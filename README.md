@@ -3,10 +3,15 @@
 ## Chapters:
 
 **1. Disclaimer**
+
 **2. What is Koboldkare?**
+
 **3. Controls**
+
 **4. Core aspects**
+
 **5. How to get started**
+
 **6. Tips and tricks**
 
 ## 1. Disclaimer

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bacc4a2bd4ca8fa4389ee261410b340a, type: 3}
+  m_Name: ReagentCallbacks
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 315106991610496841, guid: 1eb252bc61f5bf94cb2976c62bebb0eb,
+    type: 3}
+  sizzleSound: {fileID: 8300000, guid: ddec819a67782a64ea67e13851e816e7, type: 3}
+  scorchDecal: {fileID: 2100000, guid: 6cede52607bfdb64d96e271012abab8f, type: 2}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 52555264
+  reagentReactionSound: {fileID: 8300000, guid: d4c9c5b45efc62f4081b95ab1ca14d0f,
+    type: 3}

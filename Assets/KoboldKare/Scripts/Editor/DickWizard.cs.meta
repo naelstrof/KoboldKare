@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ee8559e654a6e5444ba5933fa2a8f171
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - dickDefaults: {fileID: 11400000, guid: f87e7932457b83d48bdd62bf88e7f7be, type: 2}
+  - prefabRootTransform: {instanceID: 0}
+  - dickRootTransform: {instanceID: 0}
+  - dickTipTransform: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

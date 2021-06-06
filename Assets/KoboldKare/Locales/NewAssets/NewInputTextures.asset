@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db626ad063b13545924a9839ac5fa83, type: 3}
+  m_Name: NewInputTextures
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 7ebb5707c7fd44141948ea679d6d91ca, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: 43d78ad81c001c4439acc0659ebafa79, type: 2}
+  - {fileID: 11400000, guid: e444a0c1e1b9c9f41ae95bcb2867b28e, type: 2}
+  - {fileID: 11400000, guid: 920357868d2ecd5468460180af33cc75, type: 2}
+  - {fileID: 11400000, guid: 70d2787dea069c4428530de906fceb33, type: 2}
+  - {fileID: 11400000, guid: d757c3e04f669574cba715d875737d5c, type: 2}
+  - {fileID: 11400000, guid: 7a2d0a4e3a19fb24e9ace843ca7b390b, type: 2}
+  - {fileID: 11400000, guid: 285e25cf4de0e9549b9984328cadda58, type: 2}
+  - {fileID: 11400000, guid: 9643b9fd0dce76448a7a09979b856b5c, type: 2}
+  - {fileID: 11400000, guid: 47cf02fd7703bfb4090482705ff5ed0c, type: 2}
+  - {fileID: 11400000, guid: f6404a948d79813499a93c041f2fc1e2, type: 2}
+  - {fileID: 11400000, guid: e472cf76e3a6be64b85447165c000ee7, type: 2}
+  - {fileID: 11400000, guid: 5d72ef4630d2fe14eb7044189b339a3d, type: 2}
+  - {fileID: 11400000, guid: 3dc517db28bd10d42bb5732a4047913b, type: 2}
+  - {fileID: 11400000, guid: 892d1480bacce2645be76132d9e2a5a1, type: 2}
+  - {fileID: 11400000, guid: 18072ad96a6be284eaaa2a5493e34bfd, type: 2}
+  - {fileID: 11400000, guid: d00591913564b444ba894a6b0f4df0be, type: 2}
+  - {fileID: 11400000, guid: 7ab2a163bf5440c42a8c427660efad69, type: 2}
+  - {fileID: 11400000, guid: 01d8f1507c45f264191788146e7dedfb, type: 2}
+  - {fileID: 11400000, guid: 189f51171c44ba84db77f545b75d4f4a, type: 2}
+  - {fileID: 11400000, guid: 9eb3ad6912f36e648912b496e36baf1d, type: 2}
+  - {fileID: 11400000, guid: cd6e851a8254d624585effd0f8f36847, type: 2}
+  - {fileID: 11400000, guid: 9f8606daa4951774981adeed48d92aad, type: 2}
+  - {fileID: 11400000, guid: cc9eb0b9bd14f024885ba79d1fc4b215, type: 2}
+  - {fileID: 11400000, guid: d9ee183ed92b55c499b3db24258d6aeb, type: 2}
+  - {fileID: 11400000, guid: 16f43125247f26243a5413818476bddd, type: 2}
+  m_Extensions:
+  - id: 0
+  m_Group: Asset Table
+  references:
+    version: 1
+    00000000:
+      type: {class: InputTableCreator, ns: UnityEditor.Localization.Plugins.InputTableCreator,
+        asm: Assembly-CSharp}
+      data:
+        m_Collection: {fileID: 11400000}

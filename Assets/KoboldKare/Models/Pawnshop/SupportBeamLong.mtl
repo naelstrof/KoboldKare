@@ -1,0 +1,13 @@
+# Blender MTL File: 'BasementPawnShop_Export.blend'
+# Material Count: 1
+
+newmtl MetalBeam
+Ns 39.395660
+Ka 0.765957 0.765957 0.765957
+Kd 0.507069 0.049329 0.045703
+Ks 0.145390 0.145390 0.145390
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd E:\\ForgottenWorkshop\\_Assets\\KoboldKare\\bluedirt.png

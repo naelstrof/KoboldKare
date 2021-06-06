@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcb31de5617996449b00a4330cc41ae, type: 3}
+  m_Name: InputOptions
+  m_EditorClassIdentifier: 
+  controls: {fileID: -944628639613478452, guid: b80237a58ac8c22458251d7c9dcacf88,
+    type: 3}
+  mouseSensitivity: {fileID: 11400000, guid: 3ac0d72c7d690ed43852486abb0c952c, type: 2}

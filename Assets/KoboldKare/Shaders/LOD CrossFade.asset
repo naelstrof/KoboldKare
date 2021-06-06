@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: LOD CrossFade
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=17800\n226;83;1134;420;1263.689;2184.177;1;True;False\nNode;AmplifyShaderEditor.DitheringNode;39;-704,-2048;Inherit;False;0;False;3;0;FLOAT;0;False;1;SAMPLER2D;;False;2;FLOAT4;0,0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;43;-224,-2096;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.RangedFloatNode;42;-896,-2176;Half;False;Constant;_Float0;Float
+    0;1;0;Create;True;0;0;False;0;1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.DitheringNode;45;-704,-1968;Inherit;False;1;False;3;0;FLOAT;0;False;1;SAMPLER2D;;False;2;FLOAT4;0,0,0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.LODFadeNode;38;-896,-2048;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.StaticSwitch;40;0,-2176;Float;False;Property;_LOD_FADE_CROSSFADE;LOD_FADE_CROSSFADE;0;0;Fetch;False;0;0;False;0;1;0;0;False;LOD_FADE_CROSSFADE;Toggle;2;Key0;Key1;Fetch;False;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionSwitch;44;-480,-2048;Inherit;False;Dither;False;1;2;-1;4x4
+    Bayer;8x8 Bayer;Object;-1;9;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;41;-480,-2176;Inherit;False;Alpha;1;0;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;320,-2176;Inherit;False;True;-1;Alpha;0;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;39;0;38;1\nWireConnection;43;0;41;0\nWireConnection;43;1;44;0\nWireConnection;45;0;38;1\nWireConnection;40;1;41;0\nWireConnection;40;0;43;0\nWireConnection;44;0;39;0\nWireConnection;44;1;45;0\nWireConnection;41;0;42;0\nWireConnection;0;0;40;0\nASEEND*/\n//CHKSM=C0D1027FB234CFD7111372BA92F5C2BE8A0CDEEA"
+  m_functionName: 
+  m_description: 'Unity LOD Cross Fade.
+
+
+'
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 1
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_additionalDirectives:
+    - {fileID: 0}
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems:
+    - LineType: 2
+      LineValue: multi_compile __ LOD_FADE_CROSSFADE
+      GUIDToggle: 0
+      GUIDValue: 
+      Origin: 2
+  m_nodeCategory: 6
+  m_customNodeCategory: Advanced Dynamic Shaders
+  m_previewPosition: 0
+  m_hidden: 0

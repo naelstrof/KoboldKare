@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CustomOverridePinkKobold
+  m_Controller: {fileID: 9100000, guid: 596fbaf43def8a54999157a5089972da, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400064, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: c2fef6628d28d1e41957733fc1d6a784, type: 2}
+  - m_OriginalClip: {fileID: 7400054, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 38d33461593693446ac47f37336e2a6f, type: 2}
+  - m_OriginalClip: {fileID: 7400052, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: a55f67aa4b9bdbb48b776eb90384ebf5, type: 2}
+  - m_OriginalClip: {fileID: 7400058, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 295497bbc3458b4418fd2f6e23592279, type: 2}
+  - m_OriginalClip: {fileID: 7400056, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 848e0aadb3c1807468d15d068c16ecf4, type: 2}
+  - m_OriginalClip: {fileID: 7400060, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 4f5c3bc1a5774734784b8a7b5f8b2f64, type: 2}
+  - m_OriginalClip: {fileID: 7400062, guid: 7e5debf235ac2d54397a268de3328672, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 1af8bb14f74a1674b9174cc501ae24af, type: 2}

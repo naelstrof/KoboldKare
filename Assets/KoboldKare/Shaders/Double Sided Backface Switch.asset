@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Double Sided Backface Switch
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=17300\n7;467;1264;485;2836.848;622.6113;2.676244;True;False\nNode;AmplifyShaderEditor.CommentaryNode;19;-1494.895,215.0814;Inherit;False;801.2838;177.1996;None;2;5;1;;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;18;-1492.77,-355.4929;Inherit;False;795.1077;249.4512;Flip;3;17;16;15;;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;13;-1495.963,-93.04855;Inherit;False;802.7383;285.9995;Mirror;5;6;7;8;9;11;;1,1,1,1;0;0\nNode;AmplifyShaderEditor.GetLocalVarNode;15;-1107.162,-303.1127;Inherit;False;5;bump;1;0;OBJECT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FaceVariableNode;16;-1044.457,-227.5139;Inherit;False;0;1;FLOAT;0\nNode;AmplifyShaderEditor.IntNode;3;-654.7369,-309.6704;Inherit;False;Property;_DoubleSidedNormalMode;Double
+    Sided Normal Mode;0;1;[Enum];Create;True;3;Flip;0;Mirror;1;None;2;0;False;0;0;0;0;1;INT;0\nNode;AmplifyShaderEditor.BreakToComponentsNode;7;-1254.224,-37.04903;Inherit;False;FLOAT3;1;0;FLOAT3;0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.GetLocalVarNode;6;-1445.963,-43.04856;Inherit;False;5;bump;1;0;OBJECT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.DynamicAppendNode;11;-860.2241,-36.04903;Inherit;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FaceVariableNode;8;-1128.224,82.951;Inherit;False;0;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;9;-999.2241,49.95098;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;17;-866.6626,-250.9929;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;1;-1154.165,265.0814;Inherit;False;Normal
+    Map In;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.RegisterLocalVarNode;5;-936.6116,267.525;Inherit;False;bump;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;2;-531.3558,-232.5527;Inherit;False;Cull
+    Mode;1;1;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;4;-145.1031,-97.00787;Inherit;False;float3
+    OUT = None@$if(Cull == 0){$    if(Mode == 0)$        OUT = Flip@$    if(Mode ==
+    1)$        OUT = Mirror@$    if(Mode == 2)$        OUT == None@$}else{$    OUT
+    = None@$}$return OUT@;3;False;5;True;Mode;FLOAT;0;In;;Float;False;True;Cull;FLOAT;0;In;;Float;False;True;Flip;FLOAT3;0,0,0;In;;Float;False;True;Mirror;FLOAT3;0,0,0;In;;Float;False;True;None;FLOAT3;0,0,0;In;;Float;False;If;True;False;0;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;121.6108,-96.43988;Inherit;False;True;-1;Normal
+    Map Out;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;7;0;6;0\nWireConnection;11;0;7;0\nWireConnection;11;1;7;1\nWireConnection;11;2;9;0\nWireConnection;9;0;7;2\nWireConnection;9;1;8;0\nWireConnection;17;0;15;0\nWireConnection;17;1;16;0\nWireConnection;5;0;1;0\nWireConnection;4;0;3;0\nWireConnection;4;1;2;0\nWireConnection;4;2;17;0\nWireConnection;4;3;11;0\nWireConnection;4;4;5;0\nWireConnection;0;0;4;0\nASEEND*/\n//CHKSM=6B4C46E1061B0D7910777DCCE38B1E46607981FC"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_customNodeCategory: Mtree
+  m_previewPosition: 0
+  m_hidden: 0

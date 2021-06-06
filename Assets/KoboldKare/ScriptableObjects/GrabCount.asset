@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6639fa319c43d40b21108d15f3d3e7, type: 3}
+  m_Name: GrabCount
+  m_EditorClassIdentifier: 
+  startingValue: 10
+  startingMax: 100
+  startingMin: 1
+  OnExhaust: {fileID: 0}
+  OnFull: {fileID: 0}
+  OnChanged: {fileID: 0}

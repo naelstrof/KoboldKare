@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 4224cfe42c4c0b44a8f2511f8e4c4cba
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - targetKobold: {instanceID: 0}
+  - defaultDick: {fileID: 11400000, guid: b7a18c33b66106842b96a6880e7a62c1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

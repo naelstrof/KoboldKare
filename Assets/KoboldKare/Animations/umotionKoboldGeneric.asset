@@ -1,0 +1,2591 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360751382, guid: 448d62fcada76fd4ab5702190add98fd, type: 3}
+  m_Name: umotionKoboldGeneric
+  m_EditorClassIdentifier: 
+  EditorState:
+    EditMode:
+      valueInternal: 0
+    MainTabIndex:
+      valueInternal: 0
+    PoseToolPivotMode:
+      valueInternal: 0
+    PoseToolMode:
+      valueInternal: 1
+    PoseMirrorMode:
+      valueInternal: 0
+    ConfigMode:
+      valueInternal: 0
+    ConfigToolPivotMode:
+      valueInternal: 0
+    ConfigToolMode:
+      valueInternal: 2
+    OpenedClipIndex:
+      valueInternal: 0
+    SelectedFrame:
+      valueInternal: 0
+    TimelineViewMode:
+      valueInternal: 0
+    FramesScrollPosition:
+      valueInternal: -40
+    FramesZoom:
+      valueInternal: 1
+    PropertiesScrollPosition:
+      valueInternal: 0
+    PropertiesZoom:
+      valueInternal: 1
+    CurveYScrollPosition:
+      valueInternal: 1
+    CurveYZoom:
+      valueInternal: 1
+    KeyDialogFilter:
+      ShowPosition:
+        valueInternal: 1
+      ShowRotation:
+        valueInternal: 1
+      ShowScale:
+        valueInternal: 1
+      ShowConstraints:
+        valueInternal: 1
+      ShowNotModified:
+        valueInternal: 0
+      ShowNotKeyed:
+        valueInternal: 1
+    ImportSettings:
+      ConvertToProgressive:
+        valueInternal: 1
+      DisableAnimationCompression:
+        valueInternal: 0
+      FkToIkConversion:
+        valueInternal: 0
+      HumanoidFootIKEnable:
+        valueInternal: 1
+      HumanoidHandIKEnable:
+        valueInternal: 1
+      HumanoidKeyframeReduction:
+        valueInternal: 0
+    AutoKeyMode:
+      valueInternal: 0
+    MirrorMappingCreated:
+      valueInternal: 1
+    ImportLastBrowsedDir:
+      valueInternal: Assets
+    IKWizardInitialized:
+      valueInternal: 1
+    IKFrontDirConfigured:
+      valueInternal: 0
+    IKFrontDirAngle:
+      valueInternal: 0
+    IKHandleSize:
+      valueInternal: 5
+    IKPoleHandleExtrude:
+      valueInternal: 1
+    HumanIKHandsSetting:
+      Create:
+        valueInternal: 1
+      LeftTarget:
+        valueInternal:
+          Address: 
+          Length: 0
+      RightTarget:
+        valueInternal:
+          Address: 
+          Length: 0
+      GenericTwistBoneMode:
+        valueInternal: 0
+      PoleTarget:
+        valueInternal: 1
+      ReferenceMode:
+        valueInternal: 0
+      TargetRotationMode:
+        valueInternal: 1
+    HumanIKFeetSetting:
+      Create:
+        valueInternal: 1
+      LeftTarget:
+        valueInternal:
+          Address: 
+          Length: 0
+      RightTarget:
+        valueInternal:
+          Address: 
+          Length: 0
+      GenericTwistBoneMode:
+        valueInternal: 0
+      PoleTarget:
+        valueInternal: 1
+      ReferenceMode:
+        valueInternal: 0
+      TargetRotationMode:
+        valueInternal: 1
+    CustomIKSettings: []
+    FkToIkDeleteFkKeys:
+      valueInternal: 1
+    AnimationLayersVisible:
+      valueInternal: 0
+    MuscleAssistantTab:
+      valueInternal: 0
+    MuscleAssistantLeftLegKeepPos:
+      valueInternal: 0
+    MuscleAssistantRightLegKeepPos:
+      valueInternal: 0
+    MuscleAssistantLeftToesKeepPos:
+      valueInternal: 1
+    MuscleAssistantRightToesKeepPos:
+      valueInternal: 1
+    AnimWindowSyncFrameOffset:
+      valueInternal: 0
+    RotationToolAssistantMode:
+      valueInternal: 0
+  Settings:
+    RigType:
+      valueInternal: 0
+    ChainNeighbourKeys:
+      valueInternal: 1
+    Display:
+      RigLayerVisible:
+        valueInternal: 2
+      BoneStyle:
+        valueInternal: 2
+      BonesVisible:
+        valueInternal: 1
+      TransformsVisible:
+        valueInternal: 1
+      NamesVisible:
+        valueInternal: 0
+      ToolAssistantVisible:
+        valueInternal: 1
+    Visuals:
+      StickDeselectedColor:
+        valueInternal: {r: 0.6117647, g: 0.6117647, b: 0.6117647, a: 1}
+      InverseKinematicsDeselectedColor:
+        valueInternal: {r: 0, g: 0.27450982, b: 0.7294118, a: 1}
+      SelectedColor:
+        valueInternal: {r: 0, g: 1, b: 0, a: 1}
+      InverseKinematicsSelectedColor:
+        valueInternal: {r: 0, g: 0.58431375, b: 1, a: 1}
+      ModifiedColor:
+        valueInternal: {r: 1, g: 0, b: 0, a: 1}
+      BoneNameColor:
+        valueInternal: {r: 0, g: 0, b: 0, a: 1}
+      VertexWeight0Color:
+        valueInternal: {r: 0.007843138, g: 0.039215688, b: 0.3647059, a: 1}
+      VertexWeight25Color:
+        valueInternal: {r: 0.007843138, g: 0.42352942, b: 0.42352942, a: 1}
+      VertexWeight50Color:
+        valueInternal: {r: 0.03137255, g: 0.5411765, b: 0.007843138, a: 1}
+      VertexWeight75Color:
+        valueInternal: {r: 0.6313726, g: 0.5254902, b: 0.003921569, a: 1}
+      VertexWeight100Color:
+        valueInternal: {r: 0.654902, g: 0.039215688, b: 0.047058824, a: 1}
+      BoneSize:
+        valueInternal: 1
+      StickSize:
+        valueInternal: 1
+      TransformSize:
+        valueInternal: 1
+      VertexSize:
+        valueInternal: 1
+    ExportDestinationPath:
+      valueInternal: 
+    Extension:
+      UserCallback:
+        valueInternal: 
+      BakeIntoExportedClip:
+        valueInternal: 0
+    ExportFormat:
+      valueInternal: 0
+    ExportFormatVersion:
+      valueInternal: 1
+    ExportClipTreatment:
+      valueInternal: 0
+    ExportWriteMode:
+      valueInternal: 0
+    ExportKeyframeReduction:
+      valueInternal: 0
+    ExportPositionError:
+      valueInternal: 0.01
+    ExportRotationError:
+      valueInternal: 0.01
+    ExportScaleError:
+      valueInternal: 0.01
+    ExportFileScale:
+      valueInternal: 0.01
+    ExportRotOffsetObject:
+      valueInternal:
+        Address: 
+        Length: 0
+    ExportRotOffsetX:
+      valueInternal: 0
+    ExportRotOffsetY:
+      valueInternal: 0
+    ExportRotOffsetZ:
+      valueInternal: 0
+    Selection:
+      SyncWithClipEditor:
+        valueInternal: 1
+  AnimatedObjectList:
+  - TransformPath:
+      valueInternal: 
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 0
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 
+        Length: 0
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: HipTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 
+        Length: 0
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.886
+      ReferencePoseValue:
+        valueInternal: 0.886
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.886
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: HeadTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 
+        Length: 0
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1.653
+      ReferencePoseValue:
+        valueInternal: 1.653
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1.653
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: LeftHandTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000005000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: -0.374
+      ReferencePoseValue:
+        valueInternal: -0.374
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.374
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1.225
+      ReferencePoseValue:
+        valueInternal: 1.225
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1.225
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.391
+      ReferencePoseValue:
+        valueInternal: 0.391
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.391
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: LeftElbowTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000006000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: -0.48
+      ReferencePoseValue:
+        valueInternal: -0.48
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.48
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1.442
+      ReferencePoseValue:
+        valueInternal: 1.442
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1.442
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: -0.43
+      ReferencePoseValue:
+        valueInternal: -0.43
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.43
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: RightHandTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000003000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0.287
+      ReferencePoseValue:
+        valueInternal: 0.287
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.287
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1.225
+      ReferencePoseValue:
+        valueInternal: 1.225
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1.225
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.391
+      ReferencePoseValue:
+        valueInternal: 0.391
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.391
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: RightElbowTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000004000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0.422
+      ReferencePoseValue:
+        valueInternal: 0.422
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.422
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1.442
+      ReferencePoseValue:
+        valueInternal: 1.442
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1.442
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: -0.292
+      ReferencePoseValue:
+        valueInternal: -0.292
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.292
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: LeftKneeTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 020000000a000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: -0.276
+      ReferencePoseValue:
+        valueInternal: -0.276
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.276
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.548
+      ReferencePoseValue:
+        valueInternal: 0.548
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.548
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.165
+      ReferencePoseValue:
+        valueInternal: 0.165
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.165
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: LeftFootTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000009000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: -0.178
+      ReferencePoseValue:
+        valueInternal: -0.178
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.178
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.084
+      ReferencePoseValue:
+        valueInternal: 0.084
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.084
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: -0.038
+      ReferencePoseValue:
+        valueInternal: -0.038
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.038
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0.70710653
+      ReferencePoseValue:
+        valueInternal: 0.70710653
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.70710653
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.70710707
+      ReferencePoseValue:
+        valueInternal: 0.70710707
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.70710707
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: RightFootTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000008000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0.154
+      ReferencePoseValue:
+        valueInternal: 0.154
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.154
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.047
+      ReferencePoseValue:
+        valueInternal: 0.047
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.047
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: -0.088
+      ReferencePoseValue:
+        valueInternal: -0.088
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: -0.088
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0.7071068
+      ReferencePoseValue:
+        valueInternal: 0.7071068
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.7071068
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.70710677
+      ReferencePoseValue:
+        valueInternal: 0.70710677
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.70710677
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  - TransformPath:
+      valueInternal: RightKneeTarget
+    Type:
+      valueInternal: 0
+    IsHumanBone:
+      valueInternal: 0
+    HumanBodyBone:
+      valueInternal: 0
+    Visibility:
+      valueInternal: 0
+    ParentLinkStyle:
+      valueInternal: 1
+    VisualizationTransformShape:
+      valueInternal: 0
+    VisualizationSize:
+      valueInternal: 1
+    SiblingOnOtherSide:
+      valueInternal:
+        Address: 0200000007000000
+        Length: 2
+    TransformPropsEnabledMask:
+      valueInternal: -1
+    LocalPositionSelected:
+      valueInternal: 0
+    LocalPositionChannelList:
+    - CurrentValue:
+        valueInternal: 0.304
+      ReferencePoseValue:
+        valueInternal: 0.304
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.304
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.548
+      ReferencePoseValue:
+        valueInternal: 0.548
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.548
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0.113
+      ReferencePoseValue:
+        valueInternal: 0.113
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0.113
+          newKeyListSerialized: 00000000
+    LocalRotationSelected:
+      valueInternal: 0
+    RotationModePerClip:
+    - valueInternal: 0
+    LocalRotationChannelList:
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    LocalScaleSelected:
+      valueInternal: 0
+    LocalScaleChannelList:
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    - CurrentValue:
+        valueInternal: 1
+      ReferencePoseValue:
+        valueInternal: 1
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 1
+          newKeyListSerialized: 00000000
+    IkEnable:
+      valueInternal: 0
+    IkTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkPoleTarget:
+      valueInternal:
+        Address: 
+        Length: 0
+    IkChainLength:
+      valueInternal: 2
+    IkChainMask:
+      valueInternal: 2147483647
+    IkReferenceMode:
+      valueInternal: 0
+    IkTargetRotationMode:
+      valueInternal: 0
+    IkPlaneAngleOffset:
+      valueInternal: 0
+    IkLegacyMode:
+      valueInternal: 1
+    IkFkBlendSelected:
+      valueInternal: 0
+    IkFkBlendChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    IkPoleRotationSelected:
+      valueInternal: 0
+    IkPoleRotationChannel:
+      CurrentValue:
+        valueInternal: 0
+      ReferencePoseValue:
+        valueInternal: 0
+      PoseValueList: []
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal: 0
+          newKeyListSerialized: 00000000
+    ChildOfEnable:
+      valueInternal: 0
+    ChildOfIKPinning:
+      valueInternal: 0
+    ChildOfParentSelected:
+      valueInternal: 0
+    ChildOfParentChannel:
+      CurrentValue:
+        valueInternal:
+          Address: 
+          Length: 0
+      ChannelPerClipList:
+      - LayerList:
+        - CurrentOriginalValue:
+            valueInternal:
+              Address: 
+              Length: 0
+          newKeyListSerialized: 00000000
+    CustomPropertyList: []
+  PoseList: []
+  ClipList:
+  - Settings:
+      Name:
+        valueInternal: Clip1
+      Framerate:
+        valueInternal: 60
+      Loop:
+        valueInternal: 0
+      GenerateHumanoidMotionCurves:
+        valueInternal: 0
+      HumanoidRootRotationBake:
+        valueInternal: 0
+      HumanoidRootYBake:
+        valueInternal: 0
+      HumanoidRootXZBake:
+        valueInternal: 0
+      RootMotion:
+        Translation:
+          valueInternal: 0
+        Rotation:
+          valueInternal: 0
+        AnimatedObject:
+          valueInternal:
+            Address: 
+            Length: 0
+    LayerList: []
+    SelectedLayerIndex:
+      valueInternal: 0
+    SampledRootMotionMultiplier:
+      valueInternal: 0
+    Playback:
+      StartFrame:
+        valueInternal: 0
+      EndFrame:
+        valueInternal: 0
+      Speed:
+        valueInternal: 1
+      Loop:
+        valueInternal: 0
+      RootMotion:
+        valueInternal: 1
+      PlayFromBeginning:
+        valueInternal: 0
+    EventList: []

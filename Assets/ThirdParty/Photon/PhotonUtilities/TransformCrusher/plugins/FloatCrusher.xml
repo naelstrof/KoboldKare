@@ -1,0 +1,557 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FloatCrusher</name>
+    </assembly>
+    <members>
+        <member name="T:Photon.Compression.CompressedFloat">
+            <summary>
+            A compressed representation of a float. Can be decompressed with this.Decompres() to restore the original float (Lossy).
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.CompressedFloat.crusher">
+            <summary>
+            The FloatCrusher used to compress a float to this value, and the crusher that will be used to Decompress() it.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.CompressedFloat.cvalue">
+            <summary>
+            The compressed value. This can be bitpacked and serialized. The actual bits used are found with crusher.Bits - and only that many bits need to be serialized.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.CompressedFloat.Decompress">
+            <summary>
+            Restore a float from this compressed value using the crusher it was created with.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Photon.Compression.BitCullingLevel.NoCulling">
+            <summary>
+            No culling is applied.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.BitCullingLevel.DropThird">
+            <summary>
+            By default Lvl1 culls the top third of the bits.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.BitCullingLevel.DropHalf">
+            <summary>
+            By default Lvl2 culls the top half of the bits.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.BitCullingLevel.DropAll">
+            <summary>
+            All bits are culled. This indicates no data.
+            </summary>
+        </member>
+        <member name="T:Photon.Compression.TRSType">
+            <summary>
+            Setting this slightly changes the behaviour of the compressor to account for what it is being used for. For example, Euler makes the compressor optimize
+            for the nature of eulers (they wrap around at 360 degrees, and the x-axis effectively only uses 180 degrees). The inspector interface changes for the
+            differnet types as well, limiting and exposing options applicable to the various types.
+            </summary>
+        </member>
+        <member name="T:Photon.Compression.BitsDeterminedBy">
+            <summary>
+            Method by which Bit level will be determined.
+            </summary>
+        </member>
+        <member name="T:Photon.Compression.OutOfBoundsHandling">
+            <summary>
+            Not fully implemented. Selector for how out of bounds values should be handled when fed to the compressor.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.Crusher`1.OnRecalculated">
+            <summary>
+            Notification callback for when the crusher values have changed.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.Crusher`1.OnCrusherChange(`0)">
+            <summary>
+            Callback handler for changes to any child crushers.
+            </summary>
+            <param name="crusher"></param>
+        </member>
+        <member name="T:Photon.Compression.FloatCrusher">
+            <summary>
+            Define a range and resolution for an float field, and expose encoding/decoding options based on those values.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.ISPRO">
+            <summary>
+            True if this is the Pro version of FloatCrusher. Used internally for inspector rendering handling.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.staticFloatCrushers">
+            <summary>
+            Experimental storage of unchanging crushers indexed by their hashcode - for future use to eliminate redundancies
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetStaticFloatCrusher(Photon.Compression.BitPresets,System.Single,System.Single,Photon.Compression.Axis,Photon.Compression.TRSType)">
+            <summary>
+            Creates a new crusher, then checks to see if its hashcode exists in the static dictionary already. If it exists the existing crusher is returned
+            and the created crusher gets garbage collected. Otherwise the new crusher is added to the hash dictionary.
+            </summary>
+            <param name="bitPreset"></param>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="axis"></param>
+            <param name="trstype"></param>
+            <returns>A shared float crusher with the indicated. WARNING: There are no controls in place to stop you from changing the values of this crusher, but they should not be changed.
+            The static FloatCrusher is indexed by its hashcode, and any changes will make that hashcode no longer valid.
+            </returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetStaticFloatCrusher(System.Int32,System.Single,System.Single,Photon.Compression.Axis,Photon.Compression.TRSType)">
+            <summary>
+            Creates a new crusher, then checks to see if its hashcode exists in the static dictionary already. If it exists the existing crusher is returned
+            and the created crusher gets garbage collected. Otherwise the new crusher is added to the hash dictionary.
+            </summary>
+            <returns>A shared float crusher with the indicated. WARNING: There are no controls in place to stop you from changing the values of this crusher, but they should not be changed.
+            The static FloatCrusher is indexed by its hashcode, and any changes will make that hashcode no longer valid.
+            </returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.CheckAgainstStatics(Photon.Compression.FloatCrusher)">
+            <summary>
+            See if a floatcrusher with the same hash (effectively the same crusher) exists in the static dictionary. If so, return the static crusher.
+            If not, add the supplied crusher to the dictionary. NOTE: clear any references to the supplied crusher in order for it to be garbage collected.
+            </summary>
+            <param name="fc"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.defaultUncompressedCrusher">
+            <summary>
+            Simple FloatCrusher with settings as a generic uncompressed compressor. Basically just byte converts to uint32 for serialization
+            and all other compression related tasks are bypassed.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.defaulHalfFloatCrusher">
+            <summary>
+            Simple FloatCrusher with settings as a generic Half compressor. Converts floats to uint16 for serialization
+            and all other compression related tasks are bypassed.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#cctor">
+            <summary>
+            Static Constructor
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.axis">
+            <summary>
+            The X/Y/Z axis associated with this float crusher.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.showBCL">
+            <summary>
+            Experimental: Shows the BitCullingLevel bit ranges in the inspector.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.expandBCL">
+            <summary>
+            Experimental: Expands the BitCullingLevel bit ranges in the inspector if showBCL is true.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.showEnableToggle">
+            <summary>
+            A toggle for enabled appears in the inspector drawer when true.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.enabled">
+            <summary>
+            Used by ElementCrusher and TransformCrusher to indicate that an axis is not to be included in any operations.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Enabled">
+            <summary>
+            Used by ElementCrusher and TransformCrusher to indicate that an axis is not to be included in any operations.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.AccurateCenter">
+            <summary>
+            When true, the highest compressed value is not used, and the next lowest compressed value becomes the max. This produces an odd number of quatized compression steps,
+            which in turn allows for a value to represent an uncompressed value exactly between min and max. 
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher.outOfBoundsHandling">
+            <summary>
+            Selects how out of range values will be corrected.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.CenterValue">
+            <summary>
+            Returns the center value with the current range settings, accounting for the AccurateCenter toggle.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.FloatCrusher._bits">
+            <summary>
+            Make changes to this value through the Bits property and with SetBits() or risk breakage. Backing value is only exposed for fast extension calls.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Min">
+            <summary> Set value and recalculate the FloatCrusher cache </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Max">
+            <summary> Set value and recalculate the FloatCrusher cache </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Single,System.Single)">
+            <summary>
+            Change the min and max values, retaining the previous BitsDeterminedBy setting.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Single,System.Single,System.Int32)">
+            <summary>
+            Change the min and max values, and provide a new minimum resolution target. Bits will automatically be determined, using the lowest value
+            that can still provide this level of resolution.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Single,System.Single,System.UInt32)">
+            <summary>
+            Change the min and max values, and provide a new minimum resolution target. Bits will automatically be determined, using the lowest value
+            that can still provide this level of resolution.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="resolution"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Single,System.Single,System.UInt64)">
+            <summary>
+            Change the min and max values, and provide a new minimum resolution target. Bits will automatically be determined, using the lowest value
+            that can still provide this level of resolution.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="resolution"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Single,System.Single,System.Single)">
+            <summary>
+            Change the min and max values, and provide a new minimum precision target. Bits will automatically be determined, using the lowest value
+            that can still provide this level of precision.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="precision"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetRange(System.Int32,System.Single,System.Single)">
+            <summary>
+            Set the bits, min and max values of the crusher.
+            </summary>
+            <param name="bits">Number of bits to compress to. Lower = lossier.</param>
+            <param name="min">Smallest float value expected to be given.</param>
+            <param name="max">Largest float value expect to be given.</param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.MakeRotationMinMaxConform(System.Single)">
+            <summary>
+             Apply any adjustments to manually entered rotation Min/Max values to make them conform to what is expected by all methods.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.RotationMinLimit">
+            <summary>
+            Get the Min value for this FloatCrusher, accounting for useHalfRangeX (rotation specific switch).
+            This is only used by inspector code for sizing sliders.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.RotationMaxLimit">
+            <summary>
+            Get the Max value for this FloatCrusher, accounting for useHalfRangeX (rotation specific switch)
+            This is only used by inspector code for sizing sliders.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetToFullRange">
+            <summary>
+            Set Rotation Range Limits to their max values. (Not used by Position, Scale or Generic types - as they have no limits to their range).
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.TRSType">
+            <summary>
+            Get/Set the TRS Type (Position, Rotation, Euler, Scale, Generic) for this crusher, and automate any handling code required to apply the change.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.BitsDeterminedBy">
+            <summary>
+            When using the editor, this setting determines if bitcount is determined by Resolution, Precision, or a manually set bitcount.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Resolution">
+            <summary> Set value and recalculate</summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Precision">
+            <summary> Set value and recalculate</summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.Bits">
+            <summary>Set bits value and recalculate. Get bits setting (no culling level). Returns 0 if disabled.</summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBitsAtCullLevel(Photon.Compression.BitCullingLevel)">
+            <summary>
+            Return the bits used at the given BitCullingLevel for this axis' current compression settings.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBits(Photon.Compression.BitCullingLevel)">
+            <summary>
+            Get the current bits for serialization at the specificed bcl. 0 for standard.
+            </summary>
+            <param name="bcl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.SetBits(System.Int32,Photon.Compression.BitCullingLevel)">
+            <summary>
+            Set the bits level for this FloatCrusher.
+            </summary>
+            <param name="bits"></param>
+            <param name="bcl"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.AutoDetermineBitsForCullLevels(System.Int32)">
+            <summary>
+            Be sure to Recalculate() after changing bit levels.
+            </summary>
+            <param name="bits"></param>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.LimitRange">
+            <summary>
+            Enable or disable ranges (only applicable to rotation - position and scale don't wrap around like rotations so they always need ranges).
+            Disabling range defaults to full rotation on all axes.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.FloatCrusher.UseHalfRangeX">
+            <summary>
+            When true, X axis is restricted to range of 0-180 rather than 0-360. Values outside of this range will be translated
+            by reversing the Y and Z angles accordingly to result in the same eulerAnger result. This reduces rotation network traffic
+            by one bit (in exchange for a small increase in CPU usage).
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.Recalculate">
+            <summary>
+            Any changes to the Min, Max or Bits[0] will require derived values to be recalculated.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.RecalculateMasks">
+            <summary>
+            Recalculates the masks used for turning upperbits to zeros.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.AutoSelectRotHalfX">
+            <summary> DefaultX to 180 degrees for x unless the min/max given to the constructor are out of that range.</summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(Photon.Compression.BitsDeterminedBy)">
+            <summary>
+            Constructor to use when wanting to create Uncompressed or HalfFloat crushers.
+            </summary>
+            <param name="btb"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(System.Int32,System.Single,System.Single,Photon.Compression.Axis,Photon.Compression.TRSType,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(Photon.Compression.BitPresets,System.Single,System.Single,Photon.Compression.Axis,Photon.Compression.TRSType,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(System.Single,System.Single,System.Int32,Photon.Compression.Axis,Photon.Compression.TRSType,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(System.Single,System.Single,System.Single,Photon.Compression.Axis,Photon.Compression.TRSType,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(Photon.Compression.Axis,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.#ctor(Photon.Compression.Axis,Photon.Compression.TRSType,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.Compress(System.Single,Photon.Compression.BitCullingLevel)">
+            <summary>
+            The primary Compress (crush) method for this FloatCrusher. Returns a CompressedValue.
+            </summary>
+            <param name="val">Float to compress/crush.</param>
+            <param name="bcl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.Decompress(System.UInt32)">
+            <summary>
+            The primary Decompress (uncrush) method for this FloatCrusher. Restores a float (lossy) from the compressed value.
+            </summary>
+            <param name="c">Value to decompress.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBitsForResolution">
+            <summary>
+            Determine the fewest bits required to communicate the largest value expected.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBitsForPrecision">
+            <summary>
+            Determine the fewest bits required to communicate the largest value expected.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetResAtBits">
+            <summary>
+            Returns the actual resolution of the current settings (will likely be higher than what was requested)
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetResAtBits(System.Int32)">
+            <summary>
+            Returns the resolution value if supplied bits value was used with current min/max range.
+            </summary>
+            <param name="bits"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetPrecAtBits">
+            <summary>
+            Returns the actual precision of the current settings (will likely be higher than what was requested)
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetPrecAtBits(System.Int32)">
+            <summary>
+            Returns the precisions value if supplied bits value was used with current min/max range.
+            </summary>
+            <param name="bits"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBitsForValues(System.Single,System.Single,System.Int32)">
+            <summary>
+            Get the number of bits needed for serialization based on the min/max/rez values.
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="rez"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetBitsForMaxValue(System.UInt32)">
+            <summary>
+            Returns the min number of bits required to describe any value between 0 and uint maxvalue
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GetMaxValueForBits(System.Int32)">
+            <summary>
+            Returns the maximum value that can be described at a certain bitcount.
+            </summary>
+            <param name="bitcount"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.ZeroLowerBits(System.UInt32,Photon.Compression.BitCullingLevel)">
+            <summary>
+            Turn all lower order bits to zeros, based on the BitCullingLevel.
+            </summary>
+            <param name="val"></param>
+            <param name="bcl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.ZeroUpperBits(System.UInt32,Photon.Compression.BitCullingLevel)">
+            <summary>
+            Turn all higher order bits to zeros, based on the BitCullingLevel.
+            </summary>
+            <param name="val"></param>
+            <param name="bcl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.OverwriteUpperBits(System.UInt32,System.UInt32,Photon.Compression.BitCullingLevel)">
+            <summary>
+            Replace the higher order bits of one CompressedValue with the higher order bits of another.
+            </summary>
+            <param name="l"></param>
+            <param name="u"></param>
+            <param name="bcl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.GuessUpperBits(System.UInt32,System.UInt32,Photon.Compression.BitCullingLevel)">
+            <summary>
+            Alternative to OverwriteUpperBits that attempts to guess the upperbits by seeing if value of the new position would be
+            closer to the old one if the upper bit is incremented by one, two, three etc. Stops trying when it fails to get a better result than the last increment.
+            </summary>
+            <returns>Returns a corrected compressed value</returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.OutOfBoundsCorrect(System.Single)">
+            <summary>
+            Apply the out of bounds correction as specified by outOfBoundsHandling.
+            </summary>
+            <param name="f"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.ClampRotation(System.Single)">
+            <summary>
+            Places any out of range rotation values into range. Clamping acounts for wraparound and will pick the correct min/max value to clamp to.
+            </summary>
+            <param name="f">Value to clamp.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.Clamp(System.Single)">
+            <summary>
+            Clamp value to the ranges of this FloatCrusher.
+            </summary>
+            <param name="f">Value to clamp.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.Clamp(System.UInt32)">
+            <summary>
+            Returns a the compressed value clamped to the limits of this crusher.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.CopyFrom(Photon.Compression.FloatCrusher)">
+            <summary>
+            Deep copies another crusher's values to this crusher.
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:Photon.Compression.FloatCrusher.ToString">
+            <summary>
+            Create a string of the parameters of this FloatCrusher.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FloatCrusherUtilities">
+            <summary>
+            Extension methods for use with the FloatCrusher class.
+            </summary>
+        </member>
+        <member name="M:FloatCrusherUtilities.GetXCorrectedEuler(UnityEngine.Quaternion)">
+            <summary>
+            Returns rotation as Euler with X limited to a range of -90 to 90, and the Y reversed as needed.
+            in order to maintain the same orientation.
+            </summary>
+        </member>
+        <member name="M:FloatCrusherUtilities.GetXCorrectedEuler(UnityEngine.Vector3)">
+            <summary>
+            Returns rotation as Euler using the ranges of [x]-90 to 90 [y] -180 to 180 [z] -180 to 180.
+            Y and Z axis will be mirrored when the x is outside of the -90 to 90, in order to maintain orientation.
+            </summary>
+        </member>
+        <member name="M:FloatCrusherUtilities.CheckBitCount(System.Int32,System.Int32)">
+            <summary>
+            Conditional test (is completely purged from non-editor builds) that will warn if more bits will be written than are possible.
+            </summary>
+            <param name="count"></param>
+            <param name="max"></param>
+        </member>
+        <member name="M:FloatCrusherUtilities.EditorOnlyError(System.Boolean,System.String)">
+            <summary>
+            All calls to this replacement for Debug.LogError is completely purged at build time and only exist in the Editor.
+            </summary>
+        </member>
+        <member name="M:FloatCrusherUtilities.EditorOnlyWarning(System.Boolean,System.String)">
+            <summary>
+            All calls to this replacement for Debug.LogWarning is completely purged at build time and only exist in the Editor.
+            </summary>	
+        </member>
+        <member name="M:FloatCrusherUtilities.EditorOnlyLog(System.Boolean,System.String)">
+            <summary>
+            All calls to this replacement for Debug.Log is completely purged at build time and only exist in the Editor.
+            </summary>	
+        </member>
+    </members>
+</doc>

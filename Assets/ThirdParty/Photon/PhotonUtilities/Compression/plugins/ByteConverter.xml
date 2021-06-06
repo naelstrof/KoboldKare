@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ByteConverter</name>
+    </assembly>
+    <members>
+        <member name="F:Photon.Compression.ByteConverter.uint16_B">
+            <summary>
+            The upper 4 bytes of this 8 byte struct, returned as a uint.
+            </summary>
+        </member>
+        <member name="P:Photon.Compression.ByteConverter.Item(System.Int32)">
+            <summary>
+            A Byte indexer.
+            </summary>
+            <param name="index">Byte index.</param>
+            <returns>Value of the byte at given index.</returns>
+        </member>
+    </members>
+</doc>

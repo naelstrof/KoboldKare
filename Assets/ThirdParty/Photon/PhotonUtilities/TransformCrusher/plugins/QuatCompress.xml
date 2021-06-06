@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>QuatCompress</name>
+    </assembly>
+    <members>
+        <member name="T:Photon.Compression.QuatCompress">
+            <summary>
+            This compression is based on the smallest three method of compressing Quaternions. Supply the Quaterion and the number of /bits you want it reduced to.
+            2 bits are used to identify which channel of xyzw was left out and needs to be reconstructed.
+            </summary>
+        </member>
+        <member name="T:Photon.Compression.QuatCompress.FastAbs">
+            <summary>Uses fieldoffset to allow quick setting of the sign bit of floats.</summary>
+        </member>
+        <member name="F:Photon.Compression.QuatCompress.invHalfRange">
+            <summary>
+            Cache's the inverse of all of the max values, used by decompress to avoid division and just generally minimize the math in the hotpath.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.QuatCompress.caches">
+            <summary>
+            Cache's the bit used per channel breakdown for each total bits level.
+            </summary>
+        </member>
+        <member name="F:Photon.Compression.QuatCompress.reusableByteArray">
+            <summary>
+            Internal reuseable array.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.Compress(UnityEngine.Quaternion,Photon.Compression.QuatCompress.Cache)">
+            <summary>
+            Primary Compression Method. Converts a quaternion into a ulong buffer. Depending on size most of the top bits will be 0. 
+            </summary>
+            <param name="rot">The quaternion to be compressed</param>
+            <param name="bytecount">Number of bytes the quat will be compressed down to.</param>
+            <returns>A ulong buffer of the compressed quat.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Photon.Compression.QuatCompress.CompressToULong(UnityEngine.Quaternion,System.Int32)" -->
+        <member name="M:Photon.Compression.QuatCompress.CompressToUint(UnityEngine.Quaternion)">
+            <summary>
+            Compress to a 32 bit UInt. NOTE: 32 bits is medium compression (25% of the original Quaternion), small rounding errors 
+            (averaging around .25°) may be noticable. 
+            For flawless compression, use CompressToULong or compress to byte[] using a bitcount in the range of 40 to 48 bits (Pro version only).
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.CompressToUShort(UnityEngine.Quaternion)">
+            <summary>
+            Compress to a 16 bit UInt. NOTE: 16 bits is heavy compression (12.5% of the original Quaternion), this will not rotate smoothly 
+            and is only good for very rough rotation syncing. 
+            For flawless compression, use CompressToULong or compress to a byte[] or the Ulong buffer using a bitcount in the range of 40 to 50 bits.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.CompressToByteArray(UnityEngine.Quaternion,System.Int32)">
+            <summary>
+            Writes the quat to a byte[] array. WARNING: this byte[] is reused every time QuatCompress is compresses a quaternion to byte[], so be sure to use
+            the contents immediately (copy them to your bitstream, byte array or wherever the data is going. If you need to queue byte arrays for later writing
+            use the CompressToByteArrayNonAlloc variation and supply a byte[].
+            </summary>
+            <param name="rot"></param>
+            <param name="bytecount"></param>
+            <returns>Returns a recycled byte array. The contents of this may change if not used immediately.</returns>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.CompressToByteArrayNonAlloc(UnityEngine.Quaternion,System.Byte[],System.Int32)">
+            <summary>
+            Non-Alloc overload version. Will use the length of the array as the compression level if no level is given.
+            </summary>
+            <param name="arr">Pre-allocated array to fill. Size should be 3-8 bytes.</param>
+            <param name="bytecount">Number of bytes to compress to. Leave blank or set to -1 to use the byte count of the supplied array.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.Decompress(System.UInt64,Photon.Compression.QuatCompress.Cache)">
+            <summary>
+            Primary Decompression Method. Decompress the 3 channels and missing channel ID from the serialized ULong buffer.
+            </summary>
+            <param name="buffer">The ulong that represents the compressed quaternion.</param>
+            <param name="bytecount">The number of bytes the quaternion was originally compressed to.</param>
+            <returns>The restored Quaternion.</returns>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.DecompressToQuat(System.Byte[],System.Int32)">
+            <summary>
+            Read the compressed quaterion from a Byte[] array.
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.DecompressToQuat(System.UInt64,System.Int32)">
+            <summary>
+            Decompress Quaternion from ulong buffer.
+            </summary>
+            <param name="totalBits">Number of bits that were used to compressed this quat.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.DecompressToQuat(System.UInt32,System.Int32)">
+            <summary>
+            Decompress Quaternion from uint buffer.
+            <param name="bits">Number of bits that were used to compressed this quat.</param>
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.DecompressToQuat(System.Int16,System.Int32)">
+            <summary>
+            Decompress Quaternion from uint buffer.
+            <param name="bits">Number of bits that were used to compressed this quat.</param>
+            </summary>
+        </member>
+        <member name="M:Photon.Compression.QuatCompress.ConvertByteArrayToULongBuffer(System.Byte[],System.Int32)">
+            <summary>
+            Utility to convert a byte[] array into a ulong buffer.
+            </summary>
+            <param name="bytecount">Number of bytes to use (in case the byte[].length is larger than the number of bytes used). 
+            -1 means use the full length of the array.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

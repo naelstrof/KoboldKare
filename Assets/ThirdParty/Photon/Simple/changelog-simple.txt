@@ -1,0 +1,15 @@
+
+Pun2 Simple Change Log
+Exit Games GmbH - www.photonengine.com - forum.photonengine.com
+
+
+v2.26.1 (15. December 2020)
+FIX: Some race condition on initial loading in newer Unity versions resolved.
+FIX: Enum handling in SyncVars.
+
+v2.26 (09. December 2020)
+FIX: Moving the Photon folder would break code generation cleanup.
+
+
+v2.25 (30. November 2020)
+Initial addition of Simple to Pun2

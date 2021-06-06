@@ -1,0 +1,609 @@
+fileFormatVersion: 2
+guid: 473ec3e5192b9e249b76b84f8bd7e971
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7209668571219888207
+    second: koboldkare_spritesheet_0
+  - first:
+      213: 359435360175768330
+    second: koboldkare_spritesheet_1
+  - first:
+      213: -5439229486302617990
+    second: koboldkare_spritesheet_2
+  - first:
+      213: 7031138377793629914
+    second: koboldkare_spritesheet_3
+  - first:
+      213: 4690811238457866523
+    second: koboldkare_spritesheet_4
+  - first:
+      213: -6307173796926850914
+    second: koboldkare_spritesheet_5
+  - first:
+      213: -7691596578450993115
+    second: koboldkare_spritesheet_6
+  - first:
+      213: 6181861118911128539
+    second: koboldkare_spritesheet_7
+  - first:
+      213: -4314826479307951661
+    second: koboldkare_spritesheet_8
+  - first:
+      213: -6668580592941036350
+    second: koboldkare_spritesheet_9
+  - first:
+      213: 1690484858867687311
+    second: koboldkare_spritesheet_10
+  - first:
+      213: -2064814674517274141
+    second: koboldkare_spritesheet_11
+  - first:
+      213: 4751073889588449797
+    second: koboldkare_spritesheet_12
+  - first:
+      213: -3527833891127869736
+    second: koboldkare_spritesheet_13
+  - first:
+      213: -4371397869985688087
+    second: koboldkare_spritesheet_14
+  - first:
+      213: 6941562533610893356
+    second: koboldkare_spritesheet_15
+  - first:
+      213: -6228336347933226566
+    second: koboldkare_spritesheet_16
+  - first:
+      213: 850289899175427305
+    second: koboldkare_spritesheet_17
+  - first:
+      213: 3455206267647528541
+    second: koboldkare_spritesheet_0
+  - first:
+      213: -7814664087862114622
+    second: koboldkare_spritesheet_1
+  - first:
+      213: 6641531680746833027
+    second: koboldkare_spritesheet_2
+  - first:
+      213: 620978333765647324
+    second: koboldkare_spritesheet_3
+  - first:
+      213: 1540591197703728357
+    second: koboldkare_spritesheet_4
+  - first:
+      213: -5482393539277586483
+    second: koboldkare_spritesheet_5
+  - first:
+      213: 1783208425101008960
+    second: koboldkare_spritesheet_6
+  - first:
+      213: -5732896209001735458
+    second: koboldkare_spritesheet_7
+  - first:
+      213: -8065928659322507538
+    second: koboldkare_spritesheet_8
+  - first:
+      213: 6234576257356703176
+    second: koboldkare_spritesheet_9
+  - first:
+      213: 2499186987713730149
+    second: koboldkare_spritesheet_10
+  - first:
+      213: 6299474504418829950
+    second: koboldkare_spritesheet_11
+  - first:
+      213: -8056478497270883253
+    second: koboldkare_spritesheet_12
+  - first:
+      213: 8238037762113728520
+    second: koboldkare_spritesheet_13
+  - first:
+      213: 1304212467012711157
+    second: koboldkare_spritesheet_14
+  - first:
+      213: 3118539576440110610
+    second: koboldkare_spritesheet_15
+  - first:
+      213: 1035516610351859053
+    second: koboldkare_spritesheet_16
+  - first:
+      213: 6734467413945486004
+    second: koboldkare_spritesheet_17
+  - first:
+      213: 4257962769298344987
+    second: koboldkare_spritesheet_18
+  - first:
+      213: 4551749899262712323
+    second: koboldkare_spritesheet_19
+  - first:
+      213: 2757265230961533263
+    second: koboldkare_spritesheet_20
+  - first:
+      213: -8089670612491787521
+    second: koboldkare_spritesheet_21
+  - first:
+      213: 6090527281879715850
+    second: koboldkare_spritesheet_22
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 1
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 1
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e85d04bcb53ff20800000000000000
+      internalID: 3455206267647528541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c60afb7a6cbc8390800000000000000
+      internalID: -7814664087862114622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3840b6310e57b2c50800000000000000
+      internalID: 6641531680746833027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdbb05521882e9800800000000000000
+      internalID: 620978333765647324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ec693b2887416510800000000000000
+      internalID: 1540591197703728357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcf767c7f10aae3b0800000000000000
+      internalID: -5482393539277586483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04021a26d9a3fb810800000000000000
+      internalID: 1783208425101008960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eda9448a549a070b0800000000000000
+      internalID: -5732896209001735458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eee60759e90101090800000000000000
+      internalID: -8065928659322507538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c5a4d8e21aa58650800000000000000
+      internalID: 6234576257356703176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56694f5f255eea220800000000000000
+      internalID: 2499186987713730149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e76a38b8faa3c6750800000000000000
+      internalID: 6299474504418829950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c9895ed73a13090800000000000000
+      internalID: -8056478497270883253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 800fa0992b3635270800000000000000
+      internalID: 8238037762113728520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f2bde7245e791210800000000000000
+      internalID: 1304212467012711157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21eb5b7d837474b20800000000000000
+      internalID: 3118539576440110610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d650a07eed4ee5e00800000000000000
+      internalID: 1035516610351859053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: koboldkare_spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ba0aa7ae62a57d50800000000000000
+      internalID: 6734467413945486004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 15646747d8a32b640a9ac272ac9cbb0f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

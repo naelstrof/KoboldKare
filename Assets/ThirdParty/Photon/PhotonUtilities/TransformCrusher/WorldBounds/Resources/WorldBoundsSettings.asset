@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c83769e757db51e4d811f857dfae175f, type: 3}
+  m_Name: WorldBoundsSettings
+  m_EditorClassIdentifier: 
+  worldBoundsGroups:
+  - name: Default
+    crusher:
+      expanded: 0
+      isExpanded: 1
+      hideFieldName: 1
+      _trsType: 0
+      defaultTransform: {fileID: 0}
+      uniformAxes: 0
+      _xcrusher:
+        expanded: 1
+        axis: 0
+        showBCL: 0
+        expandBCL: 0
+        showEnableToggle: 1
+        enabled: 1
+        _accurateCenter: 0
+        outOfBoundsHandling: 1
+        encoder: 327.6775
+        decoder: 0.003051781
+        actualMin: -200
+        actualMax: 200
+        wrappoint: 180
+        range: 400
+        rotationMaxValue: 160
+        maxEncodedVal: 131071
+        centerValue: 0
+        centerEncodedValue: 65535
+        _limitRange: 0
+        _useHalfRangeX: 0
+        _bitsDeterminedBy: -3
+        _bits: 110000000a0000000800000010000000
+        _min: -200
+        _max: 200
+        _resolution: 200
+        _precision: 0.005
+        _trsType: 0
+      _ycrusher:
+        expanded: 1
+        axis: 1
+        showBCL: 0
+        expandBCL: 0
+        showEnableToggle: 1
+        enabled: 1
+        _accurateCenter: 0
+        outOfBoundsHandling: 1
+        encoder: 204.7
+        decoder: 0.004885198
+        actualMin: -5
+        actualMax: 5
+        wrappoint: 180
+        range: 10
+        rotationMaxValue: 355
+        maxEncodedVal: 2047
+        centerValue: 0
+        centerEncodedValue: 1023
+        _limitRange: 1
+        _useHalfRangeX: 0
+        _bitsDeterminedBy: -3
+        _bits: 0b000000060000000500000020000000
+        _min: -5
+        _max: 5
+        _resolution: 200
+        _precision: 0.005
+        _trsType: 0
+      _zcrusher:
+        expanded: 1
+        axis: 2
+        showBCL: 0
+        expandBCL: 0
+        showEnableToggle: 1
+        enabled: 1
+        _accurateCenter: 0
+        outOfBoundsHandling: 1
+        encoder: 327.6775
+        decoder: 0.003051781
+        actualMin: -200
+        actualMax: 200
+        wrappoint: 180
+        range: 400
+        rotationMaxValue: 160
+        maxEncodedVal: 131071
+        centerValue: 0
+        centerEncodedValue: 65535
+        _limitRange: 1
+        _useHalfRangeX: 0
+        _bitsDeterminedBy: -3
+        _bits: 110000000a0000000800000000000000
+        _min: -200
+        _max: 200
+        _resolution: 200
+        _precision: 0.005
+        _trsType: 0
+      _ucrusher:
+        expanded: 0
+        axis: 4
+        showBCL: 0
+        expandBCL: 0
+        showEnableToggle: 0
+        enabled: 1
+        _accurateCenter: 0
+        outOfBoundsHandling: 1
+        encoder: 12.75
+        decoder: 0.078431375
+        actualMin: -10
+        actualMax: 10
+        wrappoint: 180
+        range: 20
+        rotationMaxValue: 350
+        maxEncodedVal: 255
+        centerValue: 0
+        centerEncodedValue: 127
+        _limitRange: 0
+        _useHalfRangeX: 0
+        _bitsDeterminedBy: 8
+        _bits: 08000000040000000300000000000000
+        _min: -10
+        _max: 10
+        _resolution: 255
+        _precision: 0.078431375
+        _trsType: 4
+      _qcrusher:
+        expanded: 0
+        bits: 0
+        _compressLevel: 64
+        transform: {fileID: 0}
+        local: 0
+        isStandalone: 1
+        showEnableToggle: 0
+        enabled: 1
+      local: 0
+      useWorldBounds: 0
+      boundsGroupId: 0
+      enableTRSTypeSelector: 0
+      enableLocalSelector: 0
+      bounds:
+        m_Center: {x: 0, y: 0, z: 0}
+        m_Extent: {x: 0, y: 0, z: 0}

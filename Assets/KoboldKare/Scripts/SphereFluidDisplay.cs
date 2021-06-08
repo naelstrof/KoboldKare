@@ -34,7 +34,7 @@ public class SphereFluidDisplay : MonoBehaviour, IReagentContainerListener {
             fluidRenderer.material.SetFloat("_Position", 0);
             return;
         }
-        fluidRenderer.material.SetColor("_Color", container.contents.GetColor(GameManager.instance.reagentDatabase));
+        fluidRenderer.material.SetColor("_Color", container.contents.GetColor(ReagentDatabase.instance));
         fluidRenderer.material.SetFloat("_Position", container.contents.volume / container.contents.maxVolume);
     }
 

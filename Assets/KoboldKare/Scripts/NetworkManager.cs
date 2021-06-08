@@ -15,8 +15,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
-public class NetworkManager : ScriptableObject, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IOnEventCallback {
-    public static NetworkManager instance { get { return GameManager.instance.networkManager; } }
+public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IOnEventCallback {
     public Dictionary<int, PhotonView> playerList = new Dictionary<int, PhotonView>();
     public bool online {
         get {
@@ -81,7 +80,7 @@ public class NetworkManager : ScriptableObject, IConnectionCallbacks, IMatchmaki
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
-            yield return GameManager.instance.LoadLevel("ErrorScene");
+            yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         if (PhotonNetwork.InLobby) {
             PhotonNetwork.LeaveLobby();
@@ -94,7 +93,7 @@ public class NetworkManager : ScriptableObject, IConnectionCallbacks, IMatchmaki
         UnpauseEvent.Raise();
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
-            yield return GameManager.instance.LoadLevel("ErrorScene");
+            yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
@@ -295,10 +294,7 @@ public class NetworkManager : ScriptableObject, IConnectionCallbacks, IMatchmaki
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
         if (!SaveManager.isLoading) {
-            yield return new WaitUntil(() => !GameManager.instance.loadingLevel);
-            if (GameManager.instance.deathGameObject != null) {
-                GameObject.Destroy(GameManager.instance.deathGameObject);
-            }
+            yield return new WaitUntil(() => !LevelLoader.loadingLevel);
             //yield return new WaitUntil(()=>(!GameManager.instance.loadingLevel && !GameManager.instance.networkManager.loading));
             for (int i = 0; i < spawnPoints.Count; i++) {
                 if (spawnPoints[i] == null) {
@@ -364,7 +360,7 @@ public class NetworkManager : ScriptableObject, IConnectionCallbacks, IMatchmaki
 
     public void OnCreatedRoom() {
         if (SceneManager.GetActiveScene().name != "MainMap" && SceneManager.GetActiveScene().name != "MainMapRedo") {
-            GameManager.instance.LoadLevel("MainMap");
+            LevelLoader.instance.LoadLevel("MainMap");
         }
     }
 

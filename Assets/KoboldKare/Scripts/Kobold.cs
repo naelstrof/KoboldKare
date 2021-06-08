@@ -714,7 +714,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public void OnEventRaised(GameEventGeneric<float> e, float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         foreach (var belly in bellies) {
-            ReagentContents vol = belly.container.contents.Metabolize(GameManager.instance.reagentDatabase, f);
+            ReagentContents vol = belly.container.contents.Metabolize(ReagentDatabase.instance, f);
             foreach (KeyValuePair<ReagentData.ID, Reagent> r in vol) {
                 switch (r.Key) {
                     case ReagentData.ID.Cum:

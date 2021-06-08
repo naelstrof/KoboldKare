@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: BigRock_Cube.002Mat
+    second: {fileID: 2100000, guid: fe99de624a7a7f84d8897a76c66f5aa6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: None
     second: {fileID: 2100000, guid: fe99de624a7a7f84d8897a76c66f5aa6, type: 2}
   materials:

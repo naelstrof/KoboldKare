@@ -7,7 +7,7 @@ using UnityEngine.Localization;
 
 
 [CreateAssetMenu(fileName = "NewReagentDatabase", menuName = "Data/Reagent Database", order = 1)]
-public class ReagentDatabase : ScriptableObject {
+public class ReagentDatabase : SingletonScriptableObject<ReagentDatabase> {
     [SerializeField]
     private List<ReagentData> serializedReagents = new List<ReagentData>();
 

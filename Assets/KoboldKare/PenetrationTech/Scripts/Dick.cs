@@ -118,10 +118,10 @@ namespace Naelstrof {
                     GenericReagentContainer container = holeTarget.connectedContainer.GetComponent<GenericReagentContainer>();
                     if (container != null) {
                         Vector3 cumAxis = holeTarget.holeTransform.TransformDirection(holeTarget.holeForwardAxis);
-                        ReagentContents fluidTransfer = balls.contents.FilterFluids(dickTransform.lossyScale.x * 0.5f, GameManager.instance.reagentDatabase);
+                        ReagentContents fluidTransfer = balls.contents.FilterFluids(dickTransform.lossyScale.x * 0.5f, ReagentDatabase.instance);
                         if (fluidTransfer.volume > 0f) {
-                            GameManager.instance.SpawnDecalInWorld(stream.splashMaterial, dickTransform.position + dickTransform.TransformDirection(dickForwardAxis) * GetWorldLength() + cumAxis * 0.25f, -cumAxis, Vector2.one * dickTransform.lossyScale.x, fluidTransfer.GetColor(GameManager.instance.reagentDatabase), dickTransform.gameObject, 0.5f, false);
-                            GameManager.instance.SpawnDecalInWorld(stream.splashMaterial, holeTarget.GetSamplePosition() - cumAxis * 0.25f, cumAxis, Vector2.one * dickTransform.lossyScale.x, fluidTransfer.GetColor(GameManager.instance.reagentDatabase), holeTarget.gameObject, 0.5f);
+                            GameManager.instance.SpawnDecalInWorld(stream.splashMaterial, dickTransform.position + dickTransform.TransformDirection(dickForwardAxis) * GetWorldLength() + cumAxis * 0.25f, -cumAxis, Vector2.one * dickTransform.lossyScale.x, fluidTransfer.GetColor(ReagentDatabase.instance), dickTransform.gameObject, 0.5f, false);
+                            GameManager.instance.SpawnDecalInWorld(stream.splashMaterial, holeTarget.GetSamplePosition() - cumAxis * 0.25f, cumAxis, Vector2.one * dickTransform.lossyScale.x, fluidTransfer.GetColor(ReagentDatabase.instance), holeTarget.gameObject, 0.5f);
                             container.contents.Mix(fluidTransfer);
                         }
                     }

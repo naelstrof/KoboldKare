@@ -230,7 +230,6 @@ public static class SaveManager {
                 NetworkManager.instance.localPlayerInstance = view;
                 NetworkManager.instance.RPCPlayerSpawn(view.ViewID);
                 PopupHandler.instance.ClearAllPopups();
-                GameManager.instance.UnpauseEvent.Raise();
             }
         }
         public PlayerPossessionEvent(SerializationInfo info, StreamingContext context) : base(info, context) {

@@ -19,6 +19,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
     public static DayNightCycle instance = null;
     public float dayLength = 700f;
     private bool nextFrameUpdate;
+    private WaitForSeconds waitForTwoSeconds = new WaitForSeconds(1.6f);
     public void ForceUpdate() {
         nextFrameUpdate = true;
     }
@@ -101,7 +102,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
             }
         }
     }
-    public void FixedUpdate() {
+    public void Update() {
         RunEvents(lastTime, time);
         lastTime = time;
     }
@@ -132,6 +133,15 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
         } else {
             float desiredTime = (float)stream.ReceiveNext();
             time = desiredTime;
+        }
+    }
+    public void Start() {
+        StartCoroutine(MetabolizeOccassionally());
+    }
+    public IEnumerator MetabolizeOccassionally() {
+        while (isActiveAndEnabled) {
+            yield return waitForTwoSeconds;
+            metabolizeEvent.Raise(2f);
         }
     }
 }

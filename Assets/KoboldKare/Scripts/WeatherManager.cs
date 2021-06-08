@@ -157,7 +157,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
                 }
                 if (rainContents.volume > 0f) {
                     bool shouldClean = rainContents.ContainsKey(ReagentData.ID.Water) && rainContents[ReagentData.ID.Water].volume > rainContents.volume * 0.9f;
-                    GameManager.instance.SpawnDecalInWorld(splashMaterial, hit.point + hit.normal * 0.25f, -hit.normal, Vector2.one * 3f, rainContents.GetColor(GameManager.instance.reagentDatabase), hit.collider.gameObject, 0.5f, true, true, shouldClean);
+                    GameManager.instance.SpawnDecalInWorld(splashMaterial, hit.point + hit.normal * 0.25f, -hit.normal, Vector2.one * 3f, rainContents.GetColor(ReagentDatabase.instance), hit.collider.gameObject, 0.5f, true, true, shouldClean);
                 }
             }
         }

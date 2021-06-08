@@ -235,9 +235,9 @@ public class StreamRenderer : MonoBehaviour {
                         body.AddForceAtPosition(Vector3.Normalize(pos-lastPos)*streamForce, worldPoint);
                     }
                     if ( decalTick++ % decalRate == 0 ) {
-                        Color c = r.GetColor(GameManager.instance.reagentDatabase);
+                        Color c = r.GetColor(ReagentDatabase.instance);
                         if (r.volume <= 0) {
-                            c = bucketSource.contents.GetColor(GameManager.instance.reagentDatabase);
+                            c = bucketSource.contents.GetColor(ReagentDatabase.instance);
                         }
                         if (r.volume > 0f) {
                             if (r.ContainsKey(ReagentData.ID.Water) && r[ReagentData.ID.Water].volume > r.volume*0.9f) {
@@ -300,12 +300,12 @@ public class StreamRenderer : MonoBehaviour {
         if ( isOn ) {
             ReagentContents r;
             if (fluidsOnly) {
-                r = bucketSource.contents.FilterFluids(volumePerSecond * Time.fixedDeltaTime, GameManager.instance.reagentDatabase);
+                r = bucketSource.contents.FilterFluids(volumePerSecond * Time.fixedDeltaTime, ReagentDatabase.instance);
             } else {
                 r = bucketSource.contents.Spill(volumePerSecond * Time.fixedDeltaTime);
             }
             if (r.volume > 0f) {
-                color = r.GetColor(GameManager.instance.reagentDatabase);
+                color = r.GetColor(ReagentDatabase.instance);
             }
             material.SetFloat("_Radius", realRadius);
             spray.SetFloat("NozzleRadius", realRadius*3f);

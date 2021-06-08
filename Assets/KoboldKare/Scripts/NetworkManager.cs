@@ -311,13 +311,15 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             if (spawnPoints.Count > 0) {
                 pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
             }
-            GameObject player = SaveManager.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
-            localPlayerInstance = player.GetComponentInChildren<PhotonView>();
-            localPlayerInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-            // Let everyone know we're not an NPC
-            RPCPlayerSpawn(localPlayerInstance.ViewID);
-            PopupHandler.instance.ClearAllPopups();
-            UnpauseEvent.Raise();
+            if (localPlayerInstance == null) {
+                GameObject player = SaveManager.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
+                localPlayerInstance = player.GetComponentInChildren<PhotonView>();
+                localPlayerInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+                // Let everyone know we're not an NPC
+                RPCPlayerSpawn(localPlayerInstance.ViewID);
+                PopupHandler.instance.ClearAllPopups();
+                UnpauseEvent.Raise();
+            }
         }
     }
     public void SpawnControllablePlayer() {

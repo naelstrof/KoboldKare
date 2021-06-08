@@ -153,6 +153,9 @@ public class ReagentSerializableCallbacks : ScriptableObject {
                 SaveManager.Destroy(other.gameObject);
                 return;
             }
+            if (other == null) {
+                Destroy(g);
+            }
         } else {
             Destroy(g);
         }

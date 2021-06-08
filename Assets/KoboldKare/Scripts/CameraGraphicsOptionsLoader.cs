@@ -6,17 +6,16 @@ using UnityEngine;
 public class CameraGraphicsOptionsLoader : MonoBehaviour, IGameEventOptionListener {
     //private FrameSettings frameSettings;
     //private FrameSettingsOverrideMask frameSettingsOverrideMask;
-    public GraphicsOptions options;
     void Start() {
-        options.RegisterListener(this);
+        GraphicsOptions.instance.RegisterListener(this);
         //frameSettings = new FrameSettings();
         //frameSettingsOverrideMask = new FrameSettingsOverrideMask();
-        foreach(GraphicsOptions.Option o in options.options) {
+        foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
             OnEventRaised(o.type, o.value);
         }
     }
     void OnDestroy() {
-        options.UnregisterListener(this);
+        GraphicsOptions.instance.UnregisterListener(this);
     }
 
     public void OnEventRaised(GraphicsOptions.OptionType target, float value) {

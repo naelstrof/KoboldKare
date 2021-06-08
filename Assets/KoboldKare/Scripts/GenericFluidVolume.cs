@@ -82,7 +82,7 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
             Vector3 pos = boxFrontWorld;
             Vector3 norm = (boxCenterWorld-boxFrontWorld).normalized;
 
-            Color c = volumeContainer.contents.GetColor(GameManager.instance.reagentDatabase);
+            Color c = volumeContainer.contents.GetColor(ReagentDatabase.instance);
             c.a = 1f;
             if (volumeContainer.contents.ContainsKey(ReagentData.ID.Water) && volumeContainer.contents[ReagentData.ID.Water].volume > volumeContainer.contents.volume*0.9f) {
                 GameManager.instance.SpawnDecalInWorld(decalDipMaterial, pos, norm, rectangle, c, g.gameObject, depth, false, false, true);
@@ -124,7 +124,7 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
                     material.SetFloat("_Position", 0);
                     continue;
                 }
-                material.SetColor("_BaseColor", contents.GetColor(GameManager.instance.reagentDatabase));
+                material.SetColor("_BaseColor", contents.GetColor(ReagentDatabase.instance));
                 material.SetFloat("_Position", contents.volume / volumeContainer.maxVolume);
             }
         }

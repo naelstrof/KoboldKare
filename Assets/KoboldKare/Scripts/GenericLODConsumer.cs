@@ -26,10 +26,10 @@ public class GenericLODConsumer : MonoBehaviour {
     // Start is called before the first frame update
     public ConsumerType resource;
     void Start() {
-        GameManager.instance.RegisterConsumer(this, resource);
+        LODManager.instance.RegisterConsumer(this, resource);
     }
     private void OnDestroy() {
-        GameManager.instance.UnregisterConsumer(this, resource);
+        LODManager.instance.UnregisterConsumer(this, resource);
     }
 
     public void RaiseBodyQuality(Rigidbody r) {

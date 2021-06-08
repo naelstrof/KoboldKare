@@ -10,8 +10,8 @@ public class PlayerKoboldLoader : MonoBehaviour, IGameEventOptionListener {
     public static int defaultDickID = 0;
     private ExitGames.Client.Photon.Hashtable koboldSave = new ExitGames.Client.Photon.Hashtable();
     void Start() {
-        GameManager.instance.options.RegisterListener(this);
-        foreach(var option in GameManager.instance.options.options) {
+        GraphicsOptions.instance.RegisterListener(this);
+        foreach(var option in GraphicsOptions.instance.options) {
             ProcessOption(koboldSave, option.type, option.value);
         }
         if (!targetKobold.isLoaded) {
@@ -34,7 +34,7 @@ public class PlayerKoboldLoader : MonoBehaviour, IGameEventOptionListener {
     //}
 
     void OnDestroy() {
-        GameManager.instance.options.UnregisterListener(this);
+        GraphicsOptions.instance.UnregisterListener(this);
     }
     public static void ProcessOption(ExitGames.Client.Photon.Hashtable t, GraphicsOptions.OptionType e, float value) {
         switch (e) {
@@ -103,7 +103,7 @@ public class PlayerKoboldLoader : MonoBehaviour, IGameEventOptionListener {
 
     public static ExitGames.Client.Photon.Hashtable GetSaveObject() {
         ExitGames.Client.Photon.Hashtable obj = new ExitGames.Client.Photon.Hashtable();
-        foreach(var option in GameManager.instance.options.options) {
+        foreach(var option in GraphicsOptions.instance.options) {
             ProcessOption(obj, option.type, option.value);
         }
         return obj;

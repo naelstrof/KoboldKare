@@ -47,10 +47,10 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
             float maxParentWidth = g.GetComponent<RectTransform>().sizeDelta.x;
             TMP_Text t = g.transform.Find("Label").GetComponent<TMP_Text>();
             Image i = g.transform.Find("Level").GetComponent<Image>();
-            var localizedText = GameManager.instance.reagentDatabase.reagents[pair.Key].localizedName.GetLocalizedString();
+            var localizedText = ReagentDatabase.instance.reagents[pair.Key].localizedName.GetLocalizedString();
             yield return new WaitUntil(()=>localizedText.IsDone);
             t.text =  localizedText.Result + ": "+ pair.Value.volume.ToString("F2");
-            i.color = GameManager.instance.reagentDatabase.reagents[pair.Key].color;
+            i.color = ReagentDatabase.instance.reagents[pair.Key].color;
             t.color = i.color.Invert();
             if (i.color.grayscale < 0.5f) {
                 t.color = Color.Lerp(t.color, Color.white, 0.5f);

@@ -94,9 +94,9 @@ public class GenericReagentContainer : MonoBehaviourPun, IReagentContainerListen
 
     public float GetWorth() {
         if (GetComponentInParent<Kobold>() != null) {
-            return contents.GetValue(GameManager.instance.reagentDatabase) * 0.5f;
+            return contents.GetValue(ReagentDatabase.instance) * 0.5f;
         } else {
-            return contents.GetValue(GameManager.instance.reagentDatabase);
+            return contents.GetValue(ReagentDatabase.instance);
         }
     }
 

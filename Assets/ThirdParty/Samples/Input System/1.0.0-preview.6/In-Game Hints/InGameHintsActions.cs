@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Samples/Input System/1.0.0-preview.6/In-Game Hints/InGameHintsActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/ThirdParty/Samples/Input System/1.0.0-preview.6/In-Game Hints/InGameHintsActions.inputactions'
 
 using System;
 using System.Collections;

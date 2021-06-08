@@ -16,7 +16,7 @@ public interface IGameEventOptionListener {
     void OnEventRaised(GraphicsOptions.OptionType e, float value);
 }
 [CreateAssetMenu(fileName = "GraphicsOptions", menuName = "Data/Graphics Options", order = 1)]
-public class GraphicsOptions : ScriptableObject {
+public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
     public LocalizedString resolutionReference;
     public List<ProceduralMaterialInfo> proceduralTextures = new List<ProceduralMaterialInfo>();
     public List<Option> options = new List<Option>();

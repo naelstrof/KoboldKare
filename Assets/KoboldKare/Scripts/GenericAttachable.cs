@@ -149,7 +149,7 @@ public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
                     ReagentContents spilled = targetContainer.contents.Spill(transferAmount);
                     ReagentContents cantTransfer = new ReagentContents();
                     foreach(var p in spilled) {
-                        if (!GameManager.instance.reagentDatabase.reagents[p.Key].isFluid) {
+                        if (!ReagentDatabase.instance.reagents[p.Key].isFluid) {
                             cantTransfer.Mix(p.Key, p.Value);
                             spilled[p.Key].volume = 0f;
                         }
@@ -161,7 +161,7 @@ public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
                     ReagentContents spilled = container.contents.Spill(transferAmount);
                     ReagentContents cantTransfer = new ReagentContents();
                     foreach(var p in spilled) {
-                        if (!GameManager.instance.reagentDatabase.reagents[p.Key].isFluid) {
+                        if (!ReagentDatabase.instance.reagents[p.Key].isFluid) {
                             cantTransfer.Mix(p.Key, p.Value);
                             spilled[p.Key].volume = 0f;
                         }

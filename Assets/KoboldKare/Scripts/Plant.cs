@@ -31,7 +31,6 @@ public class Plant : MonoBehaviour, IReagentContainerListener {
     }
 
     public void Start() {
-        UnityEngine.Random.InitState(GameManager.instance.randomSeed + GetComponentInParent<PhotonView>().ViewID);
         HueBrightnessContrastSaturation = new Vector4(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0.3f,.7f),UnityEngine.Random.Range(0.3f,0.7f),UnityEngine.Random.Range(0.3f,0.7f));
         foreach(GameObject phase in phases) {
             foreach(Kobold k in phase.GetComponentsInChildren<Kobold>(true)) {

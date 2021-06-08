@@ -13,6 +13,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     private bool canGrab = true;
     //public Grabber grabber;
     public User user;
+    public GameObject diePrefab;
     public PrecisionGrabber pGrabber;
     public GenericSpoilable spoilable;
     public Grabber grabber;
@@ -84,6 +85,9 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         }
     }
     private void OnDestroy() {
+        if (isActiveAndEnabled && NetworkManager.instance.localPlayerInstance == photonView) {
+            GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
+        }
         playerDieEvent.Raise(transform.position);
     }
     private Vector2 eyeSensitivity = new Vector2(2f,2f);

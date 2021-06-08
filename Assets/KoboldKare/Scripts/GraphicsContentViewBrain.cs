@@ -14,8 +14,8 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
     public Dictionary<GraphicsOptions.OptionType,Slider> sliders = new Dictionary<GraphicsOptions.OptionType, Slider>();
     public Dictionary<GraphicsOptions.OptionType,TMP_Dropdown> dropdowns = new Dictionary<GraphicsOptions.OptionType, TMP_Dropdown>();
     public void Start() {
-        GameManager.instance.options.RegisterListener(this);
-        foreach(GraphicsOptions.Option o in GameManager.instance.options.options) {
+        GraphicsOptions.instance.RegisterListener(this);
+        foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
             if (o == null || o.group != group) {
                 continue;
             }
@@ -107,7 +107,7 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
         if (otherAsync.Result != null){
             yield return LocalizationSettings.InitializationOperation;
             foreach (GraphicsOptions.OptionType type in (GraphicsOptions.OptionType[]) Enum.GetValues(typeof(GraphicsOptions.OptionType))) {
-                GraphicsOptions.Option o = GameManager.instance.options.options.Find(t => t.type == type);
+                GraphicsOptions.Option o = GraphicsOptions.instance.options.Find(t => t.type == type);
                 if (o == null || o.group != group) {
                     continue;
                 }
@@ -151,7 +151,7 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
     }
 
     public void Refresh() {
-        foreach(GraphicsOptions.Option o in GameManager.instance.options.options) {
+        foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
             OnEventRaised(o.type, o.value);
         }
     }
@@ -163,17 +163,17 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
         if (!this.isActiveAndEnabled) {
             return;
         }
-        GameManager.instance.options.ChangeOption(option, dropdown.value);
+        GraphicsOptions.instance.ChangeOption(option, dropdown.value);
     }
     public void OnValueChanged(Slider slider, GraphicsOptions.OptionType option) {
         if (!this.isActiveAndEnabled) {
             return;
         }
-        GameManager.instance.options.ChangeOption(option, slider.value);
+        GraphicsOptions.instance.ChangeOption(option, slider.value);
     }
 
     public void OnDestroy() {
-        GameManager.instance.options.UnregisterListener(this);
+        GraphicsOptions.instance.UnregisterListener(this);
         LocalizationSettings.SelectedLocaleChanged -= StringChanged;
     }
 

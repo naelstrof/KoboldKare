@@ -174,7 +174,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
     public void RedoOnExistCallbacks() {
         foreach (var pair in this) {
             if (pair.Value.volume > 0.01f) {
-                GameManager.instance.reagentDatabase.reagents[pair.Key].onExistCallback.Invoke(this);
+                ReagentDatabase.instance.reagents[pair.Key].onExistCallback.Invoke(this);
             }
         }
     }
@@ -195,14 +195,14 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
             List<ReagentData.ID> keys = new List<ReagentData.ID>(this.Keys);
             foreach (ReagentData.ID key in keys) {
                 int reactionID = ReagentData.GetIDPair(key, id);
-                if (GameManager.instance.reagentDatabase.reactions.ContainsKey(reactionID)) {
-                    ReagentReaction react = GameManager.instance.reagentDatabase.reactions[reactionID];
+                if (ReagentDatabase.instance.reactions.ContainsKey(reactionID)) {
+                    ReagentReaction react = ReagentDatabase.instance.reactions[reactionID];
                     if (this.ContainsKey(react.a) && this.ContainsKey(react.b) && this[react.a].volume > Mathf.Epsilon && this[react.b].volume > Mathf.Epsilon) {
                         DoReaction(react);
                     }
                 }
             }
-            GameManager.instance.reagentDatabase.reagents[id].onExistCallback.Invoke(this);
+            ReagentDatabase.instance.reagents[id].onExistCallback.Invoke(this);
         }
         // Things changed! set ourselves dirty
         SetDirty(true);

@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PhotonView))]
 public class HarvestBox : MonoBehaviourPun {
     public LayerMask layerMask;
+    public ScriptableFloat money;
     public AudioSource moneyBlips;
     public List<AudioClip> moneyBlipClips = new List<AudioClip>();
     public float maxMoneyBlip = 100f;
@@ -13,7 +14,7 @@ public class HarvestBox : MonoBehaviourPun {
 
     [PunRPC]
     public void RPCSetMoney(float moneyValue) {
-        GameManager.instance.money.set(moneyValue);
+        money.set(moneyValue);
     }
 
     public void OnDestroy() {
@@ -43,7 +44,7 @@ public class HarvestBox : MonoBehaviourPun {
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();
-            SaveManager.RPC(photonView, "RPCSetMoney", RpcTarget.AllBuffered, new object[] { GameManager.instance.money.value + totalWorth });
+            SaveManager.RPC(photonView, "RPCSetMoney", RpcTarget.AllBuffered, new object[] { money.value + totalWorth });
         }
         SaveManager.Destroy(other.transform.root.gameObject);
     }

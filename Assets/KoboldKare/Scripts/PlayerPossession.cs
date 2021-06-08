@@ -85,7 +85,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         }
     }
     private void OnDestroy() {
-        if (isActiveAndEnabled && NetworkManager.instance.localPlayerInstance == photonView) {
+        if (photonView == NetworkManager.instance.localPlayerInstance) {
             GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
         }
         playerDieEvent.Raise(transform.position);

@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Cube.002Mat
+    second: {fileID: 2100000, guid: 3af06d83db051a44ab33f3d520735975, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material
     second: {fileID: 2100000, guid: 3af06d83db051a44ab33f3d520735975, type: 2}
   materials:

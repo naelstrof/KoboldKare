@@ -7,7 +7,7 @@ using System.IO;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor;
-//using UnityEngine.AddressableAssets.Initialization;
+//using UnityEngine.AddressableAssets/KoboldKare.Initialization;
 //using UnityEngine.Localization;
 
 public class Build {
@@ -19,7 +19,7 @@ public class Build {
         ToggleSubstanceFiles(true);
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
+        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
         var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareLinux/Builds/KoboldKare", BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -34,7 +34,7 @@ public class Build {
         ToggleSubstanceFiles(true);
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
+        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
         var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareMac/Builds/KoboldKare.app", BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -49,7 +49,7 @@ public class Build {
         ToggleSubstanceFiles(true);
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
+        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
         var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindows/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -64,7 +64,7 @@ public class Build {
         ToggleSubstanceFiles(true);
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
+        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
         var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindowsx86/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -81,7 +81,7 @@ public class Build {
     }
     private static void ToggleSubstanceFiles(bool smallify) {
         // Probably totally broken, can't rely on substance plugin for now.
-        /*string path = "Assets/Materials/MapMaterials";
+        /*string path = "Assets/KoboldKare/Materials/MapMaterials";
         foreach(string file in Directory.GetFiles(path)) {
             AssetImporter importer = AssetImporter.GetAtPath(file);
             if (importer != null && file.Contains("sbsar")) {

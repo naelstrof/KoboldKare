@@ -50,7 +50,7 @@ public class Build {
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
         string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareLinux/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindows/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         ToggleSubstanceFiles(false);
@@ -65,7 +65,7 @@ public class Build {
         GetBuildVersion();
         Debug.Log("#### BUILDING ####");
         string[] scenes = {"Assets/Scenes/MainMenu.unity", "Assets/Scenes/MainMap.unity", "Assets/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareLinux/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindowsx86/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         ToggleSubstanceFiles(false);

@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Material
     second: {fileID: 2100000, guid: ddbd22c0f3aff2447b63cc80566bc243, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Obelisk_CubeMat
+    second: {fileID: 2100000, guid: 75f1dec866ac6004baf7bc2250edc343, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

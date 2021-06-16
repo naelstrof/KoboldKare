@@ -5,7 +5,6 @@ using System;
 using Photon.Pun;
 #if UNITY_EDITOR
 using UnityEditor;
-using Naelstrof;
 
 public class DickWizard : ScriptableWizard {
     public DickData dickDefaults;
@@ -65,7 +64,7 @@ public class DickWizard : ScriptableWizard {
 
         if (GUILayout.Button("Create")) {
             status = "ERROR: Check the logs...";
-            Vector3 dickForward, dickUp, dickRight;
+            /*Vector3 dickForward, dickUp, dickRight;
             GetDickOrthoWorldSpace(out dickForward, out dickUp, out dickRight);
 
 
@@ -305,7 +304,7 @@ public class DickWizard : ScriptableWizard {
                 //prefabRootTransform.gameObject.AddComponent<GenericUsable>();
                 //prefabRootTransform.gameObject.AddComponent<GenericEquipment>();
             }
-            status = "Success! <3";
+            status = "Success! <3";*/
         }
         EditorGUILayout.LabelField("Status: ", status);
     }

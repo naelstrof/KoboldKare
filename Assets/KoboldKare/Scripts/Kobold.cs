@@ -15,7 +15,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetratableSet {
-        public Naelstrof.Penetratable penetratable;
+        public Penetratable penetratable;
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
     }
@@ -112,7 +112,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         if (stimulation >= stimulationMax) {
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
-                dickSet.dick.Cum();
+                //dickSet.dick.Cum();
             }
             PumpUpDick(1f);
             stimulation = stimulationMin;
@@ -398,9 +398,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         koboldAnimator.enabled = false;
         controller.enabled = false;
-        foreach(var penSet in penetratables) {
-            penSet.penetratable.SwitchBody(penSet.ragdollAttachBody);
-        }
+        //foreach(var penSet in penetratables) {
+            //penSet.penetratable.SwitchBody(penSet.ragdollAttachBody);
+        //}
         foreach (Rigidbody b in ragdollBodies) {
             b.velocity = body.velocity;
             b.isKinematic = false;
@@ -461,9 +461,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         if ((!body.isKinematic && ragdollBodies[0].isKinematic) || koboldAnimator.enabled) {
             return;
         }
-        foreach(var penSet in penetratables) {
-            penSet.penetratable.SwitchBody(body);
-        }
+        //foreach(var penSet in penetratables) {
+            //penSet.penetratable.SwitchBody(body);
+        //}
         Vector3 diff = hip.position - body.transform.position;
         body.transform.position += diff;
         hip.position -= diff;
@@ -491,15 +491,16 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         foreach(SoftbodyPhysics s in GetComponentsInChildren<SoftbodyPhysics>()) {
             s.updateMode = SoftbodyPhysics.UpdateType.LateUpdate;
         }
-        foreach(var penSet in penetratables) {
-            penSet.penetratable.SwitchBody(body);
-        }
+        //foreach(var penSet in penetratables) {
+            //penSet.penetratable.SwitchBody(body);
+        //}
         koboldAnimator.enabled = true;
         controller.enabled = true;
         OnStandup.Invoke();
         RagdollEvent?.Invoke(false);
     }
     public void PumpUpDick(float amount) {
+        amount *= 4f;
         if (activeDicks.Count == 0) {
             return;
         }
@@ -553,15 +554,18 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
         }
         if (uprightTimer <= 0) {
-            var rot = Quaternion.FromToRotation(body.transform.up, Vector3.up);
-            //body.angularVelocity -= body.angularVelocity*0.2f;
+            body.angularVelocity -= body.angularVelocity*0.2f;
             float penetrationAmount = 0f;
-            foreach(var penSet in penetratables) {
-                if (penSet.penetratable.isActiveAndEnabled) {
-                    penetrationAmount += penSet.penetratable.realGirth;
-                }
-            }
-            body.angularVelocity += new Vector3(rot.x, rot.y, rot.z).MagnitudeClamped(0f, 1f) * Mathf.Max((1f - penetrationAmount * 2f) * uprightForce, 0f);
+            //foreach(var penSet in penetratables) {
+                //if (penSet.penetratable.isActiveAndEnabled) {
+                    //penetrationAmount += penSet.penetratable.realGirth;
+                //}
+            //}
+            float deflectionForgivenessDegrees = 5f;
+            Vector3 cross = Vector3.Cross(body.transform.up, Vector3.up);
+            float angleDiff = Mathf.Max(Vector3.Angle(body.transform.up, Vector3.up) - deflectionForgivenessDegrees, 0f);
+            body.AddTorque(cross*angleDiff, ForceMode.Acceleration);
+            //body.angularVelocity += new Vector3(rot.x, rot.y, rot.z).MagnitudeClamped(0f, 1f) * Mathf.Max((1f - penetrationAmount * 2f) * uprightForce, 0f);
         }
         //dick.dickTransform.GetComponent<CharacterJoint>().connectedAnchor = body.transform.InverseTransformPoint(hip.TransformPoint(dickAttachPosition));
         //ConfigurableJoint dickJoint = dick.body.GetComponent<ConfigurableJoint>();
@@ -768,11 +772,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 if (belly.container.contents[ReagentData.ID.Egg].volume > 4f) {
                     foreach(var penetratableSet in penetratables) {
                         //if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.dickTarget == null) {
-                        if (penetratableSet.penetratable.dickTarget == null) {
-                            belly.container.contents[ReagentData.ID.Egg].volume -= 4f;
-                            belly.container.contents.TriggerChange();
-                            SpawnEggEvent.Invoke();
-                        }
+                        //if (penetratableSet.penetratable.dickTarget == null) {
+                            //belly.container.contents[ReagentData.ID.Egg].volume -= 4f;
+                            //belly.container.contents.TriggerChange();
+                            //SpawnEggEvent.Invoke();
+                        //}
                     }
                 }
             }

@@ -19,7 +19,7 @@ public class KoboldAI : MonoBehaviourPun {
             for(int i=0;i<hits;i++) {
                 Collider hitCollider = colliders[i];
                 GenericUsable g = hitCollider.GetComponentInParent<GenericUsable>();
-                Naelstrof.Dick d = hitCollider.GetComponentInParent<Naelstrof.Dick>();
+                Dick d = hitCollider.GetComponentInParent<Dick>();
                 if (g != null && g.gameObject != photonView.gameObject) {
                     // Skip dicks that are penetrating stuff, don't use those!
                     if (d!=null) {

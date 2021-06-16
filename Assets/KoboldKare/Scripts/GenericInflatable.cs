@@ -40,7 +40,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
         [HideInInspector]
         public JiggleBone jiggleBone;
         [HideInInspector]
-        public float initialScale;
+        public Vector3 initialScale;
         [HideInInspector]
         public Quaternion initialRotation;
         [HideInInspector]
@@ -125,7 +125,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
             }
             foreach(var transformCurve in transformCurves) {
                 float scaleSample = transformCurve.scaleCurve.Evaluate(currentSize);
-                transformCurve.targetTransform.localScale = Vector3.one * transformCurve.initialScale * scaleSample;
+                transformCurve.targetTransform.localScale = transformCurve.initialScale * scaleSample;
                 if (!Mathf.Approximately(transformCurve.rotateAxis.magnitude,0f)) {
                     float rotateSample = transformCurve.rotateCurve.Evaluate(currentSize);
                     if (transformCurve.jiggleBone == null) {
@@ -175,7 +175,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
             }
         }
         foreach (var transformCurve in transformCurves) {
-            transformCurve.initialScale = transformCurve.targetTransform.localScale.y;
+            transformCurve.initialScale = transformCurve.targetTransform.localScale;
             transformCurve.initialRotation = transformCurve.targetTransform.localRotation;
             transformCurve.initialPosition = transformCurve.targetTransform.localPosition;
             transformCurve.jiggleBone = null;

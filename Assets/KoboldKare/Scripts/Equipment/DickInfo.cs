@@ -33,8 +33,8 @@ public class DickInfo : MonoBehaviour {
     private Kobold attachedKobold;
     [System.Serializable]
     public class DickSet {
-        public Transform dickRoot;
-        public Naelstrof.Dick dick;
+        public Transform dickContainer;
+        public Dick dick;
         public GenericReagentContainer container;
         public Joint joint;
 
@@ -115,34 +115,37 @@ public class DickInfo : MonoBehaviour {
         //transform.localRotation = Quaternion.identity;
         foreach(DickSet set in dicks) {
             set.info = this;
-            Vector3 scale = set.dickRoot.localScale;
-            set.dickRoot.parent = k.attachPoints[(int)set.attachPoint];
-            set.dickRoot.localScale = scale;
-            var observables = set.dickRoot.GetComponentsInChildren<IPunObservable>(true);
+            Vector3 scale = set.dickContainer.localScale;
+            set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
+            set.dickContainer.localScale = scale;
+            var observables = set.dickContainer.GetComponentsInChildren<IPunObservable>(true);
             for (int i = 0; i < observables.Length; i++) {
                 k.photonView.ObservedComponents.Add((Component)observables[i]);
             }
             //set.dick.transform.parent = k.attachPoints[(int)Equipment.EquipmentSlot.Crotch];
-            set.dickRoot.transform.localPosition = -set.attachPosition;
-            set.dickRoot.transform.localRotation = Quaternion.identity;
+            set.dickContainer.transform.localPosition = -set.attachPosition;
+            set.dickContainer.transform.localRotation = Quaternion.identity;
 
             set.parentTransform = k.animator.GetBoneTransform(set.parent);
             if (set.parent == HumanBodyBones.Hips) {
                 foreach(var hole in attachedKobold.penetratables) {
                     if (hole.isFemaleExclusiveAnatomy) {
-                        if (hole.penetratable.dickTarget != null) {
-                            hole.penetratable.dickTarget.holeTarget = null;
-                        }
                         hole.penetratable.gameObject.SetActive(false);
                     }
                 }
             }
-            set.dickAttachPosition = set.parentTransform.InverseTransformPoint(set.dick.dickTransform.position);
-            set.initialDickForwardHipSpace = set.parentTransform.InverseTransformDirection(set.dick.dickTransform.TransformDirection(set.dick.dickForwardAxis));
-            set.initialDickUpHipSpace = set.parentTransform.InverseTransformDirection(set.dick.dickTransform.TransformDirection(set.dick.dickUpAxis));
-            set.initialBodyLocalRotation = set.dick.body.transform.localRotation;
-            set.initialBodyLocalPosition = set.dick.body.transform.localPosition;
-            set.initialTransformLocalRotation = set.dick.dickTransform.localRotation;
+            set.dick.kobold = k;
+            if (!k.ragdolled) {
+                set.dick.koboldBody = attachedKobold.body;
+            } else {
+                set.dick.koboldBody = set.parentTransform.GetComponentInParent<Rigidbody>();
+            }
+            set.initialDickForwardHipSpace = set.parentTransform.InverseTransformDirection(set.dick.dickRoot.TransformDirection(set.dick.dickForward));
+            set.initialDickUpHipSpace = set.parentTransform.InverseTransformDirection(set.dick.dickRoot.TransformDirection(set.dick.dickUp));
+            set.initialBodyLocalRotation = set.dick.ragdollBody.transform.localRotation;
+            set.initialBodyLocalPosition = set.dick.ragdollBody.transform.localPosition;
+            set.dickAttachPosition = set.parentTransform.InverseTransformPoint(set.dick.dickRoot.position);
+            set.initialTransformLocalRotation = set.dick.dickRoot.localRotation;
             //dickSet.joint.axis = Vector3.up;
             //dickSet.joint.secondaryAxis = Vector3.forward;
             //dickSet.dick.body.transform.parent = root;
@@ -154,53 +157,59 @@ public class DickInfo : MonoBehaviour {
             ((CharacterJointData)set.savedJoint).connectedAnchor = set.joint.connectedAnchor;
             ((CharacterJointData)set.savedJoint).autoConfigureConnectedAnchor = false;
             k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
-            if (wasClose) {
-                StartCoroutine(UnfuckJoints(set, k.body));
-            }
             if (set.balls != null) {
                 k.balls.Add(set.balls.container);
             }
             k.activeDicks.Add(set);
             set.dick.OnMove.AddListener(OnDickMovement);
-            set.dick.kobold = k;
             foreach(Rigidbody r in k.ragdollBodies) {
                 if (r.GetComponent<Collider>() == null) {
                     continue;
                 }
-                foreach (Collider b in set.dick.selfColliders) {
-                    Physics.IgnoreCollision(r.GetComponent<Collider>(), b, true);
-                }
+                //foreach (Collider b in set.dick.selfColliders) {
+                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, true);
+                //}
+            }
+            if (!k.ragdolled) {
+                set.dick.ragdollBody.isKinematic = true;
+                Destroy(set.joint);
+            } else if (wasClose) {
+                StartCoroutine(UnfuckJoints(set, k.body));
             }
             // Make sure the dick is the right color, this just forces a reset of the colors.
             k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
         }
         k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
         k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
-        k.OnOrgasm.AddListener(Cum);
+        //k.OnOrgasm.AddListener(Cum);
         k.RagdollEvent += RagdollEvent;
         consumer.SetClose(wasClose);
         consumer.SetVeryFar(wasVeryFar);
     }
     public void OnDickLODClose() {
         foreach (DickSet set in dicks) {
-            set.dick.body.interpolation = RigidbodyInterpolation.Interpolate;
-            set.dick.body.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            if (set.dick.ragdollBody != null && !set.dick.ragdollBody.isKinematic) {
+                set.dick.ragdollBody.interpolation = RigidbodyInterpolation.Interpolate;
+                set.dick.ragdollBody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
         }
     }
     public void OnDickLODFar() {
         foreach (DickSet set in dicks) {
-            set.dick.body.interpolation = RigidbodyInterpolation.None;
-            set.dick.body.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            if (set.dick.ragdollBody != null && !set.dick.ragdollBody.isKinematic) {
+                set.dick.ragdollBody.interpolation = RigidbodyInterpolation.None;
+                set.dick.ragdollBody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            }
         }
     }
     public void OnDickMovement(float movementAmount) {
         attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
     }
-    public void Cum() {
-        foreach (DickSet set in dicks) {
-            set.dick.Cum();
-        }
-    }
+    //public void Cum() {
+        //foreach (DickSet set in dicks) {
+            //set.dick.Cum();
+        //}
+    //}
     public void RemoveFrom(Kobold k) {
         foreach (DickSet set in dicks) {
             foreach(var r in set.dick.deformationTargets) {
@@ -215,11 +224,11 @@ public class DickInfo : MonoBehaviour {
                 if (r.GetComponent<Collider>() == null) {
                     continue;
                 }
-                foreach (Collider b in set.dick.selfColliders) {
-                    Physics.IgnoreCollision(r.GetComponent<Collider>(), b, false);
-                }
+                //foreach (Collider b in set.dick.selfColliders) {
+                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, false);
+                //}
             }
-            var observables = set.dickRoot.GetComponentsInChildren<IPunObservable>(true);
+            var observables = set.dickContainer.GetComponentsInChildren<IPunObservable>(true);
             for (int i = 0; i < observables.Length; i++) {
                 k.photonView.ObservedComponents.Remove((Component)observables[i]);
             }
@@ -233,14 +242,11 @@ public class DickInfo : MonoBehaviour {
         if (shouldReenableVagina) {
             foreach(var hole in k.penetratables) {
                 if (hole.isFemaleExclusiveAnatomy) {
-                    if (hole.penetratable.dickTarget != null) {
-                        hole.penetratable.dickTarget.holeTarget = null;
-                    }
                     hole.penetratable.gameObject.SetActive(true);
                 }
             }
         }
-        k.OnOrgasm.RemoveListener(Cum);
+        //k.OnOrgasm.RemoveListener(Cum);
         k.RagdollEvent -= RagdollEvent;
         k.lodLevel.OnLODClose.RemoveListener(OnDickLODClose);
         k.lodLevel.OnLODFar.RemoveListener(OnDickLODFar);
@@ -250,15 +256,15 @@ public class DickInfo : MonoBehaviour {
         //Destroy(gameObject);
     }
     public void Update() {
-        if (attachedKobold == null || attachedKobold.ragdolled) {
+        /*if (attachedKobold == null || attachedKobold.ragdolled) {
             return;
         }
         foreach (var dickSet in dicks) {
             if (dickSet.joint == null) {
                 continue;
             }
-            Vector3 dickForward = dickSet.dick.body.rotation * dickSet.dick.dickForwardAxis;
-            Vector3 dickUp = dickSet.dick.body.rotation * dickSet.dick.dickUpAxis;
+            Vector3 dickForward = dickSet.dick.ragdollBody.rotation * dickSet.dick.dickForward;
+            Vector3 dickUp = dickSet.dick.ragdollBody.rotation * dickSet.dick.dickUp;
             Vector3 dickRight = Vector3.Cross(dickUp, dickForward);
 
             //Transform parent = attachedKobold.animator.GetBoneTransform(dickSet.parent);
@@ -272,47 +278,41 @@ public class DickInfo : MonoBehaviour {
             float maxDeflection = 30f;
             float correction = Mathf.Max(angleDiff-maxDeflection, 0f);
             if (correction > 0f) {
-                dickSet.dick.dickTransform.rotation = Quaternion.RotateTowards(dickSet.dick.dickTransform.rotation, Quaternion.FromToRotation(dickForward, hipForward) * dickSet.dick.dickTransform.rotation, correction);
+                dickSet.dick.dickRoot.rotation = Quaternion.RotateTowards(dickSet.dick.dickRoot.rotation, Quaternion.FromToRotation(dickForward, hipForward) * dickSet.dick.dickRoot.rotation, correction);
             }
-        }
+        }*/
     }
     public void FixedUpdate() {
         if (attachedKobold == null) {
             return;
         }
         foreach (var dickSet in dicks) {
-            if (dickSet.joint == null) {
+            if (dickSet.joint == null || dickSet.dick.ragdollBody.isKinematic) {
                 continue;
             }
-            dickSet.dick.body.velocity = attachedKobold.body.velocity;
+            //dickSet.dick.ragdollBody.velocity = attachedKobold.body.velocity;
             //dickSet.dick.body.centerOfMass = dickSet.dick.body.transform.InverseTransformPoint(dickSet.dick.dickTransform.position);
-            Vector3 dickForward = dickSet.dick.body.rotation * dickSet.dick.dickForwardAxis;
-            Vector3 dickUp = dickSet.dick.body.rotation * dickSet.dick.dickUpAxis;
+            Vector3 dickForward = dickSet.dick.ragdollBody.rotation * dickSet.dick.dickForward;
+            Vector3 dickUp = dickSet.dick.ragdollBody.rotation * dickSet.dick.dickUp;
             Vector3 dickRight = Vector3.Cross(dickUp, dickForward);
 
-            Transform parent = attachedKobold.animator.GetBoneTransform(dickSet.parent);
-
-            Vector3 hipUp = parent.TransformDirection(dickSet.initialDickUpHipSpace);
-            Vector3 hipForward = parent.TransformDirection(dickSet.initialDickForwardHipSpace);
+            Vector3 hipUp = dickSet.parentTransform.TransformDirection(dickSet.initialDickUpHipSpace);
+            Vector3 hipForward = dickSet.parentTransform.TransformDirection(dickSet.initialDickForwardHipSpace);
             Vector3 hipRight = Vector3.Cross(hipUp, hipForward);
 
             if (!attachedKobold.ragdolled) { // If we're not ragdolled
-                dickSet.dick.body.interpolation = attachedKobold.body.interpolation;
-                dickSet.joint.connectedAnchor = dickSet.joint.connectedBody.transform.InverseTransformPoint(parent.TransformPoint(dickSet.dickAttachPosition));
+                dickSet.dick.ragdollBody.interpolation = attachedKobold.body.interpolation;
+                dickSet.joint.connectedAnchor = dickSet.joint.connectedBody.transform.InverseTransformPoint(dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition));
             } else {
-                dickSet.dick.body.interpolation = dickSet.joint.connectedBody.interpolation;
+                dickSet.dick.ragdollBody.interpolation = dickSet.joint.connectedBody.interpolation;
             }
-            dickSet.dick.body.maxAngularVelocity = 30f;
-
-            // actually just dampen everything
-            dickSet.dick.body.angularVelocity = dickSet.dick.body.angularVelocity * 0.9f;
 
             float neededSuperCorrectionForce = Mathf.Clamp01(attachedKobold.body.velocity.GroundVector().magnitude / 4f);
 
             // Make the dick mostly face forward
             Vector3 cross = Vector3.Cross(dickForward, hipForward);
             float angleDiff = Vector3.Angle(dickForward, hipForward);
-            dickSet.dick.body.AddTorque(cross * angleDiff*2f);
+            dickSet.dick.ragdollBody.AddTorque(cross * angleDiff*2f);
 
             // Dampen, but only on dick twist.
             //dickSet.dick.body.angularVelocity = Vector3.Lerp(dickSet.dick.body.angularVelocity, Vector3.ProjectOnPlane(dickSet.dick.body.angularVelocity,dickForward), 0.5f);
@@ -324,7 +324,7 @@ public class DickInfo : MonoBehaviour {
             }
             Vector3 ucross = Vector3.Cross(dickUp, Vector3.ProjectOnPlane(targetRot, hipRight).normalized);
             float uangleDiff = Vector3.Angle(dickUp, Vector3.ProjectOnPlane(targetRot, hipRight).normalized);
-            dickSet.dick.body.AddTorque(ucross * uangleDiff * 0.2f);
+            dickSet.dick.ragdollBody.AddTorque(ucross * uangleDiff * 0.2f);
 
             if (!attachedKobold.ragdolled) {
                 dickSet.joint.massScale = Mathf.Lerp(1f, 500f, neededSuperCorrectionForce);
@@ -346,8 +346,8 @@ public class DickInfo : MonoBehaviour {
             //yield return new WaitForEndOfFrame();
         //}
 
-        while (dickSet.dick.body.GetComponent<CharacterJoint>() != null) {
-            Destroy(dickSet.dick.body.GetComponent<CharacterJoint>());
+        while (dickSet.dick.ragdollBody.GetComponent<CharacterJoint>() != null) {
+            Destroy(dickSet.dick.ragdollBody.GetComponent<CharacterJoint>());
             yield return new WaitForEndOfFrame();
         }
         while (dickSet.joint != null) {
@@ -356,14 +356,14 @@ public class DickInfo : MonoBehaviour {
         }
         //Transform parent = attachedKobold.animator.GetBoneTransform(dickSet.parent);
         // We also use Rigidbody.position, and Rigidbody.rotation. This takes a full fixed update cycle, and only at the very end of the fixed update do the rigidbodies finish interpolating.
-        dickSet.dick.body.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
-        dickSet.dick.body.rotation = dickSet.parentTransform.rotation * dickSet.initialBodyLocalRotation;
+        dickSet.dick.ragdollBody.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
+        dickSet.dick.ragdollBody.rotation = dickSet.parentTransform.rotation * dickSet.initialBodyLocalRotation;
         yield return new WaitForFixedUpdate();
         // Force the transforms into the right position right before we recreate configurableJoint, this is just in-case, might not actually be necessary.
-        dickSet.dick.body.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
-        dickSet.dick.body.rotation = dickSet.parentTransform.rotation * dickSet.initialBodyLocalRotation;
-        dickSet.dick.dickTransform.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
-        dickSet.dick.dickTransform.rotation = dickSet.parentTransform.rotation * dickSet.initialTransformLocalRotation;
+        dickSet.dick.ragdollBody.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
+        dickSet.dick.ragdollBody.rotation = dickSet.parentTransform.rotation * dickSet.initialBodyLocalRotation;
+        dickSet.dick.dickRoot.position = dickSet.parentTransform.TransformPoint(dickSet.dickAttachPosition);
+        dickSet.dick.dickRoot.rotation = dickSet.parentTransform.rotation * dickSet.initialTransformLocalRotation;
         // Finally recreate the joint.
         dickSet.joint = dickSet.savedJoint.Apply(targetBody);
         // The savedJoint probably doesn't have the right connected anchor anymore, so we update it just in-case.
@@ -390,7 +390,19 @@ public class DickInfo : MonoBehaviour {
                 continue;
             }
             //Rigidbody ragdollRigidbody = attachedKobold.animator.GetBoneTransform(set.parent).GetComponentInParent<Rigidbody>();
-            StartCoroutine(UnfuckJoints(set, ragdolled ? set.parentTransform.GetComponentInParent<Rigidbody>() : attachedKobold.body ));
+            if (ragdolled) {
+                set.dick.koboldBody = set.parentTransform.GetComponentInParent<Rigidbody>();
+                set.dick.ragdollBody.isKinematic = false;
+                StartCoroutine(UnfuckJoints(set, set.parentTransform.GetComponentInParent<Rigidbody>()));
+            } else {
+                //Destroy(set.joint);
+                set.dick.ragdollBody.isKinematic = true;
+                set.dick.koboldBody = attachedKobold.body;
+                set.dickContainer.transform.localPosition = -set.attachPosition;
+                set.dickContainer.transform.localRotation = Quaternion.identity;
+                set.dick.dickRoot.transform.localPosition = set.dickAttachPosition;
+                set.dick.dickRoot.transform.localRotation = set.initialTransformLocalRotation;
+            }
         }
     }
 }

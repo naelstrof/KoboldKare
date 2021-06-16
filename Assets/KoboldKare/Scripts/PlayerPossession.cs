@@ -101,7 +101,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         //if (!photonView.IsMine) {
             //return;
         //}
-        if (kobold.uprightTimer <= 0f) {
+        /*if (kobold.uprightTimer <= 0f) {
             body.maxAngularVelocity = 12f;
             body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Quaternion bodyRot = body.rotation;
@@ -119,7 +119,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             //rig.layers[0].active = false;
             body.maxAngularVelocity = 7f;
             body.constraints = body.constraints & ~(RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ);
-        }
+        }*/
+        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
+        Vector3 fdir = characterRot * Vector3.forward;
+        float deflectionForgivenessDegrees = 5f;
+        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
+        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
+        body.AddTorque(cross*angleDiff*5f, ForceMode.Acceleration);
     }
     void PlayerProcessing() {
         bool grab = controls.actions["Grab"].ReadValue<float>() > 0.5f && canGrab;

@@ -93,7 +93,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = false;
+                dickSet.dick.ragdollBody.detectCollisions = false;
             }
         }
         yield return new WaitForSeconds(5f);
@@ -102,7 +102,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
+                dickSet.dick.ragdollBody.detectCollisions = true;
             }
         }
         float endTransitionTime = Time.timeSinceLevelLoad + 3f;
@@ -176,7 +176,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
+                dickSet.dick.ragdollBody.detectCollisions = true;
             }
         }
     }
@@ -350,9 +350,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun
     {
         if (kobold != null) {
             float maxPen = 0f;
+            // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.
             foreach (var hole in kobold.penetratables) {
-                if (hole.penetratable.dickTarget != null) {
-                    maxPen = Mathf.Max(hole.penetratable.realGirth, maxPen);
+                foreach( var dick in hole.penetratable.GetPenetrators()) {
+                    if (!dick.isDildo) {
+                        lastPosition = transform.position;
+                    }
                 }
             }
             playerModel.SetFloat("PenetrationSize", Mathf.Clamp01(maxPen * 4f));

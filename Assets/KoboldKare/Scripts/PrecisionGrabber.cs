@@ -50,6 +50,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
     }
     private class FrozenGrab {
         public List<IAdvancedInteractable> interactables = new List<IAdvancedInteractable>();
+        public List<IFreezeReciever> freezeReceivers = new List<IFreezeReciever>();
         public ConfigurableJoint joint;
         public Vector3 worldHoldPoint;
         public Quaternion worldHoldRotation;
@@ -133,6 +134,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             if (frozenGrabs[0].joint != null) {
                 frozenGrabs[0].body?.WakeUp();
                 Destroy(frozenGrabs[0].joint);
+            }
+            foreach(IFreezeReciever freezeReciever in frozenGrabs[0].freezeReceivers) {
+                freezeReciever.OnEndFreeze();
             }
             foreach(IAdvancedInteractable interactable in frozenGrabs[0].interactables) {
                 if (((Component)interactable) != null) {
@@ -401,6 +405,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
 
             fgrab.joint = createdJoint;
         }
+        foreach (IFreezeReciever f in collider.GetComponentsInParent<IFreezeReciever>()) {
+            f.OnFreeze(kobold);
+            fgrab.freezeReceivers.Add(f);
+        }
         foreach (IAdvancedInteractable a in collider.GetComponentsInParent<IAdvancedInteractable>()) {
             // This only runs if you lagged out and missed the grab event, happens frequently for people quickly grabbing and freezing items.
             if (!grabbing || grabbedCollider != collider) {
@@ -469,17 +477,19 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
         distance += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
         hovering = false;
         Vector2 mouseDelta = Mouse.current.delta.ReadValue() * GameManager.instance.mouseSensitivity.value;
+        bool ranAdvancedObjectStuff = false;
         if (advancedGameObject != null) {
             hovering = true;
             Vector3 worldNormal = grabbedCollider.transform.TransformDirection(hitNormalObjectSpace);
             handRotation = Quaternion.Lerp(handRotation, Quaternion.LookRotation(-worldNormal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f)), Time.deltaTime*50f);
             Vector3 objHoldPoint = grabbedCollider.transform.TransformPoint(colliderLocalAnchor);
-            Vector3 holdPointOffset = objHoldPoint - advancedGameObject.transform.position;
+            //Vector3 holdPointOffset = objHoldPoint - advancedGameObject.transform.position;
             Vector3 holdPoint = view.position + view.forward * distance;
             handPosition = objHoldPoint + handRotation * Vector3.down*0.1f;
-            if (advancedGameObject.GetComponentInParent<IAdvancedInteractable>() != null) {
-                advancedGameObject.GetComponentInParent<IAdvancedInteractable>().InteractTo(holdPoint - holdPointOffset, savedQuaternion * view.rotation);
+            foreach (IAdvancedInteractable a in advancedGameObject.GetComponentsInParent<IAdvancedInteractable>()) {
+                a.InteractTo(holdPoint, savedQuaternion * view.rotation);
             }
+            ranAdvancedObjectStuff = true;
             if (inputRotation) {
                 savedQuaternion = Quaternion.AngleAxis(-mouseDelta.x*3f, view.up)*savedQuaternion;
                 savedQuaternion = Quaternion.AngleAxis(mouseDelta.y*3f, view.right)*savedQuaternion;
@@ -495,8 +505,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             Vector3 worldNormal = jointRigidbody.transform.TransformDirection(hitNormalObjectSpace);
             handRotation = Quaternion.Lerp(handRotation, Quaternion.LookRotation(-worldNormal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f)), Time.deltaTime*50f);
             handPosition = objHoldPoint + handRotation * Vector3.down*0.1f;
-            if (advancedGameObject != null) {
-                advancedGameObject.GetComponentInParent<IAdvancedInteractable>().InteractTo(holdPoint, savedQuaternion * view.rotation);
+            if (advancedGameObject != null && !ranAdvancedObjectStuff) {
+                foreach (IAdvancedInteractable a in advancedGameObject.GetComponentsInParent<IAdvancedInteractable>()) {
+                    a.InteractTo(holdPoint, savedQuaternion * view.rotation);
+                }
             }
             if (inputRotation) {
                 if (!savedRotation) {
@@ -583,7 +595,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             if (grab.body == null) {
                 continue;
             }
-            if (grab.body.isKinematic) {
+            if (grab.body.isKinematic && grab.joint != null) {
                 bool affRotation = grab.joint.angularXMotion == ConfigurableJointMotion.Locked;
                 Vector3 worldAnchor = grab.joint.transform.TransformPoint(grab.joint.anchor);
                 Destroy(grab.joint);
@@ -636,7 +648,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             //joint.targetPosition = view.forward * distance;//holdPoint-objHoldPoint;
 
             // Manual axis alignment, for pole jumps!
-            if (jointRigidbody.transform.root != self.transform.root) {
+            if (jointRigidbody.transform.root != self.transform.root && !jointRigidbody.isKinematic) {
                 jointRigidbody.velocity -= jointRigidbody.velocity*_dampStrength;
                 Vector3 axis = view.forward;
                 Vector3 jointPos = jointRigidbody.transform.TransformPoint(jointAnchor);

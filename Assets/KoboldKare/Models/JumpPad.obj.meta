@@ -7,6 +7,36 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Cylinder.001_Cylinder.017Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder.002_Cylinder.024Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder.004_Cylinder.019Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder.005_Cylinder.023Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder.007_Cylinder.022Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grate_Cylinder.020Mat
+    second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: None
     second: {fileID: 2100000, guid: bd393222290f95c4aa7ec180e82b700b, type: 2}
   materials:

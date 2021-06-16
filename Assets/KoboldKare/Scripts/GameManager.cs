@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     public ScriptableFloat mouseSensitivity;
     public PaintDecal decalPainter;
-    public GraphicsOptions options;
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
     public LayerMask precisionGrabMask;

@@ -25,6 +25,9 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public static class AnimationCurveExtensions
 {
@@ -102,5 +105,15 @@ public static class AnimationCurveExtensions
 
         return sliceWidth * accumulatedTotal;
     }
+
+#if UNITY_EDITOR
+    public static void AutoSmooth(this AnimationCurve curve) {
+        for (int i = 0; i < curve.keys.Length; ++i) {
+            curve.SmoothTangents(i, 0);
+            AnimationUtility.SetKeyLeftTangentMode(curve, i, AnimationUtility.TangentMode.ClampedAuto);
+            AnimationUtility.SetKeyRightTangentMode(curve, i, AnimationUtility.TangentMode.ClampedAuto);
+        }
+    }
+#endif
 
 }

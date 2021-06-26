@@ -89,6 +89,8 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             }
         }
     }
+    private ReagentContents dickCumContents = new ReagentContents();
+    public int cumPulseCount = 12;
     public bool isDildo = true;
     public bool canOverpenetrate = true;
     public Rigidbody koboldBody;
@@ -117,6 +119,9 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
     public Penetratable holeTarget;
 
     private bool dildoMemory = false;
+    public GenericReagentContainer ballsContainer;
+    public float cumVolumePerPump = 3f;
+    public StreamRenderer stream;
 
     public void SetHolePositions(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
         this.p0 = p0;
@@ -607,9 +612,13 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
     }
 
     void Update() {
+        if (Application.isEditor && !Application.isPlaying) {
+            SetDeforms();
+            return;
+        }
         if (holeTarget != null) {
-            penetrationDepth01 += GetTangent(penetrationDepth01)*Time.deltaTime*0.25f;
-            penetrationDepth01 += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/GetLength()))*Time.deltaTime*0.25f;
+            penetrationDepth01 += GetTangent(penetrationDepth01)*Time.deltaTime;
+            penetrationDepth01 += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/GetLength()))*Time.deltaTime;
         } else {
             penetrationDepth01 = -1f;
         }
@@ -646,15 +655,17 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             //penetrationDepth01 = Mathf.MoveTowards(penetrationDepth01,(Vector3.Distance(holePos,holeTarget.GetPoint(0,backwards))/GetLength()), Time.deltaTime*2f);
         //} else {
         squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
-        squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*12f;
+        squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*30f;
         float dist = Vector3.Distance(worldPosition, holePos)+(interactPointOffset*GetLength());
         //if (penetrationDepth01 < 0.5f) {
             //float move = (dist-(-(penetrationDepth01-1f)*GetLength()))*Time.deltaTime;
             //squishPullAmount += move*5f;
             //penetrationDepth01 -= move*5f;
         //}
+        float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
+        OnMove.Invoke(move);
         squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
-        penetrationDepth01 += Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*7f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
+        penetrationDepth01 += move;
         penetrationDepth01 = Mathf.Max(penetrationDepth01, -1f);
         if (!canOverpenetrate) {
             penetrationDepth01 = Mathf.Clamp(penetrationDepth01, -1f, 1f);
@@ -670,7 +681,30 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             OnEndInteract(null);
         }
     }
+    public void Cum() {
+        StopCoroutine("CumRoutine");
+        StartCoroutine("CumRoutine");
+    }
 
+    public IEnumerator CumRoutine() {
+        cumActive = 1f;
+        for(int i=0;i<cumPulseCount;i++) {
+            cumProgress = -bulgePercentage;
+            while (cumProgress < 1f+bulgePercentage) {
+                cumProgress = Mathf.MoveTowards(cumProgress, 1f+bulgePercentage, Time.deltaTime);
+                yield return new WaitForEndOfFrame();
+            }
+            dickCumContents.Mix(ReagentData.ID.Cum, dickRoot.TransformVector(dickRight).magnitude);
+            dickCumContents.Mix(ballsContainer.contents.Spill(cumVolumePerPump*dickRoot.TransformVector(dickRight).magnitude));
+            // Just add a little extra cum just in case the balls are empty
+            if (holeTarget != null && holeTarget.connectedContainer != null && penetrationDepth01*GetLength() < holeTarget.orifaceLength && penetrationDepth01 > 0f) {
+                holeTarget.connectedContainer.contents.Mix(dickCumContents);
+            } else {
+                stream.Fire(dickCumContents, cumVolumePerPump);
+            }
+        }
+        cumActive = 0f;
+    }
     public void OnFreeze(Kobold k) {
         dildoMemory = isDildo;
         isDildo = false;
@@ -702,7 +736,6 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             body.angularDrag = 0.05f;
         }
     }
-
     public bool PhysicsGrabbable() {
         return true;
     }

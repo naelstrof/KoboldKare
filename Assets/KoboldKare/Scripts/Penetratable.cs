@@ -175,6 +175,7 @@ public class PenetratableEditor : Editor {
 }
 #endif
 public class Penetratable : MonoBehaviour {
+    public GenericReagentContainer connectedContainer;
     [Range(0f,1f)]
     public float allowedPenetrationDepth01 = 1f;
     public bool canAllTheWayThrough = true;
@@ -465,10 +466,10 @@ public class Penetratable : MonoBehaviour {
         }
     }
     public void FixedUpdate() {
-        float springStrength = 80f;
+        float springStrength = 100f;
         float deflectionForgivenessDegrees = 10f;
         float deflectionSpringStrength = 10f;
-        float overallDamping = 0.3f;
+        float overallDamping = 0.7f;
         foreach(var penetrator in penetrators) {
             if (penetrator == null || penetrator.body == null) {
                 continue;

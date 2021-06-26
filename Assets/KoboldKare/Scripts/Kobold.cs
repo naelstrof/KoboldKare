@@ -94,6 +94,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     private Vector3 networkedRagdollHipPosition;
     public bool isLoaded = false;
+    public float arousal = 0f;
     public bool ragdolled {
         get {
             if (ragdollBodies[0] == null) {
@@ -112,7 +113,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         if (stimulation >= stimulationMax) {
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
-                //dickSet.dick.Cum();
+                dickSet.dick.Cum();
             }
             PumpUpDick(1f);
             stimulation = stimulationMin;
@@ -500,22 +501,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         RagdollEvent?.Invoke(false);
     }
     public void PumpUpDick(float amount) {
-        amount *= 4f;
-        if (activeDicks.Count == 0) {
-            return;
-        }
         if (amount > 0 ) {
             lastPumpTime = Time.timeSinceLevelLoad;
         }
-        foreach(var dickSet in activeDicks) {
-            if (!dickSet.container.contents.ContainsKey(ReagentData.ID.Blood)) {
-                dickSet.container.contents.Mix(ReagentData.ID.Blood, 0.01f);
-            }
-            float engorged = dickSet.container.contents[ReagentData.ID.Blood].volume;
-            engorged = Mathf.Clamp01(engorged + amount);
-            dickSet.container.contents[ReagentData.ID.Blood].volume = engorged;
-            dickSet.container.contents.TriggerChange();
-        }
+        arousal += amount;
+        arousal = Mathf.Clamp01(arousal);
     }
     public void OnRelease(Kobold kobold) {
         //animator.updateMode = modeSave;
@@ -539,6 +529,16 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         //pickedUp = 0;
         //transSpeed = 1f;
+    }
+    private void Update() {
+        foreach(var dickSet in activeDicks) {
+            if (!dickSet.container.contents.ContainsKey(ReagentData.ID.Blood)) {
+                dickSet.container.contents.Mix(ReagentData.ID.Blood, 0.01f);
+            }
+            // Pulse the dicks a little, so they still look "lively"
+            dickSet.container.contents[ReagentData.ID.Blood].volume = arousal*0.92f + 0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f));
+            dickSet.container.contents.TriggerChange();
+        }
     }
     private void FixedUpdate() {
         if (!grabbed) {

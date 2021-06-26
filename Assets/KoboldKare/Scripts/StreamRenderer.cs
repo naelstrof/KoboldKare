@@ -25,7 +25,7 @@ public class StreamRenderer : MonoBehaviour {
     public Material splashMaterial;
     private bool readyToFire = false;
     private bool fireAsap = false;
-    private GenericReagentContainer fireAsapSource;
+    private ReagentContents fireAsapSource;
     public VisualEffect spray;
     public VisualEffect splash;
     //public VisualEffect splashBits;
@@ -36,8 +36,8 @@ public class StreamRenderer : MonoBehaviour {
     public float radius = 0.1f;
     private float realRadius {
         get {
-            if (bucketSource != null && bucketSource.contents.volume < 1) {
-                return Mathf.Min(radius, bucketSource.contents.volume * radius);
+            if (bucketSource != null && bucketSource.volume < 1) {
+                return Mathf.Min(radius, bucketSource.volume * radius);
             }
             return Mathf.Max(radius,0.01f);
         }
@@ -74,7 +74,7 @@ public class StreamRenderer : MonoBehaviour {
             material.color = value;
         }
     }
-    private GenericReagentContainer bucketSource;
+    private ReagentContents bucketSource;
     private ReagentContents midAirStuff = new ReagentContents();
     public float volumePerSecond = 1f;
     public void Fire(GameObject b) {
@@ -83,10 +83,10 @@ public class StreamRenderer : MonoBehaviour {
         }
     }
     public void Fire(GenericReagentContainer b) {
-        Fire(b, volumePerSecond);
+        Fire(b.contents, volumePerSecond);
     }
-    public void Fire(GenericReagentContainer b, float vps) {
-        if (isOn || b.contents.volume <= 0f) {
+    public void Fire(ReagentContents b, float vps) {
+        if (isOn || b.volume <= 0f) {
             return;
         }
         if (!gameObject.activeInHierarchy) {
@@ -218,7 +218,7 @@ public class StreamRenderer : MonoBehaviour {
                     GenericReagentContainer[] hits = obj.GetComponentsInParent<GenericReagentContainer>();
                     bool filled = false;
                     foreach( GenericReagentContainer b in hits) {
-                        if (b.contents != bucketSource.contents) {
+                        if (b.contents != bucketSource) {
                             b.contents.Mix(r / hits.Length, ReagentContents.ReagentInjectType.Spray);
                             if (b.contents.volume >= b.contents.maxVolume) {
                                 filled = true;
@@ -237,7 +237,7 @@ public class StreamRenderer : MonoBehaviour {
                     if ( decalTick++ % decalRate == 0 ) {
                         Color c = r.GetColor(ReagentDatabase.instance);
                         if (r.volume <= 0) {
-                            c = bucketSource.contents.GetColor(ReagentDatabase.instance);
+                            c = bucketSource.GetColor(ReagentDatabase.instance);
                         }
                         if (r.volume > 0f) {
                             if (r.ContainsKey(ReagentData.ID.Water) && r[ReagentData.ID.Water].volume > r.volume*0.9f) {
@@ -300,9 +300,9 @@ public class StreamRenderer : MonoBehaviour {
         if ( isOn ) {
             ReagentContents r;
             if (fluidsOnly) {
-                r = bucketSource.contents.FilterFluids(volumePerSecond * Time.fixedDeltaTime, ReagentDatabase.instance);
+                r = bucketSource.FilterFluids(volumePerSecond * Time.fixedDeltaTime, ReagentDatabase.instance);
             } else {
-                r = bucketSource.contents.Spill(volumePerSecond * Time.fixedDeltaTime);
+                r = bucketSource.Spill(volumePerSecond * Time.fixedDeltaTime);
             }
             if (r.volume > 0f) {
                 color = r.GetColor(ReagentDatabase.instance);
@@ -313,8 +313,8 @@ public class StreamRenderer : MonoBehaviour {
             midAirStuff.Mix(r);
             cullStart = 0f;
             cullEnd = Mathf.MoveTowards(cullEnd, 1f, Time.fixedDeltaTime);
-            spraySound.pitch = Mathf.Max(1f, 1f/Mathf.Max(bucketSource.contents.volume,0.01f));
-            spraySound.volume = Mathf.Min(originalSoundVolume,Mathf.Max(originalSoundVolume, originalSoundVolume*(bucketSource.contents.volume/bucketSource.contents.maxVolume))*transform.lossyScale.x);
+            spraySound.pitch = Mathf.Max(1f, 1f/Mathf.Max(bucketSource.volume,0.01f));
+            spraySound.volume = Mathf.Min(originalSoundVolume,Mathf.Max(originalSoundVolume, originalSoundVolume*(bucketSource.volume/bucketSource.maxVolume))*transform.lossyScale.x);
             if ( midAirStuff.volume <= Mathf.Epsilon ) {
                 StopFiring();
             }
@@ -332,7 +332,7 @@ public class StreamRenderer : MonoBehaviour {
         }
         if (readyToFire && fireAsap) {
             midAirStuff.Clear();
-            Fire(fireAsapSource);
+            Fire(fireAsapSource, volumePerSecond);
             fireAsap = false;
             fireAsapSource = null;
         }

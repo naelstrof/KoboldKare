@@ -114,6 +114,8 @@ namespace VisualLogic {
 				EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("floatValue"), GUIContent.none);
 			} else if (t==typeof(double)) {
 				EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("doubleValue"), GUIContent.none);
+			} else if (t==typeof(bool)) {
+				EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("boolValue"), GUIContent.none);
 			} else if (t==typeof(Vector3)) {
 				EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("vector3Value"), GUIContent.none);
 			} else if (t.InheritsFrom(typeof(UnityEngine.Object))) {
@@ -189,6 +191,8 @@ namespace VisualLogic {
 						return doubleValue;
 					} else if (parameterType==typeof(Vector3)) {
 						return vector3Value;
+					} else if (parameterType==typeof(bool)) {
+						return boolValue;
 					} else if (parameterType.InheritsFrom(typeof(UnityEngine.Object))) {
 						return objectValue;
 					}
@@ -201,6 +205,7 @@ namespace VisualLogic {
 			public float floatValue;
 			public float doubleValue;
 			public Vector3 vector3Value;
+			public bool boolValue;
 			public UnityEngine.Object objectValue;
 		}
 		[Input(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override, typeConstraint = TypeConstraint.Strict, dynamicPortList = false)]
@@ -217,7 +222,7 @@ namespace VisualLogic {
 		public VisualLogicBaseNode output;
 
 
-		[Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override, dynamicPortList = false)]
+		[Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Multiple, dynamicPortList = false)]
 		public bool returnValue;
 		public object actualReturnValue;
 		public void OnValidate() {

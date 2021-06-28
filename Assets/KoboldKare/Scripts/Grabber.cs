@@ -481,7 +481,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         if (intersectingGameObjects.Count == 0) {
             OnEnterGrabbable.Invoke();
         }
-        intersectingGameObjects.Add(other.transform.root.GetComponent<IGrabbable>());
+        intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
     }
     public void OnTriggerStay(Collider other) {
         //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
@@ -491,14 +491,14 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         if (intersectingGameObjects.Count == 0) {
             OnEnterGrabbable.Invoke();
         }
-        intersectingGameObjects.Add(other.transform.root.GetComponent<IGrabbable>());
+        intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
     }
     public void OnTriggerExit(Collider other) {
         //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
         if (other.transform.root == transform.root) {
             return;
         }
-        removeLater.Add(other.transform.root.GetComponent<IGrabbable>());
+        removeLater.Add(other.transform.GetComponentInParent<IGrabbable>());
         //intersectingGameObjects.Remove(other.transform.root.GetComponent<IGrabbable>());
         //if (intersectingGameObjects.Count == 0) {
             //OnExitGrabbable.Invoke();

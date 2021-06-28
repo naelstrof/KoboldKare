@@ -4,75 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using VisualLogic;
+using XNode;
 
-
-[Serializable]
-public class UsableCondition : SerializableCallback<Kobold,bool> { }
-[System.Serializable]
-public class KoboldUseEvent : UnityEvent<Kobold, Vector3> {}
-public class GenericUsable : MonoBehaviourPun {
+public class GenericUsable : SceneGraph<VisualLogicGraph> {
     [Tooltip("If the player can hit E to use this, otherwise it can only be activated from a UnityEvent. Call Use().")]
     public bool playerUsable = true;
-    public bool keepCacheForever = false;
     public void SetPlayerUsable(bool usable) {
         playerUsable = usable;
     }
-    [Serializable]
-    public class ConditionEventPair {
-        [SerializeField]
-        public List<UsableCondition> conditions;
-        public KoboldUseEvent onUse;
-        public Sprite sprite;
-    }
     public void Awake() {
-        if (photonView.gameObject != gameObject) {
+        if (GetComponentInParent<PhotonView>().gameObject != gameObject) {
             Debug.LogError("GenericUsable is not directly on a PhotonView, this is required for them to work properly. (Just add one, or make sure it's at the root of the object).", gameObject);
         }
     }
-
-    [SerializeField]
-    public List<ConditionEventPair> usableEvents;
+    public Sprite displaySprite;
     public Sprite GetSprite(Kobold kobold) {
-        foreach(ConditionEventPair pair in usableEvents) {
-            bool conditionsMet = true;
-            foreach(UsableCondition condition in pair.conditions) {
-                conditionsMet &= condition.Invoke(kobold);
-            }
-            if (conditionsMet) {
-                return pair.sprite;
-            }
-        }
-        return null;
+        return displaySprite;
     }
-    public void OnUse(Kobold kobold, Vector3 position)
-    {
-        foreach(ConditionEventPair pair in usableEvents) {
-            bool conditionsMet = true;
-            foreach(UsableCondition condition in pair.conditions) {
-                conditionsMet &= condition.Invoke(kobold);
-            }
-            if (conditionsMet) {
-                pair.onUse.Invoke(kobold, position);
-                break;
-            }
-        }
+    public void OnUse(Kobold kobold, Vector3 position) {
+        (graph as VisualLogicGraph).TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position});
     }
 
-    public bool IsUsable(Kobold kobold)
-    {
-        if ( !playerUsable ) {
-            return false;
-        }
-        foreach(ConditionEventPair pair in usableEvents) {
-            bool conditionsMet = true;
-            foreach(UsableCondition condition in pair.conditions) {
-                conditionsMet &= condition.Invoke(kobold);
-            }
-            if( conditionsMet) {
-                return true;
-            }
-        }
-        return false;
+    public bool IsUsable(Kobold kobold) {
+        return playerUsable;
     }
     public void Use() {
         Use(null);
@@ -85,9 +40,9 @@ public class GenericUsable : MonoBehaviourPun {
         }
         if (k != null) {
             Vector3 pos = k.transform.position;
-            SaveManager.RPC(photonView, "RPCUse", RpcTarget.AllBuffered, new object[] { k.photonView.ViewID, pos });
+            SaveManager.RPC(GetComponentInParent<PhotonView>(), "RPCUse", RpcTarget.AllBuffered, new object[] { k.GetComponentInParent<PhotonView>().ViewID, pos });
         } else {
-            SaveManager.RPC(photonView, "RPCUse", RpcTarget.AllBuffered, new object[] { null, Vector3.zero });
+            SaveManager.RPC(GetComponentInParent<PhotonView>(), "RPCUse", RpcTarget.AllBuffered, new object[] { null, Vector3.zero });
         }
     }
 
@@ -109,8 +64,9 @@ public class GenericUsable : MonoBehaviourPun {
         OnUse(kobold, pos);
     }
     public void OnDestroy() {
-        if (photonView.IsMine) {
-            PhotonNetwork.CleanRpcBufferIfMine(photonView);
+        PhotonView view = GetComponentInParent<PhotonView>();
+        if (view != null && view.IsMine) {
+            PhotonNetwork.CleanRpcBufferIfMine(view);
         }
     }
     public void DestroyThing(UnityEngine.Object g) {

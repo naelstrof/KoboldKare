@@ -4,6 +4,8 @@
     "com.github.siccity.xnode": "https://github.com/siccity/xNode.git",
     "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
     "com.quantumcalzone.unitygitpackageupdater": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
+    "com.solidalloy.type-references": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
+    "com.solidalloy.util": "https://github.com/SolidAlloy/SolidUtilities.git",
     "com.unity.analytics": "3.5.3",
     "com.unity.burst": "1.4.6",
     "com.unity.formats.fbx": "4.0.1",

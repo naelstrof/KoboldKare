@@ -84,7 +84,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public float stimulationMax = 30f;
     public float stimulationMin = -30f;
     public UnityEvent SpawnEggEvent;
-    public KoboldUseEvent onGrabEvent;
+    //public KoboldUseEvent onGrabEvent;
     public float uprightForce = 10f;
     public Animator koboldAnimator;
     public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
@@ -366,7 +366,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
     }
     public bool OnGrab(Kobold kobold) {
-        onGrabEvent.Invoke(kobold, transform.position);
+        //onGrabEvent.Invoke(kobold, transform.position);
         grabbed = true;
         //KnockOver(999999f);
         //modeSave = animator.updateMode;

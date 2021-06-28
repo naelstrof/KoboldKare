@@ -647,29 +647,31 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             interactPointSet = true;
             interactPointOffset = (Vector3.Dot(dickForward,dickRoot.InverseTransformPoint(worldPosition)))/GetLocalLength() - Vector3.Dot(dickForward,GetLocalRootPosition());
         }
-        float orifaceDepth01 = ((penetrationDepth01-1f)+interactPointOffset)*GetLength()/holeTarget.orifaceLength;
-        Vector3 holePos = holeTarget.GetPoint(orifaceDepth01, backwards);
-        Vector3 holeTangent = holeTarget.GetTangent(orifaceDepth01, backwards).normalized;
-        Vector3 holeToMouse = worldPosition - holePos;
-        //if (penetrationDepth01<0f) {
-            //penetrationDepth01 = Mathf.MoveTowards(penetrationDepth01,(Vector3.Distance(holePos,holeTarget.GetPoint(0,backwards))/GetLength()), Time.deltaTime*2f);
-        //} else {
-        squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
-        squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*30f;
-        float dist = Vector3.Distance(worldPosition, holePos)+(interactPointOffset*GetLength());
-        //if (penetrationDepth01 < 0.5f) {
-            //float move = (dist-(-(penetrationDepth01-1f)*GetLength()))*Time.deltaTime;
-            //squishPullAmount += move*5f;
-            //penetrationDepth01 -= move*5f;
-        //}
-        float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
-        OnMove.Invoke(move);
-        squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
-        penetrationDepth01 += move;
-        penetrationDepth01 = Mathf.Max(penetrationDepth01, -1f);
+        // If we cannot overpenetrate, we use a method that simply uses the distance to the hole to determine how deep we are.
         if (!canOverpenetrate) {
+            float dist = Vector3.Distance(worldPosition, holeTarget.GetPoint(0,backwards))+(interactPointOffset*GetLength());
+            float diff = ((1f-(dist/GetLength()))-penetrationDepth01);
+            squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
+            squishPullAmount -= diff*Time.deltaTime*30f;
+            squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
+
+            float move = diff*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
+            OnMove.Invoke(move);
+            penetrationDepth01 += move;
             penetrationDepth01 = Mathf.Clamp(penetrationDepth01, -1f, 1f);
+        // Otherwise, we use a moving plane that follows the normal of the oriface path, and use the plane distance to the desired point to determine which way we should go.
         } else {
+            float orifaceDepth01 = ((penetrationDepth01-1f)+interactPointOffset)*GetLength()/holeTarget.orifaceLength;
+            Vector3 holePos = holeTarget.GetPoint(orifaceDepth01, backwards);
+            Vector3 holeTangent = holeTarget.GetTangent(orifaceDepth01, backwards).normalized;
+            Vector3 holeToMouse = worldPosition - holePos;
+            squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
+            squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*30f;
+            squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
+
+            float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
+            OnMove.Invoke(move);
+            penetrationDepth01 += move;
             penetrationDepth01 = Mathf.Max(penetrationDepth01, -1f);
         }
         // Prevent the dick from penetrating futher than intended.
@@ -694,13 +696,13 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
                 cumProgress = Mathf.MoveTowards(cumProgress, 1f+bulgePercentage, Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
-            dickCumContents.Mix(ReagentData.ID.Cum, dickRoot.TransformVector(dickRight).magnitude);
+            dickCumContents.Mix(ReagentData.ID.Cum, dickRoot.TransformVector(dickRight).magnitude*0.05f);
             dickCumContents.Mix(ballsContainer.contents.Spill(cumVolumePerPump*dickRoot.TransformVector(dickRight).magnitude));
             // Just add a little extra cum just in case the balls are empty
             if (holeTarget != null && holeTarget.connectedContainer != null && penetrationDepth01*GetLength() < holeTarget.orifaceLength && penetrationDepth01 > 0f) {
                 holeTarget.connectedContainer.contents.Mix(dickCumContents);
             } else {
-                stream.Fire(dickCumContents, cumVolumePerPump);
+                stream.Fire(dickCumContents, cumVolumePerPump/2f);
             }
         }
         cumActive = 0f;
@@ -725,6 +727,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
         if (penetrationDepth01<0f || rootTargetPoint > 1f) {
             interactPointSet = false;
             penetrationDepth01 = -1f;
+            squishPullAmount = 0f;
             SetDeforms();
             holeTarget.RemovePenetrator(this);
             OnEndPenetrate.Invoke();

@@ -28,6 +28,9 @@ namespace VisualLogic {
             }
 		}
 		public override object GetValue(NodePort port) {
+			if (parameters == null) {
+				return null;
+			}
 			for(int i=0;i<outputParameters.Count;i++) {
 				if (port.fieldName == "outputParameters "+i) {
 					return parameters[i];

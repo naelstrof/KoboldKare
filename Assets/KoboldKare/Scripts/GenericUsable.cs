@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using KoboldKare;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,10 @@ using VisualLogic;
 using XNode;
 
 public class GenericUsable : SceneGraph<VisualLogicGraph> {
+    [System.Serializable]
+    public class Condition : SerializableCallback<Kobold,bool> {}
+    public List<Condition> conditions = new List<Condition>();
+
     [Tooltip("If the player can hit E to use this, otherwise it can only be activated from a UnityEvent. Call Use().")]
     public bool playerUsable = true;
     public void SetPlayerUsable(bool usable) {
@@ -23,11 +28,18 @@ public class GenericUsable : SceneGraph<VisualLogicGraph> {
         return displaySprite;
     }
     public void OnUse(Kobold kobold, Vector3 position) {
+        //VisualLogicGraph instance = (VisualLogicGraph)graph.Copy();
+        //instance.TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position}).Finished += (manuallyStopped)=>{ScriptableObject.Destroy(instance);};
+
         (graph as VisualLogicGraph).TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position});
     }
 
     public bool IsUsable(Kobold kobold) {
-        return playerUsable;
+        bool usable = playerUsable;
+        foreach( Condition c in conditions) {
+            usable = usable && c.Invoke(kobold);
+        }
+        return usable;
     }
     public void Use() {
         Use(null);

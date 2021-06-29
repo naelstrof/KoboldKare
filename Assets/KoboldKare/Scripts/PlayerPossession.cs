@@ -54,13 +54,16 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     private bool switchedMode = false;
     private bool freeze = false;
     private bool pauseInput = false;
+    private GraphicsOptions.Option mouseSensitivity;
     public void OnPause() {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-    public void OnUnPause() {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        GameManager.instance.Pause(!GameManager.instance.isPaused);
+        if (GameManager.instance.isPaused) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
     private void Start() {
         //if (!photonView.IsMine) {
@@ -71,6 +74,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         if (!isActiveAndEnabled) {
             return;
         }
+        mouseSensitivity = GraphicsOptions.instance.GetOption(GraphicsOptions.OptionType.MouseSensitivity);
         //rig.layers[0].active = true;
         body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         //controller.GetComponent<Kobold>().uprightForce *= 10f;
@@ -145,7 +149,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
         }
         if (mouseAttached) {
-            eyeRot += mouseDelta * GameManager.instance.mouseSensitivity.value;
+            eyeRot += mouseDelta * mouseSensitivity.value;
         }
         eyeRot.y = Mathf.Clamp(eyeRot.y, -90f, 90f);
         while(eyeRot.x > 360 ) {

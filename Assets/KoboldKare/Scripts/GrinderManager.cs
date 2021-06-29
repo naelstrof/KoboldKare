@@ -8,6 +8,8 @@ using Photon;
 using ExitGames.Client.Photon;
 
 public class GrinderManager : MonoBehaviourPun {
+    public AudioSource grindSound;
+    public Animator animator;
     public GameObject clearDebrisButton;
     public GameObject debris;
     public Transform attachPoint;
@@ -15,7 +17,22 @@ public class GrinderManager : MonoBehaviourPun {
     public StreamRenderer stream;
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
-    public bool on { get; set; }
+    private bool internalOn;
+    public bool on {
+        get {
+            return internalOn;
+        }
+        set {
+            internalOn = value;
+            if (on) {
+                animator.SetTrigger("TurnOn");
+                grindSound.Play();
+            } else {
+                grindSound.Pause();
+                animator.SetTrigger("TurnOff");
+            }
+        }
+    }
     public IEnumerator WaitAndThenClear() {
         yield return new WaitForSeconds(0.5f);
         grindedThingsCache.Clear();

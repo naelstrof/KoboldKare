@@ -211,7 +211,7 @@ namespace VisualLogic {
 		[Input(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override, typeConstraint = TypeConstraint.Strict, dynamicPortList = false)]
 		public VisualLogicBaseNode input;
 
-		[Input(backingValue = ShowBackingValue.Unconnected, connectionType = ConnectionType.Override, typeConstraint = TypeConstraint.Strict, dynamicPortList = false)]
+		[Input(backingValue = ShowBackingValue.Unconnected, connectionType = ConnectionType.Override, typeConstraint = TypeConstraint.None, dynamicPortList = false)]
 		public UnityEngine.Object targetObject;
 		public FunctionMethodName method;
 

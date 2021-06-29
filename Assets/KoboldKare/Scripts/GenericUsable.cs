@@ -11,7 +11,12 @@ using XNode;
 public class GenericUsable : SceneGraph<VisualLogicGraph> {
     [System.Serializable]
     public class Condition : SerializableCallback<Kobold,bool> {}
+
+    [System.Serializable]
+    public class KoboldUseEvent : UnityEvent<Kobold, Vector3>{};
+    public List<VisualLogicGraph.BlackboardValue> blackboardValues = new List<VisualLogicGraph.BlackboardValue>();
     public List<Condition> conditions = new List<Condition>();
+    public KoboldUseEvent OnUseEvent;
 
     [Tooltip("If the player can hit E to use this, otherwise it can only be activated from a UnityEvent. Call Use().")]
     public bool playerUsable = true;
@@ -30,8 +35,15 @@ public class GenericUsable : SceneGraph<VisualLogicGraph> {
     public void OnUse(Kobold kobold, Vector3 position) {
         //VisualLogicGraph instance = (VisualLogicGraph)graph.Copy();
         //instance.TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position}).Finished += (manuallyStopped)=>{ScriptableObject.Destroy(instance);};
-
-        (graph as VisualLogicGraph).TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position});
+        if (graph != null) {
+            foreach(var bvalue in blackboardValues) {
+                (graph as VisualLogicGraph).blackboard[bvalue.name] = bvalue.value;
+            }
+            (graph as VisualLogicGraph).blackboard["useKobold"] = kobold;
+            (graph as VisualLogicGraph).blackboard["usePosition"] = position;
+            (graph as VisualLogicGraph).TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse);
+        }
+        OnUseEvent.Invoke(kobold, position);
     }
 
     public bool IsUsable(Kobold kobold) {

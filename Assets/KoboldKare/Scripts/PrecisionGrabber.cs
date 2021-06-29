@@ -74,6 +74,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
     private bool affectingRotation = false;
     private Rigidbody originalBody;
     private RaycastHit closestHit = new RaycastHit();
+    private GraphicsOptions.Option mouseSensitivy;
     RaycastHit[] hits = new RaycastHit[6];
     
     public void HideHand(bool hidden) {
@@ -90,6 +91,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
         if (t.gameObject.layer == fromLayer) {
             t.gameObject.layer = toLayer;
         }
+    }
+
+    public void Start(){
+        mouseSensitivy = GraphicsOptions.instance.GetOption(GraphicsOptions.OptionType.MouseSensitivity);
     }
 
     public void RefreshPrompts() {
@@ -476,7 +481,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
         //distance += Input.mouseScrollDelta.y * 0.08f;
         distance += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
         hovering = false;
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * GameManager.instance.mouseSensitivity.value;
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivy.value;
         bool ranAdvancedObjectStuff = false;
         if (advancedGameObject != null) {
             hovering = true;

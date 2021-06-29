@@ -68,6 +68,7 @@ public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
         Gameplay,
         Special,
         Multiplayer,
+        Controls,
     }
     public enum OptionType {
         DecalQuality = 0,
@@ -114,6 +115,7 @@ public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
         MirrorQuality,
         VSync,
         TargetFramerate,
+        MouseSensitivity,
     }
     [System.Serializable]
     public class OptionChange {

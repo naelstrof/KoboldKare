@@ -11,10 +11,10 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Components;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
-    public ScriptableFloat mouseSensitivity;
     public PaintDecal decalPainter;
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
@@ -23,6 +23,26 @@ public class GameManager : MonoBehaviour {
     public LayerMask waterSprayHitMask;
     public LayerMask decalHitMask;
     public NetworkManager networkManager;
+
+    public UnityEvent OnPause;
+    public UnityEvent OnUnpause;
+    [HideInInspector]
+    public bool isPaused = false;
+
+    public void Pause(bool pause) {
+        if (!pause) {
+            OnUnpause.Invoke();
+        }
+        if (pause) {
+            OnPause.Invoke();
+        }
+        isPaused = pause;
+
+        if (!PhotonNetwork.OfflineMode) {
+            return;
+        }
+        Time.timeScale = isPaused ? 0.0f : 1.0f;
+    }
 
     public void Quit() {
 #if UNITY_EDITOR
@@ -54,6 +74,7 @@ public class GameManager : MonoBehaviour {
     void Start() {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
             networkManager.StartSinglePlayer();
+            GameManager.instance.Pause(false);
         }
         foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
             // FIXME: the scriptable object loads too early to set the language, so we just set it again here.

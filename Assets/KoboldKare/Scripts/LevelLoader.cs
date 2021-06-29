@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
     public GameObject loadingPanel;
-    public GameEvent UnpauseEvent;
     public static LevelLoader instance;
     public static bool loadingLevel;
     void Awake() {
@@ -29,7 +28,6 @@ public class LevelLoader : MonoBehaviour {
         if (!SaveManager.isLoading) {
             SaveManager.ClearData();
         }
-        UnpauseEvent.Raise();
         loadingLevel = true;
         loadingPanel.SetActive(true);
         //loadingPanel.Show();
@@ -46,5 +44,6 @@ public class LevelLoader : MonoBehaviour {
         loadingPanel.SetActive(false);
         loadingLevel = false;
         PopupHandler.instance.ClearAllPopups();
+        GameManager.instance.Pause(false);
     }
 }

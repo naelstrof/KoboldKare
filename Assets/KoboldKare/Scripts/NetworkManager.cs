@@ -33,7 +33,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     [NonSerialized]
     public PhotonView localPlayerInstance;
     public GameEvent PauseEvent;
-    public GameEvent UnpauseEvent;
     public IEnumerator JoinLobbyRoutine() {
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -76,7 +75,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.JoinRoom(roomName);
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
-        UnpauseEvent.Raise();
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
@@ -90,7 +88,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.OfflineMode = true;
     }
     public IEnumerator EnsureOnlineAndReadyToLoad(bool shouldLeaveRoom = true) {
-        UnpauseEvent.Raise();
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
@@ -318,7 +315,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 // Let everyone know we're not an NPC
                 RPCPlayerSpawn(localPlayerInstance.ViewID);
                 PopupHandler.instance.ClearAllPopups();
-                UnpauseEvent.Raise();
             }
         }
     }
@@ -328,7 +324,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     void IMatchmakingCallbacks.OnJoinedRoom() {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
-        UnpauseEvent.Raise();
         //if (popup != null) {
         //popup.Hide();
         //}

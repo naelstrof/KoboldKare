@@ -9,28 +9,31 @@ using UnityEngine.Localization.Settings;
 
 public class RebindSpawner : MonoBehaviour
 {
-    public List<UnityEngine.InputSystem.InputActionReference> controls = new List<InputActionReference>();
-    public List<LocalizedString> controlNames = new List<LocalizedString>();
+    [System.Serializable]
+    public class RebindActionNamePair {
+        public UnityEngine.InputSystem.InputActionReference control;
+        public LocalizedString controlName;
+    }
+    public List<RebindActionNamePair> rebindActionNamePairs= new List<RebindActionNamePair>();
     public GameObject rebindPrefab;
     public GameObject rebindUI;
     public TMPro.TextMeshProUGUI rebindUIText;
-    private Dictionary<InputActionReference, GameObject> controlUI = new Dictionary<InputActionReference, GameObject>();
+    private Dictionary<RebindActionNamePair, GameObject> controlUI = new Dictionary<RebindActionNamePair, GameObject>();
     void Start() {
         controlUI.Clear();
-        int controlNum = 0;
-        foreach( InputActionReference r in controls) {
+        foreach( var r in rebindActionNamePairs) {
             GameObject i = GameObject.Instantiate(rebindPrefab);
             i.transform.SetParent(transform, false);
             i.transform.localScale = Vector3.one;
-            var lstring = controlNames[controlNum++].GetLocalizedString();
+            var lstring = r.controlName.GetLocalizedString();
             if (lstring.IsDone) {
                 i.GetComponentInChildren<TextMeshProUGUI>().text = lstring.Result;
             }
             controlUI[r] = i;
             int id = 0;
             foreach(RebindActionUI rebinder in i.GetComponentsInChildren<RebindActionUI>()) {
-                rebinder.actionReference = r;
-                rebinder.bindingId = r.action.bindings[id++].id.ToString();
+                rebinder.actionReference = r.control;
+                rebinder.bindingId = r.control.action.bindings[id++].id.ToString();
                 //rebinder.bindingId = r.action.bindings[id++].id.ToString();
                 rebinder.rebindOverlay = rebindUI;
                 rebinder.rebindPrompt = rebindUIText;
@@ -41,7 +44,7 @@ public class RebindSpawner : MonoBehaviour
         StringChanged(null);
     }
     public void RefreshDisplay() {
-        foreach(KeyValuePair<InputActionReference, GameObject> p in controlUI) {
+        foreach(var p in controlUI) {
             foreach (RebindActionUI rebinder in p.Value.GetComponentsInChildren<RebindActionUI>()) {
                 rebinder.UpdateBindingDisplay();
             }
@@ -53,9 +56,8 @@ public class RebindSpawner : MonoBehaviour
         yield return new WaitUntil(()=>otherAsync.IsDone);
         yield return new WaitForSecondsRealtime(1f);
         if (otherAsync.Result != null){
-            int controlNum = 0;
-            foreach( InputActionReference r in controls) {
-                var lstring = controlNames[controlNum++].GetLocalizedString();
+            foreach( var r in rebindActionNamePairs) {
+                var lstring = r.controlName.GetLocalizedString();
                 yield return new WaitUntil(()=>lstring.IsDone);
                 if (lstring.IsValid()) {
                     controlUI[r].GetComponentInChildren<TextMeshProUGUI>().text = lstring.Result;

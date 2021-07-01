@@ -16,13 +16,16 @@ public class DickEditor : Editor {
             EditorUtility.SetDirty(target);
         }
     }
-    public void DrawWireDisk(float atLength, AnimationCurve xOffset, AnimationCurve yOffset, AnimationCurve girth) {
+    public void DrawWireDisk(float atLength, AnimationCurve xOffset, AnimationCurve yOffset, AnimationCurve girth, string label = "") {
         Dick d = (Dick)target;
         Vector3 offset = xOffset.Evaluate(atLength) * d.dickRoot.TransformDirection(d.dickRight) * d.dickRoot.TransformVector(d.dickRight).magnitude;
         offset += yOffset.Evaluate(atLength) * d.dickRoot.TransformDirection(d.dickUp) * d.dickRoot.TransformVector(d.dickUp).magnitude;
         offset += atLength * d.dickRoot.TransformDirection(d.dickForward) * d.dickRoot.TransformVector(d.dickForward).magnitude;
         float g = girth.Evaluate(atLength) * d.dickRoot.TransformVector(d.dickUp).magnitude;
         Handles.DrawWireDisc(d.dickRoot.position + offset, d.dickRoot.TransformDirection(d.dickForward), g*0.5f);
+        if (!string.IsNullOrEmpty(label)) {
+            Handles.Label(d.dickRoot.position + offset, label);
+        }
     }
     public void OnSceneGUI() {
         if (Application.isPlaying) {
@@ -55,6 +58,12 @@ public class DickEditor : Editor {
                 Handles.color = Color.white;
                 DrawWireDisk(keyTwo.time, xOffset, yOffset, girth);
             }
+            var depthEvents = serializedObject.FindProperty("depthEvents");
+            for(int i=0;i<depthEvents.arraySize;i++) {
+                Handles.color = Color.blue;
+                float length = girth.keys[girth.length-1].time;
+                DrawWireDisk((1f-depthEvents.GetArrayElementAtIndex(i).FindPropertyRelative("triggerAlongDepth01").floatValue)*length, xOffset, yOffset, girth, "DepthEvent"+i);
+            }
             if (t != null) {
                 Vector3 globalPosition = Handles.PositionHandle(t.transform.TransformPoint(dickOriginOffsetProp.vector3Value), t.transform.rotation);
                 if (Vector3.Distance(t.transform.InverseTransformPoint(globalPosition), dickOriginOffsetProp.vector3Value) > 0.001f) {
@@ -75,7 +84,6 @@ public class DickEditor : Editor {
 }
 #endif
 
-[ExecuteAlways]
 public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
     public Rigidbody body {
         get {
@@ -112,16 +120,68 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
     public float girthAtEntrance;
     [HideInInspector]
     public float girthAtExit;
-
     [Range(-1f,5f)]
-    public float penetrationDepth01 = -1f;
+    [SerializeField]
+    private float internalPenetrationDepth01 = -1f;
+
+    public float penetrationDepth01 {
+        get {
+            return internalPenetrationDepth01;
+        }
+        set {
+            float diff = (value - internalPenetrationDepth01);
+            float min = Mathf.Min(value, internalPenetrationDepth01);
+            float max = Mathf.Max(value, internalPenetrationDepth01);
+            foreach(DepthEvent de in depthEvents) {
+                float triggerPoint = de.triggerAlongDepth01;
+                if ((triggerPoint > min && triggerPoint < max)) {
+                    if (de.triggerDirection == DepthEvent.TriggerDirection.Both ||
+                     (de.triggerDirection == DepthEvent.TriggerDirection.PullOut && diff < 0) ||
+                     (de.triggerDirection == DepthEvent.TriggerDirection.PushIn && diff > 0)) {
+                        de.Trigger(dickRoot.position + dickRoot.TransformDirection(dickForward)*triggerPoint);
+                    }
+                }
+            }
+            internalPenetrationDepth01 = value;
+        }
+    }
 
     public Penetratable holeTarget;
 
+    public List<AudioClip> pumpingSounds = new List<AudioClip>();
+    public List<AudioClip> slimySlidingSounds = new List<AudioClip>();
     private bool dildoMemory = false;
     public GenericReagentContainer ballsContainer;
     public float cumVolumePerPump = 3f;
     public StreamRenderer stream;
+    [System.Serializable]
+    public class DepthEvent {
+        public enum TriggerDirection {
+            Both,
+            PushIn,
+            PullOut
+        }
+        public void Trigger(Vector3 position) {
+            if (lastTrigger != 0f && lastTrigger+triggerCooldown > Time.timeSinceLevelLoad) {
+                return;
+            }
+            lastTrigger = Time.timeSinceLevelLoad;
+            if (triggerClips.Count > 0) {
+                GameManager.instance.SpawnAudioClipInWorld(triggerClips[Random.Range(0,triggerClips.Count)], position, soundTriggerVolume, GameManager.instance.soundEffectGroup);
+            }
+            triggerEvent.Invoke();
+        }
+        public float soundTriggerVolume = 1f;
+        public float triggerCooldown = 1f;
+        private float lastTrigger;
+        public List<AudioClip> triggerClips = new List<AudioClip>();
+        public TriggerDirection triggerDirection;
+        [Range(0f,1f)]
+        public float triggerAlongDepth01;
+        public UnityEvent triggerEvent;
+    }
+
+    public List<DepthEvent> depthEvents = new List<DepthEvent>();
 
     public void SetHolePositions(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3) {
         this.p0 = p0;
@@ -223,6 +283,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
 
     public Transform dickRoot;
     public Transform dickTip;
+    private AudioSource slimySource;
     public List<SkinnedMeshRenderer> bakeTargets = new List<SkinnedMeshRenderer>();
     public List<SkinnedMeshRenderer> deformationTargets = new List<SkinnedMeshRenderer>();
     [System.Serializable]
@@ -280,6 +341,15 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
 
     void Start() {
         internalDickshape = null;
+        if (slimySource == null && Application.isPlaying) {
+            slimySource = gameObject.AddComponent<AudioSource>();
+            if (slimySource != null) {
+                slimySource.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
+                slimySource.rolloffMode = AudioRolloffMode.Logarithmic;
+                slimySource.loop = true;
+                slimySource.spatialBlend = 1f;
+            }
+        }
         if (deformationTargets.Count == 0) {
             return;
         }
@@ -291,6 +361,12 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
                     shape.blendshapeIDs.Add(renderer.sharedMesh, renderer.sharedMesh.GetBlendShapeIndex(shape.blendshapeName));
                 }
             }
+        }
+    }
+    public void OnDestroy() {
+        if (slimySource != null) {
+            Destroy(slimySource);
+            slimySource = null;
         }
     }
 
@@ -601,6 +677,11 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
                 holeTarget = closestPenetratable;
                 invisibleWhenInside = !holeTarget.canSeeDickInside;
                 allTheWayThrough = holeTarget.canAllTheWayThrough;
+                if (slimySlidingSounds.Count > 0) {
+                    slimySource.clip = slimySlidingSounds[Random.Range(0,slimySlidingSounds.Count)];
+                    slimySource.volume = 0f;
+                    slimySource.Play();
+                }
                 holeTarget.AddPenetrator(this);
                 OnPenetrate.Invoke();
             }
@@ -616,9 +697,10 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             SetDeforms();
             return;
         }
+        slimySource.volume = Mathf.MoveTowards(slimySource.volume, 0f, Time.deltaTime*0.4f);
         if (holeTarget != null) {
-            penetrationDepth01 += GetTangent(penetrationDepth01)*Time.deltaTime;
-            penetrationDepth01 += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/GetLength()))*Time.deltaTime;
+            //penetrationDepth01 += GetTangent(penetrationDepth01)*Time.deltaTime;
+            //penetrationDepth01 += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/GetLength()))*Time.deltaTime;
         } else {
             penetrationDepth01 = -1f;
         }
@@ -647,32 +729,54 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             interactPointSet = true;
             interactPointOffset = (Vector3.Dot(dickForward,dickRoot.InverseTransformPoint(worldPosition)))/GetLocalLength() - Vector3.Dot(dickForward,GetLocalRootPosition());
         }
+        float length = GetLength();
+        // Calculate where the "first" shape is located along the oriface path.
+        float firstShapeOffset = ((backwards?1f-holeTarget.shapes[holeTarget.shapes.Count-1].alongPathAmount01:holeTarget.shapes[0].alongPathAmount01)*holeTarget.orifaceLength)/length;
+        float lastShapeOffset = ((backwards?holeTarget.shapes[0].alongPathAmount01:1f-holeTarget.shapes[holeTarget.shapes.Count-1].alongPathAmount01)*holeTarget.orifaceLength)/length;
         // If we cannot overpenetrate, we use a method that simply uses the distance to the hole to determine how deep we are.
         if (!canOverpenetrate) {
-            float dist = Vector3.Distance(worldPosition, holeTarget.GetPoint(0,backwards))+(interactPointOffset*GetLength());
+            float dist = Vector3.Distance(worldPosition, holeTarget.GetPoint(0,backwards))+(interactPointOffset*length);
             float diff = ((1f-(dist/GetLength()))-penetrationDepth01);
+            // Start squishing or pulling based purely on the distance to the crotch
             squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
             squishPullAmount -= diff*Time.deltaTime*30f;
             squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
+            // If we're fully squished or pulled, we finally start sliding.
+            if (Mathf.Abs(squishPullAmount) == 1f) {
+                float move = diff*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
+                // Calculate the tangents, which is used for knot forces at both the entrance and exit shape.
+                float girthTangents = GetTangent(penetrationDepth01 - firstShapeOffset);
+                girthTangents += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/length) + lastShapeOffset);
 
-            float move = diff*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
-            OnMove.Invoke(move);
-            penetrationDepth01 += move;
-            penetrationDepth01 = Mathf.Clamp(penetrationDepth01, -1f, 1f);
+                // If we're working against a knot force, don't slide
+                if (girthTangents * move < 0) {
+                    move *= Mathf.Clamp(1f-Mathf.Abs(girthTangents), 0.5f, 1f);
+                }
+                slimySource.volume = Mathf.Clamp01(Mathf.Abs(move*10f*Time.deltaTime*10f)+slimySource.volume);
+                
+                OnMove.Invoke(move);
+                penetrationDepth01 = Mathf.Clamp(penetrationDepth01+move, -1f, 1f);
+            }
         // Otherwise, we use a moving plane that follows the normal of the oriface path, and use the plane distance to the desired point to determine which way we should go.
         } else {
             float orifaceDepth01 = ((penetrationDepth01-1f)+interactPointOffset)*GetLength()/holeTarget.orifaceLength;
             Vector3 holePos = holeTarget.GetPoint(orifaceDepth01, backwards);
             Vector3 holeTangent = holeTarget.GetTangent(orifaceDepth01, backwards).normalized;
             Vector3 holeToMouse = worldPosition - holePos;
-            squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
-            squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*30f;
+            //squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
+            squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*10f;
             squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
-
-            float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*20f*Easing.Cubic.Out(Mathf.Abs(squishPullAmount));
-            OnMove.Invoke(move);
-            penetrationDepth01 += move;
-            penetrationDepth01 = Mathf.Max(penetrationDepth01, -1f);
+            if (Mathf.Abs(squishPullAmount) == 1f) {
+                float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*10f;
+                float girthTangents = GetTangent(penetrationDepth01 - firstShapeOffset);
+                girthTangents += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/length) + lastShapeOffset);
+                if (girthTangents * move < 0) {
+                    move *= Mathf.Clamp(1f-Mathf.Abs(girthTangents), 0.025f, 1f);
+                }
+                slimySource.volume = Mathf.Clamp01(Mathf.Abs(move*10f*Time.deltaTime*10f)+slimySource.volume);
+                OnMove.Invoke(move);
+                penetrationDepth01 = Mathf.Max(penetrationDepth01+move, -1f);
+            }
         }
         // Prevent the dick from penetrating futher than intended.
         if (!holeTarget.canAllTheWayThrough) {
@@ -692,17 +796,20 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
         cumActive = 1f;
         for(int i=0;i<cumPulseCount;i++) {
             cumProgress = -bulgePercentage;
+            if (pumpingSounds.Count > 0) {
+                GameManager.instance.SpawnAudioClipInWorld(pumpingSounds[Random.Range(0,pumpingSounds.Count)], transform.position, 1f, GameManager.instance.soundEffectGroup);
+            }
             while (cumProgress < 1f+bulgePercentage) {
                 cumProgress = Mathf.MoveTowards(cumProgress, 1f+bulgePercentage, Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
-            dickCumContents.Mix(ReagentData.ID.Cum, dickRoot.TransformVector(dickRight).magnitude*0.05f);
+            dickCumContents.Mix(ReagentData.ID.Cum, dickRoot.TransformVector(dickRight).magnitude*0.1f);
             dickCumContents.Mix(ballsContainer.contents.Spill(cumVolumePerPump*dickRoot.TransformVector(dickRight).magnitude));
             // Just add a little extra cum just in case the balls are empty
             if (holeTarget != null && holeTarget.connectedContainer != null && penetrationDepth01*GetLength() < holeTarget.orifaceLength && penetrationDepth01 > 0f) {
                 holeTarget.connectedContainer.contents.Mix(dickCumContents);
             } else {
-                stream.Fire(dickCumContents, cumVolumePerPump/2f);
+                stream.Fire(dickCumContents, cumVolumePerPump/10f);
             }
         }
         cumActive = 0f;
@@ -723,6 +830,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
         if (holeTarget == null) {
             return;
         }
+        slimySource.Stop();
         float rootTargetPoint = (penetrationDepth01-1f)*GetLength()/holeTarget.orifaceLength;
         if (penetrationDepth01<0f || rootTargetPoint > 1f) {
             interactPointSet = false;

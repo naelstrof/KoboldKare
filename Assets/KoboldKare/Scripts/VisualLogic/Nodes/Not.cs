@@ -11,7 +11,7 @@ using static XNode.Node;
 namespace VisualLogic {
     //[NodeTint("#CCCCFF")]
     public class Not : VisualLogicBaseNode {
-		[Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override)] public bool boolOutput;
+		[Output(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Multiple)] public bool boolOutput;
 		[Input(backingValue = ShowBackingValue.Never, connectionType = ConnectionType.Override)] public bool boolInput;
         public override IEnumerator Trigger(GameObject self) {
             yield return null;

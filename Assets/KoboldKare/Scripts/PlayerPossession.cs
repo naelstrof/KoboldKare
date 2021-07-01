@@ -249,7 +249,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Jump"].ReadValue<float>() > 0.5f);
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Gib"].ReadValue<float>() > 0.5f);
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Ragdoll"].ReadValue<float>() > 0.5f);
-                shouldCancelAnimation = (shouldCancelAnimation | Input.GetButtonDown("Cancel"));
+                shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Cancel"].ReadValue<float>() > 0.5f);
                 if (shouldCancelAnimation) {
                     SaveManager.RPC(photonView,"OnEndStation", RpcTarget.Others);
                     characterControllerAnimator.OnEndStation();

@@ -59,7 +59,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
     public bool animating = false;
     public bool notAnimating { get { return !animating; } }
     public bool CanAnimate(Kobold user) {
-        if (user == null || user.ragdollBodies == null || user.ragdollBodies.Count <=0 || !user.ragdollBodies[0].isKinematic || !kobold.ragdollBodies[0].isKinematic) {
+        if (user == null) {
             return false;
         }
         activeKobolds.Clear();
@@ -206,9 +206,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             AnimationStation bestStation = null;
             float bestCompatibilty = float.MinValue;
             foreach (AnimationStation s in stationGroup) {
-                if (s.info.user != null) {
-                    return float.MinValue;
-                }
                 float compat = CharacterControllerAnimator.Compatibility(k, s);
                 if (bestStation == null || compat > bestCompatibilty) {
                     bestStation = s;
@@ -221,6 +218,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun
     }
 
     public static float Compatibility(Kobold k, AnimationStation s) {
+        if (s.info.user != null) {
+            return float.MinValue;
+        }
         float baseCompatibility = 1f;
         // If we've got a penetrator role, we'd want a dick
         if (s.info.needsPenetrator && (k.activeDicks.Count == 0)) {
@@ -228,7 +228,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         // Kobolds with dicks will prefer to be penetrators, but only by a little.
         if (s.info.needsPenetrator && (k.activeDicks.Count != 0)) {
-            baseCompatibility += 0.5f;
+            baseCompatibility += 1f;
         }
         // Kobolds without dicks will prefer to be recievers/cuddlers, but only by a little.
         if (!s.info.needsPenetrator && (k.activeDicks.Count == 0)) {
@@ -251,17 +251,17 @@ public class CharacterControllerAnimator : MonoBehaviourPun
                 continue;
             }
             HashSet<AnimationStation> stations = s.linkedStations.hashSet;
-            if (stations.Count != kobolds.Count) {
+            if (stations.Count < kobolds.Count) {
                 continue;
             }
             float dist = Vector3.Distance(position, c.transform.position);
             float fitness = 1f - dist;
             fitness += CharacterControllerAnimator.Compatibility(kobolds, stations);
             // If fitness is too low, we skip the station, this could mean that we're targeting a macro v micro station and just don't have the right people.
-            if ((best == null || fitness > bestFitness) && fitness > 0f) {
+            //if ((best == null || fitness > bestFitness) && fitness > 0f) {
                 best = stations;
                 bestFitness = fitness;
-            }
+            //}
         }
         return best;
     }
@@ -296,8 +296,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             }
         }
 
-        // Just in case of network position differences, we extend the range out by 2x
-        var closestValidAnimationStations = GetClosestValidAnimationStations(animatableRange * 2f, activeKobolds, position);
+        var closestValidAnimationStations = GetClosestValidAnimationStations(animatableRange, activeKobolds, position);
         if (closestValidAnimationStations == null) {
             return;
         }
@@ -306,6 +305,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             AnimationStation bestStation = null;
             float bestCompatibilty = float.MinValue;
             foreach (AnimationStation s in closestValidAnimationStations) {
+                if (s.info.user == k) {
+                    bestStation = s;
+                    bestCompatibilty = float.MaxValue;
+                }
                 if (s.info.user != null) {
                     continue;
                 }

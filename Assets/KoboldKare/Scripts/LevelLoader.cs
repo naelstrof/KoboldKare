@@ -25,6 +25,7 @@ public class LevelLoader : MonoBehaviour {
         return StartCoroutine(LoadLevelRoutine(name));
     }
     public IEnumerator LoadLevelRoutine(string name) {
+        GameManager.instance.Pause(false);
         if (!SaveManager.isLoading) {
             SaveManager.ClearData();
         }

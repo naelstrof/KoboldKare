@@ -469,7 +469,7 @@ public class Penetratable : MonoBehaviour {
         float springStrength = 100f;
         float deflectionForgivenessDegrees = 10f;
         float deflectionSpringStrength = 10f;
-        float overallDamping = 0.7f;
+        float overallDamping = 0.4f;
         foreach(var penetrator in penetrators) {
             if (penetrator == null || penetrator.body == null) {
                 continue;

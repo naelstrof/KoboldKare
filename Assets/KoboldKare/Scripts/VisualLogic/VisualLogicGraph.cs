@@ -141,11 +141,28 @@ namespace VisualLogic {
 			public bool boolValue;
 			public UnityEngine.Object objectValue;
 		}
+        [NonSerialized]
         public Dictionary<string, object> blackboard = new Dictionary<string, object>();
+
+        // Just blast through the enuemrator all in one go if we can, because the graph suffers from async issues.
+        public IEnumerator TriggerWrapper(IEnumerator task) {
+            while(task.MoveNext()) {
+                var c = task.Current;
+                if (c is WaitForSeconds || c is WaitForSecondsRealtime || c is WaitForFixedUpdate || c is WaitUntil) {
+                    yield return c;
+                }
+                if (c is IEnumerator) {
+                    var cn = TriggerWrapper(c as IEnumerator);
+                    if (cn != null) {
+                        yield return cn;
+                    }
+                }
+            }
+        }
         public Task TriggerEvent(GameObject self, Event.EventType type) {
             foreach(var node in nodes) {
                 if (node is Event && (node as Event).eventType == type) {
-                    return new Task((node as Event).Trigger(self));
+                    return new Task(TriggerWrapper((node as Event).Trigger(self)));
                 }
             }
             return null;

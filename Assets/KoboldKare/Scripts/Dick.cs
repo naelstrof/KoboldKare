@@ -739,7 +739,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             float diff = ((1f-(dist/GetLength()))-penetrationDepth01);
             // Start squishing or pulling based purely on the distance to the crotch
             squishPullAmount = Mathf.MoveTowards(squishPullAmount, 0f, Time.deltaTime);
-            squishPullAmount -= diff*Time.deltaTime*30f;
+            squishPullAmount -= diff*Time.deltaTime*40f;
             squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
             // If we're fully squished or pulled, we finally start sliding.
             if (Mathf.Abs(squishPullAmount) == 1f) {
@@ -767,11 +767,11 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             squishPullAmount -= Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*10f;
             squishPullAmount = Mathf.Clamp(squishPullAmount, -1f, 1f);
             if (Mathf.Abs(squishPullAmount) == 1f) {
-                float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*10f;
+                float move = Vector3.Dot(holeToMouse, holeTangent)*Time.deltaTime*8f;
                 float girthTangents = GetTangent(penetrationDepth01 - firstShapeOffset);
                 girthTangents += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/length) + lastShapeOffset);
                 if (girthTangents * move < 0) {
-                    move *= Mathf.Clamp(1f-Mathf.Abs(girthTangents), 0.025f, 1f);
+                    move *= Mathf.Clamp(1f-Mathf.Abs(girthTangents*0.7f), 0.025f, 1f);
                 }
                 slimySource.volume = Mathf.Clamp01(Mathf.Abs(move*10f*Time.deltaTime*10f)+slimySource.volume);
                 OnMove.Invoke(move);

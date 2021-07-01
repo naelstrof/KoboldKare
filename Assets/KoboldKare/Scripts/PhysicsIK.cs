@@ -11,7 +11,7 @@ namespace Vilar.IK {
             public Vector3 targetVelocity;
             public Vector3 targetWorldPosition;
             public float strength;
-            public float damping = 0.2f;
+            public float damping = 0.3f;
             public bool rotationEnabled;
             public Quaternion targetRotation;
             //public Quaternion rotationAdjust;
@@ -63,8 +63,8 @@ namespace Vilar.IK {
             //animator.SetTrigger("UnTPose");
 			//animator.ResetTrigger("TPose");
             //targets = new IKTargetSet(animator);
-            float strength = 6f;
-            AddJoint((int)IKTargetSet.parts.HEAD, animator.GetBoneTransform(HumanBodyBones.Head), animator.GetBoneTransform(HumanBodyBones.Head).position, strength);
+            float strength = 8f;
+            AddJoint((int)IKTargetSet.parts.HEAD, animator.GetBoneTransform(HumanBodyBones.Head), animator.GetBoneTransform(HumanBodyBones.Head).position, strength*2f);
             AddJoint((int)IKTargetSet.parts.HANDLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand), animator.GetBoneTransform(HumanBodyBones.LeftHand).position, strength*0.5f);
             AddJoint((int)IKTargetSet.parts.ELBOWLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.position, strength/20f, false);
             AddJoint((int)IKTargetSet.parts.HANDRIGHT, animator.GetBoneTransform(HumanBodyBones.RightHand), animator.GetBoneTransform(HumanBodyBones.RightHand).position, strength*0.5f);
@@ -116,10 +116,14 @@ namespace Vilar.IK {
                 Vector3 targetUp = joints[i].targetRotation * Vector3.up;
                 Vector3 targetRight = joints[i].targetRotation * Vector3.right;
 
-                Quaternion rotForce = Quaternion.FromToRotation(bodyForward, targetForward);
+                //Quaternion rotForce = Quaternion.FromToRotation(bodyForward, targetForward);
+                float deflectionForgiveness = 5f;
+                Vector3 axis = Vector3.Cross(bodyForward, targetForward);
+                float angle = Mathf.Max(Vector3.Angle(bodyForward, targetForward)-deflectionForgiveness,0f);
                 // We only solve half-way up, otherwise there's situtations where the forward rotation adjustment perfectly inverts the up rotation adjustment.
                 // This way we will always solve to face the right way before rolling.
-                rotForce *= Quaternion.Lerp(Quaternion.identity, Quaternion.FromToRotation(bodyUp, Vector3.ProjectOnPlane(targetUp, bodyForward).normalized), 0.5f);
+                //rotForce *= Quaternion.Lerp(Quaternion.identity, Quaternion.FromToRotation(bodyUp, Vector3.ProjectOnPlane(targetUp, bodyForward).normalized), 0.5f);
+
                 /*if (i == 0) {
                     Debug.DrawLine(bodyPos, bodyPos + bodyForward, Color.blue);
                     Debug.DrawLine(bodyPos, bodyPos + targetForward, Color.blue);
@@ -130,8 +134,9 @@ namespace Vilar.IK {
                     Debug.DrawLine(bodyPos, bodyPos + bodyRight, Color.red);
                     Debug.DrawLine(bodyPos, bodyPos + targetRight, Color.red);
                 }*/
-                joints[i].body.angularVelocity *= (1f - joints[i].damping);
-                joints[i].body.AddTorque(new Vector3(rotForce.x, rotForce.y, rotForce.z) * joints[i].strength*40f, ForceMode.VelocityChange);
+                //joints[i].body.angularVelocity *= (1f - joints[i].damping);
+                //joints[i].body.AddTorque(axis * angle * joints[i].strength*40f, ForceMode.VelocityChange);
+                joints[i].body.angularVelocity = axis * angle * joints[i].strength * 1.5f;
             }
         }
 

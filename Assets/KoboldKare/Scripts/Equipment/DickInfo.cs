@@ -203,6 +203,7 @@ public class DickInfo : MonoBehaviour {
         }
     }
     public void OnDickMovement(float movementAmount) {
+        attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
         attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
     }
     //public void Cum() {

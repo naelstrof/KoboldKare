@@ -250,6 +250,7 @@ namespace Vilar.AnimationStation {
 	public class AnimationStationInfo {
 		public bool needsPenetrator;
 		public UnityEngine.Object user;
+		public bool headLock = false;
     }
 
 	[System.Serializable]
@@ -411,6 +412,7 @@ namespace Vilar.AnimationStation {
 				if (currentLoop.attachments[index] != AnimationLooper.TargetType.NONE ) {
                     AnimationLooper attachLoop = currentLoop;
 					Quaternion attachRotation = transform.rotation;
+
 					if (currentLoop.attachmentTargets[index] != null) {
 						attachLoop = currentLoop.attachmentTargets[index].loops[Mathf.FloorToInt(modifiedProgress) + i];
 						attachRotation = currentLoop.attachmentTargets[index].transform.rotation;
@@ -532,7 +534,7 @@ namespace Vilar.AnimationStation {
 		public Quaternion ComputeTargetRotation(int index) {
 			Quaternion blendedRotation = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetRotations[index];
 			if (modifiedProgress >= loops.Count - 1) {
-				if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying) {
+				if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying && !info.headLock) {
 					Vector3 headPos = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[index];
 					//Vector3 hipPos = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS];
 					Vector3 lookdir = lookAtPosition - headPos;
@@ -547,7 +549,7 @@ namespace Vilar.AnimationStation {
                 loops[Mathf.CeilToInt(modifiedProgress)].computedTargetRotations[index],
                 modifiedProgress % 1f
             );
-            if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying) {
+            if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying && !info.headLock) {
 				Vector3 blendedHeadPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[index], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[index], modifiedProgress % 1f);
 				//Vector3 blendedHipPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS], modifiedProgress % 1f);
                 Vector3 lookdir = lookAtPosition - blendedHeadPos;

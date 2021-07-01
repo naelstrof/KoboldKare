@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour {
     public LayerMask walkableGroundMask;
     public LayerMask waterSprayHitMask;
     public LayerMask decalHitMask;
-    public NetworkManager networkManager;
-
     public UnityEvent OnPause;
     public UnityEvent OnUnpause;
     [HideInInspector]
@@ -67,13 +65,13 @@ public class GameManager : MonoBehaviour {
         }
         // FIXME: Photon isn't initialized early enough for scriptable objects to add themselves as a callback...
         // So I do it here-- I guess!
-        PhotonNetwork.AddCallbackTarget(networkManager);
+        PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
         DontDestroyOnLoad(gameObject);
     }
 
     void Start() {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
-            networkManager.StartSinglePlayer();
+            NetworkManager.instance.StartSinglePlayer();
             GameManager.instance.Pause(false);
         }
         foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {

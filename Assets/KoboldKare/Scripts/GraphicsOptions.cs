@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using KoboldKare;
 using System.IO;
 using System.Text;
 using SimpleJSON;
@@ -18,22 +17,10 @@ public interface IGameEventOptionListener {
 [CreateAssetMenu(fileName = "GraphicsOptions", menuName = "Data/Graphics Options", order = 1)]
 public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
     public LocalizedString resolutionReference;
-    public List<ProceduralMaterialInfo> proceduralTextures = new List<ProceduralMaterialInfo>();
     public List<Option> options = new List<Option>();
     public ForwardRendererData renderer;
     public AudioMixer mixer;
     public VolumetricClouds cloudsSettings;
-    [System.Serializable]
-    public class ProceduralMaterialInfo {
-        //[SerializeField]
-        //public Substance.Game.SubstanceGraph graph;
-        [SerializeField]
-        public int bias = 0;
-        [SerializeField]
-        public int min = 7;
-        [SerializeField]
-        public int max = 10;
-    }
     [NonSerialized]
     public float textureLoadingProgress = 0f;
     [NonSerialized]

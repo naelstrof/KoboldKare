@@ -1,0 +1,12 @@
+# Blender MTL File: 'NewPlayerHomeBed2.blend'
+# Material Count: 1
+
+newmtl Banana
+Ns 365.973532
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.481931 0.046813
+Ks 0.847826 0.847826 0.847826
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2

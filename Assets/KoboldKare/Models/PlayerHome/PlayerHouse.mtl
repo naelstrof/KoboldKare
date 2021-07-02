@@ -1,7 +1,28 @@
-# Blender MTL File: 'NewPlayerHome_Out.blend'
-# Material Count: 1
+# Blender MTL File: 'None'
+# Material Count: 3
 
-newmtl Material
+newmtl HearthFloor
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Stone
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\Naelstrof\\Desktop\\cobble\\old_japanese_stone_pavers_basecolor.jpg
+
+newmtl Wood
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -10,3 +31,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd I:\\KoboldKare\\Assets\\KoboldKare\\Textures\\SubstanceTextures\\Parquet Ipe - baseColor.png

@@ -19,21 +19,21 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "93615e7722eea5ff0c38193d41e183d80ccbe524"
+      "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "55d4c45bec87d00f15029bfd02a71083027d1fa4"
+      "hash": "ae5eda9b052b0eb665fe9705462804d64c600d5b"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "007019d76c923d2bb41be22014e8c221f4d0cacd"
+      "hash": "82a9836fdc5056d5d3b3de0d8471e56d55f6f292"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",

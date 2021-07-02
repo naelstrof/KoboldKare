@@ -25,10 +25,7 @@ public class RebindSpawner : MonoBehaviour
             GameObject i = GameObject.Instantiate(rebindPrefab);
             i.transform.SetParent(transform, false);
             i.transform.localScale = Vector3.one;
-            var lstring = r.controlName.GetLocalizedString();
-            if (lstring.IsDone) {
-                i.GetComponentInChildren<TextMeshProUGUI>().text = lstring.Result;
-            }
+            i.GetComponentInChildren<TextMeshProUGUI>().text = r.controlName.GetLocalizedString();
             controlUI[r] = i;
             int id = 0;
             foreach(RebindActionUI rebinder in i.GetComponentsInChildren<RebindActionUI>()) {
@@ -57,11 +54,7 @@ public class RebindSpawner : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         if (otherAsync.Result != null){
             foreach( var r in rebindActionNamePairs) {
-                var lstring = r.controlName.GetLocalizedString();
-                yield return new WaitUntil(()=>lstring.IsDone);
-                if (lstring.IsValid()) {
-                    controlUI[r].GetComponentInChildren<TextMeshProUGUI>().text = lstring.Result;
-                }
+                controlUI[r].GetComponentInChildren<TextMeshProUGUI>().text = r.controlName.GetLocalizedString();
             }
         }
     }

@@ -37,10 +37,7 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
         foreach( TMP_Text t in s.GetComponentsInChildren<TMP_Text>()) {
             if (t.name == "Label") {
                 t.text = o.type.ToString();
-                var localizedText = o.name.GetLocalizedString();
-                if (localizedText.IsDone) {
-                    t.text = localizedText.Result;
-                }
+                t.text = o.name.GetLocalizedString();
             }
             if (t.name == "Min") {
                 t.text = o.min.ToString();
@@ -68,11 +65,8 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
         d.transform.localScale = Vector3.one;
         foreach( TMP_Text t in d.GetComponentsInChildren<TMP_Text>()) {
             if (t.name == "Label") {
-                t.text = o.type.ToString();
-                var localizedText = o.name.GetLocalizedString();
-                if (localizedText.IsDone) {
-                    t.text = localizedText.Result;
-                }
+                //t.text = o.type.ToString();
+                t.text = o.name.GetLocalizedString();
             }
         }
         List<TMP_Dropdown.OptionData> data = new List<TMP_Dropdown.OptionData>();
@@ -82,10 +76,7 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
             }
         } else {
             foreach(LocalizedString str in o.localizedDropDownDescriptions) {
-                var lstr = str.GetLocalizedString();
-                if (lstr.IsDone) {
-                    data.Add(new TMP_Dropdown.OptionData(lstr.Result));
-                }
+                data.Add(new TMP_Dropdown.OptionData(str.GetLocalizedString()));
             }
         }
         TMP_Dropdown drop = d.GetComponentInChildren<TMP_Dropdown>();
@@ -114,11 +105,7 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
                 if (o.dropDownDescriptions.Count == 0 && o.localizedDropDownDescriptions.Count == 0) {
                     foreach( TMP_Text t in sliders[type].GetComponentsInChildren<TMP_Text>()) {
                         if (t.name == "Label") {
-                            var localizedText = o.name.GetLocalizedString();
-                            yield return new WaitUntil(()=>localizedText.IsDone);
-                            if (localizedText.IsValid()) {
-                                t.text = localizedText.Result;
-                            }
+                            t.text = o.name.GetLocalizedString();
                         }
                         if (t.name == "Min") {
                             t.text = o.min.ToString();
@@ -129,20 +116,16 @@ public class GraphicsContentViewBrain : MonoBehaviour, IGameEventOptionListener 
                     }
                 } else {
                     for(int i=0;i<o.localizedDropDownDescriptions.Count;i++) {
-                        var lstr = o.localizedDropDownDescriptions[i].GetLocalizedString();
-                        yield return new WaitUntil(()=>lstr.IsDone);
                         while (dropdowns[type].options.Count <= i) {
-                            dropdowns[type].options.Add(new TMP_Dropdown.OptionData(lstr.Result));
+                            dropdowns[type].options.Add(new TMP_Dropdown.OptionData(o.localizedDropDownDescriptions[i].GetLocalizedString()));
                         }
-                        dropdowns[type].options[i].text = lstr.Result;
+                        dropdowns[type].options[i].text = o.localizedDropDownDescriptions[i].GetLocalizedString();
                         //dropdowns[type].SetValueWithoutNotify(dropdowns[type].value+1);
                         //dropdowns[type].SetValueWithoutNotify(dropdowns[type].value-1);
                     }
-                    var lname = o.name.GetLocalizedString();
-                    yield return new WaitUntil(()=>lname.IsDone);
                     foreach( TMP_Text t in dropdowns[type].transform.parent.GetComponentsInChildren<TMP_Text>()) {
                         if (t.name == "Label") {
-                            t.text = lname.Result;
+                            t.text = o.name.GetLocalizedString();
                         }
                     }
                 }

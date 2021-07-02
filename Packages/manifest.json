@@ -11,7 +11,7 @@
     "com.unity.formats.fbx": "4.0.1",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.inputsystem": "1.0.2",
-    "com.unity.localization": "0.10.0-preview",
+    "com.unity.localization": "1.0.0-pre.9",
     "com.unity.render-pipelines.core": "10.5.0",
     "com.unity.render-pipelines.universal": "https://github.com/naelstrof/com.unity.render-pipelines.universal.git#10.5.0-grassfix",
     "com.unity.scriptablebuildpipeline": "1.16.1",

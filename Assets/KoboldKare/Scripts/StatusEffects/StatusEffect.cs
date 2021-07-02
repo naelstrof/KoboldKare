@@ -38,8 +38,7 @@ public class StatusEffect : ScriptableObject, ITooltipDisplayable {
     public void OnTooltipDisplay(RectTransform panel) {
         GameObject someText = new GameObject("StatusName", new Type[] { typeof(TMPro.TextMeshProUGUI) });
         someText.transform.SetParent(panel, false);
-        var async = localizedName.GetLocalizedString();
-        async.Completed += (UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<string> result) => { someText.GetComponent<TextMeshProUGUI>().text = result.Result; };
+        someText.GetComponent<TextMeshProUGUI>().text = localizedName.GetLocalizedString();
         foreach(Statistic s in statistics) {
             GameObject display = GameObject.Instantiate(statDisplayPrefab, panel);
             string displayString = "";

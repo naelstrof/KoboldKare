@@ -18,9 +18,8 @@ public class CreateRoomOnPress : MonoBehaviour {
         if (newGameString == null || saveDropdown == null) {
             return;
         }
-        var async = newGameString.GetLocalizedString();
         saveDropdown.options = new List<TMP_Dropdown.OptionData>();
-        saveDropdown.options.Add(new TMP_Dropdown.OptionData(async.Result));
+        saveDropdown.options.Add(new TMP_Dropdown.OptionData(newGameString.GetLocalizedString()));
         SaveManager.SaveList list = SaveManager.GetSaveList(true);
         foreach(string savename in list.fileNames) {
             saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));

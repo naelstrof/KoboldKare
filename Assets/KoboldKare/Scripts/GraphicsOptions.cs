@@ -459,8 +459,10 @@ public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
                     Screen.SetResolution(resolution.width, resolution.height, fullscreenMode, resolution.refreshRate);
                 break;
                 case OptionType.DecalQuality:
-                    PaintDecal.instance.memoryBudget = value.Remap(0f,1f,128f,1024f);
-                    PaintDecal.instance.texelsPerMeter = Mathf.RoundToInt(value.Remap(0f,1f,64f,2048f));
+                    if (PaintDecal.instance != null) {
+                        PaintDecal.instance.memoryBudget = value.Remap(0f,1f,128f,1024f);
+                        PaintDecal.instance.texelsPerMeter = Mathf.RoundToInt(value.Remap(0f,1f,64f,2048f));
+                    }
                 break;
                 case OptionType.Clouds:
                     // OpenGL can't do clouds, sorry!

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 //using UnityEngine.Rendering.HighDefinition;
 
 public class CameraGraphicsOptionsLoader : MonoBehaviour, IGameEventOptionListener {
@@ -22,6 +23,11 @@ public class CameraGraphicsOptionsLoader : MonoBehaviour, IGameEventOptionListen
         switch(target) {
             case GraphicsOptions.OptionType.CameraFOV:
                 GetComponent<Camera>().fieldOfView = value;
+                break;
+            case GraphicsOptions.OptionType.AntiAliasing:
+                GetComponent<Camera>().allowMSAA = (value != 0f);
+                GetComponent<UniversalAdditionalCameraData>().antialiasing = value == 0 ? AntialiasingMode.None : AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                GetComponent<UniversalAdditionalCameraData>().antialiasingQuality = (AntialiasingQuality)Mathf.FloorToInt(value);
                 break;
         }
         /*switch(target) {

@@ -270,10 +270,10 @@ void CSMain (uint3 id : SV_DispatchThreadID)
 
 
             float mainTransmission = max(minAlbedo , -dot(normal, lightDir)) * transmissionAmount;
-            float fresnel= 1-saturate( fresnelBias + fresnelScale * pow( 1.0 - dot( normal, ray.direction ), fresnelPower ) );
+            float fresnel= 1-saturate( fresnelBias + fresnelScale * pow( abs(1.0 - dot( normal, ray.direction )), fresnelPower ) );
 
-            float lambert = (dot(lightDir,normal)+1)/2;
-            float specular = pow(saturate(dot(reflect, ray.direction)), specularPower); 
+            float lambert = max((dot(lightDir,normal)+1)/2,minAlbedo);
+            float specular = pow(abs(saturate(dot(reflect, ray.direction))), specularPower); 
 
             ray.origin = offsetPos;
             ray.direction = dirToLight;
@@ -284,7 +284,8 @@ void CSMain (uint3 id : SV_DispatchThreadID)
             //Destination[id.xy] = float4(col * lighting * shadow, 1);
             float2 refractUV = float2(clamp(id.x+refract.x, 0, width-1), clamp(id.y+refract.y, 0, height-1));
 
-            Destination[id.xy] = Source[refractUV]*float4(col.xyz,1)*lambert+specular+fresnel+float4(col.xyz,1)*mainTransmission;// float4(col * lighting * shadow, 1);
+            //Destination[id.xy] = Source[refractUV]*float4(col.xyz,1)*lambert+specular+fresnel+float4(col.xyz,1)*mainTransmission;// float4(col * lighting * shadow, 1);
+            Destination[id.xy] = saturate(Source[refractUV]*float4(col.xyz,1)*lambert+specular+fresnel+float4(col.xyz,1)*mainTransmission);
 
             break;
         }

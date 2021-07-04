@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class StreamRenderer : MonoBehaviour {
+public class StreamRenderer : FluidOutput {
     private Material material;
     private Quaternion additiveRotation = Quaternion.identity;
     private Quaternion lastRotation;
@@ -85,7 +85,7 @@ public class StreamRenderer : MonoBehaviour {
     public void Fire(GenericReagentContainer b) {
         Fire(b.contents, volumePerSecond);
     }
-    public void Fire(ReagentContents b, float vps) {
+    public override void Fire(ReagentContents b, float vps) {
         if (isOn || b.volume <= 0f) {
             return;
         }
@@ -121,7 +121,7 @@ public class StreamRenderer : MonoBehaviour {
         cullEnd = 0f;
         isOn = true;
     }
-    public void StopFiring() {
+    public override void StopFiring() {
         if ( !isOn ) {
             return;
         }

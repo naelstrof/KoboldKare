@@ -8,8 +8,12 @@ namespace UnityEngine.Rendering.Universal {
         [System.Serializable]
         public struct RaymarchRenderSettings {
             // The render pass event to inject this render feature.
+            [Range(0f,1f)]
+            public float renderQuality;
             public RenderPassEvent renderPassEvent;
+            public Material alphaBlit;
             public ComputeShader raymarching;
+            public float sceneBlend;
             public FilterMode filterMode;
         }
 
@@ -27,7 +31,10 @@ namespace UnityEngine.Rendering.Universal {
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
             // Enqueues the render pass for execution. Here you can inject one or more render passes in the renderer
             // AddRenderPasses is called everyframe. 
-            if (m_Settings.raymarching == null) {
+            if (m_Settings.raymarching == null || m_Settings.alphaBlit == null || m_Settings.renderQuality == 0f || RaymarchScene.GetShapeCount() == 0) {
+                return;
+            }
+            if (!renderingData.postProcessingEnabled) {
                 return;
             }
             //m_RaymarchRenderPass.cameraColorTarget = renderer.cameraColorTarget;

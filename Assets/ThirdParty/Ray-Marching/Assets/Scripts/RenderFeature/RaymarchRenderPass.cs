@@ -7,6 +7,7 @@ namespace UnityEngine.Rendering.Universal {
     public class RaymarchRenderPass : ScriptableRenderPass {
         public ScriptableRenderer m_Renderer;
         private Light cachedLightSource;
+        private Texture depthTexture;
         private RenderTargetHandle m_TemporaryColorTexture;
         //public ScriptableRenderer m_Renderer;
         private Light lightSource {
@@ -22,51 +23,14 @@ namespace UnityEngine.Rendering.Universal {
         }
         private ComputeBuffer shapeBuffer;
         void CreateScene (CommandBuffer cmd) {
-            List<Shape> allShapes = new List<Shape> (Object.FindObjectsOfType<Shape> ());
-            allShapes.Sort ((a, b) => a.operation.CompareTo (b.operation));
-
-            List<Shape> orderedShapes = new List<Shape> ();
-
-            for (int i = 0; i < allShapes.Count; i++) {
-                // Add top-level shapes (those without a parent)
-                if (allShapes[i].transform.parent == null) {
-
-                    Transform parentShape = allShapes[i].transform;
-                    orderedShapes.Add (allShapes[i]);
-                    allShapes[i].numChildren = parentShape.childCount;
-                    // Add all children of the shape (nested children not supported currently)
-                    for (int j = 0; j < parentShape.childCount; j++) {
-                        if (parentShape.GetChild (j).GetComponent<Shape> () != null) {
-                            orderedShapes.Add (parentShape.GetChild (j).GetComponent<Shape> ());
-                            orderedShapes[orderedShapes.Count - 1].numChildren = 0;
-                        }
-                    }
-                }
-
-            }
-
-            ShapeData[] shapeData = new ShapeData[orderedShapes.Count];
-            for (int i = 0; i < orderedShapes.Count; i++) {
-                var s = orderedShapes[i];
-                Vector3 col = new Vector3 (s.colour.r, s.colour.g, s.colour.b);
-                shapeData[i] = new ShapeData () {
-                    position = s.Position,
-                    scale = s.Scale, colour = col,
-                    radius = s.radius,
-                    shapeType = (int) s.shapeType,
-                    operation = (int) s.operation,
-                    blendStrength = s.blendStrength*3,
-                    numChildren = s.numChildren
-                };
-            }
-
             if (shapeBuffer != null){
                 shapeBuffer.Dispose();
             }
-            shapeBuffer = new ComputeBuffer (shapeData.Length, ShapeData.GetSize ());
-            cmd.SetComputeBufferData(shapeBuffer, shapeData, 0, 0, shapeData.Length);
-            cmd.SetComputeBufferParam(m_Settings.raymarching, 0, "shapes", shapeBuffer);
-            cmd.SetComputeIntParam(m_Settings.raymarching, "numShapes", shapeData.Length);
+            var scene = RaymarchScene.GetScene();
+            shapeBuffer = new ComputeBuffer (scene.Length, RaymarchScene.ShapeData.GetSize ());
+            cmd.SetComputeBufferData(shapeBuffer, scene, 0, 0, scene.Length);
+            cmd.SetComputeBufferParam(m_Settings.raymarching, 0, "_Shapes", shapeBuffer);
+            cmd.SetComputeIntParam(m_Settings.raymarching, "_NumShapes", scene.Length);
         }
 
         void OnDisable() {
@@ -81,31 +45,10 @@ namespace UnityEngine.Rendering.Universal {
             cmd.SetComputeMatrixParam(m_Settings.raymarching, "_WorldToCamera", cam.cameraToWorldMatrix.inverse);
             cmd.SetComputeMatrixParam(m_Settings.raymarching, "_CameraInverseProjection", cam.projectionMatrix.inverse);
             cmd.SetComputeVectorParam(m_Settings.raymarching, "_Light", (lightIsDirectional) ? lightSource.transform.forward : lightSource.transform.position);
-            cmd.SetComputeFloatParam(m_Settings.raymarching, "_FarClipPlane", cam.farClipPlane);
-            cmd.SetComputeFloatParam(m_Settings.raymarching, "_NearClipPlane", cam.nearClipPlane);
-            // To help decode depth buffer values....
-            //float zFar = cam.farClipPlane;
-            //float zNear = cam.nearClipPlane;
-            //cmd.SetComputeVectorParam(m_Settings.raymarching, "_ProjectionParams",
-                                                //new Vector3(zFar / ( zFar - zNear),
-                                                //zFar * zNear / (zNear - zFar), 0));
-            cmd.SetComputeIntParam(m_Settings.raymarching, "positionLight", lightIsDirectional ? 0 : 1);
+            cmd.SetComputeFloatParam(m_Settings.raymarching, "_SceneBlend", m_Settings.sceneBlend);
+            cmd.SetComputeIntParam(m_Settings.raymarching, "_PositionLight", lightIsDirectional ? 0 : 1);
         }
 
-        struct ShapeData {
-            public Vector3 position;
-            public Vector3 scale;
-            public Vector3 colour;
-            public float radius;
-            public int shapeType;
-            public int operation;
-            public float blendStrength;
-            public int numChildren;
-
-            public static int GetSize () {
-                return sizeof (float) * 11 + sizeof (int) * 3;
-            }
-        }
         string m_ProfilerTag = "DrawFullScreenRaymarchPass";
         RaymarchRenderFeature.RaymarchRenderSettings m_Settings;
 
@@ -122,12 +65,8 @@ namespace UnityEngine.Rendering.Universal {
             if (CTD.colorFormat == RenderTextureFormat.Depth) {
                 return;
             }
-            //ConfigureTarget(m_Renderer.cameraDepthTarget, m_Renderer.cameraDepthTarget);
-            CTD.enableRandomWrite = true;
-            CTD.depthBufferBits = 0;
-            CTD.sRGB = false;
             // Since we can't write directly to the camera color texture, we create a texture to write to (then we blit it to the camera after).
-            cmd.GetTemporaryRT(m_TemporaryColorTexture.id, CTD);
+            cmd.GetTemporaryRT(m_TemporaryColorTexture.id, Mathf.FloorToInt(CTD.width*m_Settings.renderQuality), Mathf.FloorToInt(CTD.height*m_Settings.renderQuality), 0, m_Settings.filterMode, Experimental.Rendering.GraphicsFormat.R8G8B8A8_SNorm, 1, true, RenderTextureMemoryless.None, false);
             CreateScene (cmd);
         }
 
@@ -139,6 +78,15 @@ namespace UnityEngine.Rendering.Universal {
                 return;
             }
 
+            // If we magically just don't have a depth buffer. We cancel the pass.
+            // _CameraDepthTexture can be null in some situations (like idling in the editor while alt-tabbed).
+            if (depthTexture == null) {
+                depthTexture = Shader.GetGlobalTexture("_CameraDepthTexture");
+            }
+            if (depthTexture == null) {
+                return;
+            }
+
             var cmd = CommandBufferPool.Get(m_ProfilerTag);
             SetParameters (cmd, camera);
             cmd.SetComputeTextureParam(m_Settings.raymarching, 0, "Source", m_Renderer.cameraColorTarget);
@@ -147,11 +95,11 @@ namespace UnityEngine.Rendering.Universal {
             m_Settings.raymarching.SetTextureFromGlobal(0, "Depth", "_CameraDepthTexture");
             cmd.SetComputeTextureParam(m_Settings.raymarching, 0, "Destination", m_TemporaryColorTexture.Identifier());
 
-            int threadGroupsX = Mathf.CeilToInt (camera.pixelWidth / 8.0f);
-            int threadGroupsY = Mathf.CeilToInt (camera.pixelHeight / 8.0f);
+            int threadGroupsX = Mathf.CeilToInt ((camera.pixelWidth*m_Settings.renderQuality) / 8.0f);
+            int threadGroupsY = Mathf.CeilToInt ((camera.pixelHeight*m_Settings.renderQuality) / 8.0f);
 
             cmd.DispatchCompute(m_Settings.raymarching, 0, threadGroupsX, threadGroupsY, 1);
-            cmd.Blit(m_TemporaryColorTexture.Identifier(), m_Renderer.cameraColorTarget);
+            cmd.Blit(m_TemporaryColorTexture.Identifier(), m_Renderer.cameraColorTarget, m_Settings.alphaBlit);
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
 

@@ -27,7 +27,7 @@ public class CameraGraphicsOptionsLoader : MonoBehaviour, IGameEventOptionListen
             case GraphicsOptions.OptionType.AntiAliasing:
                 GetComponent<Camera>().allowMSAA = (value != 0f);
                 GetComponent<UniversalAdditionalCameraData>().antialiasing = value == 0 ? AntialiasingMode.None : AntialiasingMode.SubpixelMorphologicalAntiAliasing;
-                GetComponent<UniversalAdditionalCameraData>().antialiasingQuality = (AntialiasingQuality)Mathf.FloorToInt(value);
+                GetComponent<UniversalAdditionalCameraData>().antialiasingQuality = (AntialiasingQuality)Mathf.FloorToInt(value-1f);
                 break;
         }
         /*switch(target) {

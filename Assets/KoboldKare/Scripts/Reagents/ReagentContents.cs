@@ -122,7 +122,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         if (IsDirty(DirtyFlag.Color)) {
             cachedColor = Color.black;
             cachedColor.a = 0f;
-            if (cachedVolume > 0.01f) {
+            if (cachedVolume > 0.001f) {
                 foreach (KeyValuePair<ReagentData.ID, Reagent> pair in this) {
                     cachedColor += database.reagents[pair.Key].color * (pair.Value.volume / cachedVolume);
                 }
@@ -131,7 +131,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         }
         if (IsDirty(DirtyFlag.Heat)) {
             cachedHeat = 0;
-            if (cachedVolume > 0.01f) {
+            if (cachedVolume > 0.001f) {
                 foreach (KeyValuePair<ReagentData.ID, Reagent> pair in this) {
                     cachedHeat += pair.Value.heat * (pair.Value.volume / Mathf.Max(cachedVolume, Mathf.Epsilon));
                 }
@@ -160,10 +160,10 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         this[r.b].volume -= minReaction * r.bAmount;
         float averagePotentcy = (this[r.a].potentcy + this[r.b].potentcy) / 2f;
         float averageHeat = (this[r.a].heat + this[r.b].heat) / 2f;
-        if (this[r.a].volume <= 0.01f) {
+        if (this[r.a].volume <= 0.001f) {
             this.Remove(r.a);
         }
-        if (this[r.b].volume <= 0.01f) {
+        if (this[r.b].volume <= 0.001f) {
             this.Remove(r.b);
         }
         SetDirty(true);
@@ -173,7 +173,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
     }
     public void RedoOnExistCallbacks() {
         foreach (var pair in this) {
-            if (pair.Value.volume > 0.01f) {
+            if (pair.Value.volume > 0.001f) {
                 ReagentDatabase.instance.reagents[pair.Key].onExistCallback.Invoke(this);
             }
         }
@@ -255,6 +255,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         }
         SetDirty(true);
         InvokeListenerUpdate(injectType);
+        spilledContents.SetDirty(true);
         return spilledContents;
     }
     public ReagentContents Metabolize(ReagentDatabase database, float deltaTime) {

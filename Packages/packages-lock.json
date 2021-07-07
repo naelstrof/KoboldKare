@@ -214,6 +214,13 @@
       },
       "hash": "1af1aec3f233fc0987406a7cf7caf5191a9e3e37"
     },
+    "com.vilarnaelstrof.terrainbrushtools": {
+      "version": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "586f6bb3f54cfcecf740325b735651d68c5e5b35"
+    },
     "li.lightingtools.lightprobesvolumes": {
       "version": "https://github.com/naelstrof/LightProbeVolumes.git",
       "depth": 0,

@@ -20,6 +20,7 @@
     "com.unity.timeline": "1.4.8",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualeffectgraph": "https://github.com/naelstrof/com.unity.visualeffectgraph.git#10.5.0-depthcollide",
+    "com.vilarnaelstrof.terrainbrushtools": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
     "li.lightingtools.lightprobesvolumes": "https://github.com/naelstrof/LightProbeVolumes.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

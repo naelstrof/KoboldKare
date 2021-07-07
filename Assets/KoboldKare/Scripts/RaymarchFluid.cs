@@ -55,7 +55,7 @@ public class RaymarchFluid : FluidOutput {
             b.body.AddForce(diff*dist*deltaTime*300f);
         }
         public void Tick() {
-            float sideLength = Vector3.Distance(a.gameObject.transform.position, b.gameObject.transform.position);
+            float sideLength = Mathf.Max(Vector3.Distance(a.gameObject.transform.position, b.gameObject.transform.position),0.1f);
             float volume = (a.ball.contents.volume + b.ball.contents.volume)*volumeMultiplier;
             float radius = Mathf.Sqrt(volume/(Mathf.PI*sideLength));
             capsuleShape.radius = radius;

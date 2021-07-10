@@ -20,7 +20,8 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 		_SmoothnessB("SmoothnessB", 2D) = "gray" {}
 		_HeightB("HeightB", 2D) = "gray" {}
 		_Tiling("Tiling", Range( 0.1 , 10)) = 0.1
-		[ASEEnd]_HeightBlendSmoothing("HeightBlendSmoothing", Range( 0.1 , 1)) = 0.1
+		_HeightBlendSmoothing("HeightBlendSmoothing", Range( 0.1 , 1)) = 0.1
+		[ASEEnd]_DecalColorMap("DecalColorMap", 2D) = "black" {}
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
 		//_TransStrength( "Trans Strength", Range( 0, 50 ) ) = 1
@@ -277,6 +278,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 			sampler2D _TerrainBlendMap;
 			sampler2D _Height;
 			sampler2D _HeightB;
+			sampler2D _DecalColorMap;
 			sampler2D _BumpMapB;
 			sampler2D _BumpMapA;
 			sampler2D _SmoothnessB;
@@ -293,9 +295,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 
 				o.ase_texcoord7 = v.vertex;
 				o.ase_texcoord8.xy = v.texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord8.zw = 0;
+				o.ase_texcoord8.zw = v.texcoord1.xyzw.xy;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -493,17 +493,23 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float temp_output_13_0_g5 = ( 1.0 / _HeightBlendSmoothing );
 				float temp_output_36_0_g4 = saturate( ( ( ( tex2D( _TerrainBlendMap, texCoord48_g4 ).r * ( temp_output_13_0_g5 + 1.0 ) ) + ( ( tex2D( _Height, WorldUV9_g4 ).r * temp_output_13_0_g5 * 4.0 ) - temp_output_13_0_g5 ) ) + -( tex2D( _HeightB, WorldUV9_g4 ).r * temp_output_13_0_g5 ) ) );
 				float4 lerpResult37_g4 = lerp( ( lerpResult24_g4 * tex2DNode18_g4.g ) , ( lerpResult25_g4 * tex2DNode14_g4.g ) , temp_output_36_0_g4);
+				float2 texCoord2_g6 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g6 = tex2Dlod( _DecalColorMap, float4( texCoord2_g6, 0, 0.0) );
+				float4 lerpResult7_g6 = lerp( lerpResult37_g4 , tex2DNode3_g6 , tex2DNode3_g6.a);
 				
 				float3 lerpResult43_g4 = lerp( UnpackNormalScale( tex2D( _BumpMapB, WorldUV9_g4 ), 1.0f ) , UnpackNormalScale( tex2D( _BumpMapA, WorldUV9_g4 ), 1.0f ) , temp_output_36_0_g4);
 				
 				float4 lerpResult38_g4 = lerp( tex2D( _SmoothnessB, WorldUV9_g4 ) , tex2D( _SmoothnessA, WorldUV9_g4 ) , temp_output_36_0_g4);
+				float4 break10_g6 = lerpResult38_g4;
+				float lerpResult9_g6 = lerp( break10_g6.a , 0.9 , tex2DNode3_g6.a);
+				float4 appendResult11_g6 = (float4(break10_g6.r , break10_g6.g , break10_g6.b , lerpResult9_g6));
 				
-				float3 Albedo = lerpResult37_g4.rgb;
+				float3 Albedo = lerpResult7_g6.rgb;
 				float3 Normal = lerpResult43_g4;
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
-				float Smoothness = lerpResult38_g4.a;
+				float Smoothness = appendResult11_g6.w;
 				float Occlusion = 1;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
@@ -1274,6 +1280,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 			sampler2D _TerrainBlendMap;
 			sampler2D _Height;
 			sampler2D _HeightB;
+			sampler2D _DecalColorMap;
 
 
 			
@@ -1286,9 +1293,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 
 				o.ase_texcoord2 = v.vertex;
 				o.ase_texcoord3.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord3.zw = 0;
+				o.ase_texcoord3.zw = v.texcoord1.xy;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1435,9 +1440,12 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float temp_output_13_0_g5 = ( 1.0 / _HeightBlendSmoothing );
 				float temp_output_36_0_g4 = saturate( ( ( ( tex2D( _TerrainBlendMap, texCoord48_g4 ).r * ( temp_output_13_0_g5 + 1.0 ) ) + ( ( tex2D( _Height, WorldUV9_g4 ).r * temp_output_13_0_g5 * 4.0 ) - temp_output_13_0_g5 ) ) + -( tex2D( _HeightB, WorldUV9_g4 ).r * temp_output_13_0_g5 ) ) );
 				float4 lerpResult37_g4 = lerp( ( lerpResult24_g4 * tex2DNode18_g4.g ) , ( lerpResult25_g4 * tex2DNode14_g4.g ) , temp_output_36_0_g4);
+				float2 texCoord2_g6 = IN.ase_texcoord3.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g6 = tex2Dlod( _DecalColorMap, float4( texCoord2_g6, 0, 0.0) );
+				float4 lerpResult7_g6 = lerp( lerpResult37_g4 , tex2DNode3_g6 , tex2DNode3_g6.a);
 				
 				
-				float3 Albedo = lerpResult37_g4.rgb;
+				float3 Albedo = lerpResult7_g6.rgb;
 				float3 Emission = 0;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
@@ -1500,6 +1508,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1550,6 +1559,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 			sampler2D _TerrainBlendMap;
 			sampler2D _Height;
 			sampler2D _HeightB;
+			sampler2D _DecalColorMap;
 
 
 			
@@ -1562,9 +1572,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 
 				o.ase_texcoord2 = v.vertex;
 				o.ase_texcoord3.xy = v.ase_texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord3.zw = 0;
+				o.ase_texcoord3.zw = v.ase_texcoord1.xy;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1604,6 +1612,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_texcoord1 : TEXCOORD1;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1622,6 +1631,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
 				o.ase_texcoord = v.ase_texcoord;
+				o.ase_texcoord1 = v.ase_texcoord1;
 				return o;
 			}
 
@@ -1661,6 +1671,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
 				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_texcoord1 = patch[0].ase_texcoord1 * bary.x + patch[1].ase_texcoord1 * bary.y + patch[2].ase_texcoord1 * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1708,9 +1719,12 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float temp_output_13_0_g5 = ( 1.0 / _HeightBlendSmoothing );
 				float temp_output_36_0_g4 = saturate( ( ( ( tex2D( _TerrainBlendMap, texCoord48_g4 ).r * ( temp_output_13_0_g5 + 1.0 ) ) + ( ( tex2D( _Height, WorldUV9_g4 ).r * temp_output_13_0_g5 * 4.0 ) - temp_output_13_0_g5 ) ) + -( tex2D( _HeightB, WorldUV9_g4 ).r * temp_output_13_0_g5 ) ) );
 				float4 lerpResult37_g4 = lerp( ( lerpResult24_g4 * tex2DNode18_g4.g ) , ( lerpResult25_g4 * tex2DNode14_g4.g ) , temp_output_36_0_g4);
+				float2 texCoord2_g6 = IN.ase_texcoord3.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g6 = tex2Dlod( _DecalColorMap, float4( texCoord2_g6, 0, 0.0) );
+				float4 lerpResult7_g6 = lerp( lerpResult37_g4 , tex2DNode3_g6 , tex2DNode3_g6.a);
 				
 				
-				float3 Albedo = lerpResult37_g4.rgb;
+				float3 Albedo = lerpResult7_g6.rgb;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 
@@ -2107,6 +2121,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 			sampler2D _TerrainBlendMap;
 			sampler2D _Height;
 			sampler2D _HeightB;
+			sampler2D _DecalColorMap;
 
 
 			
@@ -2119,9 +2134,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 
 				o.ase_texcoord7 = v.vertex;
 				o.ase_texcoord8.xy = v.texcoord.xy;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord8.zw = 0;
+				o.ase_texcoord8.zw = v.texcoord1.xyzw.xy;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2318,8 +2331,11 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float temp_output_13_0_g5 = ( 1.0 / _HeightBlendSmoothing );
 				float temp_output_36_0_g4 = saturate( ( ( ( tex2D( _TerrainBlendMap, texCoord48_g4 ).r * ( temp_output_13_0_g5 + 1.0 ) ) + ( ( tex2D( _Height, WorldUV9_g4 ).r * temp_output_13_0_g5 * 4.0 ) - temp_output_13_0_g5 ) ) + -( tex2D( _HeightB, WorldUV9_g4 ).r * temp_output_13_0_g5 ) ) );
 				float4 lerpResult37_g4 = lerp( ( lerpResult24_g4 * tex2DNode18_g4.g ) , ( lerpResult25_g4 * tex2DNode14_g4.g ) , temp_output_36_0_g4);
+				float2 texCoord2_g6 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g6 = tex2Dlod( _DecalColorMap, float4( texCoord2_g6, 0, 0.0) );
+				float4 lerpResult7_g6 = lerp( lerpResult37_g4 , tex2DNode3_g6 , tex2DNode3_g6.a);
 				
-				float3 Albedo = lerpResult37_g4.rgb;
+				float3 Albedo = lerpResult7_g6.rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
 				float3 Specular = 0.5;
@@ -2481,9 +2497,10 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 }
 /*ASEBEGIN
 Version=18910
-131;232;1675;748;-965.4074;540.8283;1.52389;True;True
-Node;AmplifyShaderEditor.FunctionNode;136;2035.67,50.21732;Inherit;False;TerrainPlanarProjection;0;;4;7f77f62b983d6b14cae371e33a438508;0;1;47;FLOAT2;0,0;False;3;COLOR;0;FLOAT3;44;COLOR;45
-Node;AmplifyShaderEditor.BreakToComponentsNode;137;2394.67,233.2173;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+219;165;1675;718;-1408.6;198.0222;1;True;True
+Node;AmplifyShaderEditor.FunctionNode;136;1700.67,57.21732;Inherit;False;TerrainPlanarProjection;0;;4;7f77f62b983d6b14cae371e33a438508;0;1;47;FLOAT2;0,0;False;3;COLOR;0;FLOAT3;44;COLOR;45
+Node;AmplifyShaderEditor.BreakToComponentsNode;137;2394.67,233.2173;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.FunctionNode;138;2093.958,-19.85583;Inherit;False;ApplyDecals;16;;6;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;2654.059,69.05953;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;TerrainBrush/TerrainBrushedDecalable;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;1;Built-in Fog;1;_FinalColorxAlpha;0;Meta Pass;1;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2492,9 +2509,12 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;8;1896.1,69.05953;Float;Fal
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;1896.1,69.05953;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-WireConnection;137;0;136;45
-WireConnection;2;0;136;0
-WireConnection;2;1;136;44
+WireConnection;137;0;138;15
+WireConnection;138;4;136;0
+WireConnection;138;5;136;44
+WireConnection;138;6;136;45
+WireConnection;2;0;138;13
+WireConnection;2;1;138;14
 WireConnection;2;4;137;3
 ASEEND*/
-//CHKSM=4CB4669BB047AF1E1341215636F2F9D705A16CF5
+//CHKSM=EA60CC8778F2486E0DB533E43720520714E4857C

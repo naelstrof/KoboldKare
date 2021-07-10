@@ -536,7 +536,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 dickSet.container.contents.Mix(ReagentData.ID.Blood, 0.01f);
             }
             // Pulse the dicks a little, so they still look "lively"
-            dickSet.container.contents[ReagentData.ID.Blood].volume = arousal*0.92f + 0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f));
+            dickSet.container.contents[ReagentData.ID.Blood].volume = arousal*0.92f + (0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal;
             dickSet.container.contents.TriggerChange();
         }
     }

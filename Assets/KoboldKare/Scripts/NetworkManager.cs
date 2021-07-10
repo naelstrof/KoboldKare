@@ -260,7 +260,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public void OnDisconnected(DisconnectCause cause) {
         Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
-        GameManager.instance.StartCoroutine(OnDisconnectRoutine(cause));
+        GameManager.instance?.StartCoroutine(OnDisconnectRoutine(cause));
     }
     public IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
         if (cause != DisconnectCause.DisconnectByClientLogic && cause != DisconnectCause.None) {

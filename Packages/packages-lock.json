@@ -219,7 +219,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f1cf10666eb68c1ef5cd5c53d7c443a7cf893c49"
+      "hash": "fe5bf40c2545ea6235d7b8e66e2b085f52cf5b80"
     },
     "li.lightingtools.lightprobesvolumes": {
       "version": "https://github.com/naelstrof/LightProbeVolumes.git",

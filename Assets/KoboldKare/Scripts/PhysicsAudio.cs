@@ -9,6 +9,11 @@ public class PhysicsAudio : MonoBehaviour {
     private float soundDelay = 0.2f;
     private float lastSoundTime = 0f;
     private Rigidbody body;
+    public IEnumerator WaitOneFrameThenPause() {
+        yield return null;
+        scrapeSoundOutput.volume = 0f;
+        scrapeSoundOutput.Pause();
+    }
     private void Start() {
         body = GetComponent<Rigidbody>();
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
@@ -82,9 +87,10 @@ public class PhysicsAudio : MonoBehaviour {
         if (group == null) {
             return;
         }
-        scrapeSoundOutput.volume = Easing.Cubic.In(Mathf.Clamp01((collision.relativeVelocity.magnitude-group.minScrapeSpeed)*0.8f));
+        scrapeSoundOutput.volume = Easing.Cubic.In(Mathf.Clamp01((collision.relativeVelocity.magnitude-group.minScrapeSpeed)));
     }
     void OnCollisionExit(Collision collision) {
-        scrapeSoundOutput.Pause();
+        StopCoroutine("WaitOneFrameThenPause");
+        StartCoroutine("WaitOneFrameThenPause");
     }
 }

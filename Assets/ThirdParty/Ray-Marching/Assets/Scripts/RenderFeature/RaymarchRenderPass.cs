@@ -50,7 +50,7 @@ namespace UnityEngine.Rendering.Universal {
         }
 
         string m_ProfilerTag = "DrawFullScreenRaymarchPass";
-        RaymarchRenderFeature.RaymarchRenderSettings m_Settings;
+        public RaymarchRenderFeature.RaymarchRenderSettings m_Settings;
 
         public RaymarchRenderPass(RaymarchRenderFeature.RaymarchRenderSettings settings) {
             renderPassEvent = settings.renderPassEvent;

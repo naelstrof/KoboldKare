@@ -153,7 +153,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
     private bool dildoMemory = false;
     public GenericReagentContainer ballsContainer;
     public float cumVolumePerPump = 3f;
-    public StreamRenderer stream;
+    public FluidOutput stream;
     [System.Serializable]
     public class DepthEvent {
         public enum TriggerDirection {
@@ -338,9 +338,7 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
         public Vector3 localDickRoot;
     }
     public List<DickShape> shapes = new List<DickShape>();
-
-    void Start() {
-        internalDickshape = null;
+    void Awake() {
         if (slimySource == null && Application.isPlaying) {
             slimySource = gameObject.AddComponent<AudioSource>();
             if (slimySource != null) {
@@ -350,6 +348,10 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
                 slimySource.spatialBlend = 1f;
             }
         }
+    }
+
+    void Start() {
+        internalDickshape = null;
         if (deformationTargets.Count == 0) {
             return;
         }

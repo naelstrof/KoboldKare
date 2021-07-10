@@ -21,7 +21,8 @@ namespace UnityEngine.Rendering.Universal {
         public RaymarchRenderSettings m_Settings;
         
         // The actual render pass we are injecting.
-        RaymarchRenderPass m_RaymarchRenderPass;
+        [HideInInspector]
+        public RaymarchRenderPass m_RaymarchRenderPass;
 
         public override void Create() {
             // Caches the render pass. Create method is called when the renderer instance is being constructed. 

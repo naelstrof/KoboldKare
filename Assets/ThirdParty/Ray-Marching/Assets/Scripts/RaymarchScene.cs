@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public static class RaymarchScene {
-    public static int maxShapes = 128;
+    public static int maxShapes = 100;
     public struct ShapeData {
         public ShapeData(RaymarchShape shape) {
             position = shape.Position;
@@ -56,7 +56,7 @@ public static class RaymarchScene {
     private static void CalculateScene() {
         if (dirty) {
             orderedScene = new ShapeData[Mathf.Min(allShapes.Count, maxShapes)];
-            allShapes.Sort ((a, b) => a.operation.CompareTo (b.operation));
+            //allShapes.Sort ((a, b) => a.operation.CompareTo (b.operation));
         }
 
         int sceneIndex = 0;

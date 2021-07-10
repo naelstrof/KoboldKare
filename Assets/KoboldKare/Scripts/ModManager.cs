@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,8 +33,12 @@ public class ModManager : MonoBehaviour {
         LoadAtStart();
     }
     public void OnDestroy() {
-        foreach(var pair in loadedAssets) {
-            Addressables.Release(loadedAssets[pair.Key]);
-        }
+        /*foreach(var pair in loadedAssets) {
+            try {
+                Addressables.Release(loadedAssets[pair.Key]);
+            } catch (Exception e) {
+                Debug.LogWarning(e.Message);
+            }
+        }*/
     }
 }

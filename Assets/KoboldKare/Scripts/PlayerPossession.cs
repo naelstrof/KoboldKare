@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
@@ -89,10 +89,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         }
     }
     private void OnDestroy() {
-        if (photonView == NetworkManager.instance.localPlayerInstance) {
-            GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
+        if (gameObject.scene.isLoaded) {
+            if (photonView == NetworkManager.instance.localPlayerInstance) {
+                GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
+            }
+            playerDieEvent.Raise(transform.position);
         }
-        playerDieEvent.Raise(transform.position);
     }
     private Vector2 eyeSensitivity = new Vector2(2f,2f);
     IEnumerator PauseInputForSeconds(float delay) {

@@ -35,6 +35,13 @@
       "dependencies": {},
       "hash": "82a9836fdc5056d5d3b3de0d8471e56d55f6f292"
     },
+    "com.ralivnaelstrof.terrainbrushtools": {
+      "version": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "70272b0a41c64e9a323117d45315b0a808c48409"
+    },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
       "depth": 0,
@@ -213,13 +220,6 @@
         "com.unity.render-pipelines.core": "10.5.0"
       },
       "hash": "1af1aec3f233fc0987406a7cf7caf5191a9e3e37"
-    },
-    "com.vilarnaelstrof.terrainbrushtools": {
-      "version": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "792c601fe45069074afb3c44d3d0ea72d8fd314f"
     },
     "li.lightingtools.lightprobesvolumes": {
       "version": "https://github.com/naelstrof/LightProbeVolumes.git",

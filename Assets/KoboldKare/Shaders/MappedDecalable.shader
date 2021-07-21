@@ -24,7 +24,9 @@ Shader "MappedDecalable"
 		_HeightB("HeightB", 2D) = "gray" {}
 		_Tiling("Tiling", Range( 0.1 , 10)) = 0.1
 		_HeightBlendSmoothing("HeightBlendSmoothing", Range( 0.1 , 1)) = 0.1
-		_BlendPercent("BlendPercent", Range( 0 , 1)) = 0
+		_DistanceBlendSmooth("DistanceBlendSmooth", Range( 0.1 , 2)) = 0.1
+		_DistanceBlendBias("DistanceBlendBias", Range( -2 , 2)) = 0
+		_BlendDistance01("BlendDistance01", Range( 0 , 1)) = 0
 		_DecalColorMap("DecalColorMap", 2D) = "black" {}
 		_MetallicGlossMap("MetallicGlossMap", 2D) = "gray" {}
 		_BumpMap("BumpMap", 2D) = "bump" {}
@@ -276,7 +278,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -527,28 +531,30 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _BaseColor ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g51 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform4_g51 = mul(GetObjectToWorldMatrix(),appendResult3_g51);
-				float2 appendResult6_g51 = (float2(transform4_g51.x , transform4_g51.z));
-				float2 WorldUV9_g51 = ( appendResult6_g51 * _Tiling );
-				float4 tex2DNode18_g51 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g51 );
-				float4 lerpResult24_g51 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g51.r);
-				float4 tex2DNode14_g51 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g51 );
-				float4 lerpResult25_g51 = lerp( _ColorADark , _ColorALight , tex2DNode14_g51.r);
+				float4 appendResult3_g52 = (float4(IN.ase_texcoord8.xyz , 1.0));
+				float4 transform4_g52 = mul(GetObjectToWorldMatrix(),appendResult3_g52);
+				float2 appendResult6_g52 = (float2(transform4_g52.x , transform4_g52.z));
+				float2 WorldUV9_g52 = ( appendResult6_g52 * _Tiling );
+				float4 tex2DNode18_g52 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g52 );
+				float4 lerpResult24_g52 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g52.r);
+				float4 tex2DNode14_g52 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g52 );
+				float4 lerpResult25_g52 = lerp( _ColorADark , _ColorALight , tex2DNode14_g52.r);
 				float4 appendResult3_g3 = (float4(IN.ase_texcoord8.xyz , 1.0));
 				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
 				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g52 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g51 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g52 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g51 ).r * temp_output_13_0_g52 * 4.0 ) - temp_output_13_0_g52 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g51 ).r * temp_output_13_0_g52 ) ) );
-				float4 lerpResult37_g51 = lerp( ( lerpResult24_g51 * tex2DNode18_g51.g ) , ( lerpResult25_g51 * tex2DNode14_g51.g ) , temp_output_36_0_g51);
+				float temp_output_13_0_g53 = ( 1.0 / _HeightBlendSmoothing );
+				float temp_output_36_0_g52 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g53 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g52 ).r * temp_output_13_0_g53 * 4.0 ) - temp_output_13_0_g53 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g52 ).r * temp_output_13_0_g53 ) ) );
+				float4 lerpResult37_g52 = lerp( ( lerpResult24_g52 * tex2DNode18_g52.g ) , ( lerpResult25_g52 * tex2DNode14_g52.g ) , temp_output_36_0_g52);
 				float4 break7_g3 = temp_output_6_0_g3;
 				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 temp_output_1_0_g53 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float TerrainWorldDepth13_g3 = temp_output_1_0_g53.r;
+				float4 temp_output_1_0_g54 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
+				float TerrainWorldDepth13_g3 = temp_output_1_0_g54.r;
 				float WorldDepth12_g3 = break7_g3.z;
-				float dotResult17_g3 = dot( WorldNormal , float3( 0,1,0 ) );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendPercent ) ) , saturate( (0.0 + (dotResult17_g3 - 0.0) * (1.0 - 0.0) / (0.1 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g51 , temp_output_90_13 , lerpResult24_g3);
+				float3 normalizedWorldNormal = normalize( WorldNormal );
+				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
+				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
+				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
+				float4 lerpResult38_g3 = lerp( lerpResult37_g52 , temp_output_90_13 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float4 staticSwitch91 = lerpResult38_g3;
 				#else
@@ -562,12 +568,12 @@ Shader "MappedDecalable"
 				#endif
 				float3 temp_output_90_14 = staticSwitch65;
 				float3x3 ase_worldToTangent = float3x3(WorldTangent,WorldBiTangent,WorldNormal);
-				float3 temp_output_3_0_g49 = WorldNormal;
-				float3 lerpResult43_g51 = lerp( UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapB, sampler_BaseColorMapB, WorldUV9_g51 ), 1.0f ) , UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapA, sampler_BaseColorMapA, WorldUV9_g51 ), 1.0f ) , temp_output_36_0_g51);
-				float3 temp_output_1_0_g49 = lerpResult43_g51;
-				float3 appendResult12_g49 = (float3(( (temp_output_3_0_g49).xz + (temp_output_1_0_g49).xy ) , ( (temp_output_3_0_g49).y * abs( (temp_output_1_0_g49).z ) )));
-				float3 normalizeResult18_g49 = normalize( (appendResult12_g49).xzy );
-				float3 lerpResult37_g3 = lerp( BlendNormal( mul( ase_worldToTangent, (float3( -1,-1,-1 ) + ((SAMPLE_TEXTURE2D( _TerrainNormals, sampler_TerrainNormals, appendResult8_g3 ).rgb).xyz - float3( 0,0,0 )) * (float3( 1,1,1 ) - float3( -1,-1,-1 )) / (float3( 1,1,1 ) - float3( 0,0,0 ))) ) , mul( ase_worldToTangent, normalizeResult18_g49 ) ) , temp_output_90_14 , lerpResult24_g3);
+				float3 temp_output_3_0_g56 = WorldNormal;
+				float3 lerpResult43_g52 = lerp( UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapB, sampler_BaseColorMapB, WorldUV9_g52 ), 1.0f ) , UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapA, sampler_BaseColorMapA, WorldUV9_g52 ), 1.0f ) , temp_output_36_0_g52);
+				float3 temp_output_1_0_g56 = lerpResult43_g52;
+				float3 appendResult12_g56 = (float3(( (temp_output_3_0_g56).xz + (temp_output_1_0_g56).xy ) , ( (temp_output_3_0_g56).y * abs( (temp_output_1_0_g56).z ) )));
+				float3 normalizeResult18_g56 = normalize( (appendResult12_g56).xzy );
+				float3 lerpResult37_g3 = lerp( BlendNormal( mul( ase_worldToTangent, (float3( -1,-1,-1 ) + ((SAMPLE_TEXTURE2D( _TerrainNormals, sampler_TerrainNormals, appendResult8_g3 ).rgb).xyz - float3( 0,0,0 )) * (float3( 1,1,1 ) - float3( -1,-1,-1 )) / (float3( 1,1,1 ) - float3( 0,0,0 ))) ) , mul( ase_worldToTangent, normalizeResult18_g56 ) ) , temp_output_90_14 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float3 staticSwitch93 = lerpResult37_g3;
 				#else
@@ -585,8 +591,8 @@ Shader "MappedDecalable"
 				float lerpResult9_g2 = lerp( break10_g2.a , 0.9 , tex2DNode3_g2.a);
 				float4 appendResult11_g2 = (float4(break10_g2.r , break10_g2.g , break10_g2.b , lerpResult9_g2));
 				float4 temp_output_90_15 = appendResult11_g2;
-				float4 lerpResult38_g51 = lerp( SAMPLE_TEXTURE2D( _SmoothnessB, sampler_BaseColorMapB, WorldUV9_g51 ) , SAMPLE_TEXTURE2D( _SmoothnessA, sampler_BaseColorMapA, WorldUV9_g51 ) , temp_output_36_0_g51);
-				float4 lerpResult28_g3 = lerp( lerpResult38_g51 , temp_output_90_15 , lerpResult24_g3);
+				float4 lerpResult38_g52 = lerp( SAMPLE_TEXTURE2D( _SmoothnessB, sampler_BaseColorMapB, WorldUV9_g52 ) , SAMPLE_TEXTURE2D( _SmoothnessA, sampler_BaseColorMapA, WorldUV9_g52 ) , temp_output_36_0_g52);
+				float4 lerpResult28_g3 = lerp( lerpResult38_g52 , temp_output_90_15 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float4 staticSwitch94 = lerpResult28_g3;
 				#else
@@ -823,7 +829,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1099,7 +1107,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1367,7 +1377,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1563,29 +1575,31 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _BaseColor ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g51 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g51 = mul(GetObjectToWorldMatrix(),appendResult3_g51);
-				float2 appendResult6_g51 = (float2(transform4_g51.x , transform4_g51.z));
-				float2 WorldUV9_g51 = ( appendResult6_g51 * _Tiling );
-				float4 tex2DNode18_g51 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g51 );
-				float4 lerpResult24_g51 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g51.r);
-				float4 tex2DNode14_g51 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g51 );
-				float4 lerpResult25_g51 = lerp( _ColorADark , _ColorALight , tex2DNode14_g51.r);
+				float4 appendResult3_g52 = (float4(IN.ase_texcoord3.xyz , 1.0));
+				float4 transform4_g52 = mul(GetObjectToWorldMatrix(),appendResult3_g52);
+				float2 appendResult6_g52 = (float2(transform4_g52.x , transform4_g52.z));
+				float2 WorldUV9_g52 = ( appendResult6_g52 * _Tiling );
+				float4 tex2DNode18_g52 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g52 );
+				float4 lerpResult24_g52 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g52.r);
+				float4 tex2DNode14_g52 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g52 );
+				float4 lerpResult25_g52 = lerp( _ColorADark , _ColorALight , tex2DNode14_g52.r);
 				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
 				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
 				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g52 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g51 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g52 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g51 ).r * temp_output_13_0_g52 * 4.0 ) - temp_output_13_0_g52 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g51 ).r * temp_output_13_0_g52 ) ) );
-				float4 lerpResult37_g51 = lerp( ( lerpResult24_g51 * tex2DNode18_g51.g ) , ( lerpResult25_g51 * tex2DNode14_g51.g ) , temp_output_36_0_g51);
+				float temp_output_13_0_g53 = ( 1.0 / _HeightBlendSmoothing );
+				float temp_output_36_0_g52 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g53 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g52 ).r * temp_output_13_0_g53 * 4.0 ) - temp_output_13_0_g53 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g52 ).r * temp_output_13_0_g53 ) ) );
+				float4 lerpResult37_g52 = lerp( ( lerpResult24_g52 * tex2DNode18_g52.g ) , ( lerpResult25_g52 * tex2DNode14_g52.g ) , temp_output_36_0_g52);
 				float4 break7_g3 = temp_output_6_0_g3;
 				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 temp_output_1_0_g53 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float TerrainWorldDepth13_g3 = temp_output_1_0_g53.r;
+				float4 temp_output_1_0_g54 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
+				float TerrainWorldDepth13_g3 = temp_output_1_0_g54.r;
 				float WorldDepth12_g3 = break7_g3.z;
 				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float dotResult17_g3 = dot( ase_worldNormal , float3( 0,1,0 ) );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendPercent ) ) , saturate( (0.0 + (dotResult17_g3 - 0.0) * (1.0 - 0.0) / (0.1 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g51 , temp_output_90_13 , lerpResult24_g3);
+				float3 normalizedWorldNormal = normalize( ase_worldNormal );
+				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
+				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
+				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
+				float4 lerpResult38_g3 = lerp( lerpResult37_g52 , temp_output_90_13 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float4 staticSwitch91 = lerpResult38_g3;
 				#else
@@ -1690,7 +1704,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1886,29 +1902,31 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _BaseColor ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g51 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g51 = mul(GetObjectToWorldMatrix(),appendResult3_g51);
-				float2 appendResult6_g51 = (float2(transform4_g51.x , transform4_g51.z));
-				float2 WorldUV9_g51 = ( appendResult6_g51 * _Tiling );
-				float4 tex2DNode18_g51 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g51 );
-				float4 lerpResult24_g51 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g51.r);
-				float4 tex2DNode14_g51 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g51 );
-				float4 lerpResult25_g51 = lerp( _ColorADark , _ColorALight , tex2DNode14_g51.r);
+				float4 appendResult3_g52 = (float4(IN.ase_texcoord3.xyz , 1.0));
+				float4 transform4_g52 = mul(GetObjectToWorldMatrix(),appendResult3_g52);
+				float2 appendResult6_g52 = (float2(transform4_g52.x , transform4_g52.z));
+				float2 WorldUV9_g52 = ( appendResult6_g52 * _Tiling );
+				float4 tex2DNode18_g52 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g52 );
+				float4 lerpResult24_g52 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g52.r);
+				float4 tex2DNode14_g52 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g52 );
+				float4 lerpResult25_g52 = lerp( _ColorADark , _ColorALight , tex2DNode14_g52.r);
 				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
 				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
 				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g52 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g51 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g52 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g51 ).r * temp_output_13_0_g52 * 4.0 ) - temp_output_13_0_g52 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g51 ).r * temp_output_13_0_g52 ) ) );
-				float4 lerpResult37_g51 = lerp( ( lerpResult24_g51 * tex2DNode18_g51.g ) , ( lerpResult25_g51 * tex2DNode14_g51.g ) , temp_output_36_0_g51);
+				float temp_output_13_0_g53 = ( 1.0 / _HeightBlendSmoothing );
+				float temp_output_36_0_g52 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g53 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g52 ).r * temp_output_13_0_g53 * 4.0 ) - temp_output_13_0_g53 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g52 ).r * temp_output_13_0_g53 ) ) );
+				float4 lerpResult37_g52 = lerp( ( lerpResult24_g52 * tex2DNode18_g52.g ) , ( lerpResult25_g52 * tex2DNode14_g52.g ) , temp_output_36_0_g52);
 				float4 break7_g3 = temp_output_6_0_g3;
 				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 temp_output_1_0_g53 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float TerrainWorldDepth13_g3 = temp_output_1_0_g53.r;
+				float4 temp_output_1_0_g54 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
+				float TerrainWorldDepth13_g3 = temp_output_1_0_g54.r;
 				float WorldDepth12_g3 = break7_g3.z;
 				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float dotResult17_g3 = dot( ase_worldNormal , float3( 0,1,0 ) );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendPercent ) ) , saturate( (0.0 + (dotResult17_g3 - 0.0) * (1.0 - 0.0) / (0.1 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g51 , temp_output_90_13 , lerpResult24_g3);
+				float3 normalizedWorldNormal = normalize( ase_worldNormal );
+				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
+				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
+				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
+				float4 lerpResult38_g3 = lerp( lerpResult37_g52 , temp_output_90_13 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float4 staticSwitch91 = lerpResult38_g3;
 				#else
@@ -2001,7 +2019,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -2302,7 +2322,9 @@ Shader "MappedDecalable"
 			float4 _ColorALight;
 			float _Tiling;
 			float _HeightBlendSmoothing;
-			float _BlendPercent;
+			float _BlendDistance01;
+			float _DistanceBlendSmooth;
+			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -2542,28 +2564,30 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _BaseColor ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g51 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform4_g51 = mul(GetObjectToWorldMatrix(),appendResult3_g51);
-				float2 appendResult6_g51 = (float2(transform4_g51.x , transform4_g51.z));
-				float2 WorldUV9_g51 = ( appendResult6_g51 * _Tiling );
-				float4 tex2DNode18_g51 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g51 );
-				float4 lerpResult24_g51 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g51.r);
-				float4 tex2DNode14_g51 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g51 );
-				float4 lerpResult25_g51 = lerp( _ColorADark , _ColorALight , tex2DNode14_g51.r);
+				float4 appendResult3_g52 = (float4(IN.ase_texcoord8.xyz , 1.0));
+				float4 transform4_g52 = mul(GetObjectToWorldMatrix(),appendResult3_g52);
+				float2 appendResult6_g52 = (float2(transform4_g52.x , transform4_g52.z));
+				float2 WorldUV9_g52 = ( appendResult6_g52 * _Tiling );
+				float4 tex2DNode18_g52 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g52 );
+				float4 lerpResult24_g52 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g52.r);
+				float4 tex2DNode14_g52 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g52 );
+				float4 lerpResult25_g52 = lerp( _ColorADark , _ColorALight , tex2DNode14_g52.r);
 				float4 appendResult3_g3 = (float4(IN.ase_texcoord8.xyz , 1.0));
 				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
 				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g52 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g51 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g52 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g51 ).r * temp_output_13_0_g52 * 4.0 ) - temp_output_13_0_g52 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g51 ).r * temp_output_13_0_g52 ) ) );
-				float4 lerpResult37_g51 = lerp( ( lerpResult24_g51 * tex2DNode18_g51.g ) , ( lerpResult25_g51 * tex2DNode14_g51.g ) , temp_output_36_0_g51);
+				float temp_output_13_0_g53 = ( 1.0 / _HeightBlendSmoothing );
+				float temp_output_36_0_g52 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g53 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g52 ).r * temp_output_13_0_g53 * 4.0 ) - temp_output_13_0_g53 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g52 ).r * temp_output_13_0_g53 ) ) );
+				float4 lerpResult37_g52 = lerp( ( lerpResult24_g52 * tex2DNode18_g52.g ) , ( lerpResult25_g52 * tex2DNode14_g52.g ) , temp_output_36_0_g52);
 				float4 break7_g3 = temp_output_6_0_g3;
 				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 temp_output_1_0_g53 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float TerrainWorldDepth13_g3 = temp_output_1_0_g53.r;
+				float4 temp_output_1_0_g54 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
+				float TerrainWorldDepth13_g3 = temp_output_1_0_g54.r;
 				float WorldDepth12_g3 = break7_g3.z;
-				float dotResult17_g3 = dot( WorldNormal , float3( 0,1,0 ) );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendPercent ) ) , saturate( (0.0 + (dotResult17_g3 - 0.0) * (1.0 - 0.0) / (0.1 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g51 , temp_output_90_13 , lerpResult24_g3);
+				float3 normalizedWorldNormal = normalize( WorldNormal );
+				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
+				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
+				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
+				float4 lerpResult38_g3 = lerp( lerpResult37_g52 , temp_output_90_13 , lerpResult24_g3);
 				#ifdef _TERRAINBLEND_ON
 				float4 staticSwitch91 = lerpResult38_g3;
 				#else
@@ -2732,28 +2756,28 @@ Shader "MappedDecalable"
 }
 /*ASEBEGIN
 Version=18910
-133;247;1675;736;844.382;513.8265;2.028072;True;True
+367;161;1583;595;751.0907;364.7632;2.028072;True;True
 Node;AmplifyShaderEditor.TextureCoordinatesNode;61;-1771.866,-28.83351;Inherit;False;0;6;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;71;-1575.851,613.222;Inherit;False;Property;_Metallic;Metallic;28;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,200.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;23;0;Create;True;0;0;0;False;0;False;-1;None;5dd1aefbbd4f2fe41adad65a2c44cd6d;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;59;-1567.594,428.3537;Inherit;False;Property;_Smoothness;Smoothness;25;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;71;-1575.851,613.222;Inherit;False;Property;_Metallic;Metallic;30;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,200.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;25;0;Create;True;0;0;0;False;0;False;-1;None;92a3aa22916ff01498a03edd6b8cae7a;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;59;-1567.594,428.3537;Inherit;False;Property;_Smoothness;Smoothness;27;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;75;-1077.416,179.4507;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;62;-1132.894,-181.2861;Inherit;False;Property;_BaseColor;BaseColor;26;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;62;-1132.894,-181.2861;Inherit;False;Property;_BaseColor;BaseColor;28;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;-1138.661,338.3918;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;24;0;Create;True;0;0;0;False;0;False;-1;None;557853af39bffa642b5b218360765d31;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.StaticSwitch;69;-890.0314,170.4384;Inherit;False;Property;_METALLICGLOSSMAP;_METALLICGLOSSMAP;27;0;Create;True;0;0;0;True;0;False;0;0;0;True;_NORMALMAP;Toggle;2;Key0;Key1;Create;True;True;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;26;0;Create;True;0;0;0;False;0;False;-1;None;74f14fc7d5f900c49a150260dfe30654;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.StaticSwitch;69;-890.0314,170.4384;Inherit;False;Property;_METALLICGLOSSMAP;_METALLICGLOSSMAP;29;0;Create;True;0;0;0;True;0;False;0;0;1;True;_NORMALMAP;Toggle;2;Key0;Key1;Create;True;True;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.Vector3Node;66;-864.0594,-128.7797;Inherit;False;Constant;_Vector0;Vector 0;8;0;Create;True;0;0;0;False;0;False;0,0,1;0,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;bcf550ac2dbcd9a43962851915722483;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.StaticSwitch;65;-670.5678,0.3279545;Inherit;False;Property;_NORMALMAP;NORMALMAP;29;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;2123b0dca81a19543ae8c99d02a5aa3e;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.StaticSwitch;65;-670.5678,0.3279545;Inherit;False;Property;_NORMALMAP;NORMALMAP;31;0;Create;True;0;0;0;False;0;False;0;0;1;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-903.8377,-327.4095;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;74;-543.5166,220.7278;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;90;-251.1696,21.35154;Inherit;False;ApplyDecals;21;;2;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
+Node;AmplifyShaderEditor.FunctionNode;90;-251.1696,21.35154;Inherit;False;ApplyDecals;23;;2;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
 Node;AmplifyShaderEditor.FunctionNode;92;255.3955,-58.12828;Inherit;False;TerrainBlender;1;;3;b7b88921e1da5fa42a1bc22e9b01bf0f;0;3;40;COLOR;0,0,0,0;False;45;FLOAT3;0,0,0;False;46;COLOR;0,0,0,0;False;3;COLOR;0;FLOAT3;43;COLOR;44
-Node;AmplifyShaderEditor.StaticSwitch;91;632.9503,-83.6375;Inherit;False;Property;_TERRAINBLEND;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.StaticSwitch;91;632.9503,-83.6375;Inherit;False;Property;_TERRAINBLEND;TERRAINBLEND;32;0;Create;True;0;0;0;False;0;False;0;0;1;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;73;1058.729,294.426;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.StaticSwitch;93;641.9995,54.64054;Inherit;False;Property;_TERRAINBLEND1;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.StaticSwitch;93;641.9995,54.64054;Inherit;False;Property;_TERRAINBLEND1;TERRAINBLEND;32;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RangedFloatNode;77;1182.551,452.657;Inherit;False;Constant;_Float0;Float 0;9;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.StaticSwitch;94;653.6997,191.1405;Inherit;False;Property;_TERRAINBLEND2;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT4;0,0,0,0;False;0;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;8;FLOAT4;0,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.StaticSwitch;94;653.6997,191.1405;Inherit;False;Property;_TERRAINBLEND2;TERRAINBLEND;32;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT4;0,0,0,0;False;0;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;8;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;82;1516.614,280.9744;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;MappedDecalable;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;1;Built-in Fog;1;_FinalColorxAlpha;0;Meta Pass;1;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;True;True;True;True;False;;True;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;81;1516.614,280.9744;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;87;1516.614,280.9744;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2798,4 +2822,4 @@ WireConnection;82;3;73;0
 WireConnection;82;4;73;3
 WireConnection;82;7;77;0
 ASEEND*/
-//CHKSM=081451F340534EB50AFF3C1CCF5BCCE299CEE1FE
+//CHKSM=47344A0A71D7C8349A92291F6F732A6B50DAEC71

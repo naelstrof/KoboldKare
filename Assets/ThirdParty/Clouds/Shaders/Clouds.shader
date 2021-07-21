@@ -274,7 +274,7 @@ Shader "VolumetricClouds"
                     totalDensity += max(0, sampleDensity(position) * stepSize);
                 }
 
-                float transmittance = exp(-totalDensity * lightAbsorptionTowardSun);
+                float transmittance = lerp(1,exp(-totalDensity * lightAbsorptionTowardSun), abs(_MainLightPosition.y));
                 return darknessThreshold + transmittance * (1-darknessThreshold);
             }
 
@@ -413,7 +413,7 @@ Shader "VolumetricClouds"
                         hitDstTravelled += stepSize;
                     }
                 }
-                hitTransmittance = remap( hitTransmittance, 0, 1, shadowMin, shadowMax);
+                hitTransmittance = lerp(1,remap( hitTransmittance, 0, 1, shadowMin, shadowMax),abs(_MainLightPosition.y));
                 #endif
                 // Shadows done
 

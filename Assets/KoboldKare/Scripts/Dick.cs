@@ -338,15 +338,21 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
         public Vector3 localDickRoot;
     }
     public List<DickShape> shapes = new List<DickShape>();
+
     void Awake() {
-        if (slimySource == null && Application.isPlaying) {
+        StartCoroutine(AwakeRoutine());
+    }
+
+    IEnumerator AwakeRoutine() {
+        while (slimySource == null && Application.isPlaying) {
             slimySource = gameObject.AddComponent<AudioSource>();
-            if (slimySource != null) {
-                slimySource.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-                slimySource.rolloffMode = AudioRolloffMode.Logarithmic;
-                slimySource.loop = true;
-                slimySource.spatialBlend = 1f;
-            }
+            yield return null;
+        }
+        if (slimySource != null && GameManager.instance != null) {
+            slimySource.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
+            slimySource.rolloffMode = AudioRolloffMode.Logarithmic;
+            slimySource.loop = true;
+            slimySource.spatialBlend = 1f;
         }
     }
 
@@ -699,7 +705,9 @@ public class Dick : MonoBehaviour, IAdvancedInteractable, IFreezeReciever {
             SetDeforms();
             return;
         }
-        slimySource.volume = Mathf.MoveTowards(slimySource.volume, 0f, Time.deltaTime*0.4f);
+        if (slimySource != null) {
+            slimySource.volume = Mathf.MoveTowards(slimySource.volume, 0f, Time.deltaTime*0.4f);
+        }
         if (holeTarget != null) {
             //penetrationDepth01 += GetTangent(penetrationDepth01)*Time.deltaTime;
             //penetrationDepth01 += GetTangent(penetrationDepth01-(holeTarget.orifaceLength/GetLength()))*Time.deltaTime;

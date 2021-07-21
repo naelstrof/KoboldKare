@@ -676,6 +676,16 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             controller.frictionMultiplier = 0.1f;
         }
     }
+    public bool IsPenetrating(Kobold k) {
+        foreach(var penetratable in k.penetratables) {
+            foreach(var dickset in activeDicks) {
+                if (penetratable.penetratable.ContainsPenetrator(dickset.dick)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void OnEndInteract(Kobold k) {
         grabbed = false;
         if (NetworkManager.instance.localPlayerInstance == photonView && photonView && !photonView.IsMine) {

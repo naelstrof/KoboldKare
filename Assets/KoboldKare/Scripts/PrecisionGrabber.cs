@@ -653,7 +653,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             //joint.targetPosition = view.forward * distance;//holdPoint-objHoldPoint;
 
             // Manual axis alignment, for pole jumps!
-            if (jointRigidbody.transform.root != self.transform.root && !jointRigidbody.isKinematic) {
+            bool isPenetrating = false;
+            Kobold k = jointRigidbody.GetComponentInParent<Kobold>();
+            if (k) {
+                isPenetrating = kobold.IsPenetrating(k);
+            }
+            if (!isPenetrating && jointRigidbody.transform.root != self.transform.root && !jointRigidbody.isKinematic) {
                 jointRigidbody.velocity -= jointRigidbody.velocity*_dampStrength;
                 Vector3 axis = view.forward;
                 Vector3 jointPos = jointRigidbody.transform.TransformPoint(jointAnchor);

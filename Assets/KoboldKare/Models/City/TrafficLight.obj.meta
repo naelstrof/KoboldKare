@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Emission
-    second: {fileID: 2100000, guid: 72916734e78109e409a4446a2ca7a2cb, type: 2}
+    second: {fileID: 2100000, guid: 109acdb565d2fc342b4659a42b520772, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material.001
-    second: {fileID: 2100000, guid: 5ea59ea0f41d79a46bb9db28fba26b0b, type: 2}
+    second: {fileID: 2100000, guid: 81b74278cb196934cbe8112efebf045a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

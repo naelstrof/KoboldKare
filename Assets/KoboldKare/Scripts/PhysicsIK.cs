@@ -14,6 +14,7 @@ namespace Vilar.IK {
             public float damping = 0.3f;
             public bool rotationEnabled;
             public Quaternion targetRotation;
+            public ConfigurableJoint joint;
             //public Quaternion rotationAdjust;
         }
         [System.Serializable]
@@ -27,11 +28,24 @@ namespace Vilar.IK {
         private static LimbOrientation defaultOrientation = new LimbOrientation();
         public List<LimbOrientation> orientations;
         public void AddJoint(int index, Transform body, Vector3 worldAnchor, float strength, bool rotationEnabled = true) {
+            var lo = GetOrientation((IKTargetSet.parts)index);
             CustomJoint newJoint = new CustomJoint();
             newJoint.body = body.GetComponentInParent<Rigidbody>();
             newJoint.anchor = newJoint.body.transform.InverseTransformPoint(worldAnchor);
             newJoint.strength = strength;
             newJoint.rotationEnabled = rotationEnabled;
+            if (rotationEnabled) {
+                Quaternion savedRotation = newJoint.body.transform.rotation;
+                newJoint.body.transform.rotation = Quaternion.identity;
+                newJoint.joint = newJoint.body.gameObject.AddComponent<ConfigurableJoint>();
+                newJoint.body.transform.rotation = savedRotation;
+                var slerpd = newJoint.joint.slerpDrive;
+                slerpd.positionSpring = strength*10f;
+                newJoint.joint.slerpDrive = slerpd;
+                newJoint.joint.rotationDriveMode = RotationDriveMode.Slerp;
+                newJoint.joint.configuredInWorldSpace = true;
+            }
+
             //LimbOrientation lo = GetOrientation((IKTargetSet.parts)index);
             //newJoint.rotationAdjust = Quaternion.Inverse(Quaternion.LookRotation(lo.forward, lo.up));
             joints[index] = newJoint;
@@ -66,19 +80,24 @@ namespace Vilar.IK {
             float strength = 8f;
             AddJoint((int)IKTargetSet.parts.HEAD, animator.GetBoneTransform(HumanBodyBones.Head), animator.GetBoneTransform(HumanBodyBones.Head).position, strength*2f);
             AddJoint((int)IKTargetSet.parts.HANDLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand), animator.GetBoneTransform(HumanBodyBones.LeftHand).position, strength*0.5f);
-            AddJoint((int)IKTargetSet.parts.ELBOWLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.position, strength/20f, false);
+            AddJoint((int)IKTargetSet.parts.ELBOWLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.position, strength/2f, false);
             AddJoint((int)IKTargetSet.parts.HANDRIGHT, animator.GetBoneTransform(HumanBodyBones.RightHand), animator.GetBoneTransform(HumanBodyBones.RightHand).position, strength*0.5f);
-            AddJoint((int)IKTargetSet.parts.ELBOWRIGHT, animator.GetBoneTransform(HumanBodyBones.RightHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.RightHand).parent.position, strength/20f, false);
+            AddJoint((int)IKTargetSet.parts.ELBOWRIGHT, animator.GetBoneTransform(HumanBodyBones.RightHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.RightHand).parent.position, strength/2f, false);
             AddJoint((int)IKTargetSet.parts.FOOTLEFT, animator.GetBoneTransform(HumanBodyBones.LeftFoot), animator.GetBoneTransform(HumanBodyBones.LeftFoot).position, strength*0.5f);
-            AddJoint((int)IKTargetSet.parts.KNEELEFT, animator.GetBoneTransform(HumanBodyBones.LeftFoot).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftFoot).parent.position, strength/20f, false);
+            AddJoint((int)IKTargetSet.parts.KNEELEFT, animator.GetBoneTransform(HumanBodyBones.LeftFoot).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftFoot).parent.position, strength/2f, false);
             AddJoint((int)IKTargetSet.parts.FOOTRIGHT, animator.GetBoneTransform(HumanBodyBones.RightFoot), animator.GetBoneTransform(HumanBodyBones.RightFoot).position, strength*0.5f);
-            AddJoint((int)IKTargetSet.parts.KNEERIGHT, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.parent, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.position, strength/20f, false);
+            AddJoint((int)IKTargetSet.parts.KNEERIGHT, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.parent, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.position, strength/2f, false);
             AddJoint((int)IKTargetSet.parts.HIPS, animator.GetBoneTransform(HumanBodyBones.Hips), animator.GetBoneTransform(HumanBodyBones.Hips).position, strength);
             kobold.KnockOver(9999999);
             IKEnabled = true;
         }
 
         public void CleanUp() {
+            foreach(var j in joints) {
+                if (j.rotationEnabled) {
+                    Destroy(j.joint);
+                }
+            }
             IKEnabled = false;
             kobold.StandUp();
         }
@@ -116,15 +135,16 @@ namespace Vilar.IK {
                 Vector3 targetUp = joints[i].targetRotation * Vector3.up;
                 Vector3 targetRight = joints[i].targetRotation * Vector3.right;
 
-                //Quaternion rotForce = Quaternion.FromToRotation(bodyForward, targetForward);
-                float deflectionForgiveness = 5f;
+                /*float deflectionForgiveness = 5f;
                 Vector3 axis = Vector3.Cross(bodyForward, targetForward);
                 float angle = Mathf.Max(Vector3.Angle(bodyForward, targetForward)-deflectionForgiveness,0f);
-                // We only solve half-way up, otherwise there's situtations where the forward rotation adjustment perfectly inverts the up rotation adjustment.
-                // This way we will always solve to face the right way before rolling.
-                //rotForce *= Quaternion.Lerp(Quaternion.identity, Quaternion.FromToRotation(bodyUp, Vector3.ProjectOnPlane(targetUp, bodyForward).normalized), 0.5f);
-
-                /*if (i == 0) {
+                joints[i].body.angularVelocity = axis * angle * joints[i].strength * 1.5f;*/
+                if (joints[i].rotationEnabled) {
+                    Quaternion adjust = Quaternion.LookRotation(lo.forward, lo.up);
+                    joints[i].joint.targetRotation = Quaternion.Inverse(joints[i].targetRotation * Quaternion.Inverse(adjust));
+                    //joints[i].joint.targetRotation = joints[i].body.rotation;
+                }
+                if (i == (int)(IKTargetSet.parts.HANDRIGHT)) {
                     Debug.DrawLine(bodyPos, bodyPos + bodyForward, Color.blue);
                     Debug.DrawLine(bodyPos, bodyPos + targetForward, Color.blue);
 
@@ -133,10 +153,7 @@ namespace Vilar.IK {
 
                     Debug.DrawLine(bodyPos, bodyPos + bodyRight, Color.red);
                     Debug.DrawLine(bodyPos, bodyPos + targetRight, Color.red);
-                }*/
-                //joints[i].body.angularVelocity *= (1f - joints[i].damping);
-                //joints[i].body.AddTorque(axis * angle * joints[i].strength*40f, ForceMode.VelocityChange);
-                joints[i].body.angularVelocity = axis * angle * joints[i].strength * 1.5f;
+                }
             }
         }
 

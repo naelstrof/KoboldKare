@@ -93,7 +93,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.ragdollBody.detectCollisions = false;
+                dickSet.dick.body.detectCollisions = false;
             }
         }
         yield return new WaitForSeconds(5f);
@@ -102,7 +102,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.ragdollBody.detectCollisions = true;
+                dickSet.dick.body.detectCollisions = true;
             }
         }
         float endTransitionTime = Time.timeSinceLevelLoad + 3f;
@@ -176,7 +176,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         if (kobold.activeDicks != null) {
             foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.ragdollBody.detectCollisions = true;
+                dickSet.dick.body.detectCollisions = true;
             }
         }
     }
@@ -356,7 +356,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.
             foreach (var hole in kobold.penetratables) {
                 foreach( var dick in hole.penetratable.GetPenetrators()) {
-                    if (!dick.isDildo) {
+                    if (dick.IsInside()) {
                         lastPosition = transform.position;
                     }
                 }

@@ -238,10 +238,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -266,7 +266,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -282,70 +290,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -755,10 +770,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -783,7 +798,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -801,70 +824,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1099,10 +1129,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -1127,7 +1157,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -1143,70 +1181,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1430,10 +1475,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -1458,7 +1503,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -1474,70 +1527,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				
@@ -1758,10 +1818,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -1786,7 +1846,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -1802,70 +1870,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				
@@ -2077,10 +2152,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -2105,7 +2180,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -2121,70 +2204,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -2442,10 +2532,10 @@ Shader "TentacleDeform"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float3 _forward;
 			float3 _OrifacePosition;
-			float3 _OrifaceNormal;
 			float3 _up;
+			float3 _forward;
+			float3 _OrifaceNormal;
 			float3 _right;
 			float _Length;
 			#ifdef _TRANSMISSION_ASE
@@ -2470,7 +2560,15 @@ Shader "TentacleDeform"
 			CBUFFER_END
 			
 
-			float3 MyCustomExpression20_g45( float3 bezierDerivitive, float3 forward, float3 up )
+			float3 MyCustomExpression20_g53( float3 bezierDerivitive, float3 forward, float3 up )
+			{
+				float bezierUpness = dot( bezierDerivitive , up);
+				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
+				float bezierDownness = dot( bezierDerivitive , -up );
+				return normalize( lerp( bezierUp , forward , saturate( bezierDownness )) );
+			}
+			
+			float3 MyCustomExpression20_g49( float3 bezierDerivitive, float3 forward, float3 up )
 			{
 				float bezierUpness = dot( bezierDerivitive , up);
 				float3 bezierUp = lerp( up , -forward , saturate( bezierUpness ));
@@ -2486,70 +2584,77 @@ Shader "TentacleDeform"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 temp_output_11_0_g48 = _forward;
+				float3 temp_output_42_0_g52 = float3( 0,0,0 );
 				float3 worldToObj25 = mul( GetWorldToObjectMatrix(), float4( _OrifacePosition, 1 ) ).xyz;
 				float temp_output_48_0 = length( worldToObj25 );
 				float PenetratedDepth29 = saturate( ( _Length - temp_output_48_0 ) );
-				float3 temp_output_14_0_g48 = ( ( -temp_output_11_0_g48 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
-				float dotResult22_g48 = dot( temp_output_11_0_g48 , temp_output_14_0_g48 );
-				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
-				float3 normalizeResult27_g49 = normalize( -worldToObjDir24 );
-				float3 temp_output_7_0_g48 = normalizeResult27_g49;
-				float3 temp_output_4_0_g48 = _up;
-				float dotResult23_g48 = dot( temp_output_4_0_g48 , temp_output_14_0_g48 );
-				float3 normalizeResult31_g49 = normalize( temp_output_4_0_g48 );
-				float3 normalizeResult29_g49 = normalize( cross( normalizeResult27_g49 , normalizeResult31_g49 ) );
-				float3 temp_output_7_1_g48 = cross( normalizeResult29_g49 , normalizeResult27_g49 );
-				float3 temp_output_20_0_g48 = _right;
-				float dotResult21_g48 = dot( temp_output_20_0_g48 , temp_output_14_0_g48 );
-				float3 temp_output_7_2_g48 = normalizeResult29_g49;
-				float3 temp_output_2_0_g43 = v.vertex.xyz;
-				float3 temp_output_3_0_g43 = _forward;
-				float dotResult6_g43 = dot( temp_output_2_0_g43 , temp_output_3_0_g43 );
-				float VisibleLength40 = ( _Length - PenetratedDepth29 );
-				float temp_output_20_0_g43 = ( dotResult6_g43 / VisibleLength40 );
-				float temp_output_26_0_g44 = temp_output_20_0_g43;
+				float3 temp_output_52_0_g52 = ( ( temp_output_42_0_g52 * ( 1.0 - PenetratedDepth29 ) ) + v.vertex.xyz );
+				float dotResult53_g52 = dot( temp_output_42_0_g52 , temp_output_52_0_g52 );
+				float temp_output_1_0_g55 = 1.0;
+				float temp_output_8_0_g55 = ( 1.0 - temp_output_1_0_g55 );
+				float3 temp_output_3_0_g55 = float3( 0,0,0 );
+				float3 temp_output_4_0_g55 = float3( 0,0,0 );
+				float3 temp_output_7_0_g53 = ( ( 3.0 * temp_output_8_0_g55 * temp_output_8_0_g55 * ( temp_output_3_0_g55 - float3( 0,0,0 ) ) ) + ( 6.0 * temp_output_8_0_g55 * temp_output_1_0_g55 * ( temp_output_4_0_g55 - temp_output_3_0_g55 ) ) + ( 3.0 * temp_output_1_0_g55 * temp_output_1_0_g55 * ( float3( 0,0,0 ) - temp_output_4_0_g55 ) ) );
+				float3 bezierDerivitive20_g53 = temp_output_7_0_g53;
+				float3 forward20_g53 = temp_output_42_0_g52;
+				float3 temp_output_4_0_g52 = _up;
+				float3 up20_g53 = temp_output_4_0_g52;
+				float3 localMyCustomExpression20_g53 = MyCustomExpression20_g53( bezierDerivitive20_g53 , forward20_g53 , up20_g53 );
+				float3 normalizeResult27_g54 = normalize( localMyCustomExpression20_g53 );
+				float3 normalizeResult31_g54 = normalize( cross( temp_output_7_0_g53 , localMyCustomExpression20_g53 ) );
+				float3 normalizeResult29_g54 = normalize( cross( normalizeResult27_g54 , normalizeResult31_g54 ) );
+				float3 temp_output_67_23_g52 = normalizeResult29_g54;
+				float dotResult54_g52 = dot( temp_output_4_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_0_g52 = normalizeResult27_g54;
+				float3 temp_output_43_0_g52 = float3( 0,0,0 );
+				float dotResult55_g52 = dot( temp_output_43_0_g52 , temp_output_52_0_g52 );
+				float3 temp_output_67_22_g52 = cross( normalizeResult29_g54 , normalizeResult27_g54 );
+				float temp_output_42_0_g43 = 0.0;
+				float temp_output_26_0_g44 = temp_output_42_0_g43;
 				float temp_output_19_0_g44 = ( 1.0 - temp_output_26_0_g44 );
 				float3 temp_output_8_0_g43 = float3( 0,0,0 );
+				float VisibleLength40 = ( _Length - PenetratedDepth29 );
 				float3 temp_output_9_0_g43 = ( _forward * VisibleLength40 * 0.333 );
+				float3 worldToObjDir24 = mul( GetWorldToObjectMatrix(), float4( _OrifaceNormal, 0 ) ).xyz;
 				float3 temp_output_10_0_g43 = ( worldToObj25 + ( worldToObjDir24 * VisibleLength40 * 0.333 ) );
 				float3 temp_output_11_0_g43 = worldToObj25;
-				float temp_output_1_0_g46 = temp_output_20_0_g43;
-				float temp_output_8_0_g46 = ( 1.0 - temp_output_1_0_g46 );
-				float3 temp_output_3_0_g46 = temp_output_9_0_g43;
-				float3 temp_output_4_0_g46 = temp_output_10_0_g43;
-				float3 temp_output_7_0_g45 = ( ( 3.0 * temp_output_8_0_g46 * temp_output_8_0_g46 * ( temp_output_3_0_g46 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g46 * temp_output_1_0_g46 * ( temp_output_4_0_g46 - temp_output_3_0_g46 ) ) + ( 3.0 * temp_output_1_0_g46 * temp_output_1_0_g46 * ( temp_output_11_0_g43 - temp_output_4_0_g46 ) ) );
-				float3 bezierDerivitive20_g45 = temp_output_7_0_g45;
-				float3 forward20_g45 = temp_output_3_0_g43;
+				float temp_output_1_0_g51 = temp_output_42_0_g43;
+				float temp_output_8_0_g51 = ( 1.0 - temp_output_1_0_g51 );
+				float3 temp_output_3_0_g51 = temp_output_9_0_g43;
+				float3 temp_output_4_0_g51 = temp_output_10_0_g43;
+				float3 temp_output_7_0_g49 = ( ( 3.0 * temp_output_8_0_g51 * temp_output_8_0_g51 * ( temp_output_3_0_g51 - temp_output_8_0_g43 ) ) + ( 6.0 * temp_output_8_0_g51 * temp_output_1_0_g51 * ( temp_output_4_0_g51 - temp_output_3_0_g51 ) ) + ( 3.0 * temp_output_1_0_g51 * temp_output_1_0_g51 * ( temp_output_11_0_g43 - temp_output_4_0_g51 ) ) );
+				float3 bezierDerivitive20_g49 = temp_output_7_0_g49;
+				float3 temp_output_3_0_g43 = _forward;
+				float3 forward20_g49 = temp_output_3_0_g43;
 				float3 temp_output_4_0_g43 = _up;
-				float3 up20_g45 = temp_output_4_0_g43;
-				float3 localMyCustomExpression20_g45 = MyCustomExpression20_g45( bezierDerivitive20_g45 , forward20_g45 , up20_g45 );
-				float3 normalizeResult27_g47 = normalize( localMyCustomExpression20_g45 );
-				float3 normalizeResult24_g45 = normalize( cross( temp_output_7_0_g45 , localMyCustomExpression20_g45 ) );
-				float3 normalizeResult31_g47 = normalize( normalizeResult24_g45 );
-				float3 normalizeResult29_g47 = normalize( cross( normalizeResult27_g47 , normalizeResult31_g47 ) );
-				float3 temp_output_41_22_g43 = cross( normalizeResult29_g47 , normalizeResult27_g47 );
+				float3 up20_g49 = temp_output_4_0_g43;
+				float3 localMyCustomExpression20_g49 = MyCustomExpression20_g49( bezierDerivitive20_g49 , forward20_g49 , up20_g49 );
+				float3 normalizeResult27_g50 = normalize( localMyCustomExpression20_g49 );
+				float3 normalizeResult31_g50 = normalize( cross( temp_output_7_0_g49 , localMyCustomExpression20_g49 ) );
+				float3 normalizeResult29_g50 = normalize( cross( normalizeResult27_g50 , normalizeResult31_g50 ) );
+				float3 temp_output_51_22_g43 = cross( normalizeResult29_g50 , normalizeResult27_g50 );
+				float3 temp_output_2_0_g43 = v.vertex.xyz;
 				float3 temp_output_5_0_g43 = _right;
 				float dotResult15_g43 = dot( temp_output_2_0_g43 , temp_output_5_0_g43 );
-				float3 temp_output_41_0_g43 = normalizeResult27_g47;
+				float3 temp_output_51_0_g43 = normalizeResult27_g50;
 				float dotResult18_g43 = dot( temp_output_2_0_g43 , temp_output_4_0_g43 );
 				float dotResult36 = dot( v.vertex.xyz , _forward );
 				float temp_output_38_0 = saturate( sign( ( VisibleLength40 - dotResult36 ) ) );
-				float3 lerpResult54 = lerp( ( ( dotResult22_g48 * temp_output_7_0_g48 ) + ( dotResult23_g48 * temp_output_7_1_g48 ) + ( dotResult21_g48 * temp_output_7_2_g48 ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_41_22_g43 * dotResult15_g43 ) + ( temp_output_41_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
+				float3 lerpResult54 = lerp( ( ( ( dotResult53_g52 * temp_output_67_23_g52 ) + ( dotResult54_g52 * temp_output_67_0_g52 ) + ( dotResult55_g52 * temp_output_67_22_g52 ) ) + worldToObj25 ) , ( ( ( temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_19_0_g44 * temp_output_8_0_g43 ) + ( temp_output_19_0_g44 * temp_output_19_0_g44 * 3.0 * temp_output_26_0_g44 * temp_output_9_0_g43 ) + ( 3.0 * temp_output_19_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_10_0_g43 ) + ( temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_26_0_g44 * temp_output_11_0_g43 ) ) + ( temp_output_51_22_g43 * dotResult15_g43 ) + ( temp_output_51_0_g43 * dotResult18_g43 ) ) , temp_output_38_0);
 				float temp_output_71_0 = saturate( ( ( temp_output_48_0 - _Length ) * 8.0 ) );
 				float3 lerpResult67 = lerp( lerpResult54 , v.vertex.xyz , temp_output_71_0);
 				
-				float3 temp_output_24_0_g48 = v.ase_normal;
-				float dotResult25_g48 = dot( temp_output_11_0_g48 , temp_output_24_0_g48 );
-				float dotResult26_g48 = dot( temp_output_4_0_g48 , temp_output_24_0_g48 );
-				float dotResult27_g48 = dot( temp_output_20_0_g48 , temp_output_24_0_g48 );
-				float3 normalizeResult33_g48 = normalize( ( ( dotResult25_g48 * temp_output_7_0_g48 ) + ( dotResult26_g48 * temp_output_7_1_g48 ) + ( dotResult27_g48 * temp_output_7_2_g48 ) ) );
+				float3 temp_output_24_0_g52 = v.ase_normal;
+				float dotResult61_g52 = dot( temp_output_42_0_g52 , temp_output_24_0_g52 );
+				float dotResult62_g52 = dot( temp_output_4_0_g52 , temp_output_24_0_g52 );
+				float dotResult60_g52 = dot( temp_output_43_0_g52 , temp_output_24_0_g52 );
+				float3 normalizeResult33_g52 = normalize( ( ( dotResult61_g52 * temp_output_67_23_g52 ) + ( dotResult62_g52 * temp_output_67_0_g52 ) + ( dotResult60_g52 * temp_output_67_22_g52 ) ) );
 				float3 temp_output_21_0_g43 = v.ase_normal;
-				float dotResult23_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
-				float dotResult24_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
-				float dotResult25_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
-				float3 normalizeResult31_g43 = normalize( ( ( normalizeResult29_g47 * dotResult23_g43 ) + ( temp_output_41_0_g43 * dotResult24_g43 ) + ( temp_output_41_22_g43 * dotResult25_g43 ) ) );
-				float3 lerpResult64 = lerp( normalizeResult33_g48 , normalizeResult31_g43 , temp_output_38_0);
+				float dotResult55_g43 = dot( temp_output_21_0_g43 , temp_output_3_0_g43 );
+				float dotResult56_g43 = dot( temp_output_21_0_g43 , temp_output_4_0_g43 );
+				float dotResult57_g43 = dot( temp_output_21_0_g43 , temp_output_5_0_g43 );
+				float3 normalizeResult31_g43 = normalize( ( ( dotResult55_g43 * normalizeResult29_g50 ) + ( dotResult56_g43 * temp_output_51_0_g43 ) + ( dotResult57_g43 * temp_output_51_22_g43 ) ) );
+				float3 lerpResult64 = lerp( normalizeResult33_g52 , normalizeResult31_g43 , temp_output_38_0);
 				float3 lerpResult70 = lerp( lerpResult64 , v.ase_normal , temp_output_71_0);
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -2898,8 +3003,8 @@ Shader "TentacleDeform"
 	
 }
 /*ASEBEGIN
-Version=18909
-7;169;1675;823;1075.539;-14.53859;1.075239;True;False
+Version=18910
+273;98;1891;868;1191.665;9.654286;1.075239;False;True
 Node;AmplifyShaderEditor.Vector3Node;21;-1203.107,635.8024;Inherit;False;Property;_OrifacePosition;OrifacePosition;3;0;Create;True;0;0;0;False;0;False;0,0,0;0,0,10;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.TransformPositionNode;25;-934.3206,664.3275;Inherit;False;World;Object;False;Fast;True;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.LengthOpNode;48;-482.2173,584.0245;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT;0
@@ -2909,10 +3014,10 @@ Node;AmplifyShaderEditor.SaturateNode;31;-56.63159,561.7845;Inherit;False;1;0;FL
 Node;AmplifyShaderEditor.RegisterLocalVarNode;29;199.2906,571.8292;Inherit;False;PenetratedDepth;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;33;-1206.149,-622.1014;Inherit;False;29;PenetratedDepth;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleSubtractOpNode;32;-768.9017,-634.5361;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector3Node;15;-1177.729,-373.3927;Inherit;False;Property;_forward;forward;0;0;Create;True;0;0;0;False;0;False;0,0,1;0,1,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.Vector3Node;22;-1217.95,854.765;Inherit;False;Property;_OrifaceNormal;OrifaceNormal;4;0;Create;True;0;0;0;False;0;False;0,0,0;0,1,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.RegisterLocalVarNode;40;-605.9235,-394.1053;Inherit;False;VisibleLength;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.PosVertexDataNode;1;-1196.059,-525.7519;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector3Node;15;-1177.729,-373.3927;Inherit;False;Property;_forward;forward;0;0;Create;True;0;0;0;False;0;False;0,0,1;0,1,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.Vector3Node;22;-1217.95,854.765;Inherit;False;Property;_OrifaceNormal;OrifaceNormal;4;0;Create;True;0;0;0;False;0;False;0,0,0;0,1,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.TransformDirectionNode;24;-981.0281,849.497;Inherit;False;World;Object;False;Fast;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.RangedFloatNode;44;-1484.062,485.2912;Inherit;False;Constant;_Float1;Float 1;6;0;Create;True;0;0;0;False;0;False;0.333;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;41;-932.548,1020.346;Inherit;False;40;VisibleLength;1;0;OBJECT;;False;1;FLOAT;0
@@ -2921,22 +3026,22 @@ Node;AmplifyShaderEditor.SimpleSubtractOpNode;37;-219.2686,-526.8465;Inherit;Fal
 Node;AmplifyShaderEditor.GetLocalVarNode;53;-1091.918,552.8815;Inherit;False;29;PenetratedDepth;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;46;-1285.317,135.9577;Inherit;False;40;VisibleLength;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;42;-646.7068,1027.786;Inherit;False;3;3;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.PosVertexDataNode;52;-1064.701,380.2873;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;45;-965.4761,138.0826;Inherit;False;3;3;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;68;-49.49989,363.2491;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NormalVertexDataNode;63;-1376.15,-391.5664;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector3Node;16;-1199.732,-202.7614;Inherit;False;Property;_up;up;1;0;Create;True;0;0;0;False;0;False;0,1,0;0,0,1;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.SignOpNode;61;-63.97924,-501.5865;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.Vector3Node;17;-1193.1,-27.07427;Inherit;False;Property;_right;right;2;0;Create;True;0;0;0;False;0;False;1,0,0;1,0,0;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.OneMinusNode;58;-848.6926,517.2569;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;26;-629.6446,803.4425;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SignOpNode;61;-63.97924,-501.5865;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;68;-49.49989,363.2491;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector3Node;16;-1199.732,-202.7614;Inherit;False;Property;_up;up;1;0;Create;True;0;0;0;False;0;False;0,1,0;0,0,1;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.NormalVertexDataNode;63;-1376.15,-391.5664;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;45;-965.4761,138.0826;Inherit;False;3;3;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.PosVertexDataNode;52;-1064.701,380.2873;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FunctionNode;65;-584.6359,-110.0326;Inherit;False;BezierSpaceTransform;-1;;43;d8cd7e255e788cb4f9cacb136d95dad5;0;10;42;FLOAT;0;False;21;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,1;False;4;FLOAT3;0,1,0;False;5;FLOAT3;1,0,0;False;8;FLOAT3;0,0,0;False;9;FLOAT3;0,0,0;False;10;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;2;FLOAT3;22;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;66;-545.9927,240.4782;Inherit;False;OrifaceSpaceTransform;-1;;52;a2cb6c5fdae31044587a631065a2df2f;0;11;68;FLOAT3;0,0,0;False;69;FLOAT3;0,0,0;False;70;FLOAT3;0,0,0;False;71;FLOAT3;0,0,0;False;24;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;42;FLOAT3;0,0,0;False;43;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;2;FLOAT3;34;FLOAT3;0
 Node;AmplifyShaderEditor.SaturateNode;38;55.98738,-473.6723;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;72;178.1881,360.7655;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;8;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;65;-584.6359,-110.0326;Inherit;False;BeizerSpaceTransform;-1;;43;d8cd7e255e788cb4f9cacb136d95dad5;0;10;21;FLOAT3;0,0,0;False;19;FLOAT;1;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,1;False;4;FLOAT3;0,1,0;False;5;FLOAT3;1,0,0;False;8;FLOAT3;0,0,0;False;9;FLOAT3;0,0,0;False;10;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;2;FLOAT3;22;FLOAT3;0
-Node;AmplifyShaderEditor.FunctionNode;66;-548.1432,239.403;Inherit;False;OrifaceSpaceTransform;-1;;48;a2cb6c5fdae31044587a631065a2df2f;0;8;24;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;11;FLOAT3;0,0,0;False;20;FLOAT3;0,0,0;False;2;FLOAT3;34;FLOAT3;0
 Node;AmplifyShaderEditor.LerpOp;54;-122.3116,-80.5788;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.LerpOp;64;-130.3704,145.3796;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SaturateNode;71;472.5205,406.8019;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;64;-130.3704,145.3796;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.LerpOp;67;308.8506,-132.0099;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.LerpOp;70;351.1631,71.45693;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2964,19 +3069,16 @@ WireConnection;37;1;36;0
 WireConnection;42;0;24;0
 WireConnection;42;1;41;0
 WireConnection;42;2;44;0
-WireConnection;45;0;15;0
-WireConnection;45;1;46;0
-WireConnection;45;2;44;0
+WireConnection;68;0;48;0
+WireConnection;68;1;19;0
+WireConnection;61;0;37;0
 WireConnection;58;0;53;0
 WireConnection;26;0;25;0
 WireConnection;26;1;42;0
-WireConnection;61;0;37;0
-WireConnection;68;0;48;0
-WireConnection;68;1;19;0
-WireConnection;38;0;61;0
-WireConnection;72;0;68;0
+WireConnection;45;0;15;0
+WireConnection;45;1;46;0
+WireConnection;45;2;44;0
 WireConnection;65;21;63;0
-WireConnection;65;19;40;0
 WireConnection;65;2;1;0
 WireConnection;65;3;15;0
 WireConnection;65;4;16;0
@@ -2985,20 +3087,19 @@ WireConnection;65;9;45;0
 WireConnection;65;10;26;0
 WireConnection;65;11;25;0
 WireConnection;66;24;63;0
-WireConnection;66;1;24;0
 WireConnection;66;4;16;0
 WireConnection;66;5;25;0
 WireConnection;66;6;52;0
 WireConnection;66;10;58;0
-WireConnection;66;11;15;0
-WireConnection;66;20;17;0
+WireConnection;38;0;61;0
+WireConnection;72;0;68;0
 WireConnection;54;0;66;0
 WireConnection;54;1;65;0
 WireConnection;54;2;38;0
+WireConnection;71;0;72;0
 WireConnection;64;0;66;34
 WireConnection;64;1;65;22
 WireConnection;64;2;38;0
-WireConnection;71;0;72;0
 WireConnection;67;0;54;0
 WireConnection;67;1;1;0
 WireConnection;67;2;71;0
@@ -3008,4 +3109,4 @@ WireConnection;70;2;71;0
 WireConnection;4;8;67;0
 WireConnection;4;10;70;0
 ASEEND*/
-//CHKSM=5E9736843BAA988A1F7D27DB65A234DD5A91591F
+//CHKSM=DCC8171F19055CA0815F2D1B59C692DF4546D4DD

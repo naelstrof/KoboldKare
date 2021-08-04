@@ -21,6 +21,20 @@
       "dependencies": {},
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
+    "com.naelstrof.jigglephysics": {
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "77d0a8e347702e6530cf74c5254bae429683dc1d"
+    },
+    "com.naelstrof.penetrationtech": {
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9d50ca7d91bcd4736ee4f004bd7afd6bbc3ff36d"
+    },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
       "depth": 0,
@@ -172,13 +186,6 @@
         "com.unity.render-pipelines.core": "10.5.0",
         "com.unity.searcher": "4.3.2"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.terrain-tools": {
-      "version": "3.0.2-preview.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {

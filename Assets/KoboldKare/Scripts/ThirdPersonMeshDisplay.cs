@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JigglePhysics;
 
 public class ThirdPersonMeshDisplay : MonoBehaviour {
     private List<GameObject> mirrorObjects = new List<GameObject>();
     private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
     public Kobold kobold;
     public LODGroup group;
-    public SoftbodyPhysics physics;
+    public JigglePhysics.JiggleSoftbody physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
     public BodyProportion proportion;
     public void OnFinishProportionEdit() {

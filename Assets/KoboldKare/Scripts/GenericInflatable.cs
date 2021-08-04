@@ -38,7 +38,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
         public Vector3 translationOffset;
         public Transform targetTransform;
         [HideInInspector]
-        public JiggleBone jiggleBone;
+        public JigglePhysics.JiggleBone jiggleBone;
         [HideInInspector]
         public Vector3 initialScale;
         [HideInInspector]
@@ -48,7 +48,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
     }
     [System.Serializable]
     public class InflatableSoftbody {
-        public SoftbodyPhysics targetPhysics;
+        public JigglePhysics.JiggleSoftbody targetPhysics;
         public int zoneIndex;
         public AnimationCurve motionFactorCurve;
         public AnimationCurve gravityFactorCurve;
@@ -139,7 +139,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
                     if (transformCurve.jiggleBone == null) {
                         transformCurve.targetTransform.localPosition = Vector3.LerpUnclamped(transformCurve.initialPosition, transformCurve.initialPosition + transformCurve.targetTransform.localRotation * transformCurve.translationOffset, translateSample);
                     } else {
-                        JiggleBone.VirtualBone b = transformCurve.jiggleBone.GetVirtualBone(transformCurve.targetTransform);
+                        JigglePhysics.JiggleBone.VirtualBone b = transformCurve.jiggleBone.GetVirtualBone(transformCurve.targetTransform);
                         b.localStartPos = Vector3.LerpUnclamped(transformCurve.initialPosition, transformCurve.initialPosition + transformCurve.targetTransform.localRotation * transformCurve.translationOffset, translateSample);
                     }
                 }
@@ -179,7 +179,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
             transformCurve.initialRotation = transformCurve.targetTransform.localRotation;
             transformCurve.initialPosition = transformCurve.targetTransform.localPosition;
             transformCurve.jiggleBone = null;
-            foreach(JiggleBone bone in transformCurve.targetTransform.root.GetComponentsInChildren<JiggleBone>()) {
+            foreach(JigglePhysics.JiggleBone bone in transformCurve.targetTransform.root.GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
                 if (bone.IsSimulatingBone(transformCurve.targetTransform)) {
                     transformCurve.jiggleBone = bone;
                     break;

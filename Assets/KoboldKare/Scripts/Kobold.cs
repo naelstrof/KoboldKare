@@ -10,12 +10,13 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using PenetrationTech;
 
 public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunInstantiateMagicCallback, IReagentContainerListener, IPunObservable {
     public StatusEffect koboldStatus;
     [System.Serializable]
-    public class PenetratableSet {
-        public Penetratable penetratable;
+    public class PenetrableSet {
+        public Penetrable penetratable;
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
     }
@@ -40,7 +41,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public EquipmentInventory inventory;
     public StatBlock statblock = new StatBlock();
 
-    public List<PenetratableSet> penetratables = new List<PenetratableSet>();
+    public List<PenetrableSet> penetratables = new List<PenetrableSet>();
 
     public List<Transform> attachPoints = new List<Transform>();
 
@@ -414,11 +415,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         body.collisionDetectionMode = CollisionDetectionMode.Discrete;
         body.isKinematic = true;
         body.GetComponent<Collider>().enabled = false;
-        foreach(JiggleBone j in GetComponentsInChildren<JiggleBone>()) {
-            j.updateMode = JiggleBone.UpdateType.FixedUpdate;
+        foreach(JigglePhysics.JiggleBone j in GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
+            j.updateMode = JigglePhysics.JiggleBone.UpdateType.FixedUpdate;
         }
-        foreach(SoftbodyPhysics s in GetComponentsInChildren<SoftbodyPhysics>()) {
-            s.updateMode = SoftbodyPhysics.UpdateType.FixedUpdate;
+        foreach(JigglePhysics.JiggleSoftbody s in GetComponentsInChildren<JigglePhysics.JiggleSoftbody>()) {
+            s.updateMode = JigglePhysics.JiggleSoftbody.UpdateType.FixedUpdate;
         }
 
         // We need to know the final result of our ragdoll before we update the anchors.
@@ -486,11 +487,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             b.collisionDetectionMode = CollisionDetectionMode.Discrete;
             b.isKinematic = true;
         }
-        foreach(JiggleBone j in GetComponentsInChildren<JiggleBone>()) {
-            j.updateMode = JiggleBone.UpdateType.LateUpdate;
+        foreach(JigglePhysics.JiggleBone j in GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
+            j.updateMode = JigglePhysics.JiggleBone.UpdateType.LateUpdate;
         }
-        foreach(SoftbodyPhysics s in GetComponentsInChildren<SoftbodyPhysics>()) {
-            s.updateMode = SoftbodyPhysics.UpdateType.LateUpdate;
+        foreach(JigglePhysics.JiggleSoftbody s in GetComponentsInChildren<JigglePhysics.JiggleSoftbody>()) {
+            s.updateMode = JigglePhysics.JiggleSoftbody.UpdateType.LateUpdate;
         }
         //foreach(var penSet in penetratables) {
             //penSet.penetratable.SwitchBody(body);

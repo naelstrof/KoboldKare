@@ -32,7 +32,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     [HideInInspector]
     [NonSerialized]
     public PhotonView localPlayerInstance;
-    public GameEvent PauseEvent;
+    public GameEvent SpawnEvent;
     public IEnumerator JoinLobbyRoutine() {
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -272,7 +272,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PopupHandler.instance.SpawnPopup("Disconnect", true, "Error " + returnCode + ": " + message);
-        PauseEvent.Raise();
     }
 
     public void OnJoinRoomFailed(short returnCode, string message) {
@@ -312,6 +311,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 GameObject player = SaveManager.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
                 localPlayerInstance = player.GetComponentInChildren<PhotonView>();
                 localPlayerInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+                SpawnEvent.Raise();
                 // Let everyone know we're not an NPC
                 RPCPlayerSpawn(localPlayerInstance.ViewID);
                 PopupHandler.instance.ClearAllPopups();

@@ -84,6 +84,7 @@ public class SeedExtractor : MonoBehaviourPun {
         }
         internalContents.contents.Empty();
         done.Play();
+        gameObject.SetActive(false);
     }
 
     private void OnValidate() {

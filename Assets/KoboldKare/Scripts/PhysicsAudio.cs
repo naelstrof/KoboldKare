@@ -19,12 +19,18 @@ public class PhysicsAudio : MonoBehaviour {
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
         scrapeSoundOutput.spatialBlend = 1f;
         scrapeSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
+        scrapeSoundOutput.spatialize = true;
         scrapeSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
 
         impactSoundOutput = gameObject.AddComponent<AudioSource>();
         impactSoundOutput.spatialBlend = 1f;
         impactSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
+        impactSoundOutput.spatialize = true;
         impactSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
+        SteamAudio.SteamAudioSource steamaudio = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
+        steamaudio.physicsBasedAttenuation = true;
+        steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
+        //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithNoTransmission;
     }
     void PlaySoundForCollider(Rigidbody thisBody, Rigidbody otherBody, Collider thisCollider, Collider otherCollider, Vector3 contact, Vector3 relativeVelocity, Vector3 impulse, bool self) {
         PhysicsAudioGroup group = PhysicsMaterialDatabase.GetPhysicsAudioGroup(thisCollider.sharedMaterial);
@@ -76,6 +82,7 @@ public class PhysicsAudio : MonoBehaviour {
     }
     void OnCollisionStay(Collision collision) {
         if (body && body.isKinematic) {
+            scrapeSoundOutput.volume = 0f;
             return;
         }
         // Don't scrape on kinematic bodies, usually this is just player hands bumping into carried objects.

@@ -45,25 +45,25 @@ public class CameraSwitcher : MonoBehaviour {
     public void SwitchCamera(CameraMode cameraMode) {
         mode = cameraMode;
         firstperson.enabled = false;
-        firstperson.GetComponent<AudioListener>().enabled = false;
+        //firstperson.GetComponent<AudioListener>().enabled = false;
         thirdperson.enabled = false;
-        thirdperson.GetComponent<AudioListener>().enabled = false;
+        //thirdperson.GetComponent<AudioListener>().enabled = false;
         freecam.enabled = false;
-        freecam.GetComponent<AudioListener>().enabled = false;
+        //freecam.GetComponent<AudioListener>().enabled = false;
         possession.enabled = true;
 
         freecam.GetComponent<SimpleCameraController>().enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
                 firstperson.enabled = true;
-                firstperson.GetComponent<AudioListener>().enabled = true;
+                //firstperson.GetComponent<AudioListener>().enabled = true;
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);
                 }
                 break;
             case CameraMode.ThirdPerson:
                 thirdperson.enabled = true;
-                thirdperson.GetComponent<AudioListener>().enabled = true;
+                //thirdperson.GetComponent<AudioListener>().enabled = true;
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);
                 }
@@ -71,7 +71,7 @@ public class CameraSwitcher : MonoBehaviour {
             case CameraMode.FreeCam:
                 freecam.enabled = true;
                 freecam.GetComponent<SimpleCameraController>().enabled = true;
-                freecam.GetComponent<AudioListener>().enabled = true;
+                //freecam.GetComponent<AudioListener>().enabled = true;
                 possession.enabled = false;
                 possession.controller.inputDir = Vector3.zero;
                 possession.controller.inputJump = false;
@@ -82,7 +82,7 @@ public class CameraSwitcher : MonoBehaviour {
             case CameraMode.FreeCamLocked:
                 freecam.enabled = true;
                 freecam.GetComponent<SimpleCameraController>().enabled = false;
-                freecam.GetComponent<AudioListener>().enabled = true;
+                //freecam.GetComponent<AudioListener>().enabled = true;
                 possession.enabled = true;
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);

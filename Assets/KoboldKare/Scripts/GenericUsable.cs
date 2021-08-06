@@ -54,7 +54,13 @@ public class GenericUsable : SceneGraph<VisualLogicGraph> {
         return usable;
     }
     public void Use() {
-        Use(null);
+        bool usable = true;
+        foreach( Condition c in conditions) {
+            usable = usable && c.Invoke(null);
+        }
+        if (usable) {
+            Use(null);
+        }
     }
     public void Use(Kobold k) {
         if (k == null) {

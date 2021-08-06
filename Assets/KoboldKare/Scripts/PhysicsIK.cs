@@ -127,13 +127,13 @@ namespace Vilar.IK {
 
                 joints[i].body.velocity = Vector3.Lerp(joints[i].body.velocity, joints[i].targetVelocity, 0.9f);
 
-                Vector3 bodyForward = joints[i].body.transform.TransformDirection(lo.forward);
-                Vector3 bodyUp = joints[i].body.transform.TransformDirection(lo.up);
-                Vector3 bodyRight = joints[i].body.transform.TransformDirection(lo.right);
-
-                Vector3 targetForward = joints[i].targetRotation * Vector3.forward;
-                Vector3 targetUp = joints[i].targetRotation * Vector3.up;
-                Vector3 targetRight = joints[i].targetRotation * Vector3.right;
+                //Vector3 bodyForward = joints[i].body.transform.TransformDirection(lo.forward);
+                //Vector3 bodyUp = joints[i].body.transform.TransformDirection(lo.up);
+                //Vector3 bodyRight = joints[i].body.transform.TransformDirection(lo.right);
+//
+                //Vector3 targetForward = joints[i].targetRotation * Vector3.forward;
+                //Vector3 targetUp = joints[i].targetRotation * Vector3.up;
+                //Vector3 targetRight = joints[i].targetRotation * Vector3.right;
 
                 /*float deflectionForgiveness = 5f;
                 Vector3 axis = Vector3.Cross(bodyForward, targetForward);
@@ -144,16 +144,16 @@ namespace Vilar.IK {
                     joints[i].joint.targetRotation = Quaternion.Inverse(joints[i].targetRotation * Quaternion.Inverse(adjust));
                     //joints[i].joint.targetRotation = joints[i].body.rotation;
                 }
-                if (i == (int)(IKTargetSet.parts.HANDRIGHT)) {
-                    Debug.DrawLine(bodyPos, bodyPos + bodyForward, Color.blue);
-                    Debug.DrawLine(bodyPos, bodyPos + targetForward, Color.blue);
-
-                    Debug.DrawLine(bodyPos, bodyPos + bodyUp, Color.green);
-                    Debug.DrawLine(bodyPos, bodyPos + targetUp, Color.green);
-
-                    Debug.DrawLine(bodyPos, bodyPos + bodyRight, Color.red);
-                    Debug.DrawLine(bodyPos, bodyPos + targetRight, Color.red);
-                }
+                //if (i == (int)(IKTargetSet.parts.HANDRIGHT)) {
+                    //Debug.DrawLine(bodyPos, bodyPos + bodyForward, Color.blue);
+                    //Debug.DrawLine(bodyPos, bodyPos + targetForward, Color.blue);
+//
+                    //Debug.DrawLine(bodyPos, bodyPos + bodyUp, Color.green);
+                    //Debug.DrawLine(bodyPos, bodyPos + targetUp, Color.green);
+//
+                    //Debug.DrawLine(bodyPos, bodyPos + bodyRight, Color.red);
+                    //Debug.DrawLine(bodyPos, bodyPos + targetRight, Color.red);
+                //}
             }
         }
 

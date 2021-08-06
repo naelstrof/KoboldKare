@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour {
         g.transform.position = position;
         AudioSource source = g.AddComponent<AudioSource>();
         source.outputAudioMixerGroup = soundEffectGroup;
+        source.spatialize = true;
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = volume;

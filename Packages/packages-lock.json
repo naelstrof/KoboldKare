@@ -26,21 +26,21 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "77d0a8e347702e6530cf74c5254bae429683dc1d"
+      "hash": "32e730fc7deadd8c106b54514f3d558ae336691f"
     },
     "com.naelstrof.penetrationtech": {
       "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9d50ca7d91bcd4736ee4f004bd7afd6bbc3ff36d"
+      "hash": "731b73a1dedca0cd48c788f8b5ab502ff4d909ba"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ae5eda9b052b0eb665fe9705462804d64c600d5b"
+      "hash": "2c8e2caf865b13201a2f8b46ecbf5b1a1ca32de2"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",

@@ -28,8 +28,8 @@ public class PhysicsAudio : MonoBehaviour {
         impactSoundOutput.spatialize = true;
         impactSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
         SteamAudio.SteamAudioSource steamaudio = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
-        steamaudio.physicsBasedAttenuation = true;
-        steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
+        //steamaudio.physicsBasedAttenuation = true;
+        //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
         //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithNoTransmission;
     }
     void PlaySoundForCollider(Rigidbody thisBody, Rigidbody otherBody, Collider thisCollider, Collider otherCollider, Vector3 contact, Vector3 relativeVelocity, Vector3 impulse, bool self) {

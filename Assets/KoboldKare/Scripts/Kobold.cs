@@ -34,6 +34,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
+    public float nextEggTime;
 
 
     public Task ragdollTask;
@@ -47,6 +48,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public GenericLODConsumer lodLevel;
     public Transform root;
+    public EggSpawner eggSpawner;
     public Animator animator;
     public Rigidbody body;
     [HideInInspector]
@@ -61,6 +63,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public BodyProportion bodyProportion;
     public UnityEvent OnRagdoll;
     public UnityEvent OnStandup;
+    public UnityEvent OnEggFormed;
     public UnityEvent OnOrgasm;
     [HideInInspector]
     public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
@@ -779,15 +782,36 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                         break;
                 }
             }
-            if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
-                if (belly.container.contents[ReagentData.ID.Egg].volume > 4f) {
-                    foreach(var penetratableSet in penetratables) {
-                        //if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.dickTarget == null) {
-                        //if (penetratableSet.penetratable.dickTarget == null) {
-                            //belly.container.contents[ReagentData.ID.Egg].volume -= 4f;
-                            //belly.container.contents.TriggerChange();
-                            //SpawnEggEvent.Invoke();
-                        //}
+            if (Time.timeSinceLevelLoad > nextEggTime) {
+                if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
+                    if (belly.container.contents[ReagentData.ID.Egg].volume > 4f) {
+                        OnEggFormed.Invoke();
+                        nextEggTime = Time.timeSinceLevelLoad + 5f;
+                        bool spawnedEgg = false;
+                        foreach(var penetratableSet in penetratables) {
+                            if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
+                                eggSpawner.targetPenetrable = penetratableSet.penetratable;
+                                eggSpawner.spawnAlongLength = 1f;
+                                eggSpawner.SpawnEgg();
+                                spawnedEgg = true;
+                                break;
+                            }
+                        }
+                        if (!spawnedEgg) {
+                            foreach(var penetratableSet in penetratables) {
+                                if (penetratableSet.penetratable.isActiveAndEnabled) {
+                                    eggSpawner.targetPenetrable = penetratableSet.penetratable;
+                                    eggSpawner.spawnAlongLength = 0.5f;
+                                    eggSpawner.SpawnEgg();
+                                    spawnedEgg = true;
+                                    break;
+                                } 
+                            }
+                        }
+                        if (spawnedEgg) {
+                            belly.container.contents[ReagentData.ID.Egg].volume -= 4f;
+                            belly.container.contents.TriggerChange();
+                        }
                     }
                 }
             }

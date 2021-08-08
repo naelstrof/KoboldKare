@@ -497,14 +497,14 @@ public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
                         //}
                     //}
                     //break;
-                case OptionType.MasterVolume:
-                case OptionType.SoundEffectsVolume:
                 case OptionType.GoopQuality:
                     raymarchSettings.m_Settings.renderQuality = Mathf.Clamp01(value);
                     if ( raymarchSettings.m_RaymarchRenderPass != null) {
                         raymarchSettings.m_RaymarchRenderPass.m_Settings.renderQuality = Mathf.Clamp01(value);
                     }
                     break;
+                case OptionType.MasterVolume:
+                case OptionType.SoundEffectsVolume:
                 case OptionType.MusicVolume:
                     mixer.SetFloat(target.ToString(), Mathf.Log(Mathf.Max(value,0.01f))*20f);
                     break;

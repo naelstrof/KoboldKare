@@ -250,8 +250,8 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         float percentageSpill = Mathf.Min(spilledVolume/Mathf.Max(volume,Mathf.Epsilon), 1f);
         foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
             float lossAmount = pair.Value.volume * percentageSpill;
-            pair.Value.volume -= lossAmount;
             spilledContents.Mix(pair.Key, lossAmount, pair.Value.potentcy, pair.Value.heat);
+            pair.Value.volume -= lossAmount;
         }
         SetDirty(true);
         InvokeListenerUpdate(injectType);

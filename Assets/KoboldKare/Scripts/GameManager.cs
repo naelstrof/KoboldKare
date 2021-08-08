@@ -95,15 +95,25 @@ public class GameManager : MonoBehaviour {
             var lods = g.GetLODs();
             foreach (var lod in lods) {
                 foreach (Renderer ren in lod.renderers) {
-                    if (ren.gameObject.activeInHierarchy) {
-                        decalPainter.RenderDecal(ren, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
+                    if (ren != null && ren.gameObject.activeInHierarchy) {
+                        foreach (var mat in ren.sharedMaterials) {
+                            if (decalPainter.IsDecalable(mat)) {
+                                decalPainter.RenderDecal(ren, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
+                                break;
+                            }
+                        }
                     }
                 }
             }
             return;
         }
         foreach (Renderer r in obj.GetComponentsInChildren<Renderer>()) {
-            decalPainter.RenderDecal(r, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
+            foreach (var mat in r.sharedMaterials) {
+                if (decalPainter.IsDecalable(mat)) {
+                    decalPainter.RenderDecal(r, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
+                    break;
+                }
+            }
         }
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {

@@ -33,7 +33,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "731b73a1dedca0cd48c788f8b5ab502ff4d909ba"
+      "hash": "61cafa049e6ffe5d48a13bceaaf117617df1ab68"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -54,7 +54,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ac80f6389b281b9a691f7b4420f0bdf8ee92320b"
+      "hash": "93e5caaceb3f4bbe7d71227d2bec05e974d643d4"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",

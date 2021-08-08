@@ -16,7 +16,7 @@ public class Seed : MonoBehaviour, IValuedGood {
     public LayerMask _triggerMask;
     public float _spacing = 1f;
     public UnityEvent OnFailPlant;
-    public Collider[] hitColliders = new Collider[4];
+    private Collider[] hitColliders = new Collider[4];
     public bool ShouldSave() {
         return true;
     }
@@ -24,6 +24,7 @@ public class Seed : MonoBehaviour, IValuedGood {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, _triggerMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
             if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
+                Debug.Log("Can't plant due to " + hitColliders[i], hitColliders[i].gameObject);
                 return false;
             }
         }
@@ -35,6 +36,7 @@ public class Seed : MonoBehaviour, IValuedGood {
                 }
             }
         }
+            Debug.Log("Can't plant f.");
         return false;
     }
     public void Plant() {

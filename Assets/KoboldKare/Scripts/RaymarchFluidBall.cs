@@ -29,15 +29,17 @@ public class RaymarchFluidBall : MonoBehaviour {
             ReagentContents spilled = null;
             GenericReagentContainer container = collision.GetContact(0).otherCollider.GetComponentInParent<GenericReagentContainer>();
             if (container != null && Time.timeSinceLevelLoad-travelTime > 0f) {
-                spilled = contents.Spill(vps*mixInterval*6f);
+                spilled = contents.Spill(vps*mixInterval*3f);
                 container.contents.Mix(spilled, ReagentContents.ReagentInjectType.Spray);
                 if (container.contents.volume >= container.contents.maxVolume) {
                     fluid?.TriggerBadHit(collision.GetContact(0).point);
                 } else {
                     fluid?.TriggerGoodHit(collision.GetContact(0).point);
                 }
+                lastTime = Time.timeSinceLevelLoad;
             } else {
                 spilled = contents.Spill(vps*mixInterval);
+                lastTime = Time.timeSinceLevelLoad;
             }
             if (spilled == null) {
                 spilled = contents;
@@ -50,7 +52,6 @@ public class RaymarchFluidBall : MonoBehaviour {
             } else {
                 GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(spilled.volume*160f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, false);
             }
-            lastTime = Time.timeSinceLevelLoad;
         }
     }
     public void OnCollisionEnter(Collision c) {
@@ -66,7 +67,7 @@ public class RaymarchFluidBall : MonoBehaviour {
         if (Time.timeSinceLevelLoad - lastCloseTime > mixInterval) {
             GenericReagentContainer container = c.GetComponentInParent<GenericReagentContainer>();
             if (container != null) {
-                ReagentContents spilled = contents.Spill(vps*mixInterval);
+                ReagentContents spilled = contents.Spill(vps*mixInterval*3f);
                 container.contents.Mix(spilled, ReagentContents.ReagentInjectType.Spray);
                 if (container.contents.volume >= container.contents.maxVolume) {
                     fluid?.TriggerBadHit(c.transform.position);

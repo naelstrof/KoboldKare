@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Concrete
+    second: {fileID: 2100000, guid: abdfe8c9971c0304699d8624b872fba7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: HearthFloor
     second: {fileID: 2100000, guid: 320bf319a28a3464daebe0bc6f135be4, type: 2}
   - first:

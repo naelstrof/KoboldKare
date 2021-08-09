@@ -14,9 +14,10 @@ public class RaymarchFluid : FluidOutput {
     private Rigidbody body;
     public float fireVelocity = 6f;
     private bool splashing = false;
+    private Bounds bounds = new Bounds();
     private class RaymarchNode {
         public RaymarchNode(Vector3 position, Vector3 vel, ReagentContents contents, Color c, Material splatterMat, PhysicMaterial fluidMaterial, RaymarchFluid fluidparent, float vps) {
-            gameObject = new GameObject("RaymarchFluidNode", new Type[] {typeof(Rigidbody), typeof(SphereCollider), typeof(RaymarchFluidBall), typeof(AudioSource), typeof(PhysicsAudio)});
+            gameObject = new GameObject("RaymarchFluidNode", new Type[] {typeof(Rigidbody), typeof(SphereCollider), typeof(RaymarchFluidBall), typeof(PhysicsAudio)});
             gameObject.layer = LayerMask.NameToLayer("Water");
             gameObject.transform.position = position;
             ball = gameObject.GetComponent<RaymarchFluidBall>();
@@ -32,6 +33,9 @@ public class RaymarchFluid : FluidOutput {
             sphereCollider = gameObject.GetComponent<SphereCollider>();
             sphereCollider.radius = 0.1f;
             sphereCollider.sharedMaterial = fluidMaterial;
+            SphereCollider triggerCollider = gameObject.AddComponent<SphereCollider>();
+            triggerCollider.radius = 0.5f;
+            triggerCollider.isTrigger = true;
         }
         public RaymarchFluidBall ball;
         public SphereCollider sphereCollider;
@@ -223,6 +227,7 @@ public class RaymarchFluid : FluidOutput {
         foreach(var connection in connections) {
             connection.Tick();
         }
+
         for(int i=0;i<nodes.Count;i++) {
             var ball = nodes[i];
             if (ball.ball.contents.volume <= 0f) {

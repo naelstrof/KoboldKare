@@ -13,6 +13,7 @@ public class RaymarchFluidBall : MonoBehaviour {
     private Rigidbody body;
     private float travelTime;
     private float lastTime;
+    private float lastCloseTime;
     private float mixInterval = 0.05f;
     public Color emitColor;
     public void Start() {
@@ -21,6 +22,7 @@ public class RaymarchFluidBall : MonoBehaviour {
         body = GetComponent<Rigidbody>();
         travelTime = Time.timeSinceLevelLoad+1f;
         lastTime = Time.timeSinceLevelLoad;
+        lastCloseTime = Time.timeSinceLevelLoad;
     }
     private void HandleCollision(Collision collision) {
         if (Time.timeSinceLevelLoad - lastTime > mixInterval) {
@@ -60,4 +62,20 @@ public class RaymarchFluidBall : MonoBehaviour {
         HandleCollision(c);
         body.velocity *= 0.8f;
     }
+    public void OnTriggerStay(Collider c) {
+        if (Time.timeSinceLevelLoad - lastCloseTime > mixInterval) {
+            GenericReagentContainer container = c.GetComponentInParent<GenericReagentContainer>();
+            if (container != null) {
+                ReagentContents spilled = contents.Spill(vps*mixInterval);
+                container.contents.Mix(spilled, ReagentContents.ReagentInjectType.Spray);
+                if (container.contents.volume >= container.contents.maxVolume) {
+                    fluid?.TriggerBadHit(c.transform.position);
+                } else {
+                    fluid?.TriggerGoodHit(c.transform.position);
+                }
+                lastCloseTime = Time.timeSinceLevelLoad;
+            }
+        }
+    }
+
 }

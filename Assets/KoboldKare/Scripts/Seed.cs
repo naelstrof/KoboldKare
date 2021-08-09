@@ -24,7 +24,6 @@ public class Seed : MonoBehaviour, IValuedGood {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, _triggerMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
             if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
-                Debug.Log("Can't plant due to " + hitColliders[i], hitColliders[i].gameObject);
                 return false;
             }
         }

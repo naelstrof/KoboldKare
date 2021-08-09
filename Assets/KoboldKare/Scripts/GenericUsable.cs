@@ -8,6 +8,13 @@ using UnityEngine.Events;
 using VisualLogic;
 using XNode;
 
+#if UNITY_EDITOR
+using UnityEditor;
+[CanEditMultipleObjects]
+[CustomEditor(typeof(GenericUsable))]
+public class GenericUsableEditor : Editor {
+}
+#endif
 public class GenericUsable : SceneGraph<VisualLogicGraph> {
     [System.Serializable]
     public class Condition : SerializableCallback<Kobold,bool> {}

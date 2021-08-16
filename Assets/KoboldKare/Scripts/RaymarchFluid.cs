@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class RaymarchFluid : FluidOutput {
     private WaitForSeconds wait = new WaitForSeconds(0.1f);
@@ -12,6 +13,8 @@ public class RaymarchFluid : FluidOutput {
     private RaymarchNode start;
     private AudioSource streamSource;
     private Rigidbody body;
+    public float splashAmount = 20f;
+    public VisualEffect splashes;
     public float fireVelocity = 6f;
     private bool splashing = false;
     private Bounds bounds = new Bounds();
@@ -99,6 +102,7 @@ public class RaymarchFluid : FluidOutput {
         }
         this.vps = vps;
         base.Fire(b, vps);
+        splashes.SetVector4("Color",b.GetColor(ReagentDatabase.instance));
         bucket = b;
         running = true;
         StopCoroutine("FireRoutine");
@@ -113,6 +117,7 @@ public class RaymarchFluid : FluidOutput {
         if (b.volume <= 0f || splashing) {
             return;
         }
+        splashes.SetVector4("Color",b.GetColor(ReagentDatabase.instance));
         base.Fire(b, vps);
         bucket = b;
         splashing = true;
@@ -128,6 +133,7 @@ public class RaymarchFluid : FluidOutput {
         //StopCoroutine("FireRoutine");
     }
     private void OnStop() {
+        splashes.Stop();
         streamSource.Stop();
         if (start != null) {
             start.body.isKinematic = false;
@@ -149,7 +155,8 @@ public class RaymarchFluid : FluidOutput {
         //}
     }
     public IEnumerator SplashRoutine() {
-        float spillAmount = Mathf.Max(bucket.maxVolume/10f,2f);
+        float spillAmount = Mathf.Max(Mathf.Min(bucket.maxVolume,splashAmount)/10f,splashAmount/10f);
+        splashes.Play();
         for(int i=0;i<10&&bucket.volume >= spillAmount;i++) {
             yield return null;
             ReagentContents spilled = bucket.Spill(spillAmount);
@@ -184,6 +191,7 @@ public class RaymarchFluid : FluidOutput {
         OnStop();
     }
     public IEnumerator FireRoutine() {
+        splashes.Play();
         while(running && bucket.volume > 0f || ((start == null || start.connections.Count<=0) && bucket.volume > 0f)) {
             yield return wait;
             ReagentContents spilled = bucket.Spill(vps/10f);
@@ -213,6 +221,7 @@ public class RaymarchFluid : FluidOutput {
     }
     public void Start() {
         body = GetComponentInParent<Rigidbody>();
+        splashes.Stop();
         streamSource = gameObject.AddComponent<AudioSource>();
         streamSource.spatialize = true;
         streamSource.spatialBlend = 1f;

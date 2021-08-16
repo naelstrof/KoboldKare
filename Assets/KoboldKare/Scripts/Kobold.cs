@@ -731,6 +731,17 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public void OnEventRaised(GameEventGeneric<float> e, float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
+        foreach (var ball in balls) {
+            if (!ball.contents.ContainsKey(ReagentData.ID.Cum)) {
+                ball.contents.Mix(ReagentData.ID.Cum,0f);
+            }
+            if (!ball.contents.ContainsKey(ReagentData.ID.Fat)) {
+                ball.contents.Mix(ReagentData.ID.Fat,0f);
+            }
+            float neededCum = ball.contents[ReagentData.ID.Fat].volume*0.5f;
+            float currentCum = ball.contents[ReagentData.ID.Cum].volume;
+            ball.contents.Mix(ReagentData.ID.Cum, Mathf.Max(0f,(neededCum-currentCum)*(f*2f/DayNightCycle.instance.dayLength)));
+        }
         foreach (var belly in bellies) {
             ReagentContents vol = belly.container.contents.Metabolize(ReagentDatabase.instance, f);
             foreach (KeyValuePair<ReagentData.ID, Reagent> r in vol) {

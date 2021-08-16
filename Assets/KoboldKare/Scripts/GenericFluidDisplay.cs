@@ -13,7 +13,7 @@ public class GenericFluidDisplay : MonoBehaviour, IReagentContainerListener {
         OnReagentContainerChanged(container.contents, ReagentContents.ReagentInjectType.Inject);
     }
     public void OnDestroy() {
-        container.contents.RemoveListener(this);
+        container.contents?.RemoveListener(this);
     }
     public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType type) {
         foreach(var m in targetRenderer.materials) {

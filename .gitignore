@@ -43,3 +43,10 @@ sysinfo.txt
 Logs/ApiUpdaterCheck.txt
 Logs/shadercompiler-AssetImportWorker0.log
 Logs/shadercompiler-AssetImportWorker0.log
+
+# misc
+*Lightmap-*light.png
+*Lightmap-*dir.png
+*Lightmap-*light.exr
+*.blend1
+*.blend1.meta

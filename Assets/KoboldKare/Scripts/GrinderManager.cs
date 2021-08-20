@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -10,11 +10,9 @@ using ExitGames.Client.Photon;
 public class GrinderManager : MonoBehaviourPun {
     public AudioSource grindSound;
     public Animator animator;
-    public GameObject clearDebrisButton;
-    public GameObject debris;
     public Transform attachPoint;
     public AudioSource deny;
-    public StreamRenderer stream;
+    public FluidOutput stream;
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
     private bool internalOn;
@@ -60,10 +58,10 @@ public class GrinderManager : MonoBehaviourPun {
         }
         StopCoroutine("WaitAndThenClear");
         StartCoroutine("WaitAndThenClear");
-        stream.Fire(container);
+        stream.Fire(container.contents,2f);
     }
     private void HandleCollision(Collider other) {
-        if (!on || debris.activeInHierarchy ) {
+        if (!on) {
             return;
         }
         if (other.isTrigger) {
@@ -84,9 +82,7 @@ public class GrinderManager : MonoBehaviourPun {
         if ((other.GetComponentInParent<PhotonView>() != null && !other.GetComponentInParent<PhotonView>().IsMine)) {
             return;
         }
-        if ( debris.activeInHierarchy != true) {
-            Grind(other.gameObject);
-        }
+        Grind(other.gameObject);
     }
     private void OnTriggerEnter(Collider other) {
         HandleCollision(other);

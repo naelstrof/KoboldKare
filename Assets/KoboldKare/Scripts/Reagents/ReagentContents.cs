@@ -42,6 +42,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         Color = 2,
         Value = 4,
         Heat = 8,
+        FluidVolume = 16,
     }
     private bool runningListenerUpdate = false;
     public List<IReagentContainerListener> listeners = new List<IReagentContainerListener>();
@@ -104,6 +105,7 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
     private Color cachedColor;
     private float cachedValue;
     private float cachedHeat;
+    private float cachedFluidVolume;
     private void RegenerateCacheIfNeeded(ReagentDatabase database = null) {
         if (dirtyFlags == 0) {
             return;
@@ -116,8 +118,18 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
             // Unset the dirty flag
             SetDirty(DirtyFlag.Volume, false);
         }
+
         if (database == null) {
             return;
+        }
+        if (IsDirty(DirtyFlag.FluidVolume)) {
+            cachedFluidVolume = 0f;
+            foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
+                if (database.reagents[pair.Key].isFluid) {
+                    cachedFluidVolume += pair.Value.volume;
+                }
+            }
+            SetDirty(DirtyFlag.FluidVolume, false);
         }
         if (IsDirty(DirtyFlag.Color)) {
             cachedColor = Color.black;
@@ -293,6 +305,10 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
             RegenerateCacheIfNeeded();
             return cachedHeat;
         }
+    }
+    public float GetFluidVolume(ReagentDatabase database) {
+        RegenerateCacheIfNeeded(database);
+        return cachedFluidVolume;
     }
     public float GetValue(ReagentDatabase database) {
         RegenerateCacheIfNeeded(database);

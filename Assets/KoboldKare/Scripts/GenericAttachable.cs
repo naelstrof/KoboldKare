@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
@@ -10,6 +11,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
     public LayerMask attachableSearchMask;
     public Transform attachNozzle;
+    public UnityEvent OnAttach;
+    public UnityEvent OnDetach;
     private Collider[] hits = new Collider[3];
     private Transform target;
     public Rigidbody body;
@@ -109,6 +112,7 @@ public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
         target = null;
         if (ga != null && ga.target == attachNozzle) {
             ga.EndAttach();
+            OnDetach.Invoke();
         }
     }
     public void EndAttach() {
@@ -129,6 +133,7 @@ public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
             Vector3 offset = attachNozzle.position - transform.position;
             transform.position = Vector3.Lerp(transform.position, target.position - offset, lerpAmount);
         }
+        OnAttach.Invoke();
         attached = true;
     }
     public void FixedUpdate() {

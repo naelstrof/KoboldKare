@@ -18,6 +18,8 @@ public class RaymarchFluid : FluidOutput {
     public float fireVelocity = 6f;
     private bool splashing = false;
     private Bounds bounds = new Bounds();
+    public bool fireAtStartFromParent = false;
+    public bool fluidsOnly = true;
     private class RaymarchNode {
         public RaymarchNode(Vector3 position, Vector3 vel, ReagentContents contents, Color c, Material splatterMat, PhysicMaterial fluidMaterial, RaymarchFluid fluidparent, float vps) {
             gameObject = new GameObject("RaymarchFluidNode", new Type[] {typeof(Rigidbody), typeof(SphereCollider), typeof(RaymarchFluidBall), typeof(PhysicsAudio)});
@@ -157,9 +159,9 @@ public class RaymarchFluid : FluidOutput {
     public IEnumerator SplashRoutine() {
         float spillAmount = Mathf.Max(Mathf.Min(bucket.maxVolume,splashAmount)/10f,splashAmount/10f);
         splashes.Play();
-        for(int i=0;i<10&&bucket.volume >= spillAmount;i++) {
+        for(int i=0;i<10&&(fluidsOnly?bucket.GetFluidVolume(ReagentDatabase.instance):bucket.volume) >= spillAmount;i++) {
             yield return null;
-            ReagentContents spilled = bucket.Spill(spillAmount);
+            ReagentContents spilled = fluidsOnly ? bucket.FilterFluids(spillAmount, ReagentDatabase.instance) : bucket.Spill(spillAmount);
             if (spilled.volume <= 0) {
                 break;
             }
@@ -168,7 +170,7 @@ public class RaymarchFluid : FluidOutput {
                 velocity += body.velocity;
             }
             nodes.Add(new RaymarchNode(transform.position, velocity, spilled, spilled.GetColor(ReagentDatabase.instance), splatterMat, fluidMaterial, this, spillAmount));
-            streamSource.pitch = Math.Min(bucket.maxVolume/Mathf.Max(bucket.volume,0.1f), 1.5f);
+            streamSource.pitch = Math.Min(bucket.maxVolume/Mathf.Max((fluidsOnly?bucket.GetFluidVolume(ReagentDatabase.instance):bucket.volume),0.1f), 1.5f);
             if (nodes.Count > 1 && connect) {
                 var connection = new RaymarchConnection(nodes[nodes.Count-1], nodes[nodes.Count-2], spilled.GetColor(ReagentDatabase.instance));
                 connection.desiredDistance = 2f;
@@ -192,22 +194,22 @@ public class RaymarchFluid : FluidOutput {
     }
     public IEnumerator FireRoutine() {
         splashes.Play();
-        while(running && bucket.volume > 0f || ((start == null || start.connections.Count<=0) && bucket.volume > 0f)) {
+        while(running && (fluidsOnly?bucket.GetFluidVolume(ReagentDatabase.instance):bucket.volume) > 0f || ((start == null || start.connections.Count<=0) && (fluidsOnly?bucket.GetFluidVolume(ReagentDatabase.instance):bucket.volume) > 0f)) {
             yield return wait;
-            ReagentContents spilled = bucket.Spill(vps/10f);
+            ReagentContents spilled = fluidsOnly ? bucket.FilterFluids(vps/10f, ReagentDatabase.instance) : bucket.Spill(vps/10f);
             Vector3 velocity = transform.forward*fireVelocity + UnityEngine.Random.insideUnitSphere * variance;
             if (body != null) {
                 velocity += body.velocity;
             }
             nodes.Add(new RaymarchNode(transform.position, velocity, spilled, spilled.GetColor(ReagentDatabase.instance), splatterMat, fluidMaterial, this, vps*0.06f));
-            streamSource.pitch = Math.Min(bucket.maxVolume/Mathf.Max(bucket.volume,0.1f), 1.5f);
+            streamSource.pitch = Math.Min(bucket.maxVolume/Mathf.Max((fluidsOnly?bucket.GetFluidVolume(ReagentDatabase.instance):bucket.volume),0.1f), 1.5f);
             if (nodes.Count > 1 && connect) {
                 var connection = new RaymarchConnection(nodes[nodes.Count-1], nodes[nodes.Count-2], spilled.GetColor(ReagentDatabase.instance));
                 connections.Add(connection);
             }
             // Make a connection next time.
             connect = true;
-            if (start != null) {
+            if (start != null && start.body != null) {
                 start.body.isKinematic = false;
                 start.body.collisionDetectionMode = CollisionDetectionMode.Continuous;
                 start.body.velocity = transform.forward*6f + UnityEngine.Random.insideUnitSphere * 1.5f;
@@ -231,6 +233,12 @@ public class RaymarchFluid : FluidOutput {
         streamSource.loop = true;
         streamSource.clip = streamSound;
         gameObject.AddComponent<SteamAudio.SteamAudioSource>();
+        if (fireAtStartFromParent) {
+            var cont = GetComponentInParent<GenericReagentContainer>();
+            if (cont != null) {
+                Fire(cont.contents, vps);
+            }
+        }
     }
     public void Update() {
         foreach(var connection in connections) {
@@ -248,7 +256,7 @@ public class RaymarchFluid : FluidOutput {
                 nodes.Remove(ball);
             }
         }
-        if (start != null) {
+        if (start != null && start.gameObject != null) {
             start.gameObject.transform.position = transform.position;
         }
     }

@@ -33,7 +33,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "b5251065a0f95ff5146fffe4857f20a451beb70c"
+      "hash": "851d91e78da1b7241dacec9076920ed384c4ed67"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -54,7 +54,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "93e5caaceb3f4bbe7d71227d2bec05e974d643d4"
+      "hash": "ed136dd0148fe0cd2e2e7d6e156005a20d2d0180"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
@@ -145,7 +145,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "10.5.0",
+      "version": "10.6.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -165,8 +165,8 @@
       "hash": "63335c6fd38323b1623e6dc99bda361b28ed6515"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.18.0",
-      "depth": 2,
+      "version": "1.19.0",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -179,11 +179,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "10.5.0",
+      "version": "10.6.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.render-pipelines.core": "10.5.0",
+        "com.unity.render-pipelines.core": "10.6.0",
         "com.unity.searcher": "4.3.2"
       },
       "url": "https://packages.unity.com"

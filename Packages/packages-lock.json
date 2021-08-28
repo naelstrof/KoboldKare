@@ -96,7 +96,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.4.6",
+      "version": "1.4.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -165,7 +165,7 @@
       "hash": "63335c6fd38323b1623e6dc99bda361b28ed6515"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.0",
+      "version": "1.19.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

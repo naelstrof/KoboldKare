@@ -45,12 +45,12 @@ Logs/shadercompiler-AssetImportWorker0.log
 Logs/shadercompiler-AssetImportWorker0.log
 
 # misc
-*Lightmap-*.png
-*Lightmap-*.exr
-*Lightmap-*.png.meta
-*Lightmap-*.exr.meta
+#*Lightmap-*.png
+#*Lightmap-*.exr
+#*Lightmap-*.png.meta
+#*Lightmap-*.exr.meta
 *.blend1
 *.blend1.meta
-*ReflectionProbe*.exr
-*ReflectionProbe*.exr.meta
-*OcclusionCullingData.asset
+#*ReflectionProbe*.exr
+#*ReflectionProbe*.exr.meta
+#*OcclusionCullingData.asset

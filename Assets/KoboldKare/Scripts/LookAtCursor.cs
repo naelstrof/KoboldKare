@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LookAtCursor : MonoBehaviour {
     [Range(0f,20f)]
@@ -11,7 +12,8 @@ public class LookAtCursor : MonoBehaviour {
         animator = GetComponent<Animator>();
     }
     private void OnAnimatorIK(int layerIndex) {
-        currentPosition = Vector3.Lerp(currentPosition, Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromCamera), Camera.MonoOrStereoscopicEye.Mono), Time.deltaTime * 15f);
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        currentPosition = Vector3.Lerp(currentPosition, Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distanceFromCamera), Camera.MonoOrStereoscopicEye.Mono), Time.deltaTime * 15f);
         animator.SetLookAtWeight(1f, 0.4f, 1f, 1f, 0f);
         animator.SetLookAtPosition(currentPosition);
     }

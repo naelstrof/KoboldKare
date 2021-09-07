@@ -40,7 +40,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2c8e2caf865b13201a2f8b46ecbf5b1a1ca32de2"
+      "hash": "503f358ac93aaea3cf4970b44666f29b8c2b85cc"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
@@ -54,7 +54,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ed136dd0148fe0cd2e2e7d6e156005a20d2d0180"
+      "hash": "d7812831d3da38889137d1d0040f0a1ceb5452c4"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",

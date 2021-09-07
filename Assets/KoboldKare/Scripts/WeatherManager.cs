@@ -11,7 +11,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     public Material skyboxMaterial;
     public VisualEffect rain;
     public VisualEffect dust;
-    public VisualEffect snow;
+    //public VisualEffect snow;
     public Camera rainCamera;
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
@@ -21,7 +21,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     public List<InspectorReagent> startReagents = new List<InspectorReagent>();
     private HashSet<PhotonView> views = new HashSet<PhotonView>();
     private bool clearingViews = false;
-    private bool isSnowing = false;
+    //private bool isSnowing = false;
     public Vector3 cloudBounds;
     public float cloudHeight;
 
@@ -45,7 +45,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
         foreach( InspectorReagent r in startReagents) {
             rainContents.Mix(r.id, r.volume, r.potentcy, r.heat);
         }
-        StopSnow();
+        //StopSnow();
     }
     private void OnDestroy() {
         cloudMaterial.SetFloat("densityOffset", -4);
@@ -56,7 +56,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     }
 
     public IEnumerator Rain() {
-        snow.Stop();
+        //snow.Stop();
         while (rainAmount < 1f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
@@ -101,24 +101,24 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
         }
     }
 
-    public void StartSnow() {
-        if (rainAmount <= 0f) {
-            isSnowing = true;
-            snow.Play();
-            dust.Stop();
-        }
-    }
-    public void StopSnow() {
-        isSnowing = false;
-        snow.Stop();
-        dust.Play();
-    }
+    //public void StartSnow() {
+        //if (rainAmount <= 0f) {
+            //isSnowing = true;
+            //snow.Play();
+            //dust.Stop();
+        //}
+    //}
+    //public void StopSnow() {
+        //isSnowing = false;
+        //snow.Stop();
+        //dust.Play();
+    //}
 
     private void Update() {
-        if (Mathf.Approximately(rainAmount, 0f) && !dust.gameObject.activeInHierarchy && !isSnowing) {
+        if (Mathf.Approximately(rainAmount, 0f) && !dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(true);
         }
-        if (!Mathf.Approximately(rainAmount, 0f) && dust.gameObject.activeInHierarchy && !isSnowing) {
+        if (!Mathf.Approximately(rainAmount, 0f) && dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(false);
         }
         cloudMaterial.SetFloat("densityOffset", Mathf.Lerp(-4, 0f, rainAmount));

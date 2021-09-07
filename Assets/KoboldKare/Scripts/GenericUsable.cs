@@ -5,8 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using VisualLogic;
-using XNode;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,13 +13,12 @@ using UnityEditor;
 public class GenericUsableEditor : Editor {
 }
 #endif
-public class GenericUsable : SceneGraph<VisualLogicGraph> {
+public class GenericUsable : MonoBehaviourPun {
     [System.Serializable]
     public class Condition : SerializableCallback<Kobold,bool> {}
 
     [System.Serializable]
     public class KoboldUseEvent : UnityEvent<Kobold, Vector3>{};
-    public List<VisualLogicGraph.BlackboardValue> blackboardValues = new List<VisualLogicGraph.BlackboardValue>();
     public List<Condition> conditions = new List<Condition>();
     public KoboldUseEvent OnUseEvent;
 
@@ -42,14 +39,6 @@ public class GenericUsable : SceneGraph<VisualLogicGraph> {
     public void OnUse(Kobold kobold, Vector3 position) {
         //VisualLogicGraph instance = (VisualLogicGraph)graph.Copy();
         //instance.TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse, new object[]{kobold, position}).Finished += (manuallyStopped)=>{ScriptableObject.Destroy(instance);};
-        if (graph != null) {
-            foreach(var bvalue in blackboardValues) {
-                (graph as VisualLogicGraph).blackboard[bvalue.name] = bvalue.value;
-            }
-            (graph as VisualLogicGraph).blackboard["useKobold"] = kobold;
-            (graph as VisualLogicGraph).blackboard["usePosition"] = position;
-            (graph as VisualLogicGraph).TriggerEvent(gameObject, VisualLogic.Event.EventType.OnUse);
-        }
         OnUseEvent.Invoke(kobold, position);
     }
 

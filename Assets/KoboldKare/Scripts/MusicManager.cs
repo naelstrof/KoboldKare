@@ -36,7 +36,7 @@ public class MusicManager : MonoBehaviour {
         musicSource = GetComponent<AudioSource>();
     }
 
-    void FixedUpdate() {
+    void Update() {
         if (!musicSource.isPlaying && !waiting) {
             waiting = true;
             StartCoroutine(WaitAndPlay(UnityEngine.Random.Range(60, 220)));

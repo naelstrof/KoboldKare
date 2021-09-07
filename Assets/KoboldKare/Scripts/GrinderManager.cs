@@ -16,6 +16,9 @@ public class GrinderManager : MonoBehaviourPun {
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
     private bool internalOn;
+    public void ToggleOn() {
+        on = !on;
+    }
     public bool on {
         get {
             return internalOn;

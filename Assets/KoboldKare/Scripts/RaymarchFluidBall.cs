@@ -48,9 +48,9 @@ public class RaymarchFluidBall : MonoBehaviour {
             Color c = spilled.volume > 0.001f ? spilled.GetColor(ReagentDatabase.instance) : emitColor;
             c.a = 1f;
             if (spilled.ContainsKey(ReagentData.ID.Water) && spilled[ReagentData.ID.Water].volume > spilled.volume*0.9f) {
-                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(spilled.volume*200f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, true);
+                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*500f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, true);
             } else {
-                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(spilled.volume*200f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, false);
+                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*500f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, false);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KoboldKare;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -19,6 +20,7 @@ public class RaymarchFluid : FluidOutput {
     private bool splashing = false;
     private Bounds bounds = new Bounds();
     public bool fireAtStartFromParent = false;
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     public bool fluidsOnly = true;
     private class RaymarchNode {
         public RaymarchNode(Vector3 position, Vector3 vel, ReagentContents contents, Color c, Material splatterMat, PhysicMaterial fluidMaterial, RaymarchFluid fluidparent, float vps) {
@@ -90,6 +92,8 @@ public class RaymarchFluid : FluidOutput {
     private List<RaymarchConnection> connections = new List<RaymarchConnection>();
     private bool firing;
     private bool connect = false;
+    private Task updateTask = null;
+    private Task fixedUpdateTask = null;
     private ReagentContents bucket;
     public float variance = 1.5f;
     public float vps = 2f;
@@ -107,6 +111,12 @@ public class RaymarchFluid : FluidOutput {
         splashes.SetVector4("Color",b.GetColor(ReagentDatabase.instance));
         bucket = b;
         running = true;
+        if (updateTask == null || !updateTask.Running) {
+            updateTask = new Task(UpdateTask());
+        }
+        if (fixedUpdateTask == null || !fixedUpdateTask.Running) {
+            fixedUpdateTask = new Task(FixedUpdateTask());
+        }
         StopCoroutine("FireRoutine");
         StartCoroutine("FireRoutine");
         streamSource.Play();
@@ -124,6 +134,12 @@ public class RaymarchFluid : FluidOutput {
         bucket = b;
         splashing = true;
         running = true;
+        if (updateTask == null || !updateTask.Running) {
+            updateTask = new Task(UpdateTask());
+        }
+        if (fixedUpdateTask == null || !fixedUpdateTask.Running) {
+            fixedUpdateTask = new Task(FixedUpdateTask());
+        }
         StopCoroutine("SplashRoutine");
         StartCoroutine("SplashRoutine");
         streamSource.Play();
@@ -133,6 +149,9 @@ public class RaymarchFluid : FluidOutput {
         base.StopFiring();
         running = false;
         //StopCoroutine("FireRoutine");
+    }
+    private void OnDestroy() {
+        OnStop();
     }
     private void OnStop() {
         splashes.Stop();
@@ -240,29 +259,35 @@ public class RaymarchFluid : FluidOutput {
             }
         }
     }
-    public void Update() {
-        foreach(var connection in connections) {
-            connection.Tick();
-        }
-
-        for(int i=0;i<nodes.Count;i++) {
-            var ball = nodes[i];
-            if (ball.ball.contents.volume <= 0f) {
-                for(int j=0;ball.connections.Count>0;) {
-                    connections.Remove(ball.connections[j]);
-                    ball.connections[j].Destroy();
-                }
-                Destroy(ball.gameObject);
-                nodes.Remove(ball);
+    IEnumerator UpdateTask() {
+        while (nodes.Count > 0 || (this != null && this.running)) {
+            foreach(var connection in connections) {
+                connection.Tick();
             }
-        }
-        if (start != null && start.gameObject != null) {
-            start.gameObject.transform.position = transform.position;
+
+            for(int i=0;i<nodes.Count;i++) {
+                var ball = nodes[i];
+                if (ball.ball.contents.volume <= 0f) {
+                    for(int j=0;ball.connections.Count>0;) {
+                        connections.Remove(ball.connections[j]);
+                        ball.connections[j].Destroy();
+                    }
+                    Destroy(ball.gameObject);
+                    nodes.Remove(ball);
+                }
+            }
+            if (start != null && start.gameObject && this != null && transform != null) {
+                start.gameObject.transform.position = transform.position;
+            }
+            yield return null;
         }
     }
-    public void FixedUpdate() {
-        foreach(var connection in connections) {
-            connection.PhysicsTick(Time.deltaTime);
+    IEnumerator FixedUpdateTask() {
+        while(nodes.Count > 0 || (this != null && this.running)) {
+            foreach(var connection in connections) {
+                connection.PhysicsTick(Time.deltaTime);
+            }
+            yield return waitForFixedUpdate;
         }
     }
 }

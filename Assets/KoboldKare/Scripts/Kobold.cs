@@ -797,7 +797,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
                     if (belly.container.contents[ReagentData.ID.Egg].volume > 4f) {
                         OnEggFormed.Invoke();
-                        nextEggTime = Time.timeSinceLevelLoad + 5f;
+                        nextEggTime = Time.timeSinceLevelLoad + 20f;
                         bool spawnedEgg = false;
                         foreach(var penetratableSet in penetratables) {
                             if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {

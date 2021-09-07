@@ -25,15 +25,20 @@ public class PhotonGameObjectReference : ISerializationCallbackReceiver {
     public void OnValidate() {
 #if UNITY_EDITOR
         if (gameObject == null) {
-            filepath = "Assets/Resources/Unknown.prefab";
-            photonName = "Unknown";
+            GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/" + photonName + ".prefab");
+            if (obj == null) {
+                obj = AssetDatabase.LoadAssetAtPath<GameObject>(filepath);
+            }
+            if (obj != null) {
+                gameObject = obj;
+            }
+        }
+        if (gameObject == null) {
             return;
         }
         string path = AssetDatabase.GetAssetPath(gameObject);
         if (!path.StartsWith("Assets/Resources/")) {
             Debug.LogError("Prefab " + path + " is located outside the resources folder, Photon won't be able to instantiate it!");
-            filepath = "Assets/Resources/Unknown.prefab";
-            photonName = "Unknown";
             return;
         }
         filepath = path;

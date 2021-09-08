@@ -76,6 +76,7 @@ public class GraphicsOptions : SingletonScriptableObject<GraphicsOptions> {
         VideoMemoryUsage,
         MasterVolume,
         SoundEffectsVolume,
+        SexSoundsVolume,
         MusicVolume,
         CameraFOV,
         PaniniProjection,

@@ -42,6 +42,16 @@
       "dependencies": {},
       "hash": "503f358ac93aaea3cf4970b44666f29b8c2b85cc"
     },
+    "com.naelstrof.unityscriptablesettings": {
+      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.localization": "1.0.0-pre.10",
+        "com.unity.textmeshpro": "3.0.6"
+      },
+      "hash": "888f42fb93f04bcff45e32cede428653f97fd3f4"
+    },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
       "depth": 0,

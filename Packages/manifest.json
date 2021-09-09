@@ -5,6 +5,7 @@
     "com.naelstrof.jigglephysics": "https://github.com/naelstrof/UnityJigglePhysics.git#upm",
     "com.naelstrof.penetrationtech": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
     "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
+    "com.naelstrof.unityscriptablesettings": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",
     "com.quantumcalzone.unitygitpackageupdater": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
     "com.ralivnaelstrof.terrainbrushtools": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
     "com.solidalloy.type-references": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",

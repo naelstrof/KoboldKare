@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TerrainBrush;
 
-public class TerrainBrushOptionsLoader : MonoBehaviour, IGameEventOptionListener {
+namespace UnityScriptableSettings {
+public class TerrainBrushOptionsLoader : MonoBehaviour {
+    public ScriptableSetting grassSetting;
     void Start() {
-        GraphicsOptions.instance.RegisterListener(this);
-        foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
-            OnEventRaised(o.type, o.value);
-        }
+        grassSetting.onValueChange -= OnValueChange;
+        grassSetting.onValueChange += OnValueChange;
+        OnValueChange(grassSetting);
     }
     void OnDestroy() {
-        GraphicsOptions.instance.UnregisterListener(this);
+        grassSetting.onValueChange -= OnValueChange;
     }
 
-    public void OnEventRaised(GraphicsOptions.OptionType e, float value) {
-        if (e!=GraphicsOptions.OptionType.Grass) {
-            return;
-        }
-        GetComponent<TerrainBrushOverseer>().foliageDensity = 0.7f*value;
+    public void OnValueChange(ScriptableSetting setting) {
+        GetComponent<TerrainBrushOverseer>().foliageDensity = 0.7f*setting.value;
         if (GetComponent<TerrainBrushOverseer>().foliageSaveInScene != true) {
             GetComponent<TerrainBrushOverseer>().RegenerateFoliage();
         }
     }
+}
+
 }

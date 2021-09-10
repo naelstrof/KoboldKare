@@ -27,6 +27,47 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
+    [MenuItem("KoboldKare/Find Missing Script")]
+    public static void FindMissingScript() {
+        foreach(GameObject g in Selection.gameObjects) {
+            foreach(var c in g.GetComponents<Component>()) {
+                if (c == null) {
+                    if (g.hideFlags == HideFlags.HideAndDontSave || g.hideFlags == HideFlags.HideInHierarchy || g.hideFlags == HideFlags.HideInInspector) {
+                        Debug.Log("Found hidden gameobject with a missing script, deleted " + g);
+                        GameObject.DestroyImmediate(g);
+                        continue;
+                    }
+                    Selection.activeGameObject = g;
+                    return;
+                }
+            }
+        }
+        foreach(var g in Object.FindObjectsOfType<GameObject>()) {
+            foreach(var c in g.GetComponents<Component>()) {
+                if (c == null) {
+                    if (g.hideFlags == HideFlags.HideAndDontSave || g.hideFlags == HideFlags.HideInHierarchy || g.hideFlags == HideFlags.HideInInspector) {
+                        Debug.Log("Found hidden gameobject with a missing script, deleted " + g);
+                        GameObject.DestroyImmediate(g);
+                        continue;
+                    }
+                    Selection.activeGameObject = g;
+                    return;
+                }
+            }
+        }
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            foreach(var c in go.GetComponentsInChildren<Component>()) {
+                if (c == null) {
+                    Selection.activeGameObject = go;
+                    return;
+                }
+            }
+        }
+        Debug.Log("No missing scripts found anywhere! Good job.");
+    }
 }
 
 #endif

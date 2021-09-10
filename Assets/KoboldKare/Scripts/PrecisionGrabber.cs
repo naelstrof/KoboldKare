@@ -74,7 +74,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
     private bool affectingRotation = false;
     private Rigidbody originalBody;
     private RaycastHit closestHit = new RaycastHit();
-    private GraphicsOptions.Option mouseSensitivy;
+    public UnityScriptableSettings.ScriptableSetting mouseSensitivy;
     RaycastHit[] hits = new RaycastHit[6];
     
     public void HideHand(bool hidden) {
@@ -91,10 +91,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
         if (t.gameObject.layer == fromLayer) {
             t.gameObject.layer = toLayer;
         }
-    }
-
-    public void Start(){
-        mouseSensitivy = GraphicsOptions.instance.GetOption(GraphicsOptions.OptionType.MouseSensitivity);
     }
 
     public void RefreshPrompts() {

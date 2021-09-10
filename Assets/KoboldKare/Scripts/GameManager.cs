@@ -74,12 +74,6 @@ public class GameManager : MonoBehaviour {
             NetworkManager.instance.StartSinglePlayer();
             GameManager.instance.Pause(false);
         }
-        foreach(GraphicsOptions.Option o in GraphicsOptions.instance.options) {
-            // FIXME: the scriptable object loads too early to set the language, so we just set it again here.
-            if (o.type == GraphicsOptions.OptionType.Language) {
-                GraphicsOptions.instance.ChangeOption(o.type, o.value);
-            }
-        }
     }
     //public void OnDestroy() {
         //PhotonNetwork.RemoveCallbackTarget(networkManager);

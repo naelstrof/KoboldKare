@@ -70,13 +70,11 @@ public class SimpleCameraController : MonoBehaviour
     [Tooltip("Whether or not to invert our Y axis for mouse input to rotation.")]
     public bool invertY = false;
 
-    private GraphicsOptions.Option mouseSensitivity;
+    public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
 
-    void OnEnable()
-    {
+    void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
         m_InterpolatingCameraState.SetFromTransform(transform);
-        mouseSensitivity = GraphicsOptions.instance.GetOption(GraphicsOptions.OptionType.MouseSensitivity);
     }
 
     Vector3 GetInputTranslationDirection()

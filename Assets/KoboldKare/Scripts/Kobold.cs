@@ -195,25 +195,25 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     public ExitGames.Client.Photon.Hashtable Save() {
         ExitGames.Client.Photon.Hashtable t = new ExitGames.Client.Photon.Hashtable();
-        t["sex"] = sex;
-        t["hue"] = HueBrightnessContrastSaturation.x;
-        t["brightness"] =  HueBrightnessContrastSaturation.y;
-        t["contrast"] = HueBrightnessContrastSaturation.z;
-        t["saturation"] = HueBrightnessContrastSaturation.w;
-        t["topBottom"] = topBottom;
-        t["thickness"] = thickness;
-        t["size"] = subcutaneousStorage[0].transformCurves[0].initialScale;
-        t["boobSize"] = boobs[0].defaultReagentVolume;
+        t["Sex"] = sex;
+        t["Hue"] = HueBrightnessContrastSaturation.x;
+        t["Brightness"] =  HueBrightnessContrastSaturation.y;
+        t["Contrast"] = HueBrightnessContrastSaturation.z;
+        t["Saturation"] = HueBrightnessContrastSaturation.w;
+        t["TopBottom"] = topBottom;
+        t["Thickness"] = thickness;
+        t["Size"] = subcutaneousStorage[0].transformCurves[0].initialScale;
+        t["BoobSize"] = boobs[0].defaultReagentVolume;
         int[] equipmentList = new int[inventory.equipment.Count];
         for(int i=0;i<inventory.equipment.Count;i++) {
             equipmentList[i] = inventory.equipment[i].equipment.GetID();
         }
-        t["equippedItems"] = equipmentList;
+        t["EquippedItems"] = equipmentList;
         int[] statusList = new int[statblock.activeEffects.Count];
         for(int i=0;i<statblock.activeEffects.Count;i++) {
             statusList[i] = statblock.activeEffects[i].effect.GetID();
         }
-        t["activeStatusEffects"] = statusList;
+        t["ActiveStatusEffects"] = statusList;
         return t;
     }
     public void OnCompleteBodyProportion() {
@@ -225,8 +225,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     [PunRPC]
     public void Load(ExitGames.Client.Photon.Hashtable s) {
         isLoaded = true;
-        if (s.ContainsKey("sex")) {
-            sex = (float)s["sex"];
+        if (s.ContainsKey("Sex")) {
+            sex = (float)s["Sex"];
             foreach (Renderer r in koboldBodyRenderers) {
                 if (r is SkinnedMeshRenderer) {
                     SkinnedMeshRenderer bodyMesh = (SkinnedMeshRenderer)r;
@@ -239,12 +239,12 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
         }
         bool changedBodyShape = false;
-        if (s.ContainsKey("topBottom")) {
-            topBottom = (float)s["topBottom"];
+        if (s.ContainsKey("TopBottom")) {
+            topBottom = (float)s["TopBottom"];
             changedBodyShape = true;
         }
-        if (s.ContainsKey("thickness")) {
-            thickness = (float)s["thickness"];
+        if (s.ContainsKey("Thickness")) {
+            thickness = (float)s["Thickness"];
             changedBodyShape = true;
         }
         if (changedBodyShape) {
@@ -253,41 +253,41 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             bodyProportion.Initialize();
         }
         Vector4 hbcs = HueBrightnessContrastSaturation;
-        if (s.ContainsKey("brightness")) {
-            hbcs.y = (float)s["brightness"];
+        if (s.ContainsKey("Brightness")) {
+            hbcs.y = (float)s["Brightness"];
         }
-        if (s.ContainsKey("contrast")) {
-            hbcs.z = (float)s["contrast"];
+        if (s.ContainsKey("Contrast")) {
+            hbcs.z = (float)s["Contrast"];
         }
-        if (s.ContainsKey("saturation")) {
-            hbcs.w = (float)s["saturation"];
+        if (s.ContainsKey("Saturation")) {
+            hbcs.w = (float)s["Saturation"];
         }
-        if (s.ContainsKey("hue")) {
-            hbcs.x = (float)s["hue"];
+        if (s.ContainsKey("Hue")) {
+            hbcs.x = (float)s["Hue"];
         }
         HueBrightnessContrastSaturation = hbcs;
 
-        if (s.ContainsKey("size")) {
+        if (s.ContainsKey("KoboldSize")) {
             Reagent r = new Reagent();
-            r.volume = (float)s["size"] * sizeInflatable.reagentVolumeDivisor;
+            r.volume = (float)s["KoboldSize"] * sizeInflatable.reagentVolumeDivisor;
             sizeInflatable.container.contents[ReagentData.ID.GrowthSerum] = r;
             sizeInflatable.container.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Inject);
         }
 
-        if (s.ContainsKey("boobSize")) {
+        if (s.ContainsKey("BoobSize")) {
             foreach (var boob in boobs) {
                 Reagent f = new Reagent();
-                f.volume = (float)s["boobSize"] * boob.reagentVolumeDivisor * 0.7f;
+                f.volume = (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.7f;
                 Reagent m = new Reagent();
-                m.volume = (float)s["boobSize"] * boob.reagentVolumeDivisor * 0.3f;
+                m.volume = (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.3f;
                 boob.container.contents[ReagentData.ID.Fat] = f;
                 boob.container.contents[ReagentData.ID.Milk] = m;
                 boob.container.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Inject);
             }
         }
 
-        if (s.ContainsKey("equippedItems")) {
-            int[] equipped = (int[])s["equippedItems"];
+        if (s.ContainsKey("EquippedItems")) {
+            int[] equipped = (int[])s["EquippedItems"];
             bool isSame = equipped.Length == inventory.equipment.Count;
             for (int i=0;isSame&&i<equipped.Length&&i<inventory.equipment.Count;i++) {
                 if (inventory.equipment[i].equipment.GetID() != equipped[i]) {
@@ -305,8 +305,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 }
             }
         }
-        if (s.ContainsKey("activeStatusEffects")) {
-            int[] activeEffects = (int[])s["activeStatusEffects"];
+        if (s.ContainsKey("ActiveStatusEffects")) {
+            int[] activeEffects = (int[])s["ActiveStatusEffects"];
             bool isSame = activeEffects.Length == statblock.activeEffects.Count;
             for (int i=0;isSame&&i<activeEffects.Length&&i<statblock.activeEffects.Count;i++) {
                 if (statblock.activeEffects[i].effect.GetID() != activeEffects[i]) {
@@ -343,7 +343,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             for (int i = 0; i < statblock.activeEffects.Count; i++) {
                 statusList[i] = statblock.activeEffects[i].effect.GetID();
             }
-            sendInfo["activeStatusEffects"] = statusList;
+            sendInfo["ActiveStatusEffects"] = statusList;
             photonView.RPC("Load", RpcTarget.OthersBuffered, new object[] { sendInfo });
         }*/
     }

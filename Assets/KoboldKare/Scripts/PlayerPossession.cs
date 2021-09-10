@@ -54,7 +54,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     private bool switchedMode = false;
     private bool freeze = false;
     private bool pauseInput = false;
-    private GraphicsOptions.Option mouseSensitivity;
+    public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
     public void OnPause() {
         GameManager.instance.Pause(!GameManager.instance.isPaused);
         if (GameManager.instance.isPaused) {
@@ -74,7 +74,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         if (!isActiveAndEnabled) {
             return;
         }
-        mouseSensitivity = GraphicsOptions.instance.GetOption(GraphicsOptions.OptionType.MouseSensitivity);
         //rig.layers[0].active = true;
         body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         //controller.GetComponent<Kobold>().uprightForce *= 10f;

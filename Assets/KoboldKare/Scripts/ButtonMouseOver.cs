@@ -7,10 +7,17 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
     private Vector3 defaultLocalScale;
-    private Button attachedButton;
+    private Button internalAttachedButton;
+    private Button attachedButton {
+        get {
+            if (internalAttachedButton == null) {
+                internalAttachedButton = GetComponent<Button>();
+            }
+            return internalAttachedButton;
+        }
+    }
     private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
     private void Start() {
-        attachedButton = GetComponent<Button>();
         defaultLocalScale = transform.localScale;
     }
     public IEnumerator ScaleBack(float scaleDuration) {

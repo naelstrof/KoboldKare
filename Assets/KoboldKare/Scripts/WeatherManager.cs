@@ -9,10 +9,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     public float rainAmount = 0f;
     public Material cloudMaterial;
     public Material skyboxMaterial;
-    public VisualEffect rain;
     public VisualEffect dust;
     //public VisualEffect snow;
-    public Camera rainCamera;
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
     private Camera cachedCamera;
@@ -131,9 +129,9 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
         //skyboxMaterial.SetFloat("_CloudHeight", Mathf.Lerp(50f, 30f, rainAmount));
         skyboxMaterial.SetFloat("_CloudDensityOffset", Mathf.Lerp(-0.75f, 0.1f, rainAmount));
         skyboxMaterial.SetFloat("_Brightness", Mathf.Lerp(0.5f, 0.25f, rainAmount));
-        rain.SetFloat("WaterDensity", rainAmount);
-        float radius = rain.GetFloat("Radius");
-        for (int i = 0; i < 3*rainAmount; i++) {
+        //rain.SetFloat("WaterDensity", rainAmount);
+        //float radius = rain.GetFloat("Radius");
+        /*for (int i = 0; i < 3*rainAmount; i++) {
             Vector3 waterTop = rain.transform.position + Vector3.up * 100f;
             Vector3 randomSample = Vector3.ProjectOnPlane(UnityEngine.Random.insideUnitSphere, Vector3.up) * radius;
             Vector3 rayStart = waterTop + randomSample;
@@ -160,15 +158,15 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
                     GameManager.instance.SpawnDecalInWorld(splashMaterial, hit.point + hit.normal * 0.25f, -hit.normal, Vector2.one * 3f, rainContents.GetColor(ReagentDatabase.instance), hit.collider.gameObject, 0.5f, true, true, shouldClean);
                 }
             }
-        }
+        }*/
         if (cam != null) {
             transform.position = cam.transform.position;
         }
-        if (Mathf.Approximately(rainAmount, 0f) && rainCamera.enabled) {
+        /*if (Mathf.Approximately(rainAmount, 0f) && rainCamera.enabled) {
             rainCamera.enabled = false;
         } else if (!Mathf.Approximately(rainAmount, 0f) && !rainCamera.enabled) {
             rainCamera.enabled = true;
-        }
+        }*/
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

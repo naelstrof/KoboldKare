@@ -116,7 +116,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.3",
+      "version": "1.2.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -163,18 +163,18 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.universal": {
-      "version": "https://github.com/naelstrof/com.unity.render-pipelines.universal.git#10.5.0-grassfix",
+      "version": "10.6.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.1.0",
-        "com.unity.render-pipelines.core": "10.5.0",
-        "com.unity.shadergraph": "10.5.0"
+        "com.unity.render-pipelines.core": "10.6.0",
+        "com.unity.shadergraph": "10.6.0"
       },
-      "hash": "63335c6fd38323b1623e6dc99bda361b28ed6515"
+      "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.1",
+      "version": "1.19.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -228,14 +228,14 @@
       }
     },
     "com.unity.visualeffectgraph": {
-      "version": "https://github.com/naelstrof/com.unity.visualeffectgraph.git#10.5.0-depthcollide",
+      "version": "10.6.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {
-        "com.unity.shadergraph": "10.5.0",
-        "com.unity.render-pipelines.core": "10.5.0"
+        "com.unity.shadergraph": "10.6.0",
+        "com.unity.render-pipelines.core": "10.6.0"
       },
-      "hash": "1af1aec3f233fc0987406a7cf7caf5191a9e3e37"
+      "url": "https://packages.unity.com"
     },
     "li.lightingtools.lightprobesvolumes": {
       "version": "https://github.com/naelstrof/LightProbeVolumes.git",

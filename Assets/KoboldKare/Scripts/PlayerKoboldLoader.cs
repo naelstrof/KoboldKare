@@ -46,10 +46,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
         if (setting == UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Dick")) {
             if (setting.value != 0f) {
                 int[] equipmentList = new int[] { defaultDickID };
-                t["equippedItems"] = equipmentList;
+                t["EquippedItems"] = equipmentList;
             } else {
                 int[] equipmentList = new int[] {};
-                t["equippedItems"] = equipmentList;
+                t["EquippedItems"] = equipmentList;
             }
         } else {
             t[setting.name] = setting.value;

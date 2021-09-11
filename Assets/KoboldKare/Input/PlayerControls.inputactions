@@ -172,6 +172,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ErectionUp",
+                    "type": "Value",
+                    "id": "b954f352-cb6f-448d-8d72-62718c2d2bb4",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ErectionDown",
+                    "type": "Value",
+                    "id": "91fcb00e-c968-4794-98aa-ab55c01d4bb1",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -667,6 +683,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "745a0c92-97e8-4719-9747-e434df652197",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ErectionDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a3299c4-a597-4174-ba6f-561eb0b891b1",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ErectionUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

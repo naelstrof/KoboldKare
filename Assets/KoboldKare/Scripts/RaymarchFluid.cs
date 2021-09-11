@@ -22,6 +22,9 @@ public class RaymarchFluid : FluidOutput {
     public bool fireAtStartFromParent = false;
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     public bool fluidsOnly = true;
+    private void OnEnable() {
+        splashes.Stop();
+    }
     private class RaymarchNode {
         public RaymarchNode(Vector3 position, Vector3 vel, ReagentContents contents, Color c, Material splatterMat, PhysicMaterial fluidMaterial, RaymarchFluid fluidparent, float vps) {
             gameObject = new GameObject("RaymarchFluidNode", new Type[] {typeof(Rigidbody), typeof(SphereCollider), typeof(RaymarchFluidBall), typeof(PhysicsAudio)});

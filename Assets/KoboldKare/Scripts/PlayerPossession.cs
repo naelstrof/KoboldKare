@@ -139,6 +139,11 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         bool unfreeze = controls.actions["Unfreeze"].ReadValue<float>() > 0.5f;
         bool walk = controls.actions["Walk"].ReadValue<float>() > 0.5f;
         bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
+        float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
+        float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
+        if (erectionUp-erectionDown != 0f) {
+            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime);
+        }
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
 
@@ -177,7 +182,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             if (!switchGrabMode && !pGrabber.grabbing) {
                 pGrabber.Ungrab();
                 if (grab) {
-                    kobold.PumpUpDick(Time.deltaTime*0.1f);
                     grabber.TryGrab();
                 }
                 if (!pGrabber.HandHidden()) {
@@ -191,7 +195,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
                 }
                 if (grab && !freeze) {
                     pGrabber.Grab();
-                    kobold.PumpUpDick(Time.deltaTime*0.1f);
                 }
             }
             if (!grab) {
@@ -316,6 +319,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         spoilable.OnSpoilEvent.Invoke();
     }
     public void OnUse() {
+        kobold.PumpUpDick(0.1f);
         user.Use();
     }
     public void OnResetCamera() {

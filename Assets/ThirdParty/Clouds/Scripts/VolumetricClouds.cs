@@ -164,6 +164,7 @@ public class VolumetricClouds : ScriptableRendererFeature {
         RenderTargetHandle m_TemporaryColorTexture;
         string m_ProfilerTag;
         bool ready = false;
+        bool loading = false;
         public void LoadCompleteCheck(AsyncOperationHandle handle) {
             if (ready) {
                 return;
@@ -195,22 +196,10 @@ public class VolumetricClouds : ScriptableRendererFeature {
             RenderNoise(CloudNoiseType.Shape);
             RenderNoise(CloudNoiseType.Detail);
             ready = true;
+            loading = false;
         }
         public VolumetricCloudsPass(VolumetricCloudsSettings settings, string tag) {
             this.settings = settings;
-            if (!ready) {
-                noiseComputeLoader = Addressables.LoadAssetAsync<ComputeShader>("NoiseGenCompute");
-                ((AsyncOperationHandle)noiseComputeLoader).Completed += LoadCompleteCheck;
-                for (int i=1;i<5;i++) {
-                    worleyNoiseLoaders[i-1] = Addressables.LoadAssetAsync<WorleyNoiseSettings>("Shape_"+i);
-                }
-                for (int i=1;i<4;i++) {
-                    worleyNoiseLoaders[i+3] = Addressables.LoadAssetAsync<WorleyNoiseSettings>("Detail_"+i);
-                }
-                foreach(var handle in worleyNoiseLoaders) {
-                    ((AsyncOperationHandle)handle).Completed += LoadCompleteCheck;
-                }
-            }
             this.renderPassEvent = settings.Event;
             this.blitMaterial = settings.blitMaterial;
             this.blitShaderPassIndex = settings.blitMaterialPassIndex;
@@ -224,6 +213,21 @@ public class VolumetricClouds : ScriptableRendererFeature {
         }
          
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData) {
+            if (!ready && !loading) {
+                noiseComputeLoader = Addressables.LoadAssetAsync<ComputeShader>("NoiseGenCompute");
+                ((AsyncOperationHandle)noiseComputeLoader).Completed += LoadCompleteCheck;
+                for (int i=1;i<5;i++) {
+                    worleyNoiseLoaders[i-1] = Addressables.LoadAssetAsync<WorleyNoiseSettings>("Shape_"+i);
+                }
+                for (int i=1;i<4;i++) {
+                    worleyNoiseLoaders[i+3] = Addressables.LoadAssetAsync<WorleyNoiseSettings>("Detail_"+i);
+                }
+                foreach(var handle in worleyNoiseLoaders) {
+                    ((AsyncOperationHandle)handle).Completed += LoadCompleteCheck;
+                }
+                loading = true;
+                return;
+            }
             if (!renderingData.cameraData.postProcessEnabled || !ready) {
                 return;
             }

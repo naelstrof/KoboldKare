@@ -378,6 +378,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         animator.SetBool("Carried", true);
         //pickedUp = 1;
         //transSpeed = 5.0f;
+        SaveManager.RPC(photonView, "OnEndStation", RpcTarget.AllBuffered);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         return true;

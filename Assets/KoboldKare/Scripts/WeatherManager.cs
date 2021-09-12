@@ -159,14 +159,16 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
                 }
             }
         }*/
-        if (cam != null) {
-            transform.position = cam.transform.position;
-        }
         /*if (Mathf.Approximately(rainAmount, 0f) && rainCamera.enabled) {
             rainCamera.enabled = false;
         } else if (!Mathf.Approximately(rainAmount, 0f) && !rainCamera.enabled) {
             rainCamera.enabled = true;
         }*/
+    }
+    public void LateUpdate() {
+        if (cam != null) {
+            transform.position = cam.transform.position + Vector3.up*10f;
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

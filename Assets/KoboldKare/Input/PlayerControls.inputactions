@@ -568,7 +568,7 @@
                 {
                     "name": "",
                     "id": "bf63950f-c33d-47ad-80e1-5a0de1502a45",
-                    "path": "",
+                    "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -589,7 +589,7 @@
                 },
                 {
                     "name": "",
-                    "id": "02ea6f7d-7f5c-486b-83c6-999b32d9ffcc",
+                    "id": "a71ff631-7ebe-4875-a329-ba47636fa79b",
                     "path": "",
                     "interactions": "",
                     "processors": "",
@@ -634,7 +634,7 @@
                 {
                     "name": "",
                     "id": "ce77b176-e85c-4c9f-9dfb-59c10e2e0f65",
-                    "path": "",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -153,12 +153,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun
     }
     [PunRPC]
     public void OnEndStation() {
-        // Stop everyone else from having the fun, sorry!
         if (!animating) {
             return;
         }
         animating = false;
         physicsSolver.CleanUp();
+        // Stop everyone else from having the fun, sorry!
         foreach(AnimationStation s in activeStation.linkedStations.hashSet) {
             if (s.info.user && s != activeStation) {
                 ((Kobold)s.info.user).GetComponentInChildren<CharacterControllerAnimator>().OnEndStation();

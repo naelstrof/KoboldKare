@@ -10,17 +10,20 @@ public class VolumeSettingListener : MonoBehaviour {
     public ScriptableSetting bloomOption;
     public ScriptableSetting blurOption;
     public ScriptableSetting paniniOption;
+    public ScriptableSetting postExposure;
     public ScriptableSetting dofOption;
     public ScriptableSetting filmGrainOption;
     void Start() {
         bloomOption.onValueChange += OnValueChange;
         blurOption.onValueChange += OnValueChange;
         paniniOption.onValueChange += OnValueChange;
+        postExposure.onValueChange += OnValueChange;
         dofOption.onValueChange += OnValueChange;
         filmGrainOption.onValueChange += OnValueChange;
         OnValueChange(blurOption);
         OnValueChange(bloomOption);
         OnValueChange(paniniOption);
+        OnValueChange(postExposure);
         OnValueChange(dofOption);
         OnValueChange(filmGrainOption);
     }
@@ -59,6 +62,11 @@ public class VolumeSettingListener : MonoBehaviour {
             FilmGrain grain;
             if (!v.profile.TryGet<FilmGrain>(out grain)) { return; }
             grain.active = (option.value!=0);
+        }
+        if (option == postExposure) {
+            ColorAdjustments adjustments;
+            if (!v.profile.TryGet<ColorAdjustments>(out adjustments)) { return; }
+            adjustments.postExposure.Override(option.value);
         }
     }
 /*public void OnEventRaised(GraphicsOptions.OptionType target, float value) {

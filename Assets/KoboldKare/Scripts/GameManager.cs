@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public LayerMask precisionGrabMask;
     public LayerMask walkableGroundMask;
     public LayerMask waterSprayHitMask;
+    public LayerMask plantHitMask;
     public LayerMask decalHitMask;
     public UnityEvent OnPause;
     public UnityEvent OnUnpause;

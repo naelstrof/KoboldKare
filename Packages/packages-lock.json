@@ -50,7 +50,7 @@
         "com.unity.localization": "1.0.0-pre.10",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "63c301e700d6130aba769da0750e546c0455d967"
+      "hash": "ad318237df722c88f0511732aed225f836a1a7d4"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
@@ -81,6 +81,12 @@
       "source": "git",
       "dependencies": {},
       "hash": "d8a6400d71032604ee02b81f63d47fb4c2bbcdbd"
+    },
+    "com.unity.2d.sprite": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
     },
     "com.unity.addressables": {
       "version": "1.18.11",

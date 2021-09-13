@@ -19,7 +19,10 @@ public class RebindSpawner : MonoBehaviour
     public GameObject rebindUI;
     public TMPro.TextMeshProUGUI rebindUIText;
     private Dictionary<RebindActionNamePair, GameObject> controlUI = new Dictionary<RebindActionNamePair, GameObject>();
-    void Start() {
+    IEnumerator StartRoutine() {
+        yield return LocalizationSettings.InitializationOperation;
+        // Wait for settings to spawn
+        yield return new WaitForSecondsRealtime(0.25f);
         controlUI.Clear();
         foreach( var r in rebindActionNamePairs) {
             GameObject i = GameObject.Instantiate(rebindPrefab);
@@ -39,6 +42,9 @@ public class RebindSpawner : MonoBehaviour
         }
         LocalizationSettings.SelectedLocaleChanged += StringChanged;
         StringChanged(null);
+    }
+    void Start() {
+        StartCoroutine(StartRoutine());
     }
     public void RefreshDisplay() {
         foreach(var p in controlUI) {

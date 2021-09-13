@@ -707,8 +707,30 @@
                 },
                 {
                     "name": "",
+                    "id": "be43b967-bc5d-4ed7-be53-0de42d5ad0c2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ErectionDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7a3299c4-a597-4174-ba6f-561eb0b891b1",
                     "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ErectionUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2f69c4d-7636-4437-8ec3-c98c2c015abf",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

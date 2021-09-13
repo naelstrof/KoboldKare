@@ -27,6 +27,23 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
+    [MenuItem("KoboldKare/Disable all GPU Instanced Materials")]
+    public static void FindGPUInstancedMaterial() {
+        Undo.IncrementCurrentGroup();
+        Undo.SetCurrentGroupName("Changed project gpu instancing");
+        var undoIndex = Undo.GetCurrentGroup();
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            if (go.enableInstancing) {
+                Undo.RecordObject(go, "Changed project gpu instancing");
+                go.enableInstancing = false;
+                EditorUtility.SetDirty(go);
+            }
+        }
+        Undo.CollapseUndoOperations(undoIndex);
+    }
     [MenuItem("KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {
         foreach(GameObject g in Selection.gameObjects) {

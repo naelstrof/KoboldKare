@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour {
 
     public void Pause(bool pause) {
         if (!pause) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             OnUnpause.Invoke();
         }
         if (pause) {

@@ -20,6 +20,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     public InputActionReference back;
     public PrecisionGrabber pGrabber;
     public GenericSpoilable spoilable;
+    public GameObject dickErectionHidable;
     public Grabber grabber;
     public Camera eyes;
     private bool internalInputRagdolled;
@@ -290,6 +291,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
         }
+        if (kobold.activeDicks.Count > 0 && !dickErectionHidable.activeInHierarchy) {
+            dickErectionHidable.SetActive(true);
+        }
+        if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
+            dickErectionHidable.SetActive(false);
+        }
     }
 
     public IEnumerator CoyoteGrab() {
@@ -344,7 +351,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         spoilable.OnSpoilEvent.Invoke();
     }
     public void OnUse() {
-        kobold.PumpUpDick(0.025f);
         user.Use();
     }
     public void OnResetCamera() {

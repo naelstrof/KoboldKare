@@ -215,16 +215,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             {
                 var bindingIndex = action.bindings.IndexOf(x => x.id.ToString() == m_BindingId);
                 if (bindingIndex != -1) {
-                    displayString = action.GetBindingDisplayString(bindingIndex, out deviceLayoutName, out controlPath, displayStringOptions);
-                    //Debug.Log(displayString + " COMPAREDTO " + action.bindings[bindingIndex].ToString().Substring(action.name.Length) + " WITH " + bindingIndex + " OUT OF " + action.bindings.Count);
-                    string n = action.bindings[bindingIndex].ToString();
-                    if (n.Length == 0 || n.IndexOf('/')==-1) {
-                        displayString = "<not bound>";
-                    } else {
-                        string device = n.Substring(action.name.Length + 1, n.IndexOf('/') - (action.name.Length + 1));
-                        string binding = n.Substring(n.IndexOf('/') + 1);
-                        displayString = device + "/" + binding;
-                    }
+                    displayString = action.bindings[bindingIndex].path;
                 }
             }
 

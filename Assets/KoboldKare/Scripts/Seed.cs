@@ -35,7 +35,6 @@ public class Seed : MonoBehaviour, IValuedGood {
                 }
             }
         }
-            Debug.Log("Can't plant f.");
         return false;
     }
     public void Plant() {

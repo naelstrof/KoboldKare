@@ -177,7 +177,7 @@
                     "name": "ErectionUp",
                     "type": "Value",
                     "id": "b954f352-cb6f-448d-8d72-62718c2d2bb4",
-                    "expectedControlType": "Analog",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
@@ -185,7 +185,7 @@
                     "name": "ErectionDown",
                     "type": "Value",
                     "id": "91fcb00e-c968-4794-98aa-ab55c01d4bb1",
-                    "expectedControlType": "Analog",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
@@ -311,8 +311,8 @@
                 },
                 {
                     "name": "",
-                    "id": "0d52ce99-575d-47dc-ac3c-5a7d36e95beb",
-                    "path": "<Gamepad>/select",
+                    "id": "0bbe41bd-6a3e-4705-a141-c715605a5bd5",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -664,7 +664,7 @@
                 {
                     "name": "",
                     "id": "2b1f74f4-3b6a-4654-a845-8628cb598ac0",
-                    "path": "<Gamepad>/dpad/down",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -686,7 +686,7 @@
                 {
                     "name": "",
                     "id": "2c38f9d2-ed5d-492b-830f-8655f719b29d",
-                    "path": "",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -708,7 +708,7 @@
                 {
                     "name": "",
                     "id": "be43b967-bc5d-4ed7-be53-0de42d5ad0c2",
-                    "path": "",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -719,7 +719,7 @@
                 {
                     "name": "",
                     "id": "7a3299c4-a597-4174-ba6f-561eb0b891b1",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -730,7 +730,7 @@
                 {
                     "name": "",
                     "id": "b2f69c4d-7636-4437-8ec3-c98c2c015abf",
-                    "path": "",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

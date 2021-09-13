@@ -9,6 +9,7 @@ public class KoboldEvent : UnityEvent<Kobold> {}
 public class GenericGrabbable : MonoBehaviour, IGrabbable {
     public KoboldEvent onGrab;
     public KoboldEvent onRelease;
+    public KoboldEvent onThrow;
     public Rigidbody[] bodies;
     public Renderer[] renderers;
     public Transform center;
@@ -20,6 +21,9 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
 
     public void OnRelease(Kobold kobold) {
         onRelease.Invoke(kobold);
+    }
+    public void OnThrow(Kobold kobold) {
+        onThrow.Invoke(kobold);
     }
     public Vector3 GrabOffset() {
         return Vector3.zero;

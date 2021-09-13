@@ -459,6 +459,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
             if (hasWeapon) {
                 continue;
             }
+            g.OnThrow(kobold);
             thrownObjects.Add(g);
             StartCoroutine(WaitAndClearThrown(thrownUntouchableTime));
         }

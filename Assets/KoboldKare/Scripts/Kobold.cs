@@ -11,6 +11,7 @@ using Photon;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
+using TMPro;
 
 public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunInstantiateMagicCallback, IReagentContainerListener, IPunObservable {
     public StatusEffect koboldStatus;
@@ -63,6 +64,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public BodyProportion bodyProportion;
     public UnityEvent OnRagdoll;
     public UnityEvent OnStandup;
+    public TMPro.TMP_Text chatText;
     public UnityEvent OnEggFormed;
     public UnityEvent OnOrgasm;
     [HideInInspector]
@@ -99,6 +101,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     private Vector3 networkedRagdollHipPosition;
     public bool isLoaded = false;
     public float arousal = 0f;
+    public Coroutine displayMessageRoutine;
     public bool ragdolled {
         get {
             if (ragdollBodies[0] == null) {
@@ -663,6 +666,27 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public void PickupEquipment(int id) {
         inventory.AddEquipment(Equipment.GetEquipmentFromID(id), EquipmentInventory.EquipmentChangeSource.Network);
     }
+    public void SendChat(string message) {
+        SaveManager.RPC(photonView, "RPCSendChat", RpcTarget.All, new object[]{message});
+    }
+    [PunRPC]
+    public void RPCSendChat(string message) {
+        if (displayMessageRoutine != null) {
+            StopCoroutine(displayMessageRoutine);
+        }
+        displayMessageRoutine = StartCoroutine(DisplayMessage(message,5f));
+    }
+    IEnumerator DisplayMessage(string message, float duration) {
+        chatText.text = message;
+        chatText.alpha = 1f;
+        yield return new WaitForSeconds(duration);
+        float endTime = Time.time + 1f;
+        while(Time.time < endTime) {
+            chatText.alpha = endTime-Time.time;
+            yield return null;
+        }
+        chatText.alpha = 0f;
+    }
     [PunRPC]
     public void DropEquipment(int slot) {
         if (slot == -1 ) {
@@ -859,5 +883,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
             networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
         }
+    }
+
+    public void OnThrow(Kobold kobold) {
     }
 }

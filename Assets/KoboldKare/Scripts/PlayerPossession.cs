@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.UI;
 
 public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     public UnityEngine.InputSystem.PlayerInput controls;
@@ -13,7 +14,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     private bool canGrab = true;
     //public Grabber grabber;
     public User user;
+    public CanvasGroup chatGroup;
+    public TMPro.TMP_InputField chatInput;
     public GameObject diePrefab;
+    public InputActionReference back;
     public PrecisionGrabber pGrabber;
     public GenericSpoilable spoilable;
     public Grabber grabber;
@@ -64,6 +68,27 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+    }
+    private void OnTextDeselect(string t) {
+        chatInput.text="";
+        chatGroup.interactable = false;
+        chatGroup.alpha = 0f;
+        controls.ActivateInput();
+        chatInput.onSubmit.RemoveListener(OnTextSubmit);
+        chatInput.onDeselect.RemoveListener(OnTextDeselect);
+        back.action.started -= OnBack;
+    }
+    private void OnTextSubmit(string t) {
+        if (!string.IsNullOrEmpty(t)) {
+            kobold.SendChat(t);
+        }
+        chatInput.text="";
+        chatGroup.interactable = false;
+        chatGroup.alpha = 0f;
+        controls.ActivateInput();
+        chatInput.onSubmit.RemoveListener(OnTextSubmit);
+        chatInput.onDeselect.RemoveListener(OnTextDeselect);
+        back.action.started -= OnBack;
     }
     private void Start() {
         //if (!photonView.IsMine) {
@@ -142,7 +167,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
         if (erectionUp-erectionDown != 0f) {
-            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime);
+            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.1f);
         }
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
@@ -319,7 +344,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         spoilable.OnSpoilEvent.Invoke();
     }
     public void OnUse() {
-        kobold.PumpUpDick(0.1f);
+        kobold.PumpUpDick(0.025f);
         user.Use();
     }
     public void OnResetCamera() {
@@ -327,6 +352,28 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         //cameras[1].transform.localRotation = Quaternion.identity;
     }
     public void OnLook(InputValue value) {
+    }
+    public void OnBack(InputAction.CallbackContext context) {
+        OnTextDeselect("");
+    }
+    public void OnChat() {
+        if (!enabled) {
+            return;
+        }
+        if (!chatGroup.interactable) {
+            chatGroup.interactable = true;
+            chatGroup.alpha = 1f;
+            chatInput.Select();
+            back.action.performed += OnBack;
+            StopCoroutine("WaitAndThenSubscribe");
+            StartCoroutine("WaitAndThenSubscribe");
+            controls.DeactivateInput();
+            chatInput.onDeselect.AddListener(OnTextDeselect);
+        }
+    }
+    IEnumerator WaitAndThenSubscribe() {
+        yield return new WaitForSecondsRealtime(0.25f);
+        chatInput.onSubmit.AddListener(OnTextSubmit);
     }
     public IEnumerator WaitAndThenStand() {
         yield return new WaitForSeconds(1f);

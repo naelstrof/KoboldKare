@@ -117,6 +117,11 @@ public class DickInfo : MonoBehaviour {
         //transform.localPosition = Vector3.zero;
         //transform.localRotation = Quaternion.identity;
         foreach(DickSet set in dicks) {
+            //LODGroup group = attachedKobold.GetComponentInChildren<LODGroup>();
+            //LOD[] lods = group.GetLODs();
+            //List<Renderer> closeLodRenderers = new List<Renderer>(lods[0].renderers);
+            //closeLodRenderers
+
             set.info = this;
             Vector3 scale = set.dickContainer.localScale;
             set.dick.OnCumEmit.AddListener(()=>{

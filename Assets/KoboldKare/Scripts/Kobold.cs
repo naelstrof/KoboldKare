@@ -47,6 +47,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public List<Transform> attachPoints = new List<Transform>();
 
+    public AudioClip[] yowls;
     public GenericLODConsumer lodLevel;
     public Transform root;
     public EggSpawner eggSpawner;
@@ -671,6 +672,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     [PunRPC]
     public void RPCSendChat(string message) {
+        GameManager.instance.SpawnAudioClipInWorld(yowls[UnityEngine.Random.Range(0,yowls.Length)], transform.position);
         if (displayMessageRoutine != null) {
             StopCoroutine(displayMessageRoutine);
         }

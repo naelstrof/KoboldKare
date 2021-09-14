@@ -61,6 +61,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     private bool pauseInput = false;
     public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
     public void OnPause() {
+        if (equipmentUI.activeInHierarchy) {
+            equipmentUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            return;
+        }
         GameManager.instance.Pause(!GameManager.instance.isPaused);
         if (GameManager.instance.isPaused) {
             Cursor.lockState = CursorLockMode.None;

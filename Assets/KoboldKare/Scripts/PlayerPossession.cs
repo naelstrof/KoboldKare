@@ -400,14 +400,17 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     }
 
     public void OnViewStats( InputValue value ) {
-        if (value.Get<float>() <= 0.5f) {
-            equipmentUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        } else {
-            equipmentUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+        if (value.Get<float>() >= 0.5f) {
+            if (equipmentUI.activeInHierarchy) {
+                equipmentUI.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            } else {
+                equipmentUI.SetActive(true);
+                equipmentUI.GetComponentInChildren<Selectable>()?.Select();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

@@ -50,7 +50,7 @@
         "com.unity.localization": "1.0.0-pre.10",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "fc8c41c8832fc70a583643d6a1ee5676689cc260"
+      "hash": "abbf125be1e81aca6f691bc0910e3c38d4a5665a"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
@@ -89,11 +89,11 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "1.18.11",
+      "version": "1.19.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.1",
+        "com.unity.scriptablebuildpipeline": "1.19.2",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -136,11 +136,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.0.0-pre.10",
+      "version": "1.0.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.addressables": "1.18.11",
+        "com.unity.addressables": "1.19.4",
         "com.unity.nuget.newtonsoft-json": "2.0.0"
       },
       "url": "https://packages.unity.com"

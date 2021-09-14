@@ -44,6 +44,18 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
+    [MenuItem("KoboldKare/Find Specualar Workflow Materials")]
+    public static void FindSpecularWorkflowMaterials() {
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            if (go.IsKeywordEnabled("_SPECULAR_SETUP")) {
+                Selection.activeObject = go;
+                return;
+            }
+        }
+    }
     [MenuItem("KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {
         foreach(GameObject g in Selection.gameObjects) {

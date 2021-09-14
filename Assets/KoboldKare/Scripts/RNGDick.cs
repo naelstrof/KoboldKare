@@ -9,7 +9,9 @@ public class RNGDick : MonoBehaviourPun
     // Start is called before the first frame update
     void Start() {
         // We need to wait a frame or two to make sure that we are fully instantiated.
-        StartCoroutine(WaitASecAndSpawnDick());
+        if (!SaveManager.isLoading) {
+            StartCoroutine(WaitASecAndSpawnDick());
+        }
     }
     private IEnumerator WaitASecAndSpawnDick() {
         yield return null;

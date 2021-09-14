@@ -128,7 +128,11 @@ public class DickInfo : MonoBehaviour {
                 ReagentContents cumbucket = new ReagentContents();
                 cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
                 cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
-                if (!set.dick.IsInside()) {
+                Kobold pennedKobold = null;
+                if (set.dick.holeTarget != null) {
+                    pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
+                }
+                if (!set.dick.IsInside() || pennedKobold == null) {
                     set.dick.GetComponentInChildren<FluidOutput>().Fire(cumbucket, 2f);
                 } else {
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);

@@ -187,7 +187,6 @@ public class DickInfo : MonoBehaviour {
     }
     private IEnumerator AttachToRoutine(Kobold k) {
         attachedKobold = k;
-        yield return null;
         while(!k.gameObject.activeInHierarchy) {
             yield return new WaitUntil(()=>k.gameObject.activeInHierarchy);
         }

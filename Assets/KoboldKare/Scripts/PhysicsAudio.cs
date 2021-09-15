@@ -97,7 +97,12 @@ public class PhysicsAudio : MonoBehaviour {
         scrapeSoundOutput.volume = Easing.Cubic.In(Mathf.Clamp01((collision.relativeVelocity.magnitude-group.minScrapeSpeed)));
     }
     void OnCollisionExit(Collision collision) {
-        StopCoroutine("WaitOneFrameThenPause");
-        StartCoroutine("WaitOneFrameThenPause");
+        if (isActiveAndEnabled) {
+            StopCoroutine("WaitOneFrameThenPause");
+            StartCoroutine("WaitOneFrameThenPause");
+        } else if (scrapeSoundOutput != null) {
+            scrapeSoundOutput.volume = 0f;
+            scrapeSoundOutput.Pause();
+        }
     }
 }

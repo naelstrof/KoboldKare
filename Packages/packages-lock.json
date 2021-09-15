@@ -33,7 +33,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f71bf96e11ebedeeb9cd343c5c11494f263e417e"
+      "hash": "75925e498504e038d7602e6218b60ab795c55ab0"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",

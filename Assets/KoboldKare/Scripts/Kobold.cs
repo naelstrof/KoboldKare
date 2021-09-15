@@ -371,6 +371,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         if (photonView.IsMine) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
+            PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
     }
     public bool OnGrab(Kobold kobold) {

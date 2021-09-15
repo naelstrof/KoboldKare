@@ -18,7 +18,10 @@ public class HarvestBox : MonoBehaviourPun {
     }
 
     public void OnDestroy() {
-        PhotonNetwork.CleanRpcBufferIfMine(photonView);
+        if (photonView.IsMine) {
+            PhotonNetwork.CleanRpcBufferIfMine(photonView);
+            PhotonNetwork.OpCleanRpcBuffer(photonView);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {

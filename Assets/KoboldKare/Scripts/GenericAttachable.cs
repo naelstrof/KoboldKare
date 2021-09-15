@@ -204,6 +204,7 @@ public class GenericAttachable : MonoBehaviourPun, IAdvancedInteractable {
     public void OnDestroy() {
         if (photonView.IsMine) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
+            PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
     }
 }

@@ -303,11 +303,17 @@ public static class SaveManager {
                 sode.photonID = view.ViewID;
                 networkedEvents.Add(sode);
             }
+            PhotonNetwork.CleanRpcBufferIfMine(view);
+            PhotonNetwork.OpCleanRpcBuffer(view);
         }
         PhotonNetwork.Destroy(obj);
     }
 
     public static void AddRPC(PhotonView view, string name, RpcTarget targetPlayer, object[] parameters = null) {
+        // Destroyed gameobjects can send RPC calls sometimes.
+        if (view == null) {
+            return;
+        }
         RPCEvent rev = new RPCEvent();
         rev.functionName = name;
         rev.parameters = parameters;

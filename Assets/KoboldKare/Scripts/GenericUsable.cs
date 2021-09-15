@@ -90,9 +90,9 @@ public class GenericUsable : MonoBehaviourPun {
         OnUse(kobold, pos);
     }
     public void OnDestroy() {
-        PhotonView view = GetComponentInParent<PhotonView>();
-        if (view != null && view.IsMine) {
-            PhotonNetwork.CleanRpcBufferIfMine(view);
+        if (photonView.IsMine) {
+            PhotonNetwork.CleanRpcBufferIfMine(photonView);
+            PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
     }
     public void DestroyThing(UnityEngine.Object g) {

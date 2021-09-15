@@ -158,7 +158,9 @@ public class RaymarchFluid : FluidOutput {
     }
     private void OnStop() {
         splashes.Stop();
-        streamSource.Stop();
+        if (streamSource != null) {
+            streamSource.Stop();
+        }
         if (start != null) {
             start.body.isKinematic = false;
             start.body.collisionDetectionMode = CollisionDetectionMode.Continuous;

@@ -14,6 +14,7 @@ public class SeedExtractor : MonoBehaviourPun {
     public GenericUsable theExtractor;
     public AudioSource deny;
     public AudioSource done;
+    public Animator grinderAnimator;
     public Task task;
     public Transform seedSpawnLocation;
     public List<ReagentPrefabTuple> serializedSpawnables = new List<ReagentPrefabTuple>();
@@ -25,13 +26,6 @@ public class SeedExtractor : MonoBehaviourPun {
             spawnableLookup.Add(tuple.reagentType, tuple);
         }
     }
-    private void OnEnable() {
-        if (task != null && task.Running) {
-            task.Stop();
-        }
-        task = new Task(OutputSeeds());
-    }
-
     private void OnTriggerEnter(Collider other) {
         if (other.isTrigger) {
             return;
@@ -48,7 +42,7 @@ public class SeedExtractor : MonoBehaviourPun {
                 foundThing = true;
             }
             if (foundThing) {
-                if (task != null && task.Running) {
+                if (task != null) {
                     task.Stop();
                 }
                 task = new Task(OutputSeeds());
@@ -73,17 +67,15 @@ public class SeedExtractor : MonoBehaviourPun {
             if (spawnableLookup.ContainsKey(pair.Key)) {
                 while (pair.Value.volume >= spawnableLookup[pair.Key].neededVolume) {
                     pair.Value.volume -= spawnableLookup[pair.Key].neededVolume;
-                    GameObject g = SaveManager.Instantiate(spawnableLookup[pair.Key].prefab.photonName, seedSpawnLocation.position, seedSpawnLocation.rotation);
+                    SaveManager.Instantiate(spawnableLookup[pair.Key].prefab.photonName, seedSpawnLocation.position, seedSpawnLocation.rotation);
                     internalContents.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Vacuum);
                     yield return new WaitForSeconds(2f);
                 }
             }
         }
-        if (isActiveAndEnabled) {
-            theExtractor?.Use();
-        }
         internalContents.contents.Empty();
         done.Play();
+        grinderAnimator.SetTrigger("Open");
         gameObject.SetActive(false);
     }
 

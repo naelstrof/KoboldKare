@@ -51,7 +51,7 @@ public class Seed : MonoBehaviour, IValuedGood {
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
             if (hit.collider.CompareTag("PlantableTerrain")) {
                 if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    GameObject g = SaveManager.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, null);
+                    SaveManager.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, null);
                     SaveManager.Destroy(gameObject);
                 }
             }

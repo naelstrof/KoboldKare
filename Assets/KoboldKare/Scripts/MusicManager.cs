@@ -8,9 +8,10 @@ public class MusicManager : MonoBehaviour {
     public List<AudioClip> nightMusic = new List<AudioClip>();
     private bool waiting = false;
     public IEnumerator FadeOutAndStartOver() {
-        while(musicSource.volume != 0f) {
-            musicSource.volume = Mathf.MoveTowards(musicSource.volume, 0f, Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
+        float fadeoutTime = Time.time + 1f;
+        while(Time.time<fadeoutTime) {
+            musicSource.volume = fadeoutTime-Time.time;
+            yield return null;
         }
         musicSource.Stop();
         musicSource.volume = 0.7f;
@@ -18,6 +19,7 @@ public class MusicManager : MonoBehaviour {
     }
     public void Interrupt() {
         StopAllCoroutines();
+        waiting = true;
         StartCoroutine(FadeOutAndStartOver());
     }
     public IEnumerator WaitAndPlay(float time) {

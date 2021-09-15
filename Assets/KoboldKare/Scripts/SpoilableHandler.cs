@@ -24,7 +24,7 @@ public class SpoilableHandler : ScriptableObject {
     }
     IEnumerator SpoilOverTime(float duration, float multiplier) {
         float startTime = Time.timeSinceLevelLoad;
-        while(Time.timeSinceLevelLoad-startTime < duration) {
+        while(Time.timeSinceLevelLoad-startTime < duration && DayNightCycle.instance.daylight < -0.9f) {
             for(int i=spoilables.Count-1;i>=0;i--) {
                 if (Mathf.Approximately(spoilables[i].spoilIntensity, 1f)) {
                     continue;

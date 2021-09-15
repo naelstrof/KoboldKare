@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using PenetrationTech;
+using KoboldKare;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -31,6 +32,7 @@ public class DickInfoEditor : Editor {
 #endif
 // DickInfo is mainly used to have an in-scene reference to a bunch of dick info. Most of the functionality of a dick is split between DickEquipment.cs, and Dick.cs
 public class DickInfo : MonoBehaviour {
+    private Task attachTask;
     private Kobold attachedKobold;
     [System.Serializable]
     public class DickSet {
@@ -107,130 +109,10 @@ public class DickInfo : MonoBehaviour {
         }
     }
     public void AttachTo(Kobold k) {
-        attachedKobold = k;
-        // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
-        GenericLODConsumer consumer = k.GetComponentInChildren<GenericLODConsumer>(true);
-        bool wasClose = consumer.isClose;
-        bool wasVeryFar = consumer.isVeryFar;
-        consumer.SetVeryFar(false);
-        consumer.SetClose(true);
-        //transform.localPosition = Vector3.zero;
-        //transform.localRotation = Quaternion.identity;
-        foreach(DickSet set in dicks) {
-            //LODGroup group = attachedKobold.GetComponentInChildren<LODGroup>();
-            //LOD[] lods = group.GetLODs();
-            //List<Renderer> closeLodRenderers = new List<Renderer>(lods[0].renderers);
-            //closeLodRenderers
-
-            set.info = this;
-            Vector3 scale = set.dickContainer.localScale;
-            set.dick.OnCumEmit.AddListener(()=>{
-                ReagentContents cumbucket = new ReagentContents();
-                cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
-                cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
-                Kobold pennedKobold = null;
-                if (set.dick.holeTarget != null) {
-                    pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
-                }
-                if (!set.dick.IsInside() || pennedKobold == null) {
-                    set.dick.GetComponentInChildren<FluidOutput>().Fire(cumbucket, 2f);
-                } else {
-                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
-                }
-            });
-            //set.dick.OnPenetrate.AddListener(()=>{
-            //});
-            //set.dick.OnEndPenetrate.AddListener(()=>{
-            //});
-            set.initialBodyLocalRotation = set.dick.body.transform.localRotation;
-
-            set.parentTransform = k.animator.GetBoneTransform(set.parent);
-            Rigidbody targetRigid = set.parentTransform.GetComponentInParent<Rigidbody>();
-            Quaternion otherSavedRotation = targetRigid.transform.rotation;
-            targetRigid.transform.rotation = Quaternion.identity;
-            Quaternion savedRotation = set.dick.body.transform.localRotation;
-            set.dick.body.transform.localRotation = Quaternion.identity;
-            set.rotJoint = set.dick.body.gameObject.AddComponent<ConfigurableJoint>();
-            set.rotJoint.connectedBody = set.parentTransform.GetComponentInParent<Rigidbody>();
-            set.rotJoint.anchor = Vector3.zero;
-            set.rotJoint.connectedAnchor = Vector3.zero;
-            set.dick.body.transform.localRotation = savedRotation;
-            targetRigid.transform.rotation = otherSavedRotation;
-            var slerpd = set.rotJoint.slerpDrive;
-            slerpd.positionSpring = 1000f;
-            set.rotJoint.slerpDrive = slerpd;
-            set.rotJoint.rotationDriveMode = RotationDriveMode.Slerp;
-            set.rotJoint.targetRotation = Quaternion.Inverse(set.initialBodyLocalRotation);
-
-            set.dick.root = k.transform;
-            set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
-            set.dickContainer.localScale = scale;
-            var observables = set.dickContainer.GetComponentsInChildren<IPunObservable>(true);
-            for (int i = 0; i < observables.Length; i++) {
-                k.photonView.ObservedComponents.Add((Component)observables[i]);
-            }
-            //set.dick.transform.parent = k.attachPoints[(int)Equipment.EquipmentSlot.Crotch];
-            set.dickContainer.transform.localPosition = -set.attachPosition;
-            set.dickContainer.transform.localRotation = Quaternion.identity;
-
-            if (set.parent == HumanBodyBones.Hips) {
-                foreach(var hole in attachedKobold.penetratables) {
-                    if (hole.isFemaleExclusiveAnatomy) {
-                        hole.penetratable.gameObject.SetActive(false);
-                    }
-                }
-            }
-            //set.dick.kobold = k;
-            /*if (!k.ragdolled) {
-                set.dick.body = attachedKobold.body;
-            } else {
-                set.dick.body = set.parentTransform.GetComponentInParent<Rigidbody>();
-            }*/
-            set.initialDickForwardHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.forward);
-            set.initialDickUpHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.up);
-            set.initialBodyLocalPosition = set.dick.body.transform.localPosition;
-            set.dickAttachPosition = set.parentTransform.InverseTransformPoint(set.dick.dickRoot.position);
-            set.initialTransformLocalRotation = set.dick.dickRoot.localRotation;
-            //dickSet.joint.axis = Vector3.up;
-            //dickSet.joint.secondaryAxis = Vector3.forward;
-            //dickSet.dick.body.transform.parent = root;
-            set.joint.autoConfigureConnectedAnchor = false;
-            set.joint.connectedBody = k.body;
-            set.joint.massScale = 100f;
-            set.joint.connectedAnchor = set.joint.connectedBody.transform.InverseTransformPoint(set.parentTransform.TransformPoint(set.dickAttachPosition));
-            ((CharacterJointData)set.savedJoint).connectedBody = k.body;
-            ((CharacterJointData)set.savedJoint).connectedAnchor = set.joint.connectedAnchor;
-            ((CharacterJointData)set.savedJoint).autoConfigureConnectedAnchor = false;
-            k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
-            if (set.balls != null) {
-                k.balls.Add(set.balls.container);
-            }
-            k.activeDicks.Add(set);
-            set.dick.OnMove.AddListener(OnDickMovement);
-            foreach(Rigidbody r in k.ragdollBodies) {
-                if (r.GetComponent<Collider>() == null) {
-                    continue;
-                }
-                //foreach (Collider b in set.dick.selfColliders) {
-                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, true);
-                //}
-            }
-            if (!k.ragdolled) {
-                set.dick.body.isKinematic = true;
-                Destroy(set.joint);
-            } else if (wasClose) {
-                set.dick.body.isKinematic = false;
-                StartCoroutine(UnfuckJoints(set, k.body));
-            }
-            // Make sure the dick is the right color, this just forces a reset of the colors.
-            k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
+        if (attachTask != null){
+            attachTask.Stop();
         }
-        k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
-        k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
-        //k.OnOrgasm.AddListener(Cum);
-        k.RagdollEvent += RagdollEvent;
-        consumer.SetClose(wasClose);
-        consumer.SetVeryFar(wasVeryFar);
+        attachTask = new Task(AttachToRoutine(k));
     }
     public void OnDickLODClose() {
         foreach (DickSet set in dicks) {
@@ -302,6 +184,142 @@ public class DickInfo : MonoBehaviour {
             attachedKobold = null;
         }
         //Destroy(gameObject);
+    }
+    private IEnumerator AttachToRoutine(Kobold k) {
+        attachedKobold = k;
+        yield return null;
+        while(!k.gameObject.activeInHierarchy) {
+            yield return new WaitUntil(()=>k.gameObject.activeInHierarchy);
+        }
+        // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
+        GenericLODConsumer consumer = k.GetComponentInChildren<GenericLODConsumer>(true);
+        bool wasClose = consumer.isClose;
+        bool wasVeryFar = consumer.isVeryFar;
+        consumer.SetVeryFar(false);
+        consumer.SetClose(true);
+        //transform.localPosition = Vector3.zero;
+        //transform.localRotation = Quaternion.identity;
+        foreach(DickSet set in dicks) {
+            Vector3 scale = set.dickContainer.localScale;
+            set.parentTransform = k.animator.GetBoneTransform(set.parent);
+            while(set.parentTransform == null) {
+                yield return new WaitUntil(()=>k.animator.isActiveAndEnabled);
+                set.parentTransform = k.animator.GetBoneTransform(set.parent);
+            }
+
+            set.info = this;
+            set.dick.root = k.transform;
+            set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
+            set.dickContainer.localScale = scale;
+            set.dickContainer.transform.localPosition = -set.attachPosition;
+            set.dickContainer.transform.localRotation = Quaternion.identity;
+        }
+        foreach(DickSet set in dicks) {
+            //LODGroup group = attachedKobold.GetComponentInChildren<LODGroup>();
+            //LOD[] lods = group.GetLODs();
+            //List<Renderer> closeLodRenderers = new List<Renderer>(lods[0].renderers);
+            //closeLodRenderers
+
+            set.dick.OnCumEmit.AddListener(()=>{
+                ReagentContents cumbucket = new ReagentContents();
+                cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
+                cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
+                Kobold pennedKobold = null;
+                if (set.dick.holeTarget != null) {
+                    pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
+                }
+                if (!set.dick.IsInside() || pennedKobold == null) {
+                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(cumbucket, 2f);
+                } else {
+                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
+                }
+            });
+            //set.dick.OnPenetrate.AddListener(()=>{
+            //});
+            //set.dick.OnEndPenetrate.AddListener(()=>{
+            //});
+
+            set.initialBodyLocalRotation = set.dick.body.transform.localRotation;
+
+            Rigidbody targetRigid = set.parentTransform.GetComponentInParent<Rigidbody>();
+            Quaternion otherSavedRotation = targetRigid.transform.rotation;
+            targetRigid.transform.rotation = Quaternion.identity;
+
+            set.rotJoint = set.dick.body.gameObject.AddComponent<ConfigurableJoint>();
+            set.rotJoint.connectedBody = targetRigid;
+            set.rotJoint.anchor = Vector3.zero;
+            set.rotJoint.connectedAnchor = Vector3.zero;
+
+            var slerpd = set.rotJoint.slerpDrive;
+            slerpd.positionSpring = 1000f;
+            set.rotJoint.slerpDrive = slerpd;
+            set.rotJoint.rotationDriveMode = RotationDriveMode.Slerp;
+            set.rotJoint.targetRotation = Quaternion.identity;
+
+            var observables = set.dickContainer.GetComponentsInChildren<IPunObservable>(true);
+            for (int i = 0; i < observables.Length; i++) {
+                k.photonView.ObservedComponents.Add((Component)observables[i]);
+            }
+
+            if (set.parent == HumanBodyBones.Hips) {
+                foreach(var hole in attachedKobold.penetratables) {
+                    if (hole.isFemaleExclusiveAnatomy) {
+                        hole.penetratable.gameObject.SetActive(false);
+                    }
+                }
+            }
+            //set.dick.kobold = k;
+            /*if (!k.ragdolled) {
+                set.dick.body = attachedKobold.body;
+            } else {
+                set.dick.body = set.parentTransform.GetComponentInParent<Rigidbody>();
+            }*/
+            set.initialDickForwardHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.forward);
+            set.initialDickUpHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.up);
+            set.initialBodyLocalPosition = set.dick.body.transform.localPosition;
+            set.dickAttachPosition = set.parentTransform.InverseTransformPoint(set.dick.dickRoot.position);
+            set.initialTransformLocalRotation = set.dick.dickRoot.localRotation;
+            //dickSet.joint.axis = Vector3.up;
+            //dickSet.joint.secondaryAxis = Vector3.forward;
+            //dickSet.dick.body.transform.parent = root;
+            set.joint.autoConfigureConnectedAnchor = false;
+            set.joint.connectedBody = k.body;
+            set.joint.massScale = 100f;
+            set.joint.connectedAnchor = set.joint.connectedBody.transform.InverseTransformPoint(set.parentTransform.TransformPoint(set.dickAttachPosition));
+
+            ((CharacterJointData)set.savedJoint).connectedBody = k.body;
+            ((CharacterJointData)set.savedJoint).connectedAnchor = set.joint.connectedAnchor;
+            ((CharacterJointData)set.savedJoint).autoConfigureConnectedAnchor = false;
+            k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
+            if (set.balls != null) {
+                k.balls.Add(set.balls.container);
+            }
+            k.activeDicks.Add(set);
+            set.dick.OnMove.AddListener(OnDickMovement);
+            foreach(Rigidbody r in k.ragdollBodies) {
+                if (r.GetComponent<Collider>() == null) {
+                    continue;
+                }
+                //foreach (Collider b in set.dick.selfColliders) {
+                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, true);
+                //}
+            }
+            if (!k.ragdolled) {
+                set.dick.body.isKinematic = true;
+                Destroy(set.joint);
+            } else if (wasClose) {
+                set.dick.body.isKinematic = false;
+                StartCoroutine(UnfuckJoints(set, k.body));
+            }
+            // Make sure the dick is the right color, this just forces a reset of the colors.
+            k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
+        }
+        k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
+        k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
+        //k.OnOrgasm.AddListener(Cum);
+        k.RagdollEvent += RagdollEvent;
+        consumer.SetClose(wasClose);
+        consumer.SetVeryFar(wasVeryFar);
     }
     public void Update() {
         /*if (attachedKobold == null || attachedKobold.ragdolled) {

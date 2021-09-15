@@ -13,7 +13,7 @@ namespace Vilar.IK {
             public float strength;
             public float damping = 0.3f;
             public bool rotationEnabled;
-            public Quaternion targetRotation;
+            public Quaternion targetRotation = Quaternion.identity;
             public ConfigurableJoint joint;
             //public Quaternion rotationAdjust;
         }

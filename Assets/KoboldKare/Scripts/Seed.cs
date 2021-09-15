@@ -9,18 +9,17 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 
-public class Seed : MonoBehaviour, IValuedGood {
+public class Seed : MonoBehaviourPun, IValuedGood {
     //public List<GameObject> _plantPrefabs;
     public PhotonGameObjectReference plantPrefab;
     public int type = 0;
     public float _spacing = 1f;
     public UnityEvent OnFailPlant;
-    private Collider[] hitColliders = new Collider[4];
+    private Collider[] hitColliders = new Collider[16];
     public bool ShouldSave() {
         return true;
     }
     public bool CanPlant() {
-        //fix this function or so help you...
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
             if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
@@ -38,14 +37,8 @@ public class Seed : MonoBehaviour, IValuedGood {
         return false;
     }
     public void Plant() {
-        if (!GetComponentInParent<PhotonView>().IsMine) {
+        if (!photonView.IsMine || !CanPlant()) {
             return;
-        }
-        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
-        for(int i=0;i<hitCount;i++) {
-            if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
-                return;
-            }
         }
         RaycastHit hit;
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {

@@ -52,6 +52,9 @@ public class SpoilableHandler : ScriptableObject {
 
     //}
     public void StartSpoilingEvent() {
+        foreach(GenericSpoilable spoilable in spoilables) {
+            spoilable.DayPassed();
+        }
         GameManager.instance.StartCoroutine(SpoilOverTime(6f,0.2f));
     }
 }

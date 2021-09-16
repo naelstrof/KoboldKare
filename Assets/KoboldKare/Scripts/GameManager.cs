@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour {
         if (randomRotation) {
             rot = rot * Quaternion.AngleAxis(UnityEngine.Random.Range(0f,360f), Vector3.forward);
         } 
+        bool rendered = false;
         LODGroup g = obj.GetComponentInParent<LODGroup>();
         if (g != null) {
             var lods = g.GetLODs();
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour {
                     if (ren != null && ren.gameObject.activeInHierarchy) {
                         foreach (var mat in ren.sharedMaterials) {
                             if (decalPainter.IsDecalable(mat)) {
+                                rendered = true;
                                 decalPainter.RenderDecal(ren, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
                                 break;
                             }
@@ -102,7 +104,9 @@ public class GameManager : MonoBehaviour {
                     }
                 }
             }
-            return;
+            if (rendered) {
+                return;
+            }
         }
         foreach (Renderer r in obj.GetComponentsInChildren<Renderer>()) {
             foreach (var mat in r.sharedMaterials) {

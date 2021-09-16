@@ -776,7 +776,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 switch (r.Key) {
                     case ReagentData.ID.Cum:
                         //if (sex >= 0.5f) {
-                        belly.container.contents.Mix(ReagentData.ID.Egg, r.Value.volume*2f, 1f, 310f);
+                        belly.container.contents.Mix(ReagentData.ID.Egg, r.Value.volume*1.5f, 1f, 310f);
                         //}
                         break;
                     case ReagentData.ID.MelonJuice:
@@ -823,9 +823,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
             if (Time.timeSinceLevelLoad > nextEggTime) {
                 if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
-                    if (belly.container.contents[ReagentData.ID.Egg].volume > 8f) {
+                    if (belly.container.contents[ReagentData.ID.Egg].volume > 9f) {
                         OnEggFormed.Invoke();
-                        nextEggTime = Time.timeSinceLevelLoad + 35f;
+                        nextEggTime = Time.timeSinceLevelLoad + 40f;
                         bool spawnedEgg = false;
                         foreach(var penetratableSet in penetratables) {
                             if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
@@ -848,7 +848,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                             }
                         }
                         if (spawnedEgg) {
-                            belly.container.contents[ReagentData.ID.Egg].volume -= 8f;
+                            belly.container.contents[ReagentData.ID.Egg].volume -= 9f;
                             belly.container.contents.TriggerChange();
                         }
                     }

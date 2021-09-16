@@ -70,12 +70,16 @@ public class ActionHint : MonoBehaviour {
                 yield return new WaitUntil(()=>asyncOp.IsDone);
                 if (asyncOp.IsValid() && asyncOp.Result != null) {
                     text.text = "";
-                    image.color = new Color(1,1,1,1f);
-                    image.sprite = asyncOp.Result;
-                    image.preserveAspect = true;
+                    if (image != null) {
+                        image.color = new Color(1,1,1,1f);
+                        image.sprite = asyncOp.Result;
+                        image.preserveAspect = true;
+                    }
                 } else {
                     text.text = key;
-                    image.color = new Color(1,1,1,0f);
+                    if (image != null) {
+                        image.color = new Color(1,1,1,0f);
+                    }
                 }
             }
         }

@@ -200,6 +200,9 @@ public class DickInfo : MonoBehaviour {
         //transform.localRotation = Quaternion.identity;
         Quaternion oldKoboldRotation = k.transform.rotation;
         k.transform.rotation = Quaternion.identity;
+        if (dicks.Count <= 0 || dicks[0] == null || dicks[0].dickContainer == null || k.animator == null) {
+            yield break;
+        }
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
             set.parentTransform = k.animator.GetBoneTransform(set.parent);
@@ -404,6 +407,9 @@ public class DickInfo : MonoBehaviour {
             if (ragdolled) {
                 //set.dick.koboldBody = set.parentTransform.GetComponentInParent<Rigidbody>();
                 set.dick.body.isKinematic = false;
+                if (set.dick == null) {
+                    continue;
+                }
                 foreach(Collider c in set.dick.GetComponentsInChildren<Collider>()) {
                     Physics.IgnoreCollision(c,attachedKobold.animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg).GetComponentInChildren<Collider>());
                     Physics.IgnoreCollision(c,attachedKobold.animator.GetBoneTransform(HumanBodyBones.RightUpperLeg).GetComponentInChildren<Collider>());

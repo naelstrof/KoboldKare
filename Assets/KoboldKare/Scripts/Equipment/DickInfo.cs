@@ -187,22 +187,16 @@ public class DickInfo : MonoBehaviour {
     }
     private IEnumerator AttachToRoutine(Kobold k) {
         attachedKobold = k;
+        // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
         while(!k.gameObject.activeInHierarchy) {
             yield return new WaitUntil(()=>k.gameObject.activeInHierarchy);
         }
-        // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
-        GenericLODConsumer consumer = k.GetComponentInChildren<GenericLODConsumer>(true);
-        bool wasClose = consumer.isClose;
-        bool wasVeryFar = consumer.isVeryFar;
-        consumer.SetVeryFar(false);
-        consumer.SetClose(true);
-        //transform.localPosition = Vector3.zero;
-        //transform.localRotation = Quaternion.identity;
-        Quaternion oldKoboldRotation = k.transform.rotation;
-        k.transform.rotation = Quaternion.identity;
-        if (dicks.Count <= 0 || dicks[0] == null || dicks[0].dickContainer == null || k.animator == null) {
+        // Kobold, or the dicks must've been destroyed before we got to attach. Abort!
+        if (k == null || dicks == null || dicks.Count <= 0 || dicks[0] == null || dicks[0].dickContainer == null) {
             yield break;
         }
+        bool animatorWasEnabled = k.animator.enabled;
+        k.animator.enabled = true;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
             set.parentTransform = k.animator.GetBoneTransform(set.parent);
@@ -210,19 +204,12 @@ public class DickInfo : MonoBehaviour {
                 yield return new WaitUntil(()=>k.animator.isActiveAndEnabled);
                 set.parentTransform = k.animator.GetBoneTransform(set.parent);
             }
-
             set.info = this;
             set.dick.root = k.transform;
             set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
             set.dickContainer.localScale = scale;
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
-        }
-        foreach(DickSet set in dicks) {
-            //LODGroup group = attachedKobold.GetComponentInChildren<LODGroup>();
-            //LOD[] lods = group.GetLODs();
-            //List<Renderer> closeLodRenderers = new List<Renderer>(lods[0].renderers);
-            //closeLodRenderers
 
             set.dick.OnCumEmit.AddListener(()=>{
                 ReagentContents cumbucket = new ReagentContents();
@@ -238,13 +225,8 @@ public class DickInfo : MonoBehaviour {
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
                 }
             });
-            //set.dick.OnPenetrate.AddListener(()=>{
-            //});
-            //set.dick.OnEndPenetrate.AddListener(()=>{
-            //});
 
             set.initialBodyLocalRotation = set.dick.body.transform.localRotation;
-
             Rigidbody targetRigid = set.parentTransform.GetComponentInParent<Rigidbody>();
             Quaternion otherSavedRotation = targetRigid.transform.rotation;
             targetRigid.transform.rotation = Quaternion.identity;
@@ -272,25 +254,15 @@ public class DickInfo : MonoBehaviour {
                     }
                 }
             }
-            //set.dick.kobold = k;
-            /*if (!k.ragdolled) {
-                set.dick.body = attachedKobold.body;
-            } else {
-                set.dick.body = set.parentTransform.GetComponentInParent<Rigidbody>();
-            }*/
             set.initialDickForwardHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.forward);
             set.initialDickUpHipSpace = set.parentTransform.InverseTransformDirection(set.dick.body.transform.up);
             set.initialBodyLocalPosition = set.dick.body.transform.localPosition;
             set.dickAttachPosition = set.parentTransform.InverseTransformPoint(set.dick.dickRoot.position);
             set.initialTransformLocalRotation = set.dick.dickRoot.localRotation;
-            //dickSet.joint.axis = Vector3.up;
-            //dickSet.joint.secondaryAxis = Vector3.forward;
-            //dickSet.dick.body.transform.parent = root;
             set.joint.autoConfigureConnectedAnchor = false;
             set.joint.connectedBody = k.body;
             set.joint.massScale = 100f;
             set.joint.connectedAnchor = set.joint.connectedBody.transform.InverseTransformPoint(set.parentTransform.TransformPoint(set.dickAttachPosition));
-
             ((CharacterJointData)set.savedJoint).connectedBody = k.body;
             ((CharacterJointData)set.savedJoint).connectedAnchor = set.joint.connectedAnchor;
             ((CharacterJointData)set.savedJoint).autoConfigureConnectedAnchor = false;
@@ -300,31 +272,15 @@ public class DickInfo : MonoBehaviour {
             }
             k.activeDicks.Add(set);
             set.dick.OnMove.AddListener(OnDickMovement);
-            foreach(Rigidbody r in k.ragdollBodies) {
-                if (r.GetComponent<Collider>() == null) {
-                    continue;
-                }
-                //foreach (Collider b in set.dick.selfColliders) {
-                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, true);
-                //}
-            }
-            if (!k.ragdolled) {
-                set.dick.body.isKinematic = true;
-                Destroy(set.joint);
-            } else if (wasClose) {
-                set.dick.body.isKinematic = false;
-                StartCoroutine(UnfuckJoints(set, k.body));
-            }
             // Make sure the dick is the right color, this just forces a reset of the colors.
             k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
+            StartCoroutine(UnfuckJoints(set, set.parentTransform.GetComponentInParent<Rigidbody>()));
         }
-        k.transform.rotation = oldKoboldRotation;
+        k.animator.enabled = animatorWasEnabled;
         k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
         k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
-        //k.OnOrgasm.AddListener(Cum);
         k.RagdollEvent += RagdollEvent;
-        consumer.SetClose(wasClose);
-        consumer.SetVeryFar(wasVeryFar);
+        RagdollEvent(k.ragdolled);
     }
     public void Update() {
         /*if (attachedKobold == null || attachedKobold.ragdolled) {
@@ -392,10 +348,6 @@ public class DickInfo : MonoBehaviour {
         if (attachedKobold == null || attachedKobold.animator == null) {
             return;
         }
-        // If we're really far away, we're a 2d image! Also animator.GetBoneTransform returns null because fuck me i guess.
-        if (attachedKobold.GetComponentInChildren<GenericLODConsumer>(true).isVeryFar) {
-            return;
-        }
         if (ragdolled) {
             attachedKobold.animator.enabled = true;
         }
@@ -419,6 +371,7 @@ public class DickInfo : MonoBehaviour {
                 //Destroy(set.joint);
                 set.dick.body.isKinematic = true;
                 //set.dick.koboldBody = attachedKobold.body;
+                set.dick.body.transform.localPosition = set.initialBodyLocalPosition;
                 set.dickContainer.transform.localPosition = -set.attachPosition;
                 set.dickContainer.transform.localRotation = Quaternion.identity;
                 set.dick.dickRoot.transform.localPosition = set.dickAttachPosition;

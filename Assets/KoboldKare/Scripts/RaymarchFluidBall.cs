@@ -44,13 +44,15 @@ public class RaymarchFluidBall : MonoBehaviour {
             if (spilled == null) {
                 spilled = contents;
             }
-            Vector3 norm = collision.contacts[0].normal;
-            Color c = spilled.volume > 0.001f ? spilled.GetColor(ReagentDatabase.instance) : emitColor;
-            c.a = 1f;
-            if (spilled.ContainsKey(ReagentData.ID.Water) && spilled[ReagentData.ID.Water].volume >= spilled.volume*0.5f) {
-                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*100f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, true);
-            } else {
-                GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*100f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, false);
+            if (spilled.volume > 0.001f) {
+                Vector3 norm = collision.contacts[0].normal;
+                Color c = spilled.volume > 0.001f ? spilled.GetColor(ReagentDatabase.instance) : emitColor;
+                c.a = 1f;
+                if (spilled.ContainsKey(ReagentData.ID.Water) && spilled[ReagentData.ID.Water].volume >= spilled.volume*0.5f) {
+                    GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*100f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, true);
+                } else {
+                    GameManager.instance.SpawnDecalInWorld(splatterMaterial, collision.contacts[0].point + norm*0.25f, -norm, Vector2.one*Mathf.Max(vps*mixInterval*100f,0.6f), c, collision.contacts[0].otherCollider.gameObject, 0.5f, false, true, false);
+                }
             }
         }
     }

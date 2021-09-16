@@ -33,6 +33,9 @@ public class SteamAudioSettingListener : MonoBehaviour {
                 case 2: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.Medium; break;
                 case 3: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.High; break;
             }
+            foreach(AudioSource a in Object.FindObjectsOfType<AudioSource>()) {
+                a.spatialize = option.value > 0f;
+            }
         }
         if (option == steamAudioAccel) {
             if (customSettings != null) {

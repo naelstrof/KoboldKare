@@ -113,25 +113,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         useRandomSample = true;
     }
-    IEnumerator BlendThenEnd() {
-        while(blend != 0) {
-            blend = Mathf.MoveTowards(blend, 0f, Time.deltaTime * 2f);
-            yield return new WaitForEndOfFrame();
-        }
-        activeStation.OnEnd();
-        activeStation = null;
-        animating = false;
-        body.isKinematic = false;
-        //body.position += Vector3.up;
-        //transform.rotation = Quaternion.identity;
-        body.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        //physicsSolver.CleanUp();
-        onEndStation.Invoke();
-        //playerModel.updateMode = AnimatorUpdateMode.AnimatePhysics;
-    }
     void OnBeginStation(AnimationStation station) {
         StopCoroutine("WaitThenAdvanceProgress");
-        StopCoroutine("BlendThenEnd");
         blend = 0f;
         activeStation = station;
         station.OnStart(kobold);
@@ -156,6 +139,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         if (!animating) {
             return;
         }
+        kobold.StandUp();
         animating = false;
         physicsSolver.CleanUp();
         // Stop everyone else from having the fun, sorry!
@@ -167,8 +151,11 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         StopCoroutine("WaitThenAdvanceProgress");
         if (isActiveAndEnabled) {
-            StopCoroutine("BlendThenEnd");
-            StartCoroutine("BlendThenEnd");
+            blend = 0f;
+            activeStation.OnEnd();
+            activeStation = null;
+            animating = false;
+            onEndStation.Invoke();
         }
         useRandomSample = false;
         foreach( Rigidbody r in kobold.ragdollBodies) {

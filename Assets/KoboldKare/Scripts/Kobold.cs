@@ -108,7 +108,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             if (ragdollBodies[0] == null) {
                 return false;
             }
-            return uprightTimer > 0f || (originalUprightTimer > 0f && bodyProportion.running);
+            return uprightTimer > 0f;
         }
     }
     public bool notRagdolled {
@@ -252,9 +252,12 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             changedBodyShape = true;
         }
         if (changedBodyShape) {
-            originalUprightTimer = uprightTimer;
+            float oldUpright = uprightTimer;
             StandUp();
             bodyProportion.Initialize();
+            if (oldUpright > 0f) {
+                KnockOver(oldUpright);
+            }
         }
         Vector4 hbcs = HueBrightnessContrastSaturation;
         if (s.ContainsKey("Brightness")) {
@@ -449,11 +452,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     public void KnockOver(float duration = 3f) {
         //uprightTimer = Mathf.Max(Mathf.Max(0 + duration, uprightTimer + duration), 1f);
-        uprightTimer = duration;
         if (bodyProportion.running) {
             originalUprightTimer = Mathf.Max(duration, originalUprightTimer);
             return;
         }
+        uprightTimer = duration;
         if (body.isKinematic) {
             return;
         }
@@ -465,10 +468,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
     // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
     public void StandUp() {
-        // FIXME: If we've got some queued ragdoll commands, then we let it at least ragdoll a little. Otherwise our body rigidbody gets unconstrained???
-        if (originalUprightTimer > 0f) {
-            originalUprightTimer = 0.5f;
-        }
+        originalUprightTimer = 0f;
+        uprightTimer = 0f;
         if ((!body.isKinematic && ragdollBodies[0].isKinematic) || koboldAnimator.enabled) {
             return;
         }
@@ -488,7 +489,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         averageVel /= ragdollBodies.Count;
         body.velocity = averageVel;
-        uprightTimer = 0f;
         controller.enabled = true;
         //RecursiveSetLayer(transform, LayerMask.NameToLayer("PlayerHitbox"), LayerMask.NameToLayer("Hitbox"));
         foreach (Rigidbody b in ragdollBodies) {
@@ -776,7 +776,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 switch (r.Key) {
                     case ReagentData.ID.Cum:
                         //if (sex >= 0.5f) {
-                        belly.container.contents.Mix(ReagentData.ID.Egg, r.Value.volume*1.5f, 1f, 310f);
+                        belly.container.contents.Mix(ReagentData.ID.Egg, r.Value.volume*3f, 1f, 310f);
                         //}
                         break;
                     case ReagentData.ID.MelonJuice:
@@ -823,9 +823,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
             if (Time.timeSinceLevelLoad > nextEggTime) {
                 if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
-                    if (belly.container.contents[ReagentData.ID.Egg].volume > 9f) {
+                    if (belly.container.contents[ReagentData.ID.Egg].volume > 8f) {
                         OnEggFormed.Invoke();
-                        nextEggTime = Time.timeSinceLevelLoad + 40f;
+                        nextEggTime = Time.timeSinceLevelLoad + 30f;
                         bool spawnedEgg = false;
                         foreach(var penetratableSet in penetratables) {
                             if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
@@ -848,7 +848,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                             }
                         }
                         if (spawnedEgg) {
-                            belly.container.contents[ReagentData.ID.Egg].volume -= 9f;
+                            belly.container.contents[ReagentData.ID.Egg].volume -= 8f;
                             belly.container.contents.TriggerChange();
                         }
                     }
@@ -878,7 +878,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             stream.SendNext(hip.position);
         } else {
             bool ragged = (bool)stream.ReceiveNext();
-            if (!ragdolled && ragged) {
+            if (!ragdolled && ragged && !bodyProportion.running) {
                 KnockOver(99999f);
             }
             if (ragdolled && !ragged) {

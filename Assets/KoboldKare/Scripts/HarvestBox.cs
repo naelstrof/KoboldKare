@@ -11,6 +11,10 @@ public class HarvestBox : MonoBehaviourPun {
     public List<AudioClip> moneyBlipClips = new List<AudioClip>();
     public float maxMoneyBlip = 100f;
     public BoxCollider inside;
+    public bool active {get; set;} = false;
+    public void ToggleActive() {
+        active = !active;
+    }
 
     [PunRPC]
     public void RPCSetMoney(float moneyValue) {
@@ -25,7 +29,7 @@ public class HarvestBox : MonoBehaviourPun {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
+        if (!active || other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
             return;
         }
         Vector3 origin = other.transform.root.position;

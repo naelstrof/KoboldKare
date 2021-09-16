@@ -249,7 +249,7 @@ public class RaymarchFluid : FluidOutput {
         body = GetComponentInParent<Rigidbody>();
         splashes.Stop();
         streamSource = gameObject.AddComponent<AudioSource>();
-        streamSource.spatialize = true;
+        streamSource.spatialize = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
         streamSource.spatialBlend = 1f;
         streamSource.rolloffMode = AudioRolloffMode.Logarithmic;
         streamSource.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;

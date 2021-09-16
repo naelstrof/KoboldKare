@@ -125,7 +125,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         body.isKinematic = true;
         //playerModel.SetTrigger("TPose");
 
-        transform.position = station.transform.position;
+        //transform.position = station.transform.position;
         //body.position = transform.position;
         transform.rotation = station.transform.rotation;
 

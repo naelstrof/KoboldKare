@@ -16,18 +16,20 @@ public class PhysicsAudio : MonoBehaviour {
     }
     private void Start() {
         body = GetComponent<Rigidbody>();
+        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
         scrapeSoundOutput.spatialBlend = 1f;
         scrapeSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
-        scrapeSoundOutput.spatialize = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
+        scrapeSoundOutput.spatialize = steamAudioSetting.value > 0f;
         scrapeSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
 
         impactSoundOutput = gameObject.AddComponent<AudioSource>();
         impactSoundOutput.spatialBlend = 1f;
         impactSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
-        impactSoundOutput.spatialize = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
+        impactSoundOutput.spatialize = steamAudioSetting.value > 0f;
         impactSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
         SteamAudio.SteamAudioSource steamaudio = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
+        steamaudio.enabled = steamAudioSetting.value > 0f;
         //steamaudio.physicsBasedAttenuation = true;
         //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
         //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithNoTransmission;

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
     public LayerMask waterSprayHitMask;
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
+    public AnimationCurve volumeCurve;
     public UnityEvent OnPause;
     public UnityEvent OnUnpause;
     [HideInInspector]
@@ -121,16 +122,23 @@ public class GameManager : MonoBehaviour {
         if (group == null) {
             group = soundEffectGroup;
         }
+        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         GameObject g = new GameObject("One shot Audio");
         g.transform.position = position;
         AudioSource source = g.AddComponent<AudioSource>();
+        source.rolloffMode = AudioRolloffMode.Custom;
+        source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, volumeCurve);
+        source.minDistance = 0f;
+        source.maxDistance = 25f;
         source.outputAudioMixerGroup = soundEffectGroup;
-        source.spatialize = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
+        source.spatialize = steamAudioSetting.value > 0f;
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = volume;
         source.pitch = UnityEngine.Random.Range(0.85f,1.15f);
         source.Play();
+        SteamAudio.SteamAudioSource steamAudioSource = g.AddComponent<SteamAudio.SteamAudioSource>();
+        steamAudioSource.enabled = steamAudioSetting.value > 0f;
         Destroy(g, clip.length);
         //AudioSource.PlayClipAtPoint(clip, position, volume);
     }

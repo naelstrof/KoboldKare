@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using SteamAudio;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.Universal;
@@ -33,8 +34,11 @@ public class SteamAudioSettingListener : MonoBehaviour {
                 case 2: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.Medium; break;
                 case 3: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.High; break;
             }
-            foreach(AudioSource a in Object.FindObjectsOfType<AudioSource>()) {
+            foreach(AudioSource a in Object.FindObjectsOfType<AudioSource>(true)) {
                 a.spatialize = option.value > 0f;
+            }
+            foreach(SteamAudioSource s in Object.FindObjectsOfType<SteamAudioSource>(true)) {
+                s.enabled = option.value > 0f;
             }
         }
         if (option == steamAudioAccel) {

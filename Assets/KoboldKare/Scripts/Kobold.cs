@@ -354,6 +354,14 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             photonView.RPC("Load", RpcTarget.OthersBuffered, new object[] { sendInfo });
         }*/
     }
+    private void OnSteamAudioChanged(UnityScriptableSettings.ScriptableSetting setting) {
+        foreach(AudioSource asource in GetComponentsInChildren<AudioSource>(true)) {
+            asource.spatialize = setting.value > 0f;
+        }
+        foreach(SteamAudio.SteamAudioSource source in GetComponentsInChildren<SteamAudio.SteamAudioSource>(true)) {
+            source.enabled = setting.value > 0f;
+        }
+    }
 
     void Start() {
         statblock.AddStatusEffect(koboldStatus, StatBlock.StatChangeSource.Misc);
@@ -363,6 +371,10 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             b.container.contents.AddListener(this);
         }
         bodyProportion.OnComplete += OnCompleteBodyProportion;
+        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
+        steamAudioSetting.onValueChange -= OnSteamAudioChanged;
+        steamAudioSetting.onValueChange += OnSteamAudioChanged;
+        OnSteamAudioChanged(steamAudioSetting);
     }
     private void OnDestroy() {
         bodyProportion.OnComplete -= OnCompleteBodyProportion;
@@ -376,6 +388,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
             PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
+        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
+        steamAudioSetting.onValueChange -= OnSteamAudioChanged;
     }
     public bool OnGrab(Kobold kobold) {
         //onGrabEvent.Invoke(kobold, transform.position);

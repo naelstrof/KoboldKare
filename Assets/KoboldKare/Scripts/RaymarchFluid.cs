@@ -248,15 +248,17 @@ public class RaymarchFluid : FluidOutput {
     public void Start() {
         body = GetComponentInParent<Rigidbody>();
         splashes.Stop();
+        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         streamSource = gameObject.AddComponent<AudioSource>();
-        streamSource.spatialize = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
+        streamSource.spatialize = steamAudioSetting.value > 0f;
         streamSource.spatialBlend = 1f;
         streamSource.rolloffMode = AudioRolloffMode.Logarithmic;
         streamSource.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
         streamSource.playOnAwake = false;
         streamSource.loop = true;
         streamSource.clip = streamSound;
-        gameObject.AddComponent<SteamAudio.SteamAudioSource>();
+        SteamAudio.SteamAudioSource saudioSource = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
+        saudioSource.enabled = steamAudioSetting.value > 0f;
         if (fireAtStartFromParent) {
             var cont = GetComponentInParent<GenericReagentContainer>();
             if (cont != null) {

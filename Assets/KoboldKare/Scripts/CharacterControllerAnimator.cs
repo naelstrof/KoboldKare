@@ -122,12 +122,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         physicsSolver.Initialize();
         //body.collisionDetectionMode = CollisionDetectionMode.Discrete;
         useRandomSample = false;
-        //body.isKinematic = true;
+        body.isKinematic = true;
         //playerModel.SetTrigger("TPose");
 
-        //transform.position = station.transform.position;
+        transform.position = station.transform.position;
         //body.position = transform.position;
-        //transform.rotation = station.transform.rotation;
+        transform.rotation = station.transform.rotation;
 
         onBeginStation.Invoke();
         StartCoroutine("WaitThenAdvanceProgress");

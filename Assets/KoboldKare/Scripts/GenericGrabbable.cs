@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
 
 [System.Serializable]
 public class KoboldEvent : UnityEvent<Kobold> {}
-public class GenericGrabbable : MonoBehaviour, IGrabbable {
+public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
     public KoboldEvent onGrab;
     public KoboldEvent onRelease;
     public KoboldEvent onThrow;
@@ -16,6 +17,7 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
     public GrabbableType grabbableType;
     public bool OnGrab(Kobold kobold) {
         onGrab.Invoke(kobold);
+        photonView.RequestOwnership();
         return true;
     }
 

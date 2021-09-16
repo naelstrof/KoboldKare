@@ -547,10 +547,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         controller.frictionMultiplier = 1f;
         grabbed = false;
-        // If someone released us, and we own us, re-aquire ownership
-        if (NetworkManager.instance.localPlayerInstance == this.photonView && !GetComponentInParent<PhotonView>().IsMine) {
-            GetComponentInParent<PhotonView>().RequestOwnership();
-        }
         //pickedUp = 0;
         //transSpeed = 1f;
     }
@@ -734,9 +730,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     public void OnEndInteract(Kobold k) {
         grabbed = false;
-        if (NetworkManager.instance.localPlayerInstance == photonView && photonView && !photonView.IsMine) {
-            photonView.RequestOwnership();
-        }
         controller.frictionMultiplier = 1f;
         //uprightForce = 40f;
     }

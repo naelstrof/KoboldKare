@@ -184,9 +184,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         if (grabbedObjects.Count >= maxGrabCount) {
             return false;
         }
-        if (photonView.IsMine) {
-            ((Component)g).GetComponentInParent<PhotonView>()?.RequestOwnership();
-        }
         grabbedObjects.Add(g);
         foreach(Renderer render in g.GetRenderers()) {
             renderMaterials[render] = render.sharedMaterials;

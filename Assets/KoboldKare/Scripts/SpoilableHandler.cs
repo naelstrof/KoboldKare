@@ -52,9 +52,27 @@ public class SpoilableHandler : ScriptableObject {
 
     //}
     public void StartSpoilingEvent() {
-        foreach(GenericSpoilable spoilable in spoilables) {
-            spoilable.DayPassed();
+        if (DayNightCycle.instance.daylight < -0.9f) {
+            GameManager.instance.StartCoroutine(SpoilOverTime(6f,0.2f));
+        } else {
+            // Fast-forward through the night, just destroy everything outside!
+            for(int i=spoilables.Count-1;i>=0;i--) {
+                if (spoilables[i] is GenericSpoilable) {
+                    if (((GenericSpoilable)spoilables[i]).spawnProtection > 0f) {
+                        continue;
+                    }
+                }
+                int hitCount = 0;
+                foreach( RaycastHit h in Physics.RaycastAll(spoilables[i].transform.position + Vector3.up * 400f, Vector3.down, 400f, safeZoneMask, QueryTriggerInteraction.Collide)) {
+                    hitCount++;
+                }
+                if ( hitCount % 2 == 0 ) {
+                    spoilables[i].spoilIntensity = 1f;
+                    spoilables[i].onSpoilEvent.Invoke();
+                } else {
+                    spoilables[i].spoilIntensity = 0f;
+                }
+            }
         }
-        GameManager.instance.StartCoroutine(SpoilOverTime(6f,0.2f));
     }
 }

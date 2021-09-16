@@ -13,10 +13,10 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     public SpoilableHandler handler;
     public SpoilIntensityEvent OnIntensityChange;
     public SpoilIntensityEvent OnFadeout;
-    public bool canSpoilOverTime = true;
     public float spawnProtection = 4f;
     private int daysLeftOut = 0;
     private bool destroying = false;
+    public bool destroyOnSpoil = false;
     private float internalSpoilIntensity; 
     public float spoilIntensity {
         get {
@@ -32,15 +32,6 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
          }
         }
     }
-    public void DayPassed() {
-        if (!canSpoilOverTime) {
-            return;
-        }
-        daysLeftOut++;
-        if (daysLeftOut>=3 && photonView.IsMine) {
-            SaveManager.Destroy(gameObject);
-        }
-    }
     public UnityEvent OnSpoilEvent;
     public UnityEvent onSpoilEvent => OnSpoilEvent;
 
@@ -49,6 +40,13 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
         internalSpoilIntensity = 0f;
         destroying = false;
         handler.AddSpoilable(this);
+        if (destroyOnSpoil == true) {
+            onSpoilEvent.AddListener(()=>{
+                if (photonView.IsMine) {
+                    SaveManager.Destroy(gameObject);
+                }
+            });
+        }
         StartCoroutine(SpawnProtection());
     }
     public IEnumerator SpawnProtection() {

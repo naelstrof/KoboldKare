@@ -198,6 +198,8 @@ public class DickInfo : MonoBehaviour {
         consumer.SetClose(true);
         //transform.localPosition = Vector3.zero;
         //transform.localRotation = Quaternion.identity;
+        Quaternion oldKoboldRotation = k.transform.rotation;
+        k.transform.rotation = Quaternion.identity;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
             set.parentTransform = k.animator.GetBoneTransform(set.parent);
@@ -313,6 +315,7 @@ public class DickInfo : MonoBehaviour {
             // Make sure the dick is the right color, this just forces a reset of the colors.
             k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
         }
+        k.transform.rotation = oldKoboldRotation;
         k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
         k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
         //k.OnOrgasm.AddListener(Cum);

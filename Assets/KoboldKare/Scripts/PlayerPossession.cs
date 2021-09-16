@@ -77,12 +77,16 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         }
     }
     private void OnTextDeselect(string t) {
-        chatInput.text="";
-        chatGroup.interactable = false;
-        chatGroup.alpha = 0f;
-        controls.ActivateInput();
-        chatInput.onSubmit.RemoveListener(OnTextSubmit);
-        chatInput.onDeselect.RemoveListener(OnTextDeselect);
+        if (chatInput != null) {
+            chatInput.text="";
+            chatInput.onSubmit.RemoveListener(OnTextSubmit);
+            chatInput.onDeselect.RemoveListener(OnTextDeselect);
+        }
+        if (chatGroup != null) {
+            chatGroup.interactable = false;
+            chatGroup.alpha = 0f;
+        }
+        controls?.ActivateInput();
         back.action.started -= OnBack;
     }
     private void OnTextSubmit(string t) {
@@ -376,7 +380,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             chatInput.Select();
-            back.action.performed += OnBack;
+            back.action.started += OnBack;
             StopCoroutine("WaitAndThenSubscribe");
             StartCoroutine("WaitAndThenSubscribe");
             controls.DeactivateInput();

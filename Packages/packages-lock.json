@@ -64,7 +64,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "95788666e4e223442966113bd981b2618bbc728b"
+      "hash": "7e2543cd46bebc5cc151e55fb074eb0d608a853d"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",

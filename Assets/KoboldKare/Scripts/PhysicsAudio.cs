@@ -19,7 +19,10 @@ public class PhysicsAudio : MonoBehaviour {
         var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
         scrapeSoundOutput.spatialBlend = 1f;
-        scrapeSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
+        scrapeSoundOutput.rolloffMode = AudioRolloffMode.Custom;
+        scrapeSoundOutput.minDistance = 0f;
+        scrapeSoundOutput.maxDistance = 25f;
+        scrapeSoundOutput.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         scrapeSoundOutput.spatialize = steamAudioSetting.value > 0f;
         scrapeSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
 
@@ -28,6 +31,9 @@ public class PhysicsAudio : MonoBehaviour {
         impactSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
         impactSoundOutput.spatialize = steamAudioSetting.value > 0f;
         impactSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
+        scrapeSoundOutput.minDistance = 0f;
+        scrapeSoundOutput.maxDistance = 25f;
+        impactSoundOutput.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         SteamAudio.SteamAudioSource steamaudio = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
         steamaudio.enabled = steamAudioSetting.value > 0f;
         //steamaudio.physicsBasedAttenuation = true;

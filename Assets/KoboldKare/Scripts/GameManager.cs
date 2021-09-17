@@ -137,8 +137,6 @@ public class GameManager : MonoBehaviour {
         source.volume = volume;
         source.pitch = UnityEngine.Random.Range(0.85f,1.15f);
         source.Play();
-        SteamAudio.SteamAudioSource steamAudioSource = g.AddComponent<SteamAudio.SteamAudioSource>();
-        steamAudioSource.enabled = steamAudioSetting.value > 0f;
         Destroy(g, clip.length);
         //AudioSource.PlayClipAtPoint(clip, position, volume);
     }

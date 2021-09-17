@@ -358,9 +358,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         foreach(AudioSource asource in GetComponentsInChildren<AudioSource>(true)) {
             asource.spatialize = setting.value > 0f;
         }
-        foreach(SteamAudio.SteamAudioSource source in GetComponentsInChildren<SteamAudio.SteamAudioSource>(true)) {
-            source.enabled = setting.value > 0f;
-        }
+        //foreach(SteamAudio.SteamAudioSource source in GetComponentsInChildren<SteamAudio.SteamAudioSource>(true)) {
+            //source.enabled = setting.value > 0f;
+        //}
     }
 
     void Start() {

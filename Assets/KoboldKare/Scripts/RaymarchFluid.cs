@@ -257,8 +257,6 @@ public class RaymarchFluid : FluidOutput {
         streamSource.playOnAwake = false;
         streamSource.loop = true;
         streamSource.clip = streamSound;
-        SteamAudio.SteamAudioSource saudioSource = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
-        saudioSource.enabled = steamAudioSetting.value > 0f;
         if (fireAtStartFromParent) {
             var cont = GetComponentInParent<GenericReagentContainer>();
             if (cont != null) {

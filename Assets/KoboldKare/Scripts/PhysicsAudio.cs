@@ -34,8 +34,6 @@ public class PhysicsAudio : MonoBehaviour {
         scrapeSoundOutput.minDistance = 0f;
         scrapeSoundOutput.maxDistance = 25f;
         impactSoundOutput.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
-        SteamAudio.SteamAudioSource steamaudio = gameObject.AddComponent<SteamAudio.SteamAudioSource>();
-        steamaudio.enabled = steamAudioSetting.value > 0f;
         //steamaudio.physicsBasedAttenuation = true;
         //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
         //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithNoTransmission;

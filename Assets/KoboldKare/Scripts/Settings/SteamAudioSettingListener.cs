@@ -12,7 +12,7 @@ public class SteamAudioSettingListener : MonoBehaviour {
     public ScriptableSetting steamAudio;
     public ScriptableSetting steamAudioAccel;
     private SteamAudio.SteamAudioManager manager;
-    public AudioMixer mixer;
+    //public AudioMixer mixer;
     private SteamAudio.SteamAudioCustomSettings customSettings;
     void Start() {
         manager = GetComponent<SteamAudio.SteamAudioManager>();
@@ -28,7 +28,7 @@ public class SteamAudioSettingListener : MonoBehaviour {
         }
         if (option == steamAudio) {
             manager.enabled = option.value > 0;
-            mixer.SetFloat("ReverbVolume", option.value > 0f ? 0f:float.MinValue);
+            //mixer.SetFloat("ReverbVolume", option.value > 0f ? 0f:float.MinValue);
             switch(Mathf.RoundToInt(option.value)) {
                 case 1: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.Low; break;
                 case 2: manager.simulationPreset = SteamAudio.SimulationSettingsPreset.Medium; break;

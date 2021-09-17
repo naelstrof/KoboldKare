@@ -115,9 +115,11 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     private void Update() {
         if (Mathf.Approximately(rainAmount, 0f) && !dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(true);
+            GetComponent<SteamAudio.SteamAudioSource>().enabled = false;
         }
         if (!Mathf.Approximately(rainAmount, 0f) && dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(false);
+            GetComponent<SteamAudio.SteamAudioSource>().enabled = true && UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
         }
         cloudMaterial.SetFloat("densityOffset", Mathf.Lerp(-4, 0f, rainAmount));
         cloudMaterial.SetFloat("shadowMin", Mathf.Lerp(0.66f, 0.4f, rainAmount));

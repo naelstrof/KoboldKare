@@ -26,7 +26,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "b9d5c783a31d37fa4d4c1c7dd423b3b50380fc2a"
+      "hash": "40aec62ea1f8dcaef3e8fda273569e9f74c680ac"
     },
     "com.naelstrof.penetrationtech": {
       "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",

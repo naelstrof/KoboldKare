@@ -10,7 +10,7 @@ public class DickEquipment : Equipment {
         base.OnEquip(k, groundPrefab);
         GenericReagentContainer container = groundPrefab == null ? null : groundPrefab.GetComponentInChildren<GenericReagentContainer>();
         GameObject[] stuff = new GameObject[1];
-        GameObject dick = GameObject.Instantiate(dickPrefab, k.transform.position, Quaternion.identity);
+        GameObject dick = GameObject.Instantiate(dickPrefab, k.transform.position, k.transform.rotation);
         stuff[0] = dick;
         DickInfo info = dick.GetComponentInChildren<DickInfo>();
         if (info == null) {

@@ -139,6 +139,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         if (!animating) {
             return;
         }
+        body.isKinematic = false;
         kobold.StandUp();
         animating = false;
         physicsSolver.CleanUp();

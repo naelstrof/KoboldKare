@@ -231,6 +231,8 @@ public class DickInfo : MonoBehaviour {
             Quaternion otherSavedRotation = targetRigid.transform.rotation;
             targetRigid.transform.rotation = Quaternion.identity;
 
+            Physics.SyncTransforms();
+
             set.rotJoint = set.dick.body.gameObject.AddComponent<ConfigurableJoint>();
             set.rotJoint.connectedBody = targetRigid;
             set.rotJoint.anchor = Vector3.zero;

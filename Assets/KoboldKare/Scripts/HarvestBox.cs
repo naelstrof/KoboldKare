@@ -11,9 +11,17 @@ public class HarvestBox : MonoBehaviourPun {
     public List<AudioClip> moneyBlipClips = new List<AudioClip>();
     public float maxMoneyBlip = 100f;
     public BoxCollider inside;
+    public Animator targetAnimator;
     public bool active {get; set;} = false;
     public void ToggleActive() {
         active = !active;
+        if (active) {
+            targetAnimator.ResetTrigger("Close");
+            targetAnimator.SetTrigger("Open");
+        } else {
+            targetAnimator.ResetTrigger("Open");
+            targetAnimator.SetTrigger("Close");
+        }
     }
 
     [PunRPC]
@@ -27,8 +35,7 @@ public class HarvestBox : MonoBehaviourPun {
             PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
     }
-
-    private void OnTriggerEnter(Collider other) {
+    private void Check(Collider other) {
         if (!active || other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
             return;
         }
@@ -53,6 +60,13 @@ public class HarvestBox : MonoBehaviourPun {
             moneyBlips.Play();
             SaveManager.RPC(photonView, "RPCSetMoney", RpcTarget.AllBuffered, new object[] { money.value + totalWorth });
         }
-        SaveManager.Destroy(other.transform.root.gameObject);
+        SaveManager.Destroy(other.GetComponentInParent<PhotonView>().gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Check(other);
+    }
+    private void OnTriggerStay(Collider other) {
+        Check(other);
     }
 }

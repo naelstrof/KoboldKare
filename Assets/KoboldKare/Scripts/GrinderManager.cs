@@ -43,7 +43,6 @@ public class GrinderManager : MonoBehaviourPun {
             return;
         }
         if (obj.transform.root == this.transform.root) { return; }
-        photonView.RequestOwnership();
         grindedThingsCache.Add(obj.transform.root.gameObject);
         foreach (GenericReagentContainer c in obj.GetAllComponents<GenericReagentContainer>()) {
             container.contents.Mix(c.contents);
@@ -85,6 +84,7 @@ public class GrinderManager : MonoBehaviourPun {
         if ((other.GetComponentInParent<PhotonView>() != null && !other.GetComponentInParent<PhotonView>().IsMine)) {
             return;
         }
+        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
         Grind(other.gameObject);
     }
     private void OnTriggerEnter(Collider other) {

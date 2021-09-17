@@ -240,7 +240,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
         Rigidbody body = collider.GetComponentInParent<Rigidbody>();
         Vector3 hitPoint = collider.transform.TransformPoint(localColliderPosition);
         colliderLocalAnchor = localColliderPosition;
-        collider.GetComponentInParent<PhotonView>()?.RequestOwnership();
+        if (photonView.IsMine) {
+            collider.GetComponentInParent<PhotonView>()?.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
 
         savedQuaternion = Quaternion.Inverse(view.rotation);
         OnGrab.Invoke();

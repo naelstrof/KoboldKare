@@ -17,7 +17,9 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
     public GrabbableType grabbableType;
     public bool OnGrab(Kobold kobold) {
         onGrab.Invoke(kobold);
-        photonView.RequestOwnership();
+        if (kobold.photonView.IsMine) {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
         return true;
     }
 

@@ -195,6 +195,13 @@ public class DickInfo : MonoBehaviour {
         if (k == null || dicks == null || dicks.Count <= 0 || dicks[0] == null || dicks[0].dickContainer == null) {
             yield break;
         }
+        foreach(DickSet set in dicks) {
+            foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>(true)) {
+                bone.enabled = false;
+            }
+        }
+        Quaternion oldRot = k.transform.rotation;
+        k.transform.rotation = Quaternion.identity;
         bool animatorWasEnabled = k.animator.enabled;
         k.animator.enabled = true;
         foreach(DickSet set in dicks) {
@@ -278,6 +285,12 @@ public class DickInfo : MonoBehaviour {
             k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
             StartCoroutine(UnfuckJoints(set, set.parentTransform.GetComponentInParent<Rigidbody>()));
         }
+        foreach(DickSet set in dicks) {
+            foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
+                bone.enabled = true;
+            }
+        }
+        k.transform.rotation = oldRot;
         k.animator.enabled = animatorWasEnabled;
         k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
         k.lodLevel.OnLODFar.AddListener(OnDickLODFar);

@@ -199,9 +199,10 @@ public class DickInfo : MonoBehaviour {
             foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>(true)) {
                 bone.enabled = false;
             }
+            foreach(Rigidbody b in set.dick.GetComponentsInChildren<Rigidbody>(true)) {
+                b.isKinematic = true;
+            }
         }
-        Quaternion oldRot = k.transform.rotation;
-        k.transform.rotation = Quaternion.identity;
         bool animatorWasEnabled = k.animator.enabled;
         k.animator.enabled = true;
         foreach(DickSet set in dicks) {
@@ -290,7 +291,6 @@ public class DickInfo : MonoBehaviour {
                 bone.enabled = true;
             }
         }
-        k.transform.rotation = oldRot;
         k.animator.enabled = animatorWasEnabled;
         k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
         k.lodLevel.OnLODFar.AddListener(OnDickLODFar);

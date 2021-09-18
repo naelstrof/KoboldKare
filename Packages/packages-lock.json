@@ -50,7 +50,7 @@
         "com.unity.localization": "1.0.0-pre.10",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "abbf125be1e81aca6f691bc0910e3c38d4a5665a"
+      "hash": "5a05212466cf54521ee95745bb94a2022b8a7bd6"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",

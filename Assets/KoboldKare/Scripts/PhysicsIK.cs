@@ -67,6 +67,7 @@ namespace Vilar.IK {
             return defaultOrientation;
         }
         public void Initialize() {
+            CleanUp();
             foreach(LimbOrientation lo in orientations) {
                 Vector3.OrthoNormalize(ref lo.forward, ref lo.up, ref lo.right);
                 //lo.forward = Quaternion.AngleAxis(-90f, lo.right) * lo.forward;
@@ -77,7 +78,7 @@ namespace Vilar.IK {
             //animator.SetTrigger("UnTPose");
 			//animator.ResetTrigger("TPose");
             //targets = new IKTargetSet(animator);
-            float strength = 8f;
+            float strength = 5f;
             AddJoint((int)IKTargetSet.parts.HEAD, animator.GetBoneTransform(HumanBodyBones.Head), animator.GetBoneTransform(HumanBodyBones.Head).position, strength*2f);
             AddJoint((int)IKTargetSet.parts.HANDLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand), animator.GetBoneTransform(HumanBodyBones.LeftHand).position, strength*0.5f);
             AddJoint((int)IKTargetSet.parts.ELBOWLEFT, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.parent, animator.GetBoneTransform(HumanBodyBones.LeftHand).parent.position, strength/2f, false);
@@ -94,12 +95,11 @@ namespace Vilar.IK {
 
         public void CleanUp() {
             foreach(var j in joints) {
-                if (j.rotationEnabled) {
+                if (j != null && j.joint != null) {
                     Destroy(j.joint);
                 }
             }
             IKEnabled = false;
-            kobold.StandUp();
         }
 
         public void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {

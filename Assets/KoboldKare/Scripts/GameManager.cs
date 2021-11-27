@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;       //Allows us to use Lists. 
 using TMPro;
@@ -15,7 +15,6 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
-    public PaintDecal decalPainter;
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
     public LayerMask precisionGrabMask;
@@ -77,45 +76,6 @@ public class GameManager : MonoBehaviour {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
             NetworkManager.instance.StartSinglePlayer();
             GameManager.instance.Pause(false);
-        }
-    }
-    //public void OnDestroy() {
-        //PhotonNetwork.RemoveCallbackTarget(networkManager);
-    //}
-
-    public void SpawnDecalInWorld(Material decalMat, Vector3 position, Vector3 normal, Vector2 size, Color color, GameObject obj, float depth = 0.5f, bool ignoreBackface = true, bool randomRotation = true, bool subtractive = false) {
-        Quaternion rot = Quaternion.FromToRotation(Vector3.forward,normal);
-        if (randomRotation) {
-            rot = rot * Quaternion.AngleAxis(UnityEngine.Random.Range(0f,360f), Vector3.forward);
-        } 
-        bool rendered = false;
-        LODGroup g = obj.GetComponentInParent<LODGroup>();
-        if (g != null) {
-            var lods = g.GetLODs();
-            foreach (var lod in lods) {
-                foreach (Renderer ren in lod.renderers) {
-                    if (ren != null && ren.gameObject.activeInHierarchy) {
-                        foreach (var mat in ren.sharedMaterials) {
-                            if (decalPainter.IsDecalable(mat)) {
-                                rendered = true;
-                                decalPainter.RenderDecal(ren, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            if (rendered) {
-                return;
-            }
-        }
-        foreach (Renderer r in obj.GetComponentsInChildren<Renderer>()) {
-            foreach (var mat in r.sharedMaterials) {
-                if (decalPainter.IsDecalable(mat)) {
-                    decalPainter.RenderDecal(r, decalMat.GetTexture("_BaseMap"), position, rot, new Color(color.r, color.g, color.b, color.a), size / 2f, depth, false, ignoreBackface, subtractive);
-                    break;
-                }
-            }
         }
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {

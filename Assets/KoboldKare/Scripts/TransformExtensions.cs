@@ -24,4 +24,11 @@ public static class TransformExtensions {
         }
 		return false;
 	}
+	public static void GetComponentsInChildrenNoAlloc<T>(this Transform t, List<T> temp, List<T> result) {
+        t.GetComponents<T>(temp);
+        result.AddRange(temp);
+        for(int i=0;i<t.childCount;i++) {
+            GetComponentsInChildrenNoAlloc<T>(t.GetChild(i), temp, result);
+		}
+	}
 }

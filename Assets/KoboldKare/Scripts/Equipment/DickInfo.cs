@@ -228,7 +228,7 @@ public class DickInfo : MonoBehaviour {
                     pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
                 }
                 if (!set.dick.IsInside() || pennedKobold == null) {
-                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(cumbucket, 2f);
+                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(cumbucket);
                 } else {
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
                 }

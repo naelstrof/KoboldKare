@@ -60,7 +60,7 @@ public class GrinderManager : MonoBehaviourPun {
         }
         StopCoroutine("WaitAndThenClear");
         StartCoroutine("WaitAndThenClear");
-        stream.Fire(container.contents,2f);
+        stream.Fire(container.contents);
     }
     private void HandleCollision(Collider other) {
         if (!on) {

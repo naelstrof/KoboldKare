@@ -15,7 +15,7 @@ public class GenericPenetratorPump : MonoBehaviour {
             cumbucket.Mix(balls.contents.Spill(balls.contents.maxVolume/targetPenetrator.cumPulseCount));
             cumbucket.Mix(precumType, targetPenetrator.dickRoot.transform.lossyScale.x);
             if (!targetPenetrator.IsInside()) {
-                targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(cumbucket, 2f);
+                targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(cumbucket);
             } else {
                 targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
             }

@@ -11,19 +11,24 @@ using UnityEditor;
 //using UnityEngine.Localization;
 
 public class Build {
+    static string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
+    private static string outputDirectory {
+        get {
+            string dir = Environment.GetEnvironmentVariable("BUILD_DIR");
+            return dir.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        }
+    }
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
-        ToggleSubstanceFiles(true);
         GetBuildVersion();
-        Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareLinux/Builds/KoboldKare", BuildTarget.StandaloneLinux64, BuildOptions.Development);
+        string output = outputDirectory+"KoboldKare";
+        Debug.Log("#### BUILDING TO " + output + "####");
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        ToggleSubstanceFiles(false);
     }
 
     [MenuItem("KoboldKare/BuildMac")]
@@ -31,14 +36,12 @@ public class Build {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
-        ToggleSubstanceFiles(true);
         GetBuildVersion();
-        Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareMac/Builds/KoboldKare.app", BuildTarget.StandaloneOSX, BuildOptions.Development);
+        string output = outputDirectory+"KoboldKare.app";
+        Debug.Log("#### BUILDING TO " + output + "####");
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        ToggleSubstanceFiles(false);
     }
 
     [MenuItem("KoboldKare/BuildWindows")]
@@ -46,14 +49,12 @@ public class Build {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
-        ToggleSubstanceFiles(true);
         GetBuildVersion();
-        Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindows/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows64, BuildOptions.Development);
+        string output = outputDirectory+"KoboldKare.exe";
+        Debug.Log("#### BUILDING TO " + output + "####");
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        ToggleSubstanceFiles(false);
     }
 
     [MenuItem("KoboldKare/BuildWindows32")]
@@ -61,14 +62,12 @@ public class Build {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
-        ToggleSubstanceFiles(true);
         GetBuildVersion();
-        Debug.Log("#### BUILDING ####");
-        string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
-        var report = BuildPipeline.BuildPlayer(scenes, "/var/lib/jenkins/workspace/KoboldKareWindowsx86/Builds/KoboldKare.exe", BuildTarget.StandaloneWindows, BuildOptions.Development);
+        string output = outputDirectory+"KoboldKare.exe";
+        Debug.Log("#### BUILDING TO " + output + "####");
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        ToggleSubstanceFiles(false);
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 
@@ -78,33 +77,6 @@ public class Build {
         } else if (!String.IsNullOrEmpty(version)) {
             PlayerSettings.bundleVersion = version;
         }
-    }
-    private static void ToggleSubstanceFiles(bool smallify) {
-        // Probably totally broken, can't rely on substance plugin for now.
-        /*string path = "Assets/KoboldKare/Materials/MapMaterials";
-        foreach(string file in Directory.GetFiles(path)) {
-            AssetImporter importer = AssetImporter.GetAtPath(file);
-            if (importer != null && file.Contains("sbsar")) {
-                string metaPath = AssetDatabase.GetTextMetaFilePathFromAssetPath(file);
-                StreamReader reader = new StreamReader(metaPath); 
-                string data = reader.ReadToEnd();
-                reader.Close();
-                if (smallify) {
-                    data = data.Replace("textureWidth: 1024", "textureWidth: 32");
-                    data = data.Replace("textureHeight: 1024", "textureHeight: 32");
-                    data = data.Replace("value=\\\"10,10\\\"", "value=\\\"5,5\\\"");
-                } else {
-                    data = data.Replace("textureWidth: 32", "textureWidth: 1024");
-                    data = data.Replace("textureHeight: 32", "textureHeight: 1024");
-                    data = data.Replace("value=\\\"5,5\\\"", "value=\\\"10,10\\\"");
-                }
-                StreamWriter writer = new StreamWriter(metaPath, false); 
-                writer.Write(data);
-                writer.Close();
-                //AssetDatabase.ImportAsset(file);
-            }
-        }
-        AssetDatabase.Refresh();*/
     }
 }
 

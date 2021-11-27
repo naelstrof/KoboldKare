@@ -250,7 +250,6 @@ namespace Vilar.AnimationStation {
 	public class AnimationStationInfo {
 		public bool needsPenetrator;
 		public UnityEngine.Object user;
-		public bool headLock = false;
     }
 
 	[System.Serializable]
@@ -534,14 +533,6 @@ namespace Vilar.AnimationStation {
 		public Quaternion ComputeTargetRotation(int index) {
 			Quaternion blendedRotation = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetRotations[index];
 			if (modifiedProgress >= loops.Count - 1) {
-				if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying && !info.headLock) {
-					Vector3 headPos = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[index];
-					//Vector3 hipPos = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS];
-					Vector3 lookdir = lookAtPosition - headPos;
-					//Vector3 headup = headPos - hipPos;
-					//Quaternion wantedLookRot = l
-					return Quaternion.FromToRotation(blendedRotation*Vector3.forward, lookdir.normalized) * blendedRotation;
-				}
 				return blendedRotation;
 			}
             blendedRotation = Quaternion.Lerp(
@@ -549,16 +540,6 @@ namespace Vilar.AnimationStation {
                 loops[Mathf.CeilToInt(modifiedProgress)].computedTargetRotations[index],
                 modifiedProgress % 1f
             );
-            if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying && !info.headLock) {
-				Vector3 blendedHeadPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[index], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[index], modifiedProgress % 1f);
-				//Vector3 blendedHipPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HIPS], modifiedProgress % 1f);
-                Vector3 lookdir = lookAtPosition - blendedHeadPos;
-				//Vector3 headup = blendedHeadPos - blendedHipPos;
-				//Quaternion wantedLookRot = Quaternion.Lerp(blendedRotation, Quaternion.LookRotation(lookdir.normalized, Vector3.Lerp(headup.normalized, Vector3.up, 0.5f)), 0.5f);
-				//lookRot = Quaternion.Lerp(lookRot, wantedLookRot, Time.deltaTime * 6f);
-				//return lookRot;
-                return Quaternion.FromToRotation(blendedRotation*Vector3.forward, lookdir.normalized) * blendedRotation;
-            }
 			return blendedRotation;
 		}
 

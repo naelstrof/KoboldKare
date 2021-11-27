@@ -1,4 +1,4 @@
-﻿using ExitGames.Client.Photon;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -7,12 +7,15 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
+    private static List<Renderer> staticTempRenderers = new List<Renderer>();
+    private static List<Renderer> staticRenderers = new List<Renderer>();
     public bool infiniteSource = false;
     public float fillRate = 1f;
     public Transform fluidScaler;
     public ReagentContents.ReagentInjectType injectType;
     public List<Renderer> fluidRenderers = new List<Renderer>();
     public Material decalDipMaterial;
+    public Material decalClearMaterial;
     public List<BoxCollider> fluidHitboxes = new List<BoxCollider>();
     public GenericReagentContainer volumeContainer;
     public HashSet<LODGroup> paintableObjects = new HashSet<LODGroup>();
@@ -85,9 +88,18 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
             Color c = volumeContainer.contents.GetColor(ReagentDatabase.instance);
             c.a = 1f;
             if (volumeContainer.contents.ContainsKey(ReagentData.ID.Water) && volumeContainer.contents[ReagentData.ID.Water].volume > volumeContainer.contents.volume*0.9f) {
-                GameManager.instance.SpawnDecalInWorld(decalDipMaterial, pos, norm, rectangle, c, g.gameObject, depth, false, false, true);
+                staticRenderers.Clear();
+                g.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                foreach(Renderer r in staticRenderers) {
+                    SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalClearMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
+                }
             } else {
-                GameManager.instance.SpawnDecalInWorld(decalDipMaterial, pos, norm, rectangle, c, g.gameObject, depth, false, false, false);
+                decalDipMaterial.color = c;
+                staticRenderers.Clear();
+                g.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                foreach(Renderer r in staticRenderers) {
+                    SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalDipMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
+                }
             }
         }
     }

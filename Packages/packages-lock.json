@@ -26,31 +26,40 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "40aec62ea1f8dcaef3e8fda273569e9f74c680ac"
+      "hash": "ee919ad96d947094e02d208b1039c6fcfbbd1a90"
+    },
+    "com.naelstrof.mozzarellatech": {
+      "version": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm"
+      },
+      "hash": "852eb210d5a09e0f3f1230852f9c1119ba97e3fc"
     },
     "com.naelstrof.penetrationtech": {
       "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "75925e498504e038d7602e6218b60ab795c55ab0"
+      "hash": "cfbdfb2fe44eb3cdfd477f68a60655ed57080749"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6ad3a3430790cc0e8cec351c52f4e12cc5c07003"
+      "hash": "ff427606da9d9a6bfcbe80085ab8ef9ce4622b08"
     },
     "com.naelstrof.unityscriptablesettings": {
       "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.unity.localization": "1.0.0-pre.10",
+        "com.unity.localization": "1.0.4",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "5a05212466cf54521ee95745bb94a2022b8a7bd6"
+      "hash": "378b7f65c081952ada854b71eb8cf0eda415ccec"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
@@ -89,11 +98,11 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "1.19.4",
+      "version": "1.19.9",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.2",
+        "com.unity.scriptablebuildpipeline": "1.19.3",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -136,11 +145,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.0.0",
+      "version": "1.0.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.addressables": "1.19.4",
+        "com.unity.addressables": "1.19.9",
         "com.unity.nuget.newtonsoft-json": "2.0.0"
       },
       "url": "https://packages.unity.com"
@@ -180,7 +189,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.2",
+      "version": "1.19.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

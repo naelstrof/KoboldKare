@@ -34,7 +34,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         public DriverConstraint constraint;
     }
     private List<JointInfo> joints = new List<JointInfo>();
-    private Dictionary<Renderer, Material[]> renderMaterials = new Dictionary<Renderer, Material[]>();
     public float droppedHighQualityTime = 10.0f;
     public float thrownUntouchableTime = 0.4f;
     private List<Vector3> weaponPoints = new List<Vector3>();
@@ -47,7 +46,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
     public UnityEvent OnGrabThrowable;
     public UnityEvent OnGrabActivatable;
     public UnityEvent OnActivate;
-    public Material transparentMat;
     private bool hasDropped = false;
     [HideInInspector]
     public bool grabbing = false;
@@ -122,10 +120,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
             if (ren == null) {
                 continue;
             }
-            if (renderMaterials.ContainsKey(ren)) {
-                ren.materials = renderMaterials[ren];
-                renderMaterials.Remove(ren);
-            }
         }
         if (g.GetRigidBodies()[0] != null) {
             RecursiveSetLayer(g.GetRigidBodies()[0].transform.root, LayerMask.NameToLayer("PlayerNocollide"), LayerMask.NameToLayer("UsablePickups"));
@@ -185,70 +179,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
             return false;
         }
         grabbedObjects.Add(g);
-        foreach(Renderer render in g.GetRenderers()) {
-            renderMaterials[render] = render.sharedMaterials;
-            List<Material> newMaterials = new List<Material>();
-            foreach(Material m in render.sharedMaterials) {
-                if (m.shader != Shader.Find("Universal Render Pipeline/Lit")) {
-                    newMaterials.Add(m);
-                    continue;
-                }
-                if (render.CompareTag("NoFade")) {
-                    newMaterials.Add(m);
-                    continue;
-                }
-                bool hasInvalidTag = false;
-                foreach(string s in m.shaderKeywords) {
-                    if (s.Contains("_BLENDMODE_ALPHA") || s.Contains("_ALPHATEST_ON")) {
-                        hasInvalidTag = true;
-                        break;
-                    }
-                }
-                if (hasInvalidTag) {
-                    newMaterials.Add(m);
-                    continue;
-                }
-                Material newMat = Material.Instantiate(transparentMat);
-                for(int i=0;i<m.shader.GetPropertyCount();i++) {
-                    int id = m.shader.GetPropertyNameId(i);
-                    switch(m.shader.GetPropertyType(i)) {
-                        case UnityEngine.Rendering.ShaderPropertyType.Texture:
-                            newMat.SetTexture(id,m.GetTexture(id));
-                            newMat.SetTextureScale(id, m.GetTextureScale(id));
-                            newMat.SetTextureOffset(id, m.GetTextureOffset(id));
-                            break;
-                        //case UnityEngine.Rendering.ShaderPropertyType.Range:
-                            //newMat.SetFloat(id,m.GetFloat(id));
-                            //break;
-                        //case UnityEngine.Rendering.ShaderPropertyType.Float:
-                            //newMat.SetFloat(id,m.GetFloat(id));
-                            //break;
-                        //case UnityEngine.Rendering.ShaderPropertyType.Vector:
-                            //newMat.SetVector(id,m.GetVector(id));
-                            //break;
-                        case UnityEngine.Rendering.ShaderPropertyType.Color:
-                            newMat.SetColor(id,m.GetColor(id));
-                            break;
-                        default: break;
-                    }
-                }
-                //newMat.shaderKeywords = m.shaderKeywords;
-                //Color newColor = m.GetColor("_BaseColor");
-                //newColor.a = newMat.GetColor("_BaseColor").a;
-                //newMat.SetColor("_BaseColor", newColor);
-                //newMat.CopyPropertiesFromMaterial(m);
-                //foreach(string s in newMat.shaderKeywords) {
-                    //newMat.DisableKeyword(s);
-                //}
-                //foreach(string s in transparentMat.shaderKeywords) {
-                    //newMat.EnableKeyword(s);
-                //}
-
-                newMaterials.Add(newMat);
-            }
-            render.materials = newMaterials.ToArray();
-            render.UpdateGIMaterials();
-        }
         RecursiveSetLayer(g.GetRigidBodies()[0].transform.root, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));
         foreach(Rigidbody r in g.GetRigidBodies()) {
             if (r == null ) {
@@ -370,16 +300,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         }
         foreach (IGrabbable g in grabbedObjects) {
             foreach (Rigidbody r in g.GetRigidBodies()) {
-                //foreach(IGrabbable grabbable in g.GetComponentsInChildren<IGrabbable>()) {
-                    //grabbable.OnGrabStay();
-                //}
-                /*foreach(Renderer render in g.GetComponentsInChildren<Renderer>()) {
-                    foreach(Material m in render.materials) {
-                        Color c = m.GetColor("_BaseColor");
-                        c.a = Mathf.Clamp(Vector3.Distance(g.transform.position, transform.position)/100f,0.25f,1f);
-                        m.SetColor("_BaseColor", c);
-                    }
-                }*/
                 DriverConstraint j = joints.Find(info => info.body == r).constraint;
                 j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
                 IWeapon[] weapons = r.GetComponentsInChildren<IWeapon>();

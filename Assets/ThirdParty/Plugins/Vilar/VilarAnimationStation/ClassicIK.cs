@@ -19,7 +19,7 @@ namespace Vilar.IK {
 
 	}
 
-    [ExecuteAlways]
+    //[ExecuteAlways]
 #endif
 	public interface IKSolver {
         IKTargetSet targets { get; }

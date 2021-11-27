@@ -22,7 +22,8 @@ public class DecalBleeder : MonoBehaviour
         normal /= collision.contacts.Length;
         point /= collision.contacts.Length;
 
-        GameManager.instance.SpawnDecalInWorld(decalMat, point, normal, Vector2.one*3f, Color.red, collision.gameObject);
+        decalMat.color = Color.red;
+        SkinnedMeshDecals.PaintDecal.RenderDecalForCollision(collision.collider, decalMat, point, normal, UnityEngine.Random.Range(0f,360f), Vector2.one*3f);
         //if (Vector3.Distance(_lastPos, point) > _minDistance) {
             //GameObject.Instantiate(_decals[Random.Range(0, _decals.Count - 1)], point, Quaternion.LookRotation(normal));
             //_lastPos = point;

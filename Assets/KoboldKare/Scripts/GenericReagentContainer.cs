@@ -33,17 +33,17 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         {  true,   true,   true }, // Metabolize
         {  true,   true,   true }, // Vacuum
     };
-    private static bool IsMixable(ContainerType container, InjectType injectionType) {
+    public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
-    public float startingMaxVolume = 40f;
+    public float startingMaxVolume = float.MaxValue;
     public float volume => contents.volume;
     public float maxVolume => contents.GetMaxVolume();
     public Color GetColor() => contents.GetColor();
     public ContainerType type;
     public UnityEvent OnChange, OnFilled, OnEmpty;
-    public bool isFull => contents.volume == contents.GetMaxVolume();
-    public bool isEmpty => contents.volume == 0f;
+    public bool isFull => Mathf.Approximately(contents.volume, contents.GetMaxVolume());
+    public bool isEmpty => Mathf.Approximately(contents.volume,0f);
     public bool IsCleaningAgent() => contents.IsCleaningAgent();
     public float GetVolumeOf(ScriptableReagent reagent) => contents.GetVolumeOf(reagent);
     public float GetVolumeOf(short id) => contents.GetVolumeOf(id);

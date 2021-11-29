@@ -33,6 +33,8 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     private VisualEffect effect;
     [SerializeField]
     private float vps = 2f;
+    private static HashSet<GenericReagentContainer> staticTargets = new HashSet<GenericReagentContainer>();
+    private static Collider[] staticColliders = new Collider[32];
     public void Fire() {
         var container = GetComponentInParent<GenericReagentContainer>();
         if (container != null) {
@@ -89,7 +91,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
                 Squirt();
             }
             Squirt();
-            b.Spill(vps);
+            SplashTransfer(b, vps);
             yield return waitForSeconds;
         }
     }
@@ -98,11 +100,27 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         //mozzarella.SetVisco(radius);
         fluidHitListener.decalSize = radius*1.5f;
     }
+    void SplashTransfer(GenericReagentContainer b, float amount) {
+        staticTargets.Clear();
+        int hits = Physics.OverlapSphereNonAlloc(transform.position+transform.forward*1f, 0.5f, staticColliders, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
+        for(int i=0;i<hits;i++) {
+            Collider c = staticColliders[i];
+            GenericReagentContainer target = c.GetComponentInParent<GenericReagentContainer>();
+            if (target != null && target != b && GenericReagentContainer.IsMixable(target.type, GenericReagentContainer.InjectType.Spray)) {
+                staticTargets.Add(target);
+            }
+        }
+        float totalTargets = staticTargets.Count;
+        foreach(var target in staticTargets) {
+            target.TransferMix(b, amount/totalTargets);
+        }
+    }
     IEnumerator Splash(GenericReagentContainer b, float amount, float duration) {
         effect.Play();
         float targetVolume = Mathf.Max(b.volume-amount,0f);
         float startTime = Time.time;
         SetRadius(Mathf.Clamp(b.volume*0.02f, 0.01f, 0.2f));
+        SplashTransfer(b, amount);
         while(Time.time < startTime+duration) {
             float t = (Time.time-startTime)/duration;
             for(int i=0;i<mozzarella.squirts.Count;i++) {
@@ -112,7 +130,6 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
                 volume,
                 mozzarella.squirts[i].index);
             }
-            b.Spill(vps*Time.deltaTime);
             yield return null;
         }
         for(int i=0;i<mozzarella.squirts.Count;i++) {
@@ -131,7 +148,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
                 volume,
                 mozzarella.squirts[i].index);
             }
-            b.Spill(vps*Time.deltaTime);
+            SplashTransfer(b, vps*Time.deltaTime);
             yield return null;
         }
         for(int i=0;i<mozzarella.squirts.Count;i++) {

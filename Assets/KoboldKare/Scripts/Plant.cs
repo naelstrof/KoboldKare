@@ -2,123 +2,93 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.VFX;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
+using KoboldKare;
 
-public class Plant : MonoBehaviour {
-    public GenericReagentContainer container;
-    public string prefabToSpawn;
+[RequireComponent(typeof(GenericReagentContainer))]
+public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunInstantiateMagicCallback {
+    public ScriptablePlant plant;
+    private GenericReagentContainer container;
+    [SerializeField]
+    private GameEvent midnightEvent;
+    [SerializeField]
+    private VisualEffect effect;
+    [SerializeField]
+    private GameObject display;
 
-    public AudioSource gurgleSource;
-    public bool filled = false;
-
-    private int currentPhase = 0;
-    public List<GameObject> phases = new List<GameObject>();
-    public GameObject heartPoof;
-    private Vector4 HueBrightnessContrastSaturation;
-
-    public List<MeshRenderer> bouncyMaterials = new List<MeshRenderer>();
-    public List<SkinnedMeshRenderer> happyKobolds = new List<SkinnedMeshRenderer>();
-    public int GetID(SkinnedMeshRenderer r, string blendshapeName) {
-        for(int i=0;i<r.sharedMesh.blendShapeCount;i++) {
-            if (r.sharedMesh.GetBlendShapeName(i) == blendshapeName ) {
-                return i;
-            }
-        }
-        return -1;
+    void Start() {
+        container = GetComponent<GenericReagentContainer>();
+        container.OnFilled.AddListener(OnFilled);
+        midnightEvent.RegisterListener(this);
+        SwitchTo(plant);
     }
 
-    public void Start() {
-        HueBrightnessContrastSaturation = new Vector4(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0.3f,.7f),UnityEngine.Random.Range(0.3f,0.7f),UnityEngine.Random.Range(0.3f,0.7f));
-        foreach(GameObject phase in phases) {
-            foreach(Kobold k in phase.GetComponentsInChildren<Kobold>(true)) {
-                k.HueBrightnessContrastSaturation = HueBrightnessContrastSaturation;
-            }
-            foreach(Renderer r in phase.GetComponentsInChildren<SkinnedMeshRenderer>(true)) {
-                foreach(Material m in r.materials) {
-                    m.SetVector("_HueBrightnessContrastSaturation", HueBrightnessContrastSaturation);
-                }
-            }
-        }
-        container.OnChange.AddListener(OnReagentContainerChanged);
-    }
-    public void OnDestroy() {
-        container.OnChange.RemoveListener(OnReagentContainerChanged);
+    void OnDestroy() {
+        container.OnFilled.RemoveListener(OnFilled);
+        midnightEvent.UnregisterListener(this);
     }
 
-    private void AdvanceStage() {
-        foreach (GameObject phase in phases) {
-            phase.SetActive(false);
-        }
-        currentPhase++;
-        if (currentPhase < phases.Count) {
-            foreach (MeshRenderer m in bouncyMaterials) {
-                m.material.SetFloat("_BounceAmount", 0f);
-            }
-            foreach (SkinnedMeshRenderer k in happyKobolds) {
-                //m.material.SetFloat("_BounceAmount", 0.5f);
-                k.SetBlendShapeWeight(GetID(k, "HappyLeft"), 0f);
-                k.SetBlendShapeWeight(GetID(k, "HappyRight"), 0f);
-            }
-            phases[currentPhase].SetActive(true);
-            filled = false;
-            transform.Rotate(new Vector3(0, 1, 0), UnityEngine.Random.Range(0, 360));
+    void OnFilled() {
+        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }
-        // Final spawn!
-        if (GetComponentInParent<PhotonView>().IsMine) {
-            SaveManager.Instantiate(prefabToSpawn, transform.position, Quaternion.identity, 0, null);
-            SaveManager.Destroy(this.gameObject);
+        foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
+            renderer.material.SetFloat("_BounceAmount", 1f);
         }
+        effect.gameObject.SetActive(false);
+        effect.gameObject.SetActive(true);
     }
 
-    IEnumerator WaitAndThenStopGargling(float time) {
-        yield return new WaitForSeconds(time);
-        gurgleSource.Pause();
-    }
-
-    public void Metabolize(float time) {
-        time *= DayNightCycle.instance.dayLength;
-        if (container.volume >= container.maxVolume) {
-            container.Spill(container.volume);
-            AdvanceStage();
-        }
-    }
-
-    public void OnReagentContainerChanged() {
-        if (filled) {
+    void SwitchTo(ScriptablePlant newPlant) {
+        if (plant == newPlant) {
             return;
         }
-        if (container.volume >= container.maxVolume) {
-            foreach (MeshRenderer m in bouncyMaterials) {
-                m.material.SetFloat("_BounceAmount", 0.5f);
-            }
-            foreach (SkinnedMeshRenderer k in happyKobolds) {
-                //m.material.SetFloat("_BounceAmount", 0.5f);
-                k.SetBlendShapeWeight(GetID(k, "HappyLeft"), 100f);
-                k.SetBlendShapeWeight(GetID(k, "HappyRight"), 100f);
-            }
-            GameObject.Instantiate(heartPoof, transform.position + Vector3.up * 0.5f, transform.rotation * Quaternion.AngleAxis(-90, Vector3.right));
-            filled = true;
-        } else {
-            foreach (Animator a in phases[currentPhase].GetComponentsInChildren<Animator>()) {
-                if (a.runtimeAnimatorController == null ) {
-                    continue;
-                }
-                if (gurgleSource.isActiveAndEnabled && !gurgleSource.isPlaying) {
-                    gurgleSource.Play();
-                    StopCoroutine("WaitAndThenStopGargling");
-                    StartCoroutine(WaitAndThenStopGargling(0.25f));
-                }
-                foreach( var p in a.parameters) {
-                    if (p.name == "Quaff") {
-                        a.SetTrigger("Quaff");
-                        break;
+        if (display != null) {
+            Destroy(display);
+        }
+        if (newPlant.display != null) {
+            display = GameObject.Instantiate(newPlant.display, transform);
+        }
+        if (photonView.IsMine) {
+            foreach(var produce in newPlant.produces) {
+                int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
+                for(int i=0;i<max;i++) {
+                    if (produce.prefab.photonName == "GrabbableKobold4") {
+                        SaveManager.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetRandomKobold()});
+                    } else {
+                        SaveManager.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
                     }
                 }
             }
+        }
+        plant = newPlant;
+    }
+
+    public void OnEventRaised(GameEvent e) {
+        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
+            SaveManager.Destroy(gameObject);
+            return;
+        }
+        if (container.isFull) {
+            container.Spill(container.volume);
+            SwitchTo(plant.possibleNextGenerations[UnityEngine.Random.Range(0, plant.possibleNextGenerations.Length)]);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsReading) {
+            SwitchTo(PlantDatabase.GetPlant((short)stream.ReceiveNext()));
+        } else {
+            stream.SendNext(PlantDatabase.GetID(plant));
+        }
+    }
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
+            SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
         }
     }
 }

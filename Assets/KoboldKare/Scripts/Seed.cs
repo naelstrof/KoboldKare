@@ -15,6 +15,7 @@ public class Seed : MonoBehaviourPun, IValuedGood {
     public int type = 0;
     public float _spacing = 1f;
     public UnityEvent OnFailPlant;
+    public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
     public bool ShouldSave() {
         return true;
@@ -44,7 +45,7 @@ public class Seed : MonoBehaviourPun, IValuedGood {
         if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
             if (hit.collider.CompareTag("PlantableTerrain")) {
                 if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    SaveManager.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, null);
+                    SaveManager.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, new object[] {PlantDatabase.GetID(plant)} );
                     SaveManager.Destroy(gameObject);
                 }
             }

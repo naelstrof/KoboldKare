@@ -32,11 +32,11 @@ public class ReagentContents {
     private const float metabolizationVolumeEpsilon = 0.1f;
     public float volume {
         get {
-            float volume = 0f;
+            float v = 0f;
             foreach(var pair in contents) {
-                volume += pair.Value.volume;
+                v += pair.Value.volume;
             }
-            return volume;
+            return v;
         }
     }
     public int Count => contents.Count;
@@ -49,16 +49,19 @@ public class ReagentContents {
         }
         contents.Add(id, new Reagent(){ id=id, volume=volume });
     }
-    public void AddMix(short id, float volume, GenericReagentContainer worldContainer = null) {
-        Assert.IsTrue(volume >= 0f);
+    public void AddMix(short id, float addVolume, GenericReagentContainer worldContainer = null) {
+        Assert.IsTrue(addVolume >= 0f);
         if (contents.ContainsKey(id)) {
-            contents[id].volume = Mathf.Max(0f,contents[id].volume+volume);
+            contents[id].volume = Mathf.Max(0f,contents[id].volume+addVolume);
         } else {
-            contents.Add(id, new Reagent() {id=id,volume=volume});
+            contents.Add(id, new Reagent() {id=id,volume=addVolume});
             if (worldContainer != null) {
                 ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
                 ReagentDatabase.DoReactions(worldContainer, id);
             }
+        }
+        if (volume > maxVolume) {
+            Spill(volume-maxVolume);
         }
     }
     public void AddMix(Reagent reagent, GenericReagentContainer worldContainer = null) {

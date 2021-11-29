@@ -6,18 +6,15 @@ public class GenericPenetratorPump : MonoBehaviour {
     public FluidOutput fluidOutput;
     public GenericReagentContainer balls;
     public PenetrationTech.Penetrator targetPenetrator;
-    public ReagentData.ID precumType;
+    public ScriptableReagent precum;
     public float stimulation;
     public float stimulationNeeded = 4f;
     void Start() {
         targetPenetrator.OnCumEmit.AddListener(()=>{
-            ReagentContents cumbucket = new ReagentContents();
-            cumbucket.Mix(balls.contents.Spill(balls.contents.maxVolume/targetPenetrator.cumPulseCount));
-            cumbucket.Mix(precumType, targetPenetrator.dickRoot.transform.lossyScale.x);
             if (!targetPenetrator.IsInside()) {
-                targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(cumbucket);
+                targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(balls);
             } else {
-                targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
+                targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.TransferMix(balls, balls.maxVolume/targetPenetrator.cumPulseCount);
             }
         });
         targetPenetrator.OnMove.AddListener((float amount)=>{

@@ -45,7 +45,7 @@ public class GrinderManager : MonoBehaviourPun {
         if (obj.transform.root == this.transform.root) { return; }
         grindedThingsCache.Add(obj.transform.root.gameObject);
         foreach (GenericReagentContainer c in obj.GetAllComponents<GenericReagentContainer>()) {
-            container.contents.Mix(c.contents);
+            container.TransferMix(c, c.volume);
         }
         GenericDamagable d = obj.transform.root.GetComponent<GenericDamagable>();
         if (d != null) {
@@ -60,7 +60,7 @@ public class GrinderManager : MonoBehaviourPun {
         }
         StopCoroutine("WaitAndThenClear");
         StartCoroutine("WaitAndThenClear");
-        stream.Fire(container.contents);
+        stream.Fire(container);
     }
     private void HandleCollision(Collider other) {
         if (!on) {

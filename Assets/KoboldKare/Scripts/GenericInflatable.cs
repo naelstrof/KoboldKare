@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
+public class GenericInflatable : MonoBehaviour {
     private WaitForEndOfFrame waitForEndOfFrame;
     [System.Serializable]
     public class InflatableBlendshape {
@@ -95,7 +95,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
     [Tooltip("Consider this the scale of the object, bigger numbers mean less effect of fluid.")]
     public float reagentVolumeDivisor = 1f;
     public GenericReagentContainer container;
-    public List<ReagentData.ID> reagentMasks;
+    public ScriptableReagent[] reagentMasks;
     private float currentSize = 0f;
     public AnimationCurve bounceCurve;
     //private AbstractGoTween tween;
@@ -200,23 +200,20 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
             }
         }
     }
-    public void OnEnable() {
+    public void Start() {
         size = GetDesiredSize();
+    }
+    public void OnEnable() {
         StopAllCoroutines();
         tweening = false;
-        container.contents.AddListener(this);
+        container.OnChange.AddListener(OnReagentContainerChanged);
     }
     public void OnDisable() {
-        if (container != null && container.contents != null) {
-            container.contents.RemoveListener(this);
+        if (container != null) {
+            container.OnChange.RemoveListener(OnReagentContainerChanged);
         }
         tweening = false;
         StopAllCoroutines();
-    }
-    public void OnDestroy() {
-        if (container != null && container.contents != null) {
-            container.contents.RemoveListener(this);
-        }
     }
     IEnumerator Tween(float duration) {
         float startTime = Time.timeSinceLevelLoad;
@@ -231,13 +228,11 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
     }
     public float GetDesiredSize() {
         float volume = 0f;
-        if (reagentMasks.Count == 0) {
-            volume = container.contents.volume;
+        if (reagentMasks.Length == 0) {
+            volume = container.volume;
         } else {
             foreach (var mask in reagentMasks) {
-                if (container.contents.ContainsKey(mask)) {
-                    volume += container.contents[mask].volume;
-                }
+                volume += container.GetVolumeOf(mask);
             }
         }
         volume -= defaultReagentVolume;
@@ -252,16 +247,7 @@ public class GenericInflatable : MonoBehaviour, IReagentContainerListener {
         StartCoroutine(Tween(tweenDuration));
     }
 
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType type) {
-        if (reagentMasks.Count == 0) {
-            TriggerTween();
-            return;
-        }
-        foreach (ReagentData.ID id in reagentMasks) {
-            if (contents.ContainsKey(id)) {
-                TriggerTween();
-                return;
-            }
-        }
+    public void OnReagentContainerChanged() {
+        TriggerTween();
     }
 }

@@ -68,9 +68,9 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         yield return new WaitForSeconds(1f);
     }
 
-    public IEnumerator SizzleThenExplode(float delay, GameObject obj, ReagentContents contents) {
-        Transform targetTransform = obj.transform;
-        IGrabbable grabbable = obj.GetComponent<IGrabbable>();
+    public IEnumerator SizzleThenExplode(float delay, GenericReagentContainer container) {
+        Transform targetTransform = container.transform;
+        IGrabbable grabbable = container.GetComponent<IGrabbable>();
         if (grabbable != null) {
             targetTransform = grabbable.GrabTransform(grabbable.GetRigidBodies()[0]);
         }
@@ -121,22 +121,18 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         }
         // Remove all explosium
         if (targetTransform != null) {
-            contents.Empty();
+            container.Spill(container.volume);
         }
     }
 
     // To prevent rapid execution, we use coroutines to wait until the user is done mixing things before it decides to blow.
-    public void SpawnExplosion(ReagentContents contents) {
-        GameObject obj = contents.gameObject;
-        if (obj == null) {
-            return;
-        }
-        if (!HasProcess(obj, "Explosion")) {
-            AddProcess(obj, new Task(SizzleThenExplode(4f, obj, contents)), "Explosion");
+    public void SpawnExplosion(GenericReagentContainer container) {
+        if (!HasProcess(container.gameObject, "Explosion")) {
+            AddProcess(container.gameObject, new Task(SizzleThenExplode(4f, container)), "Explosion");
         }
     }
-    public void BubbleSound(ReagentContents contents) {
-        GameObject obj = contents.gameObject;
+    public void BubbleSound(GenericReagentContainer container) {
+        GameObject obj = container.gameObject;
         if (obj == null) {
             return;
         }

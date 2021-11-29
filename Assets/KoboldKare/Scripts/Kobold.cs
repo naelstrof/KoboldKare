@@ -13,7 +13,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
 using TMPro;
 
-public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunInstantiateMagicCallback, IReagentContainerListener, IPunObservable {
+public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunInstantiateMagicCallback, IPunObservable {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -275,21 +275,13 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         HueBrightnessContrastSaturation = hbcs;
 
         if (s.ContainsKey("KoboldSize")) {
-            Reagent r = new Reagent();
-            r.volume = (float)s["KoboldSize"] * sizeInflatable.reagentVolumeDivisor;
-            sizeInflatable.container.contents[ReagentData.ID.GrowthSerum] = r;
-            sizeInflatable.container.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Inject);
+            sizeInflatable.container.AddMix(ReagentDatabase.GetReagent("GrowthSerum"),(float)s["KoboldSize"] * sizeInflatable.reagentVolumeDivisor, GenericReagentContainer.InjectType.Inject);
         }
 
         if (s.ContainsKey("BoobSize")) {
             foreach (var boob in boobs) {
-                Reagent f = new Reagent();
-                f.volume = (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.7f;
-                Reagent m = new Reagent();
-                m.volume = (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.3f;
-                boob.container.contents[ReagentData.ID.Fat] = f;
-                boob.container.contents[ReagentData.ID.Milk] = m;
-                boob.container.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Inject);
+                boob.container.AddMix(ReagentDatabase.GetReagent("Fat"), (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.7f, GenericReagentContainer.InjectType.Inject);
+                boob.container.AddMix(ReagentDatabase.GetReagent("Milk"), (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.3f, GenericReagentContainer.InjectType.Inject);
             }
         }
 
@@ -368,7 +360,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         lastPumpTime = Time.timeSinceLevelLoad;
         MetabolizeEvent.RegisterListener(this);
         foreach (var b in bellies) {
-            b.container.contents.AddListener(this);
+            b.container.OnChange.AddListener(OnReagentContainerChanged);
         }
         bodyProportion.OnComplete += OnCompleteBodyProportion;
         var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
@@ -382,7 +374,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         inventory.EquipmentChangedEvent -= OnEquipmentChanged;
         MetabolizeEvent.UnregisterListener(this);
         foreach (var b in bellies) {
-            b.container.contents.RemoveListener(this);
+            b.container.OnChange.RemoveListener(OnReagentContainerChanged);
         }
         if (photonView.IsMine) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
@@ -552,12 +544,8 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     private void Update() {
         foreach(var dickSet in activeDicks) {
-            if (!dickSet.container.contents.ContainsKey(ReagentData.ID.Blood)) {
-                dickSet.container.contents.Mix(ReagentData.ID.Blood, 0.01f);
-            }
             // Pulse the dicks a little, so they still look "lively"
-            dickSet.container.contents[ReagentData.ID.Blood].volume = arousal*0.92f + (0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal;
-            dickSet.container.contents.TriggerChange();
+            dickSet.container.OverrideReagent(ReagentDatabase.GetReagent("Blood"), arousal*0.92f + (0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal);
         }
     }
     private void FixedUpdate() {
@@ -766,98 +754,60 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public void OnEventRaised(GameEventGeneric<float> e, float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
-        foreach (var ball in balls) {
-            if (!ball.contents.ContainsKey(ReagentData.ID.Cum)) {
-                ball.contents.Mix(ReagentData.ID.Cum,0f);
-            }
-            if (!ball.contents.ContainsKey(ReagentData.ID.Fat)) {
-                ball.contents.Mix(ReagentData.ID.Fat,0f);
-            }
-            float neededCum = ball.contents[ReagentData.ID.Fat].volume*0.5f;
-            float currentCum = ball.contents[ReagentData.ID.Cum].volume;
-            ball.contents.Mix(ReagentData.ID.Cum, Mathf.Max(0f,(neededCum-currentCum)*(f*2f/DayNightCycle.instance.dayLength)));
-        }
         foreach (var belly in bellies) {
-            ReagentContents vol = belly.container.contents.Metabolize(ReagentDatabase.instance, f);
-            foreach (KeyValuePair<ReagentData.ID, Reagent> r in vol) {
-                switch (r.Key) {
-                    case ReagentData.ID.Cum:
-                        //if (sex >= 0.5f) {
-                        belly.container.contents.Mix(ReagentData.ID.Egg, r.Value.volume*3f, 1f, 310f);
-                        //}
-                        break;
-                    case ReagentData.ID.MelonJuice:
-                        foreach (var boob in boobs) {
-                            boob.container.contents.Mix(ReagentData.ID.Fat, r.Value.volume*4f / boobs.Count, 1f, 310f, ReagentContents.ReagentInjectType.Metabolize);
-                            boob.container.contents.Mix(ReagentData.ID.Milk, r.Value.volume*4f*0.33f / boobs.Count, 1f, 310f, ReagentContents.ReagentInjectType.Metabolize);
-                            //boob.baseVolume += r.Value.volume*0.8f;
-                        }
-                        break;
-                    //case ReagentData.ID.Blood:
-                        //belly.container.contents[ReagentData.ID.Blood].volume = Mathf.Max(belly.container.contents[ReagentData.ID.Blood].volume, 10f);
-                        //break;
-                    case ReagentData.ID.EggplantJuice:
-                        if (activeDicks.Count == 0) {
+            ReagentContents vol = belly.container.Metabolize(f);
+            belly.container.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
+            float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
+            foreach (var boob in boobs) {
+                boob.container.AddMix(ReagentDatabase.GetReagent("Fat"), melonJuiceVolume*4f / boobs.Count, GenericReagentContainer.InjectType.Metabolize);
+                boob.container.AddMix(ReagentDatabase.GetReagent("Milk"), melonJuiceVolume*4f*0.33f / boobs.Count, GenericReagentContainer.InjectType.Metabolize);
+            }
+            float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
+            foreach(var dickSet in activeDicks) {
+                dickSet.container.AddMix(ReagentDatabase.GetReagent("Fat"), eggplantJuiceVolume*2f / activeDicks.Count, GenericReagentContainer.InjectType.Metabolize);
+            }
+            float growthSerumVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
+            foreach (var ss in subcutaneousStorage) {
+                ss.container.AddMix(ReagentDatabase.GetReagent("GrowthSerum"), growthSerumVolume/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
+            }
+            float milkShakeVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
+            foreach (var ss in subcutaneousStorage) {
+                ss.container.AddMix(ReagentDatabase.GetReagent("Fat"), milkShakeVolume*2f/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
+            }
+            float pineappleJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
+            foreach (var b in balls) {
+                b.AddMix(ReagentDatabase.GetReagent("Fat"), pineappleJuiceVolume*3f/balls.Count, GenericReagentContainer.InjectType.Metabolize);
+                b.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f/balls.Count, GenericReagentContainer.InjectType.Metabolize);
+            }
+
+            if (Time.timeSinceLevelLoad > nextEggTime) {
+                float currentEggVolume = belly.container.GetVolumeOf(ReagentDatabase.GetReagent("Egg"));
+                if (currentEggVolume > 8f) {
+                    OnEggFormed.Invoke();
+                    nextEggTime = Time.timeSinceLevelLoad + 30f;
+                    bool spawnedEgg = false;
+                    foreach(var penetratableSet in penetratables) {
+                        if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
+                            eggSpawner.targetPenetrable = penetratableSet.penetratable;
+                            eggSpawner.spawnAlongLength = 1f;
+                            eggSpawner.SpawnEgg();
+                            spawnedEgg = true;
                             break;
                         }
-                        foreach(var dickSet in activeDicks) {
-                            dickSet.container.contents.Mix(ReagentData.ID.Fat, r.Value.volume*2f / activeDicks.Count, 1f, 310);
-                        }
-                        //desiredDickSize += (r.Value.volume * 0.8f) / (desiredDickSize + 1f);
-                        break;
-                    case ReagentData.ID.GrowthSerum:
-                        foreach (var ss in subcutaneousStorage) {
-                            ss.container.contents.Mix(ReagentData.ID.GrowthSerum, r.Value.volume/subcutaneousStorage.Count, r.Value.potentcy, r.Value.heat, ReagentContents.ReagentInjectType.Metabolize);
-                        }
-                        break;
-                    case ReagentData.ID.MilkShake:
-                        foreach (var ss in subcutaneousStorage) {
-                            ss.container.contents.Mix(ReagentData.ID.Fat, r.Value.volume*2f/subcutaneousStorage.Count, r.Value.potentcy, r.Value.heat, ReagentContents.ReagentInjectType.Metabolize);
-                        }
-                        //foreach( var boob in boobs ) {
-                        //if (boob.baseVolume < 4f) {
-                        //boob.baseVolume = Mathf.MoveTowards(boob.baseVolume, 6f, r.Value.volume*3f);
-                        //}
-                        //}
-                        break;
-                    case ReagentData.ID.PineappleJuice:
-                        foreach (var b in balls) {
-                            b.contents.Mix(ReagentData.ID.Fat, r.Value.volume*3f/balls.Count, r.Value.potentcy, r.Value.heat, ReagentContents.ReagentInjectType.Metabolize);
-                            b.contents.Mix(ReagentData.ID.Cum, r.Value.volume*1f/balls.Count, r.Value.potentcy, r.Value.heat, ReagentContents.ReagentInjectType.Metabolize);
-                        }
-                        break;
-                }
-            }
-            if (Time.timeSinceLevelLoad > nextEggTime) {
-                if (belly.container.contents.ContainsKey(ReagentData.ID.Egg)) {
-                    if (belly.container.contents[ReagentData.ID.Egg].volume > 8f) {
-                        OnEggFormed.Invoke();
-                        nextEggTime = Time.timeSinceLevelLoad + 30f;
-                        bool spawnedEgg = false;
+                    }
+                    if (!spawnedEgg) {
                         foreach(var penetratableSet in penetratables) {
-                            if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
+                            if (penetratableSet.penetratable.isActiveAndEnabled) {
                                 eggSpawner.targetPenetrable = penetratableSet.penetratable;
-                                eggSpawner.spawnAlongLength = 1f;
+                                eggSpawner.spawnAlongLength = 0.5f;
                                 eggSpawner.SpawnEgg();
                                 spawnedEgg = true;
                                 break;
-                            }
+                            } 
                         }
-                        if (!spawnedEgg) {
-                            foreach(var penetratableSet in penetratables) {
-                                if (penetratableSet.penetratable.isActiveAndEnabled) {
-                                    eggSpawner.targetPenetrable = penetratableSet.penetratable;
-                                    eggSpawner.spawnAlongLength = 0.5f;
-                                    eggSpawner.SpawnEgg();
-                                    spawnedEgg = true;
-                                    break;
-                                } 
-                            }
-                        }
-                        if (spawnedEgg) {
-                            belly.container.contents[ReagentData.ID.Egg].volume -= 8f;
-                            belly.container.contents.TriggerChange();
-                        }
+                    }
+                    if (spawnedEgg) {
+                        belly.container.OverrideReagent(ReagentDatabase.GetReagent("Egg"), currentEggVolume-8f);
                     }
                 }
             }
@@ -868,14 +818,12 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         yield return new WaitForSeconds(time);
         gurgleSource.Pause();
     }
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType injectType) {
-        if (injectType == ReagentContents.ReagentInjectType.Spray) {
-            koboldAnimator.SetTrigger("Quaff");
-            if (!gurgleSource.isPlaying) {
-                gurgleSource.Play();
-                gurgleSource.pitch = 0.9f + sex*0.4f;
-                StartCoroutine(WaitAndThenStopGargling(0.25f));
-            }
+    public void OnReagentContainerChanged() {
+        koboldAnimator.SetTrigger("Quaff");
+        if (!gurgleSource.isPlaying) {
+            gurgleSource.Play();
+            gurgleSource.pitch = 0.9f + sex*0.4f;
+            StartCoroutine(WaitAndThenStopGargling(0.25f));
         }
     }
 

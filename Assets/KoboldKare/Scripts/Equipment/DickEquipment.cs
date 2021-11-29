@@ -18,7 +18,7 @@ public class DickEquipment : Equipment {
         }
         foreach(DickInfo.DickSet set in info.dicks) {
             if (container != null) {
-                set.container.contents.Mix(container.contents);
+                set.container.TransferMix(container, container.volume);
             }
             set.dickIdentifier = GetInstanceID();
         }
@@ -31,7 +31,7 @@ public class DickEquipment : Equipment {
         // Search for a dick that matches our equipment, then use the info to remove all the dicks associated with it.
         foreach(DickInfo.DickSet set in k.activeDicks) {
             if (set.dickIdentifier == GetInstanceID()) {
-                contents.Mix(set.container.contents);
+                contents.AddMix(set.container.Spill(set.container.volume));
             }
         }
         foreach(DickInfo.DickSet set in k.activeDicks) {
@@ -43,9 +43,8 @@ public class DickEquipment : Equipment {
         if (groundPrefab != null) {
             GenericReagentContainer container = groundPrefab.GetComponentInChildren<GenericReagentContainer>();
             if (container != null) {
-                container.contents.Mix(contents);
+                container.AddMix(contents, GenericReagentContainer.InjectType.Inject);
             }
-            container.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Inject);
         }
         return groundPrefab;
     }

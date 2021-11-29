@@ -5,21 +5,16 @@ using UnityEngine;
 public class GenericReagentFactory : MonoBehaviour {
     public GenericReagentContainer container;
     [Tooltip("The reagents whos volume drives the time of the animation curve.")]
-    public List<ReagentData.ID> reagentMasks;
-    public ReagentData.ID generatedReagent;
+    public ScriptableReagent[] reagentMasks;
+    public ScriptableReagent generatedReagent;
     public AnimationCurve generatedCurve;
     public void TriggerGeneration(float percent) {
         float volume = 0f;
-        foreach( var p in container.contents) {
-            if (reagentMasks.Contains(p.Key)) {
-                volume += p.Value.volume;
-            }
+        foreach( var mask in reagentMasks) {
+            volume += container.GetVolumeOf(mask);
         }
         float desiredVolume = generatedCurve.Evaluate(volume);
         float currentVolume = 0f;
-        if (container.contents.ContainsKey(generatedReagent)) {
-            currentVolume = container.contents[generatedReagent].volume;
-        }
-        container.contents.Mix(generatedReagent,  (desiredVolume-currentVolume)*percent, 1f, 310f);
+        container.AddMix(generatedReagent, (desiredVolume-currentVolume)*percent, GenericReagentContainer.InjectType.Inject);
     }
 }

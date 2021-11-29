@@ -14,9 +14,9 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
     private Camera cachedCamera;
+    [SerializeField]
     private ReagentContents rainContents = new ReagentContents();
     public Material splashMaterial;
-    public List<InspectorReagent> startReagents = new List<InspectorReagent>();
     private HashSet<PhotonView> views = new HashSet<PhotonView>();
     private bool clearingViews = false;
     //private bool isSnowing = false;
@@ -40,9 +40,6 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
         }
     }
     private void Awake() {
-        foreach( InspectorReagent r in startReagents) {
-            rainContents.Mix(r.id, r.volume, r.potentcy, r.heat);
-        }
         //StopSnow();
     }
     private void OnDestroy() {

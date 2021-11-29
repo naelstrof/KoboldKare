@@ -6,13 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
+public class GenericFluidVolume : MonoBehaviour {
     private static List<Renderer> staticTempRenderers = new List<Renderer>();
     private static List<Renderer> staticRenderers = new List<Renderer>();
-    public bool infiniteSource = false;
     public float fillRate = 1f;
     public Transform fluidScaler;
-    public ReagentContents.ReagentInjectType injectType;
     public List<Renderer> fluidRenderers = new List<Renderer>();
     public Material decalDipMaterial;
     public Material decalClearMaterial;
@@ -24,8 +22,8 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
     public UnityEvent drainEnd;
 
     public IEnumerator DrainProcess() {
-        while (volumeContainer.contents.volume > 0f) {
-            volumeContainer.contents.Spill(fillRate * Time.fixedDeltaTime);
+        while (volumeContainer.volume > 0f) {
+            volumeContainer.Spill(fillRate * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
         }
         drainEnd.Invoke();
@@ -37,28 +35,22 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
     }
 
     public void Start() {
-        volumeContainer.contents.AddListener(this);
-        OnReagentContainerChanged(volumeContainer.contents, ReagentContents.ReagentInjectType.Inject);
+        volumeContainer.OnChange.AddListener(OnReagentContainerChanged);
+        OnReagentContainerChanged();
     }
     public void OnDestroy() {
-        volumeContainer.contents.RemoveListener(this);
+        volumeContainer.OnChange.RemoveListener(OnReagentContainerChanged);
     }
     public void Update() {
         paintableObjects.RemoveWhere(o=>o == null);
         dippableObjects.RemoveWhere(o=>o == null);
         foreach(LODGroup g in paintableObjects) {
             DipDecal(g);
-            if (Mathf.Approximately(volumeContainer.contents.volume, 0f)) {
+            if (Mathf.Approximately(volumeContainer.volume, 0f)) {
                 continue;
             }
             foreach(var container in dippableObjects) {
-                if (container.contents.IsMixable(injectType)) {
-                    if (infiniteSource) {
-                        container.contents.Mix(volumeContainer.contents * fillRate * Time.deltaTime, injectType);
-                    } else {
-                        container.contents.Mix(volumeContainer.contents.Spill(Mathf.Min(container.contents.maxVolume-container.contents.volume,fillRate * Time.deltaTime)), injectType);
-                    }
-                }
+                container.TransferMix(volumeContainer, Mathf.Min(container.maxVolume-container.volume,fillRate * Time.deltaTime));
             }
         }
         paintableObjects.Clear();
@@ -69,7 +61,7 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
         if (g.gameObject.layer == LayerMask.NameToLayer("World") || g.transform.root == this.transform.root) {
             return;
         }
-        if (volumeContainer.contents.volume <= 0f) {
+        if (volumeContainer.volume <= 0f) {
             return;
         }
         foreach(BoxCollider b in fluidHitboxes) {
@@ -85,9 +77,9 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
             Vector3 pos = boxFrontWorld;
             Vector3 norm = (boxCenterWorld-boxFrontWorld).normalized;
 
-            Color c = volumeContainer.contents.GetColor(ReagentDatabase.instance);
+            Color c = volumeContainer.GetColor();
             c.a = 1f;
-            if (volumeContainer.contents.ContainsKey(ReagentData.ID.Water) && volumeContainer.contents[ReagentData.ID.Water].volume > volumeContainer.contents.volume*0.9f) {
+            if (volumeContainer.IsCleaningAgent()) {
                 staticRenderers.Clear();
                 g.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
@@ -128,31 +120,15 @@ public class GenericFluidVolume : MonoBehaviour, IReagentContainerListener {
         Gizmos.DrawIcon(transform.position, "ico_fluidvolume.png", true);
     }
 
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType injectType) {
+    public void OnReagentContainerChanged() {
         foreach(Renderer r in fluidRenderers) {
             foreach(Material material in r.materials) {
-                if ( contents.volume <= 0 ) {
-                    material.SetColor("_BaseColor", new Color(0,0,0,0));
-                    material.SetFloat("_Position", 0);
-                    continue;
-                }
-                material.SetColor("_BaseColor", contents.GetColor(ReagentDatabase.instance));
-                material.SetFloat("_Position", contents.volume / volumeContainer.maxVolume);
+                material.SetColor("_BaseColor", volumeContainer.GetColor());
+                material.SetFloat("_Position", volumeContainer.volume / volumeContainer.maxVolume);
             }
         }
-        //foreach(BoxCollider collider in fluidHitboxes) {
-            //collider.transform.parent.localScale = collider.transform.parent.localScale.With(y:contents.volume/volumeContainer.maxVolume);
-        //}
         if (fluidScaler != null) {
-            fluidScaler.localScale = fluidScaler.localScale.With(y:contents.volume/volumeContainer.maxVolume);
+            fluidScaler.localScale = fluidScaler.localScale.With(y:volumeContainer.volume/volumeContainer.maxVolume);
         }
     }
-    //private void OnTriggerExit(Collider other) {
-    //LODGroup group = other.GetComponentInParent<LODGroup>();
-    //if (group) {
-    //paintableObjects.Remove(group.gameObject);
-    //} else {
-    //paintableObjects.Remove(other.gameObject);
-    //}
-    //}
 }

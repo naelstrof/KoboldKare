@@ -220,17 +220,17 @@ public class DickInfo : MonoBehaviour {
             set.dickContainer.transform.localRotation = Quaternion.identity;
 
             set.dick.OnCumEmit.AddListener(()=>{
-                ReagentContents cumbucket = new ReagentContents();
-                cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
-                cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
+                //ReagentContents cumbucket = new ReagentContents();
+                //cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
+                //cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
                 Kobold pennedKobold = null;
                 if (set.dick.holeTarget != null) {
                     pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
                 }
                 if (!set.dick.IsInside() || pennedKobold == null) {
-                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(cumbucket);
+                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(set.balls.container);
                 } else {
-                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.contents.Mix(cumbucket);
+                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.TransferMix(set.balls.container, set.balls.container.maxVolume/set.dick.cumPulseCount);
                 }
             });
 

@@ -7,7 +7,7 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 
-public class Plant : MonoBehaviour, IReagentContainerListener {
+public class Plant : MonoBehaviour {
     public GenericReagentContainer container;
     public string prefabToSpawn;
 
@@ -42,10 +42,10 @@ public class Plant : MonoBehaviour, IReagentContainerListener {
                 }
             }
         }
-        container.contents.AddListener(this);
+        container.OnChange.AddListener(OnReagentContainerChanged);
     }
     public void OnDestroy() {
-        container.contents.RemoveListener(this);
+        container.OnChange.RemoveListener(OnReagentContainerChanged);
     }
 
     private void AdvanceStage() {
@@ -81,17 +81,17 @@ public class Plant : MonoBehaviour, IReagentContainerListener {
 
     public void Metabolize(float time) {
         time *= DayNightCycle.instance.dayLength;
-        if (container.contents.volume >= container.contents.maxVolume) {
-            container.contents.Empty();
+        if (container.volume >= container.maxVolume) {
+            container.Spill(container.volume);
             AdvanceStage();
         }
     }
 
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType injectType) {
+    public void OnReagentContainerChanged() {
         if (filled) {
             return;
         }
-        if (contents.volume >= contents.maxVolume) {
+        if (container.volume >= container.maxVolume) {
             foreach (MeshRenderer m in bouncyMaterials) {
                 m.material.SetFloat("_BounceAmount", 0.5f);
             }

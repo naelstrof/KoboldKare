@@ -7,7 +7,7 @@ using UnityEngine;
 public class SeedExtractor : MonoBehaviourPun {
     [System.Serializable]
     public class ReagentPrefabTuple {
-        public ReagentData.ID reagentType;
+        public ScriptableReagent reagentType;
         public PhotonGameObjectReference prefab;
         public float neededVolume;
     }
@@ -20,7 +20,7 @@ public class SeedExtractor : MonoBehaviourPun {
     public List<ReagentPrefabTuple> serializedSpawnables = new List<ReagentPrefabTuple>();
     public GenericReagentContainer internalContents;
 
-    private Dictionary<ReagentData.ID, ReagentPrefabTuple> spawnableLookup = new Dictionary<ReagentData.ID, ReagentPrefabTuple>();
+    private Dictionary<ScriptableReagent, ReagentPrefabTuple> spawnableLookup = new Dictionary<ScriptableReagent, ReagentPrefabTuple>();
     private void Awake() {
         foreach (var tuple in serializedSpawnables) {
             spawnableLookup.Add(tuple.reagentType, tuple);
@@ -38,7 +38,7 @@ public class SeedExtractor : MonoBehaviourPun {
         if (damagable != null && damagable.removeOnDeath) {
             bool foundThing = false;
             foreach( GenericReagentContainer container in other.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
-                internalContents.contents.Mix(container.contents);
+                internalContents.TransferMix(container, container.volume);
                 foundThing = true;
             }
             if (foundThing) {
@@ -63,17 +63,13 @@ public class SeedExtractor : MonoBehaviourPun {
     }
     private IEnumerator OutputSeeds() {
         yield return new WaitForSeconds(2f);
-        foreach(var pair in internalContents.contents) {
-            if (spawnableLookup.ContainsKey(pair.Key)) {
-                while (pair.Value.volume >= spawnableLookup[pair.Key].neededVolume) {
-                    pair.Value.volume -= spawnableLookup[pair.Key].neededVolume;
-                    SaveManager.Instantiate(spawnableLookup[pair.Key].prefab.photonName, seedSpawnLocation.position, seedSpawnLocation.rotation);
-                    internalContents.contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Vacuum);
-                    yield return new WaitForSeconds(2f);
-                }
+        foreach(var pair in spawnableLookup) {
+            while (internalContents.GetVolumeOf(pair.Key)>= pair.Value.neededVolume) {
+                internalContents.OverrideReagent(pair.Key, internalContents.GetVolumeOf(pair.Key));
+                SaveManager.Instantiate(spawnableLookup[pair.Key].prefab.photonName, seedSpawnLocation.position, seedSpawnLocation.rotation);
+                yield return new WaitForSeconds(2f);
             }
         }
-        internalContents.contents.Empty();
         done.Play();
         grinderAnimator.SetTrigger("Open");
         gameObject.SetActive(false);

@@ -73,6 +73,9 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         return grabbableType;
     }
     void OnValidate() {
+        if (renderers == null) {
+            return;
+        }
         if (rendererMaterialPairs == null || rendererMaterialPairs.Length != renderers.Length) {
             rendererMaterialPairs = new RendererMaterialPair[renderers.Length];
             for(int i=0;i<renderers.Length;i++) {

@@ -1,396 +1,178 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
-using UnityEngine.Localization;
-using UnityEngine.Events;
 using ExitGames.Client.Photon;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
-public interface IReagentContainerListener {
-    void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType type);
-}
 [System.Serializable]
-public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
-    public enum ReagentContainerType {
-        OpenTop = 0,
-        Sealed,
-        Mouth,
-    }
-    public enum ReagentInjectType {
-        Inject = 0,
-        Spray,
-        Flood,
-        Metabolize,
-        Vacuum,
-    }
-    private static bool[,] ReagentMixMatrix = new bool[,]{
-        // OpenTop, Sealed, Mouth
-        {  true,   true,    true }, // Inject
-        {  true,   false,   true }, // Spray
-        {  true,   false,   false }, // Flood
-        {  true,   true,   true }, // Metabolize
-        {  true,   true,   true }, // Vacuum
-    };
-    private static bool IsMixable(ReagentContainerType container, ReagentInjectType injectionType ) {
-        return ReagentMixMatrix[(int)injectionType,(int)container];
-    }
-    public bool IsMixable(ReagentInjectType injectionType ) {
-        return IsMixable(containerType, injectionType);
-    }
-    public enum DirtyFlag {
-        Volume = 1,
-        Color = 2,
-        Value = 4,
-        Heat = 8,
-        FluidVolume = 16,
-    }
-    private bool runningListenerUpdate = false;
-    public List<IReagentContainerListener> listeners = new List<IReagentContainerListener>();
-    public void AddListener(IReagentContainerListener listener) {
-        listeners.Add(listener);
-    }
-    public void RemoveListener(IReagentContainerListener listener) {
-        listeners.Remove(listener);
-    }
-    public void InvokeListenerUpdate(ReagentContents.ReagentInjectType injectType) {
-        SetDirty(true);
-        if (runningListenerUpdate) {
-            return;
-        }
-        runningListenerUpdate = true;
-        for (int i=listeners.Count-1;i>=0;i--) {
-            try {
-                listeners[i].OnReagentContainerChanged(this, injectType);
-            } catch (Exception e){
-                Debug.LogException(e);
-            }
-        }
-        runningListenerUpdate = false;
-    }
-    private int dirtyFlags = 0;
-    public float maxVolume = float.MaxValue;
-    public ReagentContainerType containerType = ReagentContainerType.OpenTop;
-    public GameObject gameObject;
-    public MonoBehaviour behaviour;
-    public List<Tuple<Coroutine,string>> runningRoutines = new List<Tuple<Coroutine,string>>();
+public class Reagent {
+    public short id;
+    public float volume;
+}
 
-    private bool IsDirty() {
-        return dirtyFlags != 0;
+public class ReagentContents {
+    public ReagentContents(ReagentContents other) {
+        contents = new Dictionary<short, Reagent>(other.contents);
+        maxVolume = other.maxVolume;
     }
-    private bool IsDirty(DirtyFlag dirt) {
-        return (dirtyFlags & (1<<(int)dirt)) != 0;
+    public ReagentContents(float maxVolume = float.MaxValue) {
+        this.maxVolume = maxVolume;
     }
-    private void SetDirty(bool dirty) {
-        if (dirty) {
-            dirtyFlags = ~(0);
-        } else {
-            dirtyFlags = 0;
-        }
+    private float maxVolume = float.MaxValue;
+    public float GetMaxVolume() {
+        return maxVolume;
     }
-    private void SetDirty(DirtyFlag dirt, bool dirty) {
-        if (!dirty) {
-            dirtyFlags &= ~(1<<(int)dirt);
-        } else {
-            dirtyFlags |= 1<<(int)dirt;
+    public void SetMaxVolume(float newMaxVolume) {
+        maxVolume = newMaxVolume;
+        if (contents != null && maxVolume < volume) {
+            Spill(volume-maxVolume);
         }
     }
-
-    public void Empty() {
-        Clear();
-        SetDirty(true);
-        InvokeListenerUpdate(ReagentInjectType.Vacuum);
-    }
-
-    private float cachedVolume;
-    private Color cachedColor;
-    private float cachedValue;
-    private float cachedHeat;
-    private float cachedFluidVolume;
-    private void RegenerateCacheIfNeeded(ReagentDatabase database = null) {
-        if (dirtyFlags == 0) {
-            return;
-        }
-        if (IsDirty(DirtyFlag.Volume)) {
-            cachedVolume = 0f;
-            foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-                cachedVolume += pair.Value.volume;
-            }
-            // Unset the dirty flag
-            SetDirty(DirtyFlag.Volume, false);
-        }
-
-        if (database == null) {
-            return;
-        }
-        if (IsDirty(DirtyFlag.FluidVolume)) {
-            cachedFluidVolume = 0f;
-            foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-                if (database.reagents[pair.Key].isFluid) {
-                    cachedFluidVolume += pair.Value.volume;
-                }
-            }
-            SetDirty(DirtyFlag.FluidVolume, false);
-        }
-        if (IsDirty(DirtyFlag.Color)) {
-            cachedColor = Color.black;
-            cachedColor.a = 0f;
-            if (cachedVolume > 0.001f) {
-                foreach (KeyValuePair<ReagentData.ID, Reagent> pair in this) {
-                    cachedColor += database.reagents[pair.Key].color * (pair.Value.volume / cachedVolume);
-                }
-            }
-            SetDirty(DirtyFlag.Color, false);
-        }
-        if (IsDirty(DirtyFlag.Heat)) {
-            cachedHeat = 0;
-            if (cachedVolume > 0.001f) {
-                foreach (KeyValuePair<ReagentData.ID, Reagent> pair in this) {
-                    cachedHeat += pair.Value.heat * (pair.Value.volume / Mathf.Max(cachedVolume, Mathf.Epsilon));
-                }
-            }
-            SetDirty(DirtyFlag.Heat, false);
-        }
-        if (IsDirty(DirtyFlag.Value)) {
-            cachedValue = 0;
-            foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-                cachedValue += database.reagents[pair.Key].value*pair.Value.volume;
-            }
-            SetDirty(DirtyFlag.Value, false);
-        }
-    }
-    public void Mix(ReagentContents contents, ReagentInjectType injectType = ReagentInjectType.Inject) {
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in contents ) {
-            Mix(pair.Key, pair.Value, injectType);
-        }
-    }
-    public void Mix(ReagentData.ID id, Reagent r, ReagentInjectType injectType = ReagentInjectType.Inject) {
-        Mix(id,r.volume, r.potentcy, r.heat, injectType);
-    }
-    public void DoReaction(ReagentReaction r) {
-        float minReaction = Mathf.Min(this[r.a].volume / r.aAmount, this[r.b].volume / r.bAmount);
-        this[r.a].volume -= minReaction * r.aAmount;
-        this[r.b].volume -= minReaction * r.bAmount;
-        float averagePotentcy = (this[r.a].potentcy + this[r.b].potentcy) / 2f;
-        float averageHeat = (this[r.a].heat + this[r.b].heat) / 2f;
-        if (this[r.a].volume <= 0.001f) {
-            this.Remove(r.a);
-        }
-        if (this[r.b].volume <= 0.001f) {
-            this.Remove(r.b);
-        }
-        SetDirty(true);
-        if (minReaction * r.cAmount > Mathf.Epsilon) {
-            Mix(r.c, minReaction * r.cAmount, averagePotentcy, averageHeat);
-        }
-    }
-    public void RedoOnExistCallbacks() {
-        foreach (var pair in this) {
-            if (pair.Value.volume > 0.001f) {
-                ReagentDatabase.instance.reagents[pair.Key].onExistCallback.Invoke(this);
-            }
-        }
-    }
-    public void Mix(ReagentData.ID id, float volume, float potentcy = 1f, float heat = 293f, ReagentInjectType injectType = ReagentInjectType.Inject) {
-        if (!IsMixable(injectType)) { 
-            return;
-        }
-        if (ContainsKey(id)) {
-            float oldVolume = this[id].volume;
-            this[id].volume += volume;
-            float ratio = oldVolume/Mathf.Max(this[id].volume,Mathf.Epsilon);
-            this[id].heat = this[id].heat*(ratio)+heat*(1f/ratio);
-            this[id].potentcy = this[id].potentcy*(ratio)+potentcy*(1f/ratio);
-        } else {
-            Add(id, new Reagent{volume = volume, potentcy = potentcy, heat = heat});
-        }
-        if (gameObject != null && GameManager.instance != null) {
-            List<ReagentData.ID> keys = new List<ReagentData.ID>(this.Keys);
-            foreach (ReagentData.ID key in keys) {
-                int reactionID = ReagentData.GetIDPair(key, id);
-                if (ReagentDatabase.instance.reactions.ContainsKey(reactionID)) {
-                    ReagentReaction react = ReagentDatabase.instance.reactions[reactionID];
-                    if (this.ContainsKey(react.a) && this.ContainsKey(react.b) && this[react.a].volume > Mathf.Epsilon && this[react.b].volume > Mathf.Epsilon) {
-                        DoReaction(react);
-                    }
-                }
-            }
-            ReagentDatabase.instance.reagents[id].onExistCallback.Invoke(this);
-        }
-        // Things changed! set ourselves dirty
-        SetDirty(true);
-        if (this.volume > maxVolume) {
-            Spill(this.volume - maxVolume, injectType);
-        } else {
-            InvokeListenerUpdate(injectType);
-        }
-    }
-    public void TriggerChange(ReagentInjectType injectType = ReagentInjectType.Inject) {
-        SetDirty(true);
-        InvokeListenerUpdate(injectType);
-    }
-    public ReagentContents FilterFluids(float spilledVolume, ReagentDatabase database, ReagentInjectType injectType = ReagentInjectType.Vacuum) {
-        ReagentContents spilledContents = new ReagentContents();
-        if (spilledVolume <= 0f) {
-            return spilledContents;
-        }
-        float fluidVolume = 0f;
-        foreach (KeyValuePair<ReagentData.ID, Reagent> pair in this) {
-            if (!database.reagents[pair.Key].isFluid) {
-                continue;
-            }
-            fluidVolume += pair.Value.volume;
-        }
-
-        float percentageSpill = Mathf.Min(spilledVolume/Mathf.Max(fluidVolume,Mathf.Epsilon), 1f);
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-            if (!database.reagents[pair.Key].isFluid) {
-                continue;
-            }
-            float lossAmount = pair.Value.volume * percentageSpill;
-            pair.Value.volume -= lossAmount;
-            spilledContents.Mix(pair.Key, lossAmount, pair.Value.potentcy, pair.Value.heat);
-        }
-        SetDirty(true);
-        InvokeListenerUpdate(injectType);
-        return spilledContents;
-    }
-    public ReagentContents Spill(float spilledVolume, ReagentInjectType injectType = ReagentInjectType.Vacuum) {
-        ReagentContents spilledContents = new ReagentContents();
-        if (spilledVolume <= 0f) {
-            return spilledContents;
-        }
-        float percentageSpill = Mathf.Min(spilledVolume/Mathf.Max(volume,Mathf.Epsilon), 1f);
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-            float lossAmount = pair.Value.volume * percentageSpill;
-            spilledContents.Mix(pair.Key, lossAmount, pair.Value.potentcy, pair.Value.heat);
-            pair.Value.volume -= lossAmount;
-        }
-        SetDirty(true);
-        InvokeListenerUpdate(injectType);
-        spilledContents.SetDirty(true);
-        return spilledContents;
-    }
-    public ReagentContents Metabolize(ReagentDatabase database, float deltaTime) {
-        ReagentContents metabolizedReagents = new ReagentContents();
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in this ) {
-            float v = pair.Value.volume-database.reagents[pair.Key].metabolizationMin;
-            if (Mathf.Approximately(v,0)) {
-                continue;
-            }
-            // Prevent really tiny, useless updates.
-            if (v <= 0.1f) {
-                metabolizedReagents.Mix(pair.Key, v, pair.Value.potentcy, pair.Value.heat);
-                pair.Value.volume = 0f;
-                continue;
-            }
-            float metaHalfLife = database.reagents[pair.Key].metabolizationHalfLife == 0 ? v : v * Mathf.Pow(0.5f, deltaTime / database.reagents[pair.Key].metabolizationHalfLife);
-            float loss = Mathf.Max(v - metaHalfLife, 0f);
-            pair.Value.volume = Mathf.Max(metaHalfLife, 0f);
-            metabolizedReagents.Mix(pair.Key, loss, pair.Value.potentcy, pair.Value.heat);
-        }
-        if (!Mathf.Approximately(metabolizedReagents.volume, 0f)) {
-            SetDirty(true);
-            InvokeListenerUpdate(ReagentInjectType.Metabolize);
-        }
-        return metabolizedReagents;
-    }
+    private const float metabolizationVolumeEpsilon = 0.1f;
     public float volume {
         get {
-            RegenerateCacheIfNeeded();
-            return cachedVolume;
+            float volume = 0f;
+            foreach(var pair in contents) {
+                volume += pair.Value.volume;
+            }
+            return volume;
         }
     }
-    public float heat {
-        get {
-            RegenerateCacheIfNeeded();
-            return cachedHeat;
+    public int Count => contents.Count;
+    [SerializeField]
+    private Dictionary<short,Reagent> contents = new Dictionary<short,Reagent>();
+    public void OverrideReagent(short id, float volume) {
+        if (contents.ContainsKey(id)) {
+            contents[id].volume = volume;
+            return;
+        }
+        contents.Add(id, new Reagent(){ id=id, volume=volume });
+    }
+    public void AddMix(short id, float volume, GenericReagentContainer worldContainer = null) {
+        Assert.IsTrue(volume >= 0f);
+        if (contents.ContainsKey(id)) {
+            contents[id].volume = Mathf.Max(0f,contents[id].volume+volume);
+        } else {
+            contents.Add(id, new Reagent() {id=id,volume=volume});
+            if (worldContainer != null) {
+                ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
+                ReagentDatabase.DoReactions(worldContainer, id);
+            }
         }
     }
-    public float GetFluidVolume(ReagentDatabase database) {
-        RegenerateCacheIfNeeded(database);
-        return cachedFluidVolume;
+    public void AddMix(Reagent reagent, GenericReagentContainer worldContainer = null) {
+        AddMix(reagent.id, reagent.volume, worldContainer);
     }
-    public float GetValue(ReagentDatabase database) {
-        RegenerateCacheIfNeeded(database);
-        return cachedValue;
-    }
-    public Color GetColor(ReagentDatabase database) {
-        RegenerateCacheIfNeeded(database);
-        if (float.IsNaN(cachedColor.r) || float.IsNaN(cachedColor.g) || float.IsNaN(cachedColor.b) || float.IsNaN(cachedColor.a)) {
-            return Color.black;
+    public void AddMix(ReagentContents container, GenericReagentContainer worldContainer = null) {
+        foreach(var pair in container.contents) {
+            AddMix(pair.Value, worldContainer);
         }
-        return cachedColor;
     }
-    public static ReagentContents operator /(ReagentContents a, float b) {
-        ReagentContents dividedContents = new ReagentContents();
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in a ) {
-            dividedContents.Mix(pair.Key, pair.Value.volume/b, pair.Value.potentcy, pair.Value.heat);
+    public ReagentContents Spill(float spillVolume) {
+        float v = volume;
+        ReagentContents spillContents = new ReagentContents();
+        if (v <= 0f) {
+            return spillContents;
         }
-        return dividedContents;
-    }
-    public static ReagentContents operator *(ReagentContents a, float b) {
-        ReagentContents multipliedContents = new ReagentContents();
-        foreach(KeyValuePair<ReagentData.ID, Reagent> pair in a ) {
-            multipliedContents.Mix(pair.Key, pair.Value.volume*b, pair.Value.potentcy, pair.Value.heat);
+        float spillRatio = Mathf.Clamp01(spillVolume/v);
+        
+        foreach(var pair in contents) {
+            spillContents.AddMix(pair.Key, pair.Value.volume*spillRatio);
+            contents[pair.Key].volume = pair.Value.volume*(1f-spillRatio);
         }
-        return multipliedContents;
+        return spillContents;
     }
-    public static readonly byte[] memReagent = new byte[sizeof(float)*3];
+    public ReagentContents Metabolize(float deltaTime) {
+        float v = volume;
+        ReagentContents metabolizedContents = new ReagentContents();
+        if (v <= 0f) {
+            return metabolizedContents;
+        }
+        foreach(var pair in contents) {
+            float metabolizationHalfLife = ReagentDatabase.GetReagent(pair.Key).metabolizationHalfLife;
+            float metaHalfLife = metabolizationHalfLife == 0 ? v : v * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
+            // halflife on a tiny value suuucks, just kill it if the value gets small enough so we don't spam incredibly tiny updates.
+            if (pair.Value.volume <= metabolizationVolumeEpsilon) {
+                metabolizedContents.AddMix(pair.Value);
+                contents[pair.Key].volume = 0f;
+                continue;
+            }
+            float loss = Mathf.Max(pair.Value.volume - metaHalfLife, 0f);
+            contents[pair.Key].volume = Mathf.Max(metaHalfLife, 0f);
+            metabolizedContents.AddMix(pair.Key, loss);
+        }
+        return metabolizedContents;
+    }
+    public float GetVolumeOf(short id) {
+        if (contents.ContainsKey(id)) {
+            return contents[id].volume;
+        }
+        return 0f;
+    }
+    public float GetVolumeOf(ScriptableReagent reagent) {
+        short id = ReagentDatabase.GetID(reagent);
+        return GetVolumeOf(id);
+    }
+    public bool IsCleaningAgent() {
+        float totalCleanerVolume = 0f;
+        foreach(var pair in contents) {
+            if (ReagentDatabase.GetReagent(pair.Key).cleaningAgent) {
+                totalCleanerVolume += pair.Value.volume;
+            }
+        }
+        // If we're majorly a cleaning agent...
+        return totalCleanerVolume > volume*0.5f;
+    }
+    public Color GetColor() {
+        float v = volume;
+        if (v <= 0f) {
+            return Color.white;
+        }
+        Color totalColor = Color.black;
+        foreach(var pair in contents) {
+            if (pair.Value.volume <= 0f) {
+                continue;
+            }
+            totalColor += ReagentDatabase.GetReagent(pair.Key).color*((pair.Value.volume)/v);
+        }
+        return totalColor;
+    }
+    public float GetValue() {
+        float totalValue = 0f;
+        foreach(var pair in contents) {
+            totalValue += ReagentDatabase.GetReagent(pair.Key).value*pair.Value.volume;
+        }
+        return totalValue;
+    }
+
+    public static object DeserializeReagent(StreamBuffer inStream, short length) {
+        Reagent reagent = new Reagent();
+        lock (memReagent) {
+            inStream.Read(memReagent, 0, sizeof(float));
+            int index = 0;
+            Protocol.Deserialize(out reagent.volume, memReagent, ref index);
+        }
+        return reagent;
+    }
+    public static readonly byte[] memReagent = new byte[sizeof(float)];
     public static short SerializeReagent(StreamBuffer outStream, object customObject) {
         Reagent reagent = (Reagent)customObject;
         lock (memReagent) {
             byte[] bytes = memReagent;
             int index = 0;
-            Protocol.Serialize(reagent.heat, bytes, ref index);
-            Protocol.Serialize(reagent.potentcy, bytes, ref index);
             Protocol.Serialize(reagent.volume, bytes, ref index);
-            outStream.Write(bytes, 0, sizeof(float)*3);
+            outStream.Write(bytes, 0, sizeof(float));
         }
-
         return sizeof(float)*3;
-    }
-    public static object DeserializeReagent(StreamBuffer inStream, short length) {
-        Reagent reagent = new Reagent();
-        lock (memReagent) {
-            inStream.Read(memReagent, 0, sizeof(float)*3);
-            int index = 0;
-            Protocol.Deserialize(out reagent.heat, memReagent, ref index);
-            Protocol.Deserialize(out reagent.potentcy, memReagent, ref index);
-            Protocol.Deserialize(out reagent.volume, memReagent, ref index);
-        }
-
-        return reagent;
-    }
-    public static readonly byte[] memReagentID = new byte[sizeof(short)];
-    public static short SerializeReagentDataID(StreamBuffer outStream, object customObject) {
-        ReagentData.ID id = (ReagentData.ID)customObject;
-        lock (memReagentID) {
-            byte[] bytes = memReagentID;
-            int index = 0;
-            Protocol.Serialize((short)id, bytes, ref index);
-            outStream.Write(bytes, 0, sizeof(short));
-        }
-        return sizeof(short);
-    }
-    public static object DeserializeReagentDataID(StreamBuffer inStream, short length) {
-        short id = (short)ReagentData.ID.Water;
-        
-        lock (memReagentID) {
-            inStream.Read(memReagentID, 0, sizeof(short));
-            int index = 0;
-            Protocol.Deserialize(out id, memReagentID, ref index);
-        }
-        return (ReagentData.ID)id;
     }
     public static short SerializeReagentContents(StreamBuffer outStream, object customObject) {
         ReagentContents reagentContents = (ReagentContents)customObject;
-        short size = (short)((sizeof(short) + sizeof(float)*3) * reagentContents.Count);
+        short size = (short)((sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
         byte[] bytes = new byte[size];
         int index = 0;
-        foreach (KeyValuePair<ReagentData.ID, Reagent> pair in reagentContents) {
+        foreach (KeyValuePair<short, Reagent> pair in reagentContents.contents) {
             Protocol.Serialize((short)pair.Key, bytes, ref index);
-            Protocol.Serialize(pair.Value.heat, bytes, ref index);
-            Protocol.Serialize(pair.Value.potentcy, bytes, ref index);
             Protocol.Serialize(pair.Value.volume, bytes, ref index);
         }
         outStream.Write(bytes, 0, size);
@@ -402,24 +184,12 @@ public class ReagentContents : Dictionary<ReagentData.ID, Reagent> {
         inStream.Read(bytes, 0, length);
         int index = 0;
         while (index < length) {
-            Reagent r = new Reagent();
             short id = 0;
-
+            float volume = 0;
             Protocol.Deserialize(out id, bytes, ref index);
-            Protocol.Deserialize(out r.heat, bytes, ref index);
-            Protocol.Deserialize(out r.potentcy, bytes, ref index);
-            Protocol.Deserialize(out r.volume, bytes, ref index);
-            reagentContents[(ReagentData.ID)id] = r;
+            Protocol.Deserialize(out volume, bytes, ref index);
+            reagentContents.OverrideReagent(id, volume);
         }
-        reagentContents.SetDirty(true);
         return reagentContents;
     }
 }
-
-//[System.Serializable]
-//public class ReagentReaction {
-    //public Reagent.ID a,b;
-    //public float aAmount, bAmount = 1f;
-    //public Reagent.ID result;
-    //public float resultAmount = 2f;
-//}

@@ -34,27 +34,20 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
             nothingFoundDisplay.SetActive(false);
         }
         OnSuccess.Invoke();
-        float maxVolume = 0f;
-        foreach( KeyValuePair<ReagentData.ID,Reagent> pair in reagents) {
-            maxVolume += pair.Value.volume;
-        }
-        foreach( KeyValuePair<ReagentData.ID,Reagent> pair in reagents) {
-            if (pair.Value.volume <= 0.05f) {
+        float maxVolume = reagents.volume;
+        foreach(var reagent in ReagentDatabase.GetReagents()) {
+            float rvolume = reagents.GetVolumeOf(reagent);
+            if (rvolume <= 0.05f) {
                 continue;
             }
-            float width01 = pair.Value.volume/maxVolume;
+            float width01 = rvolume/maxVolume;
             GameObject g = GameObject.Instantiate(scannerUIPrefab);
             float maxParentWidth = g.GetComponent<RectTransform>().sizeDelta.x;
             TMP_Text t = g.transform.Find("Label").GetComponent<TMP_Text>();
             Image i = g.transform.Find("Level").GetComponent<Image>();
-            t.text =  ReagentDatabase.instance.reagents[pair.Key].localizedName.GetLocalizedString() + ": "+ pair.Value.volume.ToString("F2");
-            i.color = ReagentDatabase.instance.reagents[pair.Key].color;
-            t.color = i.color.Invert();
-            if (i.color.grayscale < 0.5f) {
-                t.color = Color.Lerp(t.color, Color.white, 0.5f);
-            } else {
-                t.color = Color.Lerp(t.color, Color.black, 0.5f);
-            }
+            t.text =  reagent.localizedName.GetLocalizedString() + ": "+ rvolume.ToString("F2");
+            i.color = Color.Lerp(reagent.color, Color.white, 0.75f);
+            t.color = Color.black;
             i.GetComponent<RectTransform>().sizeDelta = new Vector2( maxParentWidth*width01, i.GetComponent<RectTransform>().sizeDelta.y);
             g.transform.SetParent(scannerDisplay.transform, false);
             yield return new WaitForSeconds(scanDelay);
@@ -82,7 +75,7 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
         }
         ReagentContents allReagents = new ReagentContents();
         foreach(GenericReagentContainer container in hit.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
-            allReagents.Mix(container.contents);
+            allReagents.AddMix(container.Peek());
         }
         StopAllCoroutines();
         StartCoroutine(RenderScreen(allReagents));

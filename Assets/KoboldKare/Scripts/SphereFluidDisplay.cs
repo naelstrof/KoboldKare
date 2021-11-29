@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereFluidDisplay : MonoBehaviour, IReagentContainerListener {
+public class SphereFluidDisplay : MonoBehaviour {
     public GenericReagentContainer container;
     public Rigidbody body;
     [Range(0f,100f)]
@@ -15,11 +15,11 @@ public class SphereFluidDisplay : MonoBehaviour, IReagentContainerListener {
     void Start() {
         vel = Vector3.zero;
         pos = Vector3.up;
-        container.contents.AddListener(this);
+        container.OnChange.AddListener(OnChanged);
         OnChanged();
     }
     void OnDestroy() {
-        container.contents.RemoveListener(this);
+        container.OnChange.RemoveListener(OnChanged);
     }
     void FixedUpdate() {
         Vector3 normal = body.velocity - Physics.gravity;
@@ -29,16 +29,7 @@ public class SphereFluidDisplay : MonoBehaviour, IReagentContainerListener {
         fluidRenderer.material.SetVector("_PlaneNormal", pos);
     }
     void OnChanged() {
-        if ( container.contents.volume <= 0 ) {
-            fluidRenderer.material.SetColor("_Color", new Color(0,0,0,0));
-            fluidRenderer.material.SetFloat("_Position", 0);
-            return;
-        }
-        fluidRenderer.material.SetColor("_Color", container.contents.GetColor(ReagentDatabase.instance));
-        fluidRenderer.material.SetFloat("_Position", container.contents.volume / container.contents.maxVolume);
-    }
-
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType injectType) {
-        OnChanged();
+        fluidRenderer.material.SetColor("_Color", container.GetColor());
+        fluidRenderer.material.SetFloat("_Position", container.volume / container.maxVolume);
     }
 }

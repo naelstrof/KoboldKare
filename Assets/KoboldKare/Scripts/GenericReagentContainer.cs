@@ -7,140 +7,123 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : MonoBehaviourPun, IReagentContainerListener, IValuedGood, IPunObservable, IInRoomCallbacks {
-    public float maxVolume = float.MaxValue;
-    public ReagentContents.ReagentContainerType containerType = ReagentContents.ReagentContainerType.OpenTop;
+public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObservable {
+    [System.Serializable]
+    public class InspectorReagent {
+        public ScriptableReagent reagent;
+        public float volume;
+    }
+    public enum ContainerType {
+        OpenTop,
+        Sealed,
+        Mouth,
+    }
+    public enum InjectType {
+        Inject,
+        Spray,
+        Flood,
+        Metabolize,
+        Vacuum,
+    }
+    private static bool[,] ReagentMixMatrix = new bool[,]{
+        // OpenTop, Sealed, Mouth
+        {  true,   true,    true }, // Inject
+        {  true,   false,   true }, // Spray
+        {  true,   false,   false }, // Flood
+        {  true,   true,   true }, // Metabolize
+        {  true,   true,   true }, // Vacuum
+    };
+    private static bool IsMixable(ContainerType container, InjectType injectionType) {
+        return ReagentMixMatrix[(int)injectionType,(int)container];
+    }
+    public float startingMaxVolume = 40f;
+    public float volume => contents.volume;
+    public float maxVolume => contents.GetMaxVolume();
+    public Color GetColor() => contents.GetColor();
+    public ContainerType type;
     public UnityEvent OnChange, OnFilled, OnEmpty;
-    private bool networkChanged = false;
-    private bool emptied = false;
-    public bool isFull {
-        get {
-            return Mathf.Approximately(contents.volume, contents.maxVolume);
-        }
-    }
-
-    private ReagentContents internalContents = new ReagentContents();
-    public ReagentContents contents {
-        set {
-            var savedListeners = internalContents.listeners;
-            internalContents = value;
-            internalContents.containerType = containerType;
-            internalContents.gameObject = gameObject;
-            internalContents.behaviour = this;
-            internalContents.maxVolume = maxVolume;
-            internalContents.listeners = savedListeners;
-            internalContents.TriggerChange();
-        }
-        get => internalContents;
-    }
-    public List<InspectorReagent> startReagents = new List<InspectorReagent>();
+    public bool isFull => contents.volume == contents.GetMaxVolume();
+    public bool isEmpty => contents.volume == 0f;
+    public bool IsCleaningAgent() => contents.IsCleaningAgent();
+    public float GetVolumeOf(ScriptableReagent reagent) => contents.GetVolumeOf(reagent);
+    public float GetVolumeOf(short id) => contents.GetVolumeOf(id);
+    public InspectorReagent[] startingReagents;
+    [SerializeField]
+    private ReagentContents contents;
     private bool filled = false;
-    //private bool changed = false;
-    //public IEnumerator UpdateOverNetwork() {
-        //yield return new WaitForSeconds(1f);
-        //if (this != null) {
-            //if (GetComponentInParent<PhotonView>().IsMine) {
-                //GameManager.instance.networkManager.RPCUpdateReagentContainer(this, contents);
-            //}
-        //}
-        //changed = false;
-    //}
-
+    private bool emptied = false;
     public void Awake() {
-        contents.containerType = containerType;
-        contents.gameObject = gameObject;
-        contents.behaviour = this;
-        contents.maxVolume = maxVolume;
-        foreach( InspectorReagent r in startReagents) {
-            contents.Mix(r.id, r.volume, r.potentcy, r.heat);
-        }
-        contents.AddListener(this);
-        filled = false;
+        contents = new ReagentContents(startingMaxVolume);
     }
     public void Start() {
-        PhotonNetwork.AddCallbackTarget(this);
+        foreach(var reagent in startingReagents) {
+            AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+        }
+        filled = isFull;
+        emptied = isEmpty;
     }
-    public void OnDestroy() {
-        PhotonNetwork.RemoveCallbackTarget(this);
-        contents.RemoveListener(this);
+    public ReagentContents Spill(float spillVolume) {
+        ReagentContents spillContents = contents.Spill(spillVolume);
+        OnReagentContentsChanged();
+        return spillContents;
     }
-    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents.ReagentInjectType injectType) {
-        if (!filled && contents.volume >= contents.maxVolume) {
-            filled = true;
+
+    public void TransferMix(GenericReagentContainer injector, float amount) {
+        ReagentContents spill = injector.Spill(amount);
+        AddMix(spill, InjectType.Inject);
+    }
+    public bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
+        if (!IsMixable(type, injectType)) {
+            return false;
+        }
+        contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume);
+        OnReagentContentsChanged();
+        return true;
+    }
+    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+        if (!IsMixable(type, injectType)) {
+            return false;
+        }
+        contents.AddMix(incomingReagents, this);
+        OnReagentContentsChanged();
+        return true;
+    }
+    public ReagentContents Peek() => new ReagentContents(contents);
+    public ReagentContents Metabolize(float deltaTime) => contents.Metabolize(deltaTime);
+    public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);
+    public void OverrideReagent(ScriptableReagent r, float volume) => contents.OverrideReagent(ReagentDatabase.GetID(r), volume);
+    public void OnReagentContentsChanged() {
+        if (!filled && isFull) {
             OnFilled.Invoke();
         }
-        if (contents.volume < contents.maxVolume) {
-            filled = false;
-        }
-        if (!filled) {
-            OnChange.Invoke();
-        }
-        // We ignore metabolization events, other players can do that themselves.
-        if (injectType != ReagentContents.ReagentInjectType.Metabolize) {
-            networkChanged = true;
-        }
-        //if (!changed) {
-            //new Task(UpdateOverNetwork());
-            //changed = true;
-        //}
-        if (contents.volume > 0f) {
-            emptied = false;
-        }
-        if (!emptied && Mathf.Approximately(contents.volume,0f)) {
-            emptied = true;
+        filled = isFull;
+        OnChange.Invoke();
+        if (!emptied && isEmpty) {
             OnEmpty.Invoke();
         }
+        emptied = isEmpty;
     }
 
     public float GetWorth() {
-        if (GetComponentInParent<Kobold>() != null) {
-            return contents.GetValue(ReagentDatabase.instance) * 0.5f;
-        } else {
-            return contents.GetValue(ReagentDatabase.instance);
-        }
+        return contents.GetValue();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            if (networkChanged || SaveManager.isSaving) {
-                stream.SendNext(contents);
-                networkChanged = false;
-            } else {
-                stream.SendNext(false);
-            }
+            stream.SendNext(contents);
         } else {
-            try {
-                if (stream.PeekNext() is bool) {
-                    stream.ReceiveNext(); // skip
-                    return;
-                }
-            } catch {
-                Debug.LogError(gameObject.name + " reagent container has mismatched observers!", this.gameObject);
-                return;
-            }
-            if (stream.PeekNext() is ReagentContents) {
-                contents = (ReagentContents)stream.ReceiveNext();
-                contents.InvokeListenerUpdate(ReagentContents.ReagentInjectType.Metabolize);
-            } else {
-                Debug.LogError(gameObject.name + " reagent container has mismatched observers!", this.gameObject);
-            }
+            contents = (ReagentContents)stream.ReceiveNext();
+            OnReagentContentsChanged();
         }
     }
-    public void OnPlayerEnteredRoom(Player newPlayer) {
-        // Send a new update asap
-        networkChanged = true;
-    }
-
-    public void OnPlayerLeftRoom(Player otherPlayer) {
-    }
-
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged) {
-    }
-
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
-    }
-
-    public void OnMasterClientSwitched(Player newMasterClient) {
-        networkChanged = true;
+    public void OnValidate() {
+        if (startingReagents == null) {
+            return;
+        }
+        float volume = 0f;
+        foreach(var reagent in startingReagents) {
+            volume += reagent.volume;
+        }
+        startingMaxVolume = Mathf.Max(startingMaxVolume, volume);
     }
 }

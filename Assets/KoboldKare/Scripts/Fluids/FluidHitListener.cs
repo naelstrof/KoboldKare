@@ -12,7 +12,8 @@ public class FluidHitListener : MonoBehaviour {
     public Material projector;
     [SerializeField]
     private Material eraser;
-    private bool erasing = false;
+    [HideInInspector]
+    public bool erasing = false;
     private Collider[] colliders;
     void Awake() {
         colliders = new Collider[32];

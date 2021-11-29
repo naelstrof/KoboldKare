@@ -10,12 +10,12 @@ public class GenericFluidDisplay : MonoBehaviour {
     public void Start() {
         scaleDirection = new Vector3(Mathf.Abs(scaleDirection.x), Mathf.Abs(scaleDirection.y), Mathf.Abs(scaleDirection.z));
         container.OnChange.AddListener(OnChanged);
-        OnChanged();
+        OnChanged(GenericReagentContainer.InjectType.Vacuum);
     }
     public void OnDestroy() {
         container.OnChange.RemoveListener(OnChanged);
     }
-    public void OnChanged() {
+    public void OnChanged(GenericReagentContainer.InjectType injectType) {
         foreach(var m in targetRenderer.materials) {
             m.color = container.GetColor();
         }

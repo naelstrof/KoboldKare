@@ -230,7 +230,7 @@ public class DickInfo : MonoBehaviour {
                 if (!set.dick.IsInside() || pennedKobold == null) {
                     set.dick.GetComponentInChildren<FluidOutput>(true).Fire(set.balls.container);
                 } else {
-                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.TransferMix(set.balls.container, set.balls.container.maxVolume/set.dick.cumPulseCount);
+                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.TransferMix(set.balls.container, set.balls.container.maxVolume/set.dick.cumPulseCount, GenericReagentContainer.InjectType.Inject);
                 }
             });
 

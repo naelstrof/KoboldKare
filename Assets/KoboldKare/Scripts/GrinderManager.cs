@@ -45,7 +45,7 @@ public class GrinderManager : MonoBehaviourPun {
         if (obj.transform.root == this.transform.root) { return; }
         grindedThingsCache.Add(obj.transform.root.gameObject);
         foreach (GenericReagentContainer c in obj.GetAllComponents<GenericReagentContainer>()) {
-            container.TransferMix(c, c.volume);
+            container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
         }
         GenericDamagable d = obj.transform.root.GetComponent<GenericDamagable>();
         if (d != null) {

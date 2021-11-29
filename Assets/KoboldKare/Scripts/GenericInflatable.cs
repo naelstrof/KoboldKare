@@ -247,7 +247,7 @@ public class GenericInflatable : MonoBehaviour {
         StartCoroutine(Tween(tweenDuration));
     }
 
-    public void OnReagentContainerChanged() {
+    public void OnReagentContainerChanged(GenericReagentContainer.InjectType injectType) {
         TriggerTween();
     }
 }

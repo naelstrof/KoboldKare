@@ -16,7 +16,7 @@ public class SphereFluidDisplay : MonoBehaviour {
         vel = Vector3.zero;
         pos = Vector3.up;
         container.OnChange.AddListener(OnChanged);
-        OnChanged();
+        OnChanged(GenericReagentContainer.InjectType.Inject);
     }
     void OnDestroy() {
         container.OnChange.RemoveListener(OnChanged);
@@ -28,7 +28,7 @@ public class SphereFluidDisplay : MonoBehaviour {
         pos = Vector3.Normalize(pos + vel * Time.fixedDeltaTime);
         fluidRenderer.material.SetVector("_PlaneNormal", pos);
     }
-    void OnChanged() {
+    void OnChanged(GenericReagentContainer.InjectType injectType) {
         fluidRenderer.material.SetColor("_Color", container.GetColor());
         fluidRenderer.material.SetFloat("_Position", container.volume / container.maxVolume);
     }

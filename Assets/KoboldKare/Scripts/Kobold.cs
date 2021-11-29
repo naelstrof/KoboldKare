@@ -814,17 +814,20 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
     }
 
-    //IEnumerator WaitAndThenStopGargling(float time) {
-        //yield return new WaitForSeconds(time);
-        //gurgleSource.Pause();
-    //}
-    public void OnReagentContainerChanged() {
+    IEnumerator WaitAndThenStopGargling(float time) {
+        yield return new WaitForSeconds(time);
+        gurgleSource.Pause();
+    }
+    public void OnReagentContainerChanged(GenericReagentContainer.InjectType injectType) {
+        if (injectType != GenericReagentContainer.InjectType.Spray) {
+            return;
+        }
         koboldAnimator.SetTrigger("Quaff");
-        //if (!gurgleSource.isPlaying) {
-            //gurgleSource.Play();
-            //gurgleSource.pitch = 0.9f + sex*0.4f;
-            //StartCoroutine(WaitAndThenStopGargling(0.25f));
-        //}
+        if (!gurgleSource.isPlaying) {
+            gurgleSource.Play();
+            gurgleSource.pitch = 0.9f + sex*0.4f;
+            StartCoroutine(WaitAndThenStopGargling(0.25f));
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

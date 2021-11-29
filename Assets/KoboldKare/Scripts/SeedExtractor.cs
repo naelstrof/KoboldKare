@@ -38,7 +38,7 @@ public class SeedExtractor : MonoBehaviourPun {
         if (damagable != null && damagable.removeOnDeath) {
             bool foundThing = false;
             foreach( GenericReagentContainer container in other.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
-                internalContents.TransferMix(container, container.volume);
+                internalContents.TransferMix(container, container.volume, GenericReagentContainer.InjectType.Inject);
                 foundThing = true;
             }
             if (foundThing) {

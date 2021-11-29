@@ -32,7 +32,7 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
         midnightEvent.UnregisterListener(this);
     }
 
-    void OnFilled() {
+    void OnFilled(GenericReagentContainer.InjectType injectType) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }

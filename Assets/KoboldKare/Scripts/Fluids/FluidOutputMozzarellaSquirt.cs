@@ -112,7 +112,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         }
         float totalTargets = staticTargets.Count;
         foreach(var target in staticTargets) {
-            target.TransferMix(b, amount/totalTargets);
+            target.TransferMix(b, amount/totalTargets, GenericReagentContainer.InjectType.Spray);
         }
     }
     IEnumerator Splash(GenericReagentContainer b, float amount, float duration) {

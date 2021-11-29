@@ -33,6 +33,8 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         {  true,   true,   true }, // Metabolize
         {  true,   true,   true }, // Vacuum
     };
+    [System.Serializable]
+    public class ReagentContainerChangedEvent : UnityEvent<InjectType> {}
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
@@ -41,7 +43,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     public float maxVolume => contents.GetMaxVolume();
     public Color GetColor() => contents.GetColor();
     public ContainerType type;
-    public UnityEvent OnChange, OnFilled, OnEmpty;
+    public ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;
     public bool isFull => Mathf.Approximately(contents.volume, contents.GetMaxVolume());
     public bool isEmpty => Mathf.Approximately(contents.volume,0f);
     public bool IsCleaningAgent() => contents.IsCleaningAgent();
@@ -64,20 +66,20 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
-        OnReagentContentsChanged();
+        OnReagentContentsChanged(InjectType.Vacuum);
         return spillContents;
     }
 
-    public void TransferMix(GenericReagentContainer injector, float amount) {
+    public void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
         ReagentContents spill = injector.Spill(amount);
-        AddMix(spill, InjectType.Inject);
+        AddMix(spill, injectType);
     }
     public bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
         if (!IsMixable(type, injectType)) {
             return false;
         }
         contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume);
-        OnReagentContentsChanged();
+        OnReagentContentsChanged(injectType);
         return true;
     }
     public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
@@ -85,21 +87,21 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
             return false;
         }
         contents.AddMix(incomingReagents, this);
-        OnReagentContentsChanged();
+        OnReagentContentsChanged(injectType);
         return true;
     }
     public ReagentContents Peek() => new ReagentContents(contents);
     public ReagentContents Metabolize(float deltaTime) => contents.Metabolize(deltaTime);
     public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);
     public void OverrideReagent(ScriptableReagent r, float volume) => contents.OverrideReagent(ReagentDatabase.GetID(r), volume);
-    public void OnReagentContentsChanged() {
+    public void OnReagentContentsChanged(InjectType injectType) {
         if (!filled && isFull) {
-            OnFilled.Invoke();
+            OnFilled.Invoke(injectType);
         }
         filled = isFull;
-        OnChange.Invoke();
+        OnChange.Invoke(injectType);
         if (!emptied && isEmpty) {
-            OnEmpty.Invoke();
+            OnEmpty.Invoke(injectType);
         }
         emptied = isEmpty;
     }
@@ -113,7 +115,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
             stream.SendNext(contents);
         } else {
             contents = (ReagentContents)stream.ReceiveNext();
-            OnReagentContentsChanged();
+            OnReagentContentsChanged(InjectType.Metabolize);
         }
     }
     public void OnValidate() {

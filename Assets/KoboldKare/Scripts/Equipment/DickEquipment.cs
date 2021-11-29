@@ -18,7 +18,7 @@ public class DickEquipment : Equipment {
         }
         foreach(DickInfo.DickSet set in info.dicks) {
             if (container != null) {
-                set.container.TransferMix(container, container.volume);
+                set.container.TransferMix(container, container.volume, GenericReagentContainer.InjectType.Inject);
             }
             set.dickIdentifier = GetInstanceID();
         }

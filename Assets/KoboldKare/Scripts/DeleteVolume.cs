@@ -14,13 +14,13 @@ public class DeleteVolume : MonoBehaviour {
         if (other.transform.root.GetComponentInChildren<GenericDamagable>() != null) {
             other.transform.root.GetComponentInChildren<GenericDamagable>().Damage(9999999999999999);
             if (view) {
-                SaveManager.Destroy(other.transform.root.gameObject);
+                PhotonNetwork.Destroy(other.transform.root.gameObject);
             } else {
                 Destroy(other.transform.root.gameObject);
             }
         } else {
             if (view) {
-                SaveManager.Destroy(other.transform.root.gameObject);
+                PhotonNetwork.Destroy(other.transform.root.gameObject);
             } else {
                 Destroy(other.transform.root.gameObject);
             }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReagentDatabase : MonoBehaviour {
     private static ReagentDatabase instance;
+    private Dictionary<string,ScriptableReagent> reagentDictionary = new Dictionary<string, ScriptableReagent>();
     private static ReagentDatabase GetInstance() {
         if (instance == null) {
             instance = Object.FindObjectOfType<ReagentDatabase>();
@@ -16,14 +17,15 @@ public class ReagentDatabase : MonoBehaviour {
         } else {
             instance = this;
         }
+        foreach(var reagent in reagents) {
+            reagentDictionary.Add(reagent.name, reagent);
+        }
     }
     public static ScriptableReagent GetReagent(string name) {
-        foreach(var reagent in GetInstance().reagents) {
-            if (reagent.name == name) {
-                return reagent;
-            }
+        if (GetInstance().reagentDictionary.ContainsKey(name)) {
+            return GetInstance().reagentDictionary[name];
         }
-        return null;
+        throw new UnityException("Failed to find reagent with name " + name);
     }
     public static ScriptableReagent GetReagent(short id) {
         return GetInstance().reagents[id];

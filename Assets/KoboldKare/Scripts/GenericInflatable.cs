@@ -94,7 +94,21 @@ public class GenericInflatable : MonoBehaviour {
     public float defaultReagentVolume = 0f;
     [Tooltip("Consider this the scale of the object, bigger numbers mean less effect of fluid.")]
     public float reagentVolumeDivisor = 1f;
-    public GenericReagentContainer container;
+    [SerializeField]
+    private GenericReagentContainer container;
+    public void SetContainer(GenericReagentContainer newContainer) {
+        if (container != null) {
+            container.OnChange.RemoveListener(OnReagentContainerChanged);
+        }
+        container = newContainer;
+        if (container != null) {
+            container.OnChange.AddListener(OnReagentContainerChanged);
+        }
+        Start();
+    }
+    public GenericReagentContainer GetContainer() {
+        return container;
+    }
     public ScriptableReagent[] reagentMasks;
     private float currentSize = 0f;
     public AnimationCurve bounceCurve;
@@ -200,15 +214,20 @@ public class GenericInflatable : MonoBehaviour {
             }
         }
     }
-    public void Start() {
+    void Start() {
+        if (container == null) {
+            return;
+        }
         size = GetDesiredSize();
     }
-    public void OnEnable() {
+    void OnEnable() {
         StopAllCoroutines();
         tweening = false;
-        container.OnChange.AddListener(OnReagentContainerChanged);
+        if (container != null) {
+            container.OnChange.AddListener(OnReagentContainerChanged);
+        }
     }
-    public void OnDisable() {
+    void OnDisable() {
         if (container != null) {
             container.OnChange.RemoveListener(OnReagentContainerChanged);
         }
@@ -226,7 +245,7 @@ public class GenericInflatable : MonoBehaviour {
         size = GetDesiredSize();
         tweening = false;
     }
-    public float GetDesiredSize() {
+    float GetDesiredSize() {
         float volume = 0f;
         if (reagentMasks.Length == 0) {
             volume = container.volume;
@@ -242,7 +261,9 @@ public class GenericInflatable : MonoBehaviour {
         if (!isActiveAndEnabled || tweening) {
             return;
         }
-        float volume = GetDesiredSize();
+        if (Mathf.Approximately(size, GetDesiredSize())) {
+            return;
+        }
         tweening = true;
         StartCoroutine(Tween(tweenDuration));
     }

@@ -14,7 +14,7 @@ public class GenericPenetratorPump : MonoBehaviour {
             if (!targetPenetrator.IsInside()) {
                 targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(balls);
             } else {
-                targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].container.TransferMix(balls, balls.maxVolume/targetPenetrator.cumPulseCount, GenericReagentContainer.InjectType.Inject);
+                targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(balls, balls.maxVolume/targetPenetrator.cumPulseCount, GenericReagentContainer.InjectType.Inject);
             }
         });
         targetPenetrator.OnMove.AddListener((float amount)=>{

@@ -37,7 +37,7 @@ public class GenericDamagable : MonoBehaviourPun {
             }
             if (removeOnDeath && photonView.IsMine) {
                 if (photonView != null) {
-                    SaveManager.Destroy(photonView.gameObject);
+                    PhotonNetwork.Destroy(photonView.gameObject);
                 } else {
                     Destroy(this.gameObject);
                 }

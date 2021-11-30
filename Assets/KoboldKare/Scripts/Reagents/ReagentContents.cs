@@ -86,26 +86,29 @@ public class ReagentContents {
         }
         return spillContents;
     }
+    private void Clear() {
+        contents.Clear();
+    }
     public ReagentContents Metabolize(float deltaTime) {
         float v = volume;
-        ReagentContents metabolizedContents = new ReagentContents();
+        ReagentContents metabolizeContents = new ReagentContents();
         if (v <= 0f) {
-            return metabolizedContents;
+            return metabolizeContents;
         }
         foreach(var pair in contents) {
             float metabolizationHalfLife = ReagentDatabase.GetReagent(pair.Key).metabolizationHalfLife;
-            float metaHalfLife = metabolizationHalfLife == 0 ? v : v * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
+            float metaHalfLife = metabolizationHalfLife == 0 ? pair.Value.volume : pair.Value.volume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
             // halflife on a tiny value suuucks, just kill it if the value gets small enough so we don't spam incredibly tiny updates.
             if (pair.Value.volume <= metabolizationVolumeEpsilon) {
-                metabolizedContents.AddMix(pair.Value);
+                metabolizeContents.AddMix(pair.Value);
                 contents[pair.Key].volume = 0f;
                 continue;
             }
             float loss = Mathf.Max(pair.Value.volume - metaHalfLife, 0f);
             contents[pair.Key].volume = Mathf.Max(metaHalfLife, 0f);
-            metabolizedContents.AddMix(pair.Key, loss);
+            metabolizeContents.AddMix(pair.Key, loss);
         }
-        return metabolizedContents;
+        return metabolizeContents;
     }
     public float GetVolumeOf(short id) {
         if (contents.ContainsKey(id)) {

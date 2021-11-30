@@ -78,7 +78,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         if (!IsMixable(type, injectType)) {
             return false;
         }
-        contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume);
+        contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
@@ -127,5 +127,16 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
             volume += reagent.volume;
         }
         startingMaxVolume = Mathf.Max(startingMaxVolume, volume);
+    }
+    public override string ToString()
+    {
+        string blah = "[";
+        foreach(var reagent in ReagentDatabase.GetReagents()) {
+            if (contents.GetVolumeOf(reagent) != 0f) {
+                blah += reagent.name + ": " + contents.GetVolumeOf(reagent) + ", ";
+            }
+        }
+        blah += "]";
+        return base.ToString() + blah;
     }
 }

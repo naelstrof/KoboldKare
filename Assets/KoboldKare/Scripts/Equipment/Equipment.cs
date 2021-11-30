@@ -77,7 +77,7 @@ public class Equipment : ScriptableObject {
             k.statblock.RemoveStatusEffect(effect, StatBlock.StatChangeSource.Equipment);
         }
         if (k.photonView.IsMine && groundPrefab.gameObject != null && dropOnGround) {
-            return SaveManager.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
+            return PhotonNetwork.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
         }
         return null;
     }

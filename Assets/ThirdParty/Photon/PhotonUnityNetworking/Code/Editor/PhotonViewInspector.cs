@@ -23,7 +23,7 @@ namespace Photon.Pun
         private PhotonView m_Target;
 
         private static GUIContent ownerTransferGuiContent = new GUIContent("Ownership Transfer", "Determines how ownership changes may be initiated.");
-        private static GUIContent syncronizationGuiContent = new GUIContent("Syncronization", "Determines how sync updates are culled and sent.");
+        private static GUIContent syncronizationGuiContent = new GUIContent("Synchronization", "Determines how sync updates are culled and sent.");
         private static GUIContent observableSearchGuiContent = new GUIContent("Observable Search", "When set to Auto, On Awake, Observables on this GameObject (and child GameObjects) will be found and populate the Observables List." +
                 "\n\nNested PhotonViews (children with a PhotonView) and their children will not be included in the search.");
 
@@ -68,11 +68,12 @@ namespace Photon.Pun
                 }
                 else
                 {
-                    int idValue = EditorGUILayout.IntField("View ID [1.." + (PhotonNetwork.MAX_VIEW_IDS - 1) + "]", this.m_Target.ViewID);
-                    if (this.m_Target.ViewID != idValue)
+                    // this is an object in a scene, modified at edit-time. we can store this as sceneViewId
+                    int idValue = EditorGUILayout.IntField("View ID [1.." + (PhotonNetwork.MAX_VIEW_IDS - 1) + "]", this.m_Target.sceneViewId);
+                    if (this.m_Target.sceneViewId != idValue)
                     {
                         Undo.RecordObject(this.m_Target, "Change PhotonView viewID");
-                        this.m_Target.ViewID = idValue;
+                        this.m_Target.sceneViewId = idValue;
                     }
                 }
             }
@@ -132,7 +133,7 @@ namespace Photon.Pun
                     for (int i = 0, cnt = observed.Count; i < cnt; ++i)
                         if (observed[i] != null)
                         {
-                            EditorGUILayout.HelpBox("Syncronization is set to Off. Select a Syncronization setting in order to sync the listed Observables.", MessageType.Warning);
+                            EditorGUILayout.HelpBox("Synchronization is set to Off. Select a Synchronization setting in order to sync the listed Observables.", MessageType.Warning);
                             break;
                         }
                 }
@@ -188,6 +189,26 @@ namespace Photon.Pun
             return count;
         }
 
+        /// <summary>
+        /// Find Observables, and then baking them into the serialized object.
+        /// </summary>
+        private void EditorFindObservables()
+        {
+            Undo.RecordObject(serializedObject.targetObject, "Find Observables");
+            var property = serializedObject.FindProperty("ObservedComponents");
+            
+            // Just doing a Find updates the Observables list, but Unity fails to save that change.
+            // Instead we do the find, and then iterate the found objects into the serialize property, then apply that.
+            property.ClearArray();
+            m_Target.FindObservables(true);
+            for(int i = 0; i <  m_Target.ObservedComponents.Count; ++i)
+            {
+                property.InsertArrayElementAtIndex(i);
+                property.GetArrayElementAtIndex(i).objectReferenceValue = m_Target.ObservedComponents[i];
+            }
+            serializedObject.ApplyModifiedProperties();
+        }
+
         private void DrawObservedComponentsList(bool disabled = false)
         {
             SerializedProperty listProperty = this.serializedObject.FindProperty("ObservedComponents");
@@ -201,7 +222,7 @@ namespace Photon.Pun
             float containerHeight = listProperty.arraySize * containerElementHeight;
 
             string foldoutLabel = "Observed Components (" + this.GetObservedComponentsCount() + ")";
-            bool isOpen = PhotonGUI.ContainerHeaderFoldout(foldoutLabel, this.serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue, () => m_Target.FindObservables(true), "Find");
+            bool isOpen = PhotonGUI.ContainerHeaderFoldout(foldoutLabel, this.serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue, () => EditorFindObservables(), "Find");
             this.serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue = isOpen;
 
             if (isOpen == false)

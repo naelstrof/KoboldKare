@@ -171,87 +171,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (SaveManager.isLoading) {
             return;
         }
-
-        switch (photonEvent.Code) {
-            case PunEvent.RPC:
-                Hashtable rpcData = photonEvent.CustomData as Hashtable;
-                if (rpcData == null || !rpcData.ContainsKey(PhotonNetwork.keyByteZero)) { return; }
-
-                // ts: updated with "flat" event data
-                int netViewID = (int)rpcData[PhotonNetwork.keyByteZero]; // LIMITS PHOTONVIEWS&PLAYERS
-                int otherSidePrefix = 0;    // by default, the prefix is 0 (and this is not being sent)
-                if (rpcData.ContainsKey(PhotonNetwork.keyByteOne)) {
-                    otherSidePrefix = (short)rpcData[PhotonNetwork.keyByteOne];
-                }
-                string inMethodName;
-                if (rpcData.ContainsKey(PhotonNetwork.keyByteFive)) {
-                    int rpcIndex = (byte)rpcData[PhotonNetwork.keyByteFive];  // LIMITS RPC COUNT
-                    if (rpcIndex > PhotonNetwork.PhotonServerSettings.RpcList.Count - 1) {
-                        Debug.LogError("Could not find RPC with index: " + rpcIndex + ". Going to ignore! Check PhotonServerSettings.RpcList");
-                        return;
-                    } else {
-                        inMethodName = PhotonNetwork.PhotonServerSettings.RpcList[rpcIndex];
-                    }
-                } else {
-                    inMethodName = (string)rpcData[PhotonNetwork.keyByteThree];
-                }
-
-                object[] arguments = null;
-                if (rpcData.ContainsKey(PhotonNetwork.keyByteFour)) {
-                    arguments = (object[])rpcData[PhotonNetwork.keyByteFour];
-                }
-                SaveManager.AddRPC(PhotonView.Find(netViewID), inMethodName, RpcTarget.AllBuffered, arguments);
-                break;
-            case PunEvent.Destroy:
-                Hashtable evData = (Hashtable)photonEvent.CustomData;
-                int iID = (int)evData[PhotonNetwork.keyByteZero];
-                SaveManager.ClearAllEventsWithID(iID);
-                break;
-            case PunEvent.Instantiation:
-                Hashtable networkEvent = photonEvent.CustomData as Hashtable;
-                string prefabName = (string)networkEvent[PhotonNetwork.keyByteZero];
-                int serverTime = (int)networkEvent[PhotonNetwork.keyByteSix];
-                int instantiationId = (int)networkEvent[PhotonNetwork.keyByteSeven];
-                Vector3 position;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteOne)) {
-                    position = (Vector3)networkEvent[PhotonNetwork.keyByteOne];
-                } else {
-                    position = Vector3.zero;
-                }
-
-                Quaternion rotation = Quaternion.identity;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteTwo)) {
-                    rotation = (Quaternion)networkEvent[PhotonNetwork.keyByteTwo];
-                }
-
-                byte group = 0;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteThree)) {
-                    group = (byte)networkEvent[PhotonNetwork.keyByteThree];
-                }
-                byte objLevelPrefix = 0;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteEight)) {
-                    objLevelPrefix = (byte)networkEvent[PhotonNetwork.keyByteEight];
-                }
-
-                int[] viewsIDs;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteFour)) {
-                    viewsIDs = (int[])networkEvent[PhotonNetwork.keyByteFour];
-                } else {
-                    viewsIDs = new int[1] { instantiationId };
-                }
-
-
-                object[] incomingInstantiationData;
-                if (networkEvent.ContainsKey(PhotonNetwork.keyByteFive)) {
-                    incomingInstantiationData = (object[])networkEvent[PhotonNetwork.keyByteFive];
-                } else {
-                    incomingInstantiationData = null;
-                }
-                // FIXME: Savemanager only supports single view id instantiations, but photon supports multi!
-                SaveManager.AddInstantiate(viewsIDs[0], prefabName, position, rotation, group, incomingInstantiationData);
-                //NetworkInstantiate((Hashtable)photonEvent.CustomData, originatingPlayer);
-                break;
-        }
     }
 
     public void OnConnectedToMaster() {
@@ -308,7 +227,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
             }
             if (localPlayerInstance == null) {
-                GameObject player = SaveManager.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
+                GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
                 localPlayerInstance = player.GetComponentInChildren<PhotonView>();
                 localPlayerInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
                 SpawnEvent.Raise();

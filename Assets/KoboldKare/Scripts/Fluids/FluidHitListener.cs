@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MozzarellaHitEventListener))]
 public class FluidHitListener : MonoBehaviour {
+    public ReagentContents transferContents;
     [SerializeField]
     [Range(0.001f,1f)]
     public float decalSize = 0.1f;
@@ -14,12 +15,32 @@ public class FluidHitListener : MonoBehaviour {
     private Material eraser;
     [HideInInspector]
     public bool erasing = false;
-    private Collider[] colliders;
-    void Awake() {
-        colliders = new Collider[32];
-    }
+    private static HashSet<GenericReagentContainer> staticTargets = new HashSet<GenericReagentContainer>();
+    private static Collider[] staticColliders = new Collider[32];
     void Start() {
+        transferContents = new ReagentContents();
         GetComponent<MozzarellaHitEventListener>().OnDepthBufferHit += OnDepthBufferHit;
+    }
+    void SplashTransfer(Vector3 position, float radius, float amount) {
+        ReagentContents spill = transferContents.Spill(amount);
+        if (spill.volume <= 0f) {
+            return;
+        }
+
+        staticTargets.Clear();
+        int hits = Physics.OverlapSphereNonAlloc(position, radius, staticColliders, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
+        for(int i=0;i<hits;i++) {
+            Collider c = staticColliders[i];
+            GenericReagentContainer target = c.GetComponentInParent<GenericReagentContainer>();
+            if (target != null && GenericReagentContainer.IsMixable(target.type, GenericReagentContainer.InjectType.Spray)) {
+                staticTargets.Add(target);
+            }
+            SkinnedMeshDecals.PaintDecal.RenderDecalForCollider(c, erasing ? eraser : projector, position-Vector3.forward*radius, Quaternion.identity, Vector2.one*radius, radius*2f);
+        }
+        float totalTargets = staticTargets.Count;
+        foreach(var target in staticTargets) {
+            target.AddMix(spill, GenericReagentContainer.InjectType.Spray);
+        }
     }
     void OnDepthBufferHit(List<MozzarellaHitEventListener.HitEvent> hitEvents) {
         foreach(var hitEvent in hitEvents) {
@@ -28,11 +49,7 @@ public class FluidHitListener : MonoBehaviour {
     }
     void DrawDecal(MozzarellaHitEventListener.HitEvent hitEvent) {
         float size = hitEvent.volume*decalSize;
-        if (erasing) {
-            SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(hitEvent.position, size, eraser, Quaternion.identity, GameManager.instance.waterSprayHitMask);
-        } else {
-            SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(hitEvent.position, size, projector, Quaternion.identity, GameManager.instance.waterSprayHitMask);
-        }
+        SplashTransfer(hitEvent.position, size*2f, Time.deltaTime*10f);
     }
 }
 

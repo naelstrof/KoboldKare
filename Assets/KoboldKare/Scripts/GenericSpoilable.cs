@@ -43,7 +43,7 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
         if (destroyOnSpoil == true) {
             onSpoilEvent.AddListener(()=>{
                 if (photonView.IsMine) {
-                    SaveManager.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             });
         }
@@ -62,7 +62,7 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     public IEnumerator WaitThenDestroyObject(float delay) {
         yield return new WaitForSeconds(delay);
         if (photonView.IsMine) {
-            SaveManager.Destroy(photonView.gameObject);
+            PhotonNetwork.Destroy(photonView.gameObject);
         }
     }
     public IEnumerator IntensityToZero(float delay) {

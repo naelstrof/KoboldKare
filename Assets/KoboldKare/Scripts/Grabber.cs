@@ -146,7 +146,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
         foreach( IGrabbable g in copy ) {
             TryDrop(g);
         }
-        SaveManager.RPC(photonView, "RPCDrop", RpcTarget.Others, null);
+        photonView.RPC("RPCDrop", RpcTarget.Others, null);
         grabbedObjects.Clear();
         intersectingGameObjects.Clear();
         grabbing = false;
@@ -243,7 +243,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
                 bool grabbed = TryGrab(sortedGrabables[i]);
                 if (grabbed) {
                     //Implemented in Kobold.cs
-                    SaveManager.RPC(photonView, "RPCGrab", RpcTarget.Others, new object[] { ((Component)sortedGrabables[i]).GetComponentInParent<PhotonView>().ViewID });
+                    photonView.RPC("RPCGrab", RpcTarget.Others, new object[] { ((Component)sortedGrabables[i]).GetComponentInParent<PhotonView>().ViewID });
                 }
                 if ( grabbed && grabbedObjects.Count == 1) {
                     grabType = sortedGrabables[i].GetGrabbableType();

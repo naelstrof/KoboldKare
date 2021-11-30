@@ -19,7 +19,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
         }
         if (!targetKobold.isLoaded) {
             if (PhotonNetwork.InRoom) {
-                SaveManager.RPC(targetKobold.photonView, "Load", RpcTarget.AllBuffered, new object[] { koboldSave });
+                targetKobold.photonView.RPC("Load", RpcTarget.AllBuffered, new object[] { koboldSave });
             } else {
                 targetKobold.Load(koboldSave);
             }
@@ -60,7 +60,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
         ExitGames.Client.Photon.Hashtable obj = new ExitGames.Client.Photon.Hashtable();
         ProcessOption(obj, setting);
         if (PhotonNetwork.InRoom) {
-            SaveManager.RPC(targetKobold.photonView, "Load", RpcTarget.AllBuffered, new object[] { obj });
+            targetKobold.photonView.RPC("Load", RpcTarget.AllBuffered, new object[] { obj });
         } else {
             targetKobold.Load(obj);
         }

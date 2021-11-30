@@ -66,9 +66,9 @@ public class GenericUsable : MonoBehaviourPun {
         }
         if (k != null) {
             Vector3 pos = k.transform.position;
-            SaveManager.RPC(GetComponentInParent<PhotonView>(), "RPCUse", RpcTarget.AllBuffered, new object[] { k.GetComponentInParent<PhotonView>().ViewID, pos });
+            GetComponentInParent<PhotonView>().RPC("RPCUse", RpcTarget.AllBuffered, new object[] { k.GetComponentInParent<PhotonView>().ViewID, pos });
         } else {
-            SaveManager.RPC(GetComponentInParent<PhotonView>(), "RPCUse", RpcTarget.AllBuffered, new object[] { null, Vector3.zero });
+            GetComponentInParent<PhotonView>().RPC("RPCUse", RpcTarget.AllBuffered, new object[] { null, Vector3.zero });
         }
     }
 
@@ -99,7 +99,7 @@ public class GenericUsable : MonoBehaviourPun {
         if (g is GameObject) {
             PhotonView other = ((GameObject)g).GetComponentInParent<PhotonView>();
             if (other != null && other.IsMine) {
-                SaveManager.Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
                 return;
             }
         } else {

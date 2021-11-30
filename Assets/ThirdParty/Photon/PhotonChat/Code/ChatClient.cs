@@ -1194,7 +1194,7 @@ namespace Photon.Chat
         {
             if (!this.didAuthenticate)
             {
-                this.didAuthenticate = this.chatPeer.AuthenticateOnNameServer(this.AppId, this.AppVersion, this.chatRegion, this.AuthValues);
+                this.didAuthenticate = this.chatPeer.AuthenticateOnNameServer(this.AppId, this.AppVersion, this.ChatRegion, this.AuthValues);
                 if (!this.didAuthenticate)
                 {
                     if (this.DebugOut >= DebugLevel.ERROR)

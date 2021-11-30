@@ -58,9 +58,9 @@ public class HarvestBox : MonoBehaviourPun {
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();
-            SaveManager.RPC(photonView, "RPCSetMoney", RpcTarget.AllBuffered, new object[] { money.value + totalWorth });
+            photonView.RPC("RPCSetMoney", RpcTarget.AllBuffered, new object[] { money.value + totalWorth });
         }
-        SaveManager.Destroy(other.GetComponentInParent<PhotonView>().gameObject);
+        PhotonNetwork.Destroy(other.GetComponentInParent<PhotonView>().gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {

@@ -1,3 +1,9 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ConnectAndJoinRandomLb.cs" company="Exit Games GmbH"/>
+// <summary>Prototyping / sample code for Photon Realtime.</summary>
+// <author>developer@exitgames.com</author>
+// --------------------------------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
@@ -18,8 +24,6 @@ namespace Photon.Realtime.Demo
         {
             this.lbc = new LoadBalancingClient();
             this.lbc.AddCallbackTarget(this);
-            this.lbc.SerializationProtocol = SerializationProtocol.GpBinaryV16;
-            //this.lbc.LoadBalancingPeer.SocketImplementationConfig[ConnectionProtocol.Udp] = typeof(SocketUdpSrc);
 
             if (!this.lbc.ConnectUsingSettings(appSettings))
             {

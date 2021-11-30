@@ -291,7 +291,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Ragdoll"].ReadValue<float>() > 0.5f);
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Cancel"].ReadValue<float>() > 0.5f);
                 if (shouldCancelAnimation) {
-                    SaveManager.RPC(photonView,"OnEndStation", RpcTarget.Others);
+                    photonView.RPC("OnEndStation", RpcTarget.Others);
                     characterControllerAnimator.OnEndStation();
                 }
             }
@@ -393,7 +393,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     }
     public IEnumerator WaitAndThenStand() {
         yield return new WaitForSeconds(1f);
-        SaveManager.RPC(kobold.photonView,"RPCStandUp", RpcTarget.All, null);
+        kobold.photonView.RPC("RPCStandUp", RpcTarget.All, null);
         //kobold.StandUp();
     }
     public void OnRagdoll( InputValue value ) {
@@ -405,7 +405,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
             StopCoroutine("WaitAndThenStand");
             inputRagdolled = true;
             //kobold.KnockOver(9999f);
-            SaveManager.RPC(kobold.photonView,"RPCKnockOver", RpcTarget.All, null);
+            kobold.photonView.RPC("RPCKnockOver", RpcTarget.All, null);
         }
     }
 

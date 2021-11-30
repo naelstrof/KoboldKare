@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour {
                 }
                 if (c.transform.root != null && (lastSpawned != null && lastSpawned.transform != null && c.transform.root == lastSpawned.transform.root)) {
                     if (lastSpawned.GetComponentInParent<PhotonView>().IsMine) {
-                        SaveManager.Destroy(lastSpawned);
+                        PhotonNetwork.Destroy(lastSpawned);
                     }
                     lastSpawned = null;
                 }
@@ -43,9 +43,9 @@ public class Spawner : MonoBehaviour {
             //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation);
             string randomPrefab = GetRandomPrefab();
             if (randomPrefab != "GrabbableKobold4") {
-                lastSpawned = SaveManager.Instantiate(randomPrefab, transform.position, transform.rotation);
+                lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
             } else {
-                lastSpawned = SaveManager.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
+                lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
             }
         }
     }
@@ -61,9 +61,9 @@ public class Spawner : MonoBehaviour {
         //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation, null);
         string randomPrefab = GetRandomPrefab();
         if (randomPrefab != "GrabbableKobold4") {
-            lastSpawned = SaveManager.Instantiate(randomPrefab, transform.position, transform.rotation);
+            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
         } else {
-            lastSpawned = SaveManager.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
+            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
         }
     }
     public void Start() {

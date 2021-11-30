@@ -46,8 +46,8 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
             TMP_Text t = g.transform.Find("Label").GetComponent<TMP_Text>();
             Image i = g.transform.Find("Level").GetComponent<Image>();
             t.text =  reagent.localizedName.GetLocalizedString() + ": "+ rvolume.ToString("F2");
-            i.color = Color.Lerp(reagent.color, Color.white, 0.75f);
-            t.color = Color.black;
+            i.color = Color.Lerp(reagent.color, Color.black, 0.75f);
+            t.color = Color.white;
             i.GetComponent<RectTransform>().sizeDelta = new Vector2( maxParentWidth*width01, i.GetComponent<RectTransform>().sizeDelta.y);
             g.transform.SetParent(scannerDisplay.transform, false);
             yield return new WaitForSeconds(scanDelay);

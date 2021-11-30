@@ -58,9 +58,9 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
                 int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<max;i++) {
                     if (produce.prefab.photonName == "GrabbableKobold4") {
-                        SaveManager.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetRandomKobold()});
+                        PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetRandomKobold()});
                     } else {
-                        SaveManager.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
+                        PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
 
     public void OnEventRaised(GameEvent e) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
-            SaveManager.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
             return;
         }
         if (container.isFull) {

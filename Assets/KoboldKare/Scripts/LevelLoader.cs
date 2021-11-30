@@ -26,9 +26,6 @@ public class LevelLoader : MonoBehaviour {
     }
     public IEnumerator LoadLevelRoutine(string name) {
         GameManager.instance.Pause(false);
-        if (!SaveManager.isLoading) {
-            SaveManager.ClearData();
-        }
         loadingLevel = true;
         loadingPanel.SetActive(true);
         //loadingPanel.Show();

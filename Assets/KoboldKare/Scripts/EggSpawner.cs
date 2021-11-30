@@ -27,7 +27,7 @@ public class EggSpawner : MonoBehaviour {
     }
     public Penetrator SpawnEgg() {
         //Penetrator d = GameObject.Instantiate(penetratorPrefab).GetComponentInChildren<Penetrator>();
-        Penetrator d = SaveManager.Instantiate(penetratorPrefab.photonName,targetPenetrable.GetPoint(spawnAlongLength, false), Quaternion.identity).GetComponentInChildren<Penetrator>();
+        Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,targetPenetrable.GetPoint(spawnAlongLength, false), Quaternion.identity).GetComponentInChildren<Penetrator>();
         if (d == null) {
             return null;
         }

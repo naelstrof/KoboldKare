@@ -311,7 +311,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
                 AnimationStation[] stations = stationView.GetComponentsInChildren<AnimationStation>();
                 for(int i = 0; i < stations.Length; i++) {
                     if (stations[i] == bestStation) {
-                        SaveManager.RPC(k.photonView, "SnapToStation", RpcTarget.AllBuffered, new object[] { stationView.ViewID, i });
+                        k.photonView.RPC("SnapToStation", RpcTarget.AllBuffered, new object[] { stationView.ViewID, i });
                     }
                 }
                 //k.GetComponentInChildren<CharacterControllerAnimator>().SnapToStation(bestStation);
@@ -332,7 +332,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
 
         if (!kobold.ragdolled && photonView.IsMine) {
-            SaveManager.RPC(photonView, "OnEndStation", RpcTarget.AllBuffered);
+            photonView.RPC("OnEndStation", RpcTarget.AllBuffered);
         }
         physicsSolver.ForceBlend(blend);
         activeStation.SetCharacter(physicsSolver);

@@ -53,7 +53,7 @@ public class GrinderManager : MonoBehaviourPun {
         } else {
             PhotonView other = obj.GetComponentInParent<PhotonView>();
             if (other != null) {
-                SaveManager.Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
             } else {
                 Destroy(obj.transform.root);
             }

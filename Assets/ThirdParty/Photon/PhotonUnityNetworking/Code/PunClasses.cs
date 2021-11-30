@@ -474,7 +474,7 @@ namespace Photon.Pun
 
 
     /// <summary>Defines Photon event-codes as used by PUN.</summary>
-    public class PunEvent
+    internal class PunEvent
     {
         public const byte RPC = 200;
         public const byte SendSerialize = 201;
@@ -507,7 +507,7 @@ namespace Photon.Pun
     /// \ingroup publicApi
     public class PhotonStream
     {
-        private List<object> writeData = new List<object>();
+        private List<object> writeData;
         private object[] readData;
         private int currentItem; //Used to track the next item to receive.
 
@@ -870,7 +870,7 @@ namespace Photon.Pun
             bool cached = this.ResourceCache.TryGetValue(prefabId, out res);
             if (!cached)
             {
-                res = (GameObject)Resources.Load(prefabId, typeof(GameObject));
+                res = Resources.Load<GameObject>(prefabId);
                 if (res == null)
                 {
                     Debug.LogError("DefaultPool failed to load \"" + prefabId + "\". Make sure it's in a \"Resources\" folder. Or use a custom IPunPrefabPool.");

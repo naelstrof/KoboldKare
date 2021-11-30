@@ -3,10 +3,30 @@ Photon Chat C# Client - Changelog
 Exit Games GmbH - www.photonengine.com - forum.photonengine.com
 
 
+Version 4.1.6.11 (22. November 2021)
+    Added: CustomAuthenticationType.Epic to authenticate via Epic Online Services (EOS).
+    Added: CustomAuthenticationType.FacebookGaming to authenticate via Facebook Gaming services.
 
-Version 4.1.5.0 ()
+Version 4.1.6.10 (21. October 2021 - rev6243)
+    Fixed: The ChatPeer.ConfigUnitySockets(), which used a surplus typeof() for Xbox configuration.
+
+Version 4.1.6.6 (21. September 2021 - rev6204)
+    Changed: For Xbox, order of checked assemblies when getting Type SocketNativeSource. It's more likely to be in Assembly-CSharp.
+
+Version 4.1.6.5 (24. August 2021 - rev6181)
+    Updated: The default name server host to "ns.photonengine.io". When using WSS on this, it expects TLS1.2 (Win 7 and old Unity versions may not support this).
+
+Version 4.1.6.2 (17. June 2021)
+    Changed: The enumeration CustomAuthenticationType was changed to fix naming inconsistencies. Use PlayStation4 and PlayStation5 respectively. Old variants are available as obsolete.
+
+Version 4.1.5.2 (12. March 2021)
+    ADDED: CustomAuthenticationType.Playstation5 (value 12).
+
+Version 4.1.5.0 (03. March 2021)
+    Updated: ChatPeer ConfigUnitySockets() to the analog of the Realtime API.
+
+Version 4.1.5.0 (3. February 2021)
     Internal: AuthenticationValues.Token is now an object instead of a string (so some internal code changed). This enables the server to send a byte[], which is more effective than a string.
-
 
 Version 4.1.4.6 (16. November 2020)
     Added: ChatClient.PrivateChatHistoryLength field. If set before you connect, this can be used to limit the number of private messages when the server (re)subscribes the client to (still alive) a private chat channel.
@@ -33,10 +53,10 @@ Version 4.1.2.19 (12. November 2019 - rev5266)
     Changed: ChatPeer now look for SocketNativeSource instead of SocketWebTcpNativeDynamic when the target platform is XB One. A new Xbox addon is coming up on our SDK page.
 
 Version 4.1.2.16 (25. June 2019 - rev5168)
-	Added: ChatClient.TryGetPrivateChannelByUser.
+    Added: ChatClient.TryGetPrivateChannelByUser.
 
 Version 4.1.2.14 (6. May 2019 - rev5097)
-	Changed: Chat API changes are now listed in a separate changes file.
+    Changed: Chat API changes are now listed in a separate changes file.
 
 Version 4.1.2.13 (3. May 2019 - rev5086)
     Fixed: Properly add local client's UserId to public channels' Subscribers list when applicable.
@@ -66,11 +86,11 @@ Version 4.1.1.15 (17. July 2017 - rev4232)
     Removed: Class "SocketWebTcp" is no longer found by ConfigUnitySockets().
 
 Version 4.1.1.14 (5. July 2017 - rev4191)
-	Added: ChatClient can optionally run a thread to call SendOutgoingCommands in intervals. This makes sure the connection doesn't fail easily (e.g. when Unity is loading scenes, etc.). You still have to call Service to dispatch received messages.
+    Added: ChatClient can optionally run a thread to call SendOutgoingCommands in intervals. This makes sure the connection doesn't fail easily (e.g. when Unity is loading scenes, etc.). You still have to call Service to dispatch received messages.
     Added: ChatClient.UseBackgroundWorkerForSending. Set this to true, to use the new background thread. Note: Do not use this in WebGL exports from Unity cause Threads are unavailable in them.
 
 Version 4.1.1.2 (13. September 2016 - rev3652)
-	Changed: GetNameServerAddress() is the same in Chat and LoadBalancing APIs now.
+    Changed: GetNameServerAddress() is the same in Chat and LoadBalancing APIs now.
     Changed: ChatPeer now has ConfigUnitySockets(), which defines the SocketImplementationConfig. It's only used in Unity (using UNITY define).
     Changed: ChatClient is not setting socket implementations anymore.
     Added: Hashtable definition to use Photon's own implementation for Windows Store builds (NETFX_CORE). This must be used but it means you to use the same Hashtable definition in all builds (no matter if 8.1 or 10).

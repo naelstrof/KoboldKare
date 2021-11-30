@@ -90,7 +90,7 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
                         }
                     }
                     k.inventory.RemoveEquipment(e, EquipmentInventory.EquipmentChangeSource.Drop);
-                    SaveManager.RPC(k.photonView, "DropEquipment", RpcTarget.OthersBuffered, new object[] { id });
+                    k.photonView.RPC("DropEquipment", RpcTarget.OthersBuffered, new object[] { id });
                 }
                 DisplayDetail(null);
             });

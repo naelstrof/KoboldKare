@@ -17,10 +17,10 @@ public class GenericEquipment : MonoBehaviourPun {
         }
         if (k.photonView.IsMine) {
             k.inventory.AddEquipment(representedEquipment, gameObject, EquipmentInventory.EquipmentChangeSource.Pickup);
-            SaveManager.RPC(k.photonView, "PickupEquipment", RpcTarget.OthersBuffered, new object[] { representedEquipment.GetID() });
+            k.photonView.RPC("PickupEquipment", RpcTarget.OthersBuffered, new object[] { representedEquipment.GetID() });
         }
         if (photonView != null && photonView.IsMine) {
-            SaveManager.Destroy(photonView.gameObject);
+            PhotonNetwork.Destroy(photonView.gameObject);
         }
     }
     private IEnumerator AttachOnTouch(float duration) {

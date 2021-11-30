@@ -95,9 +95,9 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         }
         GameObject.Instantiate(explosionPrefab, backupPosition, Quaternion.identity);
         HashSet<Kobold> foundKobolds = new HashSet<Kobold>();
+        SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(backupPosition, 10f, scorchDecal, Quaternion.FromToRotation(Vector3.forward, Vector3.down), GameManager.instance.decalHitMask);
         foreach( Collider c in Physics.OverlapSphere(backupPosition, 5f, playerMask, QueryTriggerInteraction.Ignore)) {
             scorchDecal.color = Color.black;
-            SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(backupPosition, 10f, scorchDecal, Quaternion.LookRotation(Vector3.forward, Vector3.down), playerMask);
             Kobold k = c.GetComponentInParent<Kobold>();
             if (k != null && !foundKobolds.Contains(k)) {
                 foundKobolds.Add(k);
@@ -147,7 +147,7 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         if (g is GameObject) {
             PhotonView other = ((GameObject)g).GetComponentInParent<PhotonView>();
             if (other != null && other.IsMine) {
-                SaveManager.Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
                 return;
             }
             if (other == null) {

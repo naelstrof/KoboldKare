@@ -122,18 +122,29 @@
             <summary>
             Get a ByteArraySlice from pool. This overload handles user supplied byte[] and byte count and can be used as a non-boxing alternative to ArraySegment&lt;byte&gt;.
             </summary>
+            <remarks>
+            This effectively pools the ByteArraySlice instances but not their data.
+            ByteArraySlice.Release() will return the slice itself to the pool but delete the reference to the buffer supplied here.
+            </remarks>
         </member>
         <member name="M:ExitGames.Client.Photon.ByteArraySlicePool.Acquire(System.Int32)">
             <summary>
             Get byte[] wrapper from pool. This overload accepts a bytecount and will return a wrapper with a byte[] that size or greater.
             </summary>
         </member>
-        <member name="M:ExitGames.Client.Photon.ByteArraySlicePool.Release(ExitGames.Client.Photon.ByteArraySlice)">
+        <member name="M:ExitGames.Client.Photon.ByteArraySlicePool.PopOrCreate(System.Collections.Generic.Stack{ExitGames.Client.Photon.ByteArraySlice},System.Int32)">
+            <summary>Pops a slice from the stack or creates a new slice for that stack.</summary>
+            <param name="stack">The stack to use. Lock that stack before calling PopOrCreate for thread safety.</param>
+            <param name="stackIndex"></param>
+            <returns>A slice.</returns>
+        </member>
+        <member name="M:ExitGames.Client.Photon.ByteArraySlicePool.Release(ExitGames.Client.Photon.ByteArraySlice,System.Int32)">
             <summary>
             Releasing a ByteArraySlice, will put it back into the pool, if it was acquired from one.
             </summary>
             <param name="slice">The ByteArraySlice to return to the pool.</param>
-            <returns>True if this slice was returned to some pool. False if not.</returns>
+            <param name="stackIndex">The stackIndex for this slice.</param>
+            <returns>True if this slice was returned to some pool. False if not (null or stackIndex &lt; 0.</returns>
         </member>
         <member name="M:ExitGames.Client.Photon.ByteArraySlicePool.ClearPools(System.Int32,System.Int32)">
             <summary>
@@ -179,38 +190,33 @@
             </remarks>
             <returns>Shallow copy of the Hashtable.</returns>
         </member>
+        <member name="T:ExitGames.Client.Photon.UnknownType">
+            <summary>
+            Used as container for unknown types the client could not deserialize.
+            </summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.UnknownType.TypeCode">
+            <summary>
+            The type code which was read for this type.
+            </summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.UnknownType.Size">
+            <summary>
+            The size/length value that was read for this type.
+            </summary>
+            <remarks>May be larger than Data.Length, if the Size exceeded the remaining message content.</remarks>
+        </member>
+        <member name="F:ExitGames.Client.Photon.UnknownType.Data">
+            <summary>
+            Container for the data that arrived.
+            </summary>
+            <remarks>If the Size exceeded the remaining message length, only the remaining data is read. This may be null, if the size was somehow less than 1.</remarks>
+        </member>
         <member name="T:ExitGames.Client.Photon.Encryption.IPhotonEncryptor">
             <summary>Interface for DatagramEncryptor implementations.</summary>
         </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.Init(System.Byte[],System.Byte[],System.Byte[],System.Boolean)">
+        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.Init(System.Byte[],System.Byte[],System.Byte[],System.Boolean,System.Int32)">
             <summary>Initialize the encryptor.</summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.Encrypt(System.Byte[],System.Int32,System.Byte[],System.Int32@,System.Boolean)">
-            <summary>Encrypt data.</summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.Decrypt(System.Byte[],System.Int32,System.Int32,System.Int32@,System.Boolean)">
-            <summary>Decrypt data.</summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.CreateHMAC(System.Byte[],System.Int32,System.Int32)">
-            <summary>Calculates the HMAC for given data.</summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.IPhotonEncryptor.CheckHMAC(System.Byte[],System.Int32)">
-            <summary>Checks if the HMAC of the provided data is correct.</summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNet.BLOCK_SIZE">
-            <summary>
-            Defines block size for encryption/decryption algorithm
-            </summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNet.IV_SIZE">
-            <summary>
-            Defines reusedIvBytes size for encryption/decryption algorithm
-            </summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNet.HMAC_SIZE">
-            <summary>
-            Defines HMAC size for packet authentication algorithm
-            </summary>
         </member>
         <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNet.encryptorIn">
             <summary>
@@ -222,70 +228,6 @@
             Packet authentication algorithm impelmenation
             </summary>
         </member>
-        <member name="T:ExitGames.Client.Photon.Encryption.EncryptorNative">
-            <summary>
-            Implementation of encryption for "Datagram Encryption".
-            </summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNative.BLOCK_SIZE">
-            <summary>
-            Defines block size for encryption/decryption algorithm
-            </summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNative.IV_SIZE">
-            <summary>
-            Defines IV size for encryption/decryption algorithm
-            </summary>
-        </member>
-        <member name="F:ExitGames.Client.Photon.Encryption.EncryptorNative.HMAC_SIZE">
-            <summary>
-            Defines HMAC size for packet authentication algorithm
-            </summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.EncryptorNative.Init(System.Byte[],System.Byte[],System.Byte[],System.Boolean)">
-            <summary>
-            Initialize
-            </summary>
-            <param name="encryptionSecret"></param>
-            <param name="hmacSecret"></param>
-            <param name="ivBytes"></param>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.EncryptorNative.Encrypt(System.Byte[],System.Int32,System.Byte[],System.Int32@,System.Boolean)">
-            <summary>
-            Encrypts data. puts them into output buffer and prepends with IV
-            </summary>
-            <param name="data"></param>
-            <param name="len"></param>
-            <param name="output"></param>
-            <param name="offset"></param>
-            <param name="ivPrefix"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.EncryptorNative.CreateHMAC(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Finishes current HMAC
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.EncryptorNative.Decrypt(System.Byte[],System.Int32,System.Int32,System.Int32@,System.Boolean)">
-            <summary>
-            Decrypts buffer containing HMAC
-            </summary>
-            <param name="data">encrypted data prepened by IV</param>
-            <param name="offset">offset in the buffer</param>
-            <param name="len">len of data to decrypt</param>
-            /// <param name="outLen">len of decrypted data</param>
-            <param name="ivPrefix"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExitGames.Client.Photon.Encryption.EncryptorNative.CheckHMAC(System.Byte[],System.Int32)">
-            <summary>
-            Checkes wheter data have corect HMAC or not
-            </summary>
-            <param name="data">buffer with data and HMAC</param>
-            <param name="len">len of data including HMAC</param>
-            <returns>true if check pass, false otherwise</returns>
-        </member>
         <member name="F:ExitGames.Client.Photon.EnetChannel.outgoingReliableUnsequencedNumber">
             <summary>Number for reliable unsequenced commands (separate from "standard" reliable sequenced). Used to avoid duplicates.</summary>
         </member>
@@ -295,10 +237,16 @@
         <member name="F:ExitGames.Client.Photon.EnetChannel.reliableUnsequencedNumbersReceived">
             <summary>Any reliable unsequenced number that's been received, which is higher than the current highest in complete sequence (reliableUnsequencedNumbersCompletelyReceived).</summary>
         </member>
+        <member name="F:ExitGames.Client.Photon.EnetChannel.highestReceivedAck">
+            <summary>To store the highest acknowledged sequence number (and get some impression what the server already received and stored).</summary>
+        </member>
         <member name="M:ExitGames.Client.Photon.EnetChannel.QueueIncomingReliableUnsequenced(ExitGames.Client.Photon.NCommand)">
             <summary>Checks and queues incoming reliable unsequenced commands ("send" or "fragment"), if they haven't been received yet.</summary>
             <param name="command">The command to check and queue.</param>
             <returns>True if the command is new and got queued (or could be executed/dispatched).</returns>
+        </member>
+        <member name="F:ExitGames.Client.Photon.EnetPeer.QUICK_RESEND_QUEUELIMIT">
+            <summary>Quick Resends are suspended if the sent queue is this size or larger.</summary>
         </member>
         <member name="F:ExitGames.Client.Photon.EnetPeer.sentReliableCommands">
             <summary>One list for all channels keeps sent commands (for re-sending).</summary>
@@ -334,9 +282,6 @@
             gathers acks until udp-packet is full and sends it!
             </summary>
         </member>
-        <member name="F:ExitGames.Client.Photon.EnetPeer.commandsToResend">
-            <summary>Queue of commands that need resending. Used instead of a method local field as optimization.</summary>
-        </member>
         <member name="F:ExitGames.Client.Photon.EnetPeer.CommandQueue">
             <summary>Queue of received commands. ReceiveIncomingCommands will queue commands, except ACKs which Execute immediately.</summary>
         </member>
@@ -344,12 +289,6 @@
             <summary>
             gathers commands from all (out)queues until udp-packet is full and sends it!
             </summary>
-        </member>
-        <member name="M:ExitGames.Client.Photon.EnetPeer.AreReliableCommandsInTransit">
-            <summary>
-            Checks if any channel has a outgoing reliable command.
-            </summary>
-            <returns>True if any channel has a outgoing reliable command. False otherwise.</returns>
         </member>
         <member name="M:ExitGames.Client.Photon.EnetPeer.EnqueuePhotonMessage(ExitGames.Client.Photon.StreamBuffer,ExitGames.Client.Photon.SendOptions)">
             <summary>
@@ -370,7 +309,7 @@
             <returns>If queued or not.</returns>
         </member>
         <member name="M:ExitGames.Client.Photon.EnetPeer.RemoveSentReliableCommand(System.Int32,System.Int32,System.Boolean)">
-            <summary>removes commands which are acknowledged*</summary>
+            <summary>removes commands which are acknowledged</summary>
         </member>
         <member name="T:ExitGames.Client.Photon.StatusCode">
             <summary>
@@ -763,7 +702,7 @@
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapper`1.Box">
             <summary>
-            Boxes the value and returns boxed object. Releaeses the wrapper.
+            Boxes the value and returns boxed object. Releases the wrapper.
             </summary>
             <returns></returns>
         </member>
@@ -772,6 +711,14 @@
             Removes this WrapperStruct from pooling.
             </summary>
         </member>
+        <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapper`1.ToString">
+            <summary>Returns a String which represents the value of this instance.</summary>
+            <returns>String which represents the value of this instance.</returns>
+        </member>
+        <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapper`1.ToString(System.Boolean)">
+            <summary>Returns a String which represents the type (in brackets and value of this instance.</summary>
+            <returns>String which represents the type (in brackets) and value of this instance.</returns>
+        </member>
         <member name="F:ExitGames.Client.Photon.StructWrapping.StructWrapper`1.staticPool">
             <summary>
             staticPool is used for implicit casting. This is not threadsafe, so casting between T and StructWrapper should only be done on the Unity main thread.
@@ -779,7 +726,7 @@
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.GetWrappedType(System.Object)">
             <summary>
-            Replacement for object.GetType() that first checks to see if object is a WrappedStruct. 
+            Replacement for object.GetType() that first checks to see if object is a WrappedStruct.
             If so returns the StructWrapper T type, otherwise just returns object.GetType().
             </summary>
             <param name="obj"></param>
@@ -814,55 +761,61 @@
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.Unwrap``1(System.Object)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is returned to the wrapper pool if applicable, so it is not considered safe to Unwrap multiple times, as the wrapper may be recycled.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.Get``1(System.Object)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is will not be returned to its pool until it is Unwrapped, or the pool is cleared.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.Unwrap``1(ExitGames.Client.Photon.Hashtable,System.Object)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is returned to the wrapper pool if applicable, so it is not considered safe to Unwrap multiple times, as the wrapper may be recycled.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.TryUnwrapValue``1(ExitGames.Client.Photon.Hashtable,System.Byte,``0@)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is returned to the wrapper pool if applicable, so it is not considered safe to Unwrap multiple times, as the wrapper may be recycled.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.TryGetValue``1(ExitGames.Client.Photon.Hashtable,System.Byte,``0@)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.TryGetValue``1(ExitGames.Client.Photon.Hashtable,System.Object,``0@)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.TryUnwrapValue``1(ExitGames.Client.Photon.Hashtable,System.Object,``0@)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is returned to the wrapper pool if applicable, so it is not considered safe to Unwrap multiple times, as the wrapper may be recycled.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.Unwrap``1(ExitGames.Client.Photon.Hashtable,System.Byte)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is returned to the wrapper pool if applicable, so it is not considered safe to Unwrap multiple times, as the wrapper may be recycled.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StructWrapping.StructWrapperUtility.Get``1(ExitGames.Client.Photon.Hashtable,System.Byte)">
             <summary>
-            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T. 
+            If object is a StructWrapper, the value will be extracted. If not, the object will be cast to T.
             Wrapper is will not be returned to its pool until it is Unwrapped, or the pool is cleared.
             </summary>
+        </member>
+        <member name="M:ExitGames.Client.Photon.ParameterDictionary.System#Collections#Generic#IEnumerable{System#Collections#Generic#KeyValuePair{System#Byte,System#Object}}#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:ExitGames.Client.Photon.ParameterDictionary.GetEnumerator">
+            <inheritdoc />
         </member>
         <member name="M:ExitGames.Client.Photon.ParameterDictionary.TryGetObject(System.Byte)">
             <summary>
@@ -870,6 +823,11 @@
             </summary>
             <param name="key"></param>
             <returns></returns>
+        </member>
+        <member name="M:ExitGames.Client.Photon.ParameterDictionary.ToStringFull(System.Boolean)">
+            <summary>Dictionary content as string.</summary>
+            <param name="includeTypes">If true, type-info is also included.</param>
+            <returns>Full content of dictionary as string.</returns>
         </member>
         <member name="F:ExitGames.Client.Photon.PhotonCodes.ClientKey">
             <summary>Param code. Used in internal op: InitEncryption.</summary>
@@ -955,8 +913,11 @@
             Count of all bytes coming in (including headers)
             </summary>
         </member>
-        <member name="F:ExitGames.Client.Photon.PeerBase.CustomInitData">
+        <member name="F:ExitGames.Client.Photon.PeerBase.PhotonToken">
             <summary>Set via Connect(..., customObject) and sent in Init-Request.</summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PeerBase.CustomInitData">
+            <summary>Sent on connect in an Init Request.</summary>
         </member>
         <member name="F:ExitGames.Client.Photon.PeerBase.AppId">
             <summary>Temporary cache of AppId. Used in Connect() to keep the AppId until we send the Init-Request (after the network-level (and Enet) connect).</summary>
@@ -973,6 +934,13 @@
             You must check the socket's IsConnected state. Otherwise, this value is not initialized.
             Sent to server in Init-Request.
             </remarks>
+        </member>
+        <member name="M:ExitGames.Client.Photon.PeerBase.WriteInitRequest">
+            <summary>
+            Writes and "Init Request", which initializes the connection / application used server-side.
+            </summary>
+            <remarks>Uses this.ServerAddress, this.AppId, this.PhotonToken and CustomInitData and some more values.</remarks>
+            <returns>Bytes of the init request.</returns>
         </member>
         <member name="M:ExitGames.Client.Photon.PeerBase.InitCallback">
             <summary>Called when the server's Init Response arrived.</summary>
@@ -1180,50 +1148,17 @@
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ClientVersion">
             <summary>Version of this library as string.</summary>
         </member>
-        <member name="P:ExitGames.Client.Photon.PhotonPeer.NativeSocketLibAvailable">
-             <summary>Checks if a native library for network sockets (PhotonSocketPlugin.dll) is available. To use it, see remarks.</summary>
-             <remarks>
-             When the native socket library is available, the SocketNative class may be used as socket implementation.
-            
-             If the SocketImplementationConfig is null, the SocketNative class is assigned for UDP, TCP and WebSocket.
-            
-             Alternatively the type SocketNative (or other) can be assigend in the SocketImplementationConfig.
-            
-             The SocketNative class in this assembly is compiled for dynamic linking.
-             A class "SocketNativeSource" can be made available for you to compile it along with your source for
-             platforms that use static linking (e.g. for iOS and some consoles).
-            
-             Note: Native libraries must match the execution platform.
-             Even if the native plugin is found it may fail to execute.
-             </remarks>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.Version">
+            <summary>Version of this library as string.</summary>
         </member>
-        <member name="P:ExitGames.Client.Photon.PhotonPeer.NativePayloadEncryptionLibAvailable">
-             <summary>Checks if native library for Payload Encryption (PhotonCryptoPlugin.dll) is available. Used automatically.</summary>
-             <remarks>
-             While the encryptor Type for Datagram Encryption can be defined, Payload Encryption
-             will always use built-in types as encryptor.
-            
-             Note: Native libraries must match the execution platform.
-             Even if the native plugin is found it may fail to execute.
-             </remarks>
+        <member name="F:ExitGames.Client.Photon.PhotonPeer.NativeSocketLibAvailable">
+            <summary>A Native Socket implementation is no longer part of this DLL but delivered in a separate add-on. This value always returns false.</summary>
         </member>
-        <member name="P:ExitGames.Client.Photon.PhotonPeer.NativeDatagramEncryptionLibAvailable">
-             <summary>Checks if a native library for Datagram Encryption is available. To use it, see remarks.</summary>
-             <remarks>
-             If the PhotonPeer.EncryptorType is set, this type is used as implementation for Datagram Encryption.
-             If it's not set, a native plugin is used if available. As fallback, a managed implementation is being used.
-            
-             Note: The native plugin is performing much better than the managed alternatives.
-             This is why we make the plugin available for various platforms.
-            
-             Note: Native libraries must match the execution platform.
-             Even if the native plugin is found it may fail to execute.
-             </remarks>
+        <member name="F:ExitGames.Client.Photon.PhotonPeer.NativePayloadEncryptionLibAvailable">
+            <summary>Native Payload Encryption is no longer part of this DLL but delivered in a separate add-on. This value always returns false.</summary>
         </member>
-        <member name="M:ExitGames.Client.Photon.PhotonPeer.CheckNativeLibsAvailability">
-            <summary>
-            Checks availability and completeness of native libs and sets respective "available" values.
-            </summary>
+        <member name="F:ExitGames.Client.Photon.PhotonPeer.NativeDatagramEncryptionLibAvailable">
+            <summary>Native Datagram Encryption is no longer part of this DLL but delivered in a separate add-on. This value always returns false.</summary>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.SerializationProtocolType">
             <summary>Enables selection of a (Photon-)serialization protocol. Used in Connect methods.</summary>
@@ -1233,11 +1168,10 @@
              <summary>Optional definition of IPhotonSocket type per ConnectionProtocol.</summary>
              <remarks>
              Several platforms have special Socket implementations and slightly different APIs.
-             To accomodate this, switching the socket implementation for a network protocol was made available.
+             Customizing the SocketImplementationConfig helps to accomodate this.
              By default, UDP and TCP have socket implementations assigned.
             
-             If a native socket plugin is available (see: PhotonPeer.NativeSocketLibAvailable), the SocketNative
-             class is used by default (with dynamic linking).
+             If a native socket plugin is available set the SocketNativeSource class as Type definition here.
             
              You only need to set the SocketImplementationConfig once, after creating a PhotonPeer
              and before connecting. If you switch the TransportProtocol, the correct implementation is being used.
@@ -1321,6 +1255,22 @@
             <summary>
             This debug setting enables a new send-ordering for commands. Defaults to true and commands are sent in the order they are created. Set to false to use Enet ordering.
             </summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PhotonPeer.SequenceDeltaLimitResends">
+            <summary>Skips resending (individual) commands if their reliable sequence number is this amount larger than the highest acknowledged sequence number.</summary>
+            <remarks>
+            This puts focus on resending commands that are older and are needed on the receiver side to dispatch commands.
+            It queues more on the client side than on the server.
+            Affects only reliable UDP (based on enet).
+            </remarks>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PhotonPeer.SequenceDeltaLimitSends">
+            <summary>Skips sending reliable and unreliable commands if their reliable sequence number is this amount larger than the highest acknowledged sequence number.</summary>
+            <remarks>
+            This puts focus on resending commands that are older and are needed on the receiver side to dispatch commands.
+            It queues more on the client side than on the server.
+            Affects only reliable UDP (based on enet).
+            </remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.BytesIn">
             <summary>
@@ -1521,7 +1471,7 @@
             
              DisconnectTimeout and SentCountAllowance are competing settings: either might trigger a disconnect on the
              client first, depending on the values and Roundtrip Time.
-             
+            
              Default: 10000 ms. Maximum setting: 65535.
              Setting a negative value will apply the default timeout.
              </remarks>
@@ -1554,23 +1504,17 @@
             <summary>
             This setter for the (local-) timestamp delegate replaces the default Environment.TickCount with any equal function.
             </summary>
-            <remarks>
-            About Environment.TickCount:
-            The value of this property is derived from the system timer and is stored as a 32-bit signed integer.
-            Consequently, if the system runs continuously, TickCount will increment from zero to Int32..::.MaxValue
-            for approximately 24.9 days, then jump to Int32..::.MinValue, which is a negative number, then increment
-            back to zero during the next 24.9 days.
-            </remarks>
-            <exception cref="T:System.Exception">Exception is thrown peer.PeerState is not PS_DISCONNECTED.</exception>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ConnectionTime">
-            <summary>The internally used "per connection" time value, which is updated infrequently, when the library executes some connectio-related tasks.</summary>
-            <remarks>
-            This integer value is an infrequently updated value by design.
-            The lib internally sets the value when it sends outgoing commands or reads incoming packages.
-            This is based on SupportClass.GetTickCount() and an initial time value per (server) connection.
-            This value is also used in low level Enet commands as sent time and optional logging.
-            </remarks>
+             <summary>The internally used per PhotonPeer time value.</summary>
+             <remarks>
+             Returns the integer part of a Stopwatch ElapsedMilliseconds value.
+             If the PhotonPeer runs continuously the ClientTime will increment from zero to Int32..::.MaxValue
+             for approximately 24.9 days, then jump to Int32..::.MinValue (a negative number), then increment
+             back to zero during the next 24.9 days.
+            
+             It is recommended to use this int only for delta times, to avoid handling the overflow.
+             </remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.LastSendAckTime">
             <summary>The last ConnectionTime value, when some ACKs were sent out by this client.</summary>
@@ -1730,6 +1674,11 @@
             Creates new instances of TrafficStats and starts a new timer for those.
             </summary>
         </member>
+        <member name="M:ExitGames.Client.Photon.PhotonPeer.InitializeTrafficStats">
+            <summary>
+            Creates new TrafficStats values and the related Stopwatch instance. To be called when the peer is created / reset.
+            </summary>
+        </member>
         <member name="M:ExitGames.Client.Photon.PhotonPeer.VitalStatsToString(System.Boolean)">
             <summary>
             Returns a string of the most interesting connection statistics.
@@ -1741,14 +1690,22 @@
         <member name="F:ExitGames.Client.Photon.PhotonPeer.peerBase">
             <summary>Implements the message-protocol, based on the underlying network protocol (udp, tcp, http).</summary>
         </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.PayloadEncryptorType">
+             <summary>Setter for the Payload Encryptor type. Used for next connection.</summary>
+             <remarks>
+             If null, the PhotonPeer will create a DiffieHellmanCryptoProvider, which is the default.
+             This is only needed in rare cases, where using native payload encryption makes sense.
+            
+             Get in touch about this, if you got questions: developer@photonengine.com
+             </remarks>
+        </member>
         <member name="F:ExitGames.Client.Photon.PhotonPeer.PayloadEncryptionSecret">
             <summary>PayloadEncryption Secret. Message payloads get encrypted with it individually and on demand.</summary>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.EncryptorType">
-            <summary>Setter for the Datagram Encryptor instance. Used at next connect.</summary>
+            <summary>Setter for the Datagram Encryptor type. Used at next connect.</summary>
             <remarks>
-            If null, the PhotonPeer will create a default encryptor instance, which may be native or managed.
-            See also: PhotonPeer.NativeDatagramEncryptionLibAvailable.
+            If null, the PhotonPeer will create a default datagram encryptor instance.
             </remarks>
         </member>
         <member name="F:ExitGames.Client.Photon.PhotonPeer.Encryptor">
@@ -1771,7 +1728,7 @@
             <param name="listener">a IPhotonPeerListener implementation</param>
             <param name="protocolType">Protocol to use to connect to Photon.</param>
         </member>
-        <member name="M:ExitGames.Client.Photon.PhotonPeer.Connect(System.String,System.String,System.Object)">
+        <member name="M:ExitGames.Client.Photon.PhotonPeer.Connect(System.String,System.String,System.Object,System.Object)">
             <summary>
             Starts connecting to the given Photon server. Non-blocking.
             </summary>
@@ -1785,16 +1742,17 @@
             <param name="appId">
             The ID of the app to use. Typically this is a guid (for the Photon Cloud). Max 32 characters.
             </param>
-            <param name="custom">
+            <param name="photonToken">
             Optional custom data to be used by server during peer creation.
             If used for authentication, the server is able to reject a client without creating a peer.
             Must be a serializable data type of Photon.
             </param>
+            <param name="customInitData">Custom data to send to the server in the Init request. Might be used to identify a client / user.</param>
             <returns>
             True if a connection attempt will be made. False if some error could be detected early-on.
             </returns>
         </member>
-        <member name="M:ExitGames.Client.Photon.PhotonPeer.Connect(System.String,System.String,System.String,System.Object)">
+        <member name="M:ExitGames.Client.Photon.PhotonPeer.Connect(System.String,System.String,System.String,System.Object,System.Object)">
             <summary>
             Starts connecting to the given Photon server. Non-blocking.
             </summary>
@@ -1811,11 +1769,12 @@
             <param name="appId">
             The ID of the app to use. Typically this is a guid (for the Photon Cloud). Max 32 characters.
             </param>
-            <param name="custom">
-            Optional custom data to be used by server during peer creation.
+            <param name="photonToken">
+            Optional Photon token data to be used by server during peer creation.
             If used for authentication, the server is able to reject a client without creating a peer.
-            Must be a serializable data type of Photon.
+            Must be of type string or byte[] (as provided by server).
             </param>
+            <param name="customInitData">Custom data to send to the server in the Init request. Might be used to identify a client / user.</param>
             <returns>
             True if a connection attempt will be made. False if some error could be detected early-on.
             </returns>
@@ -1874,8 +1833,10 @@
             <summary>
             Initializes Datagram Encryption. Optionally, the EncryptorType is being used, if set.
             </summary>
-            <param name="encryptionSecret">secret used to cipher udp packets</param>
-            <param name="hmacSecret">secret used for authentication of udp packets</param>
+            <param name="encryptionSecret">Secret used to cipher udp packets.</param>
+            <param name="hmacSecret">Secret used for authentication of udp packets.</param>
+            <param name="randomizedSequenceNumbers">Sets if enet Sequence Numbers will be randomized or not. Preferably should be true.</param>
+            <param name="chainingModeGCM">Sets if the chaining mode should be CBC (false, default) or GCM (true). GCM mode is only available with a native encryption plugin.</param>
         </member>
         <member name="M:ExitGames.Client.Photon.PhotonPeer.InitPayloadEncryption(System.Byte[])">
             <summary>
@@ -2496,9 +2457,6 @@
             <summary>Sets the DeliveryMode either to true: Reliable or false: Unreliable, overriding any current value.</summary>
             <remarks>Use this to conveniently select reliable/unreliable delivery.</remarks>
         </member>
-        <member name="M:ExitGames.Client.Photon.SocketNative.Send(System.Byte[],System.Int32)">
-            <summary>used by PhotonPeer*</summary>
-        </member>
         <member name="T:ExitGames.Client.Photon.SocketTcp">
             <summary>Encapsulates the network i/o functionality for the realtime library.</summary>
         </member>
@@ -2547,6 +2505,11 @@
         <member name="M:ExitGames.Client.Photon.StreamBuffer.GetBufferAndAdvance(System.Int32,System.Int32@)">
             <summary>
             Brings StreamBuffer to the state as after writing of 'length' bytes. Returned buffer and offset can be used to actually fill "written" segment with data.
+            </summary>
+        </member>
+        <member name="P:ExitGames.Client.Photon.StreamBuffer.Available">
+            <summary>
+            Remaining bytes in this StreamBuffer. Returns 0 if len - pos is less than 0.
             </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.StreamBuffer.SetLength(System.Int64)">

@@ -6,10 +6,9 @@
 // <author>developer@photonengine.com</author>
 // ----------------------------------------------------------------------------
 
-#if UNITY_4_7 || UNITY_5 || UNITY_5_3_OR_NEWER
+#if UNITY_2017_4_OR_NEWER
 #define SUPPORTED_UNITY
 #endif
-
 
 namespace Photon.Realtime
 {
@@ -35,9 +34,14 @@ namespace Photon.Realtime
     {
         /// <summary>AppId for Realtime or PUN.</summary>
         public string AppIdRealtime;
-        /// <summary>AppId for the Chat Api.</summary>
+
+        /// <summary>AppId for Photon Fusion.</summary>
+        public string AppIdFusion;
+
+        /// <summary>AppId for Photon Chat.</summary>
         public string AppIdChat;
-        /// <summary>AppId for use in the Voice Api.</summary>
+
+        /// <summary>AppId for Photon Voice.</summary>
         public string AppIdVoice;
 
         /// <summary>The AppVersion can be used to identify builds and will split the AppId distinct "Virtual AppIds" (important for matchmaking).</summary>
@@ -70,10 +74,13 @@ namespace Photon.Realtime
 
         /// <summary>The address (hostname or IP) of the server to connect to.</summary>
         public string Server;
+
         /// <summary>If not null, this sets the port of the first Photon server to connect to (that will "forward" the client as needed).</summary>
         public int Port;
+
         /// <summary>The address (hostname or IP and port) of the proxy server.</summary>
         public string ProxyServer;
+
         /// <summary>The network level protocol to use.</summary>
         public ConnectionProtocol Protocol = ConnectionProtocol.Udp;
 
@@ -86,54 +93,91 @@ namespace Photon.Realtime
 
         /// <summary>If true, the client will request the list of currently available lobbies.</summary>
         public bool EnableLobbyStatistics;
+
         /// <summary>Log level for the network lib.</summary>
         public DebugLevel NetworkLogging = DebugLevel.ERROR;
 
         /// <summary>If true, the Server field contains a Master Server address (if any address at all).</summary>
-        public bool IsMasterServerAddress { get { return !this.UseNameServer; } }
+        public bool IsMasterServerAddress
+        {
+            get { return !this.UseNameServer; }
+        }
+
         /// <summary>If true, the client should fetch the region list from the Name Server and find the one with best ping.</summary>
         /// <remarks>See "Best Region" in the online docs.</remarks>
-        public bool IsBestRegion { get { return this.UseNameServer && string.IsNullOrEmpty(this.FixedRegion); } }
+        public bool IsBestRegion
+        {
+            get { return this.UseNameServer && string.IsNullOrEmpty(this.FixedRegion); }
+        }
+
         /// <summary>If true, the default nameserver address for the Photon Cloud should be used.</summary>
-        public bool IsDefaultNameServer { get { return this.UseNameServer && string.IsNullOrEmpty(this.Server); } }
+        public bool IsDefaultNameServer
+        {
+            get { return this.UseNameServer && string.IsNullOrEmpty(this.Server); }
+        }
+
         /// <summary>If true, the default ports for a protocol will be used.</summary>
-        public bool IsDefaultPort { get { return this.Port <= 0; } }
+        public bool IsDefaultPort
+        {
+            get { return this.Port <= 0; }
+        }
 
         /// <summary>ToString but with more details.</summary>
         public string ToStringFull()
         {
             return string.Format(
-                "appId {0}{1}{2}{3}" +
-                "use ns: {4}, reg: {5}, {9}, " +
-                "{6}{7}{8}" +
-                "auth: {10}",
-                String.IsNullOrEmpty(this.AppIdRealtime) ? string.Empty : "rt: " + this.HideAppId(this.AppIdRealtime) + ", ",
-                String.IsNullOrEmpty(this.AppIdChat) ? string.Empty : "chat: " + this.HideAppId(this.AppIdChat) + ", ",
-                String.IsNullOrEmpty(this.AppIdVoice) ? string.Empty : "voice: " + this.HideAppId(this.AppIdVoice) + ", ",
-                String.IsNullOrEmpty(this.AppVersion) ? string.Empty : "appV: " + this.AppVersion + ", ",
-                this.UseNameServer,
-                this.IsBestRegion ? "/best/" : this.FixedRegion,
-                //this.BestRegionSummaryFromStorage,
-                String.IsNullOrEmpty(this.Server) ? string.Empty : "server: " + this.Server + ", ",
-                this.IsDefaultPort ? string.Empty : "port: " + this.Port + ", ",
-                String.IsNullOrEmpty(ProxyServer) ? string.Empty : "proxy: " + this.ProxyServer + ", ",
-                this.Protocol,
-                this.AuthMode
-                //this.EnableLobbyStatistics,
-                //this.NetworkLogging,
-            );
+                                 "appId {0}{1}{2}{3}" +
+                                 "use ns: {4}, reg: {5}, {9}, " +
+                                 "{6}{7}{8}" +
+                                 "auth: {10}",
+                                 String.IsNullOrEmpty(this.AppIdRealtime) ? string.Empty : "Realtime/PUN: " + this.HideAppId(this.AppIdRealtime) + ", ",
+                                 String.IsNullOrEmpty(this.AppIdFusion) ? string.Empty : "Fusion: " + this.HideAppId(this.AppIdFusion) + ", ",
+                                 String.IsNullOrEmpty(this.AppIdChat) ? string.Empty : "Chat: " + this.HideAppId(this.AppIdChat) + ", ",
+                                 String.IsNullOrEmpty(this.AppIdVoice) ? string.Empty : "Voice: " + this.HideAppId(this.AppIdVoice) + ", ",
+                                 String.IsNullOrEmpty(this.AppVersion) ? string.Empty : "AppVersion: " + this.AppVersion + ", ",
+                                 "UseNameServer: " + this.UseNameServer + ", ",
+                                 "Fixed Region: " + this.FixedRegion + ", ",
+                                 //this.BestRegionSummaryFromStorage,
+                                 String.IsNullOrEmpty(this.Server) ? string.Empty : "Server: " + this.Server + ", ",
+                                 this.IsDefaultPort ? string.Empty : "Port: " + this.Port + ", ",
+                                 String.IsNullOrEmpty(ProxyServer) ? string.Empty : "Proxy: " + this.ProxyServer + ", ",
+                                 this.Protocol,
+                                 this.AuthMode
+                                 //this.EnableLobbyStatistics,
+                                 //this.NetworkLogging,
+                                );
         }
+
+
+        /// <summary>Checks if a string is a Guid by attempting to create one.</summary>
+        /// <param name="val">The potential guid to check.</param>
+        /// <returns>True if new Guid(val) did not fail.</returns>
+        public static bool IsAppId(string val)
+        {
+            try
+            {
+                new Guid(val);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         private string HideAppId(string appId)
         {
             return string.IsNullOrEmpty(appId) || appId.Length < 8
-                ? appId
-                : string.Concat(appId.Substring(0, 8), "***");
+                       ? appId
+                       : string.Concat(appId.Substring(0, 8), "***");
         }
 
         public AppSettings CopyTo(AppSettings d)
         {
             d.AppIdRealtime = this.AppIdRealtime;
+            d.AppIdFusion = this.AppIdFusion;
             d.AppIdChat = this.AppIdChat;
             d.AppIdVoice = this.AppIdVoice;
             d.AppVersion = this.AppVersion;

@@ -57,10 +57,9 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
             foreach(var produce in newPlant.produces) {
                 int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<max;i++) {
-                    if (produce.prefab.photonName == "GrabbableKobold4") {
-                        PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetRandomKobold()});
-                    } else {
-                        PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
+                    GameObject obj =PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
+                    if (obj.GetComponent<Kobold>() != null) {
+                        obj.GetComponent<Kobold>().RandomizeKobold();
                     }
                 }
             }

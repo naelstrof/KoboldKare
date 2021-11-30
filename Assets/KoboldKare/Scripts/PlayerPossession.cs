@@ -125,7 +125,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
     }
     private void OnDestroy() {
         if (gameObject.scene.isLoaded) {
-            if (photonView == NetworkManager.instance.localPlayerInstance) {
+            if (kobold == ((Kobold)PhotonNetwork.LocalPlayer.TagObject)) {
                 GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
             }
             playerDieEvent.Raise(transform.position);

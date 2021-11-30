@@ -60,8 +60,11 @@ public class GenericUsable : MonoBehaviourPun {
     }
     public void Use(Kobold k) {
         if (k == null) {
-            if (NetworkManager.instance.localPlayerInstance != null) {
-                k = NetworkManager.instance.localPlayerInstance.GetComponent<Kobold>();
+            foreach(var player in PhotonNetwork.PlayerList) {
+                if (player.TagObject == null || ((GameObject)player.TagObject).GetComponent<Kobold>() == null) {
+                    continue;
+                }
+                k = ((GameObject)player.TagObject).GetComponent<Kobold>();
             }
         }
         if (k != null) {

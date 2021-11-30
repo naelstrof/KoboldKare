@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
-using System;
 using UnityEngine.Events;
 using KoboldKare;
 using Photon.Pun;
@@ -13,7 +12,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
 using TMPro;
 
-public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunInstantiateMagicCallback, IPunObservable {
+public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -74,14 +73,58 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public Grabber grabber;
     public AudioSource gurgleSource;
     public List<Renderer> koboldBodyRenderers;
+    private float internalSex = 0f;
     [HideInInspector]
-    public float sex;
+    public float sex {
+        get {
+            return internalSex;
+        }
+        set {
+            foreach (Renderer r in koboldBodyRenderers) {
+                if (!(r is SkinnedMeshRenderer)) {
+                    continue;
+                }
+                SkinnedMeshRenderer bodyMesh = (SkinnedMeshRenderer)r;
+                int index = bodyMesh.sharedMesh.GetBlendShapeIndex("MaleEncode");
+                if (index == -1) {
+                    continue;
+                }
+                bodyMesh.SetBlendShapeWeight(index,  Mathf.Clamp01(1f - value * 2f) * 100f);
+            }
+            internalSex = value;
+        }
+    }
     public Transform hip;
     public LayerMask playerHitMask;
+    private float internalTopBottom;
     [HideInInspector]
-    public float topBottom;
+    public float topBottom {
+        get {
+            return internalTopBottom;
+        }
+        set {
+            if (Mathf.Approximately(internalTopBottom, value)) {
+                return;
+            }
+            internalTopBottom = value;
+            StandUp();
+            bodyProportion.Initialize();
+        }
+    }
+    private float internalThickness;
     [HideInInspector]
-    public float thickness;
+    public float thickness {
+        get {
+            return internalThickness;
+        }
+        set {
+            if (Mathf.Approximately(internalThickness, value)) {
+                return;
+            }
+            StandUp();
+            bodyProportion.Initialize();
+        }
+    }
     //[HideInInspector]
     //public float inout;
     private CollisionDetectionMode oldCollisionMode = CollisionDetectionMode.Discrete;
@@ -100,7 +143,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     private bool grabbed = false;
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     private Vector3 networkedRagdollHipPosition;
-    public bool isLoaded = false;
     public float arousal = 0f;
     public Coroutine displayMessageRoutine;
     public bool ragdolled {
@@ -135,7 +177,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             t.gameObject.layer = toLayer;
         }
     }
-    public Vector4 HueBrightnessContrastSaturation {
+    public Color HueBrightnessContrastSaturation {
         set {
             foreach (Renderer r in koboldBodyRenderers) {
                 if (r == null) {
@@ -200,78 +242,34 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             KnockOver(originalUprightTimer);
         }
     }
-    public void Load(ExitGames.Client.Photon.Hashtable s) {
-        isLoaded = true;
-        if (s.ContainsKey("Sex")) {
-            sex = (float)s["Sex"];
-            foreach (Renderer r in koboldBodyRenderers) {
-                if (r is SkinnedMeshRenderer) {
-                    SkinnedMeshRenderer bodyMesh = (SkinnedMeshRenderer)r;
-                    for (int o = 0; o < bodyMesh.sharedMesh.blendShapeCount; o++) {
-                        if (bodyMesh.sharedMesh.GetBlendShapeName(o) == "MaleEncode") {
-                            bodyMesh.SetBlendShapeWeight(o, Mathf.Clamp01(1f - sex * 2f) * 100f);
-                        }
+    public void RandomizeKobold() {
+        sex = Random.Range(0f,1f);
+        HueBrightnessContrastSaturation = new Vector4(Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
+
+        float boobSize = 0f;
+        if (Random.Range(0f,1f) > 0.5f) {
+            Equipment dick = null;
+            var equipments = EquipmentDatabase.GetEquipments();
+            while (dick == null) {
+                foreach(var equipment in equipments) {
+                    if (equipment is DickEquipment && UnityEngine.Random.Range(0f,1f) > 0.9f) {
+                        dick = equipment;
                     }
                 }
             }
+            GetComponent<KoboldInventory>().PickupEquipment(dick, null);
+            boobSize = Random.Range(0f,0.2f);
+        } else {
+            boobSize = Random.Range(0.2f,1f);
         }
-        bool changedBodyShape = false;
-        if (s.ContainsKey("TopBottom")) {
-            topBottom = (float)s["TopBottom"];
-            changedBodyShape = true;
+        foreach (var boob in boobs) {
+            boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Fat"), boobSize * boob.reagentVolumeDivisor * 0.7f);
+            boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Milk"), boobSize * boob.reagentVolumeDivisor * 0.3f);
         }
-        if (s.ContainsKey("Thickness")) {
-            thickness = (float)s["Thickness"];
-            changedBodyShape = true;
-        }
-        if (changedBodyShape) {
-            float oldUpright = uprightTimer;
-            StandUp();
-            bodyProportion.Initialize();
-            if (oldUpright > 0f) {
-                KnockOver(oldUpright);
-            }
-        }
-        Vector4 hbcs = HueBrightnessContrastSaturation;
-        if (s.ContainsKey("Brightness")) {
-            hbcs.y = (float)s["Brightness"];
-        }
-        if (s.ContainsKey("Contrast")) {
-            hbcs.z = (float)s["Contrast"];
-        }
-        if (s.ContainsKey("Saturation")) {
-            hbcs.w = (float)s["Saturation"];
-        }
-        if (s.ContainsKey("Hue")) {
-            hbcs.x = (float)s["Hue"];
-        }
-        HueBrightnessContrastSaturation = hbcs;
+        topBottom = Random.Range(-1f,1f);
+        thickness = Random.Range(-1f, 1f);
 
-        if (s.ContainsKey("KoboldSize")) {
-            sizeInflatable.GetContainer().AddMix(ReagentDatabase.GetReagent("GrowthSerum"),(float)s["KoboldSize"] * sizeInflatable.reagentVolumeDivisor, GenericReagentContainer.InjectType.Inject);
-        }
-
-        if (s.ContainsKey("BoobSize")) {
-            foreach (var boob in boobs) {
-                boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Fat"), (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.7f, GenericReagentContainer.InjectType.Inject);
-                boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Milk"), (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.3f, GenericReagentContainer.InjectType.Inject);
-            }
-        }
-        if (s.ContainsKey("ActiveStatusEffects")) {
-            int[] activeEffects = (int[])s["ActiveStatusEffects"];
-            bool isSame = activeEffects.Length == statblock.activeEffects.Count;
-            for (int i=0;isSame&&i<activeEffects.Length&&i<statblock.activeEffects.Count;i++) {
-                if (statblock.activeEffects[i].effect.GetID() != activeEffects[i]) {
-                    isSame = false;
-                }
-            }
-            if (!isSame) {
-                statblock.Clear();
-                foreach (var id in activeEffects) {
-                    statblock.AddStatusEffect(StatusEffect.GetFromID(id), StatBlock.StatChangeSource.Network);
-                }
-            }
-        }
+        sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), Random.Range(0.7f,1.2f) * sizeInflatable.reagentVolumeDivisor);
     }
     public void OnStatusEffectsChanged(StatBlock block, StatBlock.StatChangeSource source) {
         foreach (var statEvent in statChangedEvents) {
@@ -491,54 +489,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
         if (uprightTimer <= 0) {
             body.angularVelocity -= body.angularVelocity*0.2f;
-            float penetrationAmount = 0f;
-            //foreach(var penSet in penetratables) {
-                //if (penSet.penetratable.isActiveAndEnabled) {
-                    //penetrationAmount += penSet.penetratable.realGirth;
-                //}
-            //}
             float deflectionForgivenessDegrees = 5f;
             Vector3 cross = Vector3.Cross(body.transform.up, Vector3.up);
             float angleDiff = Mathf.Max(Vector3.Angle(body.transform.up, Vector3.up) - deflectionForgivenessDegrees, 0f);
             body.AddTorque(cross*angleDiff, ForceMode.Acceleration);
-            //body.angularVelocity += new Vector3(rot.x, rot.y, rot.z).MagnitudeClamped(0f, 1f) * Mathf.Max((1f - penetrationAmount * 2f) * uprightForce, 0f);
         }
-        //dick.dickTransform.GetComponent<CharacterJoint>().connectedAnchor = body.transform.InverseTransformPoint(hip.TransformPoint(dickAttachPosition));
-        //ConfigurableJoint dickJoint = dick.body.GetComponent<ConfigurableJoint>();
-        /*if (activeDicks != null) {
-            foreach (var dickSet in activeDicks) {
-                if (dickSet.joint == null) {
-                    continue;
-                }
-                Vector3 dickForward = dickSet.dick.dickTransform.TransformDirection(dickSet.dick.dickForwardAxis);
-                Vector3 dickUp = dickSet.dick.dickTransform.TransformDirection(dickSet.dick.dickUpAxis);
-                Vector3 dickRight = Vector3.Cross(dickUp, dickForward);
-                Vector3 hipUp = dickSet.parent.TransformDirection(dickSet.initialDickUpHipSpace);
-                Vector3 hipForward = dickSet.parent.TransformDirection(dickSet.initialDickForwardHipSpace);
-                Vector3 hipRight = Vector3.Cross(hipUp, hipForward);
-
-                //FIXME
-                // Force the dick to be oriented correctly.
-                //dickSet.dick.dickTransform.rotation = Quaternion.FromToRotation(dickUp, Vector3.ProjectOnPlane(hipUp, dickForward).normalized) * dickSet.dick.dickTransform.rotation;
-                //dickSet.joint.autoConfigureConnectedAnchor = false; //dickJoint.axis = body.transform.right;
-                //if (dickSet.joint.connectedBody == body || dickSet.joint.connectedBody.isKinematic) {
-                if (uprightTimer <= 0) { // If we're not ragdolled
-                    dickSet.dick.body.interpolation = body.interpolation;
-                    dickSet.joint.connectedAnchor = dickSet.joint.connectedBody.transform.InverseTransformPoint(dickSet.parent.TransformPoint(dickSet.dickAttachPosition));
-                } else {
-                    dickSet.dick.body.interpolation = dickSet.joint.connectedBody.interpolation;
-                }
-                //dick.dickTransform.position = hip.TransformPoint(dickAttachPosition);
-                if (dickSet.container.contents.ContainsKey(ReagentData.ID.Blood)) {
-                    Quaternion ro = Quaternion.FromToRotation(dickForward, hipForward);
-                    dickSet.dick.body.angularVelocity *= 0.8f;
-                    dickSet.dick.body.AddTorque(new Vector3(ro.x, ro.y, ro.z) * 30f * dickSet.container.contents[ReagentData.ID.Blood].volume);
-                }
-                //dickSet.joint.axis = dickSet.dick.dickTransform.TransformDirection(dickSet.dick.dickUpAxis);
-                //dickSet.dick.body.position = dickSet.parent.TransformPoint(dickSet.dickAttachPosition);
-                //dickSet.dick.body.MovePosition(dickSet.parent.TransformPoint(dickSet.dickAttachPosition));
-            }
-        }*/
         if (Time.timeSinceLevelLoad-lastPumpTime > 10f) {
             PumpUpDick(-Time.deltaTime * 0.01f);
         }
@@ -639,14 +594,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
     public bool ShowHand() { return true; }
     public bool PhysicsGrabbable() { return true; }
-
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is Hashtable) {
-            //Debug.Log(info.photonView.InstantiationData[0]);
-            Load((Hashtable)(info.photonView.InstantiationData[0]));
-        }
-    }
-
     public Rigidbody[] GetRigidBodies()
     {
         return allRigidbodies;
@@ -746,6 +693,9 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         if (stream.IsWriting) {
             stream.SendNext(ragdolled);
             stream.SendNext(hip.position);
+            stream.SendNext(thickness);
+            stream.SendNext(topBottom);
+            stream.SendNext(sex);
         } else {
             bool ragged = (bool)stream.ReceiveNext();
             if (!ragdolled && ragged && !bodyProportion.running) {
@@ -755,9 +705,18 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 StandUp();
             }
             networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
+            thickness = (float)stream.ReceiveNext();
+            topBottom = (float)stream.ReceiveNext();
+            sex = (float)stream.ReceiveNext();
         }
     }
 
     public void OnThrow(Kobold kobold) {
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData.Length != 0) {
+            info.Sender.TagObject = this;
+        }
     }
 }

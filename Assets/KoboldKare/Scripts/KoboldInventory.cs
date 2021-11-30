@@ -4,7 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Kobold))]
-public class KoboldInventory : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallback {
+public class KoboldInventory : MonoBehaviourPun, IPunObservable {
     private Dictionary<Equipment, List<GameObject[]>> equipmentDisplays = new Dictionary<Equipment, List<GameObject[]>>();
     private static List<Equipment> staticIncomingEquipment = new List<Equipment>();
     public int Count => equipment.Count;
@@ -39,6 +39,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, IPunInstantiate
 
         equipmentChanged?.Invoke(equipment);
     }
+    public bool Contains(Equipment thing) => equipment.Contains(thing);
     public void RemoveEquipment(Equipment thing, bool dropOnGround) {
         equipment.Remove(thing);
         thing.OnUnequip(kobold, dropOnGround);
@@ -82,22 +83,5 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, IPunInstantiate
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
         }
-    }
-
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData == null || !(info.photonView.InstantiationData[0] is ExitGames.Client.Photon.Hashtable)) {
-            return;
-        }
-        ExitGames.Client.Photon.Hashtable s = (ExitGames.Client.Photon.Hashtable)info.photonView.InstantiationData[0];
-        if (!s.ContainsKey("EquippedItems")) {
-            return;
-        }
-        short[] equipmentList = (short[])s["EquippedItems"];
-
-        staticIncomingEquipment.Clear();
-        foreach(var id in equipmentList) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(id));
-        }
-        ReplaceEquipmentWith(staticIncomingEquipment);
     }
 }

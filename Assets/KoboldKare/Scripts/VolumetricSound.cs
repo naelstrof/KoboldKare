@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class VolumetricSound : MonoBehaviour {
@@ -11,8 +12,8 @@ public class VolumetricSound : MonoBehaviour {
     void Update() {
         if (listener == null || !listener.isActiveAndEnabled ) {
             //listener = GameObject.FindObjectOfType<AudioListener>();
-            if (NetworkManager.instance.localPlayerInstance != null) {
-                foreach(AudioListener l in NetworkManager.instance.localPlayerInstance.GetComponentsInChildren<AudioListener>()) {
+            if (PhotonNetwork.LocalPlayer.TagObject != null) {
+                foreach(AudioListener l in (PhotonNetwork.LocalPlayer.TagObject as Kobold).GetComponentsInChildren<AudioListener>()) {
                     if (l.isActiveAndEnabled) {
                         listener = l;
                         break;

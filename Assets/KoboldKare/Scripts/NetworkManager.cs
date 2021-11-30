@@ -175,6 +175,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
             player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
             SpawnEvent.Raise();
+            PopupHandler.instance.ClearAllPopups();
         }
     }
     public void SpawnControllablePlayer() {

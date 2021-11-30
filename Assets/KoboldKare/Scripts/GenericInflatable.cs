@@ -100,6 +100,7 @@ public class GenericInflatable : MonoBehaviour {
         if (container != null) {
             container.OnChange.RemoveListener(OnReagentContainerChanged);
         }
+        StopAllCoroutines();
         container = newContainer;
         if (container != null) {
             container.OnChange.AddListener(OnReagentContainerChanged);

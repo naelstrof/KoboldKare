@@ -10,8 +10,6 @@ using UnityEditor;
 #endif
 
 public class Equipment : ScriptableObject {
-    [HideInInspector]
-    public int guid;
     public Sprite sprite;
     public enum EquipmentSlot {
         Misc = -1,
@@ -44,28 +42,6 @@ public class Equipment : ScriptableObject {
     public LocalizedString localizedName;
     public LocalizedString localizedDescription;
     public List<StatusEffect> effectsToApply;
-    private static Dictionary<int,Equipment> availableEquipment = new Dictionary<int, Equipment>();
-
-    // Since these aren't referenced anywhere directly, this is the only way to get them to load properly.
-    [RuntimeInitializeOnLoadMethod]
-    public void OnInitialize() {
-        if (!availableEquipment.ContainsKey(guid)) {
-            availableEquipment.Add(guid, this);
-        }
-    }
-    public void OnEnable() {
-        OnInitialize();
-    }
-    public int GetID() {
-        return guid;
-    }
-    public static Equipment GetEquipmentFromID(int id) {
-        if (availableEquipment.ContainsKey(id)) {
-            return availableEquipment[id];
-        }
-        return null;
-    }
-    // GameObjects that are returned by this will automatically get destroyed on unequip.
     public virtual GameObject[] OnEquip(Kobold k, GameObject groundPrefab) {
         foreach(StatusEffect effect in effectsToApply) {
             k.statblock.AddStatusEffect(effect, StatBlock.StatChangeSource.Equipment);
@@ -80,16 +56,5 @@ public class Equipment : ScriptableObject {
             return PhotonNetwork.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
         }
         return null;
-    }
-
-    public void OnValidate() {
-#if UNITY_EDITOR
-        OnInitialize();
-        while ( GetEquipmentFromID(guid) != this) {
-            guid++;
-            OnInitialize();
-        }
-        groundPrefab.OnValidate();
-#endif
     }
 }

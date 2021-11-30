@@ -8,7 +8,6 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
-    public static int defaultDickID = 0;
     private ExitGames.Client.Photon.Hashtable koboldSave = new ExitGames.Client.Photon.Hashtable();
     void Start() {
         foreach(string settingName in settingNames) {
@@ -18,11 +17,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
             ProcessOption(koboldSave, option);
         }
         if (!targetKobold.isLoaded) {
-            if (PhotonNetwork.InRoom) {
-                targetKobold.photonView.RPC("Load", RpcTarget.AllBuffered, new object[] { koboldSave });
-            } else {
-                targetKobold.Load(koboldSave);
-            }
+            targetKobold.Load(koboldSave);
         }
     }
 
@@ -45,10 +40,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public static void ProcessOption(ExitGames.Client.Photon.Hashtable t, UnityScriptableSettings.ScriptableSetting setting) {
         if (setting == UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Dick")) {
             if (setting.value != 0f) {
-                int[] equipmentList = new int[] { defaultDickID };
+                short[] equipmentList = new short[] { 0 };
                 t["EquippedItems"] = equipmentList;
             } else {
-                int[] equipmentList = new int[] {};
+                short[] equipmentList = new short[] {};
                 t["EquippedItems"] = equipmentList;
             }
         } else {
@@ -59,11 +54,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
         ProcessOption(koboldSave, setting);
         ExitGames.Client.Photon.Hashtable obj = new ExitGames.Client.Photon.Hashtable();
         ProcessOption(obj, setting);
-        if (PhotonNetwork.InRoom) {
-            targetKobold.photonView.RPC("Load", RpcTarget.AllBuffered, new object[] { obj });
-        } else {
-            targetKobold.Load(obj);
-        }
+        targetKobold.Load(obj);
     }
 
     public static ExitGames.Client.Photon.Hashtable GetSaveObject() {
@@ -82,11 +73,20 @@ public class PlayerKoboldLoader : MonoBehaviour {
         t["Saturation"] = Random.Range(0f,1f);
         t["Contrast"] = Random.Range(0f,1f);
         if (Random.Range(0f,1f) > 0.5f) {
-            int[] equipmentList = new int[] { defaultDickID };
+            Equipment dick = null;
+            var equipments = EquipmentDatabase.GetEquipments();
+            while (dick == null) {
+                foreach(var equipment in equipments) {
+                    if (equipment is DickEquipment && UnityEngine.Random.Range(0f,1f) > 0.9f) {
+                        dick = equipment;
+                    }
+                }
+            }
+            short[] equipmentList = new short[] {EquipmentDatabase.GetID(dick)};
             t["EquippedItems"] = equipmentList;
             t["BoobSize"] = Random.Range(0f,0.1f);
         } else {
-            int[] equipmentList = new int[] {};
+            short[] equipmentList = new short[] {};
             t["EquippedItems"] = equipmentList;
             t["BoobSize"] = Random.Range(0.2f,1f);
         }

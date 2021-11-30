@@ -15,7 +15,7 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
     public LocalizeStringEvent detailTitle;
     public Sprite noneSprite;
     public Image detailedDisplay;
-    public Kobold k;
+    public KoboldInventory inventory;
     public GameObject inventoryUIPrefab;
     public List<EquipmentSlotDisplay> slots = new List<EquipmentSlotDisplay>();
     [System.Serializable]
@@ -29,8 +29,7 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
     }
     private List<GameObject> spawnedUI = new List<GameObject>();
     void Awake() {
-        k.inventory.EquipmentChangedEvent += UpdateDisplay;
-        UpdateDisplay(k.inventory, EquipmentInventory.EquipmentChangeSource.Network);
+        inventory.equipmentChanged += UpdateDisplay;
         foreach(var slot in slots) {
             EventTrigger et = slot.targetImage.gameObject.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -39,10 +38,13 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
             et.triggers.Add(entry);
         }
     }
+    void Start() {
+        UpdateDisplay(inventory.GetAllEquipment());
+    }
 
     private void OnDestroy() {
-        if (k != null) {
-            k.inventory.EquipmentChangedEvent -= UpdateDisplay;
+        if (inventory != null) {
+            inventory.equipmentChanged -= UpdateDisplay;
         }
     }
     public void DisplayDetail(Equipment e) {
@@ -56,7 +58,7 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
         detailDescription.StringReference = e.localizedDescription;
         detailTitle.StringReference = e.localizedName;
     }
-    public void UpdateDisplay(EquipmentInventory inventory, EquipmentInventory.EquipmentChangeSource source) {
+    public void UpdateDisplay(List<Equipment> equipment) {
         foreach(GameObject g in spawnedUI) {
             Destroy(g);
         }
@@ -66,41 +68,32 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
             slot.targetImage.color = new Color(0.5f,0.5f,0.8f,0.25f);
             slot.equipped = null;
         }
-        foreach(var e in inventory.equipment) {
+        foreach(var e in equipment) {
             foreach (var slot in slots) {
-                if (slot.slot == e.equipment.slot) {
+                if (slot.slot == e.slot) {
                     slot.containerImage.color = Color.yellow;
-                    slot.equipped = e.equipment;
-                    slot.targetImage.sprite = e.equipment.sprite;
+                    slot.equipped = e;
+                    slot.targetImage.sprite = e.sprite;
                     slot.targetImage.color = Color.white;
                 }
             }
             GameObject ui = GameObject.Instantiate(inventoryUIPrefab, targetDisplay);
 
 
-            ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.equipment.localizedName;
-            // DropEquipment RPC is found in Kobold.cs
+            ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             ui.transform.Find("DropButton").GetComponent<Button>().onClick.AddListener(() => {
-                if (k.photonView.IsMine) {
-                    int id = 0;
-                    for (int i = 0; i < k.inventory.equipment.Count; i++) {
-                        if (k.inventory.equipment[i] == e) {
-                            id = i;
-                            break;
-                        }
-                    }
-                    k.inventory.RemoveEquipment(e, EquipmentInventory.EquipmentChangeSource.Drop);
-                    k.photonView.RPC("DropEquipment", RpcTarget.OthersBuffered, new object[] { id });
+                if (inventory.photonView.IsMine) {
+                    inventory.RemoveEquipment(e, true);
                 }
                 DisplayDetail(null);
             });
-            ui.transform.Find("InspectButton").GetComponent<Button>().onClick.AddListener(() => { DisplayDetail(e.equipment); });
-            ui.transform.Find("Icon").GetComponent<Image>().sprite = e.equipment.sprite;
+            ui.transform.Find("InspectButton").GetComponent<Button>().onClick.AddListener(() => { DisplayDetail(e); });
+            ui.transform.Find("Icon").GetComponent<Image>().sprite = e.sprite;
 
             EventTrigger et = ui.transform.Find("Icon").gameObject.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerClick;
-            entry.callback.AddListener((data) => { DisplayDetail(e.equipment); });
+            entry.callback.AddListener((data) => { DisplayDetail(e); });
             et.triggers.Add(entry);
 
             spawnedUI.Add(ui);

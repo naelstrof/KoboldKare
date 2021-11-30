@@ -40,7 +40,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
 
     public Task ragdollTask;
 
-    public EquipmentInventory inventory;
     public StatBlock statblock = new StatBlock();
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
@@ -160,8 +159,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     //public AnimatorUpdateMode modeSave;
 
     public void Awake() {
-        inventory = new EquipmentInventory(this);
-        inventory.EquipmentChangedEvent += OnEquipmentChanged;
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
         allRigidbodies = new Rigidbody[2];
         allRigidbodies[0] = body;
@@ -198,36 +195,11 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             //allRigidbodies[i] = ragdollBodies[i-1];
         //}
     }
-    public ExitGames.Client.Photon.Hashtable Save() {
-        ExitGames.Client.Photon.Hashtable t = new ExitGames.Client.Photon.Hashtable();
-        t["Sex"] = sex;
-        t["Hue"] = HueBrightnessContrastSaturation.x;
-        t["Brightness"] =  HueBrightnessContrastSaturation.y;
-        t["Contrast"] = HueBrightnessContrastSaturation.z;
-        t["Saturation"] = HueBrightnessContrastSaturation.w;
-        t["TopBottom"] = topBottom;
-        t["Thickness"] = thickness;
-        t["Size"] = subcutaneousStorage[0].transformCurves[0].initialScale;
-        t["BoobSize"] = boobs[0].defaultReagentVolume;
-        int[] equipmentList = new int[inventory.equipment.Count];
-        for(int i=0;i<inventory.equipment.Count;i++) {
-            equipmentList[i] = inventory.equipment[i].equipment.GetID();
-        }
-        t["EquippedItems"] = equipmentList;
-        int[] statusList = new int[statblock.activeEffects.Count];
-        for(int i=0;i<statblock.activeEffects.Count;i++) {
-            statusList[i] = statblock.activeEffects[i].effect.GetID();
-        }
-        t["ActiveStatusEffects"] = statusList;
-        return t;
-    }
     public void OnCompleteBodyProportion() {
         if (originalUprightTimer > 0f) {
             KnockOver(originalUprightTimer);
         }
     }
-
-    [PunRPC]
     public void Load(ExitGames.Client.Photon.Hashtable s) {
         isLoaded = true;
         if (s.ContainsKey("Sex")) {
@@ -285,26 +257,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Milk"), (float)s["BoobSize"] * boob.reagentVolumeDivisor * 0.3f, GenericReagentContainer.InjectType.Inject);
             }
         }
-
-        if (s.ContainsKey("EquippedItems")) {
-            int[] equipped = (int[])s["EquippedItems"];
-            bool isSame = equipped.Length == inventory.equipment.Count;
-            for (int i=0;isSame&&i<equipped.Length&&i<inventory.equipment.Count;i++) {
-                if (inventory.equipment[i].equipment.GetID() != equipped[i]) {
-                    isSame = false;
-                }
-            }
-            if (!isSame) {
-                inventory.Clear(EquipmentInventory.EquipmentChangeSource.Network, false);
-                foreach (var id in equipped) {
-                    if (Equipment.GetEquipmentFromID(id) != null) {
-                        inventory.AddEquipment(Equipment.GetEquipmentFromID(id), EquipmentInventory.EquipmentChangeSource.Network);
-                    } else {
-                        Debug.LogError("Equipment with id " + id + " doesn't exist!");
-                    }
-                }
-            }
-        }
         if (s.ContainsKey("ActiveStatusEffects")) {
             int[] activeEffects = (int[])s["ActiveStatusEffects"];
             bool isSame = activeEffects.Length == statblock.activeEffects.Count;
@@ -321,31 +273,10 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             }
         }
     }
-    public void OnEquipmentChanged(EquipmentInventory inv, EquipmentInventory.EquipmentChangeSource source) {
-        /*if (source != EquipmentInventory.EquipmentChangeSource.Network && photonView.IsMine) {
-            Hashtable sendInfo = new Hashtable();
-            int[] equipmentList = new int[inventory.equipment.Count];
-            for(int i=0;i<inventory.equipment.Count;i++) {
-                equipmentList[i] = inventory.equipment[i].equipment.GetID();
-            }
-            sendInfo["equippedItems"] = equipmentList;
-            photonView.RPC("Load", RpcTarget.OthersBuffered, new object[] { sendInfo });
-        }*/
-    }
     public void OnStatusEffectsChanged(StatBlock block, StatBlock.StatChangeSource source) {
         foreach (var statEvent in statChangedEvents) {
             statEvent.onChange.Invoke(block.GetStat(statEvent.changedStat));
         }
-        // Equipment is already synced, and we don't want updates triggered from the network.
-        /*if (source != StatBlock.StatChangeSource.Equipment && source != StatBlock.StatChangeSource.Network && photonView.IsMine) {
-            Hashtable sendInfo = new Hashtable();
-            int[] statusList = new int[statblock.activeEffects.Count];
-            for (int i = 0; i < statblock.activeEffects.Count; i++) {
-                statusList[i] = statblock.activeEffects[i].effect.GetID();
-            }
-            sendInfo["ActiveStatusEffects"] = statusList;
-            photonView.RPC("Load", RpcTarget.OthersBuffered, new object[] { sendInfo });
-        }*/
     }
     private void OnSteamAudioChanged(UnityScriptableSettings.ScriptableSetting setting) {
         foreach(AudioSource asource in GetComponentsInChildren<AudioSource>(true)) {
@@ -372,7 +303,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     private void OnDestroy() {
         bodyProportion.OnComplete -= OnCompleteBodyProportion;
         statblock.StatusEffectsChangedEvent -= OnStatusEffectsChanged;
-        inventory.EquipmentChangedEvent -= OnEquipmentChanged;
         MetabolizeEvent.UnregisterListener(this);
         foreach (var b in bellies) {
             b.GetContainer().OnChange.RemoveListener(OnReagentContainerChanged);
@@ -660,10 +590,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public void RPCUnfreezeAll() {
         GetComponentInChildren<PrecisionGrabber>().Unfreeze(false);
     }
-    [PunRPC]
-    public void PickupEquipment(int id) {
-        inventory.AddEquipment(Equipment.GetEquipmentFromID(id), EquipmentInventory.EquipmentChangeSource.Network);
-    }
     public void SendChat(string message) {
         photonView.RPC("RPCSendChat", RpcTarget.All, new object[]{message});
     }
@@ -685,14 +611,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             yield return null;
         }
         chatText.alpha = 0f;
-    }
-    [PunRPC]
-    public void DropEquipment(int slot) {
-        if (slot == -1 ) {
-            inventory.Clear(EquipmentInventory.EquipmentChangeSource.Network, true);
-            return;
-        }
-        inventory.RemoveEquipment(slot, EquipmentInventory.EquipmentChangeSource.Network, true);
     }
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
         PumpUpDick(Time.deltaTime * 0.02f);

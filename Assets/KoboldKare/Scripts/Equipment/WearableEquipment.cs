@@ -15,15 +15,11 @@ public class WearableEquipment : Equipment {
     public List<PrefabAttachPointPair> wearables = new List<PrefabAttachPointPair>();
     public override GameObject[] OnEquip(Kobold k, GameObject groundPrefab) {
         base.OnEquip(k, groundPrefab);
+        KoboldInventory inventory = k.GetComponent<KoboldInventory>();
         GameObject[] stuff = new GameObject[wearables.Count];
         int i = 0;
         foreach (PrefabAttachPointPair p in wearables) {
-            int ecount = 0;
-            for (int o = 0; o < k.inventory.equipment.Count; o++) {
-                if (k.inventory.equipment[o].equipment == this) {
-                    ecount++;
-                }
-            }
+            int ecount = inventory.GetEquipmentInstanceCount(this);
 
             if (p.stacks) {
                 Transform targetAttach = k.attachPoints[(int)p.attachPoint];

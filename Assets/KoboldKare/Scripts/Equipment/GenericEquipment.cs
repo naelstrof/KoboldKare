@@ -16,8 +16,8 @@ public class GenericEquipment : MonoBehaviourPun {
             return;
         }
         if (k.photonView.IsMine) {
-            k.inventory.AddEquipment(representedEquipment, gameObject, EquipmentInventory.EquipmentChangeSource.Pickup);
-            k.photonView.RPC("PickupEquipment", RpcTarget.OthersBuffered, new object[] { representedEquipment.GetID() });
+            KoboldInventory inventory = k.GetComponent<KoboldInventory>();
+            inventory.PickupEquipment(representedEquipment, gameObject);
         }
         if (photonView != null && photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);

@@ -42,10 +42,9 @@ public class Spawner : MonoBehaviour {
         if (Random.Range(0f, 1f) < chance) {
             //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation);
             string randomPrefab = GetRandomPrefab();
-            if (randomPrefab != "GrabbableKobold4") {
-                lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
-            } else {
-                lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
+            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
+            if (lastSpawned.GetComponent<Kobold>() != null) {
+                lastSpawned.GetComponent<Kobold>().RandomizeKobold();
             }
         }
     }
@@ -60,10 +59,9 @@ public class Spawner : MonoBehaviour {
         }
         //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation, null);
         string randomPrefab = GetRandomPrefab();
-        if (randomPrefab != "GrabbableKobold4") {
-            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
-        } else {
-            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { PlayerKoboldLoader.GetRandomKobold() });
+        lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
+        if (lastSpawned.GetComponent<Kobold>() != null) {
+            lastSpawned.GetComponent<Kobold>().RandomizeKobold();
         }
     }
     public void Start() {

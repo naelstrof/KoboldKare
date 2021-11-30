@@ -15,11 +15,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
-public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IOnEventCallback {
-    public Dictionary<int, PhotonView> playerList = new Dictionary<int, PhotonView>();
+public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback {
     public bool online {
         get {
-            return PhotonNetwork.OfflineMode != true && playerList.Count > 1;
+            return PhotonNetwork.OfflineMode != true && PhotonNetwork.PlayerList.Length > 1;
         }
     }
     public bool offline {
@@ -29,9 +28,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
-    [HideInInspector]
-    [NonSerialized]
-    public PhotonView localPlayerInstance;
     public GameEvent SpawnEvent;
     public IEnumerator JoinLobbyRoutine() {
         if (!PhotonNetwork.IsConnected) {
@@ -123,56 +119,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public void OnDisable() {
         //PhotonNetwork.RemoveCallbackTarget(this);
     }
-    public enum KoboldKareEvent : byte {
-        SpawnObject = 0,
-        //UpdateReagentContainer,
-        SetRandomSeed,
-        PlayerSpawn,
-    }
-    public void RPCPlayerSpawn(int photonViewID) {
-        ExitGames.Client.Photon.Hashtable data = new Hashtable();
-        data["oid"] = photonViewID;
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCache };
-        PhotonNetwork.RaiseEvent((byte)KoboldKareEvent.PlayerSpawn, data, raiseEventOptions, SendOptions.SendReliable);
-    }
-    public void OnEvent(EventData photonEvent) {
-        KoboldKareEvent e = (KoboldKareEvent)photonEvent.Code;
-        switch (e) {
-            case KoboldKareEvent.PlayerSpawn: {
-                    Hashtable data = (Hashtable)photonEvent.CustomData;
-
-                    if (!playerList.ContainsKey(photonEvent.Sender)) {
-                        playerList.Add(photonEvent.Sender, PhotonView.Find((int)data["oid"]));
-                    } else {
-                        playerList[photonEvent.Sender] = PhotonView.Find((int)data["oid"]);
-                    }
-                    // Cleanup the list.
-                    List<int> removeKeys = new List<int>();
-                    foreach (var pair in playerList) {
-                        if (PhotonNetwork.CurrentRoom.GetPlayer(pair.Key).IsInactive || pair.Value == null) {
-                            removeKeys.Add(pair.Key);
-                        }
-                    }
-                    foreach (var key in removeKeys) {
-                        playerList.Remove(key);
-                    }
-                    break;
-                }
-        }
-
-        int actorNr = photonEvent.Sender;
-        Player originatingPlayer = null;
-        if (actorNr > 0 && PhotonNetwork.NetworkingClient.CurrentRoom != null) {
-            originatingPlayer = PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(actorNr);
-        }
-        if (originatingPlayer == null || originatingPlayer.IsLocal) {
-            return;
-        }
-        if (SaveManager.isLoading) {
-            return;
-        }
-    }
-
     public void OnConnectedToMaster() {
         Debug.Log("OnConnectedToMaster() was called by PUN.");
         Debug.Log("Using version " + PhotonNetwork.NetworkingClient.AppVersion);
@@ -226,15 +172,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             if (spawnPoints.Count > 0) {
                 pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
             }
-            if (localPlayerInstance == null) {
-                GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] { PlayerKoboldLoader.GetSaveObject() });
-                localPlayerInstance = player.GetComponentInChildren<PhotonView>();
-                localPlayerInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-                SpawnEvent.Raise();
-                // Let everyone know we're not an NPC
-                RPCPlayerSpawn(localPlayerInstance.ViewID);
-                PopupHandler.instance.ClearAllPopups();
-            }
+            GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
+            player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+            SpawnEvent.Raise();
         }
     }
     public void SpawnControllablePlayer() {
@@ -256,18 +196,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
             DayNightCycle.instance?.ForceUpdate();
         }
-        if (!playerList.ContainsKey(other.ActorNumber)) {
-            playerList.Add(other.ActorNumber, null);
-        }
     }
 
     public void OnPlayerLeftRoom(Player other) {
         Debug.LogFormat("OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
         if (PhotonNetwork.IsMasterClient) {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-        }
-        if (playerList.ContainsKey(other.ActorNumber)) {
-            playerList.Remove(other.ActorNumber);
         }
     }
     public void OnConnected() {

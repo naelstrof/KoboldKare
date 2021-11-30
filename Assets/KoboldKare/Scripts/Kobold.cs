@@ -715,7 +715,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData.Length != 0) {
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
             info.Sender.TagObject = this;
         }
     }

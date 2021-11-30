@@ -696,7 +696,10 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             stream.SendNext(thickness);
             stream.SendNext(topBottom);
             stream.SendNext(sex);
-            stream.SendNext((Vector4)HueBrightnessContrastSaturation);
+            stream.SendNext(HueBrightnessContrastSaturation.r);
+            stream.SendNext(HueBrightnessContrastSaturation.g);
+            stream.SendNext(HueBrightnessContrastSaturation.b);
+            stream.SendNext(HueBrightnessContrastSaturation.a);
         } else {
             bool ragged = (bool)stream.ReceiveNext();
             if (!ragdolled && ragged && !bodyProportion.running) {
@@ -709,7 +712,12 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             thickness = (float)stream.ReceiveNext();
             topBottom = (float)stream.ReceiveNext();
             sex = (float)stream.ReceiveNext();
-            HueBrightnessContrastSaturation = (Vector4)stream.ReceiveNext();
+            float r = (float)stream.ReceiveNext();
+            float g = (float)stream.ReceiveNext();
+            float b = (float)stream.ReceiveNext();
+            float a = (float)stream.ReceiveNext();
+            var col = new Color(r,g,b,a);
+            HueBrightnessContrastSaturation = col;
         }
     }
 

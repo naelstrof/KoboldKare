@@ -178,6 +178,9 @@ public class ReagentContents {
         byte[] bytes = new byte[size];
         int index = 0;
         foreach (KeyValuePair<short, Reagent> pair in reagentContents.contents) {
+            if (pair.Value.volume <= 0f) {
+                continue;
+            }
             Protocol.Serialize((short)pair.Key, bytes, ref index);
             Protocol.Serialize(pair.Value.volume, bytes, ref index);
         }

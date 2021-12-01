@@ -15,8 +15,15 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
     private GenericReagentContainer container;
     [SerializeField]
     private GameEvent midnightEvent;
+
     [SerializeField]
-    private VisualEffect effect;
+    public float timeToFadeWatered;
+
+    [SerializeField]
+    public Color darkenedColor;
+
+    [SerializeField]
+    private VisualEffect effect, wateredEffect;
     [SerializeField]
     private GameObject display;
 
@@ -38,12 +45,16 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
         }
         foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
             renderer.material.SetFloat("_BounceAmount", 1f);
+            StartCoroutine(DarkenMaterial(renderer.material));
         }
+        wateredEffect.SendEvent("Play");
         effect.gameObject.SetActive(false);
         effect.gameObject.SetActive(true);
     }
 
     void SwitchTo(ScriptablePlant newPlant) {
+        UndarkenMaterials();
+        wateredEffect.Stop();
         if (plant == newPlant) {
             return;
         }
@@ -88,6 +99,21 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
+        }
+    }
+
+    void UndarkenMaterials(){
+        foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
+            renderer.material.color = Color.white;
+        }
+    }
+
+    IEnumerator DarkenMaterial(Material tgtMat){
+        var timeSoFar = 0f;
+        while(timeSoFar < timeToFadeWatered){
+            yield return new WaitForSeconds(0.10f); //Updates 10 times per second; doesn't need to be RT.
+            timeSoFar += 0.10f;
+            tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, timeSoFar/timeToFadeWatered);
         }
     }
 }

@@ -18,21 +18,21 @@ public class CreateRoomOnPress : MonoBehaviour {
         if (newGameString == null || saveDropdown == null) {
             return;
         }
-        saveDropdown.options = new List<TMP_Dropdown.OptionData>();
-        saveDropdown.options.Add(new TMP_Dropdown.OptionData(newGameString.GetLocalizedString()));
-        SaveManager.SaveList list = SaveManager.GetSaveList(true);
-        foreach(string savename in list.fileNames) {
-            saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
-        }
+        //saveDropdown.options = new List<TMP_Dropdown.OptionData>();
+        //saveDropdown.options.Add(new TMP_Dropdown.OptionData(newGameString.GetLocalizedString()));
+        //SaveManager.SaveList list = SaveManager.GetSaveList(true);
+        //foreach(string savename in list.fileNames) {
+            //saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
+        //}
     }
     public IEnumerator CreateRoomRoutine() {
-        if (saveDropdown.value == 0) {
+        //if (saveDropdown.value == 0) {
             yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
             PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn });
-        } else {
-            SaveManager.SaveList list = SaveManager.GetSaveList(false);
-            SaveManager.Load(list.fileNames[saveDropdown.value - 1], true, (int)maxPlayersField.value, roomNameField.text, !isPrivate.isOn);
-        }
+        //} else {
+            //SaveManager.SaveList list = SaveManager.GetSaveList(false);
+            //SaveManager.Load(list.fileNames[saveDropdown.value - 1], true, (int)maxPlayersField.value, roomNameField.text, !isPrivate.isOn);
+        //}
     }
     public void CreateRoom() {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());

@@ -81,11 +81,14 @@ public static class SaveManager {
         try {
             string filePath = Application.persistentDataPath + "/" + filename;
             dataStream = new FileStream(filePath, FileMode.Create);
-            BinaryWriter writer = new BinaryWriter(dataStream);
+            Photon.Pun.PhotonStream photonStream = new PhotonStream(true, null);
+            PhotonMessageInfo info = new PhotonMessageInfo();
             foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
-                writer.Write(view.ViewID);
+                photonStream.SendNext(view.ViewID);
+                foreach(IPunObservable observable in view.ObservedComponents) {
+                    observable.OnPhotonSerializeView(photonStream, info);
+                }
             }
-            //BinaryFormatter converter = new BinaryFormatter();
             //converter.Serialize(dataStream, save);
             dataStream.Close();
             Debug.Log("Saved to " + filePath);

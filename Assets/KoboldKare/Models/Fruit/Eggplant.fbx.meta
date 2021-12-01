@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 124edce8a486b3748840da5ab32e0eb3
+guid: a245ca5963892954a965796814fbcbed
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Pineapple
-    second: {fileID: 2100000, guid: 9a91eb4969fab744988eebcb16e1bd4e, type: 2}
+      name: Eggplant
+    second: {fileID: 2100000, guid: 772b9fc9039a3754288bbf6185e062bd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -41,7 +41,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1

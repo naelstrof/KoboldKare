@@ -10,6 +10,16 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         Hose,
         Splash,
     }
+    private bool firing = false;
+    public override bool isFiring {
+        get {
+            return firing; 
+        }
+    }
+
+    public override float GetVPS() {
+        return vps;
+    }
     [SerializeField]
     private OutputType type;
     private Mozzarella mozzarella;
@@ -27,8 +37,8 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     private float velocityMultiplier = 0.1f;
     [SerializeField][Range(0f,1f)]
     private float velocityVariance = 0f;
-    private WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
-    private List<Coroutine> fireRoutines;
+    private WaitForSeconds waitForSeconds;
+    private List<Coroutine> fireRoutines = new List<Coroutine>();
     [SerializeField]
     private VisualEffect effect;
     [SerializeField]
@@ -70,28 +80,27 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         }
         effect.Stop();
         fireRoutines.Clear();
+        firing = false;
     }
-    void Start() {
+    void Awake() {
         effect.Stop();
+        waitForSeconds = new WaitForSeconds(squirtDuration*1.25f);
         currentIndex = 0;
         mozzarella = GetComponent<Mozzarella>();
         mozzarellaRenderer = GetComponent<MozzarellaRenderer>();
         fluidHitListener = GetComponent<FluidHitListener>();
-        fireRoutines = new List<Coroutine>();
     }
     IEnumerator FireRoutine(GenericReagentContainer b) {
+        firing = true;
         while(b.volume > 0f) {
-            SetRadius(Mathf.Clamp(b.volume*0.05f, 0.02f, 0.2f));
-            if (b.volume > 30f) {
+            SetRadius(Mathf.Clamp(b.volume*0.04f, 0.02f, 0.2f));
+            for(int i=0;i*8f<b.volume && i < mozzarella.squirts.Count;i++) {
                 Squirt();
             }
-            if (b.volume > 10f) {
-                Squirt();
-            }
-            Squirt();
             SplashTransfer(b, vps);
             yield return waitForSeconds;
         }
+        firing = false;
     }
     private void SetRadius( float radius ) {
         mozzarellaRenderer.SetPointRadius(radius);
@@ -115,6 +124,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         }*/
     }
     IEnumerator Splash(GenericReagentContainer b, float amount, float duration) {
+        firing = true;
         effect.Play();
         float targetVolume = Mathf.Max(b.volume-amount,0f);
         float startTime = Time.time;
@@ -135,8 +145,10 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
             mozzarella.squirts[i] = new Mozzarella.Squirt(transform.position, Vector3.zero, 0f, mozzarella.squirts[i].index);
         }
         effect.Stop();
+        firing = false;
     }
     IEnumerator Hose(GenericReagentContainer b) {
+        firing = true;
         effect.Play();
         SetRadius(Mathf.Clamp(b.volume*0.012f, 0.01f, 0.2f));
         while(b.volume > 0f) {
@@ -154,6 +166,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
             mozzarella.squirts[i] = new Mozzarella.Squirt(transform.position, Vector3.zero, 0f, mozzarella.squirts[i].index);
         }
         effect.Stop();
+        firing = false;
     }
     IEnumerator Squirt(int i, float duration) {
         //effect.Play();

@@ -40,9 +40,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "TopBottom": targetKobold.topBottom = setting.value; break;
             case "Thickness": targetKobold.thickness = setting.value; break;
             case "BoobSize": {
+                targetKobold.baseBoobSize = setting.value*40f;
                 foreach (var boob in targetKobold.boobs) {
-                    boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Fat"), setting.value * boob.reagentVolumeDivisor * 0.7f);
-                    boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Milk"), setting.value * boob.reagentVolumeDivisor * 0.3f);
+                    boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Milk"), setting.value * 0.3f);
                 }
                 break;
             }

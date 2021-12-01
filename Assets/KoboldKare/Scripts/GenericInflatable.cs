@@ -116,6 +116,14 @@ public class GenericInflatable : MonoBehaviour {
     //private AbstractGoTween tween;
     public float tweenDuration = 0.8f;
     private bool tweening = false;
+    private float internalBaseSize = 0f;
+    public float baseSize {
+        get { return internalBaseSize; }
+        set {
+            internalBaseSize = value;
+            TriggerTween();
+        }
+    }
     public float size {
         get {
             return currentSize;
@@ -216,9 +224,6 @@ public class GenericInflatable : MonoBehaviour {
         }
     }
     void Start() {
-        if (container == null) {
-            return;
-        }
         size = GetDesiredSize();
     }
     void OnEnable() {
@@ -247,9 +252,12 @@ public class GenericInflatable : MonoBehaviour {
         tweening = false;
     }
     float GetDesiredSize() {
-        float volume = 0f;
+        if (container == null) {
+            return baseSize;
+        }
+        float volume = baseSize;
         if (reagentMasks.Length == 0) {
-            volume = container.volume;
+            volume = container.volume + baseSize;
         } else {
             foreach (var mask in reagentMasks) {
                 volume += container.GetVolumeOf(mask);

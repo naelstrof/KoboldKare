@@ -38,9 +38,8 @@ public class DickInfo : MonoBehaviour {
     public class DickSet {
         public Transform dickContainer;
         public PenetrationTech.Penetrator dick;
-        public Joint joint;
-
-        public GenericInflatable[] dickInflaters;
+        public GenericInflatable dickInflater;
+        public GenericInflatable bonerInflator;
         public GenericInflatable balls;
         public Equipment.AttachPoint attachPoint;
 
@@ -100,9 +99,6 @@ public class DickInfo : MonoBehaviour {
                 k.koboldBodyRenderers.Remove(r);
             }
             set.balls.SetContainer(null);
-            foreach(var inflator in set.dickInflaters) {
-                inflator.SetContainer(null);
-            }
             k.activeDicks.Remove(set);
             set.dick.OnMove.RemoveListener(OnDickMovement);
             foreach(Rigidbody r in k.ragdollBodies) {
@@ -185,6 +181,8 @@ public class DickInfo : MonoBehaviour {
                 if (set.dick.holeTarget != null) {
                     pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
                 }
+                // Add a little precum per-pulse.
+                set.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), 1f, GenericReagentContainer.InjectType.Inject);
                 if (!set.dick.IsInside() || pennedKobold == null) {
                     set.dick.GetComponentInChildren<FluidOutput>(true).Fire(set.balls.GetContainer());
                 } else {
@@ -201,13 +199,12 @@ public class DickInfo : MonoBehaviour {
             }
             k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
             set.balls.SetContainer(k.balls);
-            foreach(var inflator in set.dickInflaters) {
-                inflator.SetContainer(k.dickContainer);
-            }
             k.activeDicks.Add(set);
             set.dick.OnMove.AddListener(OnDickMovement);
             // Make sure the dick is the right color, this just forces a reset of the colors.
-            k.HueBrightnessContrastSaturation = k.HueBrightnessContrastSaturation;
+            Color colorSave = k.HueBrightnessContrastSaturation;
+            k.HueBrightnessContrastSaturation = Color.white;
+            k.HueBrightnessContrastSaturation = colorSave;
         }
         foreach(DickSet set in dicks) {
             foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>()) {

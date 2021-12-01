@@ -17,8 +17,10 @@ public class FluidHitListener : MonoBehaviour {
     public bool erasing = false;
     private static HashSet<GenericReagentContainer> staticTargets = new HashSet<GenericReagentContainer>();
     private static Collider[] staticColliders = new Collider[32];
-    void Start() {
+    void Awake() {
         transferContents = new ReagentContents();
+    }
+    void Start() {
         GetComponent<MozzarellaHitEventListener>().OnDepthBufferHit += OnDepthBufferHit;
     }
     void SplashTransfer(Vector3 position, float radius, float amount) {

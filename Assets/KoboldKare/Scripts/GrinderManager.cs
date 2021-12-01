@@ -12,7 +12,6 @@ public class GrinderManager : MonoBehaviourPun {
     public Animator animator;
     public Transform attachPoint;
     public AudioSource deny;
-    public FluidOutput stream;
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
     private bool internalOn;
@@ -60,7 +59,6 @@ public class GrinderManager : MonoBehaviourPun {
         }
         StopCoroutine("WaitAndThenClear");
         StartCoroutine("WaitAndThenClear");
-        stream.Fire(container);
     }
     private void HandleCollision(Collider other) {
         if (!on) {

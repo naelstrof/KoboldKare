@@ -64,8 +64,8 @@ public class SeedExtractor : MonoBehaviourPun {
     private IEnumerator OutputSeeds() {
         yield return new WaitForSeconds(2f);
         foreach(var pair in spawnableLookup) {
-            while (internalContents.GetVolumeOf(pair.Key)>= pair.Value.neededVolume) {
-                internalContents.OverrideReagent(pair.Key, internalContents.GetVolumeOf(pair.Key));
+            while (internalContents.GetVolumeOf(pair.Key) >= pair.Value.neededVolume) {
+                internalContents.OverrideReagent(pair.Key, internalContents.GetVolumeOf(pair.Key)-pair.Value.neededVolume);
                 PhotonNetwork.Instantiate(spawnableLookup[pair.Key].prefab.photonName, seedSpawnLocation.position, seedSpawnLocation.rotation);
                 yield return new WaitForSeconds(2f);
             }

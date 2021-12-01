@@ -96,7 +96,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     public Transform hip;
     public LayerMask playerHitMask;
     private float internalTopBottom;
-    [HideInInspector]
     public float topBottom {
         get {
             return internalTopBottom;
@@ -111,7 +110,6 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
     }
     private float internalThickness;
-    [HideInInspector]
     public float thickness {
         get {
             return internalThickness;
@@ -120,6 +118,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             if (Mathf.Approximately(internalThickness, value)) {
                 return;
             }
+            internalThickness = value;
             StandUp();
             bodyProportion.Initialize();
         }
@@ -331,6 +330,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         steamAudioSetting.onValueChange -= OnSteamAudioChanged;
         steamAudioSetting.onValueChange += OnSteamAudioChanged;
         OnSteamAudioChanged(steamAudioSetting);
+        bodyProportion.Initialize();
     }
     private void OnDestroy() {
         bodyProportion.OnComplete -= OnCompleteBodyProportion;

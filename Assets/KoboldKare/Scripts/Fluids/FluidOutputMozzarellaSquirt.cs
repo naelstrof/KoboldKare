@@ -93,7 +93,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     IEnumerator FireRoutine(GenericReagentContainer b) {
         firing = true;
         while(b.volume > 0f) {
-            SetRadius(Mathf.Clamp(b.volume*0.04f, 0.02f, 0.2f));
+            SetRadius(Mathf.Clamp(b.volume*0.03f, 0.03f, 0.2f));
             for(int i=0;i*8f<b.volume && i < mozzarella.squirts.Count;i++) {
                 Squirt();
             }

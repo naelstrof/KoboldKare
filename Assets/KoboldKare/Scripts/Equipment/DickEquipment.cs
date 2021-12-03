@@ -31,7 +31,7 @@ public class DickEquipment : Equipment {
         // Search for a dick that matches our equipment, then use the info to remove all the dicks associated with it.
         foreach(DickInfo.DickSet set in k.activeDicks) {
             if (set.dickIdentifier == GetInstanceID()) {
-                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthReagent")), k.baseDickSize);
+                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.baseDickSize);
             }
         }
         foreach(DickInfo.DickSet set in k.activeDicks) {

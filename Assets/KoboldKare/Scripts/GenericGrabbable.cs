@@ -38,8 +38,7 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
 
     public void Start() {
         foreach(var pair in rendererMaterialPairs) {
-            if(pair.defaultMaterial != null)
-                pair.defaultMaterial = pair.renderer.material;
+            pair.defaultMaterial = pair.renderer.material;
         }
     }
 

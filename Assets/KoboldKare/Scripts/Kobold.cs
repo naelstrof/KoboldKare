@@ -679,7 +679,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Milk"), melonJuiceVolume / boobs.Count, GenericReagentContainer.InjectType.Metabolize);
             }
             float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-            baseDickSize += eggplantJuiceVolume*2f;
+            baseDickSize += eggplantJuiceVolume*0.5f;
             float growthSerumVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
             foreach (var ss in subcutaneousStorage) {
                 ss.GetContainer().AddMix(ReagentDatabase.GetReagent("GrowthSerum"), growthSerumVolume/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
@@ -689,7 +689,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 ss.GetContainer().AddMix(ReagentDatabase.GetReagent("Fat"), milkShakeVolume*2f/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
             }
             float pineappleJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
-            baseBallSize += pineappleJuiceVolume*3f;
+            baseBallSize += pineappleJuiceVolume*0.5f;
             balls.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f, GenericReagentContainer.InjectType.Metabolize);
 
             if (Time.timeSinceLevelLoad > nextEggTime) {

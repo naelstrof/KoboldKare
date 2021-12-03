@@ -58,6 +58,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         if (b.volume <= 0f){ 
             return;
         }
+        SetRadius(Mathf.Clamp(b.volume*0.02f, 0.01f, 0.3f));
         Color c = b.GetColor();
         fluidHitListener.erasing = b.IsCleaningAgent();
         effect.SetVector4("Color", c);
@@ -93,8 +94,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     IEnumerator FireRoutine(GenericReagentContainer b) {
         firing = true;
         while(b.volume > 0f) {
-            SetRadius(Mathf.Clamp(b.volume*0.03f, 0.03f, 0.2f));
-            for(int i=0;i*8f<b.volume && i < mozzarella.squirts.Count;i++) {
+            for(int i=0;i*2f < b.volume && i < mozzarella.squirts.Count;i++) {
                 Squirt();
             }
             SplashTransfer(b, vps);
@@ -128,7 +128,6 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         effect.Play();
         float targetVolume = Mathf.Max(b.volume-amount,0f);
         float startTime = Time.time;
-        //SetRadius(Mathf.Clamp(b.volume*0.02f, 0.01f, 0.2f));
         SplashTransfer(b, amount);
         while(Time.time < startTime+duration) {
             float t = (Time.time-startTime)/duration;
@@ -150,7 +149,6 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     IEnumerator Hose(GenericReagentContainer b) {
         firing = true;
         effect.Play();
-        SetRadius(Mathf.Clamp(b.volume*0.012f, 0.01f, 0.2f));
         while(b.volume > 0f) {
             for(int i=0;i<mozzarella.squirts.Count;i++) {
                 float volume = Mathf.Clamp01(Mathf.Abs(Mathf.Sin(Time.time*2f+i*5f))-0.2f);

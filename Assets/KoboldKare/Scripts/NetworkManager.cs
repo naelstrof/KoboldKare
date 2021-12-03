@@ -154,29 +154,34 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //}
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
-        if (!SaveManager.isLoading) {
-            yield return new WaitUntil(() => !LevelLoader.loadingLevel);
-            //yield return new WaitUntil(()=>(!GameManager.instance.loadingLevel && !GameManager.instance.networkManager.loading));
-            for (int i = 0; i < spawnPoints.Count; i++) {
-                if (spawnPoints[i] == null) {
-                    spawnPoints.RemoveAt(i--);
-                }
-            }
-            if (spawnPoints.Count == 0) {
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerSpawn")) {
-                    spawnPoints.Add(g.transform);
-                }
-            }
-            //GameObject[] spawns = GameObject.FindGameObjectsWithTag("PlayerSpawn");
-            Vector3 pos = Vector3.zero;
-            if (spawnPoints.Count > 0) {
-                pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
-            }
-            GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
-            player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-            SpawnEvent.Raise();
-            PopupHandler.instance.ClearAllPopups();
+        if (SaveManager.isLoading) {
+            yield break;
         }
+        yield return new WaitUntil(() => !LevelLoader.loadingLevel);
+        // If our kobold exists, don't spawn another
+        if (PhotonNetwork.LocalPlayer.TagObject != null && (PhotonNetwork.LocalPlayer.TagObject as Kobold) != null) {
+            yield break;
+        }
+        //yield return new WaitUntil(()=>(!GameManager.instance.loadingLevel && !GameManager.instance.networkManager.loading));
+        for (int i = 0; i < spawnPoints.Count; i++) {
+            if (spawnPoints[i] == null) {
+                spawnPoints.RemoveAt(i--);
+            }
+        }
+        if (spawnPoints.Count == 0) {
+            foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerSpawn")) {
+                spawnPoints.Add(g.transform);
+            }
+        }
+        //GameObject[] spawns = GameObject.FindGameObjectsWithTag("PlayerSpawn");
+        Vector3 pos = Vector3.zero;
+        if (spawnPoints.Count > 0) {
+            pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
+        }
+        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
+        player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+        SpawnEvent.Raise();
+        PopupHandler.instance.ClearAllPopups();
     }
     public void SpawnControllablePlayer() {
         GameManager.instance.StartCoroutine(SpawnControllablePlayerRoutine());

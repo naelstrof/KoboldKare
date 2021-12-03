@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Build;
@@ -32,3 +33,4 @@ class ShaderStripper : IPreprocessShaders
         }
     }
 }
+#endif

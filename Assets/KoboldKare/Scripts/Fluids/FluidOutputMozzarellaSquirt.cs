@@ -94,7 +94,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     IEnumerator FireRoutine(GenericReagentContainer b) {
         firing = true;
         while(b.volume > 0f) {
-            for(int i=0;i*2f < b.volume && i < mozzarella.squirts.Count;i++) {
+            for(int i=0;i < b.volume && i < mozzarella.squirts.Count;i++) {
                 Squirt();
             }
             SplashTransfer(b, vps);

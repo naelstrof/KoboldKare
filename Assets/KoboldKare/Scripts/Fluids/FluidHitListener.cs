@@ -24,6 +24,9 @@ public class FluidHitListener : MonoBehaviour {
         GetComponent<MozzarellaHitEventListener>().OnDepthBufferHit += OnDepthBufferHit;
     }
     void SplashTransfer(Vector3 position, float radius, float amount) {
+        if (erasing) {
+            radius *= 1.25f;
+        }
         ReagentContents spill = transferContents.Spill(amount);
         if (spill.volume <= 0f) {
             return;

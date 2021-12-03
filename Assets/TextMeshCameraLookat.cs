@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TextMeshCameraLookat : MonoBehaviour{
     void Update(){
-        transform.LookAt(Camera.main.transform);
+        if(Camera.main != null)
+            transform.LookAt(Camera.main.transform);
     }
 }

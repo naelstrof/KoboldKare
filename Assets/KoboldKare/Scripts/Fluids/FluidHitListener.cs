@@ -25,7 +25,7 @@ public class FluidHitListener : MonoBehaviour {
     }
     void SplashTransfer(Vector3 position, float radius, float amount) {
         if (erasing) {
-            radius *= 1.25f;
+            radius *= 1.2f;
         }
         ReagentContents spill = transferContents.Spill(amount);
         if (spill.volume <= 0f) {

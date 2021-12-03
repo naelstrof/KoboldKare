@@ -22,13 +22,20 @@ class ShaderStripper : IPreprocessShaders
     // The first one executed is the one where callbackOrder is returning the smallest number.
     public int callbackOrder { get { return 0; } }
 
-    public void OnProcessShader(Shader shader, ShaderSnippetData snippet, IList<ShaderCompilerData> shaderCompilerData) {
+    bool ShouldRemove(ShaderKeywordSet set) {
         foreach(var keyword in m_Keywords) {
-            for (int i = 0; i < shaderCompilerData.Count; ++i) {
-                if (shaderCompilerData[i].shaderKeywordSet.IsEnabled(keyword)) {
-                    shaderCompilerData.RemoveAt(i);
-                    --i;
-                }
+            if (set.IsEnabled(keyword)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void OnProcessShader(Shader shader, ShaderSnippetData snippet, IList<ShaderCompilerData> shaderCompilerData) {
+        for (int i = 0; i < shaderCompilerData.Count; ++i) {
+            if (ShouldRemove(shaderCompilerData[i].shaderKeywordSet)) {
+                shaderCompilerData.RemoveAt(i);
+                --i;
             }
         }
     }

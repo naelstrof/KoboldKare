@@ -5,50 +5,12 @@ using UnityEditor;
 using System.IO;
 
 [System.Serializable]
-public class PhotonGameObjectReference : ISerializationCallbackReceiver {
+public class PhotonGameObjectReference {
     public GameObject gameObject;
-    public string filepath;
     public string photonName;
-    public void OnBeforeSerialize() {
-#if UNITY_EDITOR
-        GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/" + photonName + ".prefab");
-        if (obj == null) {
-            obj = AssetDatabase.LoadAssetAtPath<GameObject>(filepath);
-        }
-        if (obj != null) {
-            gameObject = obj;
-        }
-#endif
-    }
-
-    // This doesn't get called automatically, classes that use this class *must* call it!!
     public void OnValidate() {
-#if UNITY_EDITOR
-        if (gameObject == null) {
-            GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/" + photonName + ".prefab");
-            if (obj == null) {
-                obj = AssetDatabase.LoadAssetAtPath<GameObject>(filepath);
-            }
-            if (obj != null) {
-                gameObject = obj;
-            }
+        if (gameObject != null) {
+            photonName = gameObject.name;
         }
-        if (gameObject == null) {
-            return;
-        }
-        string path = AssetDatabase.GetAssetPath(gameObject);
-        if (!path.StartsWith("Assets/Resources/")) {
-            Debug.LogError("Prefab " + path + " is located outside the resources folder, Photon won't be able to instantiate it!");
-            return;
-        }
-        filepath = path;
-        string filename = Path.GetFileNameWithoutExtension(path);
-        photonName = filename;
-#endif
-    }
-    public void OnAfterDeserialize() {
-#if UNITY_EDITOR
-        photonName = Path.GetFileNameWithoutExtension(filepath);
-#endif
     }
 }

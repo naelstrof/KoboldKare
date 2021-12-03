@@ -27,6 +27,9 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
     [SerializeField]
     private GameObject display;
 
+    [SerializeField]
+    public AudioSource audioSource;
+
     void Start() {
         container = GetComponent<GenericReagentContainer>();
         container.OnFilled.AddListener(OnFilled);
@@ -48,6 +51,7 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
             StartCoroutine(DarkenMaterial(renderer.material));
         }
         wateredEffect.SendEvent("Play");
+        audioSource.Play();
         effect.gameObject.SetActive(false);
         effect.gameObject.SetActive(true);
     }

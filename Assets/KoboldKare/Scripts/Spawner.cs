@@ -10,11 +10,18 @@ using UnityEditor;
 
 public class Spawner : MonoBehaviour {
     public float chance = .5f;
+    public float overrideCost;
     //public GameObject prefab;
     public List<PhotonGameObjectReference> possibleSpawns = new List<PhotonGameObjectReference>();
     public bool spawnOnLoad = false;
     public LayerMask obstacles;
+    public bool enforceMaximum;
+    public int maxSpawnLimitPerDay, spawnedCount;
     private GameObject lastSpawned;
+    public AudioClip spawnSound, spawnMaxReached;
+    public AudioSource audioSource;
+    public PurchaseHint hint;
+
     private string GetRandomPrefab() {
         return possibleSpawns[Random.Range(0, possibleSpawns.Count)].photonName;
     }
@@ -40,17 +47,34 @@ public class Spawner : MonoBehaviour {
         }
         yield return new WaitForEndOfFrame();
         if (Random.Range(0f, 1f) < chance) {
-            //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation);
-            string randomPrefab = GetRandomPrefab();
-            lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
-            if (lastSpawned.GetComponent<Kobold>() != null) {
-                lastSpawned.GetComponent<Kobold>().RandomizeKobold();
+            if(enforceMaximum){
+                if(spawnedCount < maxSpawnLimitPerDay){
+                    string randomPrefab = GetRandomPrefab();
+                    lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
+                    spawnedCount = Mathf.Clamp(spawnedCount+1, 0, maxSpawnLimitPerDay);
+
+                    if (lastSpawned.GetComponent<Kobold>() != null) {
+                        lastSpawned.GetComponent<Kobold>().RandomizeKobold();
+                    }
+                }
             }
+            else{
+                string randomPrefab = GetRandomPrefab();
+                lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
+                
+                if (lastSpawned.GetComponent<Kobold>() != null) {
+                    lastSpawned.GetComponent<Kobold>().RandomizeKobold();
+                }
+            }
+
+            //lastSpawned = GameObject.Instantiate(prefab, transform.position, transform.rotation);
+            
         }
     }
     public void Spawn() {
         StopAllCoroutines();
         StartCoroutine(WaitAndThenSpawn());
+        PlaySFX();
     }
     public void InstantSpawn() {
         PhotonView view = GetComponentInParent<PhotonView>();
@@ -71,9 +95,20 @@ public class Spawner : MonoBehaviour {
         if (spawnOnLoad) {
             Spawn();
         }
+        if(hint != null){
+            if(overrideCost != 0){ hint.ChangeText(overrideCost.ToString()); }
+        }
     }
     private void OnDrawGizmos() {
         Gizmos.DrawIcon(transform.position, "ico_spawn.png", true);
+    }
+
+    void PlaySFX(){
+        if(spawnedCount < maxSpawnLimitPerDay){
+            if(spawnSound != null)audioSource.PlayOneShot(spawnSound);
+        }
+        else
+            if(spawnMaxReached != null) audioSource.PlayOneShot(spawnMaxReached);
     }
 
     public void OnValidate() {
@@ -82,5 +117,13 @@ public class Spawner : MonoBehaviour {
             photonGameObject.OnValidate();
         }
 #endif
+    }
+
+    public void ResetCount(){
+        spawnedCount = 0;
+    }
+
+    public bool CanSpawn(){
+        return spawnedCount < maxSpawnLimitPerDay;
     }
 }

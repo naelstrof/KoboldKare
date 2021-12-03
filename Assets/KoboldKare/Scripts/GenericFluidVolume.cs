@@ -131,4 +131,8 @@ public class GenericFluidVolume : MonoBehaviour {
             fluidScaler.localScale = fluidScaler.localScale.With(y:volumeContainer.volume/volumeContainer.maxVolume);
         }
     }
+
+    public bool HasAnyFillAmount(){
+        return !volumeContainer.isEmpty; //If not empty, return true; if empty, return false
+    }
 }

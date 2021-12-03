@@ -26,7 +26,7 @@ public class Build {
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.Development);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
@@ -39,7 +39,7 @@ public class Build {
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.app";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.Development);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
@@ -52,7 +52,7 @@ public class Build {
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.Development);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
@@ -65,7 +65,7 @@ public class Build {
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.Development);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }

@@ -58,7 +58,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         if (b.volume <= 0f){ 
             return;
         }
-        SetRadius(Mathf.Clamp(b.volume*0.02f, 0.01f, 0.3f));
+        SetRadius(Mathf.Clamp(b.volume*0.03f, 0.01f, 0.35f));
         Color c = b.GetColor();
         fluidHitListener.erasing = b.IsCleaningAgent();
         effect.SetVector4("Color", c);
@@ -105,7 +105,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     private void SetRadius( float radius ) {
         mozzarellaRenderer.SetPointRadius(radius);
         //mozzarella.SetVisco(radius);
-        velocityVariance = Mathf.Clamp(radius*0.5f, 0.01f, 0.1f);
+        velocityVariance = Mathf.Clamp(radius*0.5f, 0.01f, 0.08f);
         fluidHitListener.decalSize = radius*1.1f;
     }
     void SplashTransfer(GenericReagentContainer b, float amount) {

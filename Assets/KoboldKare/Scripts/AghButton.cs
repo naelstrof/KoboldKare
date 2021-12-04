@@ -44,7 +44,7 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
-    [MenuItem("KoboldKare/Find Specualar Workflow Materials")]
+    [MenuItem("KoboldKare/Find Specular Workflow Materials")]
     public static void FindSpecularWorkflowMaterials() {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
@@ -68,6 +68,10 @@ public static class AghButton {
             if (go.IsKeywordEnabled("_ENVIRONMENTREFLECTIONS_OFF")) {
                 go.DisableKeyword("_ENVIRONMENTREFLECTIONS_OFF");
             }
+            if (go.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON")) {
+                go.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            }
+            EditorUtility.SetDirty(go);
         }
     }
     [MenuItem("KoboldKare/Find Missing Script")]

@@ -18,6 +18,7 @@ class ShaderStripper : IPreprocessShaders
         m_Keywords.Add(new ShaderKeyword("_ADDITIONAL_LIGHTS_VERTEX"));
         m_Keywords.Add(new ShaderKeyword("_ENVIRONMENTREFLECTIONS_OFF"));
         m_Keywords.Add(new ShaderKeyword("_SPECULARHIGHLIGHTS_OFF"));
+        m_Keywords.Add(new ShaderKeyword("_ALPHAPREMULTIPLY_ON"));
     }
 
     // Multiple callback may be implemented.

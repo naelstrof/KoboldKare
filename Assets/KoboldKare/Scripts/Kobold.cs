@@ -291,7 +291,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
                 }
             }
             GetComponent<KoboldInventory>().PickupEquipment(dick, null);
-            baseBoobSize = Random.Range(0f,0.2f)*40f;
+            baseBoobSize = Random.Range(0f,0.2f)*30f;
             baseBallSize = Random.Range(0.5f,1f)*40f;
             baseDickSize = Random.Range(0f,1f);
         } else {
@@ -299,7 +299,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
             baseBallSize = 0f;
         }
         topBottom = Random.Range(-1f,1f);
-        thickness = Random.Range(-1f, 1f);
+        thickness = Random.Range(-1f,1f);
 
         sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), Random.Range(0.7f,1.2f) * sizeInflatable.reagentVolumeDivisor);
         RegenerateSlowly(1000f);

@@ -56,6 +56,20 @@ public static class AghButton {
             }
         }
     }
+    [MenuItem("KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
+    public static void FindSpecularOffMaterials() {
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            if (go.IsKeywordEnabled("_SPECULARHIGHTLIGHTS_OFF")) {
+                go.DisableKeyword("_SPECULARHIGHTLIGHTS_OFF");
+            }
+            if (go.IsKeywordEnabled("_ENVIRONMENTREFLECTIONS_OFF")) {
+                go.DisableKeyword("_ENVIRONMENTREFLECTIONS_OFF");
+            }
+        }
+    }
     [MenuItem("KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {
         foreach(GameObject g in Selection.gameObjects) {

@@ -115,6 +115,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
             stream.SendNext(contents);
         } else {
             contents = (ReagentContents)stream.ReceiveNext();
+            contents.SetMaxVolume(startingMaxVolume);
             OnReagentContentsChanged(InjectType.Metabolize);
         }
     }

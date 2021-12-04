@@ -46,6 +46,12 @@ public class Equipment : ScriptableObject {
         foreach(StatusEffect effect in effectsToApply) {
             k.statblock.AddStatusEffect(effect, StatBlock.StatChangeSource.Equipment);
         }
+        // If we take up a slot, and we're actually being picked up off the ground, then we should unequip all the same slot.
+        if (slot != EquipmentSlot.Misc && groundPrefab != null) {
+            while(k.GetComponent<KoboldInventory>().GetEquipmentInSlot(slot) != null) {
+                k.GetComponent<KoboldInventory>().RemoveEquipment(slot, true);
+            }
+        }
         return null;
     }
     public virtual GameObject OnUnequip(Kobold k, bool dropOnGround = true) {

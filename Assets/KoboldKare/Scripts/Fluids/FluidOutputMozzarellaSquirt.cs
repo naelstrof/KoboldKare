@@ -105,6 +105,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
     private void SetRadius( float radius ) {
         mozzarellaRenderer.SetPointRadius(radius);
         //mozzarella.SetVisco(radius);
+        velocityVariance = Mathf.Clamp(radius*0.5f, 0.01f, 0.1f);
         fluidHitListener.decalSize = radius*1.1f;
     }
     void SplashTransfer(GenericReagentContainer b, float amount) {

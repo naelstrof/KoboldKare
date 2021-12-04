@@ -27,8 +27,15 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable {
         }
         return count;
     }
+    public Equipment GetEquipmentInSlot(Equipment.EquipmentSlot slot) {
+        foreach( Equipment e in equipment) {
+            if (e.slot == slot) {
+                return e;
+            }
+        }
+        return null;
+    }
     public void PickupEquipment(Equipment thing, GameObject groundPrefab) {
-        equipment.Add(thing);
         GameObject[] displays = thing.OnEquip(kobold, groundPrefab);
 
         // Remember the created objects
@@ -36,10 +43,16 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable {
             equipmentDisplays[thing] = new List<GameObject[]>();
         }
         equipmentDisplays[thing].Add(displays);
-
+        equipment.Add(thing);
         equipmentChanged?.Invoke(equipment);
     }
     public bool Contains(Equipment thing) => equipment.Contains(thing);
+    public void RemoveEquipment(Equipment.EquipmentSlot slot, bool dropOnGround) {
+        Equipment e = GetEquipmentInSlot(slot);
+        if (e!= null) {
+            RemoveEquipment(e, dropOnGround);
+        }
+    }
     public void RemoveEquipment(Equipment thing, bool dropOnGround) {
         equipment.Remove(thing);
         thing.OnUnequip(kobold, dropOnGround);

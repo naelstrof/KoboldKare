@@ -67,14 +67,15 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
             StartCoroutine(RenderScreen(noReagents));
             return;
         }
-        if (hit.transform.root.transform.childCount > 10) {
+        PhotonView rootView = hit.transform.GetComponentInParent<PhotonView>();
+        if (rootView == null) {
             ReagentContents noReagents = new ReagentContents();
             StopAllCoroutines();
             StartCoroutine(RenderScreen(noReagents));
             return;
         }
         ReagentContents allReagents = new ReagentContents();
-        foreach(GenericReagentContainer container in hit.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
+        foreach(GenericReagentContainer container in rootView.GetComponentsInChildren<GenericReagentContainer>()) {
             allReagents.AddMix(container.Peek());
         }
         StopAllCoroutines();

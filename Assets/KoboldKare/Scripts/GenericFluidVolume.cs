@@ -123,7 +123,7 @@ public class GenericFluidVolume : MonoBehaviour {
     public void OnReagentContainerChanged(GenericReagentContainer.InjectType injectType) {
         foreach(Renderer r in fluidRenderers) {
             foreach(Material material in r.materials) {
-                material.SetColor("_BaseColor", volumeContainer.GetColor());
+                material.color = volumeContainer.GetColor();
                 material.SetFloat("_Position", volumeContainer.volume / volumeContainer.maxVolume);
             }
         }

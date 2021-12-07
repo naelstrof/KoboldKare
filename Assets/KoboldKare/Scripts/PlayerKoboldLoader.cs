@@ -35,18 +35,13 @@ public class PlayerKoboldLoader : MonoBehaviour {
 
                 //Add Dicks
                 if(setting.value !=0){
-                    if (inventory.Contains(EquipmentDatabase.GetEquipment(setting.localizedName.ToString())))
+                    if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
                         break; //Don't add dicks if we already have one
-
+                    }
                     inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
-                }
-
-                //Remove Dicks
-                else{
-                    foreach (var item in dickTypes){
-                        if(inventory.Contains(EquipmentDatabase.GetEquipment(item))){
-                            inventory.RemoveEquipment(EquipmentDatabase.GetEquipment(item),false);
-                        }
+                } else { //Remove Dicks
+                    while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
+                        inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
                     }
                 }
                 

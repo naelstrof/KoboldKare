@@ -54,6 +54,9 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable {
         }
     }
     public void RemoveEquipment(Equipment thing, bool dropOnGround) {
+        if (!equipment.Contains(thing)) {
+            return;
+        }
         equipment.Remove(thing);
         thing.OnUnequip(kobold, dropOnGround);
 

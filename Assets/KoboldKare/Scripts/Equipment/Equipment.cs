@@ -11,6 +11,7 @@ using UnityEditor;
 
 public class Equipment : ScriptableObject {
     public Sprite sprite;
+    public bool hideInFirstPersonWhenWorn;
     public enum EquipmentSlot {
         Misc = -1,
         Crotch = 0,

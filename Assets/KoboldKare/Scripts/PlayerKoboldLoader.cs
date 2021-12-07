@@ -8,6 +8,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
+
     void Start() {
         foreach(string settingName in settingNames) {
             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
@@ -31,10 +32,24 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "Contrast": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(a:setting.value); break;
             case "Dick":  {
                 KoboldInventory inventory = targetKobold.GetComponent<KoboldInventory>();
-                if (inventory.Contains(EquipmentDatabase.GetEquipment("EquineDick"))) {
-                    break;
+
+                //Add Dicks
+                if(setting.value !=0){
+                    if (inventory.Contains(EquipmentDatabase.GetEquipment(setting.localizedName.ToString())))
+                        break; //Don't add dicks if we already have one
+
+                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
                 }
-                inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
+
+                //Remove Dicks
+                else{
+                    foreach (var item in dickTypes){
+                        if(inventory.Contains(EquipmentDatabase.GetEquipment(item))){
+                            inventory.RemoveEquipment(EquipmentDatabase.GetEquipment(item),false);
+                        }
+                    }
+                }
+                
                 break;
             }
             case "TopBottom": targetKobold.topBottom = setting.value; break;

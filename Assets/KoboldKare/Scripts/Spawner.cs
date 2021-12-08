@@ -4,6 +4,7 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using UnityEngine.Audio;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -20,6 +21,7 @@ public class Spawner : MonoBehaviour {
     private GameObject lastSpawned;
     public AudioClip spawnSound, spawnMaxReached;
     public AudioSource audioSource;
+    public AudioMixer targetAudioMixer;
     public PurchaseHint hint;
 
     private string GetRandomPrefab() {
@@ -98,6 +100,7 @@ public class Spawner : MonoBehaviour {
         if(hint != null){
             if(overrideCost != 0){ hint.ChangeText(overrideCost.ToString()); }
         }
+        audioSource.outputAudioMixerGroup = targetAudioMixer.FindMatchingGroups("SoundEffects")[0];
     }
     private void OnDrawGizmos() {
         Gizmos.DrawIcon(transform.position, "ico_spawn.png", true);

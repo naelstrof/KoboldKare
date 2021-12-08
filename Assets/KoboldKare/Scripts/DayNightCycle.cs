@@ -17,8 +17,8 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
     public uint counter;
     public GameEventFloat metabolizeEvent;
     public static DayNightCycle instance = null;
-    public float dayLength = 700f;
-    private bool nextFrameUpdate;
+    public float dayLength = 480f;
+    private bool nextFrameUpdate, alarmClockUpgrade;
     private WaitForSeconds waitForTwoSeconds = new WaitForSeconds(1.6f);
     public void ForceUpdate() {
         nextFrameUpdate = true;
@@ -142,6 +142,13 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
         while (isActiveAndEnabled) {
             yield return waitForTwoSeconds;
             metabolizeEvent.Raise(2f);
+        }
+    }
+
+    public void BoughtAlarmClock(){
+        if(alarmClockUpgrade == false){
+            dayLength = dayLength * 2f;
+            alarmClockUpgrade = true;
         }
     }
 }

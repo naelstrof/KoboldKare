@@ -436,10 +436,21 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public void Save(BinaryWriter writer, string version) {
         bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
         writer.Write(switchGrabMode);
+        writer.Write(gameObject.activeInHierarchy);
     }
 
     public void Load(BinaryReader reader, string version) {
         pGrabber.HideHand(!reader.ReadBoolean());
+        bool isPlayer = reader.ReadBoolean();
+        gameObject.SetActive(isPlayer);
+        if (isPlayer) {
+            PhotonNetwork.LocalPlayer.TagObject = kobold;
+            //FIXME: just need to destroy death prefab, since we have a kobold now.
+            CameraOrbiter input = Object.FindObjectOfType<CameraOrbiter>();
+            if (input != null) {
+                Destroy(input.transform.parent.gameObject);
+            }
+        }
     }
     //public void OnHold() {
     //grabber.TryGrab();

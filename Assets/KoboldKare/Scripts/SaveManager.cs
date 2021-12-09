@@ -88,7 +88,15 @@ public static class SaveManager {
             action?.Invoke();
         });
     }
+    private static void CleanUpImmediate() {
+        foreach(var view in PhotonNetwork.PhotonViewCollection) {
+            if (view.gameObject.name.EndsWith("(Clone)")) {
+                PhotonNetwork.Destroy(view.gameObject);
+            }
+        }
+    }
     private static void LoadImmediate(string filename) {
+        CleanUpImmediate();
         using(FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
             BinaryReader reader = new BinaryReader(file);
             if (reader.ReadString() != saveHeader) {
@@ -108,9 +116,6 @@ public static class SaveManager {
                 if (view == null) {
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                     view = obj.GetComponent<PhotonView>();
-                    PhotonNetwork.LocalCleanPhotonView(view);
-                    view.ViewID = viewID;
-                    PhotonNetwork.RegisterPhotonView(view);
                 }
                 foreach(var observable in view.ObservedComponents) {
                     if (observable is ISavable) {
@@ -120,22 +125,8 @@ public static class SaveManager {
             }
         }
     }
-    public static void Load(string filename, bool online = false, int maxPlayers = 2, string roomName = "", bool visible = false) {
-        GameManager.instance.StartCoroutine(LoadRoutine(filename, online, maxPlayers, roomName, visible));
-    }
-    public static IEnumerator LoadRoutine(string filename, bool online, int maxPlayers, string roomName, bool visible) {
-        // This bool basically only prevents the player from spawning while we fast-forward.
-        if (online) {
-            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-            if (string.IsNullOrEmpty(roomName)) {
-                roomName = Guid.NewGuid().ToString();
-            }
-            PhotonNetwork.CreateRoom(roomName, new RoomOptions{MaxPlayers = (byte)maxPlayers, IsVisible=visible});
-        } else {
-            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.SinglePlayerRoutine());
-        }
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("MainMap").isLoaded);
-        yield return new WaitForSecondsRealtime(1f);
+    public static void Load(string filename) {
         LoadImmediate(filename);
+        GameManager.instance.Pause(false);
     }
 }

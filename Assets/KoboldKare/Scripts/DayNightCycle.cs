@@ -6,15 +6,15 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
+using System.IO;
 
-public class DayNightCycle : MonoBehaviourPun, IPunObservable {
+public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     [System.Serializable]
     public class DayNightCycleEvent {
         [Range(0.01f,1f)]
         public float time01 = 0f;
         public GameEvent ev = null;
     }
-    public uint counter;
     public GameEventFloat metabolizeEvent;
     public static DayNightCycle instance = null;
     public float dayLength = 480f;
@@ -86,7 +86,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
         SceneManager.activeSceneChanged += OnSceneChange;
     }
     public void OnSceneChange(Scene oldScene, Scene newScene) {
-        if (PhotonNetwork.IsMasterClient && !SaveManager.isLoading) {
+        if (PhotonNetwork.IsMasterClient) {
             WarpToTime(0.35f, false);
         }
     }
@@ -122,19 +122,6 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
             metabolizeEvent.Raise((time - oldTime) * dayLength);
         }
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        // Just skip events, I don't care!!
-        if (stream.IsWriting) {
-            // Only write 16 times a day.
-            if ((counter++) % (PhotonNetwork.SerializationRate * dayLength/16f) == 0 || nextFrameUpdate || SaveManager.isSaving) {
-                stream.SendNext(time);
-                nextFrameUpdate = false;
-            }
-        } else {
-            float desiredTime = (float)stream.ReceiveNext();
-            time = desiredTime;
-        }
-    }
     public void Start() {
         StartCoroutine(MetabolizeOccassionally());
     }
@@ -147,8 +134,28 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable {
 
     public void BoughtAlarmClock(){
         if(alarmClockUpgrade == false){
-            dayLength = dayLength * 2f;
+            dayLength = dayLength * 1.5f;
             alarmClockUpgrade = true;
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        // Just skip events, I don't care!!
+        if (stream.IsWriting) {
+            stream.SendNext(time);
+            stream.SendNext(dayLength);
+        } else {
+            float desiredTime = (float)stream.ReceiveNext();
+            time = desiredTime;
+            dayLength = (float)stream.ReceiveNext();
+        }
+    }
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(time);
+        writer.Write(dayLength);
+    }
+    public void Load(BinaryReader reader, string version) {
+        time = reader.ReadSingle();
+        dayLength = reader.ReadSingle();
     }
 }

@@ -12,6 +12,7 @@
 namespace Photon.Pun
 {
     using System.Collections.Generic;
+    using System.IO;
     using UnityEngine;
 
 
@@ -25,7 +26,7 @@ namespace Photon.Pun
     /// Triggers are raised true during one frame only.
     /// </remarks>
     [AddComponentMenu("Photon Networking/Photon Animator View")]
-    public class PhotonAnimatorView : MonoBehaviourPun, IPunObservable
+    public class PhotonAnimatorView : MonoBehaviourPun, IPunObservable, ISavable
     {
         #region Enums
 
@@ -565,6 +566,15 @@ namespace Photon.Pun
                     this.DeserializeDataDiscretly(stream);
                 }
             }
+        }
+
+        // Hopefully we just don't need these, we don't use them yet
+        public void Save(BinaryWriter writer, string version) {
+            throw new System.NotImplementedException();
+        }
+
+        public void Load(BinaryReader reader, string version) {
+            throw new System.NotImplementedException();
         }
 
         #endregion

@@ -1,10 +1,17 @@
 {
     "name": "PhotonUnityNetworking",
+    "rootNamespace": "",
     "references": [
-        "PhotonRealtime"
+        "PhotonRealtime",
+        "KoboldKare.ISavable"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

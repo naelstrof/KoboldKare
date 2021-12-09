@@ -4,10 +4,10 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
-
+using System.IO;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KoboldCharacterController : MonoBehaviourPun, IPunObservable {
+public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
     [System.Serializable]
     public class PID {
         public float P;
@@ -374,5 +374,15 @@ void Accelerate(Vector3 wishdir, float wishspeed, float accel) {
             inputJump = (bool)stream.ReceiveNext();
             inputCrouched = (bool)stream.ReceiveNext();
         }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(inputJump);
+        writer.Write(inputCrouched);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        inputJump = reader.ReadBoolean();
+        inputCrouched = reader.ReadBoolean();
     }
 }

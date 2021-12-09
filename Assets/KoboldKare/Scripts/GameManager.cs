@@ -15,6 +15,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
+    public static void SetUIVisible(bool visible) => instance.UIVisible(visible);
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
     public LayerMask precisionGrabMask;
@@ -76,6 +77,12 @@ public class GameManager : MonoBehaviour {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
             NetworkManager.instance.StartSinglePlayer();
             GameManager.instance.Pause(false);
+        }
+        SaveManager.Init();
+    }
+    private void UIVisible(bool visible) {
+        foreach(Canvas c in GetComponentsInChildren<Canvas>()) {
+            c.enabled = visible;
         }
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {

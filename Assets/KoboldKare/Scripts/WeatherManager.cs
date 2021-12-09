@@ -1,10 +1,11 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class WeatherManager : MonoBehaviourPun, IPunObservable {
+public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     [Range(0f,1f)]
     public float rainAmount = 0f;
     public Material cloudMaterial;
@@ -176,5 +177,13 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable {
         } else {
             rainAmount = (float)stream.ReceiveNext();
         }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(rainAmount);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        rainAmount = reader.ReadSingle();
     }
 }

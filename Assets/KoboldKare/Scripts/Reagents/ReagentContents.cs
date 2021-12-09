@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using ExitGames.Client.Photon;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -151,27 +152,6 @@ public class ReagentContents {
         }
         return totalValue;
     }
-
-    public static object DeserializeReagent(StreamBuffer inStream, short length) {
-        Reagent reagent = new Reagent();
-        lock (memReagent) {
-            inStream.Read(memReagent, 0, sizeof(float));
-            int index = 0;
-            Protocol.Deserialize(out reagent.volume, memReagent, ref index);
-        }
-        return reagent;
-    }
-    public static readonly byte[] memReagent = new byte[sizeof(float)];
-    public static short SerializeReagent(StreamBuffer outStream, object customObject) {
-        Reagent reagent = (Reagent)customObject;
-        lock (memReagent) {
-            byte[] bytes = memReagent;
-            int index = 0;
-            Protocol.Serialize(reagent.volume, bytes, ref index);
-            outStream.Write(bytes, 0, sizeof(float));
-        }
-        return sizeof(float)*3;
-    }
     public static short SerializeReagentContents(StreamBuffer outStream, object customObject) {
         ReagentContents reagentContents = (ReagentContents)customObject;
         short size = (short)((sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
@@ -200,5 +180,32 @@ public class ReagentContents {
             reagentContents.OverrideReagent(id, volume);
         }
         return reagentContents;
+    }
+    public void Serialize(BinaryWriter outStream) {
+        int count = 0;
+        foreach (KeyValuePair<short, Reagent> pair in contents) {
+            if (pair.Value.volume <= 0f) {
+                continue;
+            }
+            count++;
+        }
+        outStream.Write(count);
+        foreach (KeyValuePair<short, Reagent> pair in contents) {
+            if (pair.Value.volume <= 0f) {
+                continue;
+            }
+            outStream.Write(pair.Key);
+            outStream.Write(pair.Value.volume);
+        }
+    }
+    public void Deserialize(BinaryReader inStream) {
+        Clear();
+        int count = inStream.ReadInt32();
+        Debug.Log("Loading " + count + " reagents");
+        for(int i=0;i<count;i++) {
+            short id = inStream.ReadInt16();
+            float volume = inStream.ReadSingle();
+            OverrideReagent(id, volume);
+        }
     }
 }

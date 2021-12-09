@@ -8,9 +8,10 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 using KoboldKare;
+using System.IO;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunInstantiateMagicCallback {
+public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public ScriptablePlant plant;
     private GenericReagentContainer container;
     [SerializeField]
@@ -93,13 +94,6 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsReading) {
-            SwitchTo(PlantDatabase.GetPlant((short)stream.ReceiveNext()));
-        } else {
-            stream.SendNext(PlantDatabase.GetID(plant));
-        }
-    }
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
@@ -119,5 +113,21 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
             timeSoFar += 0.10f;
             tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, timeSoFar/timeToFadeWatered);
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsReading) {
+            SwitchTo(PlantDatabase.GetPlant((short)stream.ReceiveNext()));
+        } else {
+            stream.SendNext(PlantDatabase.GetID(plant));
+        }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(PlantDatabase.GetID(plant));
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
     }
 }

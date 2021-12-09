@@ -3,10 +3,11 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Grabber : MonoBehaviourPun, IPunObservable {
+public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
     public GameObject player;
     public int maxGrabCount = 1;
     public Rigidbody body;
@@ -432,6 +433,17 @@ public class Grabber : MonoBehaviourPun, IPunObservable {
             } else {
                 TryStopActivate();
             }
+        }
+    }
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(activating);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        if (reader.ReadBoolean()) {
+            TryActivate();
+        } else {
+            TryStopActivate();
         }
     }
 }

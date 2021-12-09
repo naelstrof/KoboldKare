@@ -11,8 +11,9 @@ using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
 using TMPro;
+using System.IO;
 
-public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback {
+public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -788,5 +789,50 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
             info.Sender.TagObject = this;
         }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(ragdolled);
+        writer.Write(hip.position.x);
+        writer.Write(hip.position.y);
+        writer.Write(hip.position.z);
+        writer.Write(thickness);
+        writer.Write(topBottom);
+        writer.Write(sex);
+        writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.r*255f));
+        writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.g*255f));
+        writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.b*255f));
+        writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.a*255f));
+        writer.Write(baseBallSize);
+        writer.Write(baseBoobSize);
+        writer.Write(baseDickSize);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        bool ragged = reader.ReadBoolean();
+        if (!ragdolled && ragged && !bodyProportion.running) {
+            KnockOver(99999f);
+        }
+        if (ragdolled && !ragged) {
+            StandUp();
+        }
+        float hipx = reader.ReadSingle();
+        float hipy = reader.ReadSingle();
+        float hipz = reader.ReadSingle();
+        networkedRagdollHipPosition = new Vector3(hipx,hipy,hipz);
+
+        thickness = reader.ReadSingle();
+        topBottom = reader.ReadSingle();
+        sex = reader.ReadSingle();
+        byte r = reader.ReadByte();
+        byte g = reader.ReadByte();
+        byte b = reader.ReadByte();
+        byte a = reader.ReadByte();
+        var col = new Color((float)r/255f,(float)g/255f,(float)b/255f,(float)a/255f);
+        HueBrightnessContrastSaturation = col;
+
+        baseBallSize = reader.ReadSingle();
+        baseBoobSize = reader.ReadSingle();
+        baseDickSize = reader.ReadSingle();
     }
 }

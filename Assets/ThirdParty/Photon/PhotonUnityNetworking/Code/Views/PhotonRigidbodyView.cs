@@ -11,12 +11,13 @@
 
 namespace Photon.Pun
 {
+    using System.IO;
     using UnityEngine;
 
 
     [RequireComponent(typeof(Rigidbody))]
     [AddComponentMenu("Photon Networking/Photon Rigidbody View")]
-    public class PhotonRigidbodyView : MonoBehaviourPun, IPunObservable
+    public class PhotonRigidbodyView : MonoBehaviourPun, IPunObservable, ISavable
     {
         private float m_Distance;
         private float m_Angle;
@@ -106,6 +107,55 @@ namespace Photon.Pun
                         this.m_Angle = Quaternion.Angle(this.m_Body.rotation, this.m_NetworkRotation);
                     }
                 }
+            }
+        }
+
+        public void Save(BinaryWriter writer, string version) {
+            writer.Write(this.m_Body.position.x);
+            writer.Write(this.m_Body.position.y);
+            writer.Write(this.m_Body.position.z);
+
+            writer.Write(this.m_Body.rotation.x);
+            writer.Write(this.m_Body.rotation.y);
+            writer.Write(this.m_Body.rotation.z);
+            writer.Write(this.m_Body.rotation.w);
+
+            if (this.m_SynchronizeVelocity) {
+                writer.Write(this.m_Body.velocity.x);
+                writer.Write(this.m_Body.velocity.y);
+                writer.Write(this.m_Body.velocity.z);
+            }
+
+            if (this.m_SynchronizeAngularVelocity) {
+                writer.Write(this.m_Body.angularVelocity.x);
+                writer.Write(this.m_Body.angularVelocity.y);
+                writer.Write(this.m_Body.angularVelocity.z);
+            }
+        }
+
+        public void Load(BinaryReader reader, string version) {
+            float posx = reader.ReadSingle();
+            float posy = reader.ReadSingle();
+            float posz = reader.ReadSingle();
+            this.m_NetworkPosition = new Vector3(posx, posy, posz);
+            this.m_Body.position = this.m_NetworkPosition;
+            float rotx = reader.ReadSingle();
+            float roty = reader.ReadSingle();
+            float rotz = reader.ReadSingle();
+            float rotw = reader.ReadSingle();
+            this.m_NetworkRotation = new Quaternion(rotx, roty, rotz, rotw);
+            this.m_Body.rotation = this.m_NetworkRotation;
+            if (this.m_SynchronizeVelocity) {
+                float velx = reader.ReadSingle();
+                float vely = reader.ReadSingle();
+                float velz = reader.ReadSingle();
+                this.m_Body.velocity = new Vector3(velx, vely, velz);
+            }
+            if (this.m_SynchronizeAngularVelocity) {
+                float vangx = reader.ReadSingle();
+                float vangy = reader.ReadSingle();
+                float vangz = reader.ReadSingle();
+                this.m_Body.angularVelocity = new Vector3(vangx, vangy, vangz);
             }
         }
     }

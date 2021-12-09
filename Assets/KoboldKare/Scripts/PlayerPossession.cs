@@ -7,8 +7,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
+using System.IO;
 
-public class PlayerPossession : MonoBehaviourPun, IPunObservable {
+public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public UnityEngine.InputSystem.PlayerInput controls;
     public float coyoteTime = 0.2f;
     private bool canGrab = true;
@@ -430,6 +431,15 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable {
         } else {
             pGrabber.HideHand(!(bool)stream.ReceiveNext());
         }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
+        writer.Write(switchGrabMode);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        pGrabber.HideHand(!reader.ReadBoolean());
     }
     //public void OnHold() {
     //grabber.TryGrab();

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Kobold))]
-public class KoboldInventory : MonoBehaviourPun, IPunObservable {
+public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     private Dictionary<Equipment, List<GameObject[]>> equipmentDisplays = new Dictionary<Equipment, List<GameObject[]>>();
     private static List<Equipment> staticIncomingEquipment = new List<Equipment>();
     public int Count => equipment.Count;
@@ -99,5 +100,21 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable {
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
         }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(equipment.Count);
+        foreach(Equipment e in equipment) {
+            writer.Write(EquipmentDatabase.GetID(e));
+        }
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        int count = reader.ReadInt32();
+        staticIncomingEquipment.Clear();
+        for(int i=0;i<count;i++) {
+            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(reader.ReadInt16()));
+        }
+        ReplaceEquipmentWith(staticIncomingEquipment);
     }
 }

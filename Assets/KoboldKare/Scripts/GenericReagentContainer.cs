@@ -4,10 +4,11 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObservable {
+public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObservable, ISavable {
     [System.Serializable]
     public class InspectorReagent {
         public ScriptableReagent reagent;
@@ -110,15 +111,6 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         return contents.GetValue();
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(contents);
-        } else {
-            contents = (ReagentContents)stream.ReceiveNext();
-            contents.SetMaxVolume(startingMaxVolume);
-            OnReagentContentsChanged(InjectType.Metabolize);
-        }
-    }
     public void OnValidate() {
         if (startingReagents == null) {
             return;
@@ -139,5 +131,24 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         }
         blah += "]";
         return base.ToString() + blah;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(contents);
+        } else {
+            contents = (ReagentContents)stream.ReceiveNext();
+            contents.SetMaxVolume(startingMaxVolume);
+            OnReagentContentsChanged(InjectType.Metabolize);
+        }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        contents.Serialize(writer);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        contents.Deserialize(reader);
+        OnReagentContentsChanged(InjectType.Metabolize);
     }
 }

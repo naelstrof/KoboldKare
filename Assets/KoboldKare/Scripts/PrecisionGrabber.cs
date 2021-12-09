@@ -8,8 +8,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
+using System.IO;
 
-public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
+public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     public Rigidbody self;
     public Transform view;
     public GameObject handPrefab;
@@ -727,6 +728,30 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable {
             if (!(bool)stream.ReceiveNext()) {
                 Ungrab();
             }
+        }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        writer.Write(inputRotation);
+        writer.Write(distance);
+        writer.Write(savedQuaternion.x);
+        writer.Write(savedQuaternion.y);
+        writer.Write(savedQuaternion.z);
+        writer.Write(savedQuaternion.w);
+        writer.Write(grabbing);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        inputRotation = reader.ReadBoolean();
+        distance = reader.ReadSingle();
+        float x = reader.ReadSingle();
+        float y = reader.ReadSingle();
+        float z = reader.ReadSingle();
+        float w = reader.ReadSingle();
+        Quaternion newRot = new Quaternion(x,y,z,w);
+        savedQuaternion = newRot;
+        if (!reader.ReadBoolean()) {
+            Ungrab();
         }
     }
 }

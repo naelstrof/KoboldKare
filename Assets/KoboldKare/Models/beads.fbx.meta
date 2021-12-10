@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 75b66c5435237f144901017918953280
+guid: 25bba4efd237fd1489a8a96636009884
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -9,21 +9,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Material
     second: {fileID: 2100000, guid: 6828d4bc2c442a547a8a51da855be1f3, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: beads_Material_AlbedoTransparency
-    second: {fileID: 2800000, guid: f9d5a56bb0e6afa42951935754753955, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: beads_Material_MetallicSmoothness
-    second: {fileID: 2800000, guid: 99ed9738e5b71e64d9c8a003bb2d99ef, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: beads_Material_Normal
-    second: {fileID: 2800000, guid: 33b23a0ff1abb8b44b9c08d90705a47d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

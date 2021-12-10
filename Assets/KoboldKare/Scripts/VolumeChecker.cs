@@ -5,7 +5,7 @@ using KoboldKare;
 
 public class VolumeChecker : MonoBehaviour
 {
-    public GameEvent trigger;
+    public GameEventGeneric trigger;
     bool hasPlayer = false;
     void OnTriggerEnter(Collider c) {
         if ( c.gameObject.CompareTag("Player") ) {
@@ -20,7 +20,7 @@ public class VolumeChecker : MonoBehaviour
 
     public void TriggerIfNotInside() {
         if (!hasPlayer) {
-            trigger.Raise();
+            trigger.Raise(null);
         }
     }
 }

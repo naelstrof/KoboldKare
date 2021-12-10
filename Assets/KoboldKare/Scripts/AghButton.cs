@@ -106,7 +106,7 @@ public static class AghButton {
         foreach (var path in pathsToAssets) {
             var path1 = AssetDatabase.GUIDToAssetPath(path);
             var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
-            foreach(var c in go.GetComponentsInChildren<Component>()) {
+            foreach(var c in go.GetComponentsInChildren<Component>(true)) {
                 if (c == null) {
                     Selection.activeGameObject = go;
                     return;

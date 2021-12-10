@@ -28,7 +28,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
-    public GameEvent SpawnEvent;
+    public GameEventGeneric SpawnEvent;
     public IEnumerator JoinLobbyRoutine() {
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -125,7 +125,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public void OnDisconnected(DisconnectCause cause) {
         Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
-        GameManager.instance?.StartCoroutine(OnDisconnectRoutine(cause));
+        if (GameManager.instance != null) {
+            GameManager.instance.StartCoroutine(OnDisconnectRoutine(cause));
+        }
     }
     public IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
         if (cause != DisconnectCause.DisconnectByClientLogic && cause != DisconnectCause.None) {
@@ -177,7 +179,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-        SpawnEvent.Raise();
+        SpawnEvent.Raise(null);
         PopupHandler.instance.ClearAllPopups();
     }
     public void SpawnControllablePlayer() {

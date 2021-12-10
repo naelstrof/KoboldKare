@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KoboldKare;
 
 public class MusicManager : MonoBehaviour {
+    [SerializeField]
+    private GameEventGeneric sleepEvent;
     private AudioSource musicSource;
     public List<AudioClip> dayMusic = new List<AudioClip>();
     public List<AudioClip> nightMusic = new List<AudioClip>();
@@ -36,6 +39,14 @@ public class MusicManager : MonoBehaviour {
     }
     void Start() {
         musicSource = GetComponent<AudioSource>();
+        sleepEvent.AddListener(OnSleep);
+    }
+
+    void OnDestroy() {
+        sleepEvent.RemoveListener(OnSleep);
+    }
+    void OnSleep(object nothing) {
+        Interrupt();
     }
 
     void Update() {

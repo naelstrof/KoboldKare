@@ -4,62 +4,48 @@ using UnityEngine;
 using System;
 
 namespace KoboldKare {
-
-    [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Data/GameEvent", order = 1)]
     [System.Serializable]
-    public class GameEvent : ScriptableObject {
-        [NonSerialized]
-        private List<IGameEventListener> listeners = new List<IGameEventListener>();
-        [NonSerialized]
-        private List<IGameEventListener> savedListeners = new List<IGameEventListener>();
-        [NonSerialized]
-        private List<IGameEventListener> savedRemovedListeners = new List<IGameEventListener>();
+    public class GameEvent<T> : ScriptableObject {
+        List<GameEventActionGeneric> addLater = new List<GameEventActionGeneric>();
+        List<GameEventActionGeneric> removeLater = new List<GameEventActionGeneric>();
         [NonSerialized]
         private bool running = false;
-        [NonSerialized]
-        private bool active = true;
+        public delegate void GameEventActionGeneric(T arg);
+        private event GameEventActionGeneric raised;
 
-        public void RegisterListener(IGameEventListener listener) {
-            if (listeners.Contains(listener)) {
-                return;
-            }
+        public void AddListener(GameEventActionGeneric listener) {
             if (running) {
-                savedListeners.Add(listener);
+                addLater.Add(listener);
             } else {
-                listeners.Add(listener);
+                raised += listener;
             }
         }
-        public void UnregisterListener(IGameEventListener listener) {
+        public void RemoveListener(GameEventActionGeneric listener) {
             if (running) {
-                savedRemovedListeners.Add(listener);
+                removeLater.Add(listener);
             } else {
-                listeners.Remove(listener);
+                raised -= listener;
             }
         }
 
-        public void Raise() {
-            if (running || !active) {
+        public void Raise(T arg) {
+            if (running) {
                 return;
             }
-            listeners.AddRange(savedListeners);
-            savedListeners.Clear();
+
+            foreach(var action in addLater) {
+                raised += action;
+            }
+            addLater.Clear();
 
             running = true;
-            int size = listeners.Count;
-            foreach (IGameEventListener l in listeners) {
-                try {
-                    l.OnEventRaised(this);
-                } catch( Exception e ) {
-                    Debug.LogException(e, (Component)l);
-                    savedRemovedListeners.Add(l);
-                }
-            }
+            raised?.Invoke(arg);
             running = false;
 
-            foreach (IGameEventListener l in savedRemovedListeners) {
-                listeners.Remove(l);
+            foreach(var action in removeLater) {
+                raised -= action;
             }
-            savedRemovedListeners.Clear();
+            removeLater.Clear();
         }
     }
 }

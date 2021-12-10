@@ -6,6 +6,6 @@ using KoboldKare;
 
 namespace KoboldKare {
 [CreateAssetMenu(fileName = "NewGameEventVector3", menuName = "Data/GameEvent: Vector3", order = 2)]
-public class GameEventVector3 : GameEventGeneric<Vector3> {}
+public class GameEventVector3 : GameEvent<Vector3> {}
 
 }

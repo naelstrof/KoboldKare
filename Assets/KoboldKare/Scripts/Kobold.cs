@@ -13,7 +13,7 @@ using PenetrationTech;
 using TMPro;
 using System.IO;
 
-public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
+public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -322,7 +322,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     void Start() {
         statblock.AddStatusEffect(koboldStatus, StatBlock.StatChangeSource.Misc);
         lastPumpTime = Time.timeSinceLevelLoad;
-        MetabolizeEvent.RegisterListener(this);
+        MetabolizeEvent.AddListener(OnEventRaised);
         foreach (var b in bellies) {
             b.GetContainer().OnChange.AddListener(OnReagentContainerChanged);
         }
@@ -336,7 +336,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
     private void OnDestroy() {
         bodyProportion.OnComplete -= OnCompleteBodyProportion;
         statblock.StatusEffectsChangedEvent -= OnStatusEffectsChanged;
-        MetabolizeEvent.UnregisterListener(this);
+        MetabolizeEvent.RemoveListener(OnEventRaised);
         foreach (var b in bellies) {
             b.GetContainer().OnChange.RemoveListener(OnReagentContainerChanged);
         }
@@ -669,7 +669,7 @@ public class Kobold : MonoBehaviourPun, IGameEventGenericListener<float>, IGrabb
         }
     }
 
-    public void OnEventRaised(GameEventGeneric<float> e, float f) {
+    public void OnEventRaised(float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         foreach (var belly in bellies) {
             ReagentContents vol = belly.GetContainer().Metabolize(f);

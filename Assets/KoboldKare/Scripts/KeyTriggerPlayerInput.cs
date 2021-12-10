@@ -5,17 +5,17 @@ using KoboldKare;
 using UnityEngine.InputSystem;
 
 public class KeyTriggerPlayerInput : MonoBehaviour {
-    public GameEvent KeyDown;
-    public GameEvent KeyUp;
+    public GameEventGeneric KeyDown;
+    public GameEventGeneric KeyUp;
     public PlayerInput controls;
     public bool memory = false;
     public void FixedUpdate() {
         bool key = controls.actions["View Stats"].ReadValue<float>() > 0.5f;
         if (key != memory) {
             if (key) {
-                KeyDown?.Raise();
+                KeyDown?.Raise(null);
             } else {
-                KeyUp?.Raise();
+                KeyUp?.Raise(null);
             }
             memory = key;
         }

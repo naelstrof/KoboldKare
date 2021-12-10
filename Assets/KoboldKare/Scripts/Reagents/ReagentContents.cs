@@ -201,7 +201,6 @@ public class ReagentContents {
     public void Deserialize(BinaryReader inStream) {
         Clear();
         int count = inStream.ReadInt32();
-        Debug.Log("Loading " + count + " reagents");
         for(int i=0;i<count;i++) {
             short id = inStream.ReadInt16();
             float volume = inStream.ReadSingle();

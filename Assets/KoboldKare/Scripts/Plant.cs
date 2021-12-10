@@ -11,11 +11,11 @@ using KoboldKare;
 using System.IO;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunInstantiateMagicCallback, ISavable {
+public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public ScriptablePlant plant;
     private GenericReagentContainer container;
     [SerializeField]
-    private GameEvent midnightEvent;
+    private GameEventGeneric midnightEvent;
 
     [SerializeField]
     public float timeToFadeWatered;
@@ -34,13 +34,13 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
     void Start() {
         container = GetComponent<GenericReagentContainer>();
         container.OnFilled.AddListener(OnFilled);
-        midnightEvent.RegisterListener(this);
+        midnightEvent.AddListener(OnEventRaised);
         SwitchTo(plant);
     }
 
     void OnDestroy() {
         container.OnFilled.RemoveListener(OnFilled);
-        midnightEvent.UnregisterListener(this);
+        midnightEvent.RemoveListener(OnEventRaised);
     }
 
     void OnFilled(GenericReagentContainer.InjectType injectType) {
@@ -83,7 +83,7 @@ public class Plant : MonoBehaviourPun, IGameEventListener, IPunObservable, IPunI
         plant = newPlant;
     }
 
-    public void OnEventRaised(GameEvent e) {
+    public void OnEventRaised(object e) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
             PhotonNetwork.Destroy(gameObject);
             return;

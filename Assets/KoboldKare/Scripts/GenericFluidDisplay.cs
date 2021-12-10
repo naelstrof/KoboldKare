@@ -13,7 +13,9 @@ public class GenericFluidDisplay : MonoBehaviour {
         OnChanged(GenericReagentContainer.InjectType.Vacuum);
     }
     public void OnDestroy() {
-        container.OnChange.RemoveListener(OnChanged);
+        if (container != null) {
+            container.OnChange.RemoveListener(OnChanged);
+        }
     }
     public void OnChanged(GenericReagentContainer.InjectType injectType) {
         foreach(var m in targetRenderer.materials) {

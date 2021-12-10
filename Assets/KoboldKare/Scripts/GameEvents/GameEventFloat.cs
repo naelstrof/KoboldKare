@@ -6,5 +6,5 @@ using KoboldKare;
 
 namespace KoboldKare {
 [CreateAssetMenu(fileName = "NewGameEventFloat", menuName = "Data/GameEvent: float", order = 2)]
-public class GameEventFloat : GameEventGeneric<float> {}
+public class GameEventFloat : GameEvent<float> {}
 }

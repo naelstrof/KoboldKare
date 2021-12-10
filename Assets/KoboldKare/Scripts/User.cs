@@ -64,7 +64,7 @@ public class User : MonoBehaviour {
         float distance = float.MaxValue;
         GenericUsable closest = null;
         foreach( Tuple<GenericUsable,GameObject> u in possibleUsables ) {
-            if (!u.Item1.IsUsable(kobold) || u.Item1.transform.root == transform.root) {
+            if (!u.Item1.CanUse(kobold) || u.Item1.transform.root == transform.root) {
                 continue;
             }
             float d = Vector3.Distance(u.Item1.transform.position, transform.position);

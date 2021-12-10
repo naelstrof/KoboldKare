@@ -5,8 +5,8 @@ using KoboldKare;
 using Photon.Pun;
 
 public class Sleeper : MonoBehaviour {
-    public GameEvent startSleep;
-    public GameEvent sleep;
+    public GameEventGeneric startSleep;
+    public GameEventGeneric sleep;
     public void TrySleep() {
         bool canSleep = true;
         foreach(var player in PhotonNetwork.PlayerList) {
@@ -23,8 +23,9 @@ public class Sleeper : MonoBehaviour {
         }
     }
     private IEnumerator SleepRoutine() {
-        startSleep.Raise();
+        startSleep.Raise(null);
         yield return new WaitForSeconds(0.5f);
-        sleep.Raise();
+        sleep.Raise(null);
+        DayNightCycle.instance.Sleep();
     }
 }

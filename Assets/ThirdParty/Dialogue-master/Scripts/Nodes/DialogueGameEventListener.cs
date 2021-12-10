@@ -6,11 +6,12 @@ using KoboldKare;
 
 namespace Dialogue {
 	[NodeTint("#FFFFAA")]
-	public class DialogueGameEventListener : DialogueBaseNode, IGameEventListener {
+	public class DialogueGameEventListener : DialogueBaseNode {
         [Output(dynamicPortList = true)] public List<GEvent> events = new List<GEvent>();
         private bool listening = false;
         [System.Serializable] public class GEvent {
-            public GameEvent gameEvent;
+            public GameEventGeneric.GameEventActionGeneric action;
+            public GameEventGeneric gameEvent;
             [Range(-5,5)]
             public int priority;
         }
@@ -20,7 +21,8 @@ namespace Dialogue {
             }
             foreach(GEvent e in events) {
                 if (e.gameEvent!=null) {
-                    e.gameEvent.RegisterListener(this);
+                    e.action = (obj) => {OnEventRaised(e,obj);};
+                    e.gameEvent.AddListener(e.action);
                 }
             }
             base.OnEnable();
@@ -28,15 +30,15 @@ namespace Dialogue {
         public void OnDisable() {
             foreach(GEvent e in events) {
                 if (e.gameEvent!=null) {
-                    e.gameEvent.UnregisterListener(this);
+                    e.gameEvent.RemoveListener(e.action);
                 }
             }
         }
-        public void OnEventRaised(GameEvent e) {
+        public void OnEventRaised(GEvent e, object nothing) {
             NodePort port = null;
             int priority = 0;
             for(int i = 0; i < events.Count; i++) {
-                if (e == events[i].gameEvent) {
+                if (e == events[i]) {
                     port = GetOutputPort("events " + i);
                     priority = events[i].priority;
                 }

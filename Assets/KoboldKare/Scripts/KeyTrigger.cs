@@ -4,15 +4,15 @@ using UnityEngine;
 using KoboldKare;
 
 public class KeyTrigger : MonoBehaviour {
-    public GameEvent KeyDown;
-    public GameEvent KeyUp;
+    public GameEventGeneric KeyDown;
+    public GameEventGeneric KeyUp;
     public string key;
     void Update() {
         if (Input.GetButtonDown(key)) {
-            KeyDown?.Raise();
+            KeyDown?.Raise(null);
         }
         if (Input.GetButtonUp(key)) {
-            KeyUp?.Raise();
+            KeyUp?.Raise(null);
         }
     }
 }

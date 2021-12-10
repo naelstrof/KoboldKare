@@ -13,7 +13,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     public class DayNightCycleEvent {
         [Range(0.01f,1f)]
         public float time01 = 0f;
-        public GameEvent ev = null;
+        public GameEventGeneric ev = null;
     }
     public GameEventFloat metabolizeEvent;
     public static DayNightCycle instance = null;
@@ -97,7 +97,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             foreach (DayNightCycleEvent e in events) {
                 float c = f + e.time01;
                 if (c <= t && c > from ) {
-                    e.ev.Raise();
+                    e.ev.Raise(null);
                 }
             }
         }
@@ -157,5 +157,8 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     public void Load(BinaryReader reader, string version) {
         time = reader.ReadSingle();
         dayLength = reader.ReadSingle();
+    }
+    public void Sleep() {
+        WarpToTime(alarmClockUpgrade ? 0.25f : 0.35f);
     }
 }

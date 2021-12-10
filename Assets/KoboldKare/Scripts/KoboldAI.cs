@@ -27,7 +27,7 @@ public class KoboldAI : MonoBehaviourPun {
                             continue;
                         }
                     }
-                    if (g.IsUsable(GetComponentInParent<Kobold>())) {
+                    if (g.CanUse(GetComponentInParent<Kobold>())) {
                         g.Use(GetComponentInParent<Kobold>());
                         break;
                     }

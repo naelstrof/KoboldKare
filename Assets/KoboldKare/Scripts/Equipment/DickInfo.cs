@@ -182,7 +182,7 @@ public class DickInfo : MonoBehaviour {
                     pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
                 }
                 // Add a little precum per-pulse.
-                set.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), 0.05f+0.01f*attachedKobold.sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+1f*attachedKobold.baseBallSize+1f*attachedKobold.baseDickSize, GenericReagentContainer.InjectType.Inject);
+                set.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), 0.05f+0.05f*attachedKobold.sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.05f*attachedKobold.baseBallSize+0.05f*attachedKobold.baseDickSize, GenericReagentContainer.InjectType.Inject);
                 if (!set.dick.IsInside() || pennedKobold == null) {
                     set.dick.GetComponentInChildren<FluidOutput>(true).Fire(set.balls.GetContainer());
                 } else {

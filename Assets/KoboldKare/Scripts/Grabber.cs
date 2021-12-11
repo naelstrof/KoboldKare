@@ -219,7 +219,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
         return true;
     }
-    // This function is only ever called by the owner.
     public void TryGrab() {
         Validate();
         if (intersectingGameObjects.Count > 0 || grabbedObjects.Count > 0) {
@@ -422,16 +421,23 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(this.activating);
+            stream.SendNext(this.grabbing);
         } else {
             if ((bool)stream.ReceiveNext()) {
                 TryActivate();
             } else {
                 TryStopActivate();
             }
+            if ((bool)stream.ReceiveNext()) {
+                TryGrab();
+            } else {
+                TryDrop();
+            }
         }
     }
     public void Save(BinaryWriter writer, string version) {
         writer.Write(activating);
+        writer.Write(grabbing);
     }
 
     public void Load(BinaryReader reader, string version) {
@@ -439,6 +445,11 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             TryActivate();
         } else {
             TryStopActivate();
+        }
+        if (reader.ReadBoolean()) {
+            TryGrab();
+        } else {
+            TryDrop();
         }
     }
 }

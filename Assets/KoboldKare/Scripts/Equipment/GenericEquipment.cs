@@ -27,6 +27,8 @@ public class GenericEquipment : GenericUsable {
         if (k.photonView.IsMine) {
             KoboldInventory inventory = k.GetComponent<KoboldInventory>();
             inventory.PickupEquipment(representedEquipment, gameObject);
+        }
+        if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
     }

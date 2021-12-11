@@ -296,7 +296,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             baseBallSize = Random.Range(0.5f,1f)*40f;
             baseDickSize = Random.Range(0f,1f);
         } else {
-            baseBoobSize = Random.Range(0.2f,1f)*40f;
+            baseBoobSize = Random.Range(0.2f,1f)*30f;
             baseBallSize = 0f;
         }
         topBottom = Random.Range(-1f,1f);

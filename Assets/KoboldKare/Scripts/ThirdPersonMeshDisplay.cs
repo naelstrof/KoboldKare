@@ -25,7 +25,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     public void OnDestroy() {
         proportion.OnComplete -= OnFinishProportionEdit;
     }
-    public void FixedUpdate() {
+    public void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {
             for(int i=0;i<pair.Key.sharedMesh.blendShapeCount;i++) {
                 pair.Value.SetBlendShapeWeight(i,pair.Key.GetBlendShapeWeight(i));

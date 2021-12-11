@@ -18,7 +18,11 @@ public class GenericPurchasable : GenericUsable {
     private ScriptablePurchasable purchasable;
     [SerializeField]
     private AudioPack purchaseSoundPack;
-    private bool inStock = true;
+    private bool inStock {
+        get {
+            return display.activeInHierarchy;
+        }
+    }
     [SerializeField]
     private GameEventGeneric restockEvent;
     private GameObject display;
@@ -80,7 +84,7 @@ public class GenericPurchasable : GenericUsable {
     public override void Use(Kobold k) {
         base.Use(k);
         source.PlayOneShot(purchaseSoundPack.GetRandomClip(), purchaseSoundPack.volume);
-        if (photonView.IsMine) {
+        if (photonView.IsMine && CanUse(k)) {
             money.charge(purchasable.cost);
             PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
         }
@@ -94,8 +98,7 @@ public class GenericPurchasable : GenericUsable {
             stream.SendNext(inStock);
             stream.SendNext(PurchasableDatabase.GetID(purchasable));
         } else {
-            inStock = (bool)stream.ReceiveNext();
-            display.SetActive(inStock);
+            display.SetActive((bool)stream.ReceiveNext());
             short currentPurchasable = (short)stream.ReceiveNext();
             SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
         }
@@ -108,8 +111,7 @@ public class GenericPurchasable : GenericUsable {
 
     public override void Load(BinaryReader reader, string version) {
         base.Load(reader, version);
-        inStock = reader.ReadBoolean();
-        display.SetActive(inStock);
+        display.SetActive(reader.ReadBoolean());
         short currentPurchasable = (short)reader.ReadInt16();
         SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
     }

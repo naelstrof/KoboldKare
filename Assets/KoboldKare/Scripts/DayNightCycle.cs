@@ -39,8 +39,8 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             return (Time.timeSinceLevelLoad / dayLength)+rootTime;
         }
         set {
-            if (value > time) {
-                RunEvents(time, value);
+            if (value > lastTime) {
+                RunEvents(lastTime, value);
             }
             rootTime = value - (Time.timeSinceLevelLoad / dayLength);
             lastTime = time;

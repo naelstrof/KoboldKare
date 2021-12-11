@@ -10,7 +10,7 @@ using ExitGames.Client.Photon;
 [System.Serializable]
 public class SpriteEvent : UnityEvent<Sprite> {}
 
-public class User : MonoBehaviour {
+public class User : MonoBehaviourPun {
     private Kobold internalKobold;
     public Kobold kobold {
         get {
@@ -86,7 +86,8 @@ public class User : MonoBehaviour {
     }
     public void Use() {
         if (closestUsable != null) {
-            closestUsable.Use(kobold);
+            closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
+            //closestUsable.Use(kobold);
             OnUse.Invoke();
         }
     }

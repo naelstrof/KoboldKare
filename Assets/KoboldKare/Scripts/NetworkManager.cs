@@ -188,6 +188,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     void IMatchmakingCallbacks.OnJoinedRoom() {
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
+        PopupHandler.instance.ClearAllPopups();
         //if (popup != null) {
         //popup.Hide();
         //}

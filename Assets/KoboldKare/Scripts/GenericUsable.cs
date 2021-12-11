@@ -18,6 +18,13 @@ public class GenericUsable : MonoBehaviourPun, IPunObservable, ISavable {
     public virtual void Use(Kobold k) {
         usedCount++;
     }
+    [PunRPC]
+    public void RPCUse(int id) {
+        PhotonView view = PhotonNetwork.GetPhotonView(id);
+        if (view != null) {
+            Use(view.GetComponent<Kobold>());
+        }
+    }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(usedCount);

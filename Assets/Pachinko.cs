@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 using Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.IO;
 
 [RequireComponent(typeof(AudioSource))]
 public class Pachinko : GenericUsable {
@@ -72,7 +73,6 @@ public class Pachinko : GenericUsable {
     }
 
     public override void Use(Kobold k) {
-        base.Use(k);
         money.charge(playCost);
         if (photonView.IsMine) {
             StartGame();
@@ -109,7 +109,6 @@ public class Pachinko : GenericUsable {
         }
         //Debug.Log("Ball spawned");
         activeBall = PhotonNetwork.Instantiate(pachinkoBallPrefab.photonName,ballSpawnPoint.position,Quaternion.identity);
-        activeBall.transform.SetParent(transform);
         activeBall.GetComponent<BallCheat>().SetMachine(this);
         activeBall.GetComponent<Rigidbody>().velocity = ballSpawnPoint.transform.parent.GetComponent<Rigidbody>().velocity;
     }
@@ -143,4 +142,7 @@ public class Pachinko : GenericUsable {
     void OnValidate() {
         pachinkoBallPrefab.OnValidate();
     }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+    public override void Save(BinaryWriter writer, string version) { }
+    public override void Load(BinaryReader reader, string version) { }
 }

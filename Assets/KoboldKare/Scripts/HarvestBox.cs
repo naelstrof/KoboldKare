@@ -12,17 +12,6 @@ public class HarvestBox : MonoBehaviourPun {
     public float maxMoneyBlip = 100f;
     public BoxCollider inside;
     public Animator targetAnimator;
-    public bool active {get; set;} = false;
-    public void ToggleActive() {
-        active = !active;
-        if (active) {
-            targetAnimator.ResetTrigger("Close");
-            targetAnimator.SetTrigger("Open");
-        } else {
-            targetAnimator.ResetTrigger("Open");
-            targetAnimator.SetTrigger("Close");
-        }
-    }
 
     [PunRPC]
     public void RPCSetMoney(float moneyValue) {
@@ -36,7 +25,7 @@ public class HarvestBox : MonoBehaviourPun {
         }
     }
     private void Check(Collider other) {
-        if (!active || other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
+        if (other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
             return;
         }
         Vector3 origin = other.transform.root.position;

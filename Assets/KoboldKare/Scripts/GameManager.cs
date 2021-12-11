@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
     public bool isPaused = false;
 
     public void Pause(bool pause) {
+        PopupHandler.instance.ClearAllPopups();
         if (!pause) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

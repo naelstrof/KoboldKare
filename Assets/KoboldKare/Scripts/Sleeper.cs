@@ -4,10 +4,14 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 
-public class Sleeper : MonoBehaviour {
+public class Sleeper : GenericUsable {
     public GameEventGeneric startSleep;
     public GameEventGeneric sleep;
-    public void TrySleep() {
+    public Sprite sleepSprite;
+    public override Sprite GetSprite(Kobold k) {
+        return sleepSprite;
+    }
+    public override bool CanUse(Kobold k) {
         bool canSleep = true;
         foreach(var player in PhotonNetwork.PlayerList) {
             if (player.TagObject != null) {
@@ -17,10 +21,12 @@ public class Sleeper : MonoBehaviour {
                 }
             }
         }
-        if (canSleep) {
-            StopAllCoroutines();
-            StartCoroutine(SleepRoutine());
-        }
+        return canSleep;
+    }
+    public override void Use(Kobold k) {
+        base.Use(k);
+        StopAllCoroutines();
+        StartCoroutine(SleepRoutine());
     }
     private IEnumerator SleepRoutine() {
         startSleep.Raise(null);

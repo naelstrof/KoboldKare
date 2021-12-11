@@ -9,18 +9,20 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 
-public class Seed : MonoBehaviourPun, IValuedGood {
+public class Seed : GenericUsable, IValuedGood {
     //public List<GameObject> _plantPrefabs;
+    [SerializeField]
+    private Sprite displaySprite;
     public PhotonGameObjectReference plantPrefab;
     public int type = 0;
     public float _spacing = 1f;
     public UnityEvent OnFailPlant;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
-    public bool ShouldSave() {
-        return true;
+    public override Sprite GetSprite(Kobold k) {
+        return displaySprite;
     }
-    public bool CanPlant() {
+    public override bool CanUse(Kobold k) {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
             if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
@@ -37,8 +39,8 @@ public class Seed : MonoBehaviourPun, IValuedGood {
         }
         return false;
     }
-    public void Plant() {
-        if (!photonView.IsMine || !CanPlant()) {
+    public override void Use(Kobold k) {
+        if (!photonView.IsMine || !CanUse(null)) {
             return;
         }
         RaycastHit hit;

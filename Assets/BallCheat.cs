@@ -6,9 +6,14 @@ public class BallCheat : MonoBehaviour{
     Rigidbody rb;
     Pachinko pachinko;
     public float sensitivity;
+    private WaitForFixedUpdate waitForFixedUpdate;
 
     void Awake(){
         rb = GetComponent<Rigidbody>();
+        waitForFixedUpdate = new WaitForFixedUpdate();
+    }
+    void Start() {
+        StartCoroutine(StuckCheckRoutine());
     }
 
     void OnCollisionEnter(Collision collisionInfo){
@@ -18,10 +23,15 @@ public class BallCheat : MonoBehaviour{
     public void SetMachine(Pachinko Pachinko){
         pachinko = Pachinko;
     }
-
-    void FixedUpdate(){
-        if(rb.velocity.magnitude <= sensitivity){
-            pachinko.BallStuck();
+    IEnumerator StuckCheckRoutine() {
+        int stuckCount = 0;
+        while(stuckCount < 10) {
+            while (rb.velocity.magnitude > sensitivity ) {
+                yield return waitForFixedUpdate;
+            }
+            stuckCount++;
+            yield return waitForFixedUpdate;
         }
+        pachinko.BallStuck();
     }
 }

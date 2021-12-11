@@ -19,4 +19,23 @@ public class ScriptablePurchasable : ScriptableObject {
     void OnValidate() {
         spawnPrefab.OnValidate();
     }
+    public static Bounds DisableAllButGraphics(GameObject target) {
+        Bounds centerBounds = new Bounds(target.transform.position, Vector3.zero);
+        foreach(Component c in target.GetComponentsInChildren<Component>()) {
+            if (c is Renderer) {
+                centerBounds.Encapsulate((c as Renderer).bounds);
+                continue;
+            }
+            if (c is MeshFilter || c is LODGroup) {
+                continue;
+            }
+            if (c is Behaviour) {
+                (c as Behaviour).enabled = false;
+            }
+            if (c is Rigidbody) {
+                (c as Rigidbody).isKinematic = true;
+            }
+        }
+        return centerBounds;
+    }
 }

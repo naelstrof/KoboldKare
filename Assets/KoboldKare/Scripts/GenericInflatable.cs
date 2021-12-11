@@ -235,6 +235,7 @@ public class GenericInflatable : MonoBehaviour {
     }
     void OnDisable() {
         if (container != null) {
+            size = GetDesiredSize();
             container.OnChange.RemoveListener(OnReagentContainerChanged);
         }
         tweening = false;

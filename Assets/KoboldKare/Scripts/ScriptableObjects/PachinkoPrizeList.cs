@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable, CreateAssetMenu()]
 public class PachinkoPrizeList : ScriptableObject{
     [SerializeField]
-    public List<PrizeEntry> prizes = new List<PrizeEntry>();
+    private List<PrizeEntry> prizes = new List<PrizeEntry>();
 
     [System.Serializable]
     public class PrizeEntry    {
-        public GameObject prize;
+        public ScriptablePurchasable prize;
         public float chance;
     }
 

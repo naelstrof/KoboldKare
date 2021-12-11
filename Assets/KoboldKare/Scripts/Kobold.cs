@@ -356,23 +356,16 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         animator.SetBool("Carried", true);
         //pickedUp = 1;
         //transSpeed = 5.0f;
-        photonView.RPC("OnEndStation", RpcTarget.AllBuffered);
+        kobold.GetComponent<CharacterControllerAnimator>().OnEndStation();
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         return true;
-    }
-    [PunRPC]
-    public void RPCKnockOver() {
-        KnockOver(9999f);
-    }
-    [PunRPC]
-    public void RPCStandUp() {
-        StandUp();
     }
     public IEnumerator KnockOverRoutine() {
         // If we need jigglebones disabled, it takes TWO frames for it to take effect! So... here we wait!
         // Otherwise jigglebones will move rigidbodies and fuck stuff up...
         OnRagdoll.Invoke();
+        sizeInflatable.enabled = false;
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         //RecursiveSetLayer(transform, LayerMask.NameToLayer("Hitbox"), LayerMask.NameToLayer("PlayerHitbox"));
@@ -405,7 +398,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
 
         // We need to know the final result of our ragdoll before we update the anchors.
+        Physics.SyncTransforms();
         bodyProportion.ScaleSkeleton();
+        Physics.SyncTransforms();
         int i = 0;
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             CharacterJoint j = ragdollBody.GetComponent<CharacterJoint>();
@@ -426,10 +421,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             originalUprightTimer = Mathf.Max(duration, originalUprightTimer);
             return;
         }
-        uprightTimer = duration;
-        if (body.isKinematic) {
-            return;
+        originalUprightTimer = 0f;
+        if (ragdolled) {
+            StandUp();
         }
+        uprightTimer = duration;
         if (ragdollTask != null && ragdollTask.Running) {
             ragdollTask.Stop();
         }
@@ -438,11 +434,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
     // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
     public void StandUp() {
-        originalUprightTimer = 0f;
         uprightTimer = 0f;
-        if ((!body.isKinematic && ragdollBodies[0].isKinematic) || koboldAnimator.enabled) {
+        if ((!body.isKinematic && ragdollBodies[0].isKinematic)) {
             return;
         }
+        sizeInflatable.enabled = true;
         //foreach(var penSet in penetratables) {
             //penSet.penetratable.SwitchBody(body);
         //}
@@ -760,7 +756,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseDickSize);
         } else {
             bool ragged = (bool)stream.ReceiveNext();
-            if (!ragdolled && ragged && !bodyProportion.running) {
+            if (!ragdolled && ragged) {
                 KnockOver(99999f);
             }
             if (ragdolled && !ragged) {
@@ -810,7 +806,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public void Load(BinaryReader reader, string version) {
         bool ragged = reader.ReadBoolean();
-        if (!ragdolled && ragged && !bodyProportion.running) {
+        if (!ragdolled && ragged) {
             KnockOver(99999f);
         }
         if (ragdolled && !ragged) {

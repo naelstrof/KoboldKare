@@ -11,7 +11,7 @@ public class GenericSpawner : MonoBehaviourPun {
     [SerializeField]
     private bool spawnOnLoad;
     private GameObject lastSpawned;
-    private WaitUntil waitUntil;
+    private WaitUntil waitUntilCanSpawn;
     private string GetRandomPrefab() {
         return possibleSpawns[Random.Range(0, possibleSpawns.Count)].photonName;
     }
@@ -28,7 +28,7 @@ public class GenericSpawner : MonoBehaviourPun {
         return PhotonNetwork.InRoom && PhotonNetwork.IsConnectedAndReady;
     }
     public virtual IEnumerator SpawnRoutine() {
-        yield return waitUntil;
+        yield return waitUntilCanSpawn;
         string randomPrefab = GetRandomPrefab();
         lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation);
         if (lastSpawned.GetComponent<Kobold>() != null) {
@@ -36,7 +36,7 @@ public class GenericSpawner : MonoBehaviourPun {
         }
     }
     public virtual void Start() {
-        waitUntil = new WaitUntil(CanSpawn);
+        waitUntilCanSpawn = new WaitUntil(CanSpawn);
         if (possibleSpawns.Count <= 0) {
             Debug.LogWarning("Spawner without anything to spawn...", gameObject);
         }

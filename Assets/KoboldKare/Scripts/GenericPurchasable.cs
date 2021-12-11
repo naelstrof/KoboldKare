@@ -4,6 +4,7 @@ using System.IO;
 using KoboldKare;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.VFX;
 
 public class GenericPurchasable : GenericUsable {
@@ -23,14 +24,14 @@ public class GenericPurchasable : GenericUsable {
     private GameObject display;
     private AudioSource source;
     [SerializeField]
-    private Transform textTransform;
+    private UnityEvent purchased;
     [SerializeField]
-    private TMPro.TMP_Text text;
+    private MoneyFloater floater;
 
     public ScriptablePurchasable GetPurchasable() => purchasable;
     public delegate void PurchasableChangedAction(ScriptablePurchasable newPurchasable);
     public PurchasableChangedAction purchasableChanged;
-    void Start() {
+    public virtual void Start() {
         source = new AudioSource();
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
@@ -40,37 +41,14 @@ public class GenericPurchasable : GenericUsable {
         source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
         if (restockEvent != null) {
-            restockEvent.AddListener(OnEventRaised);
+            restockEvent.AddListener(OnRestock);
         }
         SwapTo(purchasable, true);
     }
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
-    void OnEnable() {
-        StartCoroutine(UpdateRoutine());
-    }
-    // Disables all components except for renderers. also returns the bounds of the renderers
-    Bounds DisableAllButGraphics(GameObject target) {
-        Bounds centerBounds = new Bounds(transform.position, Vector3.zero);
-        foreach(Component c in target.GetComponentsInChildren<Component>()) {
-            if (c is Renderer) {
-                centerBounds.Encapsulate((c as Renderer).bounds);
-                continue;
-            }
-            if (c is MeshFilter || c is LODGroup) {
-                continue;
-            }
-            if (c is Behaviour) {
-                (c as Behaviour).enabled = false;
-            }
-            if (c is Rigidbody) {
-                (c as Rigidbody).isKinematic = true;
-            }
-        }
-        return centerBounds;
-    }
-    void SwapTo(ScriptablePurchasable newPurchasable, bool forceRefresh = false) {
+    protected void SwapTo(ScriptablePurchasable newPurchasable, bool forceRefresh = false) {
         if (purchasable == newPurchasable && !forceRefresh) {
             return;
         }
@@ -79,36 +57,21 @@ public class GenericPurchasable : GenericUsable {
         }
         purchasable = newPurchasable;
         display = GameObject.Instantiate(purchasable.display, transform);
-        Bounds centerBounds = DisableAllButGraphics(display);
-        textTransform.position = centerBounds.center;
-        textTransform.localScale = Vector3.one * centerBounds.size.magnitude;
+        Bounds centerBounds = ScriptablePurchasable.DisableAllButGraphics(display);
+        floater.SetBounds(centerBounds);
         display.SetActive(inStock);
-        text.text = purchasable.cost.ToString();
+        floater.SetText(purchasable.cost.ToString());
         purchasableChanged?.Invoke(purchasable);
     }
-    IEnumerator UpdateRoutine() {
-        while(isActiveAndEnabled) {
-            // Every few frames we update
-            for(int i=0;i<2;i++) {
-                yield return null;
-            }
-            // Skip if camera is null
-            if (Camera.main == null) {
-                continue;
-            }
-            float distance = textTransform.DistanceTo(Camera.main.transform);
-            textTransform.LookAt(Camera.main.transform, Vector3.up);
-            text.alpha = Mathf.Clamp01(10f-distance);
-        }
-    }
-    void OnDestroy() {
+    public virtual void OnDestroy() {
         if (restockEvent != null) {
-            restockEvent.RemoveListener(OnEventRaised);
+            restockEvent.RemoveListener(OnRestock);
         }
     }
-    void OnEventRaised(object nothing) {
+    public virtual void OnRestock(object nothing) {
         if (!display.activeInHierarchy) {
             display.SetActive(true);
+            floater.gameObject.SetActive(true);
         }
     }
     public override bool CanUse(Kobold k) {
@@ -121,6 +84,8 @@ public class GenericPurchasable : GenericUsable {
             money.charge(purchasable.cost);
             PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
         }
+        floater.gameObject.SetActive(false);
+        purchased.Invoke();
         display.SetActive(false);
     }
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

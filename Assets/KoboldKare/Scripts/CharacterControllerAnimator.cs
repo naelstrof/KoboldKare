@@ -5,10 +5,12 @@ using UnityEngine.VFX;
 using UnityEngine.Events;
 using Vilar.AnimationStation;
 using Photon.Pun;
+using System.IO;
 
 [RequireComponent(typeof(KoboldCharacterController))]
-public class CharacterControllerAnimator : MonoBehaviourPun
-{
+public class CharacterControllerAnimator : GenericUsable {
+    [SerializeField]
+    private Sprite displaySprite;
     private Kobold internalKobold;
     public Kobold kobold {
         get {
@@ -20,6 +22,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun
     }
     public float standingAnimationSpeedMultiplier = 0.1f;
     public float crouchedAnimationSpeedMultiplier = 0.1f;
+    private int stationViewID;
+    private byte currentStationID;
     public float walkingAnimationSpeedMultiplier = 0.1f;
     public Animator playerModel;
     public Transform lookDir;
@@ -82,8 +86,15 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         return true;
     }
-    void Start()
-    {
+    public override bool CanUse(Kobold k) {
+        return CanAnimate(k);
+    }
+    public override void Use(Kobold k) {
+        if (k != null) {
+            SnapToNearestAnimationStation(k, k.transform.position);
+        }
+    }
+    void Start() {
         //lookPosition = lookDir.position;
         controller = GetComponent<KoboldCharacterController>();
     }
@@ -114,6 +125,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         useRandomSample = true;
     }
     void OnBeginStation(AnimationStation station) {
+        kobold.KnockOver(9999f);
         StopCoroutine("WaitThenAdvanceProgress");
         blend = 0f;
         activeStation = station;
@@ -125,7 +137,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         body.isKinematic = true;
         //playerModel.SetTrigger("TPose");
 
-        //transform.position = station.transform.position;
+        transform.position = station.transform.position;
         //body.position = transform.position;
         transform.rotation = station.transform.rotation;
 
@@ -134,11 +146,15 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         activeStation.progress = 0f;
         //playerModel.updateMode = AnimatorUpdateMode.Normal;
     }
-    [PunRPC]
+    public override Sprite GetSprite(Kobold k) {
+        return displaySprite;
+    }
     public void OnEndStation() {
         if (!animating) {
             return;
         }
+        stationViewID = 0;
+        currentStationID = 0;
         body.isKinematic = false;
         kobold.StandUp();
         animating = false;
@@ -253,8 +269,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         }
         return best;
     }
-    [PunRPC]
-    public void SnapToStation(int photonViewID, int stationNumber) {
+    public void SnapToStation(int photonViewID, byte stationNumber) {
         //if (activeStation != null) {
         //OnEndStation();
         //}
@@ -262,6 +277,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun
         if (view == null) {
             return;
         }
+        stationViewID = photonViewID;
+        currentStationID = stationNumber;
         AnimationStation[] stations = view.GetComponentsInChildren<AnimationStation>();
         if (stationNumber >= 0 && stationNumber < stations.Length) {
             OnBeginStation(stations[stationNumber]);
@@ -311,7 +328,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun
                 AnimationStation[] stations = stationView.GetComponentsInChildren<AnimationStation>();
                 for(int i = 0; i < stations.Length; i++) {
                     if (stations[i] == bestStation) {
-                        k.photonView.RPC("SnapToStation", RpcTarget.AllBuffered, new object[] { stationView.ViewID, i });
+                        //k.photonView.RPC("SnapToStation", RpcTarget.AllBuffered, new object[] { stationView.ViewID, i });
+                        k.GetComponent<CharacterControllerAnimator>().SnapToStation(stationView.ViewID, (byte)i);
                     }
                 }
                 //k.GetComponentInChildren<CharacterControllerAnimator>().SnapToStation(bestStation);
@@ -329,10 +347,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             if (useRandomSample && activeStation != null) {
                 activeStation.progress = randomSample;
             }
-        }
-
-        if (!kobold.ragdolled && photonView.IsMine) {
-            photonView.RPC("OnEndStation", RpcTarget.AllBuffered);
         }
         physicsSolver.ForceBlend(blend);
         activeStation.SetCharacter(physicsSolver);
@@ -428,5 +442,35 @@ public class CharacterControllerAnimator : MonoBehaviourPun
             handler.SetLookAtWeight(1f, 0.5f, 1f, 1f, 1f);
         }
         handler.SetLookAtPosition(lookDir.position);
+    }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(stationViewID);
+            stream.SendNext(currentStationID);
+        } else {
+            int newViewID = (int)stream.ReceiveNext();
+            byte newStationID = (byte)stream.ReceiveNext();
+            if (newViewID != 0 && stationViewID != newViewID) {
+                OnEndStation();
+                SnapToStation(newViewID, newStationID);
+            } else if (newViewID == 0 && stationViewID != 0) {
+                OnEndStation();
+            }
+        }
+    }
+    public override void Save(BinaryWriter writer, string version) {
+        writer.Write(stationViewID);
+        writer.Write(currentStationID);
+    }
+
+    public override void Load(BinaryReader reader, string version) {
+        int newViewID = (int)reader.ReadInt32();
+        byte newStationID = (byte)reader.ReadByte();
+        if (newViewID != 0 && stationViewID != newViewID) {
+            OnEndStation();
+            SnapToStation(newViewID, newStationID);
+        } else if (newViewID == 0 && stationViewID != 0) {
+            OnEndStation();
+        }
     }
 }

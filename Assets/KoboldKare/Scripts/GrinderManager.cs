@@ -7,33 +7,36 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 
-public class GrinderManager : MonoBehaviourPun {
+public class GrinderManager : GenericUsable {
+    [SerializeField]
+    private Sprite onSprite;
+    [SerializeField]
+    private Sprite offSprite;
     public AudioSource grindSound;
     public Animator animator;
     public Transform attachPoint;
     public AudioSource deny;
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
-    private bool internalOn;
-    public void ToggleOn() {
-        on = !on;
-    }
-    public bool on {
+    private bool on {
         get {
-            return internalOn;
-        }
-        set {
-            internalOn = value;
-            if (on) {
-                animator.SetTrigger("TurnOn");
-                grindSound.Play();
-            } else {
-                grindSound.Pause();
-                animator.SetTrigger("TurnOff");
-            }
+            return (usedCount % 2) != 0;
         }
     }
-    public IEnumerator WaitAndThenClear() {
+    public override Sprite GetSprite(Kobold k) {
+        return on ? offSprite : onSprite;
+    }
+    public override void Use(Kobold k) {
+        base.Use(k);
+        if (on) {
+            animator.SetTrigger("TurnOn");
+            grindSound.Play();
+        } else {
+            grindSound.Pause();
+            animator.SetTrigger("TurnOff");
+        }
+    }
+    IEnumerator WaitAndThenClear() {
         yield return new WaitForSeconds(0.5f);
         grindedThingsCache.Clear();
     }

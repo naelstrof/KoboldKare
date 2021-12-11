@@ -3,14 +3,23 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 
-public class GenericEquipment : MonoBehaviourPun {
+public class GenericEquipment : GenericUsable {
     public Equipment representedEquipment;
+    [SerializeField]
+    private Sprite displaySprite;
     private bool equipOnTouch = false;
     // Trying to match the Use pattern, so we can just use a GenericUsable to equip. Though technically we can call this from anything. A button that equips you with a status effect or whatever.
     public void TriggerAttachOnTouch(float duration) {
         StartCoroutine(AttachOnTouch(duration));
     }
-    public void Equip(Kobold k, Vector3 position) {
+    public override Sprite GetSprite(Kobold k) {
+        return displaySprite;
+    }
+    public override void Use(Kobold k) {
+        base.Use(k);
+        Equip(k);
+    }
+    private void Equip(Kobold k) {
         // If kobold got deleted
         if (k == null) {
             return;
@@ -37,7 +46,7 @@ public class GenericEquipment : MonoBehaviourPun {
         }
         Kobold kobold = collision.rigidbody.GetComponentInParent<Kobold>();
         if (kobold != null) {
-            Equip(kobold, kobold.transform.position);
+            Equip(kobold);
             equipOnTouch = false;
         }
     }

@@ -28,8 +28,8 @@ public class GenericEquipment : GenericUsable, IOnPhotonViewOwnerChange {
         }
         // Try to take control of the equipment, if we don't have permission.
         if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
-            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
             tryingToEquip = k;
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
         }
         // Only successfully equip if we own both the equipment, and the kobold. Otherwise, wait for ownership to successfully transfer
         if (k.photonView.IsMine && photonView.IsMine) {

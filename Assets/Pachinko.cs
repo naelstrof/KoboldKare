@@ -108,8 +108,9 @@ public class Pachinko : GenericUsable {
             return;
         }
         //Debug.Log("Ball spawned");
-        activeBall = PhotonNetwork.Instantiate(pachinkoBallPrefab.photonName,ballSpawnPoint.position,Quaternion.identity);
-        activeBall.GetComponent<BallCheat>().SetMachine(this);
+        activeBall = PhotonNetwork.Instantiate(pachinkoBallPrefab.photonName,ballSpawnPoint.position,Quaternion.identity, 0, new object[]{photonView.ViewID});
+        // We set the machine via instantiation data, since other clients would just have the ball "appear".
+        //activeBall.GetComponent<BallCheat>().SetMachine(this);
         activeBall.GetComponent<Rigidbody>().velocity = ballSpawnPoint.transform.parent.GetComponent<Rigidbody>().velocity;
     }
 

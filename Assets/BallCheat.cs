@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class BallCheat : MonoBehaviour{
+public class BallCheat : MonoBehaviourPun, IPunInstantiateMagicCallback {
     Rigidbody rb;
     Pachinko pachinko;
     public float sensitivity;
@@ -20,9 +21,9 @@ public class BallCheat : MonoBehaviour{
         pachinko.HitPin();
     }
 
-    public void SetMachine(Pachinko Pachinko){
-        pachinko = Pachinko;
-    }
+    //public void SetMachine(Pachinko Pachinko){
+        //pachinko = Pachinko;
+    //}
     IEnumerator StuckCheckRoutine() {
         int stuckCount = 0;
         while(stuckCount < 10) {
@@ -33,5 +34,9 @@ public class BallCheat : MonoBehaviour{
             yield return waitForFixedUpdate;
         }
         pachinko.BallStuck();
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        pachinko = PhotonNetwork.GetPhotonView((int)(info.photonView.InstantiationData[0])).GetComponent<Pachinko>();
     }
 }

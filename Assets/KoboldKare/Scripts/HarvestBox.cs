@@ -12,13 +12,6 @@ public class HarvestBox : MonoBehaviourPun {
     public float maxMoneyBlip = 100f;
     public BoxCollider inside;
     public Animator targetAnimator;
-
-    public void OnDestroy() {
-        if (photonView.IsMine) {
-            PhotonNetwork.CleanRpcBufferIfMine(photonView);
-            PhotonNetwork.OpCleanRpcBuffer(photonView);
-        }
-    }
     private void Check(Collider other) {
         if (other.isTrigger || other.transform.root.CompareTag("Player") || !other.GetComponentInParent<PhotonView>().IsMine) {
             return;

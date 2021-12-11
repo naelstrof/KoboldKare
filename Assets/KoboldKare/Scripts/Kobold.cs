@@ -342,7 +342,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
         if (photonView.IsMine) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
-            PhotonNetwork.OpCleanRpcBuffer(photonView);
         }
         var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         steamAudioSetting.onValueChange -= OnSteamAudioChanged;

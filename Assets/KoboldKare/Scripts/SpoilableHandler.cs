@@ -14,8 +14,12 @@ public class SpoilableHandler : MonoBehaviour {
     private LayerMask safeZoneMask;
     private List<ISpoilable> removeSpoilables = new List<ISpoilable>();
     private List<ISpoilable> spoilables = new List<ISpoilable>();
-    void Awake() {
-        instance = this;
+    public void Awake() {
+        if (instance != null) {
+            Destroy(this);
+        } else {
+            instance = this;
+        }
     }
     void Start() {
         midnightEvent.AddListener(OnMidnight);
@@ -40,7 +44,7 @@ public class SpoilableHandler : MonoBehaviour {
     }
     IEnumerator SpoilOverTime(float duration, float multiplier) {
         float startTime = Time.timeSinceLevelLoad;
-        while(Time.timeSinceLevelLoad-startTime < duration && DayNightCycle.instance.daylight < -0.9f) {
+        while(Time.timeSinceLevelLoad-startTime < duration) {
             for(int i=spoilables.Count-1;i>=0;i--) {
                 if (Mathf.Approximately(spoilables[i].spoilIntensity, 1f)) {
                     continue;

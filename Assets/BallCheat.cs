@@ -26,7 +26,7 @@ public class BallCheat : MonoBehaviourPun, IPunInstantiateMagicCallback {
     //}
     IEnumerator StuckCheckRoutine() {
         int stuckCount = 0;
-        while(stuckCount < 10) {
+        while(stuckCount < 60) {
             while (rb.velocity.magnitude > sensitivity ) {
                 yield return waitForFixedUpdate;
             }

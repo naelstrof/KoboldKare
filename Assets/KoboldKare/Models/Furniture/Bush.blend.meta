@@ -3,7 +3,13 @@ guid: c1dcf30140b33b449a67f3399dea92a0
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SharedBush
+    second: {fileID: 8715948939192389926, guid: c1dcf30140b33b449a67f3399dea92a0,
+      type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

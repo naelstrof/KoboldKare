@@ -254,7 +254,7 @@ public class GenericInflatable : MonoBehaviour {
     }
     float GetDesiredSize() {
         if (container == null) {
-            return baseSize;
+            return baseSize/reagentVolumeDivisor;
         }
         float volume = baseSize;
         if (reagentMasks.Length == 0) {

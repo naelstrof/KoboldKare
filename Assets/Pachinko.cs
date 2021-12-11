@@ -73,8 +73,8 @@ public class Pachinko : GenericUsable {
     }
 
     public override void Use(Kobold k) {
-        money.charge(playCost);
-        if (photonView.IsMine) {
+        if (MoneySyncHack.view.IsMine && CanUse(k)) {
+            money.charge(playCost);
             StartGame();
         }
     }

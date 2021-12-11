@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PhotonView))]
 public class HarvestBox : MonoBehaviourPun {
     public LayerMask layerMask;
     public ScriptableFloat money;
@@ -35,6 +34,7 @@ public class HarvestBox : MonoBehaviourPun {
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();
+            MoneySyncHack.view.RPC("RPCGiveMoney", RpcTarget.All, new object[]{totalWorth});
         }
         PhotonNetwork.Destroy(other.GetComponentInParent<PhotonView>().gameObject);
     }

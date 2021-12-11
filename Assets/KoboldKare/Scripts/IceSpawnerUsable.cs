@@ -51,11 +51,11 @@ public class IceSpawnerUsable : GenericUsable {
     }
     public override void Use(Kobold k) {
         base.Use(k);
-        if (photonView.IsMine) {
+        if (MoneySyncHack.view.IsMine && CanUse(k)) {
+            money.charge(cost);
             PhotonNetwork.Instantiate(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
             spawnsLeft--;
         }
-        money.charge(cost);
     }
     void OnValidate() {
         prefabSpawn.OnValidate();

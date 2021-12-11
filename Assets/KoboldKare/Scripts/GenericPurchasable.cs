@@ -84,7 +84,7 @@ public class GenericPurchasable : GenericUsable {
     public override void Use(Kobold k) {
         base.Use(k);
         source.PlayOneShot(purchaseSoundPack.GetRandomClip(), purchaseSoundPack.volume);
-        if (photonView.IsMine && CanUse(k)) {
+        if (MoneySyncHack.view.IsMine && CanUse(k)) {
             money.charge(purchasable.cost);
             PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
         }

@@ -8,12 +8,12 @@ using KoboldKare;
 public class SpoilableHandler : MonoBehaviour {
     [SerializeField]
     private GameEventGeneric midnightEvent;
-    private static SpoilableHandler instance;
     private bool running = false;
     [SerializeField]
     private LayerMask safeZoneMask;
     private List<ISpoilable> removeSpoilables = new List<ISpoilable>();
     private List<ISpoilable> spoilables = new List<ISpoilable>();
+    private static SpoilableHandler instance;
     public void Awake() {
         if (instance != null) {
             Destroy(this);

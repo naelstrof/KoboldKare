@@ -286,7 +286,7 @@ public class CharacterControllerAnimator : GenericUsable {
         }
     }
     public void SnapToNearestAnimationStation(Kobold OtherPlayer, Vector3 position) {
-        if (OtherPlayer == null || !photonView.IsMine) {
+        if (OtherPlayer == null) {
             return;
         }
         // Find all the active bolds.
@@ -351,8 +351,7 @@ public class CharacterControllerAnimator : GenericUsable {
         physicsSolver.ForceBlend(blend);
         activeStation.SetCharacter(physicsSolver);
     }
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (kobold != null) {
             float maxPen = 0f;
             // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.

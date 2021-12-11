@@ -1,12 +1,14 @@
 using System.Collections;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
-public class GenericEquipment : GenericUsable {
+public class GenericEquipment : GenericUsable, IOnPhotonViewOwnerChange {
     public Equipment representedEquipment;
     [SerializeField]
     private Sprite displaySprite;
+    private Kobold tryingToEquip;
     private bool equipOnTouch = false;
     // Trying to match the Use pattern, so we can just use a GenericUsable to equip. Though technically we can call this from anything. A button that equips you with a status effect or whatever.
     public void TriggerAttachOnTouch(float duration) {
@@ -24,11 +26,15 @@ public class GenericEquipment : GenericUsable {
         if (k == null) {
             return;
         }
-        if (k.photonView.IsMine) {
+        // Try to take control of the equipment, if we don't have permission.
+        if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+            tryingToEquip = k;
+        }
+        // Only successfully equip if we own both the equipment, and the kobold. Otherwise, wait for ownership to successfully transfer
+        if (k.photonView.IsMine && photonView.IsMine) {
             KoboldInventory inventory = k.GetComponent<KoboldInventory>();
             inventory.PickupEquipment(representedEquipment, gameObject);
-        }
-        if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
     }
@@ -49,5 +55,14 @@ public class GenericEquipment : GenericUsable {
             Equip(kobold);
             equipOnTouch = false;
         }
+    }
+    public void OnOwnerChange(Player newOwner, Player previousOwner) {
+        if (newOwner == PhotonNetwork.LocalPlayer && tryingToEquip != null) {
+            KoboldInventory inventory = tryingToEquip.GetComponent<KoboldInventory>();
+            inventory.PickupEquipment(representedEquipment, gameObject);
+            PhotonNetwork.Destroy(photonView.gameObject);
+        }
+        // Someone else must've won the handshake, so we clear our attempt to equip.
+        tryingToEquip = null;
     }
 }

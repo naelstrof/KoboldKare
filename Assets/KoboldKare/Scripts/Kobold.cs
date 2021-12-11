@@ -537,22 +537,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
 
     [PunRPC]
-    public void RPCGrab(int photonID) {
-        PhotonView view = PhotonView.Find(photonID);
-        if (view == null) {
-            return;
-        }
-        IGrabbable g = view.GetComponentInChildren<IGrabbable>();
-        if (g != null) {
-            GetComponentInChildren<Grabber>().TryGrab(g);
-        }
-    }
-    [PunRPC]
-    public void RPCDrop() {
-        GetComponentInChildren<Grabber>().TryDrop();
-    }
-
-    [PunRPC]
     public void RPCPrecisionGrab(int grabberViewID, int colliderID, Vector3 lHitPoint) {
         PhotonView view = PhotonView.Find(grabberViewID);
         if (view != null) {

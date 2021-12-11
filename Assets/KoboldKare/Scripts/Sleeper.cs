@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
+using System.IO;
 
 public class Sleeper : GenericUsable {
     public GameEventGeneric startSleep;
@@ -24,7 +25,6 @@ public class Sleeper : GenericUsable {
         return canSleep;
     }
     public override void Use(Kobold k) {
-        base.Use(k);
         StopAllCoroutines();
         StartCoroutine(SleepRoutine());
     }
@@ -34,4 +34,7 @@ public class Sleeper : GenericUsable {
         sleep.Raise(null);
         DayNightCycle.instance.Sleep();
     }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+    public override void Save(BinaryWriter writer, string version) { }
+    public override void Load(BinaryReader reader, string version) { }
 }

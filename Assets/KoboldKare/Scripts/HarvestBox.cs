@@ -13,11 +13,6 @@ public class HarvestBox : MonoBehaviourPun {
     public BoxCollider inside;
     public Animator targetAnimator;
 
-    [PunRPC]
-    public void RPCSetMoney(float moneyValue) {
-        money.set(moneyValue);
-    }
-
     public void OnDestroy() {
         if (photonView.IsMine) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
@@ -47,7 +42,6 @@ public class HarvestBox : MonoBehaviourPun {
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();
-            photonView.RPC("RPCSetMoney", RpcTarget.AllBuffered, new object[] { money.value + totalWorth });
         }
         PhotonNetwork.Destroy(other.GetComponentInParent<PhotonView>().gameObject);
     }

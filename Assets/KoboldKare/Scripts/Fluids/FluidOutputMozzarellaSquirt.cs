@@ -58,7 +58,7 @@ public class FluidOutputMozzarellaSquirt : FluidOutput {
         if (b.volume <= 0f){ 
             return;
         }
-        SetRadius(Mathf.Clamp(b.volume*0.03f, 0.01f, 0.35f));
+        SetRadius(Mathf.Clamp(b.volume*0.03f, 0.05f, 0.35f));
         Color c = b.GetColor();
         fluidHitListener.erasing = b.IsCleaningAgent();
         effect.SetVector4("Color", c);

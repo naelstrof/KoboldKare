@@ -103,8 +103,10 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
     public void Update() {
-        RunEvents(lastTime, time);
-        lastTime = time;
+        if (photonView.IsMine) {
+            RunEvents(lastTime, time);
+            lastTime = time;
+        }
     }
     public void WarpToTime(float time01) {
         WarpToTime(time01, false);

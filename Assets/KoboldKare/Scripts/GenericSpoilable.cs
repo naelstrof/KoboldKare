@@ -10,7 +10,6 @@ using UnityEngine.VFX;
 public class SpoilIntensityEvent : UnityEvent<float> {}
 public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     public VisualEffect effect;
-    public SpoilableHandler handler;
     public SpoilIntensityEvent OnIntensityChange;
     public SpoilIntensityEvent OnFadeout;
     public float spawnProtection = 4f;
@@ -39,7 +38,7 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     void Start() {
         internalSpoilIntensity = 0f;
         destroying = false;
-        handler.AddSpoilable(this);
+        SpoilableHandler.AddSpoilable(this);
         if (destroyOnSpoil == true) {
             onSpoilEvent.AddListener(()=>{
                 if (photonView.IsMine) {
@@ -57,7 +56,7 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
         }
     }
     void OnDestroy() {
-        handler.RemoveSpoilable(this);
+        SpoilableHandler.RemoveSpoilable(this);
     }
     public IEnumerator WaitThenDestroyObject(float delay) {
         yield return new WaitForSeconds(delay);

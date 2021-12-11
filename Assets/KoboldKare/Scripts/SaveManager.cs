@@ -96,6 +96,10 @@ public static class SaveManager {
         }
     }
     private static void LoadImmediate(string filename) {
+        // Don't load saves while online.
+        if (NetworkManager.instance.online) {
+            return;
+        }
         CleanUpImmediate();
         using(FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
             BinaryReader reader = new BinaryReader(file);

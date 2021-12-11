@@ -3,23 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Photon.Pun;
+using KoboldKare;
 
-[CreateAssetMenu(fileName = "SpoilableHandler", menuName = "Data/Spoilable Handler", order = 4)]
-public class SpoilableHandler : ScriptableObject {
+public class SpoilableHandler : MonoBehaviour {
+    [SerializeField]
+    private GameEventGeneric midnightEvent;
+    private static SpoilableHandler instance;
     private bool running = false;
-    public LayerMask safeZoneMask;
+    [SerializeField]
+    private LayerMask safeZoneMask;
     private List<ISpoilable> removeSpoilables = new List<ISpoilable>();
     private List<ISpoilable> spoilables = new List<ISpoilable>();
-    public void AddSpoilable(ISpoilable spoilable) {
-        spoilables.Add(spoilable);
+    void Awake() {
+        instance = this;
     }
-    public void RemoveSpoilable(ISpoilable spoilable) {
-        if (running) {
-            removeSpoilables.Add(spoilable);
+    void Start() {
+        midnightEvent.AddListener(OnMidnight);
+    }
+    void OnDestroy() {
+        midnightEvent.RemoveListener(OnMidnight);
+    }
+    void OnMidnight(object nothing) {
+        StartSpoilingEvent();
+    }
+    public static void AddSpoilable(ISpoilable spoilable) {
+        instance.spoilables.Add(spoilable);
+    }
+    public static void RemoveSpoilable(ISpoilable spoilable) {
+        if (instance.running) {
+            instance.removeSpoilables.Add(spoilable);
             return;
         }
-        if (spoilables.Contains(spoilable)) {
-            spoilables.Remove(spoilable);
+        if (instance.spoilables.Contains(spoilable)) {
+            instance.spoilables.Remove(spoilable);
         }
     }
     IEnumerator SpoilOverTime(float duration, float multiplier) {
@@ -51,7 +67,7 @@ public class SpoilableHandler : ScriptableObject {
     //public bool AllPlayersInside() {
 
     //}
-    public void StartSpoilingEvent() {
+    void StartSpoilingEvent() {
         if (DayNightCycle.instance.daylight < -0.9f) {
             GameManager.instance.StartCoroutine(SpoilOverTime(6f,0.2f));
         } else {

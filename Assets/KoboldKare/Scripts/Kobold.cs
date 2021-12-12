@@ -273,7 +273,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         //}
     }
     public void OnCompleteBodyProportion() {
-        sizeInflatable.enabled = true;
         if (originalUprightTimer > 0f) {
             KnockOver(originalUprightTimer);
         }

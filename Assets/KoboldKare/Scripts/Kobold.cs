@@ -724,7 +724,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 if(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum")) > maximumCum){
                     belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), maximumCum);
                 }
-                belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
+                if(maximumCum > 0) belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
             }
             float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
             foreach (var boob in boobs) {

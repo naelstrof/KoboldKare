@@ -7,9 +7,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
-    public GameObject loadingPanel;
+    public GameObject loadingPanel, masterCanvas;
     public static LevelLoader instance;
     public static bool loadingLevel;
+    public TextMeshProUGUI tmpText;
+
     void Awake() {
         //Check if instance already exists
         if (instance == null) {
@@ -27,20 +29,22 @@ public class LevelLoader : MonoBehaviour {
     public IEnumerator LoadLevelRoutine(string name) {
         GameManager.instance.Pause(false);
         loadingLevel = true;
-        loadingPanel.SetActive(true);
+        masterCanvas.SetActive(true);
+        loadingPanel.GetComponent<CanvasGroup>().alpha = 1f;
         //loadingPanel.Show();
         //loadingPanelProgress.SetProgress(0f);
         yield return new WaitForSeconds(1f);
         PhotonNetwork.LoadLevel(name);
         while (!SceneManager.GetSceneByName(name).isLoaded) {
-            loadingPanel.GetComponentInChildren<TMP_Text>().text = "Loading ... " + PhotonNetwork.LevelLoadingProgress.ToString("0") + " %";
+            //tmpText.text = "Loading ... " + (PhotonNetwork.LevelLoadingProgress/100).ToString("0") + " %";
             //loadingPanelProgress.SetProgress(PhotonNetwork.LevelLoadingProgress);
             yield return new WaitForEndOfFrame();
         }
         //loadingPanelProgress.SetProgress(1f);
         //loadingPanel.Hide();
-        loadingPanel.SetActive(false);
+        loadingPanel.GetComponent<CanvasGroup>().alpha = 0f;
         loadingLevel = false;
+        masterCanvas.SetActive(false);
         PopupHandler.instance.ClearAllPopups();
         GameManager.instance.Pause(false);
     }

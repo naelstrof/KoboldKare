@@ -41,7 +41,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
                     if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
                         break; //Don't add dicks if we already have one
                     }
-                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
+                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("DickType").value)]), null);
                 } else { //Remove Dicks
                     while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
                         inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);

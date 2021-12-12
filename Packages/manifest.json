@@ -22,6 +22,7 @@
     "com.unity.scriptablebuildpipeline": "1.19.3",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.timeline": "1.4.8",
+    "com.unity.toolchain.linux-x86_64": "0.1.19-preview",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualeffectgraph": "10.6.0",
     "li.lightingtools.lightprobesvolumes": "https://github.com/naelstrof/LightProbeVolumes.git",

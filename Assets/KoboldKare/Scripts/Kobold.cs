@@ -235,6 +235,30 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     //private bool incremented = false;
     //public AnimatorUpdateMode modeSave;
 
+    //reiikz was here
+    //rate of change for arousal when it's set to permanent
+    public float arousalSpeed = 0.01f;
+    //this is used to be able to tell if certain logic needs to be ran or not, variable gets set by PlayerKoboldLoader.cs
+    public bool isPlayer = false;
+    //if this is set to 1 the arousal behaves as noraml, if not it hovers between this x number and x - (x * .37)
+    public float permanentArousal = 0.99f;
+    //welp...
+    public float slowUpdateRate = 2f;
+    //I added an update that is called every two seconds
+    public float nextSlowUpdate = 0f;
+    //position vector used to move the player back to the house if they go outside the map
+    public static Vector3 FallbackPos = new Vector3(-168.097824f, 200f, 317.367493f);
+    //do I need to explain this?
+    public float fertility = 1f;
+    //maximum amount of cum that your belly can hold at any given time
+    public float maximumCum = 100000f;
+    //Holds weather arousal is going down or up when it's set to be permanent
+    private bool arousalDirection = false;
+    //next time the player's dick is going to soften a bit when set to permanent
+    private float nextArousalDown = 0f;
+    //probability of the player's arousal to go back up when it's going down (only afects it when set to ermanent)
+    private static int[] arouseProb  = { 1, 1200 };
+
     public void Awake() {
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
         allRigidbodies = new Rigidbody[2];
@@ -480,8 +504,30 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (amount > 0 ) {
             lastPumpTime = Time.timeSinceLevelLoad;
         }
-        arousal += amount;
-        arousal = Mathf.Clamp01(arousal);
+        //if it's a player and permanent arousal is set lower than one we make sure the player is always aroused but not quite fully aroused
+        //if not we just do business as usual
+        if(isPlayer && permanentArousal < 1){
+            if(permanentArousal == 0f){
+                arousal = 0;
+            }else{
+                if(arousalDirection){
+                    arousal += ((permanentArousal * arousalSpeed)/(150*permanentArousal))*UnityEngine.Random.Range(1.3f, 1.7f);
+                    arousal = Mathf.Clamp(arousal, (permanentArousal - (permanentArousal * 0.37f)), permanentArousal);
+                    if(arousal >= permanentArousal) if(Time.timeSinceLevelLoad > nextArousalDown) arousalDirection = !arousalDirection;
+                }else{
+                    arousal -= (permanentArousal * arousalSpeed)/(150*permanentArousal) * UnityEngine.Random.Range(1f, 1.157f);
+                    arousal = Mathf.Clamp01(arousal);
+                    float target = permanentArousal * 0.37f;
+                    if((arousal <= (permanentArousal - target)) || ( RandomChoice.WeightedIndex(arouseProb) == 0 ) ){
+                        arousalDirection = !arousalDirection;
+                        nextArousalDown = Time.timeSinceLevelLoad + UnityEngine.Random.Range(1f, 16f);
+                    }
+                }
+            }
+        }else{
+            arousal += amount;
+            arousal = Mathf.Clamp01(arousal);
+        }
     }
     public void OnRelease(Kobold kobold) {
         //animator.updateMode = modeSave;
@@ -505,6 +551,23 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private void Update() {
         foreach(var dick in activeDicks) {
             dick.bonerInflator.baseSize = arousal*0.92f + (0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal;
+        }
+        //we make sure if it's time to call the slow update so unimportant stuff can be handled
+        if(Time.timeSinceLevelLoad >= nextSlowUpdate){
+            SlowUpdate();
+            nextSlowUpdate = Time.timeSinceLevelLoad + slowUpdateRate;
+        }
+    }
+    //update that runs at a fixed time and slow rate
+    private void SlowUpdate(){
+        //if the player is this far away we must bring them back and make them fat for some reason(?)
+        if(Vector3.Distance(root.position, FallbackPos) > 3333333){
+            body.velocity = new Vector3(0f, 0f, 0f);
+            root.position = FallbackPos;
+            var fat = ReagentDatabase.GetReagent("Fat");
+            foreach (var ss in subcutaneousStorage) {
+                ss.GetContainer().OverrideReagent(fat, 50);
+            }
         }
     }
     private void FixedUpdate() {
@@ -653,7 +716,16 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         foreach (var belly in bellies) {
             ReagentContents vol = belly.GetContainer().Metabolize(f);
-            belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
+            //if fertility is set to 0 we make sure the player doesn't have cum in them otherwise it behaves normally-ish (the cum metabolization gets multiplied by the fertility)
+            if(fertility == 0){
+                belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), 0f);
+            }else{
+                //handle if the cum cap
+                if(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum")) > maximumCum){
+                    belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), maximumCum);
+                }
+                belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
+            }
             float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
             foreach (var boob in boobs) {
                 baseBoobSize += melonJuiceVolume / boobs.Count;

@@ -11,6 +11,8 @@ using ExitGames.Client.Photon;
 
 public class ReagentScanner : MonoBehaviour, IValuedGood {
     public bool firing = false;
+    [SerializeField]
+    private Animator animator;
     public GameObject canvas;
     public GameObject scannerDisplay;
     public GameObject idleDisplay;
@@ -83,6 +85,12 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
     }
     public void OnEndFire(GameObject player) {
         firing = false;
+    }
+    public void Pickup() {
+        animator.SetBool("Open", true);
+    }
+    public void Drop() {
+        animator.SetBool("Open", false);
     }
     public Vector3 GetWeaponPositionOffset(Transform grabber) {
         return (grabber.up * 0.1f + grabber.right * 0.5f - grabber.forward * 0.25f);

@@ -58,8 +58,10 @@ public class ReagentContents {
             contents.Add(id, new Reagent() {id=id,volume=addVolume});
             if (worldContainer != null) {
                 ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
-                ReagentDatabase.DoReactions(worldContainer, id);
             }
+        }
+        if (worldContainer != null) {
+            ReagentDatabase.DoReactions(worldContainer, id);
         }
         if (volume > maxVolume) {
             Spill(volume-maxVolume);

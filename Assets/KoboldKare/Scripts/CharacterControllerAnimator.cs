@@ -450,7 +450,6 @@ public class CharacterControllerAnimator : GenericUsable {
             int newViewID = (int)stream.ReceiveNext();
             byte newStationID = (byte)stream.ReceiveNext();
             if (newViewID != 0 && stationViewID != newViewID) {
-                OnEndStation();
                 SnapToStation(newViewID, newStationID);
             } else if (newViewID == 0 && stationViewID != 0) {
                 OnEndStation();
@@ -466,7 +465,6 @@ public class CharacterControllerAnimator : GenericUsable {
         int newViewID = (int)reader.ReadInt32();
         byte newStationID = (byte)reader.ReadByte();
         if (newViewID != 0 && stationViewID != newViewID) {
-            OnEndStation();
             SnapToStation(newViewID, newStationID);
         } else if (newViewID == 0 && stationViewID != 0) {
             OnEndStation();

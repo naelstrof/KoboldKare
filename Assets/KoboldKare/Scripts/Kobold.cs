@@ -717,14 +717,24 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         foreach (var belly in bellies) {
             ReagentContents vol = belly.GetContainer().Metabolize(f);
             //if fertility is set to 0 we make sure the player doesn't have cum in them otherwise it behaves normally-ish (the cum metabolization gets multiplied by the fertility)
-            if(fertility == 0){
-                belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), 0f);
-            }else{
-                //handle if the cum cap
-                if(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum")) > maximumCum){
-                    belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), maximumCum);
+            if(isPlayer){
+                if(fertility == 0){
+                    belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Egg"), 0f);
+                    belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), 0f);
+                }else{
+                    //handle if the cum cap
+                    if(belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Cum")) > maximumCum){
+                        belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Cum"), maximumCum);
+                    }
+                    if(belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Egg")) > maximumCum){
+                        belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Egg"), maximumCum);
+                    }
+                    if(maximumCum > 0){
+                        belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
+                    }
                 }
-                if(maximumCum > 0) belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
+            }else{
+                belly.GetContainer().AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
             }
             float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
             foreach (var boob in boobs) {
@@ -745,7 +755,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             baseBallSize += pineappleJuiceVolume;
             balls.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f, GenericReagentContainer.InjectType.Metabolize);
 
-            if (Time.timeSinceLevelLoad > nextEggTime) {
+            if (Time.timeSinceLevelLoad > nextEggTime && fertility > 0) {
                 float currentEggVolume = belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Egg"));
                 if (currentEggVolume > 8f) {
                     OnEggFormed.Invoke();

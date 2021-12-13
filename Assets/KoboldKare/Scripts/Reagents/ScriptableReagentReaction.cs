@@ -18,25 +18,27 @@ public class ScriptableReagentReaction : ScriptableObject {
     public Reactant[] products;
     public void DoReaction(GenericReagentContainer container) {
         Reactant minReactant = reactants[0];
-        float minReactantVolume = container.GetVolumeOf(minReactant.reactant);
+        float minReactantVolumeRatio = container.GetVolumeOf(minReactant.reactant)/Mathf.Max(minReactant.coefficient,0.001f);
         foreach(var reactant in reactants) {
-            float reactantVolume = container.GetVolumeOf(reactant.reactant);
-            if (reactantVolume < minReactantVolume) {
+            if (reactant.coefficient == 0) {
+                continue;
+            }
+            float reactantVolumeRatio = container.GetVolumeOf(reactant.reactant)/reactant.coefficient;
+            if (reactantVolumeRatio < minReactantVolumeRatio) {
                 minReactant = reactant;
-                minReactantVolume = reactantVolume;
+                minReactantVolumeRatio = reactantVolumeRatio;
             }
         }
 
-        float reactRatio = minReactantVolume / minReactant.coefficient;
-        if (reactRatio == 0f) {
+        if (Mathf.Approximately(minReactantVolumeRatio, 0f)) {
             return;
         }
         foreach(var reactant in reactants) {
             float reactantVolume = container.GetVolumeOf(reactant.reactant);
-            container.OverrideReagent(reactant.reactant, reactantVolume-reactRatio*reactant.coefficient);
+            container.OverrideReagent(reactant.reactant, reactantVolume-minReactantVolumeRatio*reactant.coefficient);
         }
         foreach(var product in products) {
-            container.AddMix(product.reactant, reactRatio*product.coefficient, GenericReagentContainer.InjectType.Metabolize);
+            container.AddMix(product.reactant, minReactantVolumeRatio*product.coefficient, GenericReagentContainer.InjectType.Metabolize);
         }
         OnReaction.Invoke(container);
     }

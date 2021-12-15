@@ -8,6 +8,7 @@ public class CateringHandler : MonoBehaviour{
     public float cateringChance = 0.15f;
     public bool vanArrived = false;
     public List<MeshRenderer> cateringVan = new List<MeshRenderer>();
+    public List<MeshRenderer> cateringVanCity = new List<MeshRenderer>();
     public AudioClip catererArrives, catererLeaves;
     Coroutine catererHurryUp;
     public AudioSource aud;
@@ -33,6 +34,10 @@ public class CateringHandler : MonoBehaviour{
                 item.enabled = true;
                 item.GetComponent<MeshCollider>().enabled = true;
             }
+            foreach (var item in cateringVanCity){
+                item.enabled = false;
+                item.GetComponent<MeshCollider>().enabled = false;
+            }
             vanArrived = true;
             Debug.Log("Caterer arrived!");
         }
@@ -49,6 +54,10 @@ public class CateringHandler : MonoBehaviour{
         foreach (var item in cateringVan){
             item.enabled = false;
             item.GetComponent<MeshCollider>().enabled = false;
+        }
+        foreach (var item in cateringVanCity){
+            item.enabled = true;
+            item.GetComponent<MeshCollider>().enabled = true;
         }
         if(catererHurryUp != null){
             StopCoroutine(catererHurryUp);
@@ -69,6 +78,10 @@ public class CateringHandler : MonoBehaviour{
         foreach (var item in cateringVan){
             item.enabled = false;
             item.GetComponent<MeshCollider>().enabled = false;
+        }
+        foreach (var item in cateringVanCity){
+            item.enabled = true;
+            item.GetComponent<MeshCollider>().enabled = true;
         }
         aud.PlayOneShot(catererLeaves);
     }

@@ -14,8 +14,9 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private Color origFogColor;
     public Material cloudMaterial;
     public Material skyboxMaterial;
-    public VisualEffect dust;
-    //public VisualEffect snow;
+    public VisualEffect dust, snow, rain;
+    public ParticleSystem rainBackup;
+    private VisualEffect spawnedEffect;
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
     private Camera cachedCamera;
@@ -27,6 +28,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     //private bool isSnowing = false;
     public Vector3 cloudBounds;
     public float cloudHeight;
+    public Coroutine rainVFXUpdate;
     
 
     public IEnumerator WaitAndThenClear() {
@@ -89,6 +91,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,origFogRange,Time.fixedDeltaTime*0.1f);
             RenderSettings.fogColor = Color.Lerp(fogColorWhenRaining,origFogColor,Time.fixedDeltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
+            //rainBackup.Stop();
+            rain.Stop();
             yield return new WaitForFixedUpdate();
         }
     }
@@ -109,6 +113,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             StopCoroutine("StopRainRoutine");
             StopCoroutine("Rain");
             StartCoroutine("Rain");
+            //rainBackup.Play();
+            rain.SendEvent("Fire");
         }
     }
 

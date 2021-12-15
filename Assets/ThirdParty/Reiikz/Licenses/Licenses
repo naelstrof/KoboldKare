@@ -4,5 +4,6 @@ This file contains a list of the licenses for each external asset included withi
 file                                                                                License:
 KoboldKare/Assets/ThirdParty/Reiikz/2DSprites/HeadPatAnim.png                           KoboldKare/Assets/ThirdParty/Reiikz/Licenses/HeadPat
 KoboldKare/Assets/ThirdParty/Reiikz/Models/HeadPat/Frame.blend                          KoboldKare/Assets/ThirdParty/Reiikz/Licenses/MIT-like
+KoboldKare/Assets/ThirdParty/Reiikz/2DSprites/KoboldPat.png                             KoboldKare/Assets/ThirdParty/Reiikz/Licenses/Unlicense
 
 anything under KoboldKare/Assets/ThirdParty/Reiikz/Scripts/*                            is provided as is, without licence or restrictions of any kind.

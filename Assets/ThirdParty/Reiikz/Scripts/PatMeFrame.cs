@@ -8,7 +8,7 @@ public class PatMeFrame : GenericUsable
     public Sprite patSprite;
     public float amont = 1f;
     public float useEach = 1f;
-    Dictionary<int, float> usedby = new Dictionary<int, float>();
+    public static Dictionary<int, float> usedby = new Dictionary<int, float>();
     // Start is called before the first frame update
     void Start()
     {
@@ -36,18 +36,18 @@ public class PatMeFrame : GenericUsable
         int pid = k.GetComponent<PhotonView>().ViewID;
         if(usedby.ContainsKey(pid)){
             if((usedby[pid] + useEach) < Time.timeSinceLevelLoad){
-                if(k.baseDickSize > 30){
-                    k.baseDickSize *= 1.05f;
+                if(k.baseDickSize < 20){
+                    k.baseDickSize = 20;
                 }else{
-                    k.baseDickSize += amont;
+                    k.baseDickSize *= amont;
                 }
                 usedby[pid] = Time.timeSinceLevelLoad;
             }
         }else{
-            if(k.baseDickSize > 30){
-                k.baseDickSize *= 1.05f;
+            if(k.baseDickSize < 20){
+                k.baseDickSize = 20;
             }else{
-                k.baseDickSize += amont;
+                k.baseDickSize *= amont;
             }
             usedby.Add(pid, Time.timeSinceLevelLoad);
         }

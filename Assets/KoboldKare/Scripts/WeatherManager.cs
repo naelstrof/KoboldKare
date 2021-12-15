@@ -8,6 +8,10 @@ using UnityEngine.VFX;
 public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     [Range(0f,1f)]
     public float rainAmount = 0f;
+    public float fogRangeWhenRaining;
+    public Color fogColorWhenRaining;
+    private float origFogRange;
+    private Color origFogColor;
     public Material cloudMaterial;
     public Material skyboxMaterial;
     public VisualEffect dust;
@@ -23,6 +27,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     //private bool isSnowing = false;
     public Vector3 cloudBounds;
     public float cloudHeight;
+    
 
     public IEnumerator WaitAndThenClear() {
         yield return new WaitForSeconds(5f);
@@ -42,6 +47,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     }
     private void Awake() {
         //StopSnow();
+        origFogRange = RenderSettings.fogDensity;
+        origFogColor = RenderSettings.fogColor;
     }
     private void OnDestroy() {
         cloudMaterial.SetFloat("densityOffset", -4);
@@ -55,16 +62,22 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         //snow.Stop();
         while (rainAmount < 1f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
+            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.fixedDeltaTime*0.1f);
+            RenderSettings.fogColor = Color.Lerp(origFogColor,fogColorWhenRaining,Time.fixedDeltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
+        FillRaincatchers("Water");
         thunderSounds.Play();
         yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
+        FillRaincatchers("Water");
         thunderSounds.Play();
         yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
+        FillRaincatchers("Water");
         thunderSounds.Play();
         yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
+        FillRaincatchers("Water");
         while (rainAmount > 0f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 0f, Time.fixedDeltaTime*0.1f);
             yield return new WaitForFixedUpdate();
@@ -73,6 +86,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     public IEnumerator StopRainRoutine() {
         while (rainAmount > 0f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 0f, Time.fixedDeltaTime*0.1f);
+            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,origFogRange,Time.fixedDeltaTime*0.1f);
+            RenderSettings.fogColor = Color.Lerp(fogColorWhenRaining,origFogColor,Time.fixedDeltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
             yield return new WaitForFixedUpdate();
         }
@@ -95,6 +110,14 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             StopCoroutine("Rain");
             StartCoroutine("Rain");
         }
+    }
+
+    public void FillRaincatchers(string Reagant){
+        var items = GameObject.FindGameObjectsWithTag("CatchesRain"); //TODO: Refactor this into a static list we add/remove from dynamically
+        foreach(GameObject GO in items){
+            //Fill each container with the amount of water we want to add
+            GO.GetComponent<GenericReagentContainer>().AddMix(ReagentDatabase.GetReagent(Reagant),110,GenericReagentContainer.InjectType.Spray);
+        }        
     }
 
     //public void StartSnow() {
@@ -129,6 +152,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         //skyboxMaterial.SetFloat("_CloudHeight", Mathf.Lerp(50f, 30f, rainAmount));
         skyboxMaterial.SetFloat("_CloudDensityOffset", Mathf.Lerp(-0.75f, 0.1f, rainAmount));
         skyboxMaterial.SetFloat("_Brightness", Mathf.Lerp(0.5f, 0.25f, rainAmount));
+
         //rain.SetFloat("WaterDensity", rainAmount);
         //float radius = rain.GetFloat("Radius");
         /*for (int i = 0; i < 3*rainAmount; i++) {

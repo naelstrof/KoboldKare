@@ -21,11 +21,9 @@ public class LoadCustomParts : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        yield return new WaitForSeconds(2.5f);
         if(IsLoaded("MainMap")){
             if(!IsLoaded("HeadPat")) {
                 SceneManager.LoadScene("HeadPat", LoadSceneMode.Additive);
-                Debug.Log("PENIS!");
             }
         }
     }

@@ -36,13 +36,19 @@ public class PatMeFrame : GenericUsable
         int pid = k.GetComponent<PhotonView>().ViewID;
         if(usedby.ContainsKey(pid)){
             if((usedby[pid] + useEach) < Time.timeSinceLevelLoad){
-                k.baseDickSize += amont;
-                // k.bellies[0].GetContainer().AddMix(ReagentDatabase.GetReagent("EggplantJuice"), amont, GenericReagentContainer.InjectType.Metabolize);
+                if(k.baseDickSize > 30){
+                    k.baseDickSize *= 1.05f;
+                }else{
+                    k.baseDickSize += amont;
+                }
                 usedby[pid] = Time.timeSinceLevelLoad;
             }
         }else{
-            k.baseDickSize += amont;
-            // k.bellies[0].GetContainer().AddMix(ReagentDatabase.GetReagent("EggplantJuice"), amont, GenericReagentContainer.InjectType.Metabolize);
+            if(k.baseDickSize > 30){
+                k.baseDickSize *= 1.05f;
+            }else{
+                k.baseDickSize += amont;
+            }
             usedby.Add(pid, Time.timeSinceLevelLoad);
         }
     }

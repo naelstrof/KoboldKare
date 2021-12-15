@@ -6,7 +6,8 @@ using KoboldKare;
 public class CateringHandler : MonoBehaviour{
     public GameEventGeneric morningEvent, middayEvent, midnightEvent;
     public float cateringChance = 0.15f;
-    public GameObject cateringVan;
+    public bool vanArrived = false;
+    public List<MeshRenderer> cateringVan = new List<MeshRenderer>();
     public AudioClip catererArrives, catererLeaves;
     Coroutine catererHurryUp;
     public AudioSource aud;
@@ -24,22 +25,31 @@ public class CateringHandler : MonoBehaviour{
     }
 
     void evalCatering(object nothing){ 
-        if(Random.Range(0,1) < cateringChance){
+        var rnd = Random.Range(0f,1f);
+        Debug.Log(string.Format("{0} vs {1}",rnd,cateringChance));
+        if(rnd < cateringChance){
             aud.PlayOneShot(catererArrives);
-            cateringVan.SetActive(true);
+            foreach (var item in cateringVan){
+                item.enabled = true;
+                item.GetComponent<MeshCollider>().enabled = true;
+            }
+            vanArrived = true;
             Debug.Log("Caterer arrived!");
         }
     }
 
     void AssignAwards(object nothing){
-        if(cateringVan.activeInHierarchy){ //Don't assign rewards if van 'leaves' despite not being there
+        if(vanArrived){ //Don't assign rewards if van 'leaves' despite not being there
             //Assign rewards
             catererHurryUp = StartCoroutine(HurryUp());
         }
     }
 
     void LeaveImmediately(object nothing){
-        cateringVan.SetActive(false);
+        foreach (var item in cateringVan){
+            item.enabled = false;
+            item.GetComponent<MeshCollider>().enabled = false;
+        }
         if(catererHurryUp != null){
             StopCoroutine(catererHurryUp);
             catererHurryUp = null;
@@ -48,14 +58,18 @@ public class CateringHandler : MonoBehaviour{
     }
 
     IEnumerator HurryUp(){
-        aud.PlayOneShot(catererArrives);
+        if(!aud.isPlaying)
+            aud.PlayOneShot(catererArrives);
         Debug.Log("Caterer is about to leave!");
         yield return new WaitForSeconds(20f);
         //Do rewards logic here
         //Get stuff inside the van's collider, tally their values up, assign that amount of money to the Farm
         //Van poofs out of existence
         Debug.Log("Caterer headed back to the city!");
-        cateringVan.SetActive(false);
+        foreach (var item in cateringVan){
+            item.enabled = false;
+            item.GetComponent<MeshCollider>().enabled = false;
+        }
         aud.PlayOneShot(catererLeaves);
     }
 }

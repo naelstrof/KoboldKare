@@ -29,7 +29,7 @@ public class KoboldSeeker : MonoBehaviour{
 
     void OnTriggerEnter(Collider other){
         if(!nearbyKobolds.Contains(other.GetComponent<Kobold>())){
-            Debug.Log("Kobold entering: "+other.name);
+            //Debug.Log("Kobold entering: "+other.name);
             nearbyKobolds.Add(other.GetComponent<Kobold>());
             if(curTarget == null) //Only seek if we have nobody we're looking for
                 SeekNewTarget();
@@ -38,7 +38,7 @@ public class KoboldSeeker : MonoBehaviour{
 
     void OnTriggerExit(Collider other){
         if(nearbyKobolds.Contains(other.GetComponent<Kobold>())){
-            Debug.Log("Kobold exiting: "+other.name);
+            //Debug.Log("Kobold exiting: "+other.name);
             nearbyKobolds.Remove(other.GetComponent<Kobold>());
             if(curTarget == other.GetComponent<Kobold>()){ //If we're looking for someone and they leave our trigger, stop looking for them
                 curTarget = null;
@@ -59,15 +59,15 @@ public class KoboldSeeker : MonoBehaviour{
                 }
                 else{
                     if(curTarget != null){
-                        Debug.Log("In can't see state");
+                        //Debug.Log("In can't see state");
                         if(sensorFailedChecks >= maxSensorFailedChecks){
-                            Debug.Log("Lost attention!");
+                            //Debug.Log("Lost attention!");
                             curTarget = null;
                             sensorFailedChecks = 0;
                             agent.SetDestination(home);
                         }
                         if(sensorFailedChecks < maxSensorFailedChecks){
-                            Debug.Log("Losing attention...");
+                            //Debug.Log("Losing attention...");
                             sensorFailedChecks++;
                             //Debug.DrawLine(transform.position,curTarget.transform.position,Color.green,10f);
                         }
@@ -75,8 +75,8 @@ public class KoboldSeeker : MonoBehaviour{
                 }
             }
             else{
-                if(curTarget != null)
-                Debug.DrawLine(transform.position,curTarget.transform.position,drawColor,0.2f);
+                //if(curTarget != null)
+                //Debug.DrawLine(transform.position,curTarget.transform.position,drawColor,0.2f);
             }
         }
         else
@@ -102,8 +102,9 @@ public class KoboldSeeker : MonoBehaviour{
                 //Debug.Log("Looking for new candidate");
                 RaycastHit hit;
                 foreach (var item in nearbyKobolds){
+                    if(item == null) {nearbyKobolds.Remove(item); continue;} //If null, remove that item and continue
                     if(Physics.Raycast(transform.position,(item.transform.position - transform.position), out hit, sensorRange, physMask)){
-                        Debug.DrawRay(transform.position, item.transform.position - transform.position);
+                        //Debug.DrawRay(transform.position, item.transform.position - transform.position);
                         if(hit.collider.gameObject.tag == "Player"){
                             //Debug.DrawLine(transform.position,item.transform.position,Color.black,5f);
                             SeekNewTarget(nearbyKobolds.FindIndex(x => x == item));

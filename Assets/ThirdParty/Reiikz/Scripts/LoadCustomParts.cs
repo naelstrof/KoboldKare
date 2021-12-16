@@ -20,14 +20,8 @@ public class LoadCustomParts : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        customizeMainMap();
-        if(IsLoaded("MainMap")){
-            if(!IsLoaded("ReiikzMainMapAditions")) {
-                SceneManager.LoadScene("ReiikzMainMapAditions", LoadSceneMode.Additive);
-            }
-        }
         UnityScriptableSettings.ScriptableSettingsManager sm = GetComponent<UnityScriptableSettings.ScriptableSettingsManager>();
         GameObject ob = gameObject.transform.Find("ReiikzManager").gameObject;
         if(ob == null) Debug.LogError("ReiikzManager Missing from GameManager");
@@ -41,12 +35,26 @@ public class LoadCustomParts : MonoBehaviour
             }
         }
         sm.settings = newSettings;
+        runMapCustoms();
         GameObject versionNumber = GameObject.Find("VersionNumber");
         if(versionNumber != null){
             TMPro.TextMeshProUGUI txt = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
             txt.text += "\n(PENIS)";
         }else{
             Debug.LogWarning("Could not find Version number game object");
+        }
+    }
+
+    void Awake(){
+        runMapCustoms();
+    }
+
+    void runMapCustoms(){
+        if(IsLoaded("MainMap")){
+            customizeMainMap();
+            if(!IsLoaded("ReiikzMainMapAditions")) {
+                SceneManager.LoadScene("ReiikzMainMapAditions", LoadSceneMode.Additive);
+            }
         }
     }
 

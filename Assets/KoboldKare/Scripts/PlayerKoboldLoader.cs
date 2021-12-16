@@ -14,6 +14,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
     void Start() {
         foreach(string settingName in settingNames) {
             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
+            if(option == null){
+                Debug.LogWarning("tried to retrieve missing setting: " + settingName);
+                continue;
+            }
             option.onValueChange -= OnValueChange;
             option.onValueChange += OnValueChange;
             ProcessOption(targetKobold, option);
@@ -41,7 +45,11 @@ public class PlayerKoboldLoader : MonoBehaviour {
                     if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
                         break; //Don't add dicks if we already have one
                     }
-                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("DickType").value)]), null);
+                    try{
+                        inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("DickType").value)]), null);
+                    }catch(System.Exception e){
+                        inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
+                    }
                 } else { //Remove Dicks
                     while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
                         inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
@@ -64,11 +72,13 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "BallSize": targetKobold.baseBallSize = Mathf.Pow(setting.value, UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("BallSizePow").value); break;
             case "BallSizePow": targetKobold.baseBallSize = Mathf.Pow(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("BallSize").value, setting.value); break;
             case "DickType":{
-                KoboldInventory inventory = targetKobold.GetComponent<KoboldInventory>();
-                while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                    inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
+                if(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Dick").value != 0){
+                    KoboldInventory inventory = targetKobold.GetComponent<KoboldInventory>();
+                    while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
+                        inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
+                    }
+                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(setting.value)]), null);
                 }
-                inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(setting.value)]), null);
                 break;
             }
             case "PermanentArousal": targetKobold.permanentArousal = setting.value; break;

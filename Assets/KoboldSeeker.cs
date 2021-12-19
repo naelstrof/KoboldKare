@@ -101,13 +101,13 @@ public class KoboldSeeker : MonoBehaviour{
             if(curTarget == null){ //We only care about this when we aren't looking for someone
                 //Debug.Log("Looking for new candidate");
                 RaycastHit hit;
-                foreach (var item in nearbyKobolds){
-                    if(item == null) {nearbyKobolds.Remove(item); continue;} //If null, remove that item and continue
-                    if(Physics.Raycast(transform.position,(item.transform.position - transform.position), out hit, sensorRange, physMask)){
+                for(int i = 0; i < nearbyKobolds.Count; i++){
+                    if(nearbyKobolds[i] == null) {nearbyKobolds.Remove(nearbyKobolds[i]); break;} //If null, remove that item and break out of loop for safety
+                    if(Physics.Raycast(transform.position,(nearbyKobolds[i].transform.position - transform.position), out hit, sensorRange, physMask)){
                         //Debug.DrawRay(transform.position, item.transform.position - transform.position);
                         if(hit.collider.gameObject.tag == "Player"){
                             //Debug.DrawLine(transform.position,item.transform.position,Color.black,5f);
-                            SeekNewTarget(nearbyKobolds.FindIndex(x => x == item));
+                            SeekNewTarget(nearbyKobolds.FindIndex(x => x == nearbyKobolds[i]));
                             break;            
                         }
                         else{

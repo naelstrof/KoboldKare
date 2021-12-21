@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow"};
+    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
     //possible dick types of the dicktype menu
@@ -115,7 +115,14 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 targetKobold.gay = setting.value == 1f;
                 if(setting.value == 0f){
                     targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(r:UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Hue").value);
+                    targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(g:UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Brightness").value);
                 }
+                break;
+            }
+            case "RainbowStep":{
+                try{
+                    LoadCustomParts.instance.rainbowStep = setting.value;
+                }catch(System.Exception e){}
                 break;
             }
         }

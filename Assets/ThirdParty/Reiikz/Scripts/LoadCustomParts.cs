@@ -17,8 +17,11 @@ public class LoadCustomParts : MonoBehaviour
     public bool grabbed = false;
     public float rainbowStep = 0.002f;
     public float rainbowUpdateRate = 0.0375f;
+    public static LoadCustomParts instance = null;
     private float nextRainbowUpdate = 0f;
-    private float currentHue = 0f;
+    public float currentHue = 0f;
+    public float currentBrightness = 0f;
+    public float brightnessDirection = 1f;
     private static bool IsLoaded(string name)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -62,6 +65,7 @@ public class LoadCustomParts : MonoBehaviour
         StartAsyncTasks();
     }
     void StartAsyncTasks(){
+        if(instance == null) instance = this;
         StartCoroutine(modifyKobolds());
     }
     private IEnumerator modifyKobolds() {
@@ -113,9 +117,13 @@ public class LoadCustomParts : MonoBehaviour
                 if(Time.timeSinceLevelLoad >= nextRainbowUpdate){
                     currentHue += rainbowStep;
                     Mathf.Clamp01(currentHue);
+                    currentBrightness += (UnityEngine.Random.Range(rainbowStep/5, (rainbowStep/5)*1.2f) * brightnessDirection);
+                    Mathf.Clamp01(currentBrightness);
+                    playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(g:currentBrightness);
                     playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
                     nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
-                    if(currentHue == 1) currentHue = 0;
+                    if(currentHue >= 1) currentHue = 0;
+                    if(currentBrightness >= 1.2 || currentBrightness < -0.2) brightnessDirection *= -1f;
                 }
             }
         }

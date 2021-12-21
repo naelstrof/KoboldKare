@@ -11,7 +11,7 @@ public class LoadCustomParts : MonoBehaviour
     public PrecisionGrabber playerPrecisionGrabber = null;
     public Kobold playerKobold;
     public KoboldCharacterController playerController;
-    public float maxSpeedOrJump = 60f;
+    public float maxSpeedOrJump = 50f;
     public float prevJump = 8f;
     public float prevSpeed = 10f;
     public bool grabbed = false;
@@ -94,13 +94,13 @@ public class LoadCustomParts : MonoBehaviour
         }else{
             if(playerGrabber.grabbing || playerPrecisionGrabber.grabbing){
                 if(playerController.speed > maxSpeedOrJump){
-                    prevSpeed = playerController.speed;
                     playerController.speed = maxSpeedOrJump;
                 }
                 if(playerController.jumpStrength > maxSpeedOrJump){
-                    prevJump = playerController.jumpStrength;
                     playerController.jumpStrength = maxSpeedOrJump;
                 }
+                prevJump = playerController.jumpStrength;
+                prevSpeed = playerController.speed;
                 grabbed = true;
             }else{
                 if(grabbed){

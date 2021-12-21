@@ -258,6 +258,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private float nextArousalDown = 0f;
     //probability of the player's arousal to go back up when it's going down (only afects it when set to ermanent)
     private static int[] arouseProb  = { 1, 1200 };
+    public bool gay = false;
 
     public void Awake() {
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;

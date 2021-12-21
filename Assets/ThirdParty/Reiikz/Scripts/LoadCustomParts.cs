@@ -6,7 +6,19 @@ using UnityEngine.SceneManagement;
 public class LoadCustomParts : MonoBehaviour
 {
     public static Vector3 caveLaunchpadPos = new Vector3(74.6600037f, -62.1015511f, -18.0100002f);
- 
+    private static bool modifyingkobolds = false;
+    public Grabber playerGrabber = null;
+    public PrecisionGrabber playerPrecisionGrabber = null;
+    public Kobold playerKobold;
+    public KoboldCharacterController playerController;
+    public float maxSpeedOrJump = 60f;
+    public float prevJump = 8f;
+    public float prevSpeed = 10f;
+    public bool grabbed = false;
+    public float rainbowStep = 0.002f;
+    public float rainbowUpdateRate = 0.0375f;
+    private float nextRainbowUpdate = 0f;
+    private float currentHue = 0f;
     private static bool IsLoaded(string name)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -19,7 +31,6 @@ public class LoadCustomParts : MonoBehaviour
         return false;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         UnityScriptableSettings.ScriptableSettingsManager sm = GetComponent<UnityScriptableSettings.ScriptableSettingsManager>();
@@ -39,14 +50,75 @@ public class LoadCustomParts : MonoBehaviour
         GameObject versionNumber = GameObject.Find("VersionNumber");
         if(versionNumber != null){
             TMPro.TextMeshProUGUI txt = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
-            txt.text += "\n(PENIS)";
+            txt.text += "\n(PENIS!)\n(Cheat by Reiikz)";
         }else{
             Debug.LogWarning("Could not find Version number game object");
         }
+        StartAsyncTasks();
     }
 
     void Awake(){
         runMapCustoms();
+        StartAsyncTasks();
+    }
+    void StartAsyncTasks(){
+        StartCoroutine(modifyKobolds());
+    }
+    private IEnumerator modifyKobolds() {
+        if(modifyingkobolds) yield break;
+        Kobold pk = null;
+        Kobold[] kobolds = (Kobold[]) GameObject.FindObjectsOfType(typeof(Kobold));
+        foreach(Kobold k in kobolds){
+            if(k.isPlayer) {
+                pk = k;
+            }
+        }
+        if(pk == null) yield break;
+        Transform grabberTransform = null;
+        do{
+            grabberTransform = pk.root.Find("Camera");
+            grabberTransform = grabberTransform.Find("Grabber");
+            yield return null;
+        }while(grabberTransform == null);
+        GameObject playerGrabber_ = grabberTransform.gameObject;
+        playerGrabber = playerGrabber_.GetComponent<Grabber>();
+        playerPrecisionGrabber = playerGrabber_.GetComponent<PrecisionGrabber>();
+        playerController = pk.root.gameObject.GetComponent<KoboldCharacterController>();
+        playerKobold = pk;
+        yield break;
+    }
+
+    void Update() {
+        if(playerKobold == null){
+            StartCoroutine(modifyKobolds());
+        }else{
+            if(playerGrabber.grabbing || playerPrecisionGrabber.grabbing){
+                if(playerController.speed > maxSpeedOrJump){
+                    prevSpeed = playerController.speed;
+                    playerController.speed = maxSpeedOrJump;
+                }
+                if(playerController.jumpStrength > maxSpeedOrJump){
+                    prevJump = playerController.jumpStrength;
+                    playerController.jumpStrength = maxSpeedOrJump;
+                }
+                grabbed = true;
+            }else{
+                if(grabbed){
+                    grabbed = false;
+                    playerController.jumpStrength = prevJump;
+                    playerController.speed = prevSpeed;
+                }
+            }
+            if(playerKobold.gay){
+                if(Time.timeSinceLevelLoad >= nextRainbowUpdate){
+                    currentHue += rainbowStep;
+                    Mathf.Clamp01(currentHue);
+                    playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
+                    nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
+                    if(currentHue == 1) currentHue = 0;
+                }
+            }
+        }
     }
 
     void runMapCustoms(){
@@ -73,10 +145,4 @@ public class LoadCustomParts : MonoBehaviour
             Debug.Log("No launchpads found");
         }
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-        
-    // }
 }

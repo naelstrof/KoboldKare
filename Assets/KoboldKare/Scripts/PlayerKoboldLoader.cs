@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly"};
+    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
     //possible dick types of the dicktype menu
     public static string[] dickTypes = { "KandiDick", "EquineDick", "TaperedDick", "KnottedDick" };
 
     void Start() {
+        targetKobold.isPlayer = true;
         foreach(string settingName in settingNames) {
             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
             if(option == null){
@@ -22,7 +23,6 @@ public class PlayerKoboldLoader : MonoBehaviour {
             option.onValueChange += OnValueChange;
             ProcessOption(targetKobold, option);
         }
-        targetKobold.isPlayer = true;
     }
     void OnDestroy() {
         foreach(string settingName in settingNames) {
@@ -111,6 +111,13 @@ public class PlayerKoboldLoader : MonoBehaviour {
             }
             case "Fertility": targetKobold.fertility = setting.value; break;
             case "MaxCumInBelly": targetKobold.maximumCum = setting.value; break;
+            case "Rainbow": {
+                targetKobold.gay = setting.value == 1f;
+                if(setting.value == 0f){
+                    targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(r:UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("Hue").value);
+                }
+                break;
+            }
         }
     }
     public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {

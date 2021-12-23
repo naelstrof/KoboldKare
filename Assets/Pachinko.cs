@@ -46,6 +46,9 @@ public class Pachinko : GenericUsable {
     public Transform ballSpawnPoint;
     GameObject activeBall;
     
+    [SerializeField]
+    public ConstantForce constantForce;
+    
     AudioSource audioSrc;
     [Header("Audio Setup"),Space(10)]
     public AudioClip wonPrize;
@@ -111,7 +114,8 @@ public class Pachinko : GenericUsable {
         activeBall = PhotonNetwork.Instantiate(pachinkoBallPrefab.photonName,ballSpawnPoint.position,Quaternion.identity, 0, new object[]{photonView.ViewID});
         // We set the machine via instantiation data, since other clients would just have the ball "appear".
         //activeBall.GetComponent<BallCheat>().SetMachine(this);
-        activeBall.GetComponent<Rigidbody>().velocity = ballSpawnPoint.transform.parent.GetComponent<Rigidbody>().velocity;
+        //activeBall.GetComponent<Rigidbody>().velocity = ballSpawnPoint.transform.parent.GetComponent<Rigidbody>().velocity;
+        activeBall.GetComponent<Rigidbody>().velocity = constantForce.force;
     }
 
     void DistributePrize(int listIdx){

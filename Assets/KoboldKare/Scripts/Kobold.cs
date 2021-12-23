@@ -65,6 +65,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public UnityEvent OnRagdoll;
     public UnityEvent OnStandup;
     public TMPro.TMP_Text chatText;
+    public float textSpeedPerCharacter, minTextTimeout;
     public UnityEvent OnEggFormed;
     public UnityEvent OnOrgasm;
     [HideInInspector]
@@ -570,11 +571,13 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (displayMessageRoutine != null) {
             StopCoroutine(displayMessageRoutine);
         }
-        displayMessageRoutine = StartCoroutine(DisplayMessage(message,5f));
+        displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
     }
     IEnumerator DisplayMessage(string message, float duration) {
         chatText.text = message;
         chatText.alpha = 1f;
+        duration += message.Length * textSpeedPerCharacter; // Add additional seconds per character
+
         yield return new WaitForSeconds(duration);
         float endTime = Time.time + 1f;
         while(Time.time < endTime) {

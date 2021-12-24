@@ -53,7 +53,11 @@ public class LoadCustomParts : MonoBehaviour
         GameObject versionNumber = GameObject.Find("VersionNumber");
         if(versionNumber != null){
             TMPro.TextMeshProUGUI txt = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
-            txt.text += "\n(PENIS!)\n(Cheat by Reiikz)";
+            txt.text += "\n(Cheat by Reiikz)\n(PENIS!)";
+            // Canvas c = versionNumber.transform.parent.transform.parent.transform.parent.GetComponent<Canvas>();
+            RectTransform rt = versionNumber.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -64);
+            // Canvas.ForceUpdateCanvases();
         }else{
             Debug.LogWarning("Could not find Version number game object");
         }
@@ -123,7 +127,7 @@ public class LoadCustomParts : MonoBehaviour
                     playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
                     nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
                     if(currentHue >= 1) currentHue = 0;
-                    if(currentBrightness >= 1.2 || currentBrightness < -0.2) brightnessDirection *= -1f;
+                    if((currentBrightness >= 1.2) || (currentBrightness < -0.2)) brightnessDirection *= -1f;
                 }
             }
         }

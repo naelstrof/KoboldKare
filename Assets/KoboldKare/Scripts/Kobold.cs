@@ -258,7 +258,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     //next time the player's dick is going to soften a bit when set to permanent
     private float nextArousalDown = 0f;
     //probability of the player's arousal to go back up when it's going down (only afects it when set to ermanent)
-    private static int[] arouseProb  = { 1, 1200 };
+    private static int[] arouseProb  = { 1, 2000 };
     public bool gay = false;
 
     public void Awake() {

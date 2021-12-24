@@ -17,6 +17,7 @@ public class GenericUsable : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public virtual void Use(Kobold k) {
         usedCount++;
+        //RPCUse(k.photonView.ViewID);
     }
     [PunRPC]
     public void RPCUse(int id) {

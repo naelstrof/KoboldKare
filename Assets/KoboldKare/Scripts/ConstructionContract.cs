@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
 public class ConstructionContract : GenericUsable {
     [SerializeField]
@@ -14,6 +15,10 @@ public class ConstructionContract : GenericUsable {
     private float cost;
     [SerializeField]
     private MoneyFloater floater;
+
+    [SerializeField]
+    public PhotonView photonView;
+
     void Start() {
         Bounds bound = new Bounds(transform.position, Vector3.one);
         foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
@@ -28,6 +33,7 @@ public class ConstructionContract : GenericUsable {
     public override bool CanUse(Kobold k) {
         return money.has(cost);
     }
+    [PunRPC]
     public override void Use(Kobold k) {
         base.Use(k);
         money.charge(cost);

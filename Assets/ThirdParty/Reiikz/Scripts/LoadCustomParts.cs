@@ -84,6 +84,7 @@ public class LoadCustomParts : MonoBehaviour
         if(pk == null) yield break;
         Transform grabberTransform = null;
         do{
+            if(pk == null) yield break;
             grabberTransform = pk.root.Find("Camera");
             grabberTransform = grabberTransform.Find("Grabber");
             yield return null;

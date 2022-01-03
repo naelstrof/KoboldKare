@@ -30,4 +30,8 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks 
             });
         }
     }
+
+    public void UpdateList(){
+        //Update
+    }
 }

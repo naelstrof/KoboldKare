@@ -39,7 +39,7 @@ public class LoadCustomParts : MonoBehaviour
         UnityScriptableSettings.ScriptableSettingsManager sm = GetComponent<UnityScriptableSettings.ScriptableSettingsManager>();
         GameObject ob = gameObject.transform.Find("ReiikzManager").gameObject;
         if(ob == null) Debug.LogError("ReiikzManager Missing from GameManager");
-        UnityScriptableSettings.ScriptableSetting[] settings = ob.GetComponent<MySettings>().settings;
+        UnityScriptableSettings.ScriptableSetting[] settings = ob.GetComponent<MyCustomParts>().settings;
         UnityScriptableSettings.ScriptableSetting[] newSettings = new UnityScriptableSettings.ScriptableSetting[sm.settings.Length + settings.Length];
         for(int x = 0; x < newSettings.Length; x++){
             if(x < sm.settings.Length){

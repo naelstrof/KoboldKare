@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Reiikz.UnityUtils;
+using System.Threading;
 
 public class LoadCustomParts : MonoBehaviour
 {
+    public static string cheatVersion = "1";
+
     public static Vector3 caveLaunchpadPos = new Vector3(74.6600037f, -62.1015511f, -18.0100002f);
     private static bool modifyingkobolds = false;
     public Grabber playerGrabber = null;
     public PrecisionGrabber playerPrecisionGrabber = null;
     public Kobold playerKobold;
     public KoboldCharacterController playerController;
+    public PlayerKoboldLoader playerLoader;
     public float maxSpeedOrJump = 50f;
     public float prevJump = 8f;
     public float prevSpeed = 10f;
@@ -22,6 +27,20 @@ public class LoadCustomParts : MonoBehaviour
     public float currentHue = 0f;
     public float currentBrightness = 0f;
     public float brightnessDirection = 1f;
+    public GameObject versionNumber = null;
+    public TMPro.TextMeshProUGUI versionNumberText = null;
+    static readonly SemaphoreSlim AsyncTasksLocker = new SemaphoreSlim (1, 1);
+    public static bool AsyncTasksDone;
+    public float slowUpdateRate = 2f;
+    public float nextSlowUpdate = 0f;
+    public enum STATE {
+        MAIN_MENU = 0,
+        PLAYING,
+        UNKNOWN
+    }
+    public STATE gameState = STATE.UNKNOWN;
+    // public bool postLoadMainMenuKoboldUpdateDone = false;
+
     private static bool IsLoaded(string name)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -50,17 +69,6 @@ public class LoadCustomParts : MonoBehaviour
         }
         sm.settings = newSettings;
         runMapCustoms();
-        GameObject versionNumber = GameObject.Find("VersionNumber");
-        if(versionNumber != null){
-            TMPro.TextMeshProUGUI txt = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
-            txt.text += "\n(Cheat by Reiikz)\n(PENIS!)";
-            // Canvas c = versionNumber.transform.parent.transform.parent.transform.parent.GetComponent<Canvas>();
-            RectTransform rt = versionNumber.GetComponent<RectTransform>();
-            rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -64);
-            // Canvas.ForceUpdateCanvases();
-        }else{
-            Debug.LogWarning("Could not find Version number game object");
-        }
         StartAsyncTasks();
     }
 
@@ -68,10 +76,38 @@ public class LoadCustomParts : MonoBehaviour
         runMapCustoms();
         StartAsyncTasks();
     }
+
     void StartAsyncTasks(){
-        if(instance == null) instance = this;
-        StartCoroutine(modifyKobolds());
+        AsyncTasksLocker.Wait();
+        if(!AsyncTasksDone){
+            if(instance == null) instance = this;
+            StartCoroutine(modifyKobolds());
+            StartCoroutine(modifyVersionNumber());
+            StartCoroutine(SlowUpdateRunner());
+        }
+        AsyncTasksDone = true;
+        AsyncTasksLocker.Release();
     }
+
+    private IEnumerator modifyVersionNumber() {
+        versionNumber = BruteForce.AggressiveTreeFind(gameObject.transform, "VersionNumber");
+        do{
+            if(versionNumber != null){
+                if(versionNumberText == null) versionNumberText = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
+                if(!versionNumberText.text.Contains("Reiikz")){
+                    versionNumberText.text += "\n(Cheat by Reiikz)\n(PENIS!)\nCheat v" + cheatVersion;
+                    RectTransform rt = versionNumber.GetComponent<RectTransform>();
+                    rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -64);
+                    Debug.Log("Version number updated!");
+                }
+            }else{
+                versionNumber = BruteForce.AggressiveTreeFind(gameObject.transform, "VersionNumber");
+            }
+            yield return null;
+        }while(versionNumber == null);
+        yield break;
+    }
+
     private IEnumerator modifyKobolds() {
         if(modifyingkobolds) yield break;
         Kobold pk = null;
@@ -93,6 +129,7 @@ public class LoadCustomParts : MonoBehaviour
         playerGrabber = playerGrabber_.GetComponent<Grabber>();
         playerPrecisionGrabber = playerGrabber_.GetComponent<PrecisionGrabber>();
         playerController = pk.root.gameObject.GetComponent<KoboldCharacterController>();
+        playerLoader = pk.root.gameObject.GetComponent<PlayerKoboldLoader>();
         playerKobold = pk;
         yield break;
     }
@@ -101,22 +138,21 @@ public class LoadCustomParts : MonoBehaviour
         if(playerKobold == null){
             StartCoroutine(modifyKobolds());
         }else{
-            if(playerGrabber.grabbing || playerPrecisionGrabber.grabbing){
+            if((playerGrabber.grabbing || playerPrecisionGrabber.grabbing) && (grabbed == false)){
+                prevJump = playerController.jumpStrength;
+                prevSpeed = playerController.speed;
                 if(playerController.speed > maxSpeedOrJump){
                     playerController.speed = maxSpeedOrJump;
                 }
                 if(playerController.jumpStrength > maxSpeedOrJump){
                     playerController.jumpStrength = maxSpeedOrJump;
                 }
-                prevJump = playerController.jumpStrength;
-                prevSpeed = playerController.speed;
                 grabbed = true;
-            }else{
-                if(grabbed){
-                    grabbed = false;
-                    playerController.jumpStrength = prevJump;
-                    playerController.speed = prevSpeed;
-                }
+            }
+            if(((!playerGrabber.grabbing) && (!playerPrecisionGrabber.grabbing)) && (grabbed == true)){
+                grabbed = false;
+                playerController.jumpStrength = prevJump;
+                playerController.speed = prevSpeed;
             }
             if(playerKobold.gay){
                 if(Time.timeSinceLevelLoad >= nextRainbowUpdate){
@@ -128,10 +164,43 @@ public class LoadCustomParts : MonoBehaviour
                     playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
                     nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
                     if(currentHue >= 1) currentHue = 0;
-                    if((currentBrightness >= 1.2) || (currentBrightness < -0.2)) brightnessDirection *= -1f;
+                    if((currentBrightness >= 1.2f) || (currentBrightness <= -0.2f)) brightnessDirection *= -1f;
                 }
             }
         }
+    }
+
+    private IEnumerator SlowUpdateRunner() {
+        while(true) {
+            if(Time.timeSinceLevelLoad >= nextSlowUpdate){
+                SlowUpdate();
+                nextSlowUpdate = Time.timeSinceLevelLoad + slowUpdateRate;
+            }
+            yield return null;
+        }
+    }
+
+    private void SlowUpdate(){
+        if(versionNumber == null){
+            StartCoroutine(modifyVersionNumber());
+        }else{
+            if(versionNumber.activeSelf){
+                StartCoroutine(modifyVersionNumber());
+            }
+        }
+        // if(gameState == STATE.MAIN_MENU) if(playerKobold != null) if(!postLoadMainMenuKoboldUpdateDone){
+        //     if(Time.timeSinceLevelLoad > 10f){
+        //         foreach(string settingName in PlayerKoboldLoader.settingNames){
+        //             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
+        //             if(option == null){
+        //                 Debug.LogWarning("tried to retrieve missing setting: " + settingName);
+        //                 continue;
+        //             }
+        //             PlayerKoboldLoader.ProcessOption(playerKobold, option);
+        //         }
+        //         postLoadMainMenuKoboldUpdateDone = true;
+        //     }
+        // }
     }
 
     void runMapCustoms(){
@@ -140,6 +209,9 @@ public class LoadCustomParts : MonoBehaviour
             if(!IsLoaded("ReiikzMainMapAditions")) {
                 SceneManager.LoadScene("ReiikzMainMapAditions", LoadSceneMode.Additive);
             }
+            gameState = STATE.PLAYING;
+        }else{
+            gameState = STATE.MAIN_MENU;
         }
     }
 

@@ -68,7 +68,6 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 break;
             }
             case "KoboldSize": targetKobold.sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), setting.value * targetKobold.sizeInflatable.reagentVolumeDivisor); break;
-            case "DickSize": targetKobold.baseDickSize = setting.value; break;
             case "BallSize": targetKobold.baseBallSize = Mathf.Pow(setting.value, UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("BallSizePow").value); break;
             case "BallSizePow": targetKobold.baseBallSize = Mathf.Pow(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("BallSize").value, setting.value); break;
             case "DickType":{
@@ -81,6 +80,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 }
                 break;
             }
+            case "DickSize": targetKobold.baseDickSize = setting.value; break;
             case "PermanentArousal": targetKobold.permanentArousal = setting.value; break;
             case "SpeedPow":{
                 KoboldCharacterController kkc = targetKobold.GetComponent<KoboldCharacterController>();

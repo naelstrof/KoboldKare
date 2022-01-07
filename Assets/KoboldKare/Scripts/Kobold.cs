@@ -12,6 +12,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
 using TMPro;
 using System.IO;
+using Reiikz.UnityUtils;
 
 public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public StatusEffect koboldStatus;
@@ -562,12 +563,12 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     //update that runs at a fixed time and slow rate
     private void SlowUpdate(){
         //if the player is this far away we must bring them back and make them fat for some reason(?)
-        if(Vector3.Distance(root.position, FallbackPos) > 1200000){
+        if(Vector3.Distance(root.position, FallbackPos) > 950000){
             body.velocity = new Vector3(0f, 0f, 0f);
             root.position = FallbackPos;
             var fat = ReagentDatabase.GetReagent("Fat");
             foreach (var ss in subcutaneousStorage) {
-                ss.GetContainer().OverrideReagent(fat, 50);
+                ss.GetContainer().OverrideReagent(fat, 500);
             }
         }
     }

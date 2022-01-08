@@ -23,7 +23,7 @@ public static class Screenshotter {
         yield return new WaitForEndOfFrame();
 
         Texture2D texture = ScreenCapture.CaptureScreenshotAsTexture();
-        action.Invoke(resize ? Resize(texture, 128, 128) : texture);
+        action.Invoke(resize ? Resize(texture, 640, 360) : texture);
         GameManager.SetUIVisible(true);
     }
     private static Texture2D Resize(Texture2D texture2D,int targetX,int targetY) {

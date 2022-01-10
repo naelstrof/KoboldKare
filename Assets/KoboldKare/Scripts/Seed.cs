@@ -39,7 +39,8 @@ public class Seed : GenericUsable, IValuedGood {
         }
         return false;
     }
-    public override void Use(Kobold k) {
+    [PunRPC]
+    public override void Use() {
         if (!photonView.IsMine || !CanUse(null)) {
             return;
         }

@@ -23,6 +23,7 @@ public class SeedExtractor : GenericUsable {
     public List<ReagentPrefabTuple> serializedSpawnables = new List<ReagentPrefabTuple>();
     public GenericReagentContainer internalContents;
     public Coroutine routine;
+    private int usedCount;
     void Start() {
         grinderAnimator.SetBool("Open", true);
     }
@@ -35,8 +36,8 @@ public class SeedExtractor : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return on ? onSprite : offSprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    public override void Use() {
+        usedCount++;
         if (on) {
             source.Play();
             if (routine != null) {

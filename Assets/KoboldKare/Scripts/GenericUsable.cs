@@ -7,44 +7,22 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericUsable : MonoBehaviourPun, IPunObservable, ISavable {
-    protected int usedCount;
-    public virtual Sprite GetSprite(Kobold k) {
-        return null;
+public class GenericUsable : MonoBehaviourPun, ISavable {
+    public virtual Sprite GetSprite(Kobold k) { return null; }
+    public virtual bool CanUse(Kobold k) { return true; }
+
+    // Called only by us locally when the player tries to use an object. By default we try to inform everyone that we used it.
+    public virtual void LocalUse(Kobold k) {
+        photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
     }
-    public virtual bool CanUse(Kobold k) {
-        return true;
-    }
-    public virtual void Use(Kobold k) {
-        usedCount++;
-        //RPCUse(k.photonView.ViewID);
-    }
+    // Called globally by all clients, synced.
+    public virtual void Use() { }
+
+    // A passthrough to call from RPC
     [PunRPC]
-    public void RPCUse(int id) {
-        PhotonView view = PhotonNetwork.GetPhotonView(id);
-        if (view != null) {
-            Use(view.GetComponent<Kobold>());
-        }
+    public void RPCUse() {
+        Use();
     }
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(usedCount);
-        } else {
-            int otherUseCount = (int)stream.ReceiveNext();
-            for (int i=usedCount;i<otherUseCount;i++) {
-                Use(null);
-            }
-        }
-    }
-    public virtual void Save(BinaryWriter writer, string version) {
-        writer.Write(usedCount);
-    }
-    public virtual void Load(BinaryReader reader, string version) {
-        usedCount = 0;
-        int otherUseCount = reader.ReadInt32();
-        for (int i=usedCount;i<otherUseCount;i++) {
-            Use(null);
-        }
-        usedCount = otherUseCount;
-    }
+    public virtual void Save(BinaryWriter writer, string version) { }
+    public virtual void Load(BinaryReader reader, string version) { }
 }

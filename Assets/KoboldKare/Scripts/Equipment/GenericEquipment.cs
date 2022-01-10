@@ -17,8 +17,8 @@ public class GenericEquipment : GenericUsable, IOnPhotonViewOwnerChange {
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    public override void LocalUse(Kobold k) {
+        //base.LocalUse(k);
         Equip(k);
     }
     private void Equip(Kobold k) {

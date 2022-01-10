@@ -9,6 +9,7 @@ public class SprayButton : GenericUsable {
     private Sprite offSprite;
     public List<FluidOutputMozzarellaSquirt> squirter = new List<FluidOutputMozzarellaSquirt>();
     public AudioSource aud;
+    private int usedCount;
     public override Sprite GetSprite(Kobold k) {
         return on ? onSprite : offSprite;
     }
@@ -17,8 +18,9 @@ public class SprayButton : GenericUsable {
             return (usedCount % 2) != 0;
         }
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    public override void Use() {
+        base.Use();
+        usedCount++;
         if (on) {
             foreach (var item in squirter){
                 item.Fire();

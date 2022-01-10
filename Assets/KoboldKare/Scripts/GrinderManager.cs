@@ -18,6 +18,7 @@ public class GrinderManager : GenericUsable {
     public AudioSource deny;
     public GenericReagentContainer container;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
+    private int usedCount;
     private bool on {
         get {
             return (usedCount % 2) != 0;
@@ -26,8 +27,9 @@ public class GrinderManager : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return on ? offSprite : onSprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    [PunRPC]
+    public override void Use() {
+        usedCount++;
         if (on) {
             animator.SetTrigger("TurnOn");
             grindSound.Play();

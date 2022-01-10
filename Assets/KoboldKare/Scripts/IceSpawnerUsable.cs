@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 using KoboldKare;
 
 [RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class IceSpawnerUsable : GenericUsable {
+public class IceSpawnerUsable : GenericUsable, IPunObservable {
     [SerializeField]
     private ScriptableFloat money;
     [SerializeField]
@@ -49,9 +49,9 @@ public class IceSpawnerUsable : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return buySprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
-        if (MoneySyncHack.view.IsMine && CanUse(k)) {
+    [PunRPC]
+    public override void Use() {
+        if (MoneySyncHack.view.IsMine && CanUse(null)) {
             money.charge(cost);
             PhotonNetwork.Instantiate(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
             spawnsLeft--;
@@ -60,8 +60,7 @@ public class IceSpawnerUsable : GenericUsable {
     void OnValidate() {
         prefabSpawn.OnValidate();
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        base.OnPhotonSerializeView(stream,info);
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(spawnsLeft);
         } else {

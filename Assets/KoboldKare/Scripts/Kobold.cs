@@ -492,7 +492,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             foreach(Collider c in Physics.OverlapSphere(transform.position, 1f, playerHitMask, QueryTriggerInteraction.Collide)) {
                 Kobold k = c.GetComponentInParent<Kobold>();
                 if (k!=this && k!=kobold) {
-                    k.GetComponentInChildren<GenericUsable>().Use(this);
+                    k.GetComponentInChildren<GenericUsable>().LocalUse(this);
                 }
             }
             controller.enabled = true;

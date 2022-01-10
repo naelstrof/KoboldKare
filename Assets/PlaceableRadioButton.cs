@@ -13,18 +13,13 @@ public class PlaceableRadioButton : GenericUsable{
     public AudioSource aud;
     public List<AudioClip> tracks = new List<AudioClip>();
     int trackPos;
-    private bool on {
-        get {
-            return (usedCount % 2) != 0;
-        }
-    }
     public override Sprite GetSprite(Kobold k) {
         //return on ? onSprite : offSprite;
         return nextTrack;
     }
 
-    public override void Use(Kobold k) {
-        base.Use(k);
+    public override void Use() {
+        base.Use();
         trackPos = (int)Mathf.Repeat(trackPos+1,tracks.Count);
         aud.clip = tracks[trackPos];
         aud.Play();

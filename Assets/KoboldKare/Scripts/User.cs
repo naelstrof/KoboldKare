@@ -86,8 +86,9 @@ public class User : MonoBehaviourPun {
     }
     public void Use() {
         if (closestUsable != null) {
-            closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
-            //closestUsable.Use(kobold);
+
+            //closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
+            closestUsable.LocalUse(kobold);
             OnUse.Invoke();
         }
     }

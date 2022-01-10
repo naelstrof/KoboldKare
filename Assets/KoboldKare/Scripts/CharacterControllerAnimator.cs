@@ -8,7 +8,7 @@ using Photon.Pun;
 using System.IO;
 
 [RequireComponent(typeof(KoboldCharacterController))]
-public class CharacterControllerAnimator : GenericUsable {
+public class CharacterControllerAnimator : GenericUsable, IPunObservable {
     [SerializeField]
     private Sprite displaySprite;
     private Kobold internalKobold;
@@ -89,9 +89,14 @@ public class CharacterControllerAnimator : GenericUsable {
     public override bool CanUse(Kobold k) {
         return CanAnimate(k);
     }
-    public override void Use(Kobold k) {
-        if (k != null) {
-            SnapToNearestAnimationStation(k, k.transform.position);
+    public override void LocalUse(Kobold k) {
+        //SnapToNearestAnimationStation(k, k.transform.position);
+        photonView.RPC("RPCSnapToNearestAnimationStation", RpcTarget.All, new object[]{k.photonView.ViewID, k.transform.position});
+    }
+    public void RPCSnapToNearestAnimationStation(int id, Vector3 position) {
+        PhotonView view = PhotonNetwork.GetPhotonView(id);
+        if (view != null) {
+            SnapToNearestAnimationStation(view.GetComponent<Kobold>(), position);
         }
     }
     void Start() {
@@ -159,13 +164,14 @@ public class CharacterControllerAnimator : GenericUsable {
         kobold.StandUp();
         animating = false;
         physicsSolver.CleanUp();
+        activeStation.info.user = null;
         // Stop everyone else from having the fun, sorry!
-        foreach(AnimationStation s in activeStation.linkedStations.hashSet) {
-            if (s.info.user && s != activeStation) {
-                ((Kobold)s.info.user).GetComponentInChildren<CharacterControllerAnimator>().OnEndStation();
-            }
-            s.info.user = null;
-        }
+        //foreach(AnimationStation s in activeStation.linkedStations.hashSet) {
+            //if (s.info.user && s != activeStation) {
+                //((Kobold)s.info.user).GetComponentInChildren<CharacterControllerAnimator>().OnEndStation();
+            //}
+            //s.info.user = null;
+        //}
         StopCoroutine("WaitThenAdvanceProgress");
         if (isActiveAndEnabled) {
             blend = 0f;
@@ -442,7 +448,7 @@ public class CharacterControllerAnimator : GenericUsable {
         }
         handler.SetLookAtPosition(lookDir.position);
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(stationViewID);
             stream.SendNext(currentStationID);

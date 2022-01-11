@@ -9,10 +9,6 @@ public class HarvestBox : MonoBehaviourPun {
     public AudioSource moneyBlips;
     public List<AudioClip> moneyBlipClips = new List<AudioClip>();
     public float maxMoneyBlip = 100f;
-    public float returnedValue = 0.3f;
-    public float returnedValueFruit = 0.5f;
-    public float returnedValueSelfSale = 0.1f;
-    public float maxSaleValue = 6000f;
     public BoxCollider inside;
     public Animator targetAnimator;
     private void Check(Collider other) {
@@ -31,9 +27,6 @@ public class HarvestBox : MonoBehaviourPun {
             return;
         }
         float totalWorth = 0f;
-        //float totalWorthUnmod = 0f;
-
-        //Debug.Log("Beginning value determination...");
         foreach(IValuedGood v in other.GetAllComponents<IValuedGood>()) {
             if (v != null) {
                 totalWorth += v.GetWorth();
@@ -41,9 +34,9 @@ public class HarvestBox : MonoBehaviourPun {
         }
 
         if (totalWorth > 0f) {
-            totalWorth = Mathf.Min(totalWorth,maxSaleValue);
+            //totalWorth = Mathf.Min(totalWorth,maxSaleValue);
             //Debug.Log("Giving player $"+totalWorth+" from a market value of "+totalWorthUnmod);
-            Debug.Log("Giving player $"+totalWorth+" with a maximum value of "+maxSaleValue);
+            Debug.Log("Giving player $"+totalWorth);
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();

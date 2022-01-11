@@ -31,35 +31,19 @@ public class HarvestBox : MonoBehaviourPun {
             return;
         }
         float totalWorth = 0f;
-        float totalWorthUnmod = 0f;
+        //float totalWorthUnmod = 0f;
 
         //Debug.Log("Beginning value determination...");
         foreach(IValuedGood v in other.GetAllComponents<IValuedGood>()) {
             if (v != null) {
-                if(grabbable != null && grabbable.grabbableType == GrabbableType.Fruit){                    
-                    totalWorth += Mathf.RoundToInt(v.GetWorth()*returnedValueFruit); //Don't provide full value of the items
-                    totalWorthUnmod += v.GetWorth();
-                }
-                else if(other.transform.root.GetComponent<Kobold>() != null){
-                    if(other.transform.root.GetComponent<PhotonView>().IsMine){ // Give 10% back if player is selling self
-                        totalWorth += Mathf.RoundToInt(v.GetWorth()*returnedValueSelfSale);
-                        totalWorthUnmod +=v.GetWorth();
-                    }
-                    else{
-                        totalWorth += Mathf.RoundToInt(v.GetWorth()*returnedValue);
-                        totalWorthUnmod+= v.GetWorth();
-                    }
-                }
-                else{
-                    totalWorth += Mathf.RoundToInt(v.GetWorth()*returnedValue);
-                    totalWorthUnmod += v.GetWorth();
-                }
+                totalWorth += v.GetWorth();
             }
         }
 
         if (totalWorth > 0f) {
             totalWorth = Mathf.Min(totalWorth,maxSaleValue);
-            Debug.Log("Giving player $"+totalWorth+" from a market value of "+totalWorthUnmod);
+            //Debug.Log("Giving player $"+totalWorth+" from a market value of "+totalWorthUnmod);
+            Debug.Log("Giving player $"+totalWorth+" with a maximum value of "+maxSaleValue);
             AudioClip playback = moneyBlipClips[Mathf.RoundToInt(Mathf.Clamp01(totalWorth / maxMoneyBlip) * (moneyBlipClips.Count - 1))];
             moneyBlips.clip = playback;
             moneyBlips.Play();

@@ -230,20 +230,20 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         grabbables.ExceptWith(thrownObjects);
         List<IGrabbable> sortedGrabables = new List<IGrabbable>(grabbables);
         sortedGrabables.Sort((a, b) => Vector3.Distance(a.GrabTransform(a.GetRigidBodies()[0]).position, transform.position).CompareTo(Vector3.Distance(b.GrabTransform(b.GetRigidBodies()[0]).position, transform.position)));
-        GrabbableType grabType = GrabbableType.None;
+        /*GrabbableType grabType = GrabbableType.None;
         foreach(IGrabbable g in grabbedObjects) {
             grabType |= g.GetGrabbableType();
         }
         if (grabType == GrabbableType.None) {
             grabType = GrabbableType.Any;
-        }
+        }*/
         for(int i=0;i<sortedGrabables.Count;i++) {
-            if ((grabType & sortedGrabables[i].GetGrabbableType()) != 0) {
+            //if ((grabType & sortedGrabables[i].GetGrabbableType()) != 0) {
                 bool grabbed = TryGrab(sortedGrabables[i]);
-                if ( grabbed && grabbedObjects.Count == 1) {
+                /*if ( grabbed && grabbedObjects.Count == 1) {
                     grabType = sortedGrabables[i].GetGrabbableType();
-                }
-            }
+                }*/
+            //}
         }
         if (grabbedObjects.Count>0) {
             grabbing = true;

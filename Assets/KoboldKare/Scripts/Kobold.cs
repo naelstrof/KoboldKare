@@ -630,9 +630,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
 
-    public GrabbableType GetGrabbableType() {
+    /*public GrabbableType GetGrabbableType() {
         return GrabbableType.Kobold;
-    }
+    }*/
 
     public void RegenerateSlowly(float deltaTime) {
         float wantedBoobVolume = baseBoobSize*0.2f;

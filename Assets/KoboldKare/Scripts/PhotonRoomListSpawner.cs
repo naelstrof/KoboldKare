@@ -53,6 +53,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks 
             });
         }
 
+
         if(roomList.Count > 0) //Only call once
             hideOnRoomsFound.SetActive(false);
     }
@@ -60,11 +61,14 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks 
         curRoomList.Remove(room);
     }
 
+    
+
     private void ClearRoomList(){
         foreach(GameObject g in roomPrefabs) {
             Destroy(g);
         }
         roomPrefabs.Clear();
-        curRoomList.Clear();
+        if(curRoomList != null && curRoomList.Count != 0) //Check if null or empty
+            curRoomList.Clear();
     }
 }

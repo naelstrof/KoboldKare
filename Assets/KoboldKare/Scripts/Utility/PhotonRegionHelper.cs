@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
+
+public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
+    public TMPro.TMP_Dropdown dropdown;
+    private RegionHandler cachedHandler;
+    private Region selectedRegion;
+
+    public void ChooseRegion(int id){
+        PhotonNetwork.Disconnect(); //We must disconnect from the present server to change servers
+        PhotonNetwork.ConnectToRegion(dropdown.options[id].text);
+    }
+
+    public override void OnRegionListReceived(RegionHandler handler){
+        Debug.Log("[Photon Region Handler] :: Currently connected region: "+PhotonNetwork.CloudRegion);
+        dropdown.ClearOptions();
+        cachedHandler = handler;
+        var returnedRegions = new List<TMP_Dropdown.OptionData>();
+        foreach (var item in cachedHandler.EnabledRegions){
+            returnedRegions.Add(new TMPro.TMP_Dropdown.OptionData(item.Code));
+        }
+        dropdown.AddOptions(returnedRegions);
+        dropdown.onValueChanged.RemoveListener(ChooseRegion);
+        dropdown.onValueChanged.AddListener(ChooseRegion);
+    }
+
+    public override void OnConnectedToMaster(){
+        base.OnConnectedToMaster();
+        Debug.Log("[Photon Region Handler] :: Connected to master");
+        for (int i = 0; i < cachedHandler.EnabledRegions.Count; i++){
+            if(PhotonNetwork.CloudRegion == cachedHandler.EnabledRegions[i].Code){
+                ForceConnectionToPresentSelected();
+            }
+        }       
+    }
+
+    void ForceConnectionToPresentSelected(){
+        Debug.Log("Forced");
+        foreach (var item in dropdown.options){
+            if(PhotonNetwork.CloudRegion == item.text)
+                dropdown.SetValueWithoutNotify(dropdown.options.IndexOf(item));
+        }
+    }
+}

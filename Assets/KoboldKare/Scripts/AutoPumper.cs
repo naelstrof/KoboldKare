@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoPumper : MonoBehaviour {
-    public FluidOutput output;
+    public GameObject output;
+    private IFluidOutput foutput;
     private GenericReagentContainer target;
     void Start() {
+        foutput = output.GetComponent<IFluidOutput>();
         target = GetComponentInParent<GenericReagentContainer>();
         target.OnChange.AddListener(OnChanged);
-        output.Fire(target);
+        foutput.Fire(target);
     }
     void OnDestroy() {
         if (target != null) {
@@ -16,8 +18,8 @@ public class AutoPumper : MonoBehaviour {
         }
     }
     void OnChanged(GenericReagentContainer.InjectType type) {
-        if (!output.isFiring && target.volume > output.GetVPS()) {
-            output.Fire(target);
+        if (!foutput.isFiring && target.volume > 1f) {
+            foutput.Fire(target);
         }
     }
 }

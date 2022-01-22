@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GenericPenetratorPump : MonoBehaviour {
-    public FluidOutput fluidOutput;
     public GenericReagentContainer balls;
     public PenetrationTech.Penetrator targetPenetrator;
     public ScriptableReagent precum;
@@ -12,7 +11,7 @@ public class GenericPenetratorPump : MonoBehaviour {
     void Start() {
         targetPenetrator.OnCumEmit.AddListener(()=>{
             if (!targetPenetrator.IsInside()) {
-                targetPenetrator.GetComponentInChildren<FluidOutput>().Fire(balls);
+                targetPenetrator.GetComponentInChildren<IFluidOutput>().Fire(balls);
             } else {
                 targetPenetrator.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(balls, balls.maxVolume/targetPenetrator.cumPulseCount, GenericReagentContainer.InjectType.Inject);
             }

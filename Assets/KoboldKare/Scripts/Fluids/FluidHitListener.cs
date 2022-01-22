@@ -54,7 +54,7 @@ public class FluidHitListener : MonoBehaviour {
     }
     void DrawDecal(MozzarellaHitEventListener.HitEvent hitEvent) {
         float size = hitEvent.volume*decalSize;
-        SplashTransfer(hitEvent.position, size*2f, Time.deltaTime*10f);
+        SplashTransfer(hitEvent.position, size*2f, Time.deltaTime*15f);
     }
 }
 

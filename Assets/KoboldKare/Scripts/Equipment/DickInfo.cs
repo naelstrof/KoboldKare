@@ -181,10 +181,11 @@ public class DickInfo : MonoBehaviour {
                 if (set.dick.holeTarget != null) {
                     pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
                 }
+                float cumAmount = 0.05f+0.05f*attachedKobold.sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.05f*attachedKobold.baseBallSize+0.05f*attachedKobold.baseDickSize;
                 // Add a little precum per-pulse.
-                set.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), 0.05f+0.05f*attachedKobold.sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.05f*attachedKobold.baseBallSize+0.05f*attachedKobold.baseDickSize, GenericReagentContainer.InjectType.Inject);
+                set.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), cumAmount, GenericReagentContainer.InjectType.Inject);
                 if (!set.dick.IsInside() || pennedKobold == null) {
-                    set.dick.GetComponentInChildren<FluidOutput>(true).Fire(set.balls.GetContainer());
+                    set.dick.GetComponentInChildren<IFluidOutput>(true).Fire(set.balls.GetContainer());
                 } else {
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(set.balls.GetContainer(), set.balls.GetContainer().maxVolume/set.dick.cumPulseCount, GenericReagentContainer.InjectType.Inject);
                 }

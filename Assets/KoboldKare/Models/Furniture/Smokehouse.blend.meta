@@ -22,6 +22,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Void
+    second: {fileID: 2100000, guid: 2c6b13626b726384da1a453d4766eafa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Water
     second: {fileID: 2100000, guid: 71e49ea2699eeb143bb3083fef765b80, type: 2}
   - first:

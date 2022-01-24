@@ -10,6 +10,7 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         Squirt,
         Hose,
         Spray,
+        Sprinkler
     }
     private bool firing = false;
     public bool isFiring { get { return firing; } }
@@ -38,6 +39,8 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     [FormerlySerializedAs("vps")]
     private float volumePerSecond = 2f;
     private float volumeSprayedThisFire = 0f;
+    [SerializeField]
+    public GenericReagentContainer containerOverride;
     private Coroutine fireRoutine;
     protected class SquirtStream : BaseStreamer.Stream {
         private float startTime;
@@ -88,9 +91,14 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     }
 
     public void Fire() {
-        var container = GetComponentInParent<GenericReagentContainer>();
-        if (container != null) {
-            Fire(container);
+        if(containerOverride == null){
+            var container = GetComponentInParent<GenericReagentContainer>();
+            if (container != null) {
+                Fire(container);
+            }
+        }
+        else{
+            Fire(containerOverride);
         }
     }
     public void Fire(GenericReagentContainer b) {
@@ -108,7 +116,9 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
             case OutputType.Hose:
             effect.Play();
             break;
-            case OutputType.Squirt:
+            case OutputType.Squirt: break;
+            case OutputType.Sprinkler:
+            effect.Play();
             break;
         }
         fireRoutine = StartCoroutine(FireRoutine(b));
@@ -148,6 +158,10 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
             velocityMultiplier = 0.04f+logscale*0.02f;
             squirtDuration = Mathf.Min(0.1f + logscale*0.4f,1f);
         }
+        if( type == OutputType.Sprinkler){
+            velocityMultiplier = 0.394f;
+            velocityVariance = 0.500f;
+        }
         while(volumeSprayedThisFire < volumeSprayedPerFire && b.volume > 0f) {
             Color c = b.GetColor();
             fluidHitListener.erasing = b.IsCleaningAgent();
@@ -180,6 +194,15 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
                     SplashTransfer(b, volumePerSecond*Time.deltaTime);
                     volumeSprayedThisFire += volumePerSecond*Time.deltaTime;
                     for(int i=streams.Count;i<wantedStreamCount;i++) {
+                        streams.Add(new HoseStream(Time.time + i*5f));
+                    }
+                    mozzarella.SetVisibleUntil(Time.time + 5f);
+                    break;
+                }
+                case OutputType.Sprinkler: {
+                    SplashTransfer(b, volumePerSecond*Time.deltaTime);
+                    volumeSprayedThisFire += volumePerSecond * Time.deltaTime;
+                    for(int i=streams.Count; i<wantedStreamCount; i++){
                         streams.Add(new HoseStream(Time.time + i*5f));
                     }
                     mozzarella.SetVisibleUntil(Time.time + 5f);

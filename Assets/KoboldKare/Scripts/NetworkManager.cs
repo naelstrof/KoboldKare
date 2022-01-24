@@ -132,8 +132,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
         if (cause != DisconnectCause.DisconnectByClientLogic && cause != DisconnectCause.None) {
             yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
+            PopupHandler.instance.SpawnPopup("Disconnect", true, cause.ToString());
         }
-        PopupHandler.instance.SpawnPopup("Disconnect", true, cause.ToString());
     }
 
     public IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {

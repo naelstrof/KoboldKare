@@ -31,6 +31,9 @@ public class ReagentDatabase : MonoBehaviour {
         return GetInstance().reagents[id];
     }
     public static short GetID(ScriptableReagent reagent) {
+        if (GetInstance() == null) {
+            return 0;
+        }
         return (short)GetInstance().reagents.IndexOf(reagent);
     }
     public static List<ScriptableReagent> GetReagents() => GetInstance().reagents;

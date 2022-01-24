@@ -93,6 +93,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         //SnapToNearestAnimationStation(k, k.transform.position);
         photonView.RPC("RPCSnapToNearestAnimationStation", RpcTarget.All, new object[]{k.photonView.ViewID, k.transform.position});
     }
+    [PunRPC]
     public void RPCSnapToNearestAnimationStation(int id, Vector3 position) {
         PhotonView view = PhotonNetwork.GetPhotonView(id);
         if (view != null) {

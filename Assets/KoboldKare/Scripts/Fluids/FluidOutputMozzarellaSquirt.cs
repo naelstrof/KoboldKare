@@ -10,7 +10,6 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         Squirt,
         Hose,
         Spray,
-        Sprinkler
     }
     private bool firing = false;
     public bool isFiring { get { return firing; } }
@@ -33,14 +32,14 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     private WaitForSeconds waitForSeconds;
     [SerializeField]
     private VisualEffect effect;
+    [SerializeField][Range(0f,1f)]
+    private float particleMultiplier = 1f;
     [SerializeField]
     private float volumeSprayedPerFire = float.MaxValue;
     [SerializeField]
     [FormerlySerializedAs("vps")]
     private float volumePerSecond = 2f;
     private float volumeSprayedThisFire = 0f;
-    [SerializeField]
-    public GenericReagentContainer containerOverride;
     private Coroutine fireRoutine;
     protected class SquirtStream : BaseStreamer.Stream {
         private float startTime;
@@ -91,14 +90,9 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     }
 
     public void Fire() {
-        if(containerOverride == null){
-            var container = GetComponentInParent<GenericReagentContainer>();
-            if (container != null) {
-                Fire(container);
-            }
-        }
-        else{
-            Fire(containerOverride);
+        var container = GetComponentInParent<GenericReagentContainer>();
+        if (container != null) {
+            Fire(container);
         }
     }
     public void Fire(GenericReagentContainer b) {
@@ -117,9 +111,6 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
             effect.Play();
             break;
             case OutputType.Squirt: break;
-            case OutputType.Sprinkler:
-            effect.Play();
-            break;
         }
         fireRoutine = StartCoroutine(FireRoutine(b));
     }
@@ -153,14 +144,10 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         int wantedStreamCount = Mathf.RoundToInt(logscale*2f);
         mozzarellaRenderer.SetPointRadius(logscale*0.16f);
         fluidHitListener.decalSize = logscale*0.16f;
-        velocityVariance = logscale*0.04f;
         if (type == OutputType.Squirt) {
             velocityMultiplier = 0.04f+logscale*0.02f;
             squirtDuration = Mathf.Min(0.1f + logscale*0.4f,1f);
-        }
-        if( type == OutputType.Sprinkler){
-            velocityMultiplier = 0.394f;
-            velocityVariance = 0.500f;
+            velocityVariance = logscale*0.04f;
         }
         while(volumeSprayedThisFire < volumeSprayedPerFire && b.volume > 0f) {
             Color c = b.GetColor();
@@ -168,7 +155,7 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
             effect.SetVector4("Color", c);
             mozzarellaRenderer.material.color = c;
             fluidHitListener.projector.color = c;
-            particlesPerSecondPerStream = 50+wantedStreamCount*42;
+            particlesPerSecondPerStream = Mathf.RoundToInt(50f+((float)wantedStreamCount)*42f*particleMultiplier);
             switch(type) {
                 case OutputType.Squirt: {
                     SplashTransfer(b, volumePerSecond*squirtDuration);
@@ -194,15 +181,6 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
                     SplashTransfer(b, volumePerSecond*Time.deltaTime);
                     volumeSprayedThisFire += volumePerSecond*Time.deltaTime;
                     for(int i=streams.Count;i<wantedStreamCount;i++) {
-                        streams.Add(new HoseStream(Time.time + i*5f));
-                    }
-                    mozzarella.SetVisibleUntil(Time.time + 5f);
-                    break;
-                }
-                case OutputType.Sprinkler: {
-                    SplashTransfer(b, volumePerSecond*Time.deltaTime);
-                    volumeSprayedThisFire += volumePerSecond * Time.deltaTime;
-                    for(int i=streams.Count; i<wantedStreamCount; i++){
                         streams.Add(new HoseStream(Time.time + i*5f));
                     }
                     mozzarella.SetVisibleUntil(Time.time + 5f);

@@ -51,7 +51,6 @@ public class ReagentContents {
         contents.Add(id, new Reagent(){ id=id, volume=volume });
     }
     public void AddMix(short id, float addVolume, GenericReagentContainer worldContainer = null) {
-        Assert.IsTrue(addVolume >= 0f);
         if (contents.ContainsKey(id)) {
             contents[id].volume = Mathf.Max(0f,contents[id].volume+addVolume);
         } else {

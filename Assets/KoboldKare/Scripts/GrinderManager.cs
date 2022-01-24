@@ -43,12 +43,15 @@ public class GrinderManager : GenericUsable {
         grindedThingsCache.Clear();
     }
     void Grind(GameObject obj) {
-        if ( grindedThingsCache.Contains(obj.transform.root.gameObject)) {
+        GenericGrabbable root = obj.GetComponentInParent<GenericGrabbable>();
+        if (root == null) {
             return;
         }
-        if (obj.transform.root == this.transform.root) { return; }
-        grindedThingsCache.Add(obj.transform.root.gameObject);
-        foreach (GenericReagentContainer c in obj.GetAllComponents<GenericReagentContainer>()) {
+        if ( grindedThingsCache.Contains(root.gameObject)) {
+            return;
+        }
+        grindedThingsCache.Add(root.gameObject);
+        foreach (GenericReagentContainer c in root.gameObject.GetComponentsInChildren<GenericReagentContainer>()) {
             container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
         }
         GenericDamagable d = obj.transform.root.GetComponent<GenericDamagable>();
@@ -59,7 +62,7 @@ public class GrinderManager : GenericUsable {
             if (other != null) {
                 PhotonNetwork.Destroy(other.gameObject);
             } else {
-                Destroy(obj.transform.root);
+                Destroy(root.gameObject);
             }
         }
         StopCoroutine("WaitAndThenClear");

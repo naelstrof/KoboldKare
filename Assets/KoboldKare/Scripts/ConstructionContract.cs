@@ -34,8 +34,8 @@ public class ConstructionContract : GenericUsable {
         return money.has(cost);
     }
     [PunRPC]
-    public override void Use(Kobold k) {
-        base.Use(k);
+    public override void Use() {
+        base.Use();
         money.charge(cost);
         purchased.Invoke();
         gameObject.SetActive(false);

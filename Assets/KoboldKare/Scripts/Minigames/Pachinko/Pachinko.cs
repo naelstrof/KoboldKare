@@ -71,12 +71,16 @@ public class Pachinko : GenericUsable {
         }
     }
 
+    public override void LocalUse(Kobold k) {
+        photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
+    }
+
     public override bool CanUse(Kobold k) {
         return money.has(playCost) && activeBall == null;
     }
 
-    public override void Use(Kobold k) {
-        if (MoneySyncHack.view.IsMine && CanUse(k)) {
+    public override void Use() {
+        if (MoneySyncHack.view.IsMine && CanUse(null)) {
             money.charge(playCost);
             StartGame();
         }
@@ -147,7 +151,6 @@ public class Pachinko : GenericUsable {
     void OnValidate() {
         pachinkoBallPrefab.OnValidate();
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
     public override void Save(BinaryWriter writer, string version) { }
     public override void Load(BinaryReader reader, string version) { }
 }

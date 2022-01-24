@@ -22,7 +22,7 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
     public Rigidbody[] bodies;
     public Renderer[] renderers;
     public Transform center;
-    public GrabbableType grabbableType;
+    //public GrabbableType grabbableType;
     public bool OnGrab(Kobold kobold) {
         onGrab.Invoke(kobold);
         foreach(var pair in rendererMaterialPairs) {
@@ -69,9 +69,10 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         return center;
     }
 
-    public GrabbableType GetGrabbableType() {
+    //Deprecated
+    /*public GrabbableType GetGrabbableType() {
         return grabbableType;
-    }
+    }*/
     void OnValidate() {
         if (renderers == null) {
             return;

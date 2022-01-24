@@ -24,7 +24,10 @@ public class Sleeper : GenericUsable {
         }
         return canSleep;
     }
-    public override void Use(Kobold k) {
+    public override void LocalUse(Kobold k) {
+        photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
+    }
+    public override void Use() {
         StopAllCoroutines();
         StartCoroutine(SleepRoutine());
     }
@@ -34,7 +37,6 @@ public class Sleeper : GenericUsable {
         sleep.Raise(null);
         DayNightCycle.instance.Sleep();
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
     public override void Save(BinaryWriter writer, string version) { }
     public override void Load(BinaryReader reader, string version) { }
 }

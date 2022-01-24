@@ -21,8 +21,9 @@ public class BombUsable : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return bombSprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    [PunRPC]
+    public override void Use() {
+        base.Use();
         if (!fired) {
             effect.gameObject.SetActive(true);
             animator.SetTrigger("Burn");

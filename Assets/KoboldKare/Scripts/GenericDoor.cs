@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
@@ -12,6 +13,7 @@ public class GenericDoor : GenericUsable {
     public AudioSource soundWhileOpen;
     public Animator animator;
     AudioSource audioSource;
+    private int usedCount;
     private bool opened {
         get { return (usedCount % 2) != 0; }
     }
@@ -22,8 +24,10 @@ public class GenericDoor : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return opened ? closeSprite : openSprite;
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    [PunRPC]
+    public override void Use() {
+        base.Use();
+        usedCount++;
         UpdateState();
     }
     private void UpdateState() {

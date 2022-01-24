@@ -88,6 +88,21 @@ public static class SaveManager {
             action?.Invoke();
         });
     }
+
+    public static bool RemoveSave(string fileName){
+        string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
+        string savePath = fileName;
+        if(!File.Exists(savePath)){
+            Debug.LogWarning("Indicated save file doesn't exist! ("+savePath+") Should remove from UI rather than disk. TODO: Callback.");
+            return false;
+        }
+        else{
+            File.Delete(savePath);
+            File.Delete(savePath.Substring(0,savePath.Length-4)+".jpg"); //Make sure to remove associated .jpg file of the same name too.
+            Debug.Log("Deleted file from disk: "+savePath);
+            return true;
+        }
+    }
     private static void CleanUpImmediate() {
         foreach(var view in PhotonNetwork.PhotonViewCollection) {
             if (view.gameObject.name.EndsWith("(Clone)")) {

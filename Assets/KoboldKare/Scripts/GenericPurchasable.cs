@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class GenericPurchasable : GenericUsable {
+public class GenericPurchasable : GenericUsable, IPunObservable {
 
     [SerializeField]
     private ScriptableFloat money;
@@ -81,10 +81,10 @@ public class GenericPurchasable : GenericUsable {
     public override bool CanUse(Kobold k) {
         return display.activeInHierarchy && money.has(purchasable.cost);
     }
-    public override void Use(Kobold k) {
-        base.Use(k);
+    [PunRPC]
+    public override void Use() {
         source.PlayOneShot(purchaseSoundPack.GetRandomClip(), purchaseSoundPack.volume);
-        if (MoneySyncHack.view.IsMine && CanUse(k)) {
+        if (MoneySyncHack.view.IsMine && CanUse(null)) {
             money.charge(purchasable.cost);
             PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
         }
@@ -92,8 +92,7 @@ public class GenericPurchasable : GenericUsable {
         purchased.Invoke();
         display.SetActive(false);
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        base.OnPhotonSerializeView(stream, info);
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(inStock);
             stream.SendNext(PurchasableDatabase.GetID(purchasable));

@@ -11,19 +11,11 @@ public class DeleteVolume : MonoBehaviour {
         if (view != null && !view.IsMine) {
             return;
         }
-        if (other.transform.root.GetComponentInChildren<GenericDamagable>() != null) {
-            other.transform.root.GetComponentInChildren<GenericDamagable>().Damage(9999999999999999);
-            if (view) {
-                PhotonNetwork.Destroy(other.transform.root.gameObject);
-            } else {
-                Destroy(other.transform.root.gameObject);
-            }
-        } else {
-            if (view) {
-                PhotonNetwork.Destroy(other.transform.root.gameObject);
-            } else {
-                Destroy(other.transform.root.gameObject);
-            }
+        if(other.GetComponentInParent<GenericGrabbable>() == null || view == null){
+            return;
         }
+        
+        //Handle networked object
+        PhotonNetwork.Destroy(view);
     }
 }

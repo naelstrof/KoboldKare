@@ -200,6 +200,10 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (stimulation >= stimulationMax) {
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
+                float cumAmount = 0.5f+0.5f*sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.5f*baseBallSize+0.5f*baseDickSize;
+                Debug.Log("Cumming " + cumAmount);
+                dickSet.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), cumAmount, GenericReagentContainer.InjectType.Inject);
+                dickSet.dick.GetComponentInChildren<IFluidOutput>(true).SetVolumePerSecond(cumAmount/dickSet.dick.cumPulseCount);
                 dickSet.dick.Cum();
             }
             PumpUpDick(1f);
@@ -540,7 +544,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             foreach(Collider c in Physics.OverlapSphere(transform.position, 1f, playerHitMask, QueryTriggerInteraction.Collide)) {
                 Kobold k = c.GetComponentInParent<Kobold>();
                 if (k!=this && k!=kobold) {
-                    k.GetComponentInChildren<GenericUsable>().Use(this);
+                    k.GetComponentInChildren<GenericUsable>().LocalUse(this);
                 }
             }
             controller.enabled = true;
@@ -695,9 +699,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
 
-    public GrabbableType GetGrabbableType() {
+    /*public GrabbableType GetGrabbableType() {
         return GrabbableType.Kobold;
-    }
+    }*/
 
     public void RegenerateSlowly(float deltaTime) {
         float wantedBoobVolume = baseBoobSize*0.2f;

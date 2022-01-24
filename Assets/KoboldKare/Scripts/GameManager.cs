@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour {
     public AnimationCurve volumeCurve;
     public UnityEvent OnPause;
     public UnityEvent OnUnpause;
+    public GameObject selectOnPause;
+    public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
+
     [HideInInspector]
     public bool isPaused = false;
 
@@ -45,6 +48,10 @@ public class GameManager : MonoBehaviour {
             return;
         }
         Time.timeScale = isPaused ? 0.0f : 1.0f;
+        if(selectOnPause != null)
+            selectOnPause.GetComponent<Selectable>().Select();
+        else
+            Debug.LogError("[GameManager] selectOnPause is not bound to the resume button! Button was not selected for controller support.");
     }
 
     public void Quit() {
@@ -85,6 +92,9 @@ public class GameManager : MonoBehaviour {
         foreach(Canvas c in GetComponentsInChildren<Canvas>()) {
             c.enabled = visible;
         }
+        
+        if(Camera.main != null) //Camera isn't guaranteed to be available
+            Camera.main.gameObject.GetComponentInChildren<Canvas>().enabled = visible;
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {
         if (group == null) {
@@ -107,5 +117,20 @@ public class GameManager : MonoBehaviour {
         source.Play();
         Destroy(g, clip.length);
         //AudioSource.PlayClipAtPoint(clip, position, volume);
+    }
+
+    public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType){
+        if(btn.buttonType == ButtonMouseOver.ButtonTypes.Default){
+            if(evtType == ButtonMouseOver.EventType.Hover)
+                SpawnAudioClipInWorld(buttonHoveredMenu, Vector3.zero);
+            else
+                SpawnAudioClipInWorld(buttonClickedMenu, Vector3.zero); 
+        }
+        else if (btn.buttonType == ButtonMouseOver.ButtonTypes.Save){
+            if(evtType == ButtonMouseOver.EventType.Hover)
+                SpawnAudioClipInWorld(buttonHoveredSubmenu, Vector3.zero);
+            else
+                SpawnAudioClipInWorld(buttonClickedSubmenu, Vector3.zero);
+        }
     }
 }

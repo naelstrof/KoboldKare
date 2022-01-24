@@ -348,23 +348,23 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     //}
 
     // Quake style acceleration
-void Accelerate(Vector3 wishdir, float wishspeed, float accel) {
-    float wishspd = wishspeed;
-    if (!grounded) {
-        wishspd = Mathf.Min(wishspd, airCap);
+    void Accelerate(Vector3 wishdir, float wishspeed, float accel) {
+        float wishspd = wishspeed;
+        if (!grounded) {
+            wishspd = Mathf.Min(wishspd, airCap);
+        }
+        float currentspeed = Vector3.Dot(velocity, wishdir);
+
+        float addspeed = wishspd - currentspeed;
+        if (addspeed <= 0) {
+            return;
+        }
+        float accelspeed = accel * wishspeed * Time.deltaTime;
+
+        accelspeed = Mathf.Min(accelspeed, addspeed);
+
+        velocity += accelspeed * wishdir;
     }
-    float currentspeed = Vector3.Dot(velocity, wishdir);
-
-    float addspeed = wishspd - currentspeed;
-    if (addspeed <= 0) {
-        return;
-    }
-    float accelspeed = accel * wishspeed * Time.deltaTime;
-
-    accelspeed = Mathf.Min(accelspeed, addspeed);
-
-    velocity += accelspeed * wishdir;
-}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {

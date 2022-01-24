@@ -374,7 +374,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         OnTextDeselect("");
     }
     public void OnChat() {
-        if (!enabled) {
+        if (!enabled || GameManager.instance.isPaused) {
             return;
         }
         if (!chatGroup.interactable) {

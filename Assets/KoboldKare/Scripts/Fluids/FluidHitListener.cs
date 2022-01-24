@@ -28,9 +28,6 @@ public class FluidHitListener : MonoBehaviour {
             radius *= 1.2f;
         }
         ReagentContents spill = transferContents.Spill(amount);
-        if (spill.volume <= 0f) {
-            return;
-        }
 
         staticTargets.Clear();
         int hits = Physics.OverlapSphereNonAlloc(position, radius, staticColliders, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
@@ -54,7 +51,7 @@ public class FluidHitListener : MonoBehaviour {
     }
     void DrawDecal(MozzarellaHitEventListener.HitEvent hitEvent) {
         float size = hitEvent.volume*decalSize;
-        SplashTransfer(hitEvent.position, size*2f, Time.deltaTime*10f);
+        SplashTransfer(hitEvent.position, size*2f, Time.deltaTime*15f);
     }
 }
 

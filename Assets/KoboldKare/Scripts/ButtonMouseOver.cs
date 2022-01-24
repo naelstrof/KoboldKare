@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler {
+public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler, IPointerClickHandler {
     private Vector3 defaultLocalScale;
     private Button internalAttachedButton;
     private Button attachedButton {
@@ -17,6 +17,12 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
     }
     private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+
+    public enum ButtonTypes{Default, MainMenu, Option, Save}
+    public enum EventType{ Hover, Click };
+    public EventType lastEvent;
+    public ButtonTypes buttonType;
+
     private void Start() {
         defaultLocalScale = transform.localScale;
     }
@@ -36,12 +42,15 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         transform.localScale = defaultLocalScale*1.1f;
     }
+
     public void OnPointerEnter(PointerEventData eventData) {
         if (!attachedButton.interactable) {
             return;
         }
         StopAllCoroutines();
         StartCoroutine(ScaleUp(0.3f));
+        lastEvent = EventType.Hover;
+        PlaySFX();
     }
 
     public void OnPointerExit(PointerEventData eventData) {
@@ -58,6 +67,8 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         StopAllCoroutines();
         StartCoroutine(ScaleUp(0.3f));
+        lastEvent = EventType.Hover;
+        PlaySFX();
     }
 
     public void OnDeselect(BaseEventData eventData) {
@@ -66,5 +77,19 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
         StopAllCoroutines();
         StartCoroutine(ScaleBack(0.3f));
+    }
+
+    public void OnSubmit(BaseEventData eventData){
+        lastEvent = EventType.Click;
+        PlaySFX();
+    }
+
+    public void OnPointerClick(PointerEventData eventData){
+        lastEvent = EventType.Click;
+        PlaySFX();
+    }
+
+    private void PlaySFX(){
+        GameManager.instance.PlayUISFX(this, lastEvent);
     }
 }

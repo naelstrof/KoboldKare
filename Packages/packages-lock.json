@@ -35,7 +35,7 @@
       "dependencies": {
         "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm"
       },
-      "hash": "93ecc5c57d0347b293a2fc062dcdf957fb09ec2a"
+      "hash": "a6ed6b871bb1079f70ad740c66bf5515942d1f1f"
     },
     "com.naelstrof.penetrationtech": {
       "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",

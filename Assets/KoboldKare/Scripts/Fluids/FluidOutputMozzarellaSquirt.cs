@@ -42,9 +42,11 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     protected class SquirtStream : BaseStreamer.Stream {
         private float startTime;
         private float duration;
-        public SquirtStream( float startTime, float duration ) {
+        private float offset;
+        public SquirtStream(float startTime, float duration, float offset) {
             this.startTime = startTime;
             this.duration = duration;
+            this.offset = offset;
         }
         public bool IsFinished() {
             return Time.time > startTime + duration;
@@ -53,10 +55,11 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
             if (!(streamer is FluidOutputMozzarellaSquirt)) {
                 throw new UnityException("Tried to use a squirter stream on a non-squirter behavior.");
             }
-            float t = (Time.time-startTime)/duration;
+            float t = (time-startTime)/duration;
+            float perlin = Mathf.PerlinNoise(offset+time,offset+time);
             FluidOutputMozzarellaSquirt squirter = streamer as FluidOutputMozzarellaSquirt;
-            Vector3 velocity = Vector3.up*0.025f+squirter.transform.forward*squirter.velocityCurve.Evaluate(t)*squirter.velocityMultiplier+UnityEngine.Random.insideUnitSphere*squirter.velocityVariance;
-            float volume = squirter.volumeCurve.Evaluate(t);
+            Vector3 velocity = Vector3.up*0.025f+squirter.transform.forward*squirter.velocityCurve.Evaluate(t)*(0.75f+perlin*0.25f)*squirter.velocityMultiplier+UnityEngine.Random.insideUnitSphere*squirter.velocityVariance;
+            float volume = squirter.volumeCurve.Evaluate(t)*(0.5f+perlin*0.5f);
             return new Mozzarella.Point() {
                 position = squirter.transform.position,
                 prevPosition = squirter.transform.position - velocity,
@@ -121,7 +124,7 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     }
     public override void FixedUpdate() {
         for (int i=streams.Count-1;i>=0;i--) {
-            if (streams[i] is SquirtStream && (streams[0] as SquirtStream).IsFinished()) {
+            if (streams[i] is SquirtStream && (streams[i] as SquirtStream).IsFinished()) {
                 streams.RemoveAt(i);
             }
         }
@@ -136,9 +139,16 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     }
     IEnumerator FireRoutine(GenericReagentContainer b) {
         firing = true;
-        float logscale = Mathf.Log(1f+b.volume)*2f;
-        int wantedStreamCount = Mathf.RoundToInt(logscale);
-        SetRadius(Mathf.Clamp(logscale*0.03f, 0.05f, 0.3f));
+        float logscale = Mathf.Log(1f+b.volume*0.7f);
+        int wantedStreamCount = Mathf.RoundToInt(logscale*2f);
+        mozzarellaRenderer.SetPointRadius(logscale*0.08f);
+        velocityVariance = logscale*0.02f;
+        fluidHitListener.decalSize = logscale*0.1f;
+        if (type == OutputType.Squirt) {
+            velocityMultiplier = 0.04f+logscale*0.02f;
+            squirtDuration = Mathf.Min(0.1f + logscale*0.4f,1f);
+        }
+        bool huge = b.volume > 50f;
         while(volumeSprayedThisFire < volumeSprayedPerFire && b.volume > 0f) {
             Color c = b.GetColor();
             fluidHitListener.erasing = b.IsCleaningAgent();
@@ -151,7 +161,11 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
                     SplashTransfer(b, volumePerSecond*squirtDuration);
                     volumeSprayedThisFire += volumePerSecond * squirtDuration;
                     for(int i=streams.Count;i<wantedStreamCount;i++) {
-                        streams.Add(new SquirtStream(Time.time, squirtDuration));
+                        if (huge && i%2==0) {
+                            streams.Add(new HoseStream(Time.fixedTime+i*5f));
+                        } else {
+                            streams.Add(new SquirtStream(Time.fixedTime, squirtDuration, Time.fixedTime*i*100));
+                        }
                     }
                     mozzarella.SetVisibleUntil(Time.time + squirtDuration + 5f);
                     yield return new WaitForSeconds(squirtDuration);
@@ -181,12 +195,6 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         }
         StopFiring();
     }
-    private void SetRadius( float radius ) {
-        mozzarellaRenderer.SetPointRadius(radius);
-        //mozzarella.SetVisco(radius);
-        velocityVariance = Mathf.Clamp(radius*0.5f, 0.01f, 0.07f);
-        fluidHitListener.decalSize = radius*1.1f;
-    }
     void SplashTransfer(GenericReagentContainer b, float amount) {
         fluidHitListener.transferContents.AddMix(b.Spill(amount));
     }
@@ -195,5 +203,8 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         volumeCurve.preWrapMode = WrapMode.Clamp;
         velocityCurve.postWrapMode = WrapMode.Clamp;
         velocityCurve.preWrapMode = WrapMode.Clamp;
+    }
+    public void SetVolumePerSecond(float newVPS) {
+        volumePerSecond = newVPS;
     }
 }

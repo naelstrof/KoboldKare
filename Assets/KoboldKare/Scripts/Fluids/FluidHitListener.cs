@@ -28,9 +28,6 @@ public class FluidHitListener : MonoBehaviour {
             radius *= 1.2f;
         }
         ReagentContents spill = transferContents.Spill(amount);
-        if (spill.volume <= 0f) {
-            return;
-        }
 
         staticTargets.Clear();
         int hits = Physics.OverlapSphereNonAlloc(position, radius, staticColliders, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);

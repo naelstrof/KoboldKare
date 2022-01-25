@@ -69,8 +69,10 @@ public class PatMeFrame : GenericUsable
         return patSprite;
     }
 
-    public override void Use(Kobold k) {
-        base.Use(k);
+    [PunRPC]
+    public override void Use() {
+        base.Use();
+        Kobold k = LoadCustomParts.instance.playerKobold;
         KoboldInventory inventory = k.GetComponent<KoboldInventory>();
         if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) == null){
             while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {

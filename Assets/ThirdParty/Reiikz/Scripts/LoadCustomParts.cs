@@ -147,6 +147,13 @@ public class LoadCustomParts : MonoBehaviour
                 if(playerController.jumpStrength > maxSpeedOrJump){
                     playerController.jumpStrength = maxSpeedOrJump;
                 }
+                if(playerKobold.body.velocity.magnitude > maxSpeedOrJump) {
+                    float x = playerKobold.body.velocity.x, y = playerKobold.body.velocity.y, z = playerKobold.body.velocity.z;
+                    x = Mathf.Clamp(x, 0, maxSpeedOrJump);
+                    y = Mathf.Clamp(y, 0, maxSpeedOrJump);
+                    z = Mathf.Clamp(z, 0, maxSpeedOrJump);
+                    playerKobold.body.velocity = new Vector3(x, y, z);
+                }
                 grabbed = true;
             }
             if(((!playerGrabber.grabbing) && (!playerPrecisionGrabber.grabbing)) && (grabbed == true)){

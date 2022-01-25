@@ -215,13 +215,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             {
                 var bindingIndex = action.bindings.IndexOf(x => x.id.ToString() == m_BindingId);
                 if (bindingIndex != -1) {
-                    displayString = action.bindings[bindingIndex].path;
+                    displayString = action.bindings[bindingIndex].effectivePath;
                 }
             }
 
-            if (isActiveAndEnabled) {
-                StartCoroutine(WaitThenCheckKey(displayString));
-            }
+            GameManager.instance.StartCoroutine(WaitThenCheckKey(displayString));
 
             // Set on label (if any).
             //if (m_BindingText != null)
@@ -234,22 +232,16 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         IEnumerator WaitThenCheckKey(string key) {
             if (key != "") {
                 // Wait for the localization system to initialize, loading Locales, preloading etc.
-                var otherAsync = LocalizationSettings.SelectedLocaleAsync;
-                yield return new WaitUntil(()=>otherAsync.IsDone);
-                if (otherAsync.Result != null){
-                    yield return LocalizationSettings.InitializationOperation;
-                    var asyncOp = LocalizationSettings.AssetDatabase.GetLocalizedAssetAsync<Sprite>("InputTexturesTable", key);
-                    yield return new WaitUntil(()=>asyncOp.IsDone);
-                    if (asyncOp.IsValid() && asyncOp.Result != null) {
-                        m_BindingText.text = "";
-                        bindingImage.color = new Color(1,1,1,1f);
-                        bindingImage.sprite = asyncOp.Result;
-                        bindingImage.preserveAspect = true;
-                    } else {
-                        m_BindingText.text = key;
-                        bindingImage.color = new Color(1,1,1,0f);
-                    }
-                }
+                yield return LocalizationSettings.InitializationOperation;
+                bindingImage.sprite = null;
+                bindingImage.color = new Color(1,1,1,0f);
+                m_BindingText.text = key;
+                LocalizationSettings.AssetDatabase.GetLocalizedAssetAsync<Sprite>("InputTexturesTable", key).Completed += (asyncOp)=>{
+                    m_BindingText.text = "";
+                    bindingImage.color = new Color(1,1,1,1f);
+                    bindingImage.sprite = asyncOp.Result;
+                    bindingImage.preserveAspect = true;
+                };
             }
         }
 
@@ -330,7 +322,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
                         action.Enable();
-                        UpdateBindingDisplay();
                         UpdateBindingDisplay();
                         CleanUp();
 

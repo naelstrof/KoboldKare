@@ -144,8 +144,15 @@ public static class SaveManager {
             }
         }
     }
-    public static void Load(string filename) {
+    private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        if (SceneManager.GetActiveScene().name != "MainMap") {
+            yield return NetworkManager.instance.SinglePlayerRoutine();
+        }
+        yield return new WaitForSeconds(1f);
         LoadImmediate(filename);
         GameManager.instance.Pause(false);
+    }
+    public static void Load(string filename) {
+        GameManager.instance.StartCoroutine(MakeSureMapIsLoadedThenLoadSave(filename));
     }
 }

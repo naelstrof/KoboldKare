@@ -6,12 +6,10 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 
-public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks {
+public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
     public GameObject roomPrefab;
     public GameObject hideOnRoomsFound;
     private List<GameObject> roomPrefabs = new List<GameObject>();
-    public List<RoomInfo> curRoomList;
-
     public override void OnConnectedToMaster(){
         base.OnConnectedToMaster();
         Debug.Log("PhotonRoomListSpawner :: Connected to master");
@@ -25,22 +23,12 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior
         Debug.Log("[PhotonRoomListSpawner] :: Got room list update from master server");
-        hideOnRoomsFound.SetActive(true);
         ClearRoomList();
-        //Build new list to refresh UI on
-        foreach(RoomInfo info in roomList) {    
-            if(info.RemovedFromList == true || info.IsOpen == false){
-                ClearRoomFromList(info);
+        //Build UI from current room list
+        foreach (RoomInfo info in roomList){
+            if (info.RemovedFromList) {
                 continue;
             }
-            else{
-                if(!curRoomList.Contains(info)) //Only add it in if we don't have it already
-                    curRoomList.Add(info);
-            }
-        }
-
-        //Build UI from current room list
-        foreach (RoomInfo info in curRoomList){
             GameObject room = GameObject.Instantiate(roomPrefab, this.transform);
             roomPrefabs.Add(room);
             room.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = info.Name;
@@ -52,23 +40,13 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks 
                 NetworkManager.instance.JoinMatch(info.Name);
             });
         }
-
-
-        if(roomList.Count > 0) //Only call once
-            hideOnRoomsFound.SetActive(false);
+        hideOnRoomsFound.SetActive(roomList.Count == 0);
     }
-    private void ClearRoomFromList(RoomInfo room){
-        curRoomList.Remove(room);
-    }
-
-    
 
     private void ClearRoomList(){
         foreach(GameObject g in roomPrefabs) {
             Destroy(g);
         }
         roomPrefabs.Clear();
-        if(curRoomList != null && curRoomList.Count != 0) //Check if null or empty
-            curRoomList.Clear();
     }
 }

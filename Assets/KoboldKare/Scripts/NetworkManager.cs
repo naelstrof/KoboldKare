@@ -16,6 +16,7 @@ using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback {
+    public ServerSettings settings;
     public bool online {
         get {
             return PhotonNetwork.OfflineMode != true && PhotonNetwork.PlayerList.Length > 1;
@@ -30,17 +31,17 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private List<Transform> spawnPoints = new List<Transform>();
     public GameEventGeneric SpawnEvent;
     public IEnumerator JoinLobbyRoutine(string region) {
+        if (PhotonNetwork.IsConnected && settings.AppSettings.FixedRegion != region) {
+            PhotonNetwork.Disconnect();
+            yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        }
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
-            if (region == "") {
-                PhotonNetwork.ConnectUsingSettings();
-            } else {
-                PhotonNetwork.ConnectToRegion(region);
-            }
+            settings.AppSettings.FixedRegion = region;
+            PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
         if (!PhotonNetwork.InLobby) {
-            Debug.Log("Joined lobby?");
             PhotonNetwork.JoinLobby();
         }
     }

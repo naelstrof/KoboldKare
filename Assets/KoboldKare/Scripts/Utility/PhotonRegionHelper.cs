@@ -12,7 +12,6 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
     private Region selectedRegion;
 
     public void ChooseRegion(int id){
-        PhotonNetwork.Disconnect(); //We must disconnect from the present server to change servers
         NetworkManager.instance.JoinLobby(dropdown.options[id].text);
     }
 

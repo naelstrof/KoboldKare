@@ -29,22 +29,27 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
     public GameEventGeneric SpawnEvent;
-    public IEnumerator JoinLobbyRoutine() {
+    public IEnumerator JoinLobbyRoutine(string region) {
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
-            PhotonNetwork.ConnectUsingSettings();
+            if (region == "") {
+                PhotonNetwork.ConnectUsingSettings();
+            } else {
+                PhotonNetwork.ConnectToRegion(region);
+            }
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
         if (!PhotonNetwork.InLobby) {
+            Debug.Log("Joined lobby?");
             PhotonNetwork.JoinLobby();
         }
     }
-    public void JoinLobby() {
+    public void JoinLobby(string region) {
         // Don't load the lobby if we're playing offline.
         if (SceneManager.GetActiveScene().name == "MainMap" && PhotonNetwork.OfflineMode == true) {
             return;
         }
-        GameManager.instance.StartCoroutine(JoinLobbyRoutine());
+        GameManager.instance.StartCoroutine(JoinLobbyRoutine(region));
     }
     public void QuickMatch() {
         GameManager.instance.StartCoroutine(QuickMatchRoutine());

@@ -219,7 +219,9 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 }
             }
 
-            GameManager.instance.StartCoroutine(WaitThenCheckKey(displayString));
+            if (GameManager.instance != null) {
+                GameManager.instance.StartCoroutine(WaitThenCheckKey(displayString));
+            }
 
             // Set on label (if any).
             //if (m_BindingText != null)

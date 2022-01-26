@@ -18,7 +18,7 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
     private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
-    public enum ButtonTypes{Default, MainMenu, Option, Save}
+    public enum ButtonTypes{Default, MainMenu, Option, Save, NoScale}
     public enum EventType{ Hover, Click };
     public EventType lastEvent;
     public ButtonTypes buttonType;
@@ -27,6 +27,9 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         defaultLocalScale = transform.localScale;
     }
     public IEnumerator ScaleBack(float scaleDuration) {
+        if (buttonType == ButtonTypes.NoScale) {
+            yield break;
+        }
         float startTime = Time.unscaledTime;
         while (isActiveAndEnabled && attachedButton.interactable && (startTime + scaleDuration) > Time.unscaledTime ) {
             transform.localScale = Vector3.Lerp(transform.localScale, defaultLocalScale, (Time.unscaledTime-startTime)/scaleDuration);
@@ -35,6 +38,9 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         transform.localScale = defaultLocalScale;
     }
     public IEnumerator ScaleUp(float scaleDuration) {
+        if (buttonType == ButtonTypes.NoScale) {
+            yield break;
+        }
         float startTime = Time.unscaledTime;
         while (isActiveAndEnabled && attachedButton.interactable && (startTime + scaleDuration) > Time.unscaledTime ) {
             transform.localScale = Vector3.Lerp(transform.localScale, defaultLocalScale*1.1f, (Time.unscaledTime-startTime)/scaleDuration);

@@ -71,7 +71,7 @@ public class Build {
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 
-        string gitcommit = Environment.GetEnvironmentVariable("GIT_COMMIT"); 
+        string gitcommit = Environment.GetEnvironmentVariable("GIT_COMMIT").Substring(0,7); 
         if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(gitcommit)) {
             PlayerSettings.bundleVersion = version + "_" + gitcommit;
         } else if (!String.IsNullOrEmpty(version)) {

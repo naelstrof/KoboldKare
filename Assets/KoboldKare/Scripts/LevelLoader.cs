@@ -11,6 +11,9 @@ public class LevelLoader : MonoBehaviour {
     public static LevelLoader instance;
     public static bool loadingLevel;
     public TextMeshProUGUI tmpText;
+    public delegate void SceneEventAction();
+    public event SceneEventAction sceneLoadStart;
+    public event SceneEventAction sceneLoadEnd;
 
     void Awake() {
         //Check if instance already exists
@@ -28,6 +31,7 @@ public class LevelLoader : MonoBehaviour {
     }
     public IEnumerator LoadLevelRoutine(string name) {
         GameManager.instance.Pause(false);
+        sceneLoadStart?.Invoke();
         loadingLevel = true;
         masterCanvas.SetActive(true);
         loadingPanel.GetComponent<CanvasGroup>().alpha = 1f;
@@ -47,5 +51,6 @@ public class LevelLoader : MonoBehaviour {
         masterCanvas.SetActive(false);
         PopupHandler.instance.ClearAllPopups();
         GameManager.instance.Pause(false);
+        sceneLoadEnd?.Invoke();
     }
 }

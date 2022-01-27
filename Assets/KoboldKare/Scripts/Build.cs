@@ -21,7 +21,7 @@ public class Build {
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
-        //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
+        AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare";

@@ -69,9 +69,10 @@ public class IrrigationZone : MonoBehaviour{
         //Play Visual Effects
         foreach (var item in vfx){
             item.Stop();
-            item.Play();
+            item.Reinit();
+            item.SendEvent("Fire");
         }
-        
+
         //Play audio
         if(!aud.isPlaying){
             aud.Play();

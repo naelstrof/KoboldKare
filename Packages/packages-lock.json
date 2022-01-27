@@ -22,11 +22,11 @@
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#upm",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v2.2.5",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ee919ad96d947094e02d208b1039c6fcfbbd1a90"
+      "hash": "0bf655f25db5b517db9892f862b5cb0613e5d2a1"
     },
     "com.naelstrof.mozzarellatech": {
       "version": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",

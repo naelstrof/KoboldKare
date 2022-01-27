@@ -26,7 +26,6 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         ClearRoomList();
         //Build UI from current room list
         foreach (RoomInfo info in roomList){
-            Debug.Log("[PhotonRoomListSpawner] :: got server " + info.Name);
             if (info.RemovedFromList) {
                 continue;
             }

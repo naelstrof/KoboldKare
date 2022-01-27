@@ -12,7 +12,7 @@ public class IrrigationZone : MonoBehaviour{
     public int amountToInject;
     LayerMask waterMask;
     public List<VisualEffect> vfx = new List<VisualEffect>();
-    public float timeToPlay;
+    public AudioSource aud;
 
     void Start(){
         waterMask = GameManager.instance.waterSprayHitMask;
@@ -71,7 +71,11 @@ public class IrrigationZone : MonoBehaviour{
             item.Stop();
             item.Play();
         }
-
+        
+        //Play audio
+        if(!aud.isPlaying){
+            aud.Play();
+        }
         //Debug.Log("[Irrigation Zone] :: Reagent Injection Sequence Complete!");
     }
 }

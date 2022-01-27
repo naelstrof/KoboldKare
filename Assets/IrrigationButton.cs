@@ -7,8 +7,6 @@ public class IrrigationButton : GenericUsable{
     [SerializeField]
     private Sprite spraySprite;
     public IrrigationZone iz;
-
-    public AudioSource aud;
     private int usedCount;
 
     public override Sprite GetSprite(Kobold k){
@@ -19,8 +17,5 @@ public class IrrigationButton : GenericUsable{
         base.Use();
         usedCount++;
         iz.InjectReagent();
-        if(aud != null){
-            aud.Play();
-        }
     }
 }

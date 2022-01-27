@@ -6,10 +6,15 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 
 public class QuitFromIngame : MonoBehaviour{
-    public string MainMenuDest;
     public void QuitToMenu(){
-        PhotonNetwork.Disconnect(); // Must always D/C before returning to main menu
-        SceneManager.LoadScene(MainMenuDest);
+        GameManager.instance.StartCoroutine(QuitToMenuRoutine());
+    }
+
+    public IEnumerator QuitToMenuRoutine() {
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        PhotonNetwork.OfflineMode = false;
     }
 
 }

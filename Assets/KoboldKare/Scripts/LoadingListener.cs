@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadingListener : MonoBehaviour {
-    void Awake() {
+    void Start() {
         LevelLoader.instance.sceneLoadStart += SceneLoadStart;
         LevelLoader.instance.sceneLoadEnd += SceneLoadEnd;
         gameObject.SetActive(false);

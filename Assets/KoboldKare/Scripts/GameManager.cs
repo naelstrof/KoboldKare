@@ -15,6 +15,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
+    public GameObject mainCanvas;
     public static void SetUIVisible(bool visible) => instance.UIVisible(visible);
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
@@ -35,16 +36,23 @@ public class GameManager : MonoBehaviour {
     public void Pause(bool pause) {
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             OnUnpause.Invoke();
         }
         if (pause) {
             OnPause.Invoke();
         }
+        if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        } else {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         isPaused = pause;
+        mainCanvas.SetActive(isPaused || SceneManager.GetActiveScene().name == "MainMenu");
 
-        if (!PhotonNetwork.OfflineMode) {
+        if (!PhotonNetwork.OfflineMode || SceneManager.GetActiveScene().name == "MainMenu") {
+            Time.timeScale = 1.0f;
             return;
         }
         Time.timeScale = isPaused ? 0.0f : 1.0f;

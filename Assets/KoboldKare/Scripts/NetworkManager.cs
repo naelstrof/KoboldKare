@@ -31,6 +31,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private List<Transform> spawnPoints = new List<Transform>();
     public GameEventGeneric SpawnEvent;
     public IEnumerator JoinLobbyRoutine(string region) {
+        if (PhotonNetwork.OfflineMode) {
+            PhotonNetwork.OfflineMode = false;
+        }
         if (PhotonNetwork.IsConnected && settings.AppSettings.FixedRegion != region) {
             PhotonNetwork.Disconnect();
             yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
@@ -46,10 +49,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
     }
     public void JoinLobby(string region) {
-        // Don't load the lobby if we're playing offline.
-        if (SceneManager.GetActiveScene().name == "MainMap" && PhotonNetwork.OfflineMode == true) {
-            return;
-        }
         GameManager.instance.StartCoroutine(JoinLobbyRoutine(region));
     }
     public void QuickMatch() {

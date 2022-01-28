@@ -21,7 +21,7 @@ public class Build {
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
-        //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
+        AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare";
@@ -34,7 +34,7 @@ public class Build {
     [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
-        //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
+        AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.app";
@@ -47,7 +47,7 @@ public class Build {
     [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
-        //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
+        AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.exe";
@@ -60,7 +60,7 @@ public class Build {
     [MenuItem("KoboldKare/BuildWindows32")]
     static void BuildWindows32() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
-        //AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
+        AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.exe";

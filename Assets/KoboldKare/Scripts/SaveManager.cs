@@ -91,6 +91,7 @@ public static class SaveManager {
 
     public static bool RemoveSave(string fileName){
         string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
+        string imageSavePath = saveDataPath + fileName + imageExtension;
         string savePath = fileName;
         if(!File.Exists(savePath)){
             Debug.LogWarning("Indicated save file doesn't exist! ("+savePath+") Should remove from UI rather than disk. TODO: Callback.");
@@ -98,7 +99,7 @@ public static class SaveManager {
         }
         else{
             File.Delete(savePath);
-            File.Delete(savePath.Substring(0,savePath.Length-4)+".jpg"); //Make sure to remove associated .jpg file of the same name too.
+            File.Delete(imageSavePath); //Make sure to remove associated .jpg file of the same name too.
             Debug.Log("Deleted file from disk: "+savePath);
             return true;
         }
@@ -148,11 +149,12 @@ public static class SaveManager {
         if (SceneManager.GetActiveScene().name != "MainMap") {
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         LoadImmediate(filename);
         GameManager.instance.Pause(false);
     }
     public static void Load(string filename) {
+        Debug.Log("[SaveManager] :: Loading in process...");
         GameManager.instance.StartCoroutine(MakeSureMapIsLoadedThenLoadSave(filename));
     }
 }

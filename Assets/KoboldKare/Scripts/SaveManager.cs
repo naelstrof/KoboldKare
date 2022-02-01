@@ -69,7 +69,7 @@ public static class SaveManager {
             BinaryWriter writer = new BinaryWriter(file);
             writer.Write(saveHeader);
             writer.Write(version);
-            Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
+            //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
             foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
                 writer.Write(view.ViewID);
@@ -130,7 +130,7 @@ public static class SaveManager {
             }
             string fileVersion = reader.ReadString();
             int viewCount = reader.ReadInt32();
-            //Debug.Log("viewCount: "+viewCount);
+            Debug.Log("viewCount: "+viewCount);
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
                 string prefabName = reader.ReadString();
@@ -142,7 +142,7 @@ public static class SaveManager {
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                     view = obj.GetComponent<PhotonView>();
                 }
-                foreach(var observable in view.ObservedComponents) {
+                foreach(Component observable in view.ObservedComponents) {
                     if (observable is ISavable) {
                         (observable as ISavable).Load(reader, fileVersion);
                     }

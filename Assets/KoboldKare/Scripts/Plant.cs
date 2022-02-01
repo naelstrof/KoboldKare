@@ -125,9 +125,16 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
 
     public void Save(BinaryWriter writer, string version) {
         writer.Write(PlantDatabase.GetID(plant));
+        writer.Write(transform.position.x);
+        writer.Write(transform.position.y);
+        writer.Write(transform.position.z);
     }
 
     public void Load(BinaryReader reader, string version) {
         SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
+        float x = reader.ReadSingle();
+        float y = reader.ReadSingle();
+        float z = reader.ReadSingle();
+        transform.position = new Vector3(x,y,z);
     }
 }

@@ -448,6 +448,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             if (input != null) {
                 Destroy(input.transform.parent.gameObject);
             }
+            eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
         }
     }
     //public void OnHold() {

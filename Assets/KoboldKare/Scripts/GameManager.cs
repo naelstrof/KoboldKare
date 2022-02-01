@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
     public UnityEvent OnUnpause;
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
+    public LoadingListener loadListener;
 
     [HideInInspector]
     public bool isPaused = false;

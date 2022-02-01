@@ -21,4 +21,14 @@ public class LoadingListener : MonoBehaviour {
         gameObject.SetActive(false);
         gameObject.GetComponent<CanvasGroup>().alpha = 0f;
     }
+
+    public void Show(){
+        gameObject.SetActive(true);
+        gameObject.GetComponent<CanvasGroup>().alpha = 1f;
+    }
+
+    public void Hide(){
+        gameObject.SetActive(false);
+        gameObject.GetComponent<CanvasGroup>().alpha = 0f;
+    }
 }

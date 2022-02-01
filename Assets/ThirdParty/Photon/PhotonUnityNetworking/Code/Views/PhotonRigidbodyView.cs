@@ -134,11 +134,13 @@ namespace Photon.Pun
         }
 
         public void Load(BinaryReader reader, string version) {
+            
             float posx = reader.ReadSingle();
             float posy = reader.ReadSingle();
             float posz = reader.ReadSingle();
             this.m_NetworkPosition = new Vector3(posx, posy, posz);
             this.m_Body.position = this.m_NetworkPosition;
+            this.m_Body.transform.position = this.m_NetworkPosition; //Force update?
             float rotx = reader.ReadSingle();
             float roty = reader.ReadSingle();
             float rotz = reader.ReadSingle();

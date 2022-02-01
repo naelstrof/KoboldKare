@@ -69,11 +69,11 @@ public static class SaveManager {
             BinaryWriter writer = new BinaryWriter(file);
             writer.Write(saveHeader);
             writer.Write(version);
-            Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
+            //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
             foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
                 writer.Write(view.ViewID);
-                Debug.Log("[SaveManager] <Serialization Log> :: "+PrefabifyGameObjectName(view.gameObject));
+                //Debug.Log("[SaveManager] <Serialization Log> :: "+PrefabifyGameObjectName(view.gameObject));
                 writer.Write(PrefabifyGameObjectName(view.gameObject));
                 foreach(var observable in view.ObservedComponents) {
                     if (observable is ISavable) {
@@ -130,15 +130,15 @@ public static class SaveManager {
             }
             string fileVersion = reader.ReadString();
             int viewCount = reader.ReadInt32();
-            Debug.Log("viewCount: "+viewCount);
+            //Debug.Log("viewCount: "+viewCount);
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
                 string prefabName = reader.ReadString();
                 PhotonView view = PhotonNetwork.GetPhotonView(viewID);
                 
-                Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
+                //Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
                 if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
-                    Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
+                    //Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                     view = obj.GetComponent<PhotonView>();
                 }

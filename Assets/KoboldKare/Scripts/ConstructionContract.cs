@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
+using System.IO;
 
 public class ConstructionContract : GenericUsable {
     [SerializeField]
@@ -18,6 +19,9 @@ public class ConstructionContract : GenericUsable {
 
     [SerializeField]
     public PhotonView photonView;
+
+    [SerializeField]
+    public bool bought;
 
     void Start() {
         Bounds bound = new Bounds(transform.position, Vector3.one);
@@ -39,5 +43,19 @@ public class ConstructionContract : GenericUsable {
         money.charge(cost);
         purchased.Invoke();
         gameObject.SetActive(false);
+    }
+
+    public override void Save(BinaryWriter writer, string version){       
+        writer.Write(bought);
+    }
+
+    public override void Load(BinaryReader reader, string version){
+        bought = reader.ReadBoolean();
+        if(bought){
+            photonView.RPC("Use",RpcTarget.AllBufferedViaServer);
+        }
+        else{
+            PhotonNetwork.CleanRpcBufferIfMine(photonView);
+        }
     }
 }

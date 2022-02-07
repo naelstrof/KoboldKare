@@ -75,6 +75,9 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
 
     public void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
+        if (!IsMixable(this.type, injectType)) {
+            return;
+        }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
     }

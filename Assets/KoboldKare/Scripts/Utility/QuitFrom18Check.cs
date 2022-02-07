@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class QuitFrom18Check : MonoBehaviour{
     public void Quit(){
-        Application.Quit();
+        GameManager.instance.Quit();
     }
 }

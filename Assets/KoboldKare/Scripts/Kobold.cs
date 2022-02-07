@@ -239,6 +239,15 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     //private bool incremented = false;
     //public AnimatorUpdateMode modeSave;
+    
+    [PunRPC]
+    public void SetRagdolled(bool ragdolled) {
+        if (ragdolled) {
+            KnockOver(999f);
+        } else {
+            StandUp();
+        }
+    }
 
     public void Awake() {
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
@@ -434,6 +443,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             ragdollTask.Stop();
         }
         ragdollTask = new Task(KnockOverRoutine());
+        if (photonView.IsMine) {
+            photonView.RPC("SetRagdolled", RpcTarget.Others, true);
+        }
     }
     // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
     // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
@@ -479,6 +491,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         controller.enabled = true;
         OnStandup.Invoke();
         RagdollEvent?.Invoke(false);
+        if (photonView.IsMine) {
+            photonView.RPC("SetRagdolled", RpcTarget.Others, false);
+        }
     }
     public void PumpUpDick(float amount) {
         if (amount > 0 ) {
@@ -732,7 +747,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(ragdolled);
             stream.SendNext(hip.position);
             stream.SendNext(thickness);
             stream.SendNext(topBottom);
@@ -745,13 +759,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseBoobSize);
             stream.SendNext(baseDickSize);
         } else {
-            bool ragged = (bool)stream.ReceiveNext();
-            if (!ragdolled && ragged) {
-                KnockOver(99999f);
-            }
-            if (ragdolled && !ragged) {
-                StandUp();
-            }
             networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
             thickness = (float)stream.ReceiveNext();
             topBottom = (float)stream.ReceiveNext();

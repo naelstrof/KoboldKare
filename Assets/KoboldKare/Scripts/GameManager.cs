@@ -102,8 +102,9 @@ public class GameManager : MonoBehaviour {
             c.enabled = visible;
         }
         
-        if(Camera.main != null) //Camera isn't guaranteed to be available
-            Camera.main.gameObject.GetComponentInChildren<Canvas>().enabled = visible;
+        if(Camera.main != null && Camera.main.gameObject.GetComponentInChildren<Canvas>(true) != null){ //Camera isn't guaranteed to be available           
+            Camera.main.gameObject.GetComponentInChildren<Canvas>(true).enabled = visible;
+        }
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {
         if (group == null) {

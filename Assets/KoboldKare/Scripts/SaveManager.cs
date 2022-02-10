@@ -24,7 +24,9 @@ public static class SaveManager {
             imageLocation = fileName.Substring(0, fileName.Length-4)+imageExtension;
             this.time = time;
             image = new Texture2D(16,16);
-            image.LoadImage(File.ReadAllBytes(imageLocation));
+            if (File.Exists(imageLocation)) {
+                image.LoadImage(File.ReadAllBytes(imageLocation));
+            }
         }
         public readonly string imageLocation;
         public readonly Texture2D image;
@@ -71,6 +73,13 @@ public static class SaveManager {
             writer.Write(version);
             //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
+            // We need to enable all our saved objects, they don't have proper viewids otherwise
+            foreach(PhotonView view in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                if (!view.gameObject.activeInHierarchy && !(PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(PrefabifyGameObjectName(view.gameObject))){
+                    Debug.LogError("Found a disabled static viewID" + view.ViewID + " " + view.gameObject.name + ", this is not allowed as it prevents unique id assignments!", view.gameObject);
+                    return;
+                }
+            }
             foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
                 writer.Write(view.ViewID);
                 //Debug.Log("[SaveManager] <Serialization Log> :: "+PrefabifyGameObjectName(view.gameObject));
@@ -141,6 +150,17 @@ public static class SaveManager {
                     //Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                     view = obj.GetComponent<PhotonView>();
+                }
+                if (view == null) {
+                    foreach(PhotonView deepcheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                        if (deepcheck.ViewID == viewID) {
+                            view = deepcheck;
+                            break;
+                        }
+                    }
+                }
+                if (view == null) {
+                    Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
                 }
                 foreach(Component observable in view.ObservedComponents) {
                     if (observable is ISavable) {

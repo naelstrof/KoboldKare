@@ -155,6 +155,9 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
 
     public void Save(BinaryWriter writer, string version) {
+        if (contents == null) {
+            Awake(); Start();
+        }
         contents.Serialize(writer);
     }
 

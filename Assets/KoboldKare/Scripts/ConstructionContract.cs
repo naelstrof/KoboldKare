@@ -11,14 +11,15 @@ public class ConstructionContract : GenericUsable {
     [SerializeField]
     private UnityEvent purchased;
     [SerializeField]
+    private GameObject[] disableOnPurchase;
+    [SerializeField]
+    private GameObject[] enableOnPurchase;
+    [SerializeField]
     private ScriptableFloat money;
     [SerializeField]
     private float cost;
     [SerializeField]
     private MoneyFloater floater;
-
-    [SerializeField]
-    public PhotonView photonView;
 
     [SerializeField]
     public bool bought;
@@ -35,14 +36,26 @@ public class ConstructionContract : GenericUsable {
         return displaySprite;
     }
     public override bool CanUse(Kobold k) {
-        return money.has(cost);
+        return money.has(cost) && !bought;
+    }
+    private void SetState(bool purchased) {
+        foreach(GameObject obj in enableOnPurchase) {
+            obj.SetActive(purchased);
+        }
+        foreach(GameObject obj in disableOnPurchase) {
+            obj.SetActive(!purchased);
+        }
+        foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
+            r.enabled = !purchased;
+        }
     }
     [PunRPC]
     public override void Use() {
         base.Use();
         money.charge(cost);
         purchased.Invoke();
-        gameObject.SetActive(false);
+        SetState(true);
+        //gameObject.SetActive(false);
     }
 
     public override void Save(BinaryWriter writer, string version){       
@@ -57,5 +70,6 @@ public class ConstructionContract : GenericUsable {
         else{
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
+        SetState(bought);
     }
 }

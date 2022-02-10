@@ -162,6 +162,9 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
 
     public void Load(BinaryReader reader, string version) {
+        if (contents == null) {
+            Awake(); Start();
+        }
         //Debug.Log("[Generic Reagent Container] :: <Deserialization Process> Starting for GRC of "+gameObject.name);
         contents.Deserialize(reader);
         //Debug.Log("[Generic Reagent Container] :: <Firing OnReagentContents Change if Valid.......>");

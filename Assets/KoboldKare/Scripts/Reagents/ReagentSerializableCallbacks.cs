@@ -59,6 +59,9 @@ public class ReagentSerializableCallbacks : ScriptableObject {
     }
 
     public IEnumerator ReagentReactionSound(GameObject obj) {
+        if (obj == null) {
+            yield break;
+        }
         Transform targetTransform = obj.transform;
         IGrabbable grabbable = obj.GetComponent<IGrabbable>();
         if (grabbable != null) {

@@ -109,6 +109,13 @@ public class BodyProportion : MonoBehaviour {
 			OnComplete?.Invoke();
         }
     }
+	void OnDestroy() {
+		foreach(var task in tasks) {
+			if (task != null) {
+				task.Stop();
+			}
+		}
+	}
 
 	public void Initialize() {
 		//koboldData.Randomize();

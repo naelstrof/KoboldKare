@@ -119,7 +119,7 @@ public static class SaveManager {
         }
     }
     private static void CleanUpImmediate() {
-        foreach(var view in PhotonNetwork.PhotonViewCollection) {
+        foreach(PhotonView view in GameObject.FindObjectsOfType<PhotonView>(true)) {
             if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(PrefabifyGameObjectName(view.gameObject))){
                 PhotonNetwork.Destroy(view.gameObject);
             }
@@ -162,10 +162,15 @@ public static class SaveManager {
                 if (view == null) {
                     Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
                 }
-                foreach(Component observable in view.ObservedComponents) {
-                    if (observable is ISavable) {
-                        (observable as ISavable).Load(reader, fileVersion);
+                try {
+                    foreach(Component observable in view.ObservedComponents) {
+                        if (observable is ISavable) {
+                            (observable as ISavable).Load(reader, fileVersion);
+                        }
                     }
+                } catch (Exception e) {
+                    Debug.LogError("Failed to load observable on photonview " +viewID + ", " + prefabName, view);
+                    throw e;
                 }
             }
         }

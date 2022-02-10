@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Photon.Pun;
 using System.IO;
 
-public class ConstructionContract : GenericUsable {
+public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
     [SerializeField]
     private Sprite displaySprite;
     [SerializeField]
@@ -20,9 +20,7 @@ public class ConstructionContract : GenericUsable {
     private float cost;
     [SerializeField]
     private MoneyFloater floater;
-
-    [SerializeField]
-    public bool bought;
+    private bool bought;
 
     void Start() {
         Bounds bound = new Bounds(transform.position, Vector3.one);
@@ -48,6 +46,8 @@ public class ConstructionContract : GenericUsable {
         foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
             r.enabled = !purchased;
         }
+        bought = purchased;
+        Debug.Log(gameObject.name+":: Bought is set to: "+bought);
     }
     [PunRPC]
     public override void Use() {
@@ -58,7 +58,8 @@ public class ConstructionContract : GenericUsable {
         //gameObject.SetActive(false);
     }
 
-    public override void Save(BinaryWriter writer, string version){       
+    public override void Save(BinaryWriter writer, string version){   
+        Debug.Log(bought);    
         writer.Write(bought);
     }
 
@@ -71,5 +72,8 @@ public class ConstructionContract : GenericUsable {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
         SetState(bought);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
     }
 }

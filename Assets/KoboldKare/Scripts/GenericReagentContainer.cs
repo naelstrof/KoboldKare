@@ -55,16 +55,20 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     private ReagentContents contents;
     private bool filled = false;
     private bool emptied = false;
+    private bool ready = false;
     public void Awake() {
+        if(ready){return;}
         contents = new ReagentContents(startingMaxVolume);
         //Debug.Log("[Generic Reagent Container] :: Initializing Contents...");
     }
     public void Start() {
+        if(ready){return;}
         foreach(var reagent in startingReagents) {
             AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
         }
         filled = isFull;
         emptied = isEmpty;
+        ready = true;
 
         //Debug.Log(string.Format("[Generic Reagent Container] :: States of isFull, isEmpty, filled, and emptied: {0},{1},{2},{3}",isFull,isEmpty,filled,emptied));
     }
@@ -169,5 +173,6 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         contents.Deserialize(reader);
         //Debug.Log("[Generic Reagent Container] :: <Firing OnReagentContents Change if Valid.......>");
         OnReagentContentsChanged(InjectType.Metabolize);
+        ready = true;
     }
 }

@@ -47,7 +47,7 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
             r.enabled = !purchased;
         }
         bought = purchased;
-        Debug.Log(gameObject.name+":: Bought is set to: "+bought);
+        //Debug.Log(gameObject.name+":: Bought is set to: "+bought);
     }
     [PunRPC]
     public override void Use() {
@@ -59,7 +59,7 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
     }
 
     public override void Save(BinaryWriter writer, string version){   
-        Debug.Log(bought);    
+        //Debug.Log(bought);    
         writer.Write(bought);
     }
 

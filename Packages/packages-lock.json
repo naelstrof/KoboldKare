@@ -49,7 +49,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e51e91b0980d70a323ae9f5c578aa6492261eaee"
+      "hash": "7f2f2e20fd803255fe636c16804439ecb722508d"
     },
     "com.naelstrof.unityscriptablesettings": {
       "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",

@@ -27,6 +27,9 @@ public class GrinderManager : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return on ? offSprite : onSprite;
     }
+    public override bool CanUse(Kobold k) {
+        return animator.isActiveAndEnabled;
+    }
     [PunRPC]
     public override void Use() {
         usedCount++;

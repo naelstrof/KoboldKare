@@ -122,6 +122,14 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         emptied = isEmpty;
     }
 
+    public void RefillToFullWithDefaultContents(){
+        if(startingReagents.Length != 0){
+            foreach (var item in startingReagents){
+                AddMix(item.reagent,item.volume,InjectType.Spray);
+            }
+        }
+    }
+
     public float GetWorth() {
         return contents.GetValue();
     }

@@ -5,12 +5,22 @@ using UnityEngine.VFX;
 
 public class IrrigationButton : GenericUsable{
     [SerializeField]
-    private Sprite spraySprite;
+    private Sprite spraySprite, disabledSprite;
     public IrrigationZone iz;
     private int usedCount;
+    public bool interactable;
 
     public override Sprite GetSprite(Kobold k){
-        return spraySprite;
+        if(interactable == true){
+            return spraySprite;
+        }
+        else{
+            return disabledSprite;
+        }
+    }
+
+    public void ChangeInteractableState(bool toState){
+        interactable = toState;
     }
 
     public override void Use(){

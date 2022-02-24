@@ -36,6 +36,10 @@ public class SeedExtractor : GenericUsable {
     public override Sprite GetSprite(Kobold k) {
         return on ? onSprite : offSprite;
     }
+    public override bool CanUse(Kobold k) {
+        return grinderAnimator.isActiveAndEnabled;
+    }
+    [PunRPC]
     public override void Use() {
         usedCount++;
         if (on) {

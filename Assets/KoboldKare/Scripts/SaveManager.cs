@@ -145,16 +145,24 @@ public static class SaveManager {
                 string prefabName = reader.ReadString();
                 PhotonView view = PhotonNetwork.GetPhotonView(viewID);
                 
-                //Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
+                // Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
                 if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
-                    //Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
+                    // Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+                    if(obj.GetComponentsInChildren<Plant>() != null){ 
+                        // Bypass protection, prevents Plants from 'skipping ahead' a generation
+                        foreach (var item in obj.GetComponentsInChildren<Plant>()){
+                            item.spawnedFromLoad = true;
+                        }
+                    }
                     view = obj.GetComponent<PhotonView>();
                 }
                 if (view == null) {
+                    Debug.Log("[SaveManager] <Deserialization Log> :: Running deep check when view returned null...");
                     foreach(PhotonView deepcheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
                         if (deepcheck.ViewID == viewID) {
                             view = deepcheck;
+                            Debug.Log("[SaveManager] <Deserialization Log> :: Deep check successful!");
                             break;
                         }
                     }
@@ -162,9 +170,16 @@ public static class SaveManager {
                 if (view == null) {
                     Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
                 }
+                else{
+                    // Debug.Log("[Save Manager] <Deserialization Log> :: View checks were not null; load should proceed smoothly on this object.");
+                }
                 try {
+                    if(view.ObservedComponents.Count == 0){
+                        Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing");
+                    }
                     foreach(Component observable in view.ObservedComponents) {
                         if (observable is ISavable) {
+                            // Debug.Log("[SaveManager] <Deserialization Log> :: Proceeding to call Load() on observed component of type "+observable+" on game object "+view.gameObject.name);
                             (observable as ISavable).Load(reader, fileVersion);
                         }
                     }

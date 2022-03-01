@@ -16,6 +16,7 @@ using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback {
+    public ServerSettings settings;
     public bool online {
         get {
             return PhotonNetwork.OfflineMode != true && PhotonNetwork.PlayerList.Length > 1;
@@ -29,9 +30,17 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
     public GameEventGeneric SpawnEvent;
-    public IEnumerator JoinLobbyRoutine() {
+    public IEnumerator JoinLobbyRoutine(string region) {
+        if (PhotonNetwork.OfflineMode) {
+            PhotonNetwork.OfflineMode = false;
+        }
+        if (PhotonNetwork.IsConnected && settings.AppSettings.FixedRegion != region) {
+            PhotonNetwork.Disconnect();
+            yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        }
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
+            settings.AppSettings.FixedRegion = region;
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
@@ -39,12 +48,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PhotonNetwork.JoinLobby();
         }
     }
-    public void JoinLobby() {
-        // Don't load the lobby if we're playing offline.
-        if (SceneManager.GetActiveScene().name == "MainMap" && PhotonNetwork.OfflineMode == true) {
-            return;
-        }
-        GameManager.instance.StartCoroutine(JoinLobbyRoutine());
+    public void JoinLobby(string region) {
+        GameManager.instance.StartCoroutine(JoinLobbyRoutine(region));
     }
     public void QuickMatch() {
         GameManager.instance.StartCoroutine(QuickMatchRoutine());

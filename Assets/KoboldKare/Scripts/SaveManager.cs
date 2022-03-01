@@ -24,7 +24,9 @@ public static class SaveManager {
             imageLocation = fileName.Substring(0, fileName.Length-4)+imageExtension;
             this.time = time;
             image = new Texture2D(16,16);
-            image.LoadImage(File.ReadAllBytes(imageLocation));
+            if (File.Exists(imageLocation)) {
+                image.LoadImage(File.ReadAllBytes(imageLocation));
+            }
         }
         public readonly string imageLocation;
         public readonly Texture2D image;
@@ -50,13 +52,16 @@ public static class SaveManager {
     }
     private static string PrefabifyGameObjectName(GameObject obj) {
         string name = obj.name;
-        // Remove (Clone) at the end of our prefab name.
-        if (name.EndsWith("(Clone)")) {
-            name = name.Substring(0,name.Length-7);
+
+        if(name.Contains("(")){
+            //Debug.Log(String.Format("[SaveManager] :: Convering {0} to {1}.",name,name.Split('(')[0].Trim()));
+            return name.Split('(')[0].Trim();
         }
+        
         return name;
     }
     public static void Save(string filename, SaveCompleteAction action = null) {
+        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be saved: "+filename);
         string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
         string savePath = saveDataPath + filename + saveExtension;
         if (!Directory.Exists(saveDataPath)) {
@@ -66,9 +71,18 @@ public static class SaveManager {
             BinaryWriter writer = new BinaryWriter(file);
             writer.Write(saveHeader);
             writer.Write(version);
+            //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
+            // We need to enable all our saved objects, they don't have proper viewids otherwise
+            foreach(PhotonView view in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                if (!view.gameObject.activeInHierarchy && !(PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(PrefabifyGameObjectName(view.gameObject))){
+                    Debug.LogError("Found a disabled static viewID" + view.ViewID + " " + view.gameObject.name + ", this is not allowed as it prevents unique id assignments!", view.gameObject);
+                    return;
+                }
+            }
             foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
                 writer.Write(view.ViewID);
+                //Debug.Log("[SaveManager] <Serialization Log> :: "+PrefabifyGameObjectName(view.gameObject));
                 writer.Write(PrefabifyGameObjectName(view.gameObject));
                 foreach(var observable in view.ObservedComponents) {
                     if (observable is ISavable) {
@@ -91,6 +105,7 @@ public static class SaveManager {
 
     public static bool RemoveSave(string fileName){
         string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
+        string imageSavePath = fileName.Substring(0,fileName.Length-4) + imageExtension;
         string savePath = fileName;
         if(!File.Exists(savePath)){
             Debug.LogWarning("Indicated save file doesn't exist! ("+savePath+") Should remove from UI rather than disk. TODO: Callback.");
@@ -98,19 +113,20 @@ public static class SaveManager {
         }
         else{
             File.Delete(savePath);
-            File.Delete(savePath.Substring(0,savePath.Length-4)+".jpg"); //Make sure to remove associated .jpg file of the same name too.
-            Debug.Log("Deleted file from disk: "+savePath);
+            File.Delete(imageSavePath); //Make sure to remove associated .jpg file of the same name too.
+            //Debug.Log("Deleted file from disk: "+savePath);
             return true;
         }
     }
     private static void CleanUpImmediate() {
-        foreach(var view in PhotonNetwork.PhotonViewCollection) {
-            if (view.gameObject.name.EndsWith("(Clone)")) {
+        foreach(PhotonView view in GameObject.FindObjectsOfType<PhotonView>(true)) {
+            if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(PrefabifyGameObjectName(view.gameObject))){
                 PhotonNetwork.Destroy(view.gameObject);
             }
         }
     }
     private static void LoadImmediate(string filename) {
+        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be loaded: "+filename);
         // Don't load saves while online.
         if (NetworkManager.instance.online) {
             return;
@@ -123,29 +139,77 @@ public static class SaveManager {
             }
             string fileVersion = reader.ReadString();
             int viewCount = reader.ReadInt32();
+            //Debug.Log("viewCount: "+viewCount);
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
                 string prefabName = reader.ReadString();
                 PhotonView view = PhotonNetwork.GetPhotonView(viewID);
                 
-                if (view != null && PrefabifyGameObjectName(view.gameObject) != prefabName) {
-                    PhotonNetwork.Destroy(view.gameObject);
-                    view = null;
-                }
-                if (view == null) {
+                // Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
+                if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
+                    // Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+                    if(obj.GetComponentsInChildren<Plant>() != null){ 
+                        // Bypass protection, prevents Plants from 'skipping ahead' a generation
+                        foreach (var item in obj.GetComponentsInChildren<Plant>()){
+                            item.spawnedFromLoad = true;
+                        }
+                    }
                     view = obj.GetComponent<PhotonView>();
                 }
-                foreach(var observable in view.ObservedComponents) {
-                    if (observable is ISavable) {
-                        (observable as ISavable).Load(reader, fileVersion);
+                if (view == null) {
+                    Debug.Log("[SaveManager] <Deserialization Log> :: Running deep check when view returned null...");
+                    foreach(PhotonView deepcheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                        if (deepcheck.ViewID == viewID) {
+                            view = deepcheck;
+                            Debug.Log("[SaveManager] <Deserialization Log> :: Deep check successful!");
+                            break;
+                        }
                     }
+                }
+                if (view == null) {
+                    Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
+                }
+                else{
+                    // Debug.Log("[Save Manager] <Deserialization Log> :: View checks were not null; load should proceed smoothly on this object.");
+                }
+                try {
+                    if(view.ObservedComponents.Count == 0){
+                        Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing");
+                    }
+                    foreach(Component observable in view.ObservedComponents) {
+                        if (observable is ISavable) {
+                            // Debug.Log("[SaveManager] <Deserialization Log> :: Proceeding to call Load() on observed component of type "+observable+" on game object "+view.gameObject.name);
+                            (observable as ISavable).Load(reader, fileVersion);
+                        }
+                    }
+                } catch (Exception e) {
+                    Debug.LogError("Failed to load observable on photonview " +viewID + ", " + prefabName, view);
+                    throw e;
                 }
             }
         }
     }
-    public static void Load(string filename) {
+    private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        //Ensure we show the player that the game is loading while we load
+        if(SceneManager.GetActiveScene().name != "MainMenu"){
+            GameManager.instance.Pause(false);
+            GameManager.instance.loadListener.Show();
+        }
+
+        if (SceneManager.GetActiveScene().name != "MainMap") {
+            yield return NetworkManager.instance.SinglePlayerRoutine();
+        }
+        yield return new WaitForSecondsRealtime(1f);
         LoadImmediate(filename);
-        GameManager.instance.Pause(false);
+
+        //Once loading is finished, hide loading screen
+        if(SceneManager.GetActiveScene().name != "MainMenu"){
+            GameManager.instance.loadListener.Hide();
+        }
+    }
+    public static void Load(string filename) {
+        //Debug.Log("[SaveManager] :: Loading in process...");
+        GameManager.instance.StartCoroutine(MakeSureMapIsLoadedThenLoadSave(filename));
     }
 }

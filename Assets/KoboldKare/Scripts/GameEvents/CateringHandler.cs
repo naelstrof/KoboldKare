@@ -27,7 +27,7 @@ public class CateringHandler : MonoBehaviour{
 
     void evalCatering(object nothing){ 
         var rnd = Random.Range(0f,1f);
-        Debug.Log(string.Format("{0} vs {1}",rnd,cateringChance));
+        //Debug.Log(string.Format("{0} vs {1}",rnd,cateringChance));
         if(rnd < cateringChance){
             aud.PlayOneShot(catererArrives);
             foreach (var item in cateringVan){

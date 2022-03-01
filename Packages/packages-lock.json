@@ -22,11 +22,11 @@
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#upm",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v2.2.5",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ee919ad96d947094e02d208b1039c6fcfbbd1a90"
+      "hash": "0bf655f25db5b517db9892f862b5cb0613e5d2a1"
     },
     "com.naelstrof.mozzarellatech": {
       "version": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",
@@ -35,7 +35,7 @@
       "dependencies": {
         "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm"
       },
-      "hash": "a6ed6b871bb1079f70ad740c66bf5515942d1f1f"
+      "hash": "9efeb7bb1fe5248fe4f15723e235af0f1c75a727"
     },
     "com.naelstrof.penetrationtech": {
       "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
@@ -49,7 +49,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e51e91b0980d70a323ae9f5c578aa6492261eaee"
+      "hash": "7f2f2e20fd803255fe636c16804439ecb722508d"
     },
     "com.naelstrof.unityscriptablesettings": {
       "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",
@@ -59,7 +59,7 @@
         "com.unity.localization": "1.0.4",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "378b7f65c081952ada854b71eb8cf0eda415ccec"
+      "hash": "b135fb2dec409e23ea980c83245923203e75a46c"
     },
     "com.quantumcalzone.unitygitpackageupdater": {
       "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
@@ -131,7 +131,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

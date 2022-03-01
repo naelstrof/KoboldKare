@@ -55,15 +55,22 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     private ReagentContents contents;
     private bool filled = false;
     private bool emptied = false;
+    private bool ready = false;
     public void Awake() {
+        if(ready){return;}
         contents = new ReagentContents(startingMaxVolume);
+        //Debug.Log("[Generic Reagent Container] :: Initializing Contents...");
     }
     public void Start() {
+        if(ready){return;}
         foreach(var reagent in startingReagents) {
             AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
         }
         filled = isFull;
         emptied = isEmpty;
+        ready = true;
+
+        //Debug.Log(string.Format("[Generic Reagent Container] :: States of isFull, isEmpty, filled, and emptied: {0},{1},{2},{3}",isFull,isEmpty,filled,emptied));
     }
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
@@ -72,6 +79,9 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
 
     public void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
+        if (!IsMixable(this.type, injectType)) {
+            return;
+        }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
     }
@@ -96,15 +106,28 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);
     public void OverrideReagent(ScriptableReagent r, float volume) => contents.OverrideReagent(ReagentDatabase.GetID(r), volume);
     public void OnReagentContentsChanged(InjectType injectType) {
+        //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
+            //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
             OnFilled.Invoke(injectType);
         }
+        //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
         OnChange.Invoke(injectType);
         if (!emptied && isEmpty) {
+            //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
             OnEmpty.Invoke(injectType);
         }
+        //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;
+    }
+
+    public void RefillToFullWithDefaultContents(){
+        if(startingReagents.Length != 0){
+            foreach (var item in startingReagents){
+                AddMix(item.reagent,item.volume,InjectType.Spray);
+            }
+        }
     }
 
     public float GetWorth() {
@@ -144,11 +167,20 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
 
     public void Save(BinaryWriter writer, string version) {
+        if (contents == null) {
+            Awake(); Start();
+        }
         contents.Serialize(writer);
     }
 
     public void Load(BinaryReader reader, string version) {
+        if (contents == null) {
+            Awake(); Start();
+        }
+        //Debug.Log("[Generic Reagent Container] :: <Deserialization Process> Starting for GRC of "+gameObject.name);
         contents.Deserialize(reader);
+        //Debug.Log("[Generic Reagent Container] :: <Firing OnReagentContents Change if Valid.......>");
         OnReagentContentsChanged(InjectType.Metabolize);
+        ready = true;
     }
 }

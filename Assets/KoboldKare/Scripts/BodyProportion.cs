@@ -109,7 +109,6 @@ public class BodyProportion : MonoBehaviour {
 			OnComplete?.Invoke();
         }
     }
-
 	public void Initialize() {
 		//koboldData.Randomize();
 		for(int i=0;i<tasks.Count;) {
@@ -120,6 +119,7 @@ public class BodyProportion : MonoBehaviour {
 			tasks.RemoveAt(0);
         }
 		foreach (SkinnedMeshRenderer r in targetRenderers) {
+			if (r == null) {continue;}
 			if (!originalMeshMemory.ContainsKey(r)) {
 				originalMeshMemory[r] = r.sharedMesh;
 			}

@@ -12,8 +12,7 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
     private Region selectedRegion;
 
     public void ChooseRegion(int id){
-        PhotonNetwork.Disconnect(); //We must disconnect from the present server to change servers
-        PhotonNetwork.ConnectToRegion(dropdown.options[id].text);
+        NetworkManager.instance.JoinLobby(dropdown.options[id].text);
     }
 
     public override void OnRegionListReceived(RegionHandler handler){
@@ -32,18 +31,10 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
     public override void OnConnectedToMaster(){
         base.OnConnectedToMaster();
         Debug.Log("[Photon Region Handler] :: Connected to master");
-        for (int i = 0; i < cachedHandler.EnabledRegions.Count; i++){
-            if(PhotonNetwork.CloudRegion == cachedHandler.EnabledRegions[i].Code){
-                ForceConnectionToPresentSelected();
-            }
-        }       
-    }
-
-    void ForceConnectionToPresentSelected(){
-        Debug.Log("Forced");
         foreach (var item in dropdown.options){
-            if(PhotonNetwork.CloudRegion == item.text)
+            if(PhotonNetwork.CloudRegion == item.text) {
                 dropdown.SetValueWithoutNotify(dropdown.options.IndexOf(item));
+            }
         }
     }
 }

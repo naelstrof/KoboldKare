@@ -15,6 +15,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
+    public GameObject mainCanvas;
     public static void SetUIVisible(bool visible) => instance.UIVisible(visible);
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour {
     public UnityEvent OnUnpause;
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
+    public LoadingListener loadListener;
 
     [HideInInspector]
     public bool isPaused = false;
@@ -35,16 +37,23 @@ public class GameManager : MonoBehaviour {
     public void Pause(bool pause) {
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             OnUnpause.Invoke();
         }
         if (pause) {
             OnPause.Invoke();
         }
+        if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        } else {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         isPaused = pause;
+        mainCanvas.SetActive(isPaused || SceneManager.GetActiveScene().name == "MainMenu");
 
-        if (!PhotonNetwork.OfflineMode) {
+        if (!PhotonNetwork.OfflineMode || SceneManager.GetActiveScene().name == "MainMenu") {
+            Time.timeScale = 1.0f;
             return;
         }
         Time.timeScale = isPaused ? 0.0f : 1.0f;
@@ -93,8 +102,9 @@ public class GameManager : MonoBehaviour {
             c.enabled = visible;
         }
         
-        if(Camera.main != null) //Camera isn't guaranteed to be available
-            Camera.main.gameObject.GetComponentInChildren<Canvas>().enabled = visible;
+        if(Camera.main != null && Camera.main.gameObject.GetComponentInChildren<Canvas>(true) != null){ //Camera isn't guaranteed to be available           
+            Camera.main.gameObject.GetComponentInChildren<Canvas>(true).enabled = visible;
+        }
     }
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {
         if (group == null) {

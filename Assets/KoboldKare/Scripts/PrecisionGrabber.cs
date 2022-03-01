@@ -579,7 +579,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             Destroy(hand);
         }
         Unfreeze(false);
-        if (photonView.IsMine) {
+        if (photonView.IsMine && PhotonNetwork.InRoom) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
     }

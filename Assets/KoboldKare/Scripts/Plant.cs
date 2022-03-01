@@ -13,6 +13,7 @@ using System.IO;
 [RequireComponent(typeof(GenericReagentContainer))]
 public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public ScriptablePlant plant;
+    [SerializeField]
     private GenericReagentContainer container;
     [SerializeField]
     private GameEventGeneric midnightEvent;
@@ -30,12 +31,23 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
 
     [SerializeField]
     public AudioSource audioSource;
+    public bool spawnedFromLoad = false;
 
     void Start() {
-        container = GetComponent<GenericReagentContainer>();
+        if(GetComponent<GenericReagentContainer>() != null){
+            container = GetComponent<GenericReagentContainer>();
+        }
+        else{
+            Debug.LogWarning("[Plant] :: Attempted to refresh link to container but failed as container was not on same-level as Plant or does not exist");
+        }
         container.OnFilled.AddListener(OnFilled);
         midnightEvent.AddListener(OnEventRaised);
-        SwitchTo(plant);
+        if(!spawnedFromLoad){
+            SwitchTo(plant);
+        }
+        else{
+            SwitchTo(plant,true);
+        }
     }
 
     void OnDestroy() {
@@ -55,32 +67,65 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         audioSource.Play();
         effect.gameObject.SetActive(false);
         effect.gameObject.SetActive(true);
+        //Debug.Log(gameObject.name+"'s container filled state is: "+container.isFull);
+        //Debug.Log(gameObject.name+"'s contents: "+container.ToString());
     }
 
-    void SwitchTo(ScriptablePlant newPlant) {
-        UndarkenMaterials();
-        wateredEffect.Stop();
-        if (plant == newPlant) {
-            return;
-        }
-        if (display != null) {
-            Destroy(display);
-        }
-        if (newPlant.display != null) {
-            display = GameObject.Instantiate(newPlant.display, transform);
-        }
-        if (photonView.IsMine) {
-            foreach(var produce in newPlant.produces) {
-                int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
-                for(int i=0;i<max;i++) {
-                    GameObject obj =PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
-                    if (obj.GetComponent<Kobold>() != null) {
-                        obj.GetComponent<Kobold>().RandomizeKobold();
+    void SwitchTo(ScriptablePlant newPlant, bool loaded = false) {
+        if(!loaded){ // Don't allow this to run if we're running this from save to prevent generation skip
+            UndarkenMaterials();
+            wateredEffect.Stop();
+            if (plant == newPlant) {
+                return;
+            }
+            if (display != null) {
+                Destroy(display);
+            }
+            if (newPlant.display != null) {
+                display = GameObject.Instantiate(newPlant.display, transform);
+            }
+            if (photonView.IsMine) {
+                foreach(var produce in newPlant.produces) {
+                    int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
+                    for(int i=0;i<max;i++) {
+                        GameObject obj =PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
+                        if (obj.GetComponent<Kobold>() != null) {
+                            obj.GetComponent<Kobold>().RandomizeKobold();
+                        }
                     }
                 }
             }
+            plant = newPlant;
         }
-        plant = newPlant;
+        else{ // Behavior for when the plant is being spawned as part of deserialization and not spawning
+            // Plant == newPlant should always return true for deserialization, skip that step and assert
+            if(display == null){
+                Destroy(display);
+            }
+            if(newPlant.display != null){
+                display = GameObject.Instantiate(newPlant.display,transform);
+            }
+                    //Don't fully replicate injection; no need to play hearts and poofs as if it were just watered.
+            // Debug.Log("[Plant] :: <Deserialization> Running container check for isFull");
+            if(container != null){
+                if(container.isFull){
+                    // Debug.Log("[Plant] :: <Deserialization> Container was full, running effects");
+                    wateredEffect.SendEvent("Play");
+                    foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
+                        renderer.material.SetFloat("_BounceAmount", 1f);
+                        StartCoroutine(DarkenMaterial(renderer.material));
+                    }
+
+                    // Debug.Log("[Plant] :: <Deserialization> Effects ran and/or deserialization complete");
+                }
+                else{
+                    // Debug.Log("[Plant] :: <Deserialization> Container was not full");
+                }
+            }
+            else{
+                // Debug.LogError("[Plant] :: <Deserialization> Plant with name "+gameObject.name+" failed to deserialize. Reason: Container reference was null");
+            }
+        }
     }
 
     public void OnEventRaised(object e) {
@@ -89,6 +134,7 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
             return;
         }
         if (container.isFull) {
+            // Debug.Log("[Plant] Container was full, running SwitchTo() for next random generation");
             container.Spill(container.volume);
             SwitchTo(plant.possibleNextGenerations[UnityEngine.Random.Range(0, plant.possibleNextGenerations.Length)]);
         }
@@ -111,7 +157,12 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         while(timeSoFar < timeToFadeWatered){
             yield return new WaitForSeconds(0.10f); //Updates 10 times per second; doesn't need to be RT.
             timeSoFar += 0.10f;
-            tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, timeSoFar/timeToFadeWatered);
+            if(tgtMat.color != null){
+                tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, timeSoFar/timeToFadeWatered);
+            } else {
+                Debug.LogWarning("[Plant] :: Can not set _color/color of materials whose shaders do not have a color property");
+            }
+            
         }
     }
 
@@ -125,9 +176,16 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
 
     public void Save(BinaryWriter writer, string version) {
         writer.Write(PlantDatabase.GetID(plant));
+        writer.Write(transform.position.x);
+        writer.Write(transform.position.y);
+        writer.Write(transform.position.z);
     }
 
     public void Load(BinaryReader reader, string version) {
         SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
+        float x = reader.ReadSingle();
+        float y = reader.ReadSingle();
+        float z = reader.ReadSingle();
+        transform.position = new Vector3(x,y,z);
     }
 }

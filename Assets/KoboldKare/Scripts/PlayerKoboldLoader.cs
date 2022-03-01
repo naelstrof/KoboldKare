@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep"};
+    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
     //possible dick types of the dicktype menu
@@ -123,6 +123,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 try{
                     LoadCustomParts.instance.rainbowStep = setting.value;
                 }catch(System.Exception e){}
+                break;
+            }
+            case "MetabolizationRate": {
+                targetKobold.metabolizationRate = setting.value;
                 break;
             }
         }

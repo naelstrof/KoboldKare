@@ -265,6 +265,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     //probability of the player's arousal to go back up when it's going down (only afects it when set to ermanent)
     private static int[] arouseProb  = { 1, 2000 };
     public bool gay = false;
+    public float metabolizationRate = 1;
 
     public void Awake() {
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
@@ -747,21 +748,21 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
             foreach (var boob in boobs) {
                 baseBoobSize += melonJuiceVolume / boobs.Count;
-                boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Milk"), melonJuiceVolume / boobs.Count, GenericReagentContainer.InjectType.Metabolize);
+                boob.GetContainer().AddMix(ReagentDatabase.GetReagent("Milk"), (melonJuiceVolume / boobs.Count)*metabolizationRate, GenericReagentContainer.InjectType.Metabolize);
             }
             float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-            baseDickSize += eggplantJuiceVolume;
+            baseDickSize += eggplantJuiceVolume*metabolizationRate;
             float growthSerumVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
             foreach (var ss in subcutaneousStorage) {
-                ss.GetContainer().AddMix(ReagentDatabase.GetReagent("GrowthSerum"), growthSerumVolume/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
+                ss.GetContainer().AddMix(ReagentDatabase.GetReagent("GrowthSerum"), (growthSerumVolume/subcutaneousStorage.Count)*metabolizationRate, GenericReagentContainer.InjectType.Metabolize);
             }
             float milkShakeVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
             foreach (var ss in subcutaneousStorage) {
-                ss.GetContainer().AddMix(ReagentDatabase.GetReagent("Fat"), milkShakeVolume*2f/subcutaneousStorage.Count, GenericReagentContainer.InjectType.Metabolize);
+                ss.GetContainer().AddMix(ReagentDatabase.GetReagent("Fat"), (milkShakeVolume*2f/subcutaneousStorage.Count)*metabolizationRate, GenericReagentContainer.InjectType.Metabolize);
             }
             float pineappleJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
-            baseBallSize += pineappleJuiceVolume;
-            balls.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f, GenericReagentContainer.InjectType.Metabolize);
+            baseBallSize += pineappleJuiceVolume*metabolizationRate;
+            balls.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f*metabolizationRate, GenericReagentContainer.InjectType.Metabolize);
 
             if (Time.timeSinceLevelLoad > nextEggTime && fertility > 0) {
                 float currentEggVolume = belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Egg"));

@@ -95,9 +95,9 @@ public class LoadCustomParts : MonoBehaviour
             if(versionNumber != null){
                 if(versionNumberText == null) versionNumberText = versionNumber.GetComponent<TMPro.TextMeshProUGUI>();
                 if(!versionNumberText.text.Contains("Reiikz")){
-                    versionNumberText.text += "\n(Cheat by Reiikz)\n(PENIS!)\nCheat v" + cheatVersion;
-                    RectTransform rt = versionNumber.GetComponent<RectTransform>();
-                    rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -64);
+                    versionNumberText.text += "\n(Cheat by Reiikz)\n(PENIS!)";
+                    // RectTransform rt = versionNumber.GetComponent<RectTransform>();
+                    // rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -64);
                     Debug.Log("Version number updated!");
                 }
             }else{

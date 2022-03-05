@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using Reiikz.UnityUtils;
 
 public class PatMeFrame : GenericUsable
 {
+    public Transform root;
     public Sprite patSprite;
     public float amont = 1f;
     public float useEach = 1f;
@@ -26,6 +28,7 @@ public class PatMeFrame : GenericUsable
     static string[] phrases = { "Pat me", "BRRR", "rer", "rawr", "penis", "jej", "pat pats", "run", "69420 NICE", ":v", "(8)8====>", "pat me", "gib pats", "pattity pat pat", "UwU", "OwO", "OWO", "UNO", "OnO", "UnU", "rawr XD", "<3", "https://youtu.be/EWMPVn1kgIQ", "GIB PATS!", "NEED PATS", "RUB ME!", "RUB MY PP", "GAMING 2008", "MyMsix MP3 player", "I'm currently on the run from the police for multiple home invasions between 2003-2007", "nun", "unu", "PLEASE, DON'T TOUCH ME!", "one day I'll break out of this wood and take over this world", "I'm watching you all have sex" };
     static string[] pattedPhrases = { "NICE COCK!", "nice color", "what an ugly color", "*BRRRRRR*", "*BRRR*", "*BRRRRRRRRR*", "*PURRING INTENSIFIES*", "nice cock you got there", "I like your penis", "NEVER GONNA GIVE YOU UP\nALWAYS GONNA FUCK YOU HARD\nAND IMPALE YOU", "AHHHHHHHH\nHow dare you!", "Don't touch me!", "I see you like my penis", "OwO", "Patttt go BRRRRRR", "ME PATS!", "GIB MOAR", "AH, *BRRRRRR*", "E", "REEEEEEE", "Nice pat", "*BURP*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*", "*BRRRRRR*" };
     static int[] probOfTalking = { 3000, 1 };
+    public Dictionary<int, Kobold> kobolds = new Dictionary<int, Kobold>();
 
     // Start is called before the first frame update
     void Start()
@@ -69,29 +72,53 @@ public class PatMeFrame : GenericUsable
         return patSprite;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Kobold k = other.gameObject.GetComponent<Kobold>();
+        if(k != null){
+            if(!kobolds.ContainsKey(k.photonView.ViewID)){
+                kobolds.Add(k.photonView.ViewID, k);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Kobold k = other.gameObject.GetComponent<Kobold>();
+        if(k != null){
+            if(kobolds.ContainsKey(k.photonView.ViewID)){
+                kobolds.Remove(k.photonView.ViewID);
+            }
+        }
+    }
+
     [PunRPC]
     public override void Use() {
         base.Use();
-        Kobold k = LoadCustomParts.instance.playerKobold;
-        KoboldInventory inventory = k.GetComponent<KoboldInventory>();
-        if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) == null){
-            while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
-            }
-            inventory.PickupEquipment(EquipmentDatabase.GetEquipment("KandiDick"), null);
-        }
-        int pid = k.GetComponent<PhotonView>().ViewID;
         if((usedBy + useEach) <= Time.timeSinceLevelLoad || usedBy == 0){
-            if(k.baseDickSize < 20){
-                k.baseDickSize = 20;
-            }else{
-                k.baseDickSize *= amont;
-                if(pettingPower < 5) k.baseDickSize += pettingPower;
+            foreach(KeyValuePair<int, Kobold> ks in kobolds)
+            {   
+                try{
+                    Kobold k = ks.Value;
+                    if(k.baseDickSize < 20){
+                        k.baseDickSize = 20;
+                    }
+                    k.bellies[0].GetContainer().AddMix(ReagentDatabase.GetReagent("EggplantJuice"), pettingPower, GenericReagentContainer.InjectType.Metabolize);
+                    k.arousal = 1;
+                    KoboldInventory inventory = k.GetComponent<KoboldInventory>();
+                    if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) == null){
+                        while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
+                            inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
+                        }
+                        inventory.PickupEquipment(EquipmentDatabase.GetEquipment("KandiDick"), null);
+                    }
+                }catch(Exception e){
+                    kobolds.Remove(ks.Key);
+                }
             }
+
             usedBy = Time.timeSinceLevelLoad;
-            k.bellies[0].GetContainer().AddMix(ReagentDatabase.GetReagent("EggplantJuice"), pettingPower, GenericReagentContainer.InjectType.Metabolize);
             if((usedBy + (useEach*1.5)) >= Time.timeSinceLevelLoad) pettingPower += (petPowerIncStep*2f); else pettingPower += petPowerIncStep;
-            k.arousal = 1;
             anim.Play("HeadPat");
             int phrase = System.Convert.ToInt32(UnityEngine.Random.Range(0f, pattedPhrases.Length - 1));
             talk(pattedPhrases[phrase], true);

@@ -15,16 +15,31 @@ public class Build {
     private static string outputDirectory {
         get {
             string dir = Environment.GetEnvironmentVariable("BUILD_DIR");
+            // string[] dirs = Directory.GetDirectories(dir);
+            // int biggest=0, tmp=-1;
+            // if(dirs.Length > 0){
+            //     foreach(string d in dirs){
+            //         try {
+            //             tmp = Convert.ToInt32(Path.GetFileName(d));
+            //         }catch(Exception e){}
+            //         if(tmp > biggest){
+            //             biggest = tmp;
+            //         }
+            //         tmp=-1;
+            //     }
+            // }
+            // biggest++;
+            // dir = dir + biggest;
             return dir.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
         }
     }
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
+        string output = outputDirectory+"Linux.x64"+Path.DirectorySeparatorChar+"KoboldKare";
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare";
         Debug.Log("#### BUILDING TO " + output + "####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
@@ -37,7 +52,7 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.app";
+        string output = outputDirectory+"Mac"+Path.DirectorySeparatorChar+"KoboldKare.app";
         Debug.Log("#### BUILDING TO " + output + "####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
@@ -50,7 +65,7 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.exe";
+        string output = outputDirectory+"Windows.x64"+Path.DirectorySeparatorChar+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
@@ -63,7 +78,7 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.exe";
+        string output = outputDirectory+"Windows.x86"+Path.DirectorySeparatorChar+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");

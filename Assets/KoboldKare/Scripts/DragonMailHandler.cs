@@ -14,7 +14,7 @@ public class DragonMailHandler : MonoBehaviour{
     public GameObject koboldBoxPrefab, koboldBoxInstance;
 
     void OnEnable(){   
-        TurnOn(viewMain);
+        SwitchToMain();
     }
 
     public void SwitchToMain(){

@@ -8,6 +8,11 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
     public AudioSource src;
     public Canvas tgt;
     public DragonMailHandler dmHandler;
+    public Sprite displaySprite;
+
+    public override Sprite GetSprite(Kobold k){
+        return displaySprite;
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         //Serialize event
@@ -18,6 +23,18 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
         if(photonView.IsMine){
             base.Use();
             tgt.enabled = !tgt.enabled;
+            if(tgt.enabled){
+                tgt.GetComponent<Animator>().SetBool("Open", true);
+                tgt.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                tgt.GetComponent<CanvasGroup>().interactable = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else{
+                tgt.GetComponent<Animator>().SetBool("Open", false);
+                tgt.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                tgt.GetComponent<CanvasGroup>().interactable = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             dmHandler.SwitchToMain();
         }
     }

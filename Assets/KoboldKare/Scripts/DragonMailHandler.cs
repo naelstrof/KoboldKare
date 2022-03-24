@@ -96,25 +96,30 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
     }
 
     public void Close(){
-        if(dmActive){
-            dmActive = false;
-            dmMainCanvas.GetComponent<Animator>().SetBool("Open", false);
-            dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            dmMainCanvas.GetComponent<CanvasGroup>().interactable = false;
-            Cursor.lockState = CursorLockMode.None;
-            dmMainCanvas.enabled = false;
-        }
+        dmActive = false;
+        dmMainCanvas.GetComponent<Animator>().SetBool("Open", dmActive);
+        dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = dmActive;
+        dmMainCanvas.GetComponent<CanvasGroup>().interactable = dmActive;
+        Cursor.lockState = CursorLockMode.None;
+        dmMainCanvas.enabled = dmActive;
     }
 
     public void Open(){
-        if(!dmActive){
-            dmActive = true;
-            dmMainCanvas.GetComponent<Animator>().SetBool("Open", true);
-            dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            dmMainCanvas.GetComponent<CanvasGroup>().interactable = true;
-            Cursor.lockState = CursorLockMode.None;
-            dmMainCanvas.enabled = true;
+        dmActive = true;
+        dmMainCanvas.GetComponent<Animator>().SetBool("Open", dmActive);
+        dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = dmActive;
+        dmMainCanvas.GetComponent<CanvasGroup>().interactable = dmActive;
+        Cursor.lockState = CursorLockMode.None;
+        dmMainCanvas.enabled = dmActive;
+    }
+
+    public void Toggle(){
+        if(dmActive){ Close(); }
+        else if (!dmActive){
+            Open();
+            SwitchToMain();
         }
+        
     }
 
     public void SendDonationBox(){

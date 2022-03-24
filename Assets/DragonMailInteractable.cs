@@ -19,18 +19,10 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
     }
 
     public override void Use(){ 
-        //Pulling the screen up/down is entirely local so don't network this part of the set of behaviors
+        //Pulling the screen up/down is entirely local so don't broadcast this part of the set of behaviors
         if(photonView.IsMine){
             base.Use();
-            if(tgt.enabled == false){
-                Debug.Log("canvas not enabled, enabling");
-                DragonMailHandler.inst.Open();
-            }
-            else{
-                Debug.Log("canvas enabled, disabling");
-                DragonMailHandler.inst.Close();
-            }
-            dmHandler.SwitchToMain();
+            DragonMailHandler.inst.Toggle();
         }
     }
 }

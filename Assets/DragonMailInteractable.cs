@@ -22,18 +22,13 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
         //Pulling the screen up/down is entirely local so don't network this part of the set of behaviors
         if(photonView.IsMine){
             base.Use();
-            tgt.enabled = !tgt.enabled;
-            if(tgt.enabled){
-                tgt.GetComponent<Animator>().SetBool("Open", true);
-                tgt.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                tgt.GetComponent<CanvasGroup>().interactable = true;
-                Cursor.lockState = CursorLockMode.None;
+            if(tgt.enabled == false){
+                Debug.Log("canvas not enabled, enabling");
+                DragonMailHandler.inst.Open();
             }
             else{
-                tgt.GetComponent<Animator>().SetBool("Open", false);
-                tgt.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                tgt.GetComponent<CanvasGroup>().interactable = true;
-                Cursor.lockState = CursorLockMode.Locked;
+                Debug.Log("canvas enabled, disabling");
+                DragonMailHandler.inst.Close();
             }
             dmHandler.SwitchToMain();
         }

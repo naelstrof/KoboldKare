@@ -15,13 +15,13 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
     public GameObject koboldBoxPrefab, koboldBoxInstance;
     public Transform boxSpawnPoint;
     PhotonView pView;
+    public bool dmActive;
+    public static DragonMailHandler inst;
+    public Canvas dmMainCanvas;
     void Start(){
         pView = GetComponent<PhotonView>();
-    }
-
-    void OnEnable(){   
-        SwitchToMain();
         RefreshMoneyGoal();
+        inst = this;
     }
 
     public void RefreshMoneyGoal(){
@@ -31,9 +31,11 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
     }
 
     public void SwitchToMain(){
+        Debug.Log("switching to Main");
         EventSystem.current.SetSelectedGameObject(selectOnStart);
         TurnOn(viewMain);
         RefreshMoneyGoal();
+        dmActive = true;
     }
 
     public void SwitchToMoneyDonate(){
@@ -46,6 +48,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
     }
 
     public void SwitchToKoboldDonate(){
+        Debug.Log("switching to KoboldDonate");
         if(koboldBoxInstance == null){
             TurnOn(viewKoboldSend);
         }
@@ -69,6 +72,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
     }
 
     void TurnOff(GameObject go){
+        Debug.Log("turned off"+go.name+" with GUID "+go.GetInstanceID().ToString());
         go.GetComponent<Animator>().SetBool("Open", false);
         go.GetComponent<CanvasGroup>().interactable = false;
         go.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -76,7 +80,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
 
     void TurnOn(GameObject go){
         TurnOffAll();
-        Debug.Log("turning on"+go.name);
+        Debug.Log("turning on"+go.name+" with GUID "+go.GetInstanceID().ToString());
         go.GetComponent<Animator>().SetBool("Open", true);
         go.GetComponent<CanvasGroup>().interactable = true;
         go.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -91,8 +95,26 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
         RefreshMoneyGoal();
     }
 
-    public void Close(){ //TODO : Make animated
-        gameObject.SetActive(false);
+    public void Close(){
+        if(dmActive){
+            dmActive = false;
+            dmMainCanvas.GetComponent<Animator>().SetBool("Open", false);
+            dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            dmMainCanvas.GetComponent<CanvasGroup>().interactable = false;
+            Cursor.lockState = CursorLockMode.None;
+            dmMainCanvas.enabled = false;
+        }
+    }
+
+    public void Open(){
+        if(!dmActive){
+            dmActive = true;
+            dmMainCanvas.GetComponent<Animator>().SetBool("Open", true);
+            dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            dmMainCanvas.GetComponent<CanvasGroup>().interactable = true;
+            Cursor.lockState = CursorLockMode.None;
+            dmMainCanvas.enabled = true;
+        }
     }
 
     public void SendDonationBox(){

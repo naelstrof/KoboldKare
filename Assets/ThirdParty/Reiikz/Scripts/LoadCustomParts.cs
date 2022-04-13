@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Reiikz.UnityUtils;
 using System.Threading;
+using Photon.Pun;
 
 public class LoadCustomParts : MonoBehaviour
 {
     public static string cheatVersion = "1";
 
     public static Vector3 caveLaunchpadPos = new Vector3(74.6600037f, -62.1015511f, -18.0100002f);
+    public static Vector3 insideDumpster =  new Vector3(-141.160583f,17.8840008f,275.673981f);
     private static bool modifyingkobolds = false;
     public Grabber playerGrabber = null;
     public PrecisionGrabber playerPrecisionGrabber = null;
@@ -41,6 +43,19 @@ public class LoadCustomParts : MonoBehaviour
     public STATE gameState = STATE.UNKNOWN;
     // public bool postLoadMainMenuKoboldUpdateDone = false;
 
+    public static void CleanUpServer (){
+        PhotonView[] objects = FindObjectsOfType<PhotonView>();
+        foreach(PhotonView pv in objects){
+            if(pv.gameObject.name.Contains("Egg(Clone)") || pv.gameObject.name.Contains("TailbagEquippable(Clone)")){
+                //PhotonNetwork.Destroy(
+                pv.TransferOwnership(PhotonNetwork.LocalPlayer);
+                if(pv.IsMine){
+                    pv.gameObject.transform.position = insideDumpster + new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                }
+            }
+        }
+    }
+
     private static bool IsLoaded(string name)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -55,6 +70,9 @@ public class LoadCustomParts : MonoBehaviour
 
     void Start()
     {
+        if(instance == null){
+            instance = this;
+        }
         UnityScriptableSettings.ScriptableSettingsManager sm = GetComponent<UnityScriptableSettings.ScriptableSettingsManager>();
         GameObject ob = gameObject.transform.Find("ReiikzManager").gameObject;
         if(ob == null) Debug.LogError("ReiikzManager Missing from GameManager");

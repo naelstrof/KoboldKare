@@ -5,11 +5,12 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate"};
+    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate", "FIX_LAG"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
     //possible dick types of the dicktype menu
     public static string[] dickTypes = { "KandiDick", "EquineDick", "TaperedDick", "KnottedDick" };
+    public LoadCustomParts customScript = null;
 
     void Start() {
         targetKobold.isPlayer = true;
@@ -21,7 +22,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
             }
             option.onValueChange -= OnValueChange;
             option.onValueChange += OnValueChange;
-            ProcessOption(targetKobold, option);
+            if(!settingName.Equals("FIX_LAG")) ProcessOption(targetKobold, option);
         }
     }
     void OnDestroy() {
@@ -127,6 +128,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
             }
             case "MetabolizationRate": {
                 targetKobold.metabolizationRate = setting.value;
+                break;
+            }
+            case "FIX_LAG": {
+                LoadCustomParts.CleanUpServer();
                 break;
             }
         }

@@ -40,14 +40,13 @@ public class Pachinko : GenericUsable {
     private MoneyFloater floater;
     [SerializeField]
     private Sprite displaySprite;
-    public ScriptableFloat money;
     public float playCost = 50f;
     public PhotonGameObjectReference pachinkoBallPrefab;
     public Transform ballSpawnPoint;
     GameObject activeBall;
     
     [SerializeField]
-    public ConstantForce constantForce;
+    public new ConstantForce constantForce;
     
     AudioSource audioSrc;
     [Header("Audio Setup"),Space(10)]
@@ -72,18 +71,16 @@ public class Pachinko : GenericUsable {
     }
 
     public override void LocalUse(Kobold k) {
+        k.GetComponent<MoneyHolder>().ChargeMoney(playCost);
         photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
     }
 
     public override bool CanUse(Kobold k) {
-        return money.has(playCost) && activeBall == null;
+        return (k==null || k.GetComponent<MoneyHolder>().HasMoney(playCost)) && activeBall == null;
     }
 
     public override void Use() {
-        if (MoneySyncHack.view.IsMine && CanUse(null)) {
-            money.charge(playCost);
-            StartGame();
-        }
+        StartGame();
     }
 
     public void StartGame(){

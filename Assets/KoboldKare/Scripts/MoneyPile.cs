@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using Photon.Pun;
+using UnityEngine;
+
+public class MoneyPile : GenericUsable, IPunObservable, IPunInstantiateMagicCallback {
+    private float internalWorth;
+    private Kobold tryingToEquip;
+    [SerializeField]
+    private GameObject[] displays;
+    [SerializeField]
+    private AnimationCurve moneyMap;
+    [SerializeField]
+    private float maxMoney = 250f;
+    [SerializeField]
+    private Sprite useSprite;
+    private float worth {
+        get {
+            return internalWorth;
+        }
+        set {
+            internalWorth = value;
+            int targetIndex = Mathf.RoundToInt(moneyMap.Evaluate(value/maxMoney)*(displays.Length-1));
+            targetIndex = Mathf.Clamp(targetIndex, 0, displays.Length-1);
+            for (int i=0;i<displays.Length;i++) {
+                displays[i].SetActive(i==targetIndex);
+            }
+        }
+    }
+    public override Sprite GetSprite(Kobold k) {
+        return useSprite;
+    }
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
+            worth = (float)info.photonView.InstantiationData[0];
+        }
+    }
+    public override void LocalUse(Kobold k) {
+        // Try to take control of the equipment, if we don't have permission.
+        if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
+            tryingToEquip = k;
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
+        // Only successfully equip if we own both the equipment, and the kobold. Otherwise, wait for ownership to successfully transfer
+        if (k.photonView.IsMine && photonView.IsMine) {
+            k.GetComponent<MoneyHolder>().AddMoney(worth);
+            PhotonNetwork.Destroy(photonView.gameObject);
+        }
+    }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(worth);
+        } else {
+            worth = (float)stream.ReceiveNext();
+        }
+    }
+    public override void Save(BinaryWriter writer, string version) {
+        base.Save(writer, version);
+        writer.Write(worth);
+    }
+    public override void Load(BinaryReader reader, string version) {
+        base.Load(reader, version);
+        worth = reader.ReadSingle();
+    }
+}

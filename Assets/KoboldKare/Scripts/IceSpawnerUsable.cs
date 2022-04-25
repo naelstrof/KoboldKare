@@ -10,8 +10,6 @@ using KoboldKare;
 [RequireComponent(typeof(Photon.Pun.PhotonView))]
 public class IceSpawnerUsable : GenericUsable, IPunObservable {
     [SerializeField]
-    private ScriptableFloat money;
-    [SerializeField]
     private float cost = 20f;
     [SerializeField]
     private MoneyFloater floater;
@@ -44,18 +42,23 @@ public class IceSpawnerUsable : GenericUsable, IPunObservable {
         }
     }
     public override bool CanUse(Kobold k) {
-        return spawnsLeft > 0 && money.has(cost);
+        return spawnsLeft > 0 && (k==null || k.GetComponent<MoneyHolder>().HasMoney(cost));
     }
     public override Sprite GetSprite(Kobold k) {
         return buySprite;
     }
+    public override void LocalUse(Kobold k) {
+        if (k == null) {
+            return;
+        }
+        k.GetComponent<MoneyHolder>().ChargeMoney(cost);
+        PhotonNetwork.Instantiate(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
+        photonView.RPC("RPCUse", RpcTarget.OthersBuffered, new object[]{});
+        spawnsLeft--;
+    }
     [PunRPC]
     public override void Use() {
-        if (MoneySyncHack.view.IsMine && CanUse(null)) {
-            money.charge(cost);
-            PhotonNetwork.Instantiate(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
-            spawnsLeft--;
-        }
+        spawnsLeft--;
     }
     void OnValidate() {
         prefabSpawn.OnValidate();

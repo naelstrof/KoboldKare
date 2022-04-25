@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(AudioSource)), RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class GenericDoor : GenericUsable {
+public class GenericDoor : GenericUsable, IPunObservable, ISavable {
     public AudioClip openSFX, closeSFX;
     public Sprite openSprite, closeSprite;
     public VisualEffect activeWhenOpen;
@@ -14,7 +14,7 @@ public class GenericDoor : GenericUsable {
     public Animator animator;
     AudioSource audioSource;
     private int usedCount;
-    private bool opened {
+    protected bool opened {
         get { return (usedCount % 2) != 0; }
     }
     void Start(){

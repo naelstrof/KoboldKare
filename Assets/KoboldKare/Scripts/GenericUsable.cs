@@ -7,7 +7,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericUsable : MonoBehaviourPun, ISavable {
+public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     public virtual Sprite GetSprite(Kobold k) { return null; }
     public virtual bool CanUse(Kobold k) { return true; }
 
@@ -25,4 +25,6 @@ public class GenericUsable : MonoBehaviourPun, ISavable {
     }
     public virtual void Save(BinaryWriter writer, string version) { }
     public virtual void Load(BinaryReader reader, string version) { }
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    }
 }

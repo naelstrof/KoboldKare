@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class GenericPurchasable : GenericUsable, IPunObservable {
+public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
 
     [SerializeField]
     private Sprite displaySprite;
@@ -34,7 +34,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable {
     public delegate void PurchasableChangedAction(ScriptablePurchasable newPurchasable);
     public PurchasableChangedAction purchasableChanged;
     public virtual void Start() {
-        source = new AudioSource();
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
         source.rolloffMode = AudioRolloffMode.Custom;
@@ -89,12 +88,12 @@ public class GenericPurchasable : GenericUsable, IPunObservable {
     }
     [PunRPC]
     public override void Use() {
-        source.PlayOneShot(purchaseSoundPack.GetRandomClip(), purchaseSoundPack.volume);
+        purchaseSoundPack.Play(source);
         floater.gameObject.SetActive(false);
         purchased.Invoke();
         display.SetActive(false);
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(inStock);
             stream.SendNext(PurchasableDatabase.GetID(purchasable));

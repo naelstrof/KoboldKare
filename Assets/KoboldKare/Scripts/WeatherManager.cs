@@ -24,7 +24,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private ReagentContents rainContents = new ReagentContents();
     public Material splashMaterial;
     private HashSet<PhotonView> views = new HashSet<PhotonView>();
-    private bool clearingViews = false;
+    //private bool clearingViews = false;
     //private bool isSnowing = false;
     public Vector3 cloudBounds;
     public float cloudHeight;
@@ -34,7 +34,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     public IEnumerator WaitAndThenClear() {
         yield return new WaitForSeconds(5f);
         views.Clear();
-        clearingViews = false;
+        //clearingViews = false;
     }
     private Camera cam {
         get {

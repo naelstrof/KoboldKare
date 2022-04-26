@@ -14,7 +14,7 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
         return displaySprite;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         //Serialize event
     }
 

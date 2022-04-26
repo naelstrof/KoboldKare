@@ -42,12 +42,15 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
         if (!photonView.IsMine) {
             return;
         }
+        int i = 0;
         while(payout > 0f) {
             float currentPayout = payout*0.25f+5f;
             currentPayout = Mathf.Min(payout, currentPayout);
             payout -= currentPayout;
-            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{currentPayout});
+            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward*i*0.25f, payoutLocation.rotation, 0, new object[]{currentPayout});
+            i++;
         }
+        targetAnimator.SetBool("Ready", false);
     }
     private void Awake() {
         midnight.AddListener(OnMidnight);
@@ -96,6 +99,7 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
 
     [PunRPC]
     void RPCAddMoney(float amount) {
+        targetAnimator.SetBool("Ready", true);
         payout += amount;
     }
 

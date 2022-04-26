@@ -45,7 +45,7 @@ public class Strand : MonoBehaviour {
     private List<Node> nodes;
     private List<Edge> edges;
     private bool snapped = false;
-    private float overallAlpha = 1f;
+    //private float overallAlpha = 1f;
     public void SetAlpha(float a) {
         if (lineRenderer == null || snapRenderer == null || snapped) {
             return;

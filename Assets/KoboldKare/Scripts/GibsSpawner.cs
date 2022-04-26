@@ -9,7 +9,7 @@ public class GibsSpawner : MonoBehaviour
     public Vector3 _randomVelocity;
     public Transform _targetArmature = null;
     private Vector3 _velocity = Vector3.zero;
-    private bool _spawned = false;
+    //private bool _spawned = false;
     public AudioClip gibSound;
 
     void PrepareGib( Transform body ) {
@@ -33,7 +33,7 @@ public class GibsSpawner : MonoBehaviour
         }
         FitToArmature(_gibArmature, _targetArmature);
         GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
-        _spawned = true;
+        //_spawned = true;
     }
 
     void FitToArmature(Transform from, Transform to) {

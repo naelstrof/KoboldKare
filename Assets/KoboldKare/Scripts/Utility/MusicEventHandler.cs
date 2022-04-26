@@ -8,7 +8,7 @@ public class MusicEventHandler : MonoBehaviour{
     private GameEventGeneric midnightEvent, nightEvent;
     public float timeToFadeAudio, delayFadeAudio, loudness;
     public static MusicEventHandler instance;
-    public AudioSource audio;
+    public new AudioSource audio;
     public AudioClip midnightStinger;
 
     void Awake(){

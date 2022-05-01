@@ -174,9 +174,10 @@ public static class SaveManager {
                     // Debug.Log("[Save Manager] <Deserialization Log> :: View checks were not null; load should proceed smoothly on this object.");
                 }
                 try {
-                    if(view.ObservedComponents.Count == 0){
-                        Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing");
-                    }
+                    //if(view.ObservedComponents.Count == 0){
+                        // This is not necessarily an issue, photonviews can simply be used as a unique id for other scripts to use for rpcs or whatever.
+                        //Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing", view.gameObject);
+                    //}
                     foreach(Component observable in view.ObservedComponents) {
                         if (observable is ISavable) {
                             // Debug.Log("[SaveManager] <Deserialization Log> :: Proceeding to call Load() on observed component of type "+observable+" on game object "+view.gameObject.name);

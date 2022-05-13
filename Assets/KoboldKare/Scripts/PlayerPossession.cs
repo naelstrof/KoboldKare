@@ -392,19 +392,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         yield return new WaitForSecondsRealtime(0.25f);
         chatInput.onSubmit.AddListener(OnTextSubmit);
     }
-    public IEnumerator WaitAndThenStand() {
-        yield return new WaitForSeconds(1f);
-        kobold.StandUp();
-    }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {
-            StopCoroutine("WaitAndThenStand");
-            StartCoroutine("WaitAndThenStand");
+            kobold.ragdoller.PopRagdoll();
             inputRagdolled = false;
         } else {
-            StopCoroutine("WaitAndThenStand");
+            kobold.ragdoller.PushRagdoll();
             inputRagdolled = true;
-            kobold.KnockOver(9999f);
         }
     }
 

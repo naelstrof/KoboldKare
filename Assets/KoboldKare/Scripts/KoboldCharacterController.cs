@@ -202,12 +202,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
                 body.MovePosition(body.position - new Vector3(0, diff, 0)/2f);
             }
         }
-        worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
-    }
-
-    //private void LateUpdate() {
         //worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
-    //}
+    }
 
     private void Friction() {
         float speed = velocity.magnitude;
@@ -290,7 +286,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (!enabled) {
             return;
         }
-        CheckCrouched();
+        //CheckCrouched();
     }
 
     private void CheckSounds() {

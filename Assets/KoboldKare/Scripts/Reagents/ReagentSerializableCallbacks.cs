@@ -104,11 +104,11 @@ public class ReagentSerializableCallbacks : ScriptableObject {
             Kobold k = c.GetComponentInParent<Kobold>();
             if (k != null && !foundKobolds.Contains(k)) {
                 foundKobolds.Add(k);
-                foreach (Rigidbody r in k.ragdollBodies) {
+                foreach (Rigidbody r in k.ragdoller.GetRagdollBodies()) {
                     r.AddExplosionForce(3000f, backupPosition, 5f);
                 }
                 k.body.AddExplosionForce(3000f, backupPosition, 5f);
-                k.KnockOver(6f);
+                k.StartCoroutine(k.ThrowRoutine());
             } else {
                 Rigidbody r = c.GetComponentInParent<Rigidbody>();
                 r?.AddExplosionForce(3000f, backupPosition, 5f);

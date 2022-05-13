@@ -33,13 +33,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public List<StatChangeEvent> statChangedEvents = new List<StatChangeEvent>();
 
-    public delegate void RagdollEventHandler(bool ragdolled);
-    public event RagdollEventHandler RagdollEvent;
     public float nextEggTime;
-
-
-    public Task ragdollTask;
-
     public StatBlock statblock = new StatBlock();
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
@@ -47,14 +41,10 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public List<Transform> attachPoints = new List<Transform>();
 
     public AudioClip[] yowls;
-    public GenericLODConsumer lodLevel;
     public Transform root;
     public EggSpawner eggSpawner;
     public Animator animator;
     public Rigidbody body;
-    [HideInInspector]
-    public float uprightTimer = 0;
-    private float originalUprightTimer = 0;
     public GameEventFloat MetabolizeEvent;
     public List<GenericInflatable> boobs = new List<GenericInflatable>();
     public List<GenericInflatable> bellies = new List<GenericInflatable>();
@@ -62,8 +52,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public GenericInflatable sizeInflatable;
     public GenericReagentContainer balls;
     public BodyProportion bodyProportion;
-    public UnityEvent OnRagdoll;
-    public UnityEvent OnStandup;
     public TMPro.TMP_Text chatText;
     public float textSpeedPerCharacter, minTextTimeout;
     public UnityEvent OnEggFormed;
@@ -73,6 +61,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public Grabber grabber;
     public AudioSource gurgleSource;
+    public Rigidbody[] grabbableBodies;
     public List<Renderer> koboldBodyRenderers;
     private float internalSex = 0f;
     [HideInInspector]
@@ -97,38 +86,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     public Transform hip;
     public LayerMask playerHitMask;
-    private float internalTopBottom;
-    public float topBottom {
-        get {
-            return internalTopBottom;
-        }
-        set {
-            if (Mathf.Approximately(internalTopBottom, value)) {
-                return;
-            }
-            internalTopBottom = value;
-            StandUp();
-            bodyProportion.Initialize();
-        }
-    }
-    private float internalThickness;
-    public float thickness {
-        get {
-            return internalThickness;
-        }
-        set {
-            if (Mathf.Approximately(internalThickness, value)) {
-                return;
-            }
-            internalThickness = value;
-            StandUp();
-            bodyProportion.Initialize();
-        }
-    }
-    //[HideInInspector]
-    //public float inout;
-    private CollisionDetectionMode oldCollisionMode = CollisionDetectionMode.Discrete;
-    //public PhotonView photonView;
     public KoboldCharacterController controller;
     public float stimulation = 0f;
     public float stimulationMax = 30f;
@@ -137,12 +94,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     //public KoboldUseEvent onGrabEvent;
     public float uprightForce = 10f;
     public Animator koboldAnimator;
-    public List<Rigidbody> ragdollBodies = new List<Rigidbody>();
-    private Rigidbody[] allRigidbodies;
     private float lastPumpTime = 0f;
     private bool grabbed = false;
     private List<Vector3> savedJointAnchors = new List<Vector3>();
-    private Vector3 networkedRagdollHipPosition;
     public float arousal = 0f;
     private float internalBaseDickSize;
     public float baseDickSize {
@@ -181,19 +135,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
     public Coroutine displayMessageRoutine;
-    public bool ragdolled {
-        get {
-            if (ragdollBodies[0] == null) {
-                return false;
-            }
-            return uprightTimer > 0f;
-        }
-    }
-    public bool notRagdolled {
-        get {
-            return !ragdolled;
-        }
-    }
+    public Ragdoller ragdoller;
     public void AddStimulation(float s) {
         stimulation += s;
         if (stimulation >= stimulationMax) {
@@ -237,63 +179,27 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             return internalHBCS;
         }
     }
-    //private bool incremented = false;
-    //public AnimatorUpdateMode modeSave;
-    
-    [PunRPC]
-    public void SetRagdolled(bool ragdolled) {
-        if (ragdolled) {
-            KnockOver(999f);
-        } else {
-            StandUp();
-        }
-    }
 
     public void Awake() {
         statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
-        allRigidbodies = new Rigidbody[2];
-        allRigidbodies[0] = body;
-        allRigidbodies[1] = ragdollBodies[0];
-        /*foreach(var dickGroup in dickGroups) {
-            foreach (var dickSet in dickGroup.dicks) {
-                dickSet.dickAttachPosition = dickSet.parent.InverseTransformPoint(dickSet.dick.dickTransform.position);
-                dickSet.initialDickForwardHipSpace = dickSet.parent.InverseTransformDirection(dickSet.dick.dickTransform.TransformDirection(dickSet.dick.dickForwardAxis));
-                dickSet.initialDickUpHipSpace = dickSet.parent.InverseTransformDirection(dickSet.dick.dickTransform.TransformDirection(dickSet.dick.dickUpAxis));
-                dickSet.initialBodyLocalRotation = dickSet.dick.body.transform.localRotation;
-                dickSet.initialTransformLocalRotation = dickSet.dick.dickTransform.localRotation;
-                //dickSet.joint.axis = Vector3.up;
-                //dickSet.joint.secondaryAxis = Vector3.forward;
-                //dickSet.dick.body.transform.parent = root;
-                dickSet.joint.autoConfigureConnectedAnchor = false;
-                if (dickSet.joint is ConfigurableJoint) {
-                    Debug.LogWarning("Configurable joints will cause problems! They won't get removed properly due to a unity bug, and using a while loop to remove them will sometimes delete freezes. So just don't use them!");
-                    dickSet.savedJoint = new ConfigurableJointData((ConfigurableJoint)dickSet.joint);
-                } else if (dickSet.joint is CharacterJoint) {
-                    dickSet.savedJoint = new CharacterJointData((CharacterJoint)dickSet.joint);
-                }
-                koboldBodyRenderers.AddRange(dickSet.dick.deformationTargets);
-            }
-        }*/
-        savedJointAnchors.Clear();
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            if (ragdollBody.GetComponent<CharacterJoint>() == null) {
-                continue;
-            }
-            savedJointAnchors.Add(ragdollBody.GetComponent<CharacterJoint>().connectedAnchor);
-            ragdollBody.GetComponent<CharacterJoint>().autoConfigureConnectedAnchor = false;
-        }
-        //for(int i=1;i<ragdollBodies.Count+1;i++) {
-            //allRigidbodies[i] = ragdollBodies[i-1];
-        //}
     }
-    public void OnCompleteBodyProportion() {
-        if (originalUprightTimer > 0f) {
-            KnockOver(originalUprightTimer);
+    private float[] GetRandomProperties(float totalBudget, int count) {
+        float[] properties = new float[count];
+        float sum = 0f;
+        for (int i=0;i<count;i++) {
+            properties[i] = Random.Range(0f,totalBudget);
+            sum += properties[i];
         }
+        float x = totalBudget/sum;
+        for (int i=0;i<count;i++) {
+            properties[i] *= x;
+        }
+        return properties;
     }
     public void RandomizeKobold() {
         sex = Random.Range(0f,1f);
         HueBrightnessContrastSaturation = new Vector4(Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
+
 
         if (Random.Range(0f,1f) > 0.5f) {
             Equipment dick = null;
@@ -306,15 +212,15 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 }
             }
             GetComponent<KoboldInventory>().PickupEquipment(dick, null);
-            baseBoobSize = Random.Range(0f,0.2f)*30f;
-            baseBallSize = Random.Range(0.5f,1f)*40f;
+            baseBoobSize = Random.Range(0f,20f);
+            baseBallSize = Random.Range(20f,40f);
             baseDickSize = Random.Range(0f,1f);
         } else {
-            baseBoobSize = Random.Range(0.2f,1f)*30f;
+            baseBoobSize = Random.Range(6f,30f);
             baseBallSize = 0f;
         }
-        topBottom = Random.Range(-1f,1f);
-        thickness = Random.Range(-1f,1f);
+        bodyProportion.topBottom = Random.Range(-1f,1f);
+        bodyProportion.thickness = Random.Range(-1f,1f);
 
         sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), Random.Range(0.7f,1.2f) * sizeInflatable.reagentVolumeDivisor);
         RegenerateSlowly(1000f);
@@ -340,15 +246,12 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         foreach (var b in bellies) {
             b.GetContainer().OnChange.AddListener(OnReagentContainerChanged);
         }
-        bodyProportion.OnComplete += OnCompleteBodyProportion;
         var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         steamAudioSetting.onValueChange -= OnSteamAudioChanged;
         steamAudioSetting.onValueChange += OnSteamAudioChanged;
         OnSteamAudioChanged(steamAudioSetting);
-        bodyProportion.Initialize();
     }
     private void OnDestroy() {
-        bodyProportion.OnComplete -= OnCompleteBodyProportion;
         statblock.StatusEffectsChangedEvent -= OnStatusEffectsChanged;
         MetabolizeEvent.RemoveListener(OnEventRaised);
         foreach (var b in bellies) {
@@ -374,127 +277,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         controller.enabled = false;
         return true;
     }
-    public IEnumerator KnockOverRoutine() {
-        // If we need jigglebones disabled, it takes TWO frames for it to take effect! So... here we wait!
-        // Otherwise jigglebones will move rigidbodies and fuck stuff up...
-        OnRagdoll.Invoke();
-        sizeInflatable.enabled = false;
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForEndOfFrame();
-        //RecursiveSetLayer(transform, LayerMask.NameToLayer("Hitbox"), LayerMask.NameToLayer("PlayerHitbox"));
-        if (koboldAnimator == null) {
-            // Oh dear, guess we got removed already. Just quit out.
-            yield return null;
-        }
-        koboldAnimator.enabled = false;
-        controller.enabled = false;
-        //foreach(var penSet in penetratables) {
-            //penSet.penetratable.SwitchBody(penSet.ragdollAttachBody);
-        //}
-        foreach (Rigidbody b in ragdollBodies) {
-            b.velocity = body.velocity;
-            b.isKinematic = false;
-            //b.interpolation = RigidbodyInterpolation.Interpolate;
-            if (lodLevel.isClose) {
-                b.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            }
-        }
-        oldCollisionMode = body.collisionDetectionMode;
-        body.collisionDetectionMode = CollisionDetectionMode.Discrete;
-        body.isKinematic = true;
-        body.GetComponent<Collider>().enabled = false;
-        foreach(JigglePhysics.JiggleBone j in GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
-            j.updateMode = JigglePhysics.JiggleBone.UpdateType.FixedUpdate;
-        }
-        foreach(JigglePhysics.JiggleSoftbody s in GetComponentsInChildren<JigglePhysics.JiggleSoftbody>()) {
-            s.updateMode = JigglePhysics.JiggleSoftbody.UpdateType.FixedUpdate;
-        }
-
-        // We need to know the final result of our ragdoll before we update the anchors.
-        Physics.SyncTransforms();
-        bodyProportion.ScaleSkeleton();
-        Physics.SyncTransforms();
-        int i = 0;
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            CharacterJoint j = ragdollBody.GetComponent<CharacterJoint>();
-            if (j == null) {
-                continue;
-            }
-            //j.anchor = Vector3.zero;
-            j.connectedAnchor = savedJointAnchors[i++];
-        }
-        // FIXME: For somereason, after kobolds get grabbed and tossed off of a live physics animation-- the body doesn't actually stay kinematic. I'm assuming due to one of the ragdoll events.
-        // Adding this extra set fixes it for somereason, though this is not a proper fix.
-        body.isKinematic = true;
-        RagdollEvent?.Invoke(true);
-    }
-    public void KnockOver(float duration = 3f) {
-        //uprightTimer = Mathf.Max(Mathf.Max(0 + duration, uprightTimer + duration), 1f);
-        if (bodyProportion.running) {
-            originalUprightTimer = Mathf.Max(duration, originalUprightTimer);
-            return;
-        }
-        originalUprightTimer = 0f;
-        if (ragdolled) {
-            StandUp();
-        }
-        uprightTimer = duration;
-        if (ragdollTask != null && ragdollTask.Running) {
-            ragdollTask.Stop();
-        }
-        ragdollTask = new Task(KnockOverRoutine());
-        if (photonView.IsMine) {
-            photonView.RPC("SetRagdolled", RpcTarget.Others, true);
-        }
-    }
-    // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
-    // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
-    public void StandUp() {
-        uprightTimer = 0f;
-        if ((!body.isKinematic && ragdollBodies[0].isKinematic)) {
-            return;
-        }
-        sizeInflatable.enabled = true;
-        //foreach(var penSet in penetratables) {
-            //penSet.penetratable.SwitchBody(body);
-        //}
-        Vector3 diff = hip.position - body.transform.position;
-        body.transform.position += diff;
-        hip.position -= diff;
-        body.transform.position += Vector3.up*0.5f;
-        body.isKinematic = false;
-        body.GetComponent<Collider>().enabled = true;
-        body.collisionDetectionMode = oldCollisionMode;
-        Vector3 averageVel = Vector3.zero;
-        foreach (Rigidbody b in ragdollBodies) {
-            averageVel += b.velocity;
-        }
-        averageVel /= ragdollBodies.Count;
-        body.velocity = averageVel;
-        controller.enabled = true;
-        //RecursiveSetLayer(transform, LayerMask.NameToLayer("PlayerHitbox"), LayerMask.NameToLayer("Hitbox"));
-        foreach (Rigidbody b in ragdollBodies) {
-            //b.interpolation = RigidbodyInterpolation.None;
-            b.collisionDetectionMode = CollisionDetectionMode.Discrete;
-            b.isKinematic = true;
-        }
-        foreach(JigglePhysics.JiggleBone j in GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
-            j.updateMode = JigglePhysics.JiggleBone.UpdateType.LateUpdate;
-        }
-        foreach(JigglePhysics.JiggleSoftbody s in GetComponentsInChildren<JigglePhysics.JiggleSoftbody>()) {
-            s.updateMode = JigglePhysics.JiggleSoftbody.UpdateType.LateUpdate;
-        }
-        //foreach(var penSet in penetratables) {
-            //penSet.penetratable.SwitchBody(body);
-        //}
-        koboldAnimator.enabled = true;
-        controller.enabled = true;
-        OnStandup.Invoke();
-        RagdollEvent?.Invoke(false);
-        if (photonView.IsMine) {
-            photonView.RPC("SetRagdolled", RpcTarget.Others, false);
-        }
-    }
     public void PumpUpDick(float amount) {
         if (amount > 0 ) {
             lastPumpTime = Time.timeSinceLevelLoad;
@@ -502,11 +284,16 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         arousal += amount;
         arousal = Mathf.Clamp01(arousal);
     }
+    public IEnumerator ThrowRoutine() {
+        ragdoller.PushRagdoll();
+        yield return new WaitForSeconds(3f);
+        ragdoller.PopRagdoll();
+    }
     public void OnRelease(Kobold kobold) {
         //animator.updateMode = modeSave;
         animator.SetBool("Carried", false);
         if (body.velocity.magnitude > 3f) {
-            KnockOver(3f);
+            StartCoroutine(ThrowRoutine());
         } else {
             foreach(Collider c in Physics.OverlapSphere(transform.position, 1f, playerHitMask, QueryTriggerInteraction.Collide)) {
                 Kobold k = c.GetComponentInParent<Kobold>();
@@ -518,8 +305,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
         controller.frictionMultiplier = 1f;
         grabbed = false;
-        //pickedUp = 0;
-        //transSpeed = 1f;
     }
     private void Update() {
         foreach(var dick in activeDicks) {
@@ -533,13 +318,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             uprightForce = Mathf.MoveTowards(uprightForce, 0f, Time.deltaTime * 2f);
             PumpUpDick(Time.deltaTime*0.1f);
         }
-        if (uprightTimer > 0f) {
-            uprightTimer -= Time.fixedDeltaTime;
-            if (uprightTimer < 0f) {
-                StandUp();
-            }
-        }
-        if (uprightTimer <= 0) {
+        if (!ragdoller.ragdolled) {
             body.angularVelocity -= body.angularVelocity*0.2f;
             float deflectionForgivenessDegrees = 5f;
             Vector3 cross = Vector3.Cross(body.transform.up, Vector3.up);
@@ -548,10 +327,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
         if (Time.timeSinceLevelLoad-lastPumpTime > 10f) {
             PumpUpDick(-Time.deltaTime * 0.01f);
-        }
-        if (!photonView.IsMine) {
-            Vector3 dir = networkedRagdollHipPosition - hip.position;
-            hip.GetComponent<Rigidbody>().AddForce(dir, ForceMode.VelocityChange);
         }
     }
 
@@ -632,9 +407,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     public bool ShowHand() { return true; }
     public bool PhysicsGrabbable() { return true; }
-    public Rigidbody[] GetRigidBodies()
-    {
-        return allRigidbodies;
+    public Rigidbody[] GetRigidBodies() {
+        return grabbableBodies;
     }
 
     public Renderer[] GetRenderers() {
@@ -669,7 +443,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             balls.OverrideReagent(cum, Mathf.MoveTowards(currentCumVolume, wantedBoobVolume, deltaTime));
         }
     }
-
+    private float FloorNearestPower(float baseNum, float target) {
+        float f = baseNum;
+        for(;f<=target;f*=baseNum) {}
+        return f/baseNum;
+    }
     public void OnEventRaised(float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         foreach (var belly in bellies) {
@@ -694,17 +472,18 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             baseBallSize += pineappleJuiceVolume;
             balls.AddMix(ReagentDatabase.GetReagent("Cum"), pineappleJuiceVolume*1f, GenericReagentContainer.InjectType.Metabolize);
 
-            if (Time.timeSinceLevelLoad > nextEggTime) {
+            if (Time.timeSinceLevelLoad > nextEggTime && photonView.IsMine) {
                 float currentEggVolume = belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Egg"));
-                if (currentEggVolume > 8f) {
+                float eggSize = FloorNearestPower(5f,currentEggVolume);
+                if (eggSize >= 5f && eggSize < belly.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("Cum"))) {
                     OnEggFormed.Invoke();
-                    nextEggTime = Time.timeSinceLevelLoad + 60f;
+                    nextEggTime = Time.timeSinceLevelLoad + 30f;
                     bool spawnedEgg = false;
                     foreach(var penetratableSet in penetratables) {
                         if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
                             eggSpawner.targetPenetrable = penetratableSet.penetratable;
                             eggSpawner.spawnAlongLength = 1f;
-                            eggSpawner.SpawnEgg();
+                            eggSpawner.SpawnEgg(eggSize);
                             spawnedEgg = true;
                             break;
                         }
@@ -714,14 +493,14 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                             if (penetratableSet.penetratable.isActiveAndEnabled) {
                                 eggSpawner.targetPenetrable = penetratableSet.penetratable;
                                 eggSpawner.spawnAlongLength = 0.5f;
-                                eggSpawner.SpawnEgg();
+                                eggSpawner.SpawnEgg(eggSize);
                                 spawnedEgg = true;
                                 break;
                             } 
                         }
                     }
                     if (spawnedEgg) {
-                        belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Egg"), currentEggVolume-8f);
+                        belly.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Egg"), currentEggVolume-eggSize);
                     }
                 }
             }
@@ -747,9 +526,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(hip.position);
-            stream.SendNext(thickness);
-            stream.SendNext(topBottom);
             stream.SendNext(sex);
             stream.SendNext((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.r*255f));
             stream.SendNext((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.g*255f));
@@ -759,9 +535,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseBoobSize);
             stream.SendNext(baseDickSize);
         } else {
-            networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
-            thickness = (float)stream.ReceiveNext();
-            topBottom = (float)stream.ReceiveNext();
             sex = (float)stream.ReceiveNext();
             byte r = (byte)stream.ReceiveNext();
             byte g = (byte)stream.ReceiveNext();
@@ -785,12 +558,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
 
     public void Save(BinaryWriter writer, string version) {
-        writer.Write(ragdolled);
-        writer.Write(hip.position.x);
-        writer.Write(hip.position.y);
-        writer.Write(hip.position.z);
-        writer.Write(thickness);
-        writer.Write(topBottom);
         writer.Write(sex);
         writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.r*255f));
         writer.Write((byte)Mathf.RoundToInt(HueBrightnessContrastSaturation.g*255f));
@@ -802,20 +569,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
 
     public void Load(BinaryReader reader, string version) {
-        bool ragged = reader.ReadBoolean();
-        if (!ragdolled && ragged) {
-            KnockOver(99999f);
-        }
-        if (ragdolled && !ragged) {
-            StandUp();
-        }
-        float hipx = reader.ReadSingle();
-        float hipy = reader.ReadSingle();
-        float hipz = reader.ReadSingle();
-        networkedRagdollHipPosition = new Vector3(hipx,hipy,hipz);
-
-        thickness = reader.ReadSingle();
-        topBottom = reader.ReadSingle();
         sex = reader.ReadSingle();
         byte r = reader.ReadByte();
         byte g = reader.ReadByte();

@@ -38,16 +38,23 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
         base.Close();
         dumpsterTrigger.SetActive(false);
     }
+    private float FloorNearestPower(float baseNum, float target) {
+        float f = baseNum;
+        for(;f<=target;f*=baseNum) {}
+        return f/baseNum;
+    }
     private void OnMidnight(object ignore) {
         if (!photonView.IsMine) {
             return;
         }
         int i = 0;
         while(payout > 0f) {
-            float currentPayout = payout*0.25f+5f;
-            currentPayout = Mathf.Min(payout, currentPayout);
+            float currentPayout = FloorNearestPower(5f,payout);
+            //currentPayout = Mathf.Min(payout, currentPayout);
             payout -= currentPayout;
-            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward*i*0.25f, payoutLocation.rotation, 0, new object[]{currentPayout});
+            payout = Mathf.Max(payout,0f);
+            float up = Mathf.Floor((float)i/4f)*0.2f;
+            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward*(i%4)*0.25f + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
             i++;
         }
         targetAnimator.SetBool("Ready", false);

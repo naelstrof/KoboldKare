@@ -5,16 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class FootIK : MonoBehaviour {
     private Animator targetAnimator;
-    public void Start() {
+    void Start() {
         targetAnimator = GetComponent<Animator>();
     }
-    public void OnAnimatorIK(int layerIndex) {
+    void OnAnimatorIK(int layerIndex) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
         Transform leftfoot = targetAnimator.GetBoneTransform(HumanBodyBones.LeftFoot);
         Transform rightfoot = targetAnimator.GetBoneTransform(HumanBodyBones.RightFoot);
         SetFootTarget(leftfoot, targetAnimator.GetBoneTransform(HumanBodyBones.Hips), targetAnimator, AvatarIKGoal.LeftFoot);
         SetFootTarget(rightfoot, targetAnimator.GetBoneTransform(HumanBodyBones.Hips), targetAnimator, AvatarIKGoal.RightFoot);
     }
-    private void SetFootTarget(Transform foot, Transform hip, Animator a, AvatarIKGoal target) {
+    void SetFootTarget(Transform foot, Transform hip, Animator a, AvatarIKGoal target) {
         RaycastHit hit;
         float dist = Vector3.Distance(hip.position, foot.position);
         if (Physics.Raycast(hip.position, (foot.position - hip.position).normalized, out hit, dist, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {

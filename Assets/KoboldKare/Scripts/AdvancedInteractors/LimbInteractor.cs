@@ -79,11 +79,11 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
     }
 
     public void Start() {
-        kobold.RagdollEvent += RagdollEvent;
+        kobold.ragdoller.RagdollEvent += RagdollEvent;
     }
     public void OnDestroy() {
         if (kobold != null) {
-            kobold.RagdollEvent -= RagdollEvent;
+            kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
     }
 

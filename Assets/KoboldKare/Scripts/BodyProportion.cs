@@ -11,8 +11,34 @@ using System;
 public class BodyProportion : MonoBehaviour {
 	[SerializeField] private Animator humanoidAnimator;
 	[SerializeField] private AnimationCurve modificationCurve; // should be log(x)
-	[SerializeField] private Kobold koboldData;
-	public static bool resourceLock = false;
+
+    private float internalTopBottom = 1f;
+    public float topBottom {
+        get {
+            return internalTopBottom;
+        }
+        set {
+            if (Mathf.Approximately(internalTopBottom, value) && initialized) {
+                return;
+            }
+            internalTopBottom = value;
+            Initialize();
+        }
+    }
+    private float internalThickness = 1f;
+    public float thickness {
+        get {
+            return internalThickness;
+        }
+        set {
+            if (Mathf.Approximately(internalThickness, value) && initialized) {
+                return;
+            }
+            internalThickness = value;
+            Initialize();
+        }
+    }
+	private static bool resourceLock = false;
 
 	//[SerializeField] private bool initImmediately;
 	private Vector3 tempVert;
@@ -26,8 +52,8 @@ public class BodyProportion : MonoBehaviour {
 	private float spineBoneScale = 1f;
 	private float chestBoneScale = 1f;
 	private float shoulderBoneScale = 1f;
-	private float lastLowerbodyScale = 1f;
-	private float bodyScale = 1f;
+	//private float lastLowerbodyScale = 1f;
+	//private float bodyScale = 1f;
 	private float handScale = 1f;
 	private float footScale = 1f;
 	[HideInInspector]
@@ -37,11 +63,12 @@ public class BodyProportion : MonoBehaviour {
 	//private Mesh bakeMesh;
 	public Dictionary<Renderer, Mesh> originalMeshMemory = new Dictionary<Renderer, Mesh>();
 
-	public delegate void GenericListener();
-	public GenericListener OnComplete;
+	public delegate void CompletedBodyProportionAction();
+	public CompletedBodyProportionAction completed;
 	public List<Task> tasks = new List<Task>();
+	private bool initialized = false;
 
-	public bool running {
+	private bool running {
 		get {
             for (int i=0;i<tasks.Count;i++) {
                 if (tasks[i].Running) {
@@ -94,22 +121,19 @@ public class BodyProportion : MonoBehaviour {
 			Initialize();
         }
 	}
-
-	private void Start() {
-		//if (initImmediately) Initialize();
-		OnComplete = CheckIfQueued;
-	}
-	public void CheckFinished(bool manuallyStopped) {
+	private void CheckFinished(bool manuallyStopped) {
 		for (int i=0;i<tasks.Count;i++) {
 			if (!tasks[i].Running) {
 				tasks.RemoveAt(i);
             }
         }
 		if (tasks.Count == 0) {
-			OnComplete?.Invoke();
+			completed?.Invoke();
+			CheckIfQueued();
         }
     }
 	public void Initialize() {
+		initialized = true;
 		//koboldData.Randomize();
 		for(int i=0;i<tasks.Count;) {
 			if (tasks[i].Running) {
@@ -180,31 +204,31 @@ public class BodyProportion : MonoBehaviour {
 		BodyProportion.resourceLock = false;
 	}
 
-	public void SetScales() {
+	private void SetScales() {
 		float limitLow(float i) => i = (i < 0f ? i * 0.4f : i);
 		float limitHigh(float i) => i = (i > 0f ? i * 0.4f : i);
 
-		hipMeshScale = modificationCurve.Evaluate(-koboldData.topBottom + koboldData.thickness) * 0.1f;
+		hipMeshScale = modificationCurve.Evaluate(-topBottom + thickness) * 0.1f;
 		hipMeshScale = limitLow(hipMeshScale) + 1f;
-		spineMeshScale = modificationCurve.Evaluate(koboldData.thickness) * 0.5f;
+		spineMeshScale = modificationCurve.Evaluate(thickness) * 0.5f;
 		spineMeshScale = limitLow(spineMeshScale) + 1f;
-		chestMeshScale = modificationCurve.Evaluate(koboldData.topBottom + koboldData.thickness) * 0.1f;
+		chestMeshScale = modificationCurve.Evaluate(topBottom + thickness) * 0.1f;
 		chestMeshScale = limitLow(chestMeshScale) + 1f;
-		shoulderMeshScale = 1f + modificationCurve.Evaluate(koboldData.topBottom + koboldData.thickness) * 0.2f;
-		upperarmMeshScale = modificationCurve.Evaluate(koboldData.topBottom + koboldData.thickness) * 0.4f;
+		shoulderMeshScale = 1f + modificationCurve.Evaluate(topBottom + thickness) * 0.2f;
+		upperarmMeshScale = modificationCurve.Evaluate(topBottom + thickness) * 0.4f;
 		upperarmMeshScale = limitLow(upperarmMeshScale) + 1f;
-		upperlegMeshScale = modificationCurve.Evaluate(-koboldData.topBottom + koboldData.thickness) * 0.3f;
+		upperlegMeshScale = modificationCurve.Evaluate(-topBottom + thickness) * 0.3f;
 		upperlegMeshScale = limitLow(upperlegMeshScale) + 1f;
-		hipBoneScale = modificationCurve.Evaluate(-koboldData.topBottom + koboldData.thickness) * 0.1f;
+		hipBoneScale = modificationCurve.Evaluate(-topBottom + thickness) * 0.1f;
 		hipBoneScale = limitHigh(hipBoneScale) + 1f;
-		spineBoneScale = 1f + modificationCurve.Evaluate(-koboldData.thickness) * 0.2f;
-		chestBoneScale = modificationCurve.Evaluate(koboldData.topBottom + koboldData.thickness) * 0.4f;
+		spineBoneScale = 1f + modificationCurve.Evaluate(-thickness) * 0.2f;
+		chestBoneScale = modificationCurve.Evaluate(topBottom + thickness) * 0.4f;
 		chestBoneScale = limitHigh(chestBoneScale) + 1f;
-		shoulderBoneScale = modificationCurve.Evaluate(koboldData.topBottom + koboldData.thickness) * 0.4f;
+		shoulderBoneScale = modificationCurve.Evaluate(topBottom + thickness) * 0.4f;
 		shoulderBoneScale = limitHigh(shoulderBoneScale) + 1f;
-		handScale = modificationCurve.Evaluate(koboldData.topBottom) * 0.3f;
+		handScale = modificationCurve.Evaluate(topBottom) * 0.3f;
 		handScale = limitLow(handScale) + 1f;
-		footScale = modificationCurve.Evaluate(-koboldData.topBottom) * 0.3f;
+		footScale = modificationCurve.Evaluate(-topBottom) * 0.3f;
 		footScale = limitLow(footScale) + 1f;
 	}
     private void ScaleMeshAtBone(Vector3[] vertices, Matrix4x4[] bindPoses, int[] boneIndices, Vector3[] boneScaleMasks, List<byte> bonesPerVertex, List<BoneWeight1> allBoneWeights, HumanBodyBones bone, float scale) {
@@ -292,35 +316,4 @@ public class BodyProportion : MonoBehaviour {
 		}
 		return dic;
 	}
-
-	//public BodyProportionJob ScaleMesh(SkinnedMeshRenderer renderer, Mesh m) {
-		//BodyProportionJob job = new BodyProportionJob();
-		//job.hipMeshScale = hipMeshScale;
-		//job.spineMeshScale = spineMeshScale;
-		//job.chestMeshScale = chestMeshScale;
-		//job.shoulderMeshScale = shoulderMeshScale;
-		//job.upperarmMeshScale = upperarmMeshScale;
-		//job.upperlegMeshScale = upperlegMeshScale;
-		//job.hipBoneScale = hipBoneScale;
-		//job.spineBoneScale = spineBoneScale;
-		//job.chestBoneScale = chestBoneScale;
-		//job.shoulderBoneScale = shoulderBoneScale;
-		//job.lastLowerbodyScale = lastLowerbodyScale;
-		//bodyScale = 1f + koboldData.size * 0.2f;
-		//handScale = 1f + koboldData.topBottom * 0.1f;
-		//footScale = 1f - koboldData.topBottom * 0.1f;
-		//job.bodyScale = bodyScale;
-		//job.handScale = handScale;
-		//job.footScale = footScale;
-//
-		//// These jobs take more than 4 frames generally... They're very slow
-		//job.bindPoses = new NativeArray<Matrix4x4>(m.bindposes, Allocator.Persistent);
-		//job.boneIndices = new NativeArray<int>(GetBoneIndices(renderer).ToArray(), Allocator.Persistent);
-		//job.boneScaleMasks = new NativeArray<Vector3>(GetBoneScaleMasks(renderer).ToArray(), Allocator.Persistent);
-        //job.weights = m.GetAllBoneWeights();
-        //job.bonesPerVertex = m.GetBonesPerVertex();
-		//job.vertices = new NativeArray<Vector3>(m.vertices, Allocator.Persistent);
-		//return job;
-		//job.Schedule();
-	//}
 }

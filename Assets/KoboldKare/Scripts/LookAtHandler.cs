@@ -25,6 +25,9 @@ public class LookAtHandler : MonoBehaviour
         _clampWeight = clampWeight;
     }
     private void OnAnimatorIK(int layerIndex) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
         bodyweight = Mathf.MoveTowards(bodyweight, _bodyWeight, Time.deltaTime);
         _anim.SetLookAtWeight(_weight, bodyweight, _headWeight, _eyesWeight, _clampWeight);
         _anim.SetLookAtPosition(_lookPosition);

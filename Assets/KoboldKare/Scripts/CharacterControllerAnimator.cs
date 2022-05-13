@@ -105,7 +105,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         controller = GetComponent<KoboldCharacterController>();
     }
     public IEnumerator WaitThenAdvanceProgress() {
-        foreach( Rigidbody r in kobold.ragdollBodies) {
+        foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = false;
         }
         if (kobold.activeDicks != null) {
@@ -114,7 +114,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
             }
         }
         yield return new WaitForSeconds(5f);
-        foreach( Rigidbody r in kobold.ragdollBodies) {
+        foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = true;
         }
         if (kobold.activeDicks != null) {
@@ -123,7 +123,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
             }
         }
         float endTransitionTime = Time.timeSinceLevelLoad + 3f;
-        int oldLayer = kobold.ragdollBodies[0].gameObject.layer;
+        int oldLayer = kobold.ragdoller.GetRagdollBodies()[0].gameObject.layer;
         while (activeStation != null && Time.timeSinceLevelLoad < endTransitionTime) {
             activeStation.progress = Mathf.MoveTowards(activeStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/3f);
             yield return endOfFrame;
@@ -131,7 +131,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         useRandomSample = true;
     }
     void OnBeginStation(AnimationStation station) {
-        kobold.KnockOver(9999f);
+        kobold.ragdoller.PushRagdoll();
         StopCoroutine("WaitThenAdvanceProgress");
         blend = 0f;
         activeStation = station;
@@ -162,7 +162,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         stationViewID = 0;
         currentStationID = 0;
         body.isKinematic = false;
-        kobold.StandUp();
+        kobold.ragdoller.PopRagdoll();
         animating = false;
         physicsSolver.CleanUp();
         activeStation.info.user = null;
@@ -182,7 +182,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
             onEndStation.Invoke();
         }
         useRandomSample = false;
-        foreach( Rigidbody r in kobold.ragdollBodies) {
+        foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = true;
         }
         if (kobold.activeDicks != null) {
@@ -344,21 +344,21 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         }
     }
     private void Update() {
-        if (activeStation == null) {
+        if (activeStation != null) {
+            activeStation.lookAtPosition = lookDir.position;
+            if (animating) {
+                kobold.PumpUpDick(Time.deltaTime);
+                blend = Mathf.MoveTowards(blend, 1f, Time.deltaTime*2f);
+                if (useRandomSample && activeStation != null) {
+                    activeStation.progress = randomSample;
+                }
+            }
+            physicsSolver.ForceBlend(blend);
+            activeStation.SetCharacter(physicsSolver);
+        }
+        if (Time.deltaTime == 0f) {
             return;
         }
-        activeStation.lookAtPosition = lookDir.position;
-        if (animating) {
-            kobold.PumpUpDick(Time.deltaTime);
-            blend = Mathf.MoveTowards(blend, 1f, Time.deltaTime*2f);
-            if (useRandomSample && activeStation != null) {
-                activeStation.progress = randomSample;
-            }
-        }
-        physicsSolver.ForceBlend(blend);
-        activeStation.SetCharacter(physicsSolver);
-    }
-    void FixedUpdate() {
         if (kobold != null) {
             float maxPen = 0f;
             // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.
@@ -400,7 +400,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         if (jumped != controller.jumped && !controller.jumped) {
             jumped = controller.jumped;
         }
-        Vector3 velocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
+        Vector3 velocity = (transform.position - lastPosition) / Time.deltaTime;
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
         dir = Quaternion.Inverse(Quaternion.Euler(0,headTransform.rotation.eulerAngles.y,0)) * dir;

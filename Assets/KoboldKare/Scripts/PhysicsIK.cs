@@ -89,7 +89,7 @@ namespace Vilar.IK {
             AddJoint((int)IKTargetSet.parts.FOOTRIGHT, animator.GetBoneTransform(HumanBodyBones.RightFoot), animator.GetBoneTransform(HumanBodyBones.RightFoot).position, strength*0.5f);
             AddJoint((int)IKTargetSet.parts.KNEERIGHT, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.parent, animator.GetBoneTransform(HumanBodyBones.RightFoot).parent.position, strength/2f, false);
             AddJoint((int)IKTargetSet.parts.HIPS, animator.GetBoneTransform(HumanBodyBones.Hips), animator.GetBoneTransform(HumanBodyBones.Hips).position, strength);
-            kobold.KnockOver(9999999);
+            kobold.ragdoller.PushRagdoll();
             IKEnabled = true;
         }
 
@@ -100,6 +100,7 @@ namespace Vilar.IK {
                 }
             }
             IKEnabled = false;
+            kobold.ragdoller.PopRagdoll();
         }
 
         public void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {

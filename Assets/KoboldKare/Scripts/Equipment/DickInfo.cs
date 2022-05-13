@@ -101,7 +101,7 @@ public class DickInfo : MonoBehaviour {
             set.balls.SetContainer(null);
             k.activeDicks.Remove(set);
             set.dick.OnMove.RemoveListener(OnDickMovement);
-            foreach(Rigidbody r in k.ragdollBodies) {
+            foreach(Rigidbody r in k.ragdoller.GetRagdollBodies()) {
                 if (r.GetComponent<Collider>() == null) {
                     continue;
                 }
@@ -124,10 +124,10 @@ public class DickInfo : MonoBehaviour {
             }
         }
         //k.OnOrgasm.RemoveListener(Cum);
-        k.lodLevel.OnLODClose.RemoveListener(OnDickLODClose);
-        k.lodLevel.OnLODFar.RemoveListener(OnDickLODFar);
+        //k.lodLevel.OnLODClose.RemoveListener(OnDickLODClose);
+        //k.lodLevel.OnLODFar.RemoveListener(OnDickLODFar);
         if (attachedKobold) {
-            attachedKobold.RagdollEvent -= OnRagdoll;
+            attachedKobold.ragdoller.RagdollEvent -= OnRagdoll;
         }
         if (k == attachedKobold) {
             attachedKobold = null;
@@ -136,7 +136,7 @@ public class DickInfo : MonoBehaviour {
     }
     private void OnDestroy() {
         if (attachedKobold) {
-            attachedKobold.RagdollEvent -= OnRagdoll;
+            attachedKobold.ragdoller.RagdollEvent -= OnRagdoll;
         }
     }
     private IEnumerator AttachToRoutine(Kobold k) {
@@ -150,8 +150,8 @@ public class DickInfo : MonoBehaviour {
             yield break;
         }
         foreach(DickSet set in dicks) {
-            foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>(true)) {
-                bone.enabled = false;
+            foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>(true)) {
+                rig.enabled = false;
             }
             foreach(Rigidbody b in set.dick.GetComponentsInChildren<Rigidbody>(true)) {
                 b.isKinematic = true;
@@ -205,17 +205,17 @@ public class DickInfo : MonoBehaviour {
             k.HueBrightnessContrastSaturation = colorSave;
         }
         foreach(DickSet set in dicks) {
-            foreach(JigglePhysics.JiggleBone bone in set.dick.GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
-                bone.enabled = true;
+            foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>()) {
+                rig.enabled = true;
             }
         }
         k.animator.enabled = animatorWasEnabled;
-        k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
-        k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
+        //k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
+        //k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
         if (attachedKobold) {
-            attachedKobold.RagdollEvent += OnRagdoll;
+            attachedKobold.ragdoller.RagdollEvent += OnRagdoll;
         }
-        OnRagdoll(attachedKobold.ragdolled);
+        OnRagdoll(attachedKobold.ragdoller.ragdolled);
     }
     public void OnRagdoll(bool ragdolled) {
         foreach (DickSet set in dicks) {

@@ -8,14 +8,14 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
     public Kobold kobold;
     public LODGroup group;
-    public JigglePhysics.JiggleSoftbody physics;
+    public JigglePhysics.JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
     public BodyProportion proportion;
     public void OnFinishProportionEdit() {
         RegenerateMirror();
     }
     public void Start() {
-        proportion.OnComplete += OnFinishProportionEdit;
+        proportion.completed += OnFinishProportionEdit;
         foreach (SkinnedMeshRenderer s in dissolveTargets) {
             foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 0f);
@@ -23,7 +23,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
         }
     }
     public void OnDestroy() {
-        proportion.OnComplete -= OnFinishProportionEdit;
+        proportion.completed -= OnFinishProportionEdit;
     }
     public void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {
@@ -38,8 +38,8 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 if (kobold.koboldBodyRenderers.Contains(r)) {
                     kobold.koboldBodyRenderers.Remove(r);
                 }
-                if (physics.targetRenderers.Contains(r)) {
-                    physics.targetRenderers.Remove(r);
+                if (physics.targetSkins.Contains(r)) {
+                    physics.targetSkins.Remove(r);
                 }
                 foreach (var boob in kobold.boobs) {
                     if (boob.targetRenderers.Contains(r)) {
@@ -100,7 +100,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             lods[0].renderers = renderers.ToArray();
             group.SetLODs(lods);
             if (s.gameObject.name == "Body") {
-                physics.targetRenderers.Add(smrCopies[s]);
+                physics.targetSkins.Add(smrCopies[s]);
                 foreach(var boob in kobold.boobs) {
                     boob.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
                 }

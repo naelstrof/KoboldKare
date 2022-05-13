@@ -287,7 +287,7 @@ namespace Vilar.AnimationStation {
         [HideInInspector] public AnimationStationHashSet linkedStations = new AnimationStationHashSet();
 		public bool isPreviewAssigned => previewCharacter != null;
 		private Dictionary<HumanBodyBones, Quaternion> restPoseCache;
-		private bool initialized=false;
+		//private bool initialized=false;
 		public AnimationStationInfo info = new AnimationStationInfo();
 
 		private void Update() {

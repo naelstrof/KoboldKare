@@ -22,15 +22,17 @@ public class EggSpawner : MonoBehaviour {
             }
         }
     }
-    public void SpawnEggNoReturn() {
-        SpawnEgg();
-    }
-    public Penetrator SpawnEgg() {
+    //public void SpawnEggNoReturn() {
+        //SpawnEgg();
+    //}
+    public Penetrator SpawnEgg(float eggVolume) {
         //Penetrator d = GameObject.Instantiate(penetratorPrefab).GetComponentInChildren<Penetrator>();
         Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,targetPenetrable.GetPoint(spawnAlongLength, false), Quaternion.identity).GetComponentInChildren<Penetrator>();
         if (d == null) {
             return null;
         }
+        d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
+        d.GetComponent<GenericInflatable>().TriggerTween();
         d.body.transform.position = targetPenetrable.GetPoint(spawnAlongLength, false);
         // Manually control penetration parameters
         d.autoPenetrate = false;
@@ -43,12 +45,12 @@ public class EggSpawner : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         d.autoPenetrate = true;
     }
-    public IEnumerator SpawnEggs() {
-        while(true) {
-            Destroy(SpawnEgg().gameObject, 60f);
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f,5f));
-        }
-    }
+    //public IEnumerator SpawnEggs() {
+        //while(true) {
+            //Destroy(SpawnEgg().gameObject, 60f);
+            //yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f,5f));
+        //}
+    //}
     public void OnValidate() {
 #if UNITY_EDITOR
         penetratorPrefab.OnValidate();

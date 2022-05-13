@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class GenericEquipment : GenericUsable, IOnPhotonViewOwnerChange {
+public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwnerChange {
     public Equipment representedEquipment;
     [SerializeField]
     private Sprite displaySprite;

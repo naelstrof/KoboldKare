@@ -212,7 +212,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 }
             }
             GetComponent<KoboldInventory>().PickupEquipment(dick, null);
-            baseBoobSize = Random.Range(0f,20f);
+            baseBoobSize = Random.Range(0f,15f);
             baseBallSize = Random.Range(20f,40f);
             baseDickSize = Random.Range(0f,1f);
         } else {
@@ -224,6 +224,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
         sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), Random.Range(0.7f,1.2f) * sizeInflatable.reagentVolumeDivisor);
         RegenerateSlowly(1000f);
+        PumpUpDick(-1f);
     }
     public void OnStatusEffectsChanged(StatBlock block, StatBlock.StatChangeSource source) {
         foreach (var statEvent in statChangedEvents) {
@@ -307,8 +308,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         grabbed = false;
     }
     private void Update() {
+        // Throbbing!
         foreach(var dick in activeDicks) {
-            dick.bonerInflator.baseSize = arousal*0.92f + (0.08f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal;
+            dick.bonerInflator.baseSize = arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal;
         }
     }
     private void FixedUpdate() {

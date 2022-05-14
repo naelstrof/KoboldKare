@@ -24,6 +24,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
     private int ragdollCount;
     [SerializeField]
     private Transform hip;
+    [SerializeField]
+    private JigglePhysics.JiggleRigBuilder jiggleRig;
+    [SerializeField]
+    private JigglePhysics.JiggleSkin jiggleSkin;
     private Vector3 networkedRagdollHipPosition;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
@@ -67,6 +71,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         if (ragdolled) {
             return;
         }
+        jiggleRig.interpolate = false;
+        jiggleSkin.interpolate = false;
         animator.enabled = false;
         controller.enabled = false;
         foreach (Rigidbody b in ragdollBodies) {
@@ -116,6 +122,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         if (!ragdolled) {
             return;
         }
+        jiggleRig.interpolate = true;
+        jiggleSkin.interpolate = true;
         Vector3 diff = hip.position - body.transform.position;
         body.transform.position += diff;
         hip.position -= diff;

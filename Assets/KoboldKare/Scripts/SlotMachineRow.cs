@@ -17,7 +17,7 @@ public class SlotMachineRow : MonoBehaviour{
     private AudioSource myAud;
 
     private float stripLength = 30.625f;
-    private float lengthBetweenSlots = 2.5f;
+    //private float lengthBetweenSlots = 2.5f;
     private float movementLength = 0.64f;
     //private float slotOffset = 0.095f;
     private float slotOffset = 0f;

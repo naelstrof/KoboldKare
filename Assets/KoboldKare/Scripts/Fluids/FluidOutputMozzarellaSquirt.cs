@@ -37,6 +37,12 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     [SerializeField]
     private float volumeSprayedPerFire = float.MaxValue;
     [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioPack splashEffect;
+    [SerializeField]
+    private AudioPack hoseEffect;
+    [SerializeField]
     [FormerlySerializedAs("vps")]
     private float volumePerSecond = 2f;
     private float volumeSprayedThisFire = 0f;
@@ -107,7 +113,11 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
         }
         switch(type) {
             case OutputType.Spray:
+            splashEffect.PlayOneShot(audioSource);
+            effect.Play();
+            break;
             case OutputType.Hose:
+            hoseEffect.Play(audioSource);
             effect.Play();
             break;
             case OutputType.Squirt: break;
@@ -116,6 +126,7 @@ public class FluidOutputMozzarellaSquirt : BaseStreamer, IFluidOutput {
     }
     public void StopFiring() {
         streams.Clear();
+        audioSource.Stop();
         effect.Stop();
         volumeSprayedThisFire = 0f;
         firing = false;

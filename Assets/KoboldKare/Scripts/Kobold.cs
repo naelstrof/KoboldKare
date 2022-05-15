@@ -142,7 +142,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
                 float cumAmount = 0.5f+0.5f*sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.5f*baseBallSize+0.5f*baseDickSize;
-                Debug.Log("Cumming " + cumAmount);
+                //Debug.Log("Cumming " + cumAmount);
                 dickSet.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), cumAmount, GenericReagentContainer.InjectType.Inject);
                 dickSet.dick.GetComponentInChildren<IFluidOutput>(true).SetVolumePerSecond(cumAmount/dickSet.dick.cumPulseCount);
                 dickSet.dick.Cum();

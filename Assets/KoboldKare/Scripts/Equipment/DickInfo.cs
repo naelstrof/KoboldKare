@@ -42,6 +42,7 @@ public class DickInfo : MonoBehaviour {
         public GenericInflatable bonerInflator;
         public GenericInflatable balls;
         public Equipment.AttachPoint attachPoint;
+        public Material cumSplatProjectorMaterial;
 
         public Vector3 attachPosition;
 
@@ -184,6 +185,10 @@ public class DickInfo : MonoBehaviour {
                 if (!set.dick.IsInside() || pennedKobold == null) {
                     set.dick.GetComponentInChildren<IFluidOutput>(true).Fire(set.balls.GetContainer());
                 } else {
+                    Penetrable hole = set.dick.holeTarget;
+                    Vector3 holePos = hole.GetPoint(0f,set.dick.backwards);
+                    Vector3 holeTangent = hole.GetTangent(0f,set.dick.backwards);
+                    SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x*0.25f, set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent,Vector3.up), GameManager.instance.decalHitMask);
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(set.balls.GetContainer(), set.balls.GetContainer().volume/set.dick.cumPulseCount, GenericReagentContainer.InjectType.Inject);
                 }
             });

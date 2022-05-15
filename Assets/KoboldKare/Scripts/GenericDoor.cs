@@ -17,7 +17,7 @@ public class GenericDoor : GenericUsable, IPunObservable, ISavable {
     protected bool opened {
         get { return (usedCount % 2) != 0; }
     }
-    void Start(){
+    public virtual void Start(){
         audioSource = GetComponent<AudioSource>();
         UpdateState();
     }

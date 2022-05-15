@@ -62,6 +62,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
 
     public IEnumerator Rain() {
         //snow.Stop();
+        rainSounds.enabled = true;
+        thunderSounds.enabled = true;
         while (rainAmount < 1f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
             RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.fixedDeltaTime*0.1f);
@@ -95,6 +97,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             rain.Stop();
             yield return new WaitForFixedUpdate();
         }
+        rainSounds.enabled = false;
+        thunderSounds.enabled = false;
     }
 
     public void StopRain() {

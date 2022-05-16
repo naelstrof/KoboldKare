@@ -4,36 +4,15 @@ Shader "MappedDecalable"
 {
 	Properties
 	{
-		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
+		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[ASEBegin]_BaseMap("BaseMap", 2D) = "white" {}
-		_TerrainDepth("TerrainDepth", 2D) = "white" {}
-		_TerrainNormals("TerrainNormals", 2D) = "white" {}
-		_TerrainBlendMap("TerrainBlendMap", 2D) = "white" {}
-		_ColorALight("ColorALight", Color) = (1,0.9480466,0.495283,0)
-		_ColorADark("ColorADark", Color) = (0.05884402,0.4811321,0,0)
-		_BaseColorMapA("BaseColorMapA", 2D) = "gray" {}
-		_BumpMapA("BumpMapA", 2D) = "bump" {}
-		_SmoothnessA("SmoothnessA", 2D) = "gray" {}
-		_Height("HeightA", 2D) = "gray" {}
-		_ColorBLight("ColorBLight", Color) = (1,0.9480466,0.495283,0)
-		_ColorBDark("ColorBDark", Color) = (0.05884402,0.4811321,0,0)
-		_BaseColorMapB("BaseColorMapB", 2D) = "gray" {}
-		_BumpMapB("BumpMapB", 2D) = "bump" {}
-		_SmoothnessB("SmoothnessB", 2D) = "gray" {}
-		_HeightB("HeightB", 2D) = "gray" {}
-		_Tiling("Tiling", Range( 0.1 , 10)) = 0.1
-		_HeightBlendSmoothing("HeightBlendSmoothing", Range( 0.1 , 1)) = 0.1
-		_DistanceBlendSmooth("DistanceBlendSmooth", Range( 0.1 , 2)) = 0.1
-		_DistanceBlendBias("DistanceBlendBias", Range( -2 , 2)) = 0
-		_BlendDistance01("BlendDistance01", Range( 0 , 1)) = 0
 		_DecalColorMap("DecalColorMap", 2D) = "black" {}
 		_MetallicGlossMap("MetallicGlossMap", 2D) = "gray" {}
 		_BumpMap("BumpMap", 2D) = "bump" {}
 		_Smoothness("Smoothness", Range( 0 , 1)) = 1
 		_Color("Color", Color) = (1,1,1,1)
-		_Metallic("Metallic", Range( 0 , 1)) = 0
-		[ASEEnd][Toggle(_TERRAINBLEND_ON)] _TERRAINBLEND("TERRAINBLEND", Float) = 0
+		[ASEEnd]_Metallic("Metallic", Range( 0 , 1)) = 0
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
 		//_TransStrength( "Trans Strength", Range( 0, 50 ) ) = 1
@@ -230,12 +209,7 @@ Shader "MappedDecalable"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_FRAG_WORLD_NORMAL
-			#define ASE_NEEDS_FRAG_WORLD_TANGENT
-			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			struct VertexInput
 			{
@@ -263,7 +237,6 @@ Shader "MappedDecalable"
 				float4 screenPos : TEXCOORD6;
 				#endif
 				float4 ase_texcoord7 : TEXCOORD7;
-				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -271,15 +244,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -306,34 +270,11 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 			TEXTURE2D(_BumpMap);
-			TEXTURE2D(_TerrainNormals);
-			SAMPLER(sampler_TerrainNormals);
-			TEXTURE2D(_BumpMapB);
-			TEXTURE2D(_BumpMapA);
 			TEXTURE2D(_MetallicGlossMap);
-			TEXTURE2D(_SmoothnessB);
-			TEXTURE2D(_SmoothnessA);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -343,7 +284,6 @@ Shader "MappedDecalable"
 
 				o.ase_texcoord7.xy = v.texcoord.xy;
 				o.ase_texcoord7.zw = v.texcoord1.xyzw.xy;
-				o.ase_texcoord8 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -534,74 +474,22 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 normalizedWorldNormal = normalize( WorldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
-				
-				float3 temp_output_90_14 = UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMap, sampler_BaseMap, uv_BaseMap ), 1.0f );
-				float3x3 ase_worldToTangent = float3x3(WorldTangent,WorldBiTangent,WorldNormal);
-				float3 temp_output_3_0_g56 = WorldNormal;
-				float3 lerpResult43_g58 = lerp( UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapB, sampler_BaseColorMapB, WorldUV9_g58 ), 1.0f ) , UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapA, sampler_BaseColorMapA, WorldUV9_g58 ), 1.0f ) , temp_output_36_0_g58);
-				float3 temp_output_1_0_g56 = lerpResult43_g58;
-				float3 appendResult12_g56 = (float3(( (temp_output_3_0_g56).xz + (temp_output_1_0_g56).xy ) , ( (temp_output_3_0_g56).y * abs( (temp_output_1_0_g56).z ) )));
-				float3 normalizeResult18_g56 = normalize( (appendResult12_g56).xzy );
-				float3 lerpResult37_g3 = lerp( BlendNormal( mul( ase_worldToTangent, (float3( -1,-1,-1 ) + (SAMPLE_TEXTURE2D( _TerrainNormals, sampler_TerrainNormals, appendResult8_g3 ).rgb - float3( 0,0,0 )) * (float3( 1,1,1 ) - float3( -1,-1,-1 )) / (float3( 1,1,1 ) - float3( 0,0,0 ))) ) , mul( ase_worldToTangent, normalizeResult18_g56 ) ) , temp_output_90_14 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float3 staticSwitch93 = lerpResult37_g3;
-				#else
-				float3 staticSwitch93 = temp_output_90_14;
-				#endif
 				
 				float4 tex2DNode8 = SAMPLE_TEXTURE2D( _MetallicGlossMap, sampler_BaseMap, uv_BaseMap );
 				float4 appendResult74 = (float4(( tex2DNode8.r * _Metallic ) , tex2DNode8.g , tex2DNode8.b , ( tex2DNode8.a * _Smoothness )));
 				float4 break10_g2 = appendResult74;
 				float lerpResult9_g2 = lerp( break10_g2.a , 0.9 , tex2DNode3_g2.a);
 				float4 appendResult11_g2 = (float4(break10_g2.r , break10_g2.g , break10_g2.b , lerpResult9_g2));
-				float4 temp_output_90_15 = appendResult11_g2;
-				float4 lerpResult38_g58 = lerp( SAMPLE_TEXTURE2D( _SmoothnessB, sampler_BaseColorMapB, WorldUV9_g58 ) , SAMPLE_TEXTURE2D( _SmoothnessA, sampler_BaseColorMapA, WorldUV9_g58 ) , temp_output_36_0_g58);
-				float4 lerpResult28_g3 = lerp( lerpResult38_g58 , temp_output_90_15 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch94 = lerpResult28_g3;
-				#else
-				float4 staticSwitch94 = temp_output_90_15;
-				#endif
-				float4 break73 = staticSwitch94;
+				float4 break73 = appendResult11_g2;
 				
-				float3 Albedo = staticSwitch91.rgb;
-				float3 Normal = staticSwitch93;
+				float3 Albedo = temp_output_90_13.rgb;
+				float3 Normal = UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMap, sampler_BaseMap, uv_BaseMap ), 1.0f );
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = break73.x;
 				float Smoothness = break73.w;
 				float Occlusion = 1;
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -792,10 +680,7 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			struct VertexInput
 			{
@@ -816,8 +701,6 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -825,15 +708,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -860,26 +734,9 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			float3 _LightDirection;
 #if ASE_SRP_VERSION >= 110000 
 			float3 _LightPosition;
@@ -891,15 +748,8 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
-				o.ase_texcoord4.xyz = ase_worldNormal;
-				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
-				o.ase_texcoord3 = v.vertex;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord4.w = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1067,39 +917,8 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
 				
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -1160,10 +979,7 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			struct VertexInput
 			{
@@ -1184,8 +1000,6 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1193,15 +1007,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1228,26 +1033,9 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1255,15 +1043,8 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
-				o.ase_texcoord4.xyz = ase_worldNormal;
-				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
-				o.ase_texcoord3 = v.vertex;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord4.w = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1409,39 +1190,8 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
 				
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -1495,10 +1245,7 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1522,8 +1269,6 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1531,15 +1276,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1566,26 +1302,9 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1593,15 +1312,8 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
-				o.ase_texcoord4.xyz = ase_worldNormal;
-				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.texcoord1.xy;
-				o.ase_texcoord3 = v.vertex;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord4.w = 0;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1741,42 +1453,11 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
 				
 				
-				float3 Albedo = staticSwitch91.rgb;
+				float3 Albedo = temp_output_90_13.rgb;
 				float3 Emission = 0;
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 
 				#ifdef _ALPHATEST_ON
@@ -1829,10 +1510,7 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1855,8 +1533,6 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1864,15 +1540,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -1899,26 +1566,9 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1926,15 +1576,8 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
-				o.ase_texcoord4.xyz = ase_worldNormal;
-				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
-				o.ase_texcoord3 = v.vertex;
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord4.w = 0;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -2074,41 +1717,10 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
-				float3 normalizedWorldNormal = normalize( ase_worldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
 				
 				
-				float3 Albedo = staticSwitch91.rgb;
-				float Alpha = staticSwitch91.a;
+				float3 Albedo = temp_output_90_13.rgb;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 
 				half4 color = half4( Albedo, Alpha );
@@ -2157,9 +1769,7 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			struct VertexInput
 			{
@@ -2181,7 +1791,6 @@ Shader "MappedDecalable"
 				#endif
 				float3 worldNormal : TEXCOORD2;
 				float4 ase_texcoord3 : TEXCOORD3;
-				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2189,15 +1798,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -2224,26 +1824,9 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2253,7 +1836,6 @@ Shader "MappedDecalable"
 
 				o.ase_texcoord3.xy = v.ase_texcoord.xy;
 				o.ase_texcoord3.zw = v.ase_texcoord1.xy;
-				o.ase_texcoord4 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2402,38 +1984,8 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord4.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord4.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 normalizedWorldNormal = normalize( IN.worldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
 				
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -2514,12 +2066,7 @@ Shader "MappedDecalable"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_FRAG_POSITION
-			#define ASE_NEEDS_FRAG_WORLD_NORMAL
-			#define ASE_NEEDS_FRAG_WORLD_TANGENT
-			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
-			#pragma shader_feature_local _TERRAINBLEND_ON
-
+			
 
 			struct VertexInput
 			{
@@ -2547,7 +2094,6 @@ Shader "MappedDecalable"
 				float4 screenPos : TEXCOORD6;
 				#endif
 				float4 ase_texcoord7 : TEXCOORD7;
-				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2555,15 +2101,6 @@ Shader "MappedDecalable"
 			CBUFFER_START(UnityPerMaterial)
 			float4 _BaseMap_ST;
 			float4 _Color;
-			float4 _ColorBDark;
-			float4 _ColorBLight;
-			float4 _ColorADark;
-			float4 _ColorALight;
-			float _Tiling;
-			float _HeightBlendSmoothing;
-			float _BlendDistance01;
-			float _DistanceBlendSmooth;
-			float _DistanceBlendBias;
 			float _Metallic;
 			float _Smoothness;
 			#ifdef _TRANSMISSION_ASE
@@ -2590,34 +2127,11 @@ Shader "MappedDecalable"
 			SAMPLER(sampler_BaseMap);
 			TEXTURE2D(_DecalColorMap);
 			SAMPLER(sampler_DecalColorMap);
-			TEXTURE2D(_BaseColorMapB);
-			SAMPLER(sampler_BaseColorMapB);
-			TEXTURE2D(_BaseColorMapA);
-			SAMPLER(sampler_BaseColorMapA);
-			TEXTURE2D(_TerrainBlendMap);
-			float4x4 _WorldToTexture;
-			SAMPLER(sampler_TerrainBlendMap);
-			TEXTURE2D(_Height);
-			TEXTURE2D(_HeightB);
-			TEXTURE2D(_TerrainDepth);
-			SAMPLER(sampler_TerrainDepth);
 			TEXTURE2D(_BumpMap);
-			TEXTURE2D(_TerrainNormals);
-			SAMPLER(sampler_TerrainNormals);
-			TEXTURE2D(_BumpMapB);
-			TEXTURE2D(_BumpMapA);
 			TEXTURE2D(_MetallicGlossMap);
-			TEXTURE2D(_SmoothnessB);
-			TEXTURE2D(_SmoothnessA);
 
 
-			float DecodeFloatRGBA2_g57( float4 enc )
-			{
-				float4 kDecodeDot = float4(1.0, 1/255.0, 1/65025.0, 1/16581375.0);
-				    return dot( enc, kDecodeDot );
-			}
 			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2627,7 +2141,6 @@ Shader "MappedDecalable"
 
 				o.ase_texcoord7.xy = v.texcoord.xy;
 				o.ase_texcoord7.zw = v.texcoord1.xyzw.xy;
-				o.ase_texcoord8 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2817,74 +2330,22 @@ Shader "MappedDecalable"
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
 				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
 				float4 temp_output_90_13 = lerpResult7_g2;
-				float4 appendResult3_g58 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform4_g58 = mul(GetObjectToWorldMatrix(),appendResult3_g58);
-				float2 appendResult6_g58 = (float2(transform4_g58.x , transform4_g58.z));
-				float2 WorldUV9_g58 = ( appendResult6_g58 * _Tiling );
-				float4 tex2DNode18_g58 = SAMPLE_TEXTURE2D( _BaseColorMapB, sampler_BaseColorMapB, WorldUV9_g58 );
-				float4 lerpResult24_g58 = lerp( _ColorBDark , _ColorBLight , tex2DNode18_g58.r);
-				float4 tex2DNode14_g58 = SAMPLE_TEXTURE2D( _BaseColorMapA, sampler_BaseColorMapA, WorldUV9_g58 );
-				float4 lerpResult25_g58 = lerp( _ColorADark , _ColorALight , tex2DNode14_g58.r);
-				float4 appendResult3_g3 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform5_g3 = mul(GetObjectToWorldMatrix(),appendResult3_g3);
-				float4 temp_output_6_0_g3 = mul( _WorldToTexture, transform5_g3 );
-				float temp_output_13_0_g59 = ( 1.0 / _HeightBlendSmoothing );
-				float temp_output_36_0_g58 = saturate( ( ( ( SAMPLE_TEXTURE2D( _TerrainBlendMap, sampler_TerrainBlendMap, temp_output_6_0_g3.xy ).r * ( temp_output_13_0_g59 + 1.0 ) ) + ( ( SAMPLE_TEXTURE2D( _Height, sampler_BaseColorMapA, WorldUV9_g58 ).r * temp_output_13_0_g59 * 4.0 ) - temp_output_13_0_g59 ) ) + -( SAMPLE_TEXTURE2D( _HeightB, sampler_BaseColorMapB, WorldUV9_g58 ).r * temp_output_13_0_g59 ) ) );
-				float4 lerpResult37_g58 = lerp( ( lerpResult24_g58 * tex2DNode18_g58.g ) , ( lerpResult25_g58 * tex2DNode14_g58.g ) , temp_output_36_0_g58);
-				float4 break7_g3 = temp_output_6_0_g3;
-				float2 appendResult8_g3 = (float2(break7_g3.x , break7_g3.y));
-				float4 enc2_g57 = SAMPLE_TEXTURE2D( _TerrainDepth, sampler_TerrainDepth, appendResult8_g3 );
-				float localDecodeFloatRGBA2_g57 = DecodeFloatRGBA2_g57( enc2_g57 );
-				float TerrainWorldDepth13_g3 = localDecodeFloatRGBA2_g57;
-				float WorldDepth12_g3 = break7_g3.z;
-				float3 normalizedWorldNormal = normalize( WorldNormal );
-				float dotResult113_g3 = dot( normalizedWorldNormal , float3( 0,1,0 ) );
-				float temp_output_117_0_g3 = ( 1.0 / _DistanceBlendSmooth );
-				float lerpResult24_g3 = lerp( 1.0 , saturate( ( ( TerrainWorldDepth13_g3 - WorldDepth12_g3 ) / _BlendDistance01 ) ) , saturate( (( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias ) + (dotResult113_g3 - 0.0) * (( temp_output_117_0_g3 + _DistanceBlendBias ) - ( ( 1.0 - temp_output_117_0_g3 ) + _DistanceBlendBias )) / (1.0 - 0.0)) ));
-				float4 lerpResult38_g3 = lerp( lerpResult37_g58 , temp_output_90_13 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch91 = lerpResult38_g3;
-				#else
-				float4 staticSwitch91 = temp_output_90_13;
-				#endif
-				
-				float3 temp_output_90_14 = UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMap, sampler_BaseMap, uv_BaseMap ), 1.0f );
-				float3x3 ase_worldToTangent = float3x3(WorldTangent,WorldBiTangent,WorldNormal);
-				float3 temp_output_3_0_g56 = WorldNormal;
-				float3 lerpResult43_g58 = lerp( UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapB, sampler_BaseColorMapB, WorldUV9_g58 ), 1.0f ) , UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapA, sampler_BaseColorMapA, WorldUV9_g58 ), 1.0f ) , temp_output_36_0_g58);
-				float3 temp_output_1_0_g56 = lerpResult43_g58;
-				float3 appendResult12_g56 = (float3(( (temp_output_3_0_g56).xz + (temp_output_1_0_g56).xy ) , ( (temp_output_3_0_g56).y * abs( (temp_output_1_0_g56).z ) )));
-				float3 normalizeResult18_g56 = normalize( (appendResult12_g56).xzy );
-				float3 lerpResult37_g3 = lerp( BlendNormal( mul( ase_worldToTangent, (float3( -1,-1,-1 ) + (SAMPLE_TEXTURE2D( _TerrainNormals, sampler_TerrainNormals, appendResult8_g3 ).rgb - float3( 0,0,0 )) * (float3( 1,1,1 ) - float3( -1,-1,-1 )) / (float3( 1,1,1 ) - float3( 0,0,0 ))) ) , mul( ase_worldToTangent, normalizeResult18_g56 ) ) , temp_output_90_14 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float3 staticSwitch93 = lerpResult37_g3;
-				#else
-				float3 staticSwitch93 = temp_output_90_14;
-				#endif
 				
 				float4 tex2DNode8 = SAMPLE_TEXTURE2D( _MetallicGlossMap, sampler_BaseMap, uv_BaseMap );
 				float4 appendResult74 = (float4(( tex2DNode8.r * _Metallic ) , tex2DNode8.g , tex2DNode8.b , ( tex2DNode8.a * _Smoothness )));
 				float4 break10_g2 = appendResult74;
 				float lerpResult9_g2 = lerp( break10_g2.a , 0.9 , tex2DNode3_g2.a);
 				float4 appendResult11_g2 = (float4(break10_g2.r , break10_g2.g , break10_g2.b , lerpResult9_g2));
-				float4 temp_output_90_15 = appendResult11_g2;
-				float4 lerpResult38_g58 = lerp( SAMPLE_TEXTURE2D( _SmoothnessB, sampler_BaseColorMapB, WorldUV9_g58 ) , SAMPLE_TEXTURE2D( _SmoothnessA, sampler_BaseColorMapA, WorldUV9_g58 ) , temp_output_36_0_g58);
-				float4 lerpResult28_g3 = lerp( lerpResult38_g58 , temp_output_90_15 , lerpResult24_g3);
-				#ifdef _TERRAINBLEND_ON
-				float4 staticSwitch94 = lerpResult28_g3;
-				#else
-				float4 staticSwitch94 = temp_output_90_15;
-				#endif
-				float4 break73 = staticSwitch94;
+				float4 break73 = appendResult11_g2;
 				
-				float3 Albedo = staticSwitch91.rgb;
-				float3 Normal = staticSwitch93;
+				float3 Albedo = temp_output_90_13.rgb;
+				float3 Normal = UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMap, sampler_BaseMap, uv_BaseMap ), 1.0f );
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = break73.x;
 				float Smoothness = break73.w;
 				float Occlusion = 1;
-				float Alpha = staticSwitch91.a;
+				float Alpha = temp_output_90_13.a;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
@@ -3039,25 +2500,21 @@ Shader "MappedDecalable"
 }
 /*ASEBEGIN
 Version=18921
-0;30;2560;1359;2068.314;751.1265;1;True;True
+0;234;2218;979;613.3834;261.0691;1;True;True
 Node;AmplifyShaderEditor.TextureCoordinatesNode;61;-1956.466,-53.53351;Inherit;False;0;6;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,199.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;25;0;Create;True;0;0;0;False;0;False;6;None;472f584c50d599d429a4462750ddbe27;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;71;-1575.851,613.222;Inherit;False;Property;_Metallic;Metallic;29;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;59;-1567.594,428.3537;Inherit;False;Property;_Smoothness;Smoothness;27;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,199.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;3;0;Create;True;0;0;0;False;0;False;6;None;92a3aa22916ff01498a03edd6b8cae7a;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;71;-1575.851,613.222;Inherit;False;Property;_Metallic;Metallic;7;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;59;-1567.594,428.3537;Inherit;False;Property;_Smoothness;Smoothness;5;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;-1138.661,338.3918;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;62;-1133.894,-181.2861;Inherit;False;Property;_Color;Color;28;0;Create;True;0;0;0;False;0;False;1,1,1,1;0.5471698,0.1574403,0.1574403,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;e7a2a5e1fe6aa6648ac0979a3209fe3a;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;62;-1133.894,-181.2861;Inherit;False;Property;_Color;Color;6;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;ebaab750f57cad443a0a7a230e1bf198;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;75;-1077.416,179.4507;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;26;0;Create;True;0;0;0;False;0;False;6;None;5961347c4bdef5f409521f5f2aded9f7;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;4;0;Create;True;0;0;0;False;0;False;6;None;43e879ee5caefab45b1f4569b36a83c0;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-903.8377,-327.4095;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;74;-543.5166,220.7278;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;90;-251.1696,21.35154;Inherit;False;ApplyDecals;23;;2;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
-Node;AmplifyShaderEditor.FunctionNode;92;192.3955,181.8717;Inherit;False;TerrainBlender;1;;3;b7b88921e1da5fa42a1bc22e9b01bf0f;0;3;40;COLOR;0,0,0,0;False;45;FLOAT3;0,0,0;False;46;COLOR;0,0,0,0;False;3;COLOR;0;FLOAT3;43;COLOR;44
-Node;AmplifyShaderEditor.StaticSwitch;94;653.6997,191.1405;Inherit;False;Property;_TERRAINBLEND2;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT4;0,0,0,0;False;0;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;8;FLOAT4;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.StaticSwitch;91;632.9503,-83.6375;Inherit;False;Property;_TERRAINBLEND;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.FunctionNode;90;-251.1696,21.35154;Inherit;False;ApplyDecals;1;;2;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
 Node;AmplifyShaderEditor.BreakToComponentsNode;73;1058.729,294.426;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.BreakToComponentsNode;95;1065.15,-59.62518;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.StaticSwitch;93;641.9995,54.64054;Inherit;False;Property;_TERRAINBLEND1;TERRAINBLEND;30;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Reference;91;True;True;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RangedFloatNode;77;1182.551,452.657;Inherit;False;Constant;_Float0;Float 0;9;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;88;1516.614,280.9744;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;1;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;82;1516.614,280.9744;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;MappedDecalable;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;1;Built-in Fog;1;_FinalColorxAlpha;0;Meta Pass;1;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;True;True;True;True;False;;True;0
@@ -3083,22 +2540,13 @@ WireConnection;74;3;60;0
 WireConnection;90;4;63;0
 WireConnection;90;5;7;0
 WireConnection;90;6;74;0
-WireConnection;92;40;90;13
-WireConnection;92;45;90;14
-WireConnection;92;46;90;15
-WireConnection;94;1;90;15
-WireConnection;94;0;92;44
-WireConnection;91;1;90;13
-WireConnection;91;0;92;0
-WireConnection;73;0;94;0
-WireConnection;95;0;91;0
-WireConnection;93;1;90;14
-WireConnection;93;0;92;43
-WireConnection;82;0;91;0
-WireConnection;82;1;93;0
+WireConnection;73;0;90;15
+WireConnection;95;0;90;13
+WireConnection;82;0;90;13
+WireConnection;82;1;90;14
 WireConnection;82;3;73;0
 WireConnection;82;4;73;3
 WireConnection;82;6;95;3
 WireConnection;82;7;77;0
 ASEEND*/
-//CHKSM=EC26686EDABC61297427E3B4371D8DD595FF3A6C
+//CHKSM=185766B0DA273B2D82FA7C637B5F21D71155000E

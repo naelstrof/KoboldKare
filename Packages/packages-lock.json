@@ -21,6 +21,12 @@
       "dependencies": {},
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
+    "com.naelstrof.bodyproportion": {
+      "version": "file:com.naelstrof.bodyproportion",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.naelstrof.jigglephysics": {
       "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v3.6.4",
       "depth": 0,
@@ -38,11 +44,11 @@
       "hash": "9efeb7bb1fe5248fe4f15723e235af0f1c75a727"
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.2",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "cfbdfb2fe44eb3cdfd477f68a60655ed57080749"
+      "hash": "01393b31ec6f3d098485e605438efc3a5dc518d0"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -67,13 +73,6 @@
       "source": "git",
       "dependencies": {},
       "hash": "82a9836fdc5056d5d3b3de0d8471e56d55f6f292"
-    },
-    "com.ralivnaelstrof.terrainbrushtools": {
-      "version": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "7e2543cd46bebc5cc151e55fb074eb0d608a853d"
     },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
@@ -112,12 +111,19 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.analytics": {
-      "version": "3.6.11",
+      "version": "3.6.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ext.nunit": {
+      "version": "1.0.6",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.formats.fbx": {
@@ -127,6 +133,15 @@
       "dependencies": {
         "com.unity.timeline": "1.0.0",
         "com.autodesk.fbx": "4.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ide.rider": {
+      "version": "2.0.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.1"
       },
       "url": "https://packages.unity.com"
     },
@@ -189,7 +204,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.3",
+      "version": "1.19.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -209,6 +224,17 @@
       "dependencies": {
         "com.unity.render-pipelines.core": "10.6.0",
         "com.unity.searcher": "4.3.2"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.test-framework": {
+      "version": "1.1.29",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ext.nunit": "1.0.6",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

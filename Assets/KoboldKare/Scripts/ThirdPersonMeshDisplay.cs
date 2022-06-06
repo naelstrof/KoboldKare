@@ -10,20 +10,13 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     public LODGroup group;
     public JigglePhysics.JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
-    public BodyProportion proportion;
-    public void OnFinishProportionEdit() {
-        RegenerateMirror();
-    }
     public void Start() {
-        proportion.completed += OnFinishProportionEdit;
         foreach (SkinnedMeshRenderer s in dissolveTargets) {
             foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 0f);
             }
         }
-    }
-    public void OnDestroy() {
-        proportion.completed -= OnFinishProportionEdit;
+        RegenerateMirror();
     }
     public void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {

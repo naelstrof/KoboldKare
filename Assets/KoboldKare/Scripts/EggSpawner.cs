@@ -4,53 +4,53 @@ using UnityEngine;
 using PenetrationTech;
 
 public class EggSpawner : MonoBehaviour {
+    private class PenetratorCoupler {
+        public Penetrator penetrator;
+        public Penetrable penetrable;
+        public Rigidbody body;
+        public float pushAmount;
+    }
+
     public Penetrable targetPenetrable;
     [Range(0f,1f)]
     public float spawnAlongLength = 0.5f;
     [Range(-1,1f)]
     public float pushDirection = -1f;
     public PhotonGameObjectReference penetratorPrefab;
-    private List<Penetrator> penetrators = new List<Penetrator>();
+    private List<PenetratorCoupler> penetrators = new List<PenetratorCoupler>();
     public void Update() {
         for(int i=0;i<penetrators.Count;i++) {
-            Penetrator d = penetrators[i];
-            d.PushTowards(pushDirection*0.02f);
-            if (!d.IsInside(0.25f)) {
-                d.Decouple(true);
-                penetrators.Remove(d);
-                StartCoroutine(ReenableEggAfterSomeTime(d));
+            var coupler = penetrators[i];
+            if (coupler.pushAmount < coupler.penetrator.GetWorldLength()) {
+                CatmullSpline path = coupler.penetrable.GetSplinePath();
+                Vector3 position = path.GetPositionFromT(0f);
+                Vector3 tangent = path.GetVelocityFromT(0f).normalized;
+                coupler.pushAmount += Time.deltaTime*0.4f;
+                coupler.body.transform.position = position - tangent * coupler.pushAmount;
+                continue;
             }
+
+            coupler.body.isKinematic = false;
+            penetrators.RemoveAt(i);
         }
     }
-    //public void SpawnEggNoReturn() {
-        //SpawnEgg();
-    //}
     public Penetrator SpawnEgg(float eggVolume) {
         //Penetrator d = GameObject.Instantiate(penetratorPrefab).GetComponentInChildren<Penetrator>();
-        Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,targetPenetrable.GetPoint(spawnAlongLength, false), Quaternion.identity).GetComponentInChildren<Penetrator>();
+        CatmullSpline path = targetPenetrable.GetSplinePath();
+        Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up)).GetComponentInChildren<Penetrator>();
         if (d == null) {
             return null;
         }
+
+        Rigidbody body = d.GetComponentInChildren<Rigidbody>();
         d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
         d.GetComponent<GenericInflatable>().TriggerTween();
-        d.body.transform.position = targetPenetrable.GetPoint(spawnAlongLength, false);
+        body.isKinematic = true;
         // Manually control penetration parameters
-        d.autoPenetrate = false;
-        d.canOverpenetrate = true;
-        d.CoupleWith(targetPenetrable, ((spawnAlongLength*targetPenetrable.orificeLength)/d.GetLength()));
-        penetrators.Add(d);
+        d.Penetrate(targetPenetrable);
+        penetrators.Add(new PenetratorCoupler(){penetrator = d, body = body, pushAmount = 0f});
         return d;
     }
-    public IEnumerator ReenableEggAfterSomeTime(Penetrator d) {
-        yield return new WaitForSeconds(1f);
-        d.autoPenetrate = true;
-    }
-    //public IEnumerator SpawnEggs() {
-        //while(true) {
-            //Destroy(SpawnEgg().gameObject, 60f);
-            //yield return new WaitForSeconds(UnityEngine.Random.Range(0.5f,5f));
-        //}
-    //}
     public void OnValidate() {
 #if UNITY_EDITOR
         penetratorPrefab.OnValidate();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Naelstrof.BodyProportion;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,7 +20,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
     private CollisionDetectionMode oldCollisionMode;
     private List<Vector3> savedJointAnchors;
     [SerializeField]
-    private BodyProportion bodyProportion;
+    private BodyProportionBase bodyProportion;
     public bool ragdolled {get; private set;}
     private int ragdollCount;
     [SerializeField]

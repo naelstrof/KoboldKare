@@ -12,6 +12,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using PenetrationTech;
 using TMPro;
 using System.IO;
+using Naelstrof.BodyProportion;
 
 public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public StatusEffect koboldStatus;
@@ -51,7 +52,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public List<GenericInflatable> subcutaneousStorage = new List<GenericInflatable>();
     public GenericInflatable sizeInflatable;
     public GenericReagentContainer balls;
-    public BodyProportion bodyProportion;
+    public BodyProportionSimple bodyProportion;
     public TMPro.TMP_Text chatText;
     public float textSpeedPerCharacter, minTextTimeout;
     public UnityEvent OnEggFormed;
@@ -144,8 +145,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 float cumAmount = 0.5f+0.5f*sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.5f*baseBallSize+0.5f*baseDickSize;
                 //Debug.Log("Cumming " + cumAmount);
                 dickSet.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), cumAmount, GenericReagentContainer.InjectType.Inject);
-                dickSet.dick.GetComponentInChildren<IFluidOutput>(true).SetVolumePerSecond(cumAmount/dickSet.dick.cumPulseCount);
-                dickSet.dick.Cum();
+                dickSet.dick.GetComponentInChildren<IFluidOutput>(true).SetVolumePerSecond(cumAmount/12f);
             }
             PumpUpDick(1f);
             stimulation = stimulationMin;
@@ -219,8 +219,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             baseBoobSize = Random.Range(6f,30f);
             baseBallSize = 0f;
         }
-        bodyProportion.topBottom = Random.Range(-1f,1f);
-        bodyProportion.thickness = Random.Range(-1f,1f);
+        bodyProportion.SetTopBottom(Random.Range(-1f,1f));
+        bodyProportion.SetThickness(Random.Range(-1f,1f));
 
         sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), Random.Range(0.7f,1.2f) * sizeInflatable.reagentVolumeDivisor);
         RegenerateSlowly(1000f);
@@ -231,14 +231,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             statEvent.onChange.Invoke(block.GetStat(statEvent.changedStat));
         }
     }
-    private void OnSteamAudioChanged(UnityScriptableSettings.ScriptableSetting setting) {
-        foreach(AudioSource asource in GetComponentsInChildren<AudioSource>(true)) {
-            asource.spatialize = setting.value > 0f;
-        }
-        //foreach(SteamAudio.SteamAudioSource source in GetComponentsInChildren<SteamAudio.SteamAudioSource>(true)) {
-            //source.enabled = setting.value > 0f;
-        //}
-    }
 
     void Start() {
         statblock.AddStatusEffect(koboldStatus, StatBlock.StatChangeSource.Misc);
@@ -247,10 +239,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         foreach (var b in bellies) {
             b.GetContainer().OnChange.AddListener(OnReagentContainerChanged);
         }
-        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
-        steamAudioSetting.onValueChange -= OnSteamAudioChanged;
-        steamAudioSetting.onValueChange += OnSteamAudioChanged;
-        OnSteamAudioChanged(steamAudioSetting);
     }
     private void OnDestroy() {
         statblock.StatusEffectsChangedEvent -= OnStatusEffectsChanged;
@@ -261,8 +249,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (photonView.IsMine && PhotonNetwork.InRoom) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
-        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
-        steamAudioSetting.onValueChange -= OnSteamAudioChanged;
     }
     public bool OnGrab(Kobold kobold) {
         //onGrabEvent.Invoke(kobold, transform.position);
@@ -393,13 +379,14 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
     public bool IsPenetrating(Kobold k) {
-        foreach(var penetratable in k.penetratables) {
+        //TODO: add functionality so we can determine if which dick is penetrated where.
+        /*foreach(var penetratable in k.penetratables) {
             foreach(var dickset in activeDicks) {
                 if (penetratable.penetratable.ContainsPenetrator(dickset.dick)) {
                     return true;
                 }
             }
-        }
+        }*/
         return false;
     }
     public void OnEndInteract(Kobold k) {

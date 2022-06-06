@@ -69,46 +69,18 @@ public class DickInfo : MonoBehaviour {
         }
         attachTask = new Task(AttachToRoutine(k));
     }
-    public void OnDickLODClose() {
-        foreach (DickSet set in dicks) {
-            if (set.dick.body != null && !set.dick.body.isKinematic) {
-                set.dick.body.interpolation = RigidbodyInterpolation.Interpolate;
-                set.dick.body.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            }
-        }
-    }
-    public void OnDickLODFar() {
-        foreach (DickSet set in dicks) {
-            if (set.dick.body != null && !set.dick.body.isKinematic) {
-                set.dick.body.interpolation = RigidbodyInterpolation.None;
-                set.dick.body.collisionDetectionMode = CollisionDetectionMode.Discrete;
-            }
-        }
-    }
-    public void OnDickMovement(float movementAmount) {
+    /*public void OnDickMovement(float movementAmount) {
         attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
         attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
-    }
-    //public void Cum() {
-        //foreach (DickSet set in dicks) {
-            //set.dick.Cum();
-        //}
-    //}
+    }*/
     public void RemoveFrom(Kobold k) {
         foreach (DickSet set in dicks) {
-            foreach(var r in set.dick.deformationTargets) {
-                k.koboldBodyRenderers.Remove(r);
-            }
             set.balls.SetContainer(null);
             k.activeDicks.Remove(set);
-            set.dick.OnMove.RemoveListener(OnDickMovement);
             foreach(Rigidbody r in k.ragdoller.GetRagdollBodies()) {
                 if (r.GetComponent<Collider>() == null) {
                     continue;
                 }
-                //foreach (Collider b in set.dick.selfColliders) {
-                    //Physics.IgnoreCollision(r.GetComponent<Collider>(), b, false);
-                //}
             }
         }
         bool shouldReenableVagina = true;
@@ -124,20 +96,8 @@ public class DickInfo : MonoBehaviour {
                 }
             }
         }
-        //k.OnOrgasm.RemoveListener(Cum);
-        //k.lodLevel.OnLODClose.RemoveListener(OnDickLODClose);
-        //k.lodLevel.OnLODFar.RemoveListener(OnDickLODFar);
-        if (attachedKobold) {
-            attachedKobold.ragdoller.RagdollEvent -= OnRagdoll;
-        }
         if (k == attachedKobold) {
             attachedKobold = null;
-        }
-        //Destroy(gameObject);
-    }
-    private void OnDestroy() {
-        if (attachedKobold) {
-            attachedKobold.ragdoller.RagdollEvent -= OnRagdoll;
         }
     }
     private IEnumerator AttachToRoutine(Kobold k) {
@@ -168,13 +128,12 @@ public class DickInfo : MonoBehaviour {
                 set.parentTransform = k.animator.GetBoneTransform(set.parent);
             }
             set.info = this;
-            set.dick.root = k.transform;
             set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
             set.dickContainer.localScale = scale;
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
 
-            set.dick.OnCumEmit.AddListener(()=>{
+            /*set.dick.OnCumEmit.AddListener(()=>{
                 //ReagentContents cumbucket = new ReagentContents();
                 //cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
                 //cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
@@ -191,7 +150,7 @@ public class DickInfo : MonoBehaviour {
                     SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x*0.25f, set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent,Vector3.up), GameManager.instance.decalHitMask);
                     set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(set.balls.GetContainer(), set.balls.GetContainer().volume/set.dick.cumPulseCount, GenericReagentContainer.InjectType.Inject);
                 }
-            });
+            });*/
 
             if (set.parent == HumanBodyBones.Hips) {
                 foreach(var hole in attachedKobold.penetratables) {
@@ -200,10 +159,10 @@ public class DickInfo : MonoBehaviour {
                     }
                 }
             }
-            k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
+            //k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
             set.balls.SetContainer(k.balls);
             k.activeDicks.Add(set);
-            set.dick.OnMove.AddListener(OnDickMovement);
+            //set.dick.OnMove.AddListener(OnDickMovement);
             // Make sure the dick is the right color, this just forces a reset of the colors.
             Color colorSave = k.HueBrightnessContrastSaturation;
             k.HueBrightnessContrastSaturation = Color.white;
@@ -215,21 +174,5 @@ public class DickInfo : MonoBehaviour {
             }
         }
         k.animator.enabled = animatorWasEnabled;
-        //k.lodLevel.OnLODClose.AddListener(OnDickLODClose);
-        //k.lodLevel.OnLODFar.AddListener(OnDickLODFar);
-        if (attachedKobold) {
-            attachedKobold.ragdoller.RagdollEvent += OnRagdoll;
-        }
-        OnRagdoll(attachedKobold.ragdoller.ragdolled);
-    }
-    public void OnRagdoll(bool ragdolled) {
-        foreach (DickSet set in dicks) {
-            foreach(Collider c in set.dick.body.GetComponentsInChildren<Collider>()) {
-                if (c.isTrigger) {
-                    continue;
-                }
-                c.enabled = !ragdolled;
-            }
-        }
     }
 }

@@ -108,19 +108,9 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = false;
         }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = false;
-            }
-        }
         yield return new WaitForSeconds(5f);
         foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = true;
-        }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
-            }
         }
         float endTransitionTime = Time.timeSinceLevelLoad + 3f;
         int oldLayer = kobold.ragdoller.GetRagdollBodies()[0].gameObject.layer;
@@ -184,11 +174,6 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         useRandomSample = false;
         foreach( Rigidbody r in kobold.ragdoller.GetRagdollBodies()) {
             r.detectCollisions = true;
-        }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
-            }
         }
     }
     private void OnDestroy() {
@@ -361,24 +346,11 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         }
         if (kobold != null) {
             float maxPen = 0f;
-            // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.
-            foreach (var hole in kobold.penetratables) {
-                foreach( var dick in hole.penetratable.GetPenetrators()) {
-                    if (dick.IsInside()) {
-                        lastPosition = transform.position;
-                    }
-                }
-            }
             playerModel.SetFloat("PenetrationSize", Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
                 playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 1f, Time.deltaTime * 2f));
             } else {
                 playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 0f, Time.deltaTime));
-            }
-            foreach (var dickSet in kobold.activeDicks) {
-                if (dickSet.dick.holeTarget != null || dickSet.dick.cumActive > 0) {
-                    playerModel.SetFloat("SexFace", 1f);
-                }
             }
             playerModel.SetFloat("Orgasm", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
             playerModel.SetFloat("MadHappy", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));

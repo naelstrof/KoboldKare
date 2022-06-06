@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
         if (group == null) {
             group = soundEffectGroup;
         }
-        var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
+        //var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         GameObject g = new GameObject("One shot Audio");
         g.transform.position = position;
         AudioSource source = g.AddComponent<AudioSource>();
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour {
         source.minDistance = 0f;
         source.maxDistance = 25f;
         source.outputAudioMixerGroup = soundEffectGroup;
-        source.spatialize = steamAudioSetting.value > 0f;
+        //source.spatialize = steamAudioSetting.value > 0f;
         source.clip = clip;
         source.spatialBlend = 1f;
         source.volume = volume;

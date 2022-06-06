@@ -47,8 +47,8 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 
                 break;
             }
-            case "TopBottom": targetKobold.bodyProportion.topBottom = setting.value; break;
-            case "Thickness": targetKobold.bodyProportion.thickness = setting.value; break;
+            case "TopBottom": targetKobold.bodyProportion.SetTopBottom(setting.value); break;
+            case "Thickness": targetKobold.bodyProportion.SetThickness(setting.value); break;
             case "BoobSize": {
                 targetKobold.baseBoobSize = setting.value*30f;
                 foreach (var boob in targetKobold.boobs) {

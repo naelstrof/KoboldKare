@@ -17043,7 +17043,7 @@ MonoBehaviour:
   - {fileID: 7141379799750553941}
   - {fileID: 3513761996189148957}
   body: {fileID: 4787937348439926609}
-  bodyProportion: {fileID: 0}
+  bodyProportion: {fileID: 2103486266263749528}
   hip: {fileID: 6506915555090380208}
   jiggleRig: {fileID: 3736482642893614196}
   jiggleSkin: {fileID: 7646633552433837299}

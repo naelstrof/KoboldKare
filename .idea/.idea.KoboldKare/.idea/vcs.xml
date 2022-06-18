@@ -2,6 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Packages/com.naelstrof.bodyproportion" vcs="Git" />
   </component>
 </project>

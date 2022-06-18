@@ -1,0 +1,16 @@
+{
+    "name": "naelstrof.MozzarellaTech",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d0135da40076c8843b9d9c6d66da44be"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

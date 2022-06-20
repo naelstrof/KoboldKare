@@ -112,6 +112,7 @@ public class ReagentContents {
         }
         return metabolizeContents;
     }
+
     public float GetVolumeOf(short id) {
         if (contents.ContainsKey(id)) {
             return contents[id].volume;

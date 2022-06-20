@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -11,6 +12,9 @@ public class BucketWeapon : GenericWeapon {
     [SerializeField]
     private Animator bucketAnimator;
 
+    [SerializeField]
+    private Rigidbody body;
+
     private static readonly int Fire = Animator.StringToHash("Fire");
 
     public override void OnFire(GameObject player) {
@@ -19,8 +23,13 @@ public class BucketWeapon : GenericWeapon {
     }
 
     public void OnFireComplete() {
-        Vector3 velocity = GetWeaponBarrelTransform().forward * 5f;
-        PhotonNetwork.Instantiate(bucketSplashProjectile.photonName, GetWeaponBarrelTransform().position,
+        Vector3 velocity = GetWeaponBarrelTransform().forward * 10f + body.velocity*0.5f;
+        GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName, GetWeaponBarrelTransform().position,
             GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity});
+        obj.GetComponent<Projectile>().LaunchFrom(body);
+    }
+
+    private void OnValidate() {
+        bucketSplashProjectile.OnValidate();
     }
 }

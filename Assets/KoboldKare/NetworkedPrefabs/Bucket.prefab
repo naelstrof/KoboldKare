@@ -323,10 +323,12 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 2475493572493469503}
   weaponHoldOffset: {x: 0, y: -0.3, z: 0}
   bucketSplashProjectile:
-    gameObject: {fileID: 0}
-    photonName: 
+    gameObject: {fileID: 6847052273168792518, guid: f42cf9decb64d9f4f9a00d76db944c15,
+      type: 3}
+    photonName: FluidProjectile
   container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
+  body: {fileID: 7403922466466801549}
 --- !u!1 &2004953112158708580
 GameObject:
   m_ObjectHideFlags: 0

@@ -214,6 +214,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splash: {fileID: 8990559583516497300}
   projectile: {fileID: 2486025102224192870}
+  splashSound: {fileID: 11400000, guid: 28060c26902176c4885806a8a485b3da, type: 2}
+  splashEffect: {fileID: 7588399243503337696}
+  projectileBlob: {fileID: 4500658826102850757}
 --- !u!114 &5449135698538099406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +287,10 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0.012286487, y: 0.20507877, z: 1, w: 1}
+        m_Name: Color
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -443,6 +449,12 @@ PrefabInstance:
 --- !u!4 &3332278379604459434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 61718ce813494304291e7eeca2f4f059,
+    type: 3}
+  m_PrefabInstance: {fileID: 3005054315727738945}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4500658826102850757 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 61718ce813494304291e7eeca2f4f059,
     type: 3}
   m_PrefabInstance: {fileID: 3005054315727738945}
   m_PrefabAsset: {fileID: 0}

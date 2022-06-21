@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRenderers:
-  - {fileID: 0}
+  - {fileID: 7606962015968506203}
   shapeCurves: []
   transformCurves:
   - scaleCurve:

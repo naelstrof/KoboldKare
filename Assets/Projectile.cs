@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstantiateMagicCallback {
     private Vector3 velocity;
@@ -12,12 +12,20 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
     private GameObject splash;
     [SerializeField]
     private GameObject projectile;
+    [SerializeField]
+    private AudioPack splashSound;
+    
+    [SerializeField] private VisualEffect splashEffect;
+    [SerializeField] private Renderer projectileBlob;
     private ReagentContents contents;
     private HashSet<Collider> ignoreColliders;
     private static Collider[] colliders = new Collider[32];
     private static RaycastHit[] raycastHits = new RaycastHit[32];
     private static HashSet<GenericReagentContainer> hitContainers = new HashSet<GenericReagentContainer>();
     private bool splashed = false;
+    private static readonly int FluidColor = Shader.PropertyToID("_FluidColor");
+    private AudioSource splashSoundSource;
+
     void Update() {
         if (splashed) {
             return;
@@ -55,6 +63,16 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
         }
     }
 
+    private void Start() {
+        splashSoundSource = gameObject.AddComponent<AudioSource>();
+        splashSoundSource.maxDistance = 20f;
+        splashSoundSource.minDistance = 0.25f;
+        splashSoundSource.spatialBlend = 1f;
+        splashSoundSource.playOnAwake = false;
+        splashSoundSource.loop = false;
+        splashSoundSource.rolloffMode = AudioRolloffMode.Linear;
+    }
+
     private void OnSplash() {
         splash.SetActive(true);
         projectile.SetActive(false);
@@ -76,6 +94,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
             StartCoroutine(DestroyAfterTime());
         }
         transform.rotation = Quaternion.identity;
+        splashSound.Play(splashSoundSource);
     }
 
     private IEnumerator DestroyAfterTime() {
@@ -118,6 +137,9 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         contents = (ReagentContents)info.photonView.InstantiationData[0];
+        Color color = contents.GetColor();
+        splashEffect.SetVector4("Color", new Vector4(color.r,color.g,color.b, color.a));
+        projectileBlob.material.SetColor(FluidColor, color);
         velocity = (Vector3)info.photonView.InstantiationData[1];
         splashed = false;
     }

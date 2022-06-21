@@ -23,10 +23,13 @@ public class BucketWeapon : GenericWeapon {
     }
 
     public void OnFireComplete() {
-        Vector3 velocity = GetWeaponBarrelTransform().forward * 10f + body.velocity*0.5f;
-        GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName, GetWeaponBarrelTransform().position,
-            GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity});
-        obj.GetComponent<Projectile>().LaunchFrom(body);
+        if (container.volume > 0.1f) {
+            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f + body.velocity * 0.5f;
+            GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
+                GetWeaponBarrelTransform().position,
+                GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity });
+            obj.GetComponent<Projectile>().LaunchFrom(body);
+        }
     }
 
     private void OnValidate() {

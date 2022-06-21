@@ -198,7 +198,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     public void RandomizeKobold() {
         sex = Random.Range(0f,1f);
-        HueBrightnessContrastSaturation = new Vector4(Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
+        HueBrightnessContrastSaturation = new Vector4(Random.Range(0f,1f), Random.Range(0.1f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
 
 
         if (Random.Range(0f,1f) > 0.5f) {

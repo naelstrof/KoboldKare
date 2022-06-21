@@ -215,6 +215,7 @@ Shader "Rock"
 
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
 			#define ASE_NEEDS_FRAG_WORLD_TANGENT
 			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
 
@@ -530,7 +531,9 @@ Shader "Rock"
 				float4 lerpResult22 = lerp( temp_output_60_0 , color23 , temp_output_24_0);
 				float2 texCoord2_g62 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g62 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g62, 0.0 );
-				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , tex2DNode3_g62.a);
+				float fresnelNdotV16_g62 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode16_g62 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g62, 5.0 ) );
+				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , ( tex2DNode3_g62.a * fresnelNode16_g62 ));
 				
 				float2 temp_cast_3 = (_RockTiling).xx;
 				float3x3 ase_worldToTangent = float3x3(WorldTangent,WorldBiTangent,WorldNormal);
@@ -1520,7 +1523,11 @@ Shader "Rock"
 				float4 lerpResult22 = lerp( temp_output_60_0 , color23 , temp_output_24_0);
 				float2 texCoord2_g62 = IN.ase_texcoord3.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g62 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g62, 0.0 );
-				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , tex2DNode3_g62.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float fresnelNdotV16_g62 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g62 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g62, 5.0 ) );
+				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , ( tex2DNode3_g62.a * fresnelNode16_g62 ));
 				
 				
 				float3 Albedo = lerpResult7_g62.rgb;
@@ -1814,7 +1821,11 @@ Shader "Rock"
 				float4 lerpResult22 = lerp( temp_output_60_0 , color23 , temp_output_24_0);
 				float2 texCoord2_g62 = IN.ase_texcoord3.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g62 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g62, 0.0 );
-				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , tex2DNode3_g62.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float fresnelNdotV16_g62 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g62 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g62, 5.0 ) );
+				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , ( tex2DNode3_g62.a * fresnelNode16_g62 ));
 				
 				
 				float3 Albedo = lerpResult7_g62.rgb;
@@ -2153,6 +2164,7 @@ Shader "Rock"
 
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
 			#define ASE_NEEDS_FRAG_WORLD_TANGENT
 			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
 
@@ -2467,7 +2479,9 @@ Shader "Rock"
 				float4 lerpResult22 = lerp( temp_output_60_0 , color23 , temp_output_24_0);
 				float2 texCoord2_g62 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g62 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g62, 0.0 );
-				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , tex2DNode3_g62.a);
+				float fresnelNdotV16_g62 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode16_g62 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g62, 5.0 ) );
+				float4 lerpResult7_g62 = lerp( lerpResult22 , tex2DNode3_g62 , ( tex2DNode3_g62.a * fresnelNode16_g62 ));
 				
 				float2 temp_cast_3 = (_RockTiling).xx;
 				float3x3 ase_worldToTangent = float3x3(WorldTangent,WorldBiTangent,WorldNormal);
@@ -2645,7 +2659,7 @@ Shader "Rock"
 }
 /*ASEBEGIN
 Version=18921
--49;228;2218;985;3144.681;537.3679;2.229097;True;True
+24;337;1772;681;2647.592;191.8579;2.229097;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;21;-2538.045,388.01;Inherit;False;Property;_RockTiling;RockTiling;3;0;Create;True;0;0;0;False;0;False;0.1;0.19;0.01;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TexturePropertyNode;20;-2849.101,634.1174;Inherit;True;Property;_MetallicGloss;MetallicGloss;6;0;Create;True;0;0;0;False;0;False;None;277d01ac56f7e19489c75ba2878c8d65;False;black;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.TriplanarNode;51;-1981.7,697.9095;Inherit;True;Spherical;World;False;Top Texture 3;_TopTexture3;white;-1;None;Mid Texture 3;_MidTexture3;white;-1;None;Bot Texture 3;_BotTexture3;white;-1;None;Triplanar Sampler;Tangent;10;0;SAMPLER2D;;False;5;FLOAT;1;False;1;SAMPLER2D;;False;6;FLOAT;0;False;2;SAMPLER2D;;False;7;FLOAT;0;False;9;FLOAT3;0,0,0;False;8;FLOAT;1;False;3;FLOAT2;1,1;False;4;FLOAT;1;False;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -2661,9 +2675,9 @@ Node;AmplifyShaderEditor.ColorNode;59;-1733.441,-3.582848;Inherit;False;Property
 Node;AmplifyShaderEditor.TFHCRemapNode;24;-1654.994,-189.1375;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;23;-1651.377,-435.7436;Inherit;False;Constant;_Color0;Color 0;5;0;Create;True;0;0;0;False;0;False;1,1,1,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PowerNode;27;-981.0891,777.5065;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;1.7;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TexturePropertyNode;19;-2842.155,434.9805;Inherit;True;Property;_Normal;Normal;5;0;Create;True;0;0;0;False;0;False;None;de91beab25016bd47b70a0269357cda9;True;bump;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;-1448.536,162.5656;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.LerpOp;26;-796.4229,693.0487;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;-1448.536,162.5656;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.TexturePropertyNode;19;-2842.155,434.9805;Inherit;True;Property;_Normal;Normal;5;0;Create;True;0;0;0;False;0;False;None;de91beab25016bd47b70a0269357cda9;True;bump;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.LerpOp;22;-1047.703,117.8778;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;65;-608.8711,592.3128;Inherit;False;FLOAT4;4;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TriplanarNode;53;-2037.002,448.7346;Inherit;True;Spherical;World;True;Top Texture 0;_TopTexture0;white;-1;None;Mid Texture 0;_MidTexture0;white;-1;None;Bot Texture 0;_BotTexture0;white;-1;None;Triplanar Sampler;Tangent;10;0;SAMPLER2D;;False;5;FLOAT;1;False;1;SAMPLER2D;;False;6;FLOAT;0;False;2;SAMPLER2D;;False;7;FLOAT;0;False;9;FLOAT3;0,0,0;False;8;FLOAT;1;False;3;FLOAT2;1,1;False;4;FLOAT;1;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -2691,11 +2705,11 @@ WireConnection;24;0;9;1
 WireConnection;24;4;25;0
 WireConnection;27;0;50;0
 WireConnection;27;1;36;0
-WireConnection;60;0;59;0
-WireConnection;60;1;52;0
 WireConnection;26;0;27;0
 WireConnection;26;1;23;1
 WireConnection;26;2;24;0
+WireConnection;60;0;59;0
+WireConnection;60;1;52;0
 WireConnection;22;0;60;0
 WireConnection;22;1;23;0
 WireConnection;22;2;24;0
@@ -2715,4 +2729,4 @@ WireConnection;2;2;62;0
 WireConnection;2;3;77;0
 WireConnection;2;4;77;3
 ASEEND*/
-//CHKSM=F90DF781855659CD6B3E418ED61F9206E4E0FD9D
+//CHKSM=62E0E4EC7D08258B7B6082C5FBA1CFA0C7454D18

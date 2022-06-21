@@ -17,6 +17,8 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
     
     [SerializeField] private VisualEffect splashEffect;
     [SerializeField] private Renderer projectileBlob;
+    [SerializeField] private Material decalProjector;
+    [SerializeField] private Material decalProjectorSubtractive;
     private ReagentContents contents;
     private HashSet<Collider> ignoreColliders;
     private static Collider[] colliders = new Collider[32];
@@ -25,6 +27,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
     private bool splashed = false;
     private static readonly int FluidColor = Shader.PropertyToID("_FluidColor");
     private AudioSource splashSoundSource;
+    private static readonly int ColorID = Shader.PropertyToID("_Color");
 
     void Update() {
         if (splashed) {
@@ -32,12 +35,12 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
         }
 
         velocity += Physics.gravity * Time.deltaTime;
-        int hits = Physics.RaycastNonAlloc(transform.position, velocity.normalized, raycastHits, velocity.magnitude * Time.deltaTime,
+        int hits = Physics.SphereCastNonAlloc(transform.position, 0.25f, velocity.normalized, raycastHits, velocity.magnitude * Time.deltaTime,
             GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
         int closestHit = -1;
         float closestDistance = float.MaxValue;
         for (int i = 0; i < hits; i++) {
-            if (ignoreColliders.Contains(raycastHits[i].collider)) {
+            if (ignoreColliders.Contains(raycastHits[i].collider) || raycastHits[i].point == Vector3.zero) {
                 continue;
             }
 
@@ -74,6 +77,13 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
     }
 
     private void OnSplash() {
+        Color color = contents.GetColor();
+        decalProjector.SetColor(ColorID, color);
+        decalProjectorSubtractive.SetColor(ColorID, color);
+        SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(transform.position, 1f, contents.IsCleaningAgent() ? decalProjectorSubtractive : decalProjector,
+            Quaternion.identity,
+            GameManager.instance.decalHitMask);
+
         splash.SetActive(true);
         projectile.SetActive(false);
         splashed = true;
@@ -85,6 +95,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
                 hitContainers.Add(container);
             }
         }
+        
 
         float perVolume = contents.volume / hitContainers.Count;
         foreach (GenericReagentContainer container in hitContainers) {
@@ -94,6 +105,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
             StartCoroutine(DestroyAfterTime());
         }
         transform.rotation = Quaternion.identity;
+
         splashSound.Play(splashSoundSource);
     }
 

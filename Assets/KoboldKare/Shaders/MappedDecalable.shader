@@ -209,7 +209,9 @@ Shader "MappedDecalable"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+
 
 			struct VertexInput
 			{
@@ -472,7 +474,9 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord7.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float fresnelNdotV16_g2 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				float4 tex2DNode8 = SAMPLE_TEXTURE2D( _MetallicGlossMap, sampler_BaseMap, uv_BaseMap );
@@ -680,7 +684,9 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			struct VertexInput
 			{
@@ -701,6 +707,7 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -748,8 +755,14 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord3.xyz = ase_worldNormal;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.w = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -915,7 +928,12 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord2.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
+				float fresnelNdotV16_g2 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				float Alpha = temp_output_90_13.a;
@@ -979,7 +997,9 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			struct VertexInput
 			{
@@ -1000,6 +1020,7 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1043,8 +1064,14 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord3.xyz = ase_worldNormal;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.w = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1188,7 +1215,12 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord2.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
+				float fresnelNdotV16_g2 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				float Alpha = temp_output_90_13.a;
@@ -1245,7 +1277,9 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1269,6 +1303,7 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1312,8 +1347,14 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord3.xyz = ase_worldNormal;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.texcoord1.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.w = 0;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1451,7 +1492,12 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord2.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
+				float fresnelNdotV16_g2 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				
@@ -1510,7 +1556,9 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			
-			
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1533,6 +1581,7 @@ Shader "MappedDecalable"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1576,8 +1625,14 @@ Shader "MappedDecalable"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord3.xyz = ase_worldNormal;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord3.w = 0;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1715,7 +1770,12 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord2.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
+				float fresnelNdotV16_g2 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				
@@ -1769,7 +1829,8 @@ Shader "MappedDecalable"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+
 
 			struct VertexInput
 			{
@@ -1982,7 +2043,11 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord3.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord3.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float fresnelNdotV16_g2 = dot( IN.worldNormal, ase_worldViewDir );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				float Alpha = temp_output_90_13.a;
@@ -2066,7 +2131,9 @@ Shader "MappedDecalable"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+
 
 			struct VertexInput
 			{
@@ -2328,7 +2395,9 @@ Shader "MappedDecalable"
 				float2 uv_BaseMap = IN.ase_texcoord7.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
 				float2 texCoord2_g2 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g2 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g2, 0.0 );
-				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , tex2DNode3_g2.a);
+				float fresnelNdotV16_g2 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode16_g2 = ( 0.5 + 3.0 * pow( 1.0 - fresnelNdotV16_g2, 5.0 ) );
+				float4 lerpResult7_g2 = lerp( ( SAMPLE_TEXTURE2D( _BaseMap, sampler_BaseMap, uv_BaseMap ) * _Color ) , tex2DNode3_g2 , ( tex2DNode3_g2.a * fresnelNode16_g2 ));
 				float4 temp_output_90_13 = lerpResult7_g2;
 				
 				float4 tex2DNode8 = SAMPLE_TEXTURE2D( _MetallicGlossMap, sampler_BaseMap, uv_BaseMap );
@@ -2500,16 +2569,16 @@ Shader "MappedDecalable"
 }
 /*ASEBEGIN
 Version=18921
-0;234;2218;979;613.3834;261.0691;1;True;True
+662;729;1772;681;1034.809;232.1828;1.434588;True;False
 Node;AmplifyShaderEditor.TextureCoordinatesNode;61;-1956.466,-53.53351;Inherit;False;0;6;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,199.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;3;0;Create;True;0;0;0;False;0;False;6;None;92a3aa22916ff01498a03edd6b8cae7a;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;8;-1498.949,199.052;Inherit;True;Property;_MetallicGlossMap;MetallicGlossMap;3;0;Create;True;0;0;0;False;0;False;6;None;7d2bc6669e22acc4da11431ce96a37db;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;71;-1575.851,613.222;Inherit;False;Property;_Metallic;Metallic;7;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;59;-1567.594,428.3537;Inherit;False;Property;_Smoothness;Smoothness;5;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;60;-1138.661,338.3918;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;62;-1133.894,-181.2861;Inherit;False;Property;_Color;Color;6;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,1,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;ebaab750f57cad443a0a7a230e1bf198;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;6;-1495.986,-210.7979;Inherit;True;Property;_BaseMap;BaseMap;0;0;Create;True;0;0;0;False;0;False;-1;None;12adec6567d214644896c72e1055b7fb;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;75;-1077.416,179.4507;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;4;0;Create;True;0;0;0;False;0;False;6;None;43e879ee5caefab45b1f4569b36a83c0;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;7;-1493.757,-5.071336;Inherit;True;Property;_BumpMap;BumpMap;4;0;Create;True;0;0;0;False;0;False;6;None;5bae68604bb66e3448788ea249dbaec0;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;63;-903.8377,-327.4095;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;74;-543.5166,220.7278;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.FunctionNode;90;-251.1696,21.35154;Inherit;False;ApplyDecals;1;;2;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;3;FLOAT3;14;FLOAT4;15;COLOR;13
@@ -2549,4 +2618,4 @@ WireConnection;82;4;73;3
 WireConnection;82;6;95;3
 WireConnection;82;7;77;0
 ASEEND*/
-//CHKSM=185766B0DA273B2D82FA7C637B5F21D71155000E
+//CHKSM=EC93224F9F83C1EB013BB82FD4184EC06C88A540

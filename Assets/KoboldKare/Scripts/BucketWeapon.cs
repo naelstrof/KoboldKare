@@ -16,15 +16,21 @@ public class BucketWeapon : GenericWeapon {
     private Rigidbody body;
 
     private static readonly int Fire = Animator.StringToHash("Fire");
+    private Kobold playerFired;
 
     public override void OnFire(GameObject player) {
         base.OnFire(player);
         bucketAnimator.SetTrigger(Fire);
+        playerFired = player.GetComponentInParent<Kobold>();
     }
 
     public void OnFireComplete() {
         if (container.volume > 0.1f) {
-            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f + body.velocity * 0.5f;
+
+            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
+            if (playerFired != null) {
+                velocity += playerFired.body.velocity * 0.5f;
+            }
             GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
                 GetWeaponBarrelTransform().position,
                 GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity });

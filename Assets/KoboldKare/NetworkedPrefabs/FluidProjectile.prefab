@@ -217,6 +217,9 @@ MonoBehaviour:
   splashSound: {fileID: 11400000, guid: 28060c26902176c4885806a8a485b3da, type: 2}
   splashEffect: {fileID: 7588399243503337696}
   projectileBlob: {fileID: 4500658826102850757}
+  decalProjector: {fileID: 2100000, guid: 0aedd8bc1c4736945999458791d86fe5, type: 2}
+  decalProjectorSubtractive: {fileID: 2100000, guid: 4728c092756adc6498992724834605ef,
+    type: 2}
 --- !u!114 &5449135698538099406
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ namespace Naelstrof.BodyProportion {
             {HumanBodyBones.RightHand, BoneFlags.Scale | BoneFlags.IgnoreParentScale},
             {HumanBodyBones.LeftFoot, BoneFlags.Scale | BoneFlags.IgnoreParentScale},
             {HumanBodyBones.RightFoot, BoneFlags.Scale | BoneFlags.IgnoreParentScale},
-            {HumanBodyBones.Head, BoneFlags.Scale | BoneFlags.IgnoreParentScale},
+            {HumanBodyBones.Head, BoneFlags.Scale},
         };
 
         public static bool HasFlag(HumanBodyBones bone, BoneFlags flag) {
@@ -86,10 +86,12 @@ namespace Naelstrof.BodyProportion {
                     return animator.GetBoneTransform(HumanBodyBones.Chest);
                 case HumanBodyBones.RightShoulder:
                     return animator.GetBoneTransform(HumanBodyBones.Chest);
+                case HumanBodyBones.Head:
+                    return animator.GetBoneTransform(HumanBodyBones.Neck);
                 case HumanBodyBones.LeftUpperArm:
-                    return animator.GetBoneTransform(HumanBodyBones.Chest);
+                    return animator.GetBoneTransform(HumanBodyBones.LeftShoulder);
                 case HumanBodyBones.RightUpperArm:
-                    return animator.GetBoneTransform(HumanBodyBones.Chest);
+                    return animator.GetBoneTransform(HumanBodyBones.RightShoulder);
                 case HumanBodyBones.RightLowerArm:
                     return animator.GetBoneTransform(HumanBodyBones.RightUpperArm);
                 case HumanBodyBones.LeftLowerArm:

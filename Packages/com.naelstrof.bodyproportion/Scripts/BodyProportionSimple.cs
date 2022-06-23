@@ -21,6 +21,10 @@ public class BodyProportionSimple : BodyProportionBase {
 	    Apply();
     }
 
+    void Update() {
+	    Apply();
+    }
+
     void Apply() {
         float limitLow(float i) => i = (i < 0f ? i * 0.4f : i);
         float limitHigh(float i) => i = (i > 0f ? i * 0.4f : i);
@@ -50,22 +54,30 @@ public class BodyProportionSimple : BodyProportionBase {
 		upperlegMeshScale = limitLow(upperlegMeshScale) + 1f;
 		meshScalings[HumanBodyBones.LeftUpperLeg] = upperlegMeshScale;
 		meshScalings[HumanBodyBones.RightUpperLeg] = upperlegMeshScale;
+
+		float overallScale = targetAnimator.transform.lossyScale.x;
 		
 		float hipBoneScale = modificationCurve.Evaluate(-topBottom + thickness) * 0.1f;
 		hipBoneScale = limitHigh(hipBoneScale) + 1f;
 		boneScalings[HumanBodyBones.Hips] = hipBoneScale;
 		
 		float spineBoneScale = 1f + modificationCurve.Evaluate(-thickness) * 0.2f;
-		boneScalings[HumanBodyBones.Spine] = spineBoneScale;
-		
+		boneScalings[HumanBodyBones.Spine] = spineBoneScale * overallScale;
+
 		float chestBoneScale = modificationCurve.Evaluate(topBottom + thickness) * 0.4f;
 		chestBoneScale = limitHigh(chestBoneScale) + 1f;
-		boneScalings[HumanBodyBones.Chest] = chestBoneScale;
+		boneScalings[HumanBodyBones.Chest] = chestBoneScale * overallScale;
 		
 		float shoulderBoneScale = modificationCurve.Evaluate(topBottom + thickness) * 0.4f;
 		shoulderBoneScale = limitHigh(shoulderBoneScale) + 1f;
-		boneScalings[HumanBodyBones.LeftShoulder] = shoulderBoneScale;
-		boneScalings[HumanBodyBones.RightShoulder] = shoulderBoneScale;
+		boneScalings[HumanBodyBones.LeftShoulder] = shoulderBoneScale * overallScale;
+		boneScalings[HumanBodyBones.RightShoulder] = shoulderBoneScale * overallScale;
+		
+		boneScalings[HumanBodyBones.LeftUpperArm] = overallScale;
+		boneScalings[HumanBodyBones.RightUpperArm] = overallScale;
+		
+		boneScalings[HumanBodyBones.LeftUpperLeg] = overallScale;
+		boneScalings[HumanBodyBones.RightUpperLeg] = overallScale;
 		
 		float handScale = modificationCurve.Evaluate(topBottom) * 0.3f;
 		handScale = limitLow(handScale) + 1f;
@@ -76,5 +88,7 @@ public class BodyProportionSimple : BodyProportionBase {
 		footScale = limitLow(footScale) + 1f;
 		boneScalings[HumanBodyBones.LeftFoot] = footScale;
 		boneScalings[HumanBodyBones.RightFoot] = footScale;
+		
+		boneScalings[HumanBodyBones.Head] = overallScale;
     }
 }

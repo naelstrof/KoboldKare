@@ -8,7 +8,7 @@ namespace Naelstrof.BodyProportion {
 	public class BodyProportionBase : MonoBehaviour {
 		protected Dictionary<HumanBodyBones, float> meshScalings;
 		protected Dictionary<HumanBodyBones, float> boneScalings;
-		private Animator targetAnimator;
+		protected Animator targetAnimator;
 		private class RendererIDLookup {
 			public RendererIDLookup() {
 				shrinkIDs = new Dictionary<HumanBodyBones, int>();

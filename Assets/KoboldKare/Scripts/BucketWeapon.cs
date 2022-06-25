@@ -18,6 +18,25 @@ public class BucketWeapon : GenericWeapon {
     private static readonly int Fire = Animator.StringToHash("Fire");
     private Kobold playerFired;
 
+    [SerializeField] private AudioPack bucketSlosh;
+    private AudioSource audioSource;
+
+    private WaitForSeconds waitForSeconds;
+
+    void Start() {
+        if (audioSource == null) {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+            audioSource.maxDistance = 20f;
+            audioSource.minDistance = 0.2f;
+            audioSource.rolloffMode = AudioRolloffMode.Linear;
+            audioSource.spatialBlend = 1f;
+            audioSource.loop = false;
+        }
+        audioSource.enabled = false;
+        waitForSeconds = new WaitForSeconds(5f);
+    }
+
     public override void OnFire(GameObject player) {
         base.OnFire(player);
         bucketAnimator.SetTrigger(Fire);
@@ -35,7 +54,14 @@ public class BucketWeapon : GenericWeapon {
                 GetWeaponBarrelTransform().position,
                 GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity });
             obj.GetComponent<Projectile>().LaunchFrom(body);
+            audioSource.enabled = true;
+            bucketSlosh.Play(audioSource);
         }
+    }
+
+    IEnumerator WaitSomeTimeThenDisableAudio() {
+        yield return waitForSeconds;
+        audioSource.enabled = false;
     }
 
     private void OnValidate() {

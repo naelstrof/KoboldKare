@@ -113,7 +113,7 @@ Material:
     - _Cutoff: 0.5
     - _DarkSpotScale: 1.48
     - _DstBlend: 0
-    - _Eclipse: 0.55728537
+    - _Eclipse: 0.50883794
     - _EnableFog: 0
     - _EnableRotation: 0
     - _EnvironmentReflections: 1

@@ -329,6 +329,7 @@ MonoBehaviour:
   container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
   body: {fileID: 7403922466466801549}
+  bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
 --- !u!1 &2004953112158708580
 GameObject:
   m_ObjectHideFlags: 0

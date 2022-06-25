@@ -109,10 +109,12 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EndClip: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Length: 0.73
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -124,17 +126,19 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StartClip: 0
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.39150935, g: 0.6161468, b: 1, a: 1}
+    - _Color: {r: 0.39150918, g: 0.6161468, b: 1, a: 1}
     - _DickForwardWorld: {r: 0, g: 1, b: 0, a: 0}
     - _DickForwardWorld1: {r: 0, g: 0, b: 0, a: 0}
     - _DickRightWorld: {r: 0, g: 0, b: 0, a: 0}
     - _DickRootWorld: {r: 0, g: 0, b: 0, a: 0}
     - _DickUpWorld: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FluidColor: {r: 0.39150915, g: 0.6161468, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

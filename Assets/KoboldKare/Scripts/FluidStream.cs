@@ -76,7 +76,7 @@ public class FluidStream : CatmullDeformer {
         if (waterHitSource == null) {
             waterHitSource = splatter.gameObject.AddComponent<AudioSource>();
             waterHitSource.playOnAwake = false;
-            waterHitSource.maxDistance = 20f;
+            waterHitSource.maxDistance = 10f;
             waterHitSource.minDistance = 0.2f;
             waterHitSource.rolloffMode = AudioRolloffMode.Linear;
             waterHitSource.spatialBlend = 1f;
@@ -162,12 +162,13 @@ public class FluidStream : CatmullDeformer {
         for (int i = 0; i < points.Count-1; i++) {
             Vector3 diff = points[i+1] - points[i];
             float dist = diff.magnitude;
-            int hits = Physics.SphereCastNonAlloc(points[i], 0.25f, diff.normalized, raycastHits, dist, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
+            float rad = 0.25f;
+            int hits = Physics.SphereCastNonAlloc(points[i] - diff.normalized*(rad*2f), rad, diff.normalized, raycastHits, dist+rad*3f, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
             if (hits > 0) {
                 float closestDist = float.MaxValue;
                 int closestHit = -1;
                 for (int j = 0; j < hits; j++) {
-                    if (raycastHits[j].distance < closestDist && (distanceAcc+raycastHits[j].distance) > startDistance
+                    if (raycastHits[j].point != Vector3.zero && raycastHits[j].distance < closestDist && (distanceAcc+raycastHits[j].distance) > startDistance
                                                               && (distanceAcc+raycastHits[j].distance) < endDistance) {
                         closestDist = raycastHits[j].distance;
                         closestHit = j;
@@ -259,6 +260,7 @@ public class FluidStream : CatmullDeformer {
             yield return null;
         }
 
+        endClip = startClip = 0f;
         midairContents.Spill(midairContents.volume);
         coroutineRunning = false;
         particles.Clear();

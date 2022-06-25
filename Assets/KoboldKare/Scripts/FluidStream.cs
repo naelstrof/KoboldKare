@@ -64,7 +64,7 @@ public class FluidStream : CatmullDeformer {
         if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
-            audioSource.maxDistance = 20f;
+            audioSource.maxDistance = 10f;
             audioSource.minDistance = 0.2f;
             audioSource.rolloffMode = AudioRolloffMode.Linear;
             audioSource.spatialBlend = 1f;

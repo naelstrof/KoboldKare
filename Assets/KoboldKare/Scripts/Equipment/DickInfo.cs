@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using PenetrationTech;
 using KoboldKare;
+using Naelstrof.Mozzarella;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -34,6 +35,26 @@ public class DickInfoEditor : Editor {
 public class DickInfo : MonoBehaviour {
     private Task attachTask;
     private Kobold attachedKobold;
+
+    [PenetratorListener(typeof(KoboldDickListener), "Kobold Dick Listener")]
+    private class KoboldDickListener : PenetratorListener {
+        public KoboldDickListener(Kobold kobold) {
+            attachedKobold = kobold;
+        }
+
+        private readonly Kobold attachedKobold;
+        private float lastDepthDist;
+        protected override void OnPenetrationDepthChange(float depthDist) {
+            base.OnPenetrationDepthChange(depthDist);
+            float movementAmount = depthDist - lastDepthDist;
+            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
+            attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
+            lastDepthDist = depthDist;
+        }
+    }
+
+    private WaitForSeconds cumDelay;
+
     [System.Serializable]
     public class DickSet {
         public Transform dickContainer;
@@ -59,6 +80,7 @@ public class DickInfo : MonoBehaviour {
     }
     public List<DickSet> dicks = new List<DickSet>();
     public void Awake() {
+        cumDelay = new WaitForSeconds(0.8f);
         foreach (DickSet set in dicks) {
             set.info = this;
         }
@@ -100,6 +122,36 @@ public class DickInfo : MonoBehaviour {
             attachedKobold = null;
         }
     }
+    public IEnumerator CumRoutine(DickSet set) {
+        int pulses = 100;
+        for (int i = 0; i < pulses; i++) {
+            yield return cumDelay;
+            if (!set.dick.TryGetPenetrable(out Penetrable pennedHole)) {
+                if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
+                    ReagentContents alloc = set.balls.GetContainer().Spill(set.balls.GetContainer().volume / pulses);
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(set.balls.size*0.05f));
+                    mozzarella.hitCallback += (hit, startPos, dir, length, progression) => {
+                        GenericReagentContainer container = hit.collider.GetComponentInParent<GenericReagentContainer>();
+                        if (container != null) {
+                            container.AddMix(alloc.Spill(alloc.volume * 0.1f), GenericReagentContainer.InjectType.Spray);
+                        }
+                    };
+                    mozzarella.SetFollowPenetrator(set.dick);
+                }
+                continue;
+            }
+            Kobold pennedKobold = pennedHole.GetComponentInParent<Kobold>();
+            Vector3 holePos = pennedHole.GetSplinePath().GetPositionFromT(0f);
+            Vector3 holeTangent = pennedHole.GetSplinePath().GetVelocityFromT(0f);
+            SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
+                set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
+                GameManager.instance.decalHitMask);
+            pennedHole.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(
+                set.balls.GetContainer(), set.balls.GetContainer().volume / pulses,
+                GenericReagentContainer.InjectType.Inject);
+        }
+    }
+
     private IEnumerator AttachToRoutine(Kobold k) {
         attachedKobold = k;
         // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
@@ -160,6 +212,7 @@ public class DickInfo : MonoBehaviour {
                 }
             }
             //k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
+            set.dick.listeners.Add(new KoboldDickListener(k));
             set.balls.SetContainer(k.balls);
             k.activeDicks.Add(set);
             //set.dick.OnMove.AddListener(OnDickMovement);

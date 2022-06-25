@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PenetrationTech;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -47,6 +48,13 @@ namespace Naelstrof.Mozzarella {
         private static int particleCount = 50;
         private float dieTime = 0f;
         private static RaycastHit[] hits = new RaycastHit[32];
+        public delegate void HitCallbackAction(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float progression);
+        public event HitCallbackAction hitCallback;
+        private Penetrator followPenetrator;
+
+        public void SetFollowPenetrator(Penetrator target) {
+            followPenetrator = target;
+        }
 
         private void Awake() {
             widthCurve = new AnimationCurve();
@@ -79,6 +87,7 @@ namespace Naelstrof.Mozzarella {
             gameObject.SetActive(false);
             lineRenderer.positionCount = 0;
             id = 0;
+            hitCallback = null;
             base.Reset();
         }
 
@@ -117,6 +126,7 @@ namespace Naelstrof.Mozzarella {
         private void HitCallback(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float progression) {
             SkinnedMeshDecals.PaintDecal.RenderDecalForCollider(hit.collider, decalProjector, startPos,
                 Quaternion.FromToRotation(Vector3.forward,dir), Vector2.one*(volumeCurve.Evaluate(progression)*2f), length);
+            hitCallback?.Invoke(hit, startPos, dir, length, progression);
             //Debug.DrawLine(startPos, startPos + dir * length, Color.red,1f);
         }
 
@@ -125,6 +135,15 @@ namespace Naelstrof.Mozzarella {
                 Reset();
                 return;
             }
+
+            if (followPenetrator != null) {
+                float dist = followPenetrator.GetWorldLength();
+                var path = followPenetrator.GetSplinePath();
+                transform.position = path.GetPositionFromDistance(dist);
+                transform.rotation = Quaternion.LookRotation(path.GetVelocityFromDistance(dist), Vector3.up);
+            }
+            //transform.position = followTarget.transform.position + followTarget.TransformVector(followTargetOffset);
+            //transform.rotation = followTarget.transform.rotation;
 
             for (int i = 0; i < particles.Count; i++) {
                 particlePoints[i] = particles[i].position;

@@ -145,6 +145,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 float cumAmount = 0.5f+0.5f*sizeInflatable.GetContainer().GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"))+0.5f*baseBallSize+0.5f*baseDickSize;
                 //Debug.Log("Cumming " + cumAmount);
                 dickSet.balls.GetContainer().AddMix(ReagentDatabase.GetReagent("Cum"), cumAmount, GenericReagentContainer.InjectType.Inject);
+                // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
+                StartCoroutine(dickSet.info.CumRoutine(dickSet));
                 //dickSet.dick.GetComponentInChildren<IFluidOutput>(true).SetVolumePerSecond(cumAmount/12f);
             }
             PumpUpDick(1f);

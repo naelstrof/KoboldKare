@@ -58,14 +58,23 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     private bool ready = false;
     public void Awake() {
         if(ready){return;}
+
+        OnChange ??= new ReagentContainerChangedEvent();
+        OnFilled ??= new ReagentContainerChangedEvent();
+        OnEmpty ??= new ReagentContainerChangedEvent();
+
         contents = new ReagentContents(startingMaxVolume);
         //Debug.Log("[Generic Reagent Container] :: Initializing Contents...");
     }
     public void Start() {
         if(ready){return;}
-        foreach(var reagent in startingReagents) {
-            AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+
+        if (startingReagents != null) {
+            foreach (var reagent in startingReagents) {
+                AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+            }
         }
+
         filled = isFull;
         emptied = isEmpty;
         ready = true;

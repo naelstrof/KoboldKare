@@ -34,10 +34,11 @@ namespace Naelstrof.Mozzarella {
 
         [SerializeField]
         private float velocityMultiplier = 0.01f;
+        [SerializeField]
+        private float volumeMultiplier = 1f;
 
-        [SerializeField] private float lifetime = 3f;
+        [SerializeField] private float lifetime = 2.25f;
         [SerializeField] private LayerMask decalHitMask;
-        [SerializeField] private Material decalProjector;
         
         private List<Particle> particles;
         private NativeArray<Vector3> particlePoints;
@@ -48,12 +49,17 @@ namespace Naelstrof.Mozzarella {
         private static int particleCount = 50;
         private float dieTime = 0f;
         private static RaycastHit[] hits = new RaycastHit[32];
-        public delegate void HitCallbackAction(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float progression);
+        public delegate void HitCallbackAction(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float volume);
         public event HitCallbackAction hitCallback;
         private Penetrator followPenetrator;
+        private int lastFrame;
 
         public void SetFollowPenetrator(Penetrator target) {
             followPenetrator = target;
+        }
+
+        public void SetVolumeMultiplier(float multi) {
+            volumeMultiplier = multi;
         }
 
         private void Awake() {
@@ -92,11 +98,20 @@ namespace Naelstrof.Mozzarella {
         }
 
         private void FixedUpdate() {
-            if (id < particles.Count) {
+            if (followPenetrator != null) {
+                float dist = followPenetrator.GetWorldLength();
+                var path = followPenetrator.GetSplinePath();
+                transform.position = path.GetPositionFromDistance(dist);
+                transform.rotation = Quaternion.LookRotation(path.GetVelocityFromDistance(dist), Vector3.up);
+            }
+            
+            // Only spawn one particle per real-frame-- so we don't overlay particles on top one-another.
+            if (id < particles.Count && lastFrame != Time.frameCount) {
                 float t = (float)id / (float)particles.Count;
-                particles[id].Spawn(transform.position, transform.forward * (velocityCurve.Evaluate(t) * velocityMultiplier));
+                particles[id].Spawn(transform.position, transform.forward * (velocityCurve.Evaluate(t) * velocityMultiplier) + followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position)*0.5f);
                 transform.rotation *= Quaternion.Lerp(Random.rotation, Quaternion.identity, 0.99f);
                 id++;
+                lastFrame = Time.frameCount;
             }
 
 
@@ -112,11 +127,11 @@ namespace Naelstrof.Mozzarella {
 
         private void DoCollisions() {
             int skip = 5;
-            for (int i = 0; i < id-skip; i+=skip) {
-                Vector3 diff = particles[i + skip].position - particles[i].position;
+            for (int i = id-1; i > skip; i-=skip) {
+                Vector3 diff = particles[i - skip].position - particles[i].position;
                 Vector3 dir = diff.normalized;
                 float dist = diff.magnitude;
-                int hitcount = Physics.RaycastNonAlloc(particles[i].position, dir, hits, dist, decalHitMask);
+                int hitcount = Physics.RaycastNonAlloc(particles[i].position, dir, hits, dist, decalHitMask, QueryTriggerInteraction.Ignore);
                 for (int j = 0; j < hitcount; j++) {
                     HitCallback(hits[j], particles[i].position-dir*0.1f, dir, dist+0.1f, ((float)i/(float)particles.Count));
                 }
@@ -124,10 +139,7 @@ namespace Naelstrof.Mozzarella {
         }
 
         private void HitCallback(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float progression) {
-            SkinnedMeshDecals.PaintDecal.RenderDecalForCollider(hit.collider, decalProjector, startPos,
-                Quaternion.FromToRotation(Vector3.forward,dir), Vector2.one*(volumeCurve.Evaluate(progression)*2f), length);
-            hitCallback?.Invoke(hit, startPos, dir, length, progression);
-            //Debug.DrawLine(startPos, startPos + dir * length, Color.red,1f);
+            hitCallback?.Invoke(hit, startPos, dir, length, volumeCurve.Evaluate(progression)*volumeMultiplier);
         }
 
         private void Update() {
@@ -135,15 +147,6 @@ namespace Naelstrof.Mozzarella {
                 Reset();
                 return;
             }
-
-            if (followPenetrator != null) {
-                float dist = followPenetrator.GetWorldLength();
-                var path = followPenetrator.GetSplinePath();
-                transform.position = path.GetPositionFromDistance(dist);
-                transform.rotation = Quaternion.LookRotation(path.GetVelocityFromDistance(dist), Vector3.up);
-            }
-            //transform.position = followTarget.transform.position + followTarget.TransformVector(followTargetOffset);
-            //transform.rotation = followTarget.transform.rotation;
 
             for (int i = 0; i < particles.Count; i++) {
                 particlePoints[i] = particles[i].position;
@@ -153,7 +156,7 @@ namespace Naelstrof.Mozzarella {
                 float t = (float)i / (float)keys.Length;
                 float volumeT = t * done;
                 keys[i].time = (float)i / (float)keys.Length;
-                keys[i].value = volumeCurve.Evaluate(volumeT);
+                keys[i].value = volumeCurve.Evaluate(volumeT)*volumeMultiplier;
             }
 
             lineRenderer.positionCount = particles.Count;

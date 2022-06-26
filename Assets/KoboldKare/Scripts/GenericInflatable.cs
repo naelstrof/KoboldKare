@@ -241,7 +241,7 @@ public class GenericInflatable : MonoBehaviour {
         while (Time.timeSinceLevelLoad < startTime + duration) {
             float curve = bounceCurve.Evaluate((Time.timeSinceLevelLoad - startTime) / duration);
             size = Mathf.LerpUnclamped(before, GetDesiredSize(), curve);
-            yield return waitForEndOfFrame;
+            yield return null;
         }
         size = GetDesiredSize();
         tweening = false;

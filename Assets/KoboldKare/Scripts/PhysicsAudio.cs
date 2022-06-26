@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Naelstrof.Easing;
 using UnityEngine;
 
 public class PhysicsAudio : MonoBehaviour {

@@ -50,13 +50,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "TopBottom": targetKobold.bodyProportion.SetTopBottom(setting.value); break;
             case "Thickness": targetKobold.bodyProportion.SetThickness(setting.value); break;
             case "BoobSize": {
-                targetKobold.baseBoobSize = setting.value*30f;
-                foreach (var boob in targetKobold.boobs) {
-                    boob.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("Milk"), setting.value * 0.3f);
-                }
+                targetKobold.SetBaseBoobSize(setting.value*30f);
                 break;
             }
-            case "KoboldSize": targetKobold.sizeInflatable.GetContainer().OverrideReagent(ReagentDatabase.GetReagent("GrowthSerum"), setting.value * targetKobold.sizeInflatable.reagentVolumeDivisor); break;
+            case "KoboldSize": targetKobold.SetBaseSize(setting.value*20f); break;
         }
     }
     public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {

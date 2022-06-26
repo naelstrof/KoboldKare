@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda560634c9b1154a9a4c948706726b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineMaterial: {fileID: 2100000, guid: 1e2f6d860ed75344fa28213283abd618, type: 2}
+  lineMaterial: {fileID: 2100000, guid: 0494a8afd5188d84f9eef35e21285d03, type: 2}
   velocityCurve:
     serializedVersion: 2
     m_Curve:
@@ -114,5 +114,5 @@ MonoBehaviour:
   lifetime: 3
   decalHitMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  decalProjector: {fileID: 2100000, guid: d1eff859dd116b94896d2abf01aeea61, type: 2}
+    m_Bits: 33565696
+  decalProjector: {fileID: 2100000, guid: 0aedd8bc1c4736945999458791d86fe5, type: 2}

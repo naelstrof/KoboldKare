@@ -231,7 +231,7 @@ MonoBehaviour:
   targetRenderers:
   - renderer: {fileID: 4274595427072518775}
     mask: -1
-  fluidLength: 4
+  fluidLength: 5
   decalProjector: {fileID: 2100000, guid: 0aedd8bc1c4736945999458791d86fe5, type: 2}
   decalProjectorSubtractive: {fileID: 2100000, guid: 4728c092756adc6498992724834605ef,
     type: 2}

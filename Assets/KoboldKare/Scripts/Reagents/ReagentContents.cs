@@ -13,13 +13,19 @@ public class Reagent {
 }
 
 public class ReagentContents {
-    public ReagentContents(ReagentContents other) {
-        contents = new Dictionary<short, Reagent>(other.contents);
-        maxVolume = other.maxVolume;
-    }
+    public delegate void ReagentContentsChangedAction(ReagentContents contents);
+
+    public ReagentContentsChangedAction changed;
+    public ReagentContents(ReagentContents other) { Copy(other); }
     public ReagentContents(float maxVolume = float.MaxValue) {
         this.maxVolume = maxVolume;
     }
+
+    public void Copy(ReagentContents other) {
+        contents = new Dictionary<short, Reagent>(other.contents);
+        maxVolume = other.maxVolume;
+    }
+
     private float maxVolume = float.MaxValue;
     public float GetMaxVolume() {
         return maxVolume;
@@ -49,6 +55,7 @@ public class ReagentContents {
             return;
         }
         contents.Add(id, new Reagent(){ id=id, volume=volume });
+        changed?.Invoke(this);
     }
     public void AddMix(short id, float addVolume, GenericReagentContainer worldContainer = null) {
         if (contents.ContainsKey(id)) {
@@ -65,6 +72,7 @@ public class ReagentContents {
         if (volume > maxVolume) {
             Spill(volume-maxVolume);
         }
+        changed?.Invoke(this);
     }
     public void AddMix(Reagent reagent, GenericReagentContainer worldContainer = null) {
         AddMix(reagent.id, reagent.volume, worldContainer);
@@ -86,10 +94,12 @@ public class ReagentContents {
             spillContents.AddMix(pair.Key, pair.Value.volume*spillRatio);
             contents[pair.Key].volume = pair.Value.volume*(1f-spillRatio);
         }
+        changed?.Invoke(this);
         return spillContents;
     }
     private void Clear() {
         contents.Clear();
+        changed?.Invoke(this);
     }
     public ReagentContents Metabolize(float deltaTime) {
         float v = volume;
@@ -110,6 +120,7 @@ public class ReagentContents {
             contents[pair.Key].volume = Mathf.Max(metaHalfLife, 0f);
             metabolizeContents.AddMix(pair.Key, loss);
         }
+        changed?.Invoke(this);
         return metabolizeContents;
     }
 

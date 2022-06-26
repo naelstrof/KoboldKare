@@ -27,6 +27,18 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.naelstrof.easing": {
+      "version": "file:com.naelstrof.easing",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.naelstrof.inflatable": {
+      "version": "file:com.naelstrof.inflatable",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.naelstrof.jigglephysics": {
       "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v3.6.4",
       "depth": 0,
@@ -43,11 +55,11 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.3",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.4",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4eff4763d2b1b0685b08feebf4008c1e5bbd545e"
+      "hash": "99ef71244d39e7f8bcbc06dff079a696dd5cc2d3"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -136,7 +148,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.14",
+      "version": "3.0.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {

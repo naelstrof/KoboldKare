@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Naelstrof.Inflatable;
 using JigglePhysics;
 
 public class ThirdPersonMeshDisplay : MonoBehaviour {
@@ -34,20 +35,14 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 if (physics.targetSkins.Contains(r)) {
                     physics.targetSkins.Remove(r);
                 }
-                foreach (var boob in kobold.boobs) {
-                    if (boob.targetRenderers.Contains(r)) {
-                        boob.targetRenderers.Remove(r);
-                    }
+                foreach (InflatableBreast boob in kobold.boobListeners) {
+                    boob.RemoveTargetRenderer(r);
                 }
-                foreach (var belly in kobold.bellies) {
-                    if (belly.targetRenderers.Contains(r)) {
-                        belly.targetRenderers.Remove(r);
-                    }
+                foreach (InflatableBlendShape belly in kobold.bellyListeners) {
+                    belly.RemoveTargetRenderer(r);
                 }
-                foreach (var ss in kobold.subcutaneousStorage) {
-                    if (ss.targetRenderers.Contains(r)) {
-                        ss.targetRenderers.Remove(r);
-                    }
+                foreach (var fatness in kobold.fatnessListeners) {
+                    fatness.RemoveTargetRenderer(r);
                 }
             }
             Destroy(g);
@@ -94,14 +89,14 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             group.SetLODs(lods);
             if (s.gameObject.name == "Body") {
                 physics.targetSkins.Add(smrCopies[s]);
-                foreach(var boob in kobold.boobs) {
-                    boob.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
+                foreach(var boob in kobold.boobListeners) {
+                    boob.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 }
-                foreach (var belly in kobold.bellies) {
-                    belly.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
+                foreach (var belly in kobold.bellyListeners) {
+                    belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 }
-                foreach (var ss in kobold.subcutaneousStorage) {
-                    ss.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
+                foreach (var fatness in kobold.fatnessListeners) {
+                    fatness.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 }
             }
             foreach(Material m in g.GetComponent<SkinnedMeshRenderer>().materials) {

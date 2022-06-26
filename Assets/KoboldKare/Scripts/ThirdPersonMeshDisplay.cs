@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Naelstrof.Inflatable;
 using JigglePhysics;
+using PenetrationTech;
 
 public class ThirdPersonMeshDisplay : MonoBehaviour {
     private List<GameObject> mirrorObjects = new List<GameObject>();
     private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
     public Kobold kobold;
+    private ProceduralDeformation proceduralDeformation;
     public LODGroup group;
     public JigglePhysics.JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
@@ -17,6 +19,8 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 m.SetFloat("_Head", 0f);
             }
         }
+
+        proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
         RegenerateMirror();
     }
     public void Update() {
@@ -35,6 +39,8 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 if (physics.targetSkins.Contains(r)) {
                     physics.targetSkins.Remove(r);
                 }
+
+                proceduralDeformation.RemoveTargetRenderer(r);
                 foreach (InflatableBreast boob in kobold.boobListeners) {
                     boob.RemoveTargetRenderer(r);
                 }
@@ -95,6 +101,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 foreach (var belly in kobold.bellyListeners) {
                     belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 }
+                proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 foreach (var fatness in kobold.fatnessListeners) {
                     fatness.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                 }

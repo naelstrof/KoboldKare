@@ -5755,7 +5755,7 @@ MonoBehaviour:
           pullBlendshapeID: 36
           pushBlendshapeID: 37
         baseGirthRadius: 0.003
-        blendShapeGirthRadius: 0.052
+        blendShapeGirthRadius: 0.048
         pullT: -0.025
         pushT: 0.01
         overdrive: 1
@@ -13594,7 +13594,7 @@ MonoBehaviour:
           pullBlendshapeID: 39
           pushBlendshapeID: 40
         baseGirthRadius: 0.005
-        blendShapeGirthRadius: 0.06
+        blendShapeGirthRadius: 0.055
         pullT: -0.03
         pushT: 0.03
         overdrive: 1

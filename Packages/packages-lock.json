@@ -58,11 +58,11 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.6",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.7",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5907e1615312d996712ee41a29d7c3ab3ff211ce"
+      "hash": "720650e2ee1d920485fbcf4ce4ff9d489cd43513"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",

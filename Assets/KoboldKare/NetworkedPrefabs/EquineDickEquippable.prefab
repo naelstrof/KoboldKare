@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 9215171481547719801}
   - component: {fileID: 9031729285690142174}
   - component: {fileID: 7633934662170762724}
-  - component: {fileID: 3660955075666237138}
   - component: {fileID: 7381712563764229017}
   - component: {fileID: 633940069110604374}
   - component: {fileID: 8137013097932000980}
@@ -228,19 +227,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVolume: 1
---- !u!114 &3660955075666237138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3729554680024515055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2803bf4e63043fe4fae9e2cc82759af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worth: 15
 --- !u!114 &7381712563764229017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1256,66 +1242,76 @@ MonoBehaviour:
   representedEquipment: {fileID: 11400000, guid: b7a18c33b66106842b96a6880e7a62c1,
     type: 2}
   displaySprite: {fileID: 21300000, guid: 88683833f4308384aac8e0dbf4adc88c, type: 3}
-  bounceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.25
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.20167542
-      value: 2.502484
-      inSlope: 0.45121813
-      outSlope: 0.45121813
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.4
-      value: 0.46640015
-      inSlope: -1.8744586
-      outSlope: -1.8744586
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6033672
-      value: 1.791847
-      inSlope: 0.56383085
-      outSlope: 0.56383085
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.803418
-      value: 0.71360475
-      inSlope: -2.3585095
-      outSlope: -2.3585095
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  dildoSizeInflatable:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 1
+    listeners:
+    - id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 403445864755311612}
 --- !u!1001 &5189641523864866709
 PrefabInstance:
   m_ObjectHideFlags: 0

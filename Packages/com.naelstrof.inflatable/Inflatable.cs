@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Naelstrof.Inflatable {
+    [System.Serializable]
     public class Inflatable {
         private float currentSize;
         private float targetSize;
         private bool tweenRunning = false;
+        [SerializeField]
         private AnimationCurve bounceCurve;
+        [SerializeField]
         private float bounceDuration;
-        private List<InflatableListener> listeners;
-        
-        public bool SetSize(float newSize, out IEnumerator tween) {
+        [SerializeReference, SerializeReferenceButton]
+        public List<InflatableListener> listeners = new List<InflatableListener>();
+
+        public ReadOnlyCollection<InflatableListener> readOnlyListeners;
+        public ReadOnlyCollection<InflatableListener> GetInflatableListeners() {
+            return readOnlyListeners ??= listeners.AsReadOnly();
+        }
+
+        private bool initialized = false;
+
+        private bool SetSize(float newSize, out IEnumerator tween) {
             targetSize = newSize;
             if (!tweenRunning) {
                 tweenRunning = true;
@@ -20,6 +32,24 @@ namespace Naelstrof.Inflatable {
             }
             tween = null;
             return false;
+        }
+
+        public void SetSize(float newSize, MonoBehaviour tweener) {
+            if (!initialized) {
+                Debug.LogError("Inflatable wasn't initialized.", tweener);
+                throw new UnityException("Inflatable wasn't initialized ");
+            }
+            if (SetSize(newSize, out IEnumerator tween)) {
+                tweener.StartCoroutine(tween);
+            }
+        }
+
+        public void OnEnable() {
+            foreach (var listener in listeners) {
+                listener.OnEnable();
+            }
+
+            initialized = true;
         }
 
         public float GetSize() {
@@ -45,13 +75,6 @@ namespace Naelstrof.Inflatable {
             }
             tweenRunning = false;
         }
-
-        public Inflatable(AnimationCurve bounceCurve, float bounceDuration) {
-            listeners = new List<InflatableListener>();
-            this.bounceDuration = bounceDuration;
-            this.bounceCurve = bounceCurve;
-        }
-        
         public void AddListener(InflatableListener listener) {
             listener.OnEnable();
             listener.OnSizeChanged(currentSize);

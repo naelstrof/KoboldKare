@@ -18,7 +18,7 @@ public class DickEquipment : Equipment {
         }
         foreach(DickInfo.DickSet set in info.dicks) {
             if (container != null) {
-                k.baseDickSize = container.volume;
+                k.SetBaseDickSize(container.volume);
             }
             set.dickIdentifier = GetInstanceID();
         }

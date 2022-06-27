@@ -7,16 +7,12 @@ namespace Naelstrof.Inflatable {
     public class InflatableTransform : InflatableListener {
         [SerializeField]
         private Transform targetTransform;
-        
         private Vector3 startScale;
-        public InflatableTransform(Transform targetTransform) {
-            this.targetTransform = targetTransform;
-        }
         public override void OnEnable() {
             startScale = targetTransform.localScale;
         }
         public override void OnSizeChanged(float newSize) {
-            targetTransform.localScale = startScale*Mathf.Max(newSize,0.025f);
+            targetTransform.localScale = startScale*Mathf.Max(newSize,0.05f);
         }
     }
 }

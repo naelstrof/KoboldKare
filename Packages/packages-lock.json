@@ -37,7 +37,10 @@
       "version": "file:com.naelstrof.inflatable",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.textus-games.serialized-reference-ui": "1.0.0",
+        "com.naelstrof.jigglephysics": "3.6.4"
+      }
     },
     "com.naelstrof.jigglephysics": {
       "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v3.6.4",
@@ -55,11 +58,11 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.5",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.3.6",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9b40cc8cd6e6b57feb28c034a624edc875378305"
+      "hash": "5907e1615312d996712ee41a29d7c3ab3ff211ce"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -78,13 +81,6 @@
       },
       "hash": "b135fb2dec409e23ea980c83245923203e75a46c"
     },
-    "com.quantumcalzone.unitygitpackageupdater": {
-      "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "82a9836fdc5056d5d3b3de0d8471e56d55f6f292"
-    },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
       "depth": 0,
@@ -100,6 +96,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "d8a6400d71032604ee02b81f63d47fb4c2bbcdbd"
+    },
+    "com.textus-games.serialized-reference-ui": {
+      "version": "https://github.com/TextusGames/UnitySerializedReferenceUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "51aff6062610296c86f739a3e093c29d08388a95"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using PenetrationTech;
 using KoboldKare;
+using Naelstrof.Inflatable;
 using Naelstrof.Mozzarella;
 using Photon.Pun.UtilityScripts;
 using SkinnedMeshDecals;
@@ -70,9 +71,11 @@ public class DickInfo : MonoBehaviour {
     public class DickSet {
         public Transform dickContainer;
         public PenetrationTech.Penetrator dick;
-        public GenericInflatable dickInflater;
-        public GenericInflatable bonerInflator;
-        public GenericInflatable balls;
+        
+        public Inflatable ballSizeInflater;
+        public Inflatable dickSizeInflater;
+        public Inflatable bonerInflater;
+        
         public Equipment.AttachPoint attachPoint;
         public Material cumSplatProjectorMaterial;
 
@@ -95,7 +98,11 @@ public class DickInfo : MonoBehaviour {
     public void Awake() {
         cumDelay = new WaitForSeconds(0.8f);
         foreach (DickSet set in dicks) {
+            //set.ball
             set.info = this;
+            set.bonerInflater.OnEnable();
+            set.dickSizeInflater.OnEnable();
+            set.ballSizeInflater.OnEnable();
         }
     }
     public void AttachTo(Kobold k) {
@@ -110,7 +117,6 @@ public class DickInfo : MonoBehaviour {
     }*/
     public void RemoveFrom(Kobold k) {
         foreach (DickSet set in dicks) {
-            set.balls.SetContainer(null);
             k.activeDicks.Remove(set);
             foreach(Rigidbody r in k.ragdoller.GetRagdollBodies()) {
                 if (r.GetComponent<Collider>() == null) {
@@ -141,8 +147,8 @@ public class DickInfo : MonoBehaviour {
             yield return cumDelay;
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
-                    ReagentContents alloc = set.balls.GetContainer().Spill(set.balls.GetContainer().volume / pulses);
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(set.balls.size*0.05f));
+                    ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.05f));
                     mozzarella.SetVolumeMultiplier(alloc.volume*10f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         GenericReagentContainer container = hit.collider.GetComponentInParent<GenericReagentContainer>();
@@ -165,8 +171,8 @@ public class DickInfo : MonoBehaviour {
             SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
-            pennedHole.GetComponentInParent<Kobold>().bellyContainer.TransferMix(
-                set.balls.GetContainer(), set.balls.GetContainer().volume / pulses,
+            pennedHole.GetComponentInParent<Kobold>().bellyContainer.AddMix(
+                attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
                 GenericReagentContainer.InjectType.Inject);
         }
     }
@@ -204,25 +210,6 @@ public class DickInfo : MonoBehaviour {
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
 
-            /*set.dick.OnCumEmit.AddListener(()=>{
-                //ReagentContents cumbucket = new ReagentContents();
-                //cumbucket.Mix(set.balls.container.contents.Spill(set.balls.container.maxVolume/set.dick.cumPulseCount));
-                //cumbucket.Mix(ReagentData.ID.Cum, set.dick.dickRoot.transform.lossyScale.x);
-                Kobold pennedKobold = null;
-                if (set.dick.holeTarget != null) {
-                    pennedKobold = set.dick.holeTarget.GetComponentInParent<Kobold>();
-                }
-                if (!set.dick.IsInside() || pennedKobold == null) {
-                    set.dick.GetComponentInChildren<IFluidOutput>(true).Fire(set.balls.GetContainer());
-                } else {
-                    Penetrable hole = set.dick.holeTarget;
-                    Vector3 holePos = hole.GetPoint(0f,set.dick.backwards);
-                    Vector3 holeTangent = hole.GetTangent(0f,set.dick.backwards);
-                    SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x*0.25f, set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent,Vector3.up), GameManager.instance.decalHitMask);
-                    set.dick.holeTarget.GetComponentInParent<Kobold>().bellies[0].GetContainer().TransferMix(set.balls.GetContainer(), set.balls.GetContainer().volume/set.dick.cumPulseCount, GenericReagentContainer.InjectType.Inject);
-                }
-            });*/
-
             if (set.parent == HumanBodyBones.Hips) {
                 foreach(var hole in attachedKobold.penetratables) {
                     if (hole.isFemaleExclusiveAnatomy) {
@@ -230,11 +217,11 @@ public class DickInfo : MonoBehaviour {
                     }
                 }
             }
-            //k.koboldBodyRenderers.AddRange(set.dick.deformationTargets);
+
             set.dick.listeners.Add(new KoboldDickListener(k,set));
-            set.balls.SetContainer(k.balls);
             k.activeDicks.Add(set);
-            //set.dick.OnMove.AddListener(OnDickMovement);
+            k.SetBaseDickSize(k.baseDickSize);
+            k.SetBaseBallsSize(k.baseBallsSize);
             // Make sure the dick is the right color, this just forces a reset of the colors.
             Color colorSave = k.HueBrightnessContrastSaturation;
             k.HueBrightnessContrastSaturation = Color.white;

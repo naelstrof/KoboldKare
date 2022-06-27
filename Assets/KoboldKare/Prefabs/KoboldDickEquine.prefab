@@ -416,9 +416,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6827762471943035006}
-  - component: {fileID: 5843050003280572503}
-  - component: {fileID: 5930659161140155148}
-  - component: {fileID: 3242609656918735825}
   - component: {fileID: 8139189007339321787}
   - component: {fileID: 7114996326512174768}
   - component: {fileID: 8284837355911774605}
@@ -447,585 +444,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5843050003280572503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6163956088671044292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13dd6be68d4eeb4c9b3c8e7812fd68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers: []
-  shapeCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 2
-        outSlope: 2
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    blendshapeName: BiggerBalls
-  transformCurves:
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.6238264
-        outSlope: 0.6238264
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.052155424
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0.2978317
-        outSlope: 0.2978317
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.05116904
-      - serializedVersion: 3
-        time: 100
-        value: 10
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0.3494401
-        outSlope: 0.3494401
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.038201608
-      - serializedVersion: 3
-        time: 100
-        value: 10
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateAxis: {x: 0, y: 0, z: 1}
-    translationOffset: {x: 0, y: 0.2, z: 0}
-    targetTransform: {fileID: 4549868196879854992}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.6238264
-        outSlope: 0.6238264
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.052155424
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0.2978317
-        outSlope: 0.2978317
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.05116904
-      - serializedVersion: 3
-        time: 100
-        value: 10
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0.3412452
-        outSlope: 0.3412452
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.05721438
-      - serializedVersion: 3
-        time: 100
-        value: 10
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateAxis: {x: 0, y: 0, z: -1}
-    translationOffset: {x: 0, y: 0.2, z: 0}
-    targetTransform: {fileID: 8003517335756057479}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  softbodyCurves: []
-  jiggleBoneCurves: []
-  eventListeners: []
-  materialCurves: []
-  defaultReagentVolume: 0
-  reagentVolumeDivisor: 20
-  container: {fileID: 0}
-  reagentMasks: []
-  bounceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.25
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.20167542
-      value: 2.502484
-      inSlope: 0.45121813
-      outSlope: 0.45121813
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.4
-      value: 0.46640015
-      inSlope: -1.8744586
-      outSlope: -1.8744586
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6033672
-      value: 1.791847
-      inSlope: 0.56383085
-      outSlope: 0.56383085
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.803418
-      value: 0.71360475
-      inSlope: -2.3585095
-      outSlope: -2.3585095
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  tweenDuration: 0.8
---- !u!114 &5930659161140155148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6163956088671044292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13dd6be68d4eeb4c9b3c8e7812fd68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers:
-  - {fileID: 2987425613198561351}
-  - {fileID: 7315451754972725502}
-  shapeCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -4.608613
-        outSlope: -4.608613
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.03850672
-      - serializedVersion: 3
-        time: 0.5
-        value: 0
-        inSlope: 0.03688566
-        outSlope: 0.03688566
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.19700599
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    blendshapeName: Flaccid1
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: -0.109321035
-        outSlope: -0.109321035
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.16560915
-      - serializedVersion: 3
-        time: 0.5
-        value: 1
-        inSlope: 0.03688566
-        outSlope: 0.03688566
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.19700599
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    blendshapeName: Flaccid2
-  transformCurves: []
-  softbodyCurves: []
-  jiggleBoneCurves: []
-  eventListeners: []
-  materialCurves: []
-  defaultReagentVolume: 0
-  reagentVolumeDivisor: 1
-  container: {fileID: 0}
-  reagentMasks:
-  - {fileID: 11400000, guid: 2028e04405fc5d146a345a4daac5a189, type: 2}
-  bounceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 4.3394804
-      outSlope: 4.3394804
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.047563374
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: -6.532544
-      outSlope: -6.532544
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.053040028
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  tweenDuration: 1.5
---- !u!114 &3242609656918735825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6163956088671044292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13dd6be68d4eeb4c9b3c8e7812fd68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers: []
-  shapeCurves: []
-  transformCurves:
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.58229697
-        outSlope: 0.58229697
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.029980013
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
-    rotateAxis: {x: 0, y: 0, z: 0}
-    translationOffset: {x: 0, y: 0, z: 0}
-    targetTransform: {fileID: 9000013800218957590}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.58229697
-        outSlope: 0.58229697
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.029980013
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
-    rotateAxis: {x: 0, y: 0, z: 0}
-    translationOffset: {x: 0, y: 0, z: 0}
-    targetTransform: {fileID: 4855000224091205294}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  softbodyCurves: []
-  jiggleBoneCurves: []
-  eventListeners: []
-  materialCurves: []
-  defaultReagentVolume: 0
-  reagentVolumeDivisor: 20
-  container: {fileID: 0}
-  reagentMasks: []
-  bounceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.25
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.20167542
-      value: 2.502484
-      inSlope: 0.45121813
-      outSlope: 0.45121813
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.4
-      value: 0.46640015
-      inSlope: -1.8744586
-      outSlope: -1.8744586
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6033672
-      value: 1.791847
-      inSlope: 0.56383085
-      outSlope: 0.56383085
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.803418
-      value: 0.71360475
-      inSlope: -2.3585095
-      outSlope: -2.3585095
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  tweenDuration: 0.8
 --- !u!114 &8139189007339321787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,9 +459,164 @@ MonoBehaviour:
   dicks:
   - dickContainer: {fileID: 6827762471943035006}
     dick: {fileID: 5521368089599830723}
-    dickInflater: {fileID: 3242609656918735825}
-    bonerInflator: {fileID: 5930659161140155148}
-    balls: {fileID: 5843050003280572503}
+    ballSizeInflater:
+      bounceCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.25
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.20167542
+          value: 2.502484
+          inSlope: 0.45121813
+          outSlope: 0.45121813
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.4
+          value: 0.46640015
+          inSlope: -1.8744586
+          outSlope: -1.8744586
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.6033672
+          value: 1.791847
+          inSlope: 0.56383085
+          outSlope: 0.56383085
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.803418
+          value: 0.71360475
+          inSlope: -2.3585095
+          outSlope: -2.3585095
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      bounceDuration: 1
+      listeners:
+      - id: 0
+      - id: 1
+    dickSizeInflater:
+      bounceCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.25
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.20167542
+          value: 2.502484
+          inSlope: 0.45121813
+          outSlope: 0.45121813
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.4
+          value: 0.46640015
+          inSlope: -1.8744586
+          outSlope: -1.8744586
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.6033672
+          value: 1.791847
+          inSlope: 0.56383085
+          outSlope: 0.56383085
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.803418
+          value: 0.71360475
+          inSlope: -2.3585095
+          outSlope: -2.3585095
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      bounceDuration: 1
+      listeners:
+      - id: 2
+      - id: 3
+    bonerInflater:
+      bounceCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 3.5640838
+          outSlope: 3.5640838
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.021674141
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: -0.6442978
+          outSlope: -0.6442978
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.038116574
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      bounceDuration: 1
+      listeners:
+      - id: 4
     attachPoint: 0
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
@@ -1052,6 +625,33 @@ MonoBehaviour:
     parent: 0
     parentTransform: {fileID: 0}
     dickIdentifier: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 4549868196879854992}
+    00000001:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 8003517335756057479}
+    00000002:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 9000013800218957590}
+    00000003:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 4855000224091205294}
+    00000004:
+      type: {class: BonerInflatable, ns: , asm: Assembly-CSharp}
+      data:
+        limpBlendshape: Flaccid2
+        flaccidBlendshape: Flaccid1
+        targetRenderers:
+        - {fileID: 2987425613198561351}
+        - {fileID: 7315451754972725502}
+        rigBuilder: {fileID: 8284837355911774605}
 --- !u!205 &7114996326512174768
 LODGroup:
   m_ObjectHideFlags: 0

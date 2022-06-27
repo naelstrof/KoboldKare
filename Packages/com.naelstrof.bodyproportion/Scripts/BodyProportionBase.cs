@@ -82,6 +82,9 @@ namespace Naelstrof.BodyProportion {
 			}
 
 			if (!ignoreParent) {
+				if (animator.GetParentBone(boneID).lossyScale.x == 0f) {
+					throw new UnityException("Body proportion cannot run on a character with a body part scale of 0.");
+				}
 				bone.localScale = Vector3.one * ((1f / animator.GetParentBone(boneID).lossyScale.x) * scale);
 			} else {
 				bone.localScale = Vector3.one * scale;

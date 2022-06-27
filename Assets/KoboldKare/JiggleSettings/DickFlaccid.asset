@@ -18,4 +18,4 @@ MonoBehaviour:
   blend: 1
   angleElasticity: 0.25
   elasticitySoften: 0.1
-  lengthElasticity: 0.5
+  lengthElasticity: 0.7

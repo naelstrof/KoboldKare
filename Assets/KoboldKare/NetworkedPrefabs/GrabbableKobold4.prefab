@@ -15437,39 +15437,264 @@ MonoBehaviour:
   animator: {fileID: 6506915555083475516}
   body: {fileID: 4787937348439926609}
   MetabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
-  boobListeners:
-  - targetTransform: {fileID: 6506915555090380244}
-    flatShape: FlatChestLeft
-    biggerShape: BiggerBreastLeft
-    skinnedMeshRenderers:
-    - {fileID: 6506915555087688956}
-    - {fileID: 2780399689652382999}
-    - {fileID: 6532966543233302468}
-    - {fileID: 3953097671077810326}
-    rigBuilder: {fileID: 3736482642893614196}
-  - targetTransform: {fileID: 6506915555090380242}
-    flatShape: FlatChestRight
-    biggerShape: BiggerBreastRight
-    skinnedMeshRenderers:
-    - {fileID: 6506915555087688956}
-    - {fileID: 2780399689652382999}
-    - {fileID: 6532966543233302468}
-    - {fileID: 3953097671077810326}
-    rigBuilder: {fileID: 3736482642893614196}
-  bellyListeners:
-  - blendShapeName: Inflate
-    skinnedMeshRenderers:
-    - {fileID: 6506915555087688956}
-    - {fileID: 2780399689652382999}
-    clamped: 1
-  fatnessListeners:
-  - blendShapeName: Fatten_Female
-    skinnedMeshRenderers:
-    - {fileID: 6506915555087688956}
-    - {fileID: 2780399689652382999}
-    clamped: 0
+  belly:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 1
+    listeners:
+    - id: 0
+  fatnessInflater:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 0.8
+    listeners:
+    - id: 1
+  sizeInflater:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 0.6
+    listeners:
+    - id: 2
+  boobs:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 1
+    listeners:
+    - id: 3
+    - id: 4
   tummyGrumbles: {fileID: 11400000, guid: 67a1644657f256b47ab2a61a75c069d6, type: 2}
-  balls: {fileID: 4474583895957048706}
   bodyProportion: {fileID: 2103486266263749528}
   chatText: {fileID: 708238915651104558}
   textSpeedPerCharacter: 0.08
@@ -15587,6 +15812,48 @@ MonoBehaviour:
   koboldAnimator: {fileID: 6506915555083475516}
   arousal: 0
   ragdoller: {fileID: 3374508250042995388}
+  references:
+    version: 1
+    00000000:
+      type: {class: InflatableBlendShape, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        blendShapeName: Inflate
+        skinnedMeshRenderers:
+        - {fileID: 6506915555087688956}
+        - {fileID: 2780399689652382999}
+        clamped: 1
+    00000001:
+      type: {class: InflatableBlendShape, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        blendShapeName: Fatten_Female
+        skinnedMeshRenderers:
+        - {fileID: 6506915555087688956}
+        - {fileID: 2780399689652382999}
+        clamped: 0
+    00000002:
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 5441969853467665008}
+    00000003:
+      type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 6506915555090380244}
+        flatShape: FlatChestLeft
+        biggerShape: BiggerBreastLeft
+        skinnedMeshRenderers:
+        - {fileID: 6506915555087688956}
+        - {fileID: 2780399689652382999}
+        rigBuilder: {fileID: 3736482642893614196}
+    00000004:
+      type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 6506915555090380242}
+        flatShape: FlatChestRight
+        biggerShape: BiggerBreastRight
+        skinnedMeshRenderers:
+        - {fileID: 6506915555087688956}
+        - {fileID: 2780399689652382999}
+        rigBuilder: {fileID: 3736482642893614196}
 --- !u!114 &2647890867887436755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15721,12 +15988,10 @@ MonoBehaviour:
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms:
     - {fileID: 7612000003749820546}
-    - {fileID: 0}
   - rootTransform: {fileID: 8437674557913943489}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms:
     - {fileID: 352334595102091798}
-    - {fileID: 0}
   - rootTransform: {fileID: 6506915555090380194}
     jiggleSettings: {fileID: 11400000, guid: dbdf3dbab824a8c448cb0f4cead4c467, type: 2}
     ignoredTransforms: []

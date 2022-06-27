@@ -41,14 +41,13 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 }
 
                 proceduralDeformation.RemoveTargetRenderer(r);
-                foreach (InflatableBreast boob in kobold.boobListeners) {
-                    boob.RemoveTargetRenderer(r);
-                }
-                foreach (InflatableBlendShape belly in kobold.bellyListeners) {
-                    belly.RemoveTargetRenderer(r);
-                }
-                foreach (var fatness in kobold.fatnessListeners) {
-                    fatness.RemoveTargetRenderer(r);
+                foreach (var inflatable in kobold.GetAllInflatableListeners()) {
+                    if (inflatable is InflatableBreast breast) {
+                        breast.RemoveTargetRenderer(r);
+                    }
+                    if (inflatable is InflatableBlendShape blendshape) {
+                        blendshape.RemoveTargetRenderer(r);
+                    }
                 }
             }
             Destroy(g);
@@ -95,16 +94,15 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             group.SetLODs(lods);
             if (s.gameObject.name == "Body") {
                 physics.targetSkins.Add(smrCopies[s]);
-                foreach(var boob in kobold.boobListeners) {
-                    boob.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                }
-                foreach (var belly in kobold.bellyListeners) {
-                    belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                foreach (var inflatable in kobold.GetAllInflatableListeners()) {
+                    if (inflatable is InflatableBreast breast) {
+                        breast.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                    }
+                    if (inflatable is InflatableBlendShape blendshape) {
+                        blendshape.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                    }
                 }
                 proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                foreach (var fatness in kobold.fatnessListeners) {
-                    fatness.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                }
             }
             foreach(Material m in g.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 1f);

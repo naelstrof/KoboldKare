@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate", "FIX_LAG"};
+    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate", "FIX_LAG", "WhatToSpawn", "HowMuchToSpawn"};
     public Kobold targetKobold;
     public UnityEvent onLoad;
     //possible dick types of the dicktype menu
@@ -132,6 +132,12 @@ public class PlayerKoboldLoader : MonoBehaviour {
             }
             case "FIX_LAG": {
                 LoadCustomParts.CleanUpServer();
+                break;
+            }
+            case "WhatToSpawn": {
+                int howMuch = (int) UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("HowMuchToSpawn").value;
+                int thing = (int) setting.value;
+                LoadCustomParts.instance.spawnShit(thing, howMuch);
                 break;
             }
         }

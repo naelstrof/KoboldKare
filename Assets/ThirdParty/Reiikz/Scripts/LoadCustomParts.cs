@@ -43,6 +43,27 @@ public class LoadCustomParts : MonoBehaviour
     public STATE gameState = STATE.UNKNOWN;
     // public bool postLoadMainMenuKoboldUpdateDone = false;
 
+    public Dictionary<int, string> SpawnTable = new Dictionary<int, string> {
+        {0, ""},
+        {1, "Egg"},
+        {2, "Bomb"},
+        {3, "Eggplant"},
+        {4, "EquineDickEquippable"},
+        {5, "KandiDickEquippable"},
+        {6, "KnottedDickEquippable"},
+        {7, "TaperedDickEquippable"},
+        {8, "Melon"},
+        {9, "NipplePump"},
+        {10, "Heart"},
+        {11, "Banana"},
+        {12, "Pineapple"},
+        {13, "IceChunk"},
+        {14, "SpikeCollarEquippable"},
+        {15, "TailbagEquippable"},
+        {16, "HardhatEquippable"},
+        {17, "NippleBarbellPiercingsEquippable"}
+    };
+
     public static void CleanUpServer (){
         PhotonView[] objects = FindObjectsOfType<PhotonView>();
         foreach(PhotonView pv in objects){
@@ -253,6 +274,16 @@ public class LoadCustomParts : MonoBehaviour
             }
         }else{
             Debug.Log("No launchpads found");
+        }
+    }
+
+    public void spawnShit(int thing, int howMuch){
+        if (thing == 0) return;
+        if(!SpawnTable.ContainsKey(thing)) return;
+        for(int i = 1; i <= howMuch; i++){
+            try {
+                PhotonNetwork.Instantiate(SpawnTable[thing], playerKobold.transform.position, playerKobold.transform.rotation, 0);
+            }catch(System.Exception e) {}
         }
     }
 }

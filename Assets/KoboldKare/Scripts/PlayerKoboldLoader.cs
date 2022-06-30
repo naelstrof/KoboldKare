@@ -23,6 +23,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
             option.onValueChange -= OnValueChange;
             option.onValueChange += OnValueChange;
             if(!settingName.Equals("FIX_LAG")) ProcessOption(targetKobold, option);
+            if(!settingName.Equals("WhatToSpawn")) ProcessOption(targetKobold, option);
         }
     }
     void OnDestroy() {

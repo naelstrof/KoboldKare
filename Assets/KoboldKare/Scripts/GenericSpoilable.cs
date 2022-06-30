@@ -13,7 +13,7 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     public SpoilIntensityEvent OnIntensityChange;
     public SpoilIntensityEvent OnFadeout;
     public float spawnProtection = 4f;
-    private int daysLeftOut = 0;
+    //private int daysLeftOut = 0;
     private bool destroying = false;
     public bool destroyOnSpoil = false;
     private float internalSpoilIntensity; 

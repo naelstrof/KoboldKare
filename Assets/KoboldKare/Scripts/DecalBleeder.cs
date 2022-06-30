@@ -8,7 +8,7 @@ public class DecalBleeder : MonoBehaviour
     public Material decalMat;
     public LayerMask _hitLayers;
     private Vector3 _lastPos = Vector3.zero;
-    private float _minDistance = 0.1f;
+    //private float _minDistance = 0.1f;
     private void OnCollisionEnter(Collision collision) {
         if ( (1<<collision.collider.gameObject.layer & _hitLayers) == 0 ) {
             return;

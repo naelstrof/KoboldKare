@@ -205,7 +205,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.IsMasterClient) {
             //RPCSetMoney(money.data);
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-            DayNightCycle.instance?.ForceUpdate();
+            //DayNightCycle.instance?.ForceUpdate();
         }
     }
 

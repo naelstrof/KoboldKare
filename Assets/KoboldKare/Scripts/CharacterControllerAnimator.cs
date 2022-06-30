@@ -37,7 +37,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
     public VisualEffect jumpDust;
     public VisualEffect walkDust;
     //public ParticleSystem walkDust;
-    private float distanceCounter = 0;
+    //private float distanceCounter = 0;
     public Transform headTransform;
     public LayerMask actionLayer;
     //private Vector3 lookPosition;
@@ -449,7 +449,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         }
         handler.SetLookAtPosition(lookDir.position);
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(stationViewID);
             stream.SendNext(currentStationID);

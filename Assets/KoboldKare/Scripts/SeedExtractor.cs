@@ -86,7 +86,8 @@ public class SeedExtractor : GenericUsable {
             foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
                 r?.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
             }
-            source.PlayOneShot(deny.GetRandomClip(), deny.volume);
+            deny.Play(source);
+            //source.PlayOneShot(deny.GetRandomClip(), deny.volume);
         }
         if (damagable) {
             damagable.Damage(damagable.maxHealth+1);

@@ -7,10 +7,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class GenericPurchasable : GenericUsable, IPunObservable {
+public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
 
-    [SerializeField]
-    private ScriptableFloat money;
     [SerializeField]
     private Sprite displaySprite;
 
@@ -36,7 +34,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable {
     public delegate void PurchasableChangedAction(ScriptablePurchasable newPurchasable);
     public PurchasableChangedAction purchasableChanged;
     public virtual void Start() {
-        source = new AudioSource();
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
         source.rolloffMode = AudioRolloffMode.Custom;
@@ -78,21 +75,25 @@ public class GenericPurchasable : GenericUsable, IPunObservable {
             floater.gameObject.SetActive(true);
         }
     }
+    public override void LocalUse(Kobold k) {
+        //base.LocalUse(k);
+        if (CanUse(k)) {
+            photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
+            k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
+            PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
+        }
+    }
     public override bool CanUse(Kobold k) {
-        return display.activeInHierarchy && money.has(purchasable.cost);
+        return display.activeInHierarchy && (k == null || k.GetComponent<MoneyHolder>().HasMoney(purchasable.cost));
     }
     [PunRPC]
     public override void Use() {
-        source.PlayOneShot(purchaseSoundPack.GetRandomClip(), purchaseSoundPack.volume);
-        if (MoneySyncHack.view.IsMine && CanUse(null)) {
-            money.charge(purchasable.cost);
-            PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
-        }
+        purchaseSoundPack.Play(source);
         floater.gameObject.SetActive(false);
         purchased.Invoke();
         display.SetActive(false);
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(inStock);
             stream.SendNext(PurchasableDatabase.GetID(purchasable));

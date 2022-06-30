@@ -6,7 +6,7 @@ using UnityEngine;
 public class ReflectionProbeUpdater : MonoBehaviour {
     //public List<GameEvent> gameEventsToTriggerOn = new List<GameEvent>();
     public List<ReflectionProbe> probes = new List<ReflectionProbe>();
-    private bool rendering;
+    //private bool rendering;
     //public void Awake() {
     //foreach( GameEvent e in gameEventsToTriggerOn) {
     //e.RegisterListener(this);
@@ -21,7 +21,7 @@ public class ReflectionProbeUpdater : MonoBehaviour {
         StartCoroutine(UpdateProbes());
     }
     IEnumerator UpdateProbes() {
-        rendering = true;
+        //rendering = true;
         foreach (ReflectionProbe p in probes) {
             //p.resolution = 32;
             p.timeSlicingMode = UnityEngine.Rendering.ReflectionProbeTimeSlicingMode.IndividualFaces;
@@ -30,7 +30,7 @@ public class ReflectionProbeUpdater : MonoBehaviour {
             p.RenderProbe(); // Force it to render, to prevent stutter later
             yield return new WaitForEndOfFrame();
         }
-        rendering = false;
+        //rendering = false;
     }
     //public void OnEventRaised(GameEvent e) {
         //if (!rendering) {

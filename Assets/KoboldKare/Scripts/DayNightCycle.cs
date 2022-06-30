@@ -18,11 +18,8 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     public GameEventFloat metabolizeEvent;
     public static DayNightCycle instance = null;
     public float dayLength = 480f;
-    private bool nextFrameUpdate, alarmClockUpgrade;
+    private bool alarmClockUpgrade;
     private WaitForSeconds waitForTwoSeconds = new WaitForSeconds(1.6f);
-    public void ForceUpdate() {
-        nextFrameUpdate = true;
-    }
     private float lastTime = 0f;
     public float hour {
         get {

@@ -8,25 +8,32 @@ using System.Text;
 [RequireComponent(typeof(TMPro.TextMeshProUGUI))]
 public class FloatTextDisplay : MonoBehaviour {
     private TMPro.TextMeshProUGUI text;
-    public ScriptableFloat num;
-    public string startingText;
-    private float disp;
-    private float currentFloat = 0;
-    private StringBuilder sb = new StringBuilder(16,16);
+    [SerializeField]
+    private string startingText;
+    [SerializeField]
+    private MoneyHolder holder;
+    private float oldMoney;
+    private Coroutine routine;
     void Start() {
         text = GetComponent<TMPro.TextMeshProUGUI>();
-        disp = num.value;
+        text.text = startingText + Mathf.Round(holder.GetMoney()).ToString();
+        oldMoney = holder.GetMoney();
+        holder.moneyChanged += OnMoneyChanged;
     }
-    void FixedUpdate() {
-        disp = Mathf.MoveTowards(disp, num.value, Time.deltaTime * 5f + (Mathf.Abs(num.value - disp)) * Time.deltaTime * 2f);
-        if (currentFloat != disp) {
-            currentFloat = disp;
-            sb.Length = 0;
-            sb.Append(startingText);
-            sb.Append(Mathf.Round(disp));
-            if (text.text != sb.ToString()) {
-                text.SetText(sb.ToString());
-            }
+    void OnMoneyChanged(float newMoney) {
+        if (routine != null) {
+            StopCoroutine(routine);
+        }
+        routine = StartCoroutine(MoneyUpdateRoutine(oldMoney, newMoney));
+    }
+    IEnumerator MoneyUpdateRoutine(float from, float to) {
+        float startTime = Time.time;
+        float duration = 1f;
+        while (Time.time<startTime+duration) {
+            float t = (Time.time - startTime)/duration;
+            oldMoney = Mathf.Lerp(from,to,t);
+            text.text = startingText + Mathf.Round(oldMoney).ToString();
+            yield return null;
         }
     }
 }

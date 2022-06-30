@@ -14,8 +14,8 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
     private GameObject[] disableOnPurchase;
     [SerializeField]
     private GameObject[] enableOnPurchase;
-    [SerializeField]
-    private ScriptableFloat money;
+    //[SerializeField]
+    //private ScriptableFloat money;
     [SerializeField]
     private float cost;
     [SerializeField]
@@ -34,7 +34,7 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
         return displaySprite;
     }
     public override bool CanUse(Kobold k) {
-        return money.has(cost) && !bought;
+        return k.GetComponent<MoneyHolder>().HasMoney(cost) && !bought;
     }
     private void SetState(bool purchased) {
         foreach(GameObject obj in enableOnPurchase) {
@@ -49,10 +49,14 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
         bought = purchased;
         //Debug.Log(gameObject.name+":: Bought is set to: "+bought);
     }
+    public override void LocalUse(Kobold k) {
+        if (k.GetComponent<MoneyHolder>().ChargeMoney(cost)) {
+            base.LocalUse(k);
+        }
+    }
     [PunRPC]
     public override void Use() {
         base.Use();
-        money.charge(cost);
         purchased.Invoke();
         SetState(true);
         //gameObject.SetActive(false);
@@ -74,6 +78,6 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
         SetState(bought);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
     }
 }

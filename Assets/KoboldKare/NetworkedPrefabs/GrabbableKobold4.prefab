@@ -5678,6 +5678,7 @@ MonoBehaviour:
   - {fileID: 6506915555090380202}
   - {fileID: 6705071045580581135}
   - {fileID: 6110215587851341107}
+  splineTension: 0.5
   listeners:
   - id: 0
   - id: 1
@@ -12832,6 +12833,7 @@ MonoBehaviour:
   - {fileID: 6506915555090380202}
   - {fileID: 6362529374609880686}
   - {fileID: 7431995225434785503}
+  splineTension: 0.5
   listeners:
   - id: 0
   - id: 1
@@ -13655,6 +13657,7 @@ MonoBehaviour:
   - {fileID: 615628336786005644}
   - {fileID: 8632167451197018564}
   - {fileID: 1606155469873694204}
+  splineTension: 0.5
   listeners:
   - id: 0
   - id: 1

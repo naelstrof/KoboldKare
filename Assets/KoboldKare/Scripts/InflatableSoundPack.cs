@@ -23,7 +23,7 @@ namespace Naelstrof.Inflatable {
         }
         public override void OnSizeChanged(float newSize) {
             source.enabled = newSize > 0f;
-            if (!source.isPlaying) {
+            if (!source.isPlaying && newSize > 0f) {
                 soundPack.Play(source);
             }
             source.volume = Mathf.Clamp01(newSize);

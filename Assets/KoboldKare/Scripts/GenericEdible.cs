@@ -9,6 +9,9 @@ public class GenericEdible : GenericUsable, IPunObservable, IOnPhotonViewOwnerCh
     private Sprite eatSymbol;
     [SerializeField]
     private GenericReagentContainer container;
+
+    [SerializeField] private bool destroyOnEat = true;
+    [SerializeField] private AudioPack eatSoundPack;
     public override Sprite GetSprite(Kobold k) {
         return eatSymbol;
     }
@@ -25,15 +28,22 @@ public class GenericEdible : GenericUsable, IPunObservable, IOnPhotonViewOwnerCh
         }
         // Only successfully eat if we own both the edible, and the kobold. Otherwise, wait for ownership to successfully transfer
         if (k.photonView.IsMine && photonView.IsMine) {
-            k.bellyContainer.TransferMix(container, container.volume*0.5f, GenericReagentContainer.InjectType.Spray);
+            Eat(k);
+        }
+    }
+
+    private void Eat(Kobold kobold) {
+        kobold.bellyContainer.TransferMix(container, container.volume*0.5f, GenericReagentContainer.InjectType.Spray);
+        if (destroyOnEat) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
+
+        GameManager.instance.SpawnAudioClipInWorld(eatSoundPack, transform.position);
     }
 
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
         if (newOwner == PhotonNetwork.LocalPlayer && tryingToEat != null) {
-            tryingToEat.bellyContainer.TransferMix(container, container.volume*0.5f, GenericReagentContainer.InjectType.Spray);
-            PhotonNetwork.Destroy(photonView.gameObject);
+            Eat(tryingToEat);
         }
         // Someone else must've won the handshake, so we clear our attempt to equip.
         tryingToEat = null;

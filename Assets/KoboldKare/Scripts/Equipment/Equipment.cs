@@ -64,4 +64,8 @@ public class Equipment : ScriptableObject {
         }
         return null;
     }
+
+    private void OnValidate() {
+        groundPrefab.OnValidate();
+    }
 }

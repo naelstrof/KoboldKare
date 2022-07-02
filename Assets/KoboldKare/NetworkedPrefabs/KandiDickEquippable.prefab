@@ -231,12 +231,13 @@ MonoBehaviour:
   tipTarget: {fileID: 4034448089667243240}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 0.8
+  penetrationMarginOfError: 1
   autoPenetrate: -1
   listeners:
   - id: 0
   - id: 1
   - id: 2
+  - id: 3
   references:
     version: 1
     00000000:
@@ -257,6 +258,14 @@ MonoBehaviour:
         angularForceMultiplier: 30
         planarAlignmentForceMultiplier: 4
         friction: 0.5
+    00000003:
+      type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        localDist: 0
+        clip: {fileID: 8300000, guid: 917c54fd07476f94ea8af2a93072456b, type: 3}
+        audioGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
+          type: 2}
+        volume: 0.6
 --- !u!136 &6664954676554565166
 CapsuleCollider:
   m_ObjectHideFlags: 0

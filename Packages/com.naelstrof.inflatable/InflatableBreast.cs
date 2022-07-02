@@ -39,6 +39,7 @@ namespace Naelstrof.Inflatable {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
                     targetRig = jiggleRig;
+                    targetRig.jiggleSettings = JiggleSettingsBlend.Instantiate(targetRig.jiggleSettings);
                     break;
                 }
             }

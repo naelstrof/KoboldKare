@@ -21,7 +21,7 @@ public class MoneyPile : GenericUsable, IPunObservable, IPunInstantiateMagicCall
             internalWorth = value;
             //int targetIndex = Mathf.RoundToInt(moneyMap.Evaluate(value/maxMoney)*(displays.Length-1));
             int targetIndex = (int)Mathf.Log(value, 5f);
-            Debug.Log("Got " + Mathf.Log(value, 5f) + ", rounded to " + targetIndex);
+            //Debug.Log("Got " + Mathf.Log(value, 5f) + ", rounded to " + targetIndex);
             targetIndex = Mathf.Clamp(targetIndex, 0, displays.Length-1);
             for (int i=0;i<displays.Length;i++) {
                 displays[i].SetActive(i==targetIndex);

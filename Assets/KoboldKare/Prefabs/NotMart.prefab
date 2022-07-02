@@ -286,8 +286,6 @@ GameObject:
   - component: {fileID: 915706546001399098}
   - component: {fileID: 915706546001399099}
   - component: {fileID: 915706546001399092}
-  - component: {fileID: 915706546001399093}
-  - component: {fileID: 915706546001399094}
   m_Layer: 10
   m_Name: Quad (10)
   m_TagString: Untagged
@@ -372,41 +370,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &915706546001399093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915706546001399088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &915706546001399094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915706546001399088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 5
-  Value:
-    LowFreqAbsorption: 0.24
-    MidFreqAbsorption: 0.69
-    HighFreqAbsorption: 0.73
-    Scattering: 0.05
-    LowFreqTransmission: 0.02
-    MidFreqTransmission: 0.005
-    HighFreqTransmission: 0.003
 --- !u!1 &915706546127428139
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +477,6 @@ GameObject:
   - component: {fileID: 915706546195946424}
   - component: {fileID: 915706546195946430}
   - component: {fileID: 915706546195946431}
-  - component: {fileID: 915706546195946429}
   - component: {fileID: 287694855388310530}
   - component: {fileID: 8811475657113570720}
   m_Layer: 12
@@ -744,63 +706,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   metabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
---- !u!114 &915706546195946429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915706546195946425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc64aca77a4bc84f9a15ccd92d26878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directBinaural: 1
-  interpolation: 0
-  physicsBasedAttenuation: 0
-  airAbsorption: 1
-  dipoleWeight: 0
-  dipolePower: 0
-  occlusionMode: 3
-  occlusionMethod: 1
-  sourceRadius: 1
-  occlusionSamples: 16
-  directMixLevel: 1
-  reflections: 1
-  indirectBinaural: 1
-  physicsBasedAttenuationForIndirect: 1
-  indirectMixLevel: 1
-  simulationType: 1
-  uniqueIdentifier: StoreMusic
-  avoidSilenceDuringInit: 0
-  overrideHRTFIndex: 0
-  hrtfIndex: 0
-  bakingRadius: 45
-  useAllProbeBoxes: 1
-  probeBoxes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  bakedProbeNames:
-  - CaveReverb3
-  - CaveReverb2
-  - StoreReverb (3)
-  - OutsideReverb (2)
-  - OutsideReverb (1)
-  - StoreReverb (2)
-  - OutsideReverb
-  - CaveReverb1
-  - StoreReverb
-  - StoreReverb (1)
-  - HouseReverb
-  bakedProbeDataSizes: 00000000000000005ac9040054530100425e0000000000000000000000000000525003000000000000000000
-  bakedDataSize: 641858
-  bakedStatsFoldout: 1
-  bakeToggle: 1
-  bakedDataIdentifier:
-    identifier: 109506167
-    type: 0
 --- !u!114 &287694855388310530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,18 +725,6 @@ MonoBehaviour:
     even:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 915706546195946429}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
         - m_Target: {fileID: 915706546195946430}
           m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
           m_MethodName: set_enabled
@@ -849,18 +742,6 @@ MonoBehaviour:
     even:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 915706546195946429}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 915706546195946430}
           m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
           m_MethodName: set_enabled
@@ -2985,8 +2866,6 @@ GameObject:
   - component: {fileID: 5685938597852330854}
   - component: {fileID: 8612143271376857224}
   - component: {fileID: 805057971035898359}
-  - component: {fileID: 915706546436558032}
-  - component: {fileID: 915706546436558039}
   m_Layer: 10
   m_Name: Concrete
   m_TagString: Untagged
@@ -3071,41 +2950,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2035880078066663383, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706546436558032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286976881940767472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 2
-  Value:
-    LowFreqAbsorption: 0.05
-    MidFreqAbsorption: 0.07
-    HighFreqAbsorption: 0.08
-    Scattering: 0.05
-    LowFreqTransmission: 0.015
-    MidFreqTransmission: 0.002
-    HighFreqTransmission: 0.001
---- !u!114 &915706546436558039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1286976881940767472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &1484943905502121567
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,8 +2962,6 @@ GameObject:
   - component: {fileID: 7209311452858994543}
   - component: {fileID: 8891192075908386503}
   - component: {fileID: 3560317407827086039}
-  - component: {fileID: 915706546496369191}
-  - component: {fileID: 915706546496369190}
   m_Layer: 0
   m_Name: Carpet
   m_TagString: Untagged
@@ -3204,41 +3046,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2052996276529254954, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706546496369191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484943905502121567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &915706546496369190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484943905502121567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 5
-  Value:
-    LowFreqAbsorption: 0.24
-    MidFreqAbsorption: 0.69
-    HighFreqAbsorption: 0.73
-    Scattering: 0.05
-    LowFreqTransmission: 0.02
-    MidFreqTransmission: 0.005
-    HighFreqTransmission: 0.003
 --- !u!1 &1702778760723159250
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,8 +3348,6 @@ GameObject:
   - component: {fileID: 8982378354283441736}
   - component: {fileID: 521261140743224933}
   - component: {fileID: 8111105015763266178}
-  - component: {fileID: 915706547480411161}
-  - component: {fileID: 915706547480411160}
   m_Layer: 0
   m_Name: Metal
   m_TagString: Untagged
@@ -3627,41 +3432,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4496885475859389300, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706547480411161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171296939911752396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 9
-  Value:
-    LowFreqAbsorption: 0.2
-    MidFreqAbsorption: 0.07
-    HighFreqAbsorption: 0.06
-    Scattering: 0.05
-    LowFreqTransmission: 0.2
-    MidFreqTransmission: 0.025
-    HighFreqTransmission: 0.01
---- !u!114 &915706547480411160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2171296939911752396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &2226991060460947550
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,8 +3444,6 @@ GameObject:
   - component: {fileID: 711768014974180830}
   - component: {fileID: 4880562392215255575}
   - component: {fileID: 3249818966812528464}
-  - component: {fileID: 915706546860008416}
-  - component: {fileID: 915706546860008423}
   m_Layer: 10
   m_Name: Wood
   m_TagString: Untagged
@@ -3761,41 +3529,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1736622283181914040, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706546860008416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226991060460947550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 8
-  Value:
-    LowFreqAbsorption: 0.11
-    MidFreqAbsorption: 0.07
-    HighFreqAbsorption: 0.06
-    Scattering: 0.05
-    LowFreqTransmission: 0.07
-    MidFreqTransmission: 0.014
-    HighFreqTransmission: 0.005
---- !u!114 &915706546860008423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226991060460947550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &3384363575370997902
 GameObject:
   m_ObjectHideFlags: 0
@@ -3808,8 +3541,6 @@ GameObject:
   - component: {fileID: 7859579641610243497}
   - component: {fileID: 3345753664752287525}
   - component: {fileID: 8816737900900553563}
-  - component: {fileID: 915706546260860303}
-  - component: {fileID: 915706546260860302}
   m_Layer: 10
   m_Name: Ceiling
   m_TagString: Untagged
@@ -3894,41 +3625,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3633865748600368068, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706546260860303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384363575370997902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 7
-  Value:
-    LowFreqAbsorption: 0.12
-    MidFreqAbsorption: 0.06
-    HighFreqAbsorption: 0.04
-    Scattering: 0.05
-    LowFreqTransmission: 0.056
-    MidFreqTransmission: 0.056
-    HighFreqTransmission: 0.004
---- !u!114 &915706546260860302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3384363575370997902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &3440930660525508517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3941,8 +3637,6 @@ GameObject:
   - component: {fileID: 7672378480236149449}
   - component: {fileID: 3728240501283789192}
   - component: {fileID: 8372224340913948908}
-  - component: {fileID: 915706547030892322}
-  - component: {fileID: 915706547030892321}
   m_Layer: 0
   m_Name: FloorTile
   m_TagString: Untagged
@@ -4027,41 +3721,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6946868759442727253, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706547030892322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440930660525508517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 2
-  Value:
-    LowFreqAbsorption: 0.05
-    MidFreqAbsorption: 0.07
-    HighFreqAbsorption: 0.08
-    Scattering: 0.05
-    LowFreqTransmission: 0.015
-    MidFreqTransmission: 0.002
-    HighFreqTransmission: 0.001
---- !u!114 &915706547030892321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440930660525508517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &5409733311269681213
 GameObject:
   m_ObjectHideFlags: 0
@@ -4554,8 +4213,6 @@ GameObject:
   - component: {fileID: 3136276930449161049}
   - component: {fileID: 3278408525259849606}
   - component: {fileID: 162600903136537880}
-  - component: {fileID: 915706547088758356}
-  - component: {fileID: 915706547088758363}
   m_Layer: 10
   m_Name: Plastic
   m_TagString: Untagged
@@ -4641,41 +4298,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2501353177796253522, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706547088758356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8278787505049072268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 5
-  Value:
-    LowFreqAbsorption: 0.24
-    MidFreqAbsorption: 0.69
-    HighFreqAbsorption: 0.73
-    Scattering: 0.05
-    LowFreqTransmission: 0.02
-    MidFreqTransmission: 0.005
-    HighFreqTransmission: 0.003
---- !u!114 &915706547088758363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8278787505049072268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &8408842898138685601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4688,8 +4310,6 @@ GameObject:
   - component: {fileID: 2639672408859619062}
   - component: {fileID: 630174445804093047}
   - component: {fileID: 6393848424419016653}
-  - component: {fileID: 915706546720234183}
-  - component: {fileID: 915706546720234182}
   m_Layer: 10
   m_Name: Brick
   m_TagString: Untagged
@@ -4774,41 +4394,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5426383390628818845, guid: b4f65537ca16fa64297f446fe41d431a, type: 3}
---- !u!114 &915706546720234183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8408842898138685601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 1
-  Value:
-    LowFreqAbsorption: 0.03
-    MidFreqAbsorption: 0.04
-    HighFreqAbsorption: 0.07
-    Scattering: 0.05
-    LowFreqTransmission: 0.015
-    MidFreqTransmission: 0.015
-    HighFreqTransmission: 0.015
---- !u!114 &915706546720234182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8408842898138685601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
 --- !u!1 &8886113845317524636
 GameObject:
   m_ObjectHideFlags: 0
@@ -7032,6 +6617,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b050c24a6955cee40ac44b13dfa0734c, type: 3}
+--- !u!4 &8458182485701455157 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -444521105353760620, guid: b050c24a6955cee40ac44b13dfa0734c,
+    type: 3}
+  m_PrefabInstance: {fileID: 915706546616520097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2829818915584920513 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: b050c24a6955cee40ac44b13dfa0734c,
+    type: 3}
+  m_PrefabInstance: {fileID: 915706546616520097}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5318622028042495675 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b050c24a6955cee40ac44b13dfa0734c,
@@ -7044,27 +6641,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 915706546616520097}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1946794658023144966 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1707243787577406375, guid: b050c24a6955cee40ac44b13dfa0734c,
-    type: 3}
-  m_PrefabInstance: {fileID: 915706546616520097}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6370973863403010174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3107764419183184417, guid: b050c24a6955cee40ac44b13dfa0734c,
     type: 3}
   m_PrefabInstance: {fileID: 915706546616520097}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8458182485701455157 stripped
+--- !u!4 &1946794658023144966 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -444521105353760620, guid: b050c24a6955cee40ac44b13dfa0734c,
-    type: 3}
-  m_PrefabInstance: {fileID: 915706546616520097}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &2829818915584920513 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: b050c24a6955cee40ac44b13dfa0734c,
+  m_CorrespondingSourceObject: {fileID: 1707243787577406375, guid: b050c24a6955cee40ac44b13dfa0734c,
     type: 3}
   m_PrefabInstance: {fileID: 915706546616520097}
   m_PrefabAsset: {fileID: 0}

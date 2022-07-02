@@ -114,6 +114,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private bool grabbed = false;
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     public float arousal = 0f;
+    public GameObject nipplePumps;
+    public GameObject nippleBarbells;
     public float baseSize { get; private set; }
     public float baseFatness { get; private set; }
     public float baseDickSize { get; private set; }

@@ -106,6 +106,22 @@ public class GameManager : MonoBehaviour {
             Camera.main.gameObject.GetComponentInChildren<Canvas>(true).enabled = visible;
         }
     }
+
+    public void SpawnAudioClipInWorld(AudioPack pack, Vector3 position) {
+        GameObject g = new GameObject("One shot Audio");
+        g.transform.position = position;
+        AudioSource source = g.AddComponent<AudioSource>();
+        source.rolloffMode = AudioRolloffMode.Custom;
+        source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, volumeCurve);
+        source.minDistance = 0f;
+        source.maxDistance = 25f;
+        source.outputAudioMixerGroup = soundEffectGroup;
+        source.spatialBlend = 1f;
+        source.pitch = UnityEngine.Random.Range(0.85f,1.15f);
+        pack.Play(source);
+        Destroy(g, source.clip.length);
+    }
+
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {
         if (group == null) {
             group = soundEffectGroup;

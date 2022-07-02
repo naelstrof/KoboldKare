@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5112288436516698404}
   - component: {fileID: 7705284574934100389}
   - component: {fileID: 4245764609677436959}
-  - component: {fileID: 4474693343659670345}
-  - component: {fileID: 1664122429919693322}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Untagged
@@ -98,41 +96,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5426383390628818845, guid: 7b749d6a34ca1724f8c63efdeb64fa57, type: 3}
---- !u!114 &4474693343659670345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648960946641532787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &1664122429919693322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648960946641532787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 1
-  Value:
-    LowFreqAbsorption: 0.03
-    MidFreqAbsorption: 0.04
-    HighFreqAbsorption: 0.07
-    Scattering: 0.05
-    LowFreqTransmission: 0.015
-    MidFreqTransmission: 0.015
-    HighFreqTransmission: 0.015
 --- !u!1 &2973295933917474799
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,8 +108,6 @@ GameObject:
   - component: {fileID: 451551476990125688}
   - component: {fileID: 110443153140952607}
   - component: {fileID: 4957400397617591491}
-  - component: {fileID: 8924058328528573220}
-  - component: {fileID: 9167466403534274383}
   m_Layer: 0
   m_Name: Glass
   m_TagString: Untagged
@@ -231,41 +192,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -9146618070568788744, guid: 7b749d6a34ca1724f8c63efdeb64fa57, type: 3}
---- !u!114 &8924058328528573220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2973295933917474799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &9167466403534274383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2973295933917474799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 6
-  Value:
-    LowFreqAbsorption: 0.06
-    MidFreqAbsorption: 0.03
-    HighFreqAbsorption: 0.02
-    Scattering: 0.05
-    LowFreqTransmission: 0.06
-    MidFreqTransmission: 0.044
-    HighFreqTransmission: 0.011
 --- !u!1 &3290308367143006763
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,8 +204,6 @@ GameObject:
   - component: {fileID: 1623702251322208722}
   - component: {fileID: 2517892831143129337}
   - component: {fileID: 6119996482912802811}
-  - component: {fileID: 6333586285733594112}
-  - component: {fileID: 4571829719174738126}
   m_Layer: 0
   m_Name: Paint
   m_TagString: Untagged
@@ -364,41 +288,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -784566545644147505, guid: 7b749d6a34ca1724f8c63efdeb64fa57, type: 3}
---- !u!114 &6333586285733594112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290308367143006763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &4571829719174738126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290308367143006763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 7
-  Value:
-    LowFreqAbsorption: 0.12
-    MidFreqAbsorption: 0.06
-    HighFreqAbsorption: 0.04
-    Scattering: 0.05
-    LowFreqTransmission: 0.056
-    MidFreqTransmission: 0.056
-    HighFreqTransmission: 0.004
 --- !u!1 &7071822119553620936
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,8 +334,6 @@ GameObject:
   - component: {fileID: 6352667961019788398}
   - component: {fileID: 3868076293257576786}
   - component: {fileID: 7631206014139649618}
-  - component: {fileID: 1017152706212670854}
-  - component: {fileID: 2222647826646689895}
   m_Layer: 0
   m_Name: DarkMetal
   m_TagString: Untagged
@@ -531,38 +418,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3771005164211155407, guid: 7b749d6a34ca1724f8c63efdeb64fa57, type: 3}
---- !u!114 &1017152706212670854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8163564945786064477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79e99846fd75c4438917229c144155a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TerrainSimplificationLevel: 0
-  exportAllChildren: 0
---- !u!114 &2222647826646689895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8163564945786064477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43300f764e354d642abf0f0dbb612011, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Preset: 9
-  Value:
-    LowFreqAbsorption: 0.2
-    MidFreqAbsorption: 0.07
-    HighFreqAbsorption: 0.06
-    Scattering: 0.05
-    LowFreqTransmission: 0.2
-    MidFreqTransmission: 0.025
-    HighFreqTransmission: 0.01

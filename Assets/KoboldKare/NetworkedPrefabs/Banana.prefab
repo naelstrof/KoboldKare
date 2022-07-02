@@ -431,6 +431,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eatSymbol: {fileID: 21300000, guid: 8088d40388c4d4a4d8f8b1c3ebf4c768, type: 3}
   container: {fileID: 3102687797691339589}
+  destroyOnEat: 1
+  eatSoundPack: {fileID: 11400000, guid: 28060c26902176c4885806a8a485b3da, type: 2}
 --- !u!1 &4282812472268641806
 GameObject:
   m_ObjectHideFlags: 0

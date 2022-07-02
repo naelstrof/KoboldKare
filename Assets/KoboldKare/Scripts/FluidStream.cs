@@ -46,6 +46,7 @@ public class FluidStream : CatmullDeformer {
     [SerializeField] private VisualEffect splatter;
     [SerializeField] private AudioPack splatterSounds;
     [SerializeField] private AudioPack waterSpraySound;
+    [SerializeField] private float waterRadiusCollision = 0.25f;
     private HashSet<GenericReagentContainer> hitContainers;
     private AudioSource audioSource;
     private AudioSource waterHitSource;
@@ -162,7 +163,7 @@ public class FluidStream : CatmullDeformer {
         for (int i = 0; i < points.Count-1; i++) {
             Vector3 diff = points[i+1] - points[i];
             float dist = diff.magnitude;
-            float rad = 0.25f;
+            float rad = waterRadiusCollision;
             int hits = Physics.SphereCastNonAlloc(points[i] - diff.normalized*(rad*2f), rad, diff.normalized, raycastHits, dist+rad*3f, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
             if (hits > 0) {
                 float closestDist = float.MaxValue;

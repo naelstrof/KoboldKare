@@ -238,4 +238,5 @@ MonoBehaviour:
   splatter: {fileID: 8835921756005040661}
   splatterSounds: {fileID: 11400000, guid: 9002d9716d671ce4791acbdd2ae02ec3, type: 2}
   waterSpraySound: {fileID: 11400000, guid: c412be3f061972c4a9cc6b651b38b5cb, type: 2}
+  waterRadiusCollision: 0.25
   body: {fileID: 0}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BucketWeapon : GenericWeapon {
     [SerializeField]
@@ -22,6 +23,8 @@ public class BucketWeapon : GenericWeapon {
     private AudioSource audioSource;
 
     private WaitForSeconds waitForSeconds;
+    [SerializeField] private int projectileCount = 1;
+    [SerializeField] private float projectileVolume = 10f;
 
     void Start() {
         if (audioSource == null) {
@@ -45,15 +48,19 @@ public class BucketWeapon : GenericWeapon {
 
     public void OnFireComplete() {
         if (container.volume > 0.1f) {
+            for (int i = 0; i < projectileCount; i++) {
+                Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
+                if (playerFired != null) {
+                    velocity += playerFired.body.velocity * 0.5f;
+                }
 
-            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
-            if (playerFired != null) {
-                velocity += playerFired.body.velocity * 0.5f;
+                velocity += Random.insideUnitSphere * i * 2f;
+                GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
+                    GetWeaponBarrelTransform().position,
+                    GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity });
+                obj.GetComponent<Projectile>().LaunchFrom(body);
             }
-            GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
-                GetWeaponBarrelTransform().position,
-                GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(10f), velocity });
-            obj.GetComponent<Projectile>().LaunchFrom(body);
+
             audioSource.enabled = true;
             bucketSlosh.Play(audioSource);
         }

@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 8229970607678505117}
   - component: {fileID: 5609934524133607417}
   - component: {fileID: 2344765839666492491}
+  - component: {fileID: 3974528431164441439}
   m_Layer: 11
   m_Name: Bucket
   m_TagString: Untagged
@@ -244,6 +245,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 5305001150950473274}
   - {fileID: 3157269094071852165}
+  - {fileID: 3974528431164441439}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -330,6 +332,24 @@ MonoBehaviour:
   bucketAnimator: {fileID: 8229970607678505117}
   body: {fileID: 7403922466466801549}
   bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
+  projectileCount: 1
+  projectileVolume: 10
+--- !u!114 &3974528431164441439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114852081462200378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6813240c1000e204f98fbc3fe36bafce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eatSymbol: {fileID: 21300000, guid: 8088d40388c4d4a4d8f8b1c3ebf4c768, type: 3}
+  container: {fileID: 5305001150950473274}
+  destroyOnEat: 0
+  eatSoundPack: {fileID: 11400000, guid: 4bb8b189df8295a42b3736a510558d68, type: 2}
 --- !u!1 &2004953112158708580
 GameObject:
   m_ObjectHideFlags: 0

@@ -178,8 +178,8 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _FoamDepth: 0.89
-    - _FoamFalloff: -10.17
+    - _FoamDepth: 1
+    - _FoamFalloff: -119.5
     - _FoamSmoothness: 0
     - _FoamSpecular: 0
     - _FogIntensity: 1
@@ -206,7 +206,7 @@ Material:
     - _MaterialID: 1
     - _Metallic: 0
     - _NormalMapSpace: 0
-    - _NormalScale: 0.34
+    - _NormalScale: 0.1
     - _Offset: -0.12
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -263,8 +263,8 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _WaterDepth: 1
-    - _WaterFalloff: -2.24
+    - _WaterDepth: 0.1
+    - _WaterFalloff: 4
     - _WaterSmoothness: 0.9
     - _WaterSpecular: 0.05
     - _ZTestDepthEqualForOpaque: 4
@@ -275,7 +275,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.041829593, g: 0.046281226, b: 0.18867892, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.041829593, g: 0.046281226, b: 0.18867892, a: 1}
+    - _Color: {r: 0.995283, g: 1, b: 0.99952006, a: 1}
     - _DeepColor: {r: 0, g: 0, b: 0, a: 0}
     - _DepthColor: {r: 0.04182975, g: 0.04628139, b: 0.18867913, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
@@ -297,7 +297,7 @@ Material:
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _WaterColor: {r: 0.19811317, g: 0.19811317, b: 0.19811317, a: 1}
     - _WaterSpeed: {r: 0, g: 0, b: 0, a: 0}
-    - _WaterSpeedAlso: {r: 1, g: -0.5, b: 0, a: 0}
+    - _WaterSpeedAlso: {r: 0.05, g: -0.1, b: 0, a: 0}
     - _WaveScale: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5582715370362076289

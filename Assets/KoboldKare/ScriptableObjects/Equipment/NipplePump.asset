@@ -9,16 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd92f616eb846994e99a37d339d48784, type: 3}
+  m_Script: {fileID: 11500000, guid: 4eb73f0097c7b1d46b3ad3551c400996, type: 3}
   m_Name: NipplePump
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 775c36010e943454ab66e38726c40e0a, type: 3}
   hideInFirstPersonWhenWorn: 0
   slot: 3
   groundPrefab:
-    gameObject: {fileID: 4814205500992453071, guid: 134db3fc1a92e3842b8bd5fc77245d86,
-      type: 3}
-    photonName: NipplePump
+    gameObject: {fileID: 0}
+    photonName: 
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
@@ -26,28 +25,17 @@ MonoBehaviour:
       m_KeyId: 73168528301674496
       m_Key: 
     m_FallbackState: 0
-    m_WaitForCompletion: 1
+    m_WaitForCompletion: 0
     m_LocalVariables: []
   localizedDescription:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
-      m_KeyId: 38140087290613760
+      m_KeyId: 73168528301674496
       m_Key: 
     m_FallbackState: 0
-    m_WaitForCompletion: 1
+    m_WaitForCompletion: 0
     m_LocalVariables: []
   effectsToApply: []
-  wearables:
-  - wearablePrefab: {fileID: 2059474872487934207, guid: db4656fb4ded35e4aae13d4ef1f0c056,
-      type: 3}
-    attachPoint: 3
-    stacks: 0
-    stackOffset: {x: 0, y: 0, z: 0}
-  - wearablePrefab: {fileID: 2059474872487934207, guid: db4656fb4ded35e4aae13d4ef1f0c056,
-      type: 3}
-    attachPoint: 4
-    stacks: 0
-    stackOffset: {x: 0, y: 0, z: 0}
   references:
     version: 1

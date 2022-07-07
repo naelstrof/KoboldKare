@@ -110,9 +110,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  velocityMultiplier: 0.04
+  velocityMultiplier: 2
+  volumeMultiplier: 1
   lifetime: 3
   decalHitMask:
     serializedVersion: 2
     m_Bits: 33565696
-  decalProjector: {fileID: 2100000, guid: 0aedd8bc1c4736945999458791d86fe5, type: 2}

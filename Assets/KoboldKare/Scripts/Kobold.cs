@@ -198,7 +198,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     private void OnBallsContentsChanged(ReagentContents contents) {
         foreach (var dickSet in activeDicks) {
-            dickSet.ballSizeInflater.SetSize(Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), this);
+            dickSet.ballSizeInflater.SetSize(1f+Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), this);
         }
     }
 

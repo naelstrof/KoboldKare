@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class FootstepSoundManager : MonoBehaviour {
-    public List<AudioClip> footstepClips = new List<AudioClip>();
+    //public List<AudioClip> footstepClips = new List<AudioClip>();
+    [SerializeField]
+    private AudioPack footstepPack;
     private Animator animator;
+
+    public void SetFootstepPack(AudioPack pack) {
+        footstepPack = pack;
+    }
+
     public void Start() {
         animator = GetComponent<Animator>();
     }
@@ -19,7 +26,7 @@ public class FootstepSoundManager : MonoBehaviour {
         }
         Transform f = evt.intParameter == 0 ? animator.GetBoneTransform(HumanBodyBones.LeftFoot) : animator.GetBoneTransform(HumanBodyBones.RightFoot);
         RaycastHit hit;
-        AudioClip clip = footstepClips[Random.Range(0, footstepClips.Count)];
+        AudioClip clip = footstepPack.GetClip();
         bool rayHit = false;
         if (Physics.Raycast(f.position, Vector3.down, out hit, groundedAnimation? 0.8f: 5f, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {
             rayHit = true;

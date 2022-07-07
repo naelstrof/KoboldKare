@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,12 @@ public class EggSpawner : MonoBehaviour {
     [Range(-1,1f)]
     public float pushDirection = -1f;
     public PhotonGameObjectReference penetratorPrefab;
-    private List<PenetratorCoupler> penetrators = new List<PenetratorCoupler>();
+    private List<PenetratorCoupler> penetrators;
+
+    private void Awake() {
+        penetrators = new List<PenetratorCoupler>();
+    }
+
     public void Update() {
         for(int i=0;i<penetrators.Count;i++) {
             var coupler = penetrators[i];
@@ -48,7 +54,7 @@ public class EggSpawner : MonoBehaviour {
         body.isKinematic = true;
         // Manually control penetration parameters
         d.Penetrate(targetPenetrable);
-        penetrators.Add(new PenetratorCoupler(){penetrator = d, body = body, pushAmount = 0f});
+        penetrators.Add(new PenetratorCoupler(){penetrable = targetPenetrable, penetrator = d, body = body, pushAmount = 0f});
         return d;
     }
     public void OnValidate() {

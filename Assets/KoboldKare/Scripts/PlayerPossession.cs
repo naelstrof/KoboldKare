@@ -283,7 +283,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         Cursor.visible = false;
         if (isActiveAndEnabled) {
             PlayerProcessing();
-            if (photonView.IsMine && photonView.AmOwner && characterControllerAnimator.animating && Mathf.Approximately(characterControllerAnimator.blend, 1f)) {
+            if (photonView.IsMine && photonView.AmOwner) {
                 bool shouldCancelAnimation = false;
                 //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Rotate"].ReadValue<float>() > 0.5f);
                 //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Unfreeze"].ReadValue<float>() > 0.5f);
@@ -293,7 +293,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Cancel"].ReadValue<float>() > 0.5f);
                 if (shouldCancelAnimation) {
                     //kobold.GetComponent<CharacterControllerAnimator>().OnEndStation();
-                    characterControllerAnimator.OnEndStation();
+                    characterControllerAnimator.StopAnimation();
                 }
             }
         } else {

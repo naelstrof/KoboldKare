@@ -108,7 +108,7 @@ namespace Naelstrof.Mozzarella {
             // Only spawn one particle per real-frame-- so we don't overlay particles on top one-another.
             if (id < particles.Count && lastFrame != Time.frameCount) {
                 float t = (float)id / (float)particles.Count;
-                particles[id].Spawn(transform.position, transform.forward * (velocityCurve.Evaluate(t) * velocityMultiplier) + followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position)*0.5f);
+                particles[id].Spawn(transform.position, transform.forward * (velocityCurve.Evaluate(t) * velocityMultiplier) + followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position)*(0.5f*Time.deltaTime));
                 transform.rotation *= Quaternion.Lerp(Random.rotation, Quaternion.identity, 0.99f);
                 id++;
                 lastFrame = Time.frameCount;
@@ -131,6 +131,11 @@ namespace Naelstrof.Mozzarella {
                 Vector3 diff = particles[i - skip].position - particles[i].position;
                 Vector3 dir = diff.normalized;
                 float dist = diff.magnitude;
+                
+                if (dist > 5f) {
+                    continue;
+                }
+
                 int hitcount = Physics.RaycastNonAlloc(particles[i].position, dir, hits, dist, decalHitMask, QueryTriggerInteraction.Ignore);
                 for (int j = 0; j < hitcount; j++) {
                     HitCallback(hits[j], particles[i].position-dir*0.1f, dir, dist+0.1f, ((float)i/(float)particles.Count));

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7892042725618938985}
   - component: {fileID: 7892042725618938982}
-  m_Layer: 11
+  m_Layer: 20
   m_Name: TableAnimationStation2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7892042725667799150}
   - component: {fileID: 7892042725667799121}
-  m_Layer: 11
+  m_Layer: 20
   m_Name: TableAnimationStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -749,9 +749,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7892042726207317677}
-  - component: {fileID: 7892042726207317674}
   - component: {fileID: 3568346791208984836}
-  m_Layer: 11
+  - component: {fileID: 9029491333355822978}
+  m_Layer: 20
   m_Name: TableStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,19 +774,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -197.066, z: 0}
---- !u!135 &7892042726207317674
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7892042726207317675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3568346791208984836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,3 +796,18 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &9029491333355822978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892042726207317675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6e131632140ed459309d489c1e52b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stations:
+  - {fileID: 7892042725667799121}
+  - {fileID: 7892042725618938982}

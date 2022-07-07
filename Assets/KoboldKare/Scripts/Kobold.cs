@@ -336,7 +336,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         animator.SetBool("Carried", true);
         //pickedUp = 1;
         //transSpeed = 5.0f;
-        GetComponent<CharacterControllerAnimator>().OnEndStation();
+        //GetComponent<CharacterControllerAnimator>().OnEndStation();
+        GetComponent<CharacterControllerAnimator>().StopAnimation();
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         return true;

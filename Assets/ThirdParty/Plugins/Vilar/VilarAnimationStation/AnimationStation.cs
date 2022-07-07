@@ -374,24 +374,18 @@ namespace Vilar.AnimationStation {
 				Vector3 targetVelocity = Vector3.zero;
 				Quaternion targetRotation = transform.rotation * currentLoop.targetRotations[index];
 				if (currentLoop.motion[index] != null) {
-					targetVelocity += targetRotation * Vector3.right * 
-						currentLoop.motion[index].X.Differentiate(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.x) % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.right *
-						currentLoop.motion[index].X.Evaluate(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.x) % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]);
-					targetVelocity += targetRotation * Vector3.up *
-						currentLoop.motion[index].Y.Differentiate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.up *
-						currentLoop.motion[index].Y.Evaluate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]);
-					targetVelocity += targetRotation * Vector3.forward *
-						currentLoop.motion[index].Z.Differentiate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.forward *
-						currentLoop.motion[index].Z.Evaluate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]);
+					targetVelocity += targetRotation * Vector3.right * (currentLoop.motion[index].X.Differentiate((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.x % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]));
+					targetPosition += targetRotation * Vector3.right * (currentLoop.motion[index].X.Evaluate(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.x) % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]));
+					targetVelocity += targetRotation * Vector3.up * (currentLoop.motion[index].Y.Differentiate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]));
+					targetPosition += targetRotation * Vector3.up * (currentLoop.motion[index].Y.Evaluate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]));
+					targetVelocity += targetRotation * Vector3.forward * (currentLoop.motion[index].Z.Differentiate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]));
+					targetPosition += targetRotation * Vector3.forward * (currentLoop.motion[index].Z.Evaluate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]));
 					targetRotation = targetRotation * Quaternion.Euler(
 						currentLoop.motion[index].RX.Evaluate(((animProgress + currentLoop.motion[index].offsetR.x * 0.01f + currentLoop.motionOffset[index]) *
 							currentLoop.motion[index].timescaleR.x) % 1f) * (currentLoop.motion[index].scaleR.x * currentLoop.motionScale[index]),
@@ -418,36 +412,32 @@ namespace Vilar.AnimationStation {
                     }
 					int attachmentIndex = (int)currentLoop.attachments[index] - 1;
 					if (attachLoop.motion[attachmentIndex] != null) {
-						targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right *
-							attachLoop.motion[attachmentIndex].X.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.x * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.x) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right *
-							attachLoop.motion[attachmentIndex].X.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.x * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.x) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetPosition +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up *
-							attachLoop.motion[attachmentIndex].Y.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.y * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.y) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up *
-							attachLoop.motion[attachmentIndex].Y.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.y * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.y) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetPosition +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward *
-							attachLoop.motion[attachmentIndex].Z.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.z * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.z) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward *
-							attachLoop.motion[attachmentIndex].Z.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.z * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.z) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex];
+						if (attachLoop != null) {
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right * (attachLoop.motion[attachmentIndex].X.Evaluate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.x * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.x) % 1f) * attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetVelocity += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right * (attachLoop.motion[attachmentIndex].X.Differentiate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.x * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.x) % 1f) * attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up * (attachLoop.motion[attachmentIndex].Y.Evaluate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.y * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.y) % 1f) * attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetVelocity += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up * (attachLoop.motion[attachmentIndex].Y.Differentiate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.y * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.y) % 1f) * attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward * (attachLoop.motion[attachmentIndex].Z.Evaluate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.z * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.z) % 1f) * attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetVelocity += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward * (attachLoop.motion[attachmentIndex].Z.Differentiate(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.z * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.z) % 1f) * attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex]);
+						}
 					}
 				}
                 currentLoop.computedTargetPositions[index] = targetPosition;

@@ -89,6 +89,8 @@ MonoBehaviour:
   autoPenetrate: -1
   listeners:
   - id: 0
+  - id: 1
+  - id: 2
   references:
     version: 1
     00000000:
@@ -96,6 +98,20 @@ MonoBehaviour:
       data:
         localDist: 0
         knotForceFactor: 0.3
+    00000001:
+      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
+      data:
+        localDist: 0.201
+        pack: {fileID: 11400000, guid: d035a4d1ac446f4469be99a8da0d16ff, type: 2}
+        activateOnEnter: 0
+        activateOnExit: 1
+    00000002:
+      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
+      data:
+        localDist: 0.663
+        pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
+        activateOnEnter: 1
+        activateOnExit: 0
 --- !u!114 &8106492029364060170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,13 +355,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7065954616549386873}
-  m_LocalRotation: {x: -0.5000001, y: -1.1368685e-13, z: 2.8421713e-14, w: 0.8660254}
-  m_LocalPosition: {x: -0, y: 0.509, z: 0.032}
+  m_LocalRotation: {x: -0.6360105, y: -3.4106057e-13, z: -2.557954e-13, w: 0.7716804}
+  m_LocalPosition: {x: -0, y: 0.511, z: -0.0474}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 501530407804742356}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -78.99, y: 0, z: 0}
 --- !u!1001 &1329374299755020038
 PrefabInstance:
   m_ObjectHideFlags: 0

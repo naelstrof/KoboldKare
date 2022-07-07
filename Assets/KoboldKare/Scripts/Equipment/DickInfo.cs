@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using PenetrationTech;
 using KoboldKare;
+using Naelstrof.Easing;
 using Naelstrof.Inflatable;
 using Naelstrof.Mozzarella;
-using Photon.Pun.UtilityScripts;
 using SkinnedMeshDecals;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -65,8 +64,6 @@ public class DickInfo : MonoBehaviour {
         }
     }
 
-    private WaitForSeconds cumDelay;
-
     [System.Serializable]
     public class DickSet {
         public Transform dickContainer;
@@ -96,7 +93,6 @@ public class DickInfo : MonoBehaviour {
     }
     public List<DickSet> dicks = new List<DickSet>();
     public void Awake() {
-        cumDelay = new WaitForSeconds(0.8f);
         foreach (DickSet set in dicks) {
             //set.ball
             set.info = this;
@@ -143,9 +139,30 @@ public class DickInfo : MonoBehaviour {
     }
     public IEnumerator CumRoutine(DickSet set) {
         int pulses = 100;
+        float pulseDuration = 0.7f;
         for (int i = 0; i < pulses; i++) {
-            yield return cumDelay;
-            if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside) {
+            float pulseStartTime = Time.time;
+            while (Time.time < pulseStartTime+pulseDuration) {
+                float t = ((Time.time - pulseStartTime) / pulseDuration);
+                foreach (var renderTarget in set.dick.GetTargetRenderers()) {
+                    Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
+                    float easingStart = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.25f)*4f)));
+                    float easingMiddle = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.5f)*4f)));
+                    float easingEnd = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.75f)*4f)));
+                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum0"), easingStart*100f);
+                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum1"), easingMiddle*100f);
+                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum2"), easingEnd*100f);
+                }
+                yield return null;
+            }
+            foreach (var renderTarget in set.dick.GetTargetRenderers()) {
+                Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
+                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum0"), 0f);
+                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum1"), 0f);
+                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum2"), 0f);
+            }
+
+            if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<Kobold>() == null) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.05f));

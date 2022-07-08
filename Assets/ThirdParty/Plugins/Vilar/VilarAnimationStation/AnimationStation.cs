@@ -112,7 +112,7 @@ namespace Vilar.AnimationStation {
 		}
 
 		public override void OnInspectorGUI() {
-			EditorGUI.BeginChangeCheck();
+			serializedObject.Update();
 			var script = (AnimationStation) target;
 			if (script.isPreviewAssigned) {
 				var styleButton = new GUIStyle(GUI.skin.button);
@@ -152,40 +152,49 @@ namespace Vilar.AnimationStation {
 					script.progress = newprogress;
 					script.selectedLoop = Mathf.RoundToInt(newprogress);
 				}
-				script.loops[script.selectedLoop].speed = EditorGUILayout.FloatField("Speed", script.loops[script.selectedLoop].speed);
-				if (script.loops != null && script.loops.Count > 0) {
-					for (int i = 0; i < 10; i++) {
-						GUILayout.BeginHorizontal();
-						GUILayout.Label(AnimationLooper.GetTypeName(i + 1), GUILayout.Width(86));
-						script.loops[script.selectedLoop].motion[i] = (AnimationMotion) EditorGUILayout.ObjectField(GUIContent.none, script.loops[script.selectedLoop].motion[i], typeof(AnimationMotion), true);
-						GUILayout.Label("Attach", GUILayout.Width(40));
-						script.loops[script.selectedLoop].attachments[i] = (AnimationLooper.TargetType) EditorGUILayout.EnumPopup(script.loops[script.selectedLoop].attachments[i], GUILayout.Width(100));
-                        script.loops[script.selectedLoop].attachmentTargets[i] = (AnimationStation)EditorGUILayout.ObjectField(GUIContent.none, script.loops[script.selectedLoop].attachmentTargets[i], typeof(AnimationStation), true, GUILayout.Width(100));
 
-						GUILayout.EndHorizontal();
+				SerializedProperty loops = serializedObject.FindProperty("loops");
+				SerializedProperty speedProp = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("speed");
+				speedProp.floatValue = EditorGUILayout.FloatField("Speed", speedProp.floatValue);
+				for (int i = 0; i < 10; i++) {
+					GUILayout.BeginHorizontal();
+					GUILayout.Label(AnimationLooper.GetTypeName(i + 1), GUILayout.Width(86));
+					SerializedProperty motion = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motion");
+					SerializedProperty attachments = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("attachments");
+					SerializedProperty attachmentTargets = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("attachmentTargets");
+					motion.GetArrayElementAtIndex(i).objectReferenceValue = (AnimationMotion) EditorGUILayout.ObjectField(GUIContent.none, motion.GetArrayElementAtIndex(i).objectReferenceValue, typeof(AnimationMotion), true);
+					GUILayout.Label("Attach", GUILayout.Width(40));
+					attachments.GetArrayElementAtIndex(i).intValue = (int)(AnimationLooper.TargetType) EditorGUILayout.EnumPopup((AnimationLooper.TargetType)attachments.GetArrayElementAtIndex(i).intValue, GUILayout.Width(100));
+					attachmentTargets.GetArrayElementAtIndex(i).objectReferenceValue = (AnimationStation)EditorGUILayout.ObjectField(GUIContent.none, attachmentTargets.GetArrayElementAtIndex(i).objectReferenceValue, typeof(AnimationStation), true, GUILayout.Width(100));
 
-						GUILayout.BeginHorizontal();
-						GUILayout.Label("Scale", GUILayout.Width(200));
-						r = GUILayoutUtility.GetLastRect();
-						r.x += 40f;
-						r.width -= 40f;
-						script.loops[script.selectedLoop].motionScale[i] = (float) GUI.HorizontalSlider(r, script.loops[script.selectedLoop].motionScale[i], 0.1f, 2f);
-						GUILayout.Label("Offset", GUILayout.Width(200));
-						r = GUILayoutUtility.GetLastRect();
-						r.x += 40f;
-						r.width -= 40f;
-						script.loops[script.selectedLoop].motionOffset[i] = (float) GUI.HorizontalSlider(r, script.loops[script.selectedLoop].motionOffset[i], 0f, 1f);
+					GUILayout.EndHorizontal();
 
-						GUILayout.EndHorizontal();
-					}
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("Scale", GUILayout.Width(200));
+					r = GUILayoutUtility.GetLastRect();
+					r.x += 40f;
+					r.width -= 40f;
+					SerializedProperty motionScale = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motionScale");
+					motionScale.GetArrayElementAtIndex(i).floatValue = (float) GUI.HorizontalSlider(r, motionScale.GetArrayElementAtIndex(i).floatValue, 0.1f, 2f);
+					GUILayout.Label("Offset", GUILayout.Width(200));
+					r = GUILayoutUtility.GetLastRect();
+					r.x += 40f;
+					r.width -= 40f;
+					SerializedProperty motionOffset = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motionOffset");
+					motionOffset.GetArrayElementAtIndex(i).floatValue = (float) GUI.HorizontalSlider(r, motionOffset.GetArrayElementAtIndex(i).floatValue, 0f, 1f);
+
+					GUILayout.EndHorizontal();
 				}
 			}
+
+			if (serializedObject.hasModifiedProperties) {
+				EditorUtility.SetDirty(target);
+				serializedObject.ApplyModifiedProperties();
+			}
+
 			listGUI.DoLayoutList();
 
 			DrawDefaultInspector();
-			if (EditorGUI.EndChangeCheck()) {
-				Undo.RecordObject(script, "Set A Field Value");
-			}
 		}
 
 		void OnSceneGUI(SceneView sceneView) {
@@ -281,7 +290,7 @@ namespace Vilar.AnimationStation {
 		public Vector3 lookAtPosition;
 
 		public GameObject previewCharacter;
-		[HideInInspector] public GameObject previewCharacterInstance;
+		private GameObject previewCharacterInstance;
 		private IKSolver previewCharacterIKSolver;
 		//private AnimationStationHashSet internalLinkedStations;
         [HideInInspector] public AnimationStationHashSet linkedStations = new AnimationStationHashSet();
@@ -301,7 +310,6 @@ namespace Vilar.AnimationStation {
 					if (lastScale != transform.localScale) {
 						lastScale = transform.localScale;
                         DestroyPreview();
-						TryInstantiatePreview();
                     }
 					//UpdatePreview(Time.deltaTime);
 					foreach (AnimationStation linkedStation in linkedStations.hashSet) {
@@ -351,6 +359,10 @@ namespace Vilar.AnimationStation {
 				previewCharacterIKSolver = previewCharacterInstance.GetComponentInChildren<IKSolver>();
 				previewCharacterIKSolver.Initialize();
 			}
+		}
+
+		private void OnDisable() {
+			DestroyPreview();
 		}
 
 		public void Advance(float time) {
@@ -594,8 +606,7 @@ namespace Vilar.AnimationStation {
 		private void OnValidate() {
 #if UNITY_EDITOR
 			linkedStations.hashSet.Add(this);
-			if (Selection.activeGameObject == gameObject) TryInstantiatePreview();
-			if (previewCharacter!=null && (loops==null || loops.Count==0)) {
+			if (loops==null || loops.Count==0) {
 				AddLoop();
 				ZeroData();
 			}

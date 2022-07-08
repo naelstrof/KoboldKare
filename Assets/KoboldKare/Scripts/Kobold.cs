@@ -140,7 +140,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (stimulation >= stimulationMax) {
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
-                float cumAmount = 0.5f+0.5f*baseSize+0.5f*baseBallsSize+0.5f*baseDickSize;
+                float cumAmount = 0.5f+0.1f*baseSize+0.5f*baseBallsSize+0.1f*baseDickSize; // Bonus!
                 ballsContents.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(cumAmount));
                 // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
                 StartCoroutine(dickSet.info.CumRoutine(dickSet));

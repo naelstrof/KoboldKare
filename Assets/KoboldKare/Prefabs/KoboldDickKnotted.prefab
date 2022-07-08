@@ -161,7 +161,7 @@ MonoBehaviour:
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
-        knotForceFactor: 0.3
+        knotForceFactor: 0.33
     00000001:
       type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
@@ -453,6 +453,7 @@ MonoBehaviour:
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
     attachPosition: {x: 0, y: 0.8524475, z: -0.031321373}
+    cumSoundPack: {fileID: 11400000, guid: 6a026e8e8fe32d948a722fccae91b39a, type: 2}
     info: {fileID: 0}
     parent: 0
     parentTransform: {fileID: 0}

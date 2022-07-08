@@ -77,6 +77,7 @@ public class DickInfo : MonoBehaviour {
         public Material cumSplatProjectorMaterial;
 
         public Vector3 attachPosition;
+        public AudioPack cumSoundPack;
 
         [HideInInspector]
         public DickInfo info;
@@ -138,9 +139,10 @@ public class DickInfo : MonoBehaviour {
         }
     }
     public IEnumerator CumRoutine(DickSet set) {
-        int pulses = 100;
-        float pulseDuration = 0.7f;
+        int pulses = 12;
+        float pulseDuration = 0.8f;
         for (int i = 0; i < pulses; i++) {
+            GameManager.instance.SpawnAudioClipInWorld(set.cumSoundPack, set.dick.transform.position);
             float pulseStartTime = Time.time;
             while (Time.time < pulseStartTime+pulseDuration) {
                 float t = ((Time.time - pulseStartTime) / pulseDuration);
@@ -165,8 +167,8 @@ public class DickInfo : MonoBehaviour {
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<Kobold>() == null) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.05f));
-                    mozzarella.SetVolumeMultiplier(alloc.volume*10f);
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.01f));
+                    mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         GenericReagentContainer container = hit.collider.GetComponentInParent<GenericReagentContainer>();
                         if (container != null) {

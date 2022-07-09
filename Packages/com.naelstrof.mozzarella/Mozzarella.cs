@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using PenetrationTech;
 using Unity.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.VFX;
 using Random = UnityEngine.Random;
@@ -173,7 +175,9 @@ namespace Naelstrof.Mozzarella {
         private void OnDrawGizmosSelected() {
             for (int i = 0; i < particles.Count; i++) {
                 Gizmos.DrawWireSphere(particles[i].position, 0.05f);
+                #if UNITY_EDITOR
                 Handles.Label(particles[i].position, i.ToString());
+                #endif
             }
         }
     }

@@ -295,7 +295,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public void SetBaseDickSize(float baseSize) {
         baseDickSize = baseSize;
         foreach (var dickSet in activeDicks) {
-            dickSet.dickSizeInflater.SetSize(0.8f+baseSize, this);
+            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (baseSize) / 20f, 2f), this);
         }
     }
     public void SetBaseSize(float newSize) {
@@ -523,7 +523,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         SetBaseBoobSize(baseBoobSize+melonJuiceVolume);
         
         float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-        baseDickSize += eggplantJuiceVolume;
+        SetBaseDickSize(baseDickSize+eggplantJuiceVolume);
         float growthSerumVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
         SetBaseSize(baseSize + growthSerumVolume);
         float milkShakeVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));

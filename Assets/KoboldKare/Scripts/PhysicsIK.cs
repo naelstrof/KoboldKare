@@ -103,12 +103,11 @@ namespace Vilar.IK {
             kobold.ragdoller.PopRagdoll();
         }
 
-        public void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {
+        public void SetTarget(int index, Vector3 position, Quaternion rotation) {
             //targets.SetTarget(index, transform.InverseTransformPoint(position), Quaternion.Inverse(transform.rotation) * rotation);
             if (joints[index] != null) {
                 joints[index].targetWorldPosition = position;
                 joints[index].targetRotation = rotation;
-                joints[index].targetVelocity = velocity;
                 //Debug.DrawLine(joints[index].GetComponent<Rigidbody>().transform.TransformPoint(joints[index].anchor), position, Color.red);
             }
         }

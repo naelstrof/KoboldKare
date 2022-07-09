@@ -25,7 +25,7 @@ namespace Vilar.IK {
         IKTargetSet targets { get; }
 		void Solve();
 		void Initialize();
-		void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity);
+		void SetTarget(int index, Vector3 position, Quaternion rotation);
 		void ForceBlend(float value);
 		void CleanUp();
     }
@@ -141,7 +141,7 @@ namespace Vilar.IK {
 			//animator.Play("TPose");
         }
 
-		public void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {
+		public void SetTarget(int index, Vector3 position, Quaternion rotation) {
 			targets.SetTarget(index, transform.InverseTransformPoint(position), Quaternion.Inverse(transform.rotation) * rotation);
 		}
 

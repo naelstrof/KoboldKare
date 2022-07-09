@@ -375,6 +375,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  scaleR: {x: -30, y: 0, z: 0}
+  scaleR: {x: -20, y: 0, z: 0}
   timescaleR: {x: 1, y: 1, z: 1}
   offsetR: {x: 30, y: 0, z: 0}

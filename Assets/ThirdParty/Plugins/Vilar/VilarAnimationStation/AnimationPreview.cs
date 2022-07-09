@@ -32,9 +32,9 @@ namespace Vilar.AnimationStation {
 		public static void EnsureInstance() {
 			if (instance == null) instance = GameObject.FindObjectOfType<AnimationPreview>();
 		}
-		public static void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {
+		public static void SetTarget(int index, Vector3 position, Quaternion rotation) {
 			EnsureInstance();
-			instance._SetTarget(index, position, rotation, velocity);
+			instance._SetTarget(index, position, rotation);
 		}
 		public static void MovePreviews(Vector3 position, Quaternion rotation) {
 			EnsureInstance();
@@ -75,8 +75,8 @@ namespace Vilar.AnimationStation {
 			transform.rotation = rotation;
 		}
 
-		public void _SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {
-			IKSolver.SetTarget(index, position, rotation, velocity);
+		public void _SetTarget(int index, Vector3 position, Quaternion rotation) {
+			IKSolver.SetTarget(index, position, rotation);
 		}
 
 		public void _Solve() {

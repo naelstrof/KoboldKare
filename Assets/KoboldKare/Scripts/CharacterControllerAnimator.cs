@@ -78,8 +78,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold.body.isKinematic = true;
         kobold.body.position = currentStation.transform.position;
         solver.Initialize();
+        currentStation.SetProgress(0f);
         currentStation.OnStart(kobold);
-        currentStation.progress = 0f;
         float startTime = Time.time;
         float blendDuration = 1f;
         while (Time.time < startTime + blendDuration) {
@@ -92,7 +92,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         float transitionDuration = 3f;
         float endTransitionTime = Time.time + transitionDuration;
         while (Time.time < endTransitionTime) {
-            currentStation.progress = Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration);
+            currentStation.SetProgress(Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration));
             yield return null;
         }
     }

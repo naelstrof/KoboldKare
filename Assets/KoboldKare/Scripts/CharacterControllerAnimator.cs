@@ -196,17 +196,56 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold.body.isKinematic = false;
         solver.CleanUp();
         animating = false;
+        currentStation = null;
+        currentStationSet = null;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
+            if (animating) {
+                stream.SendNext(currentStationSet.photonView.ViewID);
+                stream.SendNext(currentStationSet.GetAnimationStations().IndexOf(currentStation));
+            } else {
+                stream.SendNext(-1);
+                stream.SendNext(-1);
+            }
         } else {
+            int photonViewID = (int)stream.ReceiveNext();
+            int animationID = (int)stream.ReceiveNext();
+            if (photonViewID != -1 &&
+                (!animating || currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
+                 currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
+                PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+                AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+                if (animating) {
+                    StopAnimation();
+                }
+                BeginAnimation(set.GetAnimationStations()[animationID]);
+            }
+        }
+    }
+    public void Save(BinaryWriter writer, string version) {
+        if (animating) {
+            writer.Write(currentStationSet.photonView.ViewID);
+            writer.Write(currentStationSet.GetAnimationStations().IndexOf(currentStation));
+        } else {
+            writer.Write(-1);
+            writer.Write(-1);
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
-    }
-
     public void Load(BinaryReader reader, string version) {
+        int photonViewID = reader.ReadInt32();
+        int animationID = reader.ReadInt32();
+        if (photonViewID != -1 &&
+            (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
+             currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
+            PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+            AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+            if (animating) {
+                StopAnimation();
+            }
+            BeginAnimation(set.GetAnimationStations()[animationID]);
+        }
     }
 }

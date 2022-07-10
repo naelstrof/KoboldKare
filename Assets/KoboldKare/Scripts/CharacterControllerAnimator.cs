@@ -95,6 +95,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             currentStation.SetProgress(Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration));
             yield return null;
         }
+        while (animating) {
+            currentStation.SetProgress(randomSample);
+            yield return null;
+        }
     }
 
     void Update() {
@@ -135,7 +139,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (jumped != controller.jumped && !controller.jumped) {
             jumped = controller.jumped;
         }
-        Vector3 velocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
+        Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.01f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
         dir = Quaternion.Inverse(Quaternion.Euler(0,headTransform.rotation.eulerAngles.y,0)) * dir;
@@ -189,6 +193,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (!animating) {
             return;
         }
+
+        StopAllCoroutines();
         solver.enabled = false;
         currentStation.OnEnd();
         //playerModel.enabled = true;

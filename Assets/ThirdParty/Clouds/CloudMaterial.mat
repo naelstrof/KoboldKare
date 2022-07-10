@@ -83,7 +83,7 @@ Material:
     - lightAbsorptionThroughCloud: 1.6
     - lightAbsorptionTowardSun: 0.64
     - lightIntensity: 1
-    - numStepsLight: 12
+    - numStepsLight: 8
     - rayOffsetStrength: 10.08
     - scale: 0.6
     - shadowMax: 1

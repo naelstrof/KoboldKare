@@ -2048,7 +2048,6 @@ GameObject:
   - component: {fileID: 4414669415223956895}
   - component: {fileID: 4190846526786134222}
   - component: {fileID: 3192418245976703367}
-  - component: {fileID: 2954812983257854848}
   - component: {fileID: 1987447185257097715}
   m_Layer: 9
   m_Name: Camera
@@ -2178,22 +2177,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &2954812983257854848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877103441348542382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 0
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &1987447185257097715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15066,6 +15049,8 @@ MonoBehaviour:
   headTransform: {fileID: 1580927918472896871}
   lookDir: {fileID: 8035917758158531233}
   footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
+  body: {fileID: 4787937348439926609}
+  playerPossession: {fileID: 8319315006002239314}
   crouchedAnimationSpeedMultiplier: 0.5
   walkingAnimationSpeedMultiplier: 1.2
   standingAnimationSpeedMultiplier: 0.1
@@ -15635,7 +15620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 0
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -15650,7 +15635,6 @@ MonoBehaviour:
   - {fileID: 3374508250042995388}
   - {fileID: 7583880414202998869}
   - {fileID: 6799515848612029700}
-  - {fileID: 2954812983257854848}
   - {fileID: 8319315006002239314}
   - {fileID: 6162965588660380068}
   - {fileID: 1100894617940906835}

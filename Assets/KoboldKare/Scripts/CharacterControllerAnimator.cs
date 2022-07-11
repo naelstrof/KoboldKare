@@ -31,6 +31,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [SerializeField]
     private AudioPack footstepPack;
 
+    [SerializeField] private Rigidbody body;
+    [SerializeField] private PlayerPossession playerPossession;
+
     [SerializeField] private float crouchedAnimationSpeedMultiplier = 1f;
     [SerializeField] private float walkingAnimationSpeedMultiplier = 1f;
     [SerializeField] private float standingAnimationSpeedMultiplier = 1f;
@@ -204,6 +207,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         animating = false;
         currentStation = null;
         currentStationSet = null;
+    }
+    void FixedUpdate() {
+        Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
+        Vector3 fdir = characterRot * Vector3.forward;
+        float deflectionForgivenessDegrees = 5f;
+        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
+        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
+        body.AddTorque(cross*(angleDiff*5f), ForceMode.Acceleration);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

@@ -25,6 +25,11 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public Grabber grabber;
     public Camera eyes;
     private bool internalInputRagdolled;
+
+    public Vector2 GetEyeRot() {
+        return eyeRot;
+    }
+
     public bool inputRagdolled {
         get {
             if (isActiveAndEnabled) {
@@ -139,36 +144,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         pauseInput = false;
     }
     private Vector2 eyeRot = new Vector2(0, 0);
-    void FixedUpdate() {
-        if (!photonView.IsMine) {
-            return;
-        }
-        /*if (kobold.uprightTimer <= 0f) {
-            body.maxAngularVelocity = 12f;
-            body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            Quaternion bodyRot = body.rotation;
-            Vector3 v = bodyRot.eulerAngles;
-            body.MoveRotation(Quaternion.Euler(v.With(x : 0, z : 0)));
-
-            Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-            Vector3 fdir = characterRot * Vector3.forward;
-            Vector3 dampingForce = Vector3.Project(body.angularVelocity, body.transform.up)*0.5f;
-            Quaternion rotForce = Quaternion.FromToRotation(body.transform.forward, fdir);
-            body.angularVelocity -= dampingForce;
-            body.AddTorque(new Vector3(rotForce.x,rotForce.y,rotForce.z)*5f, ForceMode.VelocityChange);
-            //rig.layers[0].active = true;
-        } else {
-            //rig.layers[0].active = false;
-            body.maxAngularVelocity = 7f;
-            body.constraints = body.constraints & ~(RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ);
-        }*/
-        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-        Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 5f;
-        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
-        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
-        body.AddTorque(cross*angleDiff*5f, ForceMode.Acceleration);
-    }
     void PlayerProcessing() {
         bool grab = controls.actions["Grab"].ReadValue<float>() > 0.5f && canGrab;
         bool activateGrab = controls.actions["ActivateGrab"].ReadValue<float>() > 0.5f && canGrab;
@@ -420,8 +395,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (stream.IsWriting) {
             bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
             stream.SendNext(switchGrabMode);
+            stream.SendNext(eyeRot);
         } else {
             pGrabber.HideHand(!(bool)stream.ReceiveNext());
+            eyeRot = (Vector2)stream.ReceiveNext();
         }
     }
 

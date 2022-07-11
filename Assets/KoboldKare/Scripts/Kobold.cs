@@ -15,7 +15,7 @@ using System.IO;
 using Naelstrof.BodyProportion;
 using Naelstrof.Inflatable;
 
-public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable {
+public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -595,6 +595,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseBallsSize);
             stream.SendNext(baseBoobSize);
             stream.SendNext(baseDickSize);
+            stream.SendNext(baseFatness);
             stream.SendNext(baseSize);
         } else {
             sex = (float)stream.ReceiveNext();
@@ -607,6 +608,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             SetBaseBallsSize((float)stream.ReceiveNext());
             SetBaseBoobSize((float)stream.ReceiveNext());
             SetBaseDickSize((float)stream.ReceiveNext());
+            SetBaseFatness((float)stream.ReceiveNext());
             SetBaseSize((float)stream.ReceiveNext());
         }
     }
@@ -629,6 +631,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         writer.Write(baseBallsSize);
         writer.Write(baseBoobSize);
         writer.Write(baseDickSize);
+        writer.Write(baseFatness);
         writer.Write(baseSize);
     }
 
@@ -644,6 +647,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         SetBaseBallsSize(reader.ReadSingle());
         SetBaseBoobSize(reader.ReadSingle());
         SetBaseDickSize(reader.ReadSingle());
+        SetBaseFatness(reader.ReadSingle());
         SetBaseSize(reader.ReadSingle());
+    }
+
+    public float GetWorth() {
+        return baseSize + baseDickSize + baseBoobSize + baseFatness;
     }
 }

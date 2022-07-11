@@ -49,7 +49,7 @@ public class KoboldAnimationUsable : GenericUsable {
             }
         }
         
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders, mask, QueryTriggerInteraction.Collide);
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, 5f, colliders, mask, QueryTriggerInteraction.Collide);
         AnimationStation bestStation = null;
         float bestSetScore = float.MaxValue;
         for (int i = 0; i < hits; i++) {

@@ -595,6 +595,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseBallsSize);
             stream.SendNext(baseBoobSize);
             stream.SendNext(baseDickSize);
+            stream.SendNext(baseSize);
         } else {
             sex = (float)stream.ReceiveNext();
             byte r = (byte)stream.ReceiveNext();
@@ -606,6 +607,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             SetBaseBallsSize((float)stream.ReceiveNext());
             SetBaseBoobSize((float)stream.ReceiveNext());
             SetBaseDickSize((float)stream.ReceiveNext());
+            SetBaseSize((float)stream.ReceiveNext());
         }
     }
 
@@ -627,6 +629,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         writer.Write(baseBallsSize);
         writer.Write(baseBoobSize);
         writer.Write(baseDickSize);
+        writer.Write(baseSize);
     }
 
     public void Load(BinaryReader reader, string version) {
@@ -641,5 +644,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         SetBaseBallsSize(reader.ReadSingle());
         SetBaseBoobSize(reader.ReadSingle());
         SetBaseDickSize(reader.ReadSingle());
+        SetBaseSize(reader.ReadSingle());
     }
 }

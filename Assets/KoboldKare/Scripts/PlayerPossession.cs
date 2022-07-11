@@ -140,9 +140,9 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
     private Vector2 eyeRot = new Vector2(0, 0);
     void FixedUpdate() {
-        //if (!photonView.IsMine) {
-            //return;
-        //}
+        if (!photonView.IsMine) {
+            return;
+        }
         /*if (kobold.uprightTimer <= 0f) {
             body.maxAngularVelocity = 12f;
             body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;

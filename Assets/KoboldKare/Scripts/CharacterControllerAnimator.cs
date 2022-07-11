@@ -66,7 +66,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.GetBoneTransform(HumanBodyBones.RightFoot).gameObject.AddComponent<FootInteractor>();
     }
 
-    public void BeginAnimation(AnimationStation station) {
+    [PunRPC]
+    public void BeginAnimationRPC(int photonViewID, int animatorID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+        AnimationStationSet set = view.GetComponent<AnimationStationSet>();
+        BeginAnimation(set.GetAnimationStations()[animatorID]);
+    }
+    
+    private void BeginAnimation(AnimationStation station) {
         StopAllCoroutines();
         currentStation = station;
         currentStationSet = currentStation.GetComponentInParent<AnimationStationSet>();
@@ -79,7 +86,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         //playerModel.enabled = false;
         controller.enabled = false;
         kobold.body.isKinematic = true;
-        kobold.body.position = currentStation.transform.position;
+        //kobold.body.position = currentStation.transform.position;
         solver.Initialize();
         currentStation.SetProgress(0f);
         currentStation.OnStart(kobold);
@@ -209,6 +216,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         currentStationSet = null;
     }
     void FixedUpdate() {
+        if (playerPossession == null) {
+            return;
+        }
         Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
         float deflectionForgivenessDegrees = 5f;

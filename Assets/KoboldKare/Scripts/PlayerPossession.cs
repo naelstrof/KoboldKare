@@ -24,23 +24,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public GameObject dickErectionHidable;
     public Grabber grabber;
     public Camera eyes;
-    private bool internalInputRagdolled;
 
     public Vector2 GetEyeRot() {
         return eyeRot;
     }
 
-    public bool inputRagdolled {
-        get {
-            if (isActiveAndEnabled) {
-                return internalInputRagdolled;
-            }
-            return false;
-        }
-        set {
-            internalInputRagdolled = inputRagdolled;
-        }
-    }
+    public bool inputRagdolled;
     private Kobold cachedKobold;
     public Kobold kobold {
         get {
@@ -55,10 +44,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public Rigidbody body;
     public Animator animator;
     public GameEventVector3 playerDieEvent;
-    //public SimpleCa
     public bool mouseAttached = true;
-    //public Transform hip;
-    //public Transform hipTarget;
     public List<GameObject> localGameObjects = new List<GameObject>();
     public GameObject grabPrompt;
     public GameObject equipmentUI;
@@ -92,7 +78,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             chatGroup.interactable = false;
             chatGroup.alpha = 0f;
         }
-        controls?.ActivateInput();
+        controls.ActivateInput();
         back.action.started -= OnBack;
     }
     private void OnTextSubmit(string t) {
@@ -108,20 +94,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         back.action.started -= OnBack;
     }
     private void Start() {
-        //if (!photonView.IsMine) {
-            //eyes.gameObject.SetActive(false);
-            //return;
-        //}
-        //animator.updateMode = AnimatorUpdateMode.Normal;
         if (!isActiveAndEnabled) {
             return;
         }
-        //rig.layers[0].active = true;
         body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        //controller.GetComponent<Kobold>().uprightForce *= 10f;
-        //controller.speed *= 2.9f;
-        //controller.crouchSpeed *= 3.1f;
-        //controller.airAccel *= 1.5f;
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -230,15 +206,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 pGrabber.Unfreeze(true);
             }
         }
-        //float angle = Quaternion.Angle(rotLerp, characterRot);
-        //rotLerp = Quaternion.RotateTowards(rotLerp, characterRot, Time.deltaTime * angle * 6f);
-        //playerModel.transform.rotation = rotLerp;
-
-        //if (rig.layers[0].active) {
-            //hipTarget.position = hip.position;
-            //hipTarget.rotation = hip.rotation;
-        //}
-
 
         Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
@@ -290,38 +257,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         yield return new WaitForSeconds(coyoteTime);
         canGrab = true;
     }
-
-    /*public bool ShouldSave() {
-        return true;
-    }
-    public void Load(SaveObject s, int version) {
-        transform.position = s.vectors["position"];
-        eyeRot = new Vector2(s.vectors["EyeRot"].x, s.vectors["EyeRot"].y);
-        Update();
-        GetComponent<Rigidbody>().velocity = s.vectors["Velocity"];
-        controller.crouchAmount = s.floats["CrouchTimer"];
-    }
-
-    public SaveObject Save(int version) {
-        SaveObject s = new SaveObject();
-        s.id = ScriptableSaveLibrary.SaveID.Player;
-        s.vectors["Velocity"] = GetComponent<Rigidbody>().velocity;
-        s.vectors["position"] = transform.position;
-        s.quats["rotation"] = Quaternion.identity;
-        s.vectors["EyeRot"] = new Vector3(eyeRot.x, eyeRot.y, 0);
-        s.floats["CrouchTimer"] = controller.crouchAmount;
-        return s;
-    }*/
-
-    //public void OnMove(InputValue value) {
-        //Vector2 move2 = value.Get<Vector2>();
-        //move = new Vector3(move2.x, 0, move2.y);
-
-        //Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-        //Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
-        //wishDir.y = 0;
-        //controller.inputDir = wishDir.magnitude > 0 ? Vector3.Normalize(wishDir) : Vector3.zero;
-    //}
     public void OnJump(InputValue value) {
         controller.inputJump = value.Get<float>() > 0f;
     }
@@ -356,9 +291,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             chatInput.Select();
+            if (inputRagdolled) {
+                kobold.ragdoller.PopRagdoll();
+            }
+
             back.action.started += OnBack;
-            StopCoroutine("WaitAndThenSubscribe");
-            StartCoroutine("WaitAndThenSubscribe");
+            StopCoroutine(nameof(WaitAndThenSubscribe));
+            StartCoroutine(nameof(WaitAndThenSubscribe));
             controls.DeactivateInput();
             chatInput.onDeselect.AddListener(OnTextDeselect);
         }
@@ -422,10 +361,4 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
         }
     }
-    //public void OnHold() {
-    //grabber.TryGrab();
-    //}
-    //public void OnActivateHeldItems() {
-    //grabber.TryActivate();
-    //}
 }

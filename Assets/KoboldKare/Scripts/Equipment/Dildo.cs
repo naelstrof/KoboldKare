@@ -14,6 +14,7 @@ public class Dildo : GenericEquipment, IValuedGood {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
         container.OnChange.AddListener(OnContentsChanged);
+        photonView.ObservedComponents.Add(container);
     }
 
     private void Start() {

@@ -74,8 +74,17 @@ public class KoboldAnimationUsable : GenericUsable {
     public override void LocalUse(Kobold k) {
         selfKobold.photonView.RequestOwnership();
         AnimationStation aStation = GetAvailableStation(selfKobold, 0);
+        if (aStation != null) {
+            AnimationStationSet aSet = aStation.GetComponentInParent<AnimationStationSet>();
+            photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
+                new object[] { aSet.photonView.ViewID, aSet.GetAnimationStations().IndexOf(aStation) });
+        }
+
         AnimationStation bStation = GetAvailableStation(k, 1);
-        animator.BeginAnimation(aStation);
-        k.GetComponent<CharacterControllerAnimator>().BeginAnimation(bStation);
+        if (bStation != null) {
+            AnimationStationSet bSet = bStation.GetComponentInParent<AnimationStationSet>();
+            k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
+                new object[] { bSet.photonView.ViewID, bSet.GetAnimationStations().IndexOf(bStation) });
+        }
     }
 }

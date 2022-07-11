@@ -16990,7 +16990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5035472476564357050
 Transform:
   m_ObjectHideFlags: 0
@@ -17013,7 +17013,7 @@ VisualEffect:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9053102254559415257}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Asset: {fileID: 8926484042661614526, guid: 0e0f9666f0d2948419010feb55a99b45, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0

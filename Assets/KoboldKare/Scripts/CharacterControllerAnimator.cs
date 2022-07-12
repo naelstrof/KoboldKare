@@ -41,7 +41,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private LookAtHandler handler;
 
     private Vector3 lastPosition;
-    private bool animating = false;
+    private bool animating;
 
     public bool TryGetAnimationStationSet(out AnimationStationSet set) {
         if (!animating) {
@@ -70,23 +70,21 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     public void BeginAnimationRPC(int photonViewID, int animatorID) {
         PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
         AnimationStationSet set = view.GetComponent<AnimationStationSet>();
-        BeginAnimation(set.GetAnimationStations()[animatorID]);
+        BeginAnimation(set, set.GetAnimationStations()[animatorID]);
     }
     
-    private void BeginAnimation(AnimationStation station) {
-        StopAllCoroutines();
+    private void BeginAnimation(AnimationStationSet set, AnimationStation station) {
+        StopAnimation();
+        currentStationSet = set;
         currentStation = station;
-        currentStationSet = currentStation.GetComponentInParent<AnimationStationSet>();
         StartCoroutine(AnimationRoutine());
     }
 
     private IEnumerator AnimationRoutine() {
         animating = true;
         solver.enabled = true;
-        //playerModel.enabled = false;
         controller.enabled = false;
         kobold.body.isKinematic = true;
-        //kobold.body.position = currentStation.transform.position;
         solver.Initialize();
         currentStation.SetProgress(0f);
         currentStation.OnStart(kobold);
@@ -203,15 +201,15 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (!animating) {
             return;
         }
-
         StopAllCoroutines();
         solver.enabled = false;
-        currentStation.OnEnd();
-        //playerModel.enabled = true;
         controller.enabled = true;
         kobold.body.isKinematic = false;
         solver.CleanUp();
         animating = false;
+        if (currentStation.info.user == kobold) {
+            currentStation.info.user = null;
+        }
         currentStation = null;
         currentStationSet = null;
     }
@@ -247,7 +245,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
                 if (animating) {
                     StopAnimation();
                 }
-                BeginAnimation(set.GetAnimationStations()[animationID]);
+                BeginAnimation(set, set.GetAnimationStations()[animationID]);
             }
         }
     }
@@ -272,7 +270,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             if (animating) {
                 StopAnimation();
             }
-            BeginAnimation(set.GetAnimationStations()[animationID]);
+            BeginAnimation(set, set.GetAnimationStations()[animationID]);
         }
     }
 }

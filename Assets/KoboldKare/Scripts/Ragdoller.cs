@@ -84,7 +84,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         oldCollisionMode = body.collisionDetectionMode;
         body.collisionDetectionMode = CollisionDetectionMode.Discrete;
         body.isKinematic = true;
-        body.GetComponent<Collider>().enabled = false;
+        body.detectCollisions = false;
+        //body.GetComponent<Collider>().enabled = false;
 
         // We need to know the final result of our ragdoll before we update the anchors.
         Physics.SyncTransforms();
@@ -130,7 +131,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         hip.position -= diff;
         body.transform.position += Vector3.up*0.5f;
         body.isKinematic = false;
-        body.GetComponent<Collider>().enabled = true;
+        body.detectCollisions = true;
+        //body.GetComponent<Collider>().enabled = true;
         body.collisionDetectionMode = oldCollisionMode;
         Vector3 averageVel = Vector3.zero;
         foreach (Rigidbody b in ragdollBodies) {

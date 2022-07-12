@@ -259,7 +259,7 @@ namespace Vilar.AnimationStation {
 	[System.Serializable]
 	public class AnimationStationInfo {
 		public bool needsPenetrator;
-		public UnityEngine.Object user;
+		public Kobold user;
     }
 
 	[System.Serializable]
@@ -286,8 +286,6 @@ namespace Vilar.AnimationStation {
 		[HideInInspector] public double lastEditorTime = 0f;
 		private Vector3 lastScale;
 		private float modifiedProgress;
-		public UnityEvent onEnd;
-		public UnityEvent onStart;
 		public Vector3 lookAtPosition;
 
 		public GameObject previewCharacter;
@@ -341,13 +339,8 @@ namespace Vilar.AnimationStation {
 			Advance(dT);
 			SetPreview();
 		}
-		public void OnEnd() {
-			info.user = null;
-			onEnd.Invoke();
-        }
-		public void OnStart(UnityEngine.Object user) {
+		public void OnStart(Kobold user) {
 			info.user = user;
-			onStart.Invoke();
 			foreach (var linkedStation in linkedStations.hashSet) {
 				linkedStation.animProgress = 0f;
 			}

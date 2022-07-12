@@ -23,6 +23,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
     }
+    
 
     [System.Serializable]
     public class UnityEventFloat : UnityEvent<float> {}
@@ -633,6 +634,12 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         writer.Write(baseDickSize);
         writer.Write(baseFatness);
         writer.Write(baseSize);
+    }
+
+    public void Lactate() {
+    }
+
+    private void LactateRoutine() {
     }
 
     public void Load(BinaryReader reader, string version) {

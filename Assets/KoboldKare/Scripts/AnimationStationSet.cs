@@ -31,4 +31,15 @@ public class AnimationStationSet : MonoBehaviourPun {
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return readonlyStations;
     }
+
+    /*public int GetAvailableSlots() {
+        int count = 0;
+        foreach (AnimationStation station in stations) {
+            if (station.info.user == null) {
+                count++;
+            }
+        }
+
+        return count;
+    }*/
 }

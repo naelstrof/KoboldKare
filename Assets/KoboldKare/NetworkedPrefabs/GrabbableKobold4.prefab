@@ -3080,6 +3080,7 @@ MonoBehaviour:
   dickErectionHidable: {fileID: 5893451608039140927}
   grabber: {fileID: 6162965588660380068}
   eyes: {fileID: 7579450968131491077}
+  inputRagdolled: 0
   controller: {fileID: 8398179079861015653}
   characterControllerAnimator: {fileID: 7517654626729760162}
   body: {fileID: 4787937348439926609}
@@ -10914,6 +10915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58e6d179e730884bbc321743a0a2a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tpose: {fileID: -8312538846858333772, guid: 46bd2d6ffa5c8c14f850b597913018ee, type: 3}
   antiPop:
     serializedVersion: 2
     m_Curve:

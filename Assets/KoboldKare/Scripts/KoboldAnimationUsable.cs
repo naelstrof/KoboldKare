@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
@@ -10,81 +10,75 @@ public class KoboldAnimationUsable : GenericUsable {
     private CharacterControllerAnimator animator;
     private static Collider[] colliders = new Collider[32];
     private LayerMask mask;
+    private List<Kobold> koboldCache;
     [SerializeField] private Sprite sprite;
     public override Sprite GetSprite(Kobold k) {
         return sprite;
     }
 
     void Start() {
+        koboldCache = new List<Kobold>();
         mask = LayerMask.GetMask("AnimationSet");
         selfKobold = GetComponent<Kobold>();
         animator = GetComponent<CharacterControllerAnimator>();
     }
-
-    private AnimationStation GetAvailableStation(AnimationStationSet set, int index) {
-        foreach (var station in set.GetAnimationStations()) {
-            if (station.info.user == null) {
-                if (index == 0) {
-                    return station;
-                } else {
-                    index--;
-                }
-            } 
+    
+    private AnimationStationSet GetAnimationStationSet(Vector3 position, int neededSlots) {
+        //Already animating
+        if (animator.TryGetAnimationStationSet(out AnimationStationSet testSet) && testSet.GetAnimationStations().Count >= neededSlots ) {
+            return testSet;
         }
-        return null;
-    }
-
-    private AnimationStation GetAvailableStation(Kobold kobold, int index) {
-        if (animator.TryGetAnimationStationSet(out AnimationStationSet testSet)) {
-            // Already animating!
-            foreach (var station in testSet.GetAnimationStations()) {
-                if (station.info.user == kobold) {
-                    return station;
-                }
-            }
-
-            AnimationStation test = GetAvailableStation(testSet, index);
-            if (test != null) {
-                return test;
-            }
-        }
-        
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, 5f, colliders, mask, QueryTriggerInteraction.Collide);
-        AnimationStation bestStation = null;
-        float bestSetScore = float.MaxValue;
+        int hits = Physics.OverlapSphereNonAlloc(position, 5f, colliders, mask, QueryTriggerInteraction.Collide);
+        AnimationStationSet bestStationSet = null;
+        float bestStationDistance = float.MaxValue;
         for (int i = 0; i < hits; i++) {
             AnimationStationSet targetSet = colliders[i].GetComponentInParent<AnimationStationSet>();
-            AnimationStation testStation = GetAvailableStation(targetSet, index);
-            float distance = Vector3.Distance(targetSet.transform.position, transform.position);
-            if (testStation != null && distance < bestSetScore) {
-                bestStation = testStation;
-                bestSetScore = distance;
+            if (targetSet.GetAnimationStations().Count < neededSlots) {
+                continue;
+            }
+
+            float distance = Vector3.Distance(position, targetSet.transform.position);
+            if (distance < bestStationDistance) {
+                bestStationSet = targetSet;
+                bestStationDistance = distance;
             }
         }
-
-        return bestStation;
+        return bestStationSet;
     }
-
     public override bool CanUse(Kobold k) {
-        AnimationStation aStation = GetAvailableStation(selfKobold, 0);
-        AnimationStation bStation = GetAvailableStation(k, 1);
-        return aStation != null && bStation != null;
+        koboldCache.Clear();
+        koboldCache.Add(selfKobold);
+        koboldCache.Add(k);
+        if (animator.TryGetAnimationStationSet(out AnimationStationSet testSet)) {
+            foreach (AnimationStation station in testSet.GetAnimationStations()) {
+                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k) {
+                    koboldCache.Add(station.info.user);
+                }
+            }
+        }
+        AnimationStationSet targetSet = GetAnimationStationSet(transform.position, koboldCache.Count);
+        return targetSet != null;
     }
 
     public override void LocalUse(Kobold k) {
         selfKobold.photonView.RequestOwnership();
-        AnimationStation aStation = GetAvailableStation(selfKobold, 0);
-        if (aStation != null) {
-            AnimationStationSet aSet = aStation.GetComponentInParent<AnimationStationSet>();
-            photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                new object[] { aSet.photonView.ViewID, aSet.GetAnimationStations().IndexOf(aStation) });
+        koboldCache.Clear();
+        koboldCache.Add(selfKobold);
+        koboldCache.Add(k);
+        if (animator.TryGetAnimationStationSet(out AnimationStationSet testSet)) {
+            foreach (AnimationStation station in testSet.GetAnimationStations()) {
+                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k) {
+                    koboldCache.Add(station.info.user);
+                }
+            }
         }
-
-        AnimationStation bStation = GetAvailableStation(k, 1);
-        if (bStation != null) {
-            AnimationStationSet bSet = bStation.GetComponentInParent<AnimationStationSet>();
-            k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                new object[] { bSet.photonView.ViewID, bSet.GetAnimationStations().IndexOf(bStation) });
+        
+        AnimationStationSet targetSet = GetAnimationStationSet(transform.position, koboldCache.Count);
+        if (targetSet != null) {
+            for (int i = 0; i < koboldCache.Count; i++) {
+                koboldCache[i].photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
+                    new object[] { targetSet.photonView.ViewID, i });
+            }
         }
     }
 }

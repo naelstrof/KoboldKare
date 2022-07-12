@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityMultiplier: 0.7
   friction: 0.3
-  airFriction: 0.3
+  airFriction: 0.15
   blend: 1
   angleElasticity: 0.25
   elasticitySoften: 0.3

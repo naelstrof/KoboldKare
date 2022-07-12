@@ -22,6 +22,7 @@ MonoBehaviour:
     shapeNoiseResolution: 128
     detailNoiseResolution: 64
     textureId: _VolumetricCloudsPassTexture
+  valid: 1
 --- !u!114 &-5851201962799788227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +45,7 @@ MonoBehaviour:
     shapeNoiseResolution: 128
     detailNoiseResolution: 64
     textureId: _VolumetricCloudsPassTexture
+  valid: 1
 --- !u!114 &-3823256574297813237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,8 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RendererFeatures:
   - {fileID: -3823256574297813237}
-  - {fileID: -5851201962799788227}
-  m_RendererFeatureMap: 0b4fcdf36610f1ca3d0f40dad05accae
+  m_RendererFeatureMap: 0b4fcdf36610f1ca
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:

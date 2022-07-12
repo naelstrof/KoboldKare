@@ -30,6 +30,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField]
     private JigglePhysics.JiggleSkin jiggleSkin;
     private Vector3 networkedRagdollHipPosition;
+    [SerializeField]
+    private LODGroup group;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
@@ -72,6 +74,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         if (ragdolled) {
             return;
         }
+
+        foreach (var lod in group.GetLODs()) {
+            foreach (Renderer renderer in lod.renderers) {
+                if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
+                    skinnedMeshRenderer.updateWhenOffscreen = true;
+                }
+            }
+        }
+        group.ForceLOD(0);
+
         jiggleRig.interpolate = false;
         jiggleSkin.interpolate = false;
         animator.enabled = false;
@@ -124,6 +136,14 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         if (!ragdolled) {
             return;
         }
+        foreach (var lod in group.GetLODs()) {
+            foreach (Renderer renderer in lod.renderers) {
+                if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
+                    skinnedMeshRenderer.updateWhenOffscreen = false;
+                }
+            }
+        }
+        group.ForceLOD(-1);
         jiggleRig.interpolate = true;
         jiggleSkin.interpolate = true;
         Vector3 diff = hip.position - body.transform.position;

@@ -113,7 +113,7 @@ Material:
     - _Cutoff: 0.5
     - _DarkSpotScale: 1.48
     - _DstBlend: 0
-    - _Eclipse: 0.5730427
+    - _Eclipse: 0.4372517
     - _EnableFog: 0
     - _EnableRotation: 0
     - _EnvironmentReflections: 1
@@ -180,7 +180,7 @@ Material:
     - _GoldenHours: {r: 0.9245283, g: 0.4536633, b: 0.18752158, a: 0}
     - _GroundColor: {r: 0.2901961, g: 0.3529412, b: 0.2627451, a: 1}
     - _HorizonColor: {r: 0.036430337, g: 0.0050729797, b: 0.056603715, a: 0}
-    - _NightColor: {r: 0.0696673, g: 0.008009965, b: 0.11320677, a: 0}
+    - _NightColor: {r: 0.06966728, g: 0.008009965, b: 0.11320674, a: 0}
     - _SkyColor: {r: 0.493681, g: 0.76892054, b: 0.8113207, a: 0}
     - _SkyTint: {r: 0.47952846, g: 0.5566038, b: 0.47521362, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

@@ -144,7 +144,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 float cumAmount = 0.5f+0.1f*baseSize+0.5f*baseBallsSize+0.1f*baseDickSize; // Bonus!
                 ballsContents.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(cumAmount));
                 // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
-                StartCoroutine(dickSet.info.CumRoutine(dickSet));
+                dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
             }
             PumpUpDick(1f);
             stimulation = stimulationMin;
@@ -199,7 +199,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     private void OnBallsContentsChanged(ReagentContents contents) {
         foreach (var dickSet in activeDicks) {
-            dickSet.ballSizeInflater.SetSize(1f+Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), this);
+            dickSet.ballSizeInflater.SetSize(1f+Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), dickSet.info);
         }
     }
 
@@ -296,7 +296,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public void SetBaseDickSize(float baseSize) {
         baseDickSize = baseSize;
         foreach (var dickSet in activeDicks) {
-            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (baseSize) / 20f, 2f), this);
+            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (baseSize) / 20f, 2f), dickSet.info);
         }
     }
     public void SetBaseSize(float newSize) {
@@ -375,7 +375,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private void Update() {
         // Throbbing!
         foreach(var dick in activeDicks) {
-            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, this);
+            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.info);
         }
     }
     private void FixedUpdate() {

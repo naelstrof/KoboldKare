@@ -1,0 +1,10 @@
+{
+    "name": "com.naelstrof.mozzarellatech",
+    "displayName": "Mozzarella Tech",
+    "version": "2.3.2",
+    "unity": "2020.3",
+    "dependencies": {
+        "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm"
+    },
+    "description": "GPU-based verlet solver with some included procedural rendering techniques."
+}

@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using Photon;
 using Photon.Realtime;
 using Photon.Pun;
-// FIX PANINI PROJECTION
 
 public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
-    public HandIK handHandler;
+    private HandIK handHandler;
     public enum Hand {
         Left = 0,
         Right
@@ -19,26 +17,15 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
     private Vector3 handRight = Vector3.right;
     private RopeJointConstraint joint;
     private bool ragdolled;
-    private Kobold internalKobold;
-    public Kobold kobold {
-        get {
-            if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
-            }
-            return internalKobold;
-        }
-    }
-    public Rigidbody koboldBody;
-    public Rigidbody koboldLimb;
+    private Kobold kobold;
+    private Rigidbody koboldLimb;
     public Transform rootedTransform;
     public float _maxDistance = 1;
     public float _springStrength = 400;
     [Range(0f,1f)]
     public float _dampStrength = 0.1f;
-    public UnityEvent OnGrab;
 
     private ConfigurableJoint otherJoint;
-    public UnityEvent OnRelease;
     private Quaternion originalRot;
     private bool grabbed = false;
     public ConfigurableJoint AddJoint(Rigidbody hitBody, Vector3 worldAnchor) {
@@ -64,12 +51,11 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
         if (joint != null || otherJoint != null) {
             return;
         }
-        OnGrab.Invoke();
         grabbed = true;
         joint = gameObject.AddComponent<RopeJointConstraint>();
         joint.anchor = transform.position;
-        joint.connectedBody = koboldBody;
-        joint.connectedAnchor = koboldBody.transform.InverseTransformPoint(rootedTransform.position);
+        joint.connectedBody = kobold.body;
+        joint.connectedAnchor = kobold.body.transform.InverseTransformPoint(rootedTransform.position);
         joint.springStrength = _springStrength;
         joint.dampStrength = _dampStrength;
         joint.maxDistance = _maxDistance;
@@ -79,16 +65,18 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
     }
 
     public void Start() {
-        kobold.RagdollEvent += RagdollEvent;
+        kobold = GetComponentInParent<Kobold>();
+        handHandler = GetComponentInParent<HandIK>();
+        koboldLimb = GetComponentInParent<Rigidbody>();
+        kobold.ragdoller.RagdollEvent += RagdollEvent;
     }
     public void OnDestroy() {
         if (kobold != null) {
-            kobold.RagdollEvent -= RagdollEvent;
+            kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
     }
 
     public void OnEndInteract(Kobold k) {
-        OnRelease.Invoke();
         grabbed = false;
         if (otherJoint != null) {
             Destroy(otherJoint);
@@ -104,7 +92,7 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
         if (joint != null) {
             joint.anchor = worldPosition;
-            joint.connectedAnchor = koboldBody.transform.InverseTransformPoint(rootedTransform.position);
+            joint.connectedAnchor = kobold.body.transform.InverseTransformPoint(rootedTransform.position);
             handHandler.SetIKTarget((int)handTarget, worldPosition, worldRotation*originalRot);
         } else {
             handHandler.UnsetIKTarget((int)handTarget);
@@ -130,16 +118,12 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
                 }
                 otherJoint = AddJoint(koboldLimb, transform.position);
             }
-            OnGrab.Invoke();
         } else {
             if (otherJoint != null) {
                 Destroy(otherJoint);
             }
             if (joint != null) {
                 joint.enabled = true;
-            }
-            if (!grabbed) {
-                OnRelease.Invoke();
             }
         }
     }

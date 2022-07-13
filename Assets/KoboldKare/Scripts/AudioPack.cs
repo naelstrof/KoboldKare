@@ -14,6 +14,10 @@ public class AudioPack : ScriptableObject {
     //public AudioClip GetRandomClip() {
         //return clips[Random.Range(0, clips.Length)];
     //}
+    public AudioClip GetClip() {
+        return clips[Random.Range(0, clips.Length)];
+    }
+
     public void Play(AudioSource source) {
         source.outputAudioMixerGroup = group;
         source.clip = clips[Random.Range(0, clips.Length)];

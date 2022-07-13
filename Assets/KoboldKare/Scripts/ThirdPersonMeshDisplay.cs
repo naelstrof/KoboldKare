@@ -1,29 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Naelstrof.Inflatable;
 using JigglePhysics;
+using PenetrationTech;
 
 public class ThirdPersonMeshDisplay : MonoBehaviour {
     private List<GameObject> mirrorObjects = new List<GameObject>();
     private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
     public Kobold kobold;
+    private ProceduralDeformation proceduralDeformation;
     public LODGroup group;
-    public JigglePhysics.JiggleSoftbody physics;
+    public JigglePhysics.JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
-    public BodyProportion proportion;
-    public void OnFinishProportionEdit() {
-        RegenerateMirror();
-    }
     public void Start() {
-        proportion.OnComplete += OnFinishProportionEdit;
         foreach (SkinnedMeshRenderer s in dissolveTargets) {
             foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 0f);
             }
         }
-    }
-    public void OnDestroy() {
-        proportion.OnComplete -= OnFinishProportionEdit;
+
+        proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
+        RegenerateMirror();
     }
     public void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {
@@ -38,22 +36,17 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 if (kobold.koboldBodyRenderers.Contains(r)) {
                     kobold.koboldBodyRenderers.Remove(r);
                 }
-                if (physics.targetRenderers.Contains(r)) {
-                    physics.targetRenderers.Remove(r);
+                if (physics.targetSkins.Contains(r)) {
+                    physics.targetSkins.Remove(r);
                 }
-                foreach (var boob in kobold.boobs) {
-                    if (boob.targetRenderers.Contains(r)) {
-                        boob.targetRenderers.Remove(r);
+
+                proceduralDeformation.RemoveTargetRenderer(r);
+                foreach (var inflatable in kobold.GetAllInflatableListeners()) {
+                    if (inflatable is InflatableBreast breast) {
+                        breast.RemoveTargetRenderer(r);
                     }
-                }
-                foreach (var belly in kobold.bellies) {
-                    if (belly.targetRenderers.Contains(r)) {
-                        belly.targetRenderers.Remove(r);
-                    }
-                }
-                foreach (var ss in kobold.subcutaneousStorage) {
-                    if (ss.targetRenderers.Contains(r)) {
-                        ss.targetRenderers.Remove(r);
+                    if (inflatable is InflatableBlendShape blendshape) {
+                        blendshape.RemoveTargetRenderer(r);
                     }
                 }
             }
@@ -100,16 +93,16 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             lods[0].renderers = renderers.ToArray();
             group.SetLODs(lods);
             if (s.gameObject.name == "Body") {
-                physics.targetRenderers.Add(smrCopies[s]);
-                foreach(var boob in kobold.boobs) {
-                    boob.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
+                physics.targetSkins.Add(smrCopies[s]);
+                foreach (var inflatable in kobold.GetAllInflatableListeners()) {
+                    if (inflatable is InflatableBreast breast) {
+                        breast.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                    }
+                    if (inflatable is InflatableBlendShape blendshape) {
+                        blendshape.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                    }
                 }
-                foreach (var belly in kobold.bellies) {
-                    belly.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
-                }
-                foreach (var ss in kobold.subcutaneousStorage) {
-                    ss.targetRenderers.Add(g.GetComponent<SkinnedMeshRenderer>());
-                }
+                proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
             }
             foreach(Material m in g.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 1f);

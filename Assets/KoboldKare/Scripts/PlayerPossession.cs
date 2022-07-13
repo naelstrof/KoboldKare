@@ -24,18 +24,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public GameObject dickErectionHidable;
     public Grabber grabber;
     public Camera eyes;
-    private bool internalInputRagdolled;
-    public bool inputRagdolled {
-        get {
-            if (isActiveAndEnabled) {
-                return internalInputRagdolled;
-            }
-            return false;
-        }
-        set {
-            internalInputRagdolled = inputRagdolled;
-        }
+
+    public Vector2 GetEyeRot() {
+        return eyeRot;
     }
+
+    public bool inputRagdolled;
     private Kobold cachedKobold;
     public Kobold kobold {
         get {
@@ -50,10 +44,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public Rigidbody body;
     public Animator animator;
     public GameEventVector3 playerDieEvent;
-    //public SimpleCa
     public bool mouseAttached = true;
-    //public Transform hip;
-    //public Transform hipTarget;
     public List<GameObject> localGameObjects = new List<GameObject>();
     public GameObject grabPrompt;
     public GameObject equipmentUI;
@@ -87,7 +78,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             chatGroup.interactable = false;
             chatGroup.alpha = 0f;
         }
-        controls?.ActivateInput();
+        controls.ActivateInput();
         back.action.started -= OnBack;
     }
     private void OnTextSubmit(string t) {
@@ -103,20 +94,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         back.action.started -= OnBack;
     }
     private void Start() {
-        //if (!photonView.IsMine) {
-            //eyes.gameObject.SetActive(false);
-            //return;
-        //}
-        //animator.updateMode = AnimatorUpdateMode.Normal;
         if (!isActiveAndEnabled) {
             return;
         }
-        //rig.layers[0].active = true;
         body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        //controller.GetComponent<Kobold>().uprightForce *= 10f;
-        //controller.speed *= 2.9f;
-        //controller.crouchSpeed *= 3.1f;
-        //controller.airAccel *= 1.5f;
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -139,36 +120,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         pauseInput = false;
     }
     private Vector2 eyeRot = new Vector2(0, 0);
-    void FixedUpdate() {
-        //if (!photonView.IsMine) {
-            //return;
-        //}
-        /*if (kobold.uprightTimer <= 0f) {
-            body.maxAngularVelocity = 12f;
-            body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            Quaternion bodyRot = body.rotation;
-            Vector3 v = bodyRot.eulerAngles;
-            body.MoveRotation(Quaternion.Euler(v.With(x : 0, z : 0)));
-
-            Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-            Vector3 fdir = characterRot * Vector3.forward;
-            Vector3 dampingForce = Vector3.Project(body.angularVelocity, body.transform.up)*0.5f;
-            Quaternion rotForce = Quaternion.FromToRotation(body.transform.forward, fdir);
-            body.angularVelocity -= dampingForce;
-            body.AddTorque(new Vector3(rotForce.x,rotForce.y,rotForce.z)*5f, ForceMode.VelocityChange);
-            //rig.layers[0].active = true;
-        } else {
-            //rig.layers[0].active = false;
-            body.maxAngularVelocity = 7f;
-            body.constraints = body.constraints & ~(RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ);
-        }*/
-        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-        Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 5f;
-        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
-        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
-        body.AddTorque(cross*angleDiff*5f, ForceMode.Acceleration);
-    }
     void PlayerProcessing() {
         bool grab = controls.actions["Grab"].ReadValue<float>() > 0.5f && canGrab;
         bool activateGrab = controls.actions["ActivateGrab"].ReadValue<float>() > 0.5f && canGrab;
@@ -179,7 +130,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
         if (erectionUp-erectionDown != 0f) {
-            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.1f);
+            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.2f);
         }
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
@@ -255,15 +206,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 pGrabber.Unfreeze(true);
             }
         }
-        //float angle = Quaternion.Angle(rotLerp, characterRot);
-        //rotLerp = Quaternion.RotateTowards(rotLerp, characterRot, Time.deltaTime * angle * 6f);
-        //playerModel.transform.rotation = rotLerp;
-
-        //if (rig.layers[0].active) {
-            //hipTarget.position = hip.position;
-            //hipTarget.rotation = hip.rotation;
-        //}
-
 
         Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
@@ -283,7 +225,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         Cursor.visible = false;
         if (isActiveAndEnabled) {
             PlayerProcessing();
-            if (photonView.IsMine && photonView.AmOwner && characterControllerAnimator.animating && Mathf.Approximately(characterControllerAnimator.blend, 1f)) {
+            if (photonView.IsMine && photonView.AmOwner) {
                 bool shouldCancelAnimation = false;
                 //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Rotate"].ReadValue<float>() > 0.5f);
                 //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Unfreeze"].ReadValue<float>() > 0.5f);
@@ -293,7 +235,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Cancel"].ReadValue<float>() > 0.5f);
                 if (shouldCancelAnimation) {
                     //kobold.GetComponent<CharacterControllerAnimator>().OnEndStation();
-                    characterControllerAnimator.OnEndStation();
+                    characterControllerAnimator.StopAnimation();
                 }
             }
         } else {
@@ -315,38 +257,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         yield return new WaitForSeconds(coyoteTime);
         canGrab = true;
     }
-
-    /*public bool ShouldSave() {
-        return true;
-    }
-    public void Load(SaveObject s, int version) {
-        transform.position = s.vectors["position"];
-        eyeRot = new Vector2(s.vectors["EyeRot"].x, s.vectors["EyeRot"].y);
-        Update();
-        GetComponent<Rigidbody>().velocity = s.vectors["Velocity"];
-        controller.crouchAmount = s.floats["CrouchTimer"];
-    }
-
-    public SaveObject Save(int version) {
-        SaveObject s = new SaveObject();
-        s.id = ScriptableSaveLibrary.SaveID.Player;
-        s.vectors["Velocity"] = GetComponent<Rigidbody>().velocity;
-        s.vectors["position"] = transform.position;
-        s.quats["rotation"] = Quaternion.identity;
-        s.vectors["EyeRot"] = new Vector3(eyeRot.x, eyeRot.y, 0);
-        s.floats["CrouchTimer"] = controller.crouchAmount;
-        return s;
-    }*/
-
-    //public void OnMove(InputValue value) {
-        //Vector2 move2 = value.Get<Vector2>();
-        //move = new Vector3(move2.x, 0, move2.y);
-
-        //Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
-        //Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
-        //wishDir.y = 0;
-        //controller.inputDir = wishDir.magnitude > 0 ? Vector3.Normalize(wishDir) : Vector3.zero;
-    //}
     public void OnJump(InputValue value) {
         controller.inputJump = value.Get<float>() > 0f;
     }
@@ -381,9 +291,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             chatInput.Select();
+            if (inputRagdolled) {
+                kobold.ragdoller.PopRagdoll();
+            }
+
             back.action.started += OnBack;
-            StopCoroutine("WaitAndThenSubscribe");
-            StartCoroutine("WaitAndThenSubscribe");
+            StopCoroutine(nameof(WaitAndThenSubscribe));
+            StartCoroutine(nameof(WaitAndThenSubscribe));
             controls.DeactivateInput();
             chatInput.onDeselect.AddListener(OnTextDeselect);
         }
@@ -392,19 +306,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         yield return new WaitForSecondsRealtime(0.25f);
         chatInput.onSubmit.AddListener(OnTextSubmit);
     }
-    public IEnumerator WaitAndThenStand() {
-        yield return new WaitForSeconds(1f);
-        kobold.StandUp();
-    }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {
-            StopCoroutine("WaitAndThenStand");
-            StartCoroutine("WaitAndThenStand");
+            kobold.ragdoller.PopRagdoll();
             inputRagdolled = false;
         } else {
-            StopCoroutine("WaitAndThenStand");
+            kobold.ragdoller.PushRagdoll();
             inputRagdolled = true;
-            kobold.KnockOver(9999f);
         }
     }
 
@@ -426,8 +334,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (stream.IsWriting) {
             bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
             stream.SendNext(switchGrabMode);
+            stream.SendNext(eyeRot);
         } else {
             pGrabber.HideHand(!(bool)stream.ReceiveNext());
+            eyeRot = (Vector2)stream.ReceiveNext();
         }
     }
 
@@ -451,10 +361,4 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
         }
     }
-    //public void OnHold() {
-    //grabber.TryGrab();
-    //}
-    //public void OnActivateHeldItems() {
-    //grabber.TryActivate();
-    //}
 }

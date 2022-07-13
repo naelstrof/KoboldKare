@@ -159,11 +159,11 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             t.gameObject.layer = toLayer;
         }
     }
-    private void GetForwardAndUpVectors(IWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
+    private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
         averageForward = Vector3.zero;
         averageUp = Vector3.zero;
         averageOffset = Vector3.zero;
-        foreach (IWeapon w in weapons) {
+        foreach (GenericWeapon w in weapons) {
             averageForward += w.GetWeaponBarrelTransform().forward;
             averageOffset += w.GetWeaponHoldPosition();
             averageUp += w.GetWeaponBarrelTransform().up;
@@ -199,7 +199,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
             j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
             j.connectedAnchor = Vector3.zero;
-            IWeapon[] weapons = r.GetComponentsInChildren<IWeapon>();
+            GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
             if (weapons.Length != 0) {
                 OnGrabActivatable.Invoke();
                 Vector3 averageForward;
@@ -268,7 +268,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         int weaponCount = 1;
         foreach (IGrabbable g in grabbedObjects) {
             foreach(Rigidbody r in g.GetRigidBodies()) {
-                weaponCount += r.GetComponentsInChildren<IWeapon>().Length;
+                weaponCount += r.GetComponentsInChildren<GenericWeapon>().Length;
             }
         }
         while ( weaponPoints.Count <= weaponCount) {
@@ -297,7 +297,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             foreach (Rigidbody r in g.GetRigidBodies()) {
                 DriverConstraint j = joints.Find(info => info.body == r).constraint;
                 j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
-                IWeapon[] weapons = r.GetComponentsInChildren<IWeapon>();
+                GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
                 if (weapons.Length != 0) {
                     Vector3 averageForward;
                     Vector3 averageUp;
@@ -329,7 +329,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (r == null) {
                 continue;
             }
-            foreach (IWeapon w in r.GetComponentsInChildren<IWeapon>()) {
+            foreach (GenericWeapon w in r.GetComponentsInChildren<GenericWeapon>()) {
                 w.OnEndFire(player);
             }
         }
@@ -358,7 +358,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
                     continue;
                 }
                 // Only throw non-weapons
-                foreach(IWeapon w in r.GetComponentsInChildren<IWeapon>()) {
+                foreach(GenericWeapon w in r.GetComponentsInChildren<GenericWeapon>()) {
                     w.OnFire(player);
                     hasWeapon = true;
                 }

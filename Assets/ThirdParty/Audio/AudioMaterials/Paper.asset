@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a19e1e6b5e3d9d448dfe506af226871, type: 3}
+  m_Name: Paper
+  m_EditorClassIdentifier: 
+  minScrapeSpeed: 0.06
+  surfaceType: 1
+  impactGroups:
+  - impactType: 0
+    isSortedByImpactVelocity: 1
+    minImpactMagnitude: 0
+    maxImpactMagnitude: 17
+    impactSounds:
+    - {fileID: 8300000, guid: bbe4e42d7cac0ac4fbcf80f20071062a, type: 3}
+    scrapeSound: {fileID: 8300000, guid: 2119ddc9b3381264bb4ade54a97bddcd, type: 3}
+  - impactType: 1
+    isSortedByImpactVelocity: 1
+    minImpactMagnitude: 0
+    maxImpactMagnitude: 17
+    impactSounds:
+    - {fileID: 8300000, guid: 7708809f0e48ebf4bb7b60b2662d40a5, type: 3}
+    scrapeSound: {fileID: 8300000, guid: 2119ddc9b3381264bb4ade54a97bddcd, type: 3}
+  associatedMaterials:
+  - {fileID: 13400000, guid: ee851eefe73d48946a1a99d7acb40d03, type: 2}

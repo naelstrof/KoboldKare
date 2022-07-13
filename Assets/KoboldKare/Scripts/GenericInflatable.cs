@@ -38,8 +38,6 @@ public class GenericInflatable : MonoBehaviour {
         public Vector3 translationOffset;
         public Transform targetTransform;
         [HideInInspector]
-        public JigglePhysics.JiggleBone jiggleBone;
-        [HideInInspector]
         public Vector3 initialScale;
         [HideInInspector]
         public Quaternion initialRotation;
@@ -48,17 +46,18 @@ public class GenericInflatable : MonoBehaviour {
     }
     [System.Serializable]
     public class InflatableSoftbody {
-        public JigglePhysics.JiggleSoftbody targetPhysics;
+        public JigglePhysics.JiggleSkin targetPhysics;
         public int zoneIndex;
-        public AnimationCurve motionFactorCurve;
-        public AnimationCurve gravityFactorCurve;
+        public AnimationCurve blend;
         public AnimationCurve radiusCurve;
         [HideInInspector]
-        public float motionFactorDefault;
-        [HideInInspector]
-        public Vector2 gravityInOutDefault;
-        [HideInInspector]
         public float radiusDefault;
+    }
+    [System.Serializable]
+    public class InflatableJiggleBone {
+        public JigglePhysics.JiggleRigBuilder targetRig;
+        public int zoneIndex;
+        public AnimationCurve blend;
     }
     [System.Serializable]
     public class InflationChangeEvent : SerializableEvent<float> { };
@@ -87,6 +86,7 @@ public class GenericInflatable : MonoBehaviour {
     public List<InflatableBlendshape> shapeCurves = new List<InflatableBlendshape>();
     public List<InflatableTransform> transformCurves = new List<InflatableTransform>();
     public List<InflatableSoftbody> softbodyCurves = new List<InflatableSoftbody>();
+    public List<InflatableJiggleBone> jiggleBoneCurves = new List<InflatableJiggleBone>();
     public List<InflatableChangeEventCurve> eventListeners = new List<InflatableChangeEventCurve>();
     public List<InflatableMaterialFloatCurve> materialCurves = new List<InflatableMaterialFloatCurve>();
 
@@ -151,29 +151,26 @@ public class GenericInflatable : MonoBehaviour {
                 transformCurve.targetTransform.localScale = transformCurve.initialScale * scaleSample;
                 if (!Mathf.Approximately(transformCurve.rotateAxis.magnitude,0f)) {
                     float rotateSample = transformCurve.rotateCurve.Evaluate(currentSize);
-                    if (transformCurve.jiggleBone == null) {
-                        transformCurve.targetTransform.localRotation = Quaternion.AngleAxis(rotateSample, transformCurve.rotateAxis) * transformCurve.initialRotation;
-                    } else {
-                        transformCurve.jiggleBone.GetVirtualBone(transformCurve.targetTransform).localStartRot = Quaternion.AngleAxis(rotateSample, transformCurve.rotateAxis) * transformCurve.initialRotation;
-                    }
+                    transformCurve.targetTransform.localRotation = Quaternion.AngleAxis(rotateSample, transformCurve.rotateAxis) * transformCurve.initialRotation;
                 }
                 if (!Mathf.Approximately(transformCurve.translationOffset.magnitude,0f)) {
                     float translateSample = transformCurve.translateOffsetCurve.Evaluate(currentSize);
-                    if (transformCurve.jiggleBone == null) {
-                        transformCurve.targetTransform.localPosition = Vector3.LerpUnclamped(transformCurve.initialPosition, transformCurve.initialPosition + transformCurve.targetTransform.localRotation * transformCurve.translationOffset, translateSample);
-                    } else {
-                        JigglePhysics.JiggleBone.VirtualBone b = transformCurve.jiggleBone.GetVirtualBone(transformCurve.targetTransform);
-                        b.localStartPos = Vector3.LerpUnclamped(transformCurve.initialPosition, transformCurve.initialPosition + transformCurve.targetTransform.localRotation * transformCurve.translationOffset, translateSample);
-                    }
+                    transformCurve.targetTransform.localPosition = Vector3.LerpUnclamped(transformCurve.initialPosition, transformCurve.initialPosition + transformCurve.targetTransform.localRotation * transformCurve.translationOffset, translateSample);
                 }
             }
             foreach (var softbodyCurve in softbodyCurves) {
-                float motionSample = softbodyCurve.motionFactorCurve.Evaluate(currentSize);
-                softbodyCurve.targetPhysics.zones[softbodyCurve.zoneIndex].amplitude = softbodyCurve.motionFactorDefault * motionSample;
-                float gravitySample = softbodyCurve.gravityFactorCurve.Evaluate(currentSize);
-                softbodyCurve.targetPhysics.zones[softbodyCurve.zoneIndex].gravity = softbodyCurve.gravityInOutDefault * gravitySample;
+                //float motionSample = softbodyCurve.motionFactorCurve.Evaluate(currentSize);
+                //softbodyCurve.targetPhysics.zones[softbodyCurve.zoneIndex].amplitude = softbodyCurve.motionFactorDefault * motionSample;
+                //float gravitySample = softbodyCurve.gravityFactorCurve.Evaluate(currentSize);
+                //softbodyCurve.targetPhysics.zones[softbodyCurve.zoneIndex].gravity = softbodyCurve.gravityInOutDefault * gravitySample;
+                float blendSample = softbodyCurve.blend.Evaluate(currentSize);
+                (softbodyCurve.targetPhysics.jiggleZones[softbodyCurve.zoneIndex].jiggleSettings as JigglePhysics.JiggleSettingsBlend).normalizedBlend = blendSample;
                 float radiusSample = softbodyCurve.radiusCurve.Evaluate(currentSize);
-                softbodyCurve.targetPhysics.zones[softbodyCurve.zoneIndex].radius = softbodyCurve.radiusDefault * radiusSample;
+                softbodyCurve.targetPhysics.jiggleZones[softbodyCurve.zoneIndex].radius = softbodyCurve.radiusDefault * radiusSample;
+            }
+            foreach (var jiggleCurve in jiggleBoneCurves) {
+                float blendSample = jiggleCurve.blend.Evaluate(currentSize);
+                (jiggleCurve.targetRig.jiggleRigs[jiggleCurve.zoneIndex].jiggleSettings as JigglePhysics.JiggleSettingsBlend).normalizedBlend = blendSample;
             }
             foreach (var eventListener in eventListeners) {
                 float eventSample = eventListener.curve.Evaluate(currentSize);
@@ -201,18 +198,9 @@ public class GenericInflatable : MonoBehaviour {
             transformCurve.initialScale = transformCurve.targetTransform.localScale;
             transformCurve.initialRotation = transformCurve.targetTransform.localRotation;
             transformCurve.initialPosition = transformCurve.targetTransform.localPosition;
-            transformCurve.jiggleBone = null;
-            foreach(JigglePhysics.JiggleBone bone in transformCurve.targetTransform.root.GetComponentsInChildren<JigglePhysics.JiggleBone>()) {
-                if (bone.IsSimulatingBone(transformCurve.targetTransform)) {
-                    transformCurve.jiggleBone = bone;
-                    break;
-                }
-            }
         }
         foreach( var inflatableSensor in softbodyCurves) {
-            inflatableSensor.radiusDefault = inflatableSensor.targetPhysics.zones[inflatableSensor.zoneIndex].radius;
-            inflatableSensor.gravityInOutDefault = inflatableSensor.targetPhysics.zones[inflatableSensor.zoneIndex].gravity;
-            inflatableSensor.motionFactorDefault = inflatableSensor.targetPhysics.zones[inflatableSensor.zoneIndex].amplitude;
+            inflatableSensor.radiusDefault = inflatableSensor.targetPhysics.jiggleZones[inflatableSensor.zoneIndex].radius;
         }
         foreach (var materialCurve in materialCurves) {
             foreach (var r in materialCurve.targetRenderers) {
@@ -224,6 +212,12 @@ public class GenericInflatable : MonoBehaviour {
         }
     }
     void Start() {
+        foreach( var inflatableSensor in softbodyCurves) {
+            inflatableSensor.targetPhysics.jiggleZones[inflatableSensor.zoneIndex].jiggleSettings = JigglePhysics.JiggleSettingsBlend.Instantiate(inflatableSensor.targetPhysics.jiggleZones[inflatableSensor.zoneIndex].jiggleSettings);
+        }
+        foreach( var jiggleSensor in jiggleBoneCurves) {
+            jiggleSensor.targetRig.jiggleRigs[jiggleSensor.zoneIndex].jiggleSettings = JigglePhysics.JiggleSettingsBlend.Instantiate(jiggleSensor.targetRig.jiggleRigs[jiggleSensor.zoneIndex].jiggleSettings);
+        }
         size = GetDesiredSize();
     }
     void OnEnable() {
@@ -247,7 +241,7 @@ public class GenericInflatable : MonoBehaviour {
         while (Time.timeSinceLevelLoad < startTime + duration) {
             float curve = bounceCurve.Evaluate((Time.timeSinceLevelLoad - startTime) / duration);
             size = Mathf.LerpUnclamped(before, GetDesiredSize(), curve);
-            yield return waitForEndOfFrame;
+            yield return null;
         }
         size = GetDesiredSize();
         tweening = false;

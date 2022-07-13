@@ -205,10 +205,6 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
     }
 
-    //private void LateUpdate() {
-        //worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
-    //}
-
     private void Friction() {
         float speed = velocity.magnitude;
         if ( speed < 0.1f ) {

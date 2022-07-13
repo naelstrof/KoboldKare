@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7656649442327450882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7656649442327450892}
+  - component: {fileID: 7656649442327450893}
+  m_Layer: 0
+  m_Name: Mozzarella
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7656649442327450892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7656649442327450882}
+  m_LocalRotation: {x: 0.000000107235955, y: -0.9539853, z: -0.2998535, w: -0.00000034117173}
+  m_LocalPosition: {x: 2.022, y: 1.477, z: 0.837}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -34.898, y: -180, z: 0}
+--- !u!114 &7656649442327450893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7656649442327450882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda560634c9b1154a9a4c948706726b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineMaterial: {fileID: 2100000, guid: 0494a8afd5188d84f9eef35e21285d03, type: 2}
+  velocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5047985
+      inSlope: 13.93706
+      outSlope: 13.93706
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.20173824
+    - serializedVersion: 3
+      time: 0.19902855
+      value: 1.9983059
+      inSlope: 0.03688566
+      outSlope: 0.03688566
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19700599
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.8640181
+      value: 0.008802414
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  volumeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.74309736
+      outSlope: 0.74309736
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.14936636
+    - serializedVersion: 3
+      time: 0.20241238
+      value: 0.04976032
+      inSlope: 0.03688566
+      outSlope: 0.03688566
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19700599
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocityMultiplier: 2
+  volumeMultiplier: 1
+  lifetime: 3
+  decalHitMask:
+    serializedVersion: 2
+    m_Bits: 33565696

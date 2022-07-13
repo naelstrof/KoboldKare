@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEditor;
 
 public static class AghButton {
-    [MenuItem("KoboldKare/HomogenizeButtons")]
+    [MenuItem("Tools/KoboldKare/HomogenizeButtons")]
     public static void HomogenizeButtons() {
         ColorBlock block = new ColorBlock();
         block.normalColor = Color.white;
@@ -27,7 +27,7 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
-    [MenuItem("KoboldKare/Disable all GPU Instanced Materials")]
+    [MenuItem("Tools/KoboldKare/Disable all GPU Instanced Materials")]
     public static void FindGPUInstancedMaterial() {
         Undo.IncrementCurrentGroup();
         Undo.SetCurrentGroupName("Changed project gpu instancing");
@@ -44,7 +44,7 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
-    [MenuItem("KoboldKare/Find Specular Workflow Materials")]
+    [MenuItem("Tools/KoboldKare/Find Specular Workflow Materials")]
     public static void FindSpecularWorkflowMaterials() {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
@@ -56,7 +56,7 @@ public static class AghButton {
             }
         }
     }
-    [MenuItem("KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
+    [MenuItem("Tools/KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
     public static void FindSpecularOffMaterials() {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
@@ -74,7 +74,7 @@ public static class AghButton {
             EditorUtility.SetDirty(go);
         }
     }
-    [MenuItem("KoboldKare/Find Missing Script")]
+    [MenuItem("Tools/KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {
         foreach(GameObject g in Selection.gameObjects) {
             foreach(var c in g.GetComponents<Component>()) {

@@ -1,0 +1,18 @@
+{
+    "name": "com.naelstrof.inflatable",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d7ce7b21aa347964e81778f95bcb6a36",
+        "GUID:2684ea0d564097444a05d23355ff46a1",
+        "GUID:73106583b323919458c1e05166706ce3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

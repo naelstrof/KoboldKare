@@ -9,7 +9,7 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 
-public class ReagentScanner : MonoBehaviour, IValuedGood {
+public class ReagentScanner : GenericWeapon, IValuedGood {
     public bool firing = false;
     [SerializeField]
     private Animator animator;
@@ -55,7 +55,8 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
             yield return new WaitForSeconds(scanDelay);
         }
     }
-    public void OnFire(GameObject player) {
+    public override void OnFire(GameObject player) {
+        base.OnFire(player);
         if (firing) {
             return;
         }
@@ -83,7 +84,7 @@ public class ReagentScanner : MonoBehaviour, IValuedGood {
         StopAllCoroutines();
         StartCoroutine(RenderScreen(allReagents));
     }
-    public void OnEndFire(GameObject player) {
+    public override void OnEndFire(GameObject player) {
         firing = false;
     }
     public void Pickup() {

@@ -17,12 +17,12 @@ public class Follower : MonoBehaviour {
     }
     bool ragdoll = false;
     void Start() {
-        kobold.RagdollEvent += RagdollEvent;
+        kobold.ragdoller.RagdollEvent += RagdollEvent;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
     }
     void OnDestroy() {
         if (kobold !=null) {
-            kobold.RagdollEvent -= RagdollEvent;
+            kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
     }
     void LateUpdate() {

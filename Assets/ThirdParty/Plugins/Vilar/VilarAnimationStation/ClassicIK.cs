@@ -25,12 +25,13 @@ namespace Vilar.IK {
         IKTargetSet targets { get; }
 		void Solve();
 		void Initialize();
-		void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity);
+		void SetTarget(int index, Vector3 position, Quaternion rotation);
 		void ForceBlend(float value);
 		void CleanUp();
     }
 	public class ClassicIK : MonoBehaviour, IKSolver {
 
+		[SerializeField] private AnimationClip tpose;
 		[SerializeField] private AnimationCurve antiPop;
 		[HideInInspector] public IKTargetSet targets { get; set; }
 
@@ -110,13 +111,25 @@ namespace Vilar.IK {
 			SolveLimb(animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg), animator.GetBoneTransform(HumanBodyBones.LeftLowerLeg), animator.GetBoneTransform(HumanBodyBones.LeftFoot), targets.GetLocalPosition(IKTargetSet.parts.FOOTLEFT), targets.GetLocalRotation(IKTargetSet.parts.FOOTLEFT), targets.GetLocalPosition(IKTargetSet.parts.KNEELEFT), true, true);
 			SolveLimb(animator.GetBoneTransform(HumanBodyBones.RightUpperLeg), animator.GetBoneTransform(HumanBodyBones.RightLowerLeg), animator.GetBoneTransform(HumanBodyBones.RightFoot), targets.GetLocalPosition(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalRotation(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalPosition(IKTargetSet.parts.KNEERIGHT), true, true);
 		}
+		
+		private void TPoseForAFrame() {
+			if (animator == null){
+				animator = GetComponentInChildren<Animator>();
+			}
+			/// ---- SLOW ----
+			// To discard root motion, we just cache and reset the position/rotations
+			Vector3 position = animator.transform.localPosition;
+			Quaternion rotation = animator.transform.localRotation;
+			tpose.SampleAnimation(animator.gameObject, 0f);
+			//animator.transform.SetPositionAndRotation(position, rotation);
+			animator.transform.localPosition = position;
+			animator.transform.localRotation = rotation;
+			// --------------
+		}
 
 		public void Initialize() {
 			animator = GetComponentInChildren<Animator>();
-            animator.Play("TPose", 0, 0f);
-            animator.Update(0f);
-            animator.SetTrigger("UnTPose");
-			animator.ResetTrigger("TPose");
+			TPoseForAFrame();
 			hip = animator.GetBoneTransform(HumanBodyBones.Hips);
 			spine = animator.GetBoneTransform(HumanBodyBones.Spine);
 			chest = animator.GetBoneTransform(HumanBodyBones.Chest);
@@ -134,14 +147,9 @@ namespace Vilar.IK {
 			transform.rotation = cachedRotation;
 		}
 		public void CleanUp() {
-			//animator.speed = 1f;
-			animator.ResetTrigger("TPose");
-			animator.ResetTrigger("UnTPose");
-			animator.SetTrigger("UnTPose");
-			//animator.Play("TPose");
         }
 
-		public void SetTarget(int index, Vector3 position, Quaternion rotation, Vector3 velocity) {
+		public void SetTarget(int index, Vector3 position, Quaternion rotation) {
 			targets.SetTarget(index, transform.InverseTransformPoint(position), Quaternion.Inverse(transform.rotation) * rotation);
 		}
 

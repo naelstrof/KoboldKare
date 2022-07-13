@@ -111,8 +111,9 @@ namespace Vilar.AnimationStation {
 			SceneView.duringSceneGui -= this.OnSceneGUI;
 		}
 
+
 		public override void OnInspectorGUI() {
-			EditorGUI.BeginChangeCheck();
+			serializedObject.Update();
 			var script = (AnimationStation) target;
 			if (script.isPreviewAssigned) {
 				var styleButton = new GUIStyle(GUI.skin.button);
@@ -152,40 +153,49 @@ namespace Vilar.AnimationStation {
 					script.progress = newprogress;
 					script.selectedLoop = Mathf.RoundToInt(newprogress);
 				}
-				script.loops[script.selectedLoop].speed = EditorGUILayout.FloatField("Speed", script.loops[script.selectedLoop].speed);
-				if (script.loops != null && script.loops.Count > 0) {
-					for (int i = 0; i < 10; i++) {
-						GUILayout.BeginHorizontal();
-						GUILayout.Label(AnimationLooper.GetTypeName(i + 1), GUILayout.Width(86));
-						script.loops[script.selectedLoop].motion[i] = (AnimationMotion) EditorGUILayout.ObjectField(GUIContent.none, script.loops[script.selectedLoop].motion[i], typeof(AnimationMotion), true);
-						GUILayout.Label("Attach", GUILayout.Width(40));
-						script.loops[script.selectedLoop].attachments[i] = (AnimationLooper.TargetType) EditorGUILayout.EnumPopup(script.loops[script.selectedLoop].attachments[i], GUILayout.Width(100));
-                        script.loops[script.selectedLoop].attachmentTargets[i] = (AnimationStation)EditorGUILayout.ObjectField(GUIContent.none, script.loops[script.selectedLoop].attachmentTargets[i], typeof(AnimationStation), true, GUILayout.Width(100));
 
-						GUILayout.EndHorizontal();
+				SerializedProperty loops = serializedObject.FindProperty("loops");
+				SerializedProperty speedProp = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("speed");
+				speedProp.floatValue = EditorGUILayout.FloatField("Speed", speedProp.floatValue);
+				for (int i = 0; i < 10; i++) {
+					GUILayout.BeginHorizontal();
+					GUILayout.Label(AnimationLooper.GetTypeName(i + 1), GUILayout.Width(86));
+					SerializedProperty motion = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motion");
+					SerializedProperty attachments = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("attachments");
+					SerializedProperty attachmentTargets = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("attachmentTargets");
+					motion.GetArrayElementAtIndex(i).objectReferenceValue = (AnimationMotion) EditorGUILayout.ObjectField(GUIContent.none, motion.GetArrayElementAtIndex(i).objectReferenceValue, typeof(AnimationMotion), true);
+					GUILayout.Label("Attach", GUILayout.Width(40));
+					attachments.GetArrayElementAtIndex(i).intValue = (int)(AnimationLooper.TargetType) EditorGUILayout.EnumPopup((AnimationLooper.TargetType)attachments.GetArrayElementAtIndex(i).intValue, GUILayout.Width(100));
+					attachmentTargets.GetArrayElementAtIndex(i).objectReferenceValue = (AnimationStation)EditorGUILayout.ObjectField(GUIContent.none, attachmentTargets.GetArrayElementAtIndex(i).objectReferenceValue, typeof(AnimationStation), true, GUILayout.Width(100));
 
-						GUILayout.BeginHorizontal();
-						GUILayout.Label("Scale", GUILayout.Width(200));
-						r = GUILayoutUtility.GetLastRect();
-						r.x += 40f;
-						r.width -= 40f;
-						script.loops[script.selectedLoop].motionScale[i] = (float) GUI.HorizontalSlider(r, script.loops[script.selectedLoop].motionScale[i], 0.1f, 2f);
-						GUILayout.Label("Offset", GUILayout.Width(200));
-						r = GUILayoutUtility.GetLastRect();
-						r.x += 40f;
-						r.width -= 40f;
-						script.loops[script.selectedLoop].motionOffset[i] = (float) GUI.HorizontalSlider(r, script.loops[script.selectedLoop].motionOffset[i], 0f, 1f);
+					GUILayout.EndHorizontal();
 
-						GUILayout.EndHorizontal();
-					}
+					GUILayout.BeginHorizontal();
+					GUILayout.Label("Scale", GUILayout.Width(200));
+					r = GUILayoutUtility.GetLastRect();
+					r.x += 40f;
+					r.width -= 40f;
+					SerializedProperty motionScale = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motionScale");
+					motionScale.GetArrayElementAtIndex(i).floatValue = (float) GUI.HorizontalSlider(r, motionScale.GetArrayElementAtIndex(i).floatValue, 0.1f, 2f);
+					GUILayout.Label("Offset", GUILayout.Width(200));
+					r = GUILayoutUtility.GetLastRect();
+					r.x += 40f;
+					r.width -= 40f;
+					SerializedProperty motionOffset = loops.GetArrayElementAtIndex(script.selectedLoop).FindPropertyRelative("motionOffset");
+					motionOffset.GetArrayElementAtIndex(i).floatValue = (float) GUI.HorizontalSlider(r, motionOffset.GetArrayElementAtIndex(i).floatValue, 0f, 1f);
+
+					GUILayout.EndHorizontal();
 				}
 			}
+
+			if (serializedObject.hasModifiedProperties) {
+				EditorUtility.SetDirty(target);
+				serializedObject.ApplyModifiedProperties();
+			}
+
 			listGUI.DoLayoutList();
 
 			DrawDefaultInspector();
-			if (EditorGUI.EndChangeCheck()) {
-				Undo.RecordObject(script, "Set A Field Value");
-			}
 		}
 
 		void OnSceneGUI(SceneView sceneView) {
@@ -249,7 +259,7 @@ namespace Vilar.AnimationStation {
 	[System.Serializable]
 	public class AnimationStationInfo {
 		public bool needsPenetrator;
-		public UnityEngine.Object user;
+		public Kobold user;
     }
 
 	[System.Serializable]
@@ -276,18 +286,16 @@ namespace Vilar.AnimationStation {
 		[HideInInspector] public double lastEditorTime = 0f;
 		private Vector3 lastScale;
 		private float modifiedProgress;
-		public UnityEvent onEnd;
-		public UnityEvent onStart;
 		public Vector3 lookAtPosition;
 
 		public GameObject previewCharacter;
-		[HideInInspector] public GameObject previewCharacterInstance;
+		private GameObject previewCharacterInstance;
 		private IKSolver previewCharacterIKSolver;
 		//private AnimationStationHashSet internalLinkedStations;
         [HideInInspector] public AnimationStationHashSet linkedStations = new AnimationStationHashSet();
 		public bool isPreviewAssigned => previewCharacter != null;
 		private Dictionary<HumanBodyBones, Quaternion> restPoseCache;
-		private bool initialized=false;
+		//private bool initialized=false;
 		public AnimationStationInfo info = new AnimationStationInfo();
 
 		private void Update() {
@@ -301,7 +309,6 @@ namespace Vilar.AnimationStation {
 					if (lastScale != transform.localScale) {
 						lastScale = transform.localScale;
                         DestroyPreview();
-						TryInstantiatePreview();
                     }
 					//UpdatePreview(Time.deltaTime);
 					foreach (AnimationStation linkedStation in linkedStations.hashSet) {
@@ -321,18 +328,22 @@ namespace Vilar.AnimationStation {
 #endif
 		}
 
+		public void SetProgress(float newProgress) {
+			foreach (var linkedStation in linkedStations.hashSet) {
+				linkedStation.progress = newProgress;
+			}
+		}
+
 		public void UpdatePreview(float dT) {
 			TryInstantiatePreview();
 			Advance(dT);
 			SetPreview();
 		}
-		public void OnEnd() {
-			info.user = null;
-			onEnd.Invoke();
-        }
-		public void OnStart(UnityEngine.Object user) {
+		public void OnStart(Kobold user) {
 			info.user = user;
-			onStart.Invoke();
+			foreach (var linkedStation in linkedStations.hashSet) {
+				linkedStation.animProgress = 0f;
+			}
 		}
 
 		private void TryInstantiatePreview() {
@@ -353,14 +364,18 @@ namespace Vilar.AnimationStation {
 			}
 		}
 
+		private void OnDisable() {
+			DestroyPreview();
+		}
+
 		public void Advance(float time) {
 			if (loops!=null && loops.Count>0) {
 				if (animProgress<0f) animProgress=0f;
 				//modifiedProgress = Mathf.Clamp(progress + Mathf.Cos(Time.timeSinceLevelLoad * 0.38f) * 0.4f + Mathf.Cos(Time.timeSinceLevelLoad * 1.13f) * 0.2f, 0f, loops.Count - 1);
 				modifiedProgress = Mathf.Clamp(progress, 0, loops.Count - 1);
 				float blendedSpeed = loops[Mathf.FloorToInt(modifiedProgress)].speed;
-				if (modifiedProgress < loops.Count - 1) blendedSpeed = Mathf.Lerp(blendedSpeed, loops[Mathf.CeilToInt(modifiedProgress)].speed, modifiedProgress % 1f);
-				animProgress = (animProgress + time * blendedSpeed) % 100f;
+				if (modifiedProgress < loops.Count - 1) blendedSpeed = Mathf.Lerp(blendedSpeed, loops[Mathf.CeilToInt(modifiedProgress)].speed, Mathf.Repeat(modifiedProgress , 1f));
+				animProgress = Mathf.Repeat((animProgress + time * blendedSpeed) , 100f);
 				for (int i = 0; i < 10; i++) {
 					SetTargetPosition(i);
 				}
@@ -371,30 +386,17 @@ namespace Vilar.AnimationStation {
 			for (int i = 0; i < ((modifiedProgress < loops.Count - 1) ? 2 : 1); i++) {
 				AnimationLooper currentLoop = loops[Mathf.FloorToInt(modifiedProgress) + i];
 				Vector3 targetPosition = transform.TransformPoint(currentLoop.targetPositions[index]);
-				Vector3 targetVelocity = Vector3.zero;
 				Quaternion targetRotation = transform.rotation * currentLoop.targetRotations[index];
 				if (currentLoop.motion[index] != null) {
-					targetVelocity += targetRotation * Vector3.right * 
-						currentLoop.motion[index].X.Differentiate(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.x) % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.right *
-						currentLoop.motion[index].X.Evaluate(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.x) % 1f) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]);
-					targetVelocity += targetRotation * Vector3.up *
-						currentLoop.motion[index].Y.Differentiate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.up *
-						currentLoop.motion[index].Y.Evaluate(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.y) % 1f) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]);
-					targetVelocity += targetRotation * Vector3.forward *
-						currentLoop.motion[index].Z.Differentiate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]);
-					targetPosition += targetRotation * Vector3.forward *
-						currentLoop.motion[index].Z.Evaluate(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescale.z) % 1f) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]);
+					targetPosition += targetRotation * Vector3.right * (currentLoop.motion[index].X.Evaluate(Mathf.Repeat(((animProgress + currentLoop.motion[index].offset.x * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.x), 1f)) * (currentLoop.motion[index].scale.x * 0.01f * currentLoop.motionScale[index]));
+					targetPosition += targetRotation * Vector3.up * (currentLoop.motion[index].Y.Evaluate(Mathf.Repeat(((animProgress + currentLoop.motion[index].offset.y * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.y) , 1f)) * (currentLoop.motion[index].scale.y * 0.01f * currentLoop.motionScale[index]));
+					targetPosition += targetRotation * Vector3.forward * (currentLoop.motion[index].Z.Evaluate(Mathf.Repeat(((animProgress + currentLoop.motion[index].offset.z * 0.01f + currentLoop.motionOffset[index]) *
+						currentLoop.motion[index].timescale.z), 1f)) * (currentLoop.motion[index].scale.z * 0.01f * currentLoop.motionScale[index]));
 					targetRotation = targetRotation * Quaternion.Euler(
-						currentLoop.motion[index].RX.Evaluate(((animProgress + currentLoop.motion[index].offsetR.x * 0.01f + currentLoop.motionOffset[index]) *
-							currentLoop.motion[index].timescaleR.x) % 1f) * (currentLoop.motion[index].scaleR.x * currentLoop.motionScale[index]),
+						currentLoop.motion[index].RX.Evaluate(Mathf.Repeat(((animProgress + currentLoop.motion[index].offsetR.x * 0.01f + currentLoop.motionOffset[index]) *
+							currentLoop.motion[index].timescaleR.x), 1f)) * (currentLoop.motion[index].scaleR.x * currentLoop.motionScale[index]),
 						0f,
 						0f);
 					targetRotation = targetRotation * Quaternion.Euler(
@@ -418,41 +420,25 @@ namespace Vilar.AnimationStation {
                     }
 					int attachmentIndex = (int)currentLoop.attachments[index] - 1;
 					if (attachLoop.motion[attachmentIndex] != null) {
-						targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right *
-							attachLoop.motion[attachmentIndex].X.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.x * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.x) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right *
-							attachLoop.motion[attachmentIndex].X.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.x * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.x) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetPosition +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up *
-							attachLoop.motion[attachmentIndex].Y.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.y * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.y) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up *
-							attachLoop.motion[attachmentIndex].Y.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.y * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.y) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetPosition +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward *
-							attachLoop.motion[attachmentIndex].Z.Evaluate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.z * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.z) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex];
-						targetVelocity +=  attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward *
-							attachLoop.motion[attachmentIndex].Z.Differentiate(((animProgress +
-									attachLoop.motion[attachmentIndex].offset.z * 0.01f + attachLoop.motionOffset[attachmentIndex]) *
-								attachLoop.motion[attachmentIndex].timescale.z) % 1f) *
-							attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex];
+						if (attachLoop != null) {
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.right * (attachLoop.motion[attachmentIndex].X.Evaluate(Mathf.Repeat(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.x * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.x) , 1f)) * attachLoop.motion[attachmentIndex].scale.x * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.up * (attachLoop.motion[attachmentIndex].Y.Evaluate(Mathf.Repeat(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.y * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.y), 1f)) * attachLoop.motion[attachmentIndex].scale.y * 0.01f * attachLoop.motionScale[attachmentIndex]);
+							targetPosition += attachRotation * attachLoop.targetRotations[attachmentIndex] * Vector3.forward * (attachLoop.motion[attachmentIndex].Z.Evaluate(Mathf.Repeat(((animProgress +
+									attachLoop.motion[attachmentIndex].offset.z * 0.01f +
+									attachLoop.motionOffset[attachmentIndex]) *
+								attachLoop.motion[attachmentIndex].timescale.z), 1f)) * attachLoop.motion[attachmentIndex].scale.z * 0.01f * attachLoop.motionScale[attachmentIndex]);
+						}
 					}
 				}
                 currentLoop.computedTargetPositions[index] = targetPosition;
                 currentLoop.computedTargetRotations[index] = targetRotation;
-                currentLoop.computedTargetVelocities[index] = targetVelocity;
+                //currentLoop.computedTargetVelocities[index] = targetVelocity;
 			}
 		}
 
@@ -513,7 +499,7 @@ namespace Vilar.AnimationStation {
                 blendedPosition = Vector3.Lerp(
                     blendedPosition,
                     loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[index],
-                    modifiedProgress % 1f
+                    Mathf.Repeat(modifiedProgress , 1f)
                 );
 			}
 			return blendedPosition;
@@ -524,7 +510,7 @@ namespace Vilar.AnimationStation {
 				blendedVelocity = Vector3.Lerp(
 					blendedVelocity,
 					loops[Mathf.CeilToInt(modifiedProgress)].computedTargetVelocities[index],
-					modifiedProgress % 1f
+					Mathf.Repeat(modifiedProgress, 1f)
 				);
 			}
 			return blendedVelocity;
@@ -552,7 +538,7 @@ namespace Vilar.AnimationStation {
 					previewCharacterInstance.GetComponentInChildren<Animator>().GetBoneTransform(p.Key).localRotation = p.Value;
 				}
 				for (int i = 0; i < 10; i++) {
-					previewCharacterIKSolver.SetTarget(i, ComputeTargetPosition(i), ComputeTargetRotation(i), ComputeTargetVelocity(i));
+					previewCharacterIKSolver.SetTarget(i, ComputeTargetPosition(i), ComputeTargetRotation(i));
 				}
 				previewCharacterIKSolver.Solve();
 			}
@@ -565,7 +551,7 @@ namespace Vilar.AnimationStation {
 
 		public void SetCharacter(IKSolver IK) {
 			for (int i = 0; i < 10; i++) {
-				IK.SetTarget(i, ComputeTargetPosition(i), ComputeTargetRotation(i), ComputeTargetVelocity(i));
+				IK.SetTarget(i, ComputeTargetPosition(i), ComputeTargetRotation(i));
 			}
 		}
 
@@ -604,8 +590,7 @@ namespace Vilar.AnimationStation {
 		private void OnValidate() {
 #if UNITY_EDITOR
 			linkedStations.hashSet.Add(this);
-			if (Selection.activeGameObject == gameObject) TryInstantiatePreview();
-			if (previewCharacter!=null && (loops==null || loops.Count==0)) {
+			if (loops==null || loops.Count==0) {
 				AddLoop();
 				ZeroData();
 			}

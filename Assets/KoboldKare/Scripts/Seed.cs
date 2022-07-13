@@ -12,6 +12,8 @@ using ExitGames.Client.Photon;
 public class Seed : GenericUsable, IValuedGood {
     //public List<GameObject> _plantPrefabs;
     [SerializeField]
+    private float worth = 5f;
+    [SerializeField]
     private Sprite displaySprite;
     public PhotonGameObjectReference plantPrefab;
     public int type = 0;
@@ -55,7 +57,7 @@ public class Seed : GenericUsable, IValuedGood {
         }
     }
     public float GetWorth() {
-        return 5f;
+        return worth;
     }
     public void OnValidate() {
         plantPrefab.OnValidate();

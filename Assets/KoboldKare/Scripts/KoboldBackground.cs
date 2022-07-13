@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Naelstrof.Easing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -31,8 +32,8 @@ public class KoboldBackground : MonoBehaviour {
         Vector2 offset = mousePos - new Vector2(Screen.width, Screen.height)*0.5f;
         float distance01 = Mathf.Clamp01(new Vector2(offset.x*2f/Screen.width, offset.y/Screen.height).magnitude*2f);
 
-        rk.anchoredPosition = -offset * Easing.Quadratic.Out(distance01)*0.1f;
-        tk.anchoredPosition = -offset * Easing.Quadratic.Out(distance01)*0.05f;
-        mk.anchoredPosition = -offset * Easing.Quadratic.Out(distance01)*0.025f;
+        rk.anchoredPosition = -offset * (Easing.Quadratic.Out(distance01) * 0.1f);
+        tk.anchoredPosition = -offset * (Easing.Quadratic.Out(distance01) * 0.05f);
+        mk.anchoredPosition = -offset * (Easing.Quadratic.Out(distance01) * 0.025f);
     }
 }

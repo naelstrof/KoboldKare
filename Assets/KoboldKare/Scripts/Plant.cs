@@ -33,6 +33,9 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
     public AudioSource audioSource;
     public bool spawnedFromLoad = false;
 
+    public delegate void SwitchAction();
+    public SwitchAction switched;
+
     void Start() {
         if(GetComponent<GenericReagentContainer>() != null){
             container = GetComponent<GenericReagentContainer>();
@@ -126,6 +129,7 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
                 // Debug.LogError("[Plant] :: <Deserialization> Plant with name "+gameObject.name+" failed to deserialize. Reason: Container reference was null");
             }
         }
+        switched?.Invoke();
     }
 
     public void OnEventRaised(object e) {

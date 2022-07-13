@@ -21,28 +21,48 @@
       "dependencies": {},
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
+    "com.naelstrof.bodyproportion": {
+      "version": "file:com.naelstrof.bodyproportion",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.naelstrof.easing": {
+      "version": "file:com.naelstrof.easing",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.naelstrof.inflatable": {
+      "version": "file:com.naelstrof.inflatable",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.textus-games.serialized-reference-ui": "1.0.0",
+        "com.naelstrof.jigglephysics": "3.6.4"
+      }
+    },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v2.2.5",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v3.6.4",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "0bf655f25db5b517db9892f862b5cb0613e5d2a1"
+      "hash": "234da1f89803edcc297d5bc1e9b0cfb4353b9cdb"
     },
     "com.naelstrof.mozzarellatech": {
-      "version": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",
+      "version": "file:com.naelstrof.mozzarella",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm"
-      },
-      "hash": "9efeb7bb1fe5248fe4f15723e235af0f1c75a727"
+      }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#upm",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.5.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "cfbdfb2fe44eb3cdfd477f68a60655ed57080749"
+      "hash": "457da95257f10cdf0eb58516920cb4a92b1235c2"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",
@@ -61,20 +81,6 @@
       },
       "hash": "b135fb2dec409e23ea980c83245923203e75a46c"
     },
-    "com.quantumcalzone.unitygitpackageupdater": {
-      "version": "https://github.com/QuantumCalzone/UnityGitPackageUpdater.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "82a9836fdc5056d5d3b3de0d8471e56d55f6f292"
-    },
-    "com.ralivnaelstrof.terrainbrushtools": {
-      "version": "https://github.com/naelstrof/URPUnityTerrainTools.git#upm",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "7e2543cd46bebc5cc151e55fb074eb0d608a853d"
-    },
     "com.solidalloy.type-references": {
       "version": "https://github.com/SolidAlloy/ClassTypeReference-for-Unity.git",
       "depth": 0,
@@ -90,6 +96,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "d8a6400d71032604ee02b81f63d47fb4c2bbcdbd"
+    },
+    "com.textus-games.serialized-reference-ui": {
+      "version": "https://github.com/TextusGames/UnitySerializedReferenceUI.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "51aff6062610296c86f739a3e093c29d08388a95"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -112,12 +125,19 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.analytics": {
-      "version": "3.6.11",
+      "version": "3.6.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ext.nunit": {
+      "version": "1.0.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.formats.fbx": {
@@ -127,6 +147,15 @@
       "dependencies": {
         "com.unity.timeline": "1.0.0",
         "com.autodesk.fbx": "4.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ide.rider": {
+      "version": "3.0.15",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ext.nunit": "1.0.6"
       },
       "url": "https://packages.unity.com"
     },
@@ -189,7 +218,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.3",
+      "version": "1.19.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

@@ -2,26 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
-
-[System.Serializable]
-public class PlayerEvent : UnityEvent<GameObject> {}
-public class GenericWeapon : MonoBehaviour, IWeapon {
-    public Transform weaponBarrelTransform;
-    public Vector3 weaponHoldOffset;
-    public PlayerEvent onFire;
-    public PlayerEvent onEndFire;
-
-    public Transform GetWeaponBarrelTransform() {
+public class GenericWeapon : MonoBehaviour {
+    [SerializeField]
+    private Transform weaponBarrelTransform;
+    [SerializeField]
+    private Vector3 weaponHoldOffset;
+    public virtual Transform GetWeaponBarrelTransform() {
         return weaponBarrelTransform;
     }
-    public Vector3 GetWeaponHoldPosition() {
+    public virtual Vector3 GetWeaponHoldPosition() {
         return weaponHoldOffset;
     }
-    public void OnEndFire(GameObject player) {
-        onEndFire.Invoke(player);
+    public virtual void OnEndFire(GameObject player) {
     }
-    public void OnFire(GameObject player) {
-        onFire.Invoke(player);
+    public virtual void OnFire(GameObject player) {
     }
 }

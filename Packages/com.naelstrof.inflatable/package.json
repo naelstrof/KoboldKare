@@ -1,0 +1,11 @@
+{
+    "name": "com.naelstrof.inflatable",
+    "displayName": "Inflatable",
+    "version": "0.0.1",
+    "unity": "2020.3",
+    "dependencies": {
+        "com.textus-games.serialized-reference-ui": "1.0.0",
+        "com.naelstrof.jigglephysics": "3.6.4"
+    },
+    "description": "Simple class to help tween certain interactions."
+}

@@ -12,9 +12,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     public Color fogColorWhenRaining;
     private float origFogRange;
     private Color origFogColor;
-    public Material cloudMaterial;
     public Material skyboxMaterial;
-    public VisualEffect dust, snow, rain;
+    public VisualEffect dust, rain;
     public ParticleSystem rainBackup;
     private VisualEffect spawnedEffect;
     public AudioSource rainSounds;
@@ -26,8 +25,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private HashSet<PhotonView> views = new HashSet<PhotonView>();
     //private bool clearingViews = false;
     //private bool isSnowing = false;
-    public Vector3 cloudBounds;
-    public float cloudHeight;
+    //public Vector3 cloudBounds;
+    //public float cloudHeight;
     public Coroutine rainVFXUpdate;
     
 
@@ -53,15 +52,17 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         origFogColor = RenderSettings.fogColor;
     }
     private void OnDestroy() {
-        cloudMaterial.SetFloat("densityOffset", -4);
-        cloudMaterial.SetFloat("shadowMin", 0.66f);
-        cloudMaterial.SetFloat("densityMultiplier", 1f);
+        //cloudMaterial.SetFloat("densityOffset", -4);
+        //cloudMaterial.SetFloat("shadowMin", 0.66f);
+        //cloudMaterial.SetFloat("densityMultiplier", 1f);
         skyboxMaterial.SetFloat("_CloudDensityOffset", -0.3f);
         skyboxMaterial.SetFloat("_Brightness", 0.5f);
     }
 
     public IEnumerator Rain() {
         //snow.Stop();
+        rainSounds.enabled = true;
+        thunderSounds.enabled = true;
         while (rainAmount < 1f) {
             rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
             RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.fixedDeltaTime*0.1f);
@@ -95,6 +96,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             rain.Stop();
             yield return new WaitForFixedUpdate();
         }
+        rainSounds.enabled = false;
+        thunderSounds.enabled = false;
     }
 
     public void StopRain() {
@@ -110,9 +113,9 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         if (UnityEngine.Random.Range(0f,1f) < chance) {
-            StopCoroutine("StopRainRoutine");
-            StopCoroutine("Rain");
-            StartCoroutine("Rain");
+            StopCoroutine(nameof(StopRainRoutine));
+            StopCoroutine(nameof(Rain));
+            StartCoroutine(nameof(Rain));
             //rainBackup.Play();
             rain.SendEvent("Fire");
         }
@@ -142,18 +145,16 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private void Update() {
         if (Mathf.Approximately(rainAmount, 0f) && !dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(true);
-            GetComponent<SteamAudio.SteamAudioSource>().enabled = false;
         }
         if (!Mathf.Approximately(rainAmount, 0f) && dust.gameObject.activeInHierarchy) {
             dust.gameObject.SetActive(false);
-            GetComponent<SteamAudio.SteamAudioSource>().enabled = true && UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio").value > 0f;
         }
-        cloudMaterial.SetFloat("densityOffset", Mathf.Lerp(-4, 0f, rainAmount));
-        cloudMaterial.SetFloat("shadowMin", Mathf.Lerp(0.66f, 0.4f, rainAmount));
-        cloudMaterial.SetFloat("densityMultiplier", Mathf.Lerp(1f, 4f, rainAmount));
-
-        cloudMaterial.SetVector("boundsMin", Vector3.Lerp(-cloudBounds + Vector3.up * cloudHeight, -cloudBounds + Vector3.up * cloudHeight*0.8f, rainAmount));
-        cloudMaterial.SetVector("boundsMax", Vector3.Lerp(cloudBounds + Vector3.up * cloudHeight, cloudBounds + Vector3.up * cloudHeight*0.4f, rainAmount));
+        //cloudMaterial.SetFloat("densityOffset", Mathf.Lerp(-4, 0f, rainAmount));
+        //cloudMaterial.SetFloat("shadowMin", Mathf.Lerp(0.66f, 0.4f, rainAmount));
+        //cloudMaterial.SetFloat("densityMultiplier", Mathf.Lerp(1f, 4f, rainAmount));
+//
+        //cloudMaterial.SetVector("boundsMin", Vector3.Lerp(-cloudBounds + Vector3.up * cloudHeight, -cloudBounds + Vector3.up * cloudHeight*0.8f, rainAmount));
+        //cloudMaterial.SetVector("boundsMax", Vector3.Lerp(cloudBounds + Vector3.up * cloudHeight, cloudBounds + Vector3.up * cloudHeight*0.4f, rainAmount));
 
         //skyboxMaterial.SetFloat("_CloudHeight", Mathf.Lerp(50f, 30f, rainAmount));
         skyboxMaterial.SetFloat("_CloudDensityOffset", Mathf.Lerp(-0.75f, 0.1f, rainAmount));

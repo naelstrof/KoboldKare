@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6f9b7d146f27a4198eefc8b2871596, type: 3}
+  m_Name: CumSound
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 331837009e8f4fe4a96a8d9c53816cee, type: 3}
+  - {fileID: 8300000, guid: 7646869483910404680d3bdb59c6b62f, type: 3}
+  - {fileID: 8300000, guid: 0518e909910aaeb498b083bf7afb3266, type: 3}
+  - {fileID: 8300000, guid: 39e1787ba178d4a4abb5ded4436c3c02, type: 3}
+  - {fileID: 8300000, guid: a8b6d6c313507cb449c0c57d008ef5cd, type: 3}
+  - {fileID: 8300000, guid: 699bb0128d051b943ac0e2a0a5d1a17c, type: 3}
+  - {fileID: 8300000, guid: 64d1f246ad85f5b4e99e5a55b552080b, type: 3}
+  volume: 1
+  group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}

@@ -17,6 +17,8 @@ public class GrinderManager : GenericUsable {
     public Transform attachPoint;
     public AudioSource deny;
     public GenericReagentContainer container;
+    [SerializeField]
+    private FluidStream fluidStream;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
     private int usedCount;
     private bool on {
@@ -68,6 +70,7 @@ public class GrinderManager : GenericUsable {
                 Destroy(root.gameObject);
             }
         }
+        fluidStream.OnFire(container);
         StopCoroutine("WaitAndThenClear");
         StartCoroutine("WaitAndThenClear");
     }
@@ -87,6 +90,12 @@ public class GrinderManager : GenericUsable {
             if (!deny.isPlaying) {
                 deny.Play();
             }
+
+            Kobold kobold = d.GetComponentInParent<Kobold>();
+            if (kobold != null) {
+                kobold.StartCoroutine(RagdollForTime(kobold));
+            }
+
             d.Damage(d.health+1);
             return;
         }
@@ -96,6 +105,13 @@ public class GrinderManager : GenericUsable {
         photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
         Grind(other.gameObject);
     }
+
+    private IEnumerator RagdollForTime(Kobold kobold) {
+        kobold.ragdoller.PushRagdoll();
+        yield return new WaitForSeconds(3f);
+        kobold.ragdoller.PopRagdoll();
+    }
+
     private void OnTriggerEnter(Collider other) {
         HandleCollision(other);
     }

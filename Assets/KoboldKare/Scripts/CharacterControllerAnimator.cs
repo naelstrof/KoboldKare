@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -6,369 +7,111 @@ using UnityEngine.Events;
 using Vilar.AnimationStation;
 using Photon.Pun;
 using System.IO;
+using PenetrationTech;
 
-[RequireComponent(typeof(KoboldCharacterController))]
-public class CharacterControllerAnimator : GenericUsable, IPunObservable {
-    [SerializeField]
-    private Sprite displaySprite;
-    private Kobold internalKobold;
-    public Kobold kobold {
-        get {
-            if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
-            }
-            return internalKobold;
-        }
-    }
-    public float standingAnimationSpeedMultiplier = 0.1f;
-    public float crouchedAnimationSpeedMultiplier = 0.1f;
-    private int stationViewID;
-    private byte currentStationID;
-    public float walkingAnimationSpeedMultiplier = 0.1f;
-    public Animator playerModel;
-    public Transform lookDir;
-    private Vector3 tempDir = new Vector3(0, 0, 0);
+public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISavable {
+    private Kobold kobold;
+    private Vilar.IK.ClassicIK solver;
+    private float randomSample => 1f+Mathf.SmoothStep(0f, 1f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
+    private AnimationStationSet currentStationSet;
+    private AnimationStation currentStation;
+    private Animator playerModel;
     private KoboldCharacterController controller;
-    private bool jumped;
     private bool isInAir;
+    private bool jumped;
+    private Vector3 tempDir;
+    [SerializeField]
+    private VisualEffect jumpDust;
+    [SerializeField]
+    private VisualEffect walkDust;
+    [SerializeField]
+    private Transform headTransform;
+    [SerializeField]
+    private Transform lookDir;
+    [SerializeField]
+    private AudioPack footstepPack;
+
+    [SerializeField] private Rigidbody body;
+    [SerializeField] private PlayerPossession playerPossession;
+
+    [SerializeField] private float crouchedAnimationSpeedMultiplier = 1f;
+    [SerializeField] private float walkingAnimationSpeedMultiplier = 1f;
+    [SerializeField] private float standingAnimationSpeedMultiplier = 1f;
     private float crouchLerper;
-    [Range(1f,10f)]
-    public float animatableRange = 1f;
-    public VisualEffect jumpDust;
-    public VisualEffect walkDust;
-    //public ParticleSystem walkDust;
-    //private float distanceCounter = 0;
-    public Transform headTransform;
-    public LayerMask actionLayer;
-    //private Vector3 lookPosition;
-    private Collider[] colliderArray = new Collider[5];
+    private LookAtHandler handler;
+
     private Vector3 lastPosition;
-    private AnimationStation activeStation;
-    private bool useRandomSample = false;
-    public Vilar.IK.PhysicsIK physicsSolver;
-    public Rigidbody body;
-    public UnityEvent onBeginStation;
-    public UnityEvent onEndStation;
-    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
-    public float randomSample {
-        get {
-            return 1f+Mathf.SmoothStep(0f, 1f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
-        }
-    }
-    public LookAtHandler handler;
-    public AnimationCurve sizeDifferenceCurve;
-    private List<Kobold> activeKobolds = new List<Kobold>(4);
-    public float blend = 0f;
-    [HideInInspector]
-    public bool animating = false;
-    public bool notAnimating { get { return !animating; } }
-    public bool CanAnimate(Kobold user) {
-        if (user == null) {
+    private bool animating;
+
+    public bool TryGetAnimationStationSet(out AnimationStationSet set) {
+        if (!animating) {
+            set = null;
             return false;
         }
-        activeKobolds.Clear();
-        activeKobolds.Add(kobold);
-        activeKobolds.Add(user);
-        if (activeStation) {
-            foreach (AnimationStation s in activeStation.linkedStations.hashSet) {
-                if (s.info.user == user) {
-                    // You're already animating with me!!
-                    return false;
-                }
-                if (s.info.user != null && !activeKobolds.Contains((Kobold)s.info.user)) {
-                    activeKobolds.Add((Kobold)s.info.user);
-                }
-            }
-        }
-        var station = GetClosestValidAnimationStations(animatableRange, activeKobolds, user.transform.position);
-        if (station == null) {
-            return false;
-        }
+        set = currentStationSet;
         return true;
     }
-    public override bool CanUse(Kobold k) {
-        return CanAnimate(k);
+
+    private void Awake() {
+        kobold = GetComponentInParent<Kobold>();
+        solver = GetComponentInChildren<Vilar.IK.ClassicIK>();
+        playerModel = GetComponentInChildren<Animator>();
+        handler = playerModel.gameObject.AddComponent<LookAtHandler>();
+        controller = GetComponentInParent<KoboldCharacterController>();
+        playerModel.gameObject.AddComponent<AnimatorExtender>();
+        playerModel.gameObject.AddComponent<FootIK>();
+        playerModel.gameObject.AddComponent<HandIK>();
+        playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
+        playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
+        playerModel.GetBoneTransform(HumanBodyBones.RightFoot).gameObject.AddComponent<FootInteractor>();
     }
-    public override void LocalUse(Kobold k) {
-        //SnapToNearestAnimationStation(k, k.transform.position);
-        photonView.RPC("RPCSnapToNearestAnimationStation", RpcTarget.All, new object[]{k.photonView.ViewID, k.transform.position});
-    }
+
     [PunRPC]
-    public void RPCSnapToNearestAnimationStation(int id, Vector3 position) {
-        PhotonView view = PhotonNetwork.GetPhotonView(id);
-        if (view != null) {
-            SnapToNearestAnimationStation(view.GetComponent<Kobold>(), position);
-        }
+    public void BeginAnimationRPC(int photonViewID, int animatorID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+        AnimationStationSet set = view.GetComponent<AnimationStationSet>();
+        BeginAnimation(set, set.GetAnimationStations()[animatorID]);
     }
-    void Start() {
-        //lookPosition = lookDir.position;
-        controller = GetComponent<KoboldCharacterController>();
+    
+    private void BeginAnimation(AnimationStationSet set, AnimationStation station) {
+        StopAnimation();
+        currentStationSet = set;
+        currentStation = station;
+        StartCoroutine(AnimationRoutine());
     }
-    public IEnumerator WaitThenAdvanceProgress() {
-        foreach( Rigidbody r in kobold.ragdollBodies) {
-            r.detectCollisions = false;
-        }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = false;
-            }
-        }
-        yield return new WaitForSeconds(5f);
-        foreach( Rigidbody r in kobold.ragdollBodies) {
-            r.detectCollisions = true;
-        }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
-            }
-        }
-        float endTransitionTime = Time.timeSinceLevelLoad + 3f;
-        int oldLayer = kobold.ragdollBodies[0].gameObject.layer;
-        while (activeStation != null && Time.timeSinceLevelLoad < endTransitionTime) {
-            activeStation.progress = Mathf.MoveTowards(activeStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/3f);
-            yield return endOfFrame;
-        }
-        useRandomSample = true;
-    }
-    void OnBeginStation(AnimationStation station) {
-        kobold.KnockOver(9999f);
-        StopCoroutine("WaitThenAdvanceProgress");
-        blend = 0f;
-        activeStation = station;
-        station.OnStart(kobold);
+
+    private IEnumerator AnimationRoutine() {
         animating = true;
-        physicsSolver.Initialize();
-        //body.collisionDetectionMode = CollisionDetectionMode.Discrete;
-        useRandomSample = false;
-        body.isKinematic = true;
-        //playerModel.SetTrigger("TPose");
-
-        transform.position = station.transform.position;
-        //body.position = transform.position;
-        transform.rotation = station.transform.rotation;
-
-        onBeginStation.Invoke();
-        StartCoroutine("WaitThenAdvanceProgress");
-        activeStation.progress = 0f;
-        //playerModel.updateMode = AnimatorUpdateMode.Normal;
-    }
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
-    }
-    public void OnEndStation() {
-        if (!animating) {
-            return;
+        solver.enabled = true;
+        controller.enabled = false;
+        kobold.body.isKinematic = true;
+        solver.Initialize();
+        currentStation.SetProgress(0f);
+        currentStation.OnStart(kobold);
+        float startTime = Time.time;
+        float blendDuration = 1f;
+        while (Time.time < startTime + blendDuration) {
+            float t = (Time.time - startTime) / blendDuration;
+            solver.ForceBlend(t);
+            yield return null;
         }
-        stationViewID = 0;
-        currentStationID = 0;
-        body.isKinematic = false;
-        kobold.StandUp();
-        animating = false;
-        physicsSolver.CleanUp();
-        activeStation.info.user = null;
-        // Stop everyone else from having the fun, sorry!
-        //foreach(AnimationStation s in activeStation.linkedStations.hashSet) {
-            //if (s.info.user && s != activeStation) {
-                //((Kobold)s.info.user).GetComponentInChildren<CharacterControllerAnimator>().OnEndStation();
-            //}
-            //s.info.user = null;
-        //}
-        StopCoroutine("WaitThenAdvanceProgress");
-        if (isActiveAndEnabled) {
-            blend = 0f;
-            activeStation.OnEnd();
-            activeStation = null;
-            animating = false;
-            onEndStation.Invoke();
+        solver.ForceBlend(1f);
+        yield return new WaitForSeconds(3f);
+        float transitionDuration = 3f;
+        float endTransitionTime = Time.time + transitionDuration;
+        while (Time.time < endTransitionTime) {
+            currentStation.SetProgress(Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration));
+            yield return null;
         }
-        useRandomSample = false;
-        foreach( Rigidbody r in kobold.ragdollBodies) {
-            r.detectCollisions = true;
-        }
-        if (kobold.activeDicks != null) {
-            foreach( var dickSet in kobold.activeDicks) {
-                dickSet.dick.body.detectCollisions = true;
-            }
-        }
-    }
-    private void OnDestroy() {
-        if (animating && activeStation) {
-            animating = false;
-            foreach (AnimationStation s in activeStation.linkedStations.hashSet) {
-                if (s.info.user) {
-                    ((Kobold)s.info.user).GetComponentInChildren<CharacterControllerAnimator>().OnEndStation();
-                }
-                s.info.user = null;
-            }
-        }
-        if (activeStation) {
-            activeStation.OnEnd();
-            activeStation = null;
-            animating = false;
-            body.isKinematic = false;
-            body.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            //playerModel.updateMode = AnimatorUpdateMode.AnimatePhysics;
+        while (animating) {
+            currentStation.SetProgress(randomSample);
+            yield return null;
         }
     }
 
-    public static float Compatibility(List<Kobold> kobolds, HashSet<AnimationStation> stationGroup) {
-        float baseCompatibility = 0f;
-        foreach (Kobold k in kobolds) {
-            AnimationStation bestStation = null;
-            float bestCompatibilty = float.MinValue;
-            foreach (AnimationStation s in stationGroup) {
-                float compat = CharacterControllerAnimator.Compatibility(k, s);
-                if (bestStation == null || compat > bestCompatibilty) {
-                    bestStation = s;
-                    bestCompatibilty = compat;
-                }
-            }
-            baseCompatibility += bestCompatibilty;
-        }
-        return baseCompatibility;
-    }
-
-    public static float Compatibility(Kobold k, AnimationStation s) {
-        if (s.info.user != null) {
-            return float.MinValue;
-        }
-        float baseCompatibility = 1f;
-        // If we've got a penetrator role, we'd want a dick
-        if (s.info.needsPenetrator && (k.activeDicks.Count == 0)) {
-            baseCompatibility -= 0.5f;
-        }
-        // Kobolds with dicks will prefer to be penetrators, but only by a little.
-        if (s.info.needsPenetrator && (k.activeDicks.Count != 0)) {
-            baseCompatibility += 1f;
-        }
-        // Kobolds without dicks will prefer to be recievers/cuddlers, but only by a little.
-        if (!s.info.needsPenetrator && (k.activeDicks.Count == 0)) {
-            baseCompatibility += 0.1f;
-        }
-        // If we're drastically the wrong scale from a custom scaled station, damage the fitness score.
-        float x = 1f + Mathf.Abs(k.transform.lossyScale.x - s.transform.lossyScale.x)*0.9f;
-        baseCompatibility -= x*x-1f;
-        return baseCompatibility;
-    }
-    private HashSet<AnimationStation> GetClosestValidAnimationStations(float range, List<Kobold> kobolds, Vector3 position) {
-        HashSet<AnimationStation> best = null;
-        float bestFitness = float.MinValue;
-        int hitCount = Physics.OverlapSphereNonAlloc(position, range, colliderArray, actionLayer, QueryTriggerInteraction.Collide);
-        for (int i=0;i<hitCount;i++) {
-            Collider c = colliderArray[i];
-            // Never use stations that have the wrong number of participants
-            AnimationStation s = c.GetComponentInChildren<AnimationStation>();
-            if (s == null) {
-                continue;
-            }
-            HashSet<AnimationStation> stations = s.linkedStations.hashSet;
-            if (stations.Count < kobolds.Count) {
-                continue;
-            }
-            float dist = Vector3.Distance(position, c.transform.position);
-            float fitness = 1f - dist;
-            fitness += CharacterControllerAnimator.Compatibility(kobolds, stations);
-            // If fitness is too low, we skip the station, this could mean that we're targeting a macro v micro station and just don't have the right people.
-            //if ((best == null || fitness > bestFitness) && fitness > 0f) {
-                best = stations;
-                bestFitness = fitness;
-            //}
-        }
-        return best;
-    }
-    public void SnapToStation(int photonViewID, byte stationNumber) {
-        //if (activeStation != null) {
-        //OnEndStation();
-        //}
-        PhotonView view = PhotonView.Find(photonViewID);
-        if (view == null) {
-            return;
-        }
-        stationViewID = photonViewID;
-        currentStationID = stationNumber;
-        AnimationStation[] stations = view.GetComponentsInChildren<AnimationStation>();
-        if (stationNumber >= 0 && stationNumber < stations.Length) {
-            OnBeginStation(stations[stationNumber]);
-            stations[stationNumber].info.user = kobold;
-        }
-    }
-    public void SnapToNearestAnimationStation(Kobold OtherPlayer, Vector3 position) {
-        if (OtherPlayer == null) {
-            return;
-        }
-        // Find all the active bolds.
-        activeKobolds.Clear();
-        activeKobolds.Add(kobold);
-        activeKobolds.Add(OtherPlayer);
-        if (activeStation) {
-            foreach (AnimationStation s in activeStation.linkedStations.hashSet) {
-                if (s.info.user != null && !activeKobolds.Contains((Kobold)s.info.user)) {
-                    activeKobolds.Add((Kobold)s.info.user);
-                }
-            }
-        }
-
-        var closestValidAnimationStations = GetClosestValidAnimationStations(animatableRange, activeKobolds, position);
-        if (closestValidAnimationStations == null) {
-            return;
-        }
-
-        foreach (Kobold k in activeKobolds) {
-            AnimationStation bestStation = null;
-            float bestCompatibilty = float.MinValue;
-            foreach (AnimationStation s in closestValidAnimationStations) {
-                if (s.info.user == k) {
-                    bestStation = s;
-                    bestCompatibilty = float.MaxValue;
-                }
-                if (s.info.user != null) {
-                    continue;
-                }
-                float compat = CharacterControllerAnimator.Compatibility(k, s);
-                if (bestStation == null || compat > bestCompatibilty) {
-                    bestStation = s;
-                    bestCompatibilty = compat;
-                }
-            }
-            if (bestStation != null) {
-                PhotonView stationView = bestStation.photonView;
-                AnimationStation[] stations = stationView.GetComponentsInChildren<AnimationStation>();
-                for(int i = 0; i < stations.Length; i++) {
-                    if (stations[i] == bestStation) {
-                        //k.photonView.RPC("SnapToStation", RpcTarget.AllBuffered, new object[] { stationView.ViewID, i });
-                        k.GetComponent<CharacterControllerAnimator>().SnapToStation(stationView.ViewID, (byte)i);
-                    }
-                }
-                //k.GetComponentInChildren<CharacterControllerAnimator>().SnapToStation(bestStation);
-            }
-        }
-    }
-    private void Update() {
-        if (activeStation == null) {
-            return;
-        }
-        activeStation.lookAtPosition = lookDir.position;
-        if (animating) {
-            kobold.PumpUpDick(Time.deltaTime);
-            blend = Mathf.MoveTowards(blend, 1f, Time.deltaTime*2f);
-            if (useRandomSample && activeStation != null) {
-                activeStation.progress = randomSample;
-            }
-        }
-        physicsSolver.ForceBlend(blend);
-        activeStation.SetCharacter(physicsSolver);
-    }
-    void FixedUpdate() {
+    void Update() {
         if (kobold != null) {
             float maxPen = 0f;
-            // Kill all position changing stuff while penetrated, otherwise causes unwanted oscillations.
-            foreach (var hole in kobold.penetratables) {
-                foreach( var dick in hole.penetratable.GetPenetrators()) {
-                    if (dick.IsInside()) {
-                        lastPosition = transform.position;
-                    }
-                }
-            }
             playerModel.SetFloat("PenetrationSize", Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
                 playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 1f, Time.deltaTime * 2f));
@@ -376,12 +119,16 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
                 playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 0f, Time.deltaTime));
             }
             foreach (var dickSet in kobold.activeDicks) {
-                if (dickSet.dick.holeTarget != null || dickSet.dick.cumActive > 0) {
+                if (dickSet.dick.TryGetPenetrable(out Penetrable penetrable)) {
                     playerModel.SetFloat("SexFace", 1f);
                 }
             }
             playerModel.SetFloat("Orgasm", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
             playerModel.SetFloat("MadHappy", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
+        }
+
+        if (animating) {
+            currentStation.SetCharacter(solver);
         }
 
         if (!controller.grounded) {
@@ -400,7 +147,7 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         if (jumped != controller.jumped && !controller.jumped) {
             jumped = controller.jumped;
         }
-        Vector3 velocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
+        Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.01f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
         dir = Quaternion.Inverse(Quaternion.Euler(0,headTransform.rotation.eulerAngles.y,0)) * dir;
@@ -449,32 +196,81 @@ public class CharacterControllerAnimator : GenericUsable, IPunObservable {
         }
         handler.SetLookAtPosition(lookDir.position);
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+
+    public void StopAnimation() {
+        if (!animating) {
+            return;
+        }
+        StopAllCoroutines();
+        solver.enabled = false;
+        controller.enabled = true;
+        kobold.body.isKinematic = false;
+        solver.CleanUp();
+        animating = false;
+        if (currentStation.info.user == kobold) {
+            currentStation.info.user = null;
+        }
+        currentStation = null;
+        currentStationSet = null;
+    }
+    void FixedUpdate() {
+        if (playerPossession == null) {
+            return;
+        }
+        Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
+        Vector3 fdir = characterRot * Vector3.forward;
+        float deflectionForgivenessDegrees = 5f;
+        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
+        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
+        body.AddTorque(cross*(angleDiff*5f), ForceMode.Acceleration);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(stationViewID);
-            stream.SendNext(currentStationID);
+            if (animating) {
+                stream.SendNext(currentStationSet.photonView.ViewID);
+                stream.SendNext(currentStationSet.GetAnimationStations().IndexOf(currentStation));
+            } else {
+                stream.SendNext(-1);
+                stream.SendNext(-1);
+            }
         } else {
-            int newViewID = (int)stream.ReceiveNext();
-            byte newStationID = (byte)stream.ReceiveNext();
-            if (newViewID != 0 && stationViewID != newViewID) {
-                SnapToStation(newViewID, newStationID);
-            } else if (newViewID == 0 && stationViewID != 0) {
-                OnEndStation();
+            int photonViewID = (int)stream.ReceiveNext();
+            int animationID = (int)stream.ReceiveNext();
+            if (photonViewID != -1 &&
+                (!animating || currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
+                 currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
+                PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+                AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+                if (animating) {
+                    StopAnimation();
+                }
+                BeginAnimation(set, set.GetAnimationStations()[animationID]);
             }
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        writer.Write(stationViewID);
-        writer.Write(currentStationID);
+    public void Save(BinaryWriter writer, string version) {
+        if (animating) {
+            writer.Write(currentStationSet.photonView.ViewID);
+            writer.Write(currentStationSet.GetAnimationStations().IndexOf(currentStation));
+        } else {
+            writer.Write(-1);
+            writer.Write(-1);
+        }
     }
 
-    public override void Load(BinaryReader reader, string version) {
-        int newViewID = (int)reader.ReadInt32();
-        byte newStationID = (byte)reader.ReadByte();
-        if (newViewID != 0 && stationViewID != newViewID) {
-            SnapToStation(newViewID, newStationID);
-        } else if (newViewID == 0 && stationViewID != 0) {
-            OnEndStation();
+    public void Load(BinaryReader reader, string version) {
+        int photonViewID = reader.ReadInt32();
+        int animationID = reader.ReadInt32();
+        if (photonViewID != -1 &&
+            (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
+             currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
+            PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
+            AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+            if (animating) {
+                StopAnimation();
+            }
+            BeginAnimation(set, set.GetAnimationStations()[animationID]);
         }
     }
 }

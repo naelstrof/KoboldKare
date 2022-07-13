@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a16dcdca4cabe4b9653b744577fa38, type: 3}
+  m_Name: BreastsBlend
+  m_EditorClassIdentifier: 
+  blendSettings:
+  - {fileID: 11400000, guid: fb21567a7e481bb42bd8ca365ea6ab23, type: 2}
+  - {fileID: 11400000, guid: 6368cd96a6814e54481b282a280e6028, type: 2}
+  - {fileID: 11400000, guid: 229a0edf82cc7e544bf2122ec0e896f8, type: 2}
+  normalizedBlend: 0.08281657

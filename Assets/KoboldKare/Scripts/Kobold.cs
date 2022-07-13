@@ -659,6 +659,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
 
     public float GetWorth() {
-        return 10f+Mathf.Log(1f+(baseSize + baseDickSize + baseBoobSize + baseFatness),2);
+        return 5f+(Mathf.Log(1f+(baseSize + baseDickSize + baseBoobSize + baseFatness),2)*10f);
     }
 }

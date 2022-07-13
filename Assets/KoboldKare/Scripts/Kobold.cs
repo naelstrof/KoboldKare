@@ -15,6 +15,8 @@ using System.IO;
 using Naelstrof.BodyProportion;
 using Naelstrof.Inflatable;
 
+using Reiikz.UnityUtils;
+
 public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
     [System.Serializable]
@@ -437,10 +439,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if((Vector3.Distance(root.position, FallbackPos) > 950000) && (!grabber.grabbing) && (!grabbed)){
             body.velocity = new Vector3(0f, 0f, 0f);
             root.position = FallbackPos;
-            var fat = ReagentDatabase.GetReagent("Fat");
-            foreach (var ss in subcutaneousStorage) {
-                ss.GetContainer().OverrideReagent(fat, 500);
-            }
         }
     }
     private void FixedUpdate() {
@@ -583,7 +581,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public void OnEventRaised(float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         ReagentContents vol = bellyContainer.Metabolize(f);
-        bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
+        bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility, GenericReagentContainer.InjectType.Metabolize);
         float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
         
         SetBaseBoobSize(baseBoobSize+melonJuiceVolume);

@@ -6,4 +6,6 @@ KoboldKare/Assets/ThirdParty/Reiikz/2DSprites/HeadPatAnim.png                   
 KoboldKare/Assets/ThirdParty/Reiikz/Models/HeadPat/Frame.blend                          KoboldKare/Assets/ThirdParty/Reiikz/Licenses/MIT-like
 KoboldKare/Assets/ThirdParty/Reiikz/2DSprites/KoboldPat.png                             KoboldKare/Assets/ThirdParty/Reiikz/Licenses/Unlicense
 
-anything under KoboldKare/Assets/ThirdParty/Reiikz/Scripts/*                            is provided as is, without licence or restrictions of any kind.
+anything under KoboldKare/Assets/ThirdParty/Reiikz/Scripts/*                            KoboldKare/Assets/ThirdParty/Reiikz/Licenses/MIT-like
+
+ALL UNLISTED FILES UNDER KoboldKare/Assets/ThirdParty/Reiikz/* MUST BE TREATED AS REDISTRIBUTABLE ALL RIGHTS RESERVED EXCEPT MODIFICATION AND REDISTRIBUTION OF SUCH MODIFICATION.

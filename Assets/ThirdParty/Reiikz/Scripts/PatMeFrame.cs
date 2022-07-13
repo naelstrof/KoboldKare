@@ -101,9 +101,9 @@ public class PatMeFrame : GenericUsable
                 try{
                     Kobold k = ks.Value;
                     if(k.baseDickSize < 20){
-                        k.baseDickSize = 20;
+                        k.SetBaseDickSize(20);
                     }
-                    k.bellies[0].GetContainer().AddMix(ReagentDatabase.GetReagent("EggplantJuice"), pettingPower, GenericReagentContainer.InjectType.Metabolize);
+                    k.bellyContainer.AddMix(ReagentDatabase.GetReagent("EggplantJuice"), pettingPower, GenericReagentContainer.InjectType.Metabolize);
                     k.arousal = 1;
                     KoboldInventory inventory = k.GetComponent<KoboldInventory>();
                     if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) == null){

@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: ReiikzLocales Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: ReiikzLocales
+  m_TableCollectionNameGuidString: be1e786da7501b905a9fbe98a8e78e00
+  m_Entries:
+  - m_Id: 28607916474368
+    m_Key: CHEAT_SPAWN_COUNT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28861172744192
+    m_Key: CHEAT_SPAWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29157374492672
+    m_Key: CHEAT_EGG_TELEPORTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29504805470208
+    m_Key: CHEAT_BALL_SIZE_POW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29794711568384
+    m_Key: CHEAT_DICK_TYPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29939326976000
+    m_Key: CHEAT_FERTILITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30132717944832
+    m_Key: CHEAT_MAX_CUM_IN_BELLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30353212506112
+    m_Key: CHEAT_METABOLIZATION_RATE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30565406539776
+    m_Key: CHEAT_PERMANENT_AROUSAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30734680260608
+    m_Key: CHEAT_RAINBOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30868243677184
+    m_Key: CHEAT_RAINBOW_SPEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31117267894272
+    m_Key: CHEAT_SPEEED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31135785746432
+    m_Key: CHEAT_MOVEMENT_POWER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33518397882368
+    m_Key: NOTHING
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1657677883934

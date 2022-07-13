@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: ReiikzLocales
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: be1e786da7501b905a9fbe98a8e78e00, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: e75b75660a424b082b9ae34ed4733ccc, type: 2}
+  - {fileID: 11400000, guid: 711fcf05df5283f6984c36178cdf5595, type: 2}
+  - {fileID: 11400000, guid: 5a4f63a2b85e39ddc8fab56d2dbfbcc9, type: 2}
+  - {fileID: 11400000, guid: dc1fd5a57d3e12822ae7908e12650d50, type: 2}
+  - {fileID: 11400000, guid: 18537fcdd2b3e44d3889a70b1e045eb2, type: 2}
+  - {fileID: 11400000, guid: 61073f947e78189259e1bb802a4d70b7, type: 2}
+  - {fileID: 11400000, guid: ef6314960b76c627082dd5fae974411e, type: 2}
+  - {fileID: 11400000, guid: 2d4fe3bf8ff375821b8ebcbe9b64ec68, type: 2}
+  - {fileID: 11400000, guid: 75d8fdb944c5162369e452f6f8c9491b, type: 2}
+  - {fileID: 11400000, guid: e60e64e2e257e817aaf79dd304d76150, type: 2}
+  - {fileID: 11400000, guid: 751292d2c3c282772892737af3fcfbc1, type: 2}
+  - {fileID: 11400000, guid: 7408dc56885e8c8699001ddb51fc5129, type: 2}
+  - {fileID: 11400000, guid: f0295cedf240f013ebc186e05d17b53e, type: 2}
+  - {fileID: 11400000, guid: b9c5d9df87bd85f208fcb7e302d53b48, type: 2}
+  - {fileID: 11400000, guid: f8ec98e60dccfb941a7e9f7530134006, type: 2}
+  - {fileID: 11400000, guid: 70b35087a34aeb5edb4bbf40eaf1c1e0, type: 2}
+  - {fileID: 11400000, guid: 5f71317099bd98922ad08ccb7c26befb, type: 2}
+  - {fileID: 11400000, guid: 0b74dd9980fe1342382002e0aeabf18b, type: 2}
+  - {fileID: 11400000, guid: 6934519e2da422102a1a86752d251de0, type: 2}
+  - {fileID: 11400000, guid: 7661ae8cc8d3a82b9a6d54991277fc3a, type: 2}
+  - {fileID: 11400000, guid: 6fd78c7cb6fa38d33b7c63d4ff993a27, type: 2}
+  - {fileID: 11400000, guid: 7aff5f4c9709fe7f08edda5d05f9a52b, type: 2}
+  - {fileID: 11400000, guid: 4f6496329f47184d78adbd45f102c16d, type: 2}
+  - {fileID: 11400000, guid: 2708c0945aa8acbafa8c0b23cca69a2d, type: 2}
+  - {fileID: 11400000, guid: 433ba029be0a7494892d899fedbe7332, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 1

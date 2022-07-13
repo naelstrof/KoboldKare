@@ -66,7 +66,11 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 targetKobold.SetBaseBoobSize(setting.value*30f);
                 break;
             }
-            case "KoboldSize": targetKobold.SetBaseSize(setting.value*20f); break;
+            
+            default:{
+                Reiikz.KoboldKare.Cheat.Cheat.ProcessOption(targetKobold, setting);
+                break;
+            }
         }
     }
     public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {

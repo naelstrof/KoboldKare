@@ -31,9 +31,9 @@ MonoBehaviour:
   OnSettingChanged:
     m_PersistentCalls:
       m_Calls: []
-  defaultValue: 1
-  minValue: 0.4
-  maxValue: 1.2
+  defaultValue: 0.1
+  minValue: 0.000001
+  maxValue: 0.55
   wholeNumbers: 0
   references:
     version: 1

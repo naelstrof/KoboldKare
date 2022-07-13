@@ -45,6 +45,7 @@ public class KoboldAnimationUsable : GenericUsable {
         }
         return bestStationSet;
     }
+
     public override bool CanUse(Kobold k) {
         koboldCache.Clear();
         koboldCache.Add(selfKobold);

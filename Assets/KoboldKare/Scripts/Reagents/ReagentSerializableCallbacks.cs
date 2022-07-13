@@ -69,6 +69,7 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         }
         GameManager.instance.SpawnAudioClipInWorld(reagentReactionSound, targetTransform.position, 1f);
         yield return new WaitForSeconds(1f);
+        ClearProcesses(obj, "Bubbles");
     }
 
     public IEnumerator SizzleThenExplode(float delay, GenericReagentContainer container) {
@@ -80,21 +81,11 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         GameManager.instance.SpawnAudioClipInWorld(sizzleSound, targetTransform.position, 1.1f, GameManager.instance.soundEffectLoudGroup);
         Vector3 backupPosition = targetTransform.position;
         // We periodically grab a backup spot, just in case the prop gets removed over the network right before the explosion.
-        yield return new WaitForSeconds(delay/4);
-        if (targetTransform != null) {
-            backupPosition = targetTransform.position;
-        }
-        yield return new WaitForSeconds(delay/4);
-        if (targetTransform != null) {
-            backupPosition = targetTransform.position;
-        }
-        yield return new WaitForSeconds(delay/4);
-        if (targetTransform != null) {
-            backupPosition = targetTransform.position;
-        }
-        yield return new WaitForSeconds(delay/4);
-        if (targetTransform != null) {
-            backupPosition = targetTransform.position;
+        for (int i = 0; i < 4; i++) {
+            yield return new WaitForSeconds(delay / 4);
+            if (targetTransform != null) {
+                backupPosition = targetTransform.position;
+            }
         }
         GameObject.Instantiate(explosionPrefab, backupPosition, Quaternion.identity);
         HashSet<Kobold> foundKobolds = new HashSet<Kobold>();
@@ -126,6 +117,8 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         if (targetTransform != null) {
             container.Spill(container.volume);
         }
+
+        ClearProcesses(container.gameObject, "Explosion");
     }
 
     // To prevent rapid execution, we use coroutines to wait until the user is done mixing things before it decides to blow.

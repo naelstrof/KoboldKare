@@ -77,6 +77,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         StopAnimation();
         currentStationSet = set;
         currentStation = station;
+        if (station.info.user != null) {
+            station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
+        }
         StartCoroutine(AnimationRoutine());
     }
 

@@ -199,7 +199,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     private void OnBallsContentsChanged(ReagentContents contents) {
         foreach (var dickSet in activeDicks) {
-            dickSet.ballSizeInflater.SetSize(1f+Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), dickSet.info);
+            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + (contents.volume + baseBallsSize) / 20f, 2f), dickSet.info);
         }
     }
 
@@ -269,7 +269,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             }
             GetComponent<KoboldInventory>().PickupEquipment(dick, null);
             SetBaseBoobSize(Random.Range(0f, 15f));
-            SetBaseBallsSize(Random.Range(20f,40f));
+            SetBaseBallsSize(Random.Range(10f,20f));
             SetBaseDickSize(Random.Range(0f, 1f));
         } else {
             SetBaseBoobSize(Random.Range(6f, 30f));

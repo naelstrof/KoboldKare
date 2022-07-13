@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
-  dayLength: 330
+  dayLength: 400
   events:
   - time01: 0.25
     ev: {fileID: 11400000, guid: 47daf45042a3fe1489b79d80d828cce0, type: 2}

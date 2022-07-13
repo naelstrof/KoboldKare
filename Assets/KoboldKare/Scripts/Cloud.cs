@@ -13,7 +13,7 @@ public class Cloud : PooledItem {
 
     void Start() {
         speed = UnityEngine.Random.Range(2f, 8f);
-        transform.localScale = Vector3.one * UnityEngine.Random.Range(20f, 40f);
+        transform.localScale = Vector3.one * UnityEngine.Random.Range(25f, 40f);
         transform.rotation = UnityEngine.Random.rotation;
     }
 
@@ -27,7 +27,9 @@ public class Cloud : PooledItem {
     }
 
     private void Update() {
+         new RenderTexture(256, 256, 0);
         transform.position -= Vector3.right * (Time.deltaTime*speed);
+        transform.rotation = Quaternion.AngleAxis(-Time.deltaTime * speed, Vector3.forward) * transform.rotation;
         if (transform.position.x < bounds.center.x-bounds.extents.x) {
             Reset();
         }

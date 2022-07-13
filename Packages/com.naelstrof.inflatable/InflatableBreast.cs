@@ -31,7 +31,6 @@ namespace Naelstrof.Inflatable {
                 flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
                 biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
             }
-            this.targetTransform = targetTransform;
             startScale = targetTransform.localScale;
             foreach (var jiggleRig in rigBuilder.jiggleRigs) {
                 if (targetTransform.IsChildOf(jiggleRig.rootTransform)) {

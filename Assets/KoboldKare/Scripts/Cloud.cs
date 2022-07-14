@@ -27,7 +27,6 @@ public class Cloud : PooledItem {
     }
 
     private void Update() {
-         new RenderTexture(256, 256, 0);
         transform.position -= Vector3.right * (Time.deltaTime*speed);
         transform.rotation = Quaternion.AngleAxis(-Time.deltaTime * speed, Vector3.forward) * transform.rotation;
         if (transform.position.x < bounds.center.x-bounds.extents.x) {

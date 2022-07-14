@@ -71,17 +71,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810378
-    m_Localized: Off.
+    m_Localized: OFF
     m_Metadata:
       m_Items: []
   - m_Id: 516090810379
-    m_Localized: "Koboldkare trimite date anonime analicale pentru a face jocul mai
-      bun! Dac\u0103 dori\u021Bi s\u0103 preveni\u021Bi acest lucru, face\u021Bi
-      clic pe butonul de mai jos (acesta va deschide un browser de internet)."
+    m_Localized: "Koboldkare trimite date anonime anonime pentru a \xEEmbun\u0103t\u0103\u021Bi
+      jocul! Dac\u0103 dori\u021Bi s\u0103 preveni\u021Bi acest lucru, face\u021Bi
+      clic pe butonul de mai jos (va deschide un browser de internet)."
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: "Deschide\u021Bi pagina de confiden\u021Bialitate a datelor"
+    m_Localized: "Deschide pagina de confiden\u021Bialitate a datelor"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
-    m_Localized: salva
+    m_Localized: "Salva\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
-    m_Localized: "Calitate decalat\u0103"
+    m_Localized: Calitatea decalului
     m_Metadata:
       m_Items: []
   - m_Id: 516090810385
@@ -121,7 +121,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810390
-    m_Localized: Umbres.
+    m_Localized: Umbre
     m_Metadata:
       m_Items: []
   - m_Id: 516090810391
@@ -133,11 +133,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
-    m_Localized: Anti-aliasing.
+    m_Localized: Anti-aliasing
     m_Metadata:
       m_Items: []
   - m_Id: 516095004673
-    m_Localized: Film de cereale.
+    m_Localized: Film cereale
     m_Metadata:
       m_Items: []
   - m_Id: 516095004674
@@ -153,11 +153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004677
-    m_Localized: Camera fov.
+    m_Localized: Camera fov
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: "Proiec\u021Bia Panini."
+    m_Localized: "Proiec\u021Bie panini"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004682
-    m_Localized: "Comuta\u021Bi pe jos"
+    m_Localized: "Comuta\u021Bi plimbarea"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
@@ -185,7 +185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004685
-    m_Localized: Fereastra maxed.
+    m_Localized: "Fereastr\u0103 maxim\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
@@ -211,25 +211,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
-    m_Localized: "\u2022 sub pedeapsa de sperjur, ai peste 18 ani.\n\u2022 Nuditate
-      \u0219i reprezent\u0103ri explicite ale activit\u0103\u021Bii sexuale nu v\u0103
-      jignesc.\n\u2022 Recunoa\u0219te\u021Bi c\u0103 sunte\u021Bi responsabil pentru
-      asigurarea tuturor persoanelor care vizualizeaz\u0103 jocul de pe dispozitivul
-      dvs. dep\u0103\u0219e\u0219te v\xE2rsta de 18 ani."
+    m_Localized: "\u2022 Sub pedeapsa de sperjur, ave\u021Bi peste 18 ani.\n\u2022
+      Nuditatea \u0219i reprezent\u0103rile explicite ale activit\u0103\u021Bii sexuale
+      nu v\u0103 jignesc.\n\u2022 Recunoa\u0219te\u021Bi c\u0103 sunte\u021Bi responsabil
+      pentru a v\u0103 asigura c\u0103 toate persoanele care vizioneaz\u0103 jocul
+      de pe dispozitivul dvs. are peste 18 ani."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
-    m_Localized: Bine
+    m_Localized: bine
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
     m_Localized: "Bine a\u021Bi venit la Koboldkare!\n\nAcesta este un dezvoltator
-      construit \u0219i este complet neterminat, nu v\u0103 a\u0219tepta\u021Bi prea
-      mult!\n\nV\u0103 mul\u021Bumesc foarte mult pentru a sprijini jocul!"
+      \u0219i este complet neterminat, nu v\u0103 a\u0219tepta\u021Bi mult!\n\nV\u0103
+      mul\u021Bumesc foarte mult pentru sus\u021Binerea jocului!"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: "Mi\u0219care"
+    m_Localized: Mutare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
@@ -241,7 +241,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: GIB.
+    m_Localized: Gib
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -253,11 +253,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: "Apuca\u021Bi \xEEmpingerea \u0219i trage\u021Bi"
+    m_Localized: "Apuca\u021Bi -v\u0103 \u0219i trage\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
-    m_Localized: Crouch.
+    m_Localized: "Ghemuial\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
@@ -269,7 +269,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: Disfare
+    m_Localized: Dezvoltare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
@@ -277,7 +277,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: "Schimba\u021Bi modul de apucare"
+    m_Localized: "Comuta\u021Bi modul de prindere"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -285,11 +285,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: "Activa\u021Bi grabul"
+    m_Localized: "Activa\u021Bi apucarea"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
-    m_Localized: Resetare
+    m_Localized: "Reseteaz\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004711
@@ -301,11 +301,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Upgrade de apucare
+    m_Localized: Actualizare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: "Comuta\u021Bi camera"
+    m_Localized: Camera de comutare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
@@ -313,7 +313,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobold.
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -333,23 +333,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Suc de pepene galben
+    m_Localized: Suc de pepene
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
-    m_Localized: "Serul de cre\u0219tere"
+    m_Localized: "Ser de cre\u0219tere"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198982
-    m_Localized: "Serul de cre\u0219tere incomplet"
+    m_Localized: "Ser de cre\u0219tere incomplet"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
-    m_Localized: Reactivul instabil
+    m_Localized: Reactiv instabil
     m_Metadata:
       m_Items: []
   - m_Id: 516099198984
-    m_Localized: Cum.
+    m_Localized: Cum
     m_Metadata:
       m_Items: []
   - m_Id: 516099198985
@@ -365,11 +365,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
-    m_Localized: "Nu au fost g\u0103site imobiliare"
+    m_Localized: "Nu au fost g\u0103si\u021Bi reagegi\u0219ti"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
-    m_Localized: Scanerul reactivului
+    m_Localized: Scaner de reactivi
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer.
+    m_Localized: Multiplayer
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -389,7 +389,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
-    m_Localized: "Crea\u021Bi un joc privat"
+    m_Localized: "Crea\u021Bi joc privat"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
@@ -421,31 +421,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Dick.
+    m_Localized: Dick
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Dimensiunea Dick.
+    m_Localized: Dimensiunea pula
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: Boob size.
+    m_Localized: Dimensiunea boobului
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Ecine.
+    m_Localized: Equin
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
-    m_Localized: Knotted.
+    m_Localized: "\xCEnnodat"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: "Ecin\u0103 la cabin\u0103"
+    m_Localized: Equin evazat
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
-    m_Localized: Conice
+    m_Localized: Conic
     m_Metadata:
       m_Items: []
   - m_Id: 516099199009
@@ -461,11 +461,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: "Al\u0103tura\u021Bi-v\u0103 jocului privat"
+    m_Localized: "Al\u0103tura\u021Bi -v\u0103 jocului privat"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: "Nu s-au g\u0103sit \xEEnc\u0103 camere ..."
+    m_Localized: "Nu s -au g\u0103sit \xEEnc\u0103 camere ..."
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
@@ -489,11 +489,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Kobold Size.
+    m_Localized: Dimensiunea kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: "Crea\u021Bi un joc public"
+    m_Localized: "Crea\u021Bi joc public"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -505,15 +505,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: FreeCam.
+    m_Localized: Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Lipicios FreeCam.
+    m_Localized: Freecam lipicios
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: Server Browser.
+    m_Localized: Browser de server
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
@@ -529,11 +529,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Camer\u0103 din st\xE2nga"
+    m_Localized: "Camera din st\xE2nga"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
-    m_Localized: "Ceva te-a f\u0103cut s\u0103 pierzi conexiunea!"
+    m_Localized: "Ceva te -a f\u0103cut s\u0103 pierzi conexiunea!"
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
@@ -541,31 +541,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness.
+    m_Localized: CHUBBINESS
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: Bilele de dimensiune
+    m_Localized: Dimensiunea bilelor
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
-    m_Localized: Mirror Calitate
+    m_Localized: Calitatea oglinzilor
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: Hemipenis.
+    m_Localized: Hemipenis
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync.
+    m_Localized: Vsync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: "\u021Aint\u0103 frameratul"
+    m_Localized: Target framerat
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Niplu Barbells
+    m_Localized: Barinele mamelonului
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -573,26 +573,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: "O staculant\u0103 magic\u0103 este lung\u0103 \u0219i cilindric\u0103
-      cu un inel medial."
+    m_Localized: "Un ata\u0219abil magic care este lung \u0219i cilindric cu un inel
+      medial."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Un simplu greu de a proteja capul din resturile care se \xEEncadreaz\u0103."
+    m_Localized: "O simpl\u0103 rezisten\u021B\u0103 pentru a proteja capul de c\u0103derea
+      resturilor."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Un magic ata\u0219abil cu un nod, un inel medial \u0219i unele
-      crest\u0103turi bumpy."
+    m_Localized: "Un ata\u0219at magic cu un nod, inel medial \u0219i ni\u0219te
+      creste denivel\u0103ri."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "O staculant\u0103 magic\u0103 este lung\u0103, cilindric\u0103
-      \u0219i are un v\xE2rf de ardere. Are o ac\u021Biune mare de telescoping!"
+    m_Localized: "Un ata\u0219at magic care este lung, cilindric \u0219i are un v\xE2rf
+      evazat. Are o mare ac\u021Biune telescopic\u0103!"
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Simple bare de metale hipoalergetice. (Da, merg \xEEn sf\xE2rcuri.)"
+    m_Localized: "Bare simple de metal hipoallergetice. (Da, ei merg \xEEn sfarcurile
+      tale.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -600,20 +602,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "O staculant\u0103 magic\u0103 este lung\u0103 \u0219i a ie\u0219it
-      p\xE2n\u0103 la un punct. Bilele sale sunt internalizate!"
+    m_Localized: "Un ata\u0219abil magic care este lung \u0219i se arunc\u0103 \xEEntr
+      -un punct. Bilele sale sunt interiorizate!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Dick-ul lui Kandi.
+    m_Localized: Dick -ul lui Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: "Baghet\u0103 de coad\u0103"
+    m_Localized: "Geant\u0103 de coad\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Gulerul spiked.
+    m_Localized: "Guler cu v\xE2rf"
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -625,7 +627,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
-    m_Localized: "Salva\u021Bi / \xEEnc\u0103rcare"
+    m_Localized: "Salva\u021Bi / \xEEnc\u0103rca\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 43807311896563712
@@ -641,15 +643,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Calitatea Goop.
+    m_Localized: Calitatea goopului
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Pompe de mamelon
+    m_Localized: "Pompe de sf\xE2rcuri"
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: "Erec\u021Bie \xEEn sus"
+    m_Localized: "Erec\u021Bie"
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
@@ -661,11 +663,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
-    m_Localized: TEXT TEXT.
+    m_Localized: Chat text
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Steam Audio.
+    m_Localized: Audio abur
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
@@ -674,18 +676,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 83373358009864192
     m_Localized: "Bine a\u021Bi venit la Koboldkare!\r\n\r\nKoboldkare este un joc
-      f\u0103r\u0103 DRM. V\u0103 rug\u0103m s\u0103 fi\u021Bi o partajare sigur\u0103,
-      Koboldkare nu are nevoie de o crack pentru a juca!\r\n\r\nV\u0103 mul\u021Bumesc
-      foarte mult pentru a sprijini jocul!\n\nVerifica\u021Bi Steam, m\xE2nc\u0103rime
-      \u0219i Patreon pentru actualiz\u0103ri \u0219i note de patch-uri.\r\n"
+      f\u0103r\u0103 DRM. V\u0103 rug\u0103m s\u0103 fi\u021Bi \xEEn siguran\u021B\u0103,
+      Koboldkare nu are nevoie de o fisur\u0103 pentru a juca!\r\n\r\nV\u0103 mul\u021Bumesc
+      foarte mult pentru sus\u021Binerea jocului!\n\nVerifica\u021Bi aburul, m\xE2nc\u0103rimea
+      \u0219i Patreon pentru actualiz\u0103ri \u0219i note de patch.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Schimba\u021Bi regiunea"
+    m_Localized: Regiunea de schimbare
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
-    m_Localized: Gameplay.
+    m_Localized: Gameplay
     m_Metadata:
       m_Items: []
   references:

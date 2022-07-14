@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516086616064
-    m_Localized: Esentato
+    m_Localized: Uscire
     m_Metadata:
       m_Items: []
   - m_Id: 516090810368
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytics.
+    m_Localized: Analisi
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810373
-    m_Localized: Indietro
+    m_Localized: Di ritorno
     m_Metadata:
       m_Items: []
   - m_Id: 516090810374
@@ -75,17 +75,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810379
-    m_Localized: "KoBoldkare invia dati analitici anonimi per rendere il gioco migliore!
-      Se si desidera impedire questo, fai clic sul pulsante sottostante (aprir\xE0
-      un browser Internet)."
+    m_Localized: "Koboldkare invia dati anonimi anonimi per migliorare il gioco!
+      Se si desidera impedirlo, fai clic sul pulsante in basso (aprir\xE0 un browser
+      Internet)."
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: Apri la pagina della privacy dei dati
+    m_Localized: Apri pagina sulla privacy dei dati
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: Ripristina i valori predefiniti.
+    m_Localized: Ripristina le impostazioni predefinite
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
@@ -93,11 +93,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
-    m_Localized: Caricare
+    m_Localized: Carico
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
-    m_Localized: "Qualit\xE0 della decalcomania"
+    m_Localized: "Qualit\xE0 di decalcomania"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810385
@@ -109,7 +109,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810387
-    m_Localized: fioritura
+    m_Localized: Fioritura
     m_Metadata:
       m_Items: []
   - m_Id: 516090810388
@@ -129,7 +129,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: Riflessioni dello spazio dello schermo
+    m_Localized: Riflessioni sullo schermo
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
@@ -145,19 +145,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: Effetti sonori Volume.
+    m_Localized: Volume degli effetti sonori
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
-    m_Localized: Volume musicale
+    m_Localized: Volume della musica
     m_Metadata:
       m_Items: []
   - m_Id: 516095004677
-    m_Localized: Fotocamera fov.
+    m_Localized: Fotocamera fov
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: Panini Projection.
+    m_Localized: Proiezione Panini
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004682
-    m_Localized: Toggle Walk.
+    m_Localized: Attiva camminata
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004687
-    m_Localized: Sopra
+    m_Localized: SU
     m_Metadata:
       m_Items: []
   - m_Id: 516095004688
@@ -210,14 +210,14 @@ MonoBehaviour:
 
 
       FACENDO CLIC SU <#008CFF>
-      GIOCA <#FFFFFF> STAI INDICANDO CHE:'
+      PLAY <#FFFFFF> STAI INDICANDO CHE:'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
-    m_Localized: "\u2022 Sotto la pena di spergiuro, hai pi\xF9 di 18 anni.\n\u2022
-      La nudit\xE0 e le raffigurazioni esplicite dell'attivit\xE0 sessuale non ti
-      offendono.\n\u2022 L'utente riconosce di essere responsabile di garantire che
-      tutte le persone che osservano il gioco dal tuo dispositivo abbia pi\xF9 di
+    m_Localized: "\u2022 Sotto pena di spergiuro, hai pi\xF9 di 18 anni.\n\u2022
+      La nudit\xE0 e le rappresentazioni esplicite dell'attivit\xE0 sessuale non
+      ti offendono.\n\u2022 Riconosci di essere responsabile di garantire che tutte
+      le persone che visualizzano il gioco dal tuo dispositivo abbiano pi\xF9 di
       18 anni."
     m_Metadata:
       m_Items: []
@@ -226,13 +226,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
-    m_Localized: "Benvenuto a Koboldkare!\n\nQuesta \xE8 una build per sviluppatori
-      ed \xE8 completamente incompiuta, non aspettarti molto!\n\nGrazie mille per
-      aver sostenuto il gioco!"
+    m_Localized: "Benvenuti a Koboldkare!\n\nQuesta \xE8 una build sviluppatore ed
+      \xE8 completamente incompiuta, non aspettarti molto!\n\nGrazie mille per aver
+      supportato il gioco!"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: Mossa
+    m_Localized: Spostare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
@@ -240,11 +240,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004697
-    m_Localized: Camminare a piedi
+    m_Localized: Camminare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: Religioso
+    m_Localized: Gib
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -256,11 +256,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: Afferrare premere e tirare
+    m_Localized: Prendi spinta e tira
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
-    m_Localized: Crouch.
+    m_Localized: Accovacciarsi
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: "Passa la modalit\xE0 di presa"
+    m_Localized: Switch Grab Mode
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -288,7 +288,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: Attiva grab.
+    m_Localized: Attivare afferrare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
@@ -304,11 +304,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Aggiorna Grab.
+    m_Localized: Aggiornamento
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: Cambio macchina fotografica
+    m_Localized: Switch Camera
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
@@ -316,7 +316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobold.
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -332,7 +332,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Succo di melanzana
+    m_Localized: Succo di melanzane
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
@@ -352,7 +352,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198984
-    m_Localized: Cum.
+    m_Localized: Cum
     m_Metadata:
       m_Items: []
   - m_Id: 516099198985
@@ -364,15 +364,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198987
-    m_Localized: Amare
+    m_Localized: Amore
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
-    m_Localized: Nessun reaganello trovato
+    m_Localized: Nessun reagente trovato
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
-    m_Localized: Scanner di reagente
+    m_Localized: Scanner di reagenti
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: Top in fondo
+    m_Localized: In basso
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
@@ -428,11 +428,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Dimensioni del cazzo
+    m_Localized: Dimensione del cazzo
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: Dimensione delle tette
+    m_Localized: Dimensione del tetto
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
@@ -444,7 +444,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Svasato equino
+    m_Localized: Equino svasato
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -460,15 +460,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199011
-    m_Localized: Di legno
+    m_Localized: Legna
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: Unisciti a giochi privati
+    m_Localized: Unisciti al gioco privato
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: Nessuna camera trovata ancora ...
+    m_Localized: Nessuna stanza ancora trovata ...
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
@@ -492,7 +492,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Dimensione di kobold.
+    m_Localized: Dimensione kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -508,11 +508,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Frecam.
+    m_Localized: Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Appiccicoso freecam.
+    m_Localized: Freecam appiccicoso
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
@@ -524,15 +524,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362048
-    m_Localized: Collegamento ...
+    m_Localized: Connessione ...
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: Trovare stanza casuale
+    m_Localized: Trovare una stanza casuale
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Stanza sinistra.
+    m_Localized: Stanza sinistra
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -544,59 +544,57 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness.
+    m_Localized: Manutenzione
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: Dimensioni delle palle
+    m_Localized: Dimensione delle sfere
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
-    m_Localized: "Qualit\xE0 speculare"
+    m_Localized: "Qualit\xE0 dello specchio"
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: Emipeni
+    m_Localized: Emipenis
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync.
+    m_Localized: Vsync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Target framerate.
+    m_Localized: Framerato target
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Bilancieri del capezzolo.
+    m_Localized: Bilancieri del capezzolo
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
-    m_Localized: Hardhat.
+    m_Localized: Hardhat
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: "Un magico attaccabile che \xE8 lungo e cilindrico con un anello
-      mediale."
+    m_Localized: Un attaccante magico lungo e cilindrico con un anello mediale.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: Un semplice elmetto protettivo per proteggere la testa dai detriti
-      che cadono.
+    m_Localized: Un semplice hardhat per proteggere la testa dai detriti che cadono.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: Un magico attaccabile con un nodo, un anello mediale e alcune creste
-      accidentate.
+    m_Localized: Un magico attaccante con un nodo, anello mediale e alcune creste
+      irregolari.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "Un magico attaccabile che \xE8 lungo, cilindrico e ha una punta
-      svasata. Ha una grande azione telescopica!"
+    m_Localized: Un magico attaccante lungo, cilindrico e ha una punta errata. Ha
+      qualche grande azione telescopica!
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Barre semplici in metallo cassaforte del corpo, ipoallengeriche.
+    m_Localized: "Semplici barre di metallo ipoallergetiche e sicuri per il corpo.
       (S\xEC, vanno nei tuoi capezzoli.)"
     m_Metadata:
       m_Items: []
@@ -605,20 +603,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Un magico attaccabile che \xE8 lungo e dihins fino a un punto.
-      Le sue palle sono interiorizzate!"
+    m_Localized: "Un magico attaccante che \xE8 lungo e che tocca fino a un certo
+      punto. Le sue palle sono interiorizzate!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi's Dick.
+    m_Localized: Kandi's Dick
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: Borsa di coda
+    m_Localized: Sacchetto di coda
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Collar a spillo
+    m_Localized: Colletto a spillo
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -626,11 +624,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: Nuovo Salva
+    m_Localized: Nuovo salvataggio
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
-    m_Localized: Salva / carico
+    m_Localized: Salva / Carica
     m_Metadata:
       m_Items: []
   - m_Id: 43807311896563712
@@ -646,11 +644,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: "Qualit\xE0 di goop."
+    m_Localized: "Qualit\xE0 Goop"
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Pompe capezzoli
+    m_Localized: Pompe per capezzolo
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
@@ -658,7 +656,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
-    m_Localized: Erezione
+    m_Localized: Erezione verso il basso
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
@@ -678,18 +676,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Benvenuto a Koboldkare!\r\n\r\nKoboldkare \xE8 un gioco senza DRM.
-      Si prega di condividere in sicurezza, Koboldkare non ha bisogno di una crepa
-      da giocare!\r\n\r\nGrazie mille per aver sostenuto il gioco!\n\nControllare
-      vapore, prurito e patreon per aggiornamenti e note patch.\r\n"
+    m_Localized: "Benvenuti a Koboldkare!\r\n\r\nKoboldkare \xE8 un gioco senza DRM.
+      Si prega di essere una condivisione sicura, Koboldkare non ha bisogno di una
+      crepa per giocare!\r\n\r\nGrazie mille per aver supportato il gioco!\n\nControlla
+      Steam, Itch e Patreon per aggiornamenti e note di patch.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: Cambia la regione
+    m_Localized: Cambia regione
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
-    m_Localized: Gameplay.
+    m_Localized: Gameplay
     m_Metadata:
       m_Items: []
   references:

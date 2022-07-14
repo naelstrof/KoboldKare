@@ -31,19 +31,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810368
-    m_Localized: Audio.
+    m_Localized: Lyd
     m_Metadata:
       m_Items: []
   - m_Id: 516090810369
-    m_Localized: Grafik.
+    m_Localized: Grafik
     m_Metadata:
       m_Items: []
   - m_Id: 516090810370
-    m_Localized: Kontrol
+    m_Localized: Kontroller
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytics.
+    m_Localized: Analytics
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810374
-    m_Localized: "Musef\xF8lsomhed"
+    m_Localized: "Musens f\xF8lsomhed"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810375
@@ -81,7 +81,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: "\xC5bn Data Privacy Page"
+    m_Localized: Open Data Privacy Side
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
-    m_Localized: Dekalkvalitet
+    m_Localized: "M\xE6rkatkvalitet"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810385
@@ -109,15 +109,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810387
-    m_Localized: Blomstrende
+    m_Localized: Bloom
     m_Metadata:
       m_Items: []
   - m_Id: 516090810388
-    m_Localized: Motion blur
+    m_Localized: "Bev\xE6gelse sl\xF8res"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810389
-    m_Localized: Omgivende okklusion.
+    m_Localized: Omgivende okklusion
     m_Metadata:
       m_Items: []
   - m_Id: 516090810390
@@ -129,11 +129,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: "Sk\xE6rmrum refleksioner"
+    m_Localized: Screen Space Reflections
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
-    m_Localized: Anti-aliasing.
+    m_Localized: Anti-aliasing
     m_Metadata:
       m_Items: []
   - m_Id: 516095004673
@@ -141,11 +141,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004674
-    m_Localized: Master Volume.
+    m_Localized: Mastervolumen
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: Lydeffekter Volume.
+    m_Localized: Lydeffekter volumen
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
@@ -153,11 +153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004677
-    m_Localized: Camera FOV.
+    m_Localized: Kamera fov
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: Panini projektion
+    m_Localized: Panini -projektion
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -165,7 +165,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004680
-    m_Localized: Skyer.
+    m_Localized: Skyer
     m_Metadata:
       m_Items: []
   - m_Id: 516095004681
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004682
-    m_Localized: Toggle Walk.
+    m_Localized: "Skift g\xE5tur"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
@@ -185,11 +185,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004685
-    m_Localized: Maxed window.
+    m_Localized: Maxed Window
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
-    m_Localized: Vinduet
+    m_Localized: Vindues
     m_Metadata:
       m_Items: []
   - m_Id: 516095004687
@@ -206,14 +206,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPIL skildrer FIKTIONELLE KARAKTERER, DER DELTAGER I <#FF0000>
-      SEKSUEL EKSPLITIGT ADF\xC6RD <#FFFFFF>\n\nVED AT KLIKKE p\xE5 <#008CFF> SPIL
+      SEKSUEL EKSPLITIGT OPF\xD8RSEL <#FFFFFF>\n\nVED AT KLIKKE p\xE5 <#008CFF> SPIL
       <#FFFFFF> ER DU AT ERKL\xC6RE AT:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
-    m_Localized: "\u2022 Under Perjury er du over 18 \xE5r.\n\u2022 N\xF8dhed og
-      eksplicitte skildringer af seksuel aktivitet forn\xE6rmer dig ikke.\n\u2022
-      Du anerkender, at du er ansvarlig for at sikre alle personer, der ser spillet
+    m_Localized: "\u2022 Under straf for perjury er du over 18 \xE5r.\n\u2022 N\xF8genhed
+      og eksplicitte skildringer af seksuel aktivitet forn\xE6rmer dig ikke.\n\u2022
+      Du anerkender, at du er ansvarlig for at sikre, at alle personer, der ser spillet
       fra din enhed, er over 18 \xE5r."
     m_Metadata:
       m_Items: []
@@ -223,7 +223,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004694
     m_Localized: "Velkommen til Koboldkare!\n\nDette er en udviklerbygning og er
-      helt uf\xE6rdig, forvent ikke meget!\n\nMange tak for at st\xF8tte spillet!"
+      helt uafsluttet, forvent ikke meget!\n\nMange tak for at st\xF8tte spillet!"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: Gib.
+    m_Localized: Gib
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: "Grib tryk og tr\xE6k"
+    m_Localized: Grib Push and Pull
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
@@ -259,7 +259,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
-    m_Localized: Se statistik
+    m_Localized: Se statistikker
     m_Metadata:
       m_Items: []
   - m_Id: 516095004704
@@ -267,7 +267,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: Unfreeze.
+    m_Localized: Fryse
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: Skift grab mode
+    m_Localized: Skift Grab -tilstand
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -283,7 +283,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: "Aktiv\xE9r grab"
+    m_Localized: "Aktiv\xE9r greb"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
@@ -299,7 +299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Opgrader grab
+    m_Localized: Opgrader Grab
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
@@ -311,7 +311,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobold.
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -323,31 +323,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198978
-    m_Localized: Milkshake.
+    m_Localized: Milkshake
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Aubergine juice.
+    m_Localized: Aubergine juice
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Melon juice.
+    m_Localized: Melon Juice
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
-    m_Localized: "V\xC6KST SERUM."
+    m_Localized: "V\xE6kstserum"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198982
-    m_Localized: "Ufuldst\xE6ndig v\xE6kst serum"
+    m_Localized: "Ufuldst\xE6ndig v\xE6kstserum"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
-    m_Localized: Ustabil reagens.
+    m_Localized: Ustabil reagens
     m_Metadata:
       m_Items: []
   - m_Id: 516099198984
-    m_Localized: Cum.
+    m_Localized: Cum
     m_Metadata:
       m_Items: []
   - m_Id: 516099198985
@@ -359,15 +359,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198987
-    m_Localized: Elsker
+    m_Localized: "K\xE6rlighed"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
-    m_Localized: Ingen reagants fundne
+    m_Localized: Der blev ikke fundet nogen reaganter
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
-    m_Localized: Reagens scanner.
+    m_Localized: Reagenscanner
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
@@ -375,11 +375,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198991
-    m_Localized: Kalium.
+    m_Localized: Kalium
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer.
+    m_Localized: Multiplayer
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -395,7 +395,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198996
-    m_Localized: Hue.
+    m_Localized: Farvetone
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
@@ -419,15 +419,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Dick.
+    m_Localized: Dick
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Dick Size.
+    m_Localized: "Dick st\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: "Boob st\xF8rrelse"
+    m_Localized: "Boobst\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
@@ -435,15 +435,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
-    m_Localized: Knottet
+    m_Localized: Knyttet
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Flared equine.
+    m_Localized: Blusset heste
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
-    m_Localized: Tapered.
+    m_Localized: Konisk
     m_Metadata:
       m_Items: []
   - m_Id: 516099199009
@@ -459,11 +459,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: Deltag i Private Game
+    m_Localized: Deltag i privat spil
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: "Ingen v\xE6relser fandt endnu ..."
+    m_Localized: "Ingen v\xE6relser fundet endnu ..."
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
@@ -475,7 +475,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016
-    m_Localized: "V\xE6relsesnavn:"
+    m_Localized: "V\xE6relsets navn:"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199017
@@ -483,15 +483,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199018
-    m_Localized: Max Players.
+    m_Localized: Max spillere
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Kobold Size.
+    m_Localized: "Kobold st\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: Skabe offentligt spil
+    m_Localized: Opret offentligt spil
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -503,19 +503,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: FreeCam.
+    m_Localized: Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Sticky FreeCam.
+    m_Localized: Sticky Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: Server browser.
+    m_Localized: Serverbrowser
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
-    m_Localized: Spillere.
+    m_Localized: Spillere
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362048
@@ -523,15 +523,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: "Finde tilf\xE6ldige rum"
+    m_Localized: "Finde tilf\xE6ldigt rum"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Venstre rum
+    m_Localized: "Venstre v\xE6relse"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
-    m_Localized: Noget fik dig til at miste forbindelse!
+    m_Localized: Noget fik dig til at miste forbindelsen!
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
@@ -539,11 +539,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness.
+    m_Localized: Chubbiness
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: "Bolde st\xF8rrelse"
+    m_Localized: "Kuglerst\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -551,11 +551,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: Hemipenis.
+    m_Localized: Hemipenis
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync.
+    m_Localized: Vsync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -563,7 +563,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Nippel barbells.
+    m_Localized: Brystvorte barbells
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -571,27 +571,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: "En magisk vedh\xE6ftbar, der er lang og cylindrisk med en medial
-      ring."
+    m_Localized: En magisk tilknytning, der er lang og cylindrisk med en medial ring.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: En simpel hardhat for at beskytte hovedet mod faldende affald.
+    m_Localized: En simpel hardhat til at beskytte hovedet mod faldende affald.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "En magisk vedh\xE6ftbar med en knude, medial ring og nogle uj\xE6vne
-      h\xF8jder."
+    m_Localized: "En magisk tilknytning med en knude, medial ring og nogle uj\xE6vn
+      rygge."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "En magisk vedh\xE6ftbar, der er lang, cylindrisk og har en flared
-      up tip. Har nogle gode teleskopiske handlinger!"
+    m_Localized: En magisk tilknytning, der er lang, cylindrisk, og har en opblusset
+      spids. Har nogle gode teleskop -handlinger!
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Simple Body-Safe, Hypoallergetic Metal Bars. (Ja de g\xE5r i dine
-      brystvorter.)"
+    m_Localized: "Enkel kropsikker, hypoallergiske metalst\xE6nger. (Ja, de g\xE5r
+      i dine brystvorter.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -599,20 +598,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "En magisk vedh\xE6ftbar, der er lang og tynder ud til et punkt.
-      Dens kugler er internaliseret!"
+    m_Localized: En magisk tilknytning, der er lang og tynd ud til et punkt. Dens
+      kugler er internaliseret!
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi's Dick.
+    m_Localized: Kandis pik
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: Hale taske
+    m_Localized: Halepose
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Spiked Collar.
+    m_Localized: Spiked krave
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -620,7 +619,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: Ny Save.
+    m_Localized: Ny redning
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
@@ -640,11 +639,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Goop Quality.
+    m_Localized: GOOP -kvalitet
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Nippelpumper
+    m_Localized: Brystvorte pumper
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
@@ -656,26 +655,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
-    m_Localized: "Sk\xE6rm lysstyrke"
+    m_Localized: "Sk\xE6rmlysstyrke"
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
-    m_Localized: Tekst chat
+    m_Localized: Tekstchat
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Damp Audio.
+    m_Localized: Steam Audio
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: Hardware accelereret
+    m_Localized: Hardware accelererede
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Velkommen til Koboldkare!\r\n\r\nKoboldkare er et DRM-gratis spil.
-      V\xE6r venligst sikker deling, Koboldkare beh\xF8ver ikke en revne at spille!\r\n\r\nMange
-      tak for at st\xF8tte spillet!\n\nKontroller Steam, Kl\xF8e og Patreon for opdateringer
-      og patch noter.\r\n"
+    m_Localized: "Velkommen til Koboldkare!\r\n\r\nKoboldkare er et DRM-frit spil.
+      V\xE6r sikker p\xE5 at dele, Koboldkare har ikke brug for en revne for at spille!\r\n\r\nMange
+      tak for at st\xF8tte spillet!\n\nKontroller damp, kl\xF8e og Patreon for opdateringer
+      og patchnotater.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -683,7 +682,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
-    m_Localized: Gameplay.
+    m_Localized: Gameplay
     m_Metadata:
       m_Items: []
   references:

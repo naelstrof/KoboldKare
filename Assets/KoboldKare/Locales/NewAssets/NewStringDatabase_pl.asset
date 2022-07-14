@@ -47,7 +47,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
-    m_Localized: Kontyntynuj
+    m_Localized: "Kontynuowa\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810373
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810374
-    m_Localized: "Czu\u0142o\u015B\u0107 myszy."
+    m_Localized: "Czu\u0142o\u015B\u0107 myszy"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810375
@@ -264,7 +264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
-    m_Localized: "Wy\u015Bwietl statystyki"
+    m_Localized: Zobacz statystyki
     m_Metadata:
       m_Items: []
   - m_Id: 516095004704
@@ -300,15 +300,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004712
-    m_Localized: "Wyczy\u015B\u0107 gruz"
+    m_Localized: Czyste zanieczyszczenia
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Upgrade Grab.
+    m_Localized: Upgrade chwyt
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: "Prze\u0142\u0105cz aparat"
+    m_Localized: "Prze\u0142\u0105cz kamer\u0119"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
@@ -316,7 +316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobold.
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -336,7 +336,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Sok melonowy.
+    m_Localized: Sok z melonem
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
@@ -384,7 +384,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer.
+    m_Localized: Gra wieloosobowa
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -428,7 +428,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Rozmiar kutasa.
+    m_Localized: Rozmiar kutasa
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
@@ -464,7 +464,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: "Do\u0142\u0105cz do prywatnej gry."
+    m_Localized: "Do\u0142\u0105cz do prywatnej gry"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
-    m_Localized: Anuluj
+    m_Localized: "Anulowa\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
@@ -508,15 +508,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freeecam.
+    m_Localized: Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Lepki freeecam.
+    m_Localized: Lepki freecam
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: "Przegl\u0105darka serwera."
+    m_Localized: "Przegl\u0105darka serwerowa"
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
@@ -528,11 +528,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: Znalezienie losowego pokoju.
+    m_Localized: Znalezienie losowego pokoju
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Lewy pok\xF3j."
+    m_Localized: "Lewy pok\xF3j"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -544,11 +544,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: "Chubbi\u0144stwo"
+    m_Localized: Chubbiness
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: "Wielko\u015B\u0107 pi\u0142ki"
+    m_Localized: "Rozmiar pi\u0142ek"
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -556,19 +556,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: Hemipenis.
+    m_Localized: Hemipenis
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync.
+    m_Localized: Vsync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Cel Framered.
+    m_Localized: "Target klatek na sekund\u0119"
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Sutek barbells.
+    m_Localized: Brilells sutki
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -576,29 +576,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: "Magiczna mocowana, kt\xF3ra jest d\u0142uga i cylindryczna z pier\u015Bcieniem
-      przy\u015Brodkowym."
+    m_Localized: "Magiczne przywi\u0105zanie, kt\xF3re jest d\u0142ugie i cylindryczne
+      z przy\u015Brodkowym pier\u015Bcieniem."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Prosty hardhat chroni\u0107 g\u0142ow\u0119 przed spadaj\u0105cymi
-      gruzem."
+    m_Localized: "Prosty hardhat, aby chroni\u0107 g\u0142ow\u0119 przed spadaj\u0105cymi
+      szcz\u0105tkami."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Magiczny przymocowany z w\u0119z\u0142em, pier\u015Bcieniem przy\u015Brodkowym
-      i niekt\xF3rymi wyboistymi grzbietami."
+    m_Localized: "Magiczne przywi\u0105zane z w\u0119z\u0142em, pier\u015Bcieniem
+      przy\u015Brodkowym i wyboczymi grzbietami."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "Magiczny przymocowany, kt\xF3ry jest d\u0142ugi, cylindryczny i
-      ma rozszerzon\u0105 ko\u0144c\xF3wk\u0119. Ma kilka \u015Bwietnych dzia\u0142a\u0144
-      teleskopowych!"
+    m_Localized: "Magiczne przywi\u0105zanie, kt\xF3re jest d\u0142ugie, cylindryczne
+      i ma rozszerzon\u0105 ko\u0144c\xF3wk\u0119. Ma \u015Bwietn\u0105 akcj\u0119
+      teleskopow\u0105!"
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Proste bezpieczne body, hipoallergetic metalowe pr\u0119ty. (Tak,
-      id\u0105 w swoich sutkach.)"
+    m_Localized: "Proste, bezpieczne, hipoallergetyczne metalowe pr\u0119ty. (Tak,
+      id\u0105 w twoich sutkach.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -606,32 +606,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Magiczny przymocowany, kt\xF3ry jest d\u0142ugi i ko\u0144czy do
-      punktu. Jego kulki s\u0105 internalizowane!"
+    m_Localized: "Magiczne przywi\u0105zanie, kt\xF3re jest d\u0142ugie i przekracza
+      do pewnego stopnia. Jego pi\u0142ki s\u0105 zinternalizowane!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi Dick.
+    m_Localized: Dick Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: Torba ogonowa
+    m_Localized: Torba ogona
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Collar
+    m_Localized: "Ko\u0142nierz"
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
-    m_Localized: Heel
+    m_Localized: "Wysoki pi\u0119ta"
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: Nowy Zapisz
+    m_Localized: Nowy zapis
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
-    m_Localized: "Zapisz / za\u0142aduj."
+    m_Localized: "Zapisz / za\u0142aduj"
     m_Metadata:
       m_Items: []
   - m_Id: 43807311896563712
@@ -639,7 +639,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43807311925923840
-    m_Localized: "Utw\xF3rz niestandardow\u0105 gr\u0119"
+    m_Localized: "Utw\xF3rz gr\u0119 niestandardow\u0105"
     m_Metadata:
       m_Items: []
   - m_Id: 54368470533984256
@@ -647,15 +647,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: "Jako\u015B\u0107 GoOP."
+    m_Localized: "Jako\u015B\u0107 goopa"
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Pompy sutkowe.
+    m_Localized: Pompy sutkowe
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: "Monta\u017C"
+    m_Localized: Erekcja
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
@@ -667,22 +667,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
-    m_Localized: Czat tekstowy.
+    m_Localized: Czat tekstowy
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Audio Steam.
+    m_Localized: Audio Steam
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: "Sprz\u0119t przyspieszy\u0142"
+    m_Localized: "Sprz\u0119t przyspieszony"
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Witamy w Koboldkare!\r\n\r\nKoboldkare to gra wolna od DRM. B\u0105d\u017A
-      bezpieczny udost\u0119pnianie, Koboldkare nie potrzebuje p\u0119kni\u0119cia
-      do gry!\r\n\r\nDzi\u0119kuj\u0119 bardzo za wspieranie gry!\n\nSprawd\u017A
-      par\u0119, itch i Patreon do aktualizacji i notatek naszych.\r\n"
+    m_Localized: "Witamy w Koboldkare!\r\n\r\nKoboldkare to gra wolna od DRM. Prosimy
+      o bezpieczne dzielenie si\u0119, Koboldkare nie potrzebuje crack, aby zagra\u0107!\r\n\r\nDzi\u0119kuj\u0119
+      bardzo za wsparcie gry!\n\nSprawd\u017A Steam, Itch i Patreon, aby uzyska\u0107
+      aktualizacje i notatki \u0142atki.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144

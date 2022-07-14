@@ -39,11 +39,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810370
-    m_Localized: Valvonta
+    m_Localized: Hallintalaitteet
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytics
+    m_Localized: Analytiikka
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -75,17 +75,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810379
-    m_Localized: "KoboldKare l\xE4hett\xE4\xE4 anonyymej\xE4 analyyttisi\xE4 tietoja,
-      jotta peli olisi parempi! Jos haluat est\xE4\xE4 t\xE4m\xE4n, napsauta alla
-      olevaa painiketta (se avaa Internet-selaimen)."
+    m_Localized: "Koboldkare l\xE4hett\xE4\xE4 nimett\xF6mi\xE4 analyyttisi\xE4 tietoja
+      pelin parantamiseksi! Jos haluat est\xE4\xE4 t\xE4m\xE4n, napsauta alla olevaa
+      painiketta (se avaa Internet -selaimen)."
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: Avaa tietosuoja-sivu
+    m_Localized: Avaa tietosuojasivu
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: Palauta oletusarvoiksi
+    m_Localized: "Palauta laiminly\xF6ntiin"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
-    m_Localized: Tarra laatu
+    m_Localized: Tarran laatu
     m_Metadata:
       m_Items: []
   - m_Id: 516090810385
@@ -105,7 +105,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810386
-    m_Localized: "P\xE4\xE4t\xF6slauselma"
+    m_Localized: Ratkaisu
     m_Metadata:
       m_Items: []
   - m_Id: 516090810387
@@ -113,11 +113,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810388
-    m_Localized: "Motion-h\xE4m\xE4rtyminen"
+    m_Localized: "Liikkeen h\xE4m\xE4rtyminen"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810389
-    m_Localized: "Ymp\xE4rist\xF6n okkluusio"
+    m_Localized: "Ymp\xE4rist\xF6n tukkeuma"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810390
@@ -129,7 +129,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: "N\xE4yt\xF6n tilan heijastukset"
+    m_Localized: "N\xE4ytt\xF6tilan heijastukset"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: "\xC4\xE4nitehosteet"
+    m_Localized: "\xC4\xE4nitehosteiden tilavuus"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
@@ -153,11 +153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004677
-    m_Localized: Kamera fov
+    m_Localized: Kamera Fov
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: Panini Projection
+    m_Localized: Panini -projektio
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004682
-    m_Localized: "Vaihda k\xE4vell\xE4"
+    m_Localized: "Kytkent\xE4k\xE4vely"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
@@ -185,7 +185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004685
-    m_Localized: Maxed-ikkuna
+    m_Localized: Maxed -ikkuna
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
@@ -205,16 +205,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "T\xC4M\xC4 PELI KUVAA KUVATTELUJA HAHJOITA, jotka OSALLISTUVAT
+    m_Localized: "T\xC4M\xC4 PELI KUVAA KUVATTELUJA HENKIL\xD6J\xC4 OSALLISTUVAT
       <#FF0000> SEKSUAALISEEN K\xC4YTT\xD6\xD6N <#FFFFFF>\n\nNAPSAUTALLA <#008CFF>
       PELAA <#FFFFFF> TOTEAT, ETT\xC4:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
-    m_Localized: "\u2022 Perjuryn rangaistus, olet yli 18-vuotiaita.\n\u2022 Seksuaalisen
-      toiminnan alastomuus ja nimenomaiset kuvaukset eiv\xE4t loukata sinua.\n\u2022
-      Sin\xE4 tunnustat, ett\xE4 olet vastuussa kaikkien laitteiden pelin katselemisesta,
-      ovat yli 18-vuotiaita."
+    m_Localized: "\u2022 V\xE4\xE4rink\xE4yt\xF6n rangaistus, olet yli 18 -vuotias.\n\u2022
+      Seksuaalisen toiminnan alastomuus ja selke\xE4t kuvaukset eiv\xE4t loukkaa
+      sinua.\n\u2022 Tunnustat, ett\xE4 olet vastuussa siit\xE4, ett\xE4 kaikki laitteen
+      peli\xE4 katselevat henkil\xF6t ovat yli 18 -vuotiaita."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
@@ -222,7 +222,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
-    m_Localized: "Tervetuloa KoboldKare!\n\nT\xE4m\xE4 on kehitt\xE4j\xE4 rakentaa
+    m_Localized: "Tervetuloa Koboldkareen!\n\nT\xE4m\xE4 on kehitt\xE4j\xE4n rakennus
       ja on t\xE4ysin keskener\xE4inen, \xE4l\xE4 odota paljon!\n\nKiitos paljon
       pelin tukemisesta!"
     m_Metadata:
@@ -240,7 +240,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: "K\xF6mpel\xF6"
+    m_Localized: Gib
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -252,11 +252,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: "Napata ty\xF6nt\xE4\xE4 ja ved\xE4"
+    m_Localized: "Tarttua ty\xF6nt\xF6\xF6n"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
-    m_Localized: "Kyyristy\xE4"
+    m_Localized: "Rypist\xE4\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
@@ -276,7 +276,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: Vaihda napata tila
+    m_Localized: Kytkin tartuntatila
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -284,7 +284,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: Aktivoi napata
+    m_Localized: Aktivoi tarttuminen
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
@@ -296,19 +296,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004712
-    m_Localized: "Selke\xE4 roskia"
+    m_Localized: "Selke\xE4 roska"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Upgrade napata
+    m_Localized: "P\xE4ivitys"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: Vaihda kamera
+    m_Localized: Vaihtaa kameraa
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
-    m_Localized: Vesi
+    m_Localized: "Vett\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
@@ -316,7 +316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
-    m_Localized: "J\xE4\xE4t\xE4"
+    m_Localized: "J\xE4\xE4ty\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198977
@@ -324,23 +324,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198978
-    m_Localized: Maito
+    m_Localized: "Pirtel\xF6"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Munakoisojen mehu
+    m_Localized: Munakoiso
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Meloni mehu
+    m_Localized: Melonimehu
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
-    m_Localized: Kasvuseerumin kasvu
+    m_Localized: Kasvun seerumi
     m_Metadata:
       m_Items: []
   - m_Id: 516099198982
-    m_Localized: "Ep\xE4t\xE4ydellinen kasvu seerumi"
+    m_Localized: "Ep\xE4t\xE4ydellinen kasvuseerumi"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
@@ -364,11 +364,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
-    m_Localized: "Ei reageants l\xF6ytynyt"
+    m_Localized: Ei reagoinnit
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
-    m_Localized: Reagenssi skanneri
+    m_Localized: Reagenssin skanneri
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
@@ -384,7 +384,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
-    m_Localized: Nopea peli
+    m_Localized: Pikapeli
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
@@ -400,7 +400,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: "Yl\xE4osa"
+    m_Localized: Pohja
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
@@ -412,7 +412,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199000
-    m_Localized: "Kyll\xE4stys"
+    m_Localized: "Kyll\xE4isyys"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199001
@@ -420,27 +420,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Munaa
+    m_Localized: Muna
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Dick koko
+    m_Localized: Munakoko
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: Boob koko
+    m_Localized: Rinnat
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: "Hevosel\xE4in"
+    m_Localized: Hevos-
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
-    m_Localized: Solmu
+    m_Localized: Solmittu
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: "Hevosel\xE4in"
+    m_Localized: Leimahdus hevos
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -464,7 +464,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: "Ei l\xF6ytynyt viel\xE4 ..."
+    m_Localized: "Ei viel\xE4 l\xF6ydetty huoneita ..."
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
@@ -488,7 +488,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Kobold koko
+    m_Localized: Koboldin koko
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -512,7 +512,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: Palvelimen selain
+    m_Localized: Palvelinselain
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: "L\xF6yt\xE4\xE4 satunnainen huone"
+    m_Localized: "L\xF6yd\xE4 satunnainen huone"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
@@ -532,7 +532,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
-    m_Localized: Jotain sait yhteyden!
+    m_Localized: "Jotain sai sinut menett\xE4m\xE4\xE4n yhteyden!"
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
@@ -540,11 +540,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Karhu
+    m_Localized: Puku
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: Pallot koko
+    m_Localized: Pallokoko
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -560,11 +560,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Kohde Framerate
+    m_Localized: Kohdehtaus
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: "N\xE4nni barbells"
+    m_Localized: "N\xE4nni -tankoja"
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -572,27 +572,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: "Maaginen kiinnitett\xE4v\xE4 se on pitk\xE4 ja sylinterim\xE4inen
-      medialirenkaan kanssa."
+    m_Localized: "Maaginen kiinnitett\xE4v\xE4, joka on pitk\xE4 ja lieri\xF6m\xE4inen
+      mediaalirenkaan kanssa."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Yksinkertainen hardhat suojella p\xE4\xE4t\xE4 putoavista roskia."
+    m_Localized: "Yksinkertainen hardhat suojaamaan p\xE4\xE4t\xE4 putoamisilta."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Maaginen liitett\xE4v\xE4 solmu, medial rengas ja jotkut kuoppaiset
-      harjat."
+    m_Localized: "Maaginen kiinnitett\xE4v\xE4 solmulla, mediaalisella renkaalla
+      ja kovettuvilla harjuilla."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "Maaginen liitett\xE4v\xE4 se on pitk\xE4, lieri\xF6m\xE4inen ja
-      siin\xE4 on flaroitu k\xE4rki. On hienoa teleskooppista toimintaa!"
+    m_Localized: "Maaginen kiinnitett\xE4v\xE4, joka on pitk\xE4, lieri\xF6m\xE4inen
+      ja siin\xE4 on leimahtunut k\xE4rki. On hienoa teleskooppia!"
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Yksinkertaiset runko-turvalliset, hypoallergetic metallipalkit.
-      (Kyll\xE4 ne menev\xE4t n\xE4nneihin.)"
+    m_Localized: "Yksinkertaiset kehon turvalliset, hypoallergiset metallipalkit.
+      (Kyll\xE4, he menev\xE4t n\xE4nniisi.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -600,12 +600,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Maaginen kiinnitt\xE4v\xE4, joka on pitk\xE4 ja ohesi ulos pisteeseen.
-      Sen pallot ovat sis\xE4istettyj\xE4!"
+    m_Localized: "Maaginen kiinnitett\xE4v\xE4, joka on pitk\xE4 ja ohenee pisteeseen.
+      Sen pallot ovat sis\xE4isi\xE4!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi's Dick
+    m_Localized: Kandin munaa
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -613,7 +613,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Piikki kaulus
+    m_Localized: Piikkipanta
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -625,7 +625,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
-    m_Localized: Tallenna / lataa
+    m_Localized: Tallenna / kuorma
     m_Metadata:
       m_Items: []
   - m_Id: 43807311896563712
@@ -633,7 +633,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43807311925923840
-    m_Localized: Luo oma peli
+    m_Localized: Luo mukautettu peli
     m_Metadata:
       m_Items: []
   - m_Id: 54368470533984256
@@ -641,7 +641,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Goop laatu
+    m_Localized: Goop -laatu
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
@@ -649,11 +649,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: Erektio
+    m_Localized: Asentaa
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
-    m_Localized: Erektio alas
+    m_Localized: "Pystytt\xE4\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
@@ -665,26 +665,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Steam Audio
+    m_Localized: "H\xF6yry\xE4\xE4ni"
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: Laitteisto kiihtyi
+    m_Localized: Laitteisto kiihtynyt
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Tervetuloa KoboldKare!\r\n\r\nKoboldkare on DRM-vapaa peli. Ole
-      turvallinen jakaminen, KoboldKare ei tarvitse halkeamaa pelaamaan!\r\n\r\nKiitos
-      paljon pelin tukemisesta!\n\nTarkista h\xF6yry, kutina ja patrireon p\xE4ivityksi\xE4
-      ja korjaustiedostoja.\r\n"
+    m_Localized: "Tervetuloa Koboldkareen!\r\n\r\nKoboldkare on DRM-vapaa peli. Ole
+      turvallinen jakaminen, Koboldkare ei tarvitse halkeamaa pelata!\r\n\r\nKiitos
+      paljon pelin tukemisesta!\n\nTarkista p\xE4ivitykset ja korjaustiedot.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: Vaihda alue
+    m_Localized: Muutosalue
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
-    m_Localized: Pelattava
+    m_Localized: Pelattavuus
     m_Metadata:
       m_Items: []
   references:

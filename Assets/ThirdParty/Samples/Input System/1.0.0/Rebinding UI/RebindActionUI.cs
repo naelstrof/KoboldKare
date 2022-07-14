@@ -204,7 +204,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         public void UpdateBindingDisplay()
         {
-            m_BindingText.text = string.Empty;
+            if (m_BindingText != null) {
+                m_BindingText.text = string.Empty;
+            }
+
             var displayString = string.Empty;
             var deviceLayoutName = default(string);
             var controlPath = default(string);

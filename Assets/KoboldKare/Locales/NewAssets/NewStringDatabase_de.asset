@@ -129,7 +129,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: Bildschirmraumreflexionen.
+    m_Localized: Reflexionen des Bildschirmraums
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
@@ -308,7 +308,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: Schalter Kamera
+    m_Localized: Kamera wechseln
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
@@ -476,7 +476,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
-    m_Localized: Beitreten
+    m_Localized: Verbinden
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016

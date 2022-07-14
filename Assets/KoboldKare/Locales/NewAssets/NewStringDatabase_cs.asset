@@ -86,7 +86,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: "Obnovit v\xFDchoz\xED hodnoty"
+    m_Localized: "Resetovat na v\xFDchoz\xED nastaven\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
-    m_Localized: Ragdoll.
+    m_Localized: Ragdoll
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
@@ -315,7 +315,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobolda
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -375,7 +375,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
-    m_Localized: Exploze
+    m_Localized: "V\xFDbuch"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198991
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
-    m_Localized: "Vytvo\u0159it soukromou hru"
+    m_Localized: "Vytvo\u0159te soukromou hru"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
@@ -475,7 +475,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
-    m_Localized: "P\u0159ipojit se"
+    m_Localized: "P\u0159ipojit"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: "Vytvo\u0159it ve\u0159ejnou hru"
+    m_Localized: "Vytvo\u0159te ve\u0159ejnou hru"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -638,7 +638,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43807311925923840
-    m_Localized: "Vytvo\u0159it vlastn\xED hru"
+    m_Localized: "Vytvo\u0159te vlastn\xED hru"
     m_Metadata:
       m_Items: []
   - m_Id: 54368470533984256
@@ -686,7 +686,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Zm\u011Bnit oblast"
+    m_Localized: "Zm\u011Bnit region"
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840

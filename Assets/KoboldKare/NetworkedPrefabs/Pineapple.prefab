@@ -71,6 +71,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &4436062060173780826
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -87,8 +88,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,20 +491,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!64 &2559240957215877120
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8567007558819337734}
-  m_Material: {fileID: 13400000, guid: 94ef3183aff10ed48ad074d65c95ff1f, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 124edce8a486b3748840da5ab32e0eb3, type: 3}
 --- !u!1 &9045468922362344000
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +634,20 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 551899645579432846}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &2559240957215877120
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567007558819337734}
+  m_Material: {fileID: 13400000, guid: 94ef3183aff10ed48ad074d65c95ff1f, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 124edce8a486b3748840da5ab32e0eb3, type: 3}
 --- !u!1001 &8635327552222632303
 PrefabInstance:
   m_ObjectHideFlags: 0

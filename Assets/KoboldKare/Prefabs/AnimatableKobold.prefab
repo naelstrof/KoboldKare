@@ -1,64 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!205 &1100778149044113133
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459038374793724170}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.0020543188, y: 0.7911048, z: 0.14327544}
-  m_Size: 0.63794625
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.22923253
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 7548095682481804169}
-  - screenRelativeHeight: 0.06136376
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2607859409070457648}
-  m_Enabled: 1
---- !u!114 &1858736965467171242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459038374793724170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cbbb6ebbc2ca34f96806a97b1b263c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localRootForward: {x: -0, y: 1, z: -0}
-  localRootUp: {x: 0, y: 0, z: -1}
-  localRootRight: {x: 1, y: 0, z: 0}
-  rootBone: {fileID: 4418935108183807192}
-  targetRenderers:
-  - renderer: {fileID: 7548095682481804169}
-    mask: -1
-  - renderer: {fileID: 2607859409070457648}
-    mask: -2
-  virtualSquashAndStretch: 1
-  tipTarget: {fileID: 0}
-  girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
-  penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.25
-  autoPenetrate: -1
-  listeners:
-  - id: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        localDist: 0
-        knotForceFactor: 0.3
 --- !u!1 &3643381365982408100
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58e6d179e730884bbc321743a0a2a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tpose: {fileID: 7400000, guid: e71cbfec09b12c644b6a4b37aa5ad12c, type: 2}
   antiPop:
     serializedVersion: 2
     m_Curve:
@@ -386,6 +328,65 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1801125914863696987}
   m_PrefabAsset: {fileID: 0}
+--- !u!205 &1100778149044113133
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459038374793724170}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0020543188, y: 0.7911048, z: 0.14327544}
+  m_Size: 0.63794625
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.22923253
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 7548095682481804169}
+  - screenRelativeHeight: 0.06136376
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2607859409070457648}
+  m_Enabled: 1
+--- !u!114 &1858736965467171242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459038374793724170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cbbb6ebbc2ca34f96806a97b1b263c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localRootForward: {x: -0, y: 1, z: -0}
+  localRootUp: {x: 0, y: 0, z: -1}
+  localRootRight: {x: 1, y: 0, z: 0}
+  rootBone: {fileID: 4418935108183807192}
+  targetRenderers:
+  - renderer: {fileID: 7548095682481804169}
+    mask: -1
+  - renderer: {fileID: 2607859409070457648}
+    mask: -2
+  virtualSquashAndStretch: 1
+  tipTarget: {fileID: 0}
+  girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
+  penetratedHole: {fileID: 0}
+  penetrationMarginOfError: 1.25
+  autoPenetrate: -1
+  listeners:
+  - id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        localDist: 0
+        knotForceFactor: 0.3
 --- !u!1001 &3449188281497314164
 PrefabInstance:
   m_ObjectHideFlags: 0

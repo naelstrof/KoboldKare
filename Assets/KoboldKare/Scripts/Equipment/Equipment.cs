@@ -42,11 +42,7 @@ public class Equipment : ScriptableObject {
     public PhotonGameObjectReference groundPrefab;
     public LocalizedString localizedName;
     public LocalizedString localizedDescription;
-    public List<StatusEffect> effectsToApply;
     public virtual GameObject[] OnEquip(Kobold k, GameObject groundPrefab) {
-        foreach(StatusEffect effect in effectsToApply) {
-            k.statblock.AddStatusEffect(effect, StatBlock.StatChangeSource.Equipment);
-        }
         // If we take up a slot, and we're actually being picked up off the ground, then we should unequip all the same slot.
         if (slot != EquipmentSlot.Misc && groundPrefab != null) {
             while(k.GetComponent<KoboldInventory>().GetEquipmentInSlot(slot) != null) {
@@ -56,9 +52,6 @@ public class Equipment : ScriptableObject {
         return null;
     }
     public virtual GameObject OnUnequip(Kobold k, bool dropOnGround = true) {
-        foreach(StatusEffect effect in effectsToApply) {
-            k.statblock.RemoveStatusEffect(effect, StatBlock.StatChangeSource.Equipment);
-        }
         if (k.photonView.IsMine && groundPrefab.gameObject != null && dropOnGround) {
             return PhotonNetwork.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
         }

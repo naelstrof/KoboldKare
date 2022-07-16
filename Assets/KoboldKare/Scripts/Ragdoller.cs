@@ -26,9 +26,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField]
     private Transform hip;
     [SerializeField]
-    private JigglePhysics.JiggleRigBuilder jiggleRig;
-    [SerializeField]
-    private JigglePhysics.JiggleSkin jiggleSkin;
+    private JigglePhysics.JiggleRigBuilder tailRig;
     private Vector3 networkedRagdollHipPosition;
     [SerializeField]
     private LODGroup group;
@@ -84,17 +82,21 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         }
         group.ForceLOD(0);
 
-        jiggleRig.interpolate = false;
-        jiggleSkin.interpolate = false;
+        //jiggleRig.interpolate = false;
+        //jiggleSkin.interpolate = false;
+        tailRig.enabled = false;
         animator.enabled = false;
+        bodyProportion.enabled = false;
         controller.enabled = false;
         foreach (Rigidbody b in ragdollBodies) {
             b.velocity = body.velocity;
             b.isKinematic = false;
             b.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            b.interpolation = RigidbodyInterpolation.Interpolate;
         }
         oldCollisionMode = body.collisionDetectionMode;
         body.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        //body.interpolation = RigidbodyInterpolation.None;
         body.isKinematic = true;
         body.detectCollisions = false;
         //body.GetComponent<Collider>().enabled = false;
@@ -144,8 +146,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
         group.ForceLOD(-1);
-        jiggleRig.interpolate = true;
-        jiggleSkin.interpolate = true;
+        //jiggleRig.interpolate = true;
+        //jiggleSkin.interpolate = true;
+        tailRig.enabled = true;
         Vector3 diff = hip.position - body.transform.position;
         body.transform.position += diff;
         hip.position -= diff;
@@ -154,6 +157,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         body.detectCollisions = true;
         //body.GetComponent<Collider>().enabled = true;
         body.collisionDetectionMode = oldCollisionMode;
+        //body.interpolation = RigidbodyInterpolation.Interpolate;
         Vector3 averageVel = Vector3.zero;
         foreach (Rigidbody b in ragdollBodies) {
             averageVel += b.velocity;
@@ -163,7 +167,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         controller.enabled = true;
         //RecursiveSetLayer(transform, LayerMask.NameToLayer("PlayerHitbox"), LayerMask.NameToLayer("Hitbox"));
         foreach (Rigidbody b in ragdollBodies) {
-            //b.interpolation = RigidbodyInterpolation.None;
+            b.interpolation = RigidbodyInterpolation.None;
             b.collisionDetectionMode = CollisionDetectionMode.Discrete;
             b.isKinematic = true;
         }
@@ -171,6 +175,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
             //penSet.penetratable.SwitchBody(body);
         //}
         animator.enabled = true;
+        bodyProportion.enabled = true;
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;

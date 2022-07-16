@@ -74,6 +74,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
     
     private void BeginAnimation(AnimationStationSet set, AnimationStation station) {
+
         StopAnimation();
         currentStationSet = set;
         currentStation = station;
@@ -110,6 +111,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             currentStation.SetProgress(randomSample);
             yield return null;
         }
+        
+        StopAnimation();
     }
 
     void Update() {

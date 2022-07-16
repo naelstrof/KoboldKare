@@ -47,12 +47,15 @@ public class KoboldAnimationUsable : GenericUsable {
     }
 
     public override bool CanUse(Kobold k) {
+        if (k.GetEnergy() == 0 || selfKobold.GetEnergy() == 0) {
+            return false;
+        }
         koboldCache.Clear();
         koboldCache.Add(selfKobold);
         koboldCache.Add(k);
         if (animator.TryGetAnimationStationSet(out AnimationStationSet testSet)) {
             foreach (AnimationStation station in testSet.GetAnimationStations()) {
-                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k) {
+                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k && station.info.user.GetEnergy() > 0) {
                     koboldCache.Add(station.info.user);
                 }
             }

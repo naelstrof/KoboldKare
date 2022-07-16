@@ -23,22 +23,12 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
     }
-    
 
-    [System.Serializable]
-    public class UnityEventFloat : UnityEvent<float> {}
+    public delegate void EnergyChangedAction(int value, int maxValue);
 
-    [System.Serializable]
-    public class StatChangeEvent {
-        public Stat changedStat;
-        public UnityEventFloat onChange;
-    }
-
-    public List<StatChangeEvent> statChangedEvents = new List<StatChangeEvent>();
+    public event EnergyChangedAction energyChanged;
 
     public float nextEggTime;
-    public StatBlock statblock = new StatBlock();
-
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
 
     public List<Transform> attachPoints = new List<Transform>();
@@ -49,6 +39,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public Animator animator;
     public Rigidbody body;
     public GameEventFloat MetabolizeEvent;
+    public GameEventGeneric MidnightEvent;
     
     private float baseBoobSize;
 
@@ -63,6 +54,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private Inflatable boobs;
     private ReagentContents boobContents;
     private ReagentContents ballsContents;
+    
+    [SerializeField]
+    private byte energy = 1;
+    [SerializeField]
+    private byte maxEnergy = 1;
     
     [SerializeField]
     private AudioPack tummyGrumbles;
@@ -138,7 +134,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public Ragdoller ragdoller;
     public void AddStimulation(float s) {
         stimulation += s;
-        if (stimulation >= stimulationMax) {
+        if (stimulation >= stimulationMax && TryConsumeEnergy(1)) {
             OnOrgasm.Invoke();
             foreach(var dickSet in activeDicks) {
                 float cumAmount = 0.5f+0.1f*baseSize+0.5f*baseBallsSize+0.1f*baseDickSize; // Bonus!
@@ -153,6 +149,15 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     public ReagentContents GetBallsContents() {
         return ballsContents;
+    }
+
+    public bool TryConsumeEnergy(byte amount) {
+        if (energy < amount) {
+            return false;
+        }
+        energy -= amount;
+        energyChanged?.Invoke(energy, maxEnergy);
+        return true;
     }
 
     private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
@@ -203,8 +208,14 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
 
+    public int GetEnergy() {
+        return energy;
+    }
+    public int GetMaxEnergy() {
+        return maxEnergy;
+    }
+
     public void Awake() {
-        statblock.StatusEffectsChangedEvent += OnStatusEffectsChanged;
         ballsContents = new ReagentContents();
         ballsContents.changed += OnBallsContentsChanged;
         boobContents = new ReagentContents();
@@ -280,7 +291,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         bodyProportion.SetThickness(Random.Range(-1f,1f));
 
         SetBaseSize(Random.Range(14f, 24f));
-        RegenerateSlowly(1000f);
         PumpUpDick(-1f);
     }
 
@@ -308,20 +318,20 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         fatnessInflater.SetSize(Mathf.Log(1f + (baseFatness) / 20f, 2f), this);
     }
 
-    public void OnStatusEffectsChanged(StatBlock block, StatBlock.StatChangeSource source) {
-        foreach (var statEvent in statChangedEvents) {
-            statEvent.onChange.Invoke(block.GetStat(statEvent.changedStat));
+    void OnMidnight(object ignore) {
+        if (energy != maxEnergy) {
+            energy = maxEnergy;
+            energyChanged?.Invoke(energy, maxEnergy);
         }
     }
 
     void Start() {
-        statblock.AddStatusEffect(koboldStatus, StatBlock.StatChangeSource.Misc);
         lastPumpTime = Time.timeSinceLevelLoad;
         MetabolizeEvent.AddListener(OnEventRaised);
+        MidnightEvent.AddListener(OnMidnight);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
     }
     private void OnDestroy() {
-        statblock.StatusEffectsChangedEvent -= OnStatusEffectsChanged;
         MetabolizeEvent.RemoveListener(OnEventRaised);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
         if (photonView.IsMine && PhotonNetwork.InRoom) {
@@ -495,7 +505,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         return GrabbableType.Kobold;
     }*/
 
-    public void RegenerateSlowly(float deltaTime) {
+    /*public void RegenerateSlowly(float deltaTime) {
         float wantedBoobVolume = baseBoobSize*0.2f;
         var milk = ReagentDatabase.GetReagent("Milk");
         float currentVolume = boobContents.GetVolumeOf(milk);
@@ -509,7 +519,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (currentCumVolume < wantedCumVolume) {
             ballsContents.OverrideReagent(ReagentDatabase.GetID(cum), Mathf.MoveTowards(currentCumVolume, wantedCumVolume, deltaTime));
         }
-    }
+    }*/
     private float FloorNearestPower(float baseNum, float target) {
         float f = baseNum;
         for(;f<=target;f*=baseNum) {}
@@ -564,7 +574,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 }
             }
         }
-        RegenerateSlowly(f*0.05f);
     }
 
     IEnumerator WaitAndThenStopGargling(float time) {
@@ -598,6 +607,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             stream.SendNext(baseDickSize);
             stream.SendNext(baseFatness);
             stream.SendNext(baseSize);
+            stream.SendNext(energy);
+            stream.SendNext(maxEnergy);
         } else {
             sex = (float)stream.ReceiveNext();
             byte r = (byte)stream.ReceiveNext();
@@ -611,6 +622,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             SetBaseDickSize((float)stream.ReceiveNext());
             SetBaseFatness((float)stream.ReceiveNext());
             SetBaseSize((float)stream.ReceiveNext());
+            energy = (byte)stream.ReceiveNext();
+            maxEnergy = (byte)stream.ReceiveNext();
         }
     }
 
@@ -634,6 +647,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         writer.Write(baseDickSize);
         writer.Write(baseFatness);
         writer.Write(baseSize);
+        writer.Write(energy);
+        writer.Write(maxEnergy);
     }
 
     public void Lactate() {
@@ -656,6 +671,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         SetBaseDickSize(reader.ReadSingle());
         SetBaseFatness(reader.ReadSingle());
         SetBaseSize(reader.ReadSingle());
+        energy = reader.ReadByte();
+        maxEnergy = reader.ReadByte();
     }
 
     public float GetWorth() {

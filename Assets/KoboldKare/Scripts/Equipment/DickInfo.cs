@@ -194,6 +194,8 @@ public class DickInfo : MonoBehaviour {
                 attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
                 GenericReagentContainer.InjectType.Inject);
         }
+        yield return new WaitForSeconds(3f);
+        attachedKobold.GetComponent<CharacterControllerAnimator>().StopAnimation();
     }
 
     private IEnumerator AttachToRoutine(Kobold k) {

@@ -6,7 +6,6 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-[RequireComponent(typeof(PhotonView))]
 public class AnimationStationSet : MonoBehaviourPun {
     [SerializeField]
     private List<AnimationStation> stations;

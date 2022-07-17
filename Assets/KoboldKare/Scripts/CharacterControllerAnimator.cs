@@ -91,7 +91,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold.body.isKinematic = true;
         solver.Initialize();
         currentStation.SetProgress(0f);
-        currentStation.OnStart(kobold);
+        currentStation.OnStartAnimation(kobold);
         float startTime = Time.time;
         float blendDuration = 1f;
         while (Time.time < startTime + blendDuration) {

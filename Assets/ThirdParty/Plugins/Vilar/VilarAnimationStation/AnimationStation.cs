@@ -339,7 +339,7 @@ namespace Vilar.AnimationStation {
 			Advance(dT);
 			SetPreview();
 		}
-		public void OnStart(Kobold user) {
+		public void OnStartAnimation(Kobold user) {
 			info.user = user;
 			foreach (var linkedStation in linkedStations.hashSet) {
 				linkedStation.animProgress = 0f;

@@ -6,42 +6,64 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
+using Vilar.AnimationStation;
 
 public class GrinderManager : GenericUsable {
     [SerializeField]
     private Sprite onSprite;
-    [SerializeField]
-    private Sprite offSprite;
     public AudioSource grindSound;
     public Animator animator;
-    public Transform attachPoint;
     public AudioSource deny;
     public GenericReagentContainer container;
+    [SerializeField] private AnimationStation station;
     [SerializeField]
     private FluidStream fluidStream;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
-    private int usedCount;
-    private bool on {
-        get {
-            return (usedCount % 2) != 0;
-        }
-    }
+    private bool grinding;
     public override Sprite GetSprite(Kobold k) {
-        return on ? offSprite : onSprite;
+        return onSprite;
     }
     public override bool CanUse(Kobold k) {
-        return animator.isActiveAndEnabled;
+        return k.GetEnergy() > 0 && !grinding;
     }
-    [PunRPC]
-    public override void Use() {
-        usedCount++;
-        if (on) {
-            animator.SetTrigger("TurnOn");
-            grindSound.Play();
-        } else {
-            grindSound.Pause();
-            animator.SetTrigger("TurnOff");
+
+    public override void LocalUse(Kobold k) {
+        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        base.LocalUse(k);
+    }
+
+    private void BeginGrind() {
+        grinding = true;
+        animator.SetBool("Grinding", true);
+        grindSound.enabled = true;
+        grindSound.Play(); 
+    }
+
+    private void StopGrind() {
+        grinding = false;
+        animator.SetBool("Grinding", false);
+        grindSound.Stop();
+        grindSound.enabled = false;
+    }
+
+    IEnumerator WaitThenConsumeEnergy() {
+        StopGrind();
+        yield return new WaitForSeconds(8f);
+        if (station.info.user == null) {
+            yield break;
         }
+        
+        if (station.info.user.TryConsumeEnergy(1)) {
+            station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
+            BeginGrind();
+            yield return new WaitForSeconds(12f);
+            StopGrind();
+        }
+    }
+
+    public override void Use() {
+        StopCoroutine(nameof(WaitThenConsumeEnergy));
+        StartCoroutine(nameof(WaitThenConsumeEnergy));
     }
     IEnumerator WaitAndThenClear() {
         yield return new WaitForSeconds(0.5f);
@@ -71,11 +93,11 @@ public class GrinderManager : GenericUsable {
             }
         }
         fluidStream.OnFire(container);
-        StopCoroutine("WaitAndThenClear");
-        StartCoroutine("WaitAndThenClear");
+        StopCoroutine(nameof(WaitAndThenClear));
+        StartCoroutine(nameof(WaitAndThenClear));
     }
     private void HandleCollision(Collider other) {
-        if (!on) {
+        if (!grinding) {
             return;
         }
         if (other.isTrigger) {

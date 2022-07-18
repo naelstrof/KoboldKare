@@ -58,11 +58,13 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.5.5",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.5.6",
       "depth": 0,
       "source": "git",
-      "dependencies": {},
-      "hash": "314c079be2d0bd6a0ff80a9784778d0c686e932a"
+      "dependencies": {
+        "com.textus-games.serialized-reference-ui": "https://github.com/TextusGames/UnitySerializedReferenceUI.git"
+      },
+      "hash": "39ba0c6f48faca12cf0f460fb2935e9fdeaa5411"
     },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#upm",

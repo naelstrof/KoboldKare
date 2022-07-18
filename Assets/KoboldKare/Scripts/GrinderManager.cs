@@ -24,7 +24,7 @@ public class GrinderManager : GenericUsable {
         return onSprite;
     }
     public override bool CanUse(Kobold k) {
-        return k.GetEnergy() > 0 && !grinding;
+        return k.GetEnergy() > 0 && !grinding && station.info.user == null;
     }
 
     public override void LocalUse(Kobold k) {

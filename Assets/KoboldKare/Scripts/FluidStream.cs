@@ -164,7 +164,7 @@ public class FluidStream : CatmullDeformer {
             Vector3 diff = points[i+1] - points[i];
             float dist = diff.magnitude;
             float rad = waterRadiusCollision;
-            int hits = Physics.SphereCastNonAlloc(points[i] - diff.normalized*(rad*2f), rad, diff.normalized, raycastHits, dist+rad*3f, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
+            int hits = Physics.SphereCastNonAlloc(points[i] - diff.normalized*(rad), rad, diff.normalized, raycastHits, dist+rad*3f, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
             if (hits > 0) {
                 float closestDist = float.MaxValue;
                 int closestHit = -1;
@@ -239,11 +239,14 @@ public class FluidStream : CatmullDeformer {
                 Color reagentColor = container.GetColor();
                 splatter.SetVector4("Color",
                     new Vector4(reagentColor.r, reagentColor.g, reagentColor.b, 1f));
-                midairContents.AddMix(container.Spill(Time.deltaTime * 5f));
+                midairContents.AddMix(container.Spill(Time.deltaTime * 4f));
                 startClip = 0f;
             } else {
                 audioSource.Stop();
                 startClip = Mathf.MoveTowards(startClip, endClip, Time.deltaTime);
+                if (startClip == endClip) {
+                    OnEndFire();
+                }
             }
 
             if (RaycastStream(startClip*fluidLength, endClip*fluidLength, out RaycastHit hit, out float distance)) {

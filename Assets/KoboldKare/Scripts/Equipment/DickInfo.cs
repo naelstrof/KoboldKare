@@ -164,7 +164,7 @@ public class DickInfo : MonoBehaviour {
                 ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum2"), 0f);
             }
 
-            if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<Kobold>() == null) {
+            if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<GenericReagentContainer>() == null) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.01f));
@@ -184,13 +184,12 @@ public class DickInfo : MonoBehaviour {
                 }
                 continue;
             }
-            Kobold pennedKobold = pennedHole.GetComponentInParent<Kobold>();
             Vector3 holePos = pennedHole.GetSplinePath().GetPositionFromT(0f);
             Vector3 holeTangent = pennedHole.GetSplinePath().GetVelocityFromT(0f);
             SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
-            pennedHole.GetComponentInParent<Kobold>().bellyContainer.AddMix(
+            pennedHole.GetComponentInParent<GenericReagentContainer>().AddMix(
                 attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
                 GenericReagentContainer.InjectType.Inject);
         }

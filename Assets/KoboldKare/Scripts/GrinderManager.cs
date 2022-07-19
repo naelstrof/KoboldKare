@@ -7,8 +7,9 @@ using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
 using Vilar.AnimationStation;
+using System.Collections.ObjectModel;
 
-public class GrinderManager : GenericUsable {
+public class GrinderManager : GenericUsable, IAnimationStationSet {
     [SerializeField]
     private Sprite onSprite;
     public AudioSource grindSound;
@@ -16,6 +17,7 @@ public class GrinderManager : GenericUsable {
     public AudioSource deny;
     public GenericReagentContainer container;
     [SerializeField] private AnimationStation station;
+    private ReadOnlyCollection<AnimationStation> stations;
     [SerializeField]
     private FluidStream fluidStream;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
@@ -59,6 +61,12 @@ public class GrinderManager : GenericUsable {
             yield return new WaitForSeconds(12f);
             StopGrind();
         }
+    }
+
+    void Start() {
+        List<AnimationStation> tempList = new List<AnimationStation>();
+        tempList.Add(station);
+        stations = tempList.AsReadOnly();
     }
 
     public override void Use() {
@@ -139,5 +147,9 @@ public class GrinderManager : GenericUsable {
     }
     private void OnTriggerStay(Collider other) {
         HandleCollision(other);
+    }
+
+    public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
+        return stations;
     }
 }

@@ -118,4 +118,5 @@ QualitySettings:
       type: 2}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
+    Server: 0
     Standalone: 2

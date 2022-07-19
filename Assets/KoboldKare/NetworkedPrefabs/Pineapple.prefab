@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8589288444591287928}
   m_RootOrder: 0
@@ -81,6 +82,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -147,6 +149,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.090611, y: 59.30005, z: -274.2953}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4516153915703585716}
   - {fileID: 9575306538021989}
@@ -474,6 +477,7 @@ Transform:
   m_LocalRotation: {x: -1, y: -0, z: -0, w: -0.00000044703478}
   m_LocalPosition: {x: -0.0076, y: 0.0032, z: -0.011}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3102687797691339585}
   m_RootOrder: 3
@@ -517,6 +521,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.276, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5449014316574214055}
   m_Father: {fileID: 3102687797691339585}
@@ -622,15 +627,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 551899645579432846}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8567007558819337734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 124edce8a486b3748840da5ab32e0eb3,
-    type: 3}
-  m_PrefabInstance: {fileID: 551899645579432846}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &1270197610423802083 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: 124edce8a486b3748840da5ab32e0eb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 551899645579432846}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8567007558819337734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 124edce8a486b3748840da5ab32e0eb3,
     type: 3}
   m_PrefabInstance: {fileID: 551899645579432846}
   m_PrefabAsset: {fileID: 0}

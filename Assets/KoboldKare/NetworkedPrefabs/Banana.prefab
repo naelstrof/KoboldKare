@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5834255564343395792}
   m_RootOrder: 0
@@ -81,6 +82,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -145,6 +147,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -5.090611, y: 59.30005, z: -274.2953}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1195283625263038270}
   - {fileID: 6824420946741390699}
@@ -444,6 +447,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.169, z: -0.002}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5449014316574214055}
   m_Father: {fileID: 3102687797691339585}
@@ -523,21 +527,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a105c5db5c048e54e9165098613f3481, type: 3}
---- !u!4 &6824420946741390699 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a105c5db5c048e54e9165098613f3481,
-    type: 3}
-  m_PrefabInstance: {fileID: 6431016903119735424}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2914723949748309768 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: a105c5db5c048e54e9165098613f3481,
-    type: 3}
-  m_PrefabInstance: {fileID: 6431016903119735424}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &5708198171558887917 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: a105c5db5c048e54e9165098613f3481,
     type: 3}
   m_PrefabInstance: {fileID: 6431016903119735424}
   m_PrefabAsset: {fileID: 0}
@@ -555,6 +547,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: a105c5db5c048e54e9165098613f3481, type: 3}
+--- !u!23 &5708198171558887917 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: a105c5db5c048e54e9165098613f3481,
+    type: 3}
+  m_PrefabInstance: {fileID: 6431016903119735424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6824420946741390699 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a105c5db5c048e54e9165098613f3481,
+    type: 3}
+  m_PrefabInstance: {fileID: 6431016903119735424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6479768063644995045
 PrefabInstance:
   m_ObjectHideFlags: 0

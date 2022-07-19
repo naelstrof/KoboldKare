@@ -1,110 +1,269 @@
 fileFormatVersion: 2
 guid: f3cb3c8f5cd4b514ebf9fbfda32cb36d
-timeCreated: 1447099478
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: Box1493
-    100002: car004
-    100004: //RootNode
-    100006: Cylinder317
-    100008: Object333
-    100010: Object334
-    100012: Object335
-    100014: Object336
-    100016: Object337
-    100018: Object338
-    100020: Object339
-    100022: Object340
-    100024: Object341
-    100026: Object342
-    100028: wheel_1
-    100030: wheel_2
-    100032: wheel_3
-    100034: wheel_4
-    400000: Box1493
-    400002: car004
-    400004: //RootNode
-    400006: Cylinder317
-    400008: Object333
-    400010: Object334
-    400012: Object335
-    400014: Object336
-    400016: Object337
-    400018: Object338
-    400020: Object339
-    400022: Object340
-    400024: Object341
-    400026: Object342
-    400028: wheel_1
-    400030: wheel_2
-    400032: wheel_3
-    400034: wheel_4
-    2300000: Box1493
-    2300002: Cylinder317
-    2300004: Object333
-    2300006: Object334
-    2300008: Object335
-    2300010: Object336
-    2300012: Object337
-    2300014: Object338
-    2300016: Object339
-    2300018: Object340
-    2300020: Object341
-    2300022: Object342
-    3300000: Box1493
-    3300002: Cylinder317
-    3300004: Object333
-    3300006: Object334
-    3300008: Object335
-    3300010: Object336
-    3300012: Object337
-    3300014: Object338
-    3300016: Object339
-    3300018: Object340
-    3300020: Object341
-    3300022: Object342
-    4300000: Box1493
-    4300002: Object333
-    4300004: Object334
-    4300006: Object336
-    4300008: Object340
-    4300010: Object339
-    4300012: Object341
-    4300014: Object335
-    4300016: Object337
-    4300018: Cylinder317
-    4300020: Object338
-    4300022: Object342
-    7400000: Rotate_wheels
-    7400002: Turn_left
-    7400004: Turn_right
-    9500000: //RootNode
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Box1493
+  - first:
+      1: 100002
+    second: car004
+  - first:
+      1: 100004
+    second: //RootNode
+  - first:
+      1: 100006
+    second: Cylinder317
+  - first:
+      1: 100008
+    second: Object333
+  - first:
+      1: 100010
+    second: Object334
+  - first:
+      1: 100012
+    second: Object335
+  - first:
+      1: 100014
+    second: Object336
+  - first:
+      1: 100016
+    second: Object337
+  - first:
+      1: 100018
+    second: Object338
+  - first:
+      1: 100020
+    second: Object339
+  - first:
+      1: 100022
+    second: Object340
+  - first:
+      1: 100024
+    second: Object341
+  - first:
+      1: 100026
+    second: Object342
+  - first:
+      1: 100028
+    second: wheel_1
+  - first:
+      1: 100030
+    second: wheel_2
+  - first:
+      1: 100032
+    second: wheel_3
+  - first:
+      1: 100034
+    second: wheel_4
+  - first:
+      4: 400000
+    second: Box1493
+  - first:
+      4: 400002
+    second: car004
+  - first:
+      4: 400004
+    second: //RootNode
+  - first:
+      4: 400006
+    second: Cylinder317
+  - first:
+      4: 400008
+    second: Object333
+  - first:
+      4: 400010
+    second: Object334
+  - first:
+      4: 400012
+    second: Object335
+  - first:
+      4: 400014
+    second: Object336
+  - first:
+      4: 400016
+    second: Object337
+  - first:
+      4: 400018
+    second: Object338
+  - first:
+      4: 400020
+    second: Object339
+  - first:
+      4: 400022
+    second: Object340
+  - first:
+      4: 400024
+    second: Object341
+  - first:
+      4: 400026
+    second: Object342
+  - first:
+      4: 400028
+    second: wheel_1
+  - first:
+      4: 400030
+    second: wheel_2
+  - first:
+      4: 400032
+    second: wheel_3
+  - first:
+      4: 400034
+    second: wheel_4
+  - first:
+      23: 2300000
+    second: Box1493
+  - first:
+      23: 2300002
+    second: Cylinder317
+  - first:
+      23: 2300004
+    second: Object333
+  - first:
+      23: 2300006
+    second: Object334
+  - first:
+      23: 2300008
+    second: Object335
+  - first:
+      23: 2300010
+    second: Object336
+  - first:
+      23: 2300012
+    second: Object337
+  - first:
+      23: 2300014
+    second: Object338
+  - first:
+      23: 2300016
+    second: Object339
+  - first:
+      23: 2300018
+    second: Object340
+  - first:
+      23: 2300020
+    second: Object341
+  - first:
+      23: 2300022
+    second: Object342
+  - first:
+      33: 3300000
+    second: Box1493
+  - first:
+      33: 3300002
+    second: Cylinder317
+  - first:
+      33: 3300004
+    second: Object333
+  - first:
+      33: 3300006
+    second: Object334
+  - first:
+      33: 3300008
+    second: Object335
+  - first:
+      33: 3300010
+    second: Object336
+  - first:
+      33: 3300012
+    second: Object337
+  - first:
+      33: 3300014
+    second: Object338
+  - first:
+      33: 3300016
+    second: Object339
+  - first:
+      33: 3300018
+    second: Object340
+  - first:
+      33: 3300020
+    second: Object341
+  - first:
+      33: 3300022
+    second: Object342
+  - first:
+      43: 4300000
+    second: Box1493
+  - first:
+      43: 4300002
+    second: Object333
+  - first:
+      43: 4300004
+    second: Object334
+  - first:
+      43: 4300006
+    second: Object336
+  - first:
+      43: 4300008
+    second: Object340
+  - first:
+      43: 4300010
+    second: Object339
+  - first:
+      43: 4300012
+    second: Object341
+  - first:
+      43: 4300014
+    second: Object335
+  - first:
+      43: 4300016
+    second: Object337
+  - first:
+      43: 4300018
+    second: Cylinder317
+  - first:
+      43: 4300020
+    second: Object338
+  - first:
+      43: 4300022
+    second: Object342
+  - first:
+      74: 7400000
+    second: Rotate_wheels
+  - first:
+      74: 7400002
+    second: Turn_left
+  - first:
+      74: 7400004
+    second: Turn_right
+  - first:
+      95: 9500000
+    second: //RootNode
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Rotate_wheels
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 19
       wrapMode: 0
@@ -169,6 +328,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Turn_left
       takeName: Take 001
+      internalID: 0
       firstFrame: 21
       lastFrame: 40
       wrapMode: 0
@@ -233,6 +393,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Turn_right
       takeName: Take 001
+      internalID: 0
       firstFrame: 42
       lastFrame: 61
       wrapMode: 0
@@ -300,25 +461,47 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -328,11 +511,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

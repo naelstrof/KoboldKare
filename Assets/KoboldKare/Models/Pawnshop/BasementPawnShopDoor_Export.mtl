@@ -1,8 +1,8 @@
-# Blender MTL File: 'BasementPawnShop_Export.blend'
+# Blender MTL File: 'None'
 # Material Count: 1
 
 newmtl Concrete
-Ns 323.999994
+Ns 323.999982
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
 Ks 0.500000 0.500000 0.500000
@@ -10,4 +10,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd .
+map_Kd C:\\Program Files\\Blender Foundation\\Blender 3.1

@@ -13,7 +13,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Kobold kobold;
     private Vilar.IK.ClassicIK solver;
     private float randomSample => 1f+Mathf.SmoothStep(0f, 1f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
-    private AnimationStationSet currentStationSet;
+    private IAnimationStationSet currentStationSet;
     private AnimationStation currentStation;
     private Animator playerModel;
     private KoboldCharacterController controller;
@@ -43,7 +43,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Vector3 lastPosition;
     private bool animating;
 
-    public bool TryGetAnimationStationSet(out AnimationStationSet set) {
+    public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
             set = null;
             return false;
@@ -69,12 +69,11 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [PunRPC]
     public void BeginAnimationRPC(int photonViewID, int animatorID) {
         PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-        AnimationStationSet set = view.GetComponent<AnimationStationSet>();
+        IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
         BeginAnimation(set, set.GetAnimationStations()[animatorID]);
     }
     
-    private void BeginAnimation(AnimationStationSet set, AnimationStation station) {
-
+    private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
         StopAnimation();
         currentStationSet = set;
         currentStation = station;
@@ -213,7 +212,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold.body.isKinematic = false;
         solver.CleanUp();
         animating = false;
-        if (currentStation.info.user == kobold) {
+        if (currentStation != null && currentStation.info.user == kobold) {
             currentStation.info.user = null;
         }
         currentStation = null;
@@ -247,7 +246,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
                 (!animating || currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
                  currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
                 PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-                AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+                IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
                 if (animating) {
                     StopAnimation();
                 }
@@ -272,7 +271,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
              currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
             PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-            AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+            IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
             if (animating) {
                 StopAnimation();
             }

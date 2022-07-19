@@ -371,12 +371,16 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (body.velocity.magnitude > 3f) {
             StartCoroutine(ThrowRoutine());
         } else {
-            foreach(Collider c in Physics.OverlapSphere(transform.position, 1f, playerHitMask, QueryTriggerInteraction.Collide)) {
-                Kobold k = c.GetComponentInParent<Kobold>();
-                if (k!=this && k!=kobold) {
-                    k.GetComponentInChildren<GenericUsable>().LocalUse(this);
+            if (photonView.IsMine) {
+                foreach (Collider c in Physics.OverlapSphere(transform.position, 1f, GameManager.instance.usableHitMask,
+                             QueryTriggerInteraction.Collide)) {
+                    GenericUsable usable = c.GetComponentInParent<GenericUsable>();
+                    if (usable != null) {
+                        usable.LocalUse(this);
+                    }
                 }
             }
+
             controller.enabled = true;
         }
         controller.frictionMultiplier = 1f;

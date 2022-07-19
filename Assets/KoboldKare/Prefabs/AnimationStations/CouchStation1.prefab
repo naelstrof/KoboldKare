@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2138890494721055910}
   - component: {fileID: 6975284764840564253}
-  - component: {fileID: 6058739899466353066}
-  m_Layer: 20
+  - component: {fileID: 1180995662122946562}
+  m_Layer: 11
   m_Name: CouchStation1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.9733733, z: 0, w: -0.22922581}
   m_LocalPosition: {x: -127.557, y: 51.708, z: -915.038}
   m_LocalScale: {x: 1.4285713, y: 1.4285715, z: 1.4285713}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2138890494772629521}
   - {fileID: 2138890495309396675}
@@ -52,11 +53,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1180995662122946562}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6058739899466353066
+--- !u!114 &1180995662122946562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,10 +67,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2138890494721055904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6e131632140ed459309d489c1e52b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stations:
+  breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
+  animationStations:
   - {fileID: 2138890494772629522}
   - {fileID: 2138890495309396674}
 --- !u!1 &2138890494772629523
@@ -81,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138890494772629521}
   - component: {fileID: 2138890494772629522}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: CouchAnimationStation2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +101,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.5143438, z: -0, w: 0.8575841}
   m_LocalPosition: {x: 0.616, y: -0.686, z: -0.168}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2138890494721055910}
   m_RootOrder: 0
@@ -424,12 +428,6 @@ MonoBehaviour:
   previewActive: 1
   animProgress: 11.673319
   lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
   lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
@@ -450,7 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138890495309396675}
   - component: {fileID: 2138890495309396674}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: CouchAnimationStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,6 +465,7 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.9197208, z: -0, w: 0.39257306}
   m_LocalPosition: {x: 0.47, y: -0.686, z: -0.104}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2138890494721055910}
   m_RootOrder: 1
@@ -793,12 +792,6 @@ MonoBehaviour:
   previewActive: 1
   animProgress: 11.673319
   lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
   lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}

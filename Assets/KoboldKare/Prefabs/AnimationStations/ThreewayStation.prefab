@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4329963711974295141}
   - component: {fileID: 4329963711974295138}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: ThreewayStation1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0.050105445, y: -0.0016524193, z: 0.0047066524, w: 0.9987315}
   m_LocalPosition: {x: 0.022, y: 0.476, z: -0.284}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4329963713731976877}
   m_RootOrder: 1
@@ -353,12 +354,6 @@ MonoBehaviour:
   previewActive: 1
   animProgress: 44.41571
   lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
   lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
@@ -380,8 +375,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4329963713731976877}
   - component: {fileID: 6160578129322005675}
-  - component: {fileID: 1667572513099199189}
-  m_Layer: 20
+  - component: {fileID: 3898180952927660242}
+  - component: {fileID: 4301732389415135238}
+  m_Layer: 11
   m_Name: ThreewayStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,6 +394,7 @@ Transform:
   m_LocalRotation: {x: 0.104122534, y: -0.60403264, z: 0.07982616, w: 0.78608584}
   m_LocalPosition: {x: -162.484, y: 18.434, z: 318.425}
   m_LocalScale: {x: 1.4285712, y: 1.4285712, z: 1.4285712}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4329963713844484649}
   - {fileID: 4329963711974295141}
@@ -423,11 +420,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3898180952927660242}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1667572513099199189
+--- !u!114 &3898180952927660242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,13 +434,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 4329963713731976879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6e131632140ed459309d489c1e52b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stations:
+  breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
+  animationStations:
   - {fileID: 4329963713844484648}
   - {fileID: 4329963711974295138}
   - {fileID: 4464103781979772686}
+--- !u!65 &4301732389415135238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329963713731976879}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2044495, y: 1.3709757, z: 2.7981935}
+  m_Center: {x: -0.102224745, y: 0.1854888, z: 0.89909995}
 --- !u!1 &4329963713844484651
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +465,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4329963713844484649}
   - component: {fileID: 4329963713844484648}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: ThreewayStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,6 +482,7 @@ Transform:
   m_LocalRotation: {x: 0.18022159, y: -0.7152272, z: -0.6484431, w: -0.18839245}
   m_LocalPosition: {x: 0.253, y: 0.339, z: 0.015}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4329963713731976877}
   m_RootOrder: 0
@@ -796,12 +809,6 @@ MonoBehaviour:
   previewActive: 1
   animProgress: 44.39445
   lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
   lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
@@ -823,7 +830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4464103781979772687}
   - component: {fileID: 4464103781979772686}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: ThreewayStation2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,6 +847,7 @@ Transform:
   m_LocalRotation: {x: 0.0067434106, y: 0.9987526, z: -0.04947483, w: 0.0000041127205}
   m_LocalPosition: {x: -0.553, y: 0.476, z: 1.984}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4329963713731976877}
   m_RootOrder: 2
@@ -1166,12 +1174,6 @@ MonoBehaviour:
   previewActive: 1
   animProgress: 44.41571
   lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
   lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}

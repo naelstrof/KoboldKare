@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     public LayerMask waterSprayHitMask;
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
+    public LayerMask usableHitMask;
     public AnimationCurve volumeCurve;
     public UnityEvent OnPause;
     public UnityEvent OnUnpause;

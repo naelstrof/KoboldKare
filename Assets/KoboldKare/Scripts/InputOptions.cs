@@ -8,10 +8,16 @@ using SimpleJSON;
 using System;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "InputOptions", menuName = "Data/Input Options", order = 1)]
-public class InputOptions : ScriptableObject {
-    public UnityEngine.InputSystem.InputActionAsset controls;
-    public void Save() {
+public class InputOptions : MonoBehaviour {
+    [SerializeField]
+    private UnityEngine.InputSystem.InputActionAsset controls;
+    private static InputOptions instance;
+
+    public static void SaveControls() {
+        instance.Save();
+    }
+
+    private void Save() {
         string savePath = Application.persistentDataPath + "/inputBindings.json";
         FileStream file = File.Create(savePath);
         //string json = JsonUtility.ToJson(overrides, true);
@@ -27,7 +33,7 @@ public class InputOptions : ScriptableObject {
         file.Close();
         Debug.Log("Saved input bindings to " + savePath);
     }
-    public void Load() {
+    private void Load() {
         try {
             string savePath = Application.persistentDataPath + "/inputBindings.json";
             FileStream file = File.Open(savePath, FileMode.Open);
@@ -53,7 +59,12 @@ public class InputOptions : ScriptableObject {
             Debug.LogException(e);
         }
     }
-    public void OnEnable() {
+
+    private void Awake() {
+        instance = this;
+    }
+
+    private void Start() {
         Load();
     }
 }

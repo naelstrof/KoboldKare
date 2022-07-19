@@ -234,8 +234,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Ragdoll"].ReadValue<float>() > 0.5f);
                 shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Cancel"].ReadValue<float>() > 0.5f);
                 if (shouldCancelAnimation) {
-                    //kobold.GetComponent<CharacterControllerAnimator>().OnEndStation();
-                    characterControllerAnimator.StopAnimation();
+                    photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
                 }
             }
         } else {

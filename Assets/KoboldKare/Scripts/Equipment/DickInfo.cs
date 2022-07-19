@@ -6,6 +6,7 @@ using KoboldKare;
 using Naelstrof.Easing;
 using Naelstrof.Inflatable;
 using Naelstrof.Mozzarella;
+using Photon.Pun;
 using SkinnedMeshDecals;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -194,7 +195,7 @@ public class DickInfo : MonoBehaviour {
                 GenericReagentContainer.InjectType.Inject);
         }
         yield return new WaitForSeconds(3f);
-        attachedKobold.GetComponent<CharacterControllerAnimator>().StopAnimation();
+        attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
     }
 
     private IEnumerator AttachToRoutine(Kobold k) {

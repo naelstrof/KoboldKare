@@ -22,6 +22,14 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
     private FluidStream fluidStream;
     private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
     private bool grinding;
+    public void Purchase(bool purchase) {
+        foreach (Transform t in transform) {
+            if (t != transform) {
+                t.gameObject.SetActive(purchase);
+            }
+        }
+    }
+
     public override Sprite GetSprite(Kobold k) {
         return onSprite;
     }
@@ -56,7 +64,7 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         }
         
         if (station.info.user.TryConsumeEnergy(1)) {
-            station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
+            station.info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
             BeginGrind();
             yield return new WaitForSeconds(12f);
             StopGrind();
@@ -69,6 +77,7 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         stations = tempList.AsReadOnly();
     }
 
+    [PunRPC]
     public override void Use() {
         StopCoroutine(nameof(WaitThenConsumeEnergy));
         StartCoroutine(nameof(WaitThenConsumeEnergy));

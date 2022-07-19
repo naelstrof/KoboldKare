@@ -202,7 +202,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         handler.SetLookAtPosition(lookDir.position);
     }
 
-    public void StopAnimation() {
+    [PunRPC]
+    public void StopAnimationRPC() {
+        StopAnimation();
+    }
+
+    private void StopAnimation() {
         if (!animating) {
             return;
         }
@@ -230,30 +235,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         body.AddTorque(cross*(angleDiff*5f), ForceMode.Acceleration);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            if (animating) {
-                stream.SendNext(currentStationSet.photonView.ViewID);
-                stream.SendNext(currentStationSet.GetAnimationStations().IndexOf(currentStation));
-            } else {
-                stream.SendNext(-1);
-                stream.SendNext(-1);
-            }
-        } else {
-            int photonViewID = (int)stream.ReceiveNext();
-            int animationID = (int)stream.ReceiveNext();
-            if (photonViewID != -1 &&
-                (!animating || currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
-                 currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
-                PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-                IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
-                if (animating) {
-                    StopAnimation();
-                }
-                BeginAnimation(set, set.GetAnimationStations()[animationID]);
-            }
-        }
-    }
+    // Animations are something that cannot have packets dropped, so we sync via RPC
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
     public void Save(BinaryWriter writer, string version) {
         if (animating) {
             writer.Write(currentStationSet.photonView.ViewID);

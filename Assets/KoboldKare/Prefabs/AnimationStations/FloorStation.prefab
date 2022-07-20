@@ -739,6 +739,7 @@ GameObject:
   - component: {fileID: 7589937686283382594}
   - component: {fileID: 17233992689476932}
   - component: {fileID: 1054968014531901800}
+  - component: {fileID: 4446025966114638579}
   m_Layer: 11
   m_Name: FloorStation
   m_TagString: Untagged
@@ -802,3 +803,16 @@ MonoBehaviour:
   animationStations:
   - {fileID: 7589937686163368903}
   - {fileID: 7589937685903013773}
+--- !u!65 &4446025966114638579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589937686283382592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

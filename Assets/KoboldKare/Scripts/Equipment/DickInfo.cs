@@ -177,6 +177,9 @@ public class DickInfo : MonoBehaviour {
                         }
 
                         //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.red, 5f);
+                        if (alloc.volume > 0f) {
+                            set.cumSplatProjectorMaterial.color = alloc.GetColor();
+                        }
                         PaintDecal.RenderDecalForCollider(hit.collider, set.cumSplatProjectorMaterial,
                             hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),
                             Vector2.one * (volume * 4f), length);

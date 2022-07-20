@@ -54,10 +54,20 @@ namespace Naelstrof.Mozzarella {
         public delegate void HitCallbackAction(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float volume);
         public event HitCallbackAction hitCallback;
         private Penetrator followPenetrator;
+        private Transform followTransform;
+        private Vector3 localForward = Vector3.forward;
         private int lastFrame;
 
         public void SetFollowPenetrator(Penetrator target) {
             followPenetrator = target;
+        }
+
+        public void SetLocalForward(Vector3 newForward) {
+            localForward = newForward;
+        }
+
+        public void SetFollowTransform(Transform target) {
+            followTransform = target;
         }
 
         public void SetVolumeMultiplier(float multi) {
@@ -95,7 +105,10 @@ namespace Naelstrof.Mozzarella {
             gameObject.SetActive(false);
             lineRenderer.positionCount = 0;
             id = 0;
+            followPenetrator = null;
+            followTransform = null;
             hitCallback = null;
+            localForward = Vector3.forward;
             base.Reset();
         }
 
@@ -106,11 +119,25 @@ namespace Naelstrof.Mozzarella {
                 transform.position = path.GetPositionFromDistance(dist);
                 transform.rotation = Quaternion.LookRotation(path.GetVelocityFromDistance(dist), Vector3.up);
             }
-            
+
+            if (followTransform != null) {
+                transform.position = followTransform.position;
+                transform.rotation = followTransform.rotation;
+            }
+
             // Only spawn one particle per real-frame-- so we don't overlay particles on top one-another.
             if (id < particles.Count && lastFrame != Time.frameCount) {
                 float t = (float)id / (float)particles.Count;
-                particles[id].Spawn(transform.position, transform.forward * (velocityCurve.Evaluate(t) * velocityMultiplier*Time.deltaTime) + followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position)*(0.5f*Time.deltaTime));
+                if (followPenetrator != null) {
+                    particles[id].Spawn(transform.position,
+                        transform.TransformDirection(localForward) * (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime) +
+                        followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position) *
+                        (0.5f * Time.deltaTime));
+                } else {
+                    particles[id].Spawn(transform.position,
+                        transform.TransformDirection(localForward) * (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime));
+                }
+
                 transform.rotation *= Quaternion.Lerp(Random.rotation, Quaternion.identity, 0.99f);
                 id++;
                 lastFrame = Time.frameCount;

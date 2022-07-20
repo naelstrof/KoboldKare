@@ -13,7 +13,7 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
 
     // Called only by us locally when the player tries to use an object. By default we try to inform everyone that we used it.
     public virtual void LocalUse(Kobold k) {
-        photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
+        photonView.RPC(nameof(GenericUsable.RPCUse), RpcTarget.All);
     }
     // Called globally by all clients, synced.
     public virtual void Use() { }

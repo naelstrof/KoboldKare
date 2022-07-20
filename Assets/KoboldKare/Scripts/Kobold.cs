@@ -41,7 +41,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public GameEventFloat MetabolizeEvent;
     public GameEventGeneric MidnightEvent;
     
-    private float baseBoobSize;
 
     public GenericReagentContainer bellyContainer { get; private set; }
     [SerializeField]
@@ -97,6 +96,9 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             internalSex = value;
         }
     }
+
+    [SerializeField]
+    private List<Transform> nipples;
     public Transform hip;
     public LayerMask playerHitMask;
     public KoboldCharacterController controller;
@@ -117,6 +119,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public float baseFatness { get; private set; }
     public float baseDickSize { get; private set; }
     public float baseBallsSize { get; private set; }
+    public float baseBoobSize { get; private set; }
 
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in belly.GetInflatableListeners()) {
@@ -128,6 +131,10 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         foreach (var listener in boobs.GetInflatableListeners()) {
             yield return listener;
         }
+    }
+
+    public List<Transform> GetNipples() {
+        return nipples;
     }
 
     public Coroutine displayMessageRoutine;
@@ -377,6 +384,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                     GenericUsable usable = c.GetComponentInParent<GenericUsable>();
                     if (usable != null) {
                         usable.LocalUse(this);
+                        break;
                     }
                 }
             }
@@ -653,12 +661,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         writer.Write(baseSize);
         writer.Write(energy);
         writer.Write(maxEnergy);
-    }
-
-    public void Lactate() {
-    }
-
-    private void LactateRoutine() {
     }
 
     public void Load(BinaryReader reader, string version) {

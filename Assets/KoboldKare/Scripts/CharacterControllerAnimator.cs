@@ -42,6 +42,16 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     private Vector3 lastPosition;
     private bool animating;
+    private static readonly int PenetrationSize = Animator.StringToHash("PenetrationSize");
+    private static readonly int SexFace = Animator.StringToHash("SexFace");
+    private static readonly int Orgasm = Animator.StringToHash("Orgasm");
+    private static readonly int MadHappy = Animator.StringToHash("MadHappy");
+    private static readonly int MoveX = Animator.StringToHash("MoveX");
+    private static readonly int MoveY = Animator.StringToHash("MoveY");
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
+    private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
@@ -117,19 +127,19 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     void Update() {
         if (kobold != null) {
             float maxPen = 0f;
-            playerModel.SetFloat("PenetrationSize", Mathf.Clamp01(maxPen * 4f));
+            playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
-                playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 1f, Time.deltaTime * 2f));
+                playerModel.SetFloat(SexFace, Mathf.Lerp(playerModel.GetFloat(SexFace), 1f, Time.deltaTime * 2f));
             } else {
-                playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 0f, Time.deltaTime));
+                playerModel.SetFloat(SexFace, Mathf.Lerp(playerModel.GetFloat(SexFace), 0f, Time.deltaTime));
             }
             foreach (var dickSet in kobold.activeDicks) {
                 if (dickSet.dick.TryGetPenetrable(out Penetrable penetrable)) {
-                    playerModel.SetFloat("SexFace", 1f);
+                    playerModel.SetFloat(SexFace, 1f);
                 }
             }
-            playerModel.SetFloat("Orgasm", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
-            playerModel.SetFloat("MadHappy", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
+            playerModel.SetFloat(Orgasm, Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
+            playerModel.SetFloat(MadHappy, Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
         }
 
         if (animating) {
@@ -170,8 +180,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         } else {
             tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z, 5f * Time.deltaTime);
         }
-        playerModel.SetFloat("MoveX", tempDir.x);
-        playerModel.SetFloat("MoveY", tempDir.z);
+        playerModel.SetFloat(MoveX, tempDir.x);
+        playerModel.SetFloat(MoveY, tempDir.z);
         float s = speed;
         if (controller.inputCrouched ) {
             s *= crouchedAnimationSpeedMultiplier;
@@ -182,19 +192,20 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             s *= walkingAnimationSpeedMultiplier;
         }
         s /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
-        playerModel.SetFloat("Speed", s == 0 ? 1f : s);
+        playerModel.SetFloat(Speed, s == 0 ? 1f : s);
         if (controller.enabled) {
             walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
         } else {
             walkDust.SetFloat("Speed", 0f);
         }
-        playerModel.SetBool("Jump", controller.jumped);
-        playerModel.SetBool("Grounded", controller.grounded);
+        playerModel.SetBool(Jump, controller.jumped);
+        playerModel.SetBool(Grounded, controller.grounded);
         crouchLerper = Mathf.MoveTowards(crouchLerper, controller.crouchAmount, 3f*Time.deltaTime);
-        playerModel.SetFloat("CrouchAmount", crouchLerper);
+        playerModel.SetFloat(CrouchAmount, crouchLerper);
         //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
         if (animating) {
+            currentStation.SetLookAtPosition(playerPossession.GetEyeDir()+headTransform.position);
             handler.SetLookAtWeight(1f, 0f, 1f, 1f, 1f);
         } else {
             handler.SetLookAtWeight(1f, 0.5f, 1f, 1f, 1f);

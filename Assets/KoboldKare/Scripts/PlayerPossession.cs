@@ -212,6 +212,11 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         wishDir.y = 0;
         controller.inputDir = wishDir;
     }
+
+    public Vector3 GetEyeDir() {
+        return Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
+    }
+
     // Update is called once per frame
     void Update() {
         if (Cursor.lockState != CursorLockMode.Locked) {

@@ -281,12 +281,10 @@ namespace Vilar.AnimationStation {
 		[HideInInspector] public int selectedLoop = 0;
 		[HideInInspector] public List<AnimationLooper> loops;
 		[HideInInspector] public int editSelection = 0;
-		[HideInInspector] public bool previewActive = true;
 		[HideInInspector] public float animProgress = 0f;
-		[HideInInspector] public double lastEditorTime = 0f;
 		private Vector3 lastScale;
 		private float modifiedProgress;
-		public Vector3 lookAtPosition;
+		private Vector3 lookAtPosition;
 
 		public GameObject previewCharacter;
 		private GameObject previewCharacterInstance;
@@ -296,7 +294,7 @@ namespace Vilar.AnimationStation {
 		public bool isPreviewAssigned => previewCharacter != null;
 		private Dictionary<HumanBodyBones, Quaternion> restPoseCache;
 		//private bool initialized=false;
-		public AnimationStationInfo info = new AnimationStationInfo();
+		public AnimationStationInfo info;
 
 		private void Update() {
 #if UNITY_EDITOR
@@ -339,6 +337,11 @@ namespace Vilar.AnimationStation {
 			Advance(dT);
 			SetPreview();
 		}
+
+		void Awake() {
+			info = new AnimationStationInfo();
+		}
+
 		public void OnStartAnimation(Kobold user) {
 			info.user = user;
 			foreach (var linkedStation in linkedStations.hashSet) {
@@ -504,28 +507,34 @@ namespace Vilar.AnimationStation {
 			}
 			return blendedPosition;
 		}
-		public Vector3 ComputeTargetVelocity(int index) {
-			Vector3 blendedVelocity = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetVelocities[index];
-			if (modifiedProgress < loops.Count - 1) {
-				blendedVelocity = Vector3.Lerp(
-					blendedVelocity,
-					loops[Mathf.CeilToInt(modifiedProgress)].computedTargetVelocities[index],
-					Mathf.Repeat(modifiedProgress, 1f)
-				);
-			}
-			return blendedVelocity;
+
+		public void SetLookAtPosition(Vector3 worldPoint) {
+			lookAtPosition = worldPoint;
+		}
+
+		private Quaternion LookAtRotation(Quaternion currentHeadRotation) {
+			Vector3 blendedHeadPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HEAD], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HEAD], Mathf.Repeat(modifiedProgress , 1f));
+			Vector3 lookdir = lookAtPosition - blendedHeadPos;
+			return Quaternion.Lerp(Quaternion.FromToRotation(currentHeadRotation*Vector3.forward, lookdir.normalized) * currentHeadRotation, currentHeadRotation, 0.5f);
 		}
 
 		public Quaternion ComputeTargetRotation(int index) {
 			Quaternion blendedRotation = loops[Mathf.FloorToInt(modifiedProgress)].computedTargetRotations[index];
+
 			if (modifiedProgress >= loops.Count - 1) {
+				if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying) {
+					return LookAtRotation(blendedRotation);
+				}
 				return blendedRotation;
 			}
             blendedRotation = Quaternion.Lerp(
                 loops[Mathf.FloorToInt(modifiedProgress)].computedTargetRotations[index],
                 loops[Mathf.CeilToInt(modifiedProgress)].computedTargetRotations[index],
-                modifiedProgress % 1f
+                Mathf.Repeat(modifiedProgress, 1f)
             );
+			if (index == (int)IKTargetSet.parts.HEAD && Application.isPlaying) {
+				return LookAtRotation(blendedRotation);
+			}
 			return blendedRotation;
 		}
 

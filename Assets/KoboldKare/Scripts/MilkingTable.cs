@@ -45,7 +45,6 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
-        Debug.Log("Huh?");
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
                 k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
@@ -60,7 +59,6 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
         StartCoroutine(WaitThenMilk());
     }
     private IEnumerator WaitThenMilk() {
-        Debug.Log("Milk Stage 1");
         yield return new WaitForSeconds(8f);
         // Validate that we have two characters with energy that have been animating for 5 seconds
         for (int i = 0; i < stations.Count; i++) {
@@ -74,7 +72,6 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
                 yield break;
             }
         }
-        Debug.Log("Milk Stage 2");
         // Now do some milk stuff.
         int pulses = 12;
         ReagentContents milkVolume = new ReagentContents();
@@ -99,7 +96,6 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
             stream.OnFire(container);
             yield return waitSpurt;
         }
-        Debug.Log("Milk Stage 3");
         yield return waitSpurt;
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user != null && stations[i].info.user.GetEnergy() <= 0) {

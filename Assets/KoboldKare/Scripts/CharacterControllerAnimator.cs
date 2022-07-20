@@ -27,8 +27,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [SerializeField]
     private Transform headTransform;
     [SerializeField]
-    private Transform lookDir;
-    [SerializeField]
     private AudioPack footstepPack;
 
     [SerializeField] private Rigidbody body;
@@ -204,13 +202,18 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.SetFloat(CrouchAmount, crouchLerper);
         //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
-        if (animating) {
-            currentStation.SetLookAtPosition(playerPossession.GetEyeDir()+headTransform.position);
-            handler.SetLookAtWeight(1f, 0f, 1f, 1f, 1f);
-        } else {
-            handler.SetLookAtWeight(1f, 0.5f, 1f, 1f, 1f);
+        Vector3 lookPos = headTransform.position + headTransform.forward;
+        if (playerPossession != null) {
+            lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         }
-        handler.SetLookAtPosition(lookDir.position);
+
+        if (animating) {
+            currentStation.SetLookAtPosition(lookPos);
+            handler.SetLookAtWeight(1f, 0f, 1f, 1f, 0.25f);
+        } else {
+            handler.SetLookAtWeight(1f, 0.4f, 1f, 1f, 0.25f);
+        }
+        handler.SetLookAtPosition(lookPos);
     }
 
     [PunRPC]
@@ -240,10 +243,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
         Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 5f;
+        float deflectionForgivenessDegrees = 35f;
         Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
         float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
-        body.AddTorque(cross*(angleDiff*5f), ForceMode.Acceleration);
+        body.AddTorque(cross*(angleDiff*3f), ForceMode.Acceleration);
     }
 
     // Animations are something that cannot have packets dropped, so we sync via RPC

@@ -13713,7 +13713,6 @@ MonoBehaviour:
   jumpDust: {fileID: 769764480791892654}
   walkDust: {fileID: 5485890040014409419}
   headTransform: {fileID: 1580927918472896871}
-  lookDir: {fileID: 8035917758158531233}
   footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
   body: {fileID: 4787937348439926609}
   playerPossession: {fileID: 8319315006002239314}

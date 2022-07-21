@@ -13582,7 +13582,6 @@ GameObject:
   - component: {fileID: 7517654626729760162}
   - component: {fileID: 5005442867846444301}
   - component: {fileID: 3498030196438502570}
-  - component: {fileID: 2647890867887436755}
   - component: {fileID: 8318442352729846311}
   - component: {fileID: 5449523794632526610}
   - component: {fileID: 560736620052164810}
@@ -14212,25 +14211,6 @@ MonoBehaviour:
         - {fileID: 6532966543233302468}
         - {fileID: 3953097671077810326}
         rigBuilder: {fileID: 3736482642893614196}
---- !u!114 &2647890867887436755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8587189159933912498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8b4a90160d8804e9c4193c02193dbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  removeOnDeath: 0
-  onDie:
-    m_PersistentCalls:
-      m_Calls: []
-  gibPrefab: {fileID: 0}
-  gibTarget: {fileID: 0}
 --- !u!114 &8318442352729846311
 MonoBehaviour:
   m_ObjectHideFlags: 0

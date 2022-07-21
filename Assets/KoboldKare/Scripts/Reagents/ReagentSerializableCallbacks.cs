@@ -104,7 +104,7 @@ public class ReagentSerializableCallbacks : ScriptableObject {
                 Rigidbody r = c.GetComponentInParent<Rigidbody>();
                 r?.AddExplosionForce(3000f, backupPosition, 5f);
             }
-            GenericDamagable damagable = c.GetComponentInParent<GenericDamagable>();
+            IDamagable damagable = c.GetComponentInParent<IDamagable>();
             // Bombs hurt!!
             if (damagable != null) {
                 float dist = Vector3.Distance(backupPosition, c.ClosestPoint(backupPosition));

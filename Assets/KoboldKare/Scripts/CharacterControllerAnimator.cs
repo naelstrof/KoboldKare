@@ -202,7 +202,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.SetFloat(CrouchAmount, crouchLerper);
         //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
-        Vector3 lookPos = headTransform.position + headTransform.forward;
+        Vector3 lookPos = controller.transform.position + controller.transform.forward;
         if (playerPossession != null) {
             lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         }

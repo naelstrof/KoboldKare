@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
 using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
+using System.IO;
 
 public class GrinderManager : GenericUsable, IAnimationStationSet {
     [SerializeField]
@@ -38,7 +35,6 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
-        photonView.RequestOwnership();
         k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
         base.LocalUse(k);
     }
@@ -88,20 +84,23 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     void Grind(GameObject obj) {
-        GenericGrabbable root = obj.GetComponentInParent<GenericGrabbable>();
+        Debug.Log("Grinding " + obj.name, obj);
+        IGrabbable root = obj.GetComponentInParent<IGrabbable>();
         if (root == null) {
             return;
         }
-        if ( grindedThingsCache.Contains(root.gameObject)) {
+        if (grindedThingsCache.Contains(root.gameObject)) {
             return;
         }
+        
+        photonView.RequestOwnership();
         grindedThingsCache.Add(root.gameObject);
         foreach (GenericReagentContainer c in root.gameObject.GetComponentsInChildren<GenericReagentContainer>()) {
             container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
         }
-        GenericDamagable d = obj.transform.root.GetComponent<GenericDamagable>();
+        IDamagable d = obj.GetComponentInParent<IDamagable>();
         if (d != null) {
-            d.Damage(d.health + 1);
+            d.Damage(d.GetHealth() + 1f);
         } else {
             PhotonView other = obj.GetComponentInParent<PhotonView>();
             if (other != null) {
@@ -125,24 +124,19 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         Kobold kobold = other.GetComponentInParent<Kobold>();
         if (kobold != null) {
             kobold.StartCoroutine(RagdollForTime(kobold));
-        }
-        foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-            r.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
-        }
-        
-        GenericDamagable d = other.transform.root.GetComponent<GenericDamagable>();
-        if (d != null && !d.removeOnDeath) {
-            d.transform.position += Vector3.up * 1f;
+            foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
+                r.AddExplosionForce(400f, transform.position+Vector3.down*5f, 100f);
+            }
             if (!deny.isPlaying) {
                 deny.Play();
             }
-            d.Damage(d.health+1);
             return;
         }
-        if ((other.GetComponentInParent<PhotonView>() != null && !other.GetComponentInParent<PhotonView>().IsMine)) {
+
+        PhotonView view = other.GetComponentInParent<PhotonView>();
+        if (view == null || !view.IsMine) {
             return;
         }
-        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
         Grind(other.gameObject);
     }
 
@@ -161,5 +155,34 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return stations;
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream, info);
+        if (stream.IsWriting) {
+            stream.SendNext(grinding);
+        } else {
+            bool newGrinding = (bool)stream.ReceiveNext();
+            if (!grinding && newGrinding) {
+                BeginGrind();
+            } else if (grinding && !newGrinding) {
+                StopGrind();
+            }
+        }
+    }
+
+    public override void Load(BinaryReader reader, string version) {
+        base.Load(reader, version);
+        bool newGrinding = reader.ReadBoolean();
+        if (!grinding && newGrinding) {
+            BeginGrind();
+        } else if (grinding && !newGrinding) {
+            StopGrind();
+        }
+    }
+
+    public override void Save(BinaryWriter writer, string version) {
+        base.Save(writer, version);
+        writer.Write(grinding);
     }
 }

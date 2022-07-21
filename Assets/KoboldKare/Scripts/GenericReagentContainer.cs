@@ -41,7 +41,12 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     }
     public float startingMaxVolume = float.MaxValue;
     public float volume => contents.volume;
-    public float maxVolume => contents.GetMaxVolume();
+
+    public float maxVolume {
+        get => contents.GetMaxVolume();
+        set => contents.SetMaxVolume(value);
+    }
+
     public Color GetColor() => contents.GetColor();
     public ContainerType type;
     public ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;

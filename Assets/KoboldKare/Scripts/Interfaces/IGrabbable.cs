@@ -9,6 +9,8 @@ public interface IGrabbable {
     Renderer[] GetRenderers();
     Transform GrabTransform(Rigidbody body);
     Transform transform { get; }
+
+    GameObject gameObject { get; }
     //GrabbableType GetGrabbableType();
     //void OnGrabStay();
 }

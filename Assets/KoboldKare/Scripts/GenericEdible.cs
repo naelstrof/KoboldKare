@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class GenericEdible : GenericUsable, IPunObservable, IOnPhotonViewOwnerChange {
+public class GenericEdible : GenericUsable, IOnPhotonViewOwnerChange {
     [SerializeField]
     private Sprite eatSymbol;
     [SerializeField]

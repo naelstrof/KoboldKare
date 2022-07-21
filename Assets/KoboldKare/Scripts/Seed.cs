@@ -27,32 +27,25 @@ public class Seed : GenericUsable, IValuedGood {
     public override bool CanUse(Kobold k) {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
-            if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
-                return false;
-            }
-        }
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
-            if (hit.collider.CompareTag("PlantableTerrain")) {
-                if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    return true;
-                }
+            SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
+            if (tile != null && tile.GetPlantable()) {
+                return true;
             }
         }
         return false;
     }
+
     [PunRPC]
     public override void Use() {
         if (!photonView.IsMine || !CanUse(null)) {
             return;
         }
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
-            if (hit.collider.CompareTag("PlantableTerrain")) {
-                if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    PhotonNetwork.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, new object[] {PlantDatabase.GetID(plant)} );
-                    PhotonNetwork.Destroy(gameObject);
-                }
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
+        for(int i=0;i<hitCount;i++) {
+            SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
+            if (tile != null && tile.GetPlantable()) {
+                PhotonNetwork.Instantiate(plantPrefab.photonName, tile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant)} );
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }

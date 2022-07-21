@@ -38,6 +38,7 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
+        photonView.RequestOwnership();
         k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
         base.LocalUse(k);
     }
@@ -120,21 +121,21 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         if (other.isTrigger) {
             return;
         }
+        
+        Kobold kobold = other.GetComponentInParent<Kobold>();
+        if (kobold != null) {
+            kobold.StartCoroutine(RagdollForTime(kobold));
+        }
+        foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
+            r.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
+        }
+        
         GenericDamagable d = other.transform.root.GetComponent<GenericDamagable>();
         if (d != null && !d.removeOnDeath) {
             d.transform.position += Vector3.up * 1f;
-            foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-                r?.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
-            }
             if (!deny.isPlaying) {
                 deny.Play();
             }
-
-            Kobold kobold = d.GetComponentInParent<Kobold>();
-            if (kobold != null) {
-                kobold.StartCoroutine(RagdollForTime(kobold));
-            }
-
             d.Damage(d.health+1);
             return;
         }

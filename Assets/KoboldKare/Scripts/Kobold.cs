@@ -346,6 +346,19 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         }
     }
     public bool OnGrab(Kobold kobold) {
+        if (!photonView.IsMine) {
+            bool shouldRequest = true;
+            foreach (var player in PhotonNetwork.PlayerList) {
+                if ((Kobold)player.TagObject == this) {
+                    shouldRequest = false;
+                    break;
+                }
+            }
+
+            if (shouldRequest) {
+                photonView.RequestOwnership();
+            }
+        }
         //onGrabEvent.Invoke(kobold, transform.position);
         grabbed = true;
         //KnockOver(999999f);
@@ -382,7 +395,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
                 foreach (Collider c in Physics.OverlapSphere(transform.position, 1f, GameManager.instance.usableHitMask,
                              QueryTriggerInteraction.Collide)) {
                     GenericUsable usable = c.GetComponentInParent<GenericUsable>();
-                    if (usable != null) {
+                    if (usable != null && usable.CanUse(this)) {
                         usable.LocalUse(this);
                         break;
                     }

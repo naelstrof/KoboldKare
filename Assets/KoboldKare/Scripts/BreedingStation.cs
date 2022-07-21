@@ -31,6 +31,7 @@ public class BreedingStation : GenericUsable, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
+        photonView.RequestOwnership();
         for (int i = 0; i < animationStations.Count; i++) {
             if (animationStations[i].info.user == null) {
                 k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,

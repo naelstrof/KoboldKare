@@ -15,7 +15,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
-public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback {
+public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
     public ServerSettings settings;
     public bool online {
         get {
@@ -283,5 +283,17 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //}
     }
     public void OnWebRpcResponse(OperationResponse response) {
+    }
+
+    public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer) {
+        if (targetView.GetComponent<Kobold>() != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+            targetView.TransferOwnership(requestingPlayer);
+        }
+    }
+
+    public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner) {
+    }
+
+    public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest) {
     }
 }

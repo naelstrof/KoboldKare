@@ -40,6 +40,7 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
         return useSprite;
     }
     public override void LocalUse(Kobold k) {
+        photonView.RequestOwnership();
         k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
     }
 

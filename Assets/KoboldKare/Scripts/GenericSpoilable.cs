@@ -1,87 +1,18 @@
-﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.VFX;
+﻿using System;
+using Photon.Pun;
 
-
-[System.Serializable]
-public class SpoilIntensityEvent : UnityEvent<float> {}
 public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
-    public VisualEffect effect;
-    public SpoilIntensityEvent OnIntensityChange;
-    public SpoilIntensityEvent OnFadeout;
-    public float spawnProtection = 4f;
-    //private int daysLeftOut = 0;
-    private bool destroying = false;
-    public bool destroyOnSpoil = false;
-    private float internalSpoilIntensity; 
-    public float spoilIntensity {
-        get {
-            return internalSpoilIntensity;
-        }
-     set {
-         if (!destroying) {
-            internalSpoilIntensity = value;
-            OnIntensityChange.Invoke(value);
-            if (effect != null) {
-                effect.SetFloat("Intensity",value);
-            }
-         }
-        }
-    }
-    public UnityEvent OnSpoilEvent;
-    public UnityEvent onSpoilEvent => OnSpoilEvent;
-
-    // Start is called before the first frame update
     void Start() {
-        internalSpoilIntensity = 0f;
-        destroying = false;
         SpoilableHandler.AddSpoilable(this);
-        if (destroyOnSpoil == true) {
-            onSpoilEvent.AddListener(()=>{
-                if (photonView.IsMine) {
-                    PhotonNetwork.Destroy(gameObject);
-                }
-            });
-        }
-        StartCoroutine(SpawnProtection());
     }
-    public IEnumerator SpawnProtection() {
-        while(spawnProtection > 0f) {
-            internalSpoilIntensity = 0f;
-            spawnProtection -= Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-    }
-    void OnDestroy() {
+
+    private void OnDestroy() {
         SpoilableHandler.RemoveSpoilable(this);
     }
-    public IEnumerator WaitThenDestroyObject(float delay) {
-        yield return new WaitForSeconds(delay);
+
+    public void OnSpoil() {
         if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
-    }
-    public IEnumerator IntensityToZero(float delay) {
-        destroying = true;
-        float newDelay = Mathf.Max(delay/2f,0f);
-        yield return new WaitForSeconds(delay/2f);
-        float time = Time.timeSinceLevelLoad;
-        while (Time.timeSinceLevelLoad < time + newDelay) {
-            float intensity = Mathf.Lerp(internalSpoilIntensity, 0f, (Time.timeSinceLevelLoad - time)/newDelay);
-            OnFadeout.Invoke(1f-intensity);
-            OnIntensityChange.Invoke(intensity);
-            if (effect != null) {
-                effect.SetFloat("Intensity",intensity);
-            }
-            yield return new WaitForFixedUpdate();
-        }
-        destroying = false;
-    }
-    public void WaitThenDestroy(float delay) {
-        StartCoroutine(IntensityToZero(delay));
-        StartCoroutine(WaitThenDestroyObject(delay));
     }
 }

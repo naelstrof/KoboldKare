@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class AlarmClockUpgrade : MonoBehaviour{
     public void Purchase(){
-        DayNightCycle.instance.BoughtAlarmClock();
+        //DayNightCycle.instance.BoughtAlarmClock();
     }
 }

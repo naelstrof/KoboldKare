@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4328201517802186046}
   - component: {fileID: 7914361262930815466}
   - component: {fileID: 5557322632122642286}
+  - component: {fileID: 1007072348121127480}
   m_Layer: 10
   m_Name: SoilTile
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5557322632122642286}
+  - {fileID: 1007072348121127480}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -75,6 +77,22 @@ MonoBehaviour:
   debris:
   - {fileID: 1780517551995939825}
   - {fileID: 7247250032879714298}
+--- !u!114 &1007072348121127480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314461881104564569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1001 &4407593548374156736
 PrefabInstance:
   m_ObjectHideFlags: 0

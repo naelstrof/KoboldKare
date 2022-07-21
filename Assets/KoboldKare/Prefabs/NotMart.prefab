@@ -485,7 +485,6 @@ GameObject:
   m_Component:
   - component: {fileID: 915706546195946424}
   - component: {fileID: 915706546195946430}
-  - component: {fileID: 915706546195946431}
   - component: {fileID: 287694855388310530}
   - component: {fileID: 8811475657113570720}
   m_Layer: 12
@@ -643,79 +642,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &915706546195946431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915706546195946425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 903c82673ad5114428d33d3b176535c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0016746521
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.24054103
-      value: 0.0011671374
-      inSlope: 0.015146755
-      outSlope: 0.015146755
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.10430748
-    - serializedVersion: 3
-      time: 0.2622943
-      value: 0.65571916
-      inSlope: -0.026711252
-      outSlope: -0.026711252
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.11900334
-    - serializedVersion: 3
-      time: 0.75014544
-      value: 0.6557488
-      inSlope: 0.0034380876
-      outSlope: 0.0034380876
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.79535776
-      value: 0.0029147863
-      inSlope: 0.0053935107
-      outSlope: 0.0053935107
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.99835205
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  metabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
 --- !u!114 &287694855388310530
 MonoBehaviour:
   m_ObjectHideFlags: 0

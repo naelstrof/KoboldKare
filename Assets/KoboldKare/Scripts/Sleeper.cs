@@ -35,7 +35,7 @@ public class Sleeper : GenericUsable {
         startSleep.Raise(null);
         yield return new WaitForSeconds(0.5f);
         sleep.Raise(null);
-        DayNightCycle.instance.Sleep();
+        DayNightCycle.StaticSleep();
     }
     public override void Save(BinaryWriter writer, string version) { }
     public override void Load(BinaryReader reader, string version) { }

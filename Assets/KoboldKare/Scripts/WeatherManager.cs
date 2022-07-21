@@ -64,26 +64,17 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         rainSounds.enabled = true;
         thunderSounds.enabled = true;
         while (rainAmount < 1f) {
-            rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
-            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.fixedDeltaTime*0.1f);
-            RenderSettings.fogColor = Color.Lerp(origFogColor,fogColorWhenRaining,Time.fixedDeltaTime*0.1f);
+            rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.deltaTime*0.1f);
+            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.deltaTime*0.1f);
+            RenderSettings.fogColor = Color.Lerp(origFogColor,fogColorWhenRaining,Time.deltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        while (rainAmount > 0f) {
-            rainAmount = Mathf.MoveTowards(rainAmount, 0f, Time.fixedDeltaTime*0.1f);
-            yield return new WaitForFixedUpdate();
+
+        while (rainAmount >= 1f) {
+            yield return new WaitForSeconds(100f);
+            FillRaincatchers("Water");
+            thunderSounds.Play();
         }
     }
     public IEnumerator StopRainRoutine() {
@@ -118,6 +109,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             StartCoroutine(nameof(Rain));
             //rainBackup.Play();
             rain.SendEvent("Fire");
+        } else {
+            StopRain();
         }
     }
 

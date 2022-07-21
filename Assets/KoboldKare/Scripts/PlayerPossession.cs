@@ -20,7 +20,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public GameObject diePrefab;
     public InputActionReference back;
     public PrecisionGrabber pGrabber;
-    public GenericSpoilable spoilable;
     public GameObject dickErectionHidable;
     public Grabber grabber;
     public Camera eyes;
@@ -272,8 +271,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void OnGib() {
         //playerDieEvent.Raise(transform.position);
-        spoilable.spoilIntensity = 1f;
-        spoilable.OnSpoilEvent.Invoke();
+        //spoilable.spoilIntensity = 1f;
+        //spoilable.OnSpoilEvent.Invoke();
     }
     public void OnUse() {
         user.Use();

@@ -5,7 +5,6 @@ using UnityEngine.VFX;
 using UnityEngine.Events;
 
 public interface ISpoilable {
-    float spoilIntensity { get; set; }
-    UnityEvent onSpoilEvent { get; }
+    void OnSpoil();
     Transform transform { get; }
 }

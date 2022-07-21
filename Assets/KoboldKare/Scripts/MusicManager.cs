@@ -7,8 +7,10 @@ public class MusicManager : MonoBehaviour {
     [SerializeField]
     private GameEventGeneric sleepEvent;
     private AudioSource musicSource;
-    public List<AudioClip> dayMusic = new List<AudioClip>();
-    public List<AudioClip> nightMusic = new List<AudioClip>();
+    [SerializeField]
+    private List<AudioClip> dayMusic;
+    [SerializeField]
+    private List<AudioClip> nightMusic;
     private bool waiting = false;
     public IEnumerator FadeOutAndStartOver() {
         float fadeoutTime = Time.time + 1f;
@@ -28,7 +30,7 @@ public class MusicManager : MonoBehaviour {
     public IEnumerator WaitAndPlay(float time) {
         yield return new WaitForSecondsRealtime(time);
         AudioClip p = null;
-        if ( DayNightCycle.instance.daylight > 0f ) {
+        if ( UnityEngine.Random.Range(0f,1f) > 0.25f ) {
             p = dayMusic[Random.Range(0,dayMusic.Count)];
         } else {
             p = nightMusic[Random.Range(0,nightMusic.Count)];

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable {
+public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable, ISpoilable {
     [SerializeField] private VisualEffect itemParticles;
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
@@ -57,8 +58,13 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     }
 
     void Start() {
+        SpoilableHandler.AddSpoilable(this);
         container.AddMix(startingReagent.reagent, startingReagent.volume, GenericReagentContainer.InjectType.Inject);
         SetFrozen(startFrozen);
+    }
+
+    private void OnDestroy() {
+        SpoilableHandler.RemoveSpoilable(this);
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -150,5 +156,9 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
     public Transform GrabTransform(Rigidbody body) {
         return transform;
+    }
+
+    public void OnSpoil() {
+        Die();
     }
 }

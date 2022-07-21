@@ -22,6 +22,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     private Inflatable fruitInflater;
     [SerializeField]
     private bool startFrozen = true;
+    [SerializeField]
+    private AudioPack gibSound;
     
     private void SetFrozen(bool frozen) {
         itemParticles.enabled = frozen;
@@ -108,6 +110,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         obj.transform.position = transform.position;
         VisualEffect effect = obj.GetComponentInChildren<VisualEffect>();
         effect.SetVector4("Color", container.GetColor());
+        GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
         Destroy(obj, 5f);
         if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);

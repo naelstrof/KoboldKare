@@ -8,6 +8,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon;
 using ExitGames.Client.Photon;
+using UnityEngine.Tilemaps;
 
 public class Seed : GenericUsable, IValuedGood {
     //public List<GameObject> _plantPrefabs;
@@ -41,12 +42,23 @@ public class Seed : GenericUsable, IValuedGood {
             return;
         }
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
+        SoilTile bestTile = null;
+        float bestTileDistance = float.MaxValue;
         for(int i=0;i<hitCount;i++) {
             SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
             if (tile != null && tile.GetPlantable()) {
-                PhotonNetwork.Instantiate(plantPrefab.photonName, tile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant)} );
-                PhotonNetwork.Destroy(gameObject);
+                float distance = Vector3.Distance(tile.transform.position, transform.position);
+                if (distance < bestTileDistance) {
+                    bestTile = tile;
+                    bestTileDistance = distance;
+                }
             }
+        }
+
+        if (bestTile != null && bestTile.GetPlantable()) {
+            GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant)} );
+            bestTile.SetPlanted(obj.GetComponent<Plant>());
+            PhotonNetwork.Destroy(gameObject);
         }
     }
     public float GetWorth() {

@@ -7,15 +7,30 @@ using Photon.Pun;
 using UnityEngine;
 
 public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
+    private Plant planted;
     [SerializeField]
-    private bool plantable = false;
+    private bool hasDebris = false;
     [SerializeField]
     private List<GameObject> debris;
-    private void SetPlantable(bool newPlantable) {
-        plantable = newPlantable;
-        foreach (GameObject obj in debris) {
-            obj.SetActive(!plantable);
+    public void SetDebris(bool newHasDebris) {
+        if (photonView.IsMine) {
+            hasDebris = newHasDebris;
+            foreach (GameObject obj in debris) {
+                obj.SetActive(hasDebris);
+            }
         }
+    }
+
+    public bool GetPlantable() {
+        return planted == null || planted.plant.possibleNextGenerations.Length == 0;
+    }
+
+    public void SetPlanted(Plant plant) {
+        if (planted != null) {
+            PhotonNetwork.Destroy(planted.gameObject);
+        }
+        
+        planted = plant;
     }
 
     public Vector3 GetPlantPosition() {
@@ -23,26 +38,40 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private void Awake() {
-        SetPlantable(plantable);
+        SetDebris(hasDebris);
     }
 
-    public bool GetPlantable() {
-        return plantable;
+    public bool GetDebris() {
+        return hasDebris;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(plantable);
+            stream.SendNext(debris);
+            if (planted == null) {
+                stream.SendNext(-1);
+            } else {
+                stream.SendNext(planted.photonView.ViewID);
+            }
         } else {
-            SetPlantable((bool)stream.ReceiveNext());
+            SetDebris((bool)stream.ReceiveNext());
+            int viewID = (int)stream.ReceiveNext();
+            SetPlanted(viewID == -1 ? null : PhotonNetwork.GetPhotonView(viewID).GetComponent<Plant>());
         }
     }
 
     public void Save(BinaryWriter writer, string version) {
-        writer.Write(plantable);
+        writer.Write(hasDebris);
+        if (planted == null) {
+            writer.Write((int)-1);
+        } else {
+            writer.Write(planted.photonView.ViewID);
+        }
     }
 
     public void Load(BinaryReader reader, string version) {
-        SetPlantable(reader.ReadBoolean());
+        SetDebris(reader.ReadBoolean());
+        int viewID = reader.ReadInt32();
+        SetPlanted(viewID == -1 ? null : PhotonNetwork.GetPhotonView(viewID).GetComponent<Plant>());
     }
 }

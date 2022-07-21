@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "ReagentCallbacks", menuName = "Data/Reagent Callbacks", order = 1)]
 public class ReagentSerializableCallbacks : ScriptableObject {
@@ -90,6 +91,10 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         GameObject.Instantiate(explosionPrefab, backupPosition, Quaternion.identity);
         HashSet<Kobold> foundKobolds = new HashSet<Kobold>();
         SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(backupPosition, 10f, scorchDecal, Quaternion.FromToRotation(Vector3.forward, Vector3.down), GameManager.instance.decalHitMask);
+        
+        SoilTile bestTile = null;
+        float bestTileDistance = float.MaxValue;
+        
         foreach( Collider c in Physics.OverlapSphere(backupPosition, 5f, playerMask, QueryTriggerInteraction.Ignore)) {
             scorchDecal.color = Color.black;
             Kobold k = c.GetComponentInParent<Kobold>();
@@ -104,6 +109,16 @@ public class ReagentSerializableCallbacks : ScriptableObject {
                 Rigidbody r = c.GetComponentInParent<Rigidbody>();
                 r?.AddExplosionForce(3000f, backupPosition, 5f);
             }
+
+            SoilTile tile = c.GetComponentInParent<SoilTile>();
+            if (tile != null && tile.GetDebris()) {
+                float distance = Vector3.Distance(backupPosition, tile.transform.position);
+                if (distance < bestTileDistance) {
+                    bestTile = tile;
+                    bestTileDistance = distance;
+                }
+            }
+
             IDamagable damagable = c.GetComponentInParent<IDamagable>();
             // Bombs hurt!!
             if (damagable != null) {
@@ -113,6 +128,11 @@ public class ReagentSerializableCallbacks : ScriptableObject {
                 damagable.Damage(damage);
             }
         }
+
+        if (bestTile != null) {
+            bestTile.SetDebris(false);
+        }
+
         // Remove all explosium
         if (targetTransform != null) {
             container.Spill(container.volume);

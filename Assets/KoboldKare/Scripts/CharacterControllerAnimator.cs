@@ -83,6 +83,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     
     private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
         StopAnimation();
+        StopAllCoroutines();
         currentStationSet = set;
         currentStation = station;
         if (station.info.user != null) {
@@ -109,9 +110,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         solver.ForceBlend(1f);
         yield return new WaitForSeconds(3f);
         float transitionDuration = 3f;
-        float endTransitionTime = Time.time + transitionDuration;
-        while (Time.time < endTransitionTime) {
-            currentStation.SetProgress(Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration));
+        float startTransitionTime = Time.time;
+        while (Time.time < startTransitionTime + transitionDuration) {
+            float t = (Time.time - startTransitionTime) / transitionDuration;
+            currentStation.SetProgress(Mathf.Lerp(currentStation.progress, randomSample, t));
             yield return null;
         }
         while (animating) {
@@ -226,10 +228,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             return;
         }
         StopAllCoroutines();
-        solver.enabled = false;
-        controller.enabled = true;
-        kobold.body.isKinematic = false;
-        solver.CleanUp();
+        StartCoroutine(StopAnimationRoutine());
         animating = false;
         if (currentStation != null && currentStation.info.user == kobold) {
             currentStation.info.user = null;
@@ -237,6 +236,22 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         currentStation = null;
         currentStationSet = null;
     }
+
+    private IEnumerator StopAnimationRoutine() {
+        float duration = 1f;
+        float startTime = Time.time;
+        while (Time.time < startTime + duration) {
+            float t = (Time.time - startTime) / duration;
+            solver.ForceBlend(1f - t);
+            yield return null;
+        }
+        solver.ForceBlend(0f);
+        solver.enabled = false;
+        controller.enabled = true;
+        kobold.body.isKinematic = false;
+        solver.CleanUp();
+    }
+
     void FixedUpdate() {
         if (playerPossession == null) {
             return;

@@ -227,7 +227,7 @@ Material:
     - _BulgeNormalCorrection: 8
     - _BumpScale: 1
     - _CoatMask: 0
-    - _CompressibleDistance: 0.1
+    - _CompressibleDistance: 0.25
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5

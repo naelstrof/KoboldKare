@@ -22,7 +22,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public bool GetPlantable() {
-        return planted == null || planted.plant.possibleNextGenerations.Length == 0;
+        return (planted == null || planted.plant.possibleNextGenerations.Length == 0) && !hasDebris;
     }
 
     public void SetPlanted(Plant plant) {

@@ -31,7 +31,7 @@ public class EnergyBarUI : MonoBehaviour {
         StopAllCoroutines();
         // Ensure we have all our bars available.
         for (int i = energyBars.Count; i < maxEnergy; i++) {
-            Image img = new GameObject("EnergyBar", typeof(Image), typeof(RectTransform)).GetComponent<Image>();
+            Image img = new GameObject("EnergyBar", typeof(Image)).GetComponent<Image>();
             img.sprite = energyBarSprite;
             img.color = deadColor;
             img.preserveAspect = true;

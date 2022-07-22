@@ -51,6 +51,7 @@ MonoBehaviour:
   - RPCAddMoney
   - BeginAnimationRPC
   - StopAnimationRPC
+  - SetDebris
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

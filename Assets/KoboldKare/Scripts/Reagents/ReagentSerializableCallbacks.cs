@@ -130,7 +130,7 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         }
 
         if (bestTile != null) {
-            bestTile.SetDebris(false);
+            bestTile.photonView.RPC(nameof(SoilTile.SetDebris),RpcTarget.All,false);
         }
 
         // Remove all explosium

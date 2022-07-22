@@ -90,7 +90,7 @@ public class ReagentSerializableCallbacks : ScriptableObject {
         }
         GameObject.Instantiate(explosionPrefab, backupPosition, Quaternion.identity);
         HashSet<Kobold> foundKobolds = new HashSet<Kobold>();
-        SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(backupPosition, 10f, scorchDecal, Quaternion.FromToRotation(Vector3.forward, Vector3.down), GameManager.instance.decalHitMask);
+        SkinnedMeshDecals.PaintDecal.RenderDecalInBox(Vector3.one*4f, backupPosition, 4f, scorchDecal, Quaternion.FromToRotation(Vector3.forward, Vector3.down), GameManager.instance.decalHitMask);
         
         SoilTile bestTile = null;
         float bestTileDistance = float.MaxValue;

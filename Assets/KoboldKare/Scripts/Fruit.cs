@@ -41,7 +41,6 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         renderers = GetComponentsInChildren<Renderer>();
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
-        container.maxVolume = startingReagent.volume;
         
         InflatableTransform inflatableTransform = new InflatableTransform();
         inflatableTransform.SetTransform(transform);

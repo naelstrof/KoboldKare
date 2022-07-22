@@ -14,6 +14,7 @@ using TMPro;
 using System.IO;
 using Naelstrof.BodyProportion;
 using Naelstrof.Inflatable;
+using UnityEngine.Serialization;
 
 public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
@@ -61,6 +62,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     
     [SerializeField]
     private AudioPack tummyGrumbles;
+    [FormerlySerializedAs("gurglePack")] [SerializeField]
+    private AudioPack garglePack;
     
     public BodyProportionSimple bodyProportion;
     public TMPro.TMP_Text chatText;
@@ -71,7 +74,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
 
     public Grabber grabber;
-    private AudioSource gurgleSource;
+    private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
     public Rigidbody[] grabbableBodies;
     public List<Renderer> koboldBodyRenderers;
@@ -245,14 +248,14 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             tummyGrumbleSource.loop = true;
         }
         
-        if (gurgleSource == null) {
-            gurgleSource = gameObject.AddComponent<AudioSource>();
-            gurgleSource.playOnAwake = false;
-            gurgleSource.maxDistance = 10f;
-            gurgleSource.minDistance = 0.2f;
-            gurgleSource.rolloffMode = AudioRolloffMode.Linear;
-            gurgleSource.spatialBlend = 1f;
-            gurgleSource.loop = true;
+        if (gargleSource == null) {
+            gargleSource = gameObject.AddComponent<AudioSource>();
+            gargleSource.playOnAwake = false;
+            gargleSource.maxDistance = 10f;
+            gargleSource.minDistance = 0.2f;
+            gargleSource.rolloffMode = AudioRolloffMode.Linear;
+            gargleSource.spatialBlend = 1f;
+            gargleSource.loop = true;
         }
         belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource));
     }
@@ -603,8 +606,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
 
     IEnumerator WaitAndThenStopGargling(float time) {
         yield return new WaitForSeconds(time);
-        gurgleSource.Pause();
-        gurgleSource.enabled = false;
+        gargleSource.Pause();
+        gargleSource.enabled = false;
     }
     public void OnBellyContentsChanged(GenericReagentContainer.InjectType injectType) {
         belly.SetSize(Mathf.Log(1f + bellyContainer.volume / 80f, 2f), this);
@@ -612,10 +615,11 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             return;
         }
         koboldAnimator.SetTrigger("Quaff");
-        if (!gurgleSource.isPlaying) {
-            gurgleSource.enabled = true;
-            gurgleSource.Play();
-            gurgleSource.pitch = 0.9f + sex*0.4f;
+        if (gargleSource.enabled == false || !gargleSource.isPlaying) {
+            gargleSource.enabled = true;
+            garglePack.Play(gargleSource);
+            //gurgleSource.Play();
+            gargleSource.pitch = 0.9f + sex*0.4f;
             StartCoroutine(WaitAndThenStopGargling(0.25f));
         }
     }

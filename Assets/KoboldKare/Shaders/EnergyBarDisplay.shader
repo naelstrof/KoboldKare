@@ -992,7 +992,9 @@ Shader "EnergyBarDisplay"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
 
 
-			
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/Functions.hlsl"
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
@@ -1014,7 +1016,7 @@ Shader "EnergyBarDisplay"
 				#ifdef ASE_FOG
 				float fogFactor : TEXCOORD2;
 				#endif
-				
+				float4 ase_texcoord3 : TEXCOORD3;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1034,7 +1036,30 @@ Shader "EnergyBarDisplay"
 			CBUFFER_END
 			
 
-						
+			
+			float4 SampleGradient( Gradient gradient, float time )
+			{
+				float3 color = gradient.colors[0].rgb;
+				UNITY_UNROLL
+				for (int c = 1; c < 8; c++)
+				{
+				float colorPos = saturate((time - gradient.colors[c-1].w) / ( 0.00001 + (gradient.colors[c].w - gradient.colors[c-1].w)) * step(c, gradient.colorsLength-1));
+				color = lerp(color, gradient.colors[c].rgb, lerp(colorPos, step(0.01, colorPos), gradient.type));
+				}
+				#ifndef UNITY_COLORSPACE_GAMMA
+				color = SRGBToLinear(color);
+				#endif
+				float alpha = gradient.alphas[0].x;
+				UNITY_UNROLL
+				for (int a = 1; a < 8; a++)
+				{
+				float alphaPos = saturate((time - gradient.alphas[a-1].y) / ( 0.00001 + (gradient.alphas[a].y - gradient.alphas[a-1].y)) * step(a, gradient.alphasLength-1));
+				alpha = lerp(alpha, gradient.alphas[a].x, lerp(alphaPos, step(0.01, alphaPos), gradient.type));
+				}
+				return float4(color, alpha);
+			}
+			
+			
 			VertexOutput VertexFunction ( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1042,7 +1067,7 @@ Shader "EnergyBarDisplay"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				
+				o.ase_texcoord3 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1171,11 +1196,14 @@ Shader "EnergyBarDisplay"
 						ShadowCoords = TransformWorldToShadowCoord( WorldPosition );
 					#endif
 				#endif
+				Gradient gradient12 = NewGradient( 0, 2, 4, float4( 1, 1, 1, 0 ), float4( 1, 1, 1, 1 ), 0, 0, 0, 0, 0, 0, float2( 0, 0.04077211 ), float2( 1, 0.05282673 ), float2( 1, 0.9471732 ), float2( 0, 0.9638514 ), 0, 0, 0, 0 );
+				float temp_output_11_0 = ( ( IN.ase_texcoord3.xyz.x + 0.5 ) * _MaxValue );
+				float lerpResult16 = lerp( 0.0 , SampleGradient( gradient12, frac( temp_output_11_0 ) ).a , saturate( sign( ( _Value - temp_output_11_0 ) ) ));
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = float3( 0.5, 0.5, 0.5 );
-				float Alpha = 1;
+				float3 Color = _Color.rgb;
+				float Alpha = ( _Color.a * saturate( lerpResult16 ) );
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
 
@@ -1238,7 +1266,9 @@ Shader "EnergyBarDisplay"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/Functions.hlsl"
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
@@ -1251,7 +1281,7 @@ Shader "EnergyBarDisplay"
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1273,6 +1303,29 @@ Shader "EnergyBarDisplay"
 			
 
 			
+			float4 SampleGradient( Gradient gradient, float time )
+			{
+				float3 color = gradient.colors[0].rgb;
+				UNITY_UNROLL
+				for (int c = 1; c < 8; c++)
+				{
+				float colorPos = saturate((time - gradient.colors[c-1].w) / ( 0.00001 + (gradient.colors[c].w - gradient.colors[c-1].w)) * step(c, gradient.colorsLength-1));
+				color = lerp(color, gradient.colors[c].rgb, lerp(colorPos, step(0.01, colorPos), gradient.type));
+				}
+				#ifndef UNITY_COLORSPACE_GAMMA
+				color = SRGBToLinear(color);
+				#endif
+				float alpha = gradient.alphas[0].x;
+				UNITY_UNROLL
+				for (int a = 1; a < 8; a++)
+				{
+				float alphaPos = saturate((time - gradient.alphas[a-1].y) / ( 0.00001 + (gradient.alphas[a].y - gradient.alphas[a-1].y)) * step(a, gradient.alphasLength-1));
+				alpha = lerp(alpha, gradient.alphas[a].x, lerp(alphaPos, step(0.01, alphaPos), gradient.type));
+				}
+				return float4(color, alpha);
+			}
+			
+
 			int _ObjectId;
 			int _PassValue;
 
@@ -1292,7 +1345,7 @@ Shader "EnergyBarDisplay"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
-				
+				o.ase_texcoord = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1393,8 +1446,11 @@ Shader "EnergyBarDisplay"
 			half4 frag(VertexOutput IN ) : SV_TARGET
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				Gradient gradient12 = NewGradient( 0, 2, 4, float4( 1, 1, 1, 0 ), float4( 1, 1, 1, 1 ), 0, 0, 0, 0, 0, 0, float2( 0, 0.04077211 ), float2( 1, 0.05282673 ), float2( 1, 0.9471732 ), float2( 0, 0.9638514 ), 0, 0, 0, 0 );
+				float temp_output_11_0 = ( ( IN.ase_texcoord.xyz.x + 0.5 ) * _MaxValue );
+				float lerpResult16 = lerp( 0.0 , SampleGradient( gradient12, frac( temp_output_11_0 ) ).a , saturate( sign( ( _Value - temp_output_11_0 ) ) ));
 				
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = ( _Color.a * saturate( lerpResult16 ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 
@@ -1444,7 +1500,9 @@ Shader "EnergyBarDisplay"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/Functions.hlsl"
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
@@ -1457,7 +1515,7 @@ Shader "EnergyBarDisplay"
 			struct VertexOutput
 			{
 				float4 clipPos : SV_POSITION;
-				
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1479,6 +1537,29 @@ Shader "EnergyBarDisplay"
 			
 
 			
+			float4 SampleGradient( Gradient gradient, float time )
+			{
+				float3 color = gradient.colors[0].rgb;
+				UNITY_UNROLL
+				for (int c = 1; c < 8; c++)
+				{
+				float colorPos = saturate((time - gradient.colors[c-1].w) / ( 0.00001 + (gradient.colors[c].w - gradient.colors[c-1].w)) * step(c, gradient.colorsLength-1));
+				color = lerp(color, gradient.colors[c].rgb, lerp(colorPos, step(0.01, colorPos), gradient.type));
+				}
+				#ifndef UNITY_COLORSPACE_GAMMA
+				color = SRGBToLinear(color);
+				#endif
+				float alpha = gradient.alphas[0].x;
+				UNITY_UNROLL
+				for (int a = 1; a < 8; a++)
+				{
+				float alphaPos = saturate((time - gradient.alphas[a-1].y) / ( 0.00001 + (gradient.alphas[a].y - gradient.alphas[a-1].y)) * step(a, gradient.alphasLength-1));
+				alpha = lerp(alpha, gradient.alphas[a].x, lerp(alphaPos, step(0.01, alphaPos), gradient.type));
+				}
+				return float4(color, alpha);
+			}
+			
+
         
 			float4 _SelectionID;
 
@@ -1499,7 +1580,7 @@ Shader "EnergyBarDisplay"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
-				
+				o.ase_texcoord = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1600,8 +1681,11 @@ Shader "EnergyBarDisplay"
 			half4 frag(VertexOutput IN ) : SV_TARGET
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				Gradient gradient12 = NewGradient( 0, 2, 4, float4( 1, 1, 1, 0 ), float4( 1, 1, 1, 1 ), 0, 0, 0, 0, 0, 0, float2( 0, 0.04077211 ), float2( 1, 0.05282673 ), float2( 1, 0.9471732 ), float2( 0, 0.9638514 ), 0, 0, 0, 0 );
+				float temp_output_11_0 = ( ( IN.ase_texcoord.xyz.x + 0.5 ) * _MaxValue );
+				float lerpResult16 = lerp( 0.0 , SampleGradient( gradient12, frac( temp_output_11_0 ) ).a , saturate( sign( ( _Value - temp_output_11_0 ) ) ));
 				
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = ( _Color.a * saturate( lerpResult16 ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 
@@ -1660,7 +1744,9 @@ Shader "EnergyBarDisplay"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/Functions.hlsl"
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
@@ -1674,7 +1760,7 @@ Shader "EnergyBarDisplay"
 			{
 				float4 clipPos : SV_POSITION;
 				float3 normalWS : TEXCOORD0;
-				
+				float4 ase_texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1694,7 +1780,30 @@ Shader "EnergyBarDisplay"
 			CBUFFER_END
 			
 
-			      
+			
+			float4 SampleGradient( Gradient gradient, float time )
+			{
+				float3 color = gradient.colors[0].rgb;
+				UNITY_UNROLL
+				for (int c = 1; c < 8; c++)
+				{
+				float colorPos = saturate((time - gradient.colors[c-1].w) / ( 0.00001 + (gradient.colors[c].w - gradient.colors[c-1].w)) * step(c, gradient.colorsLength-1));
+				color = lerp(color, gradient.colors[c].rgb, lerp(colorPos, step(0.01, colorPos), gradient.type));
+				}
+				#ifndef UNITY_COLORSPACE_GAMMA
+				color = SRGBToLinear(color);
+				#endif
+				float alpha = gradient.alphas[0].x;
+				UNITY_UNROLL
+				for (int a = 1; a < 8; a++)
+				{
+				float alphaPos = saturate((time - gradient.alphas[a-1].y) / ( 0.00001 + (gradient.alphas[a].y - gradient.alphas[a-1].y)) * step(a, gradient.alphasLength-1));
+				alpha = lerp(alpha, gradient.alphas[a].x, lerp(alphaPos, step(0.01, alphaPos), gradient.type));
+				}
+				return float4(color, alpha);
+			}
+			
+      
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1710,7 +1819,7 @@ Shader "EnergyBarDisplay"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				
+				o.ase_texcoord1 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -1815,8 +1924,11 @@ Shader "EnergyBarDisplay"
 			half4 frag(VertexOutput IN ) : SV_TARGET
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				Gradient gradient12 = NewGradient( 0, 2, 4, float4( 1, 1, 1, 0 ), float4( 1, 1, 1, 1 ), 0, 0, 0, 0, 0, 0, float2( 0, 0.04077211 ), float2( 1, 0.05282673 ), float2( 1, 0.9471732 ), float2( 0, 0.9638514 ), 0, 0, 0, 0 );
+				float temp_output_11_0 = ( ( IN.ase_texcoord1.xyz.x + 0.5 ) * _MaxValue );
+				float lerpResult16 = lerp( 0.0 , SampleGradient( gradient12, frac( temp_output_11_0 ) ).a , saturate( sign( ( _Value - temp_output_11_0 ) ) ));
 				
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = ( _Color.a * saturate( lerpResult16 ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if _ALPHATEST_ON
@@ -1872,7 +1984,9 @@ Shader "EnergyBarDisplay"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#include "Packages/com.unity.shadergraph/ShaderGraphLibrary/Functions.hlsl"
+			#define ASE_NEEDS_FRAG_POSITION
+
 
 			struct VertexInput
 			{
@@ -1886,7 +2000,7 @@ Shader "EnergyBarDisplay"
 			{
 				float4 clipPos : SV_POSITION;
 				float3 normalWS : TEXCOORD0;
-				
+				float4 ase_texcoord1 : TEXCOORD1;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1907,6 +2021,29 @@ Shader "EnergyBarDisplay"
 			
 
 			
+			float4 SampleGradient( Gradient gradient, float time )
+			{
+				float3 color = gradient.colors[0].rgb;
+				UNITY_UNROLL
+				for (int c = 1; c < 8; c++)
+				{
+				float colorPos = saturate((time - gradient.colors[c-1].w) / ( 0.00001 + (gradient.colors[c].w - gradient.colors[c-1].w)) * step(c, gradient.colorsLength-1));
+				color = lerp(color, gradient.colors[c].rgb, lerp(colorPos, step(0.01, colorPos), gradient.type));
+				}
+				#ifndef UNITY_COLORSPACE_GAMMA
+				color = SRGBToLinear(color);
+				#endif
+				float alpha = gradient.alphas[0].x;
+				UNITY_UNROLL
+				for (int a = 1; a < 8; a++)
+				{
+				float alphaPos = saturate((time - gradient.alphas[a-1].y) / ( 0.00001 + (gradient.alphas[a].y - gradient.alphas[a-1].y)) * step(a, gradient.alphasLength-1));
+				alpha = lerp(alpha, gradient.alphas[a].x, lerp(alphaPos, step(0.01, alphaPos), gradient.type));
+				}
+				return float4(color, alpha);
+			}
+			
+
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1922,7 +2059,7 @@ Shader "EnergyBarDisplay"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				
+				o.ase_texcoord1 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -2026,8 +2163,11 @@ Shader "EnergyBarDisplay"
 			half4 frag(VertexOutput IN ) : SV_TARGET
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				Gradient gradient12 = NewGradient( 0, 2, 4, float4( 1, 1, 1, 0 ), float4( 1, 1, 1, 1 ), 0, 0, 0, 0, 0, 0, float2( 0, 0.04077211 ), float2( 1, 0.05282673 ), float2( 1, 0.9471732 ), float2( 0, 0.9638514 ), 0, 0, 0, 0 );
+				float temp_output_11_0 = ( ( IN.ase_texcoord1.xyz.x + 0.5 ) * _MaxValue );
+				float lerpResult16 = lerp( 0.0 , SampleGradient( gradient12, frac( temp_output_11_0 ) ).a , saturate( sign( ( _Value - temp_output_11_0 ) ) ));
 				
-				surfaceDescription.Alpha = 1;
+				surfaceDescription.Alpha = ( _Color.a * saturate( lerpResult16 ) );
 				surfaceDescription.AlphaClipThreshold = 0.5;
 				
 				#if _ALPHATEST_ON
@@ -2054,22 +2194,22 @@ Shader "EnergyBarDisplay"
 }
 /*ASEBEGIN
 Version=18935
-237;417;1800;766;947.6459;420.9015;1;True;False
+270;419;1800;766;4077.906;1171.371;4.421673;True;False
 Node;AmplifyShaderEditor.PosVertexDataNode;8;-1067,-187;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;250.4331,-209.8712;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;21;441.3541,196.0985;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LerpOp;16;169.1115,171.3081;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SaturateNode;19;-90.5614,89.6394;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GradientSampleNode;13;-149,-277;Inherit;True;2;0;OBJECT;;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SignOpNode;18;-233.5614,55.83942;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;5;-32,-510;Inherit;False;Property;_Color;Color;0;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,0.9609347,0.1084903,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.GradientNode;12;-410,-338;Inherit;False;0;2;4;1,1,1,0;1,1,1,1;0,0.04077211;1,0.05282673;1,0.9471732;0,0.9638514;0;1;OBJECT;0
-Node;AmplifyShaderEditor.SimpleSubtractOpNode;17;-561.1614,79.23941;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;9;-864,-168;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;6;-1202.44,154.305;Inherit;False;Property;_MaxValue;MaxValue;1;0;Create;True;0;0;0;False;0;False;5;3;1;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;7;-857.6002,325.9998;Inherit;False;Property;_Value;Value;2;0;Create;True;0;0;0;False;0;False;0;3;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;11;-667,-171;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;6;-1202.44,154.305;Inherit;False;Property;_MaxValue;MaxValue;1;0;Create;True;0;0;0;False;0;False;5;3;1;10;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;9;-864,-168;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleSubtractOpNode;17;-561.1614,79.23941;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SignOpNode;18;-233.5614,55.83942;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GradientNode;12;-410,-338;Inherit;False;0;2;4;1,1,1,0;1,1,1,1;0,0.04077211;1,0.05282673;1,0.9471732;0,0.9638514;0;1;OBJECT;0
 Node;AmplifyShaderEditor.FractNode;10;-362,-144;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SaturateNode;19;-90.5614,89.6394;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GradientSampleNode;13;-149,-277;Inherit;True;2;0;OBJECT;;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.LerpOp;16;169.1115,171.3081;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;5;-32,-510;Inherit;False;Property;_Color;Color;0;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,0.9609347,0.1084903,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SaturateNode;21;441.3541,196.0985;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;20;250.4331,-209.8712;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;24;469.2,-248;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ScenePickingPass;0;7;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;23;469.2,-248;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;SceneSelectionPass;0;6;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;22;469.2,-248;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2080,22 +2220,22 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;25;469.2,-248;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormals;0;8;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;26;469.2,-248;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormalsOnly;0;9;DepthNormalsOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;True;15;d3d9;d3d11_9x;d3d11;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-WireConnection;20;0;5;4
-WireConnection;20;1;21;0
-WireConnection;21;0;16;0
-WireConnection;16;1;13;4
-WireConnection;16;2;19;0
+WireConnection;9;0;8;1
+WireConnection;11;0;9;0
+WireConnection;11;1;6;0
+WireConnection;17;0;7;0
+WireConnection;17;1;11;0
+WireConnection;18;0;17;0
+WireConnection;10;0;11;0
 WireConnection;19;0;18;0
 WireConnection;13;0;12;0
 WireConnection;13;1;10;0
-WireConnection;18;0;17;0
-WireConnection;17;0;7;0
-WireConnection;17;1;11;0
-WireConnection;11;0;9;0
-WireConnection;11;1;6;0
-WireConnection;9;0;8;1
-WireConnection;10;0;11;0
+WireConnection;16;1;13;4
+WireConnection;16;2;19;0
+WireConnection;21;0;16;0
+WireConnection;20;0;5;4
+WireConnection;20;1;21;0
 WireConnection;1;2;5;0
 WireConnection;1;3;20;0
 ASEEND*/
-//CHKSM=30E590765F8B6DA79BE508C54B4558A327B0AF8C
+//CHKSM=60CCF75927721B50979B87FF9AC3AACD79DF74B1

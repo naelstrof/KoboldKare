@@ -47,7 +47,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(debris);
+            stream.SendNext(hasDebris);
             if (planted == null) {
                 stream.SendNext(-1);
             } else {

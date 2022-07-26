@@ -5053,8 +5053,6 @@ GameObject:
   - component: {fileID: 9199127522773900938}
   - component: {fileID: 9199127522773900933}
   - component: {fileID: 4220519017408526975}
-  - component: {fileID: 4018566566073863999}
-  - component: {fileID: 3175383925714894487}
   - component: {fileID: 3829575167701226571}
   - component: {fileID: 6695653805882490790}
   - component: {fileID: 5384312534589600833}
@@ -5105,6 +5103,7 @@ MonoBehaviour:
   rainBackup: {fileID: 1658980044}
   rainSounds: {fileID: 3829575167701226571}
   thunderSounds: {fileID: 6695653805882490790}
+  midnightEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
   splashMaterial: {fileID: 2100000, guid: 25bb901563187024482892d29edbc468, type: 2}
 --- !u!114 &4220519017408526975
 MonoBehaviour:
@@ -5129,62 +5128,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4018566566073863999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199127522773900932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f410c3a124368e42a898991d4c13a0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 47daf45042a3fe1489b79d80d828cce0, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9199127522773900933}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: RandomlyRain
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.15
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3175383925714894487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199127522773900932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f410c3a124368e42a898991d4c13a0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9199127522773900933}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: StopRain
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!82 &3829575167701226571
 AudioSource:
   m_ObjectHideFlags: 0

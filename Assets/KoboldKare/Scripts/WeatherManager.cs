@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using KoboldKare;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -18,6 +19,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private VisualEffect spawnedEffect;
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
+    public GameEventGeneric midnightEvent;
     private Camera cachedCamera;
     [SerializeField]
     private ReagentContents rainContents = new ReagentContents();
@@ -50,13 +52,21 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         //StopSnow();
         origFogRange = RenderSettings.fogDensity;
         origFogColor = RenderSettings.fogColor;
+        midnightEvent.AddListener(OnMidnight);
     }
+
+    private void OnMidnight(object ignore) {
+        StopRain();
+        RandomlyRain(0.15f);
+    }
+
     private void OnDestroy() {
         //cloudMaterial.SetFloat("densityOffset", -4);
         //cloudMaterial.SetFloat("shadowMin", 0.66f);
         //cloudMaterial.SetFloat("densityMultiplier", 1f);
         skyboxMaterial.SetFloat("_CloudDensityOffset", -0.3f);
         skyboxMaterial.SetFloat("_Brightness", 0.5f);
+        midnightEvent.RemoveListener(OnMidnight);
     }
 
     public IEnumerator Rain() {

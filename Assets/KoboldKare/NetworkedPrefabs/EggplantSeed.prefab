@@ -36,6 +36,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6688771, y: 2.0076098, z: 24.435377}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5543126298821402180}
   m_Father: {fileID: 0}
@@ -366,18 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3990710f7e52bc045b957f418bc71726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 0}
-  OnIntensityChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFadeout:
-    m_PersistentCalls:
-      m_Calls: []
-  spawnProtection: 4
-  destroyOnSpoil: 1
-  OnSpoilEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &3860784306425387888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +461,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9525cfa3d9484df4b901a058cf4e22d3, type: 3}
+--- !u!23 &1635650526462627251 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 979766634720143154, guid: 9525cfa3d9484df4b901a058cf4e22d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1957425284671761025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5543126298821402180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6325041711933977797, guid: 9525cfa3d9484df4b901a058cf4e22d3,
@@ -481,12 +476,6 @@ Transform:
 --- !u!23 &6464547416698389280 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4799856932775029153, guid: 9525cfa3d9484df4b901a058cf4e22d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1957425284671761025}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &1635650526462627251 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 979766634720143154, guid: 9525cfa3d9484df4b901a058cf4e22d3,
     type: 3}
   m_PrefabInstance: {fileID: 1957425284671761025}
   m_PrefabAsset: {fileID: 0}

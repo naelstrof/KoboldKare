@@ -9,13 +9,15 @@ public class FootInteractor : MonoBehaviour, IAdvancedInteractable {
     private Kobold kobold;
     private static WaitForSeconds waitForSeconds = new WaitForSeconds(3f);
     public void OnInteract(Kobold k) {
-        kobold.ragdoller.PushRagdoll();
+        StopAllCoroutines();
+        if (!kobold.ragdoller.ragdolled) {
+            kobold.ragdoller.PushRagdoll();
+        }
     }
     public void Start() {
         kobold = GetComponentInParent<Kobold>();
     }
     public void OnEndInteract(Kobold k) {
-        StopAllCoroutines();
         StartCoroutine(WaitThenStand());
     }
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {

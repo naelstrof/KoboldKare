@@ -55,11 +55,13 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     private ReagentContents boobContents;
     private ReagentContents ballsContents;
     
+    public ReagentContents metabolizedContents;
+    
     [SerializeField]
     private byte energy = 1;
     [SerializeField]
     private byte maxEnergy = 1;
-    
+
     [SerializeField]
     private AudioPack tummyGrumbles;
     [FormerlySerializedAs("gurglePack")] [SerializeField]
@@ -208,7 +210,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             return internalHBCS;
         }
     }
-
     private void OnBoobContentsChanged(ReagentContents contents) {
         boobs.SetSize(Mathf.Log(1f + (contents.volume + baseBoobSize) / 20f, 2f), this);
     }
@@ -232,6 +233,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         boobContents.changed += OnBoobContentsChanged;
         bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
         bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
+        metabolizedContents = new ReagentContents(20f);
+        bellyContainer.maxVolume = 20f;
         photonView.ObservedComponents.Add(bellyContainer);
         belly.OnEnable();
         sizeInflater.OnEnable();
@@ -556,9 +559,24 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public void OnEventRaised(float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         ReagentContents vol = bellyContainer.Metabolize(f);
-        bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
-        float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
         
+        // Reagents that don't affect metabolization limits
+        bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
+
+        vol.DumpNonConsumable();
+        
+        // Can't over-metabolize, put some back if it doesn't fit
+        float maxMetabolization = (metabolizedContents.GetMaxVolume() - metabolizedContents.volume);
+        if (vol.volume > maxMetabolization) {
+            bellyContainer.AddMix(vol.Spill(vol.volume - maxMetabolization), GenericReagentContainer.InjectType.Inject);
+        }
+
+        if (vol.volume <= 0f) {
+            return;
+        }
+        metabolizedContents.AddMix(vol);
+
+        float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
         SetBaseBoobSize(baseBoobSize+melonJuiceVolume);
         
         float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
@@ -569,39 +587,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         SetBaseFatness(baseFatness + milkShakeVolume);
         float pineappleJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
         SetBaseBallsSize(baseBallsSize+pineappleJuiceVolume);
-
-        if (Time.timeSinceLevelLoad > nextEggTime && photonView.IsMine) {
-            float currentEggVolume = bellyContainer.GetVolumeOf(ReagentDatabase.GetReagent("Egg"));
-            float eggSize = FloorNearestPower(5f,currentEggVolume);
-            if (eggSize >= 5f && eggSize < bellyContainer.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))) {
-                OnEggFormed.Invoke();
-                nextEggTime = Time.timeSinceLevelLoad + 30f;
-                bool spawnedEgg = false;
-                foreach(var penetratableSet in penetratables) {
-                    if (penetratableSet.isFemaleExclusiveAnatomy && penetratableSet.penetratable.isActiveAndEnabled) {
-                        eggSpawner.targetPenetrable = penetratableSet.penetratable;
-                        eggSpawner.spawnAlongLength = 1f;
-                        eggSpawner.SpawnEgg(eggSize);
-                        spawnedEgg = true;
-                        break;
-                    }
-                }
-                if (!spawnedEgg) {
-                    foreach(var penetratableSet in penetratables) {
-                        if (penetratableSet.penetratable.isActiveAndEnabled) {
-                            eggSpawner.targetPenetrable = penetratableSet.penetratable;
-                            eggSpawner.spawnAlongLength = 0.5f;
-                            eggSpawner.SpawnEgg(eggSize);
-                            spawnedEgg = true;
-                            break;
-                        } 
-                    }
-                }
-                if (spawnedEgg) {
-                    bellyContainer.OverrideReagent(ReagentDatabase.GetReagent("Egg"), currentEggVolume-eggSize);
-                }
-            }
-        }
     }
 
     IEnumerator WaitAndThenStopGargling(float time) {
@@ -609,8 +594,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         gargleSource.Pause();
         gargleSource.enabled = false;
     }
-    public void OnBellyContentsChanged(GenericReagentContainer.InjectType injectType) {
-        belly.SetSize(Mathf.Log(1f + bellyContainer.volume / 80f, 2f), this);
+    public void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+        belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
         if (injectType != GenericReagentContainer.InjectType.Spray) {
             return;
         }

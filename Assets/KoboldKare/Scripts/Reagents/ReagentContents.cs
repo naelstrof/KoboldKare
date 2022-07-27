@@ -12,7 +12,7 @@ public class Reagent {
     public float volume;
 }
 
-public class ReagentContents {
+public class ReagentContents : IEnumerable<Reagent> {
     public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
     public ReagentContentsChangedAction changed;
@@ -101,6 +101,16 @@ public class ReagentContents {
         contents.Clear();
         changed?.Invoke(this);
     }
+
+    public void DumpNonConsumable() {
+        foreach (var pair in contents) {
+            if (!ReagentDatabase.GetReagent(pair.Key).consumesMetabolization) {
+                pair.Value.volume = 0f;
+            }
+        }
+        changed?.Invoke(this);
+    }
+
     public ReagentContents Metabolize(float deltaTime) {
         float v = volume;
         ReagentContents metabolizeContents = new ReagentContents();
@@ -219,5 +229,15 @@ public class ReagentContents {
             float volume = inStream.ReadSingle();
             OverrideReagent(id, volume);
         }
+    }
+
+    public IEnumerator<Reagent> GetEnumerator() {
+        foreach (var keyValuePair in contents) {
+            yield return keyValuePair.Value;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
     }
 }

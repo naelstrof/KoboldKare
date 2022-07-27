@@ -35,7 +35,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         {  true,   true,   true }, // Vacuum
     };
     [System.Serializable]
-    public class ReagentContainerChangedEvent : UnityEvent<InjectType> {}
+    public class ReagentContainerChangedEvent : UnityEvent<ReagentContents, InjectType> {}
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
@@ -44,7 +44,10 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
 
     public float maxVolume {
         get => contents.GetMaxVolume();
-        set => contents.SetMaxVolume(value);
+        set {
+            contents.SetMaxVolume(value);
+            OnChange.Invoke(contents, InjectType.Metabolize);
+        }
     }
 
     public Color GetColor() => contents.GetColor();
@@ -58,6 +61,11 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     public InspectorReagent[] startingReagents;
     [SerializeField]
     private ReagentContents contents;
+
+    public ReagentContents GetContents() {
+        return contents;
+    }
+
     private bool filled = false;
     private bool emptied = false;
     private bool ready = false;
@@ -123,14 +131,14 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
             //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
-            OnFilled.Invoke(injectType);
+            OnFilled.Invoke(contents, injectType);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
-        OnChange.Invoke(injectType);
+        OnChange.Invoke(contents, injectType);
         if (!emptied && isEmpty) {
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
-            OnEmpty.Invoke(injectType);
+            OnEmpty.Invoke(contents, injectType);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;

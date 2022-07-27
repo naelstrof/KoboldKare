@@ -21,7 +21,7 @@ public class PlantTutorial : MonoBehaviour {
             container.OnFilled.RemoveListener(OnFilled);
         }
     }
-    void OnFilled(GenericReagentContainer.InjectType injectType) {
+    void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         if (plant.plant.possibleNextGenerations.Length == 0) {
             waterCanvas.gameObject.SetActive(false);
             timeCanvas.gameObject.SetActive(false);

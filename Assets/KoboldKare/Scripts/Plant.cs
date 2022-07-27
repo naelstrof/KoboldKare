@@ -58,7 +58,7 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         midnightEvent.RemoveListener(OnEventRaised);
     }
 
-    void OnFilled(GenericReagentContainer.InjectType injectType) {
+    void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }

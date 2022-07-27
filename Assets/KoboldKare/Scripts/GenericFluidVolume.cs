@@ -36,7 +36,7 @@ public class GenericFluidVolume : MonoBehaviour {
 
     public void Start() {
         volumeContainer.OnChange.AddListener(OnReagentContainerChanged);
-        OnReagentContainerChanged(GenericReagentContainer.InjectType.Metabolize);
+        OnReagentContainerChanged(volumeContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
     }
     public void OnDestroy() {
         volumeContainer.OnChange.RemoveListener(OnReagentContainerChanged);
@@ -120,15 +120,15 @@ public class GenericFluidVolume : MonoBehaviour {
         Gizmos.DrawIcon(transform.position, "ico_fluidvolume.png", true);
     }
 
-    public void OnReagentContainerChanged(GenericReagentContainer.InjectType injectType) {
+    public void OnReagentContainerChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         foreach(Renderer r in fluidRenderers) {
             foreach(Material material in r.materials) {
-                material.color = volumeContainer.GetColor();
-                material.SetFloat("_Position", volumeContainer.volume / volumeContainer.maxVolume);
+                material.color = contents.GetColor();
+                material.SetFloat("_Position", contents.volume / contents.GetMaxVolume());
             }
         }
         if (fluidScaler != null) {
-            fluidScaler.localScale = fluidScaler.localScale.With(y:volumeContainer.volume/volumeContainer.maxVolume);
+            fluidScaler.localScale = fluidScaler.localScale.With(y:contents.volume/contents.GetMaxVolume());
         }
     }
 

@@ -113,7 +113,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.19848756
+  - screenRelativeHeight: 0.10418626
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6536593884140711068}
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponBarrelTransform: {fileID: 2475493572493469503}
-  weaponHoldOffset: {x: 0, y: -0.3, z: 0}
+  weaponHoldOffset: {x: 0, y: -0.2, z: 0}
   bucketSplashProjectile:
     gameObject: {fileID: 6847052273168792518, guid: f42cf9decb64d9f4f9a00d76db944c15,
       type: 3}
@@ -526,7 +526,7 @@ Transform:
   m_GameObject: {fileID: 6090925105603108262}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2295108, y: 1.2295108, z: 1.2295108}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 780206787829994112}

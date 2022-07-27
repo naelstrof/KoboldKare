@@ -199,7 +199,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RockTiling: 0.19
+    - _RockTiling: 0.242
     - _SmoothPower: 2.87
     - _Smoothness: 0.215
     - _SmoothnessTextureChannel: 0

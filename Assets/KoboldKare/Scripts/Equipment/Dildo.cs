@@ -18,12 +18,12 @@ public class Dildo : GenericEquipment, IValuedGood {
     }
 
     private void Start() {
-        OnContentsChanged(GenericReagentContainer.InjectType.Inject);
+        OnContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
     }
 
-    private void OnContentsChanged(GenericReagentContainer.InjectType injectType) {
-        float eggPlant = container.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-        float growth = container.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
+    private void OnContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+        float eggPlant = contents.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
+        float growth = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
         dildoSizeInflatable.SetSize(Mathf.Log(2f + (eggPlant + growth)/20f, 2f), this);
     }
 

@@ -21,7 +21,7 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
         stations = tempList.AsReadOnly();
     }
 
-    private void OnReagentContentsChanged(GenericReagentContainer.InjectType injectType) {
+    private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         StopCoroutine(nameof(WaitThenFire));
         StartCoroutine(nameof(WaitThenFire));
     }

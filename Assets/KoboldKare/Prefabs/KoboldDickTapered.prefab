@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -7.164703e-12, z: 6.343884e-13}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2277990634531112218}
   m_RootOrder: 1
@@ -42,6 +43,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -125,6 +127,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7145963756155047701}
   - {fileID: 4954621955005642089}
@@ -296,8 +299,8 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - id: 0
-      - id: 1
+      - rid: 0
+      - rid: 1
     bonerInflater:
       bounceCurve:
         serializedVersion: 2
@@ -325,7 +328,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - id: 2
+      - rid: 2
     attachPoint: 0
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
@@ -336,16 +339,17 @@ MonoBehaviour:
     parentTransform: {fileID: 0}
     dickIdentifier: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 445928784052510322}
-    00000001:
+    - rid: 1
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 3799106679838185238}
-    00000002:
+    - rid: 2
       type: {class: BonerInflatable, ns: , asm: Assembly-CSharp}
       data:
         limpBlendshape: Flaccid2
@@ -398,6 +402,7 @@ Transform:
   m_LocalRotation: {x: -6.998562e-10, y: 4.662226e-10, z: -9.094947e-13, w: 1}
   m_LocalPosition: {x: 1.6825652e-10, y: 0.107166484, z: -0.000000017915681}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6504779128646924794}
   m_Father: {fileID: 3230684946487656547}
@@ -430,6 +435,7 @@ Transform:
     w: 1}
   m_LocalPosition: {x: 0.0000000025986537, y: 0.10716647, z: 0.000000042099714}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9055419353732115832}
   m_Father: {fileID: 445928784052510322}
@@ -461,6 +467,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0.000042045354, y: 0.0009842139, z: -0.00016390925}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4550134514307820235}
   m_Father: {fileID: 2277990634531112218}
@@ -492,6 +499,7 @@ Transform:
   m_LocalRotation: {x: -2.339675e-10, y: 4.662368e-10, z: -4.8467614e-27, w: 1}
   m_LocalPosition: {x: 1.5415935e-10, y: 0.10716646, z: -0.000000031306854}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9055419353732115832}
   m_RootOrder: 0
@@ -522,6 +530,7 @@ Transform:
   m_LocalRotation: {x: -0.707107, y: -0.0000000027939675, z: -0.000000003201421, w: 0.70710665}
   m_LocalPosition: {x: 0, y: 0.476, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3799106679838185238}
   m_RootOrder: 0
@@ -535,7 +544,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 445928784052510322}
-  - component: {fileID: 1099266697953334850}
   - component: {fileID: 8338697229190893412}
   m_Layer: 25
   m_Name: Dick
@@ -554,251 +562,12 @@ Transform:
   m_LocalRotation: {x: 0.6852388, y: 0.010373187, z: 0.009518663, w: 0.72818244}
   m_LocalPosition: {x: 0.00004930806, y: -0.07218721, z: 0.06313045}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3230684946487656547}
   m_Father: {fileID: 4550134514307820235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1099266697953334850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6532421199761545219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b13dd6be68d4eeb4c9b3c8e7812fd68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetRenderers: []
-  shapeCurves: []
-  transformCurves:
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.58229697
-        outSlope: 0.58229697
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.029980013
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateAxis: {x: 0, y: 0, z: 0}
-    translationOffset: {x: 0, y: 0, z: 0}
-    targetTransform: {fileID: 445928784052510322}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  - scaleCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0.58229697
-        outSlope: 0.58229697
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.029980013
-      - serializedVersion: 3
-        time: 100
-        value: 20
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    translateOffsetCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    rotateAxis: {x: 0, y: 0, z: 0}
-    translationOffset: {x: 0, y: 0, z: 0}
-    targetTransform: {fileID: 3799106679838185238}
-    initialScale: {x: 0, y: 0, z: 0}
-    initialRotation: {x: 0, y: 0, z: 0, w: 0}
-    initialPosition: {x: 0, y: 0, z: 0}
-  softbodyCurves: []
-  jiggleBoneCurves: []
-  eventListeners: []
-  materialCurves: []
-  defaultReagentVolume: 0
-  reagentVolumeDivisor: 20
-  container: {fileID: 0}
-  reagentMasks: []
-  bounceCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.25
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.20167542
-      value: 2.502484
-      inSlope: 0.45121813
-      outSlope: 0.45121813
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.4
-      value: 0.46640015
-      inSlope: -1.8744586
-      outSlope: -1.8744586
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.6033672
-      value: 1.791847
-      inSlope: 0.56383085
-      outSlope: 0.56383085
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.803418
-      value: 0.71360475
-      inSlope: -2.3585095
-      outSlope: -2.3585095
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  tweenDuration: 0.8
 --- !u!114 &8338697229190893412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,17 +596,18 @@ MonoBehaviour:
   penetrationMarginOfError: 1.25
   autoPenetrate: -1
   listeners:
-  - id: 0
-  - id: 1
-  - id: 2
+  - rid: 0
+  - rid: 1
+  - rid: 2
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
         knotForceFactor: 0.3
-    00000001:
+    - rid: 1
       type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
@@ -845,7 +615,7 @@ MonoBehaviour:
         audioGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
           type: 2}
         volume: 1
-    00000002:
+    - rid: 2
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
         localDist: 0.733
@@ -878,6 +648,7 @@ Transform:
   m_LocalRotation: {x: 0.036212895, y: -3.9449292e-17, z: -0.000000014181238, w: 0.9993441}
   m_LocalPosition: {x: -0.00004203558, y: 0.92527443, z: -0.09164046}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3799106679838185238}
   - {fileID: 445928784052510322}
@@ -911,6 +682,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: -7.164703e-12, z: 6.343884e-13}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2277990634531112218}
   m_RootOrder: 2
@@ -926,6 +698,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -998,6 +771,7 @@ Transform:
   m_LocalRotation: {x: 0.6852388, y: 0.010373188, z: 0.009518663, w: 0.72818244}
   m_LocalPosition: {x: 0.00004930806, y: -0.07218723, z: 0.06313045}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4914557961092858586}
   m_Father: {fileID: 4550134514307820235}

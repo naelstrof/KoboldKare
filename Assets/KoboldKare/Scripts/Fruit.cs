@@ -25,6 +25,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     private bool startFrozen = true;
     [SerializeField]
     private AudioPack gibSound;
+    [SerializeField]
+    private Transform centerTransform;
     
     private void SetFrozen(bool frozen) {
         itemParticles.enabled = frozen;
@@ -50,6 +52,9 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         
         container.OnChange.AddListener(OnReagentContentsChanged);
         photonView.ObservedComponents.Add(container);
+        if (centerTransform == null) {
+            centerTransform = transform;
+        }
     }
 
     void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType type) {
@@ -154,7 +159,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     }
 
     public Transform GrabTransform(Rigidbody body) {
-        return transform;
+        return centerTransform;
     }
 
     public void OnSpoil() {

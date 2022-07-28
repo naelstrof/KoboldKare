@@ -19,7 +19,6 @@ public class LODManager : MonoBehaviour {
     public class Resource {
         public GenericLODConsumer.ConsumerType type;
         public int highQualityCount;
-        public int mediumQualityCount;
         [HideInInspector]
         public List<GenericLODConsumer> registeredConsumers = new List<GenericLODConsumer>();
     }
@@ -52,22 +51,14 @@ public class LODManager : MonoBehaviour {
                     resource.registeredConsumers.RemoveAt(i);
                     continue;
                 }
-                int veryFarSwapBarrier = resource.highQualityCount + resource.mediumQualityCount;
-                resource.registeredConsumers[i].SetClose(i <= resource.highQualityCount);
-                resource.registeredConsumers[i].SetVeryFar(i > veryFarSwapBarrier);
+                resource.registeredConsumers[i].SetLOD(i <= resource.highQualityCount);
 
                 float b = Vector3.Distance(resource.registeredConsumers[i].transform.position, cameraPos);
                 if (b < a) {
-                    var swap = resource.registeredConsumers[i - 1];
-                    resource.registeredConsumers[i - 1] = resource.registeredConsumers[i];
-                    resource.registeredConsumers[i] = swap;
+                    (resource.registeredConsumers[i - 1], resource.registeredConsumers[i]) = (resource.registeredConsumers[i], resource.registeredConsumers[i - 1]);
                     if (i - 1 <= resource.highQualityCount && i > resource.highQualityCount) {
-                        resource.registeredConsumers[i - 1].SetClose(true);
-                        resource.registeredConsumers[i].SetClose(false);
-                    }
-                    if (i - 1 <= veryFarSwapBarrier && i > veryFarSwapBarrier) {
-                        resource.registeredConsumers[i - 1].SetVeryFar(false);
-                        resource.registeredConsumers[i].SetVeryFar(true);
+                        resource.registeredConsumers[i-1].SetLOD(true);
+                        resource.registeredConsumers[i].SetLOD(false);
                     }
                 }
                 a = b;

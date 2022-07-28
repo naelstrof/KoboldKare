@@ -234,21 +234,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies:
   - {fileID: 3102687797691339591}
-  canLODCondition: []
   resource: 1
 --- !u!114 &1513723796837816266
 MonoBehaviour:
@@ -346,6 +333,7 @@ MonoBehaviour:
     listeners: []
   startFrozen: 1
   gibSound: {fileID: 11400000, guid: f7f1939f20ebb1147a4311c7dc948715, type: 2}
+  centerTransform: {fileID: 0}
   references:
     version: 2
     RefIds: []

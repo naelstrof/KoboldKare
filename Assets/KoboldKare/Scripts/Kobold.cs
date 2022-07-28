@@ -556,10 +556,35 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         for(;f<=target;f*=baseNum) {}
         return f/baseNum;
     }
+
+    public void ProcessReagents(ReagentContents contents) {
+        float melonJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
+        SetBaseBoobSize(baseBoobSize+melonJuiceVolume);
+        float eggplantJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
+        SetBaseDickSize(baseDickSize+eggplantJuiceVolume);
+        float growthSerumVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
+        SetBaseSize(baseSize + growthSerumVolume);
+        float milkShakeVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
+        SetBaseFatness(baseFatness + milkShakeVolume);
+        float pineappleJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
+        SetBaseBallsSize(baseBallsSize+pineappleJuiceVolume);
+    }
+    public void InverseProcessReagents(ReagentContents contents) {
+        float melonJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
+        SetBaseBoobSize(baseBoobSize-melonJuiceVolume);
+        float eggplantJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
+        SetBaseDickSize(baseDickSize-eggplantJuiceVolume);
+        float growthSerumVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
+        SetBaseSize(baseSize - growthSerumVolume);
+        float milkShakeVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
+        SetBaseFatness(baseFatness - milkShakeVolume);
+        float pineappleJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
+        SetBaseBallsSize(baseBallsSize-pineappleJuiceVolume);
+    }
+
     public void OnEventRaised(float f) {
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         ReagentContents vol = bellyContainer.Metabolize(f);
-        
         // Reagents that don't affect metabolization limits
         bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
 
@@ -575,18 +600,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
             return;
         }
         metabolizedContents.AddMix(vol);
-
-        float melonJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
-        SetBaseBoobSize(baseBoobSize+melonJuiceVolume);
-        
-        float eggplantJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-        SetBaseDickSize(baseDickSize+eggplantJuiceVolume);
-        float growthSerumVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
-        SetBaseSize(baseSize + growthSerumVolume);
-        float milkShakeVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
-        SetBaseFatness(baseFatness + milkShakeVolume);
-        float pineappleJuiceVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
-        SetBaseBallsSize(baseBallsSize+pineappleJuiceVolume);
+        ProcessReagents(vol);
     }
 
     IEnumerator WaitAndThenStopGargling(float time) {
@@ -596,7 +610,7 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     }
     public void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
-        if (injectType != GenericReagentContainer.InjectType.Spray) {
+        if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume) {
             return;
         }
         koboldAnimator.SetTrigger("Quaff");

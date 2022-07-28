@@ -66,6 +66,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             targetImage.color = ReagentDatabase.GetReagent(reagents[i].id).color;
             targetImage.type = Image.Type.Sliced;
             targetImage.fillCenter = true;
+            targetImage.pixelsPerUnitMultiplier = 2f;
             RectTransform imageRect = targetImage.GetComponent<RectTransform>();
             imageRect.anchoredPosition = new Vector2(0f, 0.5f);
             imageRect.anchorMin = new Vector2(0f, 0f);

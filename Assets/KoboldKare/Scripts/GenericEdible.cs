@@ -33,7 +33,7 @@ public class GenericEdible : GenericUsable, IOnPhotonViewOwnerChange {
     }
 
     private void Eat(Kobold kobold) {
-        kobold.bellyContainer.TransferMix(container, container.volume*0.5f, GenericReagentContainer.InjectType.Spray);
+        kobold.bellyContainer.TransferMix(container, Mathf.Min(container.maxVolume*0.5f, kobold.bellyContainer.maxVolume-kobold.bellyContainer.volume), GenericReagentContainer.InjectType.Inject);
         if (destroyOnEat) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }

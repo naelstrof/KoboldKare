@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable, ISpoilable {
+public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable, ISpoilable, IPunInstantiateMagicCallback {
     [SerializeField] private VisualEffect itemParticles;
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
@@ -164,5 +164,9 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
     public void OnSpoil() {
         Die();
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
     }
 }

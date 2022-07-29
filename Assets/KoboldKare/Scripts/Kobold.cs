@@ -662,6 +662,8 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
             info.Sender.TagObject = this;
         }
+
+        FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
     }
 
     public void Save(BinaryWriter writer, string version) {
@@ -700,4 +702,6 @@ public class Kobold : MonoBehaviourPun, IGrabbable, IAdvancedInteractable, IPunO
     public float GetWorth() {
         return 5f+(Mathf.Log(1f+(baseSize + baseDickSize + baseBoobSize + baseFatness),2)*10f);
     }
+    
+    
 }

@@ -29,7 +29,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
-    public GameEventGeneric SpawnEvent;
     public IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
@@ -184,7 +183,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-        SpawnEvent.Raise(null);
         PopupHandler.instance.ClearAllPopups();
     }
     public void SpawnControllablePlayer() {

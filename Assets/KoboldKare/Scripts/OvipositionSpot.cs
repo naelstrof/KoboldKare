@@ -77,7 +77,8 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
 
         CatmullSpline path = targetPenetrable.GetSplinePath();
-        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up)).GetComponentInChildren<Penetrator>();
+        KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponent<Kobold>().GetGenes(),k.bellyContainer.GetGenes());
+        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{mixedGenes}).GetComponentInChildren<Penetrator>();
         if (d == null) {
             yield break;
         }

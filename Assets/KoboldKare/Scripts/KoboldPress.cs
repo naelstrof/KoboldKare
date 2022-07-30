@@ -89,7 +89,7 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
         }
 
         ReagentContents spilled = pressedKobold.metabolizedContents.Spill(pressedKobold.metabolizedContents.volume);
-        pressedKobold.InverseProcessReagents(spilled);
+        pressedKobold.ProcessReagents(spilled, -1f);
         container.AddMix(spilled, GenericReagentContainer.InjectType.Inject);
         container.AddMix(pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume), GenericReagentContainer.InjectType.Inject);
     }

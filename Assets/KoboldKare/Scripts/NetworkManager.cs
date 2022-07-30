@@ -76,6 +76,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
+        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
@@ -94,6 +95,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
+        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
@@ -181,7 +183,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (spawnPoints.Count > 0) {
             pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
         }
-        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
+        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity);
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }

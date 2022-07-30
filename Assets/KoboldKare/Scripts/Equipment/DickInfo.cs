@@ -168,12 +168,13 @@ public class DickInfo : MonoBehaviour {
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<GenericReagentContainer>() == null) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.baseBallsSize*0.01f));
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize*0.01f));
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         GenericReagentContainer container = hit.collider.GetComponentInParent<GenericReagentContainer>();
                         if (container != null) {
                             container.AddMix(alloc.Spill(alloc.volume * 0.1f), GenericReagentContainer.InjectType.Spray);
+                            container.SetGenes(attachedKobold.GetGenes());
                         }
 
                         //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.red, 5f);
@@ -193,9 +194,9 @@ public class DickInfo : MonoBehaviour {
             SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
-            pennedHole.GetComponentInParent<GenericReagentContainer>().AddMix(
-                attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
-                GenericReagentContainer.InjectType.Inject);
+            GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
+            container.AddMix( attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses), GenericReagentContainer.InjectType.Inject);
+            container.SetGenes(attachedKobold.GetGenes());
         }
         yield return new WaitForSeconds(3f);
         attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
@@ -244,12 +245,8 @@ public class DickInfo : MonoBehaviour {
 
             set.dick.listeners.Add(new KoboldDickListener(k,set));
             k.activeDicks.Add(set);
-            k.SetBaseDickSize(k.baseDickSize);
-            k.SetBaseBallsSize(k.baseBallsSize);
-            // Make sure the dick is the right color, this just forces a reset of the colors.
-            Color colorSave = k.HueBrightnessContrastSaturation;
-            k.HueBrightnessContrastSaturation = Color.white;
-            k.HueBrightnessContrastSaturation = colorSave;
+            // Make sure the dick is the right color, this just forces a reset of most stats
+            k.SetGenes(k.GetGenes());
         }
         foreach(DickSet set in dicks) {
             foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>()) {

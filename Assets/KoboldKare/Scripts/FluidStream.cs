@@ -222,6 +222,9 @@ public class FluidStream : CatmullDeformer {
         float perVolume = ((midairContents.volume * percentageLoss) + 1f) / hitContainers.Count;
         foreach (GenericReagentContainer cont in hitContainers) {
             cont.AddMix(midairContents.Spill(perVolume), GenericReagentContainer.InjectType.Spray);
+            if (container != null) {
+                cont.SetGenes(container.GetGenes());
+            }
         }
 
     }

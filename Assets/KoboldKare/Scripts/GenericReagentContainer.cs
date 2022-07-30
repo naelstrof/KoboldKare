@@ -8,7 +8,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObservable, ISavable {
+public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable {
     [System.Serializable]
     public class InspectorReagent {
         public ScriptableReagent reagent;
@@ -69,7 +69,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     private bool filled = false;
     private bool emptied = false;
     private bool ready = false;
-    public void Awake() {
+    protected override void Awake() {
         if(ready){return;}
 
         OnChange ??= new ReagentContainerChangedEvent();
@@ -106,6 +106,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
+        SetGenes(injector.GetGenes());
     }
     public bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
         if (!IsMixable(type, injectType)) {
@@ -137,6 +138,7 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         filled = isFull;
         OnChange.Invoke(contents, injectType);
         if (!emptied && isEmpty) {
+            SetGenes(new KoboldGenes());
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
             OnEmpty.Invoke(contents, injectType);
         }

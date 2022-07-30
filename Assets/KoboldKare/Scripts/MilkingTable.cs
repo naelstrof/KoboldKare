@@ -75,7 +75,7 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
         // Now do some milk stuff.
         int pulses = 12;
         ReagentContents milkVolume = new ReagentContents();
-        float totalVolume = stations[0].info.user.baseBoobSize;
+        float totalVolume = stations[0].info.user.GetGenes().breastSize;
         milkVolume.AddMix(ReagentDatabase.GetReagent("Milk").GetReagent(totalVolume));
         for (int i = 0; i < pulses; i++) {
             foreach (Transform t in stations[0].info.user.GetNipples()) {

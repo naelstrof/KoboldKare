@@ -18,7 +18,7 @@ public class DickEquipment : Equipment {
         }
         foreach(DickInfo.DickSet set in info.dicks) {
             if (container != null) {
-                k.SetBaseDickSize(container.volume);
+                k.SetGenes(k.GetGenes().With(dickSize: container.volume));
             }
             set.dickIdentifier = GetInstanceID();
         }
@@ -31,7 +31,7 @@ public class DickEquipment : Equipment {
         // Search for a dick that matches our equipment, then use the info to remove all the dicks associated with it.
         foreach(DickInfo.DickSet set in k.activeDicks) {
             if (set.dickIdentifier == GetInstanceID()) {
-                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.baseDickSize);
+                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.GetGenes().dickSize);
             }
         }
         foreach(DickInfo.DickSet set in k.activeDicks) {

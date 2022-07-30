@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstantiateMagicCallback {
+public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateMagicCallback {
     private Vector3 velocity;
     [SerializeField]
     private GameObject splash;
@@ -93,6 +93,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
             GenericReagentContainer container = colliders[i].GetComponentInParent<GenericReagentContainer>();
             if (container != null) {
                 hitContainers.Add(container);
+                container.SetGenes(GetGenes());
             }
         }
         
@@ -100,6 +101,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
         float perVolume = contents.volume / hitContainers.Count;
         foreach (GenericReagentContainer container in hitContainers) {
             container.AddMix(contents.Spill(perVolume), GenericReagentContainer.InjectType.Spray);
+            container.SetGenes(GetGenes());
         }
         if (photonView.IsMine) {
             StartCoroutine(DestroyAfterTime());
@@ -154,5 +156,6 @@ public class Projectile : MonoBehaviourPun, IPunObservable, ISavable, IPunInstan
         projectileBlob.material.SetColor(FluidColor, color);
         velocity = (Vector3)info.photonView.InstantiationData[1];
         splashed = false;
+        SetGenes((KoboldGenes)info.photonView.InstantiationData[2]);
     }
 }

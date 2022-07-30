@@ -11,7 +11,7 @@ using KoboldKare;
 using System.IO;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallback, ISavable {
+public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, ISavable {
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
@@ -91,10 +91,7 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
                 foreach(var produce in newPlant.produces) {
                     int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
                     for(int i=0;i<max;i++) {
-                        GameObject obj =PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
-                        if (obj.GetComponent<Kobold>() != null) {
-                            obj.GetComponent<Kobold>().RandomizeKobold();
-                        }
+                        GameObject obj = PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{GetGenes()});
                     }
                 }
             }
@@ -147,6 +144,8 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
+            SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
+            Debug.Log(GetGenes());
         }
     }
 
@@ -173,8 +172,10 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsReading) {
             SwitchTo(PlantDatabase.GetPlant((short)stream.ReceiveNext()));
+            //SetGenes((KoboldGenes)stream.ReceiveNext());
         } else {
             stream.SendNext(PlantDatabase.GetID(plant));
+            //stream.SendNext(GetGenes());
         }
     }
 
@@ -183,6 +184,7 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         writer.Write(transform.position.x);
         writer.Write(transform.position.y);
         writer.Write(transform.position.z);
+        GetGenes().Serialize(writer);
     }
 
     public void Load(BinaryReader reader, string version) {
@@ -191,5 +193,6 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
         transform.position = new Vector3(x,y,z);
+        SetGenes(GetGenes().Deserialize(reader));
     }
 }

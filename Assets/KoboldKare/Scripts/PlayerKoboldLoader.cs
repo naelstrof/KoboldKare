@@ -24,37 +24,20 @@ public class PlayerKoboldLoader : MonoBehaviour {
         }
     }
     public static void ProcessOption(Kobold targetKobold, UnityScriptableSettings.ScriptableSetting setting) {
+        KoboldGenes genes = targetKobold.GetGenes();
         switch(setting.name) {
             case "Sex": targetKobold.sex = setting.value; break;
-            case "Hue": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(r:setting.value); break;
-            case "Brightness": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(g:setting.value); break;
-            case "Saturation": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(b:setting.value); break;
-            case "Contrast": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(a:setting.value); break;
-            case "Dick":  {
-                KoboldInventory inventory = targetKobold.GetComponent<KoboldInventory>();
-
-                //Add Dicks
-                if(setting.value !=0){
-                    if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                        break; //Don't add dicks if we already have one
-                    }
-                    inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
-                } else { //Remove Dicks
-                    while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                        inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
-                    }
-                }
-                
-                break;
-            }
+            case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Contrast": genes.contrast = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Dick": genes.dickEquip = (byte)Mathf.RoundToInt(setting.value); break;
             case "TopBottom": targetKobold.bodyProportion.SetTopBottom(setting.value); break;
             case "Thickness": targetKobold.bodyProportion.SetThickness(setting.value); break;
-            case "BoobSize": {
-                targetKobold.SetBaseBoobSize(setting.value*30f);
-                break;
-            }
-            case "KoboldSize": targetKobold.SetBaseSize(setting.value*20f); break;
+            case "BoobSize": genes.breastSize = setting.value * 30f; break;
+            case "KoboldSize": genes.baseSize = setting.value * 20f; break;
         }
+        targetKobold.SetGenes(genes);
     }
     public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {
         ProcessOption(targetKobold, setting);

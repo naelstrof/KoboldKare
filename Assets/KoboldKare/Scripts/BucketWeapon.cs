@@ -57,7 +57,7 @@ public class BucketWeapon : GenericWeapon {
                 velocity += Random.insideUnitSphere * i * 2f;
                 GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
                     GetWeaponBarrelTransform().position,
-                    GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity });
+                    GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity, container.GetGenes()});
                 obj.GetComponent<Projectile>().LaunchFrom(body);
             }
 

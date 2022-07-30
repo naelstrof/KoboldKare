@@ -1,27 +1,18 @@
-﻿using KoboldKare;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
-using UnityEngine.Tilemaps;
 
-public class Seed : GenericUsable, IValuedGood {
+public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     //public List<GameObject> _plantPrefabs;
     [SerializeField]
     private float worth = 5f;
     [SerializeField]
     private Sprite displaySprite;
     public PhotonGameObjectReference plantPrefab;
-    public int type = 0;
     public float _spacing = 1f;
-    public UnityEvent OnFailPlant;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
+    private KoboldGenes genes;
+
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
@@ -56,7 +47,7 @@ public class Seed : GenericUsable, IValuedGood {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant)} );
+            GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant), genes} );
             bestTile.SetPlanted(obj.GetComponent<Plant>());
             PhotonNetwork.Destroy(gameObject);
         }
@@ -66,5 +57,13 @@ public class Seed : GenericUsable, IValuedGood {
     }
     public void OnValidate() {
         plantPrefab.OnValidate();
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData != null) {
+            genes = (KoboldGenes)info.photonView.InstantiationData[0];
+        } else {
+            genes = new KoboldGenes().Randomize();
+        }
     }
 }

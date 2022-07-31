@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ObjectiveUIDisplay : MonoBehaviour {
+    [SerializeField] private Image starImage;
     [SerializeField]
     private Animator scrollAnimator;
     [SerializeField]
@@ -47,9 +49,14 @@ public class ObjectiveUIDisplay : MonoBehaviour {
             StopAllCoroutines();
             StartCoroutine(ObjectiveSwapRoutine(objective));
         } else {
-            title.text = objective.GetTitle();
-            description.text = objective.GetTextBody();
-            scrollAnimator.SetBool(Rollout, true);
+            if (objective == null) {
+                scrollAnimator.SetBool(Rollout, false);
+            } else {
+                title.text = objective.GetTitle();
+                description.text = objective.GetTextBody();
+                starImage.gameObject.SetActive(!objective.autoAdvance);
+                scrollAnimator.SetBool(Rollout, true);
+            }
         }
     }
 
@@ -58,8 +65,14 @@ public class ObjectiveUIDisplay : MonoBehaviour {
             scrollAnimator.SetBool(Rollout, false);
             yield break;
         } else {
+            if (scrollAnimator.GetBool(Rollout)) {
+                scrollAnimator.SetBool(Rollout, false);
+                yield return new WaitForSeconds(1.5f);
+            }
             scrollAnimator.SetBool(Rollout, true);
         }
+
+        starImage.gameObject.SetActive(!newObjective.autoAdvance);
         title.text = newObjective.GetTitle();
         description.text = newObjective.GetTextBody();
         scrollAnimator.SetBool(Rollout, true);

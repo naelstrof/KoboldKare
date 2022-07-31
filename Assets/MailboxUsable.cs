@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using KoboldKare;
@@ -29,11 +30,17 @@ public class MailboxUsable : GenericUsable {
         mailWaiting.Play(mailWaitingSource);
     }
 
+    private void OnDestroy() {
+        midnightEvent.RemoveListener(OnMidnight);
+    }
+
     void OnMidnight(object ignore) {
-        hasMail = true;
-        mailWaitingSource.enabled = true;
-        mailWaiting.Play(mailWaitingSource);
-        animator.SetBool("HasMail", true);
+        if (ObjectiveManager.GetCurrentObjective() == null) {
+            hasMail = true;
+            mailWaitingSource.enabled = true;
+            mailWaiting.Play(mailWaitingSource);
+            animator.SetBool("HasMail", true);
+        }
     }
 
     public override bool CanUse(Kobold k) {

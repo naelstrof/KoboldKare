@@ -18,6 +18,6 @@ public class StarDisplayUI : MonoBehaviour {
     }
 
     private void OnObjectiveSwapped(DragonMailObjective obj) {
-        text.text = $"{ObjectiveManager.GetCompletedObjectiveCount()}";
+        text.text = $"{ObjectiveManager.GetStars()}";
     }
 }

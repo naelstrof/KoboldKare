@@ -8,6 +8,7 @@ using UnityEngine.Localization;
 
 [System.Serializable]
 public class DragonMailObjective : ISavable, IPunObservable {
+    public bool autoAdvance = false;
     [SerializeField]
     protected LocalizedString title;
 

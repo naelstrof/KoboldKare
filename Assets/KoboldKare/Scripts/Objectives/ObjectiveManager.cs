@@ -11,9 +11,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     [SerializeField] private List<DragonMailObjective> objectives;
     private DragonMailObjective currentObjective;
     private int currentObjectiveIndex;
+    private int stars = 0;
 
-    public static int GetCompletedObjectiveCount() {
-        return instance.currentObjectiveIndex;
+    public static int GetStars() {
+        return instance.stars;
     }
     public static void GetMail() {
         instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
@@ -52,7 +53,12 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
 
     void OnObjectiveComplete(DragonMailObjective objective) {
         currentObjectiveIndex++;
-        SwitchToObjective(null);
+        if (objective.autoAdvance) {
+            SwitchToObjective(objectives[currentObjectiveIndex]);
+        } else {
+            stars++;
+            SwitchToObjective(null);
+        }
     }
 
     void OnObjectiveUpdated(DragonMailObjective objective) {

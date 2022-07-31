@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using AmplifyShaderEditor;
 using UnityEngine;
 
 public class PlantSpawnEventHandler : MonoBehaviour {

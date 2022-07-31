@@ -205,9 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONARE PARTICIP\u0102 LA
-      <#FF0000> COMPORTAMENT SEXUAL EXPLICIT <#FFFFFF>\n\nF\u0102C\xC2ND CLIC <#008CFF>
-      PLAY <#FFFFFF> DECLARA\u021AI C\u0102:"
+    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
+      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
+      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -690,5 +690,33 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Cre\u0219te -\u021Bi primul Kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Apa \u0219i timpul vor cre\u0219te Kobold, va avea grij\u0103 de
+      ea."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Transfer Kobold prin re\u021Bea pneumatic\u0103."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Ave\u021Bi aten\u021Bia lui Dragon Patron ... acum transfera\u021Bi
+      m\u0103rfurile. Vei fi r\u0103spl\u0103tit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "Planteaz\u0103 un ou!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron caut\u0103 Karetaker capabil, s\u0103 planteze un
+      ou pe P\u0103m\xE2ntul suplu."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -9,14 +9,18 @@ using UnityEngine.Localization;
 [System.Serializable]
 public class DragonMailObjective : ISavable, IPunObservable {
     [SerializeField]
-    private LocalizedString title;
+    protected LocalizedString title;
 
     public virtual string GetTitle() => title.GetLocalizedString();
-    public delegate void CompletedAction(DragonMailObjective obj);
+    public delegate void ObjectiveAction(DragonMailObjective obj);
 
-    public event CompletedAction completed;
+    public event ObjectiveAction completed;
+    public event ObjectiveAction updated;
     protected void TriggerComplete() {
         completed.Invoke(this);
+    }
+    protected void TriggerUpdate() {
+        updated.Invoke(this);
     }
 
     public virtual void Register() {

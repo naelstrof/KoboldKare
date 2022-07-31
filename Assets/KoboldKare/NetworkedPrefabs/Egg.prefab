@@ -76,11 +76,7 @@ MonoBehaviour:
     gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
       type: 3}
     photonName: Plant
-  type: 0
   _spacing: 2.5
-  OnFailPlant:
-    m_PersistentCalls:
-      m_Calls: []
   plant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
 --- !u!114 &8701036967255994449
 MonoBehaviour:

@@ -667,13 +667,38 @@ MonoBehaviour:
     m_Key: SETTING_CHANGE_REGION
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Key: KOBOLD_SPAWN_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Key: KOBOLD_SPAWN_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Key: KOBOLD_SELL_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Key: KOBOLD_SELL_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Key: PLANT_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Key: PLANT_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    id: 0
+    rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:

@@ -684,5 +684,32 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Voks din f\xF8rste kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Vann og tid vil vokse Kobold, ta vare p\xE5 det."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Overf\xF8r Kobold via pneumatisk nettverk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Du har Dragon Patrons oppmerksomhet ... overf\xF8r n\xE5 varene.
+      Du vil bli bel\xF8nnet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plant et egg!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron s\xF8ker dyktig karetaker, planter et egg i smidig
+      jord."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

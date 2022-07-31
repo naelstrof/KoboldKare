@@ -30,7 +30,7 @@ public class GenericSpawner : MonoBehaviourPun {
     public virtual IEnumerator SpawnRoutine() {
         yield return waitUntilCanSpawn;
         string randomPrefab = GetRandomPrefab();
-        lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { new KoboldGenes().Randomize() });
+        lastSpawned = PhotonNetwork.Instantiate(randomPrefab, transform.position, transform.rotation, 0, new object[] { new KoboldGenes().Randomize(), false });
     }
     public virtual void Start() {
         waitUntilCanSpawn = new WaitUntil(CanSpawn);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Photon.Pun;
 
 public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
@@ -12,6 +13,10 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
     private KoboldGenes genes;
+
+    private void Awake() {
+        genes = new KoboldGenes().Randomize();
+    }
 
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
@@ -62,8 +67,6 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null) {
             genes = (KoboldGenes)info.photonView.InstantiationData[0];
-        } else {
-            genes = new KoboldGenes().Randomize();
         }
     }
 }

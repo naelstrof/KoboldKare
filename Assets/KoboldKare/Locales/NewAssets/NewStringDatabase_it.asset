@@ -690,5 +690,32 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Crea il tuo primo kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "L'acqua e il tempo crescono il kobold, se ne prender\xE0 cura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: Trasferisci Kobold tramite rete pneumatica.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: Hai l'attenzione di Dragon Patron ... ora trasferisci la merce.
+      Sarai premiato.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Pianta un uovo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: Dragon Patron cerca il karetaker capace, pianta un uovo nella terra
+      morbida.
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

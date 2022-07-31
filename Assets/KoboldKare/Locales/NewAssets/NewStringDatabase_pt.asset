@@ -685,5 +685,32 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Aumente seu primeiro Kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "\xC1gua e tempo crescer\xE3o o Kobold, cuide disso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Transfira Kobold via rede pneum\xE1tica."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Voc\xEA tem a aten\xE7\xE3o do Dragon Patron ... agora transfira
+      as mercadorias. Voc\xEA ser\xE1 recompensado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plante um ovo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "O patrono do drag\xE3o procura um karetaker capaz, plante um ovo
+      na terra flex\xEDvel."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

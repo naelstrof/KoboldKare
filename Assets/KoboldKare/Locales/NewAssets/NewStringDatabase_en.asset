@@ -707,5 +707,32 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Grow your first kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: Water and time will grow the kobold, take care of it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: Transfer kobold via pneumatic network.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: You have Dragon patron's attention... now transfer the goods. You
+      will be rewarded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plant an egg!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: Dragon patron seeks capable Karetaker, plant an egg into supple
+      earth.
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -356,11 +356,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198986
-    m_Localized: Gros
+    m_Localized: Gras
     m_Metadata:
       m_Items: []
   - m_Id: 516099198987
-    m_Localized: Aimer
+    m_Localized: Amour
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
@@ -384,11 +384,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
-    m_Localized: Jeu rapide
+    m_Localized: Partie rapide
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
-    m_Localized: "Cr\xE9er un jeu priv\xE9"
+    m_Localized: "Cr\xE9er une partie priv\xE9e"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
@@ -420,7 +420,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Queue
+    m_Localized: Bite
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
@@ -500,7 +500,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393281
-    m_Localized: "\xC0 la troisi\xE8me personne"
+    m_Localized: "Troisi\xE8me personne"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
@@ -520,7 +520,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362048
-    m_Localized: De liaison...
+    m_Localized: Connection...
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
@@ -528,7 +528,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Salle de gauche
+    m_Localized: Sortie de la salle
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -664,11 +664,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: "Audio \xE0 vapeur"
+    m_Localized: Steam Audio
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: "Mat\xE9riel acc\xE9l\xE9r\xE9"
+    m_Localized: "Acc\xE9l\xE9ration mat\xE9riel"
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
@@ -686,5 +686,32 @@ MonoBehaviour:
     m_Localized: "Jouabilit\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Faites grandir votre premier Kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: L'eau et le temps cultiveront le kobold, prendront soin de lui.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Transf\xE9rer Kobold via un r\xE9seau pneumatique."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Vous avez l'attention de Dragon Patron ... maintenant transf\xE9rer
+      les marchandises. Vous serez r\xE9compens\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "Plantez un \u0153uf!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron cherche un karetaker capable, plantez un \u0153uf
+      dans la terre souple."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

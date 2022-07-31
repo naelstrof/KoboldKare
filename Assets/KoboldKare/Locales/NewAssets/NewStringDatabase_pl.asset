@@ -232,7 +232,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: "Poruszanie si\u0119"
+    m_Localized: Ruch
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
@@ -508,7 +508,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: Kamera wolna
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362048
-    m_Localized: "Z\u0142\u0105czony..."
+    m_Localized: "\u0141\u0105czenie..."
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
@@ -532,7 +532,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Lewy pok\xF3j"
+    m_Localized: Zostales rozlaczony z pokojem.
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -544,7 +544,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness
+    m_Localized: "Puszysto\u015B\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
@@ -619,11 +619,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: "Ko\u0142nierz"
+    m_Localized: "Obro\u017Ca"
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
-    m_Localized: "Wysoki pi\u0119ta"
+    m_Localized: Obcasy
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
@@ -655,7 +655,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: Erekcja
+    m_Localized: Erekcja w gore
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
@@ -675,7 +675,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: "Sprz\u0119t przyspieszony"
+    m_Localized: Przyspieszenie sprzetowe
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
@@ -693,5 +693,32 @@ MonoBehaviour:
     m_Localized: Rozgrywka
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Wyhoduj sw\xF3j pierwszy Kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Woda i czas wzro\u015Bnie Kobold, zajmij si\u0119 tym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Przenie\u015B Kobold przez sie\u0107 pneumatyczn\u0105."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Masz uwag\u0119 smoka patrona ... teraz przenie\u015B towar. Zostaniesz
+      nagrodzony."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "Posad\u017A jajko!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron szuka zdolnego Karetakera, posadzi jajko na gi\u0119tk\u0105
+      ziemi\u0119."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

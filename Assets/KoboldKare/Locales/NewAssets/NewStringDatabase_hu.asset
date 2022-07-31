@@ -690,5 +690,32 @@ MonoBehaviour:
     m_Localized: "J\xE1t\xE9kst\xEDlus"
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "N\xF6velje az els\u0151 koboldodat!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "A v\xEDz \xE9s az id\u0151 n\xF6veli a koboldot, vigy\xE1zzon r\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Transzfer Kobold pneumatikus h\xE1l\xF3zaton kereszt\xFCl."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Megkapja a S\xE1rk\xE1ny Patron figyelm\xE9t ... Most adja \xE1t
+      az \xE1rut. Jutalmazni fogod."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "\xDCltetni egy toj\xE1st!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "A S\xE1rk\xE1ny v\xE9d\u0151szentje k\xE9pes a k\xE9pes Karetakerre,
+      \xFCltetni egy toj\xE1st a rugalmas f\xF6ldbe."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

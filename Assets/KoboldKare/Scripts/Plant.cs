@@ -1,12 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.VFX;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
 using KoboldKare;
 using System.IO;
 
@@ -91,7 +86,7 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
                 foreach(var produce in newPlant.produces) {
                     int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
                     for(int i=0;i<max;i++) {
-                        GameObject obj = PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{GetGenes()});
+                        GameObject obj = PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{GetGenes(), false});
                     }
                 }
             }
@@ -145,8 +140,9 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
             SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
-            Debug.Log(GetGenes());
         }
+
+        PlantSpawnEventHandler.TriggerPlantSpawnEvent(photonView.gameObject, plant);
     }
 
     void UndarkenMaterials(){

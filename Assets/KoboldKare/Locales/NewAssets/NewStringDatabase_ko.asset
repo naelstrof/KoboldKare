@@ -701,5 +701,35 @@ MonoBehaviour:
     m_Localized: "\uAC8C\uC784 \uD50C\uB808\uC774"
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "\uCCAB Kobold\uB97C \uD0A4\uC6B0\uC2ED\uC2DC\uC624!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "\uBB3C\uACFC \uC2DC\uAC04\uC740 Kobold\uB97C \uD0A4\uC6B8 \uAC83\uC785\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "\uACF5\uC555 \uB124\uD2B8\uC6CC\uD06C\uB97C \uD1B5\uD574 Kobold\uB97C
+      \uC804\uC1A1\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "\uB2F9\uC2E0\uC740 \uB4DC\uB798\uACE4 \uD6C4\uC6D0\uC790\uC758
+      \uAD00\uC2EC\uC744 \uAC00\uC9C0\uACE0 \uC788\uC2B5\uB2C8\uB2E4 ... \uC774\uC81C
+      \uBB3C\uD488\uC744 \uC774\uCCB4\uD558\uC2ED\uC2DC\uC624. \uB2F9\uC2E0\uC740
+      \uBCF4\uC0C1\uBC1B\uC744 \uAC83\uC785\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "\uACC4\uB780\uC744 \uC2EC\uC73C\uC2ED\uC2DC\uC624!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron\uC740 \uC720\uB2A5\uD55C Karetaker\uB97C \uCC3E\uACE0
+      \uACC4\uB780\uC744 Sexeart\uC5D0 \uC2EC\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -686,5 +686,31 @@ MonoBehaviour:
     m_Localized: Jugabilidad
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "\xA1Cultiva tu primer kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "El agua y el tiempo crecer\xE1n el Kobold, cuidenlo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Transfiera Kobold a trav\xE9s de la red neum\xE1tica."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Tienes la atenci\xF3n de Dragon Patron ... ahora transfiere los
+      productos. Seras recompensado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "\xA1Planta un huevo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: Dragon Patron busca Karetaker capaz, planta un huevo en tierra flexible.
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

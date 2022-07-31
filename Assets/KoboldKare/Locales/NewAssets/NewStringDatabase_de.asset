@@ -129,7 +129,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: Reflexionen des Bildschirmraums
+    m_Localized: Bildbereichsreflexionen
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
@@ -476,7 +476,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
-    m_Localized: Verbinden
+    m_Localized: Beitreten
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016
@@ -500,11 +500,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
-    m_Localized: Erste Person
+    m_Localized: First-Person
     m_Metadata:
       m_Items: []
   - m_Id: 516103393281
-    m_Localized: Dritte Person
+    m_Localized: Third-Person
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
@@ -692,5 +692,32 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Wachsen Sie Ihren ersten Kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Wasser und Zeit werden den Kobold wachsen und sich darum k\xFCmmern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "\xDCbertragen Sie Kobold \xFCber pneumatisches Netzwerk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Sie haben die Aufmerksamkeit des Drachenpatrons ... \xDCbertragen
+      Sie jetzt die Ware. Du wirst belohnt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Pflanze ein Ei!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Drachenpatron sucht einen f\xE4higen Karetaker, pflanzt ein Ei
+      in geschmeidige Erde."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

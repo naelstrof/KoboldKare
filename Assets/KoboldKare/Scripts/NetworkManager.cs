@@ -183,7 +183,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (spawnPoints.Count > 0) {
             pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
         }
-        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetPlayerGenes(), true});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }

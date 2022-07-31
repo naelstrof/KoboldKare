@@ -259,7 +259,7 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         fatnessInflater.SetSize(Mathf.Log(1f + (newGenes.fatSize) / 20f, 2f), this);
         bellyContainer.maxVolume = newGenes.bellySize;
         metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
-        Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, newGenes.contrast/255f, newGenes.saturation/255f);
+        Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
         // Set color
         foreach (Renderer r in koboldBodyRenderers) {
             if (r == null) {
@@ -571,11 +571,19 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
+        if (info.photonView.InstantiationData == null) {
+            return;
+        }
+
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
-            FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
-        } else {
-            info.Sender.TagObject = this;
+        }
+        if (info.photonView.InstantiationData.Length > 1 && info.photonView.InstantiationData[1] is bool) {
+            if ((bool)info.photonView.InstantiationData[1] == true) {
+                info.Sender.TagObject = this;
+            } else {
+                FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
+            }
         }
     }
 

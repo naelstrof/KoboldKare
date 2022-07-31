@@ -19,13 +19,12 @@ public class KoboldGenes {
     public float metabolizeCapacitySize = 20f;
     public byte hue;
     public byte brightness = 128;
-    public byte contrast = 128;
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
 
     public KoboldGenes With(byte? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
-            float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null, byte? contrast = null,
+            float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
             byte? saturation = null, byte? dickEquip = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
@@ -37,7 +36,6 @@ public class KoboldGenes {
             bellySize = bellySize ?? this.bellySize,
             metabolizeCapacitySize = metabolizeCapacitySize ?? this.metabolizeCapacitySize,
             hue = hue ?? this.hue,
-            contrast = contrast ?? this.contrast,
             brightness = brightness ?? this.brightness,
             saturation = saturation ?? this.saturation,
             dickEquip = dickEquip ?? this.dickEquip
@@ -70,7 +68,6 @@ public class KoboldGenes {
         baseSize = Random.Range(14f, 24f);
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Random.Range(0, 255);
-        contrast = (byte)Random.Range(0, 255);
         saturation = (byte)Random.Range(0, 255);
         return this;
     }
@@ -88,7 +85,6 @@ public class KoboldGenes {
         float hueAngB = b.hue / 255f;
         c.hue = (byte)Mathf.RoundToInt(FloatExtensions.CircularLerp(hueAngA, hueAngB, 0.5f) * 255f);
         c.brightness = (byte)Mathf.RoundToInt(Mathf.Lerp(a.brightness / 255f, b.brightness / 255f, 0.5f)*255f);
-        c.contrast = (byte)Mathf.RoundToInt(Mathf.Lerp(a.contrast / 255f, b.contrast / 255f, 0.5f)*255f);
         c.saturation = (byte)Mathf.RoundToInt(Mathf.Lerp(a.saturation / 255f, b.saturation / 255f, 0.5f)*255f);
         c.bellySize = Mathf.Lerp(a.bellySize, b.bellySize, 0.5f);
         c.metabolizeCapacitySize = Mathf.Lerp(a.metabolizeCapacitySize, b.metabolizeCapacitySize, 0.5f);
@@ -116,7 +112,6 @@ public class KoboldGenes {
         Protocol.Serialize(genes.metabolizeCapacitySize, bytes, ref index);
         Protocol.Serialize(genes.hue, bytes, ref index);
         Protocol.Serialize(genes.brightness, bytes, ref index);
-        Protocol.Serialize(genes.contrast, bytes, ref index);
         Protocol.Serialize(genes.saturation, bytes, ref index);
         Protocol.Serialize(genes.dickEquip, bytes, ref index);
         outStream.Write(bytes, 0, byteCount);
@@ -138,7 +133,6 @@ public class KoboldGenes {
             Protocol.Deserialize(out genes.metabolizeCapacitySize, bytes, ref index);
             genes.hue = bytes[index++];
             genes.brightness = bytes[index++];
-            genes.contrast = bytes[index++];
             genes.saturation = bytes[index++];
             genes.dickEquip = bytes[index++];
         }
@@ -156,7 +150,6 @@ public class KoboldGenes {
         writer.Write(metabolizeCapacitySize);
         writer.Write(hue);
         writer.Write(brightness);
-        writer.Write(contrast);
         writer.Write(saturation);
         writer.Write(dickEquip);
     }
@@ -172,7 +165,6 @@ public class KoboldGenes {
         metabolizeCapacitySize = reader.ReadSingle();
         hue = reader.ReadByte();
         brightness = reader.ReadByte();
-        contrast = reader.ReadByte();
         saturation = reader.ReadByte();
         dickEquip = reader.ReadByte();
         return this;
@@ -190,7 +182,6 @@ public class KoboldGenes {
            metabolizeCapacitySize: {metabolizeCapacitySize}
            hue: {hue}
            brightness: {brightness}
-           contrast: {contrast}
            saturation: {saturation}
            dickEquip: {dickEquip}";
     }

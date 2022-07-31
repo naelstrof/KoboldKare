@@ -709,5 +709,32 @@ MonoBehaviour:
     m_Localized: Spelgedrag
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Kweek je eerste Kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: Water en tijd zullen de Kobold laten groeien, zorg ervoor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: Overdracht Kobold via pneumatisch netwerk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: Je hebt de aandacht van Dragon Patron ... breng nu de goederen over.
+      Je wordt beloond.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plant een ei!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: Dragon Patron zoekt capabele karetaker, plant een ei in soepele
+      aarde.
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -686,5 +686,32 @@ MonoBehaviour:
     m_Localized: Pelattavuus
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Kasvata ensimm\xE4inen Kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Vesi ja aika kasvattaa Koboldia, huolehdi siit\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Siirr\xE4 Kobold pneumaattisen verkon kautta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Sinulla on Dragon -suojelijan huomio ... siirr\xE4 nyt tavarat.
+      Sinut palkitaan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Istuta muna!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon -suojelija etsii kykenev\xE4\xE4 karetakeria, istuta muna
+      joustavaan maahan."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

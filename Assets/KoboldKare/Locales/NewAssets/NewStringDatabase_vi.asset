@@ -536,7 +536,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Ph\xF2ng b\xEAn tr\xE1i"
+    m_Localized: "B\xEAn tr\xE1i"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -703,5 +703,34 @@ MonoBehaviour:
     m_Localized: "Ch\u01A1i tr\xF2 ch\u01A1i"
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Ph\xE1t tri\u1EC3n Kobold \u0111\u1EA7u ti\xEAn c\u1EE7a b\u1EA1n!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "N\u01B0\u1EDBc v\xE0 th\u1EDDi gian s\u1EBD ph\xE1t tri\u1EC3n
+      Kobold, ch\u0103m s\xF3c n\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Chuy\u1EC3n kobold qua m\u1EA1ng l\u01B0\u1EDBi kh\xED n\xE9n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "B\u1EA1n c\xF3 s\u1EF1 ch\xFA \xFD c\u1EE7a Dragon Patron ... b\xE2y
+      gi\u1EDD chuy\u1EC3n h\xE0ng. B\u1EA1n s\u1EBD \u0111\u01B0\u1EE3c th\u01B0\u1EDFng."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: "Tr\u1ED3ng m\u1ED9t qu\u1EA3 tr\u1EE9ng!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "R\u1ED3ng Patron t\xECm ki\u1EBFm karetaker c\xF3 kh\u1EA3 n\u0103ng,
+      tr\u1ED3ng m\u1ED9t qu\u1EA3 tr\u1EE9ng v\xE0o tr\xE1i \u0111\u1EA5t d\u1EBBo
+      dai."
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

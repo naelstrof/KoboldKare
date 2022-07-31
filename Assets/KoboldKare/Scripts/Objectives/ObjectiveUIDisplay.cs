@@ -21,7 +21,7 @@ public class ObjectiveUIDisplay : MonoBehaviour {
     }
 
     private void OnDisable() {
-        ObjectiveManager.RemoveObjectiveChangeListener(OnObjectiveSwapped);
+        ObjectiveManager.RemoveObjectiveSwappedListener(OnObjectiveSwapped);
         ObjectiveManager.RemoveObjectiveUpdatedListener(OnObjectiveUpdated);
     }
 

@@ -12,6 +12,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     private DragonMailObjective currentObjective;
     private int currentObjectiveIndex;
 
+    public static int GetCompletedObjectiveCount() {
+        return instance.currentObjectiveIndex;
+    }
+
     public delegate void ObjectiveChangedAction(DragonMailObjective newObjective);
     private event ObjectiveChangedAction objectiveChanged;
     
@@ -20,7 +24,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     public static void AddObjectiveSwappedListener(ObjectiveChangedAction action) {
         instance.objectiveChanged += action;
     }
-    public static void RemoveObjectiveChangeListener(ObjectiveChangedAction action) {
+    public static void RemoveObjectiveSwappedListener(ObjectiveChangedAction action) {
         instance.objectiveChanged -= action;
     }
     

@@ -351,10 +351,7 @@ MonoBehaviour:
     - {x: 0, y: 0.94724214, z: 0, w: 0.3207209}
     - {x: 0.0018969491, y: 0.94730514, z: -0.0056027295, w: 0.32074314}
   editSelection: 9
-  previewActive: 1
   animProgress: 76.908615
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -715,10 +712,7 @@ MonoBehaviour:
     - {x: 0, y: 0.034833413, z: 0, w: -0.99939394}
     - {x: 0, y: 0.034833413, z: 0, w: -0.99939394}
   editSelection: 7
-  previewActive: 1
   animProgress: 76.908615
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -726,7 +720,7 @@ MonoBehaviour:
     - {fileID: 7892042725618938982}
     - {fileID: 7892042725667799121}
   info:
-    needsPenetrator: 1
+    needsPenetrator: 0
     user: {fileID: 0}
 --- !u!1 &7892042726207317675
 GameObject:
@@ -801,8 +795,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
   animationStations:
-  - {fileID: 7892042725667799121}
   - {fileID: 7892042725618938982}
+  - {fileID: 7892042725667799121}
 --- !u!65 &693425491391200492
 BoxCollider:
   m_ObjectHideFlags: 0

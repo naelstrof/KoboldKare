@@ -15,10 +15,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     public static int GetCompletedObjectiveCount() {
         return instance.currentObjectiveIndex;
     }
-
+    public static void GetMail() {
+        instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
+    }
     public delegate void ObjectiveChangedAction(DragonMailObjective newObjective);
     private event ObjectiveChangedAction objectiveChanged;
-    
     private event ObjectiveChangedAction objectiveUpdated;
 
     public static void AddObjectiveSwappedListener(ObjectiveChangedAction action) {
@@ -27,7 +28,6 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     public static void RemoveObjectiveSwappedListener(ObjectiveChangedAction action) {
         instance.objectiveChanged -= action;
     }
-    
     public static void AddObjectiveUpdatedListener(ObjectiveChangedAction action) {
         instance.objectiveUpdated += action;
     }
@@ -36,7 +36,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     }
 
     public static DragonMailObjective GetCurrentObjective() {
-        return instance.objectives[instance.currentObjectiveIndex];
+        return instance.currentObjective;
     }
 
     private void Awake() {
@@ -47,11 +47,12 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
         }
     }
     void Start() {
-        SwitchToObjective(objectives[currentObjectiveIndex]);
+        SwitchToObjective(null);
     }
 
     void OnObjectiveComplete(DragonMailObjective objective) {
-        SwitchToObjective(objectives[++currentObjectiveIndex]);
+        currentObjectiveIndex++;
+        SwitchToObjective(null);
     }
 
     void OnObjectiveUpdated(DragonMailObjective objective) {
@@ -65,9 +66,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
             currentObjective.updated -= OnObjectiveUpdated;
         }
         currentObjective = newObjective;
-        currentObjective.Register();
-        currentObjective.completed += OnObjectiveComplete;
-        currentObjective.updated += OnObjectiveUpdated;
+        if (newObjective != null) {
+            currentObjective.Register();
+            currentObjective.completed += OnObjectiveComplete;
+            currentObjective.updated += OnObjectiveUpdated;
+        }
         objectiveChanged?.Invoke(currentObjective);
     }
 

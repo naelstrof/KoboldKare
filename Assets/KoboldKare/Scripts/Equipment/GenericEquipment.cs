@@ -8,7 +8,7 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
     public Equipment representedEquipment;
     [SerializeField]
     private Sprite displaySprite;
-    private Kobold tryingToEquip;
+    protected Kobold tryingToEquip;
     private bool equipOnTouch = false;
     // Trying to match the Use pattern, so we can just use a GenericUsable to equip. Though technically we can call this from anything. A button that equips you with a status effect or whatever.
     public void TriggerAttachOnTouch(float duration) {
@@ -21,7 +21,7 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
         //base.LocalUse(k);
         Equip(k);
     }
-    private void Equip(Kobold k) {
+    protected virtual void Equip(Kobold k) {
         // If kobold got deleted
         if (k == null) {
             return;
@@ -58,9 +58,7 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
     }
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
         if (newOwner == PhotonNetwork.LocalPlayer && tryingToEquip != null) {
-            KoboldInventory inventory = tryingToEquip.GetComponent<KoboldInventory>();
-            inventory.PickupEquipment(representedEquipment, gameObject);
-            PhotonNetwork.Destroy(photonView.gameObject);
+            Equip(tryingToEquip);
         }
         // Someone else must've won the handshake, so we clear our attempt to equip.
         tryingToEquip = null;

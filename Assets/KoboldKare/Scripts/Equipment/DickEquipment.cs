@@ -46,6 +46,7 @@ public class DickEquipment : Equipment {
                 container.AddMix(contents, GenericReagentContainer.InjectType.Inject);
             }
         }
+        k.SetGenes(k.GetGenes().With(dickEquip: byte.MaxValue));
         return groundPrefab;
     }
 }

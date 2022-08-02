@@ -30,7 +30,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.value*255f); break;
             case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.value*255f); break;
             case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.value*255f); break;
-            case "Dick": genes.dickEquip = (byte)Mathf.RoundToInt(setting.value); break;
+            case "Dick": genes.dickEquip = (setting.value == 0f) ? byte.MaxValue : (byte)0; break;
             //case "TopBottom": targetKobold.bodyProportion.SetTopBottom(setting.value); break;
             //case "Thickness": targetKobold.bodyProportion.SetThickness(setting.value); break;
             case "BoobSize": genes.breastSize = setting.value * 30f; break;

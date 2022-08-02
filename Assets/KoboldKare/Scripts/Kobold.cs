@@ -249,7 +249,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }*/
 
     public override void SetGenes(KoboldGenes newGenes) {
-        base.SetGenes(newGenes);
         OnBoobContentsChanged(boobContents);
         OnBallsContentsChanged(ballsContents);
         foreach (var dickSet in activeDicks) {
@@ -278,16 +277,20 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }
         // Set dick
         var inventory = GetComponent<KoboldInventory>();
-        if (newGenes.dickEquip == byte.MaxValue) {
+        if (newGenes.dickEquip != GetGenes().dickEquip) {
             while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
+                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),true);
             }
-            return;
         }
-        if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
-            inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
+
+        if (newGenes.dickEquip != byte.MaxValue) {
+            if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
+                inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
+            }
         }
-        energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+
+        energyChanged?.Invoke(energy, newGenes.maxEnergy);
+        base.SetGenes(newGenes);
     }
     
     void OnMidnight(object ignore) {

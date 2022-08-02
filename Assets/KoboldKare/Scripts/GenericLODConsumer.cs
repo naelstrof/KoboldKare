@@ -15,10 +15,10 @@ public class GenericLODConsumer : MonoBehaviour {
         PhysicsItem,
     }
     public ConsumerType resource;
-    void OnEnable() {
+    void Start() {
         LODManager.instance.RegisterConsumer(this, resource);
     }
-    private void OnDisable() {
+    private void OnDestroy() {
         LODManager.instance.UnregisterConsumer(this, resource);
     }
 

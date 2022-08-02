@@ -97,7 +97,7 @@ public class KoboldGenes {
         return c;
     }
 
-    private const short byteCount = sizeof(float) * 7 + sizeof(byte);
+    private const short byteCount = sizeof(float) * 7 + sizeof(byte) * 5;
     public static short Serialize(StreamBuffer outStream, object customObject) {
         KoboldGenes genes = (KoboldGenes)customObject;
         byte[] bytes = new byte[byteCount];
@@ -110,10 +110,10 @@ public class KoboldGenes {
         Protocol.Serialize(genes.breastSize, bytes, ref index);
         Protocol.Serialize(genes.bellySize, bytes, ref index);
         Protocol.Serialize(genes.metabolizeCapacitySize, bytes, ref index);
-        Protocol.Serialize(genes.hue, bytes, ref index);
-        Protocol.Serialize(genes.brightness, bytes, ref index);
-        Protocol.Serialize(genes.saturation, bytes, ref index);
-        Protocol.Serialize(genes.dickEquip, bytes, ref index);
+        bytes[index++] = genes.hue;
+        bytes[index++] = genes.brightness;
+        bytes[index++] = genes.saturation;
+        bytes[index++] = genes.dickEquip;
         outStream.Write(bytes, 0, byteCount);
         return byteCount;
     }

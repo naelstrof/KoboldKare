@@ -8,6 +8,9 @@ using UnityEngine;
 using Vilar.AnimationStation;
 
 public class OvipositionSpot : GenericUsable, IAnimationStationSet {
+    public delegate void OvipositionAction(GameObject egg);
+    public static event OvipositionAction oviposition;
+        
     [SerializeField]
     private Sprite useSprite;
     [SerializeField]
@@ -40,6 +43,14 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         stations.Add(station);
         readOnlyStations = stations.AsReadOnly();
         egg = ReagentDatabase.GetReagent("Egg");
+    }
+
+    [PunRPC]
+    private void EggLayed(int viewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+        if (view != null) {
+            oviposition?.Invoke(view.gameObject);
+        }
     }
 
     IEnumerator EggLayingRoutine() {
@@ -83,6 +94,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             yield break;
         }
 
+        photonView.RPC(nameof(EggLayed), RpcTarget.All, d.GetComponentInParent<PhotonView>().ViewID);
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();
         d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
         body.isKinematic = true;

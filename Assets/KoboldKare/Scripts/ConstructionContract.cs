@@ -5,17 +5,11 @@ using UnityEngine.Events;
 using Photon.Pun;
 using System.IO;
 
-public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
+public class ConstructionContract : GenericUsable {
+    public delegate void ConstructionContractPurchaseAction(ConstructionContract contract);
+    public static event ConstructionContractPurchaseAction purchasedEvent;
     [SerializeField]
     private Sprite displaySprite;
-    [SerializeField]
-    private UnityEvent purchased;
-    [SerializeField]
-    private GameObject[] disableOnPurchase;
-    [SerializeField]
-    private GameObject[] enableOnPurchase;
-    //[SerializeField]
-    //private ScriptableFloat money;
     [SerializeField]
     private float cost;
     [SerializeField]
@@ -36,18 +30,19 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
     public override bool CanUse(Kobold k) {
         return k.GetComponent<MoneyHolder>().HasMoney(cost) && !bought;
     }
-    private void SetState(bool purchased) {
-        foreach(GameObject obj in enableOnPurchase) {
-            obj.SetActive(purchased);
+    protected virtual void SetState(bool purchased) {
+        bought = purchased;
+        foreach (Transform t in transform) {
+            if (transform == t) {
+                continue;
+            }
+
+            t.gameObject.SetActive(!purchased);
         }
-        foreach(GameObject obj in disableOnPurchase) {
-            obj.SetActive(!purchased);
-        }
-        foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
+
+        foreach (Renderer r in GetComponents<Renderer>()) {
             r.enabled = !purchased;
         }
-        bought = purchased;
-        //Debug.Log(gameObject.name+":: Bought is set to: "+bought);
     }
     public override void LocalUse(Kobold k) {
         if (k.GetComponent<MoneyHolder>().ChargeMoney(cost)) {
@@ -57,27 +52,24 @@ public class ConstructionContract : GenericUsable, ISavable, IPunObservable {
     [PunRPC]
     public override void Use() {
         base.Use();
-        purchased.Invoke();
         SetState(true);
-        //gameObject.SetActive(false);
+        purchasedEvent?.Invoke(this);
     }
 
     public override void Save(BinaryWriter writer, string version){   
-        //Debug.Log(bought);    
         writer.Write(bought);
     }
 
     public override void Load(BinaryReader reader, string version){
         bought = reader.ReadBoolean();
-        if(bought){
-            photonView.RPC("Use",RpcTarget.AllBufferedViaServer);
-        }
-        else{
-            PhotonNetwork.CleanRpcBufferIfMine(photonView);
-        }
         SetState(bought);
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+        if (stream.IsWriting) {
+            stream.SendNext(bought);
+        } else {
+            SetState((bool)stream.ReceiveNext());
+        }
     }
 }

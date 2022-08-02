@@ -710,6 +710,93 @@ MonoBehaviour:
       jord."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Kj\xF8p en industriell fruktblender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Disse koboldene m\xE5 mates, finne byggekontrakten p\xE5 byggekontoret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Feed kobolds fruktjuice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds trenger maten tilberedt, bruk kvernen for \xE5 male frukt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Breed Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Vi trenger lokalt hentet Kobolds, begynner med \xE5 f\xE5 noen
+      av koboldene dine gravide."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Lever store Dick Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Jeg trenger en levering av en rase av Kobolds med store pikker,
+      jeg regner med at du takler dette.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Lever store brystkoblinger.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Jeg trenger en levering av en rase av Kobolds med store bryster,
+      jeg regner med at du takler dette.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: "Cum bl\xE5s opp kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Koboldene m\xE5 fylles til randen, ikke snakk med meg videre om
+      dette."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Trenger gjennom hele veien gjennom.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Jeg kan ikke engang begynne \xE5 tenke p\xE5 en forklaring, bare
+      ta vare p\xE5 den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Lever fetede kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes g\xE5r rett til l\xE5rene, det er i v\xE5r beste interesse
+      \xE5 ha noen f\xE5 superheavy kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit et veldig stort egg.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Jeg bryr meg ikke om hva du gj\xF8r med det etter, vi trenger et
+      stort egg for \xE5 komme ut av en kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Lag makro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "De m\xE5 v\xE6re minst p\xE5 st\xF8rrelse med et hus. Lykke til."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

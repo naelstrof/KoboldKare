@@ -296,7 +296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
-    m_Localized: Reset
+    m_Localized: Resetten
     m_Metadata:
       m_Items: []
   - m_Id: 516095004711
@@ -733,6 +733,93 @@ MonoBehaviour:
   - m_Id: 197833684470169604
     m_Localized: Dragon Patron zoekt capabele karetaker, plant een ei in soepele
       aarde.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Koop een industri\xEBle fruitblender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: Deze Kobolds moeten worden gevoed, zoek het bouwcontract bij het
+      bouwkantoor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Voer Kobolds Fruitsap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: Kobolds hebben het voedsel nodig, gebruik de molen om fruit te malen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Fokkobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: We hebben lokaal geproduceerde Kobolds nodig, beginnen met een aantal
+      van je Kobolds zwanger te krijgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Lever grote lul kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Ik heb een levering van een ras van kobolds met grote lullen nodig,
+      ik verwacht dat je dit behandelt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Lever grote kobolds met borsten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Ik heb een aflevering van een ras kobolds met grote borsten nodig,
+      ik verwacht dat je dit behandelt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Sperma buig kobolds op.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: De Kobolds moeten tot de rand worden gevuld, praat hier niet verder
+      over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Doordringen helemaal door.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: Ik kan niet eens aan een verklaring denken, zorg er gewoon voor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Leveren vette kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes gaan rechtstreeks naar de dijen, het is in ons belang
+      om een \u200B\u200Bpaar superheavy kobolds te hebben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit een heel groot ei.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: Het kan me niet schelen wat je ermee doet, we hebben een groot ei
+      nodig om uit een Kobold te komen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Maak macro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: Ze moeten op zijn minst de grootte van een huis zijn. Veel geluk.
     m_Metadata:
       m_Items: []
   references:

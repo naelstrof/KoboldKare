@@ -7,7 +7,7 @@ using UnityEngine;
 public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
     public delegate void MoneyChangedAction(float newMoney);
     public MoneyChangedAction moneyChanged;
-    private float money;
+    private float money = 150f;
     public float GetMoney() => money;
     public void AddMoney(float add) {
         if (add <= 0) {

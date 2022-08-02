@@ -53,6 +53,8 @@ MonoBehaviour:
   - StopAnimationRPC
   - SetDebris
   - RPCSellObject
+  - Grind
+  - EggLayed
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

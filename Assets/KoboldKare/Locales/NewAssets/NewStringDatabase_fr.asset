@@ -712,6 +712,95 @@ MonoBehaviour:
       dans la terre souple."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Achetez un m\xE9langeur de fruits industriels."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Ces Kobolds doivent \xEAtre nourris, trouver le contrat de construction
+      au bureau de construction."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Nourrir le jus de fruits Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Les kobolds ont besoin des aliments pr\xE9par\xE9s, utilisez le
+      broyeur pour broyer les fruits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Race kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Nous avons besoin de kobolds d'origine locale, commencez par faire
+      en sorte que certaines de vos Kobolds enceintes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Livrer de grandes bites Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "J'ai besoin d'une livraison d'une race de kobolds avec de grandes
+      bites, je m'attends \xE0 ce que vous g\xE9riez cela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Livrer de grands kobolds \xE0 poitrine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "J'ai besoin d'une livraison d'une race de kobolds avec de gros
+      seins, je m'attends \xE0 ce que vous gardiez cela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum gonfle les kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Les Kobolds doivent \xEAtre remplis \xE0 ras bord, ne me parlez
+      pas davantage de cela."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "P\xE9n\xE9trer tout le long."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Je ne peux m\xEAme pas commencer \xE0 penser \xE0 une explication,
+      juste en occuper."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: "Livrer des kobolds engraiss\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Les milkshakes vont directement aux cuisses, c'est dans notre meilleur
+      int\xE9r\xEAt d'avoir quelques kobolds surchaur\xE9s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Ponte un tr\xE8s grand \u0153uf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Je me fiche de ce que vous en faites apr\xE8s, nous avons besoin
+      d'un gros \u0153uf pour sortir d'un kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: "Cr\xE9er macro kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Ils doivent \xEAtre au moins la taille d'une maison. Bonne chance."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

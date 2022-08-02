@@ -20,10 +20,18 @@ public class EnergyBarDisplay : MonoBehaviour {
     private static readonly int ColorID = Shader.PropertyToID("_Color");
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 
-    void Start() {
-        Kobold kobold = GetComponentInParent<Kobold>();
+    private Kobold kobold;
+
+    void OnEnable() {
+        kobold = GetComponentInParent<Kobold>();
         kobold.energyChanged += OnEnergyChanged;
         OnEnergyChanged(kobold.GetEnergy(), kobold.GetMaxEnergy());
+    }
+
+    void OnDisable() {
+        kobold.energyChanged -= OnEnergyChanged;
+        energyBar.material.SetColor(ColorID, energyBar.material.GetColor(ColorID).With(a:0f));
+        energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
     }
 
     void OnEnergyChanged(int value, int maxValue) {

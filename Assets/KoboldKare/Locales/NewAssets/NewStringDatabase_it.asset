@@ -716,6 +716,94 @@ MonoBehaviour:
       morbida.
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: Acquista un frullatore di frutta industriale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: Questi kobold devono essere alimentati, trovare il contratto di
+      costruzione presso l'ufficio di costruzione.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Nutri succo di frutta di Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: Kobolds ha bisogno del cibo preparato, usa la smerigliatrice per
+      macinare la frutta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Razza kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Abbiamo bisogno di Kobolds di provenienza locale, inizia facendo
+      in gravidanza ad alcuni dei tuoi kobold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Fornire grandi cazzi Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Ho bisogno di una consegna di una razza di kobolds con grandi cazzi,
+      mi aspetto che tu lo gestisca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Consegnare Kobolds a petto di grandi dimensioni.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Ho bisogno di una consegna di una razza di kobolds con seno grande,
+      mi aspetto che tu lo gestisca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum gonfiore kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: I Kobolds devono essere riempiti fino all'orlo, non parlarmi ulteriormente
+      di questo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Penetra fino in fondo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: Non riesco nemmeno a pensare a una spiegazione, prendermi cura.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Consegnare kobolds ingranati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "I frullati vanno direttamente alle cosce, \xE8 nel nostro interesse
+      avere alcuni kobolds superati."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Ovipositare un uovo molto grande.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: Non mi interessa quello che fai dopo, abbiamo bisogno di un grande
+      uovo per uscire da un kobold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Crea macro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: Devono essere almeno le dimensioni di una casa. Buona fortuna.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -691,6 +691,86 @@ MonoBehaviour:
     m_Key: PLANT_KOBOLD_OBJECTIVE_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Key: PURCHASE_GRINDER_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Key: PURCHASE_GRINDER_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Key: FRUIT_GRIND_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Key: FRUIT_GRIND_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Key: BREED_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Key: BREED_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Key: CUMFLATE_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Key: CUMFLATE_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Key: ALL_THE_WAY_THROUGH_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Key: ALL_THE_WAY_THROUGH_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Key: FATTEN_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Key: FATTEN_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Key: DELIVER_LARGE_EGG_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Key: DELIVER_LARGE_EGG_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Key: CREATE_MACRO_KOBOLD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Key: CREATE_MACRO_KOBOLD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

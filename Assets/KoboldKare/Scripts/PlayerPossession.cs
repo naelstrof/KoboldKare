@@ -253,6 +253,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
+        characterControllerAnimator.SetEyeDir(GetEyeDir());
     }
 
     public IEnumerator CoyoteGrab() {
@@ -337,10 +338,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (stream.IsWriting) {
             bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
             stream.SendNext(switchGrabMode);
-            stream.SendNext(eyeRot);
         } else {
             pGrabber.HideHand(!(bool)stream.ReceiveNext());
-            eyeRot = (Vector2)stream.ReceiveNext();
         }
     }
 

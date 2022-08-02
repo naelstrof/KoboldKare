@@ -28,6 +28,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Transform headTransform;
     [SerializeField]
     private AudioPack footstepPack;
+    private Vector3 eyeLookDir = Vector3.forward;
+    private Vector3 networkedEyeLookDir;
 
     [SerializeField] private Rigidbody body;
     [SerializeField] private PlayerPossession playerPossession;
@@ -50,6 +52,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
+
+    public void SetEyeDir(Vector3 lookdir) {
+        this.eyeLookDir = lookdir;
+    }
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
@@ -125,6 +131,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     void Update() {
+        if (!photonView.IsMine) {
+            eyeLookDir = Vector3.RotateTowards(eyeLookDir, networkedEyeLookDir, Time.deltaTime * Mathf.PI * 2f, 1f);
+        }
+
         if (kobold != null) {
             float maxPen = 0f;
             playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
@@ -204,10 +214,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.SetFloat(CrouchAmount, crouchLerper);
         //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
-        Vector3 lookPos = controller.transform.position + controller.transform.forward;
-        if (playerPossession != null) {
-            lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
-        }
+        
+        //Vector3 lookPos = controller.transform.position + controller.transform.forward;
+        Vector3 lookPos = headTransform.position + eyeLookDir;
+        //if (playerPossession != null) {
+            //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
+        //}
 
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
@@ -265,7 +277,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     // Animations are something that cannot have packets dropped, so we sync via RPC
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(eyeLookDir);
+        } else {
+            networkedEyeLookDir = (Vector3)stream.ReceiveNext();
+        }
+    }
     public void Save(BinaryWriter writer, string version) {
         if (animating) {
             writer.Write(currentStationSet.photonView.ViewID);

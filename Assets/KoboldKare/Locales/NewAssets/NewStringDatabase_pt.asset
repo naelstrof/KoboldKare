@@ -711,6 +711,94 @@ MonoBehaviour:
       na terra flex\xEDvel."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: Compre um liquidificador de frutas industriais.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Esses Kobolds precisam ser alimentados, encontre o contrato de
+      constru\xE7\xE3o no Escrit\xF3rio de Constru\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Alimente o suco de frutas Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: Kobolds precisa da comida preparada, use o moedor para moer frutas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: "Ra\xE7a kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Precisamos de kobolds de origem local, comece engravidando algumas
+      de sua Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Entregue o Dick Kobolds grandes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Preciso de uma entrega de uma ra\xE7a de kobolds com paus grandes,
+      espero que voc\xEA lide com isso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Entregue Kobolds de peito grande.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Preciso de uma entrega de uma ra\xE7a de kobolds com seios grandes,
+      espero que voc\xEA lide com isso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum infle Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Os Kobolds precisam ser preenchidos at\xE9 a borda, n\xE3o fale
+      mais comigo sobre isso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Penetrar durante todo o caminho.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "N\xE3o consigo nem come\xE7ar a pensar em uma explica\xE7\xE3o,
+      apenas cuide disso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Entregue kobolds engordados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes v\xE3o direto para as coxas, \xE9 do nosso interesse
+      ter alguns Kobolds superevinos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit um ovo muito grande.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "N\xE3o me importo com o que voc\xEA faz com isso depois, precisamos
+      de um ovo grande para sair de um Kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Crie macro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: Eles precisam ter pelo menos o tamanho de uma casa. Boa sorte.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

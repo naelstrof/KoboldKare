@@ -711,6 +711,94 @@ MonoBehaviour:
       jord."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "K\xF8b en industriel frugtblender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Disse kobolds skal fodres, finde bygge -kontrakten p\xE5 byggekontoret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Foder Kobolds frugtsaft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds har brug for den tilberedte mad, brug kv\xE6rnen til at
+      slibe frugt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Breed kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Vi har brug for lokalt fremskaffede kobolds, start med at f\xE5
+      nogle af dine kobolds gravide."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Lever store Dick Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Jeg har brug for en levering af en race af kobolds med store pikke,
+      jeg forventer, at du skal h\xE5ndtere dette."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Lever store brystede kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Jeg har brug for en levering af en race af kobolds med store bryster,
+      jeg forventer, at du skal h\xE5ndtere dette."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum oppustede Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: Kobolderne skal fyldes til randen, snak ikke med mig yderligere
+      om dette.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "Tr\xE6n dig igennem hele vejen igennem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Jeg kan ikke engang begynde at t\xE6nke p\xE5 en forklaring, bare
+      passe p\xE5 den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Lever fedtede kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes g\xE5r direkte til l\xE5rene, det er i vores bedste
+      interesse at have et par superheavy kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Oviposit et meget stort \xE6g."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Jeg er ligeglad med, hvad du g\xF8r med det efter, vi har brug
+      for et stort \xE6g for at komme ud af en Kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Opret Macro Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "De skal v\xE6re mindst st\xF8rrelsen p\xE5 et hus. Held og lykke."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

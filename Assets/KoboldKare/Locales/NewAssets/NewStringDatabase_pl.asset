@@ -719,6 +719,95 @@ MonoBehaviour:
       ziemi\u0119."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Kup przemys\u0142owy mikser owocowy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Te koboldowie musz\u0105 by\u0107 karmione, znale\u017A\u0107 umow\u0119
+      o budow\u0119 w biurze budowlanym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Nwas sok owocowy Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds potrzebuj\u0105 przygotowanego jedzenia, u\u017Cyj szlifierki
+      do szlifowania owoc\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Resore Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Potrzebujemy lokalnych kobold\xF3w, zacznij od zaj\u015Bcia w ci\u0105\u017C\u0119
+      Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: "Dostarcz du\u017Cego kutasa Koboldsa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Potrzebuj\u0119 dostawy rasy Kobolds z du\u017Cymi kutasami, spodziewam
+      si\u0119, \u017Ce poradzisz sobie z tym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Potrzebuj\u0119 dostarczenia rasy Kobolds z du\u017Cymi piersiami,
+      spodziewam si\u0119, \u017Ce poradzisz sobie z tym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Sperma nadmuchi Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Koboldowie musz\u0105 by\u0107 wype\u0142nione po brzegi, nie rozmawiaj
+      ze mn\u0105 dalej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "Przenika\u0107 przez ca\u0142\u0105 drog\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Nie mog\u0119 nawet zacz\u0105\u0107 my\u015Ble\u0107 o wyja\u015Bnieniu,
+      po prostu zadbaj o to."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Dostarcz wygrane Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Koktajle mleczne id\u0105 prosto do uda, w naszym najlepszym interesie
+      jest kilka superchodowych kobold\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Oviposit bardzo du\u017Ce jajko."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Nie obchodzi mnie, co z tym robisz, potrzebujemy du\u017Cego jajka,
+      aby wyj\u015B\u0107 z Kobolda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: "Utw\xF3rz makro Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Musz\u0105 by\u0107 co najmniej wielko\u015Bci domu. Powodzenia."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

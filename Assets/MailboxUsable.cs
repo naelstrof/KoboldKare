@@ -21,8 +21,8 @@ public class MailboxUsable : GenericUsable {
         if (mailWaitingSource == null) {
             mailWaitingSource = gameObject.AddComponent<AudioSource>();
             mailWaitingSource.playOnAwake = false;
-            mailWaitingSource.maxDistance = 10f;
-            mailWaitingSource.minDistance = 0.2f;
+            mailWaitingSource.maxDistance = 12f;
+            mailWaitingSource.minDistance = 1f;
             mailWaitingSource.rolloffMode = AudioRolloffMode.Linear;
             mailWaitingSource.spatialBlend = 1f;
             mailWaitingSource.loop = true;

@@ -717,6 +717,96 @@ MonoBehaviour:
       ou pe P\u0103m\xE2ntul suplu."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Cump\u0103ra\u021Bi un blender de fructe industriale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Aceste kobolds trebuie s\u0103 fie alimentate, s\u0103 g\u0103seasc\u0103
+      contractul de construc\u021Bie la biroul de construc\u021Bii."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: "Hr\u0103ni\u021Bi sucul de fructe kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds au nevoie de m\xE2ncarea preg\u0103tit\u0103, folosi\u021Bi
+      r\xE2\u0219ni\u021Ba pentru a m\u0103cina fructele"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Race Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Avem nevoie de kobolduri provenite local, \xEEncepe\u021Bi prin
+      a -\u021Bi pune \xEEns\u0103rcina\u021Bi o parte din Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: "Livra\u021Bi Kobolds mari de pula."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Am nevoie de o livrare a unei rase de kobolds cu pic\u0103turi
+      mari, m\u0103 a\u0219tept s\u0103 te descurci cu asta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Livra\u021Bi Kobolds cu s\xE2nii mari."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Am nevoie de o livrare a unei rase de kobolds cu s\xE2ni mari,
+      m\u0103 a\u0219tept s\u0103 te descurci cu asta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: "Cum umfl\u0103 kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Kobolds trebuie s\u0103 fie umplu\u021Bi p\xE2n\u0103 la cap\u0103t,
+      nu -mi vorbi\u021Bi mai departe despre asta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "P\u0103trunde p\xE2n\u0103 la cap\u0103t."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Nici m\u0103car nu pot \xEEncepe s\u0103 m\u0103 g\xE2ndesc la
+      o explica\u021Bie, ci doar s\u0103 am grij\u0103 de ea."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: "Livra\u021Bi Kobolds \xEEngr\u0103\u0219at"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshake -urile merg direct la coapse, este \xEEn interesul nostru
+      s\u0103 avem c\xE2teva Kobolds superheavy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposi un ou foarte mare.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Nu -mi pas\u0103 ce faci cu el, avem nevoie de un ou mare pentru
+      a ie\u0219i dintr -un kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: "Crea\u021Bi macro kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Ei trebuie s\u0103 fie cel pu\u021Bin de dimensiunea unei case.
+      Mult noroc."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

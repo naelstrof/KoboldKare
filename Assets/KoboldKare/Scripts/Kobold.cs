@@ -510,8 +510,8 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             genes.breastSize += melonJuiceVolume * multi;
             genes.dickSize += eggplantJuiceVolume * multi;
             genes.baseSize += growthSerumVolume * multi;
-            genes.baseSize += milkShakeVolume * multi;
-            genes.baseSize += pineappleJuiceVolume * multi;
+            genes.fatSize += milkShakeVolume * multi;
+            genes.ballSize += pineappleJuiceVolume * multi;
             SetGenes(genes);
         }
     }
@@ -599,7 +599,7 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
 
     public float GetWorth() {
         KoboldGenes genes = GetGenes();
-        return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*10f);
+        return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
     
     

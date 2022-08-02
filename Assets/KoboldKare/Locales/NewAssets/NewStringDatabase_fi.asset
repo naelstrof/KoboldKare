@@ -205,9 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "T\xC4M\xC4 PELI KUVAA KUVATTELUJA HENKIL\xD6J\xC4 OSALLISTUVAT
-      <#FF0000> SEKSUAALISEEN K\xC4YTT\xD6\xD6N <#FFFFFF>\n\nNAPSAUTALLA <#008CFF>
-      PELAA <#FFFFFF> TOTEAT, ETT\xC4:"
+    m_Localized: "T\xC4M\xC4 PELI KUVAA KUVATTELUJA HENKIL\xD6J\xC4 OSALLISTUNA <#FF0000>
+      SEKSUAALISEEN K\xC4YTT\xD6\xD6N <#FFFFFF>\n\nNAPSAUTALLA <#008CFF> PELAA <#FFFFFF>
+      TOTEAT, ETT\xC4:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -710,6 +710,94 @@ MonoBehaviour:
   - m_Id: 197833684470169604
     m_Localized: "Dragon -suojelija etsii kykenev\xE4\xE4 karetakeria, istuta muna
       joustavaan maahan."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Osta teollisen hedelm\xE4sekoittimen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "N\xE4m\xE4 Kobolds on ruokittava, l\xF6ydett\xE4v\xE4 rakennussopimus
+      rakennustoimistosta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: "Ruokki Koboldsin hedelm\xE4mehua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds tarvitsee valmistetun ruoan, k\xE4yt\xE4 hiomakonetta hedelmien
+      jauhamiseen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Rotu Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Tarvitsemme paikallisesti hankittuja Koboldsia, aloittamalla joihinkin
+      Kobolds -raskaana olevista Koboldsista.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Toimita suuria munaa Koboldsia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Tarvitsen koboldien rodun, jossa on suuria munaa, odotan sinun
+      k\xE4sittelev\xE4n t\xE4t\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Toimita suuria rintakeh\xE4t."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Tarvitsen koboldien rodun, jossa on suuret rinnat, odotan sinun
+      k\xE4sittelev\xE4n t\xE4t\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: "Cum t\xE4ydent\xE4\xE4 Koboldsia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Koboldit on t\xE4ytett\xE4v\xE4 reunaan, \xE4l\xE4 puhu minulle
+      t\xE4st\xE4 edelleen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "Tunkeutuu l\xE4pi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "En voi edes alkaa ajatella selityst\xE4, vain huolehtia siit\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Toimita lihotettuja Koboldsia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakut menev\xE4t suoraan reidet, on meid\xE4n etumme mukaan,
+      ett\xE4 sinulla on muutama superheavy kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Ovipositie eritt\xE4in suuri muna."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "En v\xE4lit\xE4 siit\xE4, mit\xE4 teet sen j\xE4lkeen, tarvitsemme
+      suuren munan tullaksesi Koboldista."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Luo makrokobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: Niiden on oltava ainakin talon kokoisia. Onnea.
     m_Metadata:
       m_Items: []
   references:

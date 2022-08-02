@@ -718,6 +718,96 @@ MonoBehaviour:
       in geschmeidige Erde."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: Kaufen Sie einen industriellen Fruchtmixer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Diese Kobolds m\xFCssen gef\xFCttert werden und den Bauvertrag
+      im Baub\xFCro finden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: "F\xFCttern Sie Kobolds Fruchtsaft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds braucht das Essen zubereitet und benutze die M\xFChle,
+      um Fr\xFCchte zu mahlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: "Z\xFCchten Sie Kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Wir brauchen Kobolds aus der Region, damit einige Ihrer Kobolds
+      schwanger werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: "Liefern Sie gro\xDFen Schwanz Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Ich brauche eine Lieferung einer Rasse von Kobolds mit gro\xDFen
+      Schw\xE4nzen, ich erwarte, dass Sie damit umgehen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Liefern Sie gro\xDFe Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Ich brauche eine Lieferung einer Rasse von Kobolds mit gro\xDFen
+      Br\xFCsten, ich erwarte, dass Sie damit umgehen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Sperma blasen Kobolds auf.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Die Kobolds m\xFCssen bis zum Rand gef\xFCllt sein, sprechen Sie
+      nicht weiter mit mir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Durchdringen den ganzen Weg durch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Ich kann nicht einmal an eine Erkl\xE4rung denken, k\xFCmmern Sie
+      sich einfach darum."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Liefern Sie Masted Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milchshakes gehen direkt bis zu den Oberschenkel, es ist in unserem
+      besten Interesse, ein paar \xFCberdurchschnittliche Kobolds zu haben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Oviposit ein sehr gro\xDFes Ei."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Es ist mir egal, was Sie danach damit machen, wir brauchen ein
+      gro\xDFes Ei, um aus einem Kobold herauszukommen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Makro Kobold erstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Sie m\xFCssen mindestens die Gr\xF6\xDFe eines Hauses haben. Viel
+      Gl\xFCck."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -716,6 +716,95 @@ MonoBehaviour:
       \xFCltetni egy toj\xE1st a rugalmas f\xF6ldbe."
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "V\xE1s\xE1roljon ipari gy\xFCm\xF6lcskever\u0151g\xE9pet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Ezeket a koboldokat etetni kell, meg kell tal\xE1lni az \xE9p\xEDt\xE9si
+      szerz\u0151d\xE9st az \xE9p\xEDt\xE9si hivatalban."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: "Feed kobolds gy\xFCm\xF6lcsl\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "A koboldsoknak elk\xE9sz\xEDtve kell az \xE9telt, haszn\xE1lja
+      a dar\xE1l\xF3t a gy\xFCm\xF6lcscsiszol\xE1shoz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: "Teny\xE9sz kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Sz\xFCks\xE9g\xFCnk van a helyi forr\xE1sb\xF3l sz\xE1rmaz\xF3
+      Kobolds -okra, kezdve azzal, hogy n\xE9h\xE1ny koboldot terhess\xE9 tesz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Haladjon nagy Dick Kobolds -ot.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Sz\xFCks\xE9gem van egy kobolds fajt\xE1ra, nagy faszakkal, azt
+      v\xE1rom, hogy ezt kezelje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Haladjon nagy mell\u0171 koboldokat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Sz\xFCks\xE9gem van egy nagy mell\u0171 koboldfajta sz\xE1ll\xEDt\xE1sra,
+      azt v\xE1rom, hogy ezt kezelje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: "Cum felf\xFAjja a koboldsot."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "A Kobolds -ot karim\xE1ra kell t\xF6lteni, ne besz\xE9lj velem
+      err\u0151l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: "Haladjon \xE1t eg\xE9szen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "M\xE9g nem tudom elkezdeni egy magyar\xE1zatot gondolni, csak vigy\xE1zni
+      r\xE1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: "Sz\xE1ll\xEDtson h\xEDz\xF3s\xEDtott koboldokat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "A turmixok egyenesen a combokhoz mennek, az \xE9rdeke, hogy legyen
+      n\xE9h\xE1ny szuperheves kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Oviposit egy nagyon nagy toj\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Nem \xE9rdekel, mit csin\xE1lsz vele ut\xE1na, sz\xFCks\xE9g\xFCnk
+      van egy nagy toj\xE1sra, hogy kij\xF6nj\xFCnk egy koboldb\xF3l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: "Hozzon l\xE9tre makr\xF3 koboldot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Legal\xE1bb egy h\xE1z m\xE9ret\xE9nek kell lennie. Sok szerencs\xE9t."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

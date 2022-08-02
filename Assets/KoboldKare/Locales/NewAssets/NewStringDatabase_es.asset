@@ -711,6 +711,95 @@ MonoBehaviour:
     m_Localized: Dragon Patron busca Karetaker capaz, planta un huevo en tierra flexible.
     m_Metadata:
       m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: Compre una licuadora de frutas industriales.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Estos kobolds deben ser alimentados, encuentran el contrato de
+      construcci\xF3n en la oficina de construcci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Alimentar el jugo de fruta de Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: Kobolds necesita el alimento preparado, use el molinillo para moler
+      la fruta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Raza kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: Necesitamos kobolds de origen local, comience por embargar a algunos
+      de sus kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Entrega una gran polla Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Necesito una entrega de una raza de kobolds con pollas grandes,
+      espero que manejes esto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Entregar kobolds de pecho grande.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Necesito una entrega de una raza de kobolds con senos grandes, espero
+      que manejes esto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum infla Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Los Kobolds deben llenarse hasta el borde, no me hable m\xE1s sobre
+      esto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Penetrar hasta el final.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Ni siquiera puedo comenzar a pensar en una explicaci\xF3n, solo
+      cu\xEDdalo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Entregar kobolds engordados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Los batidos van directamente a los muslos, lo mejor para nuestro
+      inter\xE9s es tener algunos kobolds superados."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit un huevo muy grande.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "No me importa lo que hagas despu\xE9s, necesitamos un huevo grande
+      para salir de un kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Crear macro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Necesitan ser al menos del tama\xF1o de una casa. Buena suerte."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

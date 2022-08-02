@@ -9,6 +9,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable {
+    public delegate void ContainerFilledAction(GenericReagentContainer container);
+    public static event ContainerFilledAction containerFilled;
     [System.Serializable]
     public class InspectorReagent {
         public ScriptableReagent reagent;
@@ -133,6 +135,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (!filled && isFull) {
             //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
             OnFilled.Invoke(contents, injectType);
+            containerFilled?.Invoke(this);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;

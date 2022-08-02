@@ -18,6 +18,7 @@ public class DragonMailObjective : ISavable, IPunObservable {
     public event ObjectiveAction completed;
     public event ObjectiveAction updated;
     protected void TriggerComplete() {
+        TriggerUpdate();
         completed.Invoke(this);
     }
     protected void TriggerUpdate() {

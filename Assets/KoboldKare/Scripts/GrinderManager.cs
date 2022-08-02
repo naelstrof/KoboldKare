@@ -6,7 +6,11 @@ using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
 
-public class GrinderManager : GenericUsable, IAnimationStationSet {
+public class GrinderManager : UsableMachine, IAnimationStationSet {
+    public delegate void GrindedObjectAction(GameObject obj);
+
+    public static event GrindedObjectAction grindedObject;
+        
     [SerializeField]
     private Sprite onSprite;
     public AudioSource grindSound;
@@ -17,21 +21,16 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
     private ReadOnlyCollection<AnimationStation> stations;
     [SerializeField]
     private FluidStream fluidStream;
-    private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
+    private HashSet<PhotonView> grindedThingsCache;
     private bool grinding;
-    public void Purchase(bool purchase) {
-        foreach (Transform t in transform) {
-            if (t != transform) {
-                t.gameObject.SetActive(purchase);
-            }
-        }
-    }
+    [SerializeField]
+    private Collider grindingCollider;
 
     public override Sprite GetSprite(Kobold k) {
         return onSprite;
     }
     public override bool CanUse(Kobold k) {
-        return k.GetEnergy() > 0 && !grinding && station.info.user == null;
+        return k.GetEnergy() > 0 && !grinding && station.info.user == null && constructed;
     }
 
     public override void LocalUse(Kobold k) {
@@ -68,7 +67,9 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         }
     }
 
-    void Start() {
+    protected override void Start() {
+        base.Start();
+        grindedThingsCache = new HashSet<PhotonView>();
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
@@ -83,32 +84,22 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
         yield return new WaitForSeconds(0.5f);
         grindedThingsCache.Clear();
     }
-    void Grind(GameObject obj) {
-        Debug.Log("Grinding " + obj.name, obj);
-        IGrabbable root = obj.GetComponentInParent<IGrabbable>();
-        if (root == null) {
-            return;
-        }
-        if (grindedThingsCache.Contains(root.gameObject)) {
-            return;
-        }
-        
-        photonView.RequestOwnership();
-        grindedThingsCache.Add(root.gameObject);
-        foreach (GenericReagentContainer c in root.gameObject.GetComponentsInChildren<GenericReagentContainer>()) {
-            container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
-        }
-        IDamagable d = obj.GetComponentInParent<IDamagable>();
-        if (d != null) {
-            d.Damage(d.GetHealth() + 1f);
-        } else {
-            PhotonView other = obj.GetComponentInParent<PhotonView>();
-            if (other != null) {
-                PhotonNetwork.Destroy(other.gameObject);
+    [PunRPC]
+    void Grind(int viewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+        grindedObject?.Invoke(view.gameObject);
+        if (photonView.IsMine) {
+            foreach (GenericReagentContainer c in view.GetComponentsInChildren<GenericReagentContainer>()) {
+                container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
+            }
+            IDamagable d = view.GetComponentInParent<IDamagable>();
+            if (d != null) {
+                d.Damage(d.GetHealth() + 1f);
             } else {
-                Destroy(root.gameObject);
+                PhotonNetwork.Destroy(view.gameObject);
             }
         }
+        grindedThingsCache.Add(view);
         fluidStream.OnFire(container);
         StopCoroutine(nameof(WaitAndThenClear));
         StartCoroutine(nameof(WaitAndThenClear));
@@ -121,6 +112,26 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
             return;
         }
         
+        // Filter by the grinding collider
+        if (!Physics.ComputePenetration(grindingCollider, grindingCollider.transform.position,
+                grindingCollider.transform.rotation,
+                other, other.transform.position, other.transform.rotation, out Vector3 dir, out float distance) || distance == 0f) {
+            return;
+        }
+        
+        PhotonView view = other.GetComponentInParent<PhotonView>();
+        if (view == null) {
+            return;
+        }
+        if (grindedThingsCache.Contains(view)) {
+            return;
+        }
+        
+        grindedThingsCache.Add(view);
+        
+        StopCoroutine(nameof(WaitAndThenClear));
+        StartCoroutine(nameof(WaitAndThenClear));
+        
         Kobold kobold = other.GetComponentInParent<Kobold>();
         if (kobold != null) {
             kobold.StartCoroutine(RagdollForTime(kobold));
@@ -132,12 +143,12 @@ public class GrinderManager : GenericUsable, IAnimationStationSet {
             }
             return;
         }
-
-        PhotonView view = other.GetComponentInParent<PhotonView>();
-        if (view == null || !view.IsMine) {
+        
+        if (!view.IsMine) {
             return;
         }
-        Grind(other.gameObject);
+        // Finally we grind it
+        photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID);
     }
 
     private IEnumerator RagdollForTime(Kobold kobold) {

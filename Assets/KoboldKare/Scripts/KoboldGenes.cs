@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class KoboldGenes {
     public byte maxEnergy = 1;
-    public float baseSize = 1f;
+    public float baseSize = 20f;
     public float fatSize;
     public float ballSize;
     public float dickSize;
@@ -54,14 +54,14 @@ public class KoboldGenes {
                 }
             }
 
-            breastSize = Random.Range(0f, 15f);
+            breastSize = Random.Range(0f, 10f);
             ballSize = Random.Range(10f, 20f);
             dickSize = Random.Range(0f, 1f);
             dickEquip = (byte)equipments.IndexOf(dick);
         } else {
-            breastSize = Random.Range(6f, 30f);
-            ballSize = 0f;
-            dickSize = 0f;
+            breastSize = Random.Range(10f, 40f);
+            ballSize = Random.Range(10f, 20f);
+            dickSize = Random.Range(0f, 1f);
             dickEquip = byte.MaxValue;
         }
 
@@ -189,10 +189,6 @@ public class KoboldGenes {
 
 public class GeneHolder : MonoBehaviourPun {
     private KoboldGenes genes;
-
-    protected virtual void Awake() {
-        genes = new KoboldGenes();
-    }
 
     public KoboldGenes GetGenes() {
         return genes;

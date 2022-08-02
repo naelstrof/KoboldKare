@@ -28,8 +28,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Transform headTransform;
     [SerializeField]
     private AudioPack footstepPack;
-    private Vector3 eyeLookDir = Vector3.forward;
-    private Vector3 networkedEyeLookDir;
+
+    private Vector2 eyeRot;
+    private Vector2 networkedEyeRot;
+
+    private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
+    private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
 
     [SerializeField] private Rigidbody body;
     [SerializeField] private PlayerPossession playerPossession;
@@ -53,8 +57,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
 
-    public void SetEyeDir(Vector3 lookdir) {
-        this.eyeLookDir = lookdir;
+    public void SetEyeRot(Vector2 newEyeRot) {
+        this.eyeRot = newEyeRot;
+    }
+    public void SetEyeDir(Vector3 newEyeDir) {
+        Quaternion rot = Quaternion.LookRotation(newEyeDir);
+        Vector3 euler = rot.eulerAngles;
+        eyeRot = new Vector2(euler.y, -euler.x);
     }
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
@@ -108,9 +117,11 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         currentStation.OnStartAnimation(kobold);
         float startTime = Time.time;
         float blendDuration = 1f;
+        Quaternion startRotation = kobold.body.rotation;
         while (Time.time < startTime + blendDuration) {
             float t = (Time.time - startTime) / blendDuration;
             solver.ForceBlend(t);
+            kobold.body.rotation = Quaternion.Lerp(startRotation, currentStation.transform.rotation, t);
             yield return null;
         }
         solver.ForceBlend(1f);
@@ -132,7 +143,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     void Update() {
         if (!photonView.IsMine) {
-            eyeLookDir = Vector3.RotateTowards(eyeLookDir, networkedEyeLookDir, Time.deltaTime * Mathf.PI * 2f, 1f);
+            float angle = Vector3.Angle(eyeDir, networkedEyeDir);
+            if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
+                networkedEyeRot.x -= 360f;
+            }
+            if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
+                networkedEyeRot.x += 360f;
+            }
+            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, angle * (1.0f / PhotonNetwork.SerializationRate));
         }
 
         if (kobold != null) {
@@ -216,7 +234,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
         
         //Vector3 lookPos = controller.transform.position + controller.transform.forward;
-        Vector3 lookPos = headTransform.position + eyeLookDir;
+        Vector3 lookPos = headTransform.position + eyeDir;
         //if (playerPossession != null) {
             //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         //}
@@ -252,9 +270,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private IEnumerator StopAnimationRoutine() {
         float duration = 1f;
         float startTime = Time.time;
+        Quaternion startRotation = kobold.body.rotation;
+        Quaternion endRotation = Quaternion.Euler(0, eyeRot.x, 0);
         while (Time.time < startTime + duration) {
             float t = (Time.time - startTime) / duration;
             solver.ForceBlend(1f - t);
+            kobold.body.rotation = Quaternion.Lerp(startRotation, endRotation, t);
             yield return null;
         }
         solver.ForceBlend(0f);
@@ -268,20 +289,21 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (playerPossession == null) {
             return;
         }
-        Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
+        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 35f;
-        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
-        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
+        float deflectionForgivenessDegrees = 45f;
+        var forward = body.transform.forward;
+        Vector3 cross = Vector3.Cross(forward, fdir);
+        float angleDiff = Mathf.Max(Vector3.Angle(forward, fdir) - deflectionForgivenessDegrees, 0f);
         body.AddTorque(cross*(angleDiff*3f), ForceMode.Acceleration);
     }
 
     // Animations are something that cannot have packets dropped, so we sync via RPC
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(eyeLookDir);
+            stream.SendNext(eyeRot);
         } else {
-            networkedEyeLookDir = (Vector3)stream.ReceiveNext();
+            networkedEyeRot = (Vector2)stream.ReceiveNext();
         }
     }
     public void Save(BinaryWriter writer, string version) {

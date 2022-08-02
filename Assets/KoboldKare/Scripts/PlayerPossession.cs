@@ -253,7 +253,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
-        characterControllerAnimator.SetEyeDir(GetEyeDir());
+        characterControllerAnimator.SetEyeRot(GetEyeRot());
     }
 
     public IEnumerator CoyoteGrab() {

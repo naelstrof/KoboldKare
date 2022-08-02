@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +9,7 @@ using PenetrationTech;
 using System.IO;
 using Naelstrof.Inflatable;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
@@ -174,43 +176,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         return GetGenes().maxEnergy;
     }
 
-    protected override void Awake() {
-        base.Awake();
-        ballsContents = new ReagentContents();
-        ballsContents.changed += OnBallsContentsChanged;
-        boobContents = new ReagentContents();
-        boobContents.changed += OnBoobContentsChanged;
-        bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
-        bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
-        metabolizedContents = new ReagentContents(20f);
-        bellyContainer.maxVolume = 20f;
-        photonView.ObservedComponents.Add(bellyContainer);
-        belly.OnEnable();
-        sizeInflater.OnEnable();
-        boobs.OnEnable();
-        fatnessInflater.OnEnable();
-
-        if (tummyGrumbleSource == null) {
-            tummyGrumbleSource = gameObject.AddComponent<AudioSource>();
-            tummyGrumbleSource.playOnAwake = false;
-            tummyGrumbleSource.maxDistance = 10f;
-            tummyGrumbleSource.minDistance = 0.2f;
-            tummyGrumbleSource.rolloffMode = AudioRolloffMode.Linear;
-            tummyGrumbleSource.spatialBlend = 1f;
-            tummyGrumbleSource.loop = true;
-        }
-        
-        if (gargleSource == null) {
-            gargleSource = gameObject.AddComponent<AudioSource>();
-            gargleSource.playOnAwake = false;
-            gargleSource.maxDistance = 10f;
-            gargleSource.minDistance = 0.2f;
-            gargleSource.rolloffMode = AudioRolloffMode.Linear;
-            gargleSource.spatialBlend = 1f;
-            gargleSource.loop = true;
-        }
-        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource));
-    }
     private float[] GetRandomProperties(float totalBudget, int count) {
         float[] properties = new float[count];
         float sum = 0f;
@@ -249,8 +214,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }*/
 
     public override void SetGenes(KoboldGenes newGenes) {
-        OnBoobContentsChanged(boobContents);
-        OnBallsContentsChanged(ballsContents);
         foreach (var dickSet in activeDicks) {
             dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (newGenes.dickSize) / 20f, 2f), dickSet.info);
         }
@@ -277,9 +240,9 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }
         // Set dick
         var inventory = GetComponent<KoboldInventory>();
-        if (newGenes.dickEquip != GetGenes().dickEquip) {
+        if (GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip || newGenes.dickEquip == byte.MaxValue) {
             while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),true);
+                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),PhotonNetwork.InRoom);
             }
         }
 
@@ -291,6 +254,8 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
 
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
+        OnBoobContentsChanged(boobContents);
+        OnBallsContentsChanged(ballsContents);
     }
     
     void OnMidnight(object ignore) {
@@ -298,6 +263,43 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             energy = GetGenes().maxEnergy;
             energyChanged?.Invoke(energy, GetGenes().maxEnergy);
         }
+    }
+
+    private void Awake() {
+        ballsContents = new ReagentContents();
+        ballsContents.changed += OnBallsContentsChanged;
+        boobContents = new ReagentContents();
+        boobContents.changed += OnBoobContentsChanged;
+        bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
+        bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
+        metabolizedContents = new ReagentContents(20f);
+        bellyContainer.maxVolume = 20f;
+        photonView.ObservedComponents.Add(bellyContainer);
+        belly.OnEnable();
+        sizeInflater.OnEnable();
+        boobs.OnEnable();
+        fatnessInflater.OnEnable();
+
+        if (tummyGrumbleSource == null) {
+            tummyGrumbleSource = gameObject.AddComponent<AudioSource>();
+            tummyGrumbleSource.playOnAwake = false;
+            tummyGrumbleSource.maxDistance = 10f;
+            tummyGrumbleSource.minDistance = 0.2f;
+            tummyGrumbleSource.rolloffMode = AudioRolloffMode.Linear;
+            tummyGrumbleSource.spatialBlend = 1f;
+            tummyGrumbleSource.loop = true;
+        }
+        
+        if (gargleSource == null) {
+            gargleSource = gameObject.AddComponent<AudioSource>();
+            gargleSource.playOnAwake = false;
+            gargleSource.maxDistance = 10f;
+            gargleSource.minDistance = 0.2f;
+            gargleSource.rolloffMode = AudioRolloffMode.Linear;
+            gargleSource.spatialBlend = 1f;
+            gargleSource.loop = true;
+        }
+        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource));
     }
 
     void Start() {
@@ -580,11 +582,16 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
 
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
+        } else {
+            SetGenes(new KoboldGenes().Randomize());
         }
+
         if (info.photonView.InstantiationData.Length > 1 && info.photonView.InstantiationData[1] is bool) {
             if ((bool)info.photonView.InstantiationData[1] == true) {
+                GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
                 info.Sender.TagObject = this;
             } else {
+                GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
                 FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
             }
         }

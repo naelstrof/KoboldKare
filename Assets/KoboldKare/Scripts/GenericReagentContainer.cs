@@ -71,7 +71,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     private bool filled = false;
     private bool emptied = false;
     private bool ready = false;
-    protected override void Awake() {
+    protected void Awake() {
         if(ready){return;}
 
         OnChange ??= new ReagentContainerChangedEvent();

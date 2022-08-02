@@ -1,14 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnergyBarDisplay : MonoBehaviour {
-    [SerializeField]
-    private Renderer energyBar;
-    [SerializeField]
-    private Renderer energyBarContainer;
-    [SerializeField]
-    private AnimationCurve bounceCurve;
+    [SerializeField] private Renderer energyBar;
+    [SerializeField] private Renderer energyBarContainer;
+    [SerializeField] private AnimationCurve bounceCurve;
 
     private float desiredValue;
     private float desiredMaxValue;
@@ -22,14 +20,17 @@ public class EnergyBarDisplay : MonoBehaviour {
 
     private Kobold kobold;
 
-    void OnEnable() {
+    void Start() {
         kobold = GetComponentInParent<Kobold>();
         kobold.energyChanged += OnEnergyChanged;
         OnEnergyChanged(kobold.GetEnergy(), kobold.GetMaxEnergy());
     }
 
-    void OnDisable() {
+    private void OnDestroy() {
         kobold.energyChanged -= OnEnergyChanged;
+    }
+
+    void OnDisable() {
         energyBar.material.SetColor(ColorID, energyBar.material.GetColor(ColorID).With(a:0f));
         energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
     }

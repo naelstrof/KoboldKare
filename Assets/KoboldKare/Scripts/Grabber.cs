@@ -52,23 +52,18 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
     public bool grabbing = false;
     [HideInInspector]
     public bool activating = false;
+
+    private class RigidbodyMemory {
+        public CollisionDetectionMode collision;
+        public RigidbodyInterpolation interpolation;
+    }
+
+    private Dictionary<Rigidbody, RigidbodyMemory> highQualityRigidbodies;
+
     public void OnDestroy() {
         TryDrop();
     }
-
-    //public IEnumerator WaitAndClearDropped(float time) {
-        //yield return new WaitForSeconds(time);
-        //foreach( GameObject g in droppedObjects) {
-            //if (g == null ) {
-                //continue;
-            //}
-            //Rigidbody r = g.GetComponentInChildren<Rigidbody>();
-            //if (r) {
-                //r.collisionDetectionMode = CollisionDetectionMode.Discrete;
-            //}
-        //}
-        //droppedObjects.Clear();
-    //}
+    
     public void SetMaxGrabCount( float grabCount ) {
         maxGrabCount = Mathf.CeilToInt(grabCount);
     }
@@ -93,7 +88,20 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         //intersectingGameObjects.RemoveWhere(o => ((Component)o)== null);
         droppedObjects.RemoveWhere(o => ((Component)o)== null);
     }
-    public void TryDrop(IGrabbable g) {
+
+    private IEnumerator WaitAndClearHighQualityRigidbodies() {
+        yield return new WaitForSeconds(10f);
+        foreach (var pair in highQualityRigidbodies) {
+            if (pair.Key != null) {
+                pair.Key.interpolation = pair.Value.interpolation;
+                pair.Key.collisionDetectionMode = pair.Value.collision;
+            }
+        }
+
+        highQualityRigidbodies.Clear();
+    }
+
+    private void TryDrop(IGrabbable g) {
         if( ((Component)g) == null ) {
             return;
         }
@@ -129,6 +137,8 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         //if (player.GetComponent<KoboldCharacterController>().groundRigidbody != null) {
             //StartCoroutine(WaitAndClearThrown(thrownUntouchableTime));
         //}
+        StopCoroutine(nameof(WaitAndClearHighQualityRigidbodies));
+        StartCoroutine(nameof(WaitAndClearHighQualityRigidbodies));
         if (grabbedObjects.Count <= 0) {
             grabbing = false;
         }
@@ -159,6 +169,11 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             t.gameObject.layer = toLayer;
         }
     }
+
+    private void Start() {
+        highQualityRigidbodies = new Dictionary<Rigidbody, RigidbodyMemory>();
+    }
+
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
         averageForward = Vector3.zero;
         averageUp = Vector3.zero;
@@ -179,13 +194,20 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             return false;
         }
         grabbedObjects.Add(g);
-        RecursiveSetLayer(g.GetRigidBodies()[0].transform.root, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));
+        Rigidbody firstBody = g.GetRigidBodies()[0];
+        RecursiveSetLayer(firstBody.transform.root, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));
+        if (!highQualityRigidbodies.ContainsKey(firstBody)) {
+            highQualityRigidbodies.Add(firstBody,
+                new RigidbodyMemory() { collision = firstBody.collisionDetectionMode, interpolation = firstBody.interpolation });
+            firstBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            firstBody.interpolation = RigidbodyInterpolation.Interpolate;
+        }
         foreach(Rigidbody r in g.GetRigidBodies()) {
             if (r == null ) {
                 continue;
             }
-            //r.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            //r.interpolation = RigidbodyInterpolation.Interpolate;
+
+
             DriverConstraint j = r.gameObject.AddComponent<DriverConstraint>();
             j.springStrength = springStrength;
             j.connectedBody = body;
@@ -230,27 +252,10 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         grabbables.ExceptWith(thrownObjects);
         List<IGrabbable> sortedGrabables = new List<IGrabbable>(grabbables);
         sortedGrabables.Sort((a, b) => Vector3.Distance(a.GrabTransform(a.GetRigidBodies()[0]).position, transform.position).CompareTo(Vector3.Distance(b.GrabTransform(b.GetRigidBodies()[0]).position, transform.position)));
-        /*GrabbableType grabType = GrabbableType.None;
-        foreach(IGrabbable g in grabbedObjects) {
-            grabType |= g.GetGrabbableType();
+        foreach (var t in sortedGrabables) {
+            bool grabbed = TryGrab(t);
         }
-        if (grabType == GrabbableType.None) {
-            grabType = GrabbableType.Any;
-        }*/
-        for(int i=0;i<sortedGrabables.Count;i++) {
-            //if ((grabType & sortedGrabables[i].GetGrabbableType()) != 0) {
-                bool grabbed = TryGrab(sortedGrabables[i]);
-                /*if ( grabbed && grabbedObjects.Count == 1) {
-                    grabType = sortedGrabables[i].GetGrabbableType();
-                }*/
-            //}
-        }
-        if (grabbedObjects.Count>0) {
-            grabbing = true;
-        } else {
-            grabbing = false;
-        }
-        //grabbedObjects.UnionWith(grabbables);
+        grabbing = grabbedObjects.Count>0;
     }
     public void FixedUpdate() {
         Validate();

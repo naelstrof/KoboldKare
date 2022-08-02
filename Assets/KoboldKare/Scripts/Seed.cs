@@ -14,10 +14,6 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     private Collider[] hitColliders = new Collider[16];
     private KoboldGenes genes;
 
-    private void Awake() {
-        genes = new KoboldGenes().Randomize();
-    }
-
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
@@ -52,6 +48,7 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
+            genes ??= new KoboldGenes().Randomize();
             GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant), genes} );
             bestTile.SetPlanted(obj.GetComponent<Plant>());
             PhotonNetwork.Destroy(gameObject);
@@ -67,6 +64,8 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null) {
             genes = (KoboldGenes)info.photonView.InstantiationData[0];
+        } else {
+            genes = new KoboldGenes().Randomize();
         }
     }
 }

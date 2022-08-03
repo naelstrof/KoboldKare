@@ -6,6 +6,27 @@ using UnityEngine.UI;
 using UnityEditor;
 
 public static class AghButton {
+    [MenuItem("Tools/KoboldKare/FindInvalidTransforms")]
+    public static void FindInvalidTransform() {
+        foreach (GameObject g in Object.FindObjectsOfType<GameObject>(true)) {
+            Quaternion checkQuat = g.transform.rotation;
+            Vector3 checkPos = g.transform.position;
+            if (float.IsNaN(checkQuat.x) ||
+                float.IsNaN(checkQuat.y) ||
+                float.IsNaN(checkQuat.z) ||
+                float.IsNaN(checkQuat.w) ||
+                float.IsNaN(checkPos.x) ||
+                float.IsNaN(checkPos.y) ||
+                float.IsNaN(checkPos.z)) {
+                Selection.activeObject = g;
+                Debug.Log("Found invalid transform!", g);
+                return;
+            }
+        }
+
+        Debug.Log("None found!");
+    }
+
     [MenuItem("Tools/KoboldKare/HomogenizeButtons")]
     public static void HomogenizeButtons() {
         ColorBlock block = new ColorBlock();

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericFluidVolume : MonoBehaviour {
+public class GenericFluidVolume : MonoBehaviourPun {
     private static List<Renderer> staticTempRenderers = new List<Renderer>();
     private static List<Renderer> staticRenderers = new List<Renderer>();
     public float fillRate = 1f;
@@ -16,8 +16,7 @@ public class GenericFluidVolume : MonoBehaviour {
     public Material decalClearMaterial;
     public List<BoxCollider> fluidHitboxes = new List<BoxCollider>();
     public GenericReagentContainer volumeContainer;
-    public HashSet<LODGroup> paintableObjects = new HashSet<LODGroup>();
-    public HashSet<GenericReagentContainer> dippableObjects = new HashSet<GenericReagentContainer>();
+    public HashSet<PhotonView> dippedObjects;
     public UnityEvent drainStart;
     public UnityEvent drainEnd;
 
@@ -35,6 +34,7 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     public void Start() {
+        dippedObjects = new HashSet<PhotonView>();
         volumeContainer.OnChange.AddListener(OnReagentContainerChanged);
         OnReagentContainerChanged(volumeContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
     }
@@ -42,23 +42,19 @@ public class GenericFluidVolume : MonoBehaviour {
         volumeContainer.OnChange.RemoveListener(OnReagentContainerChanged);
     }
     public void Update() {
-        paintableObjects.RemoveWhere(o=>o == null);
-        dippableObjects.RemoveWhere(o=>o == null);
-        foreach(LODGroup g in paintableObjects) {
-            DipDecal(g);
-            if (Mathf.Approximately(volumeContainer.volume, 0f)) {
-                continue;
-            }
-            foreach(var container in dippableObjects) {
+        dippedObjects.RemoveWhere(o=>o == null);
+        foreach(PhotonView view in dippedObjects) {
+            DipDecal(view);
+            GenericReagentContainer container = view.GetComponentInChildren<GenericReagentContainer>();
+            if (container != null) {
                 container.TransferMix(volumeContainer, Mathf.Min(container.maxVolume-container.volume,fillRate * Time.deltaTime), GenericReagentContainer.InjectType.Flood);
             }
         }
-        paintableObjects.Clear();
-        dippableObjects.Clear();
+        dippedObjects.Clear();
     }
 
-    public void DipDecal(LODGroup g) {
-        if (g.gameObject.layer == LayerMask.NameToLayer("World") || g.transform.root == this.transform.root) {
+    public void DipDecal(PhotonView view) {
+        if (view.gameObject.layer == LayerMask.NameToLayer("World")) {
             return;
         }
         if (volumeContainer.volume <= 0f) {
@@ -71,7 +67,7 @@ public class GenericFluidVolume : MonoBehaviour {
             Vector3 boxUpWorld = b.transform.TransformPoint(b.center + new Vector3(0, boxCorner.y, 0));
             Vector3 boxCenterWorld = b.transform.TransformPoint(b.center);
 
-            Vector2 rectangle = new Vector2((boxRightWorld - boxCenterWorld).magnitude, (boxUpWorld - boxCenterWorld).magnitude)*4f;
+            Vector2 rectangle = new Vector2((boxRightWorld - boxCenterWorld).magnitude, (boxUpWorld - boxCenterWorld).magnitude)*2f;
             float depth = (boxFrontWorld - boxCenterWorld).magnitude*2f;
 
             Vector3 pos = boxFrontWorld;
@@ -81,14 +77,14 @@ public class GenericFluidVolume : MonoBehaviour {
             c.a = 1f;
             if (volumeContainer.IsCleaningAgent()) {
                 staticRenderers.Clear();
-                g.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                view.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
                     SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalClearMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
                 }
             } else {
                 decalDipMaterial.color = c;
                 staticRenderers.Clear();
-                g.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                view.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
                     SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalDipMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
                 }
@@ -97,23 +93,15 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider other) {
-        LODGroup group = other.GetComponentInParent<LODGroup>();
-        if (group) {
-            paintableObjects.Add(group);
-        }
-        GenericReagentContainer container = other.GetComponentInParent<GenericReagentContainer>();
-        if (container != null) {
-            dippableObjects.Add(container);
+        PhotonView view = other.GetComponentInParent<PhotonView>();
+        if (view != null) {
+            dippedObjects.Add(view);
         }
     }
     public void OnTriggerStay(Collider other) {
-        LODGroup group = other.GetComponentInParent<LODGroup>();
-        if (group) {
-            paintableObjects.Add(group);
-        }
-        GenericReagentContainer container = other.GetComponentInParent<GenericReagentContainer>();
-        if (container != null) {
-            dippableObjects.Add(container);
+        PhotonView view = other.GetComponentInParent<PhotonView>();
+        if (view != null) {
+            dippedObjects.Add(view);
         }
     }
     private void OnDrawGizmos() {

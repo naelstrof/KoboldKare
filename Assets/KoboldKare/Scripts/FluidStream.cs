@@ -125,7 +125,10 @@ public class FluidStream : CatmullDeformer {
         }
 
         path.SetWeightsFromPoints(points);
-        rootBone.transform.localRotation *= Quaternion.AngleAxis(-Time.deltaTime * 100f, localRootForward);
+        if (Time.deltaTime != 0f) {
+            rootBone.transform.localRotation *= Quaternion.AngleAxis(-Time.deltaTime * 100f, localRootForward);
+        }
+
         foreach (var renderMask in GetTargetRenderers()) {
             renderMask.renderer.GetPropertyBlock(block);
             block.SetFloat(StartClipID, startClip);
@@ -205,8 +208,8 @@ public class FluidStream : CatmullDeformer {
         }
 
         Color color = midairContents.GetColor();
-        decalProjector.SetColor(ColorID, color);
-        decalProjectorSubtractive.SetColor(ColorID, color);
+        decalProjector.SetColor(ColorID, color.With(a:5f/255f));
+        decalProjectorSubtractive.SetColor(ColorID, color.With(a:5f/255f));
         SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(hit.point, 0.5f, midairContents.IsCleaningAgent() ? decalProjectorSubtractive : decalProjector,
             Quaternion.identity,
             GameManager.instance.decalHitMask);

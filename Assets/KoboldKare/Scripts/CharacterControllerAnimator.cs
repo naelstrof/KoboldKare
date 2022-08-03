@@ -150,7 +150,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
                 networkedEyeRot.x += 360f;
             }
-            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, angle * (1.0f / PhotonNetwork.SerializationRate));
+            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, Time.deltaTime*180f);
         }
 
         if (kobold != null) {

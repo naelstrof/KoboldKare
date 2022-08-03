@@ -11,12 +11,14 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public UnityEvent onLoad;
 
     void Start() {
+        KoboldGenes genes = new KoboldGenes();
         foreach(string settingName in settingNames) {
             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
             option.onValueChange -= OnValueChange;
             option.onValueChange += OnValueChange;
-            targetKobold.SetGenes(ProcessOption(targetKobold.GetGenes(), option));
+            genes = ProcessOption(genes, option);
         }
+        targetKobold.SetGenes(genes);
     }
     void OnDestroy() {
         foreach(string settingName in settingNames) {

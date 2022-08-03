@@ -14,11 +14,9 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     private List<GameObject> debris;
     [PunRPC]
     public void SetDebris(bool newHasDebris) {
-        if (photonView.IsMine) {
-            hasDebris = newHasDebris;
-            foreach (GameObject obj in debris) {
-                obj.SetActive(hasDebris);
-            }
+        hasDebris = newHasDebris;
+        foreach (GameObject obj in debris) {
+            obj.SetActive(hasDebris);
         }
     }
 

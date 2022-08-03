@@ -193,6 +193,12 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         if (grabbedObjects.Count >= maxGrabCount) {
             return false;
         }
+
+        PhotonView view = g.transform.GetComponentInParent<PhotonView>();
+        if (view != null) {
+            view.RequestOwnership();
+        }
+
         grabbedObjects.Add(g);
         Rigidbody firstBody = g.GetRigidBodies()[0];
         RecursiveSetLayer(firstBody.transform.root, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));

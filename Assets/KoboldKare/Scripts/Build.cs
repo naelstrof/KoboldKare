@@ -20,7 +20,7 @@ public class Build {
     }
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
@@ -33,7 +33,7 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
@@ -46,7 +46,7 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
@@ -59,7 +59,7 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildWindows32")]
     static void BuildWindows32() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();

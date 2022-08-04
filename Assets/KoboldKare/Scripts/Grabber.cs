@@ -265,7 +265,14 @@ public class Grabber : MonoBehaviourPun {
 
     private IEnumerator GiveBackKoboldsWhenPossible(Kobold targetKobold, float delay) {
         yield return new WaitForSeconds(delay);
-        while (targetKobold != null && targetKobold.photonView.IsMine && !grabbedObjects.Contains(targetKobold.GetComponent<IGrabbable>())) {
+        bool isPlayerKobold = false;
+        foreach (var playerCheck in PhotonNetwork.PlayerList) {
+            if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold) && playerCheck != PhotonNetwork.LocalPlayer) {
+                isPlayerKobold = true;
+                break;
+            }
+        }
+        while (targetKobold != null && targetKobold.photonView.IsMine && !grabbedObjects.Contains(targetKobold.GetComponent<IGrabbable>()) && isPlayerKobold) {
             foreach (var playerCheck in PhotonNetwork.PlayerList) {
                 if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold)) {
                     targetKobold.photonView.TransferOwnership(playerCheck);

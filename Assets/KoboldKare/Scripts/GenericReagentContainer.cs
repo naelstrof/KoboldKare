@@ -135,7 +135,10 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     [PunRPC]
     public void AddMixRPC(ReagentContents incomingReagents, int geneViewID) {
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
-        if (view != null && view.TryGetComponent(out GeneHolder geneHolder)) {
+        // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
+        if (view != null && view.TryGetComponent(out Kobold kobold)) {
+            SetGenes(kobold.GetGenes());
+        } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
             SetGenes(geneHolder.GetGenes());
         }
         contents.AddMix(incomingReagents, this);

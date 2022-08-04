@@ -105,17 +105,22 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     public Ragdoller ragdoller;
     public void AddStimulation(float s) {
         stimulation += s;
-        if (stimulation >= stimulationMax && TryConsumeEnergy(1)) {
-            OnOrgasm.Invoke();
-            foreach(var dickSet in activeDicks) {
-                float cumAmount = 0.5f+0.1f*GetGenes().baseSize+0.5f*GetGenes().ballSize+0.1f*GetGenes().dickSize; // Bonus!
-                ballsContents.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(cumAmount));
-                // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
-                dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
-            }
-            PumpUpDick(1f);
-            stimulation = stimulationMin;
+        if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
+            photonView.RPC(nameof(Cum), RpcTarget.All);
         }
+    }
+    
+    [PunRPC]
+    public void Cum() {
+        OnOrgasm.Invoke();
+        foreach(var dickSet in activeDicks) {
+            float cumAmount = 0.5f+0.1f*GetGenes().baseSize+0.5f*GetGenes().ballSize+0.1f*GetGenes().dickSize; // Bonus!
+            ballsContents.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(cumAmount));
+            // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
+            dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
+        }
+        PumpUpDick(1f);
+        stimulation = stimulationMin;
     }
 
     public ReagentContents GetBallsContents() {

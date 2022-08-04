@@ -200,7 +200,7 @@ public class DickInfo : MonoBehaviour {
                 GameManager.instance.decalHitMask);
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
             if (attachedKobold.photonView.IsMine) {
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
                     attachedKobold.photonView.ViewID);
             }
         }

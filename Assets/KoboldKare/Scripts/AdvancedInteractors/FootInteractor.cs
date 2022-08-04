@@ -11,7 +11,7 @@ public class FootInteractor : MonoBehaviour, IAdvancedInteractable {
     public void OnInteract(Kobold k) {
         StopAllCoroutines();
         if (!kobold.ragdoller.ragdolled) {
-            kobold.ragdoller.PushRagdoll();
+            kobold.photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         }
     }
     public void Start() {
@@ -31,6 +31,6 @@ public class FootInteractor : MonoBehaviour, IAdvancedInteractable {
 
     private IEnumerator WaitThenStand() {
         yield return waitForSeconds;
-        kobold.ragdoller.PopRagdoll();
+        kobold.photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 }

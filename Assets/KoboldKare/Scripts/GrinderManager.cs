@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 
 public class GrinderManager : UsableMachine, IAnimationStationSet {
-    public delegate void GrindedObjectAction(GameObject obj);
+    public delegate void GrindedObjectAction(ReagentContents contents);
 
     public static event GrindedObjectAction grindedObject;
         
@@ -16,7 +17,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     public AudioSource grindSound;
     public Animator animator;
     public AudioSource deny;
-    public GenericReagentContainer container;
+    //public GenericReagentContainer container;
     [SerializeField] private AnimationStation station;
     private ReadOnlyCollection<AnimationStation> stations;
     [SerializeField]
@@ -25,6 +26,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     private bool grinding;
     [SerializeField]
     private Collider grindingCollider;
+    [SerializeField]
+    private GenericReagentContainer container;
 
     public override Sprite GetSprite(Kobold k) {
         return onSprite;
@@ -73,6 +76,13 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
+        container.OnChange.AddListener(OnReagentsChanged);
+    }
+
+    private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {
+        if (fluidStream.isActiveAndEnabled) {
+            fluidStream.OnFire(container);
+        }
     }
 
     [PunRPC]
@@ -85,26 +95,11 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     [PunRPC]
-    void Grind(int viewID) {
-        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-        grindedObject?.Invoke(view.gameObject);
-        if (photonView.IsMine) {
-            foreach (GenericReagentContainer c in view.GetComponentsInChildren<GenericReagentContainer>()) {
-                container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
-            }
-        }
-        if (view.IsMine) {
-            IDamagable d = view.GetComponentInParent<IDamagable>();
-            if (d != null) {
-                d.Damage(d.GetHealth() + 1f);
-            } else {
-                PhotonNetwork.Destroy(view.gameObject);
-            }
-        }
-        grindedThingsCache.Add(view);
+    void Grind(ReagentContents incomingContents, KoboldGenes genes) {
+        grindedObject?.Invoke(incomingContents);
+        container.AddMix(incomingContents, GenericReagentContainer.InjectType.Inject);
+        container.SetGenes(genes);
         fluidStream.OnFire(container);
-        StopCoroutine(nameof(WaitAndThenClear));
-        StartCoroutine(nameof(WaitAndThenClear));
     }
     private void HandleCollision(Collider other) {
         if (!grinding) {
@@ -149,14 +144,25 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         if (!view.IsMine) {
             return;
         }
+        GenericReagentContainer genericReagentContainer = view.GetComponentInChildren<GenericReagentContainer>();
         // Finally we grind it
-        photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID);
+        if (genericReagentContainer != null) {
+            photonView.RPC(nameof(Grind), RpcTarget.All, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
+        }
+        
+        IDamagable d = view.GetComponentInParent<IDamagable>();
+        if (d != null) {
+            d.Damage(d.GetHealth() + 1f);
+        } else {
+            PhotonNetwork.Destroy(view.gameObject);
+        }
+
     }
 
     private IEnumerator RagdollForTime(Kobold kobold) {
-        kobold.ragdoller.PushRagdoll();
+        kobold.photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
-        kobold.ragdoller.PopRagdoll();
+        kobold.photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 
     private void OnTriggerEnter(Collider other) {

@@ -307,9 +307,9 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         arousal = Mathf.Clamp01(arousal);
     }
     public IEnumerator ThrowRoutine() {
-        ragdoller.PushRagdoll();
+        photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
-        ragdoller.PopRagdoll();
+        photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
     public void OnRelease(Kobold kobold) {
         //animator.updateMode = modeSave;

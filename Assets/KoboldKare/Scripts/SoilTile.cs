@@ -31,6 +31,11 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+        if (view == null) {
+            planted = null;
+            return;
+        }
+
         if (view.TryGetComponent(out Plant plant)) {
             if (planted != null) {
                 if (planted.photonView.IsMine) {

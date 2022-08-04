@@ -44,6 +44,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             ragdollBody.GetComponent<CharacterJoint>().autoConfigureConnectedAnchor = false;
         }
     }
+    [PunRPC]
     public void PushRagdoll() {
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
@@ -53,6 +54,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
+    [PunRPC]
     public void PopRagdoll() {
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
@@ -120,12 +122,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         body.isKinematic = true;
         RagdollEvent?.Invoke(true);
         ragdolled = true;
-        if (photonView.IsMine) {
-            photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, true);
-        }
     }
     
-    [PunRPC]
     private void SetRagdolled(bool ragdolled) {
         if (ragdolled) {
             Ragdoll();
@@ -181,17 +179,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;
-        if (photonView.IsMine) {
-            photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, false);
-        }
+        //if (photonView.IsMine) {
+            //photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, false);
+        //}
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(ragdolled);
             stream.SendNext(hip.position);
         } else {
-            SetRagdolled((bool)stream.ReceiveNext());
             networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
         }
     }
@@ -203,7 +199,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
-        if (Equals(newOwner, PhotonNetwork.LocalPlayer)) {
+        if (ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer)) {
             ragdollCount = 0;
         }
     }

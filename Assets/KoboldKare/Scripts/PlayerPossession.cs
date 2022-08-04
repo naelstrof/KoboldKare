@@ -329,10 +329,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {
-            kobold.ragdoller.PopRagdoll();
+            photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         } else {
-            kobold.ragdoller.PushRagdoll();
+            photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
             inputRagdolled = true;
         }
     }

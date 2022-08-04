@@ -59,6 +59,8 @@ MonoBehaviour:
   - OnFireRPC
   - SetPlanted
   - SetPlantedRPC
+  - PopRagdoll
+  - PushRagdoll
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -23,7 +23,7 @@ public class GrindFruitObjective : DragonMailObjective {
         GrinderManager.grindedObject -= OnGrindedObject;
     }
     
-    private void OnGrindedObject(GameObject obj) {
+    private void OnGrindedObject(ReagentContents contents) {
         fruitCount++;
         TriggerUpdate();
         if (fruitCount >= maxFruit) {

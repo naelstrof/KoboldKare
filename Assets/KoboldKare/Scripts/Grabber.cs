@@ -72,15 +72,6 @@ public class Grabber : MonoBehaviourPun {
         thrownObjects.Clear();
     }
 
-    private IEnumerator WaitAndGivePlayerControlBack(Kobold k) {
-        yield return new WaitForSeconds(3f);
-        foreach (var player in PhotonNetwork.PlayerList) {
-            if (k.photonView.IsMine && ReferenceEquals(player.TagObject, k)) {
-                k.photonView.TransferOwnership(player);
-            }
-        }
-    }
-
     public void Validate() {
         grabbedObjects.RemoveWhere(o => ((Component)o) == null);
         intersectingGameObjects.RemoveWhere(o => ((Component)o) == null);
@@ -165,14 +156,7 @@ public class Grabber : MonoBehaviourPun {
         foreach( IGrabbable g in copy ) {
             // As soon as we drop a player kobold, we should immediately try to give ownership back to them.
             Kobold grabbedKobold = g.photonView.GetComponent<Kobold>();
-            if (grabbedKobold != null) {
-                foreach (var player in PhotonNetwork.PlayerList) {
-                    if (grabbedKobold.photonView.IsMine && ReferenceEquals(player.TagObject, grabbedKobold)) {
-                        grabbedKobold.photonView.TransferOwnership(player);
-                    }
-                }
-            }
-
+            StartCoroutine(GiveBackKoboldsWhenPossible(grabbedKobold, 0f));
             TryDrop(g);
         }
         grabbedObjects.Clear();
@@ -278,6 +262,19 @@ public class Grabber : MonoBehaviourPun {
         }
         grabbing = grabbedObjects.Count>0;
     }
+
+    private IEnumerator GiveBackKoboldsWhenPossible(Kobold targetKobold, float delay) {
+        yield return new WaitForSeconds(delay);
+        while (targetKobold != null && targetKobold.photonView.IsMine && !grabbedObjects.Contains(targetKobold.GetComponent<IGrabbable>())) {
+            foreach (var playerCheck in PhotonNetwork.PlayerList) {
+                if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold)) {
+                    targetKobold.photonView.TransferOwnership(playerCheck);
+                }
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
     public void FixedUpdate() {
         Validate();
         if (removeLater.Count > 0) {
@@ -396,7 +393,7 @@ public class Grabber : MonoBehaviourPun {
 
             Kobold grabbedKobold = g.photonView.GetComponent<Kobold>();
             if (grabbedKobold != null) {
-                StartCoroutine(WaitAndGivePlayerControlBack(grabbedKobold));
+                StartCoroutine(GiveBackKoboldsWhenPossible(grabbedKobold, 5f));
             }
 
             g.OnThrow(kobold);

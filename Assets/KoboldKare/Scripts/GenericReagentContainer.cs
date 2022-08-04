@@ -98,7 +98,11 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
-        OnReagentContentsChanged(InjectType.Vacuum);
+        if (!photonView.IsMine) {
+            contents.AddMix(spillContents);
+        } else {
+            OnReagentContentsChanged(InjectType.Vacuum);
+        }
         return spillContents;
     }
 

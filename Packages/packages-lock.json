@@ -67,11 +67,11 @@
       "hash": "39ba0c6f48faca12cf0f460fb2935e9fdeaa5411"
     },
     "com.naelstrof.skinnedmeshdecals": {
-      "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v5.7.0",
+      "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "0f63ef9c6eb192a947e703bcaaf6c26659561491"
+      "hash": "abda5278a7de6798c418a241e20a78d75cde67d6"
     },
     "com.naelstrof.unityscriptablesettings": {
       "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",

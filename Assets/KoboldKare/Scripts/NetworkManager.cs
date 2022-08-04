@@ -13,6 +13,7 @@ using KoboldKare;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
@@ -286,8 +287,13 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer) {
-        if (targetView.GetComponent<Kobold>() != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+        Kobold k = targetView.GetComponent<Kobold>();
+        if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
             targetView.TransferOwnership(requestingPlayer);
+        } else {
+            if (!k.GetComponentInChildren<PlayerInput>().actions["Jump"].IsPressed() || ReferenceEquals(requestingPlayer, PhotonNetwork.LocalPlayer)) {
+                targetView.TransferOwnership(requestingPlayer);
+            }
         }
     }
 

@@ -75,11 +75,7 @@ MonoBehaviour:
     gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
       type: 3}
     photonName: Plant
-  type: 0
   _spacing: 2.5
-  OnFailPlant:
-    m_PersistentCalls:
-      m_Calls: []
   plant: {fileID: 11400000, guid: bb60cb0e9981bdb47bc0b517654ba115, type: 2}
 --- !u!114 &1793124260918799415
 MonoBehaviour:
@@ -165,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &838147383252525778
@@ -182,44 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: RaiseBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LowerBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies: []
-  canLODCondition: []
   resource: 1
 --- !u!114 &3264185088839444218
 MonoBehaviour:
@@ -252,6 +211,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 1104301071501742176}
   - {fileID: 3155505468015967246}
   - {fileID: 4329509743884941812}
   sceneViewId: 0

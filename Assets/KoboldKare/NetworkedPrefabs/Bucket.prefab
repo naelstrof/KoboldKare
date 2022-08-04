@@ -210,21 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies:
   - {fileID: 7403922466466801549}
-  canLODCondition: []
   resource: 1
 --- !u!114 &5688996529883549841
 MonoBehaviour:
@@ -264,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &875323940387169680

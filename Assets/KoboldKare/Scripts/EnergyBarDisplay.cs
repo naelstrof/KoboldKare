@@ -23,6 +23,8 @@ public class EnergyBarDisplay : MonoBehaviour {
     void Start() {
         kobold = GetComponentInParent<Kobold>();
         kobold.energyChanged += OnEnergyChanged;
+        energyBar.material.SetColor(ColorID, energyBar.material.GetColor(ColorID).With(a:0f));
+        energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
         OnEnergyChanged(kobold.GetEnergy(), kobold.GetMaxEnergy());
     }
 
@@ -36,6 +38,10 @@ public class EnergyBarDisplay : MonoBehaviour {
     }
 
     void OnEnergyChanged(int value, int maxValue) {
+        if (Mathf.RoundToInt(desiredValue) == value && Mathf.RoundToInt(desiredMaxValue) == maxValue) {
+            return;
+        }
+
         desiredValue = value;
         desiredMaxValue = maxValue;
         if (!animating) {

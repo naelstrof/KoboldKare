@@ -7,8 +7,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
-    public GameObject player;
+public class Grabber : MonoBehaviourPun {
+    public Kobold player;
     public int maxGrabCount = 1;
     public Rigidbody body;
     public float springStrength = 1000f;
@@ -71,6 +71,16 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         yield return new WaitForSeconds(time);
         thrownObjects.Clear();
     }
+
+    private IEnumerator WaitAndGivePlayerControlBack(Kobold k) {
+        yield return new WaitForSeconds(3f);
+        foreach (var player in PhotonNetwork.PlayerList) {
+            if (k.photonView.IsMine && ReferenceEquals(player.TagObject, k)) {
+                k.photonView.TransferOwnership(player);
+            }
+        }
+    }
+
     public void Validate() {
         grabbedObjects.RemoveWhere(o => ((Component)o) == null);
         intersectingGameObjects.RemoveWhere(o => ((Component)o) == null);
@@ -78,14 +88,12 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         // Validate joints
         for( int i=0;i<joints.Count;i++) {
             JointInfo info = joints[i];
-            if (info.body == null || ((Component)info.grabbable) == null || info.constraint == null) {
+            if (info.body == null || ((Component)info.grabbable) == null || info.constraint == null || info.grabbable.photonView == null || !info.grabbable.photonView.IsMine) {
                 TryDrop(info.grabbable);
             }
         }
 
-        // Validate GameObjects
         thrownObjects.RemoveWhere(o => ((Component)o)== null);
-        //intersectingGameObjects.RemoveWhere(o => ((Component)o)== null);
         droppedObjects.RemoveWhere(o => ((Component)o)== null);
     }
 
@@ -155,6 +163,16 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         weaponPoints.Clear();
         HashSet<IGrabbable> copy = new HashSet<IGrabbable>(grabbedObjects);
         foreach( IGrabbable g in copy ) {
+            // As soon as we drop a player kobold, we should immediately try to give ownership back to them.
+            Kobold grabbedKobold = g.photonView.GetComponent<Kobold>();
+            if (grabbedKobold != null) {
+                foreach (var player in PhotonNetwork.PlayerList) {
+                    if (grabbedKobold.photonView.IsMine && ReferenceEquals(player.TagObject, grabbedKobold)) {
+                        grabbedKobold.photonView.TransferOwnership(player);
+                    }
+                }
+            }
+
             TryDrop(g);
         }
         grabbedObjects.Clear();
@@ -195,7 +213,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         PhotonView view = g.transform.GetComponentInParent<PhotonView>();
-        if (view != null) {
+        if (view != null && photonView.IsMine) {
             view.RequestOwnership();
         }
 
@@ -230,10 +248,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
             if (weapons.Length != 0) {
                 OnGrabActivatable.Invoke();
-                Vector3 averageForward;
-                Vector3 averageUp;
-                Vector3 averageOffset;
-                GetForwardAndUpVectors(weapons, out averageForward, out averageUp, out averageOffset);
+                GetForwardAndUpVectors(weapons, out var averageForward, out var averageUp, out var averageOffset);
                 //j.connectedAnchor = Vector3.down * 0.55f + Vector3.right * 0.80f + Vector3.back * 0.55f;
                 j.connectedAnchor = averageOffset;
                 Quaternion fq = Quaternion.FromToRotation(averageForward, r.transform.forward);
@@ -290,7 +305,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
                 if (x != y) {
                     Vector3 dir = Vector3.Normalize(weaponPoints[y] - weaponPoints[x]);
                     float dist = Vector3.Distance(weaponPoints[x], weaponPoints[y]) - weaponSeparation;
-                    weaponPoints[x] += dir * dist * Time.deltaTime * 5f;
+                    weaponPoints[x] += dir * (dist * Time.deltaTime * 5f);
                 }
             }
         }
@@ -310,10 +325,7 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
                 j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
                 GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
                 if (weapons.Length != 0) {
-                    Vector3 averageForward;
-                    Vector3 averageUp;
-                    Vector3 averageOffset;
-                    GetForwardAndUpVectors(weapons, out averageForward, out averageUp, out averageOffset);
+                    GetForwardAndUpVectors(weapons, out var averageForward, out var averageUp, out var averageOffset);
                     //Debug.DrawLine(transform.position, transform.position + averageForward);
                     //Debug.DrawLine(transform.position, transform.position + averageUp);
                     if (j != null && j.body != null) {
@@ -376,12 +388,17 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
                 if (hasWeapon) {
                     continue;
                 }
-                //RecursiveSetLayer(g.transform, LayerMask.NameToLayer("Effects"), LayerMask.NameToLayer("Pickups"));
                 r.velocity += transform.forward * throwStrength;
             }
             if (hasWeapon) {
                 continue;
             }
+
+            Kobold grabbedKobold = g.photonView.GetComponent<Kobold>();
+            if (grabbedKobold != null) {
+                StartCoroutine(WaitAndGivePlayerControlBack(grabbedKobold));
+            }
+
             g.OnThrow(kobold);
             thrownObjects.Add(g);
             StartCoroutine(WaitAndClearThrown(thrownUntouchableTime));
@@ -398,7 +415,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         grabbedObjects.ExceptWith(thrownObjects);
     }
     public void OnTriggerEnter(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
         if (other.transform.root == transform.root) {
             return;
         }
@@ -408,7 +424,6 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
     }
     public void OnTriggerStay(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
         if (other.transform.root == transform.root) {
             return;
         }
@@ -418,49 +433,9 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
     }
     public void OnTriggerExit(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
         if (other.transform.root == transform.root) {
             return;
         }
         removeLater.Add(other.transform.GetComponentInParent<IGrabbable>());
-        //intersectingGameObjects.Remove(other.transform.root.GetComponent<IGrabbable>());
-        //if (intersectingGameObjects.Count == 0) {
-            //OnExitGrabbable.Invoke();
-        //}
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(this.activating);
-            stream.SendNext(this.grabbing);
-        } else {
-            if ((bool)stream.ReceiveNext()) {
-                TryActivate();
-            } else {
-                TryStopActivate();
-            }
-            if ((bool)stream.ReceiveNext()) {
-                TryGrab();
-            } else {
-                TryDrop();
-            }
-        }
-    }
-    public void Save(BinaryWriter writer, string version) {
-        writer.Write(activating);
-        writer.Write(grabbing);
-    }
-
-    public void Load(BinaryReader reader, string version) {
-        if (reader.ReadBoolean()) {
-            TryActivate();
-        } else {
-            TryStopActivate();
-        }
-        if (reader.ReadBoolean()) {
-            TryGrab();
-        } else {
-            TryDrop();
-        }
     }
 }

@@ -67,25 +67,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     public Rigidbody[] grabbableBodies;
     public List<Renderer> koboldBodyRenderers;
     private float internalSex = 0f;
-    [HideInInspector]
-    public float sex {
-        get => internalSex;
-        set {
-            foreach (Renderer r in koboldBodyRenderers) {
-                if (!(r is SkinnedMeshRenderer)) {
-                    continue;
-                }
-                SkinnedMeshRenderer bodyMesh = (SkinnedMeshRenderer)r;
-                int index = bodyMesh.sharedMesh.GetBlendShapeIndex("MaleEncode");
-                if (index == -1) {
-                    continue;
-                }
-                bodyMesh.SetBlendShapeWeight(index,  Mathf.Clamp01(1f - value * 2f) * 100f);
-            }
-            internalSex = value;
-        }
-    }
-
     [SerializeField]
     private List<Transform> nipples;
     public Transform hip;
@@ -173,6 +154,10 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         return energy;
     }
     public int GetMaxEnergy() {
+        if (GetGenes() == null) {
+            return 1;
+        }
+
         return GetGenes().maxEnergy;
     }
 
@@ -189,29 +174,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }
         return properties;
     }
-
-    /*public void RandomizeKobold() {
-        sex = Random.Range(0f,1f);
-        if (Random.Range(0f,1f) > 0.5f) {
-            Equipment dick = null;
-            var equipments = EquipmentDatabase.GetEquipments();
-            while (dick == null) {
-                foreach(var equipment in equipments) {
-                    if (equipment is DickEquipment && UnityEngine.Random.Range(0f,1f) > 0.9f) {
-                        dick = equipment;
-                    }
-                }
-            }
-            GetComponent<KoboldInventory>().PickupEquipment(dick, null);
-            SetGenes(GetGenes().With(breastSize: Random.Range(0f, 15f), ballSize: Random.Range(10f, 20f), dickSize: Random.Range(0f, 1f)));
-        } else {
-            SetGenes(GetGenes().With(breastSize: Random.Range(6f, 30f), ballSize: 0f, dickSize: 0f));
-        }
-        bodyProportion.SetTopBottom(Random.Range(-1f,1f));
-        bodyProportion.SetThickness(Random.Range(-1f,1f));
-        SetGenes(GetGenes().With(baseSize:Random.Range(14f, 24f), hue: (byte)Random.Range(0,255), brightness:(byte)Random.Range(0,255), contrast:(byte)Random.Range(0,255), saturation:(byte)Random.Range(0,255)));
-        PumpUpDick(-1f);
-    }*/
 
     public override void SetGenes(KoboldGenes newGenes) {
         foreach (var dickSet in activeDicks) {
@@ -259,9 +221,16 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }
     
     void OnMidnight(object ignore) {
-        if (energy != GetGenes().maxEnergy) {
-            energy = GetGenes().maxEnergy;
-            energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+        int hitCount = 0;
+        foreach (RaycastHit h in Physics.RaycastAll(transform.position + Vector3.up * 400f,
+                     Vector3.down, 400f, SpoilableHandler.GetSafeZoneMask(), QueryTriggerInteraction.Collide)) {
+            hitCount++;
+        }
+        if (hitCount % 2 != 0) {
+            if (energy != GetGenes().maxEnergy) {
+                energy = GetGenes().maxEnergy;
+                energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+            }
         }
     }
 
@@ -316,19 +285,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }
     }
     public bool OnGrab(Kobold kobold) {
-        if (!photonView.IsMine) {
-            bool shouldRequest = true;
-            foreach (var player in PhotonNetwork.PlayerList) {
-                if ((Kobold)player.TagObject == this) {
-                    shouldRequest = false;
-                    break;
-                }
-            }
-
-            if (shouldRequest) {
-                photonView.RequestOwnership();
-            }
-        }
         //onGrabEvent.Invoke(kobold, transform.position);
         grabbed = true;
         //KnockOver(999999f);
@@ -557,18 +513,18 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             gargleSource.enabled = true;
             garglePack.Play(gargleSource);
             //gurgleSource.Play();
-            gargleSource.pitch = 0.9f + sex*0.4f;
+            gargleSource.pitch = 1f;
             StartCoroutine(WaitAndThenStopGargling(0.25f));
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(sex);
             stream.SendNext(GetGenes());
+            stream.SendNext(arousal);
         } else {
-            sex = (float)stream.ReceiveNext();
             SetGenes((KoboldGenes)stream.ReceiveNext());
+            arousal = (float)stream.ReceiveNext();
         }
     }
 
@@ -598,12 +554,10 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }
 
     public void Save(BinaryWriter writer, string version) {
-        writer.Write(sex);
         GetGenes().Serialize(writer);
     }
 
     public void Load(BinaryReader reader, string version) {
-        sex = reader.ReadSingle();
         SetGenes(GetGenes().Deserialize(reader));
     }
 

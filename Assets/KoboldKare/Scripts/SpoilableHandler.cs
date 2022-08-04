@@ -12,6 +12,7 @@ public class SpoilableHandler : MonoBehaviour {
     private LayerMask safeZoneMask;
     private List<ISpoilable> spoilables = new List<ISpoilable>();
     private static SpoilableHandler instance;
+    public static LayerMask GetSafeZoneMask() => instance.safeZoneMask;
     private void Awake() {
         if (instance != null) {
             Destroy(gameObject);

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
-public class GenericWeapon : MonoBehaviour {
+public class GenericWeapon : MonoBehaviourPun {
     [SerializeField]
     private Transform weaponBarrelTransform;
     [SerializeField]
@@ -13,8 +14,17 @@ public class GenericWeapon : MonoBehaviour {
     public virtual Vector3 GetWeaponHoldPosition() {
         return weaponHoldOffset;
     }
-    public virtual void OnEndFire(GameObject player) {
+    public void OnEndFire(Kobold player) {
+        photonView.RPC(nameof(OnEndFireRPC), RpcTarget.All, player.photonView.ViewID);
     }
-    public virtual void OnFire(GameObject player) {
+    public void OnFire(Kobold player) {
+        photonView.RPC(nameof(OnFireRPC), RpcTarget.All, player.photonView.ViewID);
+    }
+
+    [PunRPC]
+    protected virtual void OnFireRPC(int playerID) {
+    }
+    [PunRPC]
+    protected virtual void OnEndFireRPC(int playerID) {
     }
 }

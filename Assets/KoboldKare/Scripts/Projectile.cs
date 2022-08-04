@@ -29,6 +29,10 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
     private AudioSource splashSoundSource;
     private static readonly int ColorID = Shader.PropertyToID("_Color");
 
+    private void Awake() {
+        ignoreColliders ??= new HashSet<Collider>();
+    }
+
     void Update() {
         if (splashed) {
             return;
@@ -108,7 +112,9 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         }
         transform.rotation = Quaternion.identity;
 
-        splashSound.Play(splashSoundSource);
+        if (splashSoundSource != null) {
+            splashSound.Play(splashSoundSource);
+        }
     }
 
     private IEnumerator DestroyAfterTime() {

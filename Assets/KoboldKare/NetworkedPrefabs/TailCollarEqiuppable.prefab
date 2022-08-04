@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!64 &7539747621856829340
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835432899844556718}
-  m_Material: {fileID: 13400000, guid: 99a8b73e39e83c3439d1655fb9b4b9aa, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3377216930602325389, guid: bb13b5b2c51c7ea42840b44023e95c3a, type: 3}
 --- !u!1 &5605572581541272102
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -67.17, y: 24.6, z: -793.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1311414816975133972}
   - {fileID: 2618617756781521354}
@@ -139,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &7226643011439227689
@@ -180,44 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7428936623893381341}
-        m_TargetAssemblyTypeName: GenericLODConsumer, Assembly-CSharp
-        m_MethodName: RaiseBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 5605572581541272121}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7428936623893381341}
-        m_TargetAssemblyTypeName: GenericLODConsumer, Assembly-CSharp
-        m_MethodName: LowerBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 5605572581541272121}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies: []
-  canLODCondition: []
   resource: 1
 --- !u!114 &2316579802779782844
 MonoBehaviour:
@@ -321,9 +271,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb13b5b2c51c7ea42840b44023e95c3a, type: 3}
---- !u!1 &1835432899844556718 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bb13b5b2c51c7ea42840b44023e95c3a,
+--- !u!23 &177953823478998651 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: bb13b5b2c51c7ea42840b44023e95c3a,
     type: 3}
   m_PrefabInstance: {fileID: 1565473310744115967}
   m_PrefabAsset: {fileID: 0}
@@ -333,12 +283,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1565473310744115967}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &177953823478998651 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: bb13b5b2c51c7ea42840b44023e95c3a,
+--- !u!1 &1835432899844556718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bb13b5b2c51c7ea42840b44023e95c3a,
     type: 3}
   m_PrefabInstance: {fileID: 1565473310744115967}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &7539747621856829340
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835432899844556718}
+  m_Material: {fileID: 13400000, guid: 99a8b73e39e83c3439d1655fb9b4b9aa, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3377216930602325389, guid: bb13b5b2c51c7ea42840b44023e95c3a, type: 3}
 --- !u!1001 &7867067676984728337
 PrefabInstance:
   m_ObjectHideFlags: 0

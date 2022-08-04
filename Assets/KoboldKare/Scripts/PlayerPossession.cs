@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using System.IO;
+using Object = UnityEngine.Object;
 
 public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public UnityEngine.InputSystem.PlayerInput controls;
@@ -100,10 +102,22 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnEnable() {
+        grabber.gameObject.SetActive(true);
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(true);
         }
     }
+
+    private void OnDisable() {
+        grabber.gameObject.SetActive(false);
+        foreach(GameObject localGameObject in localGameObjects) {
+            localGameObject.SetActive(false);
+        }
+    }
+
     private void OnDestroy() {
         if (gameObject.scene.isLoaded) {
             if (kobold == ((Kobold)PhotonNetwork.LocalPlayer.TagObject)) {
@@ -263,6 +277,9 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void OnJump(InputValue value) {
         controller.inputJump = value.Get<float>() > 0f;
+        if (!photonView.IsMine) {
+            photonView.RequestOwnership();
+        }
     }
     public void OnWalk(InputValue value) {
         controller.inputWalking = value.Get<float>() > 0f;

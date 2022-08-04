@@ -177,9 +177,10 @@ public class ReagentContents : IEnumerable<Reagent> {
     }
     public static short SerializeReagentContents(StreamBuffer outStream, object customObject) {
         ReagentContents reagentContents = (ReagentContents)customObject;
-        short size = (short)((sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
+        short size = (short)(sizeof(float)+(sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
         byte[] bytes = new byte[size];
         int index = 0;
+        Protocol.Serialize(reagentContents.maxVolume, bytes, ref index);
         foreach (KeyValuePair<short, Reagent> pair in reagentContents.contents) {
             if (pair.Value.volume <= 0f) {
                 continue;
@@ -195,6 +196,8 @@ public class ReagentContents : IEnumerable<Reagent> {
         byte[] bytes = new byte[length];
         inStream.Read(bytes, 0, length);
         int index = 0;
+        Protocol.Deserialize(out float maxVolume, bytes, ref index);
+        reagentContents.maxVolume = maxVolume;
         while (index < length) {
             short id = 0;
             float volume = 0;
@@ -212,6 +215,8 @@ public class ReagentContents : IEnumerable<Reagent> {
             }
             count++;
         }
+
+        outStream.Write(maxVolume);
         outStream.Write(count);
         foreach (KeyValuePair<short, Reagent> pair in contents) {
             if (pair.Value.volume <= 0f) {
@@ -223,6 +228,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     }
     public void Deserialize(BinaryReader inStream) {
         Clear();
+        maxVolume = inStream.ReadSingle();
         int count = inStream.ReadInt32();
         for(int i=0;i<count;i++) {
             short id = inStream.ReadInt16();

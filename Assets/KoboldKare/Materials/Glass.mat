@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 4
+  version: 5
 --- !u!114 &-3096174220532582694
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -34,8 +34,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Glass
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ValidKeywords:
-  - _RECEIVE_SHADOWS_OFF
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -290,7 +289,7 @@ Material:
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
-    - _ReceiveShadows: 0
+    - _ReceiveShadows: 1
     - _ReceivesSSR: 1
     - _Refraction: 0.2
     - _RefractionModel: 3

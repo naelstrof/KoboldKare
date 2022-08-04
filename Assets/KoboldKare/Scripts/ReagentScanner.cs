@@ -55,8 +55,8 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
             yield return new WaitForSeconds(scanDelay);
         }
     }
-    public override void OnFire(GameObject player) {
-        base.OnFire(player);
+    protected override void OnFireRPC(int playerViewID) {
+        base.OnFireRPC(playerViewID);
         if (firing) {
             return;
         }
@@ -84,7 +84,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
         StopAllCoroutines();
         StartCoroutine(RenderScreen(allReagents));
     }
-    public override void OnEndFire(GameObject player) {
+    protected override void OnEndFireRPC(int viewID) {
         firing = false;
     }
     public void Pickup() {

@@ -6,15 +6,17 @@ public class WateringCanWeapon : GenericWeapon {
     [SerializeField] private Animator weaponAnimator;
     [SerializeField] private FluidStream stream;
     [SerializeField] private GenericReagentContainer container;
-    public override void OnFire(GameObject player) {
-        base.OnFire(player);
-        weaponAnimator.SetBool("Fire", true);
+    private static readonly int Fire = Animator.StringToHash("Fire");
+
+    protected override void OnFireRPC(int viewID) {
+        base.OnFireRPC(viewID);
+        weaponAnimator.SetBool(Fire, true);
         stream.OnFire(container);
     }
 
-    public override void OnEndFire(GameObject player) {
-        base.OnEndFire(player);
-        weaponAnimator.SetBool("Fire", false);
+    protected override void OnEndFireRPC(int viewID) {
+        base.OnEndFireRPC(viewID);
+        weaponAnimator.SetBool(Fire, false);
         stream.OnEndFire();
     }
 }

@@ -50,7 +50,7 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         if (bestTile != null && bestTile.GetPlantable()) {
             genes ??= new KoboldGenes().Randomize();
             GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant), genes} );
-            bestTile.SetPlanted(obj.GetComponent<Plant>());
+            bestTile.photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All, obj.GetComponent<Plant>().photonView.ViewID);
             PhotonNetwork.Destroy(gameObject);
         }
     }

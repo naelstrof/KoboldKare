@@ -7,7 +7,7 @@ using ExitGames.Client.Photon;
 using System.IO;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
+public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     [System.Serializable]
     public class PID {
         public float P;
@@ -163,6 +163,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     //public Transform hipsTransform;
     private void Start() {
         body = GetComponent<Rigidbody>();
+        body.useGravity = photonView.IsMine;
         colliderFullHeight = collider.height;
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
@@ -311,7 +312,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         groundVelocity = Vector3.zero;
         GroundCalculate();
         if ( !grounded ) {
-            body.AddForce(gravityMod * transform.localScale.x, ForceMode.Acceleration);
+            velocity += gravityMod * (transform.localScale.x * Time.deltaTime);
+            //body.AddForce(gravityMod * transform.localScale.x, ForceMode.Acceleration);
             //velocity += gravityMod * transform.lossyScale.x;
         }
         JumpCheck();
@@ -326,7 +328,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         }
         CheckSounds();
         velocity += groundVelocity;
-        body.velocity = velocity;
+        if (photonView.IsMine) {
+            body.velocity = velocity;
+        }
     }
 
     private void JumpCheck() {
@@ -380,5 +384,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public void Load(BinaryReader reader, string version) {
         inputJump = reader.ReadBoolean();
         inputCrouched = reader.ReadBoolean();
+    }
+
+    public void OnOwnerChange(Player newOwner, Player previousOwner) {
+        body.useGravity = ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer);
     }
 }

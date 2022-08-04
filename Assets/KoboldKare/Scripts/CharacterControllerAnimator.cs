@@ -143,16 +143,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     void Update() {
         if (!photonView.IsMine) {
-            float angle = Vector3.Angle(eyeDir, networkedEyeDir);
             if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
                 networkedEyeRot.x -= 360f;
             }
             if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
                 networkedEyeRot.x += 360f;
             }
-            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, Time.deltaTime*180f);
+            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, Time.deltaTime * 420f);
         }
-
         if (kobold != null) {
             float maxPen = 0f;
             playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
@@ -241,9 +239,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
-            handler.SetLookAtWeight(1f, 0f, 1f, 1f, 0.25f);
+            handler.SetLookAtWeight(0.7f, 0f, 1f, 1f, 0.25f);
         } else {
-            handler.SetLookAtWeight(1f, 0.4f, 1f, 1f, 0.25f);
+            handler.SetLookAtWeight(0.7f, 0.3f, 1f, 1f, 0.25f);
         }
         handler.SetLookAtPosition(lookPos);
     }

@@ -137,8 +137,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 frozenGrabs[0].body?.WakeUp();
                 Destroy(frozenGrabs[0].joint);
             }
-            foreach(IFreezeReciever freezeReciever in frozenGrabs[0].freezeReceivers) {
-                freezeReciever.OnEndFreeze();
+            foreach(IFreezeReciever freezeReceiver in frozenGrabs[0].freezeReceivers) {
+                freezeReceiver.OnEndFreeze();
             }
             foreach(IAdvancedInteractable interactable in frozenGrabs[0].interactables) {
                 if (((Component)interactable) != null) {
@@ -151,7 +151,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
 
         if (shouldNetwork && photonView.IsMine) {
             // Implemented in Kobold.cs
-            photonView.RPC("RPCUnfreezeAll", RpcTarget.OthersBuffered, null);
+            photonView.RPC(nameof(Kobold.RPCUnfreezeAll), RpcTarget.OthersBuffered, null);
         }
     }
     public SpringJoint AddSpringJoint(Rigidbody hitBody, Vector3 worldAnchor) {
@@ -329,7 +329,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             Collider[] colliders = oview.GetComponentsInChildren<Collider>();
             for (int i = 0; i < colliders.Length; i++) {
                 if (colliders[i] == hit.collider) {
-                    photonView.RPC("RPCPrecisionGrab", RpcTarget.AllBuffered, new object[] { oview.ViewID, i, hit.collider.transform.InverseTransformPoint(hit.point) });
+                    photonView.RPC(nameof(Kobold.RPCPrecisionGrab), RpcTarget.AllBuffered, new object[] { oview.ViewID, i, hit.collider.transform.InverseTransformPoint(hit.point) });
                 }
             }
         }
@@ -372,9 +372,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
         if (r) {
-            photonView.RPC("RPCFreeze", RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, r.rotation, affRotation });
+            photonView.RPC(nameof(Kobold.RPCFreeze), RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, r.rotation, affRotation });
         } else {
-            photonView.RPC("RPCFreeze", RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, c.transform.rotation, affRotation });
+            photonView.RPC(nameof(Kobold.RPCFreeze), RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, c.transform.rotation, affRotation });
         }
     }
 
@@ -606,9 +606,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                     frozenGrabs.RemoveAt(i);
                     continue;
                 }
-                Rigidbody save = grab.body;
-                grab.body = grab.fallbackBody;
-                grab.fallbackBody = save;
+                (grab.body, grab.fallbackBody) = (grab.fallbackBody, grab.body);
                 grab.joint.connectedBody = null;
                 grab.joint.connectedAnchor = worldAnchor;
                 grab.joint.configuredInWorldSpace = true;
@@ -700,9 +698,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 Vector3 worldAnchor = jointRigidbody.transform.TransformPoint(jointAnchor);
                 //Destroy(joint);
                 //joint = AddJoint(originalBody,worldAnchor);
-                Rigidbody copy = jointRigidbody;
-                jointRigidbody = originalBody;
-                originalBody = copy;
+                (jointRigidbody, originalBody) = (originalBody, jointRigidbody);
                 jointAnchor = jointRigidbody.transform.InverseTransformPoint(worldAnchor);
             }
             // To prevent feedback loops, we lessen the self-effect of the joint when we're trying to fuck other kobolds

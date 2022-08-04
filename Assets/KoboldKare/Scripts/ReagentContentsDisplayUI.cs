@@ -96,6 +96,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
 
             rectTransform.sizeDelta = new Vector2(contents.volume * volumeToPixels, rectTransform.sizeDelta.y);
             background.sizeDelta = new Vector2(contents.GetMaxVolume() * volumeToPixels, background.sizeDelta.y);
+            Debug.Log(contents.GetMaxVolume());
         }
     }
 

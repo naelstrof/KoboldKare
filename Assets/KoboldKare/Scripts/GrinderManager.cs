@@ -81,7 +81,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         StartCoroutine(nameof(WaitThenConsumeEnergy));
     }
     IEnumerator WaitAndThenClear() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         grindedThingsCache.Clear();
     }
     [PunRPC]
@@ -92,6 +92,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
             foreach (GenericReagentContainer c in view.GetComponentsInChildren<GenericReagentContainer>()) {
                 container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
             }
+        }
+        if (view.IsMine) {
             IDamagable d = view.GetComponentInParent<IDamagable>();
             if (d != null) {
                 d.Damage(d.GetHealth() + 1f);

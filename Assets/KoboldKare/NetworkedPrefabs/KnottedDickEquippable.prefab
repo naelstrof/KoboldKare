@@ -38,6 +38,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.358, z: -0.982}
   m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3753189679710936546}
   - {fileID: 6235816104093006682}
@@ -174,8 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &4629884734506041850
 MonoBehaviour:
@@ -191,21 +192,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies:
   - {fileID: 3419122224787248078}
-  canLODCondition: []
   resource: 1
 --- !u!114 &1909358067385807388
 MonoBehaviour:
@@ -250,24 +238,25 @@ MonoBehaviour:
   penetrationMarginOfError: 1.25
   autoPenetrate: -1
   listeners:
-  - id: 0
-  - id: 1
-  - id: 2
-  - id: 3
-  - id: 4
+  - rid: 0
+  - rid: 1
+  - rid: 2
+  - rid: 3
+  - rid: 4
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
         knotForceFactor: 0.3
-    00000001:
+    - rid: 1
       type: {class: PenetratorNoCollideListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
         body: {fileID: 3419122224787248078}
-    00000002:
+    - rid: 2
       type: {class: PenetratorRigidbodyListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
@@ -275,7 +264,7 @@ MonoBehaviour:
         angularForceMultiplier: 30
         planarAlignmentForceMultiplier: 4
         friction: 0.5
-    00000003:
+    - rid: 3
       type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
@@ -283,7 +272,7 @@ MonoBehaviour:
         audioGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
           type: 2}
         volume: 0.6
-    00000004:
+    - rid: 4
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
         localDist: 0.702
@@ -395,15 +384,16 @@ MonoBehaviour:
       m_RotationOrder: 4
     bounceDuration: 1
     listeners:
-    - id: 0
-    - id: 1
+    - rid: 0
+    - rid: 1
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 960366645849176328}
-    00000001:
+    - rid: 1
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 8881838184899398773}
@@ -452,6 +442,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: -0.000000012048986, z: 0.000000009313226, w: 0.70710677}
   m_LocalPosition: {x: -0, y: 0.459, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8881838184899398773}
   m_RootOrder: 0
@@ -482,6 +473,7 @@ Transform:
   m_LocalRotation: {x: 0.99988365, y: 0.00009442773, z: 0.014088158, w: -0.005850166}
   m_LocalPosition: {x: 0, y: 0.17303465, z: 0.0037765652}
   m_LocalScale: {x: 1, y: 1, z: 0.9988221}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5087549564673714589}
   m_Father: {fileID: 2067933922500529252}
@@ -561,15 +553,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4111a30b998f8428372922a7c6e338, type: 3}
---- !u!4 &6235816104093006682 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 828615820498177118, guid: 5c4111a30b998f8428372922a7c6e338,
-    type: 3}
-  m_PrefabInstance: {fileID: 6770533153142454020}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2067933922500529252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4703731590735362912, guid: 5c4111a30b998f8428372922a7c6e338,
+    type: 3}
+  m_PrefabInstance: {fileID: 6770533153142454020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4377902523045784046 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7004411481481649898, guid: 5c4111a30b998f8428372922a7c6e338,
     type: 3}
   m_PrefabInstance: {fileID: 6770533153142454020}
   m_PrefabAsset: {fileID: 0}
@@ -579,15 +571,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6770533153142454020}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &6301817413969257270 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 756967074832421938, guid: 5c4111a30b998f8428372922a7c6e338,
+--- !u!4 &6235816104093006682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 828615820498177118, guid: 5c4111a30b998f8428372922a7c6e338,
     type: 3}
   m_PrefabInstance: {fileID: 6770533153142454020}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &4377902523045784046 stripped
+--- !u!137 &6301817413969257270 stripped
 SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7004411481481649898, guid: 5c4111a30b998f8428372922a7c6e338,
+  m_CorrespondingSourceObject: {fileID: 756967074832421938, guid: 5c4111a30b998f8428372922a7c6e338,
     type: 3}
   m_PrefabInstance: {fileID: 6770533153142454020}
   m_PrefabAsset: {fileID: 0}

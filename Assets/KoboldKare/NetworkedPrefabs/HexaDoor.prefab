@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2087340426}
   m_RootOrder: 0
@@ -162,6 +163,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2087340426}
   m_RootOrder: 1
@@ -237,6 +239,7 @@ RectTransform:
   m_LocalRotation: {x: -0.45982835, y: -0.53717583, z: -0.537176, w: -0.45982832}
   m_LocalPosition: {x: 0, y: 0, z: 0.14408693}
   m_LocalScale: {x: 0.0042002685, y: 0.0042002685, z: 0.0042002685}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1620168915}
   - {fileID: 1706354527}
@@ -320,6 +323,7 @@ Transform:
   m_LocalRotation: {x: -0.56098557, y: 0.4304593, z: 0.4304593, w: 0.56098557}
   m_LocalPosition: {x: -164.657, y: 19.583, z: 303.787}
   m_LocalScale: {x: 0.9300001, y: 0.9300001, z: 0.93}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087340426}
   m_Father: {fileID: 0}
@@ -344,6 +348,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -449,21 +454,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies:
   - {fileID: 2025816335358319480}
-  canLODCondition: []
   resource: 1
 --- !u!82 &6271754350014679978
 AudioSource:
@@ -612,6 +604,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3

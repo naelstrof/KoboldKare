@@ -187,8 +187,8 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (stream.IsWriting) {
             stream.SendNext(contents);
         } else {
-            contents = (ReagentContents)stream.ReceiveNext();
-            contents.SetMaxVolume(startingMaxVolume);
+            ReagentContents newContents = (ReagentContents)stream.ReceiveNext();
+            contents.Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
         }
     }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using Naelstrof.BodyProportion;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
+public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
     [SerializeField]
@@ -120,7 +121,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         RagdollEvent?.Invoke(true);
         ragdolled = true;
         if (photonView.IsMine) {
-            photonView.RPC("SetRagdolled", RpcTarget.Others, true);
+            photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, true);
         }
     }
     
@@ -131,6 +132,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         } else {
             StandUp();
         }
+        ragdollCount = 0;
     }
     // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
     // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
@@ -180,7 +182,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
         RagdollEvent?.Invoke(false);
         ragdolled = false;
         if (photonView.IsMine) {
-            photonView.RPC("SetRagdolled", RpcTarget.Others, false);
+            photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, false);
         }
     }
 
@@ -198,5 +200,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void Load(BinaryReader reader, string version) {
         SetRagdolled(reader.ReadBoolean());
+    }
+
+    public void OnOwnerChange(Player newOwner, Player previousOwner) {
+        if (Equals(newOwner, PhotonNetwork.LocalPlayer)) {
+            ragdollCount = 0;
+        }
     }
 }

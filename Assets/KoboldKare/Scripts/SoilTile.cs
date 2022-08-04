@@ -24,12 +24,21 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         return (planted == null || planted.plant.possibleNextGenerations.Length == 0) && !hasDebris;
     }
 
-    public void SetPlanted(Plant plant) {
-        if (planted != null) {
-            PhotonNetwork.Destroy(planted.gameObject);
+    [PunRPC]
+    public void SetPlantedRPC(int viewID) {
+        if (viewID == -1) {
+            planted = null;
         }
-        
-        planted = plant;
+
+        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+        if (view.TryGetComponent(out Plant plant)) {
+            if (planted != null) {
+                if (planted.photonView.IsMine) {
+                    PhotonNetwork.Destroy(planted.gameObject);
+                }
+            }
+            planted = plant;
+        }
     }
 
     public Vector3 GetPlantPosition() {
@@ -55,7 +64,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         } else {
             SetDebris((bool)stream.ReceiveNext());
             int viewID = (int)stream.ReceiveNext();
-            SetPlanted(viewID == -1 ? null : PhotonNetwork.GetPhotonView(viewID).GetComponent<Plant>());
+            SetPlantedRPC(viewID);
         }
     }
 
@@ -71,6 +80,6 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     public void Load(BinaryReader reader, string version) {
         SetDebris(reader.ReadBoolean());
         int viewID = reader.ReadInt32();
-        SetPlanted(viewID == -1 ? null : PhotonNetwork.GetPhotonView(viewID).GetComponent<Plant>());
+        SetPlantedRPC(viewID);
     }
 }

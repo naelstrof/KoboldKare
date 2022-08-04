@@ -36,6 +36,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6688771, y: 2.0076098, z: 24.435377}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7155237331704719282}
   m_Father: {fileID: 0}
@@ -75,11 +76,7 @@ MonoBehaviour:
     gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
       type: 3}
     photonName: Plant
-  type: 0
   _spacing: 2.5
-  OnFailPlant:
-    m_PersistentCalls:
-      m_Calls: []
   plant: {fileID: 11400000, guid: 445b098e8df3d3a4eb935ec40f76d58a, type: 2}
 --- !u!114 &1793124260918799415
 MonoBehaviour:
@@ -298,7 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &838147383252525778
@@ -315,44 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClose: 0
   isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: RaiseBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LowerBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
   trackedRigidbodies: []
-  canLODCondition: []
   resource: 1
 --- !u!114 &6010824123396375017
 MonoBehaviour:
@@ -366,18 +326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3990710f7e52bc045b957f418bc71726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 0}
-  OnIntensityChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFadeout:
-    m_PersistentCalls:
-      m_Calls: []
-  spawnProtection: 4
-  destroyOnSpoil: 1
-  OnSpoilEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7624543261363224924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +345,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 1104301071501742176}
   - {fileID: 3155505468015967246}
   - {fileID: 4329509743884941812}
   sceneViewId: 0
@@ -430,6 +379,7 @@ Transform:
   m_LocalRotation: {x: -0.0000008850838, y: 0.7071067, z: 0.7071068, w: -0.00000088508364}
   m_LocalPosition: {x: 0.03180003, y: -0.12059975, z: 0.10540006}
   m_LocalScale: {x: 0.12469817, y: 0.124698184, z: 0.124698184}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4820277084393016328}
   m_RootOrder: 0
@@ -453,6 +403,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -483,20 +434,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6888398627549403079
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8586927056155189571}
-  m_Material: {fileID: 13400000, guid: 7e63f7aeb39378d43af52f2a90cd30e1, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2789966815535805949, guid: d98d41c22bbfd3244a83510e64a53109, type: 3}
 --- !u!1001 &7261556372198834265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -586,6 +523,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d98d41c22bbfd3244a83510e64a53109, type: 3}
+--- !u!23 &4112728800104805445 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2461953862125145060, guid: d98d41c22bbfd3244a83510e64a53109,
+    type: 3}
+  m_PrefabInstance: {fileID: 7261556372198834265}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4820277084393016328 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2748087975770410065, guid: d98d41c22bbfd3244a83510e64a53109,
+    type: 3}
+  m_PrefabInstance: {fileID: 7261556372198834265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7155237331704719282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d98d41c22bbfd3244a83510e64a53109,
@@ -598,21 +547,23 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 7261556372198834265}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4820277084393016328 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2748087975770410065, guid: d98d41c22bbfd3244a83510e64a53109,
-    type: 3}
-  m_PrefabInstance: {fileID: 7261556372198834265}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &4112728800104805445 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -2461953862125145060, guid: d98d41c22bbfd3244a83510e64a53109,
-    type: 3}
-  m_PrefabInstance: {fileID: 7261556372198834265}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8586927056155189571 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7787603754002357990, guid: d98d41c22bbfd3244a83510e64a53109,
     type: 3}
   m_PrefabInstance: {fileID: 7261556372198834265}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &6888398627549403079
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586927056155189571}
+  m_Material: {fileID: 13400000, guid: 7e63f7aeb39378d43af52f2a90cd30e1, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2789966815535805949, guid: d98d41c22bbfd3244a83510e64a53109, type: 3}

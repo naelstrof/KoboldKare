@@ -70,9 +70,6 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
     }
 
     private IEnumerator CrusherRoutine() {
-        if (stations[0].info.user != null && stations[0].info.user.photonView.IsMine) {
-            photonView.RequestOwnership();
-        }
         yield return new WaitForSeconds(6f);
         foreach (var t in stations) {
             if (t.info.user == null || t.info.user.GetEnergy() <= 0) {
@@ -83,15 +80,19 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
             t.info.user.TryConsumeEnergy(1);
         }
 
-        Kobold pressedKobold = stations[0].info.user;
-        if (!pressedKobold.photonView.IsMine) {
-            pressedKobold.photonView.RequestOwnership();
+        if (photonView.IsMine) {
+            Kobold pressedKobold = stations[0].info.user;
+            pressedKobold.photonView.RPC(nameof(Kobold.SpillMetabolizedContents), RpcTarget.Others,
+                pressedKobold.metabolizedContents.volume);
+            ReagentContents spilled = pressedKobold.SpillMetabolizedContents(pressedKobold.metabolizedContents.volume);
+            
+            pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
+                pressedKobold.bellyContainer.volume);
+            spilled.AddMix(pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume));
+            
+            container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
+                pressedKobold.photonView.ViewID);
         }
-
-        ReagentContents spilled = pressedKobold.metabolizedContents.Spill(pressedKobold.metabolizedContents.volume);
-        pressedKobold.ProcessReagents(spilled, -1f);
-        container.AddMix(spilled, GenericReagentContainer.InjectType.Inject);
-        container.AddMix(pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume), GenericReagentContainer.InjectType.Inject);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

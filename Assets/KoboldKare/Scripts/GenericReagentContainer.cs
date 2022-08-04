@@ -96,6 +96,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
 
         //Debug.Log(string.Format("[Generic Reagent Container] :: States of isFull, isEmpty, filled, and emptied: {0},{1},{2},{3}",isFull,isEmpty,filled,emptied));
     }
+    [PunRPC]
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
         if (!photonView.IsMine) {
@@ -106,30 +107,41 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         return spillContents;
     }
 
-    public void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
-        if (!IsMixable(this.type, injectType)) {
+    private void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
+        if (!IsMixable(this.type, injectType) || !photonView.IsMine) {
             return;
         }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
         SetGenes(injector.GetGenes());
     }
-    public bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
-        if (!IsMixable(type, injectType)) {
+    private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
+        if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
         contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
-    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
-        if (!IsMixable(type, injectType)) {
+    private bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+        if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
+
+    [PunRPC]
+    public void AddMixRPC(ReagentContents incomingReagents, int geneViewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
+        if (view != null && view.TryGetComponent(out GeneHolder geneHolder)) {
+            SetGenes(geneHolder.GetGenes());
+        }
+        contents.AddMix(incomingReagents, this);
+        OnReagentContentsChanged(InjectType.Inject);
+    }
+
     public ReagentContents Peek() => new ReagentContents(contents);
     public ReagentContents Metabolize(float deltaTime) => contents.Metabolize(deltaTime);
     public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);

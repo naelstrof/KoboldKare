@@ -61,6 +61,11 @@ MonoBehaviour:
   - SetPlantedRPC
   - PopRagdoll
   - PushRagdoll
+  - FireStream
+  - AddMix
+  - AddMixRPC
+  - Spill
+  - SpillMetabolizedContents
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

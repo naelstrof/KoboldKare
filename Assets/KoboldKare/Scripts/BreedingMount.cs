@@ -30,6 +30,13 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
         while (container.volume < 10f && station.info.user != null) {
             yield return null;
         }
+
+        photonView.RPC(nameof(FireStream), RpcTarget.All);
+        //stream.OnFire(container);
+    }
+
+    [PunRPC]
+    private void FireStream() {
         stream.OnFire(container);
     }
 

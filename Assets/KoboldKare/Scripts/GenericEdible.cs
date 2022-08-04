@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class GenericEdible : GenericUsable, IOnPhotonViewOwnerChange {
+public class GenericEdible : GenericUsable {
     [SerializeField]
     private Sprite eatSymbol;
     [SerializeField]
@@ -15,37 +15,27 @@ public class GenericEdible : GenericUsable, IOnPhotonViewOwnerChange {
     public override Sprite GetSprite(Kobold k) {
         return eatSymbol;
     }
-    private Kobold tryingToEat;
+
+    public override bool CanUse(Kobold k) {
+        return container.volume > 0.01f && k.bellyContainer.volume < k.bellyContainer.maxVolume;
+    }
+
     public override void LocalUse(Kobold k) {
         // If kobold got deleted
         if (k == null) {
             return;
         }
-        // Try to take control of the edible, if we don't have permission.
-        if (k.photonView.IsMine && !photonView.IsMine && tryingToEat == null) {
-            tryingToEat = k;
-            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-        }
         // Only successfully eat if we own both the edible, and the kobold. Otherwise, wait for ownership to successfully transfer
-        if (k.photonView.IsMine && photonView.IsMine) {
-            Eat(k);
-        }
+        float spillAmount = Mathf.Min(container.maxVolume * 0.5f, k.bellyContainer.maxVolume - k.bellyContainer.volume);
+        ReagentContents spill = container.Spill(spillAmount);
+        container.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillAmount);
+        k.bellyContainer.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spill, photonView.ViewID);
     }
 
-    private void Eat(Kobold kobold) {
-        kobold.bellyContainer.TransferMix(container, Mathf.Min(container.maxVolume*0.5f, kobold.bellyContainer.maxVolume-kobold.bellyContainer.volume), GenericReagentContainer.InjectType.Inject);
+    public override void Use() {
         if (destroyOnEat) {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
-
         GameManager.instance.SpawnAudioClipInWorld(eatSoundPack, transform.position);
-    }
-
-    public void OnOwnerChange(Player newOwner, Player previousOwner) {
-        if (newOwner == PhotonNetwork.LocalPlayer && tryingToEat != null) {
-            Eat(tryingToEat);
-        }
-        // Someone else must've won the handshake, so we clear our attempt to equip.
-        tryingToEat = null;
     }
 }

@@ -280,6 +280,7 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     private void OnDestroy() {
         MetabolizeEvent.RemoveListener(OnEventRaised);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
+        MidnightEvent.RemoveListener(OnMidnight);
         if (photonView.IsMine && PhotonNetwork.InRoom) {
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
@@ -356,6 +357,13 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         if (Time.timeSinceLevelLoad-lastPumpTime > 10f) {
             PumpUpDick(-Time.deltaTime * 0.01f);
         }
+    }
+
+    [PunRPC]
+    public ReagentContents SpillMetabolizedContents(float volume) {
+        ReagentContents v = metabolizedContents.Spill(volume);
+        ProcessReagents(v, -1f);
+        return v;
     }
 
     [PunRPC]
@@ -478,17 +486,20 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     }
     
     private void OnEventRaised(float f) {
+        if (!photonView.IsMine) {
+            return;
+        }
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
         ReagentContents vol = bellyContainer.Metabolize(f);
         // Reagents that don't affect metabolization limits
-        bellyContainer.AddMix(ReagentDatabase.GetReagent("Egg"), vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f, GenericReagentContainer.InjectType.Metabolize);
+        bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
 
         vol.DumpNonConsumable();
         
         // Can't over-metabolize, put some back if it doesn't fit
         float maxMetabolization = (metabolizedContents.GetMaxVolume() - metabolizedContents.volume);
         if (vol.volume > maxMetabolization) {
-            bellyContainer.AddMix(vol.Spill(vol.volume - maxMetabolization), GenericReagentContainer.InjectType.Inject);
+            bellyContainer.GetContents().AddMix(vol.Spill(vol.volume - maxMetabolization), bellyContainer);
         }
 
         if (vol.volume <= 0f) {

@@ -125,11 +125,11 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public void FillRaincatchers(string Reagant){
-        var items = GameObject.FindGameObjectsWithTag("CatchesRain"); //TODO: Refactor this into a static list we add/remove from dynamically
-        foreach(GameObject GO in items){
-            //Fill each container with the amount of water we want to add
-            GO.GetComponent<GenericReagentContainer>().AddMix(ReagentDatabase.GetReagent(Reagant),110,GenericReagentContainer.InjectType.Spray);
-        }        
+        //var items = GameObject.FindGameObjectsWithTag("CatchesRain"); //TODO: Refactor this into a static list we add/remove from dynamically
+        //foreach(GameObject GO in items){
+            ////Fill each container with the amount of water we want to add
+            //GO.GetComponent<GenericReagentContainer>().AddMixRPC(ReagentDatabase.GetReagent(Reagant),110,GenericReagentContainer.InjectType.Spray);
+        //}        
     }
 
     //public void StartSnow() {

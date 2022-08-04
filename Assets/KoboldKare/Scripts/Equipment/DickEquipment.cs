@@ -43,7 +43,7 @@ public class DickEquipment : Equipment {
         if (groundPrefab != null) {
             GenericReagentContainer container = groundPrefab.GetComponentInChildren<GenericReagentContainer>();
             if (container != null) {
-                container.AddMix(contents, GenericReagentContainer.InjectType.Inject);
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, contents, container.photonView.ViewID);
             }
         }
         k.SetGenes(k.GetGenes().With(dickEquip: byte.MaxValue));

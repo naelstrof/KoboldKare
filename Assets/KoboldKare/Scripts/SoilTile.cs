@@ -32,7 +32,6 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
 
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         if (view == null) {
-            planted = null;
             return;
         }
 
@@ -61,15 +60,8 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(hasDebris);
-            if (planted == null) {
-                stream.SendNext(-1);
-            } else {
-                stream.SendNext(planted.photonView.ViewID);
-            }
         } else {
             SetDebris((bool)stream.ReceiveNext());
-            int viewID = (int)stream.ReceiveNext();
-            SetPlantedRPC(viewID);
         }
     }
 

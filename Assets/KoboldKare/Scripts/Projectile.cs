@@ -91,22 +91,23 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         splash.SetActive(true);
         projectile.SetActive(false);
         splashed = true;
-        hitContainers.Clear();
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders, GameManager.instance.waterSprayHitMask);
-        for (int i = 0; i < hits; i++) {
-            GenericReagentContainer container = colliders[i].GetComponentInParent<GenericReagentContainer>();
-            if (container != null) {
-                hitContainers.Add(container);
-                container.SetGenes(GetGenes());
+        if (photonView.IsMine) {
+            hitContainers.Clear();
+            int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders,
+                GameManager.instance.waterSprayHitMask);
+            for (int i = 0; i < hits; i++) {
+                GenericReagentContainer container = colliders[i].GetComponentInParent<GenericReagentContainer>();
+                if (container != null) {
+                    hitContainers.Add(container);
+                }
+            }
+            float perVolume = contents.volume / hitContainers.Count;
+            foreach (GenericReagentContainer container in hitContainers) {
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                    contents.Spill(perVolume), photonView.ViewID);
             }
         }
-        
 
-        float perVolume = contents.volume / hitContainers.Count;
-        foreach (GenericReagentContainer container in hitContainers) {
-            container.AddMix(contents.Spill(perVolume), GenericReagentContainer.InjectType.Spray);
-            container.SetGenes(GetGenes());
-        }
         if (photonView.IsMine) {
             StartCoroutine(DestroyAfterTime());
         }

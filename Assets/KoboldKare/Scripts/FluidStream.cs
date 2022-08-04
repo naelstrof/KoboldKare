@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using PenetrationTech;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
-
-public class FluidStream : CatmullDeformer {
+public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
     private class FluidParticle {
         public Vector3 position;
         public Vector3 lastPosition;
@@ -20,6 +21,8 @@ public class FluidStream : CatmullDeformer {
             }
         }
     }
+
+    public PhotonView photonView;
 
     private GenericReagentContainer container;
     private ReagentContents midairContents;
@@ -47,7 +50,6 @@ public class FluidStream : CatmullDeformer {
     [SerializeField] private AudioPack splatterSounds;
     [SerializeField] private AudioPack waterSpraySound;
     [SerializeField] private float waterRadiusCollision = 0.25f;
-    private HashSet<GenericReagentContainer> hitContainers;
     private AudioSource audioSource;
     private AudioSource waterHitSource;
     private bool particleCoroutineRunning;
@@ -56,12 +58,12 @@ public class FluidStream : CatmullDeformer {
     private Rigidbody body;
 
     void Start() {
+        photonView = GetComponentInParent<PhotonView>();
         block = new MaterialPropertyBlock();
         points = new List<Vector3>();
         midairContents = new ReagentContents();
         particles = new List<FluidParticle>();
         waitTime = new WaitForSeconds(0.2f);
-        hitContainers = new HashSet<GenericReagentContainer>();
         if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
@@ -87,6 +89,7 @@ public class FluidStream : CatmullDeformer {
         waterHitSource.enabled = false;
     }
 
+    
     public void OnFire(GenericReagentContainer source) {
         container = source;
         firing = true;
@@ -214,22 +217,14 @@ public class FluidStream : CatmullDeformer {
             Quaternion.identity,
             GameManager.instance.decalHitMask);
 
-        hitContainers.Clear();
-        int hits = Physics.OverlapSphereNonAlloc(hit.point, 0.5f, colliders, GameManager.instance.waterSprayHitMask);
-        for (int i = 0; i < hits; i++) {
-            GenericReagentContainer cont = colliders[i].GetComponentInParent<GenericReagentContainer>();
+        if (photonView.IsMine) {
+            float perVolume = (midairContents.volume * percentageLoss) + 1f;
+            GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
             if (cont != null) {
-                hitContainers.Add(cont);
+                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                    midairContents.Spill(perVolume), container.photonView.ViewID);
             }
         }
-        float perVolume = ((midairContents.volume * percentageLoss) + 1f) / hitContainers.Count;
-        foreach (GenericReagentContainer cont in hitContainers) {
-            cont.AddMix(midairContents.Spill(perVolume), GenericReagentContainer.InjectType.Spray);
-            if (container != null) {
-                cont.SetGenes(container.GetGenes());
-            }
-        }
-
     }
 
     private IEnumerator Output() {
@@ -276,5 +271,42 @@ public class FluidStream : CatmullDeformer {
         particles.Clear();
         audioSource.enabled = false;
         waterHitSource.enabled = false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(startClip);
+            stream.SendNext(endClip);
+            stream.SendNext(firing);
+        } else {
+            startClip = (float)stream.ReceiveNext();
+            endClip = (float)stream.ReceiveNext();
+            firing = (bool)stream.ReceiveNext();
+        }
+    }
+
+    public void Save(BinaryWriter writer, string version) {
+        if (container != null) {
+            writer.Write(container.photonView.ViewID);
+        } else {
+            writer.Write(-1);
+        }
+
+        midairContents.Serialize(writer);
+        writer.Write(startClip);
+        writer.Write(endClip);
+        writer.Write(firing);
+    }
+
+    public void Load(BinaryReader reader, string version) {
+        int viewID = reader.ReadInt32();
+        if (viewID != -1) {
+            container = PhotonNetwork.GetPhotonView(viewID).GetComponentInChildren<GenericReagentContainer>();
+        }
+
+        midairContents.Deserialize(reader);
+        startClip = reader.ReadSingle();
+        endClip = reader.ReadSingle();
+        firing = reader.ReadBoolean();
     }
 }

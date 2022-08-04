@@ -92,7 +92,12 @@ public class MilkingTable : GenericUsable, IAnimationStationSet {
                     };
                 }
             }
-            container.AddMix(milkVolume.Spill(totalVolume / pulses), GenericReagentContainer.InjectType.Inject);
+
+            if (photonView.IsMine) {
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                    milkVolume.Spill(totalVolume / pulses), photonView.ViewID);
+            }
+
             stream.OnFire(container);
             yield return waitSpurt;
         }

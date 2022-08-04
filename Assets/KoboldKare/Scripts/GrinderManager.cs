@@ -97,7 +97,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     [PunRPC]
     void Grind(ReagentContents incomingContents, KoboldGenes genes) {
         grindedObject?.Invoke(incomingContents);
-        container.AddMix(incomingContents, GenericReagentContainer.InjectType.Inject);
+        container.AddMixRPC(incomingContents, photonView.ViewID);
         container.SetGenes(genes);
         fluidStream.OnFire(container);
     }

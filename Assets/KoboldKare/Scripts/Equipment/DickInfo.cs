@@ -171,10 +171,14 @@ public class DickInfo : MonoBehaviour {
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize*0.01f));
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
-                        GenericReagentContainer container = hit.collider.GetComponentInParent<GenericReagentContainer>();
-                        if (container != null) {
-                            container.AddMix(alloc.Spill(alloc.volume * 0.1f), GenericReagentContainer.InjectType.Spray);
-                            container.SetGenes(attachedKobold.GetGenes());
+                        if (attachedKobold.photonView.IsMine) {
+                            GenericReagentContainer container =
+                                hit.collider.GetComponentInParent<GenericReagentContainer>();
+                            if (container != null) {
+                                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                                    alloc.Spill(alloc.volume * 0.1f), attachedKobold.photonView.ViewID);
+                                //container.SetGenes(attachedKobold.GetGenes());
+                            }
                         }
 
                         //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.red, 5f);
@@ -195,8 +199,10 @@ public class DickInfo : MonoBehaviour {
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
-            container.AddMix( attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses), GenericReagentContainer.InjectType.Inject);
-            container.SetGenes(attachedKobold.GetGenes());
+            if (attachedKobold.photonView.IsMine) {
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                    attachedKobold.photonView.ViewID);
+            }
         }
         yield return new WaitForSeconds(3f);
         attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);

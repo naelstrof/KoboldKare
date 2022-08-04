@@ -78,7 +78,9 @@ public class SeedExtractor : GenericUsable {
         IDamagable damagable = other.GetComponentInParent<IDamagable>();
         if (damagable != null) {
             foreach( GenericReagentContainer container in other.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
-                internalContents.TransferMix(container, container.volume, GenericReagentContainer.InjectType.Inject);
+
+                internalContents.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, container.GetContents(),
+                    photonView.ViewID);
             }
             damagable.Damage(damagable.GetHealth()+1);
         }

@@ -18,6 +18,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Animator playerModel;
     private KoboldCharacterController controller;
     private bool isInAir;
+    [SerializeField]
+    private Transform leftKneeHint;
+    [SerializeField]
+    private Transform rightKneeHint;
     private bool jumped;
     private Vector3 tempDir;
     [SerializeField]
@@ -82,7 +86,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         handler = playerModel.gameObject.AddComponent<LookAtHandler>();
         controller = GetComponentInParent<KoboldCharacterController>();
         playerModel.gameObject.AddComponent<AnimatorExtender>();
-        playerModel.gameObject.AddComponent<FootIK>();
+        FootIK ik = playerModel.gameObject.AddComponent<FootIK>();
+        ik.leftKneeHint = leftKneeHint;
+        ik.rightKneeHint = rightKneeHint;
         playerModel.gameObject.AddComponent<HandIK>();
         playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
         playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
@@ -105,6 +111,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
         }
         StartCoroutine(AnimationRoutine());
+    }
+
+    private void Start() {
+        tempDir = Vector3.forward;
     }
 
     private IEnumerator AnimationRoutine() {
@@ -191,21 +201,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.01f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
-        dir = Quaternion.Inverse(Quaternion.Euler(0,headTransform.rotation.eulerAngles.y,0)) * dir;
-        float speed = velocity.magnitude;
-        if ( speed < 1f ) {
-            dir *= speed;
-        }
-        tempDir.x = Mathf.MoveTowards(tempDir.x, dir.x, 5f * Time.deltaTime);
-        if (controller.grounded) {
-            if (dir.z > 0f) {
-                tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z + Mathf.Abs(dir.y), 5f * Time.deltaTime);
-            } else {
-                tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z - Mathf.Abs(dir.y), 5f * Time.deltaTime);
-            }
-        } else {
-            tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z, 5f * Time.deltaTime);
-        }
+        //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
+        dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
+        float speed = velocity.With(y:0).magnitude;
+        tempDir = Vector3.RotateTowards(tempDir, dir, Time.deltaTime * 10f, 0f);
         playerModel.SetFloat(MoveX, tempDir.x);
         playerModel.SetFloat(MoveY, tempDir.z);
         float s = speed;
@@ -218,7 +217,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             s *= walkingAnimationSpeedMultiplier;
         }
         s /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
-        playerModel.SetFloat(Speed, s == 0 ? 1f : s);
+        playerModel.SetFloat(Speed, s);
         if (controller.enabled) {
             walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
         } else {

@@ -203,7 +203,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
                 body.MovePosition(body.position - new Vector3(0, diff, 0)/2f);
             }
         }
-        worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
+        worldModel.localPosition = defaultWorldModelPosition + worldModelOffset * 2f / worldModel.parent.lossyScale.y;
     }
 
     private void Friction() {
@@ -261,9 +261,6 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
             groundingPID.UpdatePID(-(distanceToGround - effectiveStepHeight), Time.fixedDeltaTime);
             if (jumpTimer <= 0) {
                 velocity += Vector3.up * Mathf.Min(groundingPID.GetCorrection(), jumpStrength);
-            } else {
-                // Don't push the capsule down if we're jumping.
-                velocity += Vector3.up * Mathf.Clamp(groundingPID.GetCorrection(), 0f, jumpStrength);
             }
         } else {
             floorNormal = Vector3.up;
@@ -387,6 +384,6 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     }
 
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
-        body.useGravity = ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer);
+        body.isKinematic = !ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer);
     }
 }

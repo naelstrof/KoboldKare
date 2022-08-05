@@ -98,7 +98,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (!isActiveAndEnabled) {
             return;
         }
-        body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

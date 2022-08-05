@@ -27,6 +27,7 @@ Transform:
     w: 1}
   m_LocalPosition: {x: 7.978542e-10, y: 0.107166454, z: 0.00000008793876}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 725823893241163621}
   m_Father: {fileID: 6601312400952218014}
@@ -58,6 +59,7 @@ Transform:
   m_LocalRotation: {x: -9.715678e-10, y: 0.000000006045284, z: 1.27329276e-11, w: 1}
   m_LocalPosition: {x: -6.925802e-10, y: 0.10716646, z: 0.000000021977712}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 725823893241163621}
   m_RootOrder: 0
@@ -88,6 +90,7 @@ Transform:
   m_LocalRotation: {x: 0.0111699, y: 0.022563579, z: 0.98997146, w: -0.13900606}
   m_LocalPosition: {x: 0.03695559, y: -0.17109674, z: 0.058770023}
   m_LocalScale: {x: 0.9999971, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1691173716501037184}
   m_RootOrder: 1
@@ -119,6 +122,7 @@ Transform:
   m_LocalRotation: {x: 0.67775923, y: -0.0019433686, z: 0.026941346, w: 0.73478764}
   m_LocalPosition: {x: -0.0009217076, y: -0.07095599, z: 0.06483459}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.9999999}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2098684337182560788}
   m_Father: {fileID: 1691173716501037184}
@@ -149,20 +153,21 @@ MonoBehaviour:
   tipTarget: {fileID: 3349303736018938319}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.25
+  penetrationMarginOfError: 1.75
   autoPenetrate: -1
   listeners:
-  - id: 0
-  - id: 1
-  - id: 2
+  - rid: 0
+  - rid: 1
+  - rid: 2
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
         knotForceFactor: 0.33
-    00000001:
+    - rid: 1
       type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
@@ -170,7 +175,7 @@ MonoBehaviour:
         audioGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
           type: 2}
         volume: 1
-    00000002:
+    - rid: 2
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
         localDist: 0.651
@@ -204,6 +209,7 @@ Transform:
     w: 0.7071066}
   m_LocalPosition: {x: 0, y: 0.449, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1654800917399598365}
   m_RootOrder: 0
@@ -234,6 +240,7 @@ Transform:
   m_LocalRotation: {x: 0.67775923, y: -0.0019433695, z: 0.026941342, w: 0.7347877}
   m_LocalPosition: {x: -0.00092170597, y: -0.07095613, z: 0.06483457}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3349303736018938319}
   m_Father: {fileID: 1691173716501037184}
@@ -268,6 +275,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 194100942757582488}
   - {fileID: 8578504151655139096}
@@ -353,9 +361,9 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - id: 0
-      - id: 1
-      - id: 2
+      - rid: 0
+      - rid: 1
+      - rid: 2
     dickSizeInflater:
       bounceCurve:
         serializedVersion: 2
@@ -419,8 +427,8 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - id: 3
-      - id: 4
+      - rid: 3
+      - rid: 4
     bonerInflater:
       bounceCurve:
         serializedVersion: 2
@@ -448,7 +456,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - id: 5
+      - rid: 5
     attachPoint: 0
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
@@ -459,16 +467,17 @@ MonoBehaviour:
     parentTransform: {fileID: 0}
     dickIdentifier: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 6109262763823635973}
-    00000001:
+    - rid: 1
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 5121665486659769774}
-    00000002:
+    - rid: 2
       type: {class: InflatableBlendShape, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         blendShapeName: BiggerBalls
@@ -476,15 +485,15 @@ MonoBehaviour:
         - {fileID: 5293944777262217674}
         - {fileID: 2504630395364160274}
         clamped: 1
-    00000003:
+    - rid: 3
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 6601312400952218014}
-    00000004:
+    - rid: 4
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 1654800917399598365}
-    00000005:
+    - rid: 5
       type: {class: BonerInflatable, ns: , asm: Assembly-CSharp}
       data:
         limpBlendshape: Flaccid2
@@ -560,6 +569,7 @@ Transform:
   m_LocalRotation: {x: -0.05293921, y: 0.016606072, z: 0.98983276, w: 0.13096873}
   m_LocalPosition: {x: -0.03637474, y: -0.1717534, z: 0.055687413}
   m_LocalScale: {x: 0.99999857, y: 0.99999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1691173716501037184}
   m_RootOrder: 0
@@ -590,6 +600,7 @@ Transform:
   m_LocalRotation: {x: 4.2427933e-10, y: 0.000000016290493, z: 9.549694e-12, w: 1}
   m_LocalPosition: {x: 1.9008439e-10, y: 0.10716646, z: -0.000000024172095}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8882156511951547426}
   m_Father: {fileID: 2098684337182560788}
@@ -621,6 +632,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1691173716501037184}
   m_Father: {fileID: 5226781961726599590}
@@ -652,6 +664,7 @@ Transform:
   m_LocalRotation: {x: 0.7386351, y: 0.017460732, z: 0.012502671, w: 0.6737633}
   m_LocalPosition: {x: -0.0011752461, y: 0.09212597, z: 0.9250122}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.9999999}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6109262763823635973}
   - {fileID: 5121665486659769774}
@@ -687,6 +700,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5226781961726599590}
   m_RootOrder: 2
@@ -702,6 +716,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -777,6 +792,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5226781961726599590}
   m_RootOrder: 1
@@ -792,6 +808,7 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

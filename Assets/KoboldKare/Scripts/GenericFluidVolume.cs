@@ -42,11 +42,19 @@ public class GenericFluidVolume : MonoBehaviourPun {
         volumeContainer.OnChange.RemoveListener(OnReagentContainerChanged);
     }
     public void Update() {
+        if (!photonView.IsMine) {
+            dippedObjects.Clear();
+            return;
+        }
+
         dippedObjects.RemoveWhere(o=>o == null);
         foreach(PhotonView view in dippedObjects) {
+            if (view == photonView) {
+                continue;
+            }
             DipDecal(view);
             GenericReagentContainer container = view.GetComponentInChildren<GenericReagentContainer>();
-            if (container != null) {
+            if (container != null && GenericReagentContainer.IsMixable(container.type, GenericReagentContainer.InjectType.Flood)) {
                 float spillVolume = Mathf.Min(container.maxVolume - container.volume,
                     fillRate * Time.deltaTime);
                 ReagentContents spill = volumeContainer.Spill(spillVolume);

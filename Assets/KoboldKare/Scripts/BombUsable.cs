@@ -37,8 +37,10 @@ public class BombUsable : GenericUsable, IDamagable {
         if (photonView.IsMine) {
             // Mix the water with the potassium...
             // It should sizzle and blow up.
+            ReagentContents contents = new ReagentContents();
+            contents.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(40f));
             container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                ReagentDatabase.GetReagent("Water").GetReagent(40f), container.photonView.ViewID);
+                contents, container.photonView.ViewID);
         }
         fired = true;
     }

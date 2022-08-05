@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,11 @@ public class FootstepSoundManager : MonoBehaviour {
         footstepPack = pack;
     }
 
-    public void Start() {
+    private void Awake() {
         animator = GetComponent<Animator>();
     }
-    void DoFootstep(AnimationEvent evt) {
+
+    public void DoFootstep(AnimationEvent evt) {
         bool groundedAnimation = evt.stringParameter == "Grounded";
         if (groundedAnimation && !animator.GetBool("Grounded")) {
             return;
@@ -24,6 +26,7 @@ public class FootstepSoundManager : MonoBehaviour {
         if (evt.animatorClipInfo.weight < 0.5f) {
             return;
         }
+
         Transform f = evt.intParameter == 0 ? animator.GetBoneTransform(HumanBodyBones.LeftFoot) : animator.GetBoneTransform(HumanBodyBones.RightFoot);
         RaycastHit hit;
         AudioClip clip = footstepPack.GetClip();

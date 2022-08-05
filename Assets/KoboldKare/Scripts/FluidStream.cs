@@ -22,6 +22,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         }
     }
 
+    [NonSerialized]
     public PhotonView photonView;
 
     private GenericReagentContainer container;
@@ -57,8 +58,11 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
     [SerializeField]
     private Rigidbody body;
 
-    void Start() {
+    private void Awake() {
         photonView = GetComponentInParent<PhotonView>();
+    }
+
+    void Start() {
         block = new MaterialPropertyBlock();
         points = new List<Vector3>();
         midairContents = new ReagentContents();
@@ -206,7 +210,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             }
         }
 
-        if (midairContents.volume <= 0f) {
+        if (midairContents == null || midairContents.volume <= 0f) {
             return;
         }
 

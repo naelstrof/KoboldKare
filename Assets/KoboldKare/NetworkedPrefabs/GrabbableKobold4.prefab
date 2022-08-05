@@ -7957,6 +7957,37 @@ MonoBehaviour:
       type: 3}
     photonName: Egg
   spawnOnLoad: 0
+--- !u!1 &4383215961726034279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7792630030512707620}
+  m_Layer: 0
+  m_Name: RightKneeHint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7792630030512707620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4383215961726034279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.46, y: 0.64, z: 1.272}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6506915555090380248}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4414055191389230514
 GameObject:
   m_ObjectHideFlags: 0
@@ -11036,6 +11067,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6089311303958218970}
   m_CullTransparentMesh: 0
+--- !u!1 &6090503669900864873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638700058887392509}
+  m_Layer: 0
+  m_Name: LeftKneeHint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638700058887392509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090503669900864873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.51, y: 0.64, z: 1.148}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6506915555090380248}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6090867914755286857
 GameObject:
   m_ObjectHideFlags: 0
@@ -12292,11 +12354,11 @@ MonoBehaviour:
         offsetCorrectionBone: {fileID: 8415318311738016194}
         targets:
         - skinnedMeshRenderer: {fileID: 6506915555087688956}
-          blendshapeName: vrc.v_aa
-          blendshapeID: 4
+          blendshapeName: vrc.v_oh
+          blendshapeID: 12
         - skinnedMeshRenderer: {fileID: 2780399689652382999}
-          blendshapeName: vrc.v_aa
-          blendshapeID: 4
+          blendshapeName: vrc.v_oh
+          blendshapeID: 12
         baseGirthRadius: 0
         blendShapeGirthRadius: 0.05
         overdrive: 0
@@ -14761,7 +14823,7 @@ MonoBehaviour:
   jumpStrength: 8
   speed: 10
   crouchSpeed: 4
-  walkSpeedMultiplier: 0.5
+  walkSpeedMultiplier: 0.45
   accel: 8
   crouchAccel: 6
   airAccel: 20
@@ -14769,10 +14831,10 @@ MonoBehaviour:
   stepHeightCrouched: 1
   stepHeightCheckDistance: 2.5
   groundingPID:
-    P: 0.9
-    D: 1.8
+    P: 1
+    D: 2
   groundCheckRadius: 0.14
-  friction: 6
+  friction: 7
   crouchFriction: 10
   collider: {fileID: 5005442867846444301}
   crouchHeight: 0.6
@@ -14790,6 +14852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e687310e22ae948990b80d21e47ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftKneeHint: {fileID: 3638700058887392509}
+  rightKneeHint: {fileID: 7792630030512707620}
   jumpDust: {fileID: 769764480791892654}
   walkDust: {fileID: 5485890040014409419}
   headTransform: {fileID: 1580927918472896871}
@@ -14797,7 +14861,7 @@ MonoBehaviour:
   body: {fileID: 4787937348439926609}
   playerPossession: {fileID: 8319315006002239314}
   crouchedAnimationSpeedMultiplier: 0.5
-  walkingAnimationSpeedMultiplier: 1.2
+  walkingAnimationSpeedMultiplier: 3
   standingAnimationSpeedMultiplier: 0.1
 --- !u!136 &5005442867846444301
 CapsuleCollider:
@@ -18112,7 +18176,7 @@ CharacterJoint:
     limit: 15.392937
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -18212,7 +18276,7 @@ CharacterJoint:
     limit: 7.479134
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -18451,7 +18515,7 @@ CharacterJoint:
     limit: 14.80953
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -18519,7 +18583,7 @@ CharacterJoint:
     limit: 10.031602
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -18734,7 +18798,7 @@ CharacterJoint:
     limit: 13.41941
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -18870,7 +18934,7 @@ CharacterJoint:
     limit: 18.494884
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19098,7 +19162,7 @@ CharacterJoint:
     limit: 8.911076
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19180,7 +19244,7 @@ CharacterJoint:
     limit: 8.595212
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19262,7 +19326,7 @@ CharacterJoint:
     limit: 88.60804
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19363,7 +19427,7 @@ CharacterJoint:
     limit: 53.37047
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19445,7 +19509,7 @@ CharacterJoint:
     limit: 80.455154
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19545,7 +19609,7 @@ CharacterJoint:
     limit: 10.031602
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19627,7 +19691,7 @@ CharacterJoint:
     limit: 37.881
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19708,7 +19772,7 @@ CharacterJoint:
     limit: 10.031602
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19789,7 +19853,7 @@ CharacterJoint:
     limit: 23.677364
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19871,7 +19935,7 @@ CharacterJoint:
     limit: 9.279735
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -19953,7 +20017,7 @@ CharacterJoint:
     limit: 10.010856
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity
@@ -20059,7 +20123,7 @@ CharacterJoint:
     limit: 16.80436
     bounciness: 0.1
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 5
   m_BreakForce: Infinity

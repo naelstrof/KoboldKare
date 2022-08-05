@@ -507,6 +507,8 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             bellyContainer.GetContents().AddMix(vol.Spill(vol.volume - maxMetabolization), bellyContainer);
         }
 
+        bellyContainer.OnChange.Invoke(bellyContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
+
         if (vol.volume <= 0f) {
             return;
         }
@@ -560,6 +562,8 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
 
         if (info.photonView.InstantiationData.Length > 1 && info.photonView.InstantiationData[1] is bool) {
             if ((bool)info.photonView.InstantiationData[1] == true) {
+                body.rotation = Quaternion.FromToRotation(body.transform.up, Vector3.up) * body.rotation;
+                body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
                 info.Sender.TagObject = this;
             } else {

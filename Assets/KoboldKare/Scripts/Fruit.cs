@@ -104,7 +104,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         SetFrozen(false);
     }
 
-    public void OnEndInteract(Kobold k) {
+    public void OnEndInteract() {
     }
 
     public bool PhysicsGrabbable() {

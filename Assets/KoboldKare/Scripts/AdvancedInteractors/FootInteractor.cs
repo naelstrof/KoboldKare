@@ -17,7 +17,7 @@ public class FootInteractor : MonoBehaviour, IAdvancedInteractable {
     public void Start() {
         kobold = GetComponentInParent<Kobold>();
     }
-    public void OnEndInteract(Kobold k) {
+    public void OnEndInteract() {
         StartCoroutine(WaitThenStand());
     }
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {

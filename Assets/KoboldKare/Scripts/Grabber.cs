@@ -156,7 +156,10 @@ public class Grabber : MonoBehaviourPun {
         foreach( IGrabbable g in copy ) {
             // As soon as we drop a player kobold, we should immediately try to give ownership back to them.
             Kobold grabbedKobold = g.photonView.GetComponent<Kobold>();
-            StartCoroutine(GiveBackKoboldsWhenPossible(grabbedKobold, 0f));
+            if (grabbedKobold != null && g.GetRigidBodies()[0].velocity.magnitude < 3f) {
+                StartCoroutine(GiveBackKoboldsWhenPossible(grabbedKobold, 0f));
+            }
+
             TryDrop(g);
         }
         grabbedObjects.Clear();

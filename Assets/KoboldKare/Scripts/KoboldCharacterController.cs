@@ -7,7 +7,7 @@ using ExitGames.Client.Photon;
 using System.IO;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
+public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
     [System.Serializable]
     public class PID {
         public float P;
@@ -327,6 +327,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         velocity += groundVelocity;
         if (photonView.IsMine) {
             body.velocity = velocity;
+        } else {
+            body.isKinematic = true;
         }
     }
 
@@ -381,9 +383,5 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public void Load(BinaryReader reader, string version) {
         inputJump = reader.ReadBoolean();
         inputCrouched = reader.ReadBoolean();
-    }
-
-    public void OnOwnerChange(Player newOwner, Player previousOwner) {
-        body.isKinematic = !ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer);
     }
 }

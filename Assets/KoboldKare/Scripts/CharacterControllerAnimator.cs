@@ -278,7 +278,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         solver.ForceBlend(0f);
         solver.enabled = false;
         controller.enabled = true;
-        kobold.body.isKinematic = false;
+        kobold.body.isKinematic = !kobold.photonView.IsMine;
         solver.CleanUp();
     }
 

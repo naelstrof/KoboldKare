@@ -153,8 +153,9 @@ MonoBehaviour:
   tipTarget: {fileID: 3349303736018938319}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.75
+  penetrationMarginOfError: 1.25
   autoPenetrate: -1
+  ignorePenetrables: []
   listeners:
   - rid: 0
   - rid: 1

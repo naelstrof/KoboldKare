@@ -1,21 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using UnityEngine.Analytics;
 using Photon.Pun;
+using WebSocketSharp;
 
 public class DeleteVolume : MonoBehaviour {
+    [SerializeField]
+    private Transform bucketRespawnPoint;
     private void OnTriggerEnter(Collider other) {
         PhotonView view = other.GetComponentInParent<PhotonView>();
-        if (view != null && !view.IsMine) {
+        if (view == null) {
             return;
         }
-        if(other.GetComponentInParent<GenericGrabbable>() == null || view == null){
+        if (!view.IsMine) {
             return;
         }
         
-        //Handle networked object
-        PhotonNetwork.Destroy(view);
+        if (view.TryGetComponent(out BucketWeapon bucket)) {
+            bucket.transform.position = bucketRespawnPoint.position;
+            bucket.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        } else {
+            PhotonNetwork.Destroy(view);
+        }
     }
 }

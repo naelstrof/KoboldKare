@@ -371,32 +371,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         return v;
     }
 
-    [PunRPC]
-    public void RPCPrecisionGrab(int grabberViewID, int colliderID, Vector3 lHitPoint) {
-        PhotonView view = PhotonView.Find(grabberViewID);
-        if (view != null) {
-            Collider[] colliders = view.GetComponentsInChildren<Collider>();
-            if (colliderID >= 0 && colliderID < colliders.Length) {
-                GetComponentInChildren<PrecisionGrabber>().Grab(colliders[colliderID], lHitPoint, Vector3.up);
-            }
-        }
-    }
-
-    [PunRPC]
-    public void RPCFreeze(int grabberViewID, int colliderID, Vector3 localPosition, Vector3 worldPosition, Quaternion rotation, bool affRotation) {
-        PhotonView view = PhotonView.Find(grabberViewID);
-        if (view != null) {
-            Collider[] colliders = view.GetComponentsInChildren<Collider>();
-            if (colliderID >= 0 && colliderID < colliders.Length) {
-                GetComponentInChildren<PrecisionGrabber>().Freeze(colliders[colliderID], localPosition, worldPosition, rotation, affRotation);
-            }
-        }
-    }
-
-    [PunRPC]
-    public void RPCUnfreezeAll() {
-        GetComponentInChildren<PrecisionGrabber>().Unfreeze(false);
-    }
     public void SendChat(string message) {
         photonView.RPC(nameof(RPCSendChat), RpcTarget.All, new object[]{message});
     }
@@ -442,12 +416,12 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }*/
         return false;
     }
-    public void OnEndInteract(Kobold k) {
+    public void OnEndInteract() {
         grabbed = false;
         controller.frictionMultiplier = 1f;
-        //uprightForce = 40f;
     }
     public bool ShowHand() { return true; }
+
     public bool PhysicsGrabbable() { return true; }
     public Rigidbody[] GetRigidBodies() {
         return grabbableBodies;

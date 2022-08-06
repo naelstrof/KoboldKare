@@ -182,6 +182,7 @@ MonoBehaviour:
   - {fileID: 3408746440947745250}
   - {fileID: 6560005341841576388}
   - {fileID: 6030259404136135922}
+  - {fileID: 2394539161110907377}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -213,10 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
+  m_SynchronizeVelocity: 0
+  m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
+  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &6560005341841576388
 MonoBehaviour:
   m_ObjectHideFlags: 0

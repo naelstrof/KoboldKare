@@ -76,7 +76,7 @@ public class LimbInteractor : MonoBehaviour, IAdvancedInteractable {
         }
     }
 
-    public void OnEndInteract(Kobold k) {
+    public void OnEndInteract() {
         grabbed = false;
         if (otherJoint != null) {
             Destroy(otherJoint);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -28,12 +29,34 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private Transform hip;
     [SerializeField]
     private JigglePhysics.JiggleRigBuilder tailRig;
-    private Vector3 networkedRagdollHipPosition;
     [SerializeField]
     private LODGroup group;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
+
+    private class RigidbodyNetworkInfo {
+        public RigidbodyNetworkInfo(Rigidbody body) {
+            networkedPosition = body.position;
+            networkedRotation = body.rotation;
+            distance = 0f;
+            angle = 0f;
+        }
+        public Vector3 networkedPosition;
+        public Quaternion networkedRotation;
+        public float distance;
+        public float angle;
+    }
+
+    private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
+
+    private void Awake() {
+        rigidbodyNetworkInfos = new List<RigidbodyNetworkInfo>();
+        foreach (Rigidbody ragdollBody in ragdollBodies) {
+            rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
+        }
+    }
+
     void Start() {
         savedJointAnchors = new List<Vector3>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
@@ -43,6 +66,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             savedJointAnchors.Add(ragdollBody.GetComponent<CharacterJoint>().connectedAnchor);
             ragdollBody.GetComponent<CharacterJoint>().autoConfigureConnectedAnchor = false;
         }
+
     }
     [PunRPC]
     public void PushRagdoll() {
@@ -68,8 +92,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         if (photonView.IsMine || !ragdolled) {
             return;
         }
-        Vector3 dir = networkedRagdollHipPosition - hip.position;
-        ragdollBodies[0].AddForce(dir, ForceMode.VelocityChange);
+
+        for(int i=0;i<ragdollBodies.Length;i++) {
+            Rigidbody ragbody = ragdollBodies[i];
+            ragbody.position = Vector3.MoveTowards(ragbody.position, rigidbodyNetworkInfos[i].networkedPosition, rigidbodyNetworkInfos[i].distance * (1.0f / PhotonNetwork.SerializationRate));
+            ragbody.rotation = Quaternion.RotateTowards(ragbody.rotation, rigidbodyNetworkInfos[i].networkedRotation, rigidbodyNetworkInfos[i].angle * (1.0f / PhotonNetwork.SerializationRate));
+        }
     }
     private void Ragdoll() {
         if (ragdolled) {
@@ -186,9 +214,22 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(hip.position);
+            stream.SendNext(ragdolled);
+            if (ragdolled) {
+                foreach (Rigidbody ragbody in ragdollBodies) {
+                    stream.SendNext(ragbody.position);
+                    stream.SendNext(ragbody.rotation);
+                }
+            }
         } else {
-            networkedRagdollHipPosition = (Vector3)stream.ReceiveNext();
+            if ((bool)stream.ReceiveNext()) {
+                for(int i=0;i<ragdollBodies.Length;i++) {
+                    rigidbodyNetworkInfos[i].networkedPosition = (Vector3)stream.ReceiveNext();
+                    rigidbodyNetworkInfos[i].networkedRotation = (Quaternion)stream.ReceiveNext();
+                    rigidbodyNetworkInfos[i].distance = Vector3.Distance(ragdollBodies[i].position, rigidbodyNetworkInfos[i].networkedPosition);
+                    rigidbodyNetworkInfos[i].angle = Quaternion.Angle(ragdollBodies[i].rotation, rigidbodyNetworkInfos[i].networkedRotation);
+                }
+            }
         }
     }
     public void Save(BinaryWriter writer, string version) {

@@ -30,6 +30,8 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
 
     public delegate void SwitchAction();
     public SwitchAction switched;
+    
+    private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
 
     void Start() {
         if(GetComponent<GenericReagentContainer>() != null){
@@ -81,6 +83,17 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
             }
             if (newPlant.display != null) {
                 display = GameObject.Instantiate(newPlant.display, transform);
+                foreach (Renderer r in display.GetComponentsInChildren<Renderer>()) {
+                    if (r == null) {
+                        continue;
+                    }
+                    foreach (Material m in r.materials) {
+                        Vector4 hbcs = new Vector4(GetGenes().hue/255f, GetGenes().brightness/255f, 0.5f, GetGenes().saturation/255f);
+                        if (m.HasProperty(BrightnessContrastSaturation)) {
+                            m.SetVector(BrightnessContrastSaturation, hbcs);
+                        }
+                    }
+                }
             }
             if (photonView.IsMine) {
                 foreach(var produce in newPlant.produces) {

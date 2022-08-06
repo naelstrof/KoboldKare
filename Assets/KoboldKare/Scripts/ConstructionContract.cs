@@ -14,6 +14,8 @@ public class ConstructionContract : GenericUsable {
     private float cost;
     [SerializeField]
     private MoneyFloater floater;
+
+    [SerializeField] private int starRequirement = 1;
     private bool bought;
 
     void Start() {
@@ -28,7 +30,7 @@ public class ConstructionContract : GenericUsable {
         return displaySprite;
     }
     public override bool CanUse(Kobold k) {
-        return k.GetComponent<MoneyHolder>().HasMoney(cost) && !bought;
+        return k.GetComponent<MoneyHolder>().HasMoney(cost) && !bought && ObjectiveManager.GetStars() >= starRequirement;
     }
     protected virtual void SetState(bool purchased) {
         bought = purchased;

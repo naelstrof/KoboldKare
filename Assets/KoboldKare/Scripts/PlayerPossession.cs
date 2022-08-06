@@ -9,6 +9,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
 
 public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
@@ -108,6 +109,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(true);
         }
+
+        controls.actions["SwitchGrabMode"].performed += OnShiftMode;
+        controls.actions["Grab"].performed += OnGrabInput;
+        controls.actions["Grab"].canceled += OnGrabCancelled;
     }
 
     private void OnDisable() {
@@ -115,6 +120,9 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(false);
         }
+        controls.actions["SwitchGrabMode"].performed -= OnShiftMode;
+        controls.actions["Grab"].performed -= OnGrabInput;
+        controls.actions["Grab"].canceled -= OnGrabCancelled;
     }
 
     private void OnDestroy() {
@@ -136,8 +144,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         bool grab = controls.actions["Grab"].ReadValue<float>() > 0.5f && canGrab;
         bool activateGrab = controls.actions["ActivateGrab"].ReadValue<float>() > 0.5f && canGrab;
         bool rotate = controls.actions["Rotate"].ReadValue<float>() > 0.5f;
-        bool unfreeze = controls.actions["Unfreeze"].ReadValue<float>() > 0.5f;
-        bool walk = controls.actions["Walk"].ReadValue<float>() > 0.5f;
         bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
@@ -147,7 +153,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
 
-        pGrabber.inputRotation = rotate;
+        //pGrabber.inputRotation = rotate;
         Vector2 mouseDelta;
         if (grab && rotate) {
             mouseDelta = Vector2.zero;
@@ -172,34 +178,21 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 //pGrabber.loosenCursor = true;
                 grabPrompt.SetActive(false);
             }
-            if (!switchGrabMode && switchedMode && !pGrabber.grabbing) {
-                //pGrabber.loosenCursor = false;
-                //pGrabber.ResetCursor();
+            if (!switchGrabMode && switchedMode) {
                 mouseAttached = true;
                 switchedMode = false;
                 grabPrompt.SetActive(true);
             }
-            if (!switchGrabMode && !pGrabber.grabbing) {
-                pGrabber.Ungrab();
+            if (!switchGrabMode) {
                 if (grab) {
                     grabber.TryGrab();
-                }
-                if (!pGrabber.HandHidden()) {
-                    pGrabber.HideHand(true);
                 }
             } else if (switchGrabMode && !grabber.grabbing) {
                 grabber.TryDrop();
                 grabber.TryStopActivate();
-                if (pGrabber.HandHidden()) {
-                    pGrabber.HideHand(false);
-                }
-                if (grab && !freeze) {
-                    pGrabber.Grab();
-                }
             }
             if (!grab) {
                 grabber.TryDrop();
-                pGrabber.Ungrab();
             }
             if (!activateGrab) {
                 grabber.TryStopActivate();
@@ -208,14 +201,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 grabber.TryActivate();
                 if (!freeze) {
                     freeze = true;
-                    pGrabber.Freeze();
                     StartCoroutine(PauseInputForSeconds(0.5f));
                 }
             } else {
                 freeze = false;
-            }
-            if (unfreeze) {
-                pGrabber.Unfreeze(true);
             }
         }
 
@@ -280,6 +269,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             photonView.RequestOwnership();
         }
     }
+
+    public void OnShiftMode(InputAction.CallbackContext ctx) {
+        bool shift = ctx.ReadValue<float>() > 0f;
+        grabber.gameObject.SetActive(!shift);
+        pGrabber.SetPreviewState(shift);
+    }
+
     public void OnWalk(InputValue value) {
         controller.inputWalking = value.Get<float>() > 0f;
     }
@@ -294,6 +290,16 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public void OnUse() {
         user.Use();
     }
+    public void OnGrabInput(InputAction.CallbackContext ctx) {
+        if (!grabber.isActiveAndEnabled) {
+            pGrabber.TryGrab();
+        }
+    }
+
+    public void OnGrabCancelled(InputAction.CallbackContext ctx) {
+        pGrabber.TryDrop();
+    }
+
     public void OnResetCamera() {
         //cameras[1].transform.localPosition = Vector3.zero;
         //cameras[1].transform.localRotation = Quaternion.identity;
@@ -351,32 +357,32 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
-            stream.SendNext(switchGrabMode);
-        } else {
-            pGrabber.HideHand(!(bool)stream.ReceiveNext());
-        }
+        //if (stream.IsWriting) {
+            //bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
+            //stream.SendNext(switchGrabMode);
+        //} else {
+            //pGrabber.HideHand(!(bool)stream.ReceiveNext());
+        //}
     }
 
     public void Save(BinaryWriter writer, string version) {
-        bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
-        writer.Write(switchGrabMode);
-        writer.Write(gameObject.activeInHierarchy);
+        //bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
+        //writer.Write(switchGrabMode);
+        //writer.Write(gameObject.activeInHierarchy);
     }
 
     public void Load(BinaryReader reader, string version) {
-        pGrabber.HideHand(!reader.ReadBoolean());
-        bool isPlayer = reader.ReadBoolean();
-        gameObject.SetActive(isPlayer);
-        if (isPlayer) {
-            PhotonNetwork.LocalPlayer.TagObject = kobold;
-            //FIXME: just need to destroy death prefab, since we have a kobold now.
-            CameraOrbiter input = Object.FindObjectOfType<CameraOrbiter>();
-            if (input != null) {
-                Destroy(input.transform.parent.gameObject);
-            }
-            eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
-        }
+        //pGrabber.HideHand(!reader.ReadBoolean());
+        //bool isPlayer = reader.ReadBoolean();
+        //gameObject.SetActive(isPlayer);
+        //if (isPlayer) {
+            //PhotonNetwork.LocalPlayer.TagObject = kobold;
+            ////FIXME: just need to destroy death prefab, since we have a kobold now.
+            //CameraOrbiter input = Object.FindObjectOfType<CameraOrbiter>();
+            //if (input != null) {
+                //Destroy(input.transform.parent.gameObject);
+            //}
+            //eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
+        //}
     }
 }

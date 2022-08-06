@@ -87,14 +87,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7065954616549386873}
-  m_LocalRotation: {x: -0.6360105, y: -3.4106057e-13, z: -2.557954e-13, w: 0.7716804}
-  m_LocalPosition: {x: -0, y: 0.511, z: -0.0474}
+  m_LocalRotation: {x: -0.6289078, y: -0, z: -3.4106054e-13, w: 0.7774799}
+  m_LocalPosition: {x: 0, y: 0.467, z: -0.165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 501530407804742356}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -78.99, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.939, y: 0, z: 0}
 --- !u!1001 &1329374299755020038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,8 +210,9 @@ MonoBehaviour:
   tipTarget: {fileID: 5688532021288971835}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.75
+  penetrationMarginOfError: 1.25
   autoPenetrate: -1
+  ignorePenetrables: []
   listeners:
   - rid: 0
   - rid: 1

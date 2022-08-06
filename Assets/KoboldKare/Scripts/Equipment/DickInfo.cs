@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using PenetrationTech;
 using KoboldKare;
@@ -116,10 +117,11 @@ public class DickInfo : MonoBehaviour {
     public void RemoveFrom(Kobold k) {
         foreach (DickSet set in dicks) {
             k.activeDicks.Remove(set);
-            foreach(Rigidbody r in k.ragdoller.GetRagdollBodies()) {
-                if (r.GetComponent<Collider>() == null) {
+            foreach (var penset in k.penetratables) {
+                if (penset.penetratable.name.Contains("Mouth")) {
                     continue;
                 }
+                set.dick.RemoveIgnorePenetrable(penset.penetratable);
             }
         }
         bool shouldReenableVagina = true;
@@ -240,6 +242,14 @@ public class DickInfo : MonoBehaviour {
             set.dickContainer.localScale = scale;
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
+            foreach (var penset in k.penetratables) {
+                if (penset.penetratable.name.Contains("Mouth")) {
+                    continue;
+                }
+
+                set.dick.AddIgnorePenetrable(penset.penetratable);
+            }
+
 
             if (set.parent == HumanBodyBones.Hips) {
                 foreach(var hole in attachedKobold.penetratables) {

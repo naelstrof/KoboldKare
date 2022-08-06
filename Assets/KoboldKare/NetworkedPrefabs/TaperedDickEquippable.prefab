@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
+  m_SynchronizeVelocity: 0
+  m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
+  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &3822875329986059523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,8 +264,9 @@ MonoBehaviour:
   tipTarget: {fileID: 5704891683557793720}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.75
+  penetrationMarginOfError: 1.25
   autoPenetrate: -1
+  ignorePenetrables: []
   listeners:
   - rid: 0
   - rid: 1

@@ -6,7 +6,6 @@ using System.IO;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private GameObject handDisplayPrefab;

@@ -15127,6 +15127,7 @@ MonoBehaviour:
   - {fileID: 560736620052164810}
   - {fileID: 3374508250042995388}
   - {fileID: 7936829775780751596}
+  - {fileID: 2493919414808592328}
   - {fileID: 8319315006002239314}
   - {fileID: 4474583895957048706}
   sceneViewId: 0
@@ -15302,6 +15303,14 @@ MonoBehaviour:
   handDisplayPrefab: {fileID: 5848404021409221499, guid: 3100fdf2173d9c744a5c465ae3b19715,
     type: 3}
   view: {fileID: 1580927918472896871}
+  freezeVFXPrefab: {fileID: 8870421002407079789, guid: e88e07a8a52465f4b8a578f799e53b25,
+    type: 3}
+  unfreezeSound: {fileID: 11400000, guid: cd0a89d93b29b8a49942e072d4ff62df, type: 2}
+  kobold: {fileID: 3498030196438502570}
+  rotatePid:
+    pFactor: 1.1
+    iFactor: 0
+    dFactor: 0.2
   ignoreColliders: []
 --- !u!1 &8649843185144007013
 GameObject:
@@ -17943,7 +17952,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805324229830809373}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18003,8 +18012,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18043,7 +18052,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3559151987657574709}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18103,8 +18112,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18282,7 +18291,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868290}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18342,8 +18351,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18364,7 +18373,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868296}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18410,8 +18419,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18579,7 +18588,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868302}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18625,8 +18634,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18701,7 +18710,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868310}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18761,8 +18770,8 @@ CharacterJoint:
     bounciness: 0
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18929,7 +18938,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868332}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -18989,8 +18998,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19011,7 +19020,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868338}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19056,7 +19065,7 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 2.9872754
+    limit: 10
     bounciness: 0.1
     contactDistance: 0
   m_SwingLimitSpring:
@@ -19071,8 +19080,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19093,7 +19102,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868624}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19153,8 +19162,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19194,7 +19203,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868628}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19254,8 +19263,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19276,7 +19285,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868630}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19336,8 +19345,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19377,7 +19386,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868632}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19421,14 +19430,14 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 10.529698
+    limit: 15
     bounciness: 0.1
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 40
     damper: 0
   m_Swing1Limit:
-    limit: 15.846317
+    limit: 22.81579
     bounciness: 0.1
     contactDistance: 0
   m_Swing2Limit:
@@ -19436,8 +19445,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19458,7 +19467,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868634}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19518,8 +19527,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19540,7 +19549,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868638}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19599,8 +19608,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19680,8 +19689,8 @@ CharacterJoint:
     bounciness: 0
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19702,7 +19711,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868732}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19758,12 +19767,12 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_Swing2Limit:
-    limit: 9.279735
+    limit: 23.484068
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19784,7 +19793,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868734}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19840,12 +19849,12 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_Swing2Limit:
-    limit: 10.010856
+    limit: 15
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19890,7 +19899,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7938605716420999646}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 4
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19950,8 +19959,8 @@ CharacterJoint:
     bounciness: 0.1
     contactDistance: 0
   m_EnableProjection: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 5
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 10
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0

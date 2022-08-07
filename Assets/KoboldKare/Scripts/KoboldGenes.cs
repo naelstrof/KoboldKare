@@ -190,11 +190,16 @@ public class KoboldGenes {
 public class GeneHolder : MonoBehaviourPun {
     private KoboldGenes genes;
 
+    public delegate void GenesChangedAction(KoboldGenes newGenes);
+
+    public event GenesChangedAction genesChanged;
+
     public KoboldGenes GetGenes() {
         return genes;
     }
     public virtual void SetGenes(KoboldGenes newGenes) {
         genes = newGenes;
+        genesChanged?.Invoke(newGenes);
     }
 }
 

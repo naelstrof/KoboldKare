@@ -15,7 +15,6 @@ using Object = UnityEngine.Object;
 public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public UnityEngine.InputSystem.PlayerInput controls;
     public float coyoteTime = 0.2f;
-    private bool canGrab = true;
     //public Grabber grabber;
     public User user;
     public CanvasGroup chatGroup;
@@ -50,9 +49,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public List<GameObject> localGameObjects = new List<GameObject>();
     public GameObject grabPrompt;
     public GameObject equipmentUI;
-    private bool switchedMode = false;
-    private bool freeze = false;
-    private bool pauseInput = false;
+    private bool switchedMode;
+    private bool pauseInput;
+    private bool rotating;
+    private bool grabbing;
     public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
     public void OnPause() {
         if (equipmentUI.activeInHierarchy) {
@@ -113,6 +113,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["SwitchGrabMode"].performed += OnShiftMode;
         controls.actions["Grab"].performed += OnGrabInput;
         controls.actions["Grab"].canceled += OnGrabCancelled;
+        controls.actions["Rotate"].performed += OnRotateInput;
+        controls.actions["Rotate"].canceled += OnRotateCancelled;
+        controls.actions["ActivateGrab"].performed += OnActivateGrabInput;
+        controls.actions["ActivateGrab"].canceled += OnActivateGrabCancelled;
+        controls.actions["Unfreeze"].performed += OnUnfreezeInput;
+        controls.actions["UnfreezeAll"].performed += OnUnfreezeAllInput;
+        controls.actions["Grab Push and Pull"].performed += OnGrabPushPull;
     }
 
     private void OnDisable() {
@@ -123,6 +130,13 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["SwitchGrabMode"].performed -= OnShiftMode;
         controls.actions["Grab"].performed -= OnGrabInput;
         controls.actions["Grab"].canceled -= OnGrabCancelled;
+        controls.actions["Rotate"].performed -= OnRotateInput;
+        controls.actions["Rotate"].canceled -= OnRotateCancelled;
+        controls.actions["ActivateGrab"].performed -= OnActivateGrabInput;
+        controls.actions["ActivateGrab"].canceled -= OnActivateGrabCancelled;
+        controls.actions["Unfreeze"].performed -= OnUnfreezeInput;
+        controls.actions["UnfreezeAll"].performed -= OnUnfreezeAllInput;
+        controls.actions["Grab Push and Pull"].performed -= OnGrabPushPull;
     }
 
     private void OnDestroy() {
@@ -133,18 +147,27 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             playerDieEvent.Raise(transform.position);
         }
     }
-    private Vector2 eyeSensitivity = new Vector2(2f,2f);
     IEnumerator PauseInputForSeconds(float delay) {
         pauseInput = true;
         yield return new WaitForSeconds(delay);
         pauseInput = false;
     }
-    private Vector2 eyeRot = new Vector2(0, 0);
+    private Vector2 eyeRot;
+
+    private void Look(Vector2 delta) {
+        if (mouseAttached) {
+            eyeRot += delta;
+        }
+        eyeRot.y = Mathf.Clamp(eyeRot.y, -90f, 90f);
+        while(eyeRot.x > 360 ) {
+            eyeRot.x -= 360;
+        }
+        while (eyeRot.x < 0) {
+            eyeRot.x += 360;
+        }
+    }
+
     void PlayerProcessing() {
-        bool grab = controls.actions["Grab"].ReadValue<float>() > 0.5f && canGrab;
-        bool activateGrab = controls.actions["ActivateGrab"].ReadValue<float>() > 0.5f && canGrab;
-        bool rotate = controls.actions["Rotate"].ReadValue<float>() > 0.5f;
-        bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
         if (erectionUp-erectionDown != 0f) {
@@ -154,57 +177,17 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
 
         //pGrabber.inputRotation = rotate;
-        Vector2 mouseDelta;
-        if (grab && rotate) {
-            mouseDelta = Vector2.zero;
-        } else {
-            mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
-        }
-        if (mouseAttached) {
-            eyeRot += mouseDelta * mouseSensitivity.value;
-        }
-        eyeRot.y = Mathf.Clamp(eyeRot.y, -90f, 90f);
-        while(eyeRot.x > 360 ) {
-            eyeRot.x -= 360;
-        }
-        while (eyeRot.x < 0) {
-            eyeRot.x += 360;
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
+        
+        
+        if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.value)) {
+            Look(mouseDelta * mouseSensitivity.value);
         }
         eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
 
         if (!pauseInput) {
-            if (switchGrabMode && !switchedMode) {
-                switchedMode = true;
-                //pGrabber.loosenCursor = true;
-                grabPrompt.SetActive(false);
-            }
-            if (!switchGrabMode && switchedMode) {
-                mouseAttached = true;
-                switchedMode = false;
-                grabPrompt.SetActive(true);
-            }
-            if (!switchGrabMode) {
-                if (grab) {
-                    grabber.TryGrab();
-                }
-            } else if (switchGrabMode && !grabber.grabbing) {
-                grabber.TryDrop();
-                grabber.TryStopActivate();
-            }
-            if (!grab) {
-                grabber.TryDrop();
-            }
-            if (!activateGrab) {
-                grabber.TryStopActivate();
-            }
-            if (activateGrab) {
-                grabber.TryActivate();
-                if (!freeze) {
-                    freeze = true;
-                    StartCoroutine(PauseInputForSeconds(0.5f));
-                }
-            } else {
-                freeze = false;
+            if (grabbing && !switchedMode && !pGrabber.HasGrab()) {
+                grabber.TryGrab();
             }
         }
 
@@ -257,12 +240,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         }
         characterControllerAnimator.SetEyeRot(GetEyeRot());
     }
-
-    public IEnumerator CoyoteGrab() {
-        canGrab = false;
-        yield return new WaitForSeconds(coyoteTime);
-        canGrab = true;
-    }
     public void OnJump(InputValue value) {
         controller.inputJump = value.Get<float>() > 0f;
         if (!photonView.IsMine) {
@@ -272,8 +249,11 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
 
     public void OnShiftMode(InputAction.CallbackContext ctx) {
         bool shift = ctx.ReadValue<float>() > 0f;
-        grabber.gameObject.SetActive(!shift);
+        switchedMode = shift;
         pGrabber.SetPreviewState(shift);
+        if (!shift) {
+            StartCoroutine(PauseInputForSeconds(0.5f));
+        }
     }
 
     public void OnWalk(InputValue value) {
@@ -291,13 +271,42 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         user.Use();
     }
     public void OnGrabInput(InputAction.CallbackContext ctx) {
-        if (!grabber.isActiveAndEnabled) {
+        grabbing = true;
+        if (switchedMode) {
             pGrabber.TryGrab();
         }
     }
 
     public void OnGrabCancelled(InputAction.CallbackContext ctx) {
+        grabbing = false;
+        grabber.TryDrop();
         pGrabber.TryDrop();
+    }
+
+    public void OnRotateInput(InputAction.CallbackContext ctx) {
+        rotating = true;
+    }
+    public void OnRotateCancelled(InputAction.CallbackContext ctx) {
+        rotating = false;
+    }
+
+    public void OnGrabPushPull(InputAction.CallbackContext ctx) {
+        pGrabber.TryAdjustDistance(ctx.ReadValue<float>() * 0.0005f);
+    }
+
+    public void OnActivateGrabInput(InputAction.CallbackContext ctx) {
+        grabber.TryActivate();
+        pGrabber.TryFreeze();
+        StartCoroutine(PauseInputForSeconds(0.5f));
+    }
+    public void OnActivateGrabCancelled(InputAction.CallbackContext ctx) {
+        grabber.TryStopActivate();
+    }
+    public void OnUnfreezeInput(InputAction.CallbackContext ctx) {
+        pGrabber.TryUnfreeze();
+    }
+    public void OnUnfreezeAllInput(InputAction.CallbackContext ctx) {
+        pGrabber.UnfreezeAll();
     }
 
     public void OnResetCamera() {

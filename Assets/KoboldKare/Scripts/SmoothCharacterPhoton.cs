@@ -34,7 +34,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
     
     private void LateUpdate() {
         if (photonView.IsMine) {
-            body.isKinematic = !controllerAnimator.IsAnimating() && !ragdoller.ragdolled;
+            body.isKinematic = controllerAnimator.IsAnimating() || ragdoller.ragdolled;
             return;
         }
 

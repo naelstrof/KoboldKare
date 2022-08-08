@@ -67,14 +67,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
                 body.isKinematic = !ragdolled;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
                 return;
             }
             body.isKinematic = ragdolled;
+            body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
                 body.transform.position = Vector3.MoveTowards(body.transform.position, networkedPosition,
-                    distance * PhotonNetwork.SerializationRate * Time.deltaTime);
+                    distance * PhotonNetwork.SerializationRate * Time.deltaTime * 0.9f);
                 body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, networkedRotation,
-                    angle * PhotonNetwork.SerializationRate * Time.deltaTime);
+                    angle * PhotonNetwork.SerializationRate * Time.deltaTime * 0.9f);
             }
         }
 
@@ -122,7 +124,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
-    void Update() {
+    void LateUpdate() {
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }

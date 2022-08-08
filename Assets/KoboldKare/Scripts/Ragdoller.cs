@@ -52,18 +52,30 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<SavedJointAnchor> jointAnchors;
 
     private class RigidbodyNetworkInfo {
-        public RigidbodyNetworkInfo(Rigidbody body) {
-            this.body = body;
-            networkedPosition = body.position;
-            networkedRotation = body.rotation;
-        }
-        public void SetNetworkPosition(Vector3 position, Quaternion rotation) {
-            networkedPosition = position;
-            distance = Vector3.Distance(body.transform.position, networkedPosition);
-            angle = Quaternion.Angle(body.transform.rotation, networkedRotation);
-            networkedRotation = rotation;
+        private struct Packet {
+            public Packet(double t, Vector3 p, Quaternion rot) {
+                time = t;
+                networkedPosition = p;
+                networkedRotation = rot;
+            }
+            public double time;
+            public Vector3 networkedPosition;
+            public Quaternion networkedRotation;
         }
 
+        private Rigidbody body;
+        private Packet lastPacket;
+        private Packet nextPacket;
+
+        public RigidbodyNetworkInfo(Rigidbody body) {
+            this.body = body;
+            lastPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
+            nextPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
+        }
+        public void SetNetworkPosition(Vector3 position, Quaternion rotation, double time) {
+            lastPacket = nextPacket;
+            nextPacket = new Packet(time, position, rotation);
+        }
         public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
                 body.isKinematic = !ragdolled;
@@ -73,18 +85,19 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             body.isKinematic = ragdolled;
             body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
-                body.transform.position = Vector3.MoveTowards(body.transform.position, networkedPosition,
-                    distance * PhotonNetwork.SerializationRate * Time.deltaTime * 0.9f);
-                body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, networkedRotation,
-                    angle * PhotonNetwork.SerializationRate * Time.deltaTime * 0.9f);
+                double time = PhotonNetwork.Time - (1d / PhotonNetwork.SerializationRate);
+                double diff = nextPacket.time - lastPacket.time;
+                if (diff == 0f) {
+                    return;
+                }
+                double t = (time - lastPacket.time) / diff;
+                body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
+                    nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+                body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
+                    nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
             }
         }
 
-        private float distance;
-        private float angle;
-        private Rigidbody body;
-        private Vector3 networkedPosition;
-        private Quaternion networkedRotation;
     }
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
@@ -247,8 +260,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         } else {
             if ((bool)stream.ReceiveNext()) {
+                float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
                 for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext());
+                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
                 }
             }
         }

@@ -84,7 +84,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         private Quaternion networkedRotation;
         private ConfigurableJoint joint;
         private Quaternion startRotation;
-        private const float springForce = 100f;
+        private const float springForce = 1000f;
         private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation) {
             startRotation = body.transform.rotation;
             ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
@@ -94,13 +94,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             configurableJoint.autoConfigureConnectedAnchor = false;
             configurableJoint.breakForce = float.MaxValue;
             JointDrive drive = configurableJoint.xDrive;
-            SoftJointLimit sjl = configurableJoint.linearLimit;
-            sjl.limit = 0f;
-            configurableJoint.linearLimit = sjl;
-            SoftJointLimitSpring sjls = configurableJoint.linearLimitSpring;
-            sjls.spring = springForce;
-            configurableJoint.linearLimitSpring = sjls;
-            configurableJoint.linearLimit = sjl;
             drive.positionSpring = springForce;
             drive.positionDamper = 2f;
             configurableJoint.xDrive = drive;
@@ -112,7 +105,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             slerpDrive.maximumForce = float.MaxValue;
             slerpDrive.positionDamper = 2f;
             configurableJoint.slerpDrive = slerpDrive;
-            configurableJoint.massScale = 1f;
+            configurableJoint.massScale = 2f;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
             configurableJoint.projectionAngle = 10f;
             configurableJoint.projectionDistance = 0.5f;

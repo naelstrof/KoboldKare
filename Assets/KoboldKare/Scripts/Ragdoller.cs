@@ -259,10 +259,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
             }
         } else {
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             if ((bool)stream.ReceiveNext()) {
-                float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
                 for(int i=0;i<ragdollBodies.Length;i++) {
                     rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
+                }
+            } else {
+                for (int i = 0; i < ragdollBodies.Length; i++) {
+                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragdollBodies[i].transform.position,
+                        ragdollBodies[i].transform.rotation, info.SentServerTime + lag);
                 }
             }
         }

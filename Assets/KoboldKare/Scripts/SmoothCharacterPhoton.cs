@@ -7,61 +7,57 @@ using Photon.Realtime;
 using UnityEngine;
 
 public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
-    [System.Serializable]
-    private class VectorPid {
-        [SerializeField] private float pFactor;
-        [SerializeField] private float iFactor;
-        [SerializeField] private float dFactor;
-        private Vector3 integral;
-        private Vector3 lastError;
+    private Ragdoller ragdoller;
+    private CharacterControllerAnimator controllerAnimator;
+    private struct Frame {
+        public Vector3 position;
+        public Quaternion rotation;
+        public double time;
 
-        public VectorPid(float p, float i, float d) {
-            pFactor = p;
-            iFactor = i;
-            dFactor = d;
-        }
-
-        public Vector3 Update(Vector3 currentError, float timeFrame) {
-            integral += currentError * timeFrame;
-            var derivative = (currentError - lastError) / timeFrame;
-            lastError = currentError;
-            return currentError * pFactor + integral * iFactor + derivative * dFactor;
+        public Frame(Vector3 pos, Quaternion rotation, double time) {
+            position = pos;
+            this.rotation = rotation;
+            this.time = time;
         }
     }
-
-    [SerializeField] private VectorPid pid = new VectorPid(25f, 0f, 15f);
-    [SerializeField] private float teleportDistance = 2f;
-    
-    private Vector3 networkedPosition;
-
-    private void Awake() {
-        body = GetComponent<Rigidbody>();
-    }
+    private Frame lastFrame;
+    private Frame newFrame;
 
     private void Start() {
-        networkedPosition = body.position;
+        body = GetComponent<Rigidbody>();
+        ragdoller = GetComponent<Ragdoller>();
+        controllerAnimator = GetComponent<CharacterControllerAnimator>();
+        
+        lastFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
+        newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
     }
-
-    private void FixedUpdate() {
+    
+    private void LateUpdate() {
         if (photonView.IsMine) {
+            body.isKinematic = !controllerAnimator.IsAnimating() && !ragdoller.ragdolled;
             return;
         }
 
-        Vector3 difference = networkedPosition - body.position;
-        if (difference.magnitude > teleportDistance) {
-            body.position = networkedPosition;
+        body.isKinematic = true;
+        double time = PhotonNetwork.Time - (1d/PhotonNetwork.SerializationRate);
+        double diff = newFrame.time - lastFrame.time;
+        if (diff == 0f) {
             return;
         }
-        Vector3 adjustment = pid.Update(difference, Time.deltaTime);
-        body.AddForce(adjustment, ForceMode.Acceleration);
+        double t = (time - lastFrame.time) / diff;
+        body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
     }
     
     private Rigidbody body;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(body.position);
+            stream.SendNext(body.transform.position);
+            stream.SendNext(body.transform.rotation);
         } else {
-            networkedPosition = (Vector3)stream.ReceiveNext();
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            lastFrame = newFrame;
+            newFrame = new Frame((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
         }
     }
 

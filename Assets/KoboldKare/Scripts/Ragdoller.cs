@@ -20,7 +20,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private Rigidbody body;
     private CollisionDetectionMode oldCollisionMode;
-    private List<Vector3> savedJointAnchors;
     [SerializeField]
     private BodyProportionBase bodyProportion;
     public bool ragdolled {get; private set;}
@@ -35,7 +34,22 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
-    private List<ConfigurableJoint> joints;
+
+    private class SavedJointAnchor {
+        public SavedJointAnchor(ConfigurableJoint joint) {
+            this.joint = joint;
+            this.jointAnchor = joint.connectedAnchor;
+        }
+
+        public void Set() {
+            joint.connectedAnchor = jointAnchor;
+        }
+
+        private ConfigurableJoint joint;
+        private Vector3 jointAnchor;
+    }
+    
+    private List<SavedJointAnchor> jointAnchors;
 
     private class RigidbodyNetworkInfo {
         public RigidbodyNetworkInfo(Rigidbody body) {
@@ -121,12 +135,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
-        joints = new List<ConfigurableJoint>();
-        savedJointAnchors = new List<Vector3>();
+        jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
-            foreach (var joint in ragdollBody.GetComponentsInChildren<ConfigurableJoint>()) {
-                joints.Add(joint);
-                savedJointAnchors.Add(joint.connectedAnchor);
+            if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
+                jointAnchors.Add(new SavedJointAnchor(joint));
                 joint.autoConfigureConnectedAnchor = false;
             }
         }
@@ -199,8 +211,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         Physics.SyncTransforms();
         bodyProportion.ScaleSkeleton();
         Physics.SyncTransforms();
-        for (int i = 0; i < joints.Count; i++) {
-            joints[i].connectedAnchor = savedJointAnchors[i];
+        foreach (var savedJointAnchor in jointAnchors) {
+            savedJointAnchor.Set();
         }
         // FIXME: For somereason, after kobolds get grabbed and tossed off of a live physics animation-- the body doesn't actually stay kinematic. I'm assuming due to one of the ragdoll events.
         // Adding this extra set fixes it for somereason, though this is not a proper fix.

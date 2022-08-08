@@ -23,7 +23,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
     private Frame lastFrame;
     private Frame newFrame;
 
-    private void Start() {
+    private void Awake() {
         body = GetComponent<Rigidbody>();
         ragdoller = GetComponent<Ragdoller>();
         controllerAnimator = GetComponent<CharacterControllerAnimator>();

@@ -36,7 +36,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         public Vector3 localColliderPosition { get; private set; }
         public Vector3 localHitNormal { get; private set; }
         public bool affectingRotation { get; private set; }
-        
+        public Kobold targetKobold { get; private set; }
+
         private ConfigurableJoint joint;
         private Collider collider;
         private Quaternion savedQuaternion;
@@ -48,7 +49,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         private Transform view;
         private bool frozen;
         private AudioPack unfreezePack;
-        private Kobold targetKobold;
         private Quaternion startRotation;
 
         public Collider GetCollider() {
@@ -82,7 +82,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             configurableJoint.zDrive = drive;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             var slerpDrive = configurableJoint.slerpDrive;
-            slerpDrive.positionSpring = springForce;
+            slerpDrive.positionSpring = springForce*2f;
+            slerpDrive.maximumForce = float.MaxValue;
             slerpDrive.positionDamper = 2f;
             configurableJoint.slerpDrive = slerpDrive;
             configurableJoint.massScale = 1f;
@@ -199,7 +200,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         public bool Valid() {
-            bool valid = body != null && owner != null && photonView != null && joint != null;
+            bool valid = body != null && owner != null && photonView != null && joint != null && photonView.IsMine;
             return valid;
         }
         public void LateUpdate() {
@@ -268,14 +269,24 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (joint != null) {
                 Destroy(joint);
             }
-            if (targetKobold != null) {
-                targetKobold.ragdoller.PopRagdoll();
-            }
             Destroy(handDisplayAnimator.gameObject);
-            if (body != null) {
+            if (body != null && targetKobold == null) {
                 body.collisionDetectionMode = CollisionDetectionMode.Discrete;
                 body.interpolation = RigidbodyInterpolation.None;
                 body.maxAngularVelocity = Physics.defaultMaxAngularSpeed;
+            }
+            
+            if (targetKobold != null) {
+                targetKobold.ragdoller.PopRagdoll();
+                if (targetKobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+                    foreach (Grab grab in owner.GetComponent<PrecisionGrabber>().frozenGrabs) {
+                        if (grab.targetKobold == targetKobold) {
+                            return;
+                        }
+                    }
+                    // If we're no longer grabbed. Request ownership back.
+                    targetKobold.photonView.RequestOwnership();
+                }
             }
         }
     }
@@ -525,6 +536,24 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         currentGrab?.LateUpdate();
         foreach (var f in frozenGrabs) {
             f.LateUpdate();
+        }
+    }
+    private IEnumerator GiveBackKoboldsWhenPossible(Kobold targetKobold, float delay) {
+        yield return new WaitForSeconds(delay);
+        bool isPlayerKobold = false;
+        foreach (var playerCheck in PhotonNetwork.PlayerList) {
+            if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold) && playerCheck != PhotonNetwork.LocalPlayer) {
+                isPlayerKobold = true;
+                break;
+            }
+        }
+        while (targetKobold != null && targetKobold.photonView.IsMine && isPlayerKobold) {
+            foreach (var playerCheck in PhotonNetwork.PlayerList) {
+                if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold)) {
+                    targetKobold.photonView.TransferOwnership(playerCheck);
+                }
+            }
+            yield return new WaitForSeconds(1f);
         }
     }
 

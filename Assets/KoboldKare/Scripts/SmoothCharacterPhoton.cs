@@ -29,7 +29,8 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
         }
     }
 
-    [SerializeField] private VectorPid pid = new VectorPid(5f, 0f, 1f);
+    [SerializeField] private VectorPid pid = new VectorPid(25f, 0f, 15f);
+    [SerializeField] private float teleportDistance = 2f;
     
     private Vector3 networkedPosition;
 
@@ -47,6 +48,10 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
         }
 
         Vector3 difference = networkedPosition - body.position;
+        if (difference.magnitude > teleportDistance) {
+            body.position = networkedPosition;
+            return;
+        }
         Vector3 adjustment = pid.Update(difference, Time.deltaTime);
         body.AddForce(adjustment, ForceMode.Acceleration);
     }

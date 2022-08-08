@@ -12639,7 +12639,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7561188790633409799}
   - component: {fileID: 7561188790633409796}
-  - component: {fileID: 5563414033266944593}
   - component: {fileID: 5965944242630184372}
   - component: {fileID: 5619718347981027232}
   - component: {fileID: 5138500224039285429}
@@ -12751,25 +12750,6 @@ MonoBehaviour:
   OptionsTab: {fileID: 8040330177615201350}
   MainViewTab: {fileID: 8040330176281352349}
   isPaused: 0
---- !u!114 &5563414033266944593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b1fc7df0e8d77f429a2219558abc7c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  consumerResources:
-  - type: 0
-    highQualityCount: 4
-    registeredConsumers: []
-  - type: 1
-    highQualityCount: 8
-    registeredConsumers: []
 --- !u!114 &5965944242630184372
 MonoBehaviour:
   m_ObjectHideFlags: 0

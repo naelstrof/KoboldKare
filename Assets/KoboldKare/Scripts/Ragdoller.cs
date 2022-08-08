@@ -60,11 +60,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     void Start() {
         savedJointAnchors = new List<Vector3>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
-            if (ragdollBody.GetComponent<CharacterJoint>() == null) {
+            if (ragdollBody.GetComponent<ConfigurableJoint>() == null) {
                 continue;
             }
-            savedJointAnchors.Add(ragdollBody.GetComponent<CharacterJoint>().connectedAnchor);
-            ragdollBody.GetComponent<CharacterJoint>().autoConfigureConnectedAnchor = false;
+            savedJointAnchors.Add(ragdollBody.GetComponent<ConfigurableJoint>().connectedAnchor);
+            ragdollBody.GetComponent<ConfigurableJoint>().autoConfigureConnectedAnchor = false;
         }
 
     }
@@ -138,7 +138,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         Physics.SyncTransforms();
         int i = 0;
         foreach (Rigidbody ragdollBody in ragdollBodies) {
-            CharacterJoint j = ragdollBody.GetComponent<CharacterJoint>();
+            ConfigurableJoint j = ragdollBody.GetComponent<ConfigurableJoint>();
             if (j == null) {
                 continue;
             }

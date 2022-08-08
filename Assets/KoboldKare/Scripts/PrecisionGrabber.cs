@@ -13,7 +13,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private GameObject freezeVFXPrefab;
     [SerializeField] private AudioPack unfreezeSound;
     [SerializeField] private Kobold kobold;
-    [SerializeField] private VectorPid rotatePid = new VectorPid(33f, 0, 0.255f);
     
     private static RaycastHit[] hits = new RaycastHit[10];
     private static readonly int GrabbingHash = Animator.StringToHash("Grabbing");
@@ -23,60 +22,32 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private Transform previewHandTransform;
     private Grab currentGrab;
     private List<Grab> frozenGrabs;
-    private const float springForce = 500f;
-    private const float breakForce = 2000f;
+    private const float springForce = 100f;
+    private const float breakForce = 10000f;
     private const float maxGrabDistance = 2.5f;
     private bool previewGrab;
     private List<Grab> removeIds;
     
-    [System.Serializable]
-    private class VectorPid {
-        public float pFactor;
-        public float iFactor;
-        public float dFactor;
-        private Vector3 integral;
-        private Vector3 lastError;
-        public VectorPid() { }
-        public VectorPid(float pFactor, float iFactor, float dFactor) {
-            this.pFactor = pFactor;
-            this.iFactor = iFactor;
-            this.dFactor = dFactor;
-        }
-        public Vector3 Update(Vector3 currentError, float timeFrame) {
-            integral += currentError * timeFrame;
-            var derivative = (currentError - lastError) / timeFrame;
-            lastError = currentError;
-            return currentError * pFactor + integral * iFactor + derivative * dFactor;
-        }
-
-        public static VectorPid Instantiate(VectorPid original) {
-            return new VectorPid(original.pFactor, original.iFactor, original.dFactor) {
-                integral = original.integral, lastError = original.lastError
-            };
-        }
-    }
-
     [SerializeField]
     private Collider[] ignoreColliders;
     private class Grab {
-        private ConfigurableJoint freezeJoint;
         public PhotonView photonView { get; private set; }
         public Rigidbody body { get; private set; }
-        private Collider collider;
         public Vector3 localColliderPosition { get; private set; }
         public Vector3 localHitNormal { get; private set; }
+        public bool affectingRotation { get; private set; }
+        
+        private ConfigurableJoint joint;
+        private Collider collider;
         private Quaternion savedQuaternion;
         private Animator handDisplayAnimator;
         private Transform handTransform;
         private float distance;
-        public bool affectingRotation { get; private set; }
         private Kobold owner;
         private Vector3 bodyAnchor;
         private Transform view;
         private bool frozen;
         private AudioPack unfreezePack;
-        private VectorPid rotateFPid;
-        private VectorPid rotateUPid;
         private Kobold targetKobold;
         private Quaternion startRotation;
 
@@ -84,90 +55,60 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             return collider;
         }
 
-        public ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation, bool affRotation) {
+        private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation, bool affRotation) {
             startRotation = body.rotation;
-            ConfigurableJoint joint = body.gameObject.AddComponent<ConfigurableJoint>();
-            joint.axis = Vector3.up;
-            joint.secondaryAxis = Vector3.right;
-            joint.connectedBody = null;
-            joint.autoConfigureConnectedAnchor = false;
+            ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
+            configurableJoint.axis = Vector3.up;
+            configurableJoint.secondaryAxis = Vector3.right;
+            configurableJoint.connectedBody = null;
+            configurableJoint.autoConfigureConnectedAnchor = false;
             if (owner.photonView.IsMine) {
-                joint.breakForce = breakForce;
+                configurableJoint.breakForce = breakForce;
             } else {
-                joint.breakForce = 0f;
+                configurableJoint.breakForce = float.MaxValue;
             }
-            JointDrive drive = joint.xDrive;
-            SoftJointLimit sjl = joint.linearLimit;
+            JointDrive drive = configurableJoint.xDrive;
+            SoftJointLimit sjl = configurableJoint.linearLimit;
             sjl.limit = 0f;
-            joint.linearLimit = sjl;
-            SoftJointLimitSpring sjls = joint.linearLimitSpring;
+            configurableJoint.linearLimit = sjl;
+            SoftJointLimitSpring sjls = configurableJoint.linearLimitSpring;
             sjls.spring = springForce;
-            joint.linearLimitSpring = sjls;
-            joint.linearLimit = sjl;
+            configurableJoint.linearLimitSpring = sjls;
+            configurableJoint.linearLimit = sjl;
             drive.positionSpring = springForce;
             drive.positionDamper = 2f;
-            joint.xDrive = drive;
-            joint.yDrive = drive;
-            joint.zDrive = drive;
-            joint.rotationDriveMode = RotationDriveMode.Slerp;
-            var slerpDrive = joint.slerpDrive;
+            configurableJoint.xDrive = drive;
+            configurableJoint.yDrive = drive;
+            configurableJoint.zDrive = drive;
+            configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
+            var slerpDrive = configurableJoint.slerpDrive;
             slerpDrive.positionSpring = springForce;
             slerpDrive.positionDamper = 2f;
-            joint.slerpDrive = slerpDrive;
-            joint.massScale = 8f;
-            joint.projectionMode = JointProjectionMode.PositionAndRotation;
-            joint.projectionAngle = 5f;
-            joint.projectionDistance = 0.1f;
-            joint.connectedMassScale = 1f;
-            joint.enablePreprocessing = false;
-            joint.configuredInWorldSpace = true;
-            joint.xMotion = ConfigurableJointMotion.Limited;
-            joint.yMotion = ConfigurableJointMotion.Limited;
-            joint.zMotion = ConfigurableJointMotion.Limited;
-            joint.anchor = body.transform.InverseTransformPoint(collider.transform.TransformPoint(localColliderPosition));
-            joint.configuredInWorldSpace = true;
-            joint.connectedBody = null;
-            joint.connectedAnchor = worldPosition;
+            configurableJoint.slerpDrive = slerpDrive;
+            configurableJoint.massScale = 1f;
+            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            configurableJoint.projectionAngle = 10f;
+            configurableJoint.projectionDistance = 0.5f;
+            configurableJoint.connectedMassScale = 1f;
+            configurableJoint.enablePreprocessing = false;
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.xMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.yMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.zMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.anchor = body.transform.InverseTransformPoint(collider.transform.TransformPoint(localColliderPosition));
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.connectedBody = null;
+            configurableJoint.connectedAnchor = worldPosition;
             if (affRotation) {
-                joint.SetTargetRotation(targetRotation, startRotation);
-                joint.angularXMotion = ConfigurableJointMotion.Locked;
-                joint.angularYMotion = ConfigurableJointMotion.Locked;
-                joint.angularZMotion = ConfigurableJointMotion.Locked;
+                configurableJoint.SetTargetRotation(targetRotation, startRotation);
+                configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
+                configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
+                configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
             }
-            return joint;
+            return configurableJoint;
         }
-
-        public Grab(Kobold owner, GameObject handDisplayPrefab, Collider collider, Vector3 localColliderPosition,
-            Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation, AudioPack unfreezePack, VectorPid rotatePid) {
-            this.collider = collider;
-            this.localColliderPosition = localColliderPosition;
-            this.localHitNormal = localHitNormal;
-            savedQuaternion = rotation;
-            body = collider.GetComponentInParent<Rigidbody>();
-            photonView = collider.GetComponentInParent<PhotonView>();
-            Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
-            bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
-            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
-                .GetComponentInChildren<Animator>();
-            handDisplayAnimator.gameObject.SetActive(true);
-            handDisplayAnimator.SetBool(GrabbingHash, true);
-            handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
-            this.owner = owner;
-            this.unfreezePack = unfreezePack;
-            frozen = true;
-            freezeJoint = AddJoint(worldAnchor, rotation, affRotation);
-            this.rotateFPid = VectorPid.Instantiate(rotatePid);
-            this.rotateUPid = VectorPid.Instantiate(rotatePid);
-            rotateUPid.pFactor *= 0.5f;
-            body.maxAngularVelocity = 20f;
-            targetKobold = collider.GetComponentInParent<Kobold>();
-            if (targetKobold != null) {
-                targetKobold.ragdoller.PushRagdoll();
-            }
-        }
-
         public Grab(Kobold owner, GameObject handDisplayPrefab, Transform view, Collider collider,
-            Vector3 localColliderPosition, Vector3 localHitNormal, AudioPack unfreezePack, VectorPid rotatePid) {
+            Vector3 localColliderPosition, Vector3 localHitNormal, AudioPack unfreezePack) {
             this.collider = collider;
             this.localColliderPosition = localColliderPosition;
             this.localHitNormal = localHitNormal;
@@ -186,14 +127,52 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             this.view = view;
             this.unfreezePack = unfreezePack;
             frozen = false;
-            this.rotateFPid = VectorPid.Instantiate(rotatePid);
-            this.rotateUPid = VectorPid.Instantiate(rotatePid);
-            rotateUPid.pFactor *= 0.5f;
-            body.maxAngularVelocity = 20f;
             targetKobold = collider.GetComponentInParent<Kobold>();
             if (targetKobold != null) {
                 targetKobold.ragdoller.PushRagdoll();
-                freezeJoint = AddJoint(hitPosWorld, Quaternion.identity, false);
+                body.maxAngularVelocity = 10f;
+            } else {
+                body.maxAngularVelocity = 20f;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
+                body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+            joint = AddJoint(hitPosWorld, Quaternion.identity, false);
+            if (owner.photonView.IsMine) {
+                photonView.RequestOwnership();
+            }
+        }
+        
+        public Grab(Kobold owner, GameObject handDisplayPrefab, Collider collider, Vector3 localColliderPosition,
+            Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation, AudioPack unfreezePack) {
+            this.collider = collider;
+            this.localColliderPosition = localColliderPosition;
+            this.localHitNormal = localHitNormal;
+            savedQuaternion = rotation;
+            body = collider.GetComponentInParent<Rigidbody>();
+            photonView = collider.GetComponentInParent<PhotonView>();
+            Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
+            bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
+            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
+                .GetComponentInChildren<Animator>();
+            handDisplayAnimator.gameObject.SetActive(true);
+            handDisplayAnimator.SetBool(GrabbingHash, true);
+            handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
+            this.owner = owner;
+            this.unfreezePack = unfreezePack;
+            frozen = true;
+            joint = AddJoint(worldAnchor, rotation, affRotation);
+            targetKobold = collider.GetComponentInParent<Kobold>();
+            if (targetKobold != null) {
+                targetKobold.ragdoller.PushRagdoll();
+                body.maxAngularVelocity = 10f;
+            } else {
+                body.maxAngularVelocity = 20f;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
+                body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+
+            if (owner.photonView.IsMine) {
+                photonView.RequestOwnership();
             }
         }
 
@@ -205,10 +184,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 return;
             }
             frozen = true;
-            if (freezeJoint != null) {
-                Destroy(freezeJoint);
+            if (joint != null) {
+                Destroy(joint);
             }
-            freezeJoint = AddJoint(collider.transform.TransformPoint(localColliderPosition), savedQuaternion, affectingRotation);
+            joint = AddJoint(collider.transform.TransformPoint(localColliderPosition), savedQuaternion, affectingRotation);
         }
 
         public Vector3 GetWorldPosition() {
@@ -220,10 +199,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         public bool Valid() {
-            bool valid = body != null && owner != null && photonView != null;
-            if (frozen || targetKobold != null) {
-                valid &= freezeJoint != null;
-            }
+            bool valid = body != null && owner != null && photonView != null && joint != null;
             return valid;
         }
         public void LateUpdate() {
@@ -264,26 +240,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
 
             Vector3 holdPoint = view.position + view.forward * distance;
-            Vector3 objHoldPoint = body.transform.TransformPoint(bodyAnchor);
 
-            if (freezeJoint != null) {
-                freezeJoint.connectedAnchor = holdPoint;
+            if (joint != null) {
+                joint.connectedAnchor = holdPoint;
                 if (affectingRotation) {
-                    freezeJoint.SetTargetRotation(savedQuaternion, startRotation);
+                    joint.SetTargetRotation(savedQuaternion, startRotation);
                 }
-                return;
-            }
-
-            if (affectingRotation) {
-                Vector3 forward = savedQuaternion * Vector3.forward;
-                Vector3 headingError = Vector3.Cross(body.transform.forward, forward);
-                var headingVelocityCorrection = rotateFPid.Update(headingError, Time.deltaTime);
-                body.AddTorque(headingVelocityCorrection, ForceMode.VelocityChange);
-                
-                Vector3 up = savedQuaternion * Vector3.up;
-                Vector3 upError = Vector3.Cross(body.transform.up, up);
-                var upHeadingVelocityCorrection = rotateUPid.Update(upError, Time.deltaTime);
-                body.AddTorque(upHeadingVelocityCorrection, ForceMode.VelocityChange);
             }
 
             // Manual axis alignment, for pole jumps!
@@ -295,30 +257,24 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
                 //Vector3 wantedPosition2 = center + axis * distance / 2f;
                 float ratio = Mathf.Clamp((body.mass / owner.body.mass), 0.75f, 1.25f);
-                Vector3 force = (wantedPosition1 - view.position) * springForce;
+                Vector3 force = (wantedPosition1 - view.position) * (springForce * 10f);
                 owner.body.AddForce(force * ratio);
-                body.AddForce(-force * (1f / ratio));
+                //body.AddForce(-force * (1f / ratio));
             }
-
-            // Manual velocity to keep the prop where the user wants
-            Vector3 towardGoal = holdPoint - objHoldPoint;
-            body.AddForce(towardGoal * springForce);
         }
 
         public void Release() {
-            if (frozen && freezeJoint != null) {
-                GameManager.instance.SpawnAudioClipInWorld(unfreezePack, GetWorldPosition());
+            GameManager.instance.SpawnAudioClipInWorld(unfreezePack, GetWorldPosition());
+            if (joint != null) {
+                Destroy(joint);
             }
-
-            if (freezeJoint != null) {
-                Destroy(freezeJoint);
-            }
-
             if (targetKobold != null) {
                 targetKobold.ragdoller.PopRagdoll();
             }
             Destroy(handDisplayAnimator.gameObject);
             if (body != null) {
+                body.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                body.interpolation = RigidbodyInterpolation.None;
                 body.maxAngularVelocity = Physics.defaultMaxAngularSpeed;
             }
         }
@@ -442,7 +398,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         Collider[] colliders = otherPhotonView.GetComponentsInChildren<Collider>();
-        currentGrab = new Grab(kobold, previewHandAnimator.gameObject, view, colliders[colliderNum], localHit, localHitNormal, unfreezeSound, rotatePid);
+        currentGrab = new Grab(kobold, previewHandAnimator.gameObject, view, colliders[colliderNum], localHit, localHitNormal, unfreezeSound);
     }
 
     public void TryGrab() {
@@ -472,7 +428,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         PhotonView grabView = PhotonNetwork.GetPhotonView(grabViewID);
         Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
         frozenGrabs.Add(new Grab(kobold, previewHandAnimator.gameObject, colliders[colliderNum], localColliderPosition, localHitNormal,
-            worldAnchor, rotation, affRotation, unfreezeSound, rotatePid));
+            worldAnchor, rotation, affRotation, unfreezeSound));
         Destroy(GameObject.Instantiate(freezeVFXPrefab, worldAnchor, Quaternion.identity), 5f);
     }
 
@@ -501,7 +457,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         Rigidbody[] bodies = checkView.GetComponentsInChildren<Rigidbody>();
         for(int i=0;i<frozenGrabs.Count;i++) {
             Grab frozenGrab = frozenGrabs[i];
-            if (frozenGrab.body == bodies[i]) {
+            if (frozenGrab.body == bodies[rigidbodyID]) {
                 frozenGrab.Release();
                 frozenGrabs.RemoveAt(i--);
             }

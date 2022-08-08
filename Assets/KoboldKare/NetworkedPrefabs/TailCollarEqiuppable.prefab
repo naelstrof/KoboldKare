@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 124761839}
   - component: {fileID: 229206811461308801}
   - component: {fileID: 7226643011439227689}
-  - component: {fileID: 7428936623893381341}
   - component: {fileID: 2316579802779782844}
   m_Layer: 11
   m_Name: TailCollarEqiuppable
@@ -153,22 +152,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7428936623893381341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5605572581541272102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a937c7dc07dbc4db79c466d51e1a25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 0
-  isVeryFar: 0
-  trackedRigidbodies: []
-  resource: 1
 --- !u!114 &2316579802779782844
 MonoBehaviour:
   m_ObjectHideFlags: 0

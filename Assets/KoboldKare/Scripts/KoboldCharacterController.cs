@@ -327,8 +327,11 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         velocity += groundVelocity;
         if (photonView.IsMine) {
             body.velocity = velocity;
+            body.interpolation = RigidbodyInterpolation.Interpolate;
+            body.useGravity = true;
         } else {
-            body.isKinematic = true;
+            body.interpolation = RigidbodyInterpolation.None;
+            body.useGravity = false;
         }
     }
 
@@ -384,4 +387,5 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         inputJump = reader.ReadBoolean();
         inputCrouched = reader.ReadBoolean();
     }
+
 }

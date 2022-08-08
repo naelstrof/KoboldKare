@@ -128,7 +128,6 @@ GameObject:
   - component: {fileID: 3408746440947745250}
   - component: {fileID: 6560005341841576388}
   - component: {fileID: 3407505360677138636}
-  - component: {fileID: 176462697690530407}
   - component: {fileID: 5740176972192196422}
   - component: {fileID: -6171395322069210244}
   - component: {fileID: 4481122447384736891}
@@ -276,23 +275,6 @@ MonoBehaviour:
   - {fileID: 4901331795393525352}
   - {fileID: 3289584573705952390}
   center: {fileID: 7402139970110480303}
---- !u!114 &176462697690530407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922535127892591893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a937c7dc07dbc4db79c466d51e1a25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 0
-  isVeryFar: 0
-  trackedRigidbodies:
-  - {fileID: 573490196175961829}
-  resource: 1
 --- !u!95 &5740176972192196422
 Animator:
   serializedVersion: 4

@@ -14543,8 +14543,8 @@ GameObject:
   - component: {fileID: 3736482642893614196}
   - component: {fileID: 7646633552433837299}
   - component: {fileID: 6898602022436028164}
-  - component: {fileID: 7936829775780751596}
   - component: {fileID: 2493919414808592328}
+  - component: {fileID: 5060642094230713381}
   m_Layer: 9
   m_Name: GrabbableKobold4
   m_TagString: Player
@@ -15126,8 +15126,8 @@ MonoBehaviour:
   - {fileID: 5449523794632526610}
   - {fileID: 560736620052164810}
   - {fileID: 3374508250042995388}
-  - {fileID: 7936829775780751596}
   - {fileID: 2493919414808592328}
+  - {fileID: 5060642094230713381}
   - {fileID: 8319315006002239314}
   - {fileID: 4474583895957048706}
   sceneViewId: 0
@@ -15272,22 +15272,6 @@ MonoBehaviour:
   renderTargets:
   - {fileID: 2780399689652382999}
   - {fileID: 6506915555087688956}
---- !u!114 &7936829775780751596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8587189159933912498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &2493919414808592328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15307,11 +15291,23 @@ MonoBehaviour:
     type: 3}
   unfreezeSound: {fileID: 11400000, guid: cd0a89d93b29b8a49942e072d4ff62df, type: 2}
   kobold: {fileID: 3498030196438502570}
-  rotatePid:
-    pFactor: 1.1
-    iFactor: 0
-    dFactor: 0.2
   ignoreColliders: []
+--- !u!114 &5060642094230713381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587189159933912498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bec126ff23eeab4aa8cb3ec7382c4cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pid:
+    pFactor: 5
+    iFactor: 0
+    dFactor: 1
 --- !u!1 &8649843185144007013
 GameObject:
   m_ObjectHideFlags: 0
@@ -17974,8 +17970,8 @@ CapsuleCollider:
   m_Height: 0.38
   m_Direction: 1
   m_Center: {x: 0, y: 0.13, z: 0}
---- !u!144 &7065803233332799158
-CharacterJoint:
+--- !u!153 &212475971419857677
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -17986,38 +17982,88 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000000018626451, y: 0.28558403, z: -0.0000001192093}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -46.202915
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 43.78293
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -30.474243
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 40
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 23.354477
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 15.392937
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 31.26554
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 16.91745
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 0
+  m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!4 &1905648332443602999 stripped
@@ -18074,8 +18120,8 @@ CapsuleCollider:
   m_Height: 0.35
   m_Direction: 1
   m_Center: {x: 0, y: 0.09, z: 0}
---- !u!144 &6114501233858552111
-CharacterJoint:
+--- !u!153 &7199995866758951325
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18086,34 +18132,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000004190952, y: 0.25448862, z: 0.000000022351738}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: 1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -20
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 70
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -37.493416
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 40
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 47.797394
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 7.479134
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 38.337013
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 14.940348
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18165,18 +18261,6 @@ Transform:
 --- !u!4 &6506915555090380194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400126, guid: f7ada51eab3f03e408f76a632dd64539,
-    type: 3}
-  m_PrefabInstance: {fileID: 6506915555090771804}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6506915555090380196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400120, guid: f7ada51eab3f03e408f76a632dd64539,
-    type: 3}
-  m_PrefabInstance: {fileID: 6506915555090771804}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6506915555090380198 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400122, guid: f7ada51eab3f03e408f76a632dd64539,
     type: 3}
   m_PrefabInstance: {fileID: 6506915555090771804}
   m_PrefabAsset: {fileID: 0}
@@ -18313,8 +18397,8 @@ CapsuleCollider:
   m_Height: 0.35
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0}
---- !u!144 &9027449420607416208
-CharacterJoint:
+--- !u!153 &85213074649397184
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18325,34 +18409,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00041215715, y: 0.031133378, z: -0.14916424}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -59.64081
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 64.86664
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -36.57156
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 39.37329
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 34.701725
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 14.80953
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 25.243385
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 15.757328
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18381,8 +18515,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!144 &7477500343959339058
-CharacterJoint:
+--- !u!153 &8618200917690112045
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18393,34 +18527,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000018626448, y: 0.34764943, z: -0.0000000037252794}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -113.3784
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: -20.291544
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -113.729195
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 15.846317
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 5.67284
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 10.031602
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 17.84174
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 12.510426
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 10
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18596,8 +18780,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!144 &9220275992359560556
-CharacterJoint:
+--- !u!153 &8185957269436977482
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18608,34 +18792,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000015832493, y: 0.3476495, z: -0.0000000037253285}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -101.87044
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: -14.109422
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -122.1892
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 15.880114
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 13.6204
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 13.41941
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 12.758072
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 15.17594
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 10
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -18732,6 +18966,102 @@ CapsuleCollider:
   m_Height: 0.36996832
   m_Direction: 2
   m_Center: {x: 0.000029072251, y: 0.0938474, z: 0.073694594}
+--- !u!153 &2959797348286541865
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6506915555090868310}
+  m_ConnectedBody: {fileID: 4197933746630349409}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -19.503334
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 74.17542
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 39.87816
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 20.444069
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &5773483712770380361
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -18751,7 +19081,7 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -45.17111
+    limit: -32.947163
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
@@ -18960,8 +19290,8 @@ CapsuleCollider:
   m_Height: 0.52
   m_Direction: 1
   m_Center: {x: 0, y: 0.06, z: 0}
---- !u!144 &5937474223224025286
-CharacterJoint:
+--- !u!153 &6285483426727725356
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -18972,34 +19302,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.13188083, y: -0.050487548, z: 0.010099606}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -2.1313016
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 43.380035
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -13.204808
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 19.466797
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 63.130653
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 8.911076
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 59.52151
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 16.496151
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 50
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19042,8 +19422,8 @@ CapsuleCollider:
   m_Height: 0.52
   m_Direction: 1
   m_Center: {x: 0, y: 0.06, z: 0}
---- !u!144 &5928099162588744574
-CharacterJoint:
+--- !u!153 &919863665891324238
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19054,34 +19434,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.13488732, y: -0.041820046, z: 0.010001855}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -30.47815
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 10
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -70.715775
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 22.031548
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 2.120895
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 8.595212
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 64.55407
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 20.557833
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 50
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19124,8 +19554,8 @@ CapsuleCollider:
   m_Height: 0.22
   m_Direction: 1
   m_Center: {x: -0.01, y: 0.1, z: 0}
---- !u!144 &13420485404719607
-CharacterJoint:
+--- !u!153 &2697114104427350508
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19136,59 +19566,90 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000081956394, y: 0.27473414, z: 0.0000000023283064}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -97.93507
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 87.099075
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -53.45946
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 85.1243
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 49.10806
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 88.60804
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 30.282747
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 20.21672
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 5
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &8842386462543093614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6506915555090868624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58fbc213d3f7f1d45a7133e878dc1bfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handTarget: 1
-  handForward: {x: 0, y: 1, z: 0}
-  handUp: {x: 1, y: 0, z: 0}
-  rootedTransform: {fileID: 6506915555090380198}
-  _maxDistance: 1
-  _springStrength: 1000
-  _dampStrength: 0.1
 --- !u!1 &6506915555090868628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100040, guid: f7ada51eab3f03e408f76a632dd64539,
@@ -19225,8 +19686,8 @@ CapsuleCollider:
   m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
---- !u!144 &6366934115285631192
-CharacterJoint:
+--- !u!153 &6083147611487381792
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19237,34 +19698,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -5.820766e-10, y: 0.2883973, z: 0.0000000027939677}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -0.06255728
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 114.98468
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -9.653748
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 49.683758
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 118.34426
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 53.37047
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 9.42603
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 12.959571
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 10
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19307,8 +19818,8 @@ CapsuleCollider:
   m_Height: 0.22
   m_Direction: 1
   m_Center: {x: -0.01, y: 0.1, z: 0}
---- !u!144 &3692858324219812989
-CharacterJoint:
+--- !u!153 &6025314664018203423
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19319,59 +19830,90 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000023283068, y: 0.27473372, z: 0.000000014901161}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -82.076225
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 100.20673
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -60.41447
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 61.482475
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 69.91273
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 80.455154
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 43.828766
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 16.922638
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 5
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &640462576119017725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6506915555090868630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58fbc213d3f7f1d45a7133e878dc1bfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handTarget: 0
-  handForward: {x: 0, y: 1, z: 0}
-  handUp: {x: -1, y: 0, z: 0}
-  rootedTransform: {fileID: 6506915555090380196}
-  _maxDistance: 1
-  _springStrength: 1000
-  _dampStrength: 0.1
 --- !u!1 &6506915555090868632 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100036, guid: f7ada51eab3f03e408f76a632dd64539,
@@ -19407,8 +19949,8 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1563216, y: 0.3678657, z: 0.149279}
   m_Center: {x: 0.013548566, y: -0.017921386, z: -0.031233279}
---- !u!144 &6030927346580256962
-CharacterJoint:
+--- !u!153 &1579751984750975060
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19419,34 +19961,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000011175871, y: 0.49433804, z: 0.0000000018626451}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -84.98749
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 15
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -56.54039
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 22.81579
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 54.49626
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 10.031602
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 17.43864
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 15.273914
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 5
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19489,8 +20081,8 @@ CapsuleCollider:
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
---- !u!144 &3409269233594523614
-CharacterJoint:
+--- !u!153 &1373104511164370664
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19501,34 +20093,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000010733493, y: 0.28839722, z: 0.000000004656613}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -13.69186
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 127.51
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 66.604324
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 105.16632
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 37.881
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 18.230232
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 18.128193
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 10
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19570,8 +20212,8 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14627567, y: 0.28023174, z: 0.1292098}
   m_Center: {x: -0.038097136, y: 0.0014336494, z: -0.036080226}
---- !u!144 &3141093498704459779
-CharacterJoint:
+--- !u!153 &1004273084535054053
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19582,34 +20224,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000010952353, y: 0.49433807, z: -0.000000013038516}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -84.98749
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 10.529698
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -79.006546
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 15.846317
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 45.35453
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 10.031602
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 14.319588
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 20.150345
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 5
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19630,7 +20322,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868712}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 8
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -19651,8 +20343,8 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.27184013, y: 0.2968728, z: 0.16499044}
   m_Center: {x: 0.0029397013, y: 0.044443373, z: 0.0100535}
---- !u!144 &7232259302101059719
-CharacterJoint:
+--- !u!153 &8949659922983240923
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19663,34 +20355,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: -0.11, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0072657666, y: 0.24593997, z: 0.014266025}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
     spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -83.48237
+  m_LinearLimit:
+    limit: 0
     bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 39.611492
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -45.02356
     bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 0
-    damper: 0
-  m_Swing1Limit:
-    limit: 48.818134
+  m_HighAngularXLimit:
+    limit: 27.896729
     bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 23.677364
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 20.637884
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 18.389046
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 200
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19733,8 +20475,8 @@ CapsuleCollider:
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
---- !u!144 &132350574090162666
-CharacterJoint:
+--- !u!153 &5692937682151921470
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19745,34 +20487,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.15146418, y: 0.14794107, z: -0.011179719}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -73.13371
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 44.6631
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -56.010017
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 65.35908
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 26.712223
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 23.484068
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 77.47003
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 13.0930395
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 50
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19815,8 +20607,8 @@ CapsuleCollider:
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
---- !u!144 &9131141955940320892
-CharacterJoint:
+--- !u!153 &2262973254894972565
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19827,34 +20619,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.15179159, y: 0.14859405, z: -0.011171106}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -76.88358
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 42.988712
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -67.736855
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 64.00024
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 19.44879
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 15
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 62.363556
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 12.715568
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 50
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
@@ -19921,8 +20763,8 @@ CapsuleCollider:
   m_Height: 0.31
   m_Direction: 1
   m_Center: {x: 0, y: 0.09, z: 0}
---- !u!144 &6391583617598782836
-CharacterJoint:
+--- !u!153 &8088612886338295870
+ConfigurableJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19933,34 +20775,84 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000000018626451, y: 0.19908789, z: -0.00000008940695}
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 1, y: 0, z: 0}
-  m_TwistLimitSpring:
-    spring: 40
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
+  m_LinearLimitSpring:
+    spring: 0
     damper: 0
-  m_LowTwistLimit:
-    limit: -45.430275
-    bounciness: 0.1
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
     contactDistance: 0
-  m_HighTwistLimit:
-    limit: 44.276676
-    bounciness: 0.1
+  m_AngularXLimitSpring:
+    spring: 100
+    damper: 1
+  m_LowAngularXLimit:
+    limit: -30.418854
+    bounciness: 0
     contactDistance: 0
-  m_SwingLimitSpring:
-    spring: 40
-    damper: 0
-  m_Swing1Limit:
-    limit: 40
-    bounciness: 0.1
+  m_HighAngularXLimit:
+    limit: 35.349747
+    bounciness: 0
     contactDistance: 0
-  m_Swing2Limit:
-    limit: 16.80436
-    bounciness: 0.1
+  m_AngularYZLimitSpring:
+    spring: 100
+    damper: 1
+  m_AngularYLimit:
+    limit: 37.09912
+    bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 1
-  m_ProjectionDistance: 0.25
-  m_ProjectionAngle: 10
+  m_AngularZLimit:
+    limit: 17.384155
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 1
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 100
+    positionDamper: 1
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 1
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 15
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0

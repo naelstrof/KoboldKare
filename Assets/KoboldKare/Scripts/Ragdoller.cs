@@ -125,9 +125,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             configurableJoint.connectedBody = null;
             configurableJoint.connectedAnchor = worldPosition;
             configurableJoint.SetTargetRotation(targetRotation, startRotation);
-            configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
-            configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
-            configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            configurableJoint.angularXMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.angularYMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
             return configurableJoint;
         }
     }

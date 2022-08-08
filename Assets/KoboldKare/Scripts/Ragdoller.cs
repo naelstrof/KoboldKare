@@ -37,15 +37,83 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     private class RigidbodyNetworkInfo {
         public RigidbodyNetworkInfo(Rigidbody body) {
+            this.body = body;
             networkedPosition = body.position;
             networkedRotation = body.rotation;
-            distance = 0f;
-            angle = 0f;
         }
-        public Vector3 networkedPosition;
-        public Quaternion networkedRotation;
-        public float distance;
-        public float angle;
+        public void SetNetworkPosition(Vector3 position, Quaternion rotation) {
+            networkedPosition = position;
+            networkedRotation = rotation;
+        }
+
+        public void UpdateState(bool ours) {
+            if (ours && joint != null) {
+                Destroy(joint);
+            }
+
+            if (ours) {
+                return;
+            }
+
+            if (joint == null) {
+                joint = AddJoint(networkedPosition, networkedRotation);
+            }
+
+            joint.connectedAnchor = networkedPosition;
+            joint.SetTargetRotation(networkedRotation, startRotation);
+        }
+
+        private Rigidbody body;
+        private Vector3 networkedPosition;
+        private Quaternion networkedRotation;
+        private float distance;
+        private float angle;
+        private ConfigurableJoint joint;
+        private Quaternion startRotation;
+        private const float springForce = 100f;
+        private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation) {
+            startRotation = body.rotation;
+            ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
+            configurableJoint.axis = Vector3.up;
+            configurableJoint.secondaryAxis = Vector3.right;
+            configurableJoint.connectedBody = null;
+            configurableJoint.autoConfigureConnectedAnchor = false;
+            configurableJoint.breakForce = float.MaxValue;
+            JointDrive drive = configurableJoint.xDrive;
+            SoftJointLimit sjl = configurableJoint.linearLimit;
+            sjl.limit = 0f;
+            configurableJoint.linearLimit = sjl;
+            SoftJointLimitSpring sjls = configurableJoint.linearLimitSpring;
+            sjls.spring = springForce;
+            configurableJoint.linearLimitSpring = sjls;
+            configurableJoint.linearLimit = sjl;
+            drive.positionSpring = springForce;
+            drive.positionDamper = 2f;
+            configurableJoint.xDrive = drive;
+            configurableJoint.yDrive = drive;
+            configurableJoint.zDrive = drive;
+            configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
+            var slerpDrive = configurableJoint.slerpDrive;
+            slerpDrive.positionSpring = springForce*2f;
+            slerpDrive.maximumForce = float.MaxValue;
+            slerpDrive.positionDamper = 2f;
+            configurableJoint.slerpDrive = slerpDrive;
+            configurableJoint.massScale = 1f;
+            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            configurableJoint.projectionAngle = 10f;
+            configurableJoint.projectionDistance = 0.5f;
+            configurableJoint.connectedMassScale = 1f;
+            configurableJoint.enablePreprocessing = false;
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.anchor = Vector3.zero;
+            configurableJoint.connectedBody = null;
+            configurableJoint.connectedAnchor = worldPosition;
+            configurableJoint.SetTargetRotation(targetRotation, startRotation);
+            configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
+            configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
+            configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            return configurableJoint;
+        }
     }
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
@@ -89,20 +157,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
     }
     void FixedUpdate() {
-        if (photonView.IsMine || !ragdolled) {
-            for (int i = 0; i < ragdollBodies.Length; i++) {
-                Rigidbody ragbody = ragdollBodies[i];
-                ragbody.useGravity = true;
-            }
-
-            return;
-        }
-
-        for(int i=0;i<ragdollBodies.Length;i++) {
-            Rigidbody ragbody = ragdollBodies[i];
-            ragbody.useGravity = false;
-            ragbody.position = Vector3.MoveTowards(ragbody.position, rigidbodyNetworkInfos[i].networkedPosition, rigidbodyNetworkInfos[i].distance * (1.0f / PhotonNetwork.SerializationRate));
-            ragbody.rotation = Quaternion.RotateTowards(ragbody.rotation, rigidbodyNetworkInfos[i].networkedRotation, rigidbodyNetworkInfos[i].angle * (1.0f / PhotonNetwork.SerializationRate));
+        foreach(var networkInfo in rigidbodyNetworkInfos) {
+            networkInfo.UpdateState(photonView.IsMine);
         }
     }
     private void Ragdoll() {
@@ -230,10 +286,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         } else {
             if ((bool)stream.ReceiveNext()) {
                 for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].networkedPosition = (Vector3)stream.ReceiveNext();
-                    rigidbodyNetworkInfos[i].networkedRotation = (Quaternion)stream.ReceiveNext();
-                    rigidbodyNetworkInfos[i].distance = Vector3.Distance(ragdollBodies[i].position, rigidbodyNetworkInfos[i].networkedPosition);
-                    rigidbodyNetworkInfos[i].angle = Quaternion.Angle(ragdollBodies[i].rotation, rigidbodyNetworkInfos[i].networkedRotation);
+                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext());
                 }
             }
         }

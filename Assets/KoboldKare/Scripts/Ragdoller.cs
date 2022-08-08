@@ -59,65 +59,30 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         public void SetNetworkPosition(Vector3 position, Quaternion rotation) {
             networkedPosition = position;
+            distance = Vector3.Distance(body.transform.position, networkedPosition);
+            angle = Quaternion.Angle(body.transform.rotation, networkedRotation);
             networkedRotation = rotation;
         }
 
-        public void UpdateState(bool ours) {
-            if (ours && joint != null) {
-                Destroy(joint);
-            }
-
+        public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
+                body.isKinematic = !ragdolled;
                 return;
             }
-
-            if (joint == null) {
-                joint = AddJoint(networkedPosition, networkedRotation);
+            body.isKinematic = ragdolled;
+            if (ragdolled) {
+                body.transform.position = Vector3.MoveTowards(body.transform.position, networkedPosition,
+                    distance * PhotonNetwork.SerializationRate * Time.deltaTime);
+                body.transform.rotation = Quaternion.RotateTowards(body.transform.rotation, networkedRotation,
+                    angle * PhotonNetwork.SerializationRate * Time.deltaTime);
             }
-
-            joint.connectedAnchor = networkedPosition;
-            joint.SetTargetRotation(networkedRotation, startRotation);
         }
 
+        private float distance;
+        private float angle;
         private Rigidbody body;
         private Vector3 networkedPosition;
         private Quaternion networkedRotation;
-        private ConfigurableJoint joint;
-        private Quaternion startRotation;
-        private const float springForce = 1000f;
-        private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation) {
-            startRotation = body.transform.rotation;
-            ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
-            configurableJoint.axis = Vector3.up;
-            configurableJoint.secondaryAxis = Vector3.right;
-            configurableJoint.connectedBody = null;
-            configurableJoint.autoConfigureConnectedAnchor = false;
-            configurableJoint.breakForce = float.MaxValue;
-            JointDrive drive = configurableJoint.xDrive;
-            drive.positionSpring = springForce;
-            drive.positionDamper = 2f;
-            configurableJoint.xDrive = drive;
-            configurableJoint.yDrive = drive;
-            configurableJoint.zDrive = drive;
-            configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
-            var slerpDrive = configurableJoint.slerpDrive;
-            slerpDrive.positionSpring = springForce*2f;
-            slerpDrive.maximumForce = float.MaxValue;
-            slerpDrive.positionDamper = 2f;
-            configurableJoint.slerpDrive = slerpDrive;
-            configurableJoint.massScale = 2f;
-            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
-            configurableJoint.projectionAngle = 10f;
-            configurableJoint.projectionDistance = 0.5f;
-            configurableJoint.connectedMassScale = 1f;
-            configurableJoint.enablePreprocessing = false;
-            configurableJoint.configuredInWorldSpace = true;
-            configurableJoint.anchor = Vector3.zero;
-            configurableJoint.connectedBody = null;
-            configurableJoint.connectedAnchor = worldPosition;
-            configurableJoint.SetTargetRotation(targetRotation, startRotation);
-            return configurableJoint;
-        }
     }
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
@@ -157,9 +122,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
-    void FixedUpdate() {
+    void Update() {
         foreach(var networkInfo in rigidbodyNetworkInfos) {
-            networkInfo.UpdateState(photonView.IsMine);
+            networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
     }
     private void Ragdoll() {

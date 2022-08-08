@@ -82,13 +82,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         private Rigidbody body;
         private Vector3 networkedPosition;
         private Quaternion networkedRotation;
-        private float distance;
-        private float angle;
         private ConfigurableJoint joint;
         private Quaternion startRotation;
         private const float springForce = 100f;
         private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation) {
-            startRotation = body.rotation;
+            startRotation = body.transform.rotation;
             ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
             configurableJoint.axis = Vector3.up;
             configurableJoint.secondaryAxis = Vector3.right;
@@ -125,9 +123,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             configurableJoint.connectedBody = null;
             configurableJoint.connectedAnchor = worldPosition;
             configurableJoint.SetTargetRotation(targetRotation, startRotation);
-            configurableJoint.angularXMotion = ConfigurableJointMotion.Limited;
-            configurableJoint.angularYMotion = ConfigurableJointMotion.Limited;
-            configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
             return configurableJoint;
         }
     }

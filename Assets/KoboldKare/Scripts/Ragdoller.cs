@@ -82,7 +82,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 body.interpolation = RigidbodyInterpolation.Interpolate;
                 return;
             }
-            body.isKinematic = ragdolled;
+            body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
                 double time = PhotonNetwork.Time - (1d / PhotonNetwork.SerializationRate);

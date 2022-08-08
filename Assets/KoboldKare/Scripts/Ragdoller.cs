@@ -20,7 +20,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private Rigidbody body;
     private CollisionDetectionMode oldCollisionMode;
-    private List<Vector3> savedJointAnchors;
     [SerializeField]
     private BodyProportionBase bodyProportion;
     public bool ragdolled {get; private set;}
@@ -35,39 +34,89 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
-    private class RigidbodyNetworkInfo {
-        public RigidbodyNetworkInfo(Rigidbody body) {
-            networkedPosition = body.position;
-            networkedRotation = body.rotation;
-            distance = 0f;
-            angle = 0f;
+
+    private class SavedJointAnchor {
+        public SavedJointAnchor(ConfigurableJoint joint) {
+            this.joint = joint;
+            this.jointAnchor = joint.connectedAnchor;
         }
-        public Vector3 networkedPosition;
-        public Quaternion networkedRotation;
-        public float distance;
-        public float angle;
+
+        public void Set() {
+            joint.connectedAnchor = jointAnchor;
+        }
+
+        private ConfigurableJoint joint;
+        private Vector3 jointAnchor;
+    }
+    
+    private List<SavedJointAnchor> jointAnchors;
+
+    private class RigidbodyNetworkInfo {
+        private struct Packet {
+            public Packet(double t, Vector3 p, Quaternion rot) {
+                time = t;
+                networkedPosition = p;
+                networkedRotation = rot;
+            }
+            public double time;
+            public Vector3 networkedPosition;
+            public Quaternion networkedRotation;
+        }
+
+        private Rigidbody body;
+        private Packet lastPacket;
+        private Packet nextPacket;
+
+        public RigidbodyNetworkInfo(Rigidbody body) {
+            this.body = body;
+            lastPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
+            nextPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
+        }
+        public void SetNetworkPosition(Vector3 position, Quaternion rotation, double time) {
+            lastPacket = nextPacket;
+            nextPacket = new Packet(time, position, rotation);
+        }
+        public void UpdateState(bool ours, bool ragdolled) {
+            if (ours) {
+                body.isKinematic = !ragdolled;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
+                return;
+            }
+            body.isKinematic = true;
+            body.interpolation = RigidbodyInterpolation.None;
+            if (ragdolled) {
+                double time = PhotonNetwork.Time - (1d / PhotonNetwork.SerializationRate);
+                double diff = nextPacket.time - lastPacket.time;
+                if (diff == 0f) {
+                    return;
+                }
+                double t = (time - lastPacket.time) / diff;
+                body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
+                    nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+                body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
+                    nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
+            }
+        }
+
     }
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
+        jointAnchors = new List<SavedJointAnchor>();
+        foreach (Rigidbody ragdollBody in ragdollBodies) {
+            if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
+                jointAnchors.Add(new SavedJointAnchor(joint));
+                joint.autoConfigureConnectedAnchor = false;
+            }
+        }
+
         rigidbodyNetworkInfos = new List<RigidbodyNetworkInfo>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }
     }
 
-    void Start() {
-        savedJointAnchors = new List<Vector3>();
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            if (ragdollBody.GetComponent<ConfigurableJoint>() == null) {
-                continue;
-            }
-            savedJointAnchors.Add(ragdollBody.GetComponent<ConfigurableJoint>().connectedAnchor);
-            ragdollBody.GetComponent<ConfigurableJoint>().autoConfigureConnectedAnchor = false;
-        }
-
-    }
     [PunRPC]
     public void PushRagdoll() {
         ragdollCount++;
@@ -88,15 +137,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
-    void FixedUpdate() {
-        if (photonView.IsMine || !ragdolled) {
-            return;
-        }
-
-        for(int i=0;i<ragdollBodies.Length;i++) {
-            Rigidbody ragbody = ragdollBodies[i];
-            ragbody.position = Vector3.MoveTowards(ragbody.position, rigidbodyNetworkInfos[i].networkedPosition, rigidbodyNetworkInfos[i].distance * (1.0f / PhotonNetwork.SerializationRate));
-            ragbody.rotation = Quaternion.RotateTowards(ragbody.rotation, rigidbodyNetworkInfos[i].networkedRotation, rigidbodyNetworkInfos[i].angle * (1.0f / PhotonNetwork.SerializationRate));
+    void LateUpdate() {
+        foreach(var networkInfo in rigidbodyNetworkInfos) {
+            networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
     }
     private void Ragdoll() {
@@ -136,14 +179,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         Physics.SyncTransforms();
         bodyProportion.ScaleSkeleton();
         Physics.SyncTransforms();
-        int i = 0;
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            ConfigurableJoint j = ragdollBody.GetComponent<ConfigurableJoint>();
-            if (j == null) {
-                continue;
-            }
-            //j.anchor = Vector3.zero;
-            j.connectedAnchor = savedJointAnchors[i++];
+        foreach (var savedJointAnchor in jointAnchors) {
+            savedJointAnchor.Set();
         }
         // FIXME: For somereason, after kobolds get grabbed and tossed off of a live physics animation-- the body doesn't actually stay kinematic. I'm assuming due to one of the ragdoll events.
         // Adding this extra set fixes it for somereason, though this is not a proper fix.
@@ -222,12 +259,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
             }
         } else {
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             if ((bool)stream.ReceiveNext()) {
                 for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].networkedPosition = (Vector3)stream.ReceiveNext();
-                    rigidbodyNetworkInfos[i].networkedRotation = (Quaternion)stream.ReceiveNext();
-                    rigidbodyNetworkInfos[i].distance = Vector3.Distance(ragdollBodies[i].position, rigidbodyNetworkInfos[i].networkedPosition);
-                    rigidbodyNetworkInfos[i].angle = Quaternion.Angle(ragdollBodies[i].rotation, rigidbodyNetworkInfos[i].networkedRotation);
+                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
+                }
+            } else {
+                for (int i = 0; i < ragdollBodies.Length; i++) {
+                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragdollBodies[i].transform.position,
+                        ragdollBodies[i].transform.rotation, info.SentServerTime + lag);
                 }
             }
         }

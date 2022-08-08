@@ -151,6 +151,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         StopAnimation();
     }
 
+    public bool IsAnimating() {
+        return animating;
+    }
+
     void Update() {
         if (!photonView.IsMine) {
             if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {

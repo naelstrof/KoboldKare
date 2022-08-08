@@ -81,6 +81,11 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
             if (display != null) {
                 Destroy(display);
             }
+
+            if (GetGenes() == null) {
+                SetGenes(new KoboldGenes().Randomize());
+            }
+
             if (newPlant.display != null) {
                 display = GameObject.Instantiate(newPlant.display, transform);
                 foreach (Renderer r in display.GetComponentsInChildren<Renderer>()) {
@@ -152,7 +157,12 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
+        }
+
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
+        } else {
+            SetGenes(new KoboldGenes().Randomize());
         }
 
         PlantSpawnEventHandler.TriggerPlantSpawnEvent(photonView.gameObject, plant);

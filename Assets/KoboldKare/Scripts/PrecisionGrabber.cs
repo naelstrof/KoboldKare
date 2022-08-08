@@ -22,8 +22,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private Transform previewHandTransform;
     private Grab currentGrab;
     private List<Grab> frozenGrabs;
-    private const float springForce = 100f;
-    private const float breakForce = 10000f;
+    private const float springForce = 10000f;
+    private const float breakForce = 3000f;
     private const float maxGrabDistance = 2.5f;
     private bool previewGrab;
     private List<Grab> removeIds;
@@ -57,7 +57,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation, bool affRotation) {
-            startRotation = body.rotation;
+            Quaternion save = body.rotation;
+            if (!affRotation) {
+                body.transform.rotation = Quaternion.identity;
+            }
+
+            startRotation = body.transform.rotation;
             ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
             configurableJoint.axis = Vector3.up;
             configurableJoint.secondaryAxis = Vector3.right;
@@ -69,24 +74,20 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 configurableJoint.breakForce = float.MaxValue;
             }
             JointDrive drive = configurableJoint.xDrive;
-            SoftJointLimit sjl = configurableJoint.linearLimit;
-            sjl.limit = 0f;
-            configurableJoint.linearLimit = sjl;
-            SoftJointLimitSpring sjls = configurableJoint.linearLimitSpring;
-            sjls.spring = springForce;
-            configurableJoint.linearLimitSpring = sjls;
-            configurableJoint.linearLimit = sjl;
             drive.positionSpring = springForce;
             drive.positionDamper = 2f;
             configurableJoint.xDrive = drive;
             configurableJoint.yDrive = drive;
             configurableJoint.zDrive = drive;
+            var linearLimit = configurableJoint.linearLimit;
+            linearLimit.limit = 1f;
+            linearLimit.bounciness = 0f;
+            var spring = configurableJoint.linearLimitSpring;
+            spring.spring = springForce * 0.1f;
+            spring.damper = 2f;
+            configurableJoint.linearLimitSpring = spring;
+            configurableJoint.linearLimit = linearLimit;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
-            var slerpDrive = configurableJoint.slerpDrive;
-            slerpDrive.positionSpring = springForce*2f;
-            slerpDrive.maximumForce = float.MaxValue;
-            slerpDrive.positionDamper = 2f;
-            configurableJoint.slerpDrive = slerpDrive;
             configurableJoint.massScale = 1f;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
             configurableJoint.projectionAngle = 10f;
@@ -94,19 +95,27 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             configurableJoint.connectedMassScale = 1f;
             configurableJoint.enablePreprocessing = false;
             configurableJoint.configuredInWorldSpace = true;
-            configurableJoint.xMotion = ConfigurableJointMotion.Limited;
-            configurableJoint.yMotion = ConfigurableJointMotion.Limited;
-            configurableJoint.zMotion = ConfigurableJointMotion.Limited;
             configurableJoint.anchor = body.transform.InverseTransformPoint(collider.transform.TransformPoint(localColliderPosition));
             configurableJoint.configuredInWorldSpace = true;
             configurableJoint.connectedBody = null;
             configurableJoint.connectedAnchor = worldPosition;
+            //var slerpDrive = configurableJoint.slerpDrive;
+            //slerpDrive.positionSpring = springForce*2f;
+            //slerpDrive.maximumForce = float.MaxValue;
+            //slerpDrive.positionDamper = 2f;
+            //configurableJoint.slerpDrive = slerpDrive;
+            configurableJoint.xMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.yMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.zMotion = ConfigurableJointMotion.Limited;
             if (affRotation) {
                 configurableJoint.SetTargetRotation(targetRotation, startRotation);
                 configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
                 configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
                 configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            } else {
+                body.transform.rotation = save;
             }
+
             return configurableJoint;
         }
         public Grab(Kobold owner, GameObject handDisplayPrefab, Transform view, Collider collider,
@@ -230,7 +239,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         public void Rotate(Vector2 delta) {
             if (!affectingRotation) {
                 affectingRotation = true;
-                savedQuaternion = body.rotation;
+                savedQuaternion = body.transform.rotation;
+                var slerpDrive = joint.slerpDrive;
+                slerpDrive.positionSpring = springForce;
+                slerpDrive.maximumForce = float.MaxValue;
+                slerpDrive.positionDamper = 2f;
+                joint.slerpDrive = slerpDrive;
             }
             savedQuaternion = Quaternion.AngleAxis(-delta.x, view.up)*savedQuaternion;
             savedQuaternion = Quaternion.AngleAxis(delta.y, view.right)*savedQuaternion;
@@ -264,7 +278,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
                 //Vector3 wantedPosition2 = center + axis * distance / 2f;
                 float ratio = Mathf.Clamp((body.mass / owner.body.mass), 0.75f, 1.25f);
-                Vector3 force = (wantedPosition1 - view.position) * (springForce * 10f);
+                Vector3 force = (wantedPosition1 - view.position) * (springForce * 0.15f);
                 owner.body.AddForce(force * ratio);
                 //body.AddForce(-force * (1f / ratio));
             }
@@ -576,7 +590,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         foreach (Grab fgrab in removeIds) {
-            if (photonView.IsMine) {
+            if (photonView.IsMine && fgrab.photonView != null) {
                 Rigidbody[] bodies = fgrab.photonView.GetComponentsInChildren<Rigidbody>();
                 for (int i = 0; i < bodies.Length; i++) {
                     if (bodies[i] == fgrab.body) {

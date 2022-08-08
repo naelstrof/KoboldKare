@@ -210,9 +210,9 @@ public class Grabber : MonoBehaviourPun {
         if (!highQualityRigidbodies.ContainsKey(firstBody)) {
             highQualityRigidbodies.Add(firstBody,
                 new RigidbodyMemory() { collision = firstBody.collisionDetectionMode, interpolation = firstBody.interpolation });
-            firstBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            firstBody.interpolation = RigidbodyInterpolation.Interpolate;
         }
+        firstBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        firstBody.interpolation = RigidbodyInterpolation.Interpolate;
         foreach(Rigidbody r in g.GetRigidBodies()) {
             if (r == null ) {
                 continue;

@@ -15291,7 +15291,10 @@ MonoBehaviour:
     type: 3}
   unfreezeSound: {fileID: 11400000, guid: cd0a89d93b29b8a49942e072d4ff62df, type: 2}
   kobold: {fileID: 3498030196438502570}
-  ignoreColliders: []
+  ignoreColliders:
+  - {fileID: 6990784038411024563}
+  - {fileID: 9196838261329187590}
+  - {fileID: 4105423855885405275}
 --- !u!114 &5060642094230713381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18991,25 +18994,25 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 100
+    spring: 300
     damper: 1
   m_LowAngularXLimit:
     limit: -19.503334
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 74.17542
+    limit: 58.440437
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
-    spring: 100
+    spring: 300
     damper: 1
   m_AngularYLimit:
-    limit: 39.87816
+    limit: 32.486813
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 20.444069
+    limit: 27.110573
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -19044,7 +19047,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 100
+    positionSpring: 250
     positionDamper: 1
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
@@ -20368,18 +20371,18 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 100
+    spring: 200
     damper: 1
   m_LowAngularXLimit:
     limit: -45.02356
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 27.896729
+    limit: 18.2258
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
-    spring: 100
+    spring: 200
     damper: 1
   m_AngularYLimit:
     limit: 20.637884
@@ -20421,7 +20424,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 200
+    positionSpring: 300
     positionDamper: 1
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1

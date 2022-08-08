@@ -90,11 +90,17 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
     void FixedUpdate() {
         if (photonView.IsMine || !ragdolled) {
+            for (int i = 0; i < ragdollBodies.Length; i++) {
+                Rigidbody ragbody = ragdollBodies[i];
+                ragbody.useGravity = true;
+            }
+
             return;
         }
 
         for(int i=0;i<ragdollBodies.Length;i++) {
             Rigidbody ragbody = ragdollBodies[i];
+            ragbody.useGravity = false;
             ragbody.position = Vector3.MoveTowards(ragbody.position, rigidbodyNetworkInfos[i].networkedPosition, rigidbodyNetworkInfos[i].distance * (1.0f / PhotonNetwork.SerializationRate));
             ragbody.rotation = Quaternion.RotateTowards(ragbody.rotation, rigidbodyNetworkInfos[i].networkedRotation, rigidbodyNetworkInfos[i].angle * (1.0f / PhotonNetwork.SerializationRate));
         }

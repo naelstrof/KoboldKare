@@ -35,6 +35,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
+    private List<ConfigurableJoint> joints;
+
     private class RigidbodyNetworkInfo {
         public RigidbodyNetworkInfo(Rigidbody body) {
             this.body = body;
@@ -119,23 +121,22 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
+        joints = new List<ConfigurableJoint>();
+        savedJointAnchors = new List<Vector3>();
+        foreach (Rigidbody ragdollBody in ragdollBodies) {
+            foreach (var joint in ragdollBody.GetComponentsInChildren<ConfigurableJoint>()) {
+                joints.Add(joint);
+                savedJointAnchors.Add(joint.connectedAnchor);
+                joint.autoConfigureConnectedAnchor = false;
+            }
+        }
+
         rigidbodyNetworkInfos = new List<RigidbodyNetworkInfo>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }
     }
 
-    void Start() {
-        savedJointAnchors = new List<Vector3>();
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            if (ragdollBody.GetComponent<ConfigurableJoint>() == null) {
-                continue;
-            }
-            savedJointAnchors.Add(ragdollBody.GetComponent<ConfigurableJoint>().connectedAnchor);
-            ragdollBody.GetComponent<ConfigurableJoint>().autoConfigureConnectedAnchor = false;
-        }
-
-    }
     [PunRPC]
     public void PushRagdoll() {
         ragdollCount++;
@@ -198,14 +199,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         Physics.SyncTransforms();
         bodyProportion.ScaleSkeleton();
         Physics.SyncTransforms();
-        int i = 0;
-        foreach (Rigidbody ragdollBody in ragdollBodies) {
-            ConfigurableJoint j = ragdollBody.GetComponent<ConfigurableJoint>();
-            if (j == null) {
-                continue;
-            }
-            //j.anchor = Vector3.zero;
-            j.connectedAnchor = savedJointAnchors[i++];
+        for (int i = 0; i < joints.Count; i++) {
+            joints[i].connectedAnchor = savedJointAnchors[i];
         }
         // FIXME: For somereason, after kobolds get grabbed and tossed off of a live physics animation-- the body doesn't actually stay kinematic. I'm assuming due to one of the ragdoll events.
         // Adding this extra set fixes it for somereason, though this is not a proper fix.

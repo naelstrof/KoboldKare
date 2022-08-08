@@ -17,7 +17,6 @@ public class ScriptableReagent : ScriptableObject {
     public bool consumesMetabolization;
     public float metabolizationHalfLife;
     public bool cleaningAgent;
-    public UnityReagentContainerEvent onExist;
     public Reagent GetReagent( float volume ) {
         return new Reagent() {
             id = ReagentDatabase.GetID(this),

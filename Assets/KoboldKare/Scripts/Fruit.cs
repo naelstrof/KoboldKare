@@ -10,7 +10,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable, ISpoilable, IPunInstantiateMagicCallback {
+public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable,
+    ISpoilable, IPunInstantiateMagicCallback {
     [SerializeField] private VisualEffect itemParticles;
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
@@ -19,19 +20,16 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     private GenericReagentContainer container;
     private Rigidbody[] bodies;
     private Renderer[] renderers;
-    [SerializeField]
-    private Inflatable fruitInflater;
-    [SerializeField]
-    private bool startFrozen = true;
-    [SerializeField]
-    private AudioPack gibSound;
-    [SerializeField]
-    private Transform centerTransform;
-    
+    [SerializeField] private Inflatable fruitInflater;
+    [SerializeField] private bool startFrozen = true;
+    [SerializeField] private AudioPack gibSound;
+    [SerializeField] private Transform centerTransform;
+
     private void SetFrozen(bool frozen) {
         itemParticles.enabled = frozen;
         body.constraints = frozen ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
     }
+
     private bool GetFrozen() {
         return body.constraints == RigidbodyConstraints.FreezeAll;
     }
@@ -43,13 +41,13 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         renderers = GetComponentsInChildren<Renderer>();
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
-        
+
         InflatableTransform inflatableTransform = new InflatableTransform();
         inflatableTransform.SetTransform(transform);
         fruitInflater.AddListener(inflatableTransform);
-        
+
         fruitInflater.OnEnable();
-        
+
         container.OnChange.AddListener(OnReagentContentsChanged);
         photonView.ObservedComponents.Add(container);
         if (centerTransform == null) {
@@ -58,7 +56,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     }
 
     void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType type) {
-        fruitInflater.SetSize(Mathf.Log(1f + contents.volume/20f, 2f), this);
+        fruitInflater.SetSize(Mathf.Log(1f + contents.volume / 20f, 2f), this);
     }
 
     void Start() {
@@ -127,6 +125,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         }
     }
 
+    [PunRPC]
     public void Damage(float amount) {
         health -= amount;
         if (health <= 0f) {

@@ -63,7 +63,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         } else {
             contents.Add(id, new Reagent() {id=id,volume=addVolume});
             if (worldContainer != null) {
-                ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
+                //ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
             }
         }
         if (worldContainer != null) {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,15 +7,17 @@ using UnityEngine.InputSystem;
 public class LookAtCursor : MonoBehaviour {
     [Range(0f,20f)]
     public float distanceFromCamera = 5f;
+    private CharacterControllerAnimator characterAnimator;
     private Animator animator;
-    private Vector3 currentPosition = Vector3.zero;
     void Start() {
-        animator = GetComponent<Animator>();
+        characterAnimator = GetComponentInParent<CharacterControllerAnimator>();
+        animator = GetComponentInChildren<Animator>();
     }
-    private void OnAnimatorIK(int layerIndex) {
+    private void Update() {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        currentPosition = Vector3.Lerp(currentPosition, Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distanceFromCamera), Camera.MonoOrStereoscopicEye.Mono), Time.deltaTime * 15f);
-        animator.SetLookAtWeight(1f, 0.4f, 1f, 1f, 0f);
-        animator.SetLookAtPosition(currentPosition);
+        Vector3 headPos = animator.GetBoneTransform(HumanBodyBones.Head).position;
+        Vector3 lookPoint = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distanceFromCamera),
+            Camera.MonoOrStereoscopicEye.Mono);
+        characterAnimator.SetEyeDir((lookPoint - headPos).normalized);
     }
 }

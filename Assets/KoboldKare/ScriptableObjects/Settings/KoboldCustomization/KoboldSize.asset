@@ -32,8 +32,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   defaultValue: 1
-  minValue: 0.4
+  minValue: 0.6
   maxValue: 1.2
   wholeNumbers: 0
   references:
-    version: 1
+    version: 2
+    RefIds: []

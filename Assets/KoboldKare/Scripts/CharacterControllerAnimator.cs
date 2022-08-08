@@ -35,6 +35,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     private Vector2 eyeRot;
     private Vector2 networkedEyeRot;
+    private float networkedAngle;
 
     private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
     private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
@@ -157,13 +158,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     void Update() {
         if (!photonView.IsMine) {
-            if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
-                networkedEyeRot.x -= 360f;
-            }
-            if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
-                networkedEyeRot.x += 360f;
-            }
-            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, Time.deltaTime * 420f);
+            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
         }
         if (kobold != null) {
             float maxPen = 0f;
@@ -305,6 +300,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             stream.SendNext(eyeRot);
         } else {
             networkedEyeRot = (Vector2)stream.ReceiveNext();
+            if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
+                networkedEyeRot.x -= 360f;
+            }
+            if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
+                networkedEyeRot.x += 360f;
+            }
+            networkedAngle = Vector2.Distance(networkedEyeRot, eyeRot);
         }
     }
     public void Save(BinaryWriter writer, string version) {

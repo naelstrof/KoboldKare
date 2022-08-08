@@ -50,6 +50,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         private bool frozen;
         private AudioPack unfreezePack;
         private Quaternion startRotation;
+        private float creationTime;
 
         public Collider GetCollider() {
             return collider;
@@ -118,6 +119,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
             bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
             distance = Vector3.Distance(view.position, hitPosWorld);
+            creationTime = Time.time;
             handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
                 .GetComponentInChildren<Animator>();
             handDisplayAnimator.gameObject.SetActive(true);
@@ -158,6 +160,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             handDisplayAnimator.gameObject.SetActive(true);
             handDisplayAnimator.SetBool(GrabbingHash, true);
             handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
+            creationTime = Time.time;
             this.owner = owner;
             this.unfreezePack = unfreezePack;
             frozen = true;
@@ -200,7 +203,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         public bool Valid() {
-            bool valid = body != null && owner != null && photonView != null && joint != null && photonView.IsMine;
+            bool valid = body != null && owner != null && photonView != null && joint != null;
+            if (Time.time - creationTime > 2f && owner.photonView.IsMine) {
+                valid &= photonView.IsMine;
+            }
             return valid;
         }
         public void LateUpdate() {

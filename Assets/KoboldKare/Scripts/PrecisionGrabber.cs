@@ -575,13 +575,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
 
-        if (photonView.IsMine) {
-            foreach (Grab fgrab in removeIds) {
-                if (fgrab.photonView == null || !fgrab.photonView.IsMine) {
-                    fgrab.Release();
-                    frozenGrabs.Remove(fgrab);
-                    continue;
-                }
+        foreach (Grab fgrab in removeIds) {
+            if (photonView.IsMine) {
                 Rigidbody[] bodies = fgrab.photonView.GetComponentsInChildren<Rigidbody>();
                 for (int i = 0; i < bodies.Length; i++) {
                     if (bodies[i] == fgrab.body) {
@@ -589,6 +584,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                         break;
                     }
                 }
+            } else {
+                fgrab.Release();
+                frozenGrabs.Remove(fgrab);
             }
         }
 

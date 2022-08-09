@@ -34,11 +34,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
-
-    private JigglePhysics.JiggleRigBuilder[] jiggleRigs;
-    private JigglePhysics.JiggleSkin[] jiggleSkins;
-
-
     private class SavedJointAnchor {
         public SavedJointAnchor(ConfigurableJoint joint) {
             this.joint = joint;
@@ -95,6 +90,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                     return;
                 }
                 double t = (time - lastPacket.time) / diff;
+                body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
                 body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
                     nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
@@ -107,8 +103,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
-        jiggleRigs = GetComponentsInChildren<JiggleRigBuilder>();
-        jiggleSkins = GetComponentsInChildren<JiggleSkin>();
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -144,12 +138,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
     }
     void LateUpdate() {
-        foreach (JiggleRigBuilder builder in jiggleRigs) {
-            builder.interpolate = photonView.IsMine;
-        }
-        foreach (JiggleSkin jiggleSkin in jiggleSkins) {
-            jiggleSkin.interpolate = photonView.IsMine;
-        }
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }

@@ -239,7 +239,9 @@ public class Grabber : MonoBehaviourPun {
         if (other!= null) {
             for (int j = 0; j < giveBackKobolds.Count; j++) {
                 if (giveBackKobolds[j].kobold == other) {
-                    StopCoroutine(giveBackKobolds[j].routine);
+                    if (giveBackKobolds[j].routine != null) {
+                        StopCoroutine(giveBackKobolds[j].routine);
+                    }
                     giveBackKobolds.RemoveAt(j--);
                 }
             }

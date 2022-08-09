@@ -45,7 +45,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
             return;
         }
         double t = (time - lastFrame.time) / diff;
-        body.velocity = (newFrame.position - lastFrame.position) / (float)diff;
+        //body.velocity = (newFrame.position - lastFrame.position) / (float)diff;
         body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
     }

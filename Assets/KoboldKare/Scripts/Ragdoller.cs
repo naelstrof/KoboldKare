@@ -90,7 +90,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                     return;
                 }
                 double t = (time - lastPacket.time) / diff;
-                body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
+                //body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
                 body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
                     nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,

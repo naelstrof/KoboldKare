@@ -57,6 +57,8 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         if (stream.IsWriting) {
             stream.SendNext(body.transform.position);
             stream.SendNext(body.transform.rotation);
+            lastFrame = newFrame;
+            newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time+(1d/PhotonNetwork.SerializationRate));
         } else {
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             lastFrame = newFrame;

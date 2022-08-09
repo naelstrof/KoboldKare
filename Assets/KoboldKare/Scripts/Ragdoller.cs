@@ -66,7 +66,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             public Quaternion networkedRotation;
         }
 
-        private Rigidbody body;
+        public Rigidbody body { get; private set; }
         private Packet lastPacket;
         private Packet nextPacket;
 
@@ -260,9 +260,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         if (stream.IsWriting) {
             stream.SendNext(ragdolled);
             if (ragdolled) {
-                foreach (Rigidbody ragbody in ragdollBodies) {
-                    stream.SendNext(ragbody.position);
-                    stream.SendNext(ragbody.rotation);
+                for(int i=0;i<rigidbodyNetworkInfos.Count;i++) {
+                    Rigidbody ragbody = rigidbodyNetworkInfos[i].body;
+                    stream.SendNext(ragbody.transform.position);
+                    stream.SendNext(ragbody.transform.rotation);
+                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragbody.transform.position, ragbody.transform.rotation, PhotonNetwork.Time+(1d/PhotonNetwork.SerializationRate));
                 }
             }
         } else {

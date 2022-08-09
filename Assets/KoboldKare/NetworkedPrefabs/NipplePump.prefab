@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4814205500992453063}
   - component: {fileID: 4814205500992453057}
   - component: {fileID: 4814205500992453059}
-  - component: {fileID: 4814205500992453068}
   - component: {fileID: 4814205500992453070}
   - component: {fileID: 1761313470962135464}
   - component: {fileID: -5645697796089872782}
+  - component: {fileID: 2580050841766746526}
   m_Layer: 11
   m_Name: NipplePump
   m_TagString: Untagged
@@ -58,8 +58,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4814205500992453068}
   - {fileID: 1761313470962135464}
+  - {fileID: 2580050841766746526}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -79,22 +79,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4814205500992453068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814205500992453071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &4814205500992453070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,29 +95,6 @@ MonoBehaviour:
   - renderer: {fileID: 9065532681254696185}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 246a44374346ff34ab15533132ec4805, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1761313470962135464}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 2
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 4814205500992453059}
   renderers:
   - {fileID: 9065532681254696185}
   center: {fileID: 4814205500992453063}
@@ -165,6 +126,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 5
+--- !u!114 &2580050841766746526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814205500992453071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2859139969392619947
 PrefabInstance:
   m_ObjectHideFlags: 0

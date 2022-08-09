@@ -15,10 +15,10 @@ GameObject:
   - component: {fileID: 7440720682635522033}
   - component: {fileID: 1957244041390749798}
   - component: {fileID: 8714035162360990365}
-  - component: {fileID: 3017079792617563010}
   - component: {fileID: 5097124282401932414}
   - component: {fileID: 5603687455470966783}
   - component: {fileID: 3195098777781111908}
+  - component: {fileID: 5246803348042347016}
   m_Layer: 11
   m_Name: TopHatEquippable
   m_TagString: Untagged
@@ -139,29 +139,6 @@ MonoBehaviour:
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: -2535886429620276061, guid: 9fb93f4b242293a448c1cc43f1a31a9e,
       type: 3}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7440720682635522033}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 3326081124258091685}
   renderers:
   - {fileID: 4668887706315907089}
   center: {fileID: 5800658848821418878}
@@ -179,22 +156,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5366983200095709672, guid: 9fb93f4b242293a448c1cc43f1a31a9e, type: 3}
---- !u!114 &3017079792617563010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6614596883837501892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &5097124282401932414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +176,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7440720682635522033}
-  - {fileID: 3017079792617563010}
+  - {fileID: 5246803348042347016}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -245,3 +206,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 5
+--- !u!114 &5246803348042347016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614596883837501892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

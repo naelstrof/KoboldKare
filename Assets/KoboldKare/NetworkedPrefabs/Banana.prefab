@@ -122,8 +122,8 @@ GameObject:
   - component: {fileID: 3102687797691339591}
   - component: {fileID: 3102687797691339588}
   - component: {fileID: 4301008008726768172}
-  - component: {fileID: 4243467446321646147}
   - component: {fileID: 6299199956748189300}
+  - component: {fileID: 8188803650386502602}
   m_Layer: 11
   m_Name: Banana
   m_TagString: Untagged
@@ -197,27 +197,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4243467446321646147}
   - {fileID: 6299199956748189300}
+  - {fileID: 8188803650386502602}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4243467446321646147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3102687797691339609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &6299199956748189300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,6 +289,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &8188803650386502602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102687797691339609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4282812472268641806
 GameObject:
   m_ObjectHideFlags: 0

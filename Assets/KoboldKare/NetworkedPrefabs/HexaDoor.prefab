@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 6271754350014679978}
   - component: {fileID: 7581115830138266041}
   - component: {fileID: 2979656578513687964}
-  - component: {fileID: 2171727452265190434}
+  - component: {fileID: 5468797187702321938}
   m_Layer: 11
   m_Name: HexaDoor
   m_TagString: Untagged
@@ -525,7 +525,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2979656578513687964}
-  - {fileID: 2171727452265190434}
+  - {fileID: 5468797187702321938}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   disableOnGrab: {fileID: 2087340425}
---- !u!114 &2171727452265190434
+--- !u!114 &5468797187702321938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -551,10 +551,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5980790248163668573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2

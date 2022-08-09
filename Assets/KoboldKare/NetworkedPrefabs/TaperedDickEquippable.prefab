@@ -75,13 +75,13 @@ GameObject:
   - component: {fileID: 3520763853722563420}
   - component: {fileID: 2155631445559027282}
   - component: {fileID: 9014570033086517460}
-  - component: {fileID: 6818120822096625396}
   - component: {fileID: 5095059083864554981}
   - component: {fileID: 1320140597333020404}
   - component: {fileID: 217210921840466951}
   - component: {fileID: 2683998475688638811}
   - component: {fileID: 2058595017713375072}
   - component: {fileID: 6100834277563893051}
+  - component: {fileID: 4247687860692242341}
   m_Layer: 25
   m_Name: TaperedDickEquippable
   m_TagString: Untagged
@@ -141,29 +141,6 @@ MonoBehaviour:
   - renderer: {fileID: 109394161160481697}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 592fe42b148f8034cac19fb877d44c06, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 3520763853722563420}
   renderers:
   - {fileID: 1049018532604101526}
   - {fileID: 109394161160481697}
@@ -187,27 +164,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6818120822096625396}
   - {fileID: 2058595017713375072}
+  - {fileID: 4247687860692242341}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6818120822096625396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828591206539305778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &5095059083864554981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +389,18 @@ MonoBehaviour:
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
+--- !u!114 &4247687860692242341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5828591206539305778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2622365803986604249
 PrefabInstance:
   m_ObjectHideFlags: 0

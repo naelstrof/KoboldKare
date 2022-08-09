@@ -212,8 +212,8 @@ GameObject:
   - component: {fileID: 5044686340946874263}
   - component: {fileID: 7630934709309098564}
   - component: {fileID: 7630934709309098567}
-  - component: {fileID: 7630934709309098560}
   - component: {fileID: 7630934709309098561}
+  - component: {fileID: 7609700174258783371}
   m_Layer: 11
   m_Name: MobileHarvestBucket
   m_TagString: Untagged
@@ -334,36 +334,9 @@ MonoBehaviour:
   - renderer: {fileID: 9090255339433551131}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 26ce26e2560290e48a6630b577f515d8, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 7630934709309098564}
   renderers:
   - {fileID: 9090255339433551131}
   center: {fileID: 7956804791434681972}
---- !u!114 &7630934709309098560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7289057724466676942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &7630934709309098561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +356,19 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 7630934709309098560}
+  - {fileID: 7609700174258783371}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7609700174258783371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7289057724466676942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

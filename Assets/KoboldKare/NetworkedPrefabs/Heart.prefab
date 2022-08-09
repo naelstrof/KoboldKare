@@ -121,9 +121,9 @@ GameObject:
   - component: {fileID: 7874947988648528875}
   - component: {fileID: 2896900561964835055}
   - component: {fileID: 4050505572023529184}
-  - component: {fileID: 5999548309352413808}
   - component: {fileID: 4340716933810568552}
   - component: {fileID: 7198328624012188462}
+  - component: {fileID: 7915110767402950862}
   m_Layer: 11
   m_Name: Heart
   m_TagString: Untagged
@@ -184,27 +184,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5999548309352413808}
   - {fileID: 7198328624012188462}
+  - {fileID: 7915110767402950862}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5999548309352413808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6562367668383676920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &4340716933810568552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +235,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &7915110767402950862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6562367668383676920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4651659578292306561
 PrefabInstance:
   m_ObjectHideFlags: 0

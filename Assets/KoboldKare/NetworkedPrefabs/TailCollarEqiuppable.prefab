@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5605572581541272121}
   - component: {fileID: 5605572581541272103}
   - component: {fileID: 124761839}
-  - component: {fileID: 229206811461308801}
   - component: {fileID: 7226643011439227689}
   - component: {fileID: 2316579802779782844}
+  - component: {fileID: 5646552260943863699}
   m_Layer: 11
   m_Name: TailCollarEqiuppable
   m_TagString: Untagged
@@ -86,48 +86,9 @@ MonoBehaviour:
   - renderer: {fileID: 177953823478998651}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: e67706f0cb47eb044aabdc12e16250cc, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5605572581541272103}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 5605572581541272121}
   renderers:
   - {fileID: 177953823478998651}
   center: {fileID: 5605572581541272125}
---- !u!114 &229206811461308801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5605572581541272102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &7226643011439227689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +109,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5605572581541272103}
-  - {fileID: 229206811461308801}
+  - {fileID: 5646552260943863699}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -165,6 +126,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVolume: 1
+--- !u!114 &5646552260943863699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605572581541272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1565473310744115967
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -125,13 +125,13 @@ GameObject:
   - component: {fileID: 7402139970110480303}
   - component: {fileID: 6947302356407074518}
   - component: {fileID: 573490196175961829}
-  - component: {fileID: 3408746440947745250}
   - component: {fileID: 6560005341841576388}
   - component: {fileID: 3407505360677138636}
   - component: {fileID: 5740176972192196422}
   - component: {fileID: -6171395322069210244}
   - component: {fileID: 4481122447384736891}
   - component: {fileID: 6030259404136135922}
+  - component: {fileID: 4387182986311866001}
   m_Layer: 0
   m_Name: WateringCan
   m_TagString: Untagged
@@ -178,9 +178,9 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 3408746440947745250}
   - {fileID: 6560005341841576388}
   - {fileID: 6030259404136135922}
+  - {fileID: 4387182986311866001}
   - {fileID: 2394539161110907377}
   sceneViewId: 0
   InstantiationId: 0
@@ -201,22 +201,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3408746440947745250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922535127892591893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &6560005341841576388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,17 +244,6 @@ MonoBehaviour:
   - renderer: {fileID: 3289584573705952390}
     pickedUpMaterial: {fileID: 2100000, guid: dc04e654489921e43861f92b7490ef89, type: 2}
     defaultMaterial: {fileID: 2100000, guid: f4ecc18227c722749aee16fad49b8b67, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 573490196175961829}
   renderers:
   - {fileID: 4901331795393525352}
   - {fileID: 3289584573705952390}
@@ -341,6 +314,18 @@ MonoBehaviour:
   container: {fileID: 6560005341841576388}
   destroyOnEat: 0
   eatSoundPack: {fileID: 11400000, guid: 4bb8b189df8295a42b3736a510558d68, type: 2}
+--- !u!114 &4387182986311866001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7922535127892591893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8424801107021576016
 GameObject:
   m_ObjectHideFlags: 0

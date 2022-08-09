@@ -43,11 +43,11 @@ GameObject:
   - component: {fileID: 1131107171902011927}
   - component: {fileID: 7877201617650488777}
   - component: {fileID: 9126312317091049311}
-  - component: {fileID: 6303804066118123294}
   - component: {fileID: 6949903323443082908}
   - component: {fileID: 631521385520479730}
   - component: {fileID: 5755366702229864431}
   - component: {fileID: -6035550944668473740}
+  - component: {fileID: 4892970327686083760}
   m_Layer: 11
   m_Name: Scanner
   m_TagString: Untagged
@@ -245,22 +245,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6303804066118123294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6867567770853207055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &6949903323443082908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +264,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6303804066118123294}
+  - {fileID: 4892970327686083760}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -300,53 +284,6 @@ MonoBehaviour:
   - renderer: {fileID: 3393146517012675424}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 15d04a7009697b5429aad9f3307676d1, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1131107171902011927}
-        m_TargetAssemblyTypeName: ReagentScanner, Assembly-CSharp
-        m_MethodName: Pickup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onRelease:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8354043833256157071}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1131107171902011927}
-        m_TargetAssemblyTypeName: ReagentScanner, Assembly-CSharp
-        m_MethodName: Drop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 7877201617650488777}
   renderers:
   - {fileID: 3393146517012675424}
   center: {fileID: 2333890657059585522}
@@ -376,6 +313,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 10
+--- !u!114 &4892970327686083760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867567770853207055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6901846100482968268
 GameObject:
   m_ObjectHideFlags: 0

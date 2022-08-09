@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8158746148670298282}
   - component: {fileID: 3705515458044146613}
-  - component: {fileID: 2396756855426530197}
   - component: {fileID: 5034187077829560049}
   - component: {fileID: 7280247377460190354}
   - component: {fileID: 3083120364107045939}
+  - component: {fileID: 9038586769136011588}
   m_Layer: 11
   m_Name: IceChunk
   m_TagString: Untagged
@@ -56,22 +56,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2396756855426530197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2189650494590434039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &5034187077829560049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,8 +75,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2396756855426530197}
   - {fileID: 3083120364107045939}
+  - {fileID: 9038586769136011588}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -196,6 +180,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &9038586769136011588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2189650494590434039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4844875768420897864
 GameObject:
   m_ObjectHideFlags: 0

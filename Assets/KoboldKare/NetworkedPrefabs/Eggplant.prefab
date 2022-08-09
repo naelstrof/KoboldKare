@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1950544155720653928}
   - component: {fileID: 5129986160187613773}
-  - component: {fileID: 4607867906945485290}
   - component: {fileID: 445234255034115001}
   - component: {fileID: 8464602369954454033}
   - component: {fileID: 8413683230486353899}
+  - component: {fileID: 2957121519006777302}
   m_Layer: 11
   m_Name: Eggplant
   m_TagString: Untagged
@@ -55,22 +55,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4607867906945485290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108172281563609256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &445234255034115001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,8 +74,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4607867906945485290}
   - {fileID: 8413683230486353899}
+  - {fileID: 2957121519006777302}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -195,6 +179,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &2957121519006777302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108172281563609256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3559681030510132697
 GameObject:
   m_ObjectHideFlags: 0

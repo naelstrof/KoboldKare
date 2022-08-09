@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9115903594892809993}
   - component: {fileID: 5499541219342696325}
   - component: {fileID: 6709320850105419286}
-  - component: {fileID: 506358492566665337}
   - component: {fileID: 8860735463587925477}
   - component: {fileID: 6030700835442686254}
   - component: {fileID: 6664954676554565166}
@@ -21,6 +20,7 @@ GameObject:
   - component: {fileID: 786079027964288136}
   - component: {fileID: 4263533027581283171}
   - component: {fileID: 8191208221300011646}
+  - component: {fileID: 7132090685560837831}
   m_Layer: 25
   m_Name: KandiDickEquippable
   m_TagString: Aimable
@@ -77,29 +77,6 @@ MonoBehaviour:
   - renderer: {fileID: 7606962015968506203}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 6c6caaf32f21d2349bed7a6995177c38, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 9115903594892809993}
   renderers:
   - {fileID: 0}
   center: {fileID: 764203157853472731}
@@ -122,27 +99,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 506358492566665337}
   - {fileID: 786079027964288136}
+  - {fileID: 7132090685560837831}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &506358492566665337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3729554680024515055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &8860735463587925477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +362,18 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7606962015968506203}
   m_Enabled: 1
+--- !u!114 &7132090685560837831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729554680024515055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4536115493133135086
 GameObject:
   m_ObjectHideFlags: 0

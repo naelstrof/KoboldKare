@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 6209813979592397900}
   - component: {fileID: 7403922466466801549}
   - component: {fileID: 5688996529883549841}
-  - component: {fileID: 3157269094071852165}
   - component: {fileID: 875323940387169680}
   - component: {fileID: 8229970607678505117}
   - component: {fileID: 7231916857138784437}
   - component: {fileID: 7470410107266386338}
   - component: {fileID: 7117856318332745629}
   - component: {fileID: 2778530082504687417}
+  - component: {fileID: 3165363792815808124}
   m_Layer: 11
   m_Name: Trough
   m_TagString: Untagged
@@ -89,17 +89,6 @@ MonoBehaviour:
   - renderer: {fileID: 4843239548477827836}
     pickedUpMaterial: {fileID: 2100000, guid: dc04e654489921e43861f92b7490ef89, type: 2}
     defaultMaterial: {fileID: 2100000, guid: f4ecc18227c722749aee16fad49b8b67, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 7403922466466801549}
   renderers:
   - {fileID: 6367032187334129842}
   - {fileID: 4843239548477827836}
@@ -140,27 +129,11 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5305001150950473274}
-  - {fileID: 3157269094071852165}
   - {fileID: 2778530082504687417}
+  - {fileID: 3165363792815808124}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3157269094071852165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114852081462200378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 0
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 2
 --- !u!114 &875323940387169680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +232,18 @@ MonoBehaviour:
   container: {fileID: 5305001150950473274}
   destroyOnEat: 0
   eatSoundPack: {fileID: 11400000, guid: 4bb8b189df8295a42b3736a510558d68, type: 2}
+--- !u!114 &3165363792815808124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114852081462200378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2004953112158708580
 GameObject:
   m_ObjectHideFlags: 0

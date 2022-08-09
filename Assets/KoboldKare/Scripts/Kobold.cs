@@ -321,6 +321,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         grabbed = false;
         
         if (!photonView.IsMine) {
+            foreach (var p in PhotonNetwork.PlayerList) {
+                if ((Kobold)p.TagObject == this) {
+                    photonView.RequestOwnership();
+                }
+            }
             return;
         }
 

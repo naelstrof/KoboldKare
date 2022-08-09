@@ -117,6 +117,9 @@ public class Grabber : MonoBehaviourPun {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnReleaseRPC), RpcTarget.All, owner.photonView.ViewID, body.velocity);
                 RecursiveSetLayer(body.transform, LayerMask.NameToLayer("PlayerNocollide"),
                     LayerMask.NameToLayer("UsablePickups"));
+                if (kobold != null && owner != null) {
+                    owner.GetComponent<Grabber>().AddGivebackKobold(kobold);
+                }
             }
             
             valid = false;
@@ -177,6 +180,13 @@ public class Grabber : MonoBehaviourPun {
         }
     }
     private List<GrabInfo> grabbedObjects;
+
+    private class GiveBackKobold {
+        public Coroutine routine;
+        public Kobold kobold;
+    }
+
+    private List<GiveBackKobold> giveBackKobolds;
     private float thrownUntouchableTime = 0.4f;
     private static Collider[] colliders = new Collider[32];
     
@@ -193,6 +203,49 @@ public class Grabber : MonoBehaviourPun {
             }
         }
     }
+
+    private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
+        while (giveBackKobold.kobold.photonView.IsMine) {
+            if (giveBackKobold.kobold.ragdoller.ragdolled) {
+                yield return new WaitForSeconds(5f);
+            } else {
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            if (giveBackKobold.kobold.photonView.IsMine) {
+                foreach (Player p in PhotonNetwork.PlayerList) {
+                    if (giveBackKobold.kobold.photonView.IsMine && p.TagObject == giveBackKobold.kobold) {
+                        giveBackKobold.kobold.photonView.TransferOwnership(p);
+                        break;
+                    }
+                }
+            }
+        }
+        giveBackKobolds.Remove(giveBackKobold);
+    }
+
+    public void AddGivebackKobold(Kobold other) {
+        foreach (Player p in PhotonNetwork.PlayerList) {
+            if (p.TagObject == other) {
+                GiveBackKobold giveBackKobold = new GiveBackKobold(){kobold = other};
+                giveBackKobold.routine = StartCoroutine(GiveBackKoboldAfterDelay(giveBackKobold));
+                giveBackKobolds.Add(giveBackKobold);
+                break;
+            }
+        }
+    }
+
+    private void RemoveGivebackKobold(Kobold other) {
+        if (other!= null) {
+            for (int j = 0; j < giveBackKobolds.Count; j++) {
+                if (giveBackKobolds[j].kobold == other) {
+                    StopCoroutine(giveBackKobolds[j].routine);
+                    giveBackKobolds.RemoveAt(j--);
+                }
+            }
+        }
+    }
+
     public void TryDrop() {
         foreach (var grab in grabbedObjects) {
             grab.Release();
@@ -203,6 +256,7 @@ public class Grabber : MonoBehaviourPun {
 
     private void Awake() {
         grabbedObjects = new List<GrabInfo>();
+        giveBackKobolds = new List<GiveBackKobold>();
     }
 
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
@@ -241,7 +295,9 @@ public class Grabber : MonoBehaviourPun {
 
             if (!contains && grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
-                grabbedObjects.Add(new GrabInfo(player, view, grabbable, springStrength, dampingStrength));
+                GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength);
+                grabbedObjects.Add(info);
+                RemoveGivebackKobold(info.kobold);
             }
             if (grabbedObjects.Count >= maxGrabCount) {
                 return;

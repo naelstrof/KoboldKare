@@ -319,16 +319,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         animator.SetBool("Carried", false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
+
         
         if (!photonView.IsMine) {
-            foreach (var p in PhotonNetwork.PlayerList) {
-                if ((Kobold)p.TagObject == this) {
-                    photonView.RequestOwnership();
-                }
-            }
             return;
         }
-
+        
         foreach (Rigidbody b in ragdoller.GetRagdollBodies()) {
             b.velocity = velocity;
         }

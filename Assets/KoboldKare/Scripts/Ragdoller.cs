@@ -35,7 +35,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
-    private List<JigglePhysics.JiggleRigBuilder> jiggleRigs;
+    private JigglePhysics.JiggleRigBuilder[] jiggleRigs;
+    private JigglePhysics.JiggleSkin[] jiggleSkins;
 
 
     private class SavedJointAnchor {
@@ -106,7 +107,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
-        jiggleRigs = new List<JiggleRigBuilder>(GetComponentsInChildren<JiggleRigBuilder>());
+        jiggleRigs = GetComponentsInChildren<JiggleRigBuilder>();
+        jiggleSkins = GetComponentsInChildren<JiggleSkin>();
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -144,6 +146,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     void LateUpdate() {
         foreach (JiggleRigBuilder builder in jiggleRigs) {
             builder.interpolate = photonView.IsMine;
+        }
+        foreach (JiggleSkin jiggleSkin in jiggleSkins) {
+            jiggleSkin.interpolate = photonView.IsMine;
         }
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);

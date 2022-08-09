@@ -74,6 +74,8 @@ MonoBehaviour:
   - UnfreezeAllRPC
   - UnfreezeRPC
   - Damage
+  - OnGrabRPC
+  - OnReleaseRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

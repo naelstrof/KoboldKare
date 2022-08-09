@@ -105,7 +105,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private void OnEnable() {
-        grabber.gameObject.SetActive(true);
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(true);
         }
@@ -123,7 +122,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private void OnDisable() {
-        grabber.gameObject.SetActive(false);
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(false);
         }

@@ -18,7 +18,6 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     private float health = 100f;
     [SerializeField] private GenericReagentContainer.InspectorReagent startingReagent;
     private GenericReagentContainer container;
-    private Rigidbody[] bodies;
     private Renderer[] renderers;
     [SerializeField] private Inflatable fruitInflater;
     [SerializeField] private bool startFrozen = true;
@@ -36,8 +35,6 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
     private void Awake() {
         body = GetComponent<Rigidbody>();
-        bodies = new Rigidbody[1];
-        bodies[0] = body;
         renderers = GetComponentsInChildren<Renderer>();
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
@@ -138,26 +135,20 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         health += amount;
     }
 
-    public bool OnGrab(Kobold kobold) {
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
         SetFrozen(false);
+    }
+
+    public bool CanGrab(Kobold kobold) {
         return true;
     }
 
-    public void OnRelease(Kobold kobold) {
+    [PunRPC]
+    public void OnReleaseRPC(int koboldId, Vector3 velocity) {
     }
 
-    public void OnThrow(Kobold kobold) {
-    }
-
-    public Rigidbody[] GetRigidBodies() {
-        return bodies;
-    }
-
-    public Renderer[] GetRenderers() {
-        return renderers;
-    }
-
-    public Transform GrabTransform(Rigidbody body) {
+    public Transform GrabTransform() {
         return centerTransform;
     }
 

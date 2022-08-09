@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using JigglePhysics;
 using Naelstrof.BodyProportion;
 using Photon.Pun;
 using Photon.Realtime;
@@ -33,6 +34,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
+
+    private List<JigglePhysics.JiggleRigBuilder> jiggleRigs;
 
 
     private class SavedJointAnchor {
@@ -103,6 +106,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
+        jiggleRigs = new List<JiggleRigBuilder>(GetComponentsInChildren<JiggleRigBuilder>());
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -138,6 +142,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
     }
     void LateUpdate() {
+        foreach (JiggleRigBuilder builder in jiggleRigs) {
+            builder.interpolate = photonView.IsMine;
+        }
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }

@@ -213,8 +213,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
 
         public bool Valid() {
             bool valid = body != null && owner != null && photonView != null && joint != null;
-            if (Time.time - creationTime > 2f && owner.photonView.IsMine) {
-                valid &= photonView.IsMine;
+            if (Time.time - creationTime > 2f) {
+                valid &= photonView.Owner == owner.photonView.Owner;
             }
             return valid;
         }

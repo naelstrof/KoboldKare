@@ -16,24 +16,20 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         public Material defaultMaterial;
     }
     public RendererMaterialPair[] rendererMaterialPairs;
-    public KoboldEvent onGrab;
-    public KoboldEvent onRelease;
-    public KoboldEvent onThrow;
-    public Rigidbody[] bodies;
     public Renderer[] renderers;
     public Transform center;
     //public GrabbableType grabbableType;
-    public bool OnGrab(Kobold kobold) {
-        onGrab.Invoke(kobold);
+    public bool CanGrab(Kobold kobold) {
+        return true;
+    }
+
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {
                 pair.renderer.material = pair.pickedUpMaterial;
             }
         }
-        if (kobold.photonView.IsMine) {
-            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-        }
-        return true;
     }
 
     public void Start() {
@@ -42,37 +38,18 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         }
     }
 
-    public void OnRelease(Kobold kobold) {
-        onRelease.Invoke(kobold);
+    [PunRPC]
+    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {
                 pair.renderer.material = pair.defaultMaterial;
             }
         }
     }
-    public void OnThrow(Kobold kobold) {
-        onThrow.Invoke(kobold);
-    }
-    public Vector3 GrabOffset() {
-        return Vector3.zero;
-    }
-
-    public Rigidbody[] GetRigidBodies() {
-        return bodies;
-    }
-
-    public Renderer[] GetRenderers() {
-        return renderers;
-    }
-
-    public Transform GrabTransform(Rigidbody r) {
+    public Transform GrabTransform() {
         return center;
     }
 
-    //Deprecated
-    /*public GrabbableType GetGrabbableType() {
-        return grabbableType;
-    }*/
     void OnValidate() {
         if (renderers == null) {
             return;

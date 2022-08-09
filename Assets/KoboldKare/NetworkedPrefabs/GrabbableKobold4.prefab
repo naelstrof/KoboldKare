@@ -3103,7 +3103,7 @@ MonoBehaviour:
   back: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   pGrabber: {fileID: 2493919414808592328}
   dickErectionHidable: {fileID: 5893451608039140927}
-  grabber: {fileID: 6162965588660380068}
+  grabber: {fileID: 1411952015512140395}
   eyes: {fileID: 7579450968131491077}
   inputRagdolled: 0
   controller: {fileID: 8398179079861015653}
@@ -10917,16 +10917,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8365801439791401051}
-  - component: {fileID: 6162965588660380068}
-  - component: {fileID: 4355614334151498835}
-  - component: {fileID: 6045102104482243314}
   m_Layer: 16
   m_Name: Grabber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8365801439791401051
 Transform:
   m_ObjectHideFlags: 0
@@ -10942,129 +10939,6 @@ Transform:
   m_Father: {fileID: 1580927918472896871}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6162965588660380068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6090867914755286857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e2c51c4a521dfb41bada63070112db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 3498030196438502570}
-  maxGrabCount: 1
-  body: {fileID: 4355614334151498835}
-  springStrength: 800
-  dampingStrength: 0.4
-  throwStrength: 15
-  droppedHighQualityTime: 10
-  thrownUntouchableTime: 0.5
-  weaponSeparation: 0.7
-  cam: {fileID: 1580927918472896871}
-  OnEnterGrabbable:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExitGrabbable:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDrop:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4128439109590461521}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 9146672426307275835}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnGrabThrowable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9146672426307275835}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnGrabActivatable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4128439109590461521}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  grabbing: 0
-  activating: 0
---- !u!54 &4355614334151498835
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6090867914755286857}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!136 &6045102104482243314
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6090867914755286857}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 2
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.25}
 --- !u!1 &6216353373607515827
 GameObject:
   m_ObjectHideFlags: 0
@@ -14545,6 +14419,7 @@ GameObject:
   - component: {fileID: 6898602022436028164}
   - component: {fileID: 2493919414808592328}
   - component: {fileID: 5060642094230713381}
+  - component: {fileID: 1411952015512140395}
   m_Layer: 9
   m_Name: GrabbableKobold4
   m_TagString: Player
@@ -14701,7 +14576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   koboldStatus: {fileID: 11400000, guid: 034c23eea8c98044da5255cb9e8983d9, type: 2}
-  nextEggTime: 0
   penetratables:
   - penetratable: {fileID: 4863948698846290488}
     ragdollAttachBody: {fileID: 139429597399395155}
@@ -15011,9 +14885,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   activeDicks: []
-  grabbableBodies:
-  - {fileID: 4787937348439926609}
-  - {fileID: 139429597399395155}
   koboldBodyRenderers:
   - {fileID: 6506915555087688956}
   - {fileID: 2780399689652382999}
@@ -15021,28 +14892,10 @@ MonoBehaviour:
   - {fileID: 6506915555090380244}
   - {fileID: 6506915555090380242}
   hip: {fileID: 6506915555090380208}
-  playerHitMask:
-    serializedVersion: 2
-    m_Bits: 512
   controller: {fileID: 8398179079861015653}
   stimulation: 0
   stimulationMax: 10
   stimulationMin: -50
-  SpawnEggEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4334963843647635989}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Spawn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   uprightForce: 10
   koboldAnimator: {fileID: 6506915555083475516}
   arousal: 0
@@ -15307,6 +15160,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bec126ff23eeab4aa8cb3ec7382c4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1411952015512140395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587189159933912498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2c51c4a521dfb41bada63070112db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 3498030196438502570}
+  springStrength: 800
+  dampingStrength: 0.4
+  view: {fileID: 8365801439791401051}
 --- !u!1 &8649843185144007013
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ using Naelstrof.Inflatable;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
+public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
@@ -23,7 +23,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     public delegate void EnergyChangedAction(int value, int maxValue);
     public event EnergyChangedAction energyChanged;
 
-    public float nextEggTime;
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
 
     public List<Transform> attachPoints = new List<Transform>();
@@ -64,18 +63,15 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
     public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
     private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
-    public Rigidbody[] grabbableBodies;
     public List<Renderer> koboldBodyRenderers;
     private float internalSex = 0f;
     [SerializeField]
     private List<Transform> nipples;
     public Transform hip;
-    public LayerMask playerHitMask;
     public KoboldCharacterController controller;
     public float stimulation = 0f;
     public float stimulationMax = 30f;
     public float stimulationMin = -30f;
-    public UnityEvent SpawnEggEvent;
     public float uprightForce = 10f;
     public Animator koboldAnimator;
     private float lastPumpTime = 0f;
@@ -290,20 +286,16 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             PhotonNetwork.CleanRpcBufferIfMine(photonView);
         }
     }
-    public bool OnGrab(Kobold kobold) {
-        //onGrabEvent.Invoke(kobold, transform.position);
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
         grabbed = true;
-        //KnockOver(999999f);
-        //modeSave = animator.updateMode;
-        //animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         animator.SetBool("Carried", true);
-        //pickedUp = 1;
-        //transSpeed = 5.0f;
-        //GetComponent<CharacterControllerAnimator>().OnEndStation();
-        photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
-        return true;
+        
+        if (photonView.IsMine) {
+            photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+        }
     }
     public void PumpUpDick(float amount) {
         if (amount > 0 ) {
@@ -317,27 +309,38 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         yield return new WaitForSeconds(3f);
         photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
-    public void OnRelease(Kobold kobold) {
-        //animator.updateMode = modeSave;
-        animator.SetBool("Carried", false);
-        if (body.velocity.magnitude > 3f) {
-            StartCoroutine(ThrowRoutine());
-        } else {
-            if (photonView.IsMine) {
-                foreach (Collider c in Physics.OverlapSphere(transform.position, 1f, GameManager.instance.usableHitMask,
-                             QueryTriggerInteraction.Collide)) {
-                    GenericUsable usable = c.GetComponentInParent<GenericUsable>();
-                    if (usable != null && usable.CanUse(this)) {
-                        usable.LocalUse(this);
-                        break;
-                    }
-                }
-            }
 
-            controller.enabled = true;
-        }
+    public bool CanGrab(Kobold kobold) {
+        return !controller.inputJump;
+    }
+
+    [PunRPC]
+    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+        animator.SetBool("Carried", false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
+        
+        if (!photonView.IsMine) {
+            return;
+        }
+
+        foreach (Rigidbody b in ragdoller.GetRagdollBodies()) {
+            b.velocity = velocity;
+        }
+
+        if (velocity.magnitude > 3f) {
+            StartCoroutine(ThrowRoutine());
+        } else {
+            foreach (Collider c in Physics.OverlapSphere(transform.position, 1f, GameManager.instance.usableHitMask,
+                         QueryTriggerInteraction.Collide)) {
+                GenericUsable usable = c.GetComponentInParent<GenericUsable>();
+                if (usable != null && usable.CanUse(this)) {
+                    usable.LocalUse(this);
+                    break;
+                }
+            }
+            controller.enabled = true;
+        }
     }
     private void Update() {
         // Throbbing!
@@ -399,12 +402,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         PumpUpDick(Time.deltaTime * 0.02f);
         uprightForce = Mathf.MoveTowards(uprightForce, 1f, Time.deltaTime*10f);
     }
-    public void OnInteract(Kobold k) {
-        grabbed = true;
-        if (k != this) {
-            controller.frictionMultiplier = 0.1f;
-        }
-    }
     public bool IsPenetrating(Kobold k) {
         //TODO: add functionality so we can determine if which dick is penetrated where.
         /*foreach(var penetratable in k.penetratables) {
@@ -416,27 +413,10 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
         }*/
         return false;
     }
-    public void OnEndInteract() {
-        grabbed = false;
-        controller.frictionMultiplier = 1f;
-    }
-    public bool ShowHand() { return true; }
 
     public bool PhysicsGrabbable() { return true; }
-    public Rigidbody[] GetRigidBodies() {
-        return grabbableBodies;
-    }
-
-    public Renderer[] GetRenderers() {
-        return new Renderer[]{};
-    }
-
-    public Transform GrabTransform(Rigidbody b) {
-        if (!body.isKinematic) {
-            return hip;
-        } else {
-            return b.transform;
-        }
+    public Transform GrabTransform() {
+        return hip;
     }
     private float FloorNearestPower(float baseNum, float target) {
         float f = baseNum;
@@ -518,9 +498,6 @@ public class Kobold : GeneHolder, IGrabbable, IAdvancedInteractable, IPunObserva
             SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
         }
-    }
-
-    public void OnThrow(Kobold kobold) {
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {

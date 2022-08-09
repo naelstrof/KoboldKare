@@ -300,7 +300,6 @@ GameObject:
   - component: {fileID: 5188416680422134664}
   - component: {fileID: 2025816335358319480}
   - component: {fileID: 2263348267929744935}
-  - component: {fileID: 9021676442977306280}
   - component: {fileID: 6271754350014679978}
   - component: {fileID: 7581115830138266041}
   - component: {fileID: 2979656578513687964}
@@ -409,36 +408,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2619086233303812490, guid: e537db329b774c24c81994da704682f3, type: 3}
---- !u!114 &9021676442977306280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5980790248163668573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff2077553cbfbc45a23c26746bb92dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rendererMaterialPairs:
-  - renderer: {fileID: 5188416680422134664}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: acbc8f68102bc8f4fa0d6c15f5d2f2b7, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 2025816335358319480}
-  renderers:
-  - {fileID: 5188416680422134664}
-  center: {fileID: 6362418212345882855}
 --- !u!82 &6271754350014679978
 AudioSource:
   m_ObjectHideFlags: 0

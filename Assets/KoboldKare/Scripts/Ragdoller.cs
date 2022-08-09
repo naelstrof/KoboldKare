@@ -82,7 +82,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
                 body.isKinematic = !ragdolled;
-                body.interpolation = RigidbodyInterpolation.Interpolate;
+                body.interpolation = ragdolled ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
                 return;
             }
             body.isKinematic = true;

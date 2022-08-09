@@ -34,6 +34,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private AudioPack footstepPack;
 
     private Vector2 eyeRot;
+    private float speedLerp;
     private Vector2 networkedEyeRot;
     private float networkedAngle;
 
@@ -202,7 +203,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         Vector3 dir = Vector3.Normalize(velocity);
         //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
         dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
-        float speed = velocity.With(y:0).magnitude;
+        speedLerp = Mathf.MoveTowards(speedLerp, velocity.With(y: 0).magnitude, Time.deltaTime * 10f);
+        float speed = speedLerp;
         tempDir = Vector3.RotateTowards(tempDir, dir, Time.deltaTime * 10f, 0f);
         playerModel.SetFloat(MoveX, tempDir.x);
         playerModel.SetFloat(MoveY, tempDir.z);

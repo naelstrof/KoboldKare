@@ -7,7 +7,7 @@ using Photon.Realtime;
 using UnityEngine;
 
 public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable {
-    private JiggleRigBuilder[] jiggleRigs;
+    //private JiggleRigBuilder[] jiggleRigs;
     private struct Frame {
         public Vector3 position;
         public Quaternion rotation;
@@ -24,7 +24,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
 
     private void Awake() {
         body = GetComponent<Rigidbody>();
-        jiggleRigs = GetComponentsInChildren<JiggleRigBuilder>();
+        //jiggleRigs = GetComponentsInChildren<JiggleRigBuilder>();
         lastFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
         newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
     }
@@ -32,14 +32,14 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private void LateUpdate() {
         if (photonView.IsMine) {
             body.isKinematic = false;
-            foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
-                jiggleRig.interpolate = true;
-            }
+            //foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
+                //jiggleRig.interpolate = true;
+            //}
             return;
         }
-        foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
-            jiggleRig.interpolate = false;
-        }
+        //foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
+            //jiggleRig.interpolate = false;
+        //}
         body.isKinematic = true;
         double time = PhotonNetwork.Time - (1d/PhotonNetwork.SerializationRate);
         double diff = newFrame.time - lastFrame.time;

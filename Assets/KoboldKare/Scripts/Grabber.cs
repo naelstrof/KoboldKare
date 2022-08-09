@@ -31,6 +31,7 @@ public class Grabber : MonoBehaviourPun {
         private float dampingStrength;
         private bool valid = true;
         private Transform grabber;
+        private float grabTime;
         public GenericWeapon weapon { get; private set; }
         private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
             for(int i=0;i<t.childCount;i++ ) {
@@ -41,6 +42,7 @@ public class Grabber : MonoBehaviourPun {
             }
         }
         public GrabInfo(Kobold owner, Transform grabber, IGrabbable grabbable, float springStrength, float dampingStrength) {
+            grabTime = Time.time;
             this.grabber = grabber;
             this.owner = owner;
             this.grabbable = grabbable;
@@ -57,6 +59,7 @@ public class Grabber : MonoBehaviourPun {
             driverConstraint.connectedBody = grabber;
             driverConstraint.dampingStrength = dampingStrength;
             driverConstraint.softness = 1f;
+            grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
@@ -75,7 +78,12 @@ public class Grabber : MonoBehaviourPun {
         }
 
         public bool Valid() {
-            return ((Component)grabbable)!=null && driverConstraint != null && valid;
+            bool v = ((Component)grabbable)!=null && driverConstraint != null && valid;
+            if (v && Time.time - grabTime > 2f) {
+                v &= grabbable.photonView.IsMine;
+            }
+
+            return v;
         }
 
         public void Activate() {

@@ -319,7 +319,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         animator.SetBool("Carried", false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
-
+        controller.enabled = true;
         
         if (!photonView.IsMine) {
             return;
@@ -340,7 +340,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                     break;
                 }
             }
-            controller.enabled = true;
         }
     }
     private void Update() {

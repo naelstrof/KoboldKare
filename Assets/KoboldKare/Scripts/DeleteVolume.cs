@@ -23,6 +23,9 @@ public class DeleteVolume : MonoBehaviour {
             bucket.transform.position = bucketRespawnPoint.position;
             bucket.GetComponent<Rigidbody>().velocity = Vector3.zero;
         } else {
+            if (view.TryGetComponent(out Rigidbody body)) {
+                Debug.Log("Destroying view at " + view.transform.position + " going speed " + body.velocity.magnitude);
+            }
             PhotonNetwork.Destroy(view);
         }
     }

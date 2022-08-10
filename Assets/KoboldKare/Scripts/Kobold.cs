@@ -277,14 +277,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         MetabolizeEvent.AddListener(OnEventRaised);
         MidnightEvent.AddListener(OnMidnight);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
+        PlayAreaEnforcer.AddTrackedObject(photonView);
     }
     private void OnDestroy() {
         MetabolizeEvent.RemoveListener(OnEventRaised);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
         MidnightEvent.RemoveListener(OnMidnight);
-        if (photonView.IsMine && PhotonNetwork.InRoom) {
-            PhotonNetwork.CleanRpcBufferIfMine(photonView);
-        }
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     [PunRPC]
     public void OnGrabRPC(int koboldID) {

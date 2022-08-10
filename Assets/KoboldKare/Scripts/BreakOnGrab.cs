@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,13 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
     void Start() {
         source = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
+        PlayAreaEnforcer.AddTrackedObject(photonView);
     }
+
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+    }
+
     void SetState(bool newGrabbed) {
         if (grabbed == newGrabbed) {
             return;

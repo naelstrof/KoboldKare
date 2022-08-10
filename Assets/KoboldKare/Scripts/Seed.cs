@@ -59,6 +59,14 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         }
     }
 
+    void Start() {
+        PlayAreaEnforcer.AddTrackedObject(photonView);
+    }
+
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+    }
+
     IEnumerator WaitOnPlant() {
         waitingOnPlant = true;
         while (true) {

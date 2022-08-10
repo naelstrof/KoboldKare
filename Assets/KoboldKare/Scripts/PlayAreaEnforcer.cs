@@ -42,6 +42,7 @@ public class PlayAreaEnforcer : MonoBehaviour {
         wait = new WaitForSeconds(5f);
         OcclusionArea area = GetComponent<OcclusionArea>();
         bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
+        StartCoroutine(CheckForViolations());
     }
 
     IEnumerator CheckForViolations() {
@@ -52,6 +53,7 @@ public class PlayAreaEnforcer : MonoBehaviour {
                     PhotonNetwork.Destroy(trackedObjects[i]);
                     trackedObjects.RemoveAt(i--);
                 }
+                yield return null;
             }
         }
     }

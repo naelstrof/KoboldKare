@@ -33,6 +33,10 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         ignoreColliders ??= new HashSet<Collider>();
     }
 
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+    }
+
     void Update() {
         if (splashed) {
             return;
@@ -78,6 +82,7 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         splashSoundSource.playOnAwake = false;
         splashSoundSource.loop = false;
         splashSoundSource.rolloffMode = AudioRolloffMode.Linear;
+        PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnSplash() {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -36,6 +37,11 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         foreach(var pair in rendererMaterialPairs) {
             pair.defaultMaterial = pair.renderer.material;
         }
+        PlayAreaEnforcer.AddTrackedObject(photonView);
+    }
+
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
     [PunRPC]

@@ -9,12 +9,13 @@ using UnityEngine;
 public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
+    private Vector3 currentVelocity;
     private struct Frame {
         public Vector3 position;
         public Quaternion rotation;
-        public double time;
+        public float time;
 
-        public Frame(Vector3 pos, Quaternion rotation, double time) {
+        public Frame(Vector3 pos, Quaternion rotation, float time) {
             position = pos;
             this.rotation = rotation;
             this.time = time;
@@ -28,25 +29,26 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
         ragdoller = GetComponent<Ragdoller>();
         controllerAnimator = GetComponent<CharacterControllerAnimator>();
         
-        lastFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
-        newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
+        lastFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
+        newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
     }
     
     private void LateUpdate() {
         if (photonView.IsMine) {
             body.isKinematic = controllerAnimator.IsAnimating() || ragdoller.ragdolled;
+            currentVelocity = body.velocity;
             return;
         }
 
         body.isKinematic = true;
-        double time = PhotonNetwork.Time - (1d/PhotonNetwork.SerializationRate);
-        double diff = newFrame.time - lastFrame.time;
+        float time = Time.time - (1f/PhotonNetwork.SerializationRate);
+        float diff = newFrame.time - lastFrame.time;
         if (diff == 0f) {
             return;
         }
-        double t = (time - lastFrame.time) / diff;
-        //body.velocity = (newFrame.position - lastFrame.position) / (float)diff;
-        body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        float t = (time - lastFrame.time) / diff;
+        Vector3 desiredPosition = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        body.transform.position = Vector3.SmoothDamp(body.transform.position, desiredPosition, ref currentVelocity, 0.1f);
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
     }
     
@@ -56,11 +58,11 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
             stream.SendNext(body.transform.position);
             stream.SendNext(body.transform.rotation);
             lastFrame = newFrame;
-            newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time+(1d/PhotonNetwork.SerializationRate));
+            newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         } else {
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             lastFrame = newFrame;
-            newFrame = new Frame((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
+            newFrame = new Frame((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
         }
     }
 

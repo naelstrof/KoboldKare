@@ -52,12 +52,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     private class RigidbodyNetworkInfo {
         private struct Packet {
-            public Packet(double t, Vector3 p, Quaternion rot) {
+            public Packet(float t, Vector3 p, Quaternion rot) {
                 time = t;
                 networkedPosition = p;
                 networkedRotation = rot;
             }
-            public double time;
+            public float time;
             public Vector3 networkedPosition;
             public Quaternion networkedRotation;
         }
@@ -65,13 +65,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         public Rigidbody body { get; private set; }
         private Packet lastPacket;
         private Packet nextPacket;
-
         public RigidbodyNetworkInfo(Rigidbody body) {
             this.body = body;
-            lastPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
-            nextPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
+            lastPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
+            nextPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
         }
-        public void SetNetworkPosition(Vector3 position, Quaternion rotation, double time) {
+        public void SetNetworkPosition(Vector3 position, Quaternion rotation, float time) {
             lastPacket = nextPacket;
             nextPacket = new Packet(time, position, rotation);
         }
@@ -84,15 +83,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
-                double time = PhotonNetwork.Time - (1d / PhotonNetwork.SerializationRate);
-                double diff = nextPacket.time - lastPacket.time;
+                float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+                float diff = nextPacket.time - lastPacket.time;
                 if (diff == 0f) {
                     return;
                 }
-                double t = (time - lastPacket.time) / diff;
+                float t = (time - lastPacket.time) / diff;
                 //body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
                 body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
-                    nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+                                                              nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
                     nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
             }
@@ -257,19 +256,19 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                     Rigidbody ragbody = rigidbodyNetworkInfos[i].body;
                     stream.SendNext(ragbody.transform.position);
                     stream.SendNext(ragbody.transform.rotation);
-                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragbody.transform.position, ragbody.transform.rotation, PhotonNetwork.Time+(1d/PhotonNetwork.SerializationRate));
+                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragbody.transform.position, ragbody.transform.rotation, Time.time);
                 }
             }
         } else {
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             if ((bool)stream.ReceiveNext()) {
                 for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), info.SentServerTime+lag);
+                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
                 }
             } else {
                 for (int i = 0; i < ragdollBodies.Length; i++) {
                     rigidbodyNetworkInfos[i].SetNetworkPosition(ragdollBodies[i].transform.position,
-                        ragdollBodies[i].transform.rotation, info.SentServerTime + lag);
+                        ragdollBodies[i].transform.rotation, Time.time);
                 }
             }
         }

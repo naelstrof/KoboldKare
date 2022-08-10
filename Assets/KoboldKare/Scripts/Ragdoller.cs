@@ -65,8 +65,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         public Rigidbody body { get; private set; }
         private Packet lastPacket;
         private Packet nextPacket;
-        private Vector3 velocity;
-
         public RigidbodyNetworkInfo(Rigidbody body) {
             this.body = body;
             lastPacket = new Packet(PhotonNetwork.Time, body.transform.position, body.transform.rotation);
@@ -80,7 +78,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             if (ours) {
                 body.isKinematic = !ragdolled;
                 body.interpolation = ragdolled ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
-                velocity = body.velocity;
                 return;
             }
             body.isKinematic = true;
@@ -93,10 +90,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
                 double t = (time - lastPacket.time) / diff;
                 //body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
-                Vector3 desiredPosition = Vector3.LerpUnclamped(lastPacket.networkedPosition,
+                body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
                                                               nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
-                body.transform.position =
-                    Vector3.SmoothDamp(body.transform.position, desiredPosition, ref velocity, 0.1f);
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
                     nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
             }

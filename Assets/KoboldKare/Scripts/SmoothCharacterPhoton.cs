@@ -9,8 +9,6 @@ using UnityEngine;
 public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
-    [SerializeField, Range(0f,1f)]
-    private float smoothTime = 0.1f;
     private struct Frame {
         public Vector3 position;
         public Quaternion rotation;
@@ -49,8 +47,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
             return;
         }
         double t = (time - lastFrame.time) / diff;
-        Vector3 desiredPosition = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
-        body.transform.position = Vector3.SmoothDamp(body.transform.position, desiredPosition, ref currentVelocity, smoothTime);
+        body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
     }
     

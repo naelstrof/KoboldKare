@@ -21,6 +21,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     }
     private Frame lastFrame;
     private Frame newFrame;
+    private bool init = false;
 
     private void Awake() {
         body = GetComponent<Rigidbody>();
@@ -44,6 +45,8 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         float time = Time.time - (1f/PhotonNetwork.SerializationRate);
         float diff = newFrame.time - lastFrame.time;
         if (diff == 0f) {
+            body.transform.position = newFrame.position;
+            body.transform.rotation = newFrame.rotation;
             return;
         }
         float t = (time - lastFrame.time) / diff;
@@ -63,6 +66,10 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             lastFrame = newFrame;
             newFrame = new Frame((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
+            if (!init) {
+                lastFrame = newFrame;
+                init = true;
+            }
         }
     }
 

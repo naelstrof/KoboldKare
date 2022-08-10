@@ -35,7 +35,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
         newFrame = new Frame(body.transform.position, body.transform.rotation, PhotonNetwork.Time);
     }
     
-    private void Update() {
+    private void LateUpdate() {
         if (photonView.IsMine) {
             body.isKinematic = controllerAnimator.IsAnimating() || ragdoller.ragdolled;
             currentVelocity = body.velocity;
@@ -49,7 +49,6 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
             return;
         }
         double t = (time - lastFrame.time) / diff;
-        //body.velocity = (newFrame.position - lastFrame.position) / (float)diff;
         Vector3 desiredPosition = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
         body.transform.position = Vector3.SmoothDamp(body.transform.position, desiredPosition, ref currentVelocity, smoothTime);
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));

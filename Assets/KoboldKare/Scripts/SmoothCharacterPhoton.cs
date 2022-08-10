@@ -22,7 +22,6 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
     }
     private Frame lastFrame;
     private Frame newFrame;
-    private Vector3 currentVelocity;
 
     private void Awake() {
         body = GetComponent<Rigidbody>();
@@ -36,7 +35,6 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
     private void LateUpdate() {
         if (photonView.IsMine) {
             body.isKinematic = controllerAnimator.IsAnimating() || ragdoller.ragdolled;
-            currentVelocity = body.velocity;
             return;
         }
 
@@ -47,8 +45,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
             return;
         }
         float t = (time - lastFrame.time) / diff;
-        Vector3 desiredPosition = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
-        body.transform.position = Vector3.SmoothDamp(body.transform.position, desiredPosition, ref currentVelocity, 0.1f);
+        body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
     }
     

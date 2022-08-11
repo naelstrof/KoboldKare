@@ -220,7 +220,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
         float speedTarget = velocity.With(y: 0).magnitude;
         speedTarget *= Mathf.Lerp(standingAnimationSpeedMultiplier, crouchedAnimationSpeedMultiplier,
-            controller.inputCrouched);
+            controller.GetInputCrouched());
         if (controller.inputWalking) {
             speedTarget *= walkingAnimationSpeedMultiplier;
         }

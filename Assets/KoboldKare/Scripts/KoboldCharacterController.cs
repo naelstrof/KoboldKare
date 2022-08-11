@@ -104,7 +104,17 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     // Inputs, controlled by external player or AI script
     public Vector3 inputDir = new Vector3(0, 0, 0);
     public bool inputJump = false;
-    public float inputCrouched = 0f;
+    private float inputCrouched = 0f;
+    private float targetCrouched;
+    private float targetCrouchedVel;
+
+    public void SetInputCrouched(float input) {
+        targetCrouched = Mathf.Clamp01(input);
+    }
+    public float GetInputCrouched() {
+        return targetCrouched;
+    }
+
     public bool inputWalking = false;
 
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
@@ -284,6 +294,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (!enabled) {
             return;
         }
+
+        inputCrouched = Mathf.SmoothDamp(inputCrouched, targetCrouched, ref targetCrouchedVel, 0.1f);
         CheckCrouched();
     }
 
@@ -380,12 +392,12 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
 
     public void Save(BinaryWriter writer, string version) {
         writer.Write(inputJump);
-        writer.Write(inputCrouched);
+        writer.Write(targetCrouched);
     }
 
     public void Load(BinaryReader reader, string version) {
         inputJump = reader.ReadBoolean();
-        inputCrouched = reader.ReadSingle();
+        targetCrouched = reader.ReadSingle();
     }
 
 }

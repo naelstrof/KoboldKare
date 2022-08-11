@@ -1,18 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
 
-public class ReagentScanner : GenericWeapon, IValuedGood {
+public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
     public bool firing = false;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private Transform center;
     public GameObject canvas;
     public GameObject scannerDisplay;
     public GameObject idleDisplay;
@@ -55,6 +53,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
             yield return new WaitForSeconds(scanDelay);
         }
     }
+    [PunRPC]
     protected override void OnFireRPC(int playerViewID) {
         base.OnFireRPC(playerViewID);
         if (firing) {
@@ -84,14 +83,9 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
         StopAllCoroutines();
         StartCoroutine(RenderScreen(allReagents));
     }
+    [PunRPC]
     protected override void OnEndFireRPC(int viewID) {
         firing = false;
-    }
-    public void Pickup() {
-        animator.SetBool("Open", true);
-    }
-    public void Drop() {
-        animator.SetBool("Open", false);
     }
     public Vector3 GetWeaponPositionOffset(Transform grabber) {
         return (grabber.up * 0.1f + grabber.right * 0.5f - grabber.forward * 0.25f);
@@ -102,5 +96,23 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
     }
     public float GetWorth() {
         return 15f;
+    }
+
+    public bool CanGrab(Kobold kobold) {
+        return true;
+    }
+
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
+        animator.SetBool("Open", true);
+    }
+
+    [PunRPC]
+    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+        animator.SetBool("Open", false);
+    }
+
+    public Transform GrabTransform() {
+        return center;
     }
 }

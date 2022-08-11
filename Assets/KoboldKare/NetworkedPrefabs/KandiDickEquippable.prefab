@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4263533027581283171}
   - component: {fileID: 8191208221300011646}
   - component: {fileID: 7132090685560837831}
+  - component: {fileID: 5736165027386625321}
   m_Layer: 25
   m_Name: KandiDickEquippable
   m_TagString: Aimable
@@ -372,6 +373,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5736165027386625321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729554680024515055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc569ccf1378b244eadf40d9dc050361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4536115493133135086

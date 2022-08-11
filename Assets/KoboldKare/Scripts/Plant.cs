@@ -104,7 +104,7 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
                 foreach(var produce in newPlant.produces) {
                     int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
                     for(int i=0;i<max;i++) {
-                        GameObject obj = PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{GetGenes(), false});
+                        GameObject obj = PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName, transform.position, Quaternion.identity, 0, new object[]{GetGenes(), false});
                     }
                 }
             }

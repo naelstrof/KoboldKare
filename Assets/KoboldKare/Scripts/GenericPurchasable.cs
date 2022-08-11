@@ -80,7 +80,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         if (CanUse(k)) {
             photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
             k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
-            PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
         }
     }
     public override bool CanUse(Kobold k) {

@@ -261,6 +261,31 @@ public class DickInfo : MonoBehaviour {
 
             set.dick.listeners.Add(new KoboldDickListener(k,set));
             k.activeDicks.Add(set);
+            set.dick.penetrationStart += (Penetrable p) => {
+                if (!k.photonView.IsMine) {
+                    return;
+                }
+
+                int dicksetID = -1;
+                for (int i = 0; i < k.activeDicks.Count; i++) {
+                    if (set == k.activeDicks[i]) {
+                        dicksetID = i;
+                        break;
+                    }
+                }
+
+                if (dicksetID == -1) {
+                    return;
+                }
+
+                PhotonView other = p.GetComponentInParent<PhotonView>();
+                Penetrable[] penetrables = p.GetComponentsInChildren<Penetrable>();
+                for (int i = 0; i < penetrables.Length; i++) {
+                    if (p == penetrables[i]) {
+                        k.photonView.RPC(nameof(Kobold.PenetrateRPC), RpcTarget.Others, other.ViewID, dicksetID, i);
+                    }
+                }
+            };
             // Make sure the dick is the right color, this just forces a reset of most stats
             k.SetGenes(k.GetGenes());
         }

@@ -12704,7 +12704,7 @@ MonoBehaviour:
     m_Bits: 3072
   waterSprayHitMask:
     serializedVersion: 2
-    m_Bits: 33565696
+    m_Bits: 33696768
   plantHitMask:
     serializedVersion: 2
     m_Bits: 1024

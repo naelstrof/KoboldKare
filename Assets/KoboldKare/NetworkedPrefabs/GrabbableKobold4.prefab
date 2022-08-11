@@ -3111,7 +3111,6 @@ MonoBehaviour:
   body: {fileID: 4787937348439926609}
   animator: {fileID: 6506915555083475516}
   playerDieEvent: {fileID: 11400000, guid: 01668319808ee8c48b1c39fc22f6ff84, type: 2}
-  mouseAttached: 1
   localGameObjects:
   - {fileID: 2219152348493251986}
   - {fileID: 6596384247582581065}
@@ -14507,7 +14506,7 @@ MonoBehaviour:
   inputWalking: 0
   gravityMod: {x: 0, y: -4, z: 0}
   jumpStrength: 8
-  speed: 10
+  speed: 9
   crouchSpeed: 4
   walkSpeedMultiplier: 0.45
   accel: 8
@@ -14547,8 +14546,8 @@ MonoBehaviour:
   body: {fileID: 4787937348439926609}
   playerPossession: {fileID: 8319315006002239314}
   crouchedAnimationSpeedMultiplier: 0.5
-  walkingAnimationSpeedMultiplier: 3
-  standingAnimationSpeedMultiplier: 0.1
+  walkingAnimationSpeedMultiplier: 2.5
+  standingAnimationSpeedMultiplier: 0.13
 --- !u!136 &5005442867846444301
 CapsuleCollider:
   m_ObjectHideFlags: 0

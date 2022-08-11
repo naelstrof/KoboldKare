@@ -229,6 +229,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HipControl",
+                    "type": "Button",
+                    "id": "e17d208d-1160-491d-9bcd-96e1f73906fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -812,6 +821,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "UnfreezeAll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af3168a3-95df-4953-ba82-e5e330046948",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HipControl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13e6238d-9468-4dc7-b937-e35481597bca",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HipControl",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

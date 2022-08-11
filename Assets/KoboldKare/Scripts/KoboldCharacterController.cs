@@ -104,7 +104,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     // Inputs, controlled by external player or AI script
     public Vector3 inputDir = new Vector3(0, 0, 0);
     public bool inputJump = false;
-    public bool inputCrouched = false;
+    public float inputCrouched = 0f;
     public bool inputWalking = false;
 
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
@@ -184,7 +184,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     private void CheckCrouched() {
         // Calculate height difference of just the collider
         float oldHeight = collider.height;
-        collider.height = Mathf.MoveTowards(collider.height, inputCrouched ? crouchHeight : colliderFullHeight, Time.deltaTime*2f);
+        collider.height = Mathf.MoveTowards(collider.height, Mathf.Lerp( colliderFullHeight, crouchHeight, inputCrouched), Time.deltaTime*2f);
         float diff = (collider.height - oldHeight) / 2f;
         // If we're uncrouching and we hit something, undo the crouch progress.
         if (diff > 0 && Stuck()) {
@@ -374,7 +374,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
             stream.SendNext(this.inputCrouched);
         } else {
             inputJump = (bool)stream.ReceiveNext();
-            inputCrouched = (bool)stream.ReceiveNext();
+            inputCrouched = (float)stream.ReceiveNext();
         }
     }
 
@@ -385,7 +385,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
 
     public void Load(BinaryReader reader, string version) {
         inputJump = reader.ReadBoolean();
-        inputCrouched = reader.ReadBoolean();
+        inputCrouched = reader.ReadSingle();
     }
 
 }

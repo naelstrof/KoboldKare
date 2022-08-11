@@ -45,7 +45,6 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public Rigidbody body;
     public Animator animator;
     public GameEventVector3 playerDieEvent;
-    public bool mouseAttached = true;
     public List<GameObject> localGameObjects = new List<GameObject>();
     public GameObject grabPrompt;
     public GameObject equipmentUI;
@@ -53,6 +52,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     private bool pauseInput;
     private bool rotating;
     private bool grabbing;
+    private bool trackingHip;
     public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
     public void OnPause() {
         if (equipmentUI.activeInHierarchy) {
@@ -119,6 +119,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["Unfreeze"].performed += OnUnfreezeInput;
         controls.actions["UnfreezeAll"].performed += OnUnfreezeAllInput;
         controls.actions["Grab Push and Pull"].performed += OnGrabPushPull;
+        controls.actions["HipControl"].performed += OnActivateHipInput;
+        controls.actions["HipControl"].canceled += OnCanceledHipInput;
     }
 
     private void OnDisable() {
@@ -135,6 +137,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["Unfreeze"].performed -= OnUnfreezeInput;
         controls.actions["UnfreezeAll"].performed -= OnUnfreezeAllInput;
         controls.actions["Grab Push and Pull"].performed -= OnGrabPushPull;
+        controls.actions["HipControl"].performed -= OnActivateHipInput;
+        controls.actions["HipControl"].canceled -= OnCanceledHipInput;
     }
 
     private void OnDestroy() {
@@ -153,16 +157,11 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     private Vector2 eyeRot;
 
     private void Look(Vector2 delta) {
-        if (mouseAttached) {
+        if (!rotating && !trackingHip) {
             eyeRot += delta;
         }
         eyeRot.y = Mathf.Clamp(eyeRot.y, -90f, 90f);
-        while(eyeRot.x > 360 ) {
-            eyeRot.x -= 360;
-        }
-        while (eyeRot.x < 0) {
-            eyeRot.x += 360;
-        }
+        eyeRot.x = Mathf.Repeat(eyeRot.x, 360f);
     }
 
     void PlayerProcessing() {
@@ -176,8 +175,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
 
         //pGrabber.inputRotation = rotate;
         Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
-        
-        
+        if (trackingHip) {
+            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.025f);
+        }
+
         if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.value)) {
             Look(mouseDelta * mouseSensitivity.value);
         }
@@ -258,7 +259,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controller.inputWalking = value.Get<float>() > 0f;
     }
     public void OnCrouch(InputValue value) {
-        controller.inputCrouched = value.Get<float>() > 0f;
+        controller.inputCrouched = value.Get<float>();
     }
     public void OnGib() {
         //playerDieEvent.Raise(transform.position);
@@ -273,6 +274,14 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         if (switchedMode) {
             pGrabber.TryGrab();
         }
+    }
+    
+    public void OnActivateHipInput(InputAction.CallbackContext ctx) {
+        trackingHip = true;
+    }
+    
+    public void OnCanceledHipInput(InputAction.CallbackContext ctx) {
+        trackingHip = false;
     }
 
     public void OnGrabCancelled(InputAction.CallbackContext ctx) {
@@ -289,7 +298,10 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public void OnGrabPushPull(InputAction.CallbackContext ctx) {
-        pGrabber.TryAdjustDistance(ctx.ReadValue<float>() * 0.0005f);
+        float delta = ctx.ReadValue<float>();
+        if (!pGrabber.TryAdjustDistance(delta * 0.0005f)) {
+            controller.inputCrouched = Mathf.Clamp01(controller.inputCrouched - delta * 0.0005f);
+        }
     }
 
     public void OnActivateGrabInput(InputAction.CallbackContext ctx) {

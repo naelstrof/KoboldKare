@@ -536,5 +536,15 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
     
+    [PunRPC]
+    public void PenetrateRPC(int viewID, int dickID, int penetrableID) {
+        PhotonView other = PhotonNetwork.GetPhotonView(viewID);
+        Penetrable[] penetrables = other.GetComponentsInChildren<Penetrable>();
+        // Only penetrate if we already aren't
+        if (!activeDicks[dickID].dick.TryGetPenetrable(out Penetrable checkPen) || checkPen != penetrables[penetrableID]) {
+            activeDicks[dickID].dick.Penetrate(penetrables[penetrableID]);
+        }
+    }
+    
     
 }

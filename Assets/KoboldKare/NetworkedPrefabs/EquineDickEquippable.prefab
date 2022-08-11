@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 1456796671891264916}
   - component: {fileID: 2526945743667253145}
   - component: {fileID: 4629107860876871005}
+  - component: {fileID: 293259445133589673}
   m_Layer: 25
   m_Name: EquineDickEquippable
   m_TagString: Aimable
@@ -409,6 +410,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &293259445133589673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729554680024515055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc569ccf1378b244eadf40d9dc050361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3939921757936250936

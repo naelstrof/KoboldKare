@@ -514,13 +514,23 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
 
         bool foundGrabs = false;
         RaycastHit hit = testHit.Value;
-        hit.collider.GetComponentInParent<PhotonView>();
         for(int i=0;i<frozenGrabs.Count;i++) {
             Grab frozenGrab = frozenGrabs[i];
             if (frozenGrab.body == hit.rigidbody) {
-                frozenGrab.Release();
-                frozenGrabs.RemoveAt(i--);
+                //frozenGrab.Release();
+                //frozenGrabs.RemoveAt(i--);
                 foundGrabs = true;
+            }
+        }
+        
+        PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
+        if (foundGrabs) {
+            Rigidbody[] bodies = otherView.GetComponentsInChildren<Rigidbody>();
+            for (int i = 0; i < bodies.Length; i++) {
+                if (hit.rigidbody == bodies[i]) {
+                    photonView.RPC(nameof(UnfreezeRPC), RpcTarget.All, otherView.ViewID, i);
+                    break;
+                }
             }
         }
 

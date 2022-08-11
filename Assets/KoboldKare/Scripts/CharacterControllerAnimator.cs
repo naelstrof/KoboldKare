@@ -37,6 +37,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private float speedLerp;
     private Vector2 networkedEyeRot;
     private float networkedAngle;
+    private Vector2 hipVectorVelocity;
+    private Vector2 hipVector;
+    private Vector2 desiredHipVector;
 
     private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
     private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
@@ -58,6 +61,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int MadHappy = Animator.StringToHash("MadHappy");
     private static readonly int MoveX = Animator.StringToHash("MoveX");
     private static readonly int MoveY = Animator.StringToHash("MoveY");
+    private static readonly int ThrustX = Animator.StringToHash("ThrustX");
+    private static readonly int ThrustY = Animator.StringToHash("ThrustY");
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
@@ -157,11 +162,21 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         return animating;
     }
 
+    public void SetHipVector(Vector2 newHipVector) {
+        this.desiredHipVector = Vector2.ClampMagnitude(newHipVector, 1f);
+    }
+    public Vector2 GetHipVector() {
+        return desiredHipVector;
+    }
+
     void Update() {
         if (!photonView.IsMine) {
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
         }
+        hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);
         if (kobold != null) {
+            playerModel.SetFloat(ThrustX, hipVector.x);
+            playerModel.SetFloat(ThrustY, hipVector.y);
             float maxPen = 0f;
             playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
@@ -203,22 +218,19 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         Vector3 dir = Vector3.Normalize(velocity);
         //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
         dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
-        speedLerp = Mathf.MoveTowards(speedLerp, velocity.With(y: 0).magnitude, Time.deltaTime * 10f);
+        float speedTarget = velocity.With(y: 0).magnitude;
+        speedTarget *= Mathf.Lerp(standingAnimationSpeedMultiplier, crouchedAnimationSpeedMultiplier,
+            controller.inputCrouched);
+        if (controller.inputWalking) {
+            speedTarget *= walkingAnimationSpeedMultiplier;
+        }
+        speedLerp = Mathf.MoveTowards(speedLerp, speedTarget, Time.deltaTime * 10f);
         float speed = speedLerp;
         tempDir = Vector3.RotateTowards(tempDir, dir, Time.deltaTime * 10f, 0f);
         playerModel.SetFloat(MoveX, tempDir.x);
         playerModel.SetFloat(MoveY, tempDir.z);
-        float s = speed;
-        if (controller.inputCrouched ) {
-            s *= crouchedAnimationSpeedMultiplier;
-        } else {
-            s *= standingAnimationSpeedMultiplier;
-        }
-        if (controller.inputWalking) {
-            s *= walkingAnimationSpeedMultiplier;
-        }
-        s /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
-        playerModel.SetFloat(Speed, s);
+        speed /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
+        playerModel.SetFloat(Speed, speed);
         if (controller.enabled) {
             walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
         } else {
@@ -300,6 +312,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(eyeRot);
+            stream.SendNext(hipVector);
         } else {
             networkedEyeRot = (Vector2)stream.ReceiveNext();
             if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
@@ -309,6 +322,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
                 networkedEyeRot.x += 360f;
             }
             networkedAngle = Vector2.Distance(networkedEyeRot, eyeRot);
+            desiredHipVector = (Vector2)stream.ReceiveNext();
         }
     }
     public void Save(BinaryWriter writer, string version) {

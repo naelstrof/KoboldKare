@@ -82,6 +82,7 @@ GameObject:
   - component: {fileID: 2058595017713375072}
   - component: {fileID: 6100834277563893051}
   - component: {fileID: 4247687860692242341}
+  - component: {fileID: 6681240630547057788}
   m_Layer: 25
   m_Name: TaperedDickEquippable
   m_TagString: Untagged
@@ -399,6 +400,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6681240630547057788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5828591206539305778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc569ccf1378b244eadf40d9dc050361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2622365803986604249

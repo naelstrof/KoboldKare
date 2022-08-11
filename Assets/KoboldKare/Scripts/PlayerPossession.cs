@@ -53,6 +53,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     private bool rotating;
     private bool grabbing;
     private bool trackingHip;
+    private float targetCrouch;
+    private float targetCrouchVel;
     public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
     public void OnPause() {
         if (equipmentUI.activeInHierarchy) {
@@ -176,7 +178,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         //pGrabber.inputRotation = rotate;
         Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
         if (trackingHip) {
-            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.025f);
+            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.015f);
         }
 
         if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.value)) {
@@ -231,6 +233,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
         }
+        controller.inputCrouched = Mathf.SmoothDamp(controller.inputCrouched, targetCrouch, ref targetCrouchVel, 0.1f);
         if (kobold.activeDicks.Count > 0 && !dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(true);
         }
@@ -259,7 +262,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controller.inputWalking = value.Get<float>() > 0f;
     }
     public void OnCrouch(InputValue value) {
-        controller.inputCrouched = value.Get<float>();
+        //controller.inputCrouched = value.Get<float>();
+        targetCrouch = Mathf.Clamp01(value.Get<float>());
     }
     public void OnGib() {
         //playerDieEvent.Raise(transform.position);
@@ -300,7 +304,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public void OnGrabPushPull(InputAction.CallbackContext ctx) {
         float delta = ctx.ReadValue<float>();
         if (!pGrabber.TryAdjustDistance(delta * 0.0005f)) {
-            controller.inputCrouched = Mathf.Clamp01(controller.inputCrouched - delta * 0.0005f);
+            targetCrouch = Mathf.Clamp01(targetCrouch - delta * 0.0005f);
         }
     }
 

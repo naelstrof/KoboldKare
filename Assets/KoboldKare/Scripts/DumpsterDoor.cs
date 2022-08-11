@@ -26,11 +26,9 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
     private Animator targetAnimator;
     [SerializeField]
     private PhotonGameObjectReference moneyPile;
-    private float payout;
+    //private float payout;
     [SerializeField]
     private Transform payoutLocation;
-    [SerializeField]
-    private GameEventGeneric midnight;
 
     private static readonly int Ready = Animator.StringToHash("Ready");
     public delegate void SellObjectAction(GameObject obj, float moneyGained);
@@ -49,7 +47,7 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
         for(;f<=target;f*=baseNum) {}
         return f/baseNum;
     }
-    private void OnMidnight(object ignore) {
+    /*private void OnMidnight(object ignore) {
         if (!photonView.IsMine) {
             return;
         }
@@ -64,13 +62,26 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
             i++;
         }
         targetAnimator.SetBool(Ready, false);
+    }*/
+
+    private IEnumerator WaitAndPay(float newPayout) {
+        yield return new WaitForSeconds(30f);
+        if (!photonView.IsMine) {
+            yield break;
+        }
+        int i = 0;
+        while(newPayout > 0f) {
+            float currentPayout = FloorNearestPower(5f,newPayout);
+            //currentPayout = Mathf.Min(payout, currentPayout);
+            newPayout -= currentPayout;
+            newPayout = Mathf.Max(newPayout,0f);
+            float up = Mathf.Floor((float)i/4f)*0.2f;
+            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
+            i++;
+        }
+        targetAnimator.SetBool(Ready, false);
     }
-    private void Awake() {
-        midnight.AddListener(OnMidnight);
-    }
-    private void OnDestroy() {
-        midnight.RemoveListener(OnMidnight);
-    }
+
     private void Check(Collider other) {
         if (!layerMask.Contains(other.gameObject.layer)) {
             return;
@@ -112,7 +123,7 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
             moneyBlips.clip = playback;
             moneyBlips.Play();
             targetAnimator.SetBool(Ready, true);
-            payout += totalWorth;
+            StartCoroutine(WaitAndPay(totalWorth));
         }
         soldObject?.Invoke(view.gameObject, totalWorth);
         if (view.IsMine) {
@@ -134,16 +145,9 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(payout);
-        } else {
-            payout = (float)stream.ReceiveNext();
-        }
     }
     public override void Save(BinaryWriter writer, string version) {
-        writer.Write(payout);
     }
     public override void Load(BinaryReader reader, string version) {
-        payout = reader.ReadSingle();
     }
 }

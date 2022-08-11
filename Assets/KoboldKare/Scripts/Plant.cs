@@ -10,8 +10,6 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
-    [SerializeField]
-    private GameEventGeneric midnightEvent;
 
     [SerializeField]
     public float timeToFadeWatered;
@@ -41,7 +39,6 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
             Debug.LogWarning("[Plant] :: Attempted to refresh link to container but failed as container was not on same-level as Plant or does not exist");
         }
         container.OnFilled.AddListener(OnFilled);
-        midnightEvent.AddListener(OnEventRaised);
         if(!spawnedFromLoad){
             SwitchTo(plant);
         }
@@ -52,7 +49,11 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
 
     void OnDestroy() {
         container.OnFilled.RemoveListener(OnFilled);
-        midnightEvent.RemoveListener(OnEventRaised);
+    }
+
+    IEnumerator GrowRoutine() {
+        yield return new WaitForSeconds(30f);
+        OnEventRaised(null);
     }
 
     void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
@@ -67,6 +68,8 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
         audioSource.Play();
         effect.gameObject.SetActive(false);
         effect.gameObject.SetActive(true);
+        StopCoroutine(nameof(GrowRoutine));
+        StartCoroutine(nameof(GrowRoutine));
         //Debug.Log(gameObject.name+"'s container filled state is: "+container.isFull);
         //Debug.Log(gameObject.name+"'s contents: "+container.ToString());
     }
@@ -109,16 +112,15 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
                 }
             }
             plant = newPlant;
-        }
-        else{ // Behavior for when the plant is being spawned as part of deserialization and not spawning
-            // Plant == newPlant should always return true for deserialization, skip that step and assert
+        } else { // Behavior for when the plant is being spawned as part of deserialization and not spawning
+                 // Plant == newPlant should always return true for deserialization, skip that step and assert
             if(display == null){
                 Destroy(display);
             }
             if(newPlant.display != null){
                 display = GameObject.Instantiate(newPlant.display,transform);
             }
-                    //Don't fully replicate injection; no need to play hearts and poofs as if it were just watered.
+            //Don't fully replicate injection; no need to play hearts and poofs as if it were just watered.
             // Debug.Log("[Plant] :: <Deserialization> Running container check for isFull");
             if(container != null){
                 if(container.isFull){
@@ -143,13 +145,17 @@ public class Plant : GeneHolder, IPunObservable, IPunInstantiateMagicCallback, I
     }
 
     public void OnEventRaised(object e) {
+        if (!photonView.IsMine) {
+            return;
+        }
+
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
             PhotonNetwork.Destroy(gameObject);
             return;
         }
         if (container.isFull) {
             // Debug.Log("[Plant] Container was full, running SwitchTo() for next random generation");
-            container.Spill(container.volume);
+            photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.All, container.volume);
             SwitchTo(plant.possibleNextGenerations[UnityEngine.Random.Range(0, plant.possibleNextGenerations.Length)]);
         }
     }

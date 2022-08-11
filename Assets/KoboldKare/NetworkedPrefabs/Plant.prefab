@@ -628,7 +628,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
   container: {fileID: 2729919834162755298}
-  midnightEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
   timeToFadeWatered: 1
   darkenedColor: {r: 0.54257214, g: 0.5276344, b: 0.6698113, a: 1}
   effect: {fileID: 3845107737267702045}

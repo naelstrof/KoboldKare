@@ -21,8 +21,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             return display.activeInHierarchy;
         }
     }
-    [SerializeField]
-    private GameEventGeneric restockEvent;
     private GameObject display;
     private AudioSource source;
     [SerializeField]
@@ -41,9 +39,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         source.maxDistance = 25f;
         source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-        if (restockEvent != null) {
-            restockEvent.AddListener(OnRestock);
-        }
         SwapTo(purchasable, true);
     }
     public override Sprite GetSprite(Kobold k) {
@@ -65,9 +60,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         purchasableChanged?.Invoke(purchasable);
     }
     public virtual void OnDestroy() {
-        if (restockEvent != null) {
-            restockEvent.RemoveListener(OnRestock);
-        }
     }
     public virtual void OnRestock(object nothing) {
         if (!display.activeInHierarchy) {
@@ -92,6 +84,9 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         floater.gameObject.SetActive(false);
         purchased.Invoke();
         display.SetActive(false);
+        if (photonView.IsMine) {
+            StartCoroutine(Restock());
+        }
     }
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
@@ -114,5 +109,10 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         display.SetActive(reader.ReadBoolean());
         short currentPurchasable = (short)reader.ReadInt16();
         SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
+    }
+
+    private IEnumerator Restock() {
+        yield return new WaitForSeconds(30f);
+        OnRestock(null);
     }
 }

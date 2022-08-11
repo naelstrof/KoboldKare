@@ -31,7 +31,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public Animator animator;
     public Rigidbody body;
     public GameEventFloat MetabolizeEvent;
-    public GameEventGeneric MidnightEvent;
     
 
     public GenericReagentContainer bellyContainer { get; private set; }
@@ -235,6 +234,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
 
+    [PunRPC]
+    public void Rest() {
+        if (energy != GetGenes().maxEnergy) {
+            energy = GetGenes().maxEnergy;
+            energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+        }
+    }
+
     private void Awake() {
         ballsContents = new ReagentContents();
         ballsContents.changed += OnBallsContentsChanged;
@@ -275,14 +282,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     void Start() {
         lastPumpTime = Time.timeSinceLevelLoad;
         MetabolizeEvent.AddListener(OnEventRaised);
-        MidnightEvent.AddListener(OnMidnight);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
         PlayAreaEnforcer.AddTrackedObject(photonView);
     }
     private void OnDestroy() {
         MetabolizeEvent.RemoveListener(OnEventRaised);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
-        MidnightEvent.RemoveListener(OnMidnight);
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     [PunRPC]
@@ -447,7 +452,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (!photonView.IsMine) {
             return;
         }
-        stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.1f);
+        stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.08f);
         ReagentContents vol = bellyContainer.Metabolize(f);
         // Reagents that don't affect metabolization limits
         bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);

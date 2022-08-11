@@ -206,8 +206,8 @@ public class DickInfo : MonoBehaviour {
                     attachedKobold.photonView.ViewID);
             }
         }
-        yield return new WaitForSeconds(3f);
-        attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+        //yield return new WaitForSeconds(3f);
+        //attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
     }
 
     private IEnumerator AttachToRoutine(Kobold k) {

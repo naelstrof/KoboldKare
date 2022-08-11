@@ -14502,7 +14502,6 @@ MonoBehaviour:
   airSpeedMultiplier: 1
   inputDir: {x: 0, y: 0, z: 0}
   inputJump: 0
-  inputCrouched: 0
   inputWalking: 0
   gravityMod: {x: 0, y: -4, z: 0}
   jumpStrength: 8
@@ -14602,7 +14601,6 @@ MonoBehaviour:
   animator: {fileID: 6506915555083475516}
   body: {fileID: 4787937348439926609}
   MetabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
-  MidnightEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
   belly:
     bounceCurve:
       serializedVersion: 2

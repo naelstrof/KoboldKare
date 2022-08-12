@@ -59,6 +59,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     void Start() {
         SpoilableHandler.AddSpoilable(this);
         container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
+        OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
         SetFrozen(startFrozen);
         PlayAreaEnforcer.AddTrackedObject(photonView);
     }

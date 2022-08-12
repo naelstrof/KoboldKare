@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 960366645849176328}
   - component: {fileID: 3419122224787248078}
   - component: {fileID: 1971582527905914714}
-  - component: {fileID: 1035755260824141832}
   - component: {fileID: 8336220319347109141}
   - component: {fileID: 1909358067385807388}
   - component: {fileID: 4052835916340969697}
@@ -89,33 +88,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 0}
   m_Enabled: 1
---- !u!114 &1035755260824141832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439163416004354994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff2077553cbfbc45a23c26746bb92dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rendererMaterialPairs:
-  - renderer: {fileID: 6301817413969257270}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 6c1720b66c8e97343b3ad44978df7afc, type: 2}
-  - renderer: {fileID: 4377902523045784046}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 6c1720b66c8e97343b3ad44978df7afc, type: 2}
-  - renderer: {fileID: 8362548732372538694}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 6c1720b66c8e97343b3ad44978df7afc, type: 2}
-  renderers:
-  - {fileID: 6301817413969257270}
-  - {fileID: 4377902523045784046}
-  - {fileID: 8362548732372538694}
-  center: {fileID: 960366645849176328}
 --- !u!114 &8336220319347109141
 MonoBehaviour:
   m_ObjectHideFlags: 0

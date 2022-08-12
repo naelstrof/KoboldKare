@@ -231,11 +231,15 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.SetFloat(MoveY, tempDir.z);
         speed /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
         playerModel.SetFloat(Speed, speed);
-        if (controller.enabled) {
-            walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
-        } else {
-            walkDust.SetFloat("Speed", 0f);
+        
+        if (walkDust.HasFloat("Speed")) {
+            if (controller.enabled) {
+                walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
+            } else {
+                walkDust.SetFloat("Speed", 0f);
+            }
         }
+
         playerModel.SetBool(Jump, controller.jumped);
         playerModel.SetBool(Grounded, controller.grounded);
         crouchLerper = Mathf.MoveTowards(crouchLerper, controller.crouchAmount, 3f*Time.deltaTime);

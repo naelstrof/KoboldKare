@@ -11,9 +11,21 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     private Sprite sleepingSprite;
     [SerializeField]
     private List<AnimationStation> stations;
+
+    [SerializeField] private AudioPack brainSwapSound;
+    private AudioSource brainSwapSoundSource;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
+        if (brainSwapSoundSource == null) {
+            brainSwapSoundSource = gameObject.AddComponent<AudioSource>();
+            brainSwapSoundSource.playOnAwake = false;
+            brainSwapSoundSource.maxDistance = 10f;
+            brainSwapSoundSource.minDistance = 0.2f;
+            brainSwapSoundSource.rolloffMode = AudioRolloffMode.Linear;
+            brainSwapSoundSource.spatialBlend = 1f;
+            brainSwapSoundSource.loop = false;
+        }
     }
     public override Sprite GetSprite(Kobold k) {
         return sleepingSprite;
@@ -69,6 +81,7 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
 
     [PunRPC]
     private void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB) {
+        brainSwapSound.Play(brainSwapSoundSource);
         PhotonView aView = PhotonNetwork.GetPhotonView(aViewID);
         PhotonView bView = PhotonNetwork.GetPhotonView(bViewID);
         Player[] playerList = PhotonNetwork.PlayerList;

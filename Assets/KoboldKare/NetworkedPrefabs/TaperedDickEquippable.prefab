@@ -183,7 +183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6604670135079664008}
   - component: {fileID: 3520763853722563420}
-  - component: {fileID: 2155631445559027282}
   - component: {fileID: 9014570033086517460}
   - component: {fileID: 5095059083864554981}
   - component: {fileID: 1320140597333020404}
@@ -234,29 +233,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2155631445559027282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5828591206539305778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff2077553cbfbc45a23c26746bb92dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rendererMaterialPairs:
-  - renderer: {fileID: 1049018532604101526}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 592fe42b148f8034cac19fb877d44c06, type: 2}
-  - renderer: {fileID: 109394161160481697}
-    pickedUpMaterial: {fileID: 0}
-    defaultMaterial: {fileID: 2100000, guid: 592fe42b148f8034cac19fb877d44c06, type: 2}
-  renderers:
-  - {fileID: 1049018532604101526}
-  - {fileID: 109394161160481697}
-  center: {fileID: 1470281585102547576}
 --- !u!114 &9014570033086517460
 MonoBehaviour:
   m_ObjectHideFlags: 0

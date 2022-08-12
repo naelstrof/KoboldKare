@@ -118,9 +118,9 @@ public class DickInfo : MonoBehaviour {
         foreach (DickSet set in dicks) {
             k.activeDicks.Remove(set);
             foreach (var penset in k.penetratables) {
-                if (penset.penetratable.name.Contains("Mouth")) {
-                    continue;
-                }
+                //if (penset.penetratable.name.Contains("Mouth")) {
+                    //continue;
+                //}
                 set.dick.RemoveIgnorePenetrable(penset.penetratable);
             }
         }
@@ -243,10 +243,9 @@ public class DickInfo : MonoBehaviour {
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
             foreach (var penset in k.penetratables) {
-                if (penset.penetratable.name.Contains("Mouth")) {
-                    continue;
-                }
-
+                //if (penset.penetratable.name.Contains("Mouth")) {
+                    //continue;
+                //}
                 set.dick.AddIgnorePenetrable(penset.penetratable);
             }
 

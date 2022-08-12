@@ -67,6 +67,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
     [PunRPC]
     void SwitchToRPC(short newPlantID) {
         ScriptablePlant checkPlant = PlantDatabase.GetPlant(newPlantID);
+        Debug.Log("Switching from " + plant + " to " + checkPlant);
         if (checkPlant == plant) {
             return;
         }
@@ -89,6 +90,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         if (plant == newPlant) {
             return;
         }
+        plant = newPlant;
         UndarkenMaterials();
         wateredEffect.Stop();
          // Plant == newPlant should always return true for deserialization, skip that step and assert
@@ -111,6 +113,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
                 }
             }
         }
+
 
         switched?.Invoke();
     }

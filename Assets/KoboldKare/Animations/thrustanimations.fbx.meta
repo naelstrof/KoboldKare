@@ -104,7 +104,7 @@ ModelImporter:
       name: ThrustLeft
       takeName: Combined
       internalID: 0
-      firstFrame: 11
+      firstFrame: 12
       lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
@@ -133,7 +133,7 @@ ModelImporter:
       name: ThrustRight
       takeName: Combined
       internalID: 0
-      firstFrame: 41
+      firstFrame: 42
       lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
@@ -162,7 +162,7 @@ ModelImporter:
       name: ThrustForward
       takeName: Combined
       internalID: 0
-      firstFrame: 31
+      firstFrame: 32
       lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
@@ -191,7 +191,7 @@ ModelImporter:
       name: ThrustBack
       takeName: Combined
       internalID: 0
-      firstFrame: 21
+      firstFrame: 24
       lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0

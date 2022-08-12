@@ -2957,7 +2957,6 @@ GameObject:
   - component: {fileID: 700158042934910292}
   - component: {fileID: 2434151122344761761}
   - component: {fileID: 8319315006002239314}
-  - component: {fileID: 6127409112375344368}
   - component: {fileID: 8193339837574343834}
   - component: {fileID: 7963024909183259880}
   m_Layer: 0
@@ -3117,22 +3116,6 @@ MonoBehaviour:
   grabPrompt: {fileID: 1568765603565158341}
   equipmentUI: {fileID: 7780809589085459586}
   mouseSensitivity: {fileID: 11400000, guid: be95cd2d702feee418f854733f0d5cd9, type: 2}
---- !u!114 &6127409112375344368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311997515499236854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4224cfe42c4c0b44a8f2511f8e4c4cba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetKobold: {fileID: 3498030196438502570}
-  onLoad:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &8193339837574343834
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
+public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable {
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
     private Vector3 currentVelocity;
@@ -85,9 +85,5 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable,
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
         body.position = new Vector3(x, y, z);
-    }
-
-    public void OnOwnerChange(Player newOwner, Player previousOwner) {
-        body.useGravity = newOwner == PhotonNetwork.LocalPlayer;
     }
 }

@@ -23,7 +23,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private Grab currentGrab;
     private List<Grab> frozenGrabs;
     private const float springForce = 10000f;
-    private const float breakForce = 3000f;
+    private const float breakForce = 4000f;
     private const float maxGrabDistance = 2.5f;
     private bool previewGrab;
     private List<Grab> removeIds;
@@ -214,7 +214,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         public bool Valid() {
             bool valid = body != null && owner != null && photonView != null && joint != null;
             if (Time.time - creationTime > 2f) {
-                valid &= photonView.Owner == owner.photonView.Owner;
+                valid &= Equals(photonView.Controller, owner.photonView.Controller);
             }
             return valid;
         }

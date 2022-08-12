@@ -176,7 +176,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         //pGrabber.inputRotation = rotate;
         Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
         if (trackingHip) {
-            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.015f);
+            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
 
         if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.value)) {

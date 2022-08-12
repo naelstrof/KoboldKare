@@ -41,6 +41,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         base.LocalUse(k);
     }
 
+    [PunRPC]
     private void BeginGrind() {
         grinding = true;
         animator.SetBool("Grinding", true);
@@ -48,6 +49,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindSound.Play(); 
     }
 
+    [PunRPC]
     private void StopGrind() {
         grinding = false;
         animator.SetBool("Grinding", false);
@@ -56,17 +58,19 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     }
 
     IEnumerator WaitThenConsumeEnergy() {
-        StopGrind();
         yield return new WaitForSeconds(8f);
+        if (!photonView.IsMine) {
+            yield break;
+        }
         if (station.info.user == null) {
             yield break;
         }
         
         if (station.info.user.TryConsumeEnergy(1)) {
             station.info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-            BeginGrind();
+            photonView.RPC(nameof(BeginGrind), RpcTarget.All);
             yield return new WaitForSeconds(12f);
-            StopGrind();
+            photonView.RPC(nameof(StopGrind), RpcTarget.All);
         }
     }
 
@@ -174,20 +178,6 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return stations;
-    }
-
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        base.OnPhotonSerializeView(stream, info);
-        if (stream.IsWriting) {
-            stream.SendNext(grinding);
-        } else {
-            bool newGrinding = (bool)stream.ReceiveNext();
-            if (!grinding && newGrinding) {
-                BeginGrind();
-            } else if (grinding && !newGrinding) {
-                StopGrind();
-            }
-        }
     }
 
     public override void Load(BinaryReader reader, string version) {

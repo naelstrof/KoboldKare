@@ -79,6 +79,10 @@ MonoBehaviour:
   - PenetrateRPC
   - Rest
   - Sleep
+  - SwitchToRPC
+  - ConsumeEnergyRPC
+  - BeginGrind
+  - StopGrind
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

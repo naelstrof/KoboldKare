@@ -128,7 +128,17 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         energy -= amount;
         energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+        if (!photonView.IsMine) {
+            photonView.RPC(nameof(Kobold.ConsumeEnergyRPC), RpcTarget.Others, amount);
+        }
         return true;
+    }
+
+    [PunRPC]
+    public void ConsumeEnergyRPC(byte amount) {
+        energy -= amount;
+        energy = (byte)Mathf.Max(0, energy);
+        energyChanged?.Invoke(energy, GetGenes().maxEnergy);
     }
 
     private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
@@ -498,15 +508,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (stream.IsWriting) {
             stream.SendNext(GetGenes());
             stream.SendNext(arousal);
-            stream.SendNext(energy);
         } else {
             SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
-            byte newEnergy = (byte)stream.ReceiveNext();
-            if (energy != newEnergy) {
-                energy = newEnergy;
-                energyChanged?.Invoke(energy, GetMaxEnergy());
-            }
         }
     }
 
@@ -547,7 +551,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
     
-    [PunRPC]
+    // Misbehaving, somehow triggers on own butt.
+    /*[PunRPC]
     public void PenetrateRPC(int viewID, int dickID, int penetrableID) {
         PhotonView other = PhotonNetwork.GetPhotonView(viewID);
         Penetrable[] penetrables = other.GetComponentsInChildren<Penetrable>();
@@ -555,7 +560,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (!activeDicks[dickID].dick.TryGetPenetrable(out Penetrable checkPen) || checkPen != penetrables[penetrableID]) {
             activeDicks[dickID].dick.Penetrate(penetrables[penetrableID]);
         }
-    }
+    }*/
     
     
 }

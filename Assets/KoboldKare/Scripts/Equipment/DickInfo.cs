@@ -176,7 +176,7 @@ public class DickInfo : MonoBehaviour {
                         if (attachedKobold.photonView.IsMine) {
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
-                            if (container != null) {
+                            if (container != null && attachedKobold != null) {
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
                                     alloc.Spill(alloc.volume * 0.1f), attachedKobold.photonView.ViewID);
                                 //container.SetGenes(attachedKobold.GetGenes());
@@ -261,7 +261,8 @@ public class DickInfo : MonoBehaviour {
 
             set.dick.listeners.Add(new KoboldDickListener(k,set));
             k.activeDicks.Add(set);
-            set.dick.penetrationStart += (Penetrable p) => {
+            // Lame attempt to sync dick positions, disabled because they sync pretty good anyway.
+            /*set.dick.penetrationStart += (Penetrable p) => {
                 if (!k.photonView.IsMine) {
                     return;
                 }
@@ -285,7 +286,7 @@ public class DickInfo : MonoBehaviour {
                         k.photonView.RPC(nameof(Kobold.PenetrateRPC), RpcTarget.Others, other.ViewID, dicksetID, i);
                     }
                 }
-            };
+            };*/
             // Make sure the dick is the right color, this just forces a reset of most stats
             k.SetGenes(k.GetGenes());
         }

@@ -149,12 +149,6 @@ public static class SaveManager {
                 if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
                     // Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
-                    if(obj.GetComponentsInChildren<Plant>() != null){ 
-                        // Bypass protection, prevents Plants from 'skipping ahead' a generation
-                        foreach (var item in obj.GetComponentsInChildren<Plant>()){
-                            item.spawnedFromLoad = true;
-                        }
-                    }
                     view = obj.GetComponent<PhotonView>();
                 }
                 if (view == null) {

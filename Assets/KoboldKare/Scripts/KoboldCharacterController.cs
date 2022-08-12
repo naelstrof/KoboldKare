@@ -383,10 +383,10 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(this.inputJump);
-            stream.SendNext(this.inputCrouched);
+            stream.SendNext(this.targetCrouched);
         } else {
             inputJump = (bool)stream.ReceiveNext();
-            inputCrouched = (float)stream.ReceiveNext();
+            targetCrouched = (float)stream.ReceiveNext();
         }
     }
 

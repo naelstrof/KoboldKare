@@ -24,8 +24,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     private GameObject display;
     private AudioSource source;
     [SerializeField]
-    private UnityEvent purchased;
-    [SerializeField]
     private MoneyFloater floater;
 
     public ScriptablePurchasable GetPurchasable() => purchasable;
@@ -69,11 +67,8 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     }
     public override void LocalUse(Kobold k) {
         //base.LocalUse(k);
-        if (CanUse(k)) {
-            photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
-            k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
-            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
-        }
+        photonView.RPC("RPCUse", RpcTarget.All);
+        k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
     }
     public override bool CanUse(Kobold k) {
         return display.activeInHierarchy && (k == null || k.GetComponent<MoneyHolder>().HasMoney(purchasable.cost));
@@ -82,9 +77,9 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     public override void Use() {
         purchaseSoundPack.Play(source);
         floater.gameObject.SetActive(false);
-        purchased.Invoke();
         display.SetActive(false);
         if (photonView.IsMine) {
+            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
             StartCoroutine(Restock());
         }
     }

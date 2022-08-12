@@ -63,6 +63,7 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
 
     }
 
+    [PunRPC]
     public override void Use() {
         base.Use();
         StopAllCoroutines();
@@ -71,28 +72,29 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
 
     private IEnumerator CrusherRoutine() {
         yield return new WaitForSeconds(6f);
+        if (!photonView.IsMine) {
+            yield break;
+        }
         foreach (var t in stations) {
             if (t.info.user == null || t.info.user.GetEnergy() <= 0) {
                 yield break;
             }
         }
         foreach (var t in stations) {
+            //t.info.user.photonView.RPC(nameof(Kobold.ConsumeEnergyRPC), RpcTarget.All, (byte)1);
             t.info.user.TryConsumeEnergy(1);
         }
-
-        if (photonView.IsMine) {
-            Kobold pressedKobold = stations[0].info.user;
-            pressedKobold.photonView.RPC(nameof(Kobold.SpillMetabolizedContents), RpcTarget.Others,
-                pressedKobold.metabolizedContents.volume);
-            ReagentContents spilled = pressedKobold.SpillMetabolizedContents(pressedKobold.metabolizedContents.volume);
-            
-            pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
-                pressedKobold.bellyContainer.volume);
-            spilled.AddMix(pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume));
-            
-            container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
-                pressedKobold.photonView.ViewID);
-        }
+        Kobold pressedKobold = stations[0].info.user;
+        pressedKobold.photonView.RPC(nameof(Kobold.SpillMetabolizedContents), RpcTarget.Others,
+            pressedKobold.metabolizedContents.volume);
+        ReagentContents spilled = pressedKobold.SpillMetabolizedContents(pressedKobold.metabolizedContents.volume);
+        
+        pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
+            pressedKobold.bellyContainer.volume);
+        spilled.AddMix(pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume));
+        
+        container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
+            pressedKobold.photonView.ViewID);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

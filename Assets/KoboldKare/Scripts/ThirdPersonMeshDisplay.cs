@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Naelstrof.Inflatable;
@@ -13,7 +14,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     public LODGroup group;
     public JigglePhysics.JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
-    public void Start() {
+    public void OnEnable() {
         foreach (SkinnedMeshRenderer s in dissolveTargets) {
             foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat("_Head", 0f);
@@ -23,6 +24,15 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
         RegenerateMirror();
     }
+
+    public void OnDisable() {
+        foreach (SkinnedMeshRenderer s in dissolveTargets) {
+            foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
+                m.SetFloat("_Head", 1f);
+            }
+        }
+    }
+
     public void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {
             for(int i=0;i<pair.Key.sharedMesh.blendShapeCount;i++) {

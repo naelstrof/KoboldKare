@@ -8,8 +8,6 @@ using UnityScriptableSettings;
 public class PlayerKoboldLoader : MonoBehaviour {
     private static readonly string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize"};
     public Kobold targetKobold;
-    public UnityEvent onLoad;
-
     void Start() {
         KoboldGenes genes = new KoboldGenes();
         foreach(string settingName in settingNames) {

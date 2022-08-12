@@ -97,6 +97,8 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         }
         if(newPlant.display != null){
             display = GameObject.Instantiate(newPlant.display,transform);
+            // TODO: This is a hack to make sure future iterations have recieved the genes.
+            SetGenes(GetGenes());
         }
 
         if (photonView.IsMine) {
@@ -132,7 +134,13 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
             return;
         }
         foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
-            renderer.material.color = Color.white;
+            if (renderer.material.HasProperty("_Color")) {
+                renderer.material.SetColor("_Color", Color.white);
+            }
+
+            if (renderer.material.HasProperty("_BaseColor")) {
+                renderer.material.SetColor("_BaseColor", Color.white);
+            }
         }
     }
 
@@ -141,7 +149,12 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         float duration = 1f;
         while(Time.time < startTime + duration) {
             float t = (Time.time - startTime) / duration;
-            tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, t);
+            if (tgtMat.HasProperty("_Color")) {
+                tgtMat.SetColor("_Color", Color.Lerp(tgtMat.GetColor("_Color"), darkenedColor, t));
+            }
+            if (tgtMat.HasProperty("_BaseColor")) {
+                tgtMat.SetColor("_BaseColor", Color.Lerp(tgtMat.GetColor("_BaseColor"), darkenedColor, t));
+            }
             yield return null;
         }
     }

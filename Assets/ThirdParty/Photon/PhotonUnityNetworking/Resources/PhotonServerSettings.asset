@@ -83,6 +83,8 @@ MonoBehaviour:
   - ConsumeEnergyRPC
   - BeginGrind
   - StopGrind
+  - SwapAfterTime
+  - AssignKobolds
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

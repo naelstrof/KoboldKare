@@ -330,6 +330,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (grounded) {
             Friction();
         }
+        body.useGravity = !grounded;
         if (inputDir.magnitude == 0) {
             Accelerate(Vector3.forward, 0f, effectiveAccel);
         } else {
@@ -339,11 +340,6 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         velocity += groundVelocity;
         if (photonView.IsMine) {
             body.velocity = velocity;
-            body.interpolation = RigidbodyInterpolation.Interpolate;
-            body.useGravity = true;
-        } else {
-            body.interpolation = RigidbodyInterpolation.None;
-            body.useGravity = false;
         }
     }
 

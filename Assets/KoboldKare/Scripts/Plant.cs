@@ -103,7 +103,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
             SetGenes(GetGenes());
         }
 
-        if (photonView.IsMine) {
+        if (PhotonNetwork.IsMasterClient) {
             foreach (var produce in newPlant.produces) {
                 int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<spawnCount;i++) {

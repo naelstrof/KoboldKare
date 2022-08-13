@@ -78,7 +78,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         purchaseSoundPack.Play(source);
         floater.gameObject.SetActive(false);
         display.SetActive(false);
-        if (photonView.IsMine) {
+        if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
             StartCoroutine(Restock());
         }

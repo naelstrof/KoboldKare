@@ -79,7 +79,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         floater.gameObject.SetActive(false);
         display.SetActive(false);
         if (PhotonNetwork.IsMasterClient) {
-            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
+            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity, 0, new object[]{new KoboldGenes().Randomize()});
             StartCoroutine(Restock());
         }
     }

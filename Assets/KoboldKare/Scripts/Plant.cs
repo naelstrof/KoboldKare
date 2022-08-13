@@ -99,8 +99,10 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         }
         if(newPlant.display != null){
             display = GameObject.Instantiate(newPlant.display,transform);
-            // TODO: This is a hack to make sure future iterations have recieved the genes.
-            SetGenes(GetGenes());
+            // TODO: This is a hack to make sure future iterations have received the genes.
+            if (GetGenes() != null) {
+                SetGenes(GetGenes());
+            }
         }
 
         if (PhotonNetwork.IsMasterClient) {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +18,16 @@ public class CameraSwitcher : MonoBehaviour {
         FreeCamLocked,
     }
     public CameraMode mode = CameraMode.FirstPerson;
-    public void Start() {
+    public void OnEnable() {
         SwitchCamera(CameraMode.FirstPerson);
     }
+
+    public void OnDisable() {
+        firstperson.enabled = false;
+        thirdperson.enabled = false;
+        freecam.enabled = false;
+    }
+
     public void Update() {
         uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * 30f * ((int)mode+0.5f), Time.deltaTime*2f);
     }

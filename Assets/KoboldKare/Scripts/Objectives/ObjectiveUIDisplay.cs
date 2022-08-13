@@ -18,7 +18,7 @@ public class ObjectiveUIDisplay : MonoBehaviour {
 
     private static readonly int Rollout = Animator.StringToHash("Rollout");
 
-    void Start() {
+    private void OnEnable() {
         if (paperRustleSource == null) {
             paperRustleSource = gameObject.AddComponent<AudioSource>();
             paperRustleSource.playOnAwake = false;
@@ -26,9 +26,6 @@ public class ObjectiveUIDisplay : MonoBehaviour {
             paperRustleSource.loop = false;
             paperRustleSource.enabled = false;
         }
-    }
-
-    private void OnEnable() {
         ObjectiveManager.AddObjectiveSwappedListener(OnObjectiveSwapped);
         ObjectiveManager.AddObjectiveUpdatedListener(OnObjectiveUpdated);
         OnObjectiveSwapped(ObjectiveManager.GetCurrentObjective());

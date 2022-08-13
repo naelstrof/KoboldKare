@@ -102,22 +102,22 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
 
 
         if (aView != null) {
-            aView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
-            aView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
             if (aView.TryGetComponent(out Kobold aKobold)) {
                 if (aPlayer != null) {
                     aPlayer.TagObject = aKobold;
                 }
             }
+            
             if (aPlayer == PhotonNetwork.LocalPlayer) {
                 aView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
                 aView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
+            } else {
+                aView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
+                aView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
             }
         }
 
         if (bView != null) {
-            bView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
-            bView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
             if (bView.TryGetComponent(out Kobold bKobold)) {
                 if (bPlayer != null) {
                     bPlayer.TagObject = bKobold;
@@ -126,6 +126,9 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
             if (bPlayer == PhotonNetwork.LocalPlayer) {
                 bView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
                 bView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
+            } else {
+                bView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
+                bView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
             }
         }
     }

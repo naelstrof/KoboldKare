@@ -56,7 +56,10 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
             } else {
                 StartCoroutine(WaitOnPlant());
             }
+            waitingOnPlant = true;
+            base.LocalUse(k);
         }
+
     }
 
     void Start() {

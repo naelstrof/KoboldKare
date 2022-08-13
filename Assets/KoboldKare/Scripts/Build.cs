@@ -46,13 +46,13 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = outputDirectory+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }

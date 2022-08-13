@@ -71,7 +71,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public float stimulation = 0f;
     public float stimulationMax = 30f;
     public float stimulationMin = -30f;
-    public float uprightForce = 10f;
     public Animator koboldAnimator;
     private float lastPumpTime = 0f;
     private bool grabbed = false;
@@ -363,10 +362,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
     private void FixedUpdate() {
-        if (!grabbed) {
-            uprightForce = Mathf.MoveTowards(uprightForce, 10f, Time.deltaTime * 10f);
-        } else {
-            uprightForce = Mathf.MoveTowards(uprightForce, 0f, Time.deltaTime * 2f);
+        if (grabbed) {
             PumpUpDick(Time.deltaTime*0.1f);
         }
         if (!ragdoller.ragdolled) {
@@ -414,7 +410,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
         PumpUpDick(Time.deltaTime * 0.02f);
-        uprightForce = Mathf.MoveTowards(uprightForce, 1f, Time.deltaTime*10f);
     }
     public bool IsPenetrating(Kobold k) {
         //TODO: add functionality so we can determine if which dick is penetrated where.
@@ -527,8 +522,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         if (info.photonView.InstantiationData.Length > 1 && info.photonView.InstantiationData[1] is bool) {
             if ((bool)info.photonView.InstantiationData[1] == true) {
-                body.rotation = Quaternion.FromToRotation(body.transform.up, Vector3.up) * body.rotation;
-                body.constraints |= RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
                 info.Sender.TagObject = this;
             } else {

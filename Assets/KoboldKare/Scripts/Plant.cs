@@ -115,9 +115,10 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
                 }
             }
         }
-
-
         switched?.Invoke();
+        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
+            StartCoroutine(GrowRoutine());
+        }
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {

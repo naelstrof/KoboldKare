@@ -255,6 +255,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
+            currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(0.7f, 0f, 1f, 1f, 0.45f);
         } else {
             handler.SetLookAtWeight(0.7f, 0.22f, 1f, 1f, 0.45f);

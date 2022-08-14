@@ -295,6 +295,10 @@ namespace Vilar.AnimationStation {
 		private Dictionary<HumanBodyBones, Quaternion> restPoseCache;
 		//private bool initialized=false;
 		public AnimationStationInfo info;
+		private Vector2 hipOffset;
+		public void SetHipOffset(Vector2 hipOffset) {
+			this.hipOffset = hipOffset;
+		}
 
 		private void Update() {
 #if UNITY_EDITOR
@@ -439,7 +443,12 @@ namespace Vilar.AnimationStation {
 						}
 					}
 				}
-                currentLoop.computedTargetPositions[index] = targetPosition;
+
+				if (index == (int)IKTargetSet.parts.HIPS) {
+					targetPosition += targetRotation*(new Vector3(hipOffset.x, 0, hipOffset.y)*0.25f);
+				}
+
+				currentLoop.computedTargetPositions[index] = targetPosition;
                 currentLoop.computedTargetRotations[index] = targetRotation;
                 //currentLoop.computedTargetVelocities[index] = targetVelocity;
 			}

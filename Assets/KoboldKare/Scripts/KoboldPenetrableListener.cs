@@ -11,6 +11,7 @@ public class KoboldPenetrableListener : PenetrableListener {
         base.OnPenetrationDepthChange(newDepth);
         float diff = newDepth - oldDepth;
         targetKobold.AddStimulation(Mathf.Abs(diff));
+        oldDepth = newDepth;
     }
 
     public override void AssertValid() {

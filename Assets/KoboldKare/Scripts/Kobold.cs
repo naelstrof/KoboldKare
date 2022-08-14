@@ -242,6 +242,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             energy = GetGenes().maxEnergy;
             energyChanged?.Invoke(energy, GetGenes().maxEnergy);
         }
+        stimulation = 0f;
     }
 
     private void Awake() {

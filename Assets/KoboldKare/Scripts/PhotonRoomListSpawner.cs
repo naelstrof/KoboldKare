@@ -5,6 +5,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using System.Collections;
+using System.Linq;
 
 public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
     public GameObject roomPrefab;
@@ -18,7 +20,21 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         ClearRoomList();
         Debug.Log("[PhotonRoomListSpawner] :: Player left lobby");
     }
-    
+
+    private IEnumerator RefreshRoomRoutine() {
+        while (isActiveAndEnabled) {
+            if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady) {
+                PhotonNetwork.JoinLobby();
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public override void OnEnable() {
+        base.OnEnable();
+        StartCoroutine(RefreshRoomRoutine());
+    }
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior

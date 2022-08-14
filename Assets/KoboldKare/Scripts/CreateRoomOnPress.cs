@@ -18,16 +18,18 @@ public class CreateRoomOnPress : MonoBehaviour {
         if (newGameString == null || saveDropdown == null) {
             return;
         }
+
+        roomNameField.Select();
         //saveDropdown.options = new List<TMP_Dropdown.OptionData>();
         //saveDropdown.options.Add(new TMP_Dropdown.OptionData(newGameString.GetLocalizedString()));
         //SaveManager.SaveList list = SaveManager.GetSaveList(true);
         //foreach(string savename in list.fileNames) {
-            //saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
+        //saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
         //}
     }
     public IEnumerator CreateRoomRoutine() {
         //if (saveDropdown.value == 0) {
-            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+            yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
             PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn });
         //} else {
             //SaveManager.SaveList list = SaveManager.GetSaveList(false);
@@ -38,8 +40,12 @@ public class CreateRoomOnPress : MonoBehaviour {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());
     }
     public IEnumerator JoinRoomRoutine(string roomName) {
-        yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+        Popup p = PopupHandler.instance.SpawnPopup("Connect");
+        //yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.JoinRoom(roomName);
+        yield return new WaitUntil(() => PhotonNetwork.InRoom);
+        PopupHandler.instance.ClearPopup(p);
     }
     public void JoinRoom() {
         GameManager.instance.StartCoroutine(JoinRoomRoutine(roomNameField.text));

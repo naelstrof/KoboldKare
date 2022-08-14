@@ -145,6 +145,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     public IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
+        PopupHandler.instance.ClearAllPopups();
         PopupHandler.instance.SpawnPopup("Disconnect", true, "Error " + returnCode + ": " + message);
     }
 
@@ -195,6 +196,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
         PopupHandler.instance.ClearAllPopups();
+        GameManager.instance.Pause(false);
         //if (popup != null) {
         //popup.Hide();
         //}
@@ -242,7 +244,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnRegionListReceived(RegionHandler regionHandler) {
-        Debug.Log("We recieved a list i guess:" + regionHandler);
+        //Debug.Log("We recieved a list i guess:" + regionHandler);
     }
 
     public void OnRoomListUpdate(List<RoomInfo> roomList) {

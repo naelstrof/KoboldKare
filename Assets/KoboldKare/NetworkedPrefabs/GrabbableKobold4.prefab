@@ -14766,8 +14766,9 @@ MonoBehaviour:
   textSpeedPerCharacter: 0.08
   minTextTimeout: 3.33
   heartPrefab:
-    gameObject: {fileID: 0}
-    photonName: 
+    gameObject: {fileID: 6562367668383676920, guid: b47e824ef9dd0654bae5ca33a2d5dd4b,
+      type: 3}
+    photonName: Heart
   activeDicks: []
   koboldBodyRenderers:
   - {fileID: 6506915555087688956}

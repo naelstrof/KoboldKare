@@ -6,6 +6,7 @@ using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
 
 public class CreateRoomOnPress : MonoBehaviour {
     public TMP_InputField roomNameField;
@@ -43,7 +44,7 @@ public class CreateRoomOnPress : MonoBehaviour {
         Popup p = PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRoom(roomName);
-        yield return new WaitUntil(() => PhotonNetwork.InRoom);
+        yield return new WaitUntil(() => PhotonNetwork.InRoom && SceneManager.GetActiveScene().name == "MainMap");
         PopupHandler.instance.ClearPopup(p);
     }
     public void JoinRoom() {

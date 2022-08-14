@@ -2226,7 +2226,7 @@ PrefabInstance:
     - target: {fileID: 2980757906006962752, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 23.999908
+      value: 23.999023
       objectReference: {fileID: 0}
     - target: {fileID: 3143658858329877772, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
@@ -4442,9 +4442,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetKobold: {fileID: 629124212}
-  onLoad:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1589722807
 GameObject:
   m_ObjectHideFlags: 0

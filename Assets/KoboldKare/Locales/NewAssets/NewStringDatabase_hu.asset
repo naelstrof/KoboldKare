@@ -805,6 +805,18 @@ MonoBehaviour:
     m_Localized: "Legal\xE1bb egy h\xE1z m\xE9ret\xE9nek kell lennie. Sok szerencs\xE9t."
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Gomba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "Cs\xEDp\u0151vez\xE9rl\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "\xC1ll\xEDtsa be a Crouch szintet"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

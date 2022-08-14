@@ -44,4 +44,7 @@ public class DragonMailObjective : ISavable, IPunObservable {
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 
+    public virtual void OnValidate() {
+    }
+
 }

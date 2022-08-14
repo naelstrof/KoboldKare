@@ -21,11 +21,12 @@ public class KoboldGenes {
     public byte brightness = 128;
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
+    public float dickThickness;
 
     public KoboldGenes With(byte? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
             float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
-            byte? saturation = null, byte? dickEquip = null) {
+            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
             baseSize = baseSize ?? this.baseSize,
@@ -38,7 +39,8 @@ public class KoboldGenes {
             hue = hue ?? this.hue,
             brightness = brightness ?? this.brightness,
             saturation = saturation ?? this.saturation,
-            dickEquip = dickEquip ?? this.dickEquip
+            dickEquip = dickEquip ?? this.dickEquip,
+            dickThickness = dickThickness ?? this.dickThickness
         };
     }
 
@@ -56,15 +58,16 @@ public class KoboldGenes {
 
             breastSize = Random.Range(0f, 10f);
             ballSize = Random.Range(10f, 20f);
-            dickSize = Random.Range(0f, 1f);
+            dickSize = Random.Range(0f, 20f);
             dickEquip = (byte)equipments.IndexOf(dick);
         } else {
             breastSize = Random.Range(10f, 40f);
-            ballSize = Random.Range(10f, 20f);
-            dickSize = Random.Range(0f, 1f);
+            ballSize = Random.Range(5f, 25f);
+            dickSize = Random.Range(0f, 20f);
             dickEquip = byte.MaxValue;
         }
 
+        dickThickness = Random.Range(0f, 1f);
         baseSize = Random.Range(14f, 24f);
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Random.Range(0, 255);
@@ -93,11 +96,12 @@ public class KoboldGenes {
         c.fatSize = Mathf.Lerp(a.fatSize, b.fatSize, 0.5f);
         c.baseSize = Mathf.Lerp(a.baseSize, b.baseSize, 0.5f);
         c.maxEnergy = (byte)Mathf.RoundToInt(Mathf.Lerp(a.maxEnergy, b.maxEnergy, 0.5f));
+        c.dickThickness = Mathf.Lerp(a.dickThickness, b.dickThickness, 0.5f);
         
         return c;
     }
 
-    private const short byteCount = sizeof(float) * 7 + sizeof(byte) * 5;
+    private const short byteCount = sizeof(float) * 8 + sizeof(byte) * 5;
     public static short Serialize(StreamBuffer outStream, object customObject) {
         KoboldGenes genes = (KoboldGenes)customObject;
         byte[] bytes = new byte[byteCount];
@@ -114,6 +118,7 @@ public class KoboldGenes {
         bytes[index++] = genes.brightness;
         bytes[index++] = genes.saturation;
         bytes[index++] = genes.dickEquip;
+        Protocol.Serialize(genes.dickThickness, bytes, ref index);
         outStream.Write(bytes, 0, byteCount);
         return byteCount;
     }
@@ -135,6 +140,7 @@ public class KoboldGenes {
             genes.brightness = bytes[index++];
             genes.saturation = bytes[index++];
             genes.dickEquip = bytes[index++];
+            Protocol.Deserialize(out genes.dickThickness, bytes, ref index);
         }
         return genes;
     }
@@ -152,6 +158,7 @@ public class KoboldGenes {
         writer.Write(brightness);
         writer.Write(saturation);
         writer.Write(dickEquip);
+        writer.Write(dickThickness);
     }
 
     public KoboldGenes Deserialize(BinaryReader reader) {
@@ -167,6 +174,7 @@ public class KoboldGenes {
         brightness = reader.ReadByte();
         saturation = reader.ReadByte();
         dickEquip = reader.ReadByte();
+        dickThickness = reader.ReadSingle();
         return this;
     }
 
@@ -183,7 +191,8 @@ public class KoboldGenes {
            hue: {hue}
            brightness: {brightness}
            saturation: {saturation}
-           dickEquip: {dickEquip}";
+           dickEquip: {dickEquip}
+           dickThickness: {dickThickness}";
     }
 }
 

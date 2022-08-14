@@ -238,6 +238,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CrouchAdjust",
+                    "type": "Value",
+                    "id": "df1a2b98-1e73-45dd-a64b-d3d0c4be7b39",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -827,7 +836,7 @@
                 {
                     "name": "",
                     "id": "af3168a3-95df-4953-ba82-e5e330046948",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -843,6 +852,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "HipControl",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d96be7a-78a6-4b24-8748-1e849b8b521a",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CrouchAdjust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "61325588-126e-458d-bf78-87c58fa41b0b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CrouchAdjust",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

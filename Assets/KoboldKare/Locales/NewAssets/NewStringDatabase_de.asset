@@ -737,7 +737,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Z\xFCchten Sie Kobolds"
+    m_Localized: "Kobolds z\xFCchten"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
@@ -806,6 +806,18 @@ MonoBehaviour:
   - m_Id: 198589332866695179
     m_Localized: "Sie m\xFCssen mindestens die Gr\xF6\xDFe eines Hauses haben. Viel
       Gl\xFCck."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Pilz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "H\xFCftkontrolle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: Passen Sie die Crouch -Ebene an
     m_Metadata:
       m_Items: []
   references:

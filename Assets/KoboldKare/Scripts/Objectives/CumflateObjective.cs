@@ -9,7 +9,9 @@ public class CumflateObjective : DragonMailObjective {
     [SerializeField]
     private LocalizedString description;
     [SerializeField]
-    private ScriptableReagent reagentType;
+    private ScriptableReagent reagentTypeA;
+    [SerializeField]
+    private ScriptableReagent reagentTypeB;
     [SerializeField]
     private int cumflatedMax = 5;
 
@@ -21,7 +23,7 @@ public class CumflateObjective : DragonMailObjective {
         GenericReagentContainer.containerFilled -= OnContainerFilled;
     }
     private void OnContainerFilled(GenericReagentContainer container) {
-        if (container.GetVolumeOf(reagentType) > container.maxVolume * 0.8f) {
+        if (container.GetVolumeOf(reagentTypeA) + container.GetVolumeOf(reagentTypeB) > container.maxVolume * 0.8f) {
             cumflated++;
             TriggerUpdate();
         }

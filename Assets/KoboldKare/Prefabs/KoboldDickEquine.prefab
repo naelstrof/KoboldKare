@@ -599,8 +599,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       bounceDuration: 1
       listeners:
-      - rid: 2
-      - rid: 3
+      - rid: 5882124739971907589
     bonerInflater:
       bounceCurve:
         serializedVersion: 2
@@ -649,14 +648,6 @@ MonoBehaviour:
       type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         targetTransform: {fileID: 8003517335756057479}
-    - rid: 2
-      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
-      data:
-        targetTransform: {fileID: 9000013800218957590}
-    - rid: 3
-      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
-      data:
-        targetTransform: {fileID: 4855000224091205294}
     - rid: 4
       type: {class: BonerInflatable, ns: , asm: Assembly-CSharp}
       data:
@@ -665,6 +656,12 @@ MonoBehaviour:
         targetRenderers:
         - {fileID: 2987425613198561351}
         - {fileID: 7315451754972725502}
+    - rid: 5882124739971907589
+      type: {class: InflatableDick, ns: , asm: Assembly-CSharp}
+      data:
+        targetTransform: {fileID: 9000013800218957590}
+        targetJiggleRoot: {fileID: 4855000224091205294}
+        targetPenetrator: {fileID: 5521368089599830723}
 --- !u!205 &7114996326512174768
 LODGroup:
   m_ObjectHideFlags: 0

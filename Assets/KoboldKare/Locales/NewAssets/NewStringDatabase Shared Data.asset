@@ -771,6 +771,18 @@ MonoBehaviour:
     m_Key: CREATE_MACRO_KOBOLD_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Key: REAGENT_MUSHROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Key: CONTROLS_HIP_CONTROL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Key: CONTROLS_CROUCH_ADJUST
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

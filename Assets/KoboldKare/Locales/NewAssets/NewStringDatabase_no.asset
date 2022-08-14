@@ -205,9 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
-      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -795,6 +793,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695179
     m_Localized: "De m\xE5 v\xE6re minst p\xE5 st\xF8rrelse med et hus. Lykke til."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Sopp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Hoftekontroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "Juster hukniv\xE5et"
     m_Metadata:
       m_Items: []
   references:

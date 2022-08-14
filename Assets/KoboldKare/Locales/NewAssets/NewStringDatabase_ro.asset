@@ -205,9 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
-      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
-      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -805,6 +803,18 @@ MonoBehaviour:
   - m_Id: 198589332866695179
     m_Localized: "Ei trebuie s\u0103 fie cel pu\u021Bin de dimensiunea unei case.
       Mult noroc."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: "Ciuperc\u0103"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "Controlul \u0219oldului"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "Regla\u021Bi nivelul de ghemuire"
     m_Metadata:
       m_Items: []
   references:

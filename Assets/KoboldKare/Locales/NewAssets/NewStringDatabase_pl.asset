@@ -808,6 +808,18 @@ MonoBehaviour:
     m_Localized: "Musz\u0105 by\u0107 co najmniej wielko\u015Bci domu. Powodzenia."
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Grzyb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Kontrola bioder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: Dostosuj poziom kucaki
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

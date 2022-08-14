@@ -821,6 +821,18 @@ MonoBehaviour:
     m_Localized: They need to be at least the size of a house. Good luck.
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Mushroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Hip Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: Adjust crouch level
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

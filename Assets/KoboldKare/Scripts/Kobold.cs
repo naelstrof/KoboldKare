@@ -42,8 +42,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private Inflatable sizeInflater;
     [SerializeField]
     private Inflatable boobs;
-    private ReagentContents boobContents;
-    private ReagentContents ballsContents;
     public ReagentContents metabolizedContents;
     
     [SerializeField]
@@ -57,7 +55,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public BodyProportionSimple bodyProportion;
     public TMPro.TMP_Text chatText;
     public float textSpeedPerCharacter, minTextTimeout;
-    public UnityEvent OnOrgasm;
+    [SerializeField] private PhotonGameObjectReference heartPrefab;
     [HideInInspector]
     public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
     private AudioSource gargleSource;
@@ -106,19 +104,16 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     
     [PunRPC]
     public void Cum() {
-        OnOrgasm.Invoke();
+        if (photonView.IsMine) {
+            PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0,
+                new object[] { GetGenes() });
+        }
         foreach(var dickSet in activeDicks) {
-            float cumAmount = 0.5f+0.1f*GetGenes().baseSize+0.5f*GetGenes().ballSize+0.1f*GetGenes().dickSize; // Bonus!
-            ballsContents.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(cumAmount));
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
             dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
         }
         PumpUpDick(1f);
         stimulation = stimulationMin;
-    }
-
-    public ReagentContents GetBallsContents() {
-        return ballsContents;
     }
 
     public bool TryConsumeEnergy(byte amount) {
@@ -150,15 +145,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-    private void OnBoobContentsChanged(ReagentContents contents) {
-        boobs.SetSize(Mathf.Log(1f + (contents.volume + GetGenes().breastSize) / 20f, 2f), this);
-    }
-    private void OnBallsContentsChanged(ReagentContents contents) {
-        foreach (var dickSet in activeDicks) {
-            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + (contents.volume + GetGenes().ballSize) / 20f, 2f), dickSet.info);
-        }
-    }
-
     public int GetEnergy() {
         return energy;
     }
@@ -186,6 +172,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public override void SetGenes(KoboldGenes newGenes) {
         foreach (var dickSet in activeDicks) {
+            foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
+                if (inflater is InflatableDick inflatableDick) {
+                    inflatableDick.SetDickThickness(newGenes.dickThickness);
+                }
+            }
             dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (newGenes.dickSize) / 20f, 2f), dickSet.info);
         }
         sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f+newGenes.baseSize/20f,2f), 0.2f), this);
@@ -225,8 +216,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
-        OnBoobContentsChanged(boobContents);
-        OnBallsContentsChanged(ballsContents);
+        boobs.SetSize(Mathf.Log(1f + GetGenes().breastSize / 20f, 2f), this);
+        foreach (var dickSet in activeDicks) {
+            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + GetGenes().ballSize / 20f, 2f), dickSet.info);
+        }
     }
     
     void OnMidnight(object ignore) {
@@ -252,10 +245,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void Awake() {
-        ballsContents = new ReagentContents();
-        ballsContents.changed += OnBallsContentsChanged;
-        boobContents = new ReagentContents();
-        boobContents.changed += OnBoobContentsChanged;
         bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
         bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
         metabolizedContents = new ReagentContents(20f);
@@ -321,6 +310,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
         photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
+    }
+
+    private void OnValidate() {
+        heartPrefab.OnValidate();
     }
 
     public bool CanGrab(Kobold kobold) {
@@ -440,7 +433,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         float growthSerumVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
         float milkShakeVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
         float pineappleJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
-        float sum = melonJuiceVolume + eggplantJuiceVolume + growthSerumVolume + milkShakeVolume + pineappleJuiceVolume * multi;
+        float mushroomJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MushroomJuice"));
+        float sum = (mushroomJuiceVolume + melonJuiceVolume + eggplantJuiceVolume + growthSerumVolume + milkShakeVolume + pineappleJuiceVolume) * multi;
 
         if (sum != 0f) {
             KoboldGenes genes = GetGenes();
@@ -449,6 +443,15 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             genes.baseSize += growthSerumVolume * multi;
             genes.fatSize += milkShakeVolume * multi;
             genes.ballSize += pineappleJuiceVolume * multi;
+            
+            // Mushroom juice is poisonous!
+            genes.baseSize -= mushroomJuiceVolume * multi * 0.2f;
+            genes.ballSize -= mushroomJuiceVolume * multi * 0.2f;
+            genes.dickSize -= mushroomJuiceVolume * multi * 0.2f;
+            genes.fatSize -= mushroomJuiceVolume * multi * 0.2f;
+            genes.breastSize -= mushroomJuiceVolume * multi * 0.2f;
+            genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(mushroomJuiceVolume*2f) * multi), 0, 255);
+            
             SetGenes(genes);
         }
     }

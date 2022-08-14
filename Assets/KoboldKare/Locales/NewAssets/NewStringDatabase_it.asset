@@ -205,12 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: 'QUESTO GIOCO MOSTRA PERSONAGGI DI FANTASIA CHE PARTECIPANO A <#FF0000>
-      COMPORTAMENTI SESSUALMENTE ESPLICITI <#FFFFFF>
-
-
-      FACENDO CLIC SU <#008CFF>
-      PLAY <#FFFFFF> STAI INDICANDO CHE:'
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -739,8 +734,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: Abbiamo bisogno di Kobolds di provenienza locale, inizia facendo
-      in gravidanza ad alcuni dei tuoi kobold.
+    m_Localized: Abbiamo bisogno di Kobolds di provenienza locale, iniziando in gravidanza
+      alcuni dei tuoi kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -802,6 +797,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695179
     m_Localized: Devono essere almeno le dimensioni di una casa. Buona fortuna.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Fungo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Controllo dell'anca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: Regola il livello di accovacciamento
     m_Metadata:
       m_Items: []
   references:

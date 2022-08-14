@@ -13,6 +13,11 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
     private float money = 5f;
 #endif
     public float GetMoney() => money;
+
+    public void SetMoney(float amount) {
+        money = amount;
+    }
+
     public void AddMoney(float add) {
         if (add <= 0) {
             return;

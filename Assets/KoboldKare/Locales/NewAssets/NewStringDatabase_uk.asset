@@ -921,6 +921,19 @@ MonoBehaviour:
       \u0423\u0434\u0430\u0447\u0456."
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: "\u0413\u0440\u0438\u0431"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u044C \u0441\u0442\u0435\u0433\u043D\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "\u0412\u0456\u0434\u0440\u0435\u0433\u0443\u043B\u044E\u0439\u0442\u0435
+      \u0440\u0456\u0432\u0435\u043D\u044C Crouch"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -225,8 +225,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             float perVolume = (midairContents.volume * percentageLoss) + 1f;
             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
             if (cont != null) {
-                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                    midairContents.Spill(perVolume), container.photonView.ViewID);
+                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, midairContents.Spill(perVolume), container.photonView.ViewID);
             }
         }
     }
@@ -244,13 +243,20 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
                 Color reagentColor = container.GetColor();
                 splatter.SetVector4("Color",
                     new Vector4(reagentColor.r, reagentColor.g, reagentColor.b, 1f));
-                midairContents.AddMix(container.Spill(Time.deltaTime * 4f));
+                ReagentContents spill = container.Spill(Time.deltaTime * 4f);
+                // Add it back if we don't own the object we're spilling from.
+                if (!photonView.IsMine) {
+                    container.GetContents().AddMix(spill);
+                    container.OnChange?.Invoke(container.GetContents(), GenericReagentContainer.InjectType.Metabolize);
+                }
+                midairContents.AddMix(spill);
                 startClip = 0f;
             } else {
                 audioSource.Stop();
                 startClip = Mathf.MoveTowards(startClip, endClip, Time.deltaTime);
-                if (startClip == endClip) {
+                if (Math.Abs(startClip - endClip) < 0.01f) {
                     OnEndFire();
+                    startClip = endClip = 0f;
                 }
             }
 

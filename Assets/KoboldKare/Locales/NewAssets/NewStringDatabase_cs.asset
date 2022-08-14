@@ -808,6 +808,18 @@ MonoBehaviour:
     m_Localized: "Mus\xED to b\xFDt alespo\u0148 velikost domu. Hodn\u011B \u0161t\u011Bst\xED."
     m_Metadata:
       m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Houba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "Ovl\xE1d\xE1n\xED ky\u010Dle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "Upravte \xFArove\u0148 kr\u010Den\xED"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

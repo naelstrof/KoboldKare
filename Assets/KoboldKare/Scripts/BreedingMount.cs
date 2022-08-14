@@ -22,17 +22,7 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
     }
 
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        StopCoroutine(nameof(WaitThenFire));
-        StartCoroutine(nameof(WaitThenFire));
-    }
-
-    IEnumerator WaitThenFire() {
-        while (container.volume < 10f && station.info.user != null) {
-            yield return null;
-        }
-
         photonView.RPC(nameof(FireStream), RpcTarget.All);
-        //stream.OnFire(container);
     }
 
     [PunRPC]
@@ -47,7 +37,6 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
         return useSprite;
     }
     public override void LocalUse(Kobold k) {
-        photonView.RequestOwnership();
         k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
     }
 

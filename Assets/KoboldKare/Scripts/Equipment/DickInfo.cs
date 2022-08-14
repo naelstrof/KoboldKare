@@ -59,7 +59,7 @@ public class DickInfo : MonoBehaviour {
         protected override void OnPenetrationDepthChange(float depthDist) {
             base.OnPenetrationDepthChange(depthDist);
             float movementAmount = depthDist - lastDepthDist;
-            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount)*10f);
+            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
             dickSet.inside = depthDist != 0f && depthDist < penetrableMem.GetSplinePath().arcLength;
@@ -142,7 +142,10 @@ public class DickInfo : MonoBehaviour {
         }
     }
     public IEnumerator CumRoutine(DickSet set) {
-        int pulses = 12;
+        float ballSize = attachedKobold.GetGenes().ballSize;
+        // (1-1/(x/maxInput+1)) * maxPossibleResult
+        float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 60f + 5f;
+        int pulses = Mathf.CeilToInt(pulsesSample);
         float pulseDuration = 0.8f;
         for (int i = 0; i < pulses; i++) {
             GameManager.instance.SpawnAudioClipInWorld(set.cumSoundPack, set.dick.transform.position);
@@ -169,8 +172,8 @@ public class DickInfo : MonoBehaviour {
 
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<GenericReagentContainer>() == null) {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
-                    ReagentContents alloc = attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses);
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize*0.01f));
+                    ReagentContents alloc = new ReagentContents();
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (attachedKobold.photonView.IsMine) {
@@ -202,7 +205,9 @@ public class DickInfo : MonoBehaviour {
                 GameManager.instance.decalHitMask);
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
             if (attachedKobold.photonView.IsMine) {
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, attachedKobold.GetBallsContents().Spill(attachedKobold.GetBallsContents().volume / pulses),
+                ReagentContents alloc = new ReagentContents();
+                alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc,
                     attachedKobold.photonView.ViewID);
             }
         }

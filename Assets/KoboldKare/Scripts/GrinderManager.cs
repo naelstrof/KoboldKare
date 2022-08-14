@@ -14,6 +14,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         
     [SerializeField]
     private Sprite onSprite;
+
+    [SerializeField] private List<Collider> cylinderColliders;
     public AudioSource grindSound;
     public Animator animator;
     public AudioSource deny;
@@ -46,7 +48,10 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grinding = true;
         animator.SetBool("Grinding", true);
         grindSound.enabled = true;
-        grindSound.Play(); 
+        grindSound.Play();
+        foreach (Collider cylinderCollider in cylinderColliders) {
+            cylinderCollider.enabled = false;
+        }
     }
 
     [PunRPC]
@@ -55,6 +60,9 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         animator.SetBool("Grinding", false);
         grindSound.Stop();
         grindSound.enabled = false;
+        foreach (Collider cylinderCollider in cylinderColliders) {
+            cylinderCollider.enabled = true;
+        }
     }
 
     IEnumerator WaitThenConsumeEnergy() {

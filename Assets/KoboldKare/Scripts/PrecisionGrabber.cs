@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq;
+using KoboldKare;
 
 public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private GameObject handDisplayPrefab;
@@ -13,6 +14,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private GameObject freezeVFXPrefab;
     [SerializeField] private AudioPack unfreezeSound;
     [SerializeField] private Kobold kobold;
+    [SerializeField] private GameEventFloat handVisibilityEvent;
     
     private static RaycastHit[] hits = new RaycastHit[10];
     private static readonly int GrabbingHash = Animator.StringToHash("Grabbing");
@@ -189,6 +191,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
 
+        public void SetVisibility(float newVisibility) {
+            if (newVisibility < 0.5f && handDisplayAnimator.gameObject.activeSelf) {
+                handDisplayAnimator.gameObject.SetActive(false);
+            } else if (newVisibility >= 0.5f && !handDisplayAnimator.gameObject.activeSelf) {
+                handDisplayAnimator.gameObject.SetActive(true);
+            }
+            handDisplayAnimator.SetBool(GrabbingHash, true);
+        }
+
         public float GetDistance() => distance;
         public Quaternion GetRotation() => savedQuaternion;
 
@@ -334,11 +345,20 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         kobold.genesChanged += OnGenesChanged;
         OnGenesChanged(kobold.GetGenes());
         removeIds = new List<Grab>();
+        handVisibilityEvent.AddListener(OnHandVisibilityChanged);
     }
+
+    private void OnHandVisibilityChanged(float newVisibility) {
+        foreach (var fgrab in frozenGrabs) {
+            fgrab.SetVisibility(newVisibility);
+        }
+    }
+
     private void OnDestroy() {
         if (kobold != null) {
             kobold.genesChanged -= OnGenesChanged;
         }
+        handVisibilityEvent.RemoveListener(OnHandVisibilityChanged);
         TryDrop();
         UnfreezeAll();
     }
@@ -430,6 +450,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
         Collider[] colliders = otherPhotonView.GetComponentsInChildren<Collider>();
         currentGrab = new Grab(kobold, previewHandAnimator.gameObject, view, colliders[colliderNum], localHit, localHitNormal, unfreezeSound);
+        currentGrab.SetVisibility(handVisibilityEvent.GetLastInvokeValue());
     }
 
     public void TryGrab() {
@@ -460,6 +481,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
         frozenGrabs.Add(new Grab(kobold, previewHandAnimator.gameObject, colliders[colliderNum], localColliderPosition, localHitNormal,
             worldAnchor, rotation, affRotation, unfreezeSound));
+        frozenGrabs[^1].SetVisibility(handVisibilityEvent.GetLastInvokeValue());
         Destroy(GameObject.Instantiate(freezeVFXPrefab, worldAnchor, Quaternion.identity), 5f);
     }
 

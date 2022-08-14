@@ -408,7 +408,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: ecf1482a8516caf4399c2657a6b03b71,
         type: 3}
       propertyPath: m_Name
-      value: StarDoor Variant
+      value: StarDoor
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: ecf1482a8516caf4399c2657a6b03b71,
         type: 3}

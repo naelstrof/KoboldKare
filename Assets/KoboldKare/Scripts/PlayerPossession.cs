@@ -20,6 +20,8 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
     public CanvasGroup chatGroup;
     public TMPro.TMP_InputField chatInput;
     public GameObject diePrefab;
+    [SerializeField]
+    private GameEventFloat handVisibilityEvent;
     public InputActionReference back;
     public PrecisionGrabber pGrabber;
     public GameObject dickErectionHidable;
@@ -119,6 +121,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["Unfreeze"].performed += OnUnfreezeInput;
         controls.actions["UnfreezeAll"].performed += OnUnfreezeAllInput;
         controls.actions["Grab Push and Pull"].performed += OnGrabPushPull;
+        controls.actions["CrouchAdjust"].performed += OnCrouchAdjustInput;
         controls.actions["HipControl"].performed += OnActivateHipInput;
         controls.actions["HipControl"].canceled += OnCanceledHipInput;
     }
@@ -137,6 +140,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
         controls.actions["Unfreeze"].performed -= OnUnfreezeInput;
         controls.actions["UnfreezeAll"].performed -= OnUnfreezeAllInput;
         controls.actions["Grab Push and Pull"].performed -= OnGrabPushPull;
+        controls.actions["CrouchAdjust"].performed -= OnCrouchAdjustInput;
         controls.actions["HipControl"].performed -= OnActivateHipInput;
         controls.actions["HipControl"].canceled -= OnCanceledHipInput;
     }
@@ -248,6 +252,7 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
 
     public void OnShiftMode(InputAction.CallbackContext ctx) {
         bool shift = ctx.ReadValue<float>() > 0f;
+        handVisibilityEvent.Raise(ctx.ReadValue<float>());
         switchedMode = shift;
         pGrabber.SetPreviewState(shift);
         if (!shift) {
@@ -300,7 +305,12 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
 
     public void OnGrabPushPull(InputAction.CallbackContext ctx) {
         float delta = ctx.ReadValue<float>();
-        if (!pGrabber.TryAdjustDistance(delta * 0.0005f)) {
+        pGrabber.TryAdjustDistance(delta * 0.0005f);
+    }
+    
+    public void OnCrouchAdjustInput(InputAction.CallbackContext ctx) {
+        float delta = ctx.ReadValue<float>();
+        if (!pGrabber.TryAdjustDistance(0f)) {
             controller.SetInputCrouched(controller.GetInputCrouched() - delta * 0.0005f);
         }
     }

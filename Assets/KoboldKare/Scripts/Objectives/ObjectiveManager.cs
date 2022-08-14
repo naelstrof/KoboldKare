@@ -100,4 +100,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
         
         objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
     }
+
+    private void OnValidate() {
+        foreach (var obj in objectives) {
+            obj.OnValidate();
+        }
+    }
 }

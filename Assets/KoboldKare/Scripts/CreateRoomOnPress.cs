@@ -29,7 +29,7 @@ public class CreateRoomOnPress : MonoBehaviour {
     }
     public IEnumerator CreateRoomRoutine() {
         //if (saveDropdown.value == 0) {
-            yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
             PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn });
         //} else {
             //SaveManager.SaveList list = SaveManager.GetSaveList(false);
@@ -41,8 +41,7 @@ public class CreateRoomOnPress : MonoBehaviour {
     }
     public IEnumerator JoinRoomRoutine(string roomName) {
         Popup p = PopupHandler.instance.SpawnPopup("Connect");
-        //yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRoom(roomName);
         yield return new WaitUntil(() => PhotonNetwork.InRoom);
         PopupHandler.instance.ClearPopup(p);

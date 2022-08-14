@@ -1279,8 +1279,7 @@ Transform:
   m_LocalPosition: {x: -0, y: -0.044, z: 0.0563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1354291888904339793}
+  m_Children: []
   m_Father: {fileID: 6506915555090380208}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -4.75, y: 0, z: 0}
@@ -8944,62 +8943,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4911559323566575343
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1354291888904339793}
-  - component: {fileID: 4474583895957048706}
-  m_Layer: 13
-  m_Name: Balls
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1354291888904339793
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911559323566575343}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4363336214978915131}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4474583895957048706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911559323566575343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingMaxVolume: 3.4028235e+38
-  type: 1
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
-  startingReagents: []
 --- !u!1 &4942755153738763145
 GameObject:
   m_ObjectHideFlags: 0
@@ -14865,8 +14808,6 @@ MonoBehaviour:
   - {fileID: 3374508250042995388}
   - {fileID: 2493919414808592328}
   - {fileID: 9089167771423831199}
-  - {fileID: 8319315006002239314}
-  - {fileID: 4474583895957048706}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -15030,6 +14971,11 @@ MonoBehaviour:
   kobold: {fileID: 3498030196438502570}
   handVisibilityEvent: {fileID: 11400000, guid: 2f151a7eee134fa40a884d86e5b2be99,
     type: 2}
+  freezeUI: {fileID: 809268438650738366}
+  activeUI:
+  - {fileID: 2109737164576253188}
+  - {fileID: 790246736107418787}
+  - {fileID: 6035969167236236408}
   ignoreColliders:
   - {fileID: 6990784038411024563}
   - {fileID: 9196838261329187590}
@@ -15049,6 +14995,8 @@ MonoBehaviour:
   player: {fileID: 3498030196438502570}
   springStrength: 800
   dampingStrength: 0.4
+  activateUI: {fileID: 4128439109590461521}
+  throwUI: {fileID: 9146672426307275835}
   view: {fileID: 8365801439791401051}
 --- !u!114 &9089167771423831199
 MonoBehaviour:

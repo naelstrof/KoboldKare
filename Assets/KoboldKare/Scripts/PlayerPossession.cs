@@ -12,7 +12,7 @@ using System.IO;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
 
-public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
+public class PlayerPossession : MonoBehaviourPun {
     public UnityEngine.InputSystem.PlayerInput controls;
     public float coyoteTime = 0.2f;
     //public Grabber grabber;
@@ -385,34 +385,5 @@ public class PlayerPossession : MonoBehaviourPun, IPunObservable, ISavable {
                 Cursor.visible = true;
             }
         }
-    }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        //if (stream.IsWriting) {
-            //bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
-            //stream.SendNext(switchGrabMode);
-        //} else {
-            //pGrabber.HideHand(!(bool)stream.ReceiveNext());
-        //}
-    }
-
-    public void Save(BinaryWriter writer, string version) {
-        //bool switchGrabMode = controls.actions["SwitchGrabMode"].ReadValue<float>() > 0.5f;
-        //writer.Write(switchGrabMode);
-        //writer.Write(gameObject.activeInHierarchy);
-    }
-
-    public void Load(BinaryReader reader, string version) {
-        //pGrabber.HideHand(!reader.ReadBoolean());
-        //bool isPlayer = reader.ReadBoolean();
-        //gameObject.SetActive(isPlayer);
-        //if (isPlayer) {
-            //PhotonNetwork.LocalPlayer.TagObject = kobold;
-            ////FIXME: just need to destroy death prefab, since we have a kobold now.
-            //CameraOrbiter input = Object.FindObjectOfType<CameraOrbiter>();
-            //if (input != null) {
-                //Destroy(input.transform.parent.gameObject);
-            //}
-            //eyeRot = new Vector2(-eyes.transform.eulerAngles.y+180f,eyes.transform.eulerAngles.x);
-        //}
     }
 }

@@ -46,6 +46,7 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
+            base.LocalUse(k);
             genes ??= new KoboldGenes().Randomize();
             
             GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant), genes} );
@@ -57,7 +58,6 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
                 StartCoroutine(WaitOnPlant());
             }
             waitingOnPlant = true;
-            base.LocalUse(k);
         }
 
     }

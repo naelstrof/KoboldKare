@@ -540,7 +540,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void Load(BinaryReader reader, string version) {
-        SetGenes(GetGenes().Deserialize(reader));
+        SetGenes(new KoboldGenes().Deserialize(reader));
     }
 
     public float GetWorth() {

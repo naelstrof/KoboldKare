@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1397
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 3}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -42,7 +42,7 @@ MonoBehaviour:
     x: 367
     y: 0
     width: 1460
-    height: 955
+    height: 975
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 12}
@@ -194,7 +194,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1827
-    height: 955
+    height: 975
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 367
-    height: 955
+    height: 975
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
@@ -241,9 +241,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 955
+    y: 975
     width: 1827
-    height: 392
+    height: 372
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 20}
@@ -308,7 +308,7 @@ MonoBehaviour:
     x: 367
     y: 73
     width: 1458
-    height: 934
+    height: 954
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -543,9 +543,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -194.02818, y: 6.6234994, z: 328.01385}
+    m_Target: {x: -205.02777, y: -7.2114773, z: 329.49002}
     speed: 2
-    m_Value: {x: -0.62395287, y: 0.3610937, z: -0.18601376}
+    m_Value: {x: -205.02777, y: -7.2114773, z: 329.49002}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -592,13 +592,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.17156789, y: 0.5032695, z: -0.10269516, w: -0.84069544}
+    m_Target: {x: -0.24127029, y: 0.49410948, z: -0.1449406, w: -0.8226026}
     speed: 2
-    m_Value: {x: -0.07745298, y: -0.27593908, z: -0.022315715, w: 0.9577895}
+    m_Value: {x: -0.24692906, y: 0.48230794, z: -0.1438396, w: -0.8280792}
   m_Size:
     m_Target: 26.238932
     speed: 2
-    m_Value: 0.5744563
+    m_Value: 26.238932
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1455,7 +1455,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 1382428
+  m_LastSelectedObjectID: 44368
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1480,7 +1480,7 @@ MonoBehaviour:
     x: 367
     y: 73
     width: 1458
-    height: 934
+    height: 954
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1458, y: 913}
+  m_TargetSize: {x: 1458, y: 933}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1508,8 +1508,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -729
     m_HBaseRangeMax: 729
-    m_VBaseRangeMin: -456.5
-    m_VBaseRangeMax: 456.5
+    m_VBaseRangeMin: -466.5
+    m_VBaseRangeMax: 466.5
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1528,9 +1528,9 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 1458
-      height: 913
+      height: 933
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 729, y: 456.5}
+    m_Translation: {x: 729, y: 466.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -1538,12 +1538,12 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -729
-      y: -456.5
+      y: -466.5
       width: 1458
-      height: 913
+      height: 933
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1458, y: 934}
+  m_LastWindowPixelSize: {x: 1458, y: 954}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1573,17 +1573,17 @@ MonoBehaviour:
     x: 0
     y: 73
     width: 366
-    height: 934
+    height: 954
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 16280000
+      scrollPos: {x: 0, y: 32}
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 38fbffff
+      m_ExpandedIDs: 4a8effff38fbffff26b20000b2b80000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -2312,9 +2312,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 1028
+    y: 1048
     width: 1826
-    height: 371
+    height: 351
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -2332,22 +2332,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/KoboldKare/Scripts
+    - Assets/KoboldKare/NetworkedPrefabs
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/KoboldKare/Scripts
+  - Assets/KoboldKare/NetworkedPrefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: G:\KoboldKare
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 217}
-    m_SelectedIDs: 06440100
-    m_LastClickedID: 82950
-    m_ExpandedIDs: 00000000724201007442010076420100784201007a4201007c4201007e42010080420100824201008442010086420100884201008a4201008c4201008e42010090420100924201009442010018440100664401006844010000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 221}
+    m_SelectedIDs: cc430100
+    m_LastClickedID: 82892
+    m_ExpandedIDs: 00000000724201007442010076420100784201007a4201007c4201007e42010080420100824201008442010086420100884201008a4201008c4201008e42010090420100924201009442010000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2427,7 +2427,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 720}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207

@@ -1,13 +1,8 @@
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public static class SaveManager {
@@ -139,48 +134,37 @@ public static class SaveManager {
             }
             string fileVersion = reader.ReadString();
             int viewCount = reader.ReadInt32();
-            //Debug.Log("viewCount: "+viewCount);
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
                 string prefabName = reader.ReadString();
                 PhotonView view = PhotonNetwork.GetPhotonView(viewID);
                 
-                // Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
                 if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
-                    // Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                     view = obj.GetComponent<PhotonView>();
                 }
                 if (view == null) {
                     Debug.Log("[SaveManager] <Deserialization Log> :: Running deep check when view returned null...");
-                    foreach(PhotonView deepcheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
-                        if (deepcheck.ViewID == viewID) {
-                            view = deepcheck;
+                    foreach(PhotonView deepCheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                        if (deepCheck.ViewID == viewID) {
+                            view = deepCheck;
                             Debug.Log("[SaveManager] <Deserialization Log> :: Deep check successful!");
                             break;
                         }
                     }
                 }
                 if (view == null) {
-                    Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
-                }
-                else{
-                    // Debug.Log("[Save Manager] <Deserialization Log> :: View checks were not null; load should proceed smoothly on this object.");
+                    throw new UnityException("Failed to find view id " + viewID + " with name " + prefabName +". Failed to load...");
                 }
                 try {
-                    //if(view.ObservedComponents.Count == 0){
-                        // This is not necessarily an issue, photonviews can simply be used as a unique id for other scripts to use for rpcs or whatever.
-                        //Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing", view.gameObject);
-                    //}
                     foreach(Component observable in view.ObservedComponents) {
-                        if (observable is ISavable) {
-                            // Debug.Log("[SaveManager] <Deserialization Log> :: Proceeding to call Load() on observed component of type "+observable+" on game object "+view.gameObject.name);
-                            (observable as ISavable).Load(reader, fileVersion);
+                        if (observable is ISavable savable) {
+                            savable.Load(reader, fileVersion);
                         }
                     }
-                } catch (Exception e) {
-                    Debug.LogError("Failed to load observable on photonview " +viewID + ", " + prefabName, view);
-                    throw e;
+                } catch {
+                    Debug.LogError("Failed to load observable on photonView " +viewID + ", " + prefabName, view);
+                    throw;
                 }
             }
         }

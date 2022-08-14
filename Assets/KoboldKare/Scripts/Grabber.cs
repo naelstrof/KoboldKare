@@ -17,6 +17,9 @@ public class Grabber : MonoBehaviourPun {
     [SerializeField][Range(0f,0.5f)]
     private float dampingStrength = 0.1f;
 
+    [SerializeField] private GameObject activateUI;
+    [SerializeField] private GameObject throwUI;
+
     private bool activating;
     private class GrabInfo  {
         public IGrabbable grabbable { get; private set; }
@@ -196,11 +199,33 @@ public class Grabber : MonoBehaviourPun {
         TryDrop();
     }
     public void Validate() {
+        bool canActivate = false;
+        bool canThrow = false;
         for (int i = 0; i < grabbedObjects.Count; i++) {
+            if (grabbedObjects[i].weapon != null) {
+                canActivate = true;
+            }
+
+            if (grabbedObjects[i].body != null) {
+                canThrow = true;
+            }
+
             if (!grabbedObjects[i].Valid()) {
                 grabbedObjects[i].Release();
                 grabbedObjects.RemoveAt(i--);
             }
+        }
+
+        if (activateUI.activeSelf && !canActivate || !activateUI.activeSelf && canActivate) {
+            activateUI.SetActive(canActivate);
+        }
+
+        if (!canActivate) {
+            if (canThrow && !throwUI.activeSelf || !canThrow && throwUI.activeSelf) {
+                throwUI.SetActive(canThrow);
+            }
+        } else if (throwUI.activeSelf) {
+            throwUI.SetActive(false);
         }
     }
 

@@ -58,20 +58,20 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.7.2",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v3.7.3",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.textus-games.serialized-reference-ui": "1.0.0"
       },
-      "hash": "e263acb5011dccd53b4a6abceb38cedd21f27edc"
+      "hash": "8908a1f46d204f665a65f54368086baed2c50650"
     },
     "com.naelstrof.skinnedmeshdecals": {
-      "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.3",
+      "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.4",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5e00c7a4e168cd6a7284ce0304545c54e864e196"
+      "hash": "25fa5ba72dbe1fcb4f36653ffe44fa11c24efb26"
     },
     "com.naelstrof.unityscriptablesettings": {
       "version": "https://github.com/naelstrof/UnityScriptableSettings.git#upm",

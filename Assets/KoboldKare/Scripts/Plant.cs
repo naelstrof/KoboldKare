@@ -67,7 +67,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
     [PunRPC]
     void SwitchToRPC(short newPlantID) {
         ScriptablePlant checkPlant = PlantDatabase.GetPlant(newPlantID);
-        Debug.Log("Switching from " + plant + " to " + checkPlant);
+        //Debug.Log("Switching from " + plant + " to " + checkPlant);
         if (checkPlant == plant) {
             return;
         }

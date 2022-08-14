@@ -15,6 +15,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private AudioPack unfreezeSound;
     [SerializeField] private Kobold kobold;
     [SerializeField] private GameEventFloat handVisibilityEvent;
+    [SerializeField] private GameObject freezeUI;
+    [SerializeField] private List<GameObject> activeUI;
     
     private static RaycastHit[] hits = new RaycastHit[10];
     private static readonly int GrabbingHash = Animator.StringToHash("Grabbing");
@@ -637,6 +639,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         removeIds.Clear();
+        if (!freezeUI.activeSelf && frozenGrabs.Count > 0 || freezeUI.activeSelf && frozenGrabs.Count == 0) {
+            freezeUI.SetActive(frozenGrabs.Count != 0);
+        }
+
+        if (currentGrab != null && !activeUI[0].activeSelf || currentGrab == null && activeUI[0].activeSelf) {
+            foreach (var ui in activeUI) {
+                ui.SetActive(currentGrab != null);
+            }
+        }
     }
 
 

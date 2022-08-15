@@ -60,11 +60,11 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(grabbed);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetState(reader.ReadBoolean());
     }
 }

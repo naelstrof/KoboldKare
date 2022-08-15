@@ -148,6 +148,6 @@ public class Pachinko : GenericUsable {
     void OnValidate() {
         pachinkoBallPrefab.OnValidate();
     }
-    public override void Save(BinaryWriter writer, string version) { }
-    public override void Load(BinaryReader reader, string version) { }
+    public override void Save(BinaryWriter writer) { }
+    public override void Load(BinaryReader reader) { }
 }

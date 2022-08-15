@@ -208,14 +208,14 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         if (contents == null) {
             Awake(); Start();
         }
         contents.Serialize(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         if (contents == null) {
             Awake(); Start();
         }

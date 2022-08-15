@@ -85,7 +85,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(hasDebris);
         if (planted == null) {
             writer.Write((int)-1);
@@ -94,7 +94,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetDebris(reader.ReadBoolean());
         int viewID = reader.ReadInt32();
         SetPlantedRPC(viewID);

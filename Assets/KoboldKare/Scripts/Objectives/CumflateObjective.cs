@@ -40,11 +40,11 @@ public class CumflateObjective : DragonMailObjective {
         return $"{title.GetLocalizedString()} {cumflated.ToString()}/{cumflatedMax.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer, string version) {
+    public override void Save(BinaryWriter writer) {
         writer.Write(cumflated);
     }
 
-    public override void Load(BinaryReader reader, string version) {
+    public override void Load(BinaryReader reader) {
         cumflated = reader.ReadInt32();
         TriggerUpdate();
     }

@@ -66,6 +66,9 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     }
 
     private void SwitchToObjective(DragonMailObjective newObjective) {
+        if (newObjective == currentObjective) {
+            return;
+        }
         if (currentObjective != null) {
             currentObjective.Unregister();
             currentObjective.completed -= OnObjectiveComplete;
@@ -80,24 +83,38 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
         objectiveChanged?.Invoke(currentObjective);
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
+        bool hasObjective = currentObjective != null;
+        writer.Write(hasObjective);
         writer.Write(currentObjectiveIndex);
-        objectives[currentObjectiveIndex].Save(writer, version);
+        objectives[currentObjectiveIndex].Save(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
+        bool hasObjective = reader.ReadBoolean();
         currentObjectiveIndex = reader.ReadInt32();
-        SwitchToObjective(objectives[currentObjectiveIndex]);
-        objectives[currentObjectiveIndex].Load(reader, version);
+        if (hasObjective) {
+            SwitchToObjective(objectives[currentObjectiveIndex]);
+        } else {
+            SwitchToObjective(null);
+        }
+        objectives[currentObjectiveIndex].Load(reader);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
+            bool hasObjective = currentObjective != null;
+            stream.SendNext(hasObjective);
             stream.SendNext(currentObjectiveIndex);
         } else {
+            bool hasObjective = (bool)stream.ReceiveNext();
             currentObjectiveIndex = (int)stream.ReceiveNext();
+            if (hasObjective) {
+                SwitchToObjective(objectives[currentObjectiveIndex]);
+            } else {
+                SwitchToObjective(null);
+            }
         }
-        
         objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
     }
 

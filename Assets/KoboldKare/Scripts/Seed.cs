@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using Photon.Pun;
 
@@ -68,5 +69,16 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         } else {
             genes = new KoboldGenes().Randomize();
         }
+    }
+
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
+        genes ??= new KoboldGenes().Randomize();
+        genes.Serialize(writer);
+    }
+
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
+        genes = new KoboldGenes().Deserialize(reader);
     }
 }

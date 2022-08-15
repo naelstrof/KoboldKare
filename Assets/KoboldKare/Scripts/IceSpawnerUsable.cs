@@ -70,12 +70,12 @@ public class IceSpawnerUsable : GenericUsable, IPunObservable {
             spawnsLeft = (byte)stream.ReceiveNext();
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(spawnsLeft);
     }
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         spawnsLeft = reader.ReadByte();
     }
 }

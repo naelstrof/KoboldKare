@@ -10,7 +10,7 @@ public static class SaveManager {
     public const string saveExtension = ".sav";
     public const string imageExtension = ".jpg";
     public const string saveHeader = "KKSAVE";
-    public const string version = "0";
+    //public const string version = "0";
     public const int textureSize = 256;
     public delegate void SaveCompleteAction();
     public class SaveData {
@@ -55,6 +55,23 @@ public static class SaveManager {
         
         return name;
     }
+
+    public static bool IsLoadable(string filename, out string lastError) {
+        using FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read);
+        BinaryReader reader = new BinaryReader(file);
+        if (reader.ReadString() != saveHeader) {
+            lastError = "Not a save file: " + filename;
+            return false;
+        }
+        string fileVersion = reader.ReadString();
+        if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+            lastError = "Cannot load save file, it was saved with a different version of KoboldKare.";
+            return false;
+        }
+        lastError = "";
+        return true;
+    }
+
     public static void Save(string filename, SaveCompleteAction action = null) {
         //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be saved: "+filename);
         string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
@@ -65,7 +82,7 @@ public static class SaveManager {
         using(FileStream file = new FileStream(savePath, FileMode.CreateNew, FileAccess.Write)) {
             BinaryWriter writer = new BinaryWriter(file);
             writer.Write(saveHeader);
-            writer.Write(version);
+            writer.Write(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion);
             //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
             // We need to enable all our saved objects, they don't have proper viewids otherwise
@@ -81,7 +98,7 @@ public static class SaveManager {
                 writer.Write(PrefabifyGameObjectName(view.gameObject));
                 foreach(var observable in view.ObservedComponents) {
                     if (observable is ISavable) {
-                        (observable as ISavable).Save(writer, version);
+                        (observable as ISavable).Save(writer);
                     }
                 }
             }
@@ -133,6 +150,11 @@ public static class SaveManager {
                 throw new UnityException("Not a save file: " + filename);
             }
             string fileVersion = reader.ReadString();
+            
+            if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+                throw new UnityException("Cannot load save file, it was saved with a different version of KoboldKare.");
+            }
+
             int viewCount = reader.ReadInt32();
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
@@ -159,7 +181,7 @@ public static class SaveManager {
                 try {
                     foreach(Component observable in view.ObservedComponents) {
                         if (observable is ISavable savable) {
-                            savable.Load(reader, fileVersion);
+                            savable.Load(reader);
                         }
                     }
                 } catch {
@@ -170,6 +192,9 @@ public static class SaveManager {
         }
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        if (!IsLoadable(filename, out string lastError)) {
+            throw new UnityException(lastError);
+        }
         //Ensure we show the player that the game is loading while we load
         if(SceneManager.GetActiveScene().name != "MainMenu"){
             GameManager.instance.Pause(false);

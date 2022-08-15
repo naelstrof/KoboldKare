@@ -330,7 +330,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             desiredHipVector = (Vector2)stream.ReceiveNext();
         }
     }
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         if (animating) {
             writer.Write(currentStationSet.photonView.ViewID);
             writer.Write(currentStationSet.GetAnimationStations().IndexOf(currentStation));
@@ -340,7 +340,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         int photonViewID = reader.ReadInt32();
         int animationID = reader.ReadInt32();
         if (photonViewID != -1 &&

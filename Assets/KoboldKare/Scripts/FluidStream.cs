@@ -295,7 +295,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         if (container != null) {
             writer.Write(container.photonView.ViewID);
         } else {
@@ -308,7 +308,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         writer.Write(firing);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         int viewID = reader.ReadInt32();
         if (viewID != -1) {
             container = PhotonNetwork.GetPhotonView(viewID).GetComponentInChildren<GenericReagentContainer>();

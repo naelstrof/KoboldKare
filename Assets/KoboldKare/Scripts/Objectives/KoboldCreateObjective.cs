@@ -40,11 +40,11 @@ public class KoboldCreateObjective : DragonMailObjective {
         return $"{title.GetLocalizedString()} {kobolds.ToString()}/{maxKobolds.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer, string version) {
+    public override void Save(BinaryWriter writer) {
         writer.Write(kobolds);
     }
 
-    public override void Load(BinaryReader reader, string version) {
+    public override void Load(BinaryReader reader) {
         kobolds = reader.ReadInt32();
     }
 

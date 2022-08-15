@@ -191,7 +191,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Save(BinaryWriter writer, string version) {
+        public void Save(BinaryWriter writer) {
             var tr = transform;
             if (this.m_SynchronizePosition) {
                 if (m_UseLocal) {
@@ -226,7 +226,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Load(BinaryReader reader, string version) {
+        public void Load(BinaryReader reader) {
             var tr = transform;
             if (this.m_SynchronizePosition) {
                 float posx = reader.ReadSingle();

@@ -43,11 +43,11 @@ public class PlantKoboldObjective : DragonMailObjective {
         return description.GetLocalizedString();
     }
 
-    public override void Save(BinaryWriter writer, string version) {
+    public override void Save(BinaryWriter writer) {
         writer.Write(plants);
     }
 
-    public override void Load(BinaryReader reader, string version) {
+    public override void Load(BinaryReader reader) {
         plants = reader.ReadInt32();
     }
 

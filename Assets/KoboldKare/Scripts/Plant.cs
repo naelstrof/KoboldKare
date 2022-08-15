@@ -6,7 +6,7 @@ using KoboldKare;
 using System.IO;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
+public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, ISavable {
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
@@ -165,7 +165,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         }
     }
     
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(PlantDatabase.GetID(plant));
         writer.Write(transform.position.x);
         writer.Write(transform.position.y);
@@ -173,12 +173,15 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, ISavable {
         GetGenes().Serialize(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
         float x = reader.ReadSingle();
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
         transform.position = new Vector3(x,y,z);
-        SetGenes(GetGenes().Deserialize(reader));
+        SetGenes(new KoboldGenes().Deserialize(reader));
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 }

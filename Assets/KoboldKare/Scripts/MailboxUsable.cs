@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using KoboldKare;
+using Photon.Pun;
 using UnityEngine;
 
 public class MailboxUsable : GenericUsable {
@@ -27,6 +29,7 @@ public class MailboxUsable : GenericUsable {
         }
         mailWaiting.Play(mailWaitingSource);
         ObjectiveManager.AddObjectiveSwappedListener(OnObjectiveSwapped);
+        OnObjectiveSwapped(ObjectiveManager.GetCurrentObjective());
     }
 
     private void OnDestroy() {
@@ -35,6 +38,11 @@ public class MailboxUsable : GenericUsable {
 
     void OnObjectiveSwapped(DragonMailObjective obj) {
         if (obj != null) {
+            hasMail = false;
+            mailWaitingSource.Stop();
+            mailWaitingSource.enabled = false;
+            animator.SetBool("HasMail", false);
+            animator.SetTrigger("GetMail");
             return;
         }
         hasMail = true;

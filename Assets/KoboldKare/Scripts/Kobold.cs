@@ -540,11 +540,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         GetGenes().Serialize(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetGenes(new KoboldGenes().Deserialize(reader));
     }
 

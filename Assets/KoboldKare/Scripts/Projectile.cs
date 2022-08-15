@@ -142,14 +142,14 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(velocity.x);
         writer.Write(velocity.y);
         writer.Write(velocity.z);
         writer.Write(splashed);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         float vx = reader.ReadSingle();
         float vy = reader.ReadSingle();
         float vz = reader.ReadSingle();

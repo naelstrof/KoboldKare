@@ -35,10 +35,10 @@ public class DragonMailObjective : ISavable, IPunObservable {
         return "";
     }
 
-    public virtual void Save(BinaryWriter writer, string version) {
+    public virtual void Save(BinaryWriter writer) {
     }
 
-    public virtual void Load(BinaryReader reader, string version) {
+    public virtual void Load(BinaryReader reader) {
     }
 
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

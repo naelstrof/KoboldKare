@@ -56,12 +56,12 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
             worth = (float)stream.ReceiveNext();
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(worth);
     }
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         worth = reader.ReadSingle();
     }
 

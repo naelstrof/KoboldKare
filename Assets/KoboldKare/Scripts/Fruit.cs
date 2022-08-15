@@ -85,12 +85,12 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(GetFrozen());
         writer.Write(health);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetFrozen(reader.ReadBoolean());
         health = reader.ReadSingle();
     }

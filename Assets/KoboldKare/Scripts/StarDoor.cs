@@ -66,4 +66,29 @@ public class StarDoor : GenericUsable {
             PhotonNetwork.Destroy(photonView.gameObject);
         }
     }
+
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
+        writer.Write(transform.position.x);
+        writer.Write(transform.position.y);
+        writer.Write(transform.position.z);
+        
+        writer.Write(transform.rotation.x);
+        writer.Write(transform.rotation.y);
+        writer.Write(transform.rotation.z);
+        writer.Write(transform.rotation.w);
+    }
+
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
+        float x = reader.ReadSingle();
+        float y = reader.ReadSingle();
+        float z = reader.ReadSingle();
+        transform.position = new Vector3(x, y, z);
+        x = reader.ReadSingle();
+        y = reader.ReadSingle();
+        z = reader.ReadSingle();
+        float w = reader.ReadSingle();
+        transform.rotation = new Quaternion(x, y, z, w);
+    }
 }

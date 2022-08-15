@@ -102,14 +102,14 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(equipment.Count);
         foreach(Equipment e in equipment) {
             writer.Write(EquipmentDatabase.GetID(e));
         }
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         int count = reader.ReadInt32();
         staticIncomingEquipment.Clear();
         for(int i=0;i<count;i++) {

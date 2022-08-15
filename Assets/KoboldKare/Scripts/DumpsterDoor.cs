@@ -146,8 +146,8 @@ public class DumpsterDoor : GenericDoor, IPunObservable, ISavable {
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
-    public override void Save(BinaryWriter writer, string version) {
+    public override void Save(BinaryWriter writer) {
     }
-    public override void Load(BinaryReader reader, string version) {
+    public override void Load(BinaryReader reader) {
     }
 }

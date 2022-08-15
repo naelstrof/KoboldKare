@@ -30,11 +30,11 @@ public class BreedKoboldObjective : DragonMailObjective {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer, string version) {
+    public override void Save(BinaryWriter writer) {
         writer.Write(eggs);
     }
 
-    public override void Load(BinaryReader reader, string version) {
+    public override void Load(BinaryReader reader) {
         eggs = reader.ReadInt32();
     }
 

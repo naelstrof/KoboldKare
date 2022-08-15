@@ -678,9 +678,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
     }
 }

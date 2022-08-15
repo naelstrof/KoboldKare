@@ -213,11 +213,11 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(rainAmount);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         rainAmount = reader.ReadSingle();
     }
 }

@@ -23,8 +23,8 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     public void RPCUse() {
         Use();
     }
-    public virtual void Save(BinaryWriter writer, string version) { }
-    public virtual void Load(BinaryReader reader, string version) { }
+    public virtual void Save(BinaryWriter writer) { }
+    public virtual void Load(BinaryReader reader) { }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 }

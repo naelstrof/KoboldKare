@@ -74,13 +74,13 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(body.position.x);
         writer.Write(body.position.y);
         writer.Write(body.position.z);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         float x = reader.ReadSingle();
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();

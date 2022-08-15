@@ -273,10 +273,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
     }
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(ragdolled);
     }
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetRagdolled(reader.ReadBoolean());
     }
 

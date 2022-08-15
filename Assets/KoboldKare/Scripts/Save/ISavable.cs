@@ -4,6 +4,6 @@ using System.IO;
 using UnityEngine;
 
 public interface ISavable {
-    void Save(BinaryWriter writer, string version);
-    void Load(BinaryReader reader, string version);
+    void Save(BinaryWriter writer);
+    void Load(BinaryReader reader);
 }

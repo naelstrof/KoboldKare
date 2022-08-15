@@ -569,11 +569,11 @@ namespace Photon.Pun
         }
 
         // Hopefully we just don't need these, we don't use them yet
-        public void Save(BinaryWriter writer, string version) {
+        public void Save(BinaryWriter writer) {
             throw new System.NotImplementedException();
         }
 
-        public void Load(BinaryReader reader, string version) {
+        public void Load(BinaryReader reader) {
             throw new System.NotImplementedException();
         }
 

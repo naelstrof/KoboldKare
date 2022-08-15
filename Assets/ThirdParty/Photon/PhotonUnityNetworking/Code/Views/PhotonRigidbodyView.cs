@@ -109,7 +109,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Save(BinaryWriter writer, string version) {
+        public void Save(BinaryWriter writer) {
             writer.Write(this.m_Body.position.x);
             writer.Write(this.m_Body.position.y);
             writer.Write(this.m_Body.position.z);
@@ -132,7 +132,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Load(BinaryReader reader, string version) {
+        public void Load(BinaryReader reader) {
             
             float posx = reader.ReadSingle();
             float posy = reader.ReadSingle();

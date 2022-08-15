@@ -58,11 +58,11 @@ public class ConstructionContract : GenericUsable {
         purchasedEvent?.Invoke(this);
     }
 
-    public override void Save(BinaryWriter writer, string version){   
+    public override void Save(BinaryWriter writer){   
         writer.Write(bought);
     }
 
-    public override void Load(BinaryReader reader, string version){
+    public override void Load(BinaryReader reader){
         bought = reader.ReadBoolean();
         SetState(bought);
     }

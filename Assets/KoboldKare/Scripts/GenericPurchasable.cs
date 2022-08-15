@@ -93,14 +93,14 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(inStock);
         writer.Write(PurchasableDatabase.GetID(purchasable));
     }
 
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         display.SetActive(reader.ReadBoolean());
         short currentPurchasable = (short)reader.ReadInt16();
         SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));

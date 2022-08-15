@@ -48,10 +48,10 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             daysPast = (int)stream.ReceiveNext();
         }
     }
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(daysPast);
     }
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         daysPast = reader.ReadInt32();
     }
     private void Sleep() {

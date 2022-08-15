@@ -36,7 +36,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
     public bool HasMoney(float amount) {
         return money >= amount;
     }
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         money = reader.ReadSingle();
     }
 
@@ -48,7 +48,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(money);
     }
 }

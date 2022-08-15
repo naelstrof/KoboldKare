@@ -24,12 +24,18 @@ namespace Naelstrof.Inflatable {
         }
 
         public void AddTargetRenderer(SkinnedMeshRenderer renderer) {
+            if (skinnedMeshRenderers.Contains(renderer)) {
+                return;
+            }
             skinnedMeshRenderers.Add(renderer);
             blendshapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(blendShapeName));
         }
 
         public void RemoveTargetRenderer(SkinnedMeshRenderer renderer) {
             int index = skinnedMeshRenderers.IndexOf(renderer);
+            if (index == -1) {
+                return;
+            }
             skinnedMeshRenderers.RemoveAt(index);
             blendshapeIDs.RemoveAt(renderer.sharedMesh.GetBlendShapeIndex(blendShapeName));
         }

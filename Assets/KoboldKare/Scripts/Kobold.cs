@@ -283,6 +283,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         MetabolizeEvent.AddListener(OnEventRaised);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
         PlayAreaEnforcer.AddTrackedObject(photonView);
+        if (GetGenes() == null) {
+            SetGenes(new KoboldGenes().Randomize());
+        }
     }
     private void OnDestroy() {
         MetabolizeEvent.RemoveListener(OnEventRaised);

@@ -449,12 +449,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             genes.ballSize += pineappleJuiceVolume * multi;
             
             // Mushroom juice is poisonous!
-            genes.baseSize -= mushroomJuiceVolume * multi * 0.2f;
-            genes.ballSize -= mushroomJuiceVolume * multi * 0.2f;
-            genes.dickSize -= mushroomJuiceVolume * multi * 0.2f;
-            genes.fatSize -= mushroomJuiceVolume * multi * 0.2f;
-            genes.breastSize -= mushroomJuiceVolume * multi * 0.2f;
-            genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(mushroomJuiceVolume*2f) * multi), 0, 255);
+            genes.baseSize = Mathf.Max(genes.baseSize-mushroomJuiceVolume * multi * 0.2f, 0f);
+            genes.ballSize = Mathf.Max(genes.ballSize-mushroomJuiceVolume * multi * 0.2f,0f);
+            genes.dickSize = Mathf.Max(genes.dickSize-mushroomJuiceVolume * multi * 0.2f, 0.2f);
+            genes.fatSize = Mathf.Max(genes.fatSize-mushroomJuiceVolume * multi * 0.2f,-25f);
+            genes.breastSize = Mathf.Max(genes.breastSize-mushroomJuiceVolume * multi * 0.2f,0f);
+            genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(mushroomJuiceVolume*6f) * multi), 0, 255);
             
             SetGenes(genes);
         }

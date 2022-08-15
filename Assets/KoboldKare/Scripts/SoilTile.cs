@@ -12,6 +12,8 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     private bool hasDebris = false;
     [SerializeField]
     private List<GameObject> debris;
+    [SerializeField]
+    private PhotonGameObjectReference plantPrefab;
     [PunRPC]
     public void SetDebris(bool newHasDebris) {
         hasDebris = newHasDebris;
@@ -64,6 +66,24 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             SetDebris((bool)stream.ReceiveNext());
         }
     }
+    
+    [PunRPC]
+    public void PlantRPC(int seed, short plantID, KoboldGenes myGenes) {
+        PhotonView seedView = PhotonNetwork.GetPhotonView(seed);
+        if (seedView != null && seedView.IsMine) {
+            PhotonNetwork.Destroy(seedView);
+        }
+        if (!PhotonNetwork.IsMasterClient) {
+            return;
+        }
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject(plantPrefab.photonName, GetPlantPosition(),
+            Quaternion.LookRotation(Vector3.forward, Vector3.up), 0,
+            new object[] { plantID, myGenes });
+        photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All,
+            obj.GetComponent<Plant>().photonView.ViewID);
+    }
+
 
     public void Save(BinaryWriter writer, string version) {
         writer.Write(hasDebris);
@@ -78,5 +98,9 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         SetDebris(reader.ReadBoolean());
         int viewID = reader.ReadInt32();
         SetPlantedRPC(viewID);
+    }
+
+    private void OnValidate() {
+        plantPrefab.OnValidate();
     }
 }

@@ -72,10 +72,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worth: 0
   displaySprite: {fileID: 21300000, guid: c4d52768fead19a4ab13f15b42b9d589, type: 3}
-  plantPrefab:
-    gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
-      type: 3}
-    photonName: Plant
   _spacing: 2.5
   plant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
 --- !u!114 &3377165026053985329

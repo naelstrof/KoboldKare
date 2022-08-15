@@ -9,7 +9,6 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     private float worth = 5f;
     [SerializeField]
     private Sprite displaySprite;
-    public PhotonGameObjectReference plantPrefab;
     public float _spacing = 1f;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
@@ -46,18 +45,8 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            base.LocalUse(k);
             genes ??= new KoboldGenes().Randomize();
-            
-            GameObject obj = PhotonNetwork.Instantiate(plantPrefab.photonName, bestTile.GetPlantPosition(), Quaternion.LookRotation(Vector3.forward, Vector3.up), 0, new object[] {PlantDatabase.GetID(plant), genes} );
-            bestTile.photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All, obj.GetComponent<Plant>().photonView.ViewID);
-            
-            if (photonView.IsMine) {
-                PhotonNetwork.Destroy(photonView.gameObject);
-            } else {
-                StartCoroutine(WaitOnPlant());
-            }
-            waitingOnPlant = true;
+            bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, PlantDatabase.GetID(plant), genes);
         }
 
     }
@@ -69,26 +58,8 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     private void OnDestroy() {
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
-
-    IEnumerator WaitOnPlant() {
-        waitingOnPlant = true;
-        while (true) {
-            photonView.RPC(nameof(Use), RpcTarget.All);
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
-    [PunRPC]
-    public override void Use() {
-        if (photonView.IsMine) {
-            PhotonNetwork.Destroy(gameObject);
-        }
-    }
     public float GetWorth() {
         return worth;
-    }
-    public void OnValidate() {
-        plantPrefab.OnValidate();
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {

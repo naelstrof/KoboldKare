@@ -49,6 +49,7 @@ public class BombUsable : GenericUsable, IDamagable {
         return 1f;
     }
 
+    [PunRPC]
     public void Damage(float amount) {
         if (!fired) {
             Fire();

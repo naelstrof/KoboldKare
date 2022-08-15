@@ -510,9 +510,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (stream.IsWriting) {
             stream.SendNext(GetGenes());
             stream.SendNext(arousal);
+            stream.SendNext(metabolizedContents);
         } else {
             SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
+            metabolizedContents.Copy((ReagentContents)stream.ReceiveNext());
         }
     }
 

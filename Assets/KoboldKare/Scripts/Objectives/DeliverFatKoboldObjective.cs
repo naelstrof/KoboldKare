@@ -24,7 +24,7 @@ public class DeliverFatKoboldObjective : DragonMailObjective {
             return;
         }
 
-        if (k.GetGenes().fatSize > 20f) {
+        if (k.GetGenes().fatSize >= 15f) {
             koboldCount++;
             TriggerUpdate();
         }

@@ -88,12 +88,12 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext((short)equipment.Count);
+            stream.SendNext((byte)equipment.Count);
             foreach(Equipment e in equipment) {
                 stream.SendNext(EquipmentDatabase.GetID(e));
             }
         } else {
-            short equipmentCount = (short)stream.ReceiveNext();
+            byte equipmentCount = (byte)stream.ReceiveNext();
             staticIncomingEquipment.Clear();
             for(int i=0;i<equipmentCount;i++) {
                 staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)stream.ReceiveNext()));

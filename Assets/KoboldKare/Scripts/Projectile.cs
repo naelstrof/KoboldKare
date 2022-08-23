@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -146,6 +148,12 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         writer.Write(velocity.x);
         writer.Write(velocity.y);
         writer.Write(velocity.z);
+        contents.Serialize(writer);
+        bool hasGenes = GetGenes() != null;
+        writer.Write(hasGenes);
+        if (hasGenes) {
+            GetGenes().Serialize(writer);
+        }
         writer.Write(splashed);
     }
 
@@ -154,14 +162,23 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         float vy = reader.ReadSingle();
         float vz = reader.ReadSingle();
         velocity = new Vector3(vx, vy, vz);
-        bool newSplash = reader.ReadBoolean();
-        if (!splashed && newSplash) {
+        contents = new ReagentContents();
+        contents.Deserialize(reader);
+        bool hasGenes = reader.ReadBoolean();
+        if (hasGenes) {
+            SetGenes(new KoboldGenes().Deserialize(reader));
+        }
+        bool newSplashed = reader.ReadBoolean();
+        if (newSplashed && !splashed) {
             OnSplash();
         }
-        splashed = newSplash;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView == null || info.photonView.InstantiationData == null || info.photonView.InstantiationData[0] is not ReagentContents) {
+            return;
+        }
+
         contents = (ReagentContents)info.photonView.InstantiationData[0];
         Color color = contents.GetColor();
         splashEffect.SetVector4("Color", new Vector4(color.r,color.g,color.b, color.a));

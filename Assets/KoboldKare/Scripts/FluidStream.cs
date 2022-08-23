@@ -7,7 +7,7 @@ using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
-public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
+public class FluidStream : CatmullDeformer {
     private class FluidParticle {
         public Vector3 position;
         public Vector3 lastPosition;
@@ -281,42 +281,5 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         particles.Clear();
         audioSource.enabled = false;
         waterHitSource.enabled = false;
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(startClip);
-            stream.SendNext(endClip);
-            stream.SendNext(firing);
-        } else {
-            startClip = (float)stream.ReceiveNext();
-            endClip = (float)stream.ReceiveNext();
-            firing = (bool)stream.ReceiveNext();
-        }
-    }
-
-    public void Save(BinaryWriter writer) {
-        if (container != null) {
-            writer.Write(container.photonView.ViewID);
-        } else {
-            writer.Write(-1);
-        }
-
-        midairContents.Serialize(writer);
-        writer.Write(startClip);
-        writer.Write(endClip);
-        writer.Write(firing);
-    }
-
-    public void Load(BinaryReader reader) {
-        int viewID = reader.ReadInt32();
-        if (viewID != -1) {
-            container = PhotonNetwork.GetPhotonView(viewID).GetComponentInChildren<GenericReagentContainer>();
-        }
-
-        midairContents.Deserialize(reader);
-        startClip = reader.ReadSingle();
-        endClip = reader.ReadSingle();
-        firing = reader.ReadBoolean();
     }
 }

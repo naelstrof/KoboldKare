@@ -194,6 +194,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             }
             foreach (var dickSet in activeDicks) {
                 foreach (var rendererMask in dickSet.dick.GetTargetRenderers()) {
+                    if (rendererMask.renderer == null) {
+                        continue;
+                    }
                     foreach (Material m in rendererMask.renderer.materials) {
                         m.SetVector(BrightnessContrastSaturation, hbcs);
                     }
@@ -202,10 +205,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         // Set dick
         var inventory = GetComponent<KoboldInventory>();
-        if (GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip || newGenes.dickEquip == byte.MaxValue) {
-            while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),PhotonNetwork.InRoom);
-            }
+        Equipment crotchEquipment = inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch);
+        if (crotchEquipment != null && EquipmentDatabase.GetID(crotchEquipment) != newGenes.dickEquip) {
+            inventory.RemoveEquipment(crotchEquipment,PhotonNetwork.InRoom);
         }
 
         if (newGenes.dickEquip != byte.MaxValue) {

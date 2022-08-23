@@ -38,6 +38,8 @@ public class Equipment : ScriptableObject {
         LeftForearm,
         RightForearm,
     }
+
+    public bool canManuallyUnequip = true;
     public EquipmentSlot slot;
     public PhotonGameObjectReference groundPrefab;
     public LocalizedString localizedName;

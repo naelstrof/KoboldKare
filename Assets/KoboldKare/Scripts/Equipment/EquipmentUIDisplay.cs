@@ -81,7 +81,9 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
 
 
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
-            ui.transform.Find("DropButton").GetComponent<Button>().onClick.AddListener(() => {
+            var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();
+            DropButton.interactable = e.canManuallyUnequip;
+            DropButton.onClick.AddListener(() => {
                 if (inventory.photonView.IsMine) {
                     inventory.RemoveEquipment(e, true);
                 }

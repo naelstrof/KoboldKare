@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 7649bc89665bd244fac8a6e6a8d54e14, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 0
   slot: 0
   groundPrefab:
     gameObject: {fileID: 3729554680024515055, guid: 62f1f2d2e2495264eb99d130922d1213,
@@ -37,8 +38,8 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply: []
   dickPrefab: {fileID: 1329935879624422361, guid: b7c7bb879ff151448b3eabab18398131,
     type: 3}
   references:
-    version: 1
+    version: 2
+    RefIds: []

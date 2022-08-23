@@ -16,12 +16,6 @@ public class DickEquipment : Equipment {
         if (info == null) {
             throw new UnityException("Dick equipment is missing the DickInfo monobehavior. It's needed to be able to equip!");
         }
-        foreach(DickInfo.DickSet set in info.dicks) {
-            if (container != null) {
-                k.SetGenes(k.GetGenes().With(dickSize: container.volume));
-            }
-            set.dickIdentifier = GetInstanceID();
-        }
         info.AttachTo(k);
         return stuff;
     }
@@ -46,7 +40,6 @@ public class DickEquipment : Equipment {
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, contents, container.photonView.ViewID);
             }
         }
-        k.SetGenes(k.GetGenes().With(dickEquip: byte.MaxValue));
         return groundPrefab;
     }
 }

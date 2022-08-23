@@ -194,6 +194,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             }
             foreach (var dickSet in activeDicks) {
                 foreach (var rendererMask in dickSet.dick.GetTargetRenderers()) {
+                    if (rendererMask.renderer == null) {
+                        continue;
+                    }
                     foreach (Material m in rendererMask.renderer.materials) {
                         m.SetVector(BrightnessContrastSaturation, hbcs);
                     }

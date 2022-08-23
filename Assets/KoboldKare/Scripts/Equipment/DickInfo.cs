@@ -37,6 +37,7 @@ public class DickInfoEditor : Editor {
 #endif
 // DickInfo is mainly used to have an in-scene reference to a bunch of dick info. Most of the functionality of a dick is split between DickEquipment.cs, and an external addon called PenetrationTech
 public class DickInfo : MonoBehaviour {
+    private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private Task attachTask;
     private Kobold attachedKobold;
 
@@ -291,8 +292,14 @@ public class DickInfo : MonoBehaviour {
                     }
                 }
             };*/
-            // Make sure the dick is the right color, this just forces a reset of most stats
-            k.SetGenes(k.GetGenes());
+            KoboldGenes genes = attachedKobold.GetGenes();
+            Vector4 hbcs = new Vector4(genes.hue/255f, genes.brightness/255f, 0.5f, genes.saturation/255f);
+            // Set color
+            foreach (var rendererMask in set.dick.GetTargetRenderers()) {
+                foreach (Material m in rendererMask.renderer.materials) {
+                    m.SetVector(BrightnessContrastSaturation, hbcs);
+                }
+            }
         }
         foreach(DickSet set in dicks) {
             foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>()) {

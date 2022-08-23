@@ -64,11 +64,11 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         Player aPlayer = null;
         Player bPlayer = null;
         foreach (Player player in PhotonNetwork.PlayerList) {
-            if (player.TagObject == stations[0].info.user) {
+            if ((Kobold)player.TagObject == stations[0].info.user) {
                 aPlayer = player;
             }
 
-            if (player.TagObject == stations[1].info.user) {
+            if ((Kobold)player.TagObject == stations[1].info.user) {
                 bPlayer = player;
             }
         }

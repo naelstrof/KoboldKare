@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 using KoboldKare;
 
 [RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class IceSpawnerUsable : GenericUsable, IPunObservable {
+public class IceSpawnerUsable : GenericUsable {
     [SerializeField]
     private float cost = 20f;
     [SerializeField]
@@ -27,17 +27,14 @@ public class IceSpawnerUsable : GenericUsable, IPunObservable {
         floater.SetText(cost.ToString());
     }
     public override bool CanUse(Kobold k) {
-        return (k==null || k.GetComponent<MoneyHolder>().HasMoney(cost));
+        return k.GetComponent<MoneyHolder>().HasMoney(cost);
     }
     public override Sprite GetSprite(Kobold k) {
         return buySprite;
     }
     public override void LocalUse(Kobold k) {
-        if (k == null) {
-            return;
-        }
         k.GetComponent<MoneyHolder>().ChargeMoney(cost);
-        photonView.RPC("RPCUse", RpcTarget.Others);
+        photonView.RPC("RPCUse", RpcTarget.All);
     }
     [PunRPC]
     public override void Use() {

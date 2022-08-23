@@ -10,7 +10,8 @@ public class KoboldPenetrableListener : PenetrableListener {
     protected override void OnPenetrationDepthChange(float newDepth) {
         base.OnPenetrationDepthChange(newDepth);
         float diff = newDepth - oldDepth;
-        targetKobold.AddStimulation(Mathf.Abs(diff));
+        // We only add half stimulation because it's annoying for breeding bolds to lose their energy when the player doesn't intend to.
+        targetKobold.AddStimulation(Mathf.Abs(diff*0.4f));
         oldDepth = newDepth;
     }
 

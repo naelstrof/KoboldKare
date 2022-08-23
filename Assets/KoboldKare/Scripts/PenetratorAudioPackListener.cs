@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using PenetrationTech;
 using UnityEngine;
 
-[PenetratorListener(typeof(PenetratorAudioPackListener), "Play Audio Pack Listener")]
 [System.Serializable]
 public class PenetratorAudioPackListener : PenetratorListener {
     [SerializeField]

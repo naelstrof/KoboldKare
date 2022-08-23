@@ -104,9 +104,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     
     [PunRPC]
     public void Cum() {
-        if (photonView.IsMine) {
-            PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0,
-                new object[] { GetGenes() });
+        if (photonView.IsMine && activeDicks.Count == 0) {
+            PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0, new object[] { GetGenes() });
         }
         foreach(var dickSet in activeDicks) {
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.

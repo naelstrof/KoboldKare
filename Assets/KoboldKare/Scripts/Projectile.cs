@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.VFX;
 

@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.054, z: 0.274}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3449188281496926622}
   m_RootOrder: 7
@@ -56,6 +57,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.07, z: 0.077}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3449188281496926600}
   m_RootOrder: 2
@@ -87,6 +89,7 @@ Transform:
   m_LocalRotation: {x: 0.9797718, y: -0.015443596, z: 0.016053295, w: -0.19887465}
   m_LocalPosition: {x: -0.0021290644, y: -0.06964969, z: -0.073746406}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3449188281496926616}
   m_RootOrder: 7
@@ -110,10 +113,11 @@ MonoBehaviour:
   - {fileID: 5142107882924213383}
   splineTension: 0.5
   listeners:
-  - id: 0
+  - rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: PushPullExpandBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0
@@ -159,6 +163,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -129.86526, y: 50.9375, z: -908.3802}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3449188281496926596}
   m_Father: {fileID: 0}
@@ -216,7 +221,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.3168648
+  - screenRelativeHeight: 0.16652839
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3449188281508915412}
@@ -310,24 +315,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1801125914863696987}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4418935108183807192 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2715059708816730243, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1801125914863696987}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &7548095682481804169 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8088143263809122258, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1801125914863696987}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &2607859409070457648 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4381466059551375211, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1801125914863696987}
-  m_PrefabAsset: {fileID: 0}
 --- !u!205 &1100778149044113133
 LODGroup:
   m_ObjectHideFlags: 0
@@ -376,17 +363,37 @@ MonoBehaviour:
   tipTarget: {fileID: 0}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.5
+  penetrationMarginOfError: 1
   autoPenetrate: -1
+  ignorePenetrables: []
   listeners:
-  - id: 0
+  - rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
         knotForceFactor: 0.3
+--- !u!137 &2607859409070457648 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4381466059551375211, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1801125914863696987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4418935108183807192 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2715059708816730243, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1801125914863696987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7548095682481804169 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8088143263809122258, guid: c38cd95aa6a0a9e4eb053826a61b0a1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1801125914863696987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3449188281497314164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -394,6 +401,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8345595452543585484}
     m_Modifications:
+    - target: {fileID: -3085544894619663981, guid: f7ada51eab3f03e408f76a632dd64539,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -377938101397354895, guid: f7ada51eab3f03e408f76a632dd64539,
         type: 3}
       propertyPath: m_IsActive
@@ -470,27 +482,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
---- !u!4 &3449188281496926596 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400112, guid: f7ada51eab3f03e408f76a632dd64539,
-    type: 3}
-  m_PrefabInstance: {fileID: 3449188281497314164}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3449188281496926616 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400108, guid: f7ada51eab3f03e408f76a632dd64539,
-    type: 3}
-  m_PrefabInstance: {fileID: 3449188281497314164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1347437243614153463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4796626626809517693, guid: f7ada51eab3f03e408f76a632dd64539,
     type: 3}
   m_PrefabInstance: {fileID: 3449188281497314164}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3449188281496926596 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400112, guid: f7ada51eab3f03e408f76a632dd64539,
+    type: 3}
+  m_PrefabInstance: {fileID: 3449188281497314164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3449188281496926600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400124, guid: f7ada51eab3f03e408f76a632dd64539,
+    type: 3}
+  m_PrefabInstance: {fileID: 3449188281497314164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3449188281496926616 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400108, guid: f7ada51eab3f03e408f76a632dd64539,
     type: 3}
   m_PrefabInstance: {fileID: 3449188281497314164}
   m_PrefabAsset: {fileID: 0}

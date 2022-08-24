@@ -87,6 +87,7 @@ MonoBehaviour:
   - AssignKobolds
   - MilkRoutine
   - PlantRPC
+  - ForceMixRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

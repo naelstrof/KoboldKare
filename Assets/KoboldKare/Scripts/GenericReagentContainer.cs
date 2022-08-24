@@ -1,9 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using KoboldKare;
-using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
@@ -137,6 +132,25 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
             SetGenes(geneHolder.GetGenes());
         }
+        contents.AddMix(incomingReagents, this);
+        OnReagentContentsChanged(InjectType.Inject);
+    }
+    
+    [PunRPC]
+    public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
+        // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
+        if (view != null && view.TryGetComponent(out Kobold kobold)) {
+            SetGenes(kobold.GetGenes());
+        } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
+            SetGenes(geneHolder.GetGenes());
+        }
+        maxVolume = Mathf.Max(contents.volume + incomingReagents.volume, maxVolume);
+        
+        if (TryGetComponent(out Kobold kob)) {
+            kob.SetGenes(kob.GetGenes().With(bellySize: maxVolume));
+        }
+
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged(InjectType.Inject);
     }

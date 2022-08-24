@@ -129,10 +129,18 @@ namespace Naelstrof.Mozzarella {
             if (id < particles.Count && lastFrame != Time.frameCount) {
                 float t = (float)id / (float)particles.Count;
                 if (followPenetrator != null) {
-                    particles[id].Spawn(transform.position,
-                        transform.TransformDirection(localForward) * (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime) +
-                        followPenetrator.GetComponentInParent<Rigidbody>().GetPointVelocity(transform.position) *
-                        (0.5f * Time.deltaTime));
+                    Rigidbody body = followPenetrator.GetComponentInParent<Rigidbody>();
+                    if (body != null) {
+                        particles[id].Spawn(transform.position,
+                         transform.TransformDirection(localForward) *
+                            (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime) +
+                            body.GetPointVelocity(transform.position) *
+                            (0.5f * Time.deltaTime));
+                    } else {
+                        particles[id].Spawn(transform.position,
+                            transform.TransformDirection(localForward) *
+                            (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime));
+                    }
                 } else {
                     particles[id].Spawn(transform.position,
                         transform.TransformDirection(localForward) * (velocityCurve.Evaluate(t) * velocityMultiplier * Time.deltaTime));

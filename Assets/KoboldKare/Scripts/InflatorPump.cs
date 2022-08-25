@@ -111,7 +111,7 @@ public class InflatorPump : MonoBehaviourPun {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
                     alloc.AddMix(contents);
-                    mozzarella.SetVolumeMultiplier(alloc.volume * 2f);
+                    mozzarella.SetVolumeMultiplier(alloc.volume);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (photonView.IsMine) {
                             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
@@ -128,7 +128,7 @@ public class InflatorPump : MonoBehaviourPun {
                             hit.point - hit.normal * 0.1f,
                             Quaternion.LookRotation(hit.normal, Vector3.up) *
                             Quaternion.AngleAxis(UnityEngine.Random.Range(-180f, 180f), Vector3.forward),
-                            Vector2.one * (volume * 1.5f), length);
+                            Vector2.one * (volume), length);
                     };
                     mozzarella.SetFollowPenetrator(pumper);
                 }

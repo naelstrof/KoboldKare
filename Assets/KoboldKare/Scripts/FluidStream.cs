@@ -7,7 +7,7 @@ using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
-public class FluidStream : CatmullDeformer {
+public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
     private class FluidParticle {
         public Vector3 position;
         public Vector3 lastPosition;
@@ -281,5 +281,29 @@ public class FluidStream : CatmullDeformer {
         particles.Clear();
         audioSource.enabled = false;
         waterHitSource.enabled = false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            if (firing && container != null) {
+                stream.SendNext(container.photonView.ViewID);
+            } else {
+                stream.SendNext(-1);
+            }
+        } else {
+            int viewTarget = (int)stream.ReceiveNext();
+            if (viewTarget != -1) {
+                PhotonView view = PhotonNetwork.GetPhotonView(viewTarget);
+                if (view.TryGetComponent(out GenericReagentContainer cont)) {
+                    OnFire(cont);
+                }
+            }
+        }
+    }
+
+    public void Save(BinaryWriter writer) {
+    }
+
+    public void Load(BinaryReader reader) {
     }
 }

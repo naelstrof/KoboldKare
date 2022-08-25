@@ -292,6 +292,8 @@ public class DickInfo : MonoBehaviour {
                     }
                 }
             };*/
+            // TODO: FIXME: To prevent circular gene updates, this directly reads what it should do from Kobold.cs.
+            // Ideally it'll have one place where you should set this information. It's duplicated in Kobold.cs in SetGenes()
             KoboldGenes genes = attachedKobold.GetGenes();
             Vector4 hbcs = new Vector4(genes.hue/255f, genes.brightness/255f, 0.5f, genes.saturation/255f);
             // Set color
@@ -300,6 +302,12 @@ public class DickInfo : MonoBehaviour {
                     m.SetVector(BrightnessContrastSaturation, hbcs);
                 }
             }
+            foreach (var inflater in set.dickSizeInflater.GetInflatableListeners()) {
+                if (inflater is InflatableDick inflatableDick) {
+                    inflatableDick.SetDickThickness(genes.dickThickness);
+                }
+            }
+            set.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (genes.dickSize) / 20f, 2f), set.info);
         }
         foreach(DickSet set in dicks) {
             foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>()) {

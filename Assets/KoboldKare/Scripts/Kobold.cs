@@ -74,7 +74,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private bool grabbed = false;
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     public float arousal = 0f;
-    public GameObject nipplePumps;
     public GameObject nippleBarbells;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
@@ -170,6 +169,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
+        // TODO: FIXME: This is duplicated in DickInfo.cs because I'm a lazy architecture designer.
         foreach (var dickSet in activeDicks) {
             foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
                 if (inflater is InflatableDick inflatableDick) {
@@ -258,13 +258,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         fatnessInflater.OnEnable();
 
         if (tummyGrumbleSource == null) {
-            tummyGrumbleSource = gameObject.AddComponent<AudioSource>();
+            tummyGrumbleSource = hip.gameObject.AddComponent<AudioSource>();
             tummyGrumbleSource.playOnAwake = false;
             tummyGrumbleSource.maxDistance = 10f;
             tummyGrumbleSource.minDistance = 0.2f;
             tummyGrumbleSource.rolloffMode = AudioRolloffMode.Linear;
             tummyGrumbleSource.spatialBlend = 1f;
-            tummyGrumbleSource.loop = true;
+            tummyGrumbleSource.loop = false;
         }
         
         if (gargleSource == null) {
@@ -276,7 +276,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             gargleSource.spatialBlend = 1f;
             gargleSource.loop = true;
         }
-        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource));
+        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
     }
 
     void Start() {

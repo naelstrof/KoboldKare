@@ -6,7 +6,6 @@ using UnityEngine;
 public class PhysicsAudio : MonoBehaviour {
     public float maxVolume = 1f;
     private AudioSource scrapeSoundOutput;
-    private AudioSource impactSoundOutput;
     private float soundDelay = 0.2f;
     private float lastSoundTime = 0f;
     private Rigidbody body;
@@ -14,30 +13,18 @@ public class PhysicsAudio : MonoBehaviour {
         yield return null;
         scrapeSoundOutput.volume = 0f;
         scrapeSoundOutput.Pause();
+        scrapeSoundOutput.enabled = false;
     }
     private void Start() {
         body = GetComponent<Rigidbody>();
-        //var steamAudioSetting = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("SteamAudio");
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
         scrapeSoundOutput.spatialBlend = 1f;
         scrapeSoundOutput.rolloffMode = AudioRolloffMode.Custom;
         scrapeSoundOutput.minDistance = 0f;
         scrapeSoundOutput.maxDistance = 25f;
         scrapeSoundOutput.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
-        //scrapeSoundOutput.spatialize = steamAudioSetting.value > 0f;
         scrapeSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-
-        impactSoundOutput = gameObject.AddComponent<AudioSource>();
-        impactSoundOutput.spatialBlend = 1f;
-        impactSoundOutput.rolloffMode = AudioRolloffMode.Logarithmic;
-        //impactSoundOutput.spatialize = steamAudioSetting.value > 0f;
-        impactSoundOutput.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-        scrapeSoundOutput.minDistance = 0f;
-        scrapeSoundOutput.maxDistance = 25f;
-        impactSoundOutput.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
-        //steamaudio.physicsBasedAttenuation = true;
-        //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithFrequencyIndependentTransmission;
-        //steamaudio.occlusionMode = SteamAudio.OcclusionMode.OcclusionWithNoTransmission;
+        scrapeSoundOutput.enabled = false;
     }
     void PlaySoundForCollider(Rigidbody thisBody, Rigidbody otherBody, Collider thisCollider, Collider otherCollider, Vector3 contact, Vector3 relativeVelocity, Vector3 impulse, bool self) {
         PhysicsAudioGroup group = PhysicsMaterialDatabase.GetPhysicsAudioGroup(thisCollider.sharedMaterial);
@@ -54,12 +41,7 @@ public class PhysicsAudio : MonoBehaviour {
 
         AudioClip clip = group.GetImpactClip(otherCollider, mag);
         if (clip != null) {
-            //if (self) {
-                //impactSoundOutput.pitch = Random.Range(0.7f,1.3f);
-                //impactSoundOutput.PlayOneShot(clip, Mathf.Min(maxVolume, group.GetImpactVolume(c, mag)));
-            //} else {
-                GameManager.instance.SpawnAudioClipInWorld(clip, contact, Mathf.Min(maxVolume, group.GetImpactVolume(otherCollider, mag)));
-            //}
+            GameManager.instance.SpawnAudioClipInWorld(clip, contact, Mathf.Min(maxVolume, group.GetImpactVolume(otherCollider, mag)));
         }
     }
     void OnCollisionEnter(Collision collision) {
@@ -88,12 +70,15 @@ public class PhysicsAudio : MonoBehaviour {
         }
     }
     void OnCollisionStay(Collision collision) {
-        if (body && body.isKinematic) {
+        if (body != null && body.isKinematic) {
             scrapeSoundOutput.volume = 0f;
             return;
         }
         // Don't scrape on kinematic bodies, usually this is just player hands bumping into carried objects.
         if (!scrapeSoundOutput.isPlaying && scrapeSoundOutput.isActiveAndEnabled && (!collision.rigidbody || !collision.rigidbody.isKinematic)) {
+            if (!scrapeSoundOutput.enabled) {
+                scrapeSoundOutput.enabled = true;
+            }
             scrapeSoundOutput.Play();
         }
         ContactPoint cp = collision.GetContact(0);
@@ -105,11 +90,12 @@ public class PhysicsAudio : MonoBehaviour {
     }
     void OnCollisionExit(Collision collision) {
         if (isActiveAndEnabled) {
-            StopCoroutine("WaitOneFrameThenPause");
-            StartCoroutine("WaitOneFrameThenPause");
+            StopCoroutine(nameof(WaitOneFrameThenPause));
+            StartCoroutine(nameof(WaitOneFrameThenPause));
         } else if (scrapeSoundOutput != null) {
             scrapeSoundOutput.volume = 0f;
             scrapeSoundOutput.Pause();
+            scrapeSoundOutput.enabled = false;
         }
     }
 }

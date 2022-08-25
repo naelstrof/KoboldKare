@@ -58,6 +58,9 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                     if (inflatable is InflatableBlendShape blendshape) {
                         blendshape.RemoveTargetRenderer(r);
                     }
+                    if (inflatable is InflatableBelly belly) {
+                        belly.RemoveTargetRenderer(r);
+                    }
                 }
             }
             Destroy(g);
@@ -110,6 +113,9 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                     }
                     if (inflatable is InflatableBlendShape blendshape) {
                         blendshape.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                    }
+                    if (inflatable is InflatableBelly belly) {
+                        belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
                     }
                 }
                 proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());

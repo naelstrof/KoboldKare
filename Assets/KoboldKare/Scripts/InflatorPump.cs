@@ -21,6 +21,14 @@ public class InflatorPump : MonoBehaviourPun {
     private GenericReagentContainer container;
     [SerializeField]
     private Material cumSplatProjectorMaterial;
+    [SerializeField]
+    private Material cumCleanProjectorMaterial;
+    [SerializeField]
+    private AudioPack inflaterSloshPack;
+
+    private AudioSource sloshSource;
+
+    [SerializeField] private Animator pumpAnimator;
 
     private bool spraying = false;
     private float accumulation;
@@ -28,16 +36,30 @@ public class InflatorPump : MonoBehaviourPun {
     private Vector3 startPos;
     private float inflateAmount;
     private float lastAccumulateTime = 0f;
+    private static readonly int Pumping = Animator.StringToHash("Pumping");
+
     void Start() {
         blendshapeID = pumpRenderer.sharedMesh.GetBlendShapeIndex("Expand");
         startPos = body.position;
         inflateAmount = 1f;
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = startPos;
+        if (sloshSource == null) {
+            sloshSource = body.gameObject.AddComponent<AudioSource>();
+            sloshSource.playOnAwake = false;
+            sloshSource.maxDistance = 10f;
+            sloshSource.minDistance = 0.2f;
+            sloshSource.rolloffMode = AudioRolloffMode.Linear;
+            sloshSource.spatialBlend = 1f;
+            sloshSource.loop = false;
+        }
+
+        sloshSource.enabled = false;
     }
 
     void FixedUpdate() {
-        float distance = Vector3.Dot(body.transform.position-startPos, Vector3.down);
+        Vector3 axis = -Vector3.right;
+        float distance = Vector3.Dot(body.transform.position-startPos, axis);
         float clamp = Mathf.Clamp01(distance/maxDistance);
         pumpRenderer.SetBlendShapeWeight(blendshapeID, (1f-clamp) * 100f);
         float newInflateAmount = Mathf.Min(Mathf.Min((1f - clamp)+0.1f,1f), inflateAmount);
@@ -48,7 +70,7 @@ public class InflatorPump : MonoBehaviourPun {
         }
         inflateAmount = newInflateAmount;
         inflateAmount = Mathf.MoveTowards(inflateAmount, 1f, Time.deltaTime*1f);
-        joint.connectedAnchor = startPos + Vector3.down * ((1f - inflateAmount) * maxDistance);
+        joint.connectedAnchor = startPos + axis * ((1f - inflateAmount) * maxDistance);
     }
 
     private void Accumulate(float amount) {
@@ -58,7 +80,8 @@ public class InflatorPump : MonoBehaviourPun {
         }
 
         if (amount > 0.1 || accumulation > 5f) {
-            if (!spraying) {
+            if (!spraying && container.volume > 0f) {
+                pumpAnimator.SetBool(Pumping, true);
                 spraying = true;
                 StartCoroutine(SprayRoutine());
             }
@@ -66,7 +89,13 @@ public class InflatorPump : MonoBehaviourPun {
     }
 
     private IEnumerator SprayRoutine() {
+        if (!sloshSource.enabled) {
+            sloshSource.enabled = true;
+        }
         while (Time.time - lastAccumulateTime < 0.05f) {
+            if (!sloshSource.isPlaying) {
+                inflaterSloshPack.Play(sloshSource);
+            }
             yield return null;
         }
         if (photonView.IsMine) {
@@ -95,11 +124,11 @@ public class InflatorPump : MonoBehaviourPun {
                             cumSplatProjectorMaterial.color = alloc.GetColor();
                         }
 
-                        PaintDecal.RenderDecalForCollider(hit.collider, cumSplatProjectorMaterial,
+                        PaintDecal.RenderDecalForCollider(hit.collider, alloc.IsCleaningAgent() ? cumCleanProjectorMaterial : cumSplatProjectorMaterial,
                             hit.point - hit.normal * 0.1f,
                             Quaternion.LookRotation(hit.normal, Vector3.up) *
                             Quaternion.AngleAxis(UnityEngine.Random.Range(-180f, 180f), Vector3.forward),
-                            Vector2.one * (volume * 4f), length);
+                            Vector2.one * (volume * 1.5f), length);
                     };
                     mozzarella.SetFollowPenetrator(pumper);
                 }
@@ -107,6 +136,8 @@ public class InflatorPump : MonoBehaviourPun {
         }
 
         accumulation = 0f;
+        pumpAnimator.SetBool(Pumping, false);
         spraying = false;
+        sloshSource.enabled = false;
     }
 }

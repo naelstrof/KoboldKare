@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6f9b7d146f27a4198eefc8b2871596, type: 3}
+  m_Name: InflaterSlosh
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 35d77e71471b4464abb8bb9b570d65a5, type: 3}
+  - {fileID: 8300000, guid: 6f2695b6871ae774b967575fe1704c37, type: 3}
+  - {fileID: 8300000, guid: 1f95bb06375c278449adfe078c65749d, type: 3}
+  - {fileID: 8300000, guid: 1acbb2c95f58e9c45b17bfe692495a67, type: 3}
+  - {fileID: 8300000, guid: 0f3b1955120711a4ca8f021e2428e3aa, type: 3}
+  - {fileID: 8300000, guid: d15ce526e70c0e742bb93e00602a3a6c, type: 3}
+  - {fileID: 8300000, guid: b075ce0de03497a49a9c11ab1220323a, type: 3}
+  - {fileID: 8300000, guid: 7ae035afe79c88b4ba59f962163fd756, type: 3}
+  - {fileID: 8300000, guid: 2c46e4d994b11cf428b99d13b30e4c2b, type: 3}
+  - {fileID: 8300000, guid: 489dfd2998ccf7e469ee4281c7012032, type: 3}
+  - {fileID: 8300000, guid: 3e25ea1477bd6454ea219b6de4d2eda6, type: 3}
+  - {fileID: 8300000, guid: 20aa54d6d3ddb8e4181268ecf48b807f, type: 3}
+  - {fileID: 8300000, guid: 9d208b35618297843bbec916f03a20b9, type: 3}
+  - {fileID: 8300000, guid: 4cf636f38083eae42b028dbb627ebf33, type: 3}
+  - {fileID: 8300000, guid: 6827c498cc8a21c41b0f3329135d07a1, type: 3}
+  - {fileID: 8300000, guid: 639c29334a2124841b04744096722aa0, type: 3}
+  - {fileID: 8300000, guid: bd432539f819cd44bac5d78929deff6d, type: 3}
+  - {fileID: 8300000, guid: d975d29703d76a64f905ee664dc194a2, type: 3}
+  - {fileID: 8300000, guid: 4fb866ccf440814469fa055b9787e0a1, type: 3}
+  - {fileID: 8300000, guid: 1eacd9ddb2ffacb45b3af7debb1d353f, type: 3}
+  - {fileID: 8300000, guid: 2a5b5852728636a46944e997a7162605, type: 3}
+  - {fileID: 8300000, guid: 9c3aa61a18c669a458737983213ecb86, type: 3}
+  volume: 0.4
+  group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}

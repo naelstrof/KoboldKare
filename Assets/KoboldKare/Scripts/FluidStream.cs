@@ -296,7 +296,11 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
                 PhotonView view = PhotonNetwork.GetPhotonView(viewTarget);
                 if (view.TryGetComponent(out GenericReagentContainer cont)) {
                     OnFire(cont);
+                } else {
+                    firing = false;
                 }
+            } else {
+                firing = false;
             }
         }
     }

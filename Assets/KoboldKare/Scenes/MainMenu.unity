@@ -2226,7 +2226,7 @@ PrefabInstance:
     - target: {fileID: 2980757906006962752, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 23.999023
+      value: 23.999054
       objectReference: {fileID: 0}
     - target: {fileID: 3143658858329877772, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
@@ -7128,7 +7128,7 @@ ReflectionProbe:
   m_Type: 0
   m_Mode: 1
   m_RefreshMode: 1
-  m_TimeSlicingMode: 1
+  m_TimeSlicingMode: 0
   m_Resolution: 1024
   m_UpdateFrequency: 0
   m_BoxSize: {x: 10, y: 10, z: 10}

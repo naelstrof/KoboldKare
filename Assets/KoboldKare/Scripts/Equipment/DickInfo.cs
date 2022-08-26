@@ -105,12 +105,6 @@ public class DickInfo : MonoBehaviour {
             set.ballSizeInflater.OnEnable();
         }
     }
-    public void AttachTo(Kobold k) {
-        if (attachTask != null){
-            attachTask.Stop();
-        }
-        attachTask = new Task(AttachToRoutine(k));
-    }
     /*public void OnDickMovement(float movementAmount) {
         attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
         attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
@@ -215,32 +209,14 @@ public class DickInfo : MonoBehaviour {
         //yield return new WaitForSeconds(3f);
         //attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
     }
-
-    private IEnumerator AttachToRoutine(Kobold k) {
+    public void AttachTo(Kobold k) {
         attachedKobold = k;
-        // We need to make sure that our model isn't disabled, otherwise k.animator.GetBoneTransform always returns null :weary:
-        while(!k.gameObject.activeInHierarchy) {
-            yield return new WaitUntil(()=>k.gameObject.activeInHierarchy);
-        }
-        // Kobold, or the dicks must've been destroyed before we got to attach. Abort!
-        if (k == null || dicks == null || dicks.Count <= 0 || dicks[0] == null || dicks[0].dickContainer == null) {
-            yield break;
-        }
-        foreach(DickSet set in dicks) {
-            foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>(true)) {
-                rig.enabled = false;
-            }
-            foreach(Rigidbody b in set.dick.GetComponentsInChildren<Rigidbody>(true)) {
-                b.isKinematic = true;
-            }
-        }
         bool animatorWasEnabled = k.animator.enabled;
         k.animator.enabled = true;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
             set.parentTransform = k.animator.GetBoneTransform(set.parent);
             while(set.parentTransform == null) {
-                yield return new WaitUntil(()=>k.animator.isActiveAndEnabled);
                 set.parentTransform = k.animator.GetBoneTransform(set.parent);
             }
             set.info = this;
@@ -266,48 +242,6 @@ public class DickInfo : MonoBehaviour {
 
             set.dick.listeners.Add(new KoboldDickListener(k,set));
             k.activeDicks.Add(set);
-            // Lame attempt to sync dick positions, disabled because they sync pretty good anyway.
-            /*set.dick.penetrationStart += (Penetrable p) => {
-                if (!k.photonView.IsMine) {
-                    return;
-                }
-
-                int dicksetID = -1;
-                for (int i = 0; i < k.activeDicks.Count; i++) {
-                    if (set == k.activeDicks[i]) {
-                        dicksetID = i;
-                        break;
-                    }
-                }
-
-                if (dicksetID == -1) {
-                    return;
-                }
-
-                PhotonView other = p.GetComponentInParent<PhotonView>();
-                Penetrable[] penetrables = p.GetComponentsInChildren<Penetrable>();
-                for (int i = 0; i < penetrables.Length; i++) {
-                    if (p == penetrables[i]) {
-                        k.photonView.RPC(nameof(Kobold.PenetrateRPC), RpcTarget.Others, other.ViewID, dicksetID, i);
-                    }
-                }
-            };*/
-            // TODO: FIXME: To prevent circular gene updates, this directly reads what it should do from Kobold.cs.
-            // Ideally it'll have one place where you should set this information. It's duplicated in Kobold.cs in SetGenes()
-            KoboldGenes genes = attachedKobold.GetGenes();
-            Vector4 hbcs = new Vector4(genes.hue/255f, genes.brightness/255f, 0.5f, genes.saturation/255f);
-            // Set color
-            foreach (var rendererMask in set.dick.GetTargetRenderers()) {
-                foreach (Material m in rendererMask.renderer.materials) {
-                    m.SetVector(BrightnessContrastSaturation, hbcs);
-                }
-            }
-            foreach (var inflater in set.dickSizeInflater.GetInflatableListeners()) {
-                if (inflater is InflatableDick inflatableDick) {
-                    inflatableDick.SetDickThickness(genes.dickThickness);
-                }
-            }
-            set.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (genes.dickSize) / 20f, 2f), set.info);
         }
         foreach(DickSet set in dicks) {
             foreach(JigglePhysics.JiggleRigBuilder rig in set.dick.GetComponentsInChildren<JigglePhysics.JiggleRigBuilder>()) {

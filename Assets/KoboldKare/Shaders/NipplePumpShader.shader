@@ -970,6 +970,7 @@ Shader "NipplePumpShader"
 			
 			#pragma multi_compile_instancing
 			#define ASE_SRP_VERSION 999999
+			#define REQUIRE_OPAQUE_TEXTURE 1
 
 			
 			#pragma multi_compile _ LIGHTMAP_ON
@@ -997,13 +998,15 @@ Shader "NipplePumpShader"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
 
 
-			
+			#define ASE_NEEDS_VERT_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1019,7 +1022,8 @@ Shader "NipplePumpShader"
 				#ifdef ASE_FOG
 				float fogFactor : TEXCOORD2;
 				#endif
-				
+				float4 ase_texcoord3 : TEXCOORD3;
+				float4 ase_texcoord4 : TEXCOORD4;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1037,9 +1041,37 @@ Shader "NipplePumpShader"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _Matcap;
 
 
-						
+			float3 GetSoftbodyOffset3_g1( float blend, float3 vertexPosition )
+			{
+				float3 vertexOffset = float3(0,0,0);
+				for(int i=0;i<8;i++) {
+				    float4 targetPosePositionRadius = _JiggleInfos[i*2];
+				    float4 verletPositionBlend = _JiggleInfos[i*2+1];
+				    float3 movement = (verletPositionBlend.xyz - targetPosePositionRadius.xyz);
+				    float dist = distance(vertexPosition, targetPosePositionRadius.xyz);
+				    float multi = 1-smoothstep(0,targetPosePositionRadius.w,dist);
+				    vertexOffset += movement * multi * verletPositionBlend.w * blend;
+				}
+				return vertexOffset;
+			}
+			
+			inline float4 ASE_ComputeGrabScreenPos( float4 pos )
+			{
+				#if UNITY_UV_STARTS_AT_TOP
+				float scale = -1.0;
+				#else
+				float scale = 1.0;
+				#endif
+				float4 o = pos;
+				o.y = pos.w * 0.5f;
+				o.y = ( pos.y - o.y ) * _ProjectionParams.x * scale + o.y;
+				return o;
+			}
+			
+			
 			VertexOutput VertexFunction ( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -1047,13 +1079,25 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float blend3_g1 = saturate( ( v.ase_color.r + v.ase_color.g + v.ase_color.b ) );
+				float3 vertexPosition3_g1 = v.vertex.xyz;
+				float3 localGetSoftbodyOffset3_g1 = GetSoftbodyOffset3_g1( blend3_g1 , vertexPosition3_g1 );
+				
+				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
+				float4 screenPos = ComputeScreenPos(ase_clipPos);
+				o.ase_texcoord3 = screenPos;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord4.xyz = ase_worldNormal;
+				float3 ase_worldPos = mul(GetObjectToWorldMatrix(), v.vertex).xyz;
+				float vertexToFrag12 = ( 1.0 / distance( _WorldSpaceCameraPos , ase_worldPos ) );
+				o.ase_texcoord4.w = vertexToFrag12;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = localGetSoftbodyOffset3_g1;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1085,7 +1129,8 @@ Shader "NipplePumpShader"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1102,7 +1147,7 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1141,7 +1186,7 @@ Shader "NipplePumpShader"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1176,10 +1221,16 @@ Shader "NipplePumpShader"
 						ShadowCoords = TransformWorldToShadowCoord( WorldPosition );
 					#endif
 				#endif
+				float4 screenPos = IN.ase_texcoord3;
+				float4 ase_grabScreenPos = ASE_ComputeGrabScreenPos( screenPos );
+				float4 ase_grabScreenPosNorm = ase_grabScreenPos / ase_grabScreenPos.w;
+				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
+				float vertexToFrag12 = IN.ase_texcoord4.w;
+				float4 fetchOpaqueVal15 = float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( ( float3( (ase_grabScreenPosNorm).xy ,  0.0 ) + ( mul( unity_WorldToCamera, float4( ase_worldNormal , 0.0 ) ).xyz * ( _Distortion * vertexToFrag12 ) ) ).xy ), 1.0 );
 				
 				float3 BakedAlbedo = 0;
 				float3 BakedEmission = 0;
-				float3 Color = float3( 0.5, 0.5, 0.5 );
+				float3 Color = ( ( fetchOpaqueVal15 * _GlassColor ) + tex2D( _Matcap, ( ( mul( UNITY_MATRIX_V, float4( ase_worldNormal , 0.0 ) ).xyz * 0.5 ) + 0.5 ).xy ) ).rgb;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
@@ -1243,13 +1294,14 @@ Shader "NipplePumpShader"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1277,7 +1329,21 @@ Shader "NipplePumpShader"
 			float4 _JiggleInfos[16];
 
 
+			float3 GetSoftbodyOffset3_g1( float blend, float3 vertexPosition )
+			{
+				float3 vertexOffset = float3(0,0,0);
+				for(int i=0;i<8;i++) {
+				    float4 targetPosePositionRadius = _JiggleInfos[i*2];
+				    float4 verletPositionBlend = _JiggleInfos[i*2+1];
+				    float3 movement = (verletPositionBlend.xyz - targetPosePositionRadius.xyz);
+				    float dist = distance(vertexPosition, targetPosePositionRadius.xyz);
+				    float multi = 1-smoothstep(0,targetPosePositionRadius.w,dist);
+				    vertexOffset += movement * multi * verletPositionBlend.w * blend;
+				}
+				return vertexOffset;
+			}
 			
+
 			int _ObjectId;
 			int _PassValue;
 
@@ -1297,13 +1363,16 @@ Shader "NipplePumpShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
+				float blend3_g1 = saturate( ( v.ase_color.r + v.ase_color.g + v.ase_color.b ) );
+				float3 vertexPosition3_g1 = v.vertex.xyz;
+				float3 localGetSoftbodyOffset3_g1 = GetSoftbodyOffset3_g1( blend3_g1 , vertexPosition3_g1 );
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = localGetSoftbodyOffset3_g1;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1321,7 +1390,8 @@ Shader "NipplePumpShader"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1338,7 +1408,7 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1377,7 +1447,7 @@ Shader "NipplePumpShader"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1449,13 +1519,14 @@ Shader "NipplePumpShader"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1483,7 +1554,21 @@ Shader "NipplePumpShader"
 			float4 _JiggleInfos[16];
 
 
+			float3 GetSoftbodyOffset3_g1( float blend, float3 vertexPosition )
+			{
+				float3 vertexOffset = float3(0,0,0);
+				for(int i=0;i<8;i++) {
+				    float4 targetPosePositionRadius = _JiggleInfos[i*2];
+				    float4 verletPositionBlend = _JiggleInfos[i*2+1];
+				    float3 movement = (verletPositionBlend.xyz - targetPosePositionRadius.xyz);
+				    float dist = distance(vertexPosition, targetPosePositionRadius.xyz);
+				    float multi = 1-smoothstep(0,targetPosePositionRadius.w,dist);
+				    vertexOffset += movement * multi * verletPositionBlend.w * blend;
+				}
+				return vertexOffset;
+			}
 			
+
         
 			float4 _SelectionID;
 
@@ -1504,13 +1589,16 @@ Shader "NipplePumpShader"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
+				float blend3_g1 = saturate( ( v.ase_color.r + v.ase_color.g + v.ase_color.b ) );
+				float3 vertexPosition3_g1 = v.vertex.xyz;
+				float3 localGetSoftbodyOffset3_g1 = GetSoftbodyOffset3_g1( blend3_g1 , vertexPosition3_g1 );
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = localGetSoftbodyOffset3_g1;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1528,7 +1616,8 @@ Shader "NipplePumpShader"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1545,7 +1634,7 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1584,7 +1673,7 @@ Shader "NipplePumpShader"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1665,13 +1754,14 @@ Shader "NipplePumpShader"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1699,7 +1789,21 @@ Shader "NipplePumpShader"
 			float4 _JiggleInfos[16];
 
 
-			      
+			float3 GetSoftbodyOffset3_g1( float blend, float3 vertexPosition )
+			{
+				float3 vertexOffset = float3(0,0,0);
+				for(int i=0;i<8;i++) {
+				    float4 targetPosePositionRadius = _JiggleInfos[i*2];
+				    float4 verletPositionBlend = _JiggleInfos[i*2+1];
+				    float3 movement = (verletPositionBlend.xyz - targetPosePositionRadius.xyz);
+				    float dist = distance(vertexPosition, targetPosePositionRadius.xyz);
+				    float multi = 1-smoothstep(0,targetPosePositionRadius.w,dist);
+				    vertexOffset += movement * multi * verletPositionBlend.w * blend;
+				}
+				return vertexOffset;
+			}
+			
+      
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1715,13 +1819,16 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float blend3_g1 = saturate( ( v.ase_color.r + v.ase_color.g + v.ase_color.b ) );
+				float3 vertexPosition3_g1 = v.vertex.xyz;
+				float3 localGetSoftbodyOffset3_g1 = GetSoftbodyOffset3_g1( blend3_g1 , vertexPosition3_g1 );
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = localGetSoftbodyOffset3_g1;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1743,7 +1850,8 @@ Shader "NipplePumpShader"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1760,7 +1868,7 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -1799,7 +1907,7 @@ Shader "NipplePumpShader"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1877,13 +1985,14 @@ Shader "NipplePumpShader"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
         
-			
+			#define ASE_NEEDS_VERT_POSITION
+
 
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1911,7 +2020,21 @@ Shader "NipplePumpShader"
 			float4 _JiggleInfos[16];
 
 
+			float3 GetSoftbodyOffset3_g1( float blend, float3 vertexPosition )
+			{
+				float3 vertexOffset = float3(0,0,0);
+				for(int i=0;i<8;i++) {
+				    float4 targetPosePositionRadius = _JiggleInfos[i*2];
+				    float4 verletPositionBlend = _JiggleInfos[i*2+1];
+				    float3 movement = (verletPositionBlend.xyz - targetPosePositionRadius.xyz);
+				    float dist = distance(vertexPosition, targetPosePositionRadius.xyz);
+				    float multi = 1-smoothstep(0,targetPosePositionRadius.w,dist);
+				    vertexOffset += movement * multi * verletPositionBlend.w * blend;
+				}
+				return vertexOffset;
+			}
 			
+
 			struct SurfaceDescription
 			{
 				float Alpha;
@@ -1927,13 +2050,16 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
+				float blend3_g1 = saturate( ( v.ase_color.r + v.ase_color.g + v.ase_color.b ) );
+				float3 vertexPosition3_g1 = v.vertex.xyz;
+				float3 localGetSoftbodyOffset3_g1 = GetSoftbodyOffset3_g1( blend3_g1 , vertexPosition3_g1 );
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = localGetSoftbodyOffset3_g1;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1954,7 +2080,8 @@ Shader "NipplePumpShader"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
-				
+				float4 ase_color : COLOR;
+
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1971,7 +2098,7 @@ Shader "NipplePumpShader"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
-				
+				o.ase_color = v.ase_color;
 				return o;
 			}
 
@@ -2010,7 +2137,7 @@ Shader "NipplePumpShader"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
-				
+				o.ase_color = patch[0].ase_color * bary.x + patch[1].ase_color * bary.y + patch[2].ase_color * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2059,34 +2186,35 @@ Shader "NipplePumpShader"
 }
 /*ASEBEGIN
 Version=18935
-188;366;1800;766;1989.053;246.3457;1.674002;True;False
+550;400;1528;730;1761.389;211.1917;1.674002;True;False
 Node;AmplifyShaderEditor.CommentaryNode;9;-1708.987,-651.2279;Inherit;False;985.6011;418.6005;Get screen color for refraction and disturbe it with normals;6;31;30;29;25;15;14;;1,1,1,1;0;0
+Node;AmplifyShaderEditor.ComponentMaskNode;14;-1361.532,-534.736;Inherit;False;True;True;False;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-2124.694,-704.7642;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;17;-2033.332,251.0558;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-2375.894,164.5331;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.ScreenColorNode;15;-943.3855,-499.928;Float;False;Global;_WaterGrab;WaterGrab;-1;0;Create;True;0;0;0;False;0;False;Object;-1;False;False;False;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.DistanceOpNode;34;-2006.755,-131.7805;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;13;-1714.388,-334.4282;Float;False;Property;_Distortion;Distortion;0;0;Create;True;0;0;0;False;0;False;0.5;0.01;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.VertexToFragmentNode;12;-1711.061,-159.5661;Inherit;False;False;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-729.9768,-205.209;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.WorldPosInputsNode;19;-2382.606,-61.99872;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.FunctionNode;40;-465.9897,331.3673;Inherit;False;JigglePhysicsSoftbody;-1;;1;6ec46ef0369ac3449867136b98c25983;0;2;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.ViewMatrixNode;20;-2534.436,134.7471;Inherit;False;0;1;FLOAT4x4;0
+Node;AmplifyShaderEditor.SamplerNode;11;-1832.888,211.8721;Inherit;True;Property;_Matcap;Matcap;1;0;Create;True;0;0;0;False;0;False;-1;None;37d763773df0a014dbca7600e4cce47e;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;0,0;False;1;FLOAT2;1,0;False;2;FLOAT;1;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.WorldSpaceCameraPos;22;-2436.248,-229.2798;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.WorldToCameraMatrix;27;-2387.694,-783.7642;Inherit;False;0;1;FLOAT4x4;0
-Node;AmplifyShaderEditor.ColorNode;23;-1372.94,-102.2719;Inherit;False;Property;_GlassColor;GlassColor;2;0;Create;True;0;0;0;False;0;False;0,0.4788829,0.7830189,0;0.6367924,0.7891914,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-1459.453,-333.9065;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;24;-2208.642,200.9789;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;25;-1134.887,-496.1281;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleDivideOpNode;26;-1840.401,-126.4017;Inherit;False;2;0;FLOAT;1;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;29;-1287.985,-429.2279;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;28;-2386.711,292.9079;Float;False;Constant;_Float0;Float 0;-1;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;23;-1372.94,-102.2719;Inherit;False;Property;_GlassColor;GlassColor;2;0;Create;True;0;0;0;False;0;False;0,0.4788829,0.7830189,0;0.6367924,0.7891914,1,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;21;-461.59,-141.636;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.GrabScreenPosition;31;-1664.88,-591.8701;Inherit;False;0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.WorldNormalVector;32;-2614.624,228.881;Inherit;False;False;1;0;FLOAT3;0,0,0;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.WorldNormalVector;33;-2460.041,-612.0387;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.WorldSpaceCameraPos;22;-2436.248,-229.2798;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-1459.453,-333.9065;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ViewMatrixNode;20;-2534.436,134.7471;Inherit;False;0;1;FLOAT4x4;0
-Node;AmplifyShaderEditor.FunctionNode;40;-465.9897,331.3673;Inherit;False;JigglePhysicsSoftbody;-1;;1;6ec46ef0369ac3449867136b98c25983;0;2;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.WorldPosInputsNode;19;-2382.606,-61.99872;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-729.9768,-205.209;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;11;-1832.888,211.8721;Inherit;True;Property;_Matcap;Matcap;1;0;Create;True;0;0;0;False;0;False;-1;None;37d763773df0a014dbca7600e4cce47e;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;0,0;False;1;FLOAT2;1,0;False;2;FLOAT;1;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.VertexToFragmentNode;12;-1711.061,-159.5661;Inherit;False;False;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;13;-1714.388,-334.4282;Float;False;Property;_Distortion;Distortion;0;0;Create;True;0;0;0;False;0;False;0.5;0.01;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.DistanceOpNode;34;-2006.755,-131.7805;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ScreenColorNode;15;-943.3855,-499.928;Float;False;Global;_WaterGrab;WaterGrab;-1;0;Create;True;0;0;0;False;0;False;Object;-1;False;False;False;False;2;0;FLOAT2;0,0;False;1;FLOAT;0;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-2375.894,164.5331;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;17;-2033.332,251.0558;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;18;-2124.694,-704.7642;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.ComponentMaskNode;14;-1361.532,-534.736;Inherit;False;True;True;False;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;28;-2386.711,292.9079;Float;False;Constant;_Float0;Float 0;-1;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;43;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ScenePickingPass;0;7;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;44;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormals;0;8;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;36;0,0;Float;False;True;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;3;NipplePumpShader;2992e84f91cbeb14eab234972e07ea9d;True;Forward;0;1;Forward;8;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Transparent=RenderType;Queue=Transparent=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;22;Surface;1;0;  Blend;0;0;Two Sided;1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;0;0;Built-in Fog;0;0;DOTS Instancing;0;0;Meta Pass;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Vertex Position,InvertActionOnDeselection;1;0;0;10;False;True;True;True;False;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;39;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
@@ -2095,8 +2223,23 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;37;0,0;Float;False;False;-1
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;35;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;41;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;5;False;-1;10;False;-1;1;1;False;-1;10;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;42;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;SceneSelectionPass;0;6;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;43;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;ScenePickingPass;0;7;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;45;0,50;Float;False;False;-1;2;UnityEditor.ShaderGraphUnlitGUI;0;1;New Amplify Shader;2992e84f91cbeb14eab234972e07ea9d;True;DepthNormalsOnly;0;9;DepthNormalsOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;True;15;d3d9;d3d11_9x;d3d11;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+WireConnection;14;0;31;0
+WireConnection;18;0;27;0
+WireConnection;18;1;33;0
+WireConnection;17;0;24;0
+WireConnection;17;1;28;0
+WireConnection;16;0;20;0
+WireConnection;16;1;32;0
+WireConnection;15;0;25;0
+WireConnection;34;0;22;0
+WireConnection;34;1;19;0
+WireConnection;12;0;26;0
+WireConnection;10;0;15;0
+WireConnection;10;1;23;0
+WireConnection;11;1;17;0
+WireConnection;30;0;13;0
+WireConnection;30;1;12;0
 WireConnection;24;0;16;0
 WireConnection;24;1;28;0
 WireConnection;25;0;14;0
@@ -2106,23 +2249,7 @@ WireConnection;29;0;18;0
 WireConnection;29;1;30;0
 WireConnection;21;0;10;0
 WireConnection;21;1;11;0
-WireConnection;30;0;13;0
-WireConnection;30;1;12;0
-WireConnection;10;0;15;0
-WireConnection;10;1;23;0
-WireConnection;11;1;17;0
-WireConnection;12;0;26;0
-WireConnection;34;0;22;0
-WireConnection;34;1;19;0
-WireConnection;15;0;25;0
-WireConnection;16;0;20;0
-WireConnection;16;1;32;0
-WireConnection;17;0;24;0
-WireConnection;17;1;28;0
-WireConnection;18;0;27;0
-WireConnection;18;1;33;0
-WireConnection;14;0;31;0
 WireConnection;36;2;21;0
 WireConnection;36;5;40;0
 ASEEND*/
-//CHKSM=59FEC2115DBBB26F93396EB26937D1209EA744F2
+//CHKSM=2BC9911682C22B6658A619467767C0D61DECB31C

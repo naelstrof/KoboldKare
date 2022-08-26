@@ -4,6 +4,7 @@ using System.IO;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
+using KoboldKare;
 
 [System.Serializable]
 public class SellKoboldObjective : DragonMailObjective {
@@ -12,13 +13,15 @@ public class SellKoboldObjective : DragonMailObjective {
     [SerializeField]
     private LocalizedString kobold;
     private int kobolds = 0;
+    [SerializeField]
+    private GameEventPhotonView soldObject;
     public override void Register() {
-        DumpsterDoor.soldObject += OnEntitySold;
+        soldObject.AddListener(OnEntitySold);
     }
     public override void Unregister() {
-        DumpsterDoor.soldObject -= OnEntitySold;
+        soldObject.RemoveListener(OnEntitySold);
     }
-    private void OnEntitySold(GameObject obj, float amountGained) {
+    private void OnEntitySold(PhotonView obj) {
         if (obj.GetComponentInChildren<Kobold>() != null) {
             kobolds++;
         }

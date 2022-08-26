@@ -16583,6 +16583,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -227216338107497909, guid: f7ada51eab3f03e408f76a632dd64539,
         type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 3fa4f9d618229374582199235ee4624f, type: 2}
+    - target: {fileID: -227216338107497909, guid: f7ada51eab3f03e408f76a632dd64539,
+        type: 3}
       propertyPath: m_DirtyAABB
       value: 0
       objectReference: {fileID: 0}
@@ -17053,6 +17058,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: fd5dc7d8eeb20c248b2057279b9d49ce, type: 2}
     - target: {fileID: 13700000, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
       propertyPath: m_DirtyAABB
       value: 0

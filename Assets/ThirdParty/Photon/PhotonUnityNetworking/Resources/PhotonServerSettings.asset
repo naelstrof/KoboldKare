@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 30
+    AppVersion: 31
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -88,6 +88,7 @@ MonoBehaviour:
   - MilkRoutine
   - PlantRPC
   - ForceMixRPC
+  - SellObject
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

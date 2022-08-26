@@ -15,7 +15,7 @@ MonoBehaviour:
   gravityMultiplier: 0
   friction: 0.4
   airFriction: 0.001
-  blend: 1
+  blend: 0.7
   angleElasticity: 0.6
   elasticitySoften: 0
   lengthElasticity: 0.6

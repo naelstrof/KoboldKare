@@ -29,11 +29,26 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private Transform hip;
     [SerializeField]
     private JigglePhysics.JiggleRigBuilder tailRig;
+
     [SerializeField]
     private LODGroup group;
+    
+    private bool locked;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
+
+    public void SetLocked(bool newLockState) {
+        locked = newLockState;
+        if (locked && ragdolled) {
+            SetRagdolled(false, ragdollCount);
+        } else {
+            if (ragdollCount > 0) {
+                SetRagdolled(true, ragdollCount);
+            }
+        }
+    }
+
     private class SavedJointAnchor {
         public SavedJointAnchor(ConfigurableJoint joint) {
             this.joint = joint;
@@ -120,6 +135,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public void PushRagdoll() {
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
+        if (locked) {
+            return;
+        }
+
         if (ragdollCount > 0 && !ragdolled) {
             Ragdoll();
         } else if (ragdollCount == 0 && ragdolled) {
@@ -130,6 +149,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public void PopRagdoll() {
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
+        if (locked) {
+            return;
+        }
+        
         if (ragdollCount > 0 && !ragdolled) {
             Ragdoll();
         } else if (ragdollCount == 0 && ragdolled) {
@@ -188,13 +211,13 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         ragdolled = true;
     }
     
-    private void SetRagdolled(bool ragdolled) {
+    private void SetRagdolled(bool ragdolled, int newRagdollCount = 0) {
         if (ragdolled) {
             Ragdoll();
         } else {
             StandUp();
         }
-        ragdollCount = 0;
+        ragdollCount = newRagdollCount;
     }
     // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
     // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!

@@ -112,6 +112,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
         StopAnimation();
         StopAllCoroutines();
+        kobold.GetComponent<Ragdoller>().SetLocked(true);
         currentStationSet = set;
         currentStation = station;
         if (station.info.user != null) {
@@ -269,6 +270,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     private void StopAnimation() {
+        kobold.GetComponent<Ragdoller>().SetLocked(false);
         if (!animating) {
             return;
         }

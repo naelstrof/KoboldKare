@@ -71,7 +71,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public float stimulationMin = -30f;
     public Animator koboldAnimator;
     private float lastPumpTime = 0f;
-    private bool grabbed = false;
+    public bool grabbed { get; private set; }
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     public float arousal = 0f;
     public GameObject nippleBarbells;
@@ -169,17 +169,30 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
-        // TODO: FIXME: This is duplicated in DickInfo.cs because I'm a lazy architecture designer.
+        // Set dick
+        var inventory = GetComponent<KoboldInventory>();
+        Equipment crotchEquipment = inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch);
+        if (crotchEquipment != null && EquipmentDatabase.GetID(crotchEquipment) != newGenes.dickEquip) {
+            inventory.RemoveEquipment(crotchEquipment,PhotonNetwork.InRoom);
+        }
+
+        if (newGenes.dickEquip != byte.MaxValue) {
+            if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
+                inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
+            }
+        }
         foreach (var dickSet in activeDicks) {
             foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
                 if (inflater is InflatableDick inflatableDick) {
                     inflatableDick.SetDickThickness(newGenes.dickThickness);
                 }
             }
-            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + (newGenes.dickSize) / 20f, 2f), dickSet.info);
+            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.info);
+            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.info);
         }
         sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f+newGenes.baseSize/20f,2f), 0.2f), this);
-        fatnessInflater.SetSize(Mathf.Log(1f + (newGenes.fatSize) / 20f, 2f), this);
+        fatnessInflater.SetSize(Mathf.Log(1f + newGenes.fatSize / 20f, 2f), this);
+        boobs.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
         bellyContainer.maxVolume = newGenes.bellySize;
         metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
         Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
@@ -202,25 +215,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 }
             }
         }
-        // Set dick
-        var inventory = GetComponent<KoboldInventory>();
-        Equipment crotchEquipment = inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch);
-        if (crotchEquipment != null && EquipmentDatabase.GetID(crotchEquipment) != newGenes.dickEquip) {
-            inventory.RemoveEquipment(crotchEquipment,PhotonNetwork.InRoom);
-        }
-
-        if (newGenes.dickEquip != byte.MaxValue) {
-            if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
-                inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
-            }
-        }
 
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
-        boobs.SetSize(Mathf.Log(1f + GetGenes().breastSize / 20f, 2f), this);
-        foreach (var dickSet in activeDicks) {
-            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + GetGenes().ballSize / 20f, 2f), dickSet.info);
-        }
     }
     
     void OnMidnight(object ignore) {
@@ -410,14 +407,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         PumpUpDick(Time.deltaTime * 0.02f);
     }
     public bool IsPenetrating(Kobold k) {
-        //TODO: add functionality so we can determine if which dick is penetrated where.
-        /*foreach(var penetratable in k.penetratables) {
-            foreach(var dickset in activeDicks) {
-                if (penetratable.penetratable.ContainsPenetrator(dickset.dick)) {
-                    return true;
-                }
-            }
-        }*/
         return false;
     }
 

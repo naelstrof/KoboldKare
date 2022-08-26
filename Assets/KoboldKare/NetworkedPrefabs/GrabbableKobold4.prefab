@@ -14907,10 +14907,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interpolate: 1
   jiggleZones:
-  - target: {fileID: 6506915555090380244}
+  - target: {fileID: 1905648332443602999}
     radius: 0.15
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
-  - target: {fileID: 6506915555090380242}
+  - target: {fileID: 8437674557913943489}
     radius: 0.15
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
   - target: {fileID: 5449752281887230005}

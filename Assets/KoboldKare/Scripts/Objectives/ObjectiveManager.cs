@@ -104,9 +104,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             bool hasObjective = currentObjective != null;
+            stream.SendNext(stars);
             stream.SendNext(hasObjective);
             stream.SendNext(currentObjectiveIndex);
         } else {
+            stars = (int)stream.ReceiveNext();
             bool hasObjective = (bool)stream.ReceiveNext();
             currentObjectiveIndex = (int)stream.ReceiveNext();
             if (hasObjective) {

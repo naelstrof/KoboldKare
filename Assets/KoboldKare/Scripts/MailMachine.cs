@@ -128,17 +128,17 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
         
         if (view.IsMine) {
             PhotonNetwork.Destroy(view.gameObject);
-        }
         
-        int i = 0;
-        while(totalWorth > 0f) {
-            float currentPayout = FloorNearestPower(5f,totalWorth);
-            //currentPayout = Mathf.Min(payout, currentPayout);
-            totalWorth -= currentPayout;
-            totalWorth = Mathf.Max(totalWorth,0f);
-            float up = Mathf.Floor((float)i/4f)*0.2f;
-            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
-            i++;
+            int i = 0;
+            while(totalWorth > 0f) {
+                float currentPayout = FloorNearestPower(5f,totalWorth);
+                //currentPayout = Mathf.Min(payout, currentPayout);
+                totalWorth -= currentPayout;
+                totalWorth = Mathf.Max(totalWorth,0f);
+                float up = Mathf.Floor((float)i/4f)*0.2f;
+                PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
+                i++;
+            }
         }
     }
 

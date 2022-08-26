@@ -240,6 +240,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         body.transform.position += diff;
         hip.position -= diff;
         body.transform.position += Vector3.up*0.5f;
+        Vector3 facingDir = hip.forward.With(y: 0f).normalized;
+        body.transform.forward = facingDir;
         body.isKinematic = false;
         body.detectCollisions = true;
         //body.GetComponent<Collider>().enabled = true;

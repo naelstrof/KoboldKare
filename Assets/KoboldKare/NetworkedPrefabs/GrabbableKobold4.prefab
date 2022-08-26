@@ -2673,7 +2673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5680760803797118338
 Transform:
   m_ObjectHideFlags: 0
@@ -14354,7 +14354,7 @@ MonoBehaviour:
   crouchAccel: 6
   airAccel: 20
   stepHeight: 1
-  stepHeightCrouched: 0.4
+  stepHeightCrouched: 0.5
   stepHeightCheckDistance: 2
   groundingPID:
     P: 1
@@ -14400,9 +14400,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
-  m_Height: 1.1
+  m_Height: 1.2
   m_Direction: 1
-  m_Center: {x: 0, y: -0.1, z: 0}
+  m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!114 &3498030196438502570
 MonoBehaviour:
   m_ObjectHideFlags: 0

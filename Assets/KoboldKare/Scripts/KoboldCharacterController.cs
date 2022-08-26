@@ -213,7 +213,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
                 body.MovePosition(body.position - new Vector3(0, diff, 0)/2f);
             }
         }
-        worldModel.localPosition = defaultWorldModelPosition + worldModelOffset * 2f / worldModel.parent.lossyScale.y;
+
+        worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
     }
 
     private void Friction() {

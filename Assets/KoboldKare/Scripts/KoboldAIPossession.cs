@@ -13,12 +13,15 @@ public class KoboldAIPossession : MonoBehaviourPun {
     [SerializeField]
     private Transform headTransform;
 
+    private Ragdoller ragdoller;
+
     private Vector3 lerpDir;
 
     private Rigidbody body;
     private LayerMask lookAtMask;
 
     void Start() {
+        ragdoller = GetComponentInParent<Ragdoller>();
         lerpDir = Vector3.forward;
         body = GetComponentInParent<Rigidbody>();
         waitForSeconds = new WaitForSeconds(2f);
@@ -27,13 +30,21 @@ public class KoboldAIPossession : MonoBehaviourPun {
         lookAtMask = GameManager.instance.usableHitMask | LayerMask.GetMask("Player");
     }
 
-    private void Update() {
+    private void LateUpdate() {
         if (!photonView.IsMine) {
             return;
         }
+        
+        if (ragdoller.ragdolled) {
+            characterControllerAnimator.SetEyeDir(headTransform.forward);
+            return;
+        }
+        
         if (focus == null || headTransform == null) {
             return;
         }
+
+
         Vector3 wantedDir = focusing ? Vector3.Lerp((focus.position - headTransform.position).normalized,body.transform.forward,0.6f) : body.transform.forward;
         lerpDir = Vector3.RotateTowards(lerpDir, wantedDir, Time.deltaTime * 30f, 0f);
         characterControllerAnimator.SetEyeDir(lerpDir);

@@ -4,7 +4,7 @@ using System.IO;
 using Photon.Pun;
 using UnityEngine;
 
-public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
+public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGood {
     public delegate void MoneyChangedAction(float newMoney);
     public MoneyChangedAction moneyChanged;
 #if UNITY_EDITOR
@@ -50,5 +50,9 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable {
 
     public void Save(BinaryWriter writer) {
         writer.Write(money);
+    }
+
+    public float GetWorth() {
+        return money;
     }
 }

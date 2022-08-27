@@ -35,9 +35,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
             case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.value*255f); break;
             case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.value*255f); break;
             case "Dick": genes.dickEquip = (setting.value == 0f) ? byte.MaxValue : (byte)0; break;
-            case "DickSize": genes.dickSize = Mathf.Lerp(0f, 10f, setting.value); break;
-            case "BallSize": genes.ballSize = Mathf.Lerp(5f, 10f, setting.value); break;
-            case "DickThickness": genes.dickThickness = Mathf.Lerp(0.3f, 0.7f, setting.value); break;
+            case "DickSize": genes.dickSize = Mathf.Pow(10, setting.value)/*Mathf.Lerp(0f, 10f, setting.value)*/; break;
+            case "BallSize": genes.ballSize = setting.value/*Mathf.Lerp(5f, 10f, setting.value)*/; break;
+            case "DickThickness": genes.dickThickness = setting.value/*Mathf.Lerp(0.3f, 0.7f, setting.value)*/; break;
             case "BoobSize": genes.breastSize = setting.value * 30f; break;
             case "KoboldSize": genes.baseSize = setting.value * 20f; break;
         }

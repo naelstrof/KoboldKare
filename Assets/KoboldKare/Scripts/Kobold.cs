@@ -79,7 +79,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public GameObject nippleBarbells;
 
     //reiikz was here :v
-    public float permanentArousal = 0.84f;
+    public float permanentArousal = 1f;
     public bool arousalDirection;
     public float arousalSpeed = 0.01f;
     public float nextArousalDown;

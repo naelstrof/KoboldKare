@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 1921293409251886885}
   - component: {fileID: 6347134227094379005}
   - component: {fileID: 937947887431752802}
-  m_Layer: 9
+  m_Layer: 21
   m_Name: Pump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,8 +285,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5189653907412075780}
-  - component: {fileID: 5119504377077779139}
-  m_Layer: 10
+  - component: {fileID: 2874862180252475446}
+  m_Layer: 9
   m_Name: PumpBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,8 +308,8 @@ Transform:
   m_Father: {fileID: 468751610933944351}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!64 &5119504377077779139
-MeshCollider:
+--- !u!65 &2874862180252475446
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -318,10 +318,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.4690123, y: 3.6289816, z: 1}
+  m_Center: {x: -0.039060056, y: -0.32286105, z: -0.0000000046829087}
 --- !u!1 &6792813584769639386
 GameObject:
   m_ObjectHideFlags: 0

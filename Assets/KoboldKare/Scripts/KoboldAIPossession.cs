@@ -20,14 +20,17 @@ public class KoboldAIPossession : MonoBehaviourPun {
     private Rigidbody body;
     private LayerMask lookAtMask;
 
-    void Start() {
+    private void Awake() {
         ragdoller = GetComponentInParent<Ragdoller>();
         lerpDir = Vector3.forward;
-        body = GetComponentInParent<Rigidbody>();
         waitForSeconds = new WaitForSeconds(2f);
         characterControllerAnimator = GetComponentInParent<CharacterControllerAnimator>();
-        StartCoroutine(Think());
+        body = GetComponentInParent<Rigidbody>();
+    }
+
+    void Start() {
         lookAtMask = GameManager.instance.usableHitMask | LayerMask.GetMask("Player");
+        StartCoroutine(Think());
     }
 
     private void LateUpdate() {
@@ -35,7 +38,7 @@ public class KoboldAIPossession : MonoBehaviourPun {
             return;
         }
         
-        if (ragdoller.ragdolled) {
+        if (ragdoller != null && ragdoller.ragdolled) {
             characterControllerAnimator.SetEyeDir(headTransform.forward);
             return;
         }

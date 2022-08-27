@@ -37,7 +37,7 @@ namespace Naelstrof.Inflatable {
                 return;
             }
             skinnedMeshRenderers.RemoveAt(index);
-            blendshapeIDs.RemoveAt(renderer.sharedMesh.GetBlendShapeIndex(blendShapeName));
+            blendshapeIDs.RemoveAt(index);
         }
 
         public override void OnSizeChanged(float newSize) {

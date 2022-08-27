@@ -148,28 +148,28 @@ public class LoadCustomParts : MonoBehaviour
     }
 
     private IEnumerator modifyKobolds() {
-        if(modifyingkobolds) yield break;
-        Kobold pk = null;
-        Kobold[] kobolds = (Kobold[]) GameObject.FindObjectsOfType(typeof(Kobold));
-        foreach(Kobold k in kobolds){
-            if(k.isPlayer) {
-                pk = k;
-            }
-        }
-        if(pk == null) yield break;
-        Transform grabberTransform = null;
-        do{
-            if(pk == null) yield break;
-            grabberTransform = pk.root.Find("Camera");
-            grabberTransform = grabberTransform.Find("Grabber");
-            yield return null;
-        }while(grabberTransform == null);
-        GameObject playerGrabber_ = grabberTransform.gameObject;
-        playerGrabber = playerGrabber_.GetComponent<Grabber>();
-        playerPrecisionGrabber = playerGrabber_.GetComponent<PrecisionGrabber>();
-        playerController = pk.root.gameObject.GetComponent<KoboldCharacterController>();
-        playerLoader = pk.root.gameObject.GetComponent<PlayerKoboldLoader>();
-        playerKobold = pk;
+        // if(modifyingkobolds) yield break;
+        // Kobold pk = null;
+        // Kobold[] kobolds = (Kobold[]) GameObject.FindObjectsOfType(typeof(Kobold));
+        // foreach(Kobold k in kobolds){
+        //     if(k.gameObject.transform.Find()) {
+        //         pk = k;
+        //     }
+        // }
+        // if(pk == null) yield break;
+        // Transform grabberTransform = null;
+        // do{
+        //     if(pk == null) yield break;
+        //     grabberTransform = pk.root.Find("Camera");
+        //     grabberTransform = grabberTransform.Find("Grabber");
+        //     yield return null;
+        // }while(grabberTransform == null);
+        // GameObject playerGrabber_ = grabberTransform.gameObject;
+        // playerGrabber = playerGrabber_.GetComponent<Grabber>();
+        // playerPrecisionGrabber = playerGrabber_.GetComponent<PrecisionGrabber>();
+        // playerController = pk.root.gameObject.GetComponent<KoboldCharacterController>();
+        // playerLoader = pk.root.gameObject.GetComponent<PlayerKoboldLoader>();
+        // playerKobold = pk;
         yield break;
     }
 
@@ -177,42 +177,42 @@ public class LoadCustomParts : MonoBehaviour
         if(playerKobold == null){
             StartCoroutine(modifyKobolds());
         }else{
-            if((playerGrabber.grabbing || playerPrecisionGrabber.grabbing) && (grabbed == false)){
-                prevJump = playerController.jumpStrength;
-                prevSpeed = playerController.speed;
-                if(playerController.speed > maxSpeedOrJump){
-                    playerController.speed = maxSpeedOrJump;
-                }
-                if(playerController.jumpStrength > maxSpeedOrJump){
-                    playerController.jumpStrength = maxSpeedOrJump;
-                }
-                if(playerKobold.body.velocity.magnitude > maxSpeedOrJump) {
-                    float x = playerKobold.body.velocity.x, y = playerKobold.body.velocity.y, z = playerKobold.body.velocity.z;
-                    x = Mathf.Clamp(x, 0, maxSpeedOrJump);
-                    y = Mathf.Clamp(y, 0, maxSpeedOrJump);
-                    z = Mathf.Clamp(z, 0, maxSpeedOrJump);
-                    playerKobold.body.velocity = new Vector3(x, y, z);
-                }
-                grabbed = true;
-            }
-            if(((!playerGrabber.grabbing) && (!playerPrecisionGrabber.grabbing)) && (grabbed == true)){
-                grabbed = false;
-                playerController.jumpStrength = prevJump;
-                playerController.speed = prevSpeed;
-            }
-            if(playerKobold.gay){
-                if(Time.timeSinceLevelLoad >= nextRainbowUpdate){
-                    currentHue += rainbowStep;
-                    Mathf.Clamp01(currentHue);
-                    currentBrightness += (UnityEngine.Random.Range(rainbowStep/5, (rainbowStep/5)*1.2f) * brightnessDirection);
-                    Mathf.Clamp01(currentBrightness);
-                    playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(g:currentBrightness);
-                    playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
-                    nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
-                    if(currentHue >= 1) currentHue = 0;
-                    if((currentBrightness >= 1.2f) || (currentBrightness <= -0.2f)) brightnessDirection *= -1f;
-                }
-            }
+            // if((playerGrabber.grabbing || playerPrecisionGrabber.grabbing) && (grabbed == false)){
+            //     prevJump = playerController.jumpStrength;
+            //     prevSpeed = playerController.speed;
+            //     if(playerController.speed > maxSpeedOrJump){
+            //         playerController.speed = maxSpeedOrJump;
+            //     }
+            //     if(playerController.jumpStrength > maxSpeedOrJump){
+            //         playerController.jumpStrength = maxSpeedOrJump;
+            //     }
+            //     if(playerKobold.body.velocity.magnitude > maxSpeedOrJump) {
+            //         float x = playerKobold.body.velocity.x, y = playerKobold.body.velocity.y, z = playerKobold.body.velocity.z;
+            //         x = Mathf.Clamp(x, 0, maxSpeedOrJump);
+            //         y = Mathf.Clamp(y, 0, maxSpeedOrJump);
+            //         z = Mathf.Clamp(z, 0, maxSpeedOrJump);
+            //         playerKobold.body.velocity = new Vector3(x, y, z);
+            //     }
+            //     grabbed = true;
+            // }
+            // if(((!playerGrabber.grabbing) && (!playerPrecisionGrabber.grabbing)) && (grabbed == true)){
+            //     grabbed = false;
+            //     playerController.jumpStrength = prevJump;
+            //     playerController.speed = prevSpeed;
+            // }
+            // if(playerKobold.gay){
+            //     if(Time.timeSinceLevelLoad >= nextRainbowUpdate){
+            //         currentHue += rainbowStep;
+            //         Mathf.Clamp01(currentHue);
+            //         currentBrightness += (UnityEngine.Random.Range(rainbowStep/5, (rainbowStep/5)*1.2f) * brightnessDirection);
+            //         Mathf.Clamp01(currentBrightness);
+            //         playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(g:currentBrightness);
+            //         playerKobold.HueBrightnessContrastSaturation = playerKobold.HueBrightnessContrastSaturation.With(r:currentHue);
+            //         nextRainbowUpdate = Time.timeSinceLevelLoad + rainbowUpdateRate;
+            //         if(currentHue >= 1) currentHue = 0;
+            //         if((currentBrightness >= 1.2f) || (currentBrightness <= -0.2f)) brightnessDirection *= -1f;
+            //     }
+            // }
         }
     }
 
@@ -250,20 +250,24 @@ public class LoadCustomParts : MonoBehaviour
     }
 
     void runMapCustoms(){
-        if(IsLoaded("MainMap")){
-            customizeMainMap();
-            if(!IsLoaded("ReiikzMainMapAditions")) {
-                SceneManager.LoadScene("ReiikzMainMapAditions", LoadSceneMode.Additive);
-            }
-            gameState = STATE.PLAYING;
-        }else{
-            gameState = STATE.MAIN_MENU;
-        }
+        // if(IsLoaded("MainMap")){
+        //     customizeMainMap();
+        //     if(!IsLoaded("ReiikzMainMapAditions")) {
+        //         SceneManager.LoadScene("ReiikzMainMapAditions", LoadSceneMode.Additive);
+        //     }
+        //     gameState = STATE.PLAYING;
+        // }else{
+        //     gameState = STATE.MAIN_MENU;
+        // }
     }
 
     void customizeMainMap(){
         GameObject foundation = GameObject.Find("PlayerHouseConcreteFoundation");
-        Destroy(foundation.transform.Find("default").GetComponent<MeshCollider>());
+        try{
+            Destroy(foundation.transform.Find("default").GetComponent<MeshCollider>());
+        }catch(System.Exception e){
+            Debug.Log("Reiikz mod:  could destroy house foundation");
+        }
         Launchpad[] ls = (Launchpad[]) GameObject.FindObjectsOfType(typeof(Launchpad));
         if(ls.Length > 0){
             foreach(Launchpad l in ls){

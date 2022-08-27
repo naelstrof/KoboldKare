@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-vi
+  - m_GUID: 433ba029be0a7494892d899fedbe7332
+    m_Address: ReiikzLocales_vi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-vi
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

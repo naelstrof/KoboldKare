@@ -31,9 +31,10 @@ MonoBehaviour:
   OnSettingChanged:
     m_PersistentCalls:
       m_Calls: []
-  defaultValue: 0.5
+  defaultValue: 1
   minValue: 0
   maxValue: 1
   wholeNumbers: 0
   references:
-    version: 1
+    version: 2
+    RefIds: []

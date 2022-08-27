@@ -79,6 +79,11 @@ MonoBehaviour:
     - Locale-uk
     - Locale-vi
     - Locale
+  - m_GUID: be1e786da7501b905a9fbe98a8e78e00
+    m_Address: Assets/ThirdParty/Reiikz/Databases/ReiikzLocales/ReiikzLocales Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

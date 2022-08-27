@@ -11,6 +11,8 @@ using Naelstrof.Inflatable;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
+using Reiikz.UnityUtils;
+
 public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
     public StatusEffect koboldStatus;
     [System.Serializable]
@@ -75,6 +77,16 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     public float arousal = 0f;
     public GameObject nippleBarbells;
+
+    //reiikz was here :v
+    public float permanentArousal = 0.84f;
+    public bool arousalDirection;
+    public float arousalSpeed = 0.01f;
+    public float nextArousalDown;
+    private static int[] arouseProb  = { 1, 2000 };
+    public float nextSlowUpdate = 0f;
+    public float slowUpdateRate = 2f;
+    public float fertility = 1f;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in belly.GetInflatableListeners()) {
@@ -307,7 +319,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         //if it's a player and permanent arousal is set lower than one we make sure the player is always aroused but not quite fully aroused
         //if not we just do business as usual
-        if(isPlayer && permanentArousal < 1){
+        if(photonView.IsMine && permanentArousal < 1){
             if(permanentArousal == 0f){
                 arousal = 0;
             }else{
@@ -386,10 +398,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     //update that runs at a fixed time and slow rate
     private void SlowUpdate(){
         //if the player is this far away we must bring them back and make them fat for some reason(?)
-        if((Vector3.Distance(root.position, FallbackPos) > 950000) && (!grabber.grabbing) && (!grabbed)){
-            body.velocity = new Vector3(0f, 0f, 0f);
-            root.position = FallbackPos;
-        }
+        // if((Vector3.Distance(root.position, FallbackPos) > 950000) && (!grabber.grabbing) && (!grabbed)){
+        //     body.velocity = new Vector3(0f, 0f, 0f);
+        //     root.position = FallbackPos;
+        // }
     }
     private void FixedUpdate() {
         if (grabbed) {
@@ -492,7 +504,17 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.08f);
         ReagentContents vol = bellyContainer.Metabolize(f);
         // Reagents that don't affect metabolization limits
-        bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
+        
+        if(photonView.IsMine){
+            if(fertility == 0){
+                bellyContainer.OverrideReagent(ReagentDatabase.GetReagent("Egg"), 0f);
+                bellyContainer.OverrideReagent(ReagentDatabase.GetReagent("Cum"), 0f);
+            }else{
+                bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f*fertility), bellyContainer);    
+            }
+        }else{
+            bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
+        }
 
         vol.DumpNonConsumable();
         

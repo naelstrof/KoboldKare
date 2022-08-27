@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KoboldKare/Scenes/ErrorScene.unity
     guid: 26318fec5bcca86458a8dab753d4b12c
+  - enabled: 1
+    path: Assets/ThirdParty/Reiikz/Scenes/ReiikzMainMapAditions.unity
+    guid: 14a5ed8d3d9a6c980b0d209e5bf6e9cf
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 3f93eae9dcb5dba44ba91ccda68573bf,
       type: 2}

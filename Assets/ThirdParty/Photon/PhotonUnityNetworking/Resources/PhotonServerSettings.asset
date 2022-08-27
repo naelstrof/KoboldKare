@@ -89,6 +89,7 @@ MonoBehaviour:
   - PlantRPC
   - ForceMixRPC
   - SellObject
+  - RPC_Attach
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

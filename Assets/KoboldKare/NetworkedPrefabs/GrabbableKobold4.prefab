@@ -1450,12 +1450,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  _SortingLayer: 0
-  _SortingLayerID: 0
-  _SortingOrder: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 5223086751957673014}
   m_maskType: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
 --- !u!114 &4570874704754117338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14726,6 +14726,13 @@ MonoBehaviour:
   koboldAnimator: {fileID: 6506915555083475516}
   arousal: 0
   nippleBarbells: {fileID: 7327823432158866843}
+  permanentArousal: 0.84
+  arousalDirection: 0
+  arousalSpeed: 0.01
+  nextArousalDown: 0
+  nextSlowUpdate: 0
+  slowUpdateRate: 2
+  fertility: 1
   ragdoller: {fileID: 3374508250042995388}
   references:
     version: 2

@@ -33,7 +33,7 @@ MonoBehaviour:
       m_Calls: []
   defaultValue: 0.5
   minValue: 0
-  maxValue: 1
+  maxValue: 100
   wholeNumbers: 0
   references:
     version: 2

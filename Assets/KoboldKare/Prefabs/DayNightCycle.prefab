@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,17 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da9ad3662fac834094bfcdc8e17b43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  midnightEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
   metabolizeEvent: {fileID: 11400000, guid: 9058bff9418ac4d4b852e87a40889db5, type: 2}
-  dayLength: 330
-  events:
-  - time01: 0.25
-    ev: {fileID: 11400000, guid: 47daf45042a3fe1489b79d80d828cce0, type: 2}
-  - time01: 0.5
-    ev: {fileID: 11400000, guid: 60992f7f30cd91649ae0332010e558d3, type: 2}
-  - time01: 0.75
-    ev: {fileID: 11400000, guid: 9a060875956a4cf46807b1c5e5626f05, type: 2}
-  - time01: 1
-    ev: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
 --- !u!114 &3183048848260655736
 MonoBehaviour:
   m_ObjectHideFlags: 0

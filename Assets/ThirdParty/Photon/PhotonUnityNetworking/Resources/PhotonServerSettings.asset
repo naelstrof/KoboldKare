@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 26
+    AppVersion: 32
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -50,7 +50,45 @@ MonoBehaviour:
   - SetRagdolled
   - RPCAddMoney
   - BeginAnimationRPC
-  - RPC_Attach
+  - StopAnimationRPC
+  - SetDebris
+  - RPCSellObject
+  - Grind
+  - EggLayed
+  - OnEndFireRPC
+  - OnFireRPC
+  - SetPlanted
+  - SetPlantedRPC
+  - PopRagdoll
+  - PushRagdoll
+  - FireStream
+  - AddMix
+  - AddMixRPC
+  - Spill
+  - SpillMetabolizedContents
+  - Cum
+  - RPCUngrab
+  - GrabRPC
+  - DropRPC
+  - FreezeRPC
+  - UnfreezeAllRPC
+  - UnfreezeRPC
+  - Damage
+  - OnGrabRPC
+  - OnReleaseRPC
+  - PenetrateRPC
+  - Rest
+  - Sleep
+  - SwitchToRPC
+  - ConsumeEnergyRPC
+  - BeginGrind
+  - StopGrind
+  - SwapAfterTime
+  - AssignKobolds
+  - MilkRoutine
+  - PlantRPC
+  - ForceMixRPC
+  - SellObject
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

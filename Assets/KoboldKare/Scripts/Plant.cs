@@ -1,25 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.VFX;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
 using KoboldKare;
 using System.IO;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallback, ISavable {
+public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, ISavable {
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
-    [SerializeField]
-    private GameEventGeneric midnightEvent;
-
-    [SerializeField]
-    public float timeToFadeWatered;
 
     [SerializeField]
     public Color darkenedColor;
@@ -31,34 +21,34 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
 
     [SerializeField]
     public AudioSource audioSource;
-    public bool spawnedFromLoad = false;
-
     public delegate void SwitchAction();
-    public SwitchAction switched;
+    public event SwitchAction switched;
+    
+    private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
 
     void Start() {
-        if(GetComponent<GenericReagentContainer>() != null){
-            container = GetComponent<GenericReagentContainer>();
-        }
-        else{
-            Debug.LogWarning("[Plant] :: Attempted to refresh link to container but failed as container was not on same-level as Plant or does not exist");
-        }
         container.OnFilled.AddListener(OnFilled);
-        midnightEvent.AddListener(OnEventRaised);
-        if(!spawnedFromLoad){
-            SwitchTo(plant);
-        }
-        else{
-            SwitchTo(plant,true);
-        }
     }
 
     void OnDestroy() {
         container.OnFilled.RemoveListener(OnFilled);
-        midnightEvent.RemoveListener(OnEventRaised);
     }
 
-    void OnFilled(GenericReagentContainer.InjectType injectType) {
+    IEnumerator GrowRoutine() {
+        yield return new WaitForSeconds(30f);
+        if (!photonView.IsMine) {
+            yield break;
+        }
+        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
+            PhotonNetwork.Destroy(gameObject);
+            yield break;
+        }
+        photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.All, container.volume);
+        photonView.RPC(nameof(SwitchToRPC), RpcTarget.AllBufferedViaServer,
+            PlantDatabase.GetID(plant.possibleNextGenerations[Random.Range(0, plant.possibleNextGenerations.Length)]));
+    }
+
+    void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }
@@ -70,77 +60,64 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         audioSource.Play();
         effect.gameObject.SetActive(false);
         effect.gameObject.SetActive(true);
-        //Debug.Log(gameObject.name+"'s container filled state is: "+container.isFull);
-        //Debug.Log(gameObject.name+"'s contents: "+container.ToString());
+        StopCoroutine(nameof(GrowRoutine));
+        StartCoroutine(nameof(GrowRoutine));
     }
 
-    void SwitchTo(ScriptablePlant newPlant, bool loaded = false) {
-        if(!loaded){ // Don't allow this to run if we're running this from save to prevent generation skip
-            UndarkenMaterials();
-            wateredEffect.Stop();
-            if (plant == newPlant) {
-                return;
-            }
-            if (display != null) {
-                Destroy(display);
-            }
-            if (newPlant.display != null) {
-                display = GameObject.Instantiate(newPlant.display, transform);
-            }
-            if (photonView.IsMine) {
-                foreach(var produce in newPlant.produces) {
-                    int max = UnityEngine.Random.Range(produce.minProduce, produce.maxProduce);
-                    for(int i=0;i<max;i++) {
-                        GameObject obj =PhotonNetwork.Instantiate(produce.prefab.photonName, transform.position, Quaternion.identity);
-                        if (obj.GetComponent<Kobold>() != null) {
-                            obj.GetComponent<Kobold>().RandomizeKobold();
-                        }
-                    }
-                }
-            }
-            plant = newPlant;
+    [PunRPC]
+    void SwitchToRPC(short newPlantID) {
+        ScriptablePlant checkPlant = PlantDatabase.GetPlant(newPlantID);
+        //Debug.Log("Switching from " + plant + " to " + checkPlant);
+        if (checkPlant == plant) {
+            return;
         }
-        else{ // Behavior for when the plant is being spawned as part of deserialization and not spawning
-            // Plant == newPlant should always return true for deserialization, skip that step and assert
-            if(display == null){
-                Destroy(display);
-            }
-            if(newPlant.display != null){
-                display = GameObject.Instantiate(newPlant.display,transform);
-            }
-                    //Don't fully replicate injection; no need to play hearts and poofs as if it were just watered.
-            // Debug.Log("[Plant] :: <Deserialization> Running container check for isFull");
-            if(container != null){
-                if(container.isFull){
-                    // Debug.Log("[Plant] :: <Deserialization> Container was full, running effects");
-                    wateredEffect.SendEvent("Play");
-                    foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
-                        renderer.material.SetFloat("_BounceAmount", 1f);
-                        StartCoroutine(DarkenMaterial(renderer.material));
-                    }
+        SwitchTo(checkPlant);
+    }
 
-                    // Debug.Log("[Plant] :: <Deserialization> Effects ran and/or deserialization complete");
-                }
-                else{
-                    // Debug.Log("[Plant] :: <Deserialization> Container was not full");
+    public override void SetGenes(KoboldGenes newGenes) {
+        if (display != null) {
+            Vector4 hbcs = new Vector4(newGenes.hue / 255f, newGenes.brightness / 255f, 0.5f, newGenes.saturation / 255f);
+            foreach (var r in display.GetComponentsInChildren<Renderer>()) {
+                foreach (var material in r.materials) {
+                    material.SetColor(BrightnessContrastSaturation, hbcs);
                 }
             }
-            else{
-                // Debug.LogError("[Plant] :: <Deserialization> Plant with name "+gameObject.name+" failed to deserialize. Reason: Container reference was null");
+        }
+        base.SetGenes(newGenes);
+    }
+
+    void SwitchTo(ScriptablePlant newPlant) {
+        if (plant == newPlant) {
+            return;
+        }
+        plant = newPlant;
+        UndarkenMaterials();
+        wateredEffect.Stop();
+         // Plant == newPlant should always return true for deserialization, skip that step and assert
+        if(display != null){
+            Destroy(display);
+        }
+        if(newPlant.display != null){
+            display = GameObject.Instantiate(newPlant.display,transform);
+            // TODO: This is a hack to make sure future iterations have received the genes.
+            if (GetGenes() != null) {
+                SetGenes(GetGenes());
+            }
+        }
+
+        if (PhotonNetwork.IsMasterClient) {
+            foreach (var produce in newPlant.produces) {
+                int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
+                for(int i=0;i<spawnCount;i++) {
+                    PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
+                         transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
+                         new object[] { GetGenes(), false });
+                }
             }
         }
         switched?.Invoke();
-    }
-
-    public void OnEventRaised(object e) {
-        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
-            PhotonNetwork.Destroy(gameObject);
-            return;
-        }
-        if (container.isFull) {
-            // Debug.Log("[Plant] Container was full, running SwitchTo() for next random generation");
-            container.Spill(container.volume);
-            SwitchTo(plant.possibleNextGenerations[UnityEngine.Random.Range(0, plant.possibleNextGenerations.Length)]);
+        if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
+            StartCoroutine(GrowRoutine());
         }
     }
 
@@ -148,48 +125,63 @@ public class Plant : MonoBehaviourPun, IPunObservable, IPunInstantiateMagicCallb
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
         }
+
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
+            SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
+        } else {
+            SetGenes(new KoboldGenes().Randomize());
+        }
+
+        PlantSpawnEventHandler.TriggerPlantSpawnEvent(photonView.gameObject, plant);
     }
 
     void UndarkenMaterials(){
+        if (display == null) {
+            return;
+        }
         foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
-            renderer.material.color = Color.white;
-        }
-    }
-
-    IEnumerator DarkenMaterial(Material tgtMat){
-        var timeSoFar = 0f;
-        while(timeSoFar < timeToFadeWatered){
-            yield return new WaitForSeconds(0.10f); //Updates 10 times per second; doesn't need to be RT.
-            timeSoFar += 0.10f;
-            if(tgtMat.color != null){
-                tgtMat.color = Color.Lerp(tgtMat.color, darkenedColor, timeSoFar/timeToFadeWatered);
-            } else {
-                Debug.LogWarning("[Plant] :: Can not set _color/color of materials whose shaders do not have a color property");
+            if (renderer.material.HasProperty("_Color")) {
+                renderer.material.SetColor("_Color", Color.white);
             }
-            
+
+            if (renderer.material.HasProperty("_BaseColor")) {
+                renderer.material.SetColor("_BaseColor", Color.white);
+            }
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsReading) {
-            SwitchTo(PlantDatabase.GetPlant((short)stream.ReceiveNext()));
-        } else {
-            stream.SendNext(PlantDatabase.GetID(plant));
+    IEnumerator DarkenMaterial(Material tgtMat) {
+        float startTime = Time.time;
+        float duration = 1f;
+        while(Time.time < startTime + duration) {
+            float t = (Time.time - startTime) / duration;
+            if (tgtMat.HasProperty("_Color")) {
+                tgtMat.SetColor("_Color", Color.Lerp(tgtMat.GetColor("_Color"), darkenedColor, t));
+            }
+            if (tgtMat.HasProperty("_BaseColor")) {
+                tgtMat.SetColor("_BaseColor", Color.Lerp(tgtMat.GetColor("_BaseColor"), darkenedColor, t));
+            }
+            yield return null;
         }
     }
-
-    public void Save(BinaryWriter writer, string version) {
+    
+    public void Save(BinaryWriter writer) {
         writer.Write(PlantDatabase.GetID(plant));
         writer.Write(transform.position.x);
         writer.Write(transform.position.y);
         writer.Write(transform.position.z);
+        GetGenes().Serialize(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
         float x = reader.ReadSingle();
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
         transform.position = new Vector3(x,y,z);
+        SetGenes(new KoboldGenes().Deserialize(reader));
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 }

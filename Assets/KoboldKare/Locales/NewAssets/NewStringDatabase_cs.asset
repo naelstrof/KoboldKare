@@ -86,7 +86,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: "Obnovit v\xFDchoz\xED hodnoty"
+    m_Localized: "Resetovat na v\xFDchoz\xED nastaven\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
@@ -166,7 +166,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004680
-    m_Localized: Mraky
+    m_Localized: "Kvalita mrak\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004681
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004700
-    m_Localized: Uchopit
+    m_Localized: Chytit
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
-    m_Localized: Ragdoll.
+    m_Localized: Ragdoll
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: Chytit
+    m_Localized: "Pou\u017E\xEDt v chycen\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
@@ -315,7 +315,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobolda
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -375,7 +375,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
-    m_Localized: Exploze
+    m_Localized: "V\xFDbuch"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198991
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
-    m_Localized: "Vytvo\u0159it soukromou hru"
+    m_Localized: "Vytvo\u0159te soukromou hru"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
@@ -403,11 +403,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: "Pom\u011Br Vrchn\xED / Spodn\xED \u010D\xE1st t\u011Bla"
+    m_Localized: "Pom\u011Br postavy / Spodn\xED \u010D\xE1st t\u011Bla"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
-    m_Localized: "Tlou\u0161\u0165ka"
+    m_Localized: Mohutnost
     m_Metadata:
       m_Items: []
   - m_Id: 516099198999
@@ -475,7 +475,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
-    m_Localized: "P\u0159ipojit se"
+    m_Localized: "P\u0159ipojit"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016
@@ -495,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: "Vytvo\u0159it ve\u0159ejnou hru"
+    m_Localized: "Vytvo\u0159te ve\u0159ejnou hru"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -638,7 +638,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43807311925923840
-    m_Localized: "Vytvo\u0159it vlastn\xED hru"
+    m_Localized: "Vytvo\u0159te vlastn\xED hru"
     m_Metadata:
       m_Items: []
   - m_Id: 54368470533984256
@@ -686,12 +686,140 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Zm\u011Bnit oblast"
+    m_Localized: "Zm\u011Bnit region"
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
     m_Localized: Hra
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "P\u011Bstujte sv\u016Fj prvn\xED kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Voda a \u010Das r\u016Fst kobold, postarejte se o to."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "P\u0159eneste Kobold prost\u0159ednictv\xEDm pneumatick\xE9 s\xEDt\u011B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "M\xE1te pozornost draka patrona ... nyn\xED p\u0159eve\u010Fte
+      zbo\u017E\xED. Budete odm\u011Bn\u011Bni."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Zasadit vejce!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron hled\xE1 schopn\xE9ho karetakera, zasad\xED vejce
+      do pru\u017En\xE9 Zem\u011B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Kupte si pr\u016Fmyslov\xFD ovocn\xFD mix\xE9r."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Tyto Kobolds mus\xED b\xFDt krmeny, najd\u011Bte stavebn\xED smlouvu
+      ve stavebn\xEDm \xFA\u0159adu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: "Krmte ovocnou \u0161\u0165\xE1vou Kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds pot\u0159ebuje p\u0159ipraven\xE9 j\xEDdlo, pou\u017Eijte
+      ml\xFDnek k rozdrcen\xED ovoce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Plemeno kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Pot\u0159ebujeme m\xEDstn\u011B poch\xE1zej\xEDc\xED Kobolds, za\u010Dneme
+      t\xEDm, \u017Ee n\u011Bkter\xE9 z va\u0161ich Kobolds t\u011Bhotn\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: "Dod\xE1vejte velk\xE9 Dick Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: "Pot\u0159ebuji dod\xE1vku plemene Kobolds s velk\xFDmi pt\xE1ky,
+      o\u010Dek\xE1v\xE1m, \u017Ee to zvl\xE1dnete."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: "Dod\xE1vejte velk\xE9 prsa kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: "Pot\u0159ebuji dod\xE1vku plemene Kobolds s velk\xFDmi prsy, o\u010Dek\xE1v\xE1m,
+      \u017Ee to zvl\xE1dnete."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Cum nafouknout kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Kobolds mus\xED b\xFDt napln\u011Bn a\u017E po okraj, o tom se
+      mnou nemluvte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Proniknout celou cestu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Nem\u016F\u017Eu ani za\u010D\xEDt myslet na vysv\u011Btlen\xED,
+      jen se o to postarejte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: "Dod\xE1vejte v\xFDkrmn\xE9 kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Ml\xE9\u010Dn\xE9 koktejly jdou rovnou na stehna, je v na\u0161em
+      nejlep\u0161\xEDm z\xE1jmu m\xEDt n\u011Bkolik superheavy kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: "Oviposite velmi velk\xE9 vejce."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Nezaj\xEDm\xE1 m\u011B, co s t\xEDm d\u011Bl\xE1\u0161, pot\u0159ebujeme
+      velk\xE9 vejce, aby vy\u0161lo z koboldu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: "Vytvo\u0159te makro kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "Mus\xED to b\xFDt alespo\u0148 velikost domu. Hodn\u011B \u0161t\u011Bst\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Houba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: "Ovl\xE1d\xE1n\xED ky\u010Dle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "Upravte \xFArove\u0148 kr\u010Den\xED"
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

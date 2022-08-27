@@ -11,11 +11,9 @@ GameObject:
   - component: {fileID: 4814205500992453063}
   - component: {fileID: 4814205500992453057}
   - component: {fileID: 4814205500992453059}
-  - component: {fileID: 4814205500992453068}
-  - component: {fileID: 4814205500992453069}
   - component: {fileID: 4814205500992453070}
-  - component: {fileID: 1761313470962135464}
   - component: {fileID: -5645697796089872782}
+  - component: {fileID: 2580050841766746526}
   m_Layer: 11
   m_Name: NipplePump
   m_TagString: Untagged
@@ -33,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -175.96, y: 18.11, z: 296.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 723368803876929888}
   - {fileID: 6706520937658425071}
@@ -58,8 +57,7 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4814205500992453068}
-  - {fileID: 1761313470962135464}
+  - {fileID: 2580050841766746526}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -79,52 +77,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4814205500992453068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814205500992453071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &4814205500992453069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814205500992453071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a937c7dc07dbc4db79c466d51e1a25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 0
-  isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  trackedRigidbodies:
-  - {fileID: 4814205500992453059}
-  canLODCondition: []
-  resource: 1
 --- !u!114 &4814205500992453070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,47 +93,9 @@ MonoBehaviour:
   - renderer: {fileID: 9065532681254696185}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: 246a44374346ff34ab15533132ec4805, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1761313470962135464}
-        m_TargetAssemblyTypeName: GenericEquipment, Assembly-CSharp
-        m_MethodName: TriggerAttachOnTouch
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 2
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  bodies:
-  - {fileID: 4814205500992453059}
   renderers:
   - {fileID: 9065532681254696185}
   center: {fileID: 4814205500992453063}
---- !u!114 &1761313470962135464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4814205500992453071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b53b43d901d0fad4a84f0ca1b66ec99d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  representedEquipment: {fileID: 11400000, guid: 42939686d77e5fe448c45c7d6970cb52,
-    type: 2}
-  displaySprite: {fileID: 21300000, guid: 88683833f4308384aac8e0dbf4adc88c, type: 3}
 --- !u!114 &-5645697796089872782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +109,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 5
+--- !u!114 &2580050841766746526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814205500992453071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2859139969392619947
 PrefabInstance:
   m_ObjectHideFlags: 0

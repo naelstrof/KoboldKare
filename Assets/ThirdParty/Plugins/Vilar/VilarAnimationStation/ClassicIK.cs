@@ -95,12 +95,6 @@ namespace Vilar.IK {
 			//animator.SetTrigger("TPose");
 			//animator.Update(Time.deltaTime);
 			//animator.SetTrigger("TPose");
-
-			if (Mathf.Approximately(blend, 1f)) {
-				animator.Play("TPose", 0, 0f);
-				animator.Update(0f);
-			}
-
 			SolveSpine();
 			SolveLimb(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm), animator.GetBoneTransform(HumanBodyBones.LeftLowerArm), animator.GetBoneTransform(HumanBodyBones.LeftHand), targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), false, false);
 			SolveLimb(animator.GetBoneTransform(HumanBodyBones.RightUpperArm), animator.GetBoneTransform(HumanBodyBones.RightLowerArm), animator.GetBoneTransform(HumanBodyBones.RightHand), targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), false, false);

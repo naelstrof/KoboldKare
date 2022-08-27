@@ -35,8 +35,7 @@ public class Build {
     }
     [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
-        string output = outputDirectory+"Linux.x64"+Path.DirectorySeparatorChar+"KoboldKare";
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
@@ -48,7 +47,7 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
@@ -67,14 +66,14 @@ public class Build {
         GetBuildVersion();
         string output = outputDirectory+"Windows.x64"+Path.DirectorySeparatorChar+"KoboldKare.exe";
         Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.Development);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
 
     [MenuItem("KoboldKare/BuildWindows32")]
     static void BuildWindows32() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();

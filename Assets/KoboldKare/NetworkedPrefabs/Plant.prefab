@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6224846685087297137}
   m_RootOrder: 3
@@ -72,6 +73,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &9044296513268347386
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,6 +83,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -88,8 +91,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -235,6 +236,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6224846685087297137}
   m_RootOrder: 0
@@ -278,6 +280,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &8470260512172487113
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -287,6 +290,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -294,8 +298,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -345,6 +347,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6224846685087297137}
   m_RootOrder: 1
@@ -388,6 +391,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &4319389174960946764
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -397,6 +401,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -404,8 +409,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,6 +557,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 991712522266234801}
   - {fileID: 5186821327932587239}
@@ -624,14 +628,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
   container: {fileID: 2729919834162755298}
-  midnightEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
-  timeToFadeWatered: 1
   darkenedColor: {r: 0.54257214, g: 0.5276344, b: 0.6698113, a: 1}
   effect: {fileID: 3845107737267702045}
   wateredEffect: {fileID: 3098404744408764011}
   display: {fileID: 8496703179193917923}
   audioSource: {fileID: 1023749962119173612}
-  spawnedFromLoad: 0
 --- !u!82 &8172671330249393057
 AudioSource:
   m_ObjectHideFlags: 0
@@ -811,15 +812,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd7438071ab26843896581eaa8b01e8, type: 3}
---- !u!1 &8496703179193917923 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 4bd7438071ab26843896581eaa8b01e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 489686814874302698}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4877683577076044784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 4bd7438071ab26843896581eaa8b01e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 489686814874302698}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8496703179193917923 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 4bd7438071ab26843896581eaa8b01e8,
     type: 3}
   m_PrefabInstance: {fileID: 489686814874302698}
   m_PrefabAsset: {fileID: 0}

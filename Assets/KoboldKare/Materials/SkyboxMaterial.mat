@@ -15,14 +15,17 @@ MonoBehaviour:
   version: 1
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SkyboxMaterial
   m_Shader: {fileID: 4800000, guid: 7e939ebe7fce1a54dbabe4a44aed8dbe, type: 3}
-  m_ShaderKeywords: CLOUDS_OFF _SUNDISK_HIGH_QUALITY
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - CLOUDS_OFF
+  - _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -92,6 +95,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaClip: 0
     - _AtmosphereThickness: 1
@@ -113,7 +117,7 @@ Material:
     - _Cutoff: 0.5
     - _DarkSpotScale: 1.48
     - _DstBlend: 0
-    - _Eclipse: 0.69604254
+    - _Eclipse: 0.6221184
     - _EnableFog: 0
     - _EnableRotation: 0
     - _EnvironmentReflections: 1

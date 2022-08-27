@@ -40,30 +40,37 @@ public class BucketWeapon : GenericWeapon {
         waitForSeconds = new WaitForSeconds(5f);
     }
 
-    public override void OnFire(GameObject player) {
-        base.OnFire(player);
+    [PunRPC]
+    protected override void OnFireRPC(int viewID) {
+        base.OnFireRPC(viewID);
         bucketAnimator.SetTrigger(Fire);
-        playerFired = player.GetComponentInParent<Kobold>();
+        playerFired = PhotonNetwork.GetPhotonView(viewID).GetComponentInParent<Kobold>();
     }
 
+    // Called from the animator
     public void OnFireComplete() {
-        if (container.volume > 0.1f) {
-            for (int i = 0; i < projectileCount; i++) {
-                Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
-                if (playerFired != null) {
-                    velocity += playerFired.body.velocity * 0.5f;
-                }
+        if (!photonView.IsMine) {
+            return;
+        }
 
-                velocity += Random.insideUnitSphere * i * 2f;
-                GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
-                    GetWeaponBarrelTransform().position,
-                    GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity });
-                obj.GetComponent<Projectile>().LaunchFrom(body);
+        if (container.volume < 0.1f) {
+            return;
+        }
+        for (int i = 0; i < projectileCount; i++) {
+            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
+            if (playerFired != null) {
+                velocity += playerFired.body.velocity * 0.5f;
             }
 
-            audioSource.enabled = true;
-            bucketSlosh.Play(audioSource);
+            velocity += Random.insideUnitSphere * i * 2f;
+            GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
+                GetWeaponBarrelTransform().position,
+                GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity, container.GetGenes()});
+            obj.GetComponent<Projectile>().LaunchFrom(body);
         }
+
+        audioSource.enabled = true;
+        bucketSlosh.Play(audioSource);
     }
 
     IEnumerator WaitSomeTimeThenDisableAudio() {

@@ -8,24 +8,17 @@ using UnityEngine.VFX;
 using KoboldKare;
 
 [RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class IceSpawnerUsable : GenericUsable, IPunObservable {
+public class IceSpawnerUsable : GenericUsable {
     [SerializeField]
     private float cost = 20f;
     [SerializeField]
     private MoneyFloater floater;
     [SerializeField]
-    private GameEventGeneric refreshSpawnsEvent;
-    [SerializeField]
     private Sprite buySprite;
     [SerializeField]
     private Transform spawnLocation;
     public PhotonGameObjectReference prefabSpawn;
-    [SerializeField]
-    private byte spawnsLeft = 3;
-    private byte startingSpawnsLeft;
     void Start() {
-        startingSpawnsLeft = spawnsLeft;
-        refreshSpawnsEvent.AddListener(RefreshSpawns);
         Bounds newBounds = new Bounds(transform.position, Vector3.zero);
         foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
             newBounds.Encapsulate(r.bounds);
@@ -33,49 +26,23 @@ public class IceSpawnerUsable : GenericUsable, IPunObservable {
         floater.SetBounds(newBounds);
         floater.SetText(cost.ToString());
     }
-    void OnDestroy() {
-        refreshSpawnsEvent.RemoveListener(RefreshSpawns);
-    }
-    public void RefreshSpawns(object nothing) {
-        if (photonView.IsMine) {
-            spawnsLeft = startingSpawnsLeft;
-        }
-    }
     public override bool CanUse(Kobold k) {
-        return spawnsLeft > 0 && (k==null || k.GetComponent<MoneyHolder>().HasMoney(cost));
+        return k.GetComponent<MoneyHolder>().HasMoney(cost);
     }
     public override Sprite GetSprite(Kobold k) {
         return buySprite;
     }
     public override void LocalUse(Kobold k) {
-        if (k == null) {
-            return;
-        }
         k.GetComponent<MoneyHolder>().ChargeMoney(cost);
-        PhotonNetwork.Instantiate(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
-        photonView.RPC("RPCUse", RpcTarget.OthersBuffered, new object[]{});
-        spawnsLeft--;
+        photonView.RPC("RPCUse", RpcTarget.All);
     }
     [PunRPC]
     public override void Use() {
-        spawnsLeft--;
+        if (PhotonNetwork.IsMasterClient) {
+            PhotonNetwork.InstantiateRoomObject(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
+        }
     }
     void OnValidate() {
         prefabSpawn.OnValidate();
-    }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(spawnsLeft);
-        } else {
-            spawnsLeft = (byte)stream.ReceiveNext();
-        }
-    }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
-        writer.Write(spawnsLeft);
-    }
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
-        spawnsLeft = reader.ReadByte();
     }
 }

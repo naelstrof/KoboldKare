@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytics
+    m_Localized: Analyse
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -77,11 +77,11 @@ MonoBehaviour:
   - m_Id: 516090810379
     m_Localized: "Koboldkare sender anonyme analytiske data for \xE5 gj\xF8re spillet
       bedre! Hvis du vil forhindre dette, klikker du p\xE5 knappen nedenfor (den
-      vil \xE5pne en nettleser)."
+      \xE5pner en nettleser)."
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: "\xC5pne Data Privacy Page"
+    m_Localized: "\xC5pne personvernside for data"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
@@ -113,11 +113,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810388
-    m_Localized: Bevegelse uskarphet
+    m_Localized: Bevegelse uskarp
     m_Metadata:
       m_Items: []
   - m_Id: 516090810389
-    m_Localized: Omgivende okklusjon
+    m_Localized: Omgivelses okklusjon
     m_Metadata:
       m_Items: []
   - m_Id: 516090810390
@@ -129,15 +129,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: Skjerm rom refleksjoner
+    m_Localized: Screen Space Reflections
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
-    m_Localized: Anti-aliasing.
+    m_Localized: Anti-aliasing
     m_Metadata:
       m_Items: []
   - m_Id: 516095004673
-    m_Localized: Film korn
+    m_Localized: Filmkorn
     m_Metadata:
       m_Items: []
   - m_Id: 516095004674
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: Lydeffekter volum
+    m_Localized: Lydeffekter Volum
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
@@ -153,15 +153,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004677
-    m_Localized: Kamera fov.
+    m_Localized: Kamera fov
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: Panini-projeksjon
+    m_Localized: Panini -projeksjon
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
-    m_Localized: Feltdybde
+    m_Localized: Dybdeskarphet
     m_Metadata:
       m_Items: []
   - m_Id: 516095004680
@@ -173,7 +173,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004682
-    m_Localized: Bytt tur
+    m_Localized: Vekslingsgang
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
@@ -185,11 +185,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004685
-    m_Localized: Maxed vindu
+    m_Localized: Maksimalt vindu
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
-    m_Localized: Windowed.
+    m_Localized: Vinduet
     m_Metadata:
       m_Items: []
   - m_Id: 516095004687
@@ -205,16 +205,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAKER I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
-      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
-    m_Localized: "\u2022 Under straff av perjury er du over 18 \xE5r.\n\u2022 Nakenhet
-      og eksplisitte avbildninger av seksuell aktivitet forn\xE6rmer deg ikke.\n\u2022
-      Du anerkjenner at du er ansvarlig for at alle personer som ser spillet fra
-      enheten din, er over 18 \xE5r."
+    m_Localized: "\u2022 Under straff for perjury er du over 18 \xE5r.\n\u2022 Nakenhet
+      og eksplisitte skildringer av seksuell aktivitet forn\xE6rmer deg ikke.\n\u2022
+      Du erkjenner at du er ansvarlig for at alle personer som ser p\xE5 spillet
+      fra enheten din er over 18 \xE5r."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
@@ -222,8 +220,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
-    m_Localized: "Velkommen til Koboldkare!\n\nDette er en utviklerbygging og er
-      helt uferdig, ikke forvent mye!\n\nTakk s\xE5 mye for \xE5 st\xF8tte spillet!"
+    m_Localized: "Velkommen til Koboldkare!\n\nDette er en utviklerbygg og er helt
+      uferdig, ikke forvent mye!\n\nTusen takk for at du st\xF8tter spillet!"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
@@ -239,7 +237,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: Gib.
+    m_Localized: Gib
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -251,7 +249,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: Ta tak i trykk og trekk
+    m_Localized: Grip push and pull
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
@@ -259,7 +257,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004703
-    m_Localized: Se statistikk
+    m_Localized: Vis statistikk
     m_Metadata:
       m_Items: []
   - m_Id: 516095004704
@@ -267,15 +265,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: Unfreeze
+    m_Localized: "Frigj\xF8re"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
-    m_Localized: Ragdoll.
+    m_Localized: Ragdoll
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: Bytt tak i modus
+    m_Localized: Bytt Grab -modus
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -283,7 +281,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
-    m_Localized: Aktiver Grab.
+    m_Localized: Aktiver Grab
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
@@ -295,7 +293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004712
-    m_Localized: Klar rusk
+    m_Localized: Klart rusk
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
@@ -311,7 +309,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004716
-    m_Localized: Kobold.
+    m_Localized: Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
@@ -327,11 +325,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Aubergine juice
+    m_Localized: Auberginejuice
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Melonjuice
+    m_Localized: Melonsaft
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
@@ -343,11 +341,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
-    m_Localized: Ustabil reagens
+    m_Localized: Ustabilt reagens
     m_Metadata:
       m_Items: []
   - m_Id: 516099198984
-    m_Localized: Cum.
+    m_Localized: Cum
     m_Metadata:
       m_Items: []
   - m_Id: 516099198985
@@ -363,7 +361,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198988
-    m_Localized: Ingen reagants funnet
+    m_Localized: Ingen reaganter funnet
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
@@ -379,7 +377,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer.
+    m_Localized: Multiplayer
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -395,7 +393,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198996
-    m_Localized: Hue.
+    m_Localized: Fargetone
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
@@ -419,11 +417,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Dick.
+    m_Localized: Pikk
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Dick size.
+    m_Localized: "Pikkest\xF8rrelse"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
@@ -431,19 +429,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equine.
+    m_Localized: Hest
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
-    m_Localized: Knotted.
+    m_Localized: Knyttet
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Flared equine.
+    m_Localized: Blusset heste
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
-    m_Localized: Tapered.
+    m_Localized: Avsmalnet
     m_Metadata:
       m_Items: []
   - m_Id: 516099199009
@@ -451,7 +449,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199010
-    m_Localized: Ut av det
+    m_Localized: Inn
     m_Metadata:
       m_Items: []
   - m_Id: 516099199011
@@ -459,7 +457,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: Bli med Private Game.
+    m_Localized: "Bli med p\xE5 privat spill"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
@@ -491,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: Skape offentlig spill
+    m_Localized: Lag offentlig spill
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -503,11 +501,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: FreeCam
+    m_Localized: Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Klebrig freecam
+    m_Localized: Sticky Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
@@ -531,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
-    m_Localized: Noe gjorde at du mister tilkoblingen!
+    m_Localized: "Noe fikk deg til \xE5 miste forbindelsen!"
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
@@ -551,27 +549,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: Hemipenis.
+    m_Localized: Hemipenis
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vssync.
+    m_Localized: Vsync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: "M\xE5l Framerate."
+    m_Localized: "M\xE5lrammer"
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Brystvorte barbells.
+    m_Localized: Brystbyngger
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
-    m_Localized: Hardt
+    m_Localized: Hardhat
     m_Metadata:
       m_Items: []
   - m_Id: 38135240663289856
-    m_Localized: En magisk festbar som er lang og sylindrisk med en medial ring.
+    m_Localized: En magisk tilknytning som er lang og sylindrisk med en medial ring.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
@@ -583,13 +581,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: En magisk festbar som er lang, sylindrisk, og har en flared opp
-      tips. Har noen gode teleskopiske handlinger!
+    m_Localized: En magisk tilknytning som er lang, sylindrisk, og har en blusset
+      spiss. Har noen gode teleskopiske handlinger!
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Enkel kroppssikker, hypoallergetiske metallstenger. (Ja, de g\xE5r
-      i brystvorten.)"
+    m_Localized: "Enkle kroppssikre, hypoallergetiske metallstenger. (Ja de g\xE5r
+      i brystvortene dine.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -597,20 +595,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: En magisk festbar som er lang og tynner ut til et punkt. Dens baller
+    m_Localized: En magisk tilknytning som er lang og tynner ut til et punkt. Ballene
       er internalisert!
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandis Dick.
+    m_Localized: Kandis pikk
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: Hale bag
+    m_Localized: Haleveske
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Spiked krage
+    m_Localized: Pigget krage
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -618,7 +616,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: Ny Save.
+    m_Localized: Ny lagring
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
@@ -638,11 +636,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Goop kvalitet
+    m_Localized: Goop -kvalitet
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Brystvorte pumper
+    m_Localized: Nippelpumper
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
@@ -654,7 +652,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
-    m_Localized: Skjerm lysstyrke
+    m_Localized: Skjermlysstyrke
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
@@ -662,7 +660,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Steam Audio.
+    m_Localized: Steam Audio
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
@@ -670,19 +668,145 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Velkommen til Koboldkare!\r\n\r\nKoboldkare er et DRM-Free-spill.
-      V\xE6r s\xE5 snill \xE5 dele, Koboldkare trenger ikke en sprekk for \xE5 spille!\r\n\r\nTakk
-      s\xE5 mye for \xE5 st\xF8tte spillet!\n\nSjekk damp, kl\xF8e og patreon for
-      oppdateringer og oppdateringsnotater.\r\n"
+    m_Localized: "Velkommen til Koboldkare!\r\n\r\nKoboldkare er et DRM-gratis spill.
+      V\xE6r trygg deling, koboldkare trenger ikke en sprekk for \xE5 spille!\r\n\r\nTusen
+      takk for at du st\xF8tter spillet!\n\nKontroller damp, kl\xF8e og Patreon for
+      oppdateringer og lappnotater.\r\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: Endre regionen
+    m_Localized: Endre region
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
-    m_Localized: Gameplay.
+    m_Localized: Gameplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: "Voks din f\xF8rste kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: "Vann og tid vil vokse Kobold, ta vare p\xE5 det."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: "Overf\xF8r Kobold via pneumatisk nettverk."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: "Du har Dragon Patrons oppmerksomhet ... overf\xF8r n\xE5 varene.
+      Du vil bli bel\xF8nnet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plant et egg!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: "Dragon Patron s\xF8ker dyktig karetaker, planter et egg i smidig
+      jord."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Kj\xF8p en industriell fruktblender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: "Disse koboldene m\xE5 mates, finne byggekontrakten p\xE5 byggekontoret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Feed kobolds fruktjuice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: "Kobolds trenger maten tilberedt, bruk kvernen for \xE5 male frukt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Breed Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: "Vi trenger lokalt hentet Kobolds, begynner med \xE5 f\xE5 noen
+      av koboldene dine gravide."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Lever store Dick Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Jeg trenger en levering av en rase av Kobolds med store pikker,
+      jeg regner med at du takler dette.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Lever store brystkoblinger.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Jeg trenger en levering av en rase av Kobolds med store bryster,
+      jeg regner med at du takler dette.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: "Cum bl\xE5s opp kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: "Koboldene m\xE5 fylles til randen, ikke snakk med meg videre om
+      dette."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Trenger gjennom hele veien gjennom.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: "Jeg kan ikke engang begynne \xE5 tenke p\xE5 en forklaring, bare
+      ta vare p\xE5 den."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Lever fetede kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes g\xE5r rett til l\xE5rene, det er i v\xE5r beste interesse
+      \xE5 ha noen f\xE5 superheavy kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit et veldig stort egg.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: "Jeg bryr meg ikke om hva du gj\xF8r med det etter, vi trenger et
+      stort egg for \xE5 komme ut av en kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Lag makro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: "De m\xE5 v\xE6re minst p\xE5 st\xF8rrelse med et hus. Lykke til."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Sopp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Hoftekontroll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: "Juster hukniv\xE5et"
     m_Metadata:
       m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

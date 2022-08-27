@@ -1,757 +1,686 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
+using System.Drawing.Text;
 using System.IO;
+using UnityEngine;
+using Photon.Pun;
+using System.Linq;
+using KoboldKare;
 
 public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
-    public Rigidbody self;
-    public Transform view;
-    public GameObject handPrefab;
-    [HideInInspector]
-    public GameObject hand;
-    //private Joint joint;
-    private Rigidbody jointRigidbody;
-    private Vector3 jointAnchor;
-    public float _springStrength = 50;
-    [Range(0,1f)]
-    public float _dampStrength = 0.5f;
-    public bool inputRotation = false;
-    public float _breakStrength = 5000;
-    public GameObject freezeEffect;
-    public UnityEvent OnGrab;
-    public UnityEvent OnRelease;
-    public UnityEvent OnFreeze;
-    public UnityEvent OnUnfreeze;
-    public AudioClip unfreezeSound;
-    public PlayerPossession possession;
-    public List<Rigidbody> ignoreBodies = new List<Rigidbody>();
-    private Collider grabbedCollider;
-    private float distance;
-    private float maxDistance = 2.5f;
-    private Vector3 hitNormalObjectSpace;
-    private GameObject advancedGameObject;
-    private Vector3 colliderLocalAnchor;
-    Transform handTransform;
-    public GameObject player;
-    private Kobold internalKobold;
-    public Kobold kobold {
-        get {
-            if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
-            }
-            return internalKobold;
-        }
-    }
-    private class FrozenGrab {
-        public List<IAdvancedInteractable> interactables = new List<IAdvancedInteractable>();
-        public List<IFreezeReciever> freezeReceivers = new List<IFreezeReciever>();
-        public ConfigurableJoint joint;
-        public Vector3 worldHoldPoint;
-        public Quaternion worldHoldRotation;
-        public Rigidbody body;
-        public Rigidbody fallbackBody;
-    }
-    private List<FrozenGrab> frozenGrabs = new List<FrozenGrab>();
-    private Vector3 handPosition;
-    private Quaternion handRotation;
-    public UnityEngine.InputSystem.PlayerInput controls;
-    [HideInInspector]
-    public bool grabbing = false;
-    private Quaternion savedQuaternion = Quaternion.identity;
-    public UnityEvent OnHover;
-    public UnityEvent OnExitHover;
-    public GameObject crosshair;
-    private bool hovering = false;
-    [HideInInspector]
-    private bool hideHand = true;
-    private bool savedRotation = false;
-    private bool affectingRotation = false;
-    private Rigidbody originalBody;
-    private RaycastHit closestHit = new RaycastHit();
-    public UnityScriptableSettings.ScriptableSetting mouseSensitivy;
-    RaycastHit[] hits = new RaycastHit[6];
+    [SerializeField] private GameObject handDisplayPrefab;
+    [SerializeField] private Transform view;
+    [SerializeField] private GameObject freezeVFXPrefab;
+    [SerializeField] private AudioPack unfreezeSound;
+    [SerializeField] private Kobold kobold;
+    [SerializeField] private GameEventFloat handVisibilityEvent;
+    [SerializeField] private GameObject freezeUI;
+    [SerializeField] private List<GameObject> activeUI;
     
-    public void HideHand(bool hidden) {
-        hideHand = hidden;
-    }
-    public bool HandHidden() {
-        return hideHand;
-    }
+    private static RaycastHit[] hits = new RaycastHit[10];
+    private static readonly int GrabbingHash = Animator.StringToHash("Grabbing");
+    private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
+    private RaycastHitDistanceComparer raycastHitDistanceComparer;
+    private Animator previewHandAnimator;
+    private Transform previewHandTransform;
+    private Grab currentGrab;
+    private List<Grab> frozenGrabs;
+    private const float springForce = 10000f;
+    private const float breakForce = 4000f;
+    private const float maxGrabDistance = 2.5f;
+    private bool previewGrab;
+    private List<Grab> removeIds;
+    
+    [SerializeField]
+    private Collider[] ignoreColliders;
+    private class Grab {
+        public PhotonView photonView { get; private set; }
+        public Rigidbody body { get; private set; }
+        public Vector3 localColliderPosition { get; private set; }
+        public Vector3 localHitNormal { get; private set; }
+        public bool affectingRotation { get; private set; }
+        public Kobold targetKobold { get; private set; }
 
-    private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
-        for(int i=0;i<t.childCount;i++ ) {
-            RecursiveSetLayer(t.GetChild(i), fromLayer, toLayer);
-        }
-        if (t.gameObject.layer == fromLayer) {
-            t.gameObject.layer = toLayer;
-        }
-    }
+        private ConfigurableJoint joint;
+        private Collider collider;
+        private Quaternion savedQuaternion;
+        private Animator handDisplayAnimator;
+        private Transform handTransform;
+        private float distance;
+        private Kobold owner;
+        private Vector3 bodyAnchor;
+        private Transform view;
+        private bool frozen;
+        private AudioPack unfreezePack;
+        private Quaternion startRotation;
+        private float creationTime;
 
-    public void RefreshPrompts() {
-        if (hovering) {
-            OnHover.Invoke();
-        } else {
-            OnExitHover.Invoke();
-        }
-    }
-    /*public void Unfreeze(IAdvancedInteractable interactable, bool keepBodyFreezes = false) {
-        HashSet<FrozenGrab> matches = new HashSet<FrozenGrab>();
-        for(int i=0;i<frozenGrabs.Count;i++) {
-            if (keepBodyFreezes && frozenGrabs[i].joint != null) {
-                continue;
-            }
-            for(int o=0;o<frozenGrabs[i].interactables.Count;o++) {
-                if (frozenGrabs[i].interactables[o] == interactable && frozenGrabs[i].interactables.Count == 1) {
-                    matches.Add(frozenGrabs[i]);
-                    frozenGrabs[i].interactables[o].OnEndInteract();
-                    break;
-                }
-            }
-        }
-        foreach(FrozenGrab f in matches) {
-            if (f.joint != null) {
-                f.body?.WakeUp();
-                Destroy(f.joint);
-            }
-            foreach(IAdvancedInteractable inter in f.interactables) {
-                inter?.OnEndInteract();
-            }
-        }
-        foreach(FrozenGrab f in matches) {
-            frozenGrabs.Remove(f);
-        }
-    }*/
-    public void Unfreeze(bool shouldNetwork) {
-        if (frozenGrabs.Count > 0) {
-            GameManager.instance.SpawnAudioClipInWorld(unfreezeSound, transform.position);
-        }
-        for(int i=0;i<frozenGrabs.Count;) {
-            if (frozenGrabs[0].joint != null) {
-                frozenGrabs[0].body?.WakeUp();
-                Destroy(frozenGrabs[0].joint);
-            }
-            foreach(IFreezeReciever freezeReciever in frozenGrabs[0].freezeReceivers) {
-                freezeReciever.OnEndFreeze();
-            }
-            foreach(IAdvancedInteractable interactable in frozenGrabs[0].interactables) {
-                if (((Component)interactable) != null) {
-                    interactable.OnEndInteract(kobold);
-                }
-            }
-            frozenGrabs.RemoveAt(0);
-        }
-        OnUnfreeze.Invoke();
-
-        if (shouldNetwork && photonView.IsMine) {
-            // Implemented in Kobold.cs
-            photonView.RPC("RPCUnfreezeAll", RpcTarget.OthersBuffered, null);
-        }
-    }
-    public SpringJoint AddSpringJoint(Rigidbody hitBody, Vector3 worldAnchor) {
-        if (ignoreBodies.Contains(hitBody)) {
-            return null;
-        }
-        //hit.rigidbody.rotation = Quaternion.identity;
-        SpringJoint joint = hitBody.gameObject.AddComponent<SpringJoint>();
-        //joint.axis = view.forward;
-        //hit.rigidbody.rotation = initialRotation;
-        //joint.axis = view.up;
-        //joint.secondaryAxis = view.right;
-        //savedQuaternion = initialRotation = joint.transform.rotation;
-        joint.connectedBody = self;
-        joint.autoConfigureConnectedAnchor = false;
-        joint.breakForce = _breakStrength;
-        joint.massScale = 1f;
-        joint.connectedMassScale = 1f;
-        joint.enablePreprocessing = false;
-        joint.spring = _springStrength;
-        joint.minDistance = Vector3.Distance(worldAnchor, view.position);
-        joint.maxDistance = joint.minDistance;
-        joint.anchor = hitBody.transform.InverseTransformPoint(worldAnchor);
-        joint.connectedAnchor = joint.connectedBody.transform.InverseTransformPoint(view.position);
-        //joint.anchor = hit.point;
-        //joint.connectedAnchor = hit.point;
-        return joint;
-    }
-
-    public ConfigurableJoint AddJoint(Rigidbody hitBody, Vector3 worldAnchor) {
-        if (ignoreBodies.Contains(hitBody)) {
-            return null;
-        }
-        //hit.rigidbody.rotation = Quaternion.identity;
-        ConfigurableJoint joint = hitBody.gameObject.AddComponent<ConfigurableJoint>();
-        joint.axis = view.up;
-        joint.secondaryAxis = view.right;
-        //hit.rigidbody.rotation = initialRotation;
-        //joint.axis = view.up;
-        //joint.secondaryAxis = view.right;
-        //savedQuaternion = initialRotation = joint.transform.rotation;
-        joint.connectedBody = self;
-        joint.autoConfigureConnectedAnchor = false;
-        joint.breakForce = _breakStrength;
-        JointDrive drive = joint.xDrive;
-        SoftJointLimit sjl = joint.linearLimit;
-        sjl.limit = 0f;
-        joint.linearLimit = sjl;
-        SoftJointLimitSpring sjls = joint.linearLimitSpring;
-        sjls.spring = _springStrength;
-        joint.linearLimitSpring = sjls;
-        joint.linearLimit = sjl;
-        drive.positionSpring = _springStrength;
-        drive.positionDamper = 2f;
-        joint.xDrive = drive;
-        joint.yDrive = drive;
-        joint.zDrive = drive;
-        //joint.projectionMode = JointProjectionMode.PositionAndRotation;
-        //joint.projectionDistance = 0.1f;
-        joint.massScale = 8f;
-        joint.connectedMassScale = 1f;
-        joint.enablePreprocessing = false;
-        joint.configuredInWorldSpace = true;
-        joint.xMotion = ConfigurableJointMotion.Limited;
-        joint.yMotion = ConfigurableJointMotion.Limited;
-        joint.zMotion = ConfigurableJointMotion.Limited;
-
-        //joint.swapBodies = true;
-        //joint.configuredInWorldSpace = true;
-        joint.anchor = hitBody.transform.InverseTransformPoint(worldAnchor);
-        joint.connectedAnchor = joint.connectedBody.transform.InverseTransformPoint(view.position);
-        //joint.anchor = hit.point;
-        //joint.connectedAnchor = hit.point;
-        return joint;
-    }
-
-
-    public void Grab(Collider collider, Vector3 localColliderPosition, Vector3 localHitNormal) {
-        ValidateHand();
-        if (grabbing) {
-            return;
-        }
-        if ( jointRigidbody != null || advancedGameObject != null ) {
-            return;
-        }
-        grabbing = true;
-        Rigidbody body = collider.GetComponentInParent<Rigidbody>();
-        Vector3 hitPoint = collider.transform.TransformPoint(localColliderPosition);
-        colliderLocalAnchor = localColliderPosition;
-        if (photonView.IsMine) {
-            collider.GetComponentInParent<PhotonView>()?.TransferOwnership(PhotonNetwork.LocalPlayer);
+        public Collider GetCollider() {
+            return collider;
         }
 
-        savedQuaternion = Quaternion.Inverse(view.rotation);
-        OnGrab.Invoke();
-        hand.GetComponentInChildren<Animator>().SetBool("Grabbing", true);
-        handPosition = hitPoint + handRotation * Vector3.down * 0.1f;
-        hitNormalObjectSpace = localHitNormal;
-        distance = Vector3.Distance(view.transform.position, collider.transform.TransformPoint(localColliderPosition));
-        Vector3 holdPoint = view.position + view.forward * distance;
-        advancedGameObject = collider.gameObject;
-        grabbedCollider = collider;
-        bool needsJoint = true;
-        if (advancedGameObject.GetComponentInParent<IAdvancedInteractable>() != null) {
-            needsJoint = advancedGameObject.GetComponentInParent<IAdvancedInteractable>().PhysicsGrabbable();
-            if (!needsJoint) {
-                savedQuaternion = advancedGameObject.transform.rotation * savedQuaternion;
+        private ConfigurableJoint AddJoint(Vector3 worldPosition, Quaternion targetRotation, bool affRotation) {
+            Quaternion save = body.rotation;
+            if (!affRotation) {
+                body.transform.rotation = Quaternion.identity;
             }
-            IAdvancedInteractable a = advancedGameObject.GetComponentInParent<IAdvancedInteractable>();
-            if (a!=null) {
-                bool canFire = true;
-                foreach (FrozenGrab grab in frozenGrabs) {
-                    foreach (IAdvancedInteractable i in grab.interactables) {
-                        // This must be frozen, we shouldn't grab it.
-                        if (a == i) {
-                            canFire = false;
-                            advancedGameObject = null;
-                        }
-                    }
-                }
-                if (canFire) {
-                    a.OnInteract(kobold);
-                }
+
+            startRotation = body.transform.rotation;
+            ConfigurableJoint configurableJoint = body.gameObject.AddComponent<ConfigurableJoint>();
+            configurableJoint.axis = Vector3.up;
+            configurableJoint.secondaryAxis = Vector3.right;
+            configurableJoint.connectedBody = null;
+            configurableJoint.autoConfigureConnectedAnchor = false;
+            if (owner.photonView.IsMine) {
+                configurableJoint.breakForce = breakForce;
+            } else {
+                configurableJoint.breakForce = float.MaxValue;
             }
-        } else {
-            advancedGameObject = null;
+            JointDrive drive = configurableJoint.xDrive;
+            drive.positionSpring = springForce;
+            drive.positionDamper = 2f;
+            configurableJoint.xDrive = drive;
+            configurableJoint.yDrive = drive;
+            configurableJoint.zDrive = drive;
+            var linearLimit = configurableJoint.linearLimit;
+            linearLimit.limit = 1f;
+            linearLimit.bounciness = 0f;
+            var spring = configurableJoint.linearLimitSpring;
+            spring.spring = springForce * 0.1f;
+            spring.damper = 2f;
+            configurableJoint.linearLimitSpring = spring;
+            configurableJoint.linearLimit = linearLimit;
+            configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
+            configurableJoint.massScale = 1f;
+            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            configurableJoint.projectionAngle = 10f;
+            configurableJoint.projectionDistance = 0.5f;
+            configurableJoint.connectedMassScale = 1f;
+            configurableJoint.enablePreprocessing = false;
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.anchor = body.transform.InverseTransformPoint(collider.transform.TransformPoint(localColliderPosition));
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.connectedBody = null;
+            configurableJoint.connectedAnchor = worldPosition;
+            //var slerpDrive = configurableJoint.slerpDrive;
+            //slerpDrive.positionSpring = springForce*2f;
+            //slerpDrive.maximumForce = float.MaxValue;
+            //slerpDrive.positionDamper = 2f;
+            //configurableJoint.slerpDrive = slerpDrive;
+            configurableJoint.xMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.yMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.zMotion = ConfigurableJointMotion.Limited;
+            if (affRotation) {
+                configurableJoint.SetTargetRotation(targetRotation, startRotation);
+                configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
+                configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
+                configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
+            } else {
+                body.transform.rotation = save;
+            }
+
+            return configurableJoint;
         }
-        GetFallbackBody(ref body, out originalBody);
-        if (body != null && needsJoint) {
-            if (ignoreBodies.Contains(body))  {
+        public Grab(Kobold owner, GameObject handDisplayPrefab, Transform view, Collider collider,
+            Vector3 localColliderPosition, Vector3 localHitNormal, AudioPack unfreezePack) {
+            this.collider = collider;
+            this.localColliderPosition = localColliderPosition;
+            this.localHitNormal = localHitNormal;
+            body = collider.GetComponentInParent<Rigidbody>();
+            savedQuaternion = body.rotation;
+            Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
+            bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
+            distance = Vector3.Distance(view.position, hitPosWorld);
+            creationTime = Time.time;
+            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
+                .GetComponentInChildren<Animator>();
+            handDisplayAnimator.gameObject.SetActive(true);
+            handDisplayAnimator.SetBool(GrabbingHash, true);
+            handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
+            photonView = collider.GetComponentInParent<PhotonView>();
+            this.owner = owner;
+            this.view = view;
+            this.unfreezePack = unfreezePack;
+            frozen = false;
+            targetKobold = collider.GetComponentInParent<Kobold>();
+            if (targetKobold != null) {
+                targetKobold.ragdoller.PushRagdoll();
+                body.maxAngularVelocity = 10f;
+            } else {
+                body.maxAngularVelocity = 20f;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
+                body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+            joint = AddJoint(hitPosWorld, Quaternion.identity, false);
+            if (owner.photonView.IsMine) {
+                photonView.RequestOwnership();
+            }
+        }
+        
+        public Grab(Kobold owner, GameObject handDisplayPrefab, Collider collider, Vector3 localColliderPosition,
+            Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation, AudioPack unfreezePack) {
+            this.collider = collider;
+            this.localColliderPosition = localColliderPosition;
+            this.localHitNormal = localHitNormal;
+            savedQuaternion = rotation;
+            body = collider.GetComponentInParent<Rigidbody>();
+            photonView = collider.GetComponentInParent<PhotonView>();
+            Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
+            bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
+            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
+                .GetComponentInChildren<Animator>();
+            handDisplayAnimator.gameObject.SetActive(true);
+            handDisplayAnimator.SetBool(GrabbingHash, true);
+            handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
+            creationTime = Time.time;
+            this.owner = owner;
+            this.unfreezePack = unfreezePack;
+            frozen = true;
+            joint = AddJoint(worldAnchor, rotation, affRotation);
+            targetKobold = collider.GetComponentInParent<Kobold>();
+            if (targetKobold != null) {
+                targetKobold.ragdoller.PushRagdoll();
+                body.maxAngularVelocity = 10f;
+            } else {
+                body.maxAngularVelocity = 20f;
+                body.interpolation = RigidbodyInterpolation.Interpolate;
+                body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+
+            if (owner.photonView.IsMine) {
+                photonView.RequestOwnership();
+            }
+        }
+
+        public void SetVisibility(float newVisibility) {
+            if (newVisibility < 0.5f && handDisplayAnimator.gameObject.activeSelf) {
+                handDisplayAnimator.gameObject.SetActive(false);
+            } else if (newVisibility >= 0.5f && !handDisplayAnimator.gameObject.activeSelf) {
+                handDisplayAnimator.gameObject.SetActive(true);
+            }
+            handDisplayAnimator.SetBool(GrabbingHash, true);
+        }
+
+        public float GetDistance() => distance;
+        public Quaternion GetRotation() => savedQuaternion;
+
+        public void Freeze() {
+            if (frozen) {
                 return;
             }
-            savedQuaternion = body.rotation * savedQuaternion;
-            //joint = AddSpringJoint(body, hitPoint);
-            jointRigidbody = body;
-            jointAnchor = body.transform.InverseTransformPoint(hitPoint);
-        }
-    }
-
-    public void Grab() {
-        ValidateHand();
-        if (grabbing) {
-            return;
-        }
-        if ( jointRigidbody != null || advancedGameObject != null ) {
-            //hand.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor("_BaseColor", new Color(1, 1, 1, 0f));
-            return;
-        }
-        savedQuaternion = Quaternion.Inverse(view.rotation) ;
-        float tdistance = float.MaxValue;
-        RaycastHit hit = new RaycastHit();
-        bool valid = false;
-        int numHits = Physics.RaycastNonAlloc(view.position, view.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
-        for(int i=0;i<numHits;i++) {
-            //foreach(RaycastHit hit in Physics.RaycastAll(view.position, view.forward, maxDistance, hitMask, QueryTriggerInteraction.Collide)) {
-            RaycastHit thit = hits[i];
-            if (ignoreBodies.Contains(thit.rigidbody)) {
-                continue;
+            frozen = true;
+            if (joint != null) {
+                Destroy(joint);
             }
-            if (thit.collider.CompareTag("IgnoreAdvancedInteraction")) {
-                continue;
-            }
-            if (thit.distance > tdistance) {
-                continue;
-            }
-            hit = thit;
-            tdistance = thit.distance;
-            valid = true;
-        }
-        if (!valid) {
-            return;
-        }
-        PhotonView oview = hit.collider.GetComponentInParent<PhotonView>();
-        if (oview) {
-            Collider[] colliders = oview.GetComponentsInChildren<Collider>();
-            for (int i = 0; i < colliders.Length; i++) {
-                if (colliders[i] == hit.collider) {
-                    photonView.RPC("RPCPrecisionGrab", RpcTarget.AllBuffered, new object[] { oview.ViewID, i, hit.collider.transform.InverseTransformPoint(hit.point) });
-                }
-            }
-        }
-    }
-
-    public void GetFallbackBody(ref Rigidbody body, out Rigidbody fallback) {
-        fallback = body;
-        if (body != null && body.isKinematic) {
-            foreach(Rigidbody b in body.GetComponentsInParent<Rigidbody>()) {
-                if (!b.isKinematic) {
-                    body = b;
-                    break;
-                }
-            }
-        }
-        /*if (body != null && body.isKinematic) {
-            foreach(Rigidbody b in body.GetComponentsInParent<Rigidbody>()) {
-                if (b.isKinematic) {
-                    fallback = b;
-                    break;
-                }
-            }
-        }*/
-    }
-    public void Freeze() {
-        if (grabbedCollider == null) {
-            return;
-        }
-        Collider c = grabbedCollider;
-        Vector3 holdPoint = view.position + view.forward * distance;
-        Rigidbody r = c.GetComponentInParent<Rigidbody>();
-        bool affRotation = affectingRotation;
-        PhotonView v = grabbedCollider.GetComponentInParent<PhotonView>();
-        Collider[] colliders = v.GetComponentsInChildren<Collider>();
-        int colliderID = 0;
-        for (int i=0;i<colliders.Length;i++) {
-            if (colliders[i] == grabbedCollider) {
-                colliderID = i;
-                break;
-            }
-        }
-        if (r) {
-            photonView.RPC("RPCFreeze", RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, r.rotation, affRotation });
-        } else {
-            photonView.RPC("RPCFreeze", RpcTarget.AllBuffered, new object[] { v.ViewID, colliderID, colliderLocalAnchor, holdPoint, c.transform.rotation, affRotation });
-        }
-    }
-
-
-    public void Freeze(Collider collider, Vector3 localPosition, Vector3 worldPosition, Quaternion rotation, bool affRotation) {
-        Rigidbody otherBody = collider.GetComponentInParent<Rigidbody>();
-        bool needsJoint = true;
-        if (collider.GetComponentInParent<IAdvancedInteractable>() != null) {
-            needsJoint = collider.GetComponentInParent<IAdvancedInteractable>().PhysicsGrabbable();
+            joint = AddJoint(collider.transform.TransformPoint(localColliderPosition), savedQuaternion, affectingRotation);
         }
 
-        FrozenGrab fgrab = new FrozenGrab();
-        if (needsJoint && otherBody != null) {
-            Quaternion startRotation = otherBody.rotation;
-
-            fgrab.body = otherBody;
-            GetFallbackBody(ref fgrab.body, out fgrab.fallbackBody);
-
-            ConfigurableJoint createdJoint = AddJoint(fgrab.body, worldPosition);
-            createdJoint.anchor = fgrab.body.transform.InverseTransformPoint(collider.transform.TransformPoint(localPosition));
-            createdJoint.configuredInWorldSpace = true;
-            createdJoint.connectedBody = null;
-            createdJoint.connectedAnchor = worldPosition;
-            createdJoint.SetTargetRotation(rotation, startRotation);
-            if (affRotation) {
-                createdJoint.angularXMotion = ConfigurableJointMotion.Locked;
-                createdJoint.angularYMotion = ConfigurableJointMotion.Locked;
-                createdJoint.angularZMotion = ConfigurableJointMotion.Locked;
-            }
-
-            fgrab.joint = createdJoint;
-        }
-        foreach (IFreezeReciever f in collider.GetComponentsInParent<IFreezeReciever>()) {
-            f.OnFreeze(kobold);
-            fgrab.freezeReceivers.Add(f);
-        }
-        foreach (IAdvancedInteractable a in collider.GetComponentsInParent<IAdvancedInteractable>()) {
-            // This only runs if you lagged out and missed the grab event, happens frequently for people quickly grabbing and freezing items.
-            if (!grabbing || grabbedCollider != collider) {
-                a.OnInteract(kobold);
-            }
-            fgrab.interactables.Add(a);
-        }
-        fgrab.worldHoldPoint = worldPosition - collider.transform.TransformVector(localPosition);
-        fgrab.worldHoldRotation = rotation;
-        // We can now clear our grab without notifying anything, this is because the frozen gameobject is still grabbed!
-        if (grabbing && grabbedCollider == collider) {
-            grabbing = false;
-            hand.GetComponentInChildren<Animator>().SetBool("Grabbing", false);
-            hand.transform.parent = self.transform;
-            jointRigidbody = null;
-            advancedGameObject = null;
-            grabbedCollider = null;
-            affectingRotation = false;
-        }
-        Destroy(GameObject.Instantiate(freezeEffect, worldPosition, Quaternion.identity), 3f);
-        frozenGrabs.Add(fgrab);
-        OnFreeze.Invoke();
-    }
-
-    public void Ungrab() {
-        ValidateHand();
-        if (!grabbing) {
-            return;
-        }
-        OnRelease.Invoke();
-        grabbing = false;
-        hand.GetComponentInChildren<Animator>().SetBool("Grabbing", false);
-        hand.transform.parent = self.transform;
-        //hand.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor("_BaseColor", new Color(1, 1, 1, 0f));
-        if (jointRigidbody) {
-            if (advancedGameObject == null) {
-                foreach (IAdvancedInteractable a in jointRigidbody.gameObject.GetComponentsInParent<IAdvancedInteractable>()) {
-                    a.OnEndInteract(kobold);
-                }
-            }
-            //joint.GetComponent<Rigidbody>().SendMessageUpwards("OnRelease", SendMessageOptions.DontRequireReceiver);
-            //Destroy(joint);
-            jointRigidbody = null;
-            //RecursiveSetLayer(joint.gameObject.transform.root, LayerMask.NameToLayer("Effects"), LayerMask.NameToLayer("Pickups"));
-        }
-        if (advancedGameObject != null) {
-            if (advancedGameObject.GetComponentInParent<IAdvancedInteractable>() != null) {
-                foreach (IAdvancedInteractable a in advancedGameObject.GetComponentsInParent<IAdvancedInteractable>()) {
-                    a.OnEndInteract(kobold);
-                }
-            }
-            advancedGameObject = null;
-        }
-        grabbedCollider = null;
-        affectingRotation = false;
-    }
-    void ValidateHand() {
-        if (hand == null) {
-            hand = GameObject.Instantiate(handPrefab);
-            handTransform = hand.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.RightHand);
-        }
-    }
-    public void LateUpdate() {
-        ValidateHand();
-        //distance += Input.mouseScrollDelta.y * 0.08f;
-        distance += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
-        hovering = false;
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() * mouseSensitivy.value;
-        bool ranAdvancedObjectStuff = false;
-        if (advancedGameObject != null) {
-            hovering = true;
-            Vector3 worldNormal = grabbedCollider.transform.TransformDirection(hitNormalObjectSpace);
-            handRotation = Quaternion.Lerp(handRotation, Quaternion.LookRotation(-worldNormal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f)), Time.deltaTime*50f);
-            Vector3 objHoldPoint = grabbedCollider.transform.TransformPoint(colliderLocalAnchor);
-            //Vector3 holdPointOffset = objHoldPoint - advancedGameObject.transform.position;
-            Vector3 holdPoint = view.position + view.forward * distance;
-            handPosition = objHoldPoint + handRotation * Vector3.down*0.1f;
-            foreach (IAdvancedInteractable a in advancedGameObject.GetComponentsInParent<IAdvancedInteractable>()) {
-                a.InteractTo(holdPoint, savedQuaternion * view.rotation);
-            }
-            ranAdvancedObjectStuff = true;
-            if (inputRotation) {
-                savedQuaternion = Quaternion.AngleAxis(-mouseDelta.x*3f, view.up)*savedQuaternion;
-                savedQuaternion = Quaternion.AngleAxis(mouseDelta.y*3f, view.right)*savedQuaternion;
-            }
-        }
-        if (jointRigidbody) {
-            hovering = true;
-            Vector3 holdPoint = view.position + view.forward * distance;
-            Vector3 objHoldPoint = jointRigidbody.transform.TransformPoint(jointAnchor);
-            //joint.connectedAnchor = self.transform.InverseTransformPoint(holdPoint);
-            //(joint as SpringJoint).minDistance = distance;
-            //(joint as SpringJoint).maxDistance = distance;
-            Vector3 worldNormal = jointRigidbody.transform.TransformDirection(hitNormalObjectSpace);
-            handRotation = Quaternion.Lerp(handRotation, Quaternion.LookRotation(-worldNormal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f)), Time.deltaTime*50f);
-            handPosition = objHoldPoint + handRotation * Vector3.down*0.1f;
-            if (advancedGameObject != null && !ranAdvancedObjectStuff) {
-                foreach (IAdvancedInteractable a in advancedGameObject.GetComponentsInParent<IAdvancedInteractable>()) {
-                    a.InteractTo(holdPoint, savedQuaternion * view.rotation);
-                }
-            }
-            if (inputRotation) {
-                if (!savedRotation) {
-                    savedQuaternion = jointRigidbody.transform.rotation;
-                    savedRotation = true;
-                }
-                Quaternion q = Quaternion.AngleAxis(mouseDelta.y*3f, view.right);
-                q = Quaternion.AngleAxis(-mouseDelta.x*3f, view.up) * q;
-                savedQuaternion = q * savedQuaternion;
-                Quaternion sub = Quaternion.Inverse(jointRigidbody.transform.rotation) * savedQuaternion;
-                float angle;
-                Vector3 axis;
-                sub.ToAngleAxis(out angle, out axis);
-                if (angle >= 180) {
-                    angle = 360 - angle;
-                    axis = -axis;
-                }
-                savedQuaternion = jointRigidbody.transform.rotation * Quaternion.AngleAxis(Mathf.Clamp(angle,-90f,90f), axis);
-                affectingRotation = true;
+        public Vector3 GetWorldPosition() {
+            if (collider != null) {
+                return collider.transform.TransformPoint(localColliderPosition);
             } else {
-                savedRotation = false;
-            }
-        } else if (advancedGameObject == null) {
-            float closestHitDistance = float.MaxValue;
-            bool validHit = false;
-            int numHits = Physics.RaycastNonAlloc(view.position, view.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
-            for(int i=0;i<numHits;i++) {
-                //foreach(RaycastHit hit in Physics.RaycastAll(view.position, view.forward, maxDistance, hitMask, QueryTriggerInteraction.Collide)) {
-                RaycastHit hit = hits[i];
-                if (ignoreBodies.Contains(hit.rigidbody)) {
-                    continue;
-                }
-                if (hit.distance < closestHitDistance) {
-                    closestHit = hit;
-                    closestHitDistance = hit.distance;
-                    validHit = true;
-                }
-                //hand.GetComponentInChildren<SkinnedMeshRenderer>().material = handIdle;
-                break;
-            }
-            if (validHit) {
-                handRotation = Quaternion.LookRotation(-closestHit.normal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f));
-                handPosition = closestHit.point + handRotation*Vector3.down*0.1f;
-                hovering = true;
+                return handTransform.transform.position;
             }
         }
-        if (hovering && !hand.activeInHierarchy && !HandHidden()) {
-            hand.SetActive(true);
-            OnHover.Invoke();
-        }
-        if ((!hovering || HandHidden()) && hand.activeInHierarchy) {
-            hand.SetActive(false);
-            OnExitHover.Invoke();
-        }
-        foreach(FrozenGrab fgrab in frozenGrabs) {
-            foreach(IAdvancedInteractable interactable in fgrab.interactables) {
-                interactable.InteractTo(fgrab.worldHoldPoint, fgrab.worldHoldRotation);
-            }
-        }
-        // We set this late, so that animations can fuck off.
-        handTransform.rotation = handRotation;
-        handTransform.position = handPosition;
-    }
-    public void OnDestroy() {
-        if (hand) {
-            Destroy(hand);
-        }
-        Unfreeze(false);
-        if (photonView.IsMine && PhotonNetwork.InRoom) {
-            PhotonNetwork.CleanRpcBufferIfMine(photonView);
-        }
-    }
-    public void FixedUpdate() {
-        ValidateHand();
-        // This code here is for when a character we're grabbing gets ragdolled.
-        // When we spawn the joint, we search for a NON-kinematic rigidbody, but save the initial rigidbody we hit.
-        // We can flip between the two since we know it gets flipped when ragdolled
-        for(int i=0;i<frozenGrabs.Count;i++) {
-            FrozenGrab grab = frozenGrabs[i];
-            //if (grab.joint == null) {
-                //frozenGrabs.RemoveAt(i);
-                //continue;
-            //}
-            if (grab.body == null) {
-                continue;
-            }
-            if (grab.body.isKinematic && grab.joint != null) {
-                bool affRotation = grab.joint.angularXMotion == ConfigurableJointMotion.Locked;
-                Vector3 worldAnchor = grab.joint.transform.TransformPoint(grab.joint.anchor);
-                Destroy(grab.joint);
-                grab.joint = AddJoint(grab.fallbackBody,worldAnchor);
-                if (grab.joint == null) {
-                    frozenGrabs.RemoveAt(i);
-                    continue;
-                }
-                Rigidbody save = grab.body;
-                grab.body = grab.fallbackBody;
-                grab.fallbackBody = save;
-                grab.joint.connectedBody = null;
-                grab.joint.connectedAnchor = worldAnchor;
-                grab.joint.configuredInWorldSpace = true;
-                if (affRotation) {
-                    grab.joint.angularXMotion = ConfigurableJointMotion.Locked;
-                    grab.joint.angularYMotion = ConfigurableJointMotion.Locked;
-                    grab.joint.angularZMotion = ConfigurableJointMotion.Locked;
-                }
-            }
-        }
-        //  ---
-        if (jointRigidbody) {
-            if (affectingRotation) {
-                Vector3 forward = savedQuaternion * Vector3.forward;
-                Vector3 up = savedQuaternion * Vector3.up;
-                Quaternion rotAdjustment = Quaternion.FromToRotation(jointRigidbody.transform.forward, forward);
-                rotAdjustment *= Quaternion.Lerp(Quaternion.identity, Quaternion.FromToRotation(jointRigidbody.transform.up, up), 0.5f);
 
-                jointRigidbody.angularVelocity -= jointRigidbody.angularVelocity * _dampStrength;
-                jointRigidbody.AddTorque(new Vector3(rotAdjustment.x, rotAdjustment.y, rotAdjustment.z) * 32f, ForceMode.VelocityChange);
+        public bool Valid() {
+            bool valid = body != null && owner != null && photonView != null && joint != null;
+            if (Time.time - creationTime > 2f) {
+                valid &= Equals(photonView.Controller, owner.photonView.Controller);
             }
+            return valid;
+        }
+        public void LateUpdate() {
+            Vector3 worldNormal = collider.transform.TransformDirection(localHitNormal);
+            Vector3 worldPoint = collider.transform.TransformPoint(localColliderPosition);
+            handTransform.rotation = Quaternion.LookRotation(-worldNormal, Vector3.up) * Quaternion.AngleAxis(90f, Vector3.up);
+            handTransform.position = worldPoint + handTransform.rotation * (Vector3.down*0.1f);
+        }
+
+        public void SetRotation(Quaternion rot) {
+            savedQuaternion = rot;
+            if (!affectingRotation) {
+                affectingRotation = true;
+            }
+        }
+
+        public void SetDistance(float dist) {
+            distance = dist;
+        }
+
+        public void Rotate(Vector2 delta) {
+            if (!affectingRotation) {
+                affectingRotation = true;
+                savedQuaternion = body.transform.rotation;
+                var slerpDrive = joint.slerpDrive;
+                slerpDrive.positionSpring = springForce;
+                slerpDrive.maximumForce = float.MaxValue;
+                slerpDrive.positionDamper = 2f;
+                joint.slerpDrive = slerpDrive;
+            }
+            savedQuaternion = Quaternion.AngleAxis(-delta.x, view.up)*savedQuaternion;
+            savedQuaternion = Quaternion.AngleAxis(delta.y, view.right)*savedQuaternion;
+        }
+
+        public void AdjustDistance(float delta) {
+            distance += delta;
+            distance = Mathf.Max(distance, 0f);
+        }
+
+        public void FixedUpdate() {
+            if (frozen) {
+                return;
+            }
+
             Vector3 holdPoint = view.position + view.forward * distance;
-            Vector3 objHoldPoint = jointRigidbody.transform.TransformPoint(jointAnchor);
-            //joint.connectedAnchor = self.transform.InverseTransformPoint(holdPoint);
-            //(joint as SpringJoint).minDistance = distance;
-            //(joint as SpringJoint).maxDistance = distance;
-            Vector3 worldNormal = jointRigidbody.transform.TransformDirection(hitNormalObjectSpace);
 
-            //Vector3 springForward = objHoldPoint - head.position;
-            //Vector3 springRight = 
-
-            //joint.axis = view.forward;
-            //joint.secondaryAxis = view.right;
-            //Debug.Log(joint.axis);
-            //Vector3 springForward = objHoldPoint - view.position;
-            //Vector3 springRight = objHoldPoint - view.position;
-
-
-            //joint.targetPosition = view.forward * distance;//holdPoint-objHoldPoint;
+            if (joint != null) {
+                joint.connectedAnchor = holdPoint;
+                if (affectingRotation) {
+                    joint.SetTargetRotation(savedQuaternion, startRotation);
+                }
+            }
 
             // Manual axis alignment, for pole jumps!
-            bool isPenetrating = false;
-            Kobold k = jointRigidbody.GetComponentInParent<Kobold>();
-            if (k) {
-                isPenetrating = kobold.IsPenetrating(k);
-            }
-            if (!isPenetrating && jointRigidbody.transform.root != self.transform.root && !jointRigidbody.isKinematic) {
-                jointRigidbody.velocity -= jointRigidbody.velocity*_dampStrength;
+            if (!body.transform.IsChildOf(owner.body.transform) && !body.isKinematic) {
+                body.velocity -= body.velocity * 0.5f;
                 Vector3 axis = view.forward;
-                Vector3 jointPos = jointRigidbody.transform.TransformPoint(jointAnchor);
+                Vector3 jointPos = body.transform.TransformPoint(bodyAnchor);
                 Vector3 center = (view.position + jointPos) / 2f;
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
                 //Vector3 wantedPosition2 = center + axis * distance / 2f;
-                float ratio = Mathf.Clamp((jointRigidbody.mass / self.mass), 0.75f, 1.25f);
-                Vector3 force = (wantedPosition1 - view.position) * _springStrength;
-                self.AddForce(force * ratio);
-                jointRigidbody.AddForce(-force * (1f / ratio));
+                float ratio = Mathf.Clamp((body.mass / owner.body.mass), 0.75f, 1.25f);
+                Vector3 force = (wantedPosition1 - view.position) * (springForce * 0.15f);
+                owner.body.AddForce(force * ratio);
+                //body.AddForce(-force * (1f / ratio));
             }
-
-            // Manual velocity to keep the prop where the user wants
-
-            Vector3 towardGoal = holdPoint - objHoldPoint;
-            jointRigidbody.AddForce(towardGoal * _springStrength);
-
-            //joint.gameObject.GetComponent<Rigidbody>().angularVelocity *= 0.5f;
-            //self.angularVelocity *= 0.5f;
-
-
-
-            //Vector3 velocityDiff = joint.gameObject.GetComponent<Rigidbody>().velocity - self.velocity;
-            //joint.gameObject.GetComponent<Rigidbody>().velocity -= velocityDiff * _dampStrength; 
-            //Vector3 angleVelDiff = joint.gameObject.GetComponent<Rigidbody>().angularVelocity - self.angularVelocity;
-            //joint.gameObject.GetComponent<Rigidbody>().angularVelocity -= angleVelDiff;
-
-            //if (advancedGameObject) {
-                //advancedGameObject.GetComponent<AdvancedInteracter>().InteractTo(holdPoint, view.rotation);
-            //}
-            //hand.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor("_BaseColor", new Color(1, 1, 1, 1f));
         }
-        /*if (Input.GetMouseButtonDown(0)) {
-            Grab();
-        }
-        if (Input.GetMouseButtonUp(0)) {
-            Ungrab();
-        }*/
 
-        if (jointRigidbody != null) {
-            if (jointRigidbody.isKinematic) {
-                Vector3 worldAnchor = jointRigidbody.transform.TransformPoint(jointAnchor);
-                //Destroy(joint);
-                //joint = AddJoint(originalBody,worldAnchor);
-                Rigidbody copy = jointRigidbody;
-                jointRigidbody = originalBody;
-                originalBody = copy;
-                jointAnchor = jointRigidbody.transform.InverseTransformPoint(worldAnchor);
+        public void Release() {
+            GameManager.instance.SpawnAudioClipInWorld(unfreezePack, GetWorldPosition());
+            if (joint != null) {
+                Destroy(joint);
             }
-            // To prevent feedback loops, we lessen the self-effect of the joint when we're trying to fuck other kobolds
-            //if (kobold.dick != null && kobold.dick.holeTarget != null && kobold.dick.holeTarget.body == jointRigidbody) {
-                //joint.massScale = 20f;
-            //} else {
-                //joint.massScale = 10f;
-            //}
+            Destroy(handDisplayAnimator.gameObject);
+            if (body != null && targetKobold == null) {
+                body.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                body.interpolation = RigidbodyInterpolation.None;
+                body.maxAngularVelocity = Physics.defaultMaxAngularSpeed;
+            }
+            
+            if (targetKobold != null) {
+                targetKobold.ragdoller.PopRagdoll();
+                if (targetKobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+                    foreach (Grab grab in owner.GetComponent<PrecisionGrabber>().frozenGrabs) {
+                        if (grab.targetKobold == targetKobold) {
+                            return;
+                        }
+                    }
+                    // If we're no longer grabbed. Request ownership back.
+                    targetKobold.photonView.RequestOwnership();
+                }
+            }
         }
     }
 
+    private class RaycastHitDistanceComparer : IComparer {
+        public int Compare(object x, object y) {
+            RaycastHit a = (RaycastHit)x;
+            RaycastHit b = (RaycastHit)y;
+            return a.distance.CompareTo(b.distance);
+        }
+    }
+
+    private void Awake() {
+        raycastHitDistanceComparer = new RaycastHitDistanceComparer();
+        previewHandAnimator = GameObject.Instantiate(handDisplayPrefab, transform)
+            .GetComponentInChildren<Animator>();
+        previewHandAnimator.SetBool(GrabbingHash, true);
+        previewHandTransform = previewHandAnimator.GetBoneTransform(HumanBodyBones.RightHand);
+        previewHandAnimator.gameObject.SetActive(false);
+        kobold = GetComponent<Kobold>();
+        frozenGrabs = new List<Grab>();
+    }
+
+    private void Start() {
+        kobold.genesChanged += OnGenesChanged;
+        OnGenesChanged(kobold.GetGenes());
+        removeIds = new List<Grab>();
+        handVisibilityEvent.AddListener(OnHandVisibilityChanged);
+    }
+
+    private void OnHandVisibilityChanged(float newVisibility) {
+        foreach (var fgrab in frozenGrabs) {
+            fgrab.SetVisibility(newVisibility);
+        }
+    }
+
+    private void OnDestroy() {
+        if (kobold != null) {
+            kobold.genesChanged -= OnGenesChanged;
+        }
+        handVisibilityEvent.RemoveListener(OnHandVisibilityChanged);
+        TryDrop();
+        UnfreezeAll();
+    }
+
+    private void OnGenesChanged(KoboldGenes newGenes) {
+        if (newGenes == null) {
+            return;
+        }
+
+        Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
+        // Set color
+        foreach (Renderer r in previewHandAnimator.GetComponentsInChildren<Renderer>()) {
+            if (r == null) {
+                continue;
+            }
+            foreach (Material m in r.materials) {
+                m.SetVector(BrightnessContrastSaturation, hbcs);
+            }
+        }
+    }
+
+    private bool TryRaycastGrab(float maxDistance, out RaycastHit? previewHit) {
+        int numHits = Physics.RaycastNonAlloc(view.position, view.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
+        if (numHits == 0) {
+            previewHit = null;
+            return false;
+        }
+        Array.Sort(hits, 0, numHits, raycastHitDistanceComparer);
+        for (int i = 0; i < numHits; i++) {
+            RaycastHit hit = hits[i];
+            if (ignoreColliders.Contains(hit.collider)) {
+                continue;
+            }
+            if (hit.distance > maxDistance) {
+                continue;
+            }
+
+            previewHit = hit;
+            return true;
+        }
+        previewHit = null;
+        return false;
+    }
+
+    public void SetPreviewState(bool previewEnabled) {
+        previewGrab = previewEnabled;
+    }
+
+    private void DoPreview() {
+        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance, out RaycastHit? previewHit)) {
+            RaycastHit hit = previewHit.Value;
+            previewHandTransform.rotation = Quaternion.LookRotation(-hit.normal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f));
+            previewHandTransform.position = hit.point + previewHandTransform.rotation*Vector3.down*0.1f;
+            if (!previewHandAnimator.gameObject.activeInHierarchy) {
+                previewHandAnimator.gameObject.SetActive(true);
+            }
+        } else {
+            if (previewHandAnimator.gameObject.activeInHierarchy) {
+                previewHandAnimator.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public bool HasGrab() {
+        return currentGrab != null;
+    }
+
+    public bool TryRotate(Vector2 delta) {
+        if (currentGrab == null) {
+            return false;
+        }
+        currentGrab.Rotate(delta);
+        return true;
+    }
+    
+    public bool TryAdjustDistance(float delta) {
+        if (currentGrab == null) {
+            return false;
+        }
+        currentGrab.AdjustDistance(delta);
+        return true;
+    }
+
+    [PunRPC]
+    private void GrabRPC(int viewID, int colliderNum, Vector3 localHit, Vector3 localHitNormal) {
+        PhotonView otherPhotonView = PhotonNetwork.GetPhotonView(viewID);
+        if (otherPhotonView == null) {
+            return;
+        }
+        Collider[] colliders = otherPhotonView.GetComponentsInChildren<Collider>();
+        currentGrab = new Grab(kobold, previewHandAnimator.gameObject, view, colliders[colliderNum], localHit, localHitNormal, unfreezeSound);
+        currentGrab.SetVisibility(handVisibilityEvent.GetLastInvokeValue());
+    }
+
+    public void TryGrab() {
+        if (currentGrab != null || !photonView.IsMine) {
+            return;
+        }
+        if (!TryRaycastGrab(maxGrabDistance, out RaycastHit? hitTest)) {
+            return;
+        }
+
+        RaycastHit hit = hitTest.Value;
+        Vector3 localHit = hit.collider.transform.InverseTransformPoint(hit.point);
+        Vector3 localHitNormal = hit.collider.transform.InverseTransformDirection(hit.normal);
+
+        PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
+        Collider[] colliders = otherView.GetComponentsInChildren<Collider>();
+        for (int i = 0; i < colliders.Length; i++) {
+            if (colliders[i] == hit.collider) {
+                photonView.RPC(nameof(GrabRPC), RpcTarget.All,  otherView.ViewID, i, localHit, localHitNormal);
+                break;
+            }
+        }
+    }
+
+    [PunRPC]
+    private void FreezeRPC(int grabViewID, int colliderNum, Vector3 localColliderPosition, Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation) {
+        PhotonView grabView = PhotonNetwork.GetPhotonView(grabViewID);
+        Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
+        frozenGrabs.Add(new Grab(kobold, previewHandAnimator.gameObject, colliders[colliderNum], localColliderPosition, localHitNormal,
+            worldAnchor, rotation, affRotation, unfreezeSound));
+        frozenGrabs[^1].SetVisibility(handVisibilityEvent.GetLastInvokeValue());
+        Destroy(GameObject.Instantiate(freezeVFXPrefab, worldAnchor, Quaternion.identity), 5f);
+    }
+
+    public bool TryFreeze() {
+        if (currentGrab == null || !photonView.IsMine) {
+            return false;
+        }
+        // Tell everyone we've made a frozen joint here.
+        Collider[] colliders = currentGrab.photonView.GetComponentsInChildren<Collider>();
+        for (int i = 0; i < colliders.Length; i++) {
+            if (currentGrab.GetCollider() == colliders[i]) {
+                photonView.RPC(nameof(FreezeRPC), RpcTarget.All, currentGrab.photonView.ViewID,
+                    i, currentGrab.localColliderPosition, currentGrab.localHitNormal, currentGrab.GetWorldPosition(),
+                    currentGrab.body.rotation, currentGrab.affectingRotation);
+                TryDrop();
+                return true;
+            }
+        }
+
+        return false; // Should never happen
+    }
+
+    [PunRPC]
+    private void UnfreezeRPC(int viewID, int rigidbodyID) {
+        PhotonView checkView = PhotonNetwork.GetPhotonView(viewID);
+        Rigidbody[] bodies = checkView.GetComponentsInChildren<Rigidbody>();
+        for(int i=0;i<frozenGrabs.Count;i++) {
+            Grab frozenGrab = frozenGrabs[i];
+            if (frozenGrab.body == bodies[rigidbodyID]) {
+                frozenGrab.Release();
+                frozenGrabs.RemoveAt(i--);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void UnfreezeAllRPC() {
+        foreach (var frozenGrab in frozenGrabs) {
+            frozenGrab.Release();
+        }
+        frozenGrabs.Clear();
+    }
+
+    public bool TryUnfreeze() {
+        if (!photonView.IsMine) {
+            return false;
+        }
+
+        if (!TryRaycastGrab(100f, out RaycastHit? testHit)) {
+            return false;
+        }
+
+        bool foundGrabs = false;
+        RaycastHit hit = testHit.Value;
+        for(int i=0;i<frozenGrabs.Count;i++) {
+            Grab frozenGrab = frozenGrabs[i];
+            if (frozenGrab.body == hit.rigidbody) {
+                //frozenGrab.Release();
+                //frozenGrabs.RemoveAt(i--);
+                foundGrabs = true;
+            }
+        }
+        
+        PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
+        if (foundGrabs) {
+            Rigidbody[] bodies = otherView.GetComponentsInChildren<Rigidbody>();
+            for (int i = 0; i < bodies.Length; i++) {
+                if (hit.rigidbody == bodies[i]) {
+                    photonView.RPC(nameof(UnfreezeRPC), RpcTarget.All, otherView.ViewID, i);
+                    break;
+                }
+            }
+        }
+
+        return foundGrabs;
+    }
+
+    public void UnfreezeAll() {
+        if (frozenGrabs.Count > 0 && photonView.IsMine) {
+            UnfreezeAllRPC();
+            photonView.RPC(nameof(UnfreezeAllRPC), RpcTarget.Others);
+        }
+    }
+
+    [PunRPC]
+    private void DropRPC() {
+        currentGrab?.Release();
+        currentGrab = null;
+    }
+    
+    public void TryDrop() {
+        if (currentGrab != null && photonView.IsMine) {
+            photonView.RPC(nameof(DropRPC), RpcTarget.All);
+            return;
+        }
+        
+        currentGrab?.Release();
+        currentGrab = null;
+    }
+
+    private void LateUpdate() {
+        DoPreview();
+        Validate();
+        currentGrab?.LateUpdate();
+        foreach (var f in frozenGrabs) {
+            f.LateUpdate();
+        }
+    }
+    private IEnumerator GiveBackKoboldsWhenPossible(Kobold targetKobold, float delay) {
+        yield return new WaitForSeconds(delay);
+        bool isPlayerKobold = false;
+        foreach (var playerCheck in PhotonNetwork.PlayerList) {
+            if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold) && playerCheck != PhotonNetwork.LocalPlayer) {
+                isPlayerKobold = true;
+                break;
+            }
+        }
+        while (targetKobold != null && targetKobold.photonView.IsMine && isPlayerKobold) {
+            foreach (var playerCheck in PhotonNetwork.PlayerList) {
+                if (ReferenceEquals((Kobold)playerCheck.TagObject, targetKobold)) {
+                    targetKobold.photonView.TransferOwnership(playerCheck);
+                }
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void Validate() {
+        if (currentGrab != null && !currentGrab.Valid()) {
+            TryDrop();
+        }
+
+        removeIds.Clear();
+        foreach (var f in frozenGrabs) {
+            if (!f.Valid()) {
+                removeIds.Add(f);
+            }
+        }
+
+        foreach (Grab fgrab in removeIds) {
+            if (photonView.IsMine && fgrab.photonView != null) {
+                Rigidbody[] bodies = fgrab.photonView.GetComponentsInChildren<Rigidbody>();
+                for (int i = 0; i < bodies.Length; i++) {
+                    if (bodies[i] == fgrab.body) {
+                        photonView.RPC(nameof(UnfreezeRPC), RpcTarget.All, fgrab.photonView.ViewID, i);
+                        break;
+                    }
+                }
+            } else {
+                fgrab.Release();
+                frozenGrabs.Remove(fgrab);
+            }
+        }
+
+        removeIds.Clear();
+        if (!freezeUI.activeSelf && frozenGrabs.Count > 0 || freezeUI.activeSelf && frozenGrabs.Count == 0) {
+            freezeUI.SetActive(frozenGrabs.Count != 0);
+        }
+
+        if (currentGrab != null && !activeUI[0].activeSelf || currentGrab == null && activeUI[0].activeSelf) {
+            foreach (var ui in activeUI) {
+                ui.SetActive(currentGrab != null);
+            }
+        }
+    }
+
+
+    private void FixedUpdate() {
+        Validate();
+        currentGrab?.FixedUpdate();
+        foreach (var grab in frozenGrabs) {
+            grab.FixedUpdate();
+        }
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(this.inputRotation);
-            stream.SendNext(this.distance);
-            stream.SendNext(this.savedQuaternion);
-            stream.SendNext(this.grabbing);
+            if (currentGrab != null) {
+                stream.SendNext(currentGrab.GetRotation());
+                stream.SendNext(currentGrab.GetDistance());
+            } else {
+                stream.SendNext(Quaternion.identity);
+                stream.SendNext(2f);
+            }
         } else {
-            inputRotation = (bool)stream.ReceiveNext();
-            distance = (float)stream.ReceiveNext();
-            savedQuaternion = (Quaternion)stream.ReceiveNext();
-            if (!(bool)stream.ReceiveNext()) {
-                Ungrab();
+            Quaternion rot = (Quaternion)stream.ReceiveNext();
+            float dist  = (float)stream.ReceiveNext();
+            if (currentGrab != null) {
+                currentGrab.SetRotation(rot);
+                currentGrab.SetDistance(dist);
             }
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
-        writer.Write(inputRotation);
-        writer.Write(distance);
-        writer.Write(savedQuaternion.x);
-        writer.Write(savedQuaternion.y);
-        writer.Write(savedQuaternion.z);
-        writer.Write(savedQuaternion.w);
-        writer.Write(grabbing);
+    public void Save(BinaryWriter writer) {
     }
 
-    public void Load(BinaryReader reader, string version) {
-        inputRotation = reader.ReadBoolean();
-        distance = reader.ReadSingle();
-        float x = reader.ReadSingle();
-        float y = reader.ReadSingle();
-        float z = reader.ReadSingle();
-        float w = reader.ReadSingle();
-        Quaternion newRot = new Quaternion(x,y,z,w);
-        savedQuaternion = newRot;
-        if (!reader.ReadBoolean()) {
-            Ungrab();
-        }
+    public void Load(BinaryReader reader) {
     }
 }

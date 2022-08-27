@@ -13,7 +13,7 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
 
     // Called only by us locally when the player tries to use an object. By default we try to inform everyone that we used it.
     public virtual void LocalUse(Kobold k) {
-        photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
+        photonView.RPC(nameof(GenericUsable.RPCUse), RpcTarget.All);
     }
     // Called globally by all clients, synced.
     public virtual void Use() { }
@@ -23,8 +23,8 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     public void RPCUse() {
         Use();
     }
-    public virtual void Save(BinaryWriter writer, string version) { }
-    public virtual void Load(BinaryReader reader, string version) { }
+    public virtual void Save(BinaryWriter writer) { }
+    public virtual void Load(BinaryReader reader) { }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 }

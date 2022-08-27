@@ -21,12 +21,8 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             return display.activeInHierarchy;
         }
     }
-    [SerializeField]
-    private GameEventGeneric restockEvent;
     private GameObject display;
     private AudioSource source;
-    [SerializeField]
-    private UnityEvent purchased;
     [SerializeField]
     private MoneyFloater floater;
 
@@ -41,9 +37,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         source.maxDistance = 25f;
         source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-        if (restockEvent != null) {
-            restockEvent.AddListener(OnRestock);
-        }
         SwapTo(purchasable, true);
     }
     public override Sprite GetSprite(Kobold k) {
@@ -65,9 +58,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         purchasableChanged?.Invoke(purchasable);
     }
     public virtual void OnDestroy() {
-        if (restockEvent != null) {
-            restockEvent.RemoveListener(OnRestock);
-        }
     }
     public virtual void OnRestock(object nothing) {
         if (!display.activeInHierarchy) {
@@ -77,11 +67,8 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     }
     public override void LocalUse(Kobold k) {
         //base.LocalUse(k);
-        if (CanUse(k)) {
-            photonView.RPC("RPCUse", RpcTarget.AllBufferedViaServer, new object[]{});
-            k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
-            PhotonNetwork.Instantiate(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity);
-        }
+        photonView.RPC("RPCUse", RpcTarget.All);
+        k.GetComponent<MoneyHolder>().ChargeMoney(purchasable.cost);
     }
     public override bool CanUse(Kobold k) {
         return display.activeInHierarchy && (k == null || k.GetComponent<MoneyHolder>().HasMoney(purchasable.cost));
@@ -90,8 +77,11 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     public override void Use() {
         purchaseSoundPack.Play(source);
         floater.gameObject.SetActive(false);
-        purchased.Invoke();
         display.SetActive(false);
+        if (PhotonNetwork.IsMasterClient) {
+            PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity, 0, new object[]{new KoboldGenes().Randomize()});
+            StartCoroutine(Restock());
+        }
     }
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
@@ -103,16 +93,21 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(inStock);
         writer.Write(PurchasableDatabase.GetID(purchasable));
     }
 
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         display.SetActive(reader.ReadBoolean());
         short currentPurchasable = (short)reader.ReadInt16();
         SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
+    }
+
+    private IEnumerator Restock() {
+        yield return new WaitForSeconds(30f);
+        OnRestock(null);
     }
 }

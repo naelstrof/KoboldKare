@@ -76,8 +76,11 @@ namespace Naelstrof.Inflatable {
             tweenRunning = false;
         }
         public void AddListener(InflatableListener listener) {
-            listener.OnEnable();
-            listener.OnSizeChanged(currentSize);
+            if (initialized) {
+                listener.OnEnable();
+                listener.OnSizeChanged(currentSize);
+            }
+
             listeners.Add(listener);
         }
     }

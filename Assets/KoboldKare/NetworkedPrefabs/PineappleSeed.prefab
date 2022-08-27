@@ -14,10 +14,9 @@ GameObject:
   - component: {fileID: 1793124260918799415}
   - component: {fileID: 8082131194010373818}
   - component: {fileID: 3155505468015967246}
-  - component: {fileID: 4329509743884941812}
-  - component: {fileID: 838147383252525778}
   - component: {fileID: 3264185088839444218}
   - component: {fileID: 5284861073129107655}
+  - component: {fileID: 1986306964502464423}
   m_Layer: 11
   m_Name: PineappleSeed
   m_TagString: Untagged
@@ -35,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6688771, y: 2.0076098, z: 24.435377}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4701627238882023562}
   m_Father: {fileID: 0}
@@ -74,11 +74,7 @@ MonoBehaviour:
     gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
       type: 3}
     photonName: Plant
-  type: 0
   _spacing: 2.5
-  OnFailPlant:
-    m_PersistentCalls:
-      m_Calls: []
   plant: {fileID: 11400000, guid: bb60cb0e9981bdb47bc0b517654ba115, type: 2}
 --- !u!114 &1793124260918799415
 MonoBehaviour:
@@ -112,17 +108,6 @@ MonoBehaviour:
   - renderer: {fileID: 1972667264419318653}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: f4001d3f901b5c243b2331da19323558, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 6224846685087297150}
   renderers:
   - {fileID: 6080988213420688878}
   - {fileID: 1972667264419318653}
@@ -151,75 +136,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   startingReagents: []
---- !u!114 &4329509743884941812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6224846685087297140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &838147383252525778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6224846685087297140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a937c7dc07dbc4db79c466d51e1a25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 0
-  isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: RaiseBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 838147383252525778}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LowerBodyQuality
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6224846685087297150}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  trackedRigidbodies: []
-  canLODCondition: []
-  resource: 1
 --- !u!114 &3264185088839444218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,18 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3990710f7e52bc045b957f418bc71726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 0}
-  OnIntensityChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFadeout:
-    m_PersistentCalls:
-      m_Calls: []
-  spawnProtection: 4
-  destroyOnSpoil: 1
-  OnSpoilEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5284861073129107655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,11 +167,24 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 1104301071501742176}
   - {fileID: 3155505468015967246}
-  - {fileID: 4329509743884941812}
+  - {fileID: 1986306964502464423}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1986306964502464423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224846685087297140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6290474467451676402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,6 +254,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 307b47c9d539c7348b2ad02c927b0df9, type: 3}
+--- !u!23 &1972667264419318653 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5488783347937078671, guid: 307b47c9d539c7348b2ad02c927b0df9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6290474467451676402}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4701627238882023562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1617856744254488184, guid: 307b47c9d539c7348b2ad02c927b0df9,
@@ -346,12 +269,6 @@ Transform:
 --- !u!23 &6080988213420688878 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 227506259897099036, guid: 307b47c9d539c7348b2ad02c927b0df9,
-    type: 3}
-  m_PrefabInstance: {fileID: 6290474467451676402}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &1972667264419318653 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5488783347937078671, guid: 307b47c9d539c7348b2ad02c927b0df9,
     type: 3}
   m_PrefabInstance: {fileID: 6290474467451676402}
   m_PrefabAsset: {fileID: 0}

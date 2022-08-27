@@ -1,138 +1,356 @@
 fileFormatVersion: 2
 guid: 1ec55baed88ac07429a52bee4c519015
-timeCreated: 1446814704
-licenseType: Store
 ModelImporter:
-  serializedVersion: 18
-  fileIDToRecycleName:
-    100000: Box1392
-    100002: Box1393
-    100004: Box1394
-    100006: Box1395
-    100008: Box1396
-    100010: car1_a
-    100012: //RootNode
-    100014: disc1
-    100016: disk2
-    100018: disk3
-    100020: disk4
-    100022: glass
-    100024: gun
-    100026: Object259
-    100028: Object263
-    100030: soldier
-    100032: w1
-    100034: w2
-    100036: w3
-    100038: w4
-    100040: wheel1
-    100042: wheel2
-    100044: wheel3
-    100046: wheel4
-    100048: windows_inside
-    400000: Box1392
-    400002: Box1393
-    400004: Box1394
-    400006: Box1395
-    400008: Box1396
-    400010: car1_a
-    400012: //RootNode
-    400014: disc1
-    400016: disk2
-    400018: disk3
-    400020: disk4
-    400022: glass
-    400024: gun
-    400026: Object259
-    400028: Object263
-    400030: soldier
-    400032: w1
-    400034: w2
-    400036: w3
-    400038: w4
-    400040: wheel1
-    400042: wheel2
-    400044: wheel3
-    400046: wheel4
-    400048: windows_inside
-    2300000: Box1392
-    2300002: Box1393
-    2300004: Box1394
-    2300006: Box1395
-    2300008: Box1396
-    2300010: disc1
-    2300012: disk2
-    2300014: disk3
-    2300016: disk4
-    2300018: glass
-    2300020: Object259
-    2300022: Object263
-    2300024: wheel1
-    2300026: wheel2
-    2300028: wheel3
-    2300030: wheel4
-    2300032: windows_inside
-    3300000: Box1392
-    3300002: Box1393
-    3300004: Box1394
-    3300006: Box1395
-    3300008: Box1396
-    3300010: disc1
-    3300012: disk2
-    3300014: disk3
-    3300016: disk4
-    3300018: glass
-    3300020: Object259
-    3300022: Object263
-    3300024: wheel1
-    3300026: wheel2
-    3300028: wheel3
-    3300030: wheel4
-    3300032: windows_inside
-    4300000: Box1392
-    4300002: Box1394
-    4300004: Object259
-    4300006: glass
-    4300008: Object263
-    4300010: windows_inside
-    4300012: Box1396
-    4300014: Box1393
-    4300016: Box1395
-    4300018: disk4
-    4300020: wheel4
-    4300022: wheel3
-    4300024: disk3
-    4300026: disk2
-    4300028: wheel2
-    4300030: disc1
-    4300032: wheel1
-    7400000: Rotate_wheels
-    7400002: Turn_left
-    7400004: Turn_right
-    9500000: //RootNode
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Box1392
+  - first:
+      1: 100002
+    second: Box1393
+  - first:
+      1: 100004
+    second: Box1394
+  - first:
+      1: 100006
+    second: Box1395
+  - first:
+      1: 100008
+    second: Box1396
+  - first:
+      1: 100010
+    second: car1_a
+  - first:
+      1: 100012
+    second: //RootNode
+  - first:
+      1: 100014
+    second: disc1
+  - first:
+      1: 100016
+    second: disk2
+  - first:
+      1: 100018
+    second: disk3
+  - first:
+      1: 100020
+    second: disk4
+  - first:
+      1: 100022
+    second: glass
+  - first:
+      1: 100024
+    second: gun
+  - first:
+      1: 100026
+    second: Object259
+  - first:
+      1: 100028
+    second: Object263
+  - first:
+      1: 100030
+    second: soldier
+  - first:
+      1: 100032
+    second: w1
+  - first:
+      1: 100034
+    second: w2
+  - first:
+      1: 100036
+    second: w3
+  - first:
+      1: 100038
+    second: w4
+  - first:
+      1: 100040
+    second: wheel1
+  - first:
+      1: 100042
+    second: wheel2
+  - first:
+      1: 100044
+    second: wheel3
+  - first:
+      1: 100046
+    second: wheel4
+  - first:
+      1: 100048
+    second: windows_inside
+  - first:
+      4: 400000
+    second: Box1392
+  - first:
+      4: 400002
+    second: Box1393
+  - first:
+      4: 400004
+    second: Box1394
+  - first:
+      4: 400006
+    second: Box1395
+  - first:
+      4: 400008
+    second: Box1396
+  - first:
+      4: 400010
+    second: car1_a
+  - first:
+      4: 400012
+    second: //RootNode
+  - first:
+      4: 400014
+    second: disc1
+  - first:
+      4: 400016
+    second: disk2
+  - first:
+      4: 400018
+    second: disk3
+  - first:
+      4: 400020
+    second: disk4
+  - first:
+      4: 400022
+    second: glass
+  - first:
+      4: 400024
+    second: gun
+  - first:
+      4: 400026
+    second: Object259
+  - first:
+      4: 400028
+    second: Object263
+  - first:
+      4: 400030
+    second: soldier
+  - first:
+      4: 400032
+    second: w1
+  - first:
+      4: 400034
+    second: w2
+  - first:
+      4: 400036
+    second: w3
+  - first:
+      4: 400038
+    second: w4
+  - first:
+      4: 400040
+    second: wheel1
+  - first:
+      4: 400042
+    second: wheel2
+  - first:
+      4: 400044
+    second: wheel3
+  - first:
+      4: 400046
+    second: wheel4
+  - first:
+      4: 400048
+    second: windows_inside
+  - first:
+      23: 2300000
+    second: Box1392
+  - first:
+      23: 2300002
+    second: Box1393
+  - first:
+      23: 2300004
+    second: Box1394
+  - first:
+      23: 2300006
+    second: Box1395
+  - first:
+      23: 2300008
+    second: Box1396
+  - first:
+      23: 2300010
+    second: disc1
+  - first:
+      23: 2300012
+    second: disk2
+  - first:
+      23: 2300014
+    second: disk3
+  - first:
+      23: 2300016
+    second: disk4
+  - first:
+      23: 2300018
+    second: glass
+  - first:
+      23: 2300020
+    second: Object259
+  - first:
+      23: 2300022
+    second: Object263
+  - first:
+      23: 2300024
+    second: wheel1
+  - first:
+      23: 2300026
+    second: wheel2
+  - first:
+      23: 2300028
+    second: wheel3
+  - first:
+      23: 2300030
+    second: wheel4
+  - first:
+      23: 2300032
+    second: windows_inside
+  - first:
+      33: 3300000
+    second: Box1392
+  - first:
+      33: 3300002
+    second: Box1393
+  - first:
+      33: 3300004
+    second: Box1394
+  - first:
+      33: 3300006
+    second: Box1395
+  - first:
+      33: 3300008
+    second: Box1396
+  - first:
+      33: 3300010
+    second: disc1
+  - first:
+      33: 3300012
+    second: disk2
+  - first:
+      33: 3300014
+    second: disk3
+  - first:
+      33: 3300016
+    second: disk4
+  - first:
+      33: 3300018
+    second: glass
+  - first:
+      33: 3300020
+    second: Object259
+  - first:
+      33: 3300022
+    second: Object263
+  - first:
+      33: 3300024
+    second: wheel1
+  - first:
+      33: 3300026
+    second: wheel2
+  - first:
+      33: 3300028
+    second: wheel3
+  - first:
+      33: 3300030
+    second: wheel4
+  - first:
+      33: 3300032
+    second: windows_inside
+  - first:
+      43: 4300000
+    second: Box1392
+  - first:
+      43: 4300002
+    second: Box1394
+  - first:
+      43: 4300004
+    second: Object259
+  - first:
+      43: 4300006
+    second: glass
+  - first:
+      43: 4300008
+    second: Object263
+  - first:
+      43: 4300010
+    second: windows_inside
+  - first:
+      43: 4300012
+    second: Box1396
+  - first:
+      43: 4300014
+    second: Box1393
+  - first:
+      43: 4300016
+    second: Box1395
+  - first:
+      43: 4300018
+    second: disk4
+  - first:
+      43: 4300020
+    second: wheel4
+  - first:
+      43: 4300022
+    second: wheel3
+  - first:
+      43: 4300024
+    second: disk3
+  - first:
+      43: 4300026
+    second: disk2
+  - first:
+      43: 4300028
+    second: wheel2
+  - first:
+      43: 4300030
+    second: disc1
+  - first:
+      43: 4300032
+    second: wheel1
+  - first:
+      74: 7400000
+    second: Rotate_wheels
+  - first:
+      74: 7400002
+    second: Turn_left
+  - first:
+      74: 7400004
+    second: Turn_right
+  - first:
+      95: 9500000
+    second: //RootNode
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Rotate_wheels
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 19
       wrapMode: 0
@@ -140,6 +358,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -206,9 +425,11 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Turn_left
       takeName: Take 001
+      internalID: 0
       firstFrame: 21
       lastFrame: 40
       wrapMode: 0
@@ -216,6 +437,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -282,9 +504,11 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Turn_right
       takeName: Take 001
+      internalID: 0
       firstFrame: 42
       lastFrame: 61
       wrapMode: 0
@@ -292,6 +516,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -358,44 +583,75 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

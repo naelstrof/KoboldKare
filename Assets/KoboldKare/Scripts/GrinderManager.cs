@@ -1,115 +1,180 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
+using Vilar.AnimationStation;
+using System.Collections.ObjectModel;
+using System.IO;
 
-public class GrinderManager : GenericUsable {
+public class GrinderManager : UsableMachine, IAnimationStationSet {
+    public delegate void GrindedObjectAction(ReagentContents contents);
+
+    public static event GrindedObjectAction grindedObject;
+        
     [SerializeField]
     private Sprite onSprite;
-    [SerializeField]
-    private Sprite offSprite;
+
+    [SerializeField] private List<Collider> cylinderColliders;
     public AudioSource grindSound;
     public Animator animator;
-    public Transform attachPoint;
     public AudioSource deny;
-    public GenericReagentContainer container;
+    //public GenericReagentContainer container;
+    [SerializeField] private AnimationStation station;
+    private ReadOnlyCollection<AnimationStation> stations;
     [SerializeField]
     private FluidStream fluidStream;
-    private HashSet<GameObject> grindedThingsCache = new HashSet<GameObject>();
-    private int usedCount;
-    private bool on {
-        get {
-            return (usedCount % 2) != 0;
-        }
-    }
+    private HashSet<PhotonView> grindedThingsCache;
+    private bool grinding;
+    [SerializeField]
+    private Collider grindingCollider;
+    [SerializeField]
+    private GenericReagentContainer container;
+
     public override Sprite GetSprite(Kobold k) {
-        return on ? offSprite : onSprite;
+        return onSprite;
     }
     public override bool CanUse(Kobold k) {
-        return animator.isActiveAndEnabled;
+        return k.GetEnergy() > 0 && !grinding && station.info.user == null && constructed;
     }
+
+    public override void LocalUse(Kobold k) {
+        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        base.LocalUse(k);
+    }
+
+    [PunRPC]
+    private void BeginGrind() {
+        grinding = true;
+        animator.SetBool("Grinding", true);
+        grindSound.enabled = true;
+        grindSound.Play();
+        foreach (Collider cylinderCollider in cylinderColliders) {
+            cylinderCollider.enabled = false;
+        }
+    }
+
+    [PunRPC]
+    private void StopGrind() {
+        grinding = false;
+        animator.SetBool("Grinding", false);
+        grindSound.Stop();
+        grindSound.enabled = false;
+        foreach (Collider cylinderCollider in cylinderColliders) {
+            cylinderCollider.enabled = true;
+        }
+    }
+
+    IEnumerator WaitThenConsumeEnergy() {
+        yield return new WaitForSeconds(8f);
+        if (!photonView.IsMine) {
+            yield break;
+        }
+        if (station.info.user == null) {
+            yield break;
+        }
+        
+        if (station.info.user.TryConsumeEnergy(1)) {
+            station.info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+            photonView.RPC(nameof(BeginGrind), RpcTarget.All);
+            yield return new WaitForSeconds(12f);
+            photonView.RPC(nameof(StopGrind), RpcTarget.All);
+        }
+    }
+
+    protected override void Start() {
+        base.Start();
+        grindedThingsCache = new HashSet<PhotonView>();
+        List<AnimationStation> tempList = new List<AnimationStation>();
+        tempList.Add(station);
+        stations = tempList.AsReadOnly();
+        container.OnChange.AddListener(OnReagentsChanged);
+    }
+
+    private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {
+        if (fluidStream.isActiveAndEnabled) {
+            fluidStream.OnFire(container);
+        }
+    }
+
     [PunRPC]
     public override void Use() {
-        usedCount++;
-        if (on) {
-            animator.SetTrigger("TurnOn");
-            grindSound.Play();
-        } else {
-            grindSound.Pause();
-            animator.SetTrigger("TurnOff");
-        }
+        StopCoroutine(nameof(WaitThenConsumeEnergy));
+        StartCoroutine(nameof(WaitThenConsumeEnergy));
     }
     IEnumerator WaitAndThenClear() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         grindedThingsCache.Clear();
     }
-    void Grind(GameObject obj) {
-        GenericGrabbable root = obj.GetComponentInParent<GenericGrabbable>();
-        if (root == null) {
-            return;
-        }
-        if ( grindedThingsCache.Contains(root.gameObject)) {
-            return;
-        }
-        grindedThingsCache.Add(root.gameObject);
-        foreach (GenericReagentContainer c in root.gameObject.GetComponentsInChildren<GenericReagentContainer>()) {
-            container.TransferMix(c, c.volume, GenericReagentContainer.InjectType.Inject);
-        }
-        GenericDamagable d = obj.transform.root.GetComponent<GenericDamagable>();
-        if (d != null) {
-            d.Damage(d.health + 1);
-        } else {
-            PhotonView other = obj.GetComponentInParent<PhotonView>();
-            if (other != null) {
-                PhotonNetwork.Destroy(other.gameObject);
-            } else {
-                Destroy(root.gameObject);
-            }
-        }
+    [PunRPC]
+    void Grind(ReagentContents incomingContents, KoboldGenes genes) {
+        grindedObject?.Invoke(incomingContents);
+        container.AddMixRPC(incomingContents, photonView.ViewID);
+        container.SetGenes(genes);
         fluidStream.OnFire(container);
-        StopCoroutine("WaitAndThenClear");
-        StartCoroutine("WaitAndThenClear");
     }
     private void HandleCollision(Collider other) {
-        if (!on) {
+        if (!grinding) {
             return;
         }
         if (other.isTrigger) {
             return;
         }
-        GenericDamagable d = other.transform.root.GetComponent<GenericDamagable>();
-        if (d != null && !d.removeOnDeath) {
-            d.transform.position += Vector3.up * 1f;
+        
+        // Filter by the grinding collider
+        if (!Physics.ComputePenetration(grindingCollider, grindingCollider.transform.position,
+                grindingCollider.transform.rotation,
+                other, other.transform.position, other.transform.rotation, out Vector3 dir, out float distance) || distance == 0f) {
+            return;
+        }
+        
+        PhotonView view = other.GetComponentInParent<PhotonView>();
+        if (view == null) {
+            return;
+        }
+        if (grindedThingsCache.Contains(view)) {
+            return;
+        }
+        
+        grindedThingsCache.Add(view);
+        
+        StopCoroutine(nameof(WaitAndThenClear));
+        StartCoroutine(nameof(WaitAndThenClear));
+        
+        Kobold kobold = other.GetComponentInParent<Kobold>();
+        if (kobold != null) {
+            kobold.StartCoroutine(RagdollForTime(kobold));
             foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-                r?.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
+                r.AddExplosionForce(400f, transform.position+Vector3.down*5f, 100f);
             }
             if (!deny.isPlaying) {
                 deny.Play();
             }
-
-            Kobold kobold = d.GetComponentInParent<Kobold>();
-            if (kobold != null) {
-                kobold.StartCoroutine(RagdollForTime(kobold));
-            }
-
-            d.Damage(d.health+1);
             return;
         }
-        if ((other.GetComponentInParent<PhotonView>() != null && !other.GetComponentInParent<PhotonView>().IsMine)) {
+        
+        if (!view.IsMine) {
             return;
         }
-        photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-        Grind(other.gameObject);
+        GenericReagentContainer genericReagentContainer = view.GetComponentInChildren<GenericReagentContainer>();
+        // Finally we grind it
+        if (genericReagentContainer != null) {
+            photonView.RPC(nameof(Grind), RpcTarget.All, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
+        }
+        
+        IDamagable d = view.GetComponentInParent<IDamagable>();
+        if (d != null) {
+            d.Damage(d.GetHealth() + 1f);
+        } else {
+            PhotonNetwork.Destroy(view.gameObject);
+        }
+
     }
 
     private IEnumerator RagdollForTime(Kobold kobold) {
-        kobold.ragdoller.PushRagdoll();
+        kobold.photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
-        kobold.ragdoller.PopRagdoll();
+        kobold.photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -117,5 +182,24 @@ public class GrinderManager : GenericUsable {
     }
     private void OnTriggerStay(Collider other) {
         HandleCollision(other);
+    }
+
+    public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
+        return stations;
+    }
+
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
+        bool newGrinding = reader.ReadBoolean();
+        if (!grinding && newGrinding) {
+            BeginGrind();
+        } else if (grinding && !newGrinding) {
+            StopGrind();
+        }
+    }
+
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
+        writer.Write(grinding);
     }
 }

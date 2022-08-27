@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "PopupHandler", menuName = "Data/PopupHandler", order = 1)]
 public class PopupHandler : SingletonScriptableObject<PopupHandler> {
@@ -88,6 +84,10 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
     }
 
     public void ClearPopup(Popup p) {
+        if (p == null) {
+            return;
+        }
+
         popups.Remove(p.gameObject);
         Destroy(p.gameObject); 
         //if (popups.Count <=0) {

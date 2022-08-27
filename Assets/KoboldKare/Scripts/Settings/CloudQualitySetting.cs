@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 namespace UnityScriptableSettings {
 [CreateAssetMenu(fileName = "CloudQuality", menuName = "Unity Scriptable Setting/KoboldKare/Cloud Quality Setting", order = 1)]
 public class CloudQualitySetting : ScriptableSettingLocalizedDropdown {
-    public ForwardRendererData forwardRenderer;
+    public UniversalRendererData forwardRenderer;
     public Material cloudMaterial;
     public Material skyboxMaterial;
     public override void SetValue(float value) {

@@ -48,8 +48,7 @@ namespace Photon.Pun
 
         public void FixedUpdate()
         {
-            if (!this.photonView.IsMine)
-            {
+            if (!this.photonView.IsMine) {
                 this.m_Body.position = Vector3.MoveTowards(this.m_Body.position, this.m_NetworkPosition, this.m_Distance * (1.0f / PhotonNetwork.SerializationRate));
                 this.m_Body.rotation = Quaternion.RotateTowards(this.m_Body.rotation, this.m_NetworkRotation, this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
             }
@@ -110,7 +109,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Save(BinaryWriter writer, string version) {
+        public void Save(BinaryWriter writer) {
             writer.Write(this.m_Body.position.x);
             writer.Write(this.m_Body.position.y);
             writer.Write(this.m_Body.position.z);
@@ -133,7 +132,7 @@ namespace Photon.Pun
             }
         }
 
-        public void Load(BinaryReader reader, string version) {
+        public void Load(BinaryReader reader) {
             
             float posx = reader.ReadSingle();
             float posy = reader.ReadSingle();

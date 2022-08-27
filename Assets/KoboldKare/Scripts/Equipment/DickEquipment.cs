@@ -16,12 +16,6 @@ public class DickEquipment : Equipment {
         if (info == null) {
             throw new UnityException("Dick equipment is missing the DickInfo monobehavior. It's needed to be able to equip!");
         }
-        foreach(DickInfo.DickSet set in info.dicks) {
-            if (container != null) {
-                k.SetBaseDickSize(container.volume);
-            }
-            set.dickIdentifier = GetInstanceID();
-        }
         info.AttachTo(k);
         return stuff;
     }
@@ -31,7 +25,7 @@ public class DickEquipment : Equipment {
         // Search for a dick that matches our equipment, then use the info to remove all the dicks associated with it.
         foreach(DickInfo.DickSet set in k.activeDicks) {
             if (set.dickIdentifier == GetInstanceID()) {
-                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.baseDickSize);
+                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.GetGenes().dickSize);
             }
         }
         foreach(DickInfo.DickSet set in k.activeDicks) {
@@ -43,7 +37,7 @@ public class DickEquipment : Equipment {
         if (groundPrefab != null) {
             GenericReagentContainer container = groundPrefab.GetComponentInChildren<GenericReagentContainer>();
             if (container != null) {
-                container.AddMix(contents, GenericReagentContainer.InjectType.Inject);
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, contents, container.photonView.ViewID);
             }
         }
         return groundPrefab;

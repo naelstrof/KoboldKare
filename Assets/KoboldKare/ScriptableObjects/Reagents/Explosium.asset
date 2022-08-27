@@ -24,6 +24,7 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 0}
   value: 9
+  consumesMetabolization: 0
   metabolizationHalfLife: 10
   cleaningAgent: 0
   onExist:
@@ -42,4 +43,5 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   references:
-    version: 1
+    version: 2
+    RefIds: []

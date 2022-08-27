@@ -15,7 +15,8 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
-    public GameObject mainCanvas;
+    [SerializeField]
+    private GameObject mainCanvas;
     public static void SetUIVisible(bool visible) => instance.UIVisible(visible);
     public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
     public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
@@ -24,12 +25,17 @@ public class GameManager : MonoBehaviour {
     public LayerMask waterSprayHitMask;
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
+    public LayerMask usableHitMask;
     public AnimationCurve volumeCurve;
-    public UnityEvent OnPause;
-    public UnityEvent OnUnpause;
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
     public LoadingListener loadListener;
+    [SerializeField]
+    private GameObject MultiplayerTab;
+    [SerializeField]
+    private GameObject OptionsTab;
+    [SerializeField]
+    private GameObject MainViewTab;
 
     [HideInInspector]
     public bool isPaused = false;
@@ -37,10 +43,14 @@ public class GameManager : MonoBehaviour {
     public void Pause(bool pause) {
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
-            OnUnpause.Invoke();
+            InputOptions.SaveControls();
+            UnityScriptableSettings.ScriptableSettingsManager.instance.Save();
+            MultiplayerTab.gameObject.SetActive(false);
+            OptionsTab.gameObject.SetActive(false);
+            MainViewTab.gameObject.SetActive(true);
         }
         if (pause) {
-            OnPause.Invoke();
+            //OnPause.Invoke();
         }
         if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
             Cursor.lockState = CursorLockMode.Locked;

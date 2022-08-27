@@ -1,28 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
 
-[RequireComponent(typeof(GenericGrabbable), typeof(AudioSource), typeof(Rigidbody))]
-public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable {
-    private GenericGrabbable grabbable;
+[RequireComponent(typeof(AudioSource), typeof(Rigidbody))]
+public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbable {
     private bool grabbed = false;
     private AudioSource source;
     [SerializeField]
     private GameObject disableOnGrab;
     private Rigidbody body;
     void Start() {
-        grabbable = GetComponent<GenericGrabbable>();
         source = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
-        grabbable.onGrab.AddListener(OnGrabbed);
+        PlayAreaEnforcer.AddTrackedObject(photonView);
     }
-    void OnDestroy() {
-        if (grabbable != null) {
-            grabbable.onGrab.RemoveListener(OnGrabbed);
-        }
+
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
+
     void SetState(bool newGrabbed) {
         if (grabbed == newGrabbed) {
             return;
@@ -34,10 +33,24 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable {
             source.Play();
         }
     }
-    void OnGrabbed(Kobold k) {
+
+    public bool CanGrab(Kobold kobold) {
+        return true;
+    }
+
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
         if (photonView.IsMine) {
             SetState(true);
         }
+    }
+
+    [PunRPC]
+    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+    }
+
+    public Transform GrabTransform() {
+        return transform;
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
@@ -47,11 +60,11 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(grabbed);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         SetState(reader.ReadBoolean());
     }
 }

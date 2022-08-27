@@ -39,12 +39,12 @@ public class User : MonoBehaviourPun {
             possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
         }
     }
-    //private void OnTriggerStay(Collider other) {
-        //GenericUsable g = other.GetComponentInParent<GenericUsable>();
-        //if (g!=null) {
-            //possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
-        //}
-    //}
+    private void OnTriggerStay(Collider other) {
+        GenericUsable g = other.GetComponentInParent<GenericUsable>();
+        if (g!=null) {
+            possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
+        }
+    }
     private void OnTriggerExit(Collider other) {
         GenericUsable g = other.GetComponentInParent<GenericUsable>();
         if (g!=null) {
@@ -86,7 +86,6 @@ public class User : MonoBehaviourPun {
     }
     public void Use() {
         if (closestUsable != null) {
-
             //closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
             closestUsable.LocalUse(kobold);
             OnUse.Invoke();

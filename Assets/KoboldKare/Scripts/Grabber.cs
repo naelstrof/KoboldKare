@@ -4,161 +4,288 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
-    public GameObject player;
-    public int maxGrabCount = 1;
-    public Rigidbody body;
-    public float springStrength = 1000f;
-    [Range(0f,0.5f)]
-    public float dampingStrength = 0.1f;
-    public float throwStrength = 800f;
-    private Kobold internalKobold;
-    public Kobold kobold {
-        get {
-            if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
+public class Grabber : MonoBehaviourPun {
+    public Kobold player;
+    private int maxGrabCount = 1;
+    private Rigidbody body;
+    [SerializeField]
+    private float springStrength = 1000f;
+    [SerializeField][Range(0f,0.5f)]
+    private float dampingStrength = 0.1f;
+
+    [SerializeField] private GameObject activateUI;
+    [SerializeField] private GameObject throwUI;
+
+    private bool activating;
+    private class GrabInfo  {
+        public IGrabbable grabbable { get; private set; }
+        public Rigidbody body { get; private set; }
+        public CollisionDetectionMode collisionDetectionMode { get; private set; }
+        public RigidbodyInterpolation interpolation { get; private set; }
+        public Kobold kobold { get; private set; }
+        public Kobold owner { get; private set; }
+        private DriverConstraint driverConstraint;
+        private ConfigurableJoint joint;
+        private float springStrength;
+        private float dampingStrength;
+        private bool valid = true;
+        private Transform grabber;
+        private float grabTime;
+        public GenericWeapon weapon { get; private set; }
+        private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
+            for(int i=0;i<t.childCount;i++ ) {
+                RecursiveSetLayer(t.GetChild(i), fromLayer, toLayer);
             }
-            return internalKobold;
+            if (t.gameObject.layer == fromLayer) {
+                t.gameObject.layer = toLayer;
+            }
+        }
+        public GrabInfo(Kobold owner, Transform grabber, IGrabbable grabbable, float springStrength, float dampingStrength) {
+            grabTime = Time.time;
+            this.grabber = grabber;
+            this.owner = owner;
+            this.grabbable = grabbable;
+            this.springStrength = springStrength;
+            this.dampingStrength = dampingStrength;
+            body = grabbable.transform.GetComponentInParent<Rigidbody>();
+            collisionDetectionMode = body.collisionDetectionMode;
+            interpolation = body.interpolation;
+            body.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            body.interpolation = RigidbodyInterpolation.Interpolate;
+            driverConstraint = body.gameObject.AddComponent<DriverConstraint>();
+            driverConstraint.springStrength = springStrength;
+            driverConstraint.body = body;
+            driverConstraint.connectedBody = grabber;
+            driverConstraint.dampingStrength = dampingStrength;
+            driverConstraint.softness = 1f;
+            grabbable.photonView.RequestOwnership();
+            weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
+            if (weapon != null) {
+                driverConstraint.angleSpringStrength = 32f;
+                driverConstraint.angleDamping = 0.1f;
+                driverConstraint.angleSpringSoftness = 60f;
+                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition();
+            }
+
+            kobold = grabbable.transform.GetComponentInParent<Kobold>();
+            if (kobold != null) {
+                Rigidbody ragdollBody = kobold.GetComponent<Ragdoller>().GetRagdollBodies()[0];
+                joint = AddJoint(ragdollBody, ragdollBody.position);
+            }
+            RecursiveSetLayer(body.transform, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));
+            valid = true;
+        }
+
+        public bool Valid() {
+            bool v = ((Component)grabbable)!=null && driverConstraint != null && valid;
+            if (v && Time.time - grabTime > 2f) {
+                v &= grabbable.photonView.IsMine;
+            }
+
+            return v;
+        }
+
+        public void Activate() {
+            if (weapon != null) {
+                weapon.OnFire(owner);
+            } else {
+                body.velocity += grabber.transform.forward * 10f;
+                Release();
+            }
+        }
+        public void StopActivate() {
+            if (weapon != null) {
+                weapon.OnEndFire(owner);
+            }
+        }
+
+        public void Release() {
+            if (!valid) {
+                return;
+            }
+            
+            if (driverConstraint != null) {
+                Destroy(driverConstraint);
+            }
+
+            if (joint != null) {
+                Destroy(joint);
+            }
+
+            if (((Component)grabbable) != null && body != null) {
+                grabbable.photonView.RPC(nameof(IGrabbable.OnReleaseRPC), RpcTarget.All, owner.photonView.ViewID, body.velocity);
+                RecursiveSetLayer(body.transform, LayerMask.NameToLayer("PlayerNocollide"),
+                    LayerMask.NameToLayer("UsablePickups"));
+                if (kobold != null && owner != null) {
+                    owner.GetComponent<Grabber>().AddGivebackKobold(kobold);
+                }
+            }
+            
+            valid = false;
+        }
+
+        public void Set(Vector3 position, Quaternion viewRot) {
+            driverConstraint.anchor = body.transform.InverseTransformPoint(grabbable.GrabTransform().position);
+            if (weapon != null) {
+                Quaternion fq = Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().forward, viewRot*Vector3.forward)*Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().up, viewRot*Vector3.up);
+                driverConstraint.forwardVector = fq * body.transform.forward;
+                driverConstraint.upVector = fq * body.transform.up;
+                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition();
+            } else {
+                driverConstraint.connectedAnchor = Vector3.zero;
+            }
+
+            if (joint != null) {
+                joint.connectedAnchor = position;
+            }
+        }
+        
+        private ConfigurableJoint AddJoint(Rigidbody targetBody, Vector3 worldPosition) {
+            ConfigurableJoint configurableJoint = targetBody.gameObject.AddComponent<ConfigurableJoint>();
+            configurableJoint.axis = Vector3.up;
+            configurableJoint.secondaryAxis = Vector3.right;
+            configurableJoint.connectedBody = null;
+            configurableJoint.autoConfigureConnectedAnchor = false;
+            configurableJoint.breakForce = float.MaxValue;
+            JointDrive drive = configurableJoint.xDrive;
+            drive.positionSpring = springStrength * 10f;
+            drive.positionDamper = 2f;
+            configurableJoint.xDrive = drive;
+            configurableJoint.yDrive = drive;
+            configurableJoint.zDrive = drive;
+            var linearLimit = configurableJoint.linearLimit;
+            linearLimit.limit = 1f;
+            linearLimit.bounciness = 0f;
+            var spring = configurableJoint.linearLimitSpring;
+            spring.spring = springStrength;
+            spring.damper = 2f;
+            configurableJoint.linearLimitSpring = spring;
+            configurableJoint.linearLimit = linearLimit;
+            configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
+            configurableJoint.massScale = 1f;
+            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            configurableJoint.projectionAngle = 10f;
+            configurableJoint.projectionDistance = 0.5f;
+            configurableJoint.connectedMassScale = 1f;
+            configurableJoint.enablePreprocessing = false;
+            configurableJoint.configuredInWorldSpace = true;
+            configurableJoint.anchor = Vector3.zero;
+            configurableJoint.connectedBody = null;
+            configurableJoint.connectedAnchor = worldPosition;
+            configurableJoint.xMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.yMotion = ConfigurableJointMotion.Limited;
+            configurableJoint.zMotion = ConfigurableJointMotion.Limited;
+            return configurableJoint;
         }
     }
-    private HashSet<IGrabbable> intersectingGameObjects = new HashSet<IGrabbable>();
-    private HashSet<IGrabbable> removeLater = new HashSet<IGrabbable>();
-    private HashSet<IGrabbable> grabbedObjects = new HashSet<IGrabbable>();
-    private HashSet<IGrabbable> thrownObjects = new HashSet<IGrabbable>();
-    private HashSet<IGrabbable> droppedObjects = new HashSet<IGrabbable>();
-    private class JointInfo  {
-        public IGrabbable grabbable;
-        public Rigidbody body;
-        public DriverConstraint constraint;
+    private List<GrabInfo> grabbedObjects;
+
+    private class GiveBackKobold {
+        public Coroutine routine;
+        public Kobold kobold;
     }
-    private List<JointInfo> joints = new List<JointInfo>();
-    public float droppedHighQualityTime = 10.0f;
-    public float thrownUntouchableTime = 0.4f;
-    private List<Vector3> weaponPoints = new List<Vector3>();
-    public float weaponSeparation = 1f;
-    public Transform cam;
-    public UnityEvent OnEnterGrabbable;
-    public UnityEvent OnExitGrabbable;
-    public UnityEvent OnGrab;
-    public UnityEvent OnDrop;
-    public UnityEvent OnGrabThrowable;
-    public UnityEvent OnGrabActivatable;
-    public UnityEvent OnActivate;
-    private bool hasDropped = false;
-    [HideInInspector]
-    public bool grabbing = false;
-    [HideInInspector]
-    public bool activating = false;
+
+    private List<GiveBackKobold> giveBackKobolds;
+    private float thrownUntouchableTime = 0.4f;
+    private static Collider[] colliders = new Collider[32];
+    
+    [SerializeField]
+    private Transform view;
     public void OnDestroy() {
         TryDrop();
     }
-
-    //public IEnumerator WaitAndClearDropped(float time) {
-        //yield return new WaitForSeconds(time);
-        //foreach( GameObject g in droppedObjects) {
-            //if (g == null ) {
-                //continue;
-            //}
-            //Rigidbody r = g.GetComponentInChildren<Rigidbody>();
-            //if (r) {
-                //r.collisionDetectionMode = CollisionDetectionMode.Discrete;
-            //}
-        //}
-        //droppedObjects.Clear();
-    //}
-    public void SetMaxGrabCount( float grabCount ) {
-        maxGrabCount = Mathf.CeilToInt(grabCount);
-    }
-    public IEnumerator WaitAndClearThrown(float time) {
-        yield return new WaitForSeconds(time);
-        thrownObjects.Clear();
-    }
     public void Validate() {
-        grabbedObjects.RemoveWhere(o => ((Component)o) == null);
-        intersectingGameObjects.RemoveWhere(o => ((Component)o) == null);
+        bool canActivate = false;
+        bool canThrow = false;
+        for (int i = 0; i < grabbedObjects.Count; i++) {
+            if (grabbedObjects[i].weapon != null) {
+                canActivate = true;
+            }
 
-        // Validate joints
-        for( int i=0;i<joints.Count;i++) {
-            JointInfo info = joints[i];
-            if (info.body == null || ((Component)info.grabbable) == null || info.constraint == null) {
-                TryDrop(info.grabbable);
+            if (grabbedObjects[i].body != null) {
+                canThrow = true;
+            }
+
+            if (!grabbedObjects[i].Valid()) {
+                grabbedObjects[i].Release();
+                grabbedObjects.RemoveAt(i--);
             }
         }
 
-        // Validate GameObjects
-        thrownObjects.RemoveWhere(o => ((Component)o)== null);
-        //intersectingGameObjects.RemoveWhere(o => ((Component)o)== null);
-        droppedObjects.RemoveWhere(o => ((Component)o)== null);
-    }
-    public void TryDrop(IGrabbable g) {
-        if( ((Component)g) == null ) {
-            return;
+        if (activateUI.activeSelf && !canActivate || !activateUI.activeSelf && canActivate) {
+            activateUI.SetActive(canActivate);
         }
-        intersectingGameObjects.Remove(g);
-        grabbedObjects.Remove(g);
-        try {
-            if (g.transform == null) {
-                return;
+
+        if (!canActivate) {
+            if (canThrow && !throwUI.activeSelf || !canThrow && throwUI.activeSelf) {
+                throwUI.SetActive(canThrow);
             }
-        } catch {
-            return;
-        }
-        TryStopActivate(g);
-        JointInfo info = joints.Find(i=> i.grabbable == g);
-        while (info != null) {
-            if (info.constraint != null) {
-                Destroy(info.constraint);
-            }
-            joints.Remove(info);
-            info = joints.Find(i=>i.grabbable == g);
-        }
-        //RecursiveSetLayer(g.transform, LayerMask.NameToLayer("Effects"), LayerMask.NameToLayer("Pickups"));
-        g.OnRelease(kobold);
-        foreach (Renderer ren in g.GetRenderers()) {
-            if (ren == null) {
-                continue;
-            }
-        }
-        if (g.GetRigidBodies()[0] != null) {
-            RecursiveSetLayer(g.GetRigidBodies()[0].transform.root, LayerMask.NameToLayer("PlayerNocollide"), LayerMask.NameToLayer("UsablePickups"));
-        }
-        droppedObjects.Add(g);
-        //if (player.GetComponent<KoboldCharacterController>().groundRigidbody != null) {
-            //StartCoroutine(WaitAndClearThrown(thrownUntouchableTime));
-        //}
-        if (grabbedObjects.Count <= 0) {
-            grabbing = false;
+        } else if (throwUI.activeSelf) {
+            throwUI.SetActive(false);
         }
     }
+
+    private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
+        while (giveBackKobold.kobold.photonView.IsMine) {
+            if (giveBackKobold.kobold.ragdoller.ragdolled) {
+                yield return new WaitForSeconds(5f);
+            } else {
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            if (giveBackKobold.kobold.photonView.IsMine) {
+                foreach (Player p in PhotonNetwork.PlayerList) {
+                    if (giveBackKobold.kobold.photonView.IsMine && p.TagObject == giveBackKobold.kobold) {
+                        giveBackKobold.kobold.photonView.TransferOwnership(p);
+                        break;
+                    }
+                }
+            }
+        }
+        giveBackKobolds.Remove(giveBackKobold);
+    }
+
+    public void AddGivebackKobold(Kobold other) {
+        foreach (Player p in PhotonNetwork.PlayerList) {
+            if (p.TagObject == other) {
+                GiveBackKobold giveBackKobold = new GiveBackKobold(){kobold = other};
+                giveBackKobold.routine = StartCoroutine(GiveBackKoboldAfterDelay(giveBackKobold));
+                giveBackKobolds.Add(giveBackKobold);
+                break;
+            }
+        }
+    }
+
+    private void RemoveGivebackKobold(Kobold other) {
+        if (other!= null) {
+            for (int j = 0; j < giveBackKobolds.Count; j++) {
+                if (giveBackKobolds[j].kobold == other) {
+                    if (giveBackKobolds[j].routine != null) {
+                        StopCoroutine(giveBackKobolds[j].routine);
+                    }
+                    giveBackKobolds.RemoveAt(j--);
+                }
+            }
+        }
+    }
+
     public void TryDrop() {
-        if (!hasDropped) {
-            OnDrop.Invoke();
-            hasDropped = true;
+        foreach (var grab in grabbedObjects) {
+            grab.Release();
         }
-        if (grabbedObjects.Count <= 0 ) {
-            return;
-        }
-        Validate();
-        weaponPoints.Clear();
-        HashSet<IGrabbable> copy = new HashSet<IGrabbable>(grabbedObjects);
-        foreach( IGrabbable g in copy ) {
-            TryDrop(g);
-        }
+
         grabbedObjects.Clear();
-        intersectingGameObjects.Clear();
-        grabbing = false;
     }
-    private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
-        for(int i=0;i<t.childCount;i++ ) {
-            RecursiveSetLayer(t.GetChild(i), fromLayer, toLayer);
-        }
-        if (t.gameObject.layer == fromLayer) {
-            t.gameObject.layer = toLayer;
-        }
+
+    private void Awake() {
+        grabbedObjects = new List<GrabInfo>();
+        giveBackKobolds = new List<GiveBackKobold>();
     }
+
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
         averageForward = Vector3.zero;
         averageUp = Vector3.zero;
@@ -174,164 +301,41 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         averageForward = Vector3.Normalize(averageForward);
         averageUp = Vector3.Normalize(averageUp);
     }
-    public bool TryGrab(IGrabbable g) {
-        if (grabbedObjects.Count >= maxGrabCount) {
-            return false;
-        }
-        grabbedObjects.Add(g);
-        RecursiveSetLayer(g.GetRigidBodies()[0].transform.root, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));
-        foreach(Rigidbody r in g.GetRigidBodies()) {
-            if (r == null ) {
-                continue;
-            }
-            //r.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            //r.interpolation = RigidbodyInterpolation.Interpolate;
-            DriverConstraint j = r.gameObject.AddComponent<DriverConstraint>();
-            j.springStrength = springStrength;
-            j.connectedBody = body;
-            j.dampingStrength = dampingStrength;
-            j.softness = 1f;
-            bool grabbed = g.OnGrab(kobold);
-            if (!grabbed) {
-                grabbedObjects.Remove(g);
-                Destroy(j);
-                return false;
-            }
-            j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
-            j.connectedAnchor = Vector3.zero;
-            GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
-            if (weapons.Length != 0) {
-                OnGrabActivatable.Invoke();
-                Vector3 averageForward;
-                Vector3 averageUp;
-                Vector3 averageOffset;
-                GetForwardAndUpVectors(weapons, out averageForward, out averageUp, out averageOffset);
-                //j.connectedAnchor = Vector3.down * 0.55f + Vector3.right * 0.80f + Vector3.back * 0.55f;
-                j.connectedAnchor = averageOffset;
-                Quaternion fq = Quaternion.FromToRotation(averageForward, r.transform.forward);
-                Quaternion uq = Quaternion.FromToRotation(averageUp, r.transform.up);
-                j.forwardVector = fq*body.transform.forward;
-                j.upVector = uq*body.transform.up;
-            } else {
-                OnGrabThrowable.Invoke();
-            }
-            joints.Add(new JointInfo { body = r, grabbable = g, constraint = j});
-        }
-        return true;
-    }
     public void TryGrab() {
-        Validate();
-        if (intersectingGameObjects.Count > 0 || grabbedObjects.Count > 0) {
-            OnGrab.Invoke();
-            hasDropped = false;
-        }
-        HashSet<IGrabbable> grabbables = (new HashSet<IGrabbable>(intersectingGameObjects));
-        grabbables.ExceptWith(grabbedObjects);
-        grabbables.ExceptWith(thrownObjects);
-        List<IGrabbable> sortedGrabables = new List<IGrabbable>(grabbables);
-        sortedGrabables.Sort((a, b) => Vector3.Distance(a.GrabTransform(a.GetRigidBodies()[0]).position, transform.position).CompareTo(Vector3.Distance(b.GrabTransform(b.GetRigidBodies()[0]).position, transform.position)));
-        /*GrabbableType grabType = GrabbableType.None;
-        foreach(IGrabbable g in grabbedObjects) {
-            grabType |= g.GetGrabbableType();
-        }
-        if (grabType == GrabbableType.None) {
-            grabType = GrabbableType.Any;
-        }*/
-        for(int i=0;i<sortedGrabables.Count;i++) {
-            //if ((grabType & sortedGrabables[i].GetGrabbableType()) != 0) {
-                bool grabbed = TryGrab(sortedGrabables[i]);
-                /*if ( grabbed && grabbedObjects.Count == 1) {
-                    grabType = sortedGrabables[i].GetGrabbableType();
-                }*/
-            //}
-        }
-        if (grabbedObjects.Count>0) {
-            grabbing = true;
-        } else {
-            grabbing = false;
-        }
-        //grabbedObjects.UnionWith(grabbables);
-    }
-    public void FixedUpdate() {
-        Validate();
-        if (removeLater.Count > 0) {
-            intersectingGameObjects.ExceptWith(removeLater);
-            removeLater.Clear();
-            if (intersectingGameObjects.Count == 0) {
-                OnExitGrabbable.Invoke();
-            }
-        }
-
-        if (grabbedObjects.Count <= 0) {
+        if (grabbedObjects.Count >= maxGrabCount) {
             return;
         }
-        int weaponCount = 1;
-        foreach (IGrabbable g in grabbedObjects) {
-            foreach(Rigidbody r in g.GetRigidBodies()) {
-                weaponCount += r.GetComponentsInChildren<GenericWeapon>().Length;
-            }
-        }
-        while ( weaponPoints.Count <= weaponCount) {
-            weaponPoints.Add(Random.insideUnitSphere);
-        }
-        for (int x = 0; x < weaponPoints.Count; x++) {
-            for(int y = 0;y<weaponPoints.Count;y++) {
-                if (x != y) {
-                    Vector3 dir = Vector3.Normalize(weaponPoints[y] - weaponPoints[x]);
-                    float dist = Vector3.Distance(weaponPoints[x], weaponPoints[y]) - weaponSeparation;
-                    weaponPoints[x] += dir * dist * Time.deltaTime * 5f;
-                }
-            }
-        }
-        weaponPoints[0] = Vector3.zero;
-        int currentWeapon = 0;
-        RaycastHit hit;
-        float weaponHitDistance = 100f;
-        Vector3 hitPos = cam.position + cam.forward * weaponHitDistance;
-        if ( weaponCount > 0 && Physics.Raycast(cam.position, cam.forward, out hit, 100f, GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore)) {
-            if (hit.transform.root != transform.root) {
-                hitPos = hit.point;
-            }
-        }
-        foreach (IGrabbable g in grabbedObjects) {
-            foreach (Rigidbody r in g.GetRigidBodies()) {
-                DriverConstraint j = joints.Find(info => info.body == r).constraint;
-                j.anchor = r.transform.InverseTransformPoint(g.GrabTransform(r).position);
-                GenericWeapon[] weapons = r.GetComponentsInChildren<GenericWeapon>();
-                if (weapons.Length != 0) {
-                    Vector3 averageForward;
-                    Vector3 averageUp;
-                    Vector3 averageOffset;
-                    GetForwardAndUpVectors(weapons, out averageForward, out averageUp, out averageOffset);
-                    //Debug.DrawLine(transform.position, transform.position + averageForward);
-                    //Debug.DrawLine(transform.position, transform.position + averageUp);
-                    if (j != null && j.body != null) {
-                        Quaternion fq = Quaternion.FromToRotation(averageForward, Vector3.Normalize(hitPos-j.body.position))*Quaternion.FromToRotation(averageUp, body.transform.up);
-                        //j.forwardVector = fq * Vector3.Normalize(body.transform.forward + body.transform.up * 0.85f - body.transform.right * 0.4f);
-                        j.connectedAnchor = averageOffset + weaponPoints[currentWeapon];
-                        j.angleSpringStrength = 32f;
-                        j.angleDamping = 0.1f;
-                        j.angleSpringSoftness = 60f;
-                        j.forwardVector = fq*j.body.transform.forward;
-                        //Debug.DrawLine(transform.position, transform.position + j.forwardVector, Color.red);
-                        j.upVector = fq*j.body.transform.up;
-                    }
-                    currentWeapon++;
-                }
-            }
-        }
-        //while ( weaponPoints.Count > weaponCount) {
-            //weaponPoints.RemoveAt(weaponPoints.Count-1);
-        //}
-    }
-    private void TryStopActivate(IGrabbable g) {
-        foreach (Rigidbody r in g.GetRigidBodies()) {
-            if (r == null) {
+
+        int hits = Physics.OverlapSphereNonAlloc(view.position, 1f, colliders);
+        for (int i = 0; i < hits; i++) {
+            IGrabbable grabbable = colliders[i].GetComponentInParent<IGrabbable>();
+            if (grabbable == null || grabbable == (IGrabbable)player) {
                 continue;
             }
-            foreach (GenericWeapon w in r.GetComponentsInChildren<GenericWeapon>()) {
-                w.OnEndFire(player);
+            bool contains = false;
+            foreach (GrabInfo grabInfo in grabbedObjects) {
+                if (grabInfo.grabbable == grabbable) {
+                    contains = true;
+                    break;
+                }
             }
+
+            if (!contains && grabbable.CanGrab(player)) {
+                grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
+                GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength);
+                grabbedObjects.Add(info);
+                RemoveGivebackKobold(info.kobold);
+            }
+            if (grabbedObjects.Count >= maxGrabCount) {
+                return;
+            }
+        }
+    }
+
+    public void Update() {
+        Validate();
+        foreach (var grab in grabbedObjects) {
+            grab.Set(view.position, view.rotation);
         }
     }
     public void TryStopActivate() {
@@ -340,8 +344,8 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         activating = false;
-        foreach (IGrabbable g in grabbedObjects) {
-            TryStopActivate(g);
+        for (int i = 0; i < grabbedObjects.Count; i++) {
+            grabbedObjects[i].StopActivate();
         }
     }
     public void TryActivate() {
@@ -349,107 +353,9 @@ public class Grabber : MonoBehaviourPun, IPunObservable, ISavable {
         if (activating) {
             return;
         }
-        OnActivate.Invoke();
         activating = true;
-        foreach( IGrabbable g in grabbedObjects ) {
-            bool hasWeapon = false;
-            foreach( Rigidbody r in g.GetRigidBodies() ) {
-                if (r == null) { 
-                    continue;
-                }
-                // Only throw non-weapons
-                foreach(GenericWeapon w in r.GetComponentsInChildren<GenericWeapon>()) {
-                    w.OnFire(player);
-                    hasWeapon = true;
-                }
-                if (hasWeapon) {
-                    continue;
-                }
-                //RecursiveSetLayer(g.transform, LayerMask.NameToLayer("Effects"), LayerMask.NameToLayer("Pickups"));
-                r.velocity += transform.forward * throwStrength;
-            }
-            if (hasWeapon) {
-                continue;
-            }
-            g.OnThrow(kobold);
-            thrownObjects.Add(g);
-            StartCoroutine(WaitAndClearThrown(thrownUntouchableTime));
-        }
-        HashSet<IGrabbable> removeObjects = new HashSet<IGrabbable>();
-        foreach(IGrabbable g in grabbedObjects) {
-            if (thrownObjects.Contains(g)) {
-                removeObjects.Add(g);
-            }
-        }
-        foreach(IGrabbable g in removeObjects) {
-            TryDrop(g);
-        }
-        grabbedObjects.ExceptWith(thrownObjects);
-    }
-    public void OnTriggerEnter(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
-        if (other.transform.root == transform.root) {
-            return;
-        }
-        if (intersectingGameObjects.Count == 0) {
-            OnEnterGrabbable.Invoke();
-        }
-        intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
-    }
-    public void OnTriggerStay(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
-        if (other.transform.root == transform.root) {
-            return;
-        }
-        if (intersectingGameObjects.Count == 0) {
-            OnEnterGrabbable.Invoke();
-        }
-        intersectingGameObjects.Add(other.transform.GetComponentInParent<IGrabbable>());
-    }
-    public void OnTriggerExit(Collider other) {
-        //if (((1<<other.transform.root.gameObject.layer) & pickupLayers) == 0 || other.transform.root == transform.root) {
-        if (other.transform.root == transform.root) {
-            return;
-        }
-        removeLater.Add(other.transform.GetComponentInParent<IGrabbable>());
-        //intersectingGameObjects.Remove(other.transform.root.GetComponent<IGrabbable>());
-        //if (intersectingGameObjects.Count == 0) {
-            //OnExitGrabbable.Invoke();
-        //}
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(this.activating);
-            stream.SendNext(this.grabbing);
-        } else {
-            if ((bool)stream.ReceiveNext()) {
-                TryActivate();
-            } else {
-                TryStopActivate();
-            }
-            if ((bool)stream.ReceiveNext()) {
-                TryGrab();
-            } else {
-                TryDrop();
-            }
-        }
-    }
-    public void Save(BinaryWriter writer, string version) {
-        writer.Write(activating);
-        writer.Write(grabbing);
-    }
-
-    public void Load(BinaryReader reader, string version) {
-        if (reader.ReadBoolean()) {
-            TryActivate();
-        } else {
-            TryStopActivate();
-        }
-        if (reader.ReadBoolean()) {
-            TryGrab();
-        } else {
-            TryDrop();
+        for (int i = 0; i < grabbedObjects.Count; i++) {
+            grabbedObjects[i].Activate();
         }
     }
 }

@@ -24,10 +24,12 @@ MonoBehaviour:
   color: {r: 0.6116485, g: 0.26379493, b: 0.9811321, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
   value: 0.25
+  consumesMetabolization: 1
   metabolizationHalfLife: 30
   cleaningAgent: 0
   onExist:
     m_PersistentCalls:
       m_Calls: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

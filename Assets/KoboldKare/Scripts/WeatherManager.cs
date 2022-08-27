@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using KoboldKare;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -18,6 +19,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     private VisualEffect spawnedEffect;
     public AudioSource rainSounds;
     public AudioSource thunderSounds;
+    public GameEventGeneric midnightEvent;
     private Camera cachedCamera;
     [SerializeField]
     private ReagentContents rainContents = new ReagentContents();
@@ -50,13 +52,21 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         //StopSnow();
         origFogRange = RenderSettings.fogDensity;
         origFogColor = RenderSettings.fogColor;
+        midnightEvent.AddListener(OnMidnight);
     }
+
+    private void OnMidnight(object ignore) {
+        StopRain();
+        RandomlyRain(0.15f);
+    }
+
     private void OnDestroy() {
         //cloudMaterial.SetFloat("densityOffset", -4);
         //cloudMaterial.SetFloat("shadowMin", 0.66f);
         //cloudMaterial.SetFloat("densityMultiplier", 1f);
         skyboxMaterial.SetFloat("_CloudDensityOffset", -0.3f);
         skyboxMaterial.SetFloat("_Brightness", 0.5f);
+        midnightEvent.RemoveListener(OnMidnight);
     }
 
     public IEnumerator Rain() {
@@ -64,26 +74,17 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         rainSounds.enabled = true;
         thunderSounds.enabled = true;
         while (rainAmount < 1f) {
-            rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.fixedDeltaTime*0.1f);
-            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.fixedDeltaTime*0.1f);
-            RenderSettings.fogColor = Color.Lerp(origFogColor,fogColorWhenRaining,Time.fixedDeltaTime*0.1f);
+            rainAmount = Mathf.MoveTowards(rainAmount, 1f, Time.deltaTime*0.1f);
+            RenderSettings.fogDensity = Mathf.MoveTowards(RenderSettings.fogDensity,fogRangeWhenRaining,Time.deltaTime*0.1f);
+            RenderSettings.fogColor = Color.Lerp(origFogColor,fogColorWhenRaining,Time.deltaTime*0.1f);
             rainSounds.volume = rainAmount*0.7f;
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        thunderSounds.Play();
-        yield return new WaitForSeconds(DayNightCycle.instance.dayLength / 4f);
-        FillRaincatchers("Water");
-        while (rainAmount > 0f) {
-            rainAmount = Mathf.MoveTowards(rainAmount, 0f, Time.fixedDeltaTime*0.1f);
-            yield return new WaitForFixedUpdate();
+
+        while (rainAmount >= 1f) {
+            yield return new WaitForSeconds(100f);
+            FillRaincatchers("Water");
+            thunderSounds.Play();
         }
     }
     public IEnumerator StopRainRoutine() {
@@ -118,15 +119,17 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             StartCoroutine(nameof(Rain));
             //rainBackup.Play();
             rain.SendEvent("Fire");
+        } else {
+            StopRain();
         }
     }
 
     public void FillRaincatchers(string Reagant){
-        var items = GameObject.FindGameObjectsWithTag("CatchesRain"); //TODO: Refactor this into a static list we add/remove from dynamically
-        foreach(GameObject GO in items){
-            //Fill each container with the amount of water we want to add
-            GO.GetComponent<GenericReagentContainer>().AddMix(ReagentDatabase.GetReagent(Reagant),110,GenericReagentContainer.InjectType.Spray);
-        }        
+        //var items = GameObject.FindGameObjectsWithTag("CatchesRain"); //TODO: Refactor this into a static list we add/remove from dynamically
+        //foreach(GameObject GO in items){
+            ////Fill each container with the amount of water we want to add
+            //GO.GetComponent<GenericReagentContainer>().AddMixRPC(ReagentDatabase.GetReagent(Reagant),110,GenericReagentContainer.InjectType.Spray);
+        //}        
     }
 
     //public void StartSnow() {
@@ -210,11 +213,11 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(rainAmount);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         rainAmount = reader.ReadSingle();
     }
 }

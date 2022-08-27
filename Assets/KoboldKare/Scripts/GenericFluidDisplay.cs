@@ -10,16 +10,16 @@ public class GenericFluidDisplay : MonoBehaviour {
     public void Start() {
         scaleDirection = new Vector3(Mathf.Abs(scaleDirection.x), Mathf.Abs(scaleDirection.y), Mathf.Abs(scaleDirection.z));
         container.OnChange.AddListener(OnChanged);
-        OnChanged(GenericReagentContainer.InjectType.Vacuum);
+        OnChanged(container.GetContents(), GenericReagentContainer.InjectType.Vacuum);
     }
     public void OnDestroy() {
         if (container != null) {
             container.OnChange.RemoveListener(OnChanged);
         }
     }
-    public void OnChanged(GenericReagentContainer.InjectType injectType) {
+    public void OnChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         foreach(var m in targetRenderer.materials) {
-            m.color = container.GetColor();
+            m.color = contents.GetColor();
         }
         targetTransform.localScale = (Vector3.one - scaleDirection) + (scaleDirection * (container.volume/container.maxVolume));
     }

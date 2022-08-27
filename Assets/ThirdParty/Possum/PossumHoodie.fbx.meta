@@ -1,151 +1,431 @@
 fileFormatVersion: 2
 guid: bb69a8e51aa08a7459a0311a9878e096
 ModelImporter:
-  serializedVersion: 22
-  fileIDToRecycleName:
-    100000: Body
-    100002: Chest
-    100004: Eye_L
-    100006: Eye_R
-    100008: Head
-    100010: HeadTop_End
-    100012: Hips
-    100014: Jaw
-    100016: LeftArm
-    100018: LeftEye
-    100020: LeftFoot
-    100022: LeftForeArm
-    100024: LeftHand
-    100026: LeftHandIndex1
-    100028: LeftHandIndex2
-    100030: LeftHandIndex3
-    100032: LeftHandMiddle1
-    100034: LeftHandMiddle2
-    100036: LeftHandMiddle3
-    100038: LeftHandPinky1
-    100040: LeftHandPinky2
-    100042: LeftHandPinky3
-    100044: LeftHandRing1
-    100046: LeftHandRing2
-    100048: LeftHandRing3
-    100050: LeftHandThumb1
-    100052: LeftHandThumb2
-    100054: LeftHandThumb3
-    100056: LeftLeg
-    100058: LeftShoulder
-    100060: LeftToeBase
-    100062: LeftUpLeg
-    100064: Neck
-    100066: //RootNode
-    100068: RightArm
-    100070: RightEye
-    100072: RightFoot
-    100074: RightForeArm
-    100076: RightHand
-    100078: RightHandIndex1
-    100080: RightHandIndex2
-    100082: RightHandIndex3
-    100084: RightHandMiddle1
-    100086: RightHandMiddle2
-    100088: RightHandMiddle3
-    100090: RightHandPinky1
-    100092: RightHandPinky2
-    100094: RightHandPinky3
-    100096: RightHandRing1
-    100098: RightHandRing2
-    100100: RightHandRing3
-    100102: RightHandThumb1
-    100104: RightHandThumb2
-    100106: RightHandThumb3
-    100108: RightLeg
-    100110: RightShoulder
-    100112: RightToeBase
-    100114: RightUpLeg
-    100116: Spine
-    100118: Armature
-    100120: LeftBoob
-    100122: LeftEar
-    100124: RightBoob
-    100126: RightEar
-    100128: Tail1
-    100130: Tail2
-    100132: Tail3
-    400000: Body
-    400002: Chest
-    400004: Eye_L
-    400006: Eye_R
-    400008: Head
-    400010: HeadTop_End
-    400012: Hips
-    400014: Jaw
-    400016: LeftArm
-    400018: LeftEye
-    400020: LeftFoot
-    400022: LeftForeArm
-    400024: LeftHand
-    400026: LeftHandIndex1
-    400028: LeftHandIndex2
-    400030: LeftHandIndex3
-    400032: LeftHandMiddle1
-    400034: LeftHandMiddle2
-    400036: LeftHandMiddle3
-    400038: LeftHandPinky1
-    400040: LeftHandPinky2
-    400042: LeftHandPinky3
-    400044: LeftHandRing1
-    400046: LeftHandRing2
-    400048: LeftHandRing3
-    400050: LeftHandThumb1
-    400052: LeftHandThumb2
-    400054: LeftHandThumb3
-    400056: LeftLeg
-    400058: LeftShoulder
-    400060: LeftToeBase
-    400062: LeftUpLeg
-    400064: Neck
-    400066: //RootNode
-    400068: RightArm
-    400070: RightEye
-    400072: RightFoot
-    400074: RightForeArm
-    400076: RightHand
-    400078: RightHandIndex1
-    400080: RightHandIndex2
-    400082: RightHandIndex3
-    400084: RightHandMiddle1
-    400086: RightHandMiddle2
-    400088: RightHandMiddle3
-    400090: RightHandPinky1
-    400092: RightHandPinky2
-    400094: RightHandPinky3
-    400096: RightHandRing1
-    400098: RightHandRing2
-    400100: RightHandRing3
-    400102: RightHandThumb1
-    400104: RightHandThumb2
-    400106: RightHandThumb3
-    400108: RightLeg
-    400110: RightShoulder
-    400112: RightToeBase
-    400114: RightUpLeg
-    400116: Spine
-    400118: Armature
-    400120: LeftBoob
-    400122: LeftEar
-    400124: RightBoob
-    400126: RightEar
-    400128: Tail1
-    400130: Tail2
-    400132: Tail3
-    2100000: PossomMaterial
-    2300000: Body
-    3300000: Body
-    4300000: Body
-    9500000: //RootNode
-    13700000: Body
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Body
+  - first:
+      1: 100002
+    second: Chest
+  - first:
+      1: 100004
+    second: Eye_L
+  - first:
+      1: 100006
+    second: Eye_R
+  - first:
+      1: 100008
+    second: Head
+  - first:
+      1: 100010
+    second: HeadTop_End
+  - first:
+      1: 100012
+    second: Hips
+  - first:
+      1: 100014
+    second: Jaw
+  - first:
+      1: 100016
+    second: LeftArm
+  - first:
+      1: 100018
+    second: LeftEye
+  - first:
+      1: 100020
+    second: LeftFoot
+  - first:
+      1: 100022
+    second: LeftForeArm
+  - first:
+      1: 100024
+    second: LeftHand
+  - first:
+      1: 100026
+    second: LeftHandIndex1
+  - first:
+      1: 100028
+    second: LeftHandIndex2
+  - first:
+      1: 100030
+    second: LeftHandIndex3
+  - first:
+      1: 100032
+    second: LeftHandMiddle1
+  - first:
+      1: 100034
+    second: LeftHandMiddle2
+  - first:
+      1: 100036
+    second: LeftHandMiddle3
+  - first:
+      1: 100038
+    second: LeftHandPinky1
+  - first:
+      1: 100040
+    second: LeftHandPinky2
+  - first:
+      1: 100042
+    second: LeftHandPinky3
+  - first:
+      1: 100044
+    second: LeftHandRing1
+  - first:
+      1: 100046
+    second: LeftHandRing2
+  - first:
+      1: 100048
+    second: LeftHandRing3
+  - first:
+      1: 100050
+    second: LeftHandThumb1
+  - first:
+      1: 100052
+    second: LeftHandThumb2
+  - first:
+      1: 100054
+    second: LeftHandThumb3
+  - first:
+      1: 100056
+    second: LeftLeg
+  - first:
+      1: 100058
+    second: LeftShoulder
+  - first:
+      1: 100060
+    second: LeftToeBase
+  - first:
+      1: 100062
+    second: LeftUpLeg
+  - first:
+      1: 100064
+    second: Neck
+  - first:
+      1: 100066
+    second: //RootNode
+  - first:
+      1: 100068
+    second: RightArm
+  - first:
+      1: 100070
+    second: RightEye
+  - first:
+      1: 100072
+    second: RightFoot
+  - first:
+      1: 100074
+    second: RightForeArm
+  - first:
+      1: 100076
+    second: RightHand
+  - first:
+      1: 100078
+    second: RightHandIndex1
+  - first:
+      1: 100080
+    second: RightHandIndex2
+  - first:
+      1: 100082
+    second: RightHandIndex3
+  - first:
+      1: 100084
+    second: RightHandMiddle1
+  - first:
+      1: 100086
+    second: RightHandMiddle2
+  - first:
+      1: 100088
+    second: RightHandMiddle3
+  - first:
+      1: 100090
+    second: RightHandPinky1
+  - first:
+      1: 100092
+    second: RightHandPinky2
+  - first:
+      1: 100094
+    second: RightHandPinky3
+  - first:
+      1: 100096
+    second: RightHandRing1
+  - first:
+      1: 100098
+    second: RightHandRing2
+  - first:
+      1: 100100
+    second: RightHandRing3
+  - first:
+      1: 100102
+    second: RightHandThumb1
+  - first:
+      1: 100104
+    second: RightHandThumb2
+  - first:
+      1: 100106
+    second: RightHandThumb3
+  - first:
+      1: 100108
+    second: RightLeg
+  - first:
+      1: 100110
+    second: RightShoulder
+  - first:
+      1: 100112
+    second: RightToeBase
+  - first:
+      1: 100114
+    second: RightUpLeg
+  - first:
+      1: 100116
+    second: Spine
+  - first:
+      1: 100118
+    second: Armature
+  - first:
+      1: 100120
+    second: LeftBoob
+  - first:
+      1: 100122
+    second: LeftEar
+  - first:
+      1: 100124
+    second: RightBoob
+  - first:
+      1: 100126
+    second: RightEar
+  - first:
+      1: 100128
+    second: Tail1
+  - first:
+      1: 100130
+    second: Tail2
+  - first:
+      1: 100132
+    second: Tail3
+  - first:
+      4: 400000
+    second: Body
+  - first:
+      4: 400002
+    second: Chest
+  - first:
+      4: 400004
+    second: Eye_L
+  - first:
+      4: 400006
+    second: Eye_R
+  - first:
+      4: 400008
+    second: Head
+  - first:
+      4: 400010
+    second: HeadTop_End
+  - first:
+      4: 400012
+    second: Hips
+  - first:
+      4: 400014
+    second: Jaw
+  - first:
+      4: 400016
+    second: LeftArm
+  - first:
+      4: 400018
+    second: LeftEye
+  - first:
+      4: 400020
+    second: LeftFoot
+  - first:
+      4: 400022
+    second: LeftForeArm
+  - first:
+      4: 400024
+    second: LeftHand
+  - first:
+      4: 400026
+    second: LeftHandIndex1
+  - first:
+      4: 400028
+    second: LeftHandIndex2
+  - first:
+      4: 400030
+    second: LeftHandIndex3
+  - first:
+      4: 400032
+    second: LeftHandMiddle1
+  - first:
+      4: 400034
+    second: LeftHandMiddle2
+  - first:
+      4: 400036
+    second: LeftHandMiddle3
+  - first:
+      4: 400038
+    second: LeftHandPinky1
+  - first:
+      4: 400040
+    second: LeftHandPinky2
+  - first:
+      4: 400042
+    second: LeftHandPinky3
+  - first:
+      4: 400044
+    second: LeftHandRing1
+  - first:
+      4: 400046
+    second: LeftHandRing2
+  - first:
+      4: 400048
+    second: LeftHandRing3
+  - first:
+      4: 400050
+    second: LeftHandThumb1
+  - first:
+      4: 400052
+    second: LeftHandThumb2
+  - first:
+      4: 400054
+    second: LeftHandThumb3
+  - first:
+      4: 400056
+    second: LeftLeg
+  - first:
+      4: 400058
+    second: LeftShoulder
+  - first:
+      4: 400060
+    second: LeftToeBase
+  - first:
+      4: 400062
+    second: LeftUpLeg
+  - first:
+      4: 400064
+    second: Neck
+  - first:
+      4: 400066
+    second: //RootNode
+  - first:
+      4: 400068
+    second: RightArm
+  - first:
+      4: 400070
+    second: RightEye
+  - first:
+      4: 400072
+    second: RightFoot
+  - first:
+      4: 400074
+    second: RightForeArm
+  - first:
+      4: 400076
+    second: RightHand
+  - first:
+      4: 400078
+    second: RightHandIndex1
+  - first:
+      4: 400080
+    second: RightHandIndex2
+  - first:
+      4: 400082
+    second: RightHandIndex3
+  - first:
+      4: 400084
+    second: RightHandMiddle1
+  - first:
+      4: 400086
+    second: RightHandMiddle2
+  - first:
+      4: 400088
+    second: RightHandMiddle3
+  - first:
+      4: 400090
+    second: RightHandPinky1
+  - first:
+      4: 400092
+    second: RightHandPinky2
+  - first:
+      4: 400094
+    second: RightHandPinky3
+  - first:
+      4: 400096
+    second: RightHandRing1
+  - first:
+      4: 400098
+    second: RightHandRing2
+  - first:
+      4: 400100
+    second: RightHandRing3
+  - first:
+      4: 400102
+    second: RightHandThumb1
+  - first:
+      4: 400104
+    second: RightHandThumb2
+  - first:
+      4: 400106
+    second: RightHandThumb3
+  - first:
+      4: 400108
+    second: RightLeg
+  - first:
+      4: 400110
+    second: RightShoulder
+  - first:
+      4: 400112
+    second: RightToeBase
+  - first:
+      4: 400114
+    second: RightUpLeg
+  - first:
+      4: 400116
+    second: Spine
+  - first:
+      4: 400118
+    second: Armature
+  - first:
+      4: 400120
+    second: LeftBoob
+  - first:
+      4: 400122
+    second: LeftEar
+  - first:
+      4: 400124
+    second: RightBoob
+  - first:
+      4: 400126
+    second: RightEar
+  - first:
+      4: 400128
+    second: Tail1
+  - first:
+      4: 400130
+    second: Tail2
+  - first:
+      4: 400132
+    second: Tail3
+  - first:
+      21: 2100000
+    second: PossomMaterial
+  - first:
+      23: 2300000
+    second: Body
+  - first:
+      33: 3300000
+    second: Body
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Body
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -154,6 +434,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -162,6 +443,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -176,21 +458,33 @@ ModelImporter:
     globalScale: 38
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
@@ -198,10 +492,13 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 0
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -965,14 +1262,18 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 38
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

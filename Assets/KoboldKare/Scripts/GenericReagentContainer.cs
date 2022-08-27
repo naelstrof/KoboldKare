@@ -1,14 +1,11 @@
-﻿using ExitGames.Client.Photon;
-using KoboldKare;
-using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObservable, ISavable {
+public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable {
+    public delegate void ContainerFilledAction(GenericReagentContainer container);
+    public static event ContainerFilledAction containerFilled;
     [System.Serializable]
     public class InspectorReagent {
         public ScriptableReagent reagent;
@@ -35,13 +32,21 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         {  true,   true,   true }, // Vacuum
     };
     [System.Serializable]
-    public class ReagentContainerChangedEvent : UnityEvent<InjectType> {}
+    public class ReagentContainerChangedEvent : UnityEvent<ReagentContents, InjectType> {}
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
     public float startingMaxVolume = float.MaxValue;
     public float volume => contents.volume;
-    public float maxVolume => contents.GetMaxVolume();
+
+    public float maxVolume {
+        get => contents.GetMaxVolume();
+        set {
+            contents.SetMaxVolume(value);
+            OnChange.Invoke(contents, InjectType.Metabolize);
+        }
+    }
+
     public Color GetColor() => contents.GetColor();
     public ContainerType type;
     public ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;
@@ -53,10 +58,15 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
     public InspectorReagent[] startingReagents;
     [SerializeField]
     private ReagentContents contents;
+
+    public ReagentContents GetContents() {
+        return contents;
+    }
+
     private bool filled = false;
     private bool emptied = false;
     private bool ready = false;
-    public void Awake() {
+    protected void Awake() {
         if(ready){return;}
 
         OnChange ??= new ReagentContainerChangedEvent();
@@ -81,35 +91,70 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
 
         //Debug.Log(string.Format("[Generic Reagent Container] :: States of isFull, isEmpty, filled, and emptied: {0},{1},{2},{3}",isFull,isEmpty,filled,emptied));
     }
+    [PunRPC]
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
         return spillContents;
     }
 
-    public void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
-        if (!IsMixable(this.type, injectType)) {
+    private void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
+        if (!IsMixable(this.type, injectType) || !photonView.IsMine) {
             return;
         }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
+        SetGenes(injector.GetGenes());
     }
-    public bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
-        if (!IsMixable(type, injectType)) {
+    private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
+        if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
         contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
-    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
-        if (!IsMixable(type, injectType)) {
+    private bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+        if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
+
+    [PunRPC]
+    public void AddMixRPC(ReagentContents incomingReagents, int geneViewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
+        // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
+        if (view != null && view.TryGetComponent(out Kobold kobold)) {
+            SetGenes(kobold.GetGenes());
+        } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
+            SetGenes(geneHolder.GetGenes());
+        }
+        contents.AddMix(incomingReagents, this);
+        OnReagentContentsChanged(InjectType.Inject);
+    }
+    
+    [PunRPC]
+    public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
+        // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
+        if (view != null && view.TryGetComponent(out Kobold kobold)) {
+            SetGenes(kobold.GetGenes());
+        } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
+            SetGenes(geneHolder.GetGenes());
+        }
+        maxVolume = Mathf.Max(contents.volume + incomingReagents.volume, maxVolume);
+        
+        if (TryGetComponent(out Kobold kob)) {
+            kob.SetGenes(kob.GetGenes().With(bellySize: maxVolume));
+        }
+
+        contents.AddMix(incomingReagents, this);
+        OnReagentContentsChanged(InjectType.Inject);
+    }
+
     public ReagentContents Peek() => new ReagentContents(contents);
     public ReagentContents Metabolize(float deltaTime) => contents.Metabolize(deltaTime);
     public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);
@@ -118,14 +163,16 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
             //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
-            OnFilled.Invoke(injectType);
+            OnFilled.Invoke(contents, injectType);
+            containerFilled?.Invoke(this);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
-        OnChange.Invoke(injectType);
+        OnChange.Invoke(contents, injectType);
         if (!emptied && isEmpty) {
+            SetGenes(new KoboldGenes());
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
-            OnEmpty.Invoke(injectType);
+            OnEmpty.Invoke(contents, injectType);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;
@@ -169,20 +216,20 @@ public class GenericReagentContainer : MonoBehaviourPun, IValuedGood, IPunObserv
         if (stream.IsWriting) {
             stream.SendNext(contents);
         } else {
-            contents = (ReagentContents)stream.ReceiveNext();
-            contents.SetMaxVolume(startingMaxVolume);
+            ReagentContents newContents = (ReagentContents)stream.ReceiveNext();
+            contents.Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         if (contents == null) {
             Awake(); Start();
         }
         contents.Serialize(writer);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         if (contents == null) {
             Awake(); Start();
         }

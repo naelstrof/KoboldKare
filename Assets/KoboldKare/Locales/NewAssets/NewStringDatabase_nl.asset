@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytiek
+    m_Localized: Analyse
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -81,15 +81,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: Open Gegevens Privacypagina
+    m_Localized: Open gegevens privacypagina
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: Reset naar standaardinstellingen
+    m_Localized: Reset naar standaardwaarden
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
-    m_Localized: Sparen
+    m_Localized: Opslaan
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: Geluidseffectenvolume
+    m_Localized: Geluidseffecten volume
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
@@ -157,7 +157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: Panini-projectie
+    m_Localized: Panini -projectie
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -205,12 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: 'DIT SPEL SCHILDERT FICTIONELE PERSONAGES AF DIE DEELNEMEN AAN <#FF0000>
-      SEKSUEEL EXPLICIET GEDRAG <#FFFFFF>
-
-
-      DOOR TE KLIKKEN op <#008CFF> PLAY
-      <#FFFFFF> VERKLAART U DAT:'
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -288,7 +283,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
-    m_Localized: Kijk
+    m_Localized: Kijken
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
@@ -304,15 +299,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004712
-    m_Localized: Wissen puin
+    m_Localized: Duidelijk puin
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
-    m_Localized: Upgrade Grab
+    m_Localized: Upgrade grijper
     m_Metadata:
       m_Items: []
   - m_Id: 516095004714
-    m_Localized: Schakel de camera
+    m_Localized: Schakelcamera
     m_Metadata:
       m_Items: []
   - m_Id: 516095004715
@@ -332,15 +327,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198978
-    m_Localized: Milkshake
+    m_Localized: Melkschakel
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Aubergine sap
+    m_Localized: Auberginesap
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Meloen sap
+    m_Localized: Meloensap
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
@@ -500,7 +495,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: Maak een openbaar spel
+    m_Localized: "Cre\xEBer openbaar spel"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -516,7 +511,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Kleverige freecam
+    m_Localized: Sticky Freecam
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
@@ -532,15 +527,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: Vinden van willekeurige kamer
+    m_Localized: Willekeurige kamer vinden
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Linkerzaal
+    m_Localized: Linker kamer
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
-    m_Localized: Iets laat je verbinding verliezen!
+    m_Localized: Iets zorgde ervoor dat je de verbinding verloor!
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
@@ -548,11 +543,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbine
+    m_Localized: Machtigheid
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: Ballengrootte
+    m_Localized: Ballen maat
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -590,13 +585,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: Een magisch bevestigbaar met een knoop, mediale ring en sommige
-      hobbelige rugges.
+    m_Localized: Een magisch bevestigbaar met een knoop, mediale ring en enkele hobbelige
+      richels.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: Een magisch bevestigbaar dat lang, cilindrisch is en een uitlopende
-      tip heeft. Heeft een aantal geweldige telescopische actie!
+    m_Localized: Een magisch bevestigbaar dat lang, cilindrisch is en een wijd uitlopende
+      tip heeft. Heeft een geweldige telescopische actie!
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
@@ -609,20 +604,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Een magisch bevestigbaar dat lang is en draait naar een punt. De
-      ballen worden ge\xEFnternaliseerd!"
+    m_Localized: "Een magisch bevestigbaar dat lang is en tot op zekere hoogte duurt.
+      De ballen zijn ge\xEFnternaliseerd!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi's Dick
+    m_Localized: Kandi's lul
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
-    m_Localized: Staartzak
+    m_Localized: Staarttas
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Spiked kraag
+    m_Localized: Puntige kraag
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -630,7 +625,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: NIEUWE SAVE
+    m_Localized: Nieuwe save
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
@@ -642,7 +637,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43807311925923840
-    m_Localized: Maak aangepaste game
+    m_Localized: Maak een aangepaste game
     m_Metadata:
       m_Items: []
   - m_Id: 54368470533984256
@@ -650,11 +645,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: GOOP-kwaliteit
+    m_Localized: Goopkwaliteit
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Nippelpompen
+    m_Localized: Tepelpompen
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
@@ -662,7 +657,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
-    m_Localized: Erop
+    m_Localized: Erectie naar beneden
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
@@ -670,11 +665,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
-    m_Localized: Tekstchat
+    m_Localized: Sms -chat
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Stoomaudio
+    m_Localized: Stoom audio
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
@@ -686,17 +681,17 @@ MonoBehaviour:
 
       
 
-      Koboldkare is een DRM-gratis
-      spel. Wees alsjeblieft veilig delen, Koboldkare heeft geen scheur nodig om
-      te spelen!
+      Koboldkare is een DRM-vrij
+      spel. Wees alstublieft veilig delen, Koboldkare heeft geen crack nodig om te
+      spelen!
 
       
 
-      Heel erg bedankt voor het ondersteunen van het
-      spel!
+      Heel erg bedankt voor het steunen van het spel!
 
 
-      Controleer Steam, Itch en Patron voor updates en patch-notes.
+      Controleer
+      stoom, jeuk en Patreon voor updates en patchnotities.
 
 '
     m_Metadata:
@@ -709,5 +704,131 @@ MonoBehaviour:
     m_Localized: Spelgedrag
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Localized: Kweek je eerste Kobold!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Localized: Water en tijd zullen de Kobold laten groeien, zorg ervoor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Localized: Overdracht Kobold via pneumatisch netwerk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Localized: Je hebt de aandacht van Dragon Patron ... breng nu de goederen over.
+      Je wordt beloond.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Localized: Plant een ei!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Localized: Dragon Patron zoekt capabele karetaker, plant een ei in soepele
+      aarde.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Localized: "Koop een industri\xEBle fruitblender."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Localized: Deze Kobolds moeten worden gevoed, zoek het bouwcontract bij het
+      bouwkantoor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Localized: Voer Kobolds Fruitsap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Localized: Kobolds hebben het voedsel nodig, gebruik de molen om fruit te malen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Localized: Fokkobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Localized: We hebben lokaal geproduceerde Kobolds nodig, beginnen met een aantal
+      van je Kobolds zwanger te krijgen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Localized: Lever grote lul kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Localized: Ik heb een levering van een ras van kobolds met grote lullen nodig,
+      ik verwacht dat je dit behandelt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Localized: Lever grote kobolds met borsten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Localized: Ik heb een aflevering van een ras kobolds met grote borsten nodig,
+      ik verwacht dat je dit behandelt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Localized: Sperma buig kobolds op.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Localized: De Kobolds moeten tot de rand worden gevuld, praat hier niet verder
+      over.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Localized: Doordringen helemaal door.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Localized: Ik kan niet eens aan een verklaring denken, zorg er gewoon voor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Localized: Leveren vette kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Localized: "Milkshakes gaan rechtstreeks naar de dijen, het is in ons belang
+      om een \u200B\u200Bpaar superheavy kobolds te hebben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Localized: Oviposit een heel groot ei.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Localized: Het kan me niet schelen wat je ermee doet, we hebben een groot ei
+      nodig om uit een Kobold te komen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Localized: Maak macro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Localized: Ze moeten op zijn minst de grootte van een huis zijn. Veel geluk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Localized: Paddestoel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Localized: Heupbesturing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Localized: Pas het geheugenniveau aan
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -3,17 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityScriptableSettings;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    public static string[] settingNames = {"Sex", "Hue", "Brightness", "Saturation", "Contrast", "Dick", "TopBottom", "Thickness", "BoobSize", "KoboldSize", "DickSize", "BallSize", "BallSizePow", "DickType", "PermanentArousal", "SpeedPow", "Speed", "JumpStrength", "Fatness", "Fertility", "MaxCumInBelly", "Rainbow", "RainbowStep", "MetabolizationRate", "FIX_LAG", "WhatToSpawn", "HowMuchToSpawn"};
+    private static readonly string[] settingNames = {"Hue", "Brightness", "Saturation", "Dick", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
     public Kobold targetKobold;
-    public UnityEvent onLoad;
-    //possible dick types of the dicktype menu
-    public static string[] dickTypes = { "KandiDick", "EquineDick", "TaperedDick", "KnottedDick" };
-    public LoadCustomParts customScript = null;
-
     void Start() {
-        targetKobold.isPlayer = true;
+        //KoboldGenes genes = new KoboldGenes();
         foreach(string settingName in settingNames) {
             var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
             if(option == null){
@@ -22,9 +18,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
             }
             option.onValueChange -= OnValueChange;
             option.onValueChange += OnValueChange;
-            if(!settingName.Equals("FIX_LAG")) ProcessOption(targetKobold, option);
-            if(!settingName.Equals("WhatToSpawn")) ProcessOption(targetKobold, option);
+            //genes = ProcessOption(genes, option);
         }
+        
+        targetKobold.SetGenes(GetPlayerGenes());
     }
     void OnDestroy() {
         foreach(string settingName in settingNames) {
@@ -32,48 +29,30 @@ public class PlayerKoboldLoader : MonoBehaviour {
             option.onValueChange -= OnValueChange;
         }
     }
-    public static void ProcessOption(Kobold targetKobold, UnityScriptableSettings.ScriptableSetting setting) {
+    private static KoboldGenes ProcessOption(KoboldGenes genes, UnityScriptableSettings.ScriptableSetting setting) {
         switch(setting.name) {
-            case "Sex": targetKobold.sex = setting.value; break;
-            case "Hue": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(r:setting.value); break;
-            case "Brightness": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(g:setting.value); break;
-            case "Saturation": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(b:setting.value); break;
-            case "Contrast": targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation = targetKobold.HueBrightnessContrastSaturation.With(a:setting.value); break;
-            case "Dick":  {
-                KoboldInventory inventory = targetKobold.GetComponent<KoboldInventory>();
-
-                //Add Dicks
-                if(setting.value !=0){
-                    if (inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                        break; //Don't add dicks if we already have one
-                    }
-                    try{
-                        inventory.PickupEquipment(EquipmentDatabase.GetEquipment(dickTypes[System.Convert.ToInt32(UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting("DickType").value)]), null);
-                    }catch(System.Exception e){
-                        inventory.PickupEquipment(EquipmentDatabase.GetEquipment("EquineDick"), null);
-                    }
-                } else { //Remove Dicks
-                    while(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch) != null) {
-                        inventory.RemoveEquipment(inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch),false);
-                    }
-                }
-                
-                break;
-            }
-            case "TopBottom": targetKobold.bodyProportion.SetTopBottom(setting.value); break;
-            case "Thickness": targetKobold.bodyProportion.SetThickness(setting.value); break;
-            case "BoobSize": {
-                targetKobold.SetBaseBoobSize(setting.value*30f);
-                break;
-            }
-            
-            default:{
-                Reiikz.KoboldKare.Cheat.Cheat.ProcessOption(targetKobold, setting);
-                break;
-            }
+            case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.value*255f); break;
+            case "Dick": genes.dickEquip = (setting.value == 0f) ? byte.MaxValue : (byte)0; break;
+            case "DickSize": genes.dickSize = Mathf.Lerp(0f, 10f, setting.value); break;
+            case "BallSize": genes.ballSize = Mathf.Lerp(5f, 10f, setting.value); break;
+            case "DickThickness": genes.dickThickness = Mathf.Lerp(0.3f, 0.7f, setting.value); break;
+            case "BoobSize": genes.breastSize = setting.value * 30f; break;
+            case "KoboldSize": genes.baseSize = setting.value * 20f; break;
         }
+        return genes;
     }
+
+    public static KoboldGenes GetPlayerGenes() {
+        KoboldGenes genes = new KoboldGenes();
+        foreach (string setting in settingNames) {
+            genes = ProcessOption(genes, ScriptableSettingsManager.instance.GetSetting(setting));
+        }
+        return genes;
+    }
+
     public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {
-        ProcessOption(targetKobold, setting);
+        targetKobold.SetGenes(ProcessOption(targetKobold.GetGenes(), setting));
     }
 }

@@ -8,6 +8,11 @@ namespace Naelstrof.Inflatable {
         [SerializeField]
         private Transform targetTransform;
         private Vector3 startScale;
+
+        public void SetTransform(Transform newTargetTransform) {
+            targetTransform = newTargetTransform;
+        }
+
         public override void OnEnable() {
             startScale = targetTransform.localScale;
         }

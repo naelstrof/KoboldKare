@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8428545932236229725}
   - component: {fileID: 3023705830085370762}
-  - component: {fileID: 1650469078603936132}
   - component: {fileID: 565800559703858113}
   m_Layer: 0
   m_Name: FruitSpawner
@@ -29,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.26, y: -11.49, z: 7.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,34 +59,6 @@ MonoBehaviour:
       type: 3}
     photonName: Pineapple
   spawnOnLoad: 1
---- !u!114 &1650469078603936132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506640764043149912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f410c3a124368e42a898991d4c13a0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3023705830085370762}
-        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
-        m_MethodName: Spawn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &565800559703858113
 MonoBehaviour:
   m_ObjectHideFlags: 0

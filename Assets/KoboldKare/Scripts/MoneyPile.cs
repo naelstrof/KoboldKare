@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
-public class MoneyPile : GenericUsable, IPunObservable, IPunInstantiateMagicCallback {
+public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonViewControllerChange {
     private float internalWorth;
     private Kobold tryingToEquip;
     [SerializeField]
@@ -55,12 +56,19 @@ public class MoneyPile : GenericUsable, IPunObservable, IPunInstantiateMagicCall
             worth = (float)stream.ReceiveNext();
         }
     }
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(worth);
     }
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         worth = reader.ReadSingle();
+    }
+
+    public void OnControllerChange(Player newController, Player previousController) {
+        if (tryingToEquip.photonView.IsMine && newController == PhotonNetwork.LocalPlayer) {
+            tryingToEquip.GetComponent<MoneyHolder>().AddMoney(worth);
+            PhotonNetwork.Destroy(photonView.gameObject);
+        }
     }
 }

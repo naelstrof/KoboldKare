@@ -1,65 +1,84 @@
-﻿using KoboldKare;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
+using System.IO;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using Photon;
-using ExitGames.Client.Photon;
 
-public class Seed : GenericUsable, IValuedGood {
+public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     //public List<GameObject> _plantPrefabs;
     [SerializeField]
     private float worth = 5f;
     [SerializeField]
     private Sprite displaySprite;
-    public PhotonGameObjectReference plantPrefab;
-    public int type = 0;
     public float _spacing = 1f;
-    public UnityEvent OnFailPlant;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
+    private KoboldGenes genes;
+    private bool waitingOnPlant = false;
+
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
     public override bool CanUse(Kobold k) {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
-            if (!hitColliders[i].CompareTag("PlantableTerrain") && !hitColliders[i].CompareTag("NoBlockPlant")) {
-                return false;
-            }
-        }
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
-            if (hit.collider.CompareTag("PlantableTerrain")) {
-                if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    return true;
-                }
+            SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
+            if (tile != null && tile.GetPlantable()) {
+                return true && !waitingOnPlant;
             }
         }
         return false;
     }
-    [PunRPC]
-    public override void Use() {
-        if (!photonView.IsMine || !CanUse(null)) {
-            return;
-        }
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Collide)) {
-            if (hit.collider.CompareTag("PlantableTerrain")) {
-                if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 2f, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore)) {
-                    PhotonNetwork.Instantiate(plantPrefab.photonName, hit.point, Quaternion.LookRotation(Vector3.forward, hit.normal), 0, new object[] {PlantDatabase.GetID(plant)} );
-                    PhotonNetwork.Destroy(gameObject);
+
+    public override void LocalUse(Kobold k) {
+        int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
+        SoilTile bestTile = null;
+        float bestTileDistance = float.MaxValue;
+        for(int i=0;i<hitCount;i++) {
+            SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
+            if (tile != null && tile.GetPlantable()) {
+                float distance = Vector3.Distance(tile.transform.position, transform.position);
+                if (distance < bestTileDistance) {
+                    bestTile = tile;
+                    bestTileDistance = distance;
                 }
             }
         }
+
+        if (bestTile != null && bestTile.GetPlantable()) {
+            genes ??= new KoboldGenes().Randomize();
+            bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, PlantDatabase.GetID(plant), genes);
+        }
+
+    }
+
+    void Start() {
+        PlayAreaEnforcer.AddTrackedObject(photonView);
+    }
+
+    private void OnDestroy() {
+        PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     public float GetWorth() {
         return worth;
     }
-    public void OnValidate() {
-        plantPrefab.OnValidate();
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData != null) {
+            genes = (KoboldGenes)info.photonView.InstantiationData[0];
+        } else {
+            genes = new KoboldGenes().Randomize();
+        }
+    }
+
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
+        genes ??= new KoboldGenes().Randomize();
+        genes.Serialize(writer);
+    }
+
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
+        genes = new KoboldGenes().Deserialize(reader);
     }
 }

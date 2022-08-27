@@ -13,11 +13,15 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Kobold kobold;
     private Vilar.IK.ClassicIK solver;
     private float randomSample => 1f+Mathf.SmoothStep(0f, 1f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
-    private AnimationStationSet currentStationSet;
+    private IAnimationStationSet currentStationSet;
     private AnimationStation currentStation;
     private Animator playerModel;
     private KoboldCharacterController controller;
     private bool isInAir;
+    [SerializeField]
+    private Transform leftKneeHint;
+    [SerializeField]
+    private Transform rightKneeHint;
     private bool jumped;
     private Vector3 tempDir;
     [SerializeField]
@@ -27,9 +31,18 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [SerializeField]
     private Transform headTransform;
     [SerializeField]
-    private Transform lookDir;
-    [SerializeField]
     private AudioPack footstepPack;
+
+    private Vector2 eyeRot;
+    private float speedLerp;
+    private Vector2 networkedEyeRot;
+    private float networkedAngle;
+    private Vector2 hipVectorVelocity;
+    private Vector2 hipVector;
+    private Vector2 desiredHipVector;
+
+    private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
+    private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
 
     [SerializeField] private Rigidbody body;
     [SerializeField] private PlayerPossession playerPossession;
@@ -42,8 +55,29 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     private Vector3 lastPosition;
     private bool animating;
+    private static readonly int PenetrationSize = Animator.StringToHash("PenetrationSize");
+    private static readonly int SexFace = Animator.StringToHash("SexFace");
+    private static readonly int Orgasm = Animator.StringToHash("Orgasm");
+    private static readonly int MadHappy = Animator.StringToHash("MadHappy");
+    private static readonly int MoveX = Animator.StringToHash("MoveX");
+    private static readonly int MoveY = Animator.StringToHash("MoveY");
+    private static readonly int ThrustX = Animator.StringToHash("ThrustX");
+    private static readonly int ThrustY = Animator.StringToHash("ThrustY");
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
+    private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
 
-    public bool TryGetAnimationStationSet(out AnimationStationSet set) {
+    public void SetEyeRot(Vector2 newEyeRot) {
+        this.eyeRot = newEyeRot;
+    }
+    public void SetEyeDir(Vector3 newEyeDir) {
+        Quaternion rot = Quaternion.LookRotation(newEyeDir);
+        Vector3 euler = rot.eulerAngles;
+        eyeRot = new Vector2(euler.y, -euler.x);
+    }
+
+    public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
             set = null;
             return false;
@@ -59,7 +93,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         handler = playerModel.gameObject.AddComponent<LookAtHandler>();
         controller = GetComponentInParent<KoboldCharacterController>();
         playerModel.gameObject.AddComponent<AnimatorExtender>();
-        playerModel.gameObject.AddComponent<FootIK>();
+        FootIK ik = playerModel.gameObject.AddComponent<FootIK>();
+        ik.leftKneeHint = leftKneeHint;
+        ik.rightKneeHint = rightKneeHint;
         playerModel.gameObject.AddComponent<HandIK>();
         playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
         playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
@@ -69,15 +105,24 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [PunRPC]
     public void BeginAnimationRPC(int photonViewID, int animatorID) {
         PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-        AnimationStationSet set = view.GetComponent<AnimationStationSet>();
+        IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
         BeginAnimation(set, set.GetAnimationStations()[animatorID]);
     }
     
-    private void BeginAnimation(AnimationStationSet set, AnimationStation station) {
+    private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
         StopAnimation();
+        StopAllCoroutines();
+        kobold.GetComponent<Ragdoller>().SetLocked(true);
         currentStationSet = set;
         currentStation = station;
+        if (station.info.user != null) {
+            station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
+        }
         StartCoroutine(AnimationRoutine());
+    }
+
+    private void Start() {
+        tempDir = Vector3.forward;
     }
 
     private IEnumerator AnimationRoutine() {
@@ -87,44 +132,66 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold.body.isKinematic = true;
         solver.Initialize();
         currentStation.SetProgress(0f);
-        currentStation.OnStart(kobold);
+        currentStation.OnStartAnimation(kobold);
         float startTime = Time.time;
         float blendDuration = 1f;
+        Quaternion startRotation = kobold.body.rotation;
         while (Time.time < startTime + blendDuration) {
             float t = (Time.time - startTime) / blendDuration;
             solver.ForceBlend(t);
+            kobold.body.rotation = Quaternion.Lerp(startRotation, currentStation.transform.rotation, t);
             yield return null;
         }
         solver.ForceBlend(1f);
         yield return new WaitForSeconds(3f);
         float transitionDuration = 3f;
-        float endTransitionTime = Time.time + transitionDuration;
-        while (Time.time < endTransitionTime) {
-            currentStation.SetProgress(Mathf.MoveTowards(currentStation.progress, randomSample, 1f-(endTransitionTime-Time.timeSinceLevelLoad)/transitionDuration));
+        float startTransitionTime = Time.time;
+        while (Time.time < startTransitionTime + transitionDuration) {
+            float t = (Time.time - startTransitionTime) / transitionDuration;
+            currentStation.SetProgress(Mathf.Lerp(currentStation.progress, randomSample, t));
             yield return null;
         }
         while (animating) {
             currentStation.SetProgress(randomSample);
             yield return null;
         }
+        
+        StopAnimation();
+    }
+
+    public bool IsAnimating() {
+        return animating;
+    }
+
+    public void SetHipVector(Vector2 newHipVector) {
+        this.desiredHipVector = Vector2.ClampMagnitude(newHipVector, 1f);
+    }
+    public Vector2 GetHipVector() {
+        return desiredHipVector;
     }
 
     void Update() {
+        if (!photonView.IsMine) {
+            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
+        }
+        hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);
         if (kobold != null) {
+            playerModel.SetFloat(ThrustX, hipVector.x);
+            playerModel.SetFloat(ThrustY, hipVector.y);
             float maxPen = 0f;
-            playerModel.SetFloat("PenetrationSize", Mathf.Clamp01(maxPen * 4f));
+            playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
-                playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 1f, Time.deltaTime * 2f));
+                playerModel.SetFloat(SexFace, Mathf.Lerp(playerModel.GetFloat(SexFace), 1f, Time.deltaTime * 2f));
             } else {
-                playerModel.SetFloat("SexFace", Mathf.Lerp(playerModel.GetFloat("SexFace"), 0f, Time.deltaTime));
+                playerModel.SetFloat(SexFace, Mathf.Lerp(playerModel.GetFloat(SexFace), 0f, Time.deltaTime));
             }
             foreach (var dickSet in kobold.activeDicks) {
                 if (dickSet.dick.TryGetPenetrable(out Penetrable penetrable)) {
-                    playerModel.SetFloat("SexFace", 1f);
+                    playerModel.SetFloat(SexFace, 1f);
                 }
             }
-            playerModel.SetFloat("Orgasm", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
-            playerModel.SetFloat("MadHappy", Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
+            playerModel.SetFloat(Orgasm, Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
+            playerModel.SetFloat(MadHappy, Mathf.Clamp01(Mathf.Abs(kobold.stimulation / kobold.stimulationMax)));
         }
 
         if (animating) {
@@ -150,106 +217,122 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.01f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
-        dir = Quaternion.Inverse(Quaternion.Euler(0,headTransform.rotation.eulerAngles.y,0)) * dir;
-        float speed = velocity.magnitude;
-        if ( speed < 1f ) {
-            dir *= speed;
-        }
-        tempDir.x = Mathf.MoveTowards(tempDir.x, dir.x, 5f * Time.deltaTime);
-        if (controller.grounded) {
-            if (dir.z > 0f) {
-                tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z + Mathf.Abs(dir.y), 5f * Time.deltaTime);
-            } else {
-                tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z - Mathf.Abs(dir.y), 5f * Time.deltaTime);
-            }
-        } else {
-            tempDir.z = Mathf.MoveTowards(tempDir.z, dir.z, 5f * Time.deltaTime);
-        }
-        playerModel.SetFloat("MoveX", tempDir.x);
-        playerModel.SetFloat("MoveY", tempDir.z);
-        float s = speed;
-        if (controller.inputCrouched ) {
-            s *= crouchedAnimationSpeedMultiplier;
-        } else {
-            s *= standingAnimationSpeedMultiplier;
-        }
+        //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
+        dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
+        float speedTarget = velocity.With(y: 0).magnitude;
+        speedTarget *= Mathf.Lerp(standingAnimationSpeedMultiplier, crouchedAnimationSpeedMultiplier,
+            controller.GetInputCrouched());
         if (controller.inputWalking) {
-            s *= walkingAnimationSpeedMultiplier;
+            speedTarget *= walkingAnimationSpeedMultiplier;
         }
-        s /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
-        playerModel.SetFloat("Speed", s == 0 ? 1f : s);
-        if (controller.enabled) {
-            walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
-        } else {
-            walkDust.SetFloat("Speed", 0f);
+        speedLerp = Mathf.MoveTowards(speedLerp, speedTarget, Time.deltaTime * 10f);
+        float speed = speedLerp;
+        tempDir = Vector3.RotateTowards(tempDir, dir, Time.deltaTime * 10f, 0f);
+        playerModel.SetFloat(MoveX, tempDir.x);
+        playerModel.SetFloat(MoveY, tempDir.z);
+        speed /= Mathf.Lerp(transform.lossyScale.x,1f,0.5f);
+        playerModel.SetFloat(Speed, speed);
+        
+        if (walkDust.HasFloat("Speed")) {
+            if (controller.enabled) {
+                walkDust.SetFloat("Speed", velocity.magnitude * (controller.grounded ? 1f : 0f));
+            } else {
+                walkDust.SetFloat("Speed", 0f);
+            }
         }
-        playerModel.SetBool("Jump", controller.jumped);
-        playerModel.SetBool("Grounded", controller.grounded);
+
+        playerModel.SetBool(Jump, controller.jumped);
+        playerModel.SetBool(Grounded, controller.grounded);
         crouchLerper = Mathf.MoveTowards(crouchLerper, controller.crouchAmount, 3f*Time.deltaTime);
-        playerModel.SetFloat("CrouchAmount", crouchLerper);
+        playerModel.SetFloat(CrouchAmount, crouchLerper);
         //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
         //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
+        
+        //Vector3 lookPos = controller.transform.position + controller.transform.forward;
+        Vector3 lookPos = headTransform.position + eyeDir;
+        //if (playerPossession != null) {
+            //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
+        //}
+
         if (animating) {
-            handler.SetLookAtWeight(1f, 0f, 1f, 1f, 1f);
+            currentStation.SetLookAtPosition(lookPos);
+            currentStation.SetHipOffset(hipVector);
+            handler.SetLookAtWeight(0.7f, 0f, 1f, 1f, 0.45f);
         } else {
-            handler.SetLookAtWeight(1f, 0.5f, 1f, 1f, 1f);
+            handler.SetLookAtWeight(0.7f, 0.22f, 1f, 1f, 0.45f);
         }
-        handler.SetLookAtPosition(lookDir.position);
+        handler.SetLookAtPosition(lookPos);
     }
 
-    public void StopAnimation() {
+    [PunRPC]
+    public void StopAnimationRPC() {
+        StopAnimation();
+    }
+
+    private void StopAnimation() {
+        kobold.GetComponent<Ragdoller>().SetLocked(false);
         if (!animating) {
             return;
         }
         StopAllCoroutines();
-        solver.enabled = false;
-        controller.enabled = true;
-        kobold.body.isKinematic = false;
-        solver.CleanUp();
+        StartCoroutine(StopAnimationRoutine());
         animating = false;
-        if (currentStation.info.user == kobold) {
+        if (currentStation != null && currentStation.info.user == kobold) {
             currentStation.info.user = null;
         }
         currentStation = null;
         currentStationSet = null;
     }
+
+    private IEnumerator StopAnimationRoutine() {
+        float duration = 1f;
+        float startTime = Time.time;
+        Quaternion startRotation = kobold.body.rotation;
+        Quaternion endRotation = Quaternion.Euler(0, eyeRot.x, 0);
+        while (Time.time < startTime + duration) {
+            float t = (Time.time - startTime) / duration;
+            solver.ForceBlend(1f - t);
+            kobold.body.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            yield return null;
+        }
+        solver.ForceBlend(0f);
+        solver.enabled = false;
+        controller.enabled = true;
+        kobold.body.isKinematic = false;
+        solver.CleanUp();
+    }
+
     void FixedUpdate() {
         if (playerPossession == null) {
             return;
         }
-        Quaternion characterRot = Quaternion.Euler(0, playerPossession.GetEyeRot().x, 0);
+        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 5f;
-        Vector3 cross = Vector3.Cross(body.transform.forward, fdir);
-        float angleDiff = Mathf.Max(Vector3.Angle(body.transform.forward, fdir) - deflectionForgivenessDegrees, 0f);
-        body.AddTorque(cross*(angleDiff*5f), ForceMode.Acceleration);
+        float deflectionForgivenessDegrees = 45f;
+        var forward = body.transform.forward;
+        Vector3 cross = Vector3.Cross(forward, fdir);
+        float angleDiff = Mathf.Max(Vector3.Angle(forward, fdir) - deflectionForgivenessDegrees, 0f);
+        body.AddTorque(cross*(angleDiff*3f), ForceMode.Acceleration);
     }
 
+    // Animations are something that cannot have packets dropped, so we sync via RPC
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            if (animating) {
-                stream.SendNext(currentStationSet.photonView.ViewID);
-                stream.SendNext(currentStationSet.GetAnimationStations().IndexOf(currentStation));
-            } else {
-                stream.SendNext(-1);
-                stream.SendNext(-1);
-            }
+            stream.SendNext(eyeRot);
+            stream.SendNext(hipVector);
         } else {
-            int photonViewID = (int)stream.ReceiveNext();
-            int animationID = (int)stream.ReceiveNext();
-            if (photonViewID != -1 &&
-                (!animating || currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
-                 currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
-                PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-                AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
-                if (animating) {
-                    StopAnimation();
-                }
-                BeginAnimation(set, set.GetAnimationStations()[animationID]);
+            networkedEyeRot = (Vector2)stream.ReceiveNext();
+            if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
+                networkedEyeRot.x -= 360f;
             }
+            if (networkedEyeRot.x < eyeRot.x-360f*0.5f) {
+                networkedEyeRot.x += 360f;
+            }
+            networkedAngle = Vector2.Distance(networkedEyeRot, eyeRot);
+            desiredHipVector = (Vector2)stream.ReceiveNext();
         }
     }
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         if (animating) {
             writer.Write(currentStationSet.photonView.ViewID);
             writer.Write(currentStationSet.GetAnimationStations().IndexOf(currentStation));
@@ -259,14 +342,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         int photonViewID = reader.ReadInt32();
         int animationID = reader.ReadInt32();
         if (photonViewID != -1 &&
             (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
              currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
             PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-            AnimationStationSet set = view.GetComponentInChildren<AnimationStationSet>();
+            IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
             if (animating) {
                 StopAnimation();
             }

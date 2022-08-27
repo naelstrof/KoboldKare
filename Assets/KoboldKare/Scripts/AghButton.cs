@@ -4,8 +4,30 @@ using UnityEngine;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.PackageManager;
 
 public static class AghButton {
+    [MenuItem("Tools/KoboldKare/FindInvalidTransforms")]
+    public static void FindInvalidTransform() {
+        foreach (GameObject g in Object.FindObjectsOfType<GameObject>(true)) {
+            Quaternion checkQuat = g.transform.rotation;
+            Vector3 checkPos = g.transform.position;
+            if (float.IsNaN(checkQuat.x) ||
+                float.IsNaN(checkQuat.y) ||
+                float.IsNaN(checkQuat.z) ||
+                float.IsNaN(checkQuat.w) ||
+                float.IsNaN(checkPos.x) ||
+                float.IsNaN(checkPos.y) ||
+                float.IsNaN(checkPos.z)) {
+                Selection.activeObject = g;
+                Debug.Log("Found invalid transform!", g);
+                return;
+            }
+        }
+
+        Debug.Log("None found!");
+    }
+
     [MenuItem("Tools/KoboldKare/HomogenizeButtons")]
     public static void HomogenizeButtons() {
         ColorBlock block = new ColorBlock();
@@ -61,18 +83,47 @@ public static class AghButton {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
             var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var check = UnityEditor.PackageManager.PackageInfo.FindForAssetPath(path1);
+            if (check != null && check.source != PackageSource.Local && check.source != PackageSource.Embedded) {
+                continue;
+            }
+
+            string reason = "";
             var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
             if (go.IsKeywordEnabled("_SPECULARHIGHTLIGHTS_OFF")) {
                 go.DisableKeyword("_SPECULARHIGHTLIGHTS_OFF");
+                reason = "_SPECULARHIGHTLIGHTS_OFF";
+            }
+            if (go.IsKeywordEnabled("_RECEIVE_SHADOWS_OFF")) {
+                go.DisableKeyword("_RECEIVE_SHADOWS_OFF");
+                reason = "_RECEIVE_SHADOWS_OFF";
             }
             if (go.IsKeywordEnabled("_ENVIRONMENTREFLECTIONS_OFF")) {
                 go.DisableKeyword("_ENVIRONMENTREFLECTIONS_OFF");
+                reason = "_ENVIRONMENTREFLECTIONS_OFF";
             }
             if (go.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON")) {
                 go.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                reason = "_ALPHAPREMULTIPLY_ON";
             }
-            EditorUtility.SetDirty(go);
+            if (go.IsKeywordEnabled("_OCCLUSIONMAP")) {
+                go.DisableKeyword("_OCCLUSIONMAP");
+                reason = "_OCCLUSIONMAP";
+            }
+            if (go.IsKeywordEnabled("_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A")) {
+                go.DisableKeyword("_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A");
+                reason = "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A";
+            }
+
+            if (!string.IsNullOrEmpty(reason)) {
+                EditorUtility.SetDirty(go);
+                Debug.Log($"Selecting {go} because {reason}");
+                Selection.activeObject = go;
+                return;
+            }
         }
+
+        Debug.Log("No found errornous materials.");
     }
     [MenuItem("Tools/KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {

@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.295}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1799758763891814231}
   m_RootOrder: 2
@@ -57,6 +58,7 @@ Transform:
   m_LocalRotation: {x: -0.70710576, y: -0, z: -0, w: 0.7071079}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2508306, y: 0.2508306, z: 0.2508306}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1799758763891814231}
   m_RootOrder: 1
@@ -86,12 +88,11 @@ GameObject:
   - component: {fileID: 1799758763891814231}
   - component: {fileID: 1799758763891814229}
   - component: {fileID: 1799758763891814226}
-  - component: {fileID: 1799758763891814227}
-  - component: {fileID: 1799758763891814224}
   - component: {fileID: 1799758763891814225}
   - component: {fileID: 1204661327958881293}
   - component: {fileID: 4158865679857325936}
   - component: {fileID: 3693518083118902490}
+  - component: {fileID: 9122325249146735694}
   m_Layer: 11
   m_Name: Onahole
   m_TagString: Untagged
@@ -109,6 +110,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4463869861390397286}
   - {fileID: 1799758762872091285}
@@ -154,56 +156,10 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1799758763891814224}
+  - {fileID: 9122325249146735694}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1799758763891814227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799758763891814238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a937c7dc07dbc4db79c466d51e1a25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClose: 0
-  isVeryFar: 0
-  OnLODClose:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODFar:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLODUnImposter:
-    m_PersistentCalls:
-      m_Calls: []
-  trackedRigidbodies:
-  - {fileID: 1799758763891814229}
-  canLODCondition: []
-  resource: 1
---- !u!114 &1799758763891814224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1799758763891814238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &1799758763891814225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,17 +176,6 @@ MonoBehaviour:
   - renderer: {fileID: 8103542828081795231}
     pickedUpMaterial: {fileID: 0}
     defaultMaterial: {fileID: 2100000, guid: e73b63708b27a3a46af5761807019674, type: 2}
-  onGrab:
-    m_PersistentCalls:
-      m_Calls: []
-  onRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  onThrow:
-    m_PersistentCalls:
-      m_Calls: []
-  bodies:
-  - {fileID: 1799758763891814229}
   renderers:
   - {fileID: 8103542828081795231}
   center: {fileID: 1799758763891814231}
@@ -278,16 +223,17 @@ MonoBehaviour:
   - {fileID: 4971669995362533252}
   splineTension: 0.5
   listeners:
-  - id: 0
-  - id: 1
-  - id: 2
-  - id: 3
-  - id: 4
-  - id: 5
-  - id: 6
+  - rid: 0
+  - rid: 1
+  - rid: 2
+  - rid: 3
+  - rid: 4
+  - rid: 5
+  - rid: 6
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0
@@ -299,7 +245,7 @@ MonoBehaviour:
         baseGirthRadius: 0.07
         blendShapeGirthRadius: 0.15
         overdrive: 1
-    00000001:
+    - rid: 1
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0.277
@@ -311,7 +257,7 @@ MonoBehaviour:
         baseGirthRadius: 0.022
         blendShapeGirthRadius: 0.075
         overdrive: 1
-    00000002:
+    - rid: 2
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0.404
@@ -323,7 +269,7 @@ MonoBehaviour:
         baseGirthRadius: 0.022
         blendShapeGirthRadius: 0.075
         overdrive: 1
-    00000003:
+    - rid: 3
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0.506
@@ -335,7 +281,7 @@ MonoBehaviour:
         baseGirthRadius: 0.022
         blendShapeGirthRadius: 0.075
         overdrive: 1
-    00000004:
+    - rid: 4
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0.606
@@ -347,7 +293,7 @@ MonoBehaviour:
         baseGirthRadius: 0.022
         blendShapeGirthRadius: 0.075
         overdrive: 1
-    00000005:
+    - rid: 5
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 0.744
@@ -359,7 +305,7 @@ MonoBehaviour:
         baseGirthRadius: 0.022
         blendShapeGirthRadius: 0.075
         overdrive: 1
-    00000006:
+    - rid: 6
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         t: 1
@@ -371,6 +317,18 @@ MonoBehaviour:
         baseGirthRadius: 0.07
         blendShapeGirthRadius: 0.15
         overdrive: 1
+--- !u!114 &9122325249146735694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799758763891814238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3091891063828334654
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +355,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.304}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1799758763891814231}
   m_RootOrder: 4
@@ -427,6 +386,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.003}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1799758763891814231}
   m_RootOrder: 3
@@ -457,6 +417,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1799758763891814231}
   m_RootOrder: 5

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7892042725618938985}
   - component: {fileID: 7892042725618938982}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: TableAnimationStation2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.9577771, z: -0, w: -0.28751203}
   m_LocalPosition: {x: -0.03512056, y: 0, z: 0.47169858}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7892042726207317677}
   m_RootOrder: 0
@@ -350,19 +351,9 @@ MonoBehaviour:
     - {x: 0, y: 0.94724214, z: 0, w: 0.3207209}
     - {x: 0.0018969491, y: 0.94730514, z: -0.0056027295, w: 0.32074314}
   editSelection: 9
-  previewActive: 1
   animProgress: 76.908615
-  lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
-  previewCharacterInstance: {fileID: 0}
   linkedStations:
     values:
     - {fileID: 7892042725667799121}
@@ -380,7 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7892042725667799150}
   - component: {fileID: 7892042725667799121}
-  m_Layer: 20
+  m_Layer: 11
   m_Name: TableAnimationStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,6 +388,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7892042726207317677}
   m_RootOrder: 1
@@ -720,25 +712,15 @@ MonoBehaviour:
     - {x: 0, y: 0.034833413, z: 0, w: -0.99939394}
     - {x: 0, y: 0.034833413, z: 0, w: -0.99939394}
   editSelection: 7
-  previewActive: 1
   animProgress: 76.908615
-  lastEditorTime: 0
-  onEnd:
-    m_PersistentCalls:
-      m_Calls: []
-  onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
-  previewCharacterInstance: {fileID: 0}
   linkedStations:
     values:
     - {fileID: 7892042725618938982}
     - {fileID: 7892042725667799121}
   info:
-    needsPenetrator: 1
+    needsPenetrator: 0
     user: {fileID: 0}
 --- !u!1 &7892042726207317675
 GameObject:
@@ -750,8 +732,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7892042726207317677}
   - component: {fileID: 3568346791208984836}
-  - component: {fileID: 9029491333355822978}
-  m_Layer: 20
+  - component: {fileID: 1589356409721103926}
+  - component: {fileID: 693425491391200492}
+  m_Layer: 11
   m_Name: TableStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -768,6 +751,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.98893064, z: 0, w: -0.14837895}
   m_LocalPosition: {x: -133.143, y: 50.97, z: -925.993}
   m_LocalScale: {x: 1.4285716, y: 1.4285715, z: 1.4285716}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7892042725618938985}
   - {fileID: 7892042725667799150}
@@ -792,11 +776,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1589356409721103926}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &9029491333355822978
+--- !u!114 &1589356409721103926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -805,9 +790,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7892042726207317675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6e131632140ed459309d489c1e52b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stations:
-  - {fileID: 7892042725667799121}
+  breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
+  animationStations:
   - {fileID: 7892042725618938982}
+  - {fileID: 7892042725667799121}
+--- !u!65 &693425491391200492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892042726207317675}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.92, y: 1.18, z: 1.54}
+  m_Center: {x: 0, y: 0.51, z: 0.24}

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(Photon.Pun.PhotonView)), RequireComponent(typeof(GenericReagentContainer))]
-public class BombUsable : GenericUsable {
+public class BombUsable : GenericUsable, IDamagable {
     [SerializeField]
     private Sprite bombSprite;
     private bool fired = false;
@@ -24,15 +24,42 @@ public class BombUsable : GenericUsable {
     [PunRPC]
     public override void Use() {
         base.Use();
-        if (!fired) {
-            effect.gameObject.SetActive(true);
-            animator.SetTrigger("Burn");
-            if (photonView.IsMine) {
-                // Mix the water with the potassium...
-                // It should sizzle and blow up.
-                container.AddMix(ReagentDatabase.GetReagent("Water"), 40f, GenericReagentContainer.InjectType.Inject);
-            }
-            fired = true;
+        Fire();
+    }
+
+    private void Fire() {
+        if (fired) {
+            return;
         }
+
+        effect.gameObject.SetActive(true);
+        animator.SetTrigger("Burn");
+        if (photonView.IsMine) {
+            // Mix the water with the potassium...
+            // It should sizzle and blow up.
+            ReagentContents contents = new ReagentContents();
+            contents.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(40f));
+            container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                contents, container.photonView.ViewID);
+        }
+        fired = true;
+    }
+
+    public float GetHealth() {
+        return 1f;
+    }
+
+    [PunRPC]
+    public void Damage(float amount) {
+        if (!fired) {
+            Fire();
+        } else {
+            if (photonView.IsMine) {
+                PhotonNetwork.Destroy(gameObject);
+            }
+        }
+    }
+
+    public void Heal(float amount) {
     }
 }

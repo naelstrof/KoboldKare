@@ -31,22 +31,14 @@ MonoBehaviour:
   OnSettingChanged:
     m_PersistentCalls:
       m_Calls: []
-  defaultValue: 2
+  defaultValue: 1
   minValue: 0
-  maxValue: 2
+  maxValue: 1
   dropdownOptions:
   - m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
       m_KeyId: 516090810375
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
-    m_TableEntryReference:
-      m_KeyId: 516090810377
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -60,4 +52,5 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

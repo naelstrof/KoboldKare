@@ -13,7 +13,7 @@ public class Sleeper : GenericUsable {
         return sleepSprite;
     }
     public override bool CanUse(Kobold k) {
-        bool canSleep = true;
+        /*bool canSleep = true;
         foreach(var player in PhotonNetwork.PlayerList) {
             if (player.TagObject != null) {
                 if (Vector3.Distance((player.TagObject as Kobold).transform.position,transform.position)>10f) {
@@ -21,8 +21,8 @@ public class Sleeper : GenericUsable {
                     break;
                 }
             }
-        }
-        return canSleep;
+        }*/
+        return true;
     }
     public override void LocalUse(Kobold k) {
         photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
@@ -35,8 +35,8 @@ public class Sleeper : GenericUsable {
         startSleep.Raise(null);
         yield return new WaitForSeconds(0.5f);
         sleep.Raise(null);
-        DayNightCycle.instance.Sleep();
+        DayNightCycle.StaticSleep();
     }
-    public override void Save(BinaryWriter writer, string version) { }
-    public override void Load(BinaryReader reader, string version) { }
+    public override void Save(BinaryWriter writer) { }
+    public override void Load(BinaryReader reader) { }
 }

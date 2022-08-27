@@ -667,13 +667,130 @@ MonoBehaviour:
     m_Key: SETTING_CHANGE_REGION
     m_Metadata:
       m_Items: []
+  - m_Id: 197833684424032256
+    m_Key: KOBOLD_SPAWN_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169600
+    m_Key: KOBOLD_SPAWN_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169601
+    m_Key: KOBOLD_SELL_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169602
+    m_Key: KOBOLD_SELL_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169603
+    m_Key: PLANT_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 197833684470169604
+    m_Key: PLANT_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332828946432
+    m_Key: PURCHASE_GRINDER_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500864
+    m_Key: PURCHASE_GRINDER_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500865
+    m_Key: FRUIT_GRIND_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500866
+    m_Key: FRUIT_GRIND_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500867
+    m_Key: BREED_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500868
+    m_Key: BREED_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500869
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332862500870
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695168
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695169
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695170
+    m_Key: CUMFLATE_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695171
+    m_Key: CUMFLATE_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695172
+    m_Key: ALL_THE_WAY_THROUGH_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695173
+    m_Key: ALL_THE_WAY_THROUGH_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695174
+    m_Key: FATTEN_KOBOLD_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695175
+    m_Key: FATTEN_KOBOLD_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695176
+    m_Key: DELIVER_LARGE_EGG_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695177
+    m_Key: DELIVER_LARGE_EGG_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Key: CREATE_MACRO_KOBOLD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Key: CREATE_MACRO_KOBOLD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202939310757433344
+    m_Key: REAGENT_MUSHROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202987527876431872
+    m_Key: CONTROLS_HIP_CONTROL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 202998194956193792
+    m_Key: CONTROLS_CROUCH_ADJUST
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    id: 0
+    rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:

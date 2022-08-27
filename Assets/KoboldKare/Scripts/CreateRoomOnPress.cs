@@ -6,6 +6,7 @@ using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
 using UnityEngine.Localization;
+using UnityEngine.SceneManagement;
 
 public class CreateRoomOnPress : MonoBehaviour {
     public TMP_InputField roomNameField;
@@ -18,11 +19,13 @@ public class CreateRoomOnPress : MonoBehaviour {
         if (newGameString == null || saveDropdown == null) {
             return;
         }
+
+        roomNameField.Select();
         //saveDropdown.options = new List<TMP_Dropdown.OptionData>();
         //saveDropdown.options.Add(new TMP_Dropdown.OptionData(newGameString.GetLocalizedString()));
         //SaveManager.SaveList list = SaveManager.GetSaveList(true);
         //foreach(string savename in list.fileNames) {
-            //saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
+        //saveDropdown.options.Add(new TMP_Dropdown.OptionData(savename, saveIcon));
         //}
     }
     public IEnumerator CreateRoomRoutine() {
@@ -38,8 +41,11 @@ public class CreateRoomOnPress : MonoBehaviour {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());
     }
     public IEnumerator JoinRoomRoutine(string roomName) {
+        Popup p = PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRoom(roomName);
+        yield return new WaitUntil(() => PhotonNetwork.InRoom && SceneManager.GetActiveScene().name == "MainMap");
+        PopupHandler.instance.ClearPopup(p);
     }
     public void JoinRoom() {
         GameManager.instance.StartCoroutine(JoinRoomRoutine(roomNameField.text));

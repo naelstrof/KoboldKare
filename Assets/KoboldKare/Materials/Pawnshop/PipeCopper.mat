@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PipeCopper
   m_Shader: {fileID: 4800000, guid: 9360c483d0aebd74f89a07886916938c, type: 3}
-  m_ShaderKeywords: _METALLICGLOSSMAP_ON _METALLICSPECGLOSSMAP _NORMALMAP _NORMALMAP_ON
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _NORMALMAP
+  - _NORMALMAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -28,11 +31,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 4e5d594c142021b4fb8957fe1c2307e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7ad916cda5ea434cb618813467e7138, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 1a313ec0a14d4614f8a803c87becc9ac, type: 3}
+        m_Texture: {fileID: 2800000, guid: 313f93b4492f8444eb8ad793673662cd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMapA:
@@ -64,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 3095465430048a747946040d499c0006, type: 3}
+        m_Texture: {fileID: 2800000, guid: d06ad1d336da31744a6865b91ccc4965, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -95,6 +98,19 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
@@ -115,6 +131,7 @@ Material:
     - _Metallic: 1
     - _NORMALMAP: 1
     - _OcclusionStrength: 1
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 1

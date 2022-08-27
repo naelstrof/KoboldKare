@@ -17,4 +17,4 @@ MonoBehaviour:
     gameObject: {fileID: 114852081462200378, guid: 974826cd1bddc204db36aab32aadf599,
       type: 3}
     photonName: Bucket
-  cost: 25
+  cost: 15

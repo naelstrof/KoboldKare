@@ -41,7 +41,7 @@ TagManager:
   - AttachPoints
   - SafeZones
   - AnimationSet
-  - 
+  - PlayerPushable
   - AudioReverb
   - 
   - 

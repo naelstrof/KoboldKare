@@ -104,7 +104,17 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     // Inputs, controlled by external player or AI script
     public Vector3 inputDir = new Vector3(0, 0, 0);
     public bool inputJump = false;
-    public bool inputCrouched = false;
+    private float inputCrouched = 0f;
+    private float targetCrouched;
+    private float targetCrouchedVel;
+
+    public void SetInputCrouched(float input) {
+        targetCrouched = Mathf.Clamp01(input);
+    }
+    public float GetInputCrouched() {
+        return targetCrouched;
+    }
+
     public bool inputWalking = false;
 
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
@@ -163,6 +173,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     //public Transform hipsTransform;
     private void Start() {
         body = GetComponent<Rigidbody>();
+        body.useGravity = photonView.IsMine;
         colliderFullHeight = collider.height;
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
@@ -183,7 +194,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     private void CheckCrouched() {
         // Calculate height difference of just the collider
         float oldHeight = collider.height;
-        collider.height = Mathf.MoveTowards(collider.height, inputCrouched ? crouchHeight : colliderFullHeight, Time.deltaTime*2f);
+        collider.height = Mathf.MoveTowards(collider.height, Mathf.Lerp( colliderFullHeight, crouchHeight, inputCrouched), Time.deltaTime*2f);
         float diff = (collider.height - oldHeight) / 2f;
         // If we're uncrouching and we hit something, undo the crouch progress.
         if (diff > 0 && Stuck()) {
@@ -202,6 +213,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
                 body.MovePosition(body.position - new Vector3(0, diff, 0)/2f);
             }
         }
+
         worldModel.localPosition = defaultWorldModelPosition + worldModelOffset / worldModel.parent.lossyScale.y;
     }
 
@@ -260,9 +272,6 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
             groundingPID.UpdatePID(-(distanceToGround - effectiveStepHeight), Time.fixedDeltaTime);
             if (jumpTimer <= 0) {
                 velocity += Vector3.up * Mathf.Min(groundingPID.GetCorrection(), jumpStrength);
-            } else {
-                // Don't push the capsule down if we're jumping.
-                velocity += Vector3.up * Mathf.Clamp(groundingPID.GetCorrection(), 0f, jumpStrength);
             }
         } else {
             floorNormal = Vector3.up;
@@ -286,6 +295,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (!enabled) {
             return;
         }
+
+        inputCrouched = Mathf.SmoothDamp(inputCrouched, targetCrouched, ref targetCrouchedVel, 0.1f);
         CheckCrouched();
     }
 
@@ -311,7 +322,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         groundVelocity = Vector3.zero;
         GroundCalculate();
         if ( !grounded ) {
-            body.AddForce(gravityMod * transform.localScale.x, ForceMode.Acceleration);
+            velocity += gravityMod * (transform.localScale.x * Time.deltaTime);
+            //body.AddForce(gravityMod * transform.localScale.x, ForceMode.Acceleration);
             //velocity += gravityMod * transform.lossyScale.x;
         }
         JumpCheck();
@@ -319,6 +331,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (grounded) {
             Friction();
         }
+        body.useGravity = !grounded;
         if (inputDir.magnitude == 0) {
             Accelerate(Vector3.forward, 0f, effectiveAccel);
         } else {
@@ -326,7 +339,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         }
         CheckSounds();
         velocity += groundVelocity;
-        body.velocity = velocity;
+        if (photonView.IsMine) {
+            body.velocity = velocity;
+        }
     }
 
     private void JumpCheck() {
@@ -365,20 +380,21 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(this.inputJump);
-            stream.SendNext(this.inputCrouched);
+            stream.SendNext(this.targetCrouched);
         } else {
             inputJump = (bool)stream.ReceiveNext();
-            inputCrouched = (bool)stream.ReceiveNext();
+            targetCrouched = (float)stream.ReceiveNext();
         }
     }
 
-    public void Save(BinaryWriter writer, string version) {
+    public void Save(BinaryWriter writer) {
         writer.Write(inputJump);
-        writer.Write(inputCrouched);
+        writer.Write(targetCrouched);
     }
 
-    public void Load(BinaryReader reader, string version) {
+    public void Load(BinaryReader reader) {
         inputJump = reader.ReadBoolean();
-        inputCrouched = reader.ReadBoolean();
+        targetCrouched = reader.ReadSingle();
     }
+
 }

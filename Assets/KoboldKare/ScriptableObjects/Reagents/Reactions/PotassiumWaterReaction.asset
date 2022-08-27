@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32869a6bcc471024096a008764badf8f, type: 3}
   m_Name: PotassiumWaterReaction
   m_EditorClassIdentifier: 
-  OnReaction:
-    m_PersistentCalls:
-      m_Calls: []
+  reactions:
+  - rid: 5882124624437706776
   reactants:
   - reactant: {fileID: 11400000, guid: f8e23aff621a5594a84b2a269e9bb894, type: 2}
     coefficient: 1
@@ -23,3 +22,12 @@ MonoBehaviour:
   products:
   - reactant: {fileID: 11400000, guid: e5adf269b9ec0d340b1c41167ec79b76, type: 2}
     coefficient: 2
+  references:
+    version: 2
+    RefIds:
+    - rid: 5882124624437706776
+      type: {class: ExplosionReaction, ns: , asm: Assembly-CSharp}
+      data:
+        sizzle: {fileID: 11400000, guid: 4fd97e3165daac749909a0ef9780e307, type: 2}
+        explosion: {fileID: 315106991610496841, guid: 1eb252bc61f5bf94cb2976c62bebb0eb,
+          type: 3}

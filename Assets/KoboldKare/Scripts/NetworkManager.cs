@@ -13,9 +13,10 @@ using KoboldKare;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
-public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback {
+public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
     public ServerSettings settings;
     public bool online {
         get {
@@ -29,7 +30,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     [NonSerialized]
     private List<Transform> spawnPoints = new List<Transform>();
-    public GameEventGeneric SpawnEvent;
     public IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
@@ -77,6 +77,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
+        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
@@ -95,6 +96,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
+        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
@@ -143,6 +145,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     public IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
+        PopupHandler.instance.ClearAllPopups();
         PopupHandler.instance.SpawnPopup("Disconnect", true, "Error " + returnCode + ": " + message);
     }
 
@@ -182,9 +185,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (spawnPoints.Count > 0) {
             pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
         }
-        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[] {true});
+        GameObject player = PhotonNetwork.Instantiate("GrabbableKobold4", pos, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetPlayerGenes(), true});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-        SpawnEvent.Raise(null);
         PopupHandler.instance.ClearAllPopups();
     }
     public void SpawnControllablePlayer() {
@@ -194,6 +196,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
         PopupHandler.instance.ClearAllPopups();
+        GameManager.instance.Pause(false);
         //if (popup != null) {
         //popup.Hide();
         //}
@@ -241,7 +244,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnRegionListReceived(RegionHandler regionHandler) {
-        Debug.Log("We recieved a list i guess:" + regionHandler);
+        //Debug.Log("We recieved a list i guess:" + regionHandler);
     }
 
     public void OnRoomListUpdate(List<RoomInfo> roomList) {
@@ -283,5 +286,22 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //}
     }
     public void OnWebRpcResponse(OperationResponse response) {
+    }
+
+    public void OnOwnershipRequest(PhotonView targetView, Player requestingPlayer) {
+        Kobold k = targetView.GetComponent<Kobold>();
+        if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+            targetView.TransferOwnership(requestingPlayer);
+        } else {
+            if (!k.GetComponentInChildren<PlayerInput>().actions["Jump"].IsPressed() || ReferenceEquals(requestingPlayer, PhotonNetwork.LocalPlayer)) {
+                targetView.TransferOwnership(requestingPlayer);
+            }
+        }
+    }
+
+    public void OnOwnershipTransfered(PhotonView targetView, Player previousOwner) {
+    }
+
+    public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest) {
     }
 }

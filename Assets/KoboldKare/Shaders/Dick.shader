@@ -22,6 +22,11 @@ Shader "Custom/Dick"
 		[ASEEnd]_HueBrightnessContrastSaturation("_HueBrightnessContrastSaturation", Vector) = (0,0,0,0)
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
+		[HideInInspector]_QueueOffset("_QueueOffset", Float) = 0
+        [HideInInspector]_QueueControl("_QueueControl", Float) = -1
+        [HideInInspector][NoScaleOffset]unity_Lightmaps("unity_Lightmaps", 2DArray) = "" {}
+        [HideInInspector][NoScaleOffset]unity_LightmapsInd("unity_LightmapsInd", 2DArray) = "" {}
+        [HideInInspector][NoScaleOffset]unity_ShadowMasks("unity_ShadowMasks", 2DArray) = "" {}
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
 		//_TransStrength( "Trans Strength", Range( 0, 50 ) ) = 1
 		//_TransNormal( "Trans Normal Distortion", Range( 0, 1 ) ) = 0.5
@@ -42,10 +47,14 @@ Shader "Custom/Dick"
 		LOD 0
 
 		
-
+		
 		Tags { "RenderPipeline"="UniversalPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
 		Cull Back
+		ZWrite On
+		ZTest LEqual
+		Offset 0 , 0
 		AlphaToMask Off
+		
 		HLSLINCLUDE
 		#pragma target 3.0
 
@@ -164,28 +173,22 @@ Shader "Custom/Dick"
 			Tags { "LightMode"="UniversalForward" }
 			
 			Blend One Zero, One Zero
-			ZWrite On
-			ZTest LEqual
-			Offset 0 , 0
 			ColorMask RGBA
 			
 
 			HLSLPROGRAM
-			
+
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
-			
+
 			#pragma multi_compile _ _SCREEN_SPACE_OCCLUSION
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS _ADDITIONAL_OFF
 			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
 			#pragma multi_compile _ _SHADOWS_SOFT
@@ -196,21 +199,30 @@ Shader "Custom/Dick"
 
 			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile _ LIGHTMAP_ON
+			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
+
+			#pragma multi_compile _ _REFLECTION_PROBE_BLENDING
+			#pragma multi_compile _ _REFLECTION_PROBE_BOX_PROJECTION
+			#pragma multi_compile _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#pragma multi_compile _ _LIGHT_LAYERS
+			
+			#pragma multi_compile _ _LIGHT_COOKIES
+			#pragma multi_compile _ _CLUSTERED_RENDERING
 
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_FORWARD
+			#define SHADERPASS SHADERPASS_FORWARD
 
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-			
-			#if ASE_SRP_VERSION <= 70108
-			#define REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
-			#endif
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
 			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
@@ -227,8 +239,9 @@ Shader "Custom/Dick"
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
-				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord : TEXCOORD0;
+				float4 texcoord1 : TEXCOORD1;
+				float4 texcoord2 : TEXCOORD2;
 				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -247,8 +260,11 @@ Shader "Custom/Dick"
 				#if defined(ASE_NEEDS_FRAG_SCREEN_POSITION)
 				float4 screenPos : TEXCOORD6;
 				#endif
-				float4 ase_texcoord7 : TEXCOORD7;
+				#if defined(DYNAMICLIGHTMAP_ON)
+				float2 dynamicLightmapUV : TEXCOORD7;
+				#endif
 				float4 ase_texcoord8 : TEXCOORD8;
+				float4 ase_texcoord9 : TEXCOORD9;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -259,9 +275,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -293,7 +309,7 @@ Shader "Custom/Dick"
 			sampler2D _MaskMap;
 
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -308,7 +324,7 @@ Shader "Custom/Dick"
 				return basisTransform;
 			}
 			
-			float4 MyCustomExpression1_g712( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g720( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -336,71 +352,74 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
-				float4 break79_g713 = worldTangentOUT56_g713;
-				float4 appendResult77_g713 = (float4(break79_g713.x , break79_g713.y , break79_g713.z , 0.0));
-				float3 normalizeResult80_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult77_g713 )).xyz );
-				float4 appendResult83_g713 = (float4(normalizeResult80_g713 , break79_g713.w));
+				float4 break79_g722 = worldTangentOUT56_g722;
+				float4 appendResult77_g722 = (float4(break79_g722.x , break79_g722.y , break79_g722.z , 0.0));
+				float3 normalizeResult80_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult77_g722 )).xyz );
+				float4 appendResult83_g722 = (float4(normalizeResult80_g722 , break79_g722.w));
 				
-				o.ase_texcoord7.xy = v.texcoord.xy;
-				o.ase_texcoord7.zw = v.texcoord1.xyzw.xy;
-				o.ase_texcoord8 = v.vertex;
+				o.ase_texcoord8.xy = v.texcoord.xy;
+				o.ase_texcoord8.zw = v.texcoord1.xy;
+				o.ase_texcoord9 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
-				v.ase_normal = normalizeResult76_g713;
-				v.ase_tangent = appendResult83_g713;
+				v.ase_normal = normalizeResult76_g722;
+				v.ase_tangent = appendResult83_g722;
 
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				float3 positionVS = TransformWorldToView( positionWS );
@@ -412,8 +431,17 @@ Shader "Custom/Dick"
 				o.tSpace1 = float4( normalInput.tangentWS, positionWS.y);
 				o.tSpace2 = float4( normalInput.bitangentWS, positionWS.z);
 
+				#if defined(LIGHTMAP_ON)
 				OUTPUT_LIGHTMAP_UV( v.texcoord1, unity_LightmapST, o.lightmapUVOrVertexSH.xy );
+				#endif
+
+				#if defined(DYNAMICLIGHTMAP_ON)
+				o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
+				#endif
+
+				#if !defined(LIGHTMAP_ON)
 				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz );
+				#endif
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					o.lightmapUVOrVertexSH.zw = v.texcoord;
@@ -450,6 +478,7 @@ Shader "Custom/Dick"
 				float4 ase_tangent : TANGENT;
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
+				float4 texcoord2 : TEXCOORD2;
 				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -470,6 +499,7 @@ Shader "Custom/Dick"
 				o.ase_tangent = v.ase_tangent;
 				o.texcoord = v.texcoord;
 				o.texcoord1 = v.texcoord1;
+				o.texcoord2 = v.texcoord2;
 				
 				return o;
 			}
@@ -512,6 +542,7 @@ Shader "Custom/Dick"
 				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
 				o.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
+				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
 				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -574,25 +605,26 @@ Shader "Custom/Dick"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float4 hsbc1_g712 = _HueBrightnessContrastSaturation;
-				float2 uv_MainTex = IN.ase_texcoord7.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				float4 startColor1_g712 = tex2D( _MainTex, uv_MainTex );
-				float4 localMyCustomExpression1_g712 = MyCustomExpression1_g712( hsbc1_g712 , startColor1_g712 );
-				float2 texCoord103 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 hsbc1_g720 = _HueBrightnessContrastSaturation;
+				float2 uv_MainTex = IN.ase_texcoord8.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+				float4 startColor1_g720 = tex2D( _MainTex, uv_MainTex );
+				float4 localMyCustomExpression1_g720 = MyCustomExpression1_g720( hsbc1_g720 , startColor1_g720 );
+				float2 texCoord103 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode104 = tex2Dlod( _DecalColorMap, float4( texCoord103, 0, 0.0) );
-				float4 lerpResult105 = lerp( localMyCustomExpression1_g712 , tex2DNode104 , tex2DNode104.a);
+				float4 lerpResult105 = lerp( localMyCustomExpression1_g720 , tex2DNode104 , tex2DNode104.a);
 				
-				float2 uv_BumpMap = IN.ase_texcoord7.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
+				float2 uv_BumpMap = IN.ase_texcoord8.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 				
-				float2 uv_MaskMap = IN.ase_texcoord7.xy * _MaskMap_ST.xy + _MaskMap_ST.zw;
+				float2 uv_MaskMap = IN.ase_texcoord8.xy * _MaskMap_ST.xy + _MaskMap_ST.zw;
 				float4 tex2DNode102 = tex2D( _MaskMap, uv_MaskMap );
 				
 				float lerpResult108 = lerp( tex2DNode102.a , 0.9 , tex2DNode104.a);
 				
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord9.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
 				float3 Albedo = lerpResult105.rgb;
 				float3 Normal = UnpackNormalScale( tex2D( _BumpMap, uv_BumpMap ), 1.0f );
@@ -601,8 +633,8 @@ Shader "Custom/Dick"
 				float Metallic = tex2DNode102.r;
 				float Smoothness = lerpResult108;
 				float Occlusion = 1;
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -612,15 +644,21 @@ Shader "Custom/Dick"
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
 				#endif
+				
+				#ifdef _CLEARCOAT
+				float CoatMask = 0;
+				float CoatSmoothness = 0;
+				#endif
+
 
 				#ifdef _ALPHATEST_ON
 					clip(Alpha - AlphaClipThreshold);
 				#endif
 
-				InputData inputData;
+				InputData inputData = (InputData)0;
 				inputData.positionWS = WorldPosition;
 				inputData.viewDirectionWS = WorldViewDirection;
-				inputData.shadowCoord = ShadowCoords;
+				
 
 				#ifdef _NORMALMAP
 					#if _NORMAL_DROPOFF_TS
@@ -635,6 +673,15 @@ Shader "Custom/Dick"
 					inputData.normalWS = WorldNormal;
 				#endif
 
+				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+					inputData.shadowCoord = ShadowCoords;
+				#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
+					inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
+				#else
+					inputData.shadowCoord = float4(0, 0, 0, 0);
+				#endif
+
+
 				#ifdef ASE_FOG
 					inputData.fogCoord = IN.fogFactorAndVertexLight.x;
 				#endif
@@ -646,7 +693,12 @@ Shader "Custom/Dick"
 					float3 SH = IN.lightmapUVOrVertexSH.xyz;
 				#endif
 
+				#if defined(DYNAMICLIGHTMAP_ON)
+				inputData.bakedGI = SAMPLE_GI(IN.lightmapUVOrVertexSH.xy, IN.dynamicLightmapUV.xy, SH, inputData.normalWS);
+				#else
 				inputData.bakedGI = SAMPLE_GI( IN.lightmapUVOrVertexSH.xy, SH, inputData.normalWS );
+				#endif
+
 				#ifdef _ASE_BAKEDGI
 					inputData.bakedGI = BakedGI;
 				#endif
@@ -654,15 +706,41 @@ Shader "Custom/Dick"
 				inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(IN.clipPos);
 				inputData.shadowMask = SAMPLE_SHADOWMASK(IN.lightmapUVOrVertexSH.xy);
 
-				half4 color = UniversalFragmentPBR(
-					inputData, 
-					Albedo, 
-					Metallic, 
-					Specular, 
-					Smoothness, 
-					Occlusion, 
-					Emission, 
-					Alpha);
+				#if defined(DEBUG_DISPLAY)
+					#if defined(DYNAMICLIGHTMAP_ON)
+						inputData.dynamicLightmapUV = IN.dynamicLightmapUV.xy;
+					#endif
+
+					#if defined(LIGHTMAP_ON)
+						inputData.staticLightmapUV = IN.lightmapUVOrVertexSH.xy;
+					#else
+						inputData.vertexSH = SH;
+					#endif
+				#endif
+
+				SurfaceData surfaceData;
+				surfaceData.albedo              = Albedo;
+				surfaceData.metallic            = saturate(Metallic);
+				surfaceData.specular            = Specular;
+				surfaceData.smoothness          = saturate(Smoothness),
+				surfaceData.occlusion           = Occlusion,
+				surfaceData.emission            = Emission,
+				surfaceData.alpha               = saturate(Alpha);
+				surfaceData.normalTS            = Normal;
+				surfaceData.clearCoatMask       = 0;
+				surfaceData.clearCoatSmoothness = 1;
+
+
+				#ifdef _CLEARCOAT
+					surfaceData.clearCoatMask       = saturate(CoatMask);
+					surfaceData.clearCoatSmoothness = saturate(CoatSmoothness);
+				#endif
+
+				#ifdef _DBUFFER
+					ApplyDecalToSurfaceData(IN.clipPos, surfaceData, inputData);
+				#endif
+
+				half4 color = UniversalFragmentPBR( inputData, surfaceData);
 
 				#ifdef _TRANSMISSION_ASE
 				{
@@ -765,29 +843,33 @@ Shader "Custom/Dick"
 			ZWrite On
 			ZTest LEqual
 			AlphaToMask Off
+			ColorMask 0
 
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_SHADOWCASTER
+			#pragma multi_compile _ _CASTING_PUNCTUAL_LIGHT_SHADOW
 
+			#define SHADERPASS SHADERPASS_SHADOWCASTER
+
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
@@ -822,9 +904,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -852,7 +934,7 @@ Shader "Custom/Dick"
 			CBUFFER_END
 			
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -869,6 +951,7 @@ Shader "Custom/Dick"
 			
 
 			float3 _LightDirection;
+			float3 _LightPosition;
 
 			VertexOutput VertexFunction( VertexInput v )
 			{
@@ -877,49 +960,52 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
 				o.ase_texcoord2 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -927,14 +1013,14 @@ Shader "Custom/Dick"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
 
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
 
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				#if defined(ASE_NEEDS_FRAG_WORLD_POSITION)
@@ -942,13 +1028,22 @@ Shader "Custom/Dick"
 				#endif
 				float3 normalWS = TransformObjectToWorldDir(v.ase_normal);
 
-				float4 clipPos = TransformWorldToHClip( ApplyShadowBias( positionWS, normalWS, _LightDirection ) );
 
-				#if UNITY_REVERSED_Z
-					clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
-				#else
-					clipPos.z = max(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
-				#endif
+			#if _CASTING_PUNCTUAL_LIGHT_SHADOW
+				float3 lightDirectionWS = normalize(_LightPosition - positionWS);
+			#else
+				float3 lightDirectionWS = _LightDirection;
+			#endif
+
+				float4 clipPos = TransformWorldToHClip(ApplyShadowBias(positionWS, normalWS, lightDirectionWS));
+			
+			#if UNITY_REVERSED_Z
+				clipPos.z = min(clipPos.z, UNITY_NEAR_CLIP_VALUE);
+			#else
+				clipPos.z = max(clipPos.z, UNITY_NEAR_CLIP_VALUE);
+			#endif
+
+
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					VertexPositionInputs vertexInput = (VertexPositionInputs)0;
 					vertexInput.positionWS = positionWS;
@@ -1067,13 +1162,14 @@ Shader "Custom/Dick"
 					#endif
 				#endif
 
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord2.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord2.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 				float AlphaClipThresholdShadow = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
@@ -1090,6 +1186,7 @@ Shader "Custom/Dick"
 				#ifdef LOD_FADE_CROSSFADE
 					LODDitheringTransition( IN.clipPos.xyz, unity_LODFade.x );
 				#endif
+
 				#ifdef ASE_DEPTH_WRITE_ON
 					outputDepth = DepthValue;
 				#endif
@@ -1113,25 +1210,26 @@ Shader "Custom/Dick"
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_DEPTHONLY
-
+			#define SHADERPASS SHADERPASS_DEPTHONLY
+        
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
@@ -1166,9 +1264,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -1196,7 +1294,7 @@ Shader "Custom/Dick"
 			CBUFFER_END
 			
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -1219,49 +1317,52 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
 				o.ase_texcoord2 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1269,14 +1370,14 @@ Shader "Custom/Dick"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
 
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				float4 positionCS = TransformWorldToHClip( positionWS );
 
@@ -1401,13 +1502,14 @@ Shader "Custom/Dick"
 					#endif
 				#endif
 
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord2.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord2.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
 				#endif
@@ -1440,41 +1542,43 @@ Shader "Custom/Dick"
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_META
+			#pragma shader_feature _ EDITOR_VISUALIZATION
 
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#define SHADERPASS SHADERPASS_META
+
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
 			#include "Packages/com.naelstrof.penetrationtech/Shaders/Penetration.cginc"
 
 
-			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-
 			struct VertexInput
 			{
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
+				float4 texcoord0 : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
 				float4 ase_tangent : TANGENT;
-				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1487,8 +1591,12 @@ Shader "Custom/Dick"
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 				float4 shadowCoord : TEXCOORD1;
 				#endif
-				float4 ase_texcoord2 : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
+				#ifdef EDITOR_VISUALIZATION
+				float4 VizUV : TEXCOORD2;
+				float4 LightCoord : TEXCOORD3;
+				#endif
+				float4 ase_texcoord4 : TEXCOORD4;
+				float4 ase_texcoord5 : TEXCOORD5;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1499,9 +1607,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -1531,7 +1639,7 @@ Shader "Custom/Dick"
 			sampler2D _DecalColorMap;
 
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -1546,7 +1654,7 @@ Shader "Custom/Dick"
 				return basisTransform;
 			}
 			
-			float4 MyCustomExpression1_g712( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g720( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -1574,67 +1682,70 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
-				o.ase_texcoord2.xy = v.ase_texcoord.xy;
-				o.ase_texcoord2.zw = v.texcoord1.xy;
-				o.ase_texcoord3 = v.vertex;
+				o.ase_texcoord4.xy = v.texcoord0.xy;
+				o.ase_texcoord4.zw = v.texcoord1.xy;
+				o.ase_texcoord5 = v.vertex;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
 
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
 
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				#if defined(ASE_NEEDS_FRAG_WORLD_POSITION)
@@ -1642,12 +1753,21 @@ Shader "Custom/Dick"
 				#endif
 
 				o.clipPos = MetaVertexPosition( v.vertex, v.texcoord1.xy, v.texcoord1.xy, unity_LightmapST, unity_DynamicLightmapST );
-				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
-					VertexPositionInputs vertexInput = (VertexPositionInputs)0;
-					vertexInput.positionWS = positionWS;
-					vertexInput.positionCS = o.clipPos;
-					o.shadowCoord = GetShadowCoord( vertexInput );
-				#endif
+
+			#ifdef EDITOR_VISUALIZATION
+				float2 VizUV = 0;
+				float4 LightCoord = 0;
+				UnityEditorVizData(v.vertex.xyz, v.texcoord0.xy, v.texcoord1.xy, v.texcoord2.xy, VizUV, LightCoord);
+				o.VizUV = float4(VizUV, 0, 0);
+				o.LightCoord = LightCoord;
+			#endif
+
+			#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
+				VertexPositionInputs vertexInput = (VertexPositionInputs)0;
+				vertexInput.positionWS = positionWS;
+				vertexInput.positionCS = o.clipPos;
+				o.shadowCoord = GetShadowCoord( vertexInput );
+			#endif
 				return o;
 			}
 
@@ -1656,10 +1776,10 @@ Shader "Custom/Dick"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
+				float4 texcoord0 : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
 				float4 ase_tangent : TANGENT;
-				float4 ase_texcoord : TEXCOORD0;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1677,10 +1797,10 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
+				o.texcoord0 = v.texcoord0;
 				o.texcoord1 = v.texcoord1;
 				o.texcoord2 = v.texcoord2;
 				o.ase_tangent = v.ase_tangent;
-				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -1719,10 +1839,10 @@ Shader "Custom/Dick"
 				VertexInput o = (VertexInput) 0;
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+				o.texcoord0 = patch[0].texcoord0 * bary.x + patch[1].texcoord0 * bary.y + patch[2].texcoord0 * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
 				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1758,24 +1878,25 @@ Shader "Custom/Dick"
 					#endif
 				#endif
 
-				float4 hsbc1_g712 = _HueBrightnessContrastSaturation;
-				float2 uv_MainTex = IN.ase_texcoord2.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				float4 startColor1_g712 = tex2D( _MainTex, uv_MainTex );
-				float4 localMyCustomExpression1_g712 = MyCustomExpression1_g712( hsbc1_g712 , startColor1_g712 );
-				float2 texCoord103 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 hsbc1_g720 = _HueBrightnessContrastSaturation;
+				float2 uv_MainTex = IN.ase_texcoord4.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+				float4 startColor1_g720 = tex2D( _MainTex, uv_MainTex );
+				float4 localMyCustomExpression1_g720 = MyCustomExpression1_g720( hsbc1_g720 , startColor1_g720 );
+				float2 texCoord103 = IN.ase_texcoord4.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode104 = tex2Dlod( _DecalColorMap, float4( texCoord103, 0, 0.0) );
-				float4 lerpResult105 = lerp( localMyCustomExpression1_g712 , tex2DNode104 , tex2DNode104.a);
+				float4 lerpResult105 = lerp( localMyCustomExpression1_g720 , tex2DNode104 , tex2DNode104.a);
 				
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord5.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
 				
 				float3 Albedo = lerpResult105.rgb;
 				float3 Emission = 0;
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 
 				#ifdef _ALPHATEST_ON
 					clip(Alpha - AlphaClipThreshold);
@@ -1784,6 +1905,10 @@ Shader "Custom/Dick"
 				MetaInput metaInput = (MetaInput)0;
 				metaInput.Albedo = Albedo;
 				metaInput.Emission = Emission;
+			#ifdef EDITOR_VISUALIZATION
+				metaInput.VizUV = IN.VizUV.xy;
+				metaInput.LightCoord = IN.LightCoord;
+			#endif
 				
 				return MetaFragment(metaInput);
 			}
@@ -1798,41 +1923,36 @@ Shader "Custom/Dick"
 			Tags { "LightMode"="Universal2D" }
 
 			Blend One Zero, One Zero
-			ZWrite On
-			ZTest LEqual
-			Offset 0 , 0
 			ColorMask RGBA
 
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_2D
-
+			#define SHADERPASS SHADERPASS_2D
+        
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 			
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
 			#include "Packages/com.naelstrof.penetrationtech/Shaders/Penetration.cginc"
 
-
-			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
 			struct VertexInput
 			{
@@ -1865,9 +1985,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -1897,7 +2017,7 @@ Shader "Custom/Dick"
 			sampler2D _DecalColorMap;
 
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -1912,7 +2032,7 @@ Shader "Custom/Dick"
 				return basisTransform;
 			}
 			
-			float4 MyCustomExpression1_g712( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g720( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -1940,49 +2060,52 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				o.ase_texcoord2.zw = v.ase_texcoord1.xy;
@@ -1993,14 +2116,14 @@ Shader "Custom/Dick"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
 
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
 
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				float4 positionCS = TransformWorldToHClip( positionWS );
@@ -2124,23 +2247,24 @@ Shader "Custom/Dick"
 					#endif
 				#endif
 
-				float4 hsbc1_g712 = _HueBrightnessContrastSaturation;
+				float4 hsbc1_g720 = _HueBrightnessContrastSaturation;
 				float2 uv_MainTex = IN.ase_texcoord2.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				float4 startColor1_g712 = tex2D( _MainTex, uv_MainTex );
-				float4 localMyCustomExpression1_g712 = MyCustomExpression1_g712( hsbc1_g712 , startColor1_g712 );
+				float4 startColor1_g720 = tex2D( _MainTex, uv_MainTex );
+				float4 localMyCustomExpression1_g720 = MyCustomExpression1_g720( hsbc1_g720 , startColor1_g720 );
 				float2 texCoord103 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode104 = tex2Dlod( _DecalColorMap, float4( texCoord103, 0, 0.0) );
-				float4 lerpResult105 = lerp( localMyCustomExpression1_g712 , tex2DNode104 , tex2DNode104.a);
+				float4 lerpResult105 = lerp( localMyCustomExpression1_g720 , tex2DNode104 , tex2DNode104.a);
 				
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord3.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
 				
 				float3 Albedo = lerpResult105.rgb;
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 
 				half4 color = half4( Albedo, Alpha );
 
@@ -2168,20 +2292,18 @@ Shader "Custom/Dick"
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#define SHADERPASS_DEPTHNORMALSONLY
+			#define SHADERPASS SHADERPASS_DEPTHNORMALSONLY
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -2190,6 +2312,7 @@ Shader "Custom/Dick"
 
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_VERT_TANGENT
 			#include "Packages/com.naelstrof.penetrationtech/Shaders/Penetration.cginc"
 
 
@@ -2198,6 +2321,7 @@ Shader "Custom/Dick"
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
+				float4 ase_texcoord : TEXCOORD0;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2211,7 +2335,9 @@ Shader "Custom/Dick"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float3 worldNormal : TEXCOORD2;
-				float4 ase_texcoord3 : TEXCOORD3;
+				float4 worldTangent : TEXCOORD3;
+				float4 ase_texcoord4 : TEXCOORD4;
+				float4 ase_texcoord5 : TEXCOORD5;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2222,9 +2348,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -2250,9 +2376,10 @@ Shader "Custom/Dick"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			
+			sampler2D _BumpMap;
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -2275,66 +2402,76 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
-				o.ase_texcoord3 = v.vertex;
+				o.ase_texcoord4.xy = v.ase_texcoord.xy;
+				o.ase_texcoord5 = v.vertex;
+				
+				//setting value to unused interpolator channels and avoid initialization warnings
+				o.ase_texcoord4.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
 
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
+				v.ase_tangent = v.ase_tangent;
+				
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
 				float3 normalWS = TransformObjectToWorldNormal( v.ase_normal );
+				float4 tangentWS = float4(TransformObjectToWorldDir( v.ase_tangent.xyz), v.ase_tangent.w);
 				float4 positionCS = TransformWorldToHClip( positionWS );
 
 				#if defined(ASE_NEEDS_FRAG_WORLD_POSITION)
@@ -2342,6 +2479,7 @@ Shader "Custom/Dick"
 				#endif
 
 				o.worldNormal = normalWS;
+				o.worldTangent = tangentWS;
 
 				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					VertexPositionInputs vertexInput = (VertexPositionInputs)0;
@@ -2359,6 +2497,7 @@ Shader "Custom/Dick"
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
+				float4 ase_texcoord : TEXCOORD0;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -2377,6 +2516,7 @@ Shader "Custom/Dick"
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
 				o.ase_tangent = v.ase_tangent;
+				o.ase_texcoord = v.ase_texcoord;
 				return o;
 			}
 
@@ -2416,6 +2556,7 @@ Shader "Custom/Dick"
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
 				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2451,6 +2592,9 @@ Shader "Custom/Dick"
 				float3 WorldPosition = IN.worldPos;
 				#endif
 				float4 ShadowCoords = float4( 0, 0, 0, 0 );
+				
+				float3 WorldNormal = IN.worldNormal;
+				float4 WorldTangent = IN.worldTangent;
 
 				#if defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
 					#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
@@ -2460,13 +2604,17 @@ Shader "Custom/Dick"
 					#endif
 				#endif
 
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord3.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float2 uv_BumpMap = IN.ase_texcoord4.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 				
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord5.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				
+				float3 Normal = UnpackNormalScale( tex2D( _BumpMap, uv_BumpMap ), 1.0f );
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 				#ifdef ASE_DEPTH_WRITE_ON
 				float DepthValue = 0;
 				#endif
@@ -2483,7 +2631,29 @@ Shader "Custom/Dick"
 				outputDepth = DepthValue;
 				#endif
 				
-				return float4(PackNormalOctRectEncode(TransformWorldToViewDir(IN.worldNormal, true)), 0.0, 0.0);
+				#if defined(_GBUFFER_NORMALS_OCT)
+					float2 octNormalWS = PackNormalOctQuadEncode(WorldNormal);
+					float2 remappedOctNormalWS = saturate(octNormalWS * 0.5 + 0.5);
+					half3 packedNormalWS = PackFloat2To888(remappedOctNormalWS);
+					return half4(packedNormalWS, 0.0);
+				#else
+					
+					#if defined(_NORMALMAP)
+						#if _NORMAL_DROPOFF_TS
+							float crossSign = (WorldTangent.w > 0.0 ? 1.0 : -1.0) * GetOddNegativeScale();
+							float3 bitangent = crossSign * cross(WorldNormal.xyz, WorldTangent.xyz);
+							float3 normalWS = TransformTangentToWorld(Normal, half3x3(WorldTangent.xyz, bitangent, WorldNormal.xyz));
+						#elif _NORMAL_DROPOFF_OS
+							float3 normalWS = TransformObjectToWorldNormal(Normal);
+						#elif _NORMAL_DROPOFF_WS
+							float3 normalWS = Normal;
+						#endif
+					#else
+						float3 normalWS = WorldNormal;
+					#endif
+
+					return half4(NormalizeNormalPerPixel(normalWS), 0.0);
+				#endif
 			}
 			ENDHLSL
 		}
@@ -2496,35 +2666,35 @@ Shader "Custom/Dick"
 			Tags { "LightMode"="UniversalGBuffer" }
 			
 			Blend One Zero, One Zero
-			ZWrite On
-			ZTest LEqual
-			Offset 0 , 0
 			ColorMask RGBA
 			
 
 			HLSLPROGRAM
 			
 			#define _NORMAL_DROPOFF_TS 1
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define ASE_ABSOLUTE_VERTEX_POS 1
 			#define _ALPHATEST_ON 1
 			#define _NORMALMAP 1
-			#define ASE_SRP_VERSION 100600
+			#define ASE_SRP_VERSION 999999
 
 			
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
-			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
-			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
-			#pragma multi_compile _ _SHADOWS_SOFT
-			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
-			#pragma multi_compile _ _GBUFFER_NORMALS_OCT
-			
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile _ LIGHTMAP_ON
+			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
+			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
+			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+			
+			#pragma multi_compile _ _REFLECTION_PROBE_BLENDING
+			#pragma multi_compile _ _REFLECTION_PROBE_BOX_PROJECTION
+
+			#pragma multi_compile _ _SHADOWS_SOFT
+			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
+			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+			#pragma multi_compile _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+			#pragma multi_compile _ _GBUFFER_NORMALS_OCT
+			#pragma multi_compile _ _LIGHT_LAYERS
+			#pragma multi_compile _ _RENDER_PASS_ENABLED
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -2538,9 +2708,6 @@ Shader "Custom/Dick"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 
-			#if ASE_SRP_VERSION <= 70108
-			#define REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR
-			#endif
 
 			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
@@ -2557,8 +2724,9 @@ Shader "Custom/Dick"
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
 				float4 ase_tangent : TANGENT;
-				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord : TEXCOORD0;
+				float4 texcoord1 : TEXCOORD1;
+				float4 texcoord2 : TEXCOORD2;
 				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -2577,8 +2745,11 @@ Shader "Custom/Dick"
 				#if defined(ASE_NEEDS_FRAG_SCREEN_POSITION)
 				float4 screenPos : TEXCOORD6;
 				#endif
-				float4 ase_texcoord7 : TEXCOORD7;
+				#if defined(DYNAMICLIGHTMAP_ON)
+				float2 dynamicLightmapUV : TEXCOORD7;
+				#endif
 				float4 ase_texcoord8 : TEXCOORD8;
+				float4 ase_texcoord9 : TEXCOORD9;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2589,9 +2760,9 @@ Shader "Custom/Dick"
 			float4 _BumpMap_ST;
 			float4 _MaskMap_ST;
 			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
 			float3 _DickRightWorld;
 			float3 _DickUpWorld;
-			float3 _DickForwardWorld;
 			float _SquashStretchCorrection;
 			float _DistanceToHole;
 			float _DickWorldLength;
@@ -2623,7 +2794,7 @@ Shader "Custom/Dick"
 			sampler2D _MaskMap;
 
 
-			float3x3 ChangeOfBasis9_g713( float3 right, float3 up, float3 forward )
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
 			{
 				float3x3 basisTransform = 0;
 				    basisTransform[0][0] = right.x;
@@ -2638,7 +2809,7 @@ Shader "Custom/Dick"
 				return basisTransform;
 			}
 			
-			float4 MyCustomExpression1_g712( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g720( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -2666,65 +2837,68 @@ Shader "Custom/Dick"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float localToCatmullRomSpace_float56_g713 = ( 0.0 );
-				float3 worldDickRootPos56_g713 = _DickRootWorld;
-				float3 right9_g713 = _DickRightWorld;
-				float3 up9_g713 = _DickUpWorld;
-				float3 forward9_g713 = _DickForwardWorld;
-				float3x3 localChangeOfBasis9_g713 = ChangeOfBasis9_g713( right9_g713 , up9_g713 , forward9_g713 );
-				float4 appendResult67_g713 = (float4(v.vertex.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float3 temp_output_12_0_g713 = mul( localChangeOfBasis9_g713, ( temp_output_68_0_g713 - _DickRootWorld ) );
-				float3 break15_g713 = temp_output_12_0_g713;
-				float temp_output_18_0_g713 = ( break15_g713.z * _SquashStretchCorrection );
-				float3 appendResult26_g713 = (float3(break15_g713.x , break15_g713.y , temp_output_18_0_g713));
-				float3 appendResult25_g713 = (float3(( break15_g713.x / _SquashStretchCorrection ) , ( break15_g713.y / _SquashStretchCorrection ) , temp_output_18_0_g713));
-				float temp_output_17_0_g713 = ( _DistanceToHole * 0.5 );
-				float smoothstepResult23_g713 = smoothstep( 0.0 , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float smoothstepResult22_g713 = smoothstep( _DistanceToHole , temp_output_17_0_g713 , temp_output_18_0_g713);
-				float3 lerpResult31_g713 = lerp( appendResult26_g713 , appendResult25_g713 , min( smoothstepResult23_g713 , smoothstepResult22_g713 ));
-				float3 lerpResult32_g713 = lerp( lerpResult31_g713 , ( temp_output_12_0_g713 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g713 ));
-				float3 newPosition44_g713 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g713 ), lerpResult32_g713 ) );
-				float3 worldPosition56_g713 = newPosition44_g713;
-				float3 worldDickForward56_g713 = _DickForwardWorld;
-				float3 worldDickUp56_g713 = _DickUpWorld;
-				float3 worldDickRight56_g713 = _DickRightWorld;
-				float4 appendResult86_g713 = (float4(v.ase_normal , 0.0));
-				float3 normalizeResult87_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g713 )).xyz );
-				float3 worldNormal56_g713 = normalizeResult87_g713;
-				float4 break93_g713 = v.ase_tangent;
-				float4 appendResult89_g713 = (float4(break93_g713.x , break93_g713.y , break93_g713.z , 0.0));
-				float3 normalizeResult91_g713 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g713 )).xyz );
-				float4 appendResult94_g713 = (float4(normalizeResult91_g713 , break93_g713.w));
-				float4 worldTangent56_g713 = appendResult94_g713;
-				float3 worldPositionOUT56_g713 = float3( 0,0,0 );
-				float3 worldNormalOUT56_g713 = float3( 0,0,0 );
-				float4 worldTangentOUT56_g713 = float4( 0,0,0,0 );
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
 				{
-				ToCatmullRomSpace_float(worldDickRootPos56_g713,worldPosition56_g713,worldDickForward56_g713,worldDickUp56_g713,worldDickRight56_g713,worldNormal56_g713,worldTangent56_g713,worldPositionOUT56_g713,worldNormalOUT56_g713,worldTangentOUT56_g713);
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
 				}
-				float4 appendResult73_g713 = (float4(worldPositionOUT56_g713 , 1.0));
-				float4 transform72_g713 = mul(GetWorldToObjectMatrix(),appendResult73_g713);
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
 				
-				float4 appendResult75_g713 = (float4(worldNormalOUT56_g713 , 0.0));
-				float3 normalizeResult76_g713 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g713 )).xyz );
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
 				
-				o.ase_texcoord7.xy = v.texcoord.xy;
-				o.ase_texcoord7.zw = v.texcoord1.xyzw.xy;
-				o.ase_texcoord8 = v.vertex;
+				o.ase_texcoord8.xy = v.texcoord.xy;
+				o.ase_texcoord8.zw = v.texcoord1.xy;
+				o.ase_texcoord9 = v.vertex;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = (transform72_g713).xyz;
+				float3 vertexValue = (transform72_g722).xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
 					v.vertex.xyz += vertexValue;
 				#endif
-				v.ase_normal = normalizeResult76_g713;
+				v.ase_normal = normalizeResult76_g722;
 				v.ase_tangent = v.ase_tangent;
 
 				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
@@ -2738,6 +2912,10 @@ Shader "Custom/Dick"
 				o.tSpace2 = float4( normalInput.bitangentWS, positionWS.z);
 
 				OUTPUT_LIGHTMAP_UV( v.texcoord1, unity_LightmapST, o.lightmapUVOrVertexSH.xy );
+				#if defined(DYNAMICLIGHTMAP_ON)
+				o.dynamicLightmapUV.xy = v.texcoord2.xy * unity_DynamicLightmapST.xy + unity_DynamicLightmapST.zw;
+				#endif
+
 				OUTPUT_SH( normalInput.normalWS.xyz, o.lightmapUVOrVertexSH.xyz );
 
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
@@ -2775,6 +2953,7 @@ Shader "Custom/Dick"
 				float4 ase_tangent : TANGENT;
 				float4 texcoord : TEXCOORD0;
 				float4 texcoord1 : TEXCOORD1;
+				float4 texcoord2 : TEXCOORD2;
 				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -2795,6 +2974,7 @@ Shader "Custom/Dick"
 				o.ase_tangent = v.ase_tangent;
 				o.texcoord = v.texcoord;
 				o.texcoord1 = v.texcoord1;
+				o.texcoord2 = v.texcoord2;
 				
 				return o;
 			}
@@ -2837,6 +3017,7 @@ Shader "Custom/Dick"
 				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
 				o.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				o.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
+				o.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
 				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -2894,29 +3075,34 @@ Shader "Custom/Dick"
 					ShadowCoords = IN.shadowCoord;
 				#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
 					ShadowCoords = TransformWorldToShadowCoord( WorldPosition );
+				#else
+					ShadowCoords = float4(0, 0, 0, 0);
 				#endif
+
+
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float4 hsbc1_g712 = _HueBrightnessContrastSaturation;
-				float2 uv_MainTex = IN.ase_texcoord7.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				float4 startColor1_g712 = tex2D( _MainTex, uv_MainTex );
-				float4 localMyCustomExpression1_g712 = MyCustomExpression1_g712( hsbc1_g712 , startColor1_g712 );
-				float2 texCoord103 = IN.ase_texcoord7.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 hsbc1_g720 = _HueBrightnessContrastSaturation;
+				float2 uv_MainTex = IN.ase_texcoord8.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+				float4 startColor1_g720 = tex2D( _MainTex, uv_MainTex );
+				float4 localMyCustomExpression1_g720 = MyCustomExpression1_g720( hsbc1_g720 , startColor1_g720 );
+				float2 texCoord103 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode104 = tex2Dlod( _DecalColorMap, float4( texCoord103, 0, 0.0) );
-				float4 lerpResult105 = lerp( localMyCustomExpression1_g712 , tex2DNode104 , tex2DNode104.a);
+				float4 lerpResult105 = lerp( localMyCustomExpression1_g720 , tex2DNode104 , tex2DNode104.a);
 				
-				float2 uv_BumpMap = IN.ase_texcoord7.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
+				float2 uv_BumpMap = IN.ase_texcoord8.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 				
-				float2 uv_MaskMap = IN.ase_texcoord7.xy * _MaskMap_ST.xy + _MaskMap_ST.zw;
+				float2 uv_MaskMap = IN.ase_texcoord8.xy * _MaskMap_ST.xy + _MaskMap_ST.zw;
 				float4 tex2DNode102 = tex2D( _MaskMap, uv_MaskMap );
 				
 				float lerpResult108 = lerp( tex2DNode102.a , 0.9 , tex2DNode104.a);
 				
-				float4 appendResult67_g713 = (float4(IN.ase_texcoord8.xyz , 1.0));
-				float4 transform66_g713 = mul(GetObjectToWorldMatrix(),appendResult67_g713);
-				float3 temp_output_68_0_g713 = (transform66_g713).xyz;
-				float dotResult42_g713 = dot( _DickForwardWorld , ( temp_output_68_0_g713 - _DickRootWorld ) );
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord9.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
 				
 				float3 Albedo = lerpResult105.rgb;
 				float3 Normal = UnpackNormalScale( tex2D( _BumpMap, uv_BumpMap ), 1.0f );
@@ -2925,8 +3111,8 @@ Shader "Custom/Dick"
 				float Metallic = tex2DNode102.r;
 				float Smoothness = lerpResult108;
 				float Occlusion = 1;
-				float Alpha = ( 1.0 - ( step( _StartClip , dotResult42_g713 ) * step( dotResult42_g713 , _EndClip ) ) );
-				float AlphaClipThreshold = 0.5;
+				float Alpha = temp_output_54_0_g722;
+				float AlphaClipThreshold = 0.01;
 				float AlphaClipThresholdShadow = 0.5;
 				float3 BakedGI = 0;
 				float3 RefractionColor = 1;
@@ -2941,10 +3127,12 @@ Shader "Custom/Dick"
 					clip(Alpha - AlphaClipThreshold);
 				#endif
 
-				InputData inputData;
+				InputData inputData = (InputData)0;
 				inputData.positionWS = WorldPosition;
-				inputData.viewDirectionWS = WorldViewDirection;
+				inputData.positionCS = IN.clipPos;
 				inputData.shadowCoord = ShadowCoords;
+
+
 
 				#ifdef _NORMALMAP
 					#if _NORMAL_DROPOFF_TS
@@ -2954,101 +3142,72 @@ Shader "Custom/Dick"
 					#elif _NORMAL_DROPOFF_WS
 					inputData.normalWS = Normal;
 					#endif
-					inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
 				#else
 					inputData.normalWS = WorldNormal;
 				#endif
+					
+				inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
+				inputData.viewDirectionWS = SafeNormalize( WorldViewDirection );
+
+
 
 				#ifdef ASE_FOG
-					inputData.fogCoord = IN.fogFactorAndVertexLight.x;
+					inputData.fogCoord = InitializeInputDataFog(float4(WorldPosition, 1.0),  IN.fogFactorAndVertexLight.x);
 				#endif
 
 				inputData.vertexLighting = IN.fogFactorAndVertexLight.yzw;
+
 				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
 					float3 SH = SampleSH(inputData.normalWS.xyz);
 				#else
 					float3 SH = IN.lightmapUVOrVertexSH.xyz;
 				#endif
 
-				inputData.bakedGI = SAMPLE_GI( IN.lightmapUVOrVertexSH.xy, SH, inputData.normalWS );
+				
+
 				#ifdef _ASE_BAKEDGI
 					inputData.bakedGI = BakedGI;
+				#else
+					#if defined(DYNAMICLIGHTMAP_ON)
+						inputData.bakedGI = SAMPLE_GI( IN.lightmapUVOrVertexSH.xy, IN.dynamicLightmapUV.xy, SH, inputData.normalWS);
+					#else
+						inputData.bakedGI = SAMPLE_GI( IN.lightmapUVOrVertexSH.xy, SH, inputData.normalWS );
+					#endif
+				#endif
+
+				inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(IN.clipPos);
+				inputData.shadowMask = SAMPLE_SHADOWMASK(IN.lightmapUVOrVertexSH.xy);
+
+				#if defined(DEBUG_DISPLAY)
+					#if defined(DYNAMICLIGHTMAP_ON)
+						inputData.dynamicLightmapUV = IN.dynamicLightmapUV.xy;
+						#endif
+					#if defined(LIGHTMAP_ON)
+						inputData.staticLightmapUV = IN.lightmapUVOrVertexSH.xy;
+					#else
+						inputData.vertexSH = SH;
+					#endif
+				#endif
+
+				#ifdef _DBUFFER
+					ApplyDecal(IN.clipPos,
+						Albedo,
+						Specular,
+						inputData.normalWS,
+						Metallic,
+						Occlusion,
+						Smoothness);
 				#endif
 
 				BRDFData brdfData;
-				InitializeBRDFData( Albedo, Metallic, Specular, Smoothness, Alpha, brdfData);
-				half4 color;
-				color.rgb = GlobalIllumination( brdfData, inputData.bakedGI, Occlusion, inputData.normalWS, inputData.viewDirectionWS);
-				color.a = Alpha;
+				InitializeBRDFData
+				(Albedo, Metallic, Specular, Smoothness, Alpha, brdfData);
 
-				#ifdef _TRANSMISSION_ASE
-				{
-					float shadow = _TransmissionShadow;
-				
-					Light mainLight = GetMainLight( inputData.shadowCoord );
-					float3 mainAtten = mainLight.color * mainLight.distanceAttenuation;
-					mainAtten = lerp( mainAtten, mainAtten * mainLight.shadowAttenuation, shadow );
-					half3 mainTransmission = max(0 , -dot(inputData.normalWS, mainLight.direction)) * mainAtten * Transmission;
-					color.rgb += Albedo * mainTransmission;
-				
-					#ifdef _ADDITIONAL_LIGHTS
-						int transPixelLightCount = GetAdditionalLightsCount();
-						for (int i = 0; i < transPixelLightCount; ++i)
-						{
-							Light light = GetAdditionalLight(i, inputData.positionWS);
-							float3 atten = light.color * light.distanceAttenuation;
-							atten = lerp( atten, atten * light.shadowAttenuation, shadow );
-				
-							half3 transmission = max(0 , -dot(inputData.normalWS, light.direction)) * atten * Transmission;
-							color.rgb += Albedo * transmission;
-						}
-					#endif
-				}
-				#endif
-				
-				#ifdef _TRANSLUCENCY_ASE
-				{
-					float shadow = _TransShadow;
-					float normal = _TransNormal;
-					float scattering = _TransScattering;
-					float direct = _TransDirect;
-					float ambient = _TransAmbient;
-					float strength = _TransStrength;
-				
-					Light mainLight = GetMainLight( inputData.shadowCoord );
-					float3 mainAtten = mainLight.color * mainLight.distanceAttenuation;
-					mainAtten = lerp( mainAtten, mainAtten * mainLight.shadowAttenuation, shadow );
-				
-					half3 mainLightDir = mainLight.direction + inputData.normalWS * normal;
-					half mainVdotL = pow( saturate( dot( inputData.viewDirectionWS, -mainLightDir ) ), scattering );
-					half3 mainTranslucency = mainAtten * ( mainVdotL * direct + inputData.bakedGI * ambient ) * Translucency;
-					color.rgb += Albedo * mainTranslucency * strength;
-				
-					#ifdef _ADDITIONAL_LIGHTS
-						int transPixelLightCount = GetAdditionalLightsCount();
-						for (int i = 0; i < transPixelLightCount; ++i)
-						{
-							Light light = GetAdditionalLight(i, inputData.positionWS);
-							float3 atten = light.color * light.distanceAttenuation;
-							atten = lerp( atten, atten * light.shadowAttenuation, shadow );
-				
-							half3 lightDir = light.direction + inputData.normalWS * normal;
-							half VdotL = pow( saturate( dot( inputData.viewDirectionWS, -lightDir ) ), scattering );
-							half3 translucency = atten * ( VdotL * direct + inputData.bakedGI * ambient ) * Translucency;
-							color.rgb += Albedo * translucency * strength;
-						}
-					#endif
-				}
-				#endif
-				
-				#ifdef _REFRACTION_ASE
-					float4 projScreenPos = ScreenPos / ScreenPos.w;
-					float3 refractionOffset = ( RefractionIndex - 1.0 ) * mul( UNITY_MATRIX_V, float4( WorldNormal, 0 ) ).xyz * ( 1.0 - dot( WorldNormal, WorldViewDirection ) );
-					projScreenPos.xy += refractionOffset.xy;
-					float3 refraction = SHADERGRAPH_SAMPLE_SCENE_COLOR( projScreenPos.xy ) * RefractionColor;
-					color.rgb = lerp( refraction, color.rgb, color.a );
-					color.a = 1;
-				#endif
+				Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, inputData.shadowMask);
+				half4 color;
+				MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI, inputData.shadowMask);
+				color.rgb = GlobalIllumination(brdfData, inputData.bakedGI, Occlusion, inputData.positionWS, inputData.normalWS, inputData.viewDirectionWS);
+				color.a = Alpha;
 				
 				#ifdef ASE_FINAL_COLOR_ALPHA_MULTIPLY
 					color.rgb *= color.a;
@@ -3071,52 +3230,642 @@ Shader "Custom/Dick"
 
 			ENDHLSL
 		}
+
+		
+        Pass
+        {
+			
+            Name "SceneSelectionPass"
+            Tags { "LightMode"="SceneSelectionPass" }
+        
+			Cull Off
+
+			HLSLPROGRAM
+        
+			#define _NORMAL_DROPOFF_TS 1
+			#pragma multi_compile_fog
+			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
+			#define _NORMALMAP 1
+			#define ASE_SRP_VERSION 999999
+
+        
+			#pragma only_renderers d3d11 glcore gles gles3 
+			#pragma vertex vert
+			#pragma fragment frag
+
+			#define ATTRIBUTES_NEED_NORMAL
+			#define ATTRIBUTES_NEED_TANGENT
+			#define SHADERPASS SHADERPASS_DEPTHONLY
+
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+        
+			#define ASE_NEEDS_VERT_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+			#include "Packages/com.naelstrof.penetrationtech/Shaders/Penetration.cginc"
+
+
+			struct VertexInput
+			{
+				float4 vertex : POSITION;
+				float3 ase_normal : NORMAL;
+				float4 ase_tangent : TANGENT;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct VertexOutput
+			{
+				float4 clipPos : SV_POSITION;
+				float4 ase_texcoord : TEXCOORD0;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+        
+			CBUFFER_START(UnityPerMaterial)
+			float4 _HueBrightnessContrastSaturation;
+			float4 _MainTex_ST;
+			float4 _BumpMap_ST;
+			float4 _MaskMap_ST;
+			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
+			float3 _DickRightWorld;
+			float3 _DickUpWorld;
+			float _SquashStretchCorrection;
+			float _DistanceToHole;
+			float _DickWorldLength;
+			float _StartClip;
+			float _EndClip;
+			#ifdef TESSELLATION_ON
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+
+			
+
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
+			{
+				float3x3 basisTransform = 0;
+				    basisTransform[0][0] = right.x;
+				    basisTransform[0][1] = right.y;
+				    basisTransform[0][2] = right.z;
+				    basisTransform[1][0] = up.x;
+				    basisTransform[1][1] = up.y;
+				    basisTransform[1][2] = up.z;
+				    basisTransform[2][0] = forward.x;
+				    basisTransform[2][1] = forward.y;
+				    basisTransform[2][2] = forward.z;
+				return basisTransform;
+			}
+			
+
+			int _ObjectId;
+			int _PassValue;
+
+			struct SurfaceDescription
+			{
+				float Alpha;
+				float AlphaClipThreshold;
+			};
+        
+			VertexOutput VertexFunction(VertexInput v  )
+			{
+				VertexOutput o;
+				ZERO_INITIALIZE(VertexOutput, o);
+
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
+				{
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
+				}
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
+				
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
+				
+				o.ase_texcoord = v.vertex;
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = v.vertex.xyz;
+				#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+				#endif
+				float3 vertexValue = (transform72_g722).xyz;
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					v.vertex.xyz = vertexValue;
+				#else
+					v.vertex.xyz += vertexValue;
+				#endif
+				v.ase_normal = normalizeResult76_g722;
+
+				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
+				o.clipPos = TransformWorldToHClip(positionWS);
+				return o;
+			}
+
+			#if defined(TESSELLATION_ON)
+			struct VertexControl
+			{
+				float4 vertex : INTERNALTESSPOS;
+				float3 ase_normal : NORMAL;
+				float4 ase_tangent : TANGENT;
+
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct TessellationFactors
+			{
+				float edge[3] : SV_TessFactor;
+				float inside : SV_InsideTessFactor;
+			};
+
+			VertexControl vert ( VertexInput v )
+			{
+				VertexControl o;
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				o.vertex = v.vertex;
+				o.ase_normal = v.ase_normal;
+				o.ase_tangent = v.ase_tangent;
+				return o;
+			}
+
+			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> v)
+			{
+				TessellationFactors o;
+				float4 tf = 1;
+				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
+				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
+				#if defined(ASE_FIXED_TESSELLATION)
+				tf = FixedTess( tessValue );
+				#elif defined(ASE_DISTANCE_TESSELLATION)
+				tf = DistanceBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
+				#elif defined(ASE_LENGTH_TESSELLATION)
+				tf = EdgeLengthBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
+				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
+				tf = EdgeLengthBasedTessCull(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
+				#endif
+				o.edge[0] = tf.x; o.edge[1] = tf.y; o.edge[2] = tf.z; o.inside = tf.w;
+				return o;
+			}
+
+			[domain("tri")]
+			[partitioning("fractional_odd")]
+			[outputtopology("triangle_cw")]
+			[patchconstantfunc("TessellationFunction")]
+			[outputcontrolpoints(3)]
+			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
+			{
+			   return patch[id];
+			}
+
+			[domain("tri")]
+			VertexOutput DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
+			{
+				VertexInput o = (VertexInput) 0;
+				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
+				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				#if defined(ASE_PHONG_TESSELLATION)
+				float3 pp[3];
+				for (int i = 0; i < 3; ++i)
+					pp[i] = o.vertex.xyz - patch[i].ase_normal * (dot(o.vertex.xyz, patch[i].ase_normal) - dot(patch[i].vertex.xyz, patch[i].ase_normal));
+				float phongStrength = _TessPhongStrength;
+				o.vertex.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * o.vertex.xyz;
+				#endif
+				UNITY_TRANSFER_INSTANCE_ID(patch[0], o);
+				return VertexFunction(o);
+			}
+			#else
+			VertexOutput vert ( VertexInput v )
+			{
+				return VertexFunction( v );
+			}
+			#endif
+			
+			half4 frag(VertexOutput IN ) : SV_TARGET
+			{
+				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				
+				surfaceDescription.Alpha = temp_output_54_0_g722;
+				surfaceDescription.AlphaClipThreshold = 0.01;
+
+
+				#if _ALPHATEST_ON
+					float alphaClipThreshold = 0.01f;
+					#if ALPHA_CLIP_THRESHOLD
+						alphaClipThreshold = surfaceDescription.AlphaClipThreshold;
+					#endif
+					clip(surfaceDescription.Alpha - alphaClipThreshold);
+				#endif
+
+				half4 outColor = half4(_ObjectId, _PassValue, 1.0, 1.0);
+				return outColor;
+			}
+
+			ENDHLSL
+        }
+
+		
+        Pass
+        {
+			
+            Name "ScenePickingPass"
+            Tags { "LightMode"="Picking" }
+        
+			HLSLPROGRAM
+
+			#define _NORMAL_DROPOFF_TS 1
+			#pragma multi_compile_fog
+			#define ASE_FOG 1
+			#define ASE_ABSOLUTE_VERTEX_POS 1
+			#define _ALPHATEST_ON 1
+			#define _NORMALMAP 1
+			#define ASE_SRP_VERSION 999999
+
+
+			#pragma only_renderers d3d11 glcore gles gles3 
+			#pragma vertex vert
+			#pragma fragment frag
+
+        
+			#define ATTRIBUTES_NEED_NORMAL
+			#define ATTRIBUTES_NEED_TANGENT
+			#define SHADERPASS SHADERPASS_DEPTHONLY
+			
+
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+        
+			#define ASE_NEEDS_VERT_POSITION
+			#define ASE_NEEDS_VERT_NORMAL
+			#include "Packages/com.naelstrof.penetrationtech/Shaders/Penetration.cginc"
+
+
+			struct VertexInput
+			{
+				float4 vertex : POSITION;
+				float3 ase_normal : NORMAL;
+				float4 ase_tangent : TANGENT;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct VertexOutput
+			{
+				float4 clipPos : SV_POSITION;
+				float4 ase_texcoord : TEXCOORD0;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+        
+			CBUFFER_START(UnityPerMaterial)
+			float4 _HueBrightnessContrastSaturation;
+			float4 _MainTex_ST;
+			float4 _BumpMap_ST;
+			float4 _MaskMap_ST;
+			float3 _DickRootWorld;
+			float3 _DickForwardWorld;
+			float3 _DickRightWorld;
+			float3 _DickUpWorld;
+			float _SquashStretchCorrection;
+			float _DistanceToHole;
+			float _DickWorldLength;
+			float _StartClip;
+			float _EndClip;
+			#ifdef TESSELLATION_ON
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+
+			
+
+			float3x3 ChangeOfBasis9_g722( float3 right, float3 up, float3 forward )
+			{
+				float3x3 basisTransform = 0;
+				    basisTransform[0][0] = right.x;
+				    basisTransform[0][1] = right.y;
+				    basisTransform[0][2] = right.z;
+				    basisTransform[1][0] = up.x;
+				    basisTransform[1][1] = up.y;
+				    basisTransform[1][2] = up.z;
+				    basisTransform[2][0] = forward.x;
+				    basisTransform[2][1] = forward.y;
+				    basisTransform[2][2] = forward.z;
+				return basisTransform;
+			}
+			
+
+        
+			float4 _SelectionID;
+
+        
+			struct SurfaceDescription
+			{
+				float Alpha;
+				float AlphaClipThreshold;
+			};
+        
+			VertexOutput VertexFunction(VertexInput v  )
+			{
+				VertexOutput o;
+				ZERO_INITIALIZE(VertexOutput, o);
+
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+
+				float localToCatmullRomSpace_float56_g722 = ( 0.0 );
+				float3 worldDickRootPos56_g722 = _DickRootWorld;
+				float3 right9_g722 = _DickRightWorld;
+				float3 up9_g722 = _DickUpWorld;
+				float3 forward9_g722 = _DickForwardWorld;
+				float3x3 localChangeOfBasis9_g722 = ChangeOfBasis9_g722( right9_g722 , up9_g722 , forward9_g722 );
+				float4 appendResult67_g722 = (float4(v.vertex.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float3 temp_output_12_0_g722 = mul( localChangeOfBasis9_g722, ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float3 break15_g722 = temp_output_12_0_g722;
+				float temp_output_18_0_g722 = ( break15_g722.z * _SquashStretchCorrection );
+				float3 appendResult26_g722 = (float3(break15_g722.x , break15_g722.y , temp_output_18_0_g722));
+				float3 appendResult25_g722 = (float3(( break15_g722.x / _SquashStretchCorrection ) , ( break15_g722.y / _SquashStretchCorrection ) , temp_output_18_0_g722));
+				float temp_output_17_0_g722 = ( _DistanceToHole * 0.5 );
+				float smoothstepResult23_g722 = smoothstep( 0.0 , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float smoothstepResult22_g722 = smoothstep( _DistanceToHole , temp_output_17_0_g722 , temp_output_18_0_g722);
+				float3 lerpResult31_g722 = lerp( appendResult26_g722 , appendResult25_g722 , min( smoothstepResult23_g722 , smoothstepResult22_g722 ));
+				float3 lerpResult32_g722 = lerp( lerpResult31_g722 , ( temp_output_12_0_g722 + ( ( _DistanceToHole - ( _DickWorldLength * ( _DistanceToHole / ( _SquashStretchCorrection * _DickWorldLength ) ) ) ) * float3(0,0,1) ) ) , step( _DistanceToHole , temp_output_18_0_g722 ));
+				float3 temp_output_37_0_g722 = ( _DickRootWorld + mul( transpose( localChangeOfBasis9_g722 ), lerpResult32_g722 ) );
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				float3 lerpResult106_g722 = lerp( ( _DickRootWorld + ( _DickForwardWorld * break15_g722.z ) ) , temp_output_37_0_g722 , temp_output_54_0_g722);
+				float3 worldPosition56_g722 = lerpResult106_g722;
+				float3 worldDickForward56_g722 = _DickForwardWorld;
+				float3 worldDickUp56_g722 = _DickUpWorld;
+				float3 worldDickRight56_g722 = _DickRightWorld;
+				float4 appendResult86_g722 = (float4(v.ase_normal , 0.0));
+				float3 normalizeResult87_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult86_g722 )).xyz );
+				float3 worldNormal56_g722 = normalizeResult87_g722;
+				float4 break93_g722 = v.ase_tangent;
+				float4 appendResult89_g722 = (float4(break93_g722.x , break93_g722.y , break93_g722.z , 0.0));
+				float3 normalizeResult91_g722 = normalize( (mul( GetObjectToWorldMatrix(), appendResult89_g722 )).xyz );
+				float4 appendResult94_g722 = (float4(normalizeResult91_g722 , break93_g722.w));
+				float4 worldTangent56_g722 = appendResult94_g722;
+				float3 worldPositionOUT56_g722 = float3( 0,0,0 );
+				float3 worldNormalOUT56_g722 = float3( 0,0,0 );
+				float4 worldTangentOUT56_g722 = float4( 0,0,0,0 );
+				{
+				ToCatmullRomSpace_float(worldDickRootPos56_g722,worldPosition56_g722,worldDickForward56_g722,worldDickUp56_g722,worldDickRight56_g722,worldNormal56_g722,worldTangent56_g722,worldPositionOUT56_g722,worldNormalOUT56_g722,worldTangentOUT56_g722);
+				}
+				float4 appendResult73_g722 = (float4(worldPositionOUT56_g722 , 1.0));
+				float4 transform72_g722 = mul(GetWorldToObjectMatrix(),appendResult73_g722);
+				
+				float4 appendResult75_g722 = (float4(worldNormalOUT56_g722 , 0.0));
+				float3 normalizeResult76_g722 = normalize( (mul( GetWorldToObjectMatrix(), appendResult75_g722 )).xyz );
+				
+				o.ase_texcoord = v.vertex;
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = v.vertex.xyz;
+				#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+				#endif
+				float3 vertexValue = (transform72_g722).xyz;
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					v.vertex.xyz = vertexValue;
+				#else
+					v.vertex.xyz += vertexValue;
+				#endif
+				v.ase_normal = normalizeResult76_g722;
+
+				float3 positionWS = TransformObjectToWorld( v.vertex.xyz );
+				o.clipPos = TransformWorldToHClip(positionWS);
+				return o;
+			}
+
+			#if defined(TESSELLATION_ON)
+			struct VertexControl
+			{
+				float4 vertex : INTERNALTESSPOS;
+				float3 ase_normal : NORMAL;
+				float4 ase_tangent : TANGENT;
+
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct TessellationFactors
+			{
+				float edge[3] : SV_TessFactor;
+				float inside : SV_InsideTessFactor;
+			};
+
+			VertexControl vert ( VertexInput v )
+			{
+				VertexControl o;
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				o.vertex = v.vertex;
+				o.ase_normal = v.ase_normal;
+				o.ase_tangent = v.ase_tangent;
+				return o;
+			}
+
+			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> v)
+			{
+				TessellationFactors o;
+				float4 tf = 1;
+				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
+				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
+				#if defined(ASE_FIXED_TESSELLATION)
+				tf = FixedTess( tessValue );
+				#elif defined(ASE_DISTANCE_TESSELLATION)
+				tf = DistanceBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
+				#elif defined(ASE_LENGTH_TESSELLATION)
+				tf = EdgeLengthBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
+				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
+				tf = EdgeLengthBasedTessCull(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
+				#endif
+				o.edge[0] = tf.x; o.edge[1] = tf.y; o.edge[2] = tf.z; o.inside = tf.w;
+				return o;
+			}
+
+			[domain("tri")]
+			[partitioning("fractional_odd")]
+			[outputtopology("triangle_cw")]
+			[patchconstantfunc("TessellationFunction")]
+			[outputcontrolpoints(3)]
+			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
+			{
+			   return patch[id];
+			}
+
+			[domain("tri")]
+			VertexOutput DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
+			{
+				VertexInput o = (VertexInput) 0;
+				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
+				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				#if defined(ASE_PHONG_TESSELLATION)
+				float3 pp[3];
+				for (int i = 0; i < 3; ++i)
+					pp[i] = o.vertex.xyz - patch[i].ase_normal * (dot(o.vertex.xyz, patch[i].ase_normal) - dot(patch[i].vertex.xyz, patch[i].ase_normal));
+				float phongStrength = _TessPhongStrength;
+				o.vertex.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * o.vertex.xyz;
+				#endif
+				UNITY_TRANSFER_INSTANCE_ID(patch[0], o);
+				return VertexFunction(o);
+			}
+			#else
+			VertexOutput vert ( VertexInput v )
+			{
+				return VertexFunction( v );
+			}
+			#endif
+
+			half4 frag(VertexOutput IN ) : SV_TARGET
+			{
+				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
+				float4 appendResult67_g722 = (float4(IN.ase_texcoord.xyz , 1.0));
+				float4 transform66_g722 = mul(GetObjectToWorldMatrix(),appendResult67_g722);
+				float3 temp_output_68_0_g722 = (transform66_g722).xyz;
+				float dotResult42_g722 = dot( _DickForwardWorld , ( temp_output_68_0_g722 - _DickRootWorld ) );
+				float temp_output_54_0_g722 = ( 1.0 - ( saturate( ( -( _StartClip - dotResult42_g722 ) * 10.0 ) ) * saturate( ( -( dotResult42_g722 - _EndClip ) * 10.0 ) ) ) );
+				
+				surfaceDescription.Alpha = temp_output_54_0_g722;
+				surfaceDescription.AlphaClipThreshold = 0.01;
+
+
+				#if _ALPHATEST_ON
+					float alphaClipThreshold = 0.01f;
+					#if ALPHA_CLIP_THRESHOLD
+						alphaClipThreshold = surfaceDescription.AlphaClipThreshold;
+					#endif
+					clip(surfaceDescription.Alpha - alphaClipThreshold);
+				#endif
+
+				half4 outColor = 0;
+				outColor = _SelectionID;
+				
+				return outColor;
+			}
+        
+			ENDHLSL
+        }
 		
 	}
 	
-	CustomEditor "UnityEditor.ShaderGraph.PBRMasterGUI"
+	CustomEditor "UnityEditor.ShaderGraphLitGUI"
 	Fallback "Hidden/InternalErrorShader"
 	
 }
 /*ASEBEGIN
 Version=18935
-627;628;1800;784;-6208.897;1705.151;1;True;False
+419;682;1528;730;-6445.601;1525.206;1;True;False
 Node;AmplifyShaderEditor.CommentaryNode;206;6016.412,-2050.383;Inherit;False;1888.192;1147.05;FragmentShader;11;106;103;100;104;107;101;102;108;105;445;553;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.TextureCoordinatesNode;103;6204.022,-1988.126;Inherit;False;1;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector4Node;106;6133.625,-1815.368;Inherit;False;Property;_HueBrightnessContrastSaturation;_HueBrightnessContrastSaturation;14;0;Create;True;0;0;0;False;0;False;0,0,0,0;0,0.5019608,0.5019608,0.5019608;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;100;6070.291,-1564.565;Inherit;True;Property;_MainTex;MainTex;11;0;Create;True;0;0;0;False;0;False;-1;None;c6a51a68e5768654f8e614a5d167aefd;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;104;6584.06,-2000.383;Inherit;True;Property;_DecalColorMap;DecalColorMap;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;black;Auto;False;Object;-1;MipLevel;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;107;6529.273,-1778.095;Inherit;False;HueShift;-1;;712;1952e423258605d4aaa526c67ba2eb7c;0;2;2;FLOAT4;0,0.5,0.5,0.5;False;3;COLOR;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SamplerNode;102;6070.819,-1133.333;Inherit;True;Property;_MaskMap;MaskMap;12;0;Create;True;0;0;0;False;0;False;-1;None;aef0d52182fe29d48985b053faf59e23;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;553;6926.951,-1067.217;Inherit;False;PenetratorDeformation;1;;713;034c1604581464e459076bc562dc2e05;0;3;64;FLOAT3;0,0,0;False;69;FLOAT3;0,0,0;False;71;FLOAT4;0,0,0,0;False;4;FLOAT3;61;FLOAT3;62;FLOAT4;63;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;445;7295.528,-1194.208;Inherit;False;Constant;_Float1;Float 1;28;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.LerpOp;105;7151.767,-1775.192;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;101;6066.412,-1349.593;Inherit;True;Property;_BumpMap;BumpMap;13;0;Create;True;0;0;0;False;0;False;-1;None;9c44ea8cd9bad9a41b2e1c4b503546e2;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FunctionNode;574;7081.627,-813.377;Inherit;False;PenetratorDeformationShrink;1;;722;ad4a380768980ef49a79fe23c545abef;0;3;64;FLOAT3;0,0,0;False;69;FLOAT3;0,0,0;False;71;FLOAT4;0,0,0,0;False;4;FLOAT3;61;FLOAT3;62;FLOAT4;63;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;108;7117.321,-1484.313;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0.9;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;554;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;555;7623.605,-1459.329;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;Custom/Dick;c8c6e48b19d04b64a88f03e093fd2a1b;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,-1;0;Translucency;0;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;0.5,False,-1;0;  Scattering;2,False,-1;0;  Direct;0.9,False,-1;0;  Ambient;0.1,False,-1;0;  Shadow;0.5,False,-1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;0;0;0;8;False;True;True;True;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;556;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;557;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;558;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;559;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;560;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;561;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;14;New Amplify Shader;c8c6e48b19d04b64a88f03e093fd2a1b;True;GBuffer;0;7;GBuffer;1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-WireConnection;104;1;103;0
-WireConnection;107;2;106;0
-WireConnection;107;3;100;0
+Node;AmplifyShaderEditor.LerpOp;105;7151.767,-1775.192;Inherit;False;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;445;7295.528,-1194.208;Inherit;False;Constant;_Float1;Float 1;28;0;Create;True;0;0;0;False;0;False;0.01;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;553;6926.951,-1067.217;Inherit;False;PenetratorDeformation;11;;721;034c1604581464e459076bc562dc2e05;0;3;64;FLOAT3;0,0,0;False;69;FLOAT3;0,0,0;False;71;FLOAT4;0,0,0,0;False;4;FLOAT3;61;FLOAT3;62;FLOAT4;63;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;103;6204.022,-1988.126;Inherit;False;1;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;102;6070.819,-1133.333;Inherit;True;Property;_MaskMap;MaskMap;22;0;Create;True;0;0;0;False;0;False;-1;None;aef0d52182fe29d48985b053faf59e23;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;100;6070.291,-1564.565;Inherit;True;Property;_MainTex;MainTex;21;0;Create;True;0;0;0;False;0;False;-1;None;c6a51a68e5768654f8e614a5d167aefd;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector4Node;106;6133.625,-1815.368;Inherit;False;Property;_HueBrightnessContrastSaturation;_HueBrightnessContrastSaturation;24;0;Create;True;0;0;0;False;0;False;0,0,0,0;0,0.5019608,0.5019608,0.5019608;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;101;6066.412,-1349.593;Inherit;True;Property;_BumpMap;BumpMap;23;0;Create;True;0;0;0;False;0;False;-1;None;9c44ea8cd9bad9a41b2e1c4b503546e2;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FunctionNode;107;6529.273,-1778.095;Inherit;False;HueShift;-1;;720;1952e423258605d4aaa526c67ba2eb7c;0;2;2;FLOAT4;0,0.5,0.5,0.5;False;3;COLOR;0,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.SamplerNode;104;6584.06,-2000.383;Inherit;True;Property;_DecalColorMap;DecalColorMap;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;black;Auto;False;Object;-1;MipLevel;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;569;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;GBuffer;0;7;GBuffer;1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;562;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;565;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;563;7623.605,-1459.329;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;Custom/Dick;5b1861a142b3d4e45ba1bb5742a4fa5f;True;Forward;0;1;Forward;20;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;1;LightMode=UniversalForward;False;False;0;Hidden/InternalErrorShader;0;0;Standard;40;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,-1;0;Translucency;0;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;0.5,False,-1;0;  Scattering;2,False,-1;0;  Direct;0.9,False,-1;0;  Ambient;0.1,False,-1;0;  Shadow;0.5,False,-1;0;Cast Shadows;1;0;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;0;637951711729303007;LOD CrossFade;0;637951711720212949;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;0;637937904191780019;Debug Display;0;0;Clear Coat;0;0;0;10;False;True;True;True;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;564;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;567;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;566;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;568;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;DepthNormals;0;6;DepthNormals;1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;571;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;570;7623.605,-1459.329;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;17;New Amplify Shader;5b1861a142b3d4e45ba1bb5742a4fa5f;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+WireConnection;108;0;102;4
+WireConnection;108;2;104;4
 WireConnection;105;0;107;0
 WireConnection;105;1;104;0
 WireConnection;105;2;104;4
-WireConnection;108;0;102;4
-WireConnection;108;2;104;4
-WireConnection;555;0;105;0
-WireConnection;555;1;101;0
-WireConnection;555;3;102;1
-WireConnection;555;4;108;0
-WireConnection;555;6;553;0
-WireConnection;555;7;445;0
-WireConnection;555;8;553;61
-WireConnection;555;10;553;62
-WireConnection;555;18;553;63
+WireConnection;107;2;106;0
+WireConnection;107;3;100;0
+WireConnection;104;1;103;0
+WireConnection;563;0;105;0
+WireConnection;563;1;101;0
+WireConnection;563;3;102;1
+WireConnection;563;4;108;0
+WireConnection;563;6;574;0
+WireConnection;563;7;445;0
+WireConnection;563;8;574;61
+WireConnection;563;10;574;62
+WireConnection;563;20;574;63
 ASEEND*/
-//CHKSM=15F5B559899D2784A0EBBC52B9A18EB590C06615
+//CHKSM=F91712C5062B6819F067C8A5C96AF7BE9BD9F4BC

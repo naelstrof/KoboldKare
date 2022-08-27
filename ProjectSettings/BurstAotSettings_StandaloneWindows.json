@@ -1,6 +1,6 @@
 {
   "MonoBehaviour": {
-    "Version": 3,
+    "Version": 4,
     "EnableBurstCompilation": false,
     "EnableOptimisations": false,
     "EnableSafetyChecks": false,
@@ -11,6 +11,7 @@
     "CpuMinTargetX64": 0,
     "CpuMaxTargetX64": 0,
     "CpuTargetsX32": 6,
-    "CpuTargetsX64": 72
+    "CpuTargetsX64": 72,
+    "OptimizeFor": 1
   }
 }

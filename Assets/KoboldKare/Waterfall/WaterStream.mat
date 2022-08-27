@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterStream
   m_Shader: {fileID: 4800000, guid: 92d824d5634a5ba4a85a4e5642ee1c99, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -55,11 +56,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaCutoff: 0.5
     - _Depth: 0.98
     - _DepthFalloff: -13
-    - _Distortion: 0.09
+    - _Distortion: 0.08
     - _Float0: 0.0192
     - _Float1: 0.85
     - _Float3: 0.9
@@ -72,6 +86,8 @@ Material:
     - _Foamfalloff: -4
     - _MaskClipValue: 0.5
     - _NormalScale: 0.3
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _Smoothness: 0.9
     - _Specular: 0.1
     - _WaterDepth: 0.99
@@ -83,7 +99,7 @@ Material:
     m_Colors:
     - _Color0: {r: 0, g: 0.6749488, b: 0.8088235, a: 0}
     - _Color1: {r: 0, g: 0.048731543, b: 0.22794023, a: 0}
-    - _DeepColor: {r: 0.019607842, g: 0.07500712, b: 0.2941174, a: 0}
+    - _DeepColor: {r: 0.019607842, g: 0.075007044, b: 0.29411727, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShalowColor: {r: 0, g: 0.58681357, b: 0.6037736, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}

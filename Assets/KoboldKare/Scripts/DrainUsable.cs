@@ -62,8 +62,8 @@ public class DrainUsable : GenericUsable {
         }
     }
 
-    public override void Load(BinaryReader reader, string version) {
-        base.Load(reader, version);
+    public override void Load(BinaryReader reader) {
+        base.Load(reader);
         bool newDraining = reader.ReadBoolean();
         if (!draining && newDraining) {
             StartCoroutine(Drain());
@@ -71,8 +71,8 @@ public class DrainUsable : GenericUsable {
         draining = newDraining;
     }
 
-    public override void Save(BinaryWriter writer, string version) {
-        base.Save(writer, version);
+    public override void Save(BinaryWriter writer) {
+        base.Save(writer);
         writer.Write(draining);
     }
 }

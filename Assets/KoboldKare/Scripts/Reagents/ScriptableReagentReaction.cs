@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "New Reagent", menuName = "Data/Reagent Reaction", order = 1)]
 public class ScriptableReagentReaction : ScriptableObject {
-    [System.Serializable]
-    public class ReagentReactionEvent : UnityEvent<GenericReagentContainer> {}
-    public ReagentReactionEvent OnReaction;
+    [SerializeReference, SerializeReferenceButton]
+    private ReagentReaction[] reactions;
+    
     [System.Serializable]
     public class Reactant {
         public ScriptableReagent reactant;
@@ -38,8 +38,11 @@ public class ScriptableReagentReaction : ScriptableObject {
             container.OverrideReagent(reactant.reactant, reactantVolume-minReactantVolumeRatio*reactant.coefficient);
         }
         foreach(var product in products) {
-            container.AddMix(product.reactant, minReactantVolumeRatio*product.coefficient, GenericReagentContainer.InjectType.Metabolize);
+            container.GetContents().AddMix(ReagentDatabase.GetID(product.reactant), minReactantVolumeRatio * product.coefficient, container);
         }
-        OnReaction.Invoke(container);
+
+        foreach (var reaction in reactions) {
+            reaction.React(container);
+        }
     }
 }

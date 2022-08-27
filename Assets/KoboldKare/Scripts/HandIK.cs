@@ -49,6 +49,10 @@ public class HandIK : MonoBehaviour {
         StartCoroutine(WeightDown(hand));
     }
     private void OnAnimatorIK(int layerIndex) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         animator.SetIKPosition(AvatarIKGoal.LeftHand, hands[0].position);
         animator.SetIKRotation(AvatarIKGoal.LeftHand, hands[0].goalRotation);
         animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, hands[0].positionWeight);

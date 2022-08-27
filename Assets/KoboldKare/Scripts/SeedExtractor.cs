@@ -75,22 +75,14 @@ public class SeedExtractor : GenericUsable {
             return;
         }
         photonView.RequestOwnership();
-        GenericDamagable damagable = other.GetComponentInParent<GenericDamagable>();
-        if (damagable != null && damagable.removeOnDeath) {
+        IDamagable damagable = other.GetComponentInParent<IDamagable>();
+        if (damagable != null) {
             foreach( GenericReagentContainer container in other.transform.root.GetComponentsInChildren<GenericReagentContainer>()) {
-                internalContents.TransferMix(container, container.volume, GenericReagentContainer.InjectType.Inject);
+
+                internalContents.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, container.GetContents(),
+                    photonView.ViewID);
             }
-        }
-        if (damagable != null && !damagable.removeOnDeath) {
-            //damagable.transform.position += Vector3.up * 1f;
-            foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-                r?.AddExplosionForce(700f, transform.position+Vector3.down*5f, 100f);
-            }
-            deny.Play(source);
-            //source.PlayOneShot(deny.GetRandomClip(), deny.volume);
-        }
-        if (damagable) {
-            damagable.Damage(damagable.maxHealth+1);
+            damagable.Damage(damagable.GetHealth()+1);
         }
     }
     private IEnumerator OutputSeeds() {

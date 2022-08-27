@@ -21,9 +21,10 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  color: {r: 0, g: 1, b: 0.08237839, a: 0.078431375}
+  color: {r: 0, g: 1, b: 0.08237839, a: 1}
   emission: {r: 0.09411765, g: 8, b: 0, a: 1}
   value: 1
+  consumesMetabolization: 1
   metabolizationHalfLife: 30
   cleaningAgent: 0
   onExist:
@@ -42,4 +43,5 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   references:
-    version: 1
+    version: 2
+    RefIds: []

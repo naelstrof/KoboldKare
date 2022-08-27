@@ -7,6 +7,6 @@ public class RotateByTime : MonoBehaviour {
     public float offset = 0f;
     public float multiplier = 1f;
     void FixedUpdate() {
-        transform.rotation = Quaternion.AngleAxis(offset + DayNightCycle.instance.time01 * 360f * multiplier, axis);
+        transform.rotation = Quaternion.AngleAxis(offset + Time.time * 360f * multiplier, axis);
     }
 }

@@ -7,6 +7,6 @@ public interface IAdvancedInteractable {
     void OnInteract(Kobold k);
     Transform transform { get; }
     GameObject gameObject { get; }
-    void OnEndInteract(Kobold k);
+    void OnEndInteract();
     bool PhysicsGrabbable();
 }

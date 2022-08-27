@@ -19,4 +19,5 @@ MonoBehaviour:
     m_Items: []
   m_TableData: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

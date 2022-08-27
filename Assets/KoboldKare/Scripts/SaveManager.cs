@@ -1,13 +1,8 @@
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public static class SaveManager {
@@ -15,7 +10,7 @@ public static class SaveManager {
     public const string saveExtension = ".sav";
     public const string imageExtension = ".jpg";
     public const string saveHeader = "KKSAVE";
-    public const string version = "0";
+    //public const string version = "0";
     public const int textureSize = 256;
     public delegate void SaveCompleteAction();
     public class SaveData {
@@ -60,6 +55,23 @@ public static class SaveManager {
         
         return name;
     }
+
+    public static bool IsLoadable(string filename, out string lastError) {
+        using FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read);
+        BinaryReader reader = new BinaryReader(file);
+        if (reader.ReadString() != saveHeader) {
+            lastError = "Not a save file: " + filename;
+            return false;
+        }
+        string fileVersion = reader.ReadString();
+        if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+            lastError = "Cannot load save file, it was saved with a different version of KoboldKare.";
+            return false;
+        }
+        lastError = "";
+        return true;
+    }
+
     public static void Save(string filename, SaveCompleteAction action = null) {
         //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be saved: "+filename);
         string saveDataPath = Application.persistentDataPath + "/" + saveDataLocation;
@@ -70,7 +82,7 @@ public static class SaveManager {
         using(FileStream file = new FileStream(savePath, FileMode.CreateNew, FileAccess.Write)) {
             BinaryWriter writer = new BinaryWriter(file);
             writer.Write(saveHeader);
-            writer.Write(version);
+            writer.Write(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion);
             //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
             writer.Write(PhotonNetwork.ViewCount);
             // We need to enable all our saved objects, they don't have proper viewids otherwise
@@ -86,7 +98,7 @@ public static class SaveManager {
                 writer.Write(PrefabifyGameObjectName(view.gameObject));
                 foreach(var observable in view.ObservedComponents) {
                     if (observable is ISavable) {
-                        (observable as ISavable).Save(writer, version);
+                        (observable as ISavable).Save(writer);
                     }
                 }
             }
@@ -138,60 +150,51 @@ public static class SaveManager {
                 throw new UnityException("Not a save file: " + filename);
             }
             string fileVersion = reader.ReadString();
+            
+            if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+                throw new UnityException("Cannot load save file, it was saved with a different version of KoboldKare.");
+            }
+
             int viewCount = reader.ReadInt32();
-            //Debug.Log("viewCount: "+viewCount);
             for(int i=0;i<viewCount;i++) {
                 int viewID = reader.ReadInt32();
                 string prefabName = reader.ReadString();
                 PhotonView view = PhotonNetwork.GetPhotonView(viewID);
                 
-                // Debug.Log("[SaveManager] <Deserialization Log> :: Attempting to load: "+prefabName);
                 if((PhotonNetwork.PrefabPool as DefaultPool).ResourceCache.ContainsKey(prefabName)){
-                    // Debug.Log("[SaveManager] <Deserialization Log> :: Found in Prefab Pool: "+prefabName);
                     GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
-                    if(obj.GetComponentsInChildren<Plant>() != null){ 
-                        // Bypass protection, prevents Plants from 'skipping ahead' a generation
-                        foreach (var item in obj.GetComponentsInChildren<Plant>()){
-                            item.spawnedFromLoad = true;
-                        }
-                    }
                     view = obj.GetComponent<PhotonView>();
                 }
                 if (view == null) {
                     Debug.Log("[SaveManager] <Deserialization Log> :: Running deep check when view returned null...");
-                    foreach(PhotonView deepcheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
-                        if (deepcheck.ViewID == viewID) {
-                            view = deepcheck;
+                    foreach(PhotonView deepCheck in GameObject.FindObjectsOfType<PhotonView>(true)) {
+                        if (deepCheck.ViewID == viewID) {
+                            view = deepCheck;
                             Debug.Log("[SaveManager] <Deserialization Log> :: Deep check successful!");
                             break;
                         }
                     }
                 }
                 if (view == null) {
-                    Debug.LogError( "Failed to find view id " + viewID + " and name " + prefabName);
-                }
-                else{
-                    // Debug.Log("[Save Manager] <Deserialization Log> :: View checks were not null; load should proceed smoothly on this object.");
+                    throw new UnityException("Failed to find view id " + viewID + " with name " + prefabName +". Failed to load...");
                 }
                 try {
-                    //if(view.ObservedComponents.Count == 0){
-                        // This is not necessarily an issue, photonviews can simply be used as a unique id for other scripts to use for rpcs or whatever.
-                        //Debug.LogWarning("[SaveManager] <Deserialization Log> :: Attempting to deserialize photonview which is either not observing components or whose references to said components are broken/missing", view.gameObject);
-                    //}
                     foreach(Component observable in view.ObservedComponents) {
-                        if (observable is ISavable) {
-                            // Debug.Log("[SaveManager] <Deserialization Log> :: Proceeding to call Load() on observed component of type "+observable+" on game object "+view.gameObject.name);
-                            (observable as ISavable).Load(reader, fileVersion);
+                        if (observable is ISavable savable) {
+                            savable.Load(reader);
                         }
                     }
-                } catch (Exception e) {
-                    Debug.LogError("Failed to load observable on photonview " +viewID + ", " + prefabName, view);
-                    throw e;
+                } catch {
+                    Debug.LogError("Failed to load observable on photonView " +viewID + ", " + prefabName, view);
+                    throw;
                 }
             }
         }
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        if (!IsLoadable(filename, out string lastError)) {
+            throw new UnityException(lastError);
+        }
         //Ensure we show the player that the game is loading while we load
         if(SceneManager.GetActiveScene().name != "MainMenu"){
             GameManager.instance.Pause(false);

@@ -14724,9 +14724,9 @@ MonoBehaviour:
   stimulationMax: 10
   stimulationMin: -50
   koboldAnimator: {fileID: 6506915555083475516}
-  arousal: 0
+  arousal: 1
   nippleBarbells: {fileID: 7327823432158866843}
-  permanentArousal: 0.84
+  permanentArousal: 1
   arousalDirection: 0
   arousalSpeed: 0.01
   nextArousalDown: 0

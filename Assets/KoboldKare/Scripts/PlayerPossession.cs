@@ -172,7 +172,7 @@ public class PlayerPossession : MonoBehaviourPun {
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
         if (erectionUp-erectionDown != 0f) {
-            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.2f);
+            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.3f);
         }
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);

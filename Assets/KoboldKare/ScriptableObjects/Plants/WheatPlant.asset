@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b49cb41b826404fbc3be501ccb1196, type: 3}
+  m_Name: WheatPlant
+  m_EditorClassIdentifier: 
+  fluidNeeded: 1
+  display: {fileID: 5239235871275086912, guid: a87e76e7223fcab4287ea136c1de7345, type: 3}
+  possibleNextGenerations: []
+  produces:
+  - prefab:
+      gameObject: {fileID: 3759752909608599191, guid: 897ffc1903f30f145bfdc5a277236fc3,
+        type: 3}
+      photonName: Wheat
+    minProduce: 2
+    maxProduce: 4

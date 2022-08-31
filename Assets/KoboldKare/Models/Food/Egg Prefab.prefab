@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1026387816065326174
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -169.02115
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 17.820026
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 314.52875
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_Name
+      value: Egg Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b9ef001dc35ba74796fc28969ce59fd, type: 3}
+--- !u!1 &215926037288182031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1026387816065326174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1212815191284846431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215926037288182031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97deeeb8484811b47a9c9ff2e74f7fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeInflater:
+    bounceCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.25
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20167542
+        value: 2.502484
+        inSlope: 0.45121813
+        outSlope: 0.45121813
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0.46640015
+        inSlope: -1.8744586
+        outSlope: -1.8744586
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.6033672
+        value: 1.791847
+        inSlope: 0.56383085
+        outSlope: 0.56383085
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.803418
+        value: 0.71360475
+        inSlope: -2.3585095
+        outSlope: -2.3585095
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    bounceDuration: 1
+    listeners:
+    - rid: 5882125128588853248
+  references:
+    version: 2
+    RefIds:
+    - rid: 5882125128588853248
+      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+      data:
+        targetTransform: {fileID: 699411692930579381}
+--- !u!4 &699411692930579381 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0b9ef001dc35ba74796fc28969ce59fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1026387816065326174}
+  m_PrefabAsset: {fileID: 0}

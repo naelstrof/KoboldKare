@@ -27,9 +27,7 @@ MonoBehaviour:
   consumesMetabolization: 1
   metabolizationHalfLife: 30
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls: []
+  display: {fileID: 3800156875673657227, guid: a1982049a3ca23d45a3a3f05e16c0871, type: 3}
   references:
     version: 2
     RefIds: []

@@ -60,7 +60,7 @@ public class DickInfo : MonoBehaviour {
         protected override void OnPenetrationDepthChange(float depthDist) {
             base.OnPenetrationDepthChange(depthDist);
             float movementAmount = depthDist - lastDepthDist;
-            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
+            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount*0.5f));
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
             dickSet.inside = depthDist != 0f && depthDist < penetrableMem.GetSplinePath().arcLength;

@@ -388,7 +388,7 @@ Material:
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SubsurfaceColor: {r: 0.6037736, g: 0.030780617, b: 0, a: 0}
+    - _SubsurfaceColor: {r: 0.6037736, g: 0.030780617, b: 0, a: 1}
     - _ThicknessRemap: {r: 0, g: 0.9848447, b: 0, a: 0}
     - _TransmissionProfile_asset: {r: -0.00000089582414, g: -2.1516614e-36, b: 1.7206509e-20,
         a: 5.2331627e+28}

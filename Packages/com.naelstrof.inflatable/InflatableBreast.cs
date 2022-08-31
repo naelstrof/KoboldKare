@@ -5,12 +5,15 @@ using JigglePhysics;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 using Naelstrof.Easing;
+using UnityEngine.Serialization;
 
 namespace Naelstrof.Inflatable {
     [System.Serializable]
     public class InflatableBreast : InflatableListener {
         [SerializeField]
-        private Transform targetTransform;
+        private Transform baseBreastTransform;
+        [FormerlySerializedAs("targetTransform")] [SerializeField]
+        private Transform breastTransform;
         [SerializeField]
         private string flatShape;
         [SerializeField]
@@ -40,9 +43,9 @@ namespace Naelstrof.Inflatable {
                 flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
                 biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
             }
-            startScale = targetTransform.localScale;
+            startScale = baseBreastTransform.localScale;
             foreach (var jiggleRig in rigBuilder.jiggleRigs) {
-                if (targetTransform.IsChildOf(jiggleRig.rootTransform)) {
+                if (breastTransform.IsChildOf(jiggleRig.rootTransform)) {
                     if (jiggleRig.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
@@ -53,7 +56,7 @@ namespace Naelstrof.Inflatable {
             }
 
             foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                if (jiggleZone.target == targetTransform) {
+                if (jiggleZone.target == breastTransform) {
                     if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
@@ -88,7 +91,7 @@ namespace Naelstrof.Inflatable {
             ((JiggleSettingsBlend)targetRig.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
             ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
             skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
-            targetTransform.localScale = startScale + Vector3.one*Mathf.Max(newSize-2f, 0f);
+            baseBreastTransform.localScale = startScale + Vector3.one*Mathf.Max(newSize-2f, 0f);
             breastAnimator.SetFloat(BreastSize, newSize);
         }
     }

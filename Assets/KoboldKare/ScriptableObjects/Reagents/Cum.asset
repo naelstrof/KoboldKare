@@ -24,10 +24,10 @@ MonoBehaviour:
   color: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 0}
   value: 0.5
+  consumesMetabolization: 0
   metabolizationHalfLife: 60
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls: []
+  display: {fileID: 4074273719157461319, guid: a5e747e3c0e5bbc4388a00236396c0c5, type: 3}
   references:
-    version: 1
+    version: 2
+    RefIds: []

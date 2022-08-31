@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757ca47f379963246843acce6f01e18f, type: 3}
+  m_Name: PineapplePopsicle
+  m_EditorClassIdentifier: 
+  localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 2228726966833152
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  color: {r: 0.9990681, g: 1, b: 0.6273585, a: 1}
+  emission: {r: 0, g: 0, b: 0, a: 1}
+  value: 0.25
+  consumesMetabolization: 0
+  metabolizationHalfLife: 30
+  cleaningAgent: 0
+  display: {fileID: 3353357907096999620, guid: 8ffaa0e95da8d53419b12710d09c5d76, type: 3}
+  references:
+    version: 2
+    RefIds: []

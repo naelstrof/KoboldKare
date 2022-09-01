@@ -2572,13 +2572,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933598101458311077}
-  m_LocalRotation: {x: 0.111341126, y: 4.0472504e-11, z: 0.0000000020536386, w: 0.9937822}
-  m_LocalPosition: {x: 0, y: 0.0056, z: 0.3767}
+  m_LocalRotation: {x: -0.62134093, y: -0.0022397372, z: -0.0017911991, w: 0.7835351}
+  m_LocalPosition: {x: -0.00022205192, y: 0.34166154, z: 0.04263282}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6506915555090380214}
-  m_RootOrder: 9
+  m_Father: {fileID: 6506915555090380210}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 12.785, y: 0, z: 0}
 --- !u!1 &956235506931754160
 GameObject:
@@ -3176,13 +3176,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530571852599423149}
-  m_LocalRotation: {x: 0.106345475, y: -2.019078e-10, z: -5.788933e-10, w: 0.99432933}
-  m_LocalPosition: {x: -0, y: 0.0419, z: 0.1151}
+  m_LocalRotation: {x: -0.62527066, y: -0.0022307062, z: -0.0018024317, w: 0.7804027}
+  m_LocalPosition: {x: -0, y: 0.095, z: 0.024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6506915555090380214}
-  m_RootOrder: 10
+  m_Father: {fileID: 6506915555090380210}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 12.209, y: 0, z: 0}
 --- !u!1 &1568765603565158341
 GameObject:
@@ -7022,13 +7022,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886071233850687195}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0536, z: 0.0107}
+  m_LocalRotation: {x: -0.7047172, y: -0.0020263765, z: -0.002029436, w: 0.70948255}
+  m_LocalPosition: {x: 0.0001, y: -0.0409, z: 0.0588}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6506915555090380214}
-  m_RootOrder: 8
+  m_Father: {fileID: 6506915555090380210}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3886635895183098324
 GameObject:
@@ -11849,21 +11849,24 @@ MonoBehaviour:
   points:
   - {fileID: 3979920971096407199}
   - {fileID: 6705071045580581135}
-  - {fileID: 6506915555090380202}
+  - {fileID: 6506915555090380232}
   - {fileID: 6362529374609880686}
   - {fileID: 7431995225434785503}
-  splineTension: 0.5
+  splineTension: 0.788
   listeners:
   - rid: 0
   - rid: 1
   - rid: 2
+  - rid: 8920608344300847108
+  - rid: 8920608344300847109
+  - rid: 8920608344300847121
   references:
     version: 2
     RefIds:
     - rid: 0
       type: {class: ClipListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        t: 0.232
+        t: 0.137
         allowForAllTheWayThrough: 1
         endT: 0.882
     - rid: 1
@@ -11895,6 +11898,44 @@ MonoBehaviour:
           blendshapeID: 47
         baseGirthRadius: 0.002
         blendShapeGirthRadius: 0.05
+        overdrive: 1
+    - rid: 8920608344300847108
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0
+        offsetCorrectionBone: {fileID: 8415318311738016194}
+        targets:
+        - skinnedMeshRenderer: {fileID: 6506915555087688956}
+          blendshapeName: vrc.v_aa
+          blendshapeID: 4
+        - skinnedMeshRenderer: {fileID: 2780399689652382999}
+          blendshapeName: vrc.v_aa
+          blendshapeID: 4
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.05
+        overdrive: 0
+    - rid: 8920608344300847109
+      type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        jawTransform: {fileID: 6506915555090380210}
+        jawOpenDirection: {x: 0, y: 0, z: 1}
+        koboldAnimator: {fileID: 6506915555083475516}
+        controllerAnimator: {fileID: 7517654626729760162}
+    - rid: 8920608344300847121
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.232
+        offsetCorrectionBone: {fileID: 8415318311738016194}
+        targets:
+        - skinnedMeshRenderer: {fileID: 6506915555087688956}
+          blendshapeName: ThroatOpen
+          blendshapeID: 50
+        - skinnedMeshRenderer: {fileID: 2780399689652382999}
+          blendshapeName: ThroatOpen
+          blendshapeID: 50
+        baseGirthRadius: 0.01
+        blendShapeGirthRadius: 0.06
         overdrive: 1
 --- !u!1 &6852960065056215170
 GameObject:
@@ -17067,6 +17108,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -40.086
+      objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.036
+      objectReference: {fileID: 0}
     - target: {fileID: 400112, guid: f7ada51eab3f03e408f76a632dd64539, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -18129,9 +18182,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6506915555090771804}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &6506915555090380210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400110, guid: f7ada51eab3f03e408f76a632dd64539,
+    type: 3}
+  m_PrefabInstance: {fileID: 6506915555090771804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6506915555090380214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400106, guid: f7ada51eab3f03e408f76a632dd64539,
+    type: 3}
+  m_PrefabInstance: {fileID: 6506915555090771804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6506915555090380232 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400020, guid: f7ada51eab3f03e408f76a632dd64539,
     type: 3}
   m_PrefabInstance: {fileID: 6506915555090771804}
   m_PrefabAsset: {fileID: 0}

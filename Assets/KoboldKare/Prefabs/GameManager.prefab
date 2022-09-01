@@ -12961,6 +12961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipments:
+  - {fileID: 11400000, guid: 1a65c80dcf8e3f141a8bcb85cf74d018, type: 2}
   - {fileID: 11400000, guid: b7a18c33b66106842b96a6880e7a62c1, type: 2}
   - {fileID: 11400000, guid: f4be238faa3d6ae439a161b0024ac2ce, type: 2}
   - {fileID: 11400000, guid: 56f05d1136f50a849b8edd4164b2fa9b, type: 2}

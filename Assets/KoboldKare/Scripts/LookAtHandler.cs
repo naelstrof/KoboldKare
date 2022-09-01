@@ -17,6 +17,15 @@ public class LookAtHandler : MonoBehaviour
     public void SetLookAtPosition( Vector3 lookPosition ) {
         _lookPosition = lookPosition;
     }
+
+    public void SetWeight(float weight) {
+        _weight = weight;
+    }
+
+    public float GetWeight() {
+        return _weight;
+    }
+
     public void SetLookAtWeight(float weight, float bodyWeight, float headWeight, float eyesWeight, float clampWeight) {
         _weight = weight;
         _bodyWeight = bodyWeight;

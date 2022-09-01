@@ -40,6 +40,26 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Vector2 hipVectorVelocity;
     private Vector2 hipVector;
     private Vector2 desiredHipVector;
+    private bool lookEnabled;
+    private Coroutine lookAtTween;
+
+    public void SetLookEnabled(bool lookEnabled) {
+        this.lookEnabled = lookEnabled;
+        if (lookAtTween != null) {
+            StopCoroutine(lookAtTween);
+        }
+        lookAtTween = StartCoroutine(SetLookRoutine());
+    }
+
+    IEnumerator SetLookRoutine() {
+        float startTime = Time.time;
+        float duration = 1f;
+        while (Time.time < startTime + duration) {
+            float t = (Time.time - startTime) / duration;
+            handler.SetWeight(Mathf.Lerp(handler.GetWeight(),lookEnabled?0.7f:0f, t));
+            yield return null;
+        }
+    }
 
     private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
     private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
@@ -123,6 +143,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
     private void Start() {
         tempDir = Vector3.forward;
+        handler.SetWeight(0.7f);
     }
 
     private IEnumerator AnimationRoutine() {
@@ -254,14 +275,17 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         //}
 
-        if (animating) {
-            currentStation.SetLookAtPosition(lookPos);
-            currentStation.SetHipOffset(hipVector);
-            handler.SetLookAtWeight(0.7f, 0f, 1f, 1f, 0.45f);
-        } else {
-            handler.SetLookAtWeight(0.7f, 0.22f, 1f, 1f, 0.45f);
+        if (lookEnabled) {
+            if (animating) {
+                currentStation.SetLookAtPosition(lookPos);
+                currentStation.SetHipOffset(hipVector);
+                handler.SetLookAtWeight(handler.GetWeight(), 0f, 1f, 1f, 0.45f);
+            } else {
+                handler.SetLookAtWeight(handler.GetWeight(), 0.22f, 1f, 1f, 0.45f);
+            }
+
+            handler.SetLookAtPosition(lookPos);
         }
-        handler.SetLookAtPosition(lookPos);
     }
 
     [PunRPC]

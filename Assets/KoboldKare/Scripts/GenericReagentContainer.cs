@@ -130,7 +130,9 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
             SetGenes(kobold.GetGenes());
         } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
-            SetGenes(geneHolder.GetGenes());
+            if (geneHolder.GetGenes() != null) {
+                SetGenes(geneHolder.GetGenes());
+            }
         }
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged(InjectType.Inject);
@@ -143,7 +145,9 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
             SetGenes(kobold.GetGenes());
         } else if (view!=null && view.TryGetComponent(out GeneHolder geneHolder)) {
-            SetGenes(geneHolder.GetGenes());
+            if (geneHolder.GetGenes() != null) {
+                SetGenes(geneHolder.GetGenes());
+            }
         }
         maxVolume = Mathf.Max(contents.volume + incomingReagents.volume, maxVolume);
         

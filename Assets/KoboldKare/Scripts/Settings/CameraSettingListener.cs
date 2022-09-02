@@ -19,6 +19,7 @@ public class CameraSettingListener : MonoBehaviour {
         camData = GetComponent<UniversalAdditionalCameraData>();
         antiAliasing.changed += OnAntiAliasingChanged;
         fov.changed += OnFOVChanged;
+        
         OnAntiAliasingChanged(antiAliasing.GetValue());
         OnFOVChanged(fov.GetValue());
     }
@@ -29,9 +30,6 @@ public class CameraSettingListener : MonoBehaviour {
     }
 
     void OnAntiAliasingChanged(int value) {
-        if (cam == null) {
-            return;
-        }
         cam.allowMSAA = (value != 0f);
         camData.antialiasing = value == 0 ? AntialiasingMode.None : AntialiasingMode.SubpixelMorphologicalAntiAliasing;
         switch(value-1) {
@@ -41,9 +39,6 @@ public class CameraSettingListener : MonoBehaviour {
         }
     }
     void OnFOVChanged(float value) {
-        if (cam == null) {
-            return;
-        }
         cam.fieldOfView = value;
     }
 }

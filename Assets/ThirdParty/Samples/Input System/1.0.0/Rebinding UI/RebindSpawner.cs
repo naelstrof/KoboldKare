@@ -44,7 +44,7 @@ public class RebindSpawner : MonoBehaviour
         StringChanged(null);
     }
     void Start() {
-        StartCoroutine(StartRoutine());
+        GameManager.instance.StartCoroutine(StartRoutine());
     }
     public void RefreshDisplay() {
         foreach(var p in controlUI) {
@@ -66,6 +66,6 @@ public class RebindSpawner : MonoBehaviour
     }
     public void StringChanged(Locale locale) {
         StopAllCoroutines();
-        StartCoroutine(ChangeStrings());
+        GameManager.instance.StartCoroutine(ChangeStrings());
     }
 }

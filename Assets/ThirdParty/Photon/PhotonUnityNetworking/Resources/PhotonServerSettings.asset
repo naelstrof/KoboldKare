@@ -89,6 +89,8 @@ MonoBehaviour:
   - PlantRPC
   - ForceMixRPC
   - SellObject
+  - Die
+  - AddMoney
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

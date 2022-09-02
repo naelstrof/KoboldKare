@@ -1,0 +1,81 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Photon.Pun;
+using UnityEngine;
+using UnityEngine.VFX;
+
+public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable {
+    [SerializeField]
+    private PhotonGameObjectReference spawnOnDeath;
+    [SerializeField]
+    private VisualEffect splashPrefab;
+    [SerializeField]
+    private float health = 1f;
+
+    [SerializeField] private AudioPack gibSound;
+    private void OnValidate() {
+        spawnOnDeath.OnValidate();
+    }
+    public bool CanGrab(Kobold kobold) {
+        return true;
+    }
+    [PunRPC]
+    public void OnGrabRPC(int koboldID) {
+        Die();
+    }
+    [PunRPC]
+    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+    }
+
+    public Transform GrabTransform() {
+        return transform;
+    }
+
+    public float GetHealth() {
+        return health;
+    }
+
+    public void Damage(float amount) {
+        if (health < 0f || !photonView.IsMine) {
+            return;
+        }
+        health -= amount;
+        if (health < 0f) {
+            photonView.RPC(nameof(Die), RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    private void Die() {
+        var effect = GameObject.Instantiate(splashPrefab.gameObject, transform.position, Quaternion.identity);
+        effect.GetComponent<VisualEffect>().SetVector4("Color", spawnOnDeath.gameObject.GetComponent<Fruit>().startingReagent.reagent.color);
+        GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
+        Destroy(effect, 5f);
+        
+        if (!photonView.IsMine) {
+            return;
+        }
+        PhotonNetwork.Instantiate(spawnOnDeath.photonName, transform.position, transform.rotation);
+        PhotonNetwork.Destroy(gameObject);
+    }
+
+    public void Heal(float amount) {
+        health += amount;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(health);
+        } else {
+            // we sync death via RPC, so we just sync the health variable without triggering anything else.
+            health = (float)stream.ReceiveNext();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.rigidbody != null && collision.impulse.magnitude > 1f) {
+            Damage(collision.impulse.magnitude);
+        }
+    }
+}

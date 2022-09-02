@@ -6162,6 +6162,7 @@ MonoBehaviour:
   - rid: 1
   - rid: 2
   - rid: 5882124739971907584
+  - rid: 8920608380542517249
   references:
     version: 2
     RefIds:
@@ -6216,6 +6217,12 @@ MonoBehaviour:
       data:
         t: 0
         targetKobold: {fileID: 3498030196438502570}
+    - rid: 8920608380542517249
+      type: {class: PassiveAudioPenetrable, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0.979
+        playPack: {fileID: 11400000, guid: c1651254df0a85748841b5a2b7299d09, type: 2}
+        delayVariance: 2
 --- !u!1 &3371391311429253532
 GameObject:
   m_ObjectHideFlags: 0
@@ -12474,6 +12481,7 @@ MonoBehaviour:
   - rid: 8920608344300847108
   - rid: 8920608344300847109
   - rid: 8920608344300847121
+  - rid: 8920608380542517248
   references:
     version: 2
     RefIds:
@@ -12551,6 +12559,12 @@ MonoBehaviour:
         baseGirthRadius: 0.01
         blendShapeGirthRadius: 0.06
         overdrive: 1
+    - rid: 8920608380542517248
+      type: {class: PassiveAudioPenetrable, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        playPack: {fileID: 11400000, guid: c1651254df0a85748841b5a2b7299d09, type: 2}
+        delayVariance: 2
 --- !u!1 &6852960065056215170
 GameObject:
   m_ObjectHideFlags: 0

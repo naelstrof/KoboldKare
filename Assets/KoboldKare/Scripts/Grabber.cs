@@ -52,6 +52,11 @@ public class Grabber : MonoBehaviourPun {
             this.springStrength = springStrength;
             this.dampingStrength = dampingStrength;
             body = grabbable.transform.GetComponentInParent<Rigidbody>();
+            if (body == null) {
+                valid = false;
+                return;
+            }
+
             collisionDetectionMode = body.collisionDetectionMode;
             interpolation = body.interpolation;
             body.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -323,6 +328,11 @@ public class Grabber : MonoBehaviourPun {
             if (!contains && grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
                 GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength);
+                // Destroyed on grab, creatures gib on grab.
+                if (!info.Valid()) {
+                    return;
+                }
+
                 grabbedObjects.Add(info);
                 RemoveGivebackKobold(info.kobold);
             }

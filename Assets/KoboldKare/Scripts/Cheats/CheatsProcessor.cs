@@ -38,7 +38,7 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static bool GetCheatsEnabled() {
-        return instance.cheatsEnabled;
+        return instance.cheatsEnabled || Application.isEditor;
     }
 
     public static ReadOnlyCollection<Command> GetCommands() {

@@ -45,6 +45,7 @@ public class BucketWeapon : GenericWeapon {
         audioSource.enabled = false;
         waitForSeconds = new WaitForSeconds(5f);
         defaultBucketDisplay.SetActive(true);
+        OnReagentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
     }
 
     private void OnDestroy() {
@@ -67,7 +68,7 @@ public class BucketWeapon : GenericWeapon {
             }
         }
 
-        if (bestDisplay == null && currentDisplay != null) {
+        if ((bestDisplay == null && currentDisplay != null) || (currentDisplay != null && bestDisplay != null && !currentDisplay.name.Contains(bestDisplay.name))) {
             Destroy(currentDisplay);
             defaultBucketDisplay.SetActive(true);
         }

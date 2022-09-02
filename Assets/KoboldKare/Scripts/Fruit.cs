@@ -16,7 +16,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
     private float health = 100f;
-    [SerializeField] private GenericReagentContainer.InspectorReagent startingReagent;
+    public GenericReagentContainer.InspectorReagent startingReagent;
     private GenericReagentContainer container;
     private Renderer[] renderers;
     [SerializeField] private Inflatable fruitInflater;

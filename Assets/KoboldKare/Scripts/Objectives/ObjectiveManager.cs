@@ -16,6 +16,12 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     public static int GetStars() {
         return instance.stars;
     }
+
+    public static void GiveStars(int count) {
+        instance.stars += count;
+        instance.objectiveChanged?.Invoke(null);
+    }
+
     public static void GetMail() {
         instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
     }

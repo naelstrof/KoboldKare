@@ -18,6 +18,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
         money = amount;
     }
 
+    [PunRPC]
     public void AddMoney(float add) {
         if (add <= 0) {
             return;

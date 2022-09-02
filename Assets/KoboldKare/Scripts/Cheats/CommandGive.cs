@@ -44,7 +44,32 @@ public class CommandGive : Command {
             throw new CheatsProcessor.CommandException($"Spawning reagents requires a 3rd number argument.");
             return;
         }
-        throw new CheatsProcessor.CommandException($"There is no prefab or reagent with name {args[1]}.");
+
+        if (args[1].ToLower() == "stars") {
+            if (args.Length > 2 && int.TryParse(args[2], out int value)) {
+                ObjectiveManager.GiveStars(value);
+                output.Append($"Gave {value} {args[1]}.\n");
+                return;
+            } else {
+                ObjectiveManager.GiveStars(999);
+                output.Append($"Gave 999 {args[1]}.\n");
+                return;
+            }
+        }
+
+        if (args[1].ToLower() == "money" || args[1].ToLower() == "dosh" || args[1].ToLower() == "dollars") {
+            if (args.Length > 2 && float.TryParse(args[2], out float value)) {
+                kobold.photonView.RPC(nameof(MoneyHolder.AddMoney), RpcTarget.All, value);
+                output.Append($"Gave {value} {args[1]} to {kobold.photonView.Owner.NickName}.\n");
+                return;
+            } else {
+                kobold.photonView.RPC(nameof(MoneyHolder.AddMoney), RpcTarget.All, 999f);
+                output.Append($"Gave 999 {args[1]} to {kobold.photonView.Owner.NickName}.\n");
+                return;
+            }
+        }
+
+        throw new CheatsProcessor.CommandException($"There is no prefab, reagent, or resource with name {args[1]}.");
     }
 
     public override void OnValidate() {

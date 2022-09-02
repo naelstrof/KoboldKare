@@ -813,6 +813,30 @@ MonoBehaviour:
     m_Localized: Ajuster le niveau accroupi
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Surnom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "Le b\u0153uf hach\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: "P\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Farine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Popsicle d'ananas
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

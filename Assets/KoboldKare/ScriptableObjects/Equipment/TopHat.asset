@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 9f42e36bfe1e0074685f5aaba93ff78f, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
   slot: 2
   groundPrefab:
     gameObject: {fileID: 6614596883837501892, guid: d699c705401906e41a160011aedb02b0,
       type: 3}
-    photonName: TopHatEquippable
+    photonName: TopHat
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
-      m_KeyId: 112662228430254080
+      m_KeyId: 35653807596163072
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -32,12 +33,11 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
-      m_KeyId: 112660740748374016
+      m_KeyId: 38135240696844288
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply: []
   wearables:
   - wearablePrefab: {fileID: 919132149155446097, guid: 9fb93f4b242293a448c1cc43f1a31a9e,
       type: 3}
@@ -45,4 +45,5 @@ MonoBehaviour:
     stacks: 1
     stackOffset: {x: 0, y: 0.7, z: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

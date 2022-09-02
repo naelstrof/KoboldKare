@@ -820,6 +820,30 @@ MonoBehaviour:
     m_Localized: "Upravte \xFArove\u0148 kr\u010Den\xED"
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: "P\u0159ezd\xEDvka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "Mlet\xE9 hov\u011Bz\xED maso"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: "T\u011Bsto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Hamburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Mouka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Pineapple Popsicle
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

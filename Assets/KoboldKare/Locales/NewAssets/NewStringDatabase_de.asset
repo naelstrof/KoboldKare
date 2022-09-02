@@ -737,7 +737,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Kobolds z\xFCchten"
+    m_Localized: "Z\xFCchten Sie Kobolds"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
@@ -818,6 +818,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 202998194956193792
     m_Localized: Passen Sie die Crouch -Ebene an
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Spitzname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: Hackfleisch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Teig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Mehl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Ananas Eis am Stiel
     m_Metadata:
       m_Items: []
   references:

@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 32
+    AppVersion: 33
     UseNameServer: 1
     FixedRegion: 
     Server: 

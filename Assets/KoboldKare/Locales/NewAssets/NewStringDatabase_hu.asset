@@ -817,6 +817,30 @@ MonoBehaviour:
     m_Localized: "\xC1ll\xEDtsa be a Crouch szintet"
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: "Becen\xE9v"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "Dar\xE1lt marhah\xFAs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: "T\xE9szta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Hamburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Liszt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: "Anan\xE1sz popsicle"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

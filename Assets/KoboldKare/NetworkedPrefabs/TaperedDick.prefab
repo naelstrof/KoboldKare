@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 6681240630547057788}
   - component: {fileID: 2315499844806190798}
   m_Layer: 25
-  m_Name: TaperedDickEquippable
+  m_Name: TaperedDick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

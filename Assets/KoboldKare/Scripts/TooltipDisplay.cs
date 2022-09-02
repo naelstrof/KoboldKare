@@ -13,7 +13,7 @@ public class TooltipDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public static GameObject tooltip;
     public GameObject tooltipPrefab;
     public UnityEngine.Object thingToDisplay;
-    public Task runningTask;
+    public Coroutine runningTask;
     public IEnumerator DisplayForSomeTime(float duration) {
         if (tooltip == null) {
             tooltip = GameObject.Instantiate(tooltipPrefab, null);
@@ -36,17 +36,17 @@ public class TooltipDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltip.transform.SetParent(null);
     }
     public void OnDisable() {
-        if (runningTask != null && runningTask.Running) {
-            runningTask.Stop();
-            tooltip.SetActive(false);
-            tooltip.transform.SetParent(null);
+        if (runningTask != null) {
+            StopCoroutine(runningTask);
         }
+        tooltip.SetActive(false);
+        tooltip.transform.SetParent(null);
     }
     public void OnPointerEnter(PointerEventData eventData) {
-        if (runningTask != null && runningTask.Running) {
-            runningTask.Stop();
+        if (runningTask != null) {
+            StopCoroutine(runningTask);
         }
-        runningTask = new Task(DisplayForSomeTime(20f));
+        runningTask = StartCoroutine(DisplayForSomeTime(20f));
     }
 
     public void OnPointerExit(PointerEventData eventData) {

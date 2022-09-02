@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS DE FIC\xC7\xC3O PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
+      PLAY <#FFFFFF> VOC\xCA EST\xC1 AFIRMANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -807,6 +809,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 202998194956193792
     m_Localized: "Ajuste o n\xEDvel de agachamento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Apelido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "Carne mo\xEDda"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Massa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: "Hamb\xFArguer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Farinha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: "Picol\xE9 de abacaxi"
     m_Metadata:
       m_Items: []
   references:

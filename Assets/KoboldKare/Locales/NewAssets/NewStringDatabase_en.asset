@@ -833,6 +833,30 @@ MonoBehaviour:
     m_Localized: Adjust crouch level
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Nickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: Ground Beef
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Flour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Pineapple Popsicle
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

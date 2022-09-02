@@ -10,6 +10,8 @@ using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 using Object = UnityEngine.Object;
 
 public class PlayerPossession : MonoBehaviourPun {
@@ -18,6 +20,8 @@ public class PlayerPossession : MonoBehaviourPun {
     //public Grabber grabber;
     public User user;
     public CanvasGroup chatGroup;
+    public CommandTextDisplay chatDisplay;
+    public ScrollRect chatScrollView;
     public TMPro.TMP_InputField chatInput;
     public GameObject diePrefab;
     [SerializeField]
@@ -55,7 +59,7 @@ public class PlayerPossession : MonoBehaviourPun {
     private bool rotating;
     private bool grabbing;
     private bool trackingHip;
-    public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
+    public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
         if (equipmentUI.activeInHierarchy) {
             equipmentUI.SetActive(false);
@@ -73,7 +77,7 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
     private void OnTextDeselect(string t) {
-        if (chatInput != null) {
+        /*if (chatInput != null) {
             chatInput.text="";
             chatInput.onSubmit.RemoveListener(OnTextSubmit);
             chatInput.onDeselect.RemoveListener(OnTextDeselect);
@@ -82,20 +86,27 @@ public class PlayerPossession : MonoBehaviourPun {
             chatGroup.interactable = false;
             chatGroup.alpha = 0f;
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         controls.ActivateInput();
-        back.action.started -= OnBack;
+        back.action.started -= OnBack;*/
     }
     private void OnTextSubmit(string t) {
-        if (!string.IsNullOrEmpty(t)) {
-            kobold.SendChat(t);
-        }
         chatInput.text="";
         chatGroup.interactable = false;
+        chatInput.enabled = false;
         chatGroup.alpha = 0f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         controls.ActivateInput();
         chatInput.onSubmit.RemoveListener(OnTextSubmit);
         chatInput.onDeselect.RemoveListener(OnTextDeselect);
+        chatScrollView.normalizedPosition = new Vector2(0, 0);
         back.action.started -= OnBack;
+        chatDisplay.ForceVisible(false);
+        if (!string.IsNullOrEmpty(t)) {
+            kobold.SendChat(t);
+        }
     }
     private void Start() {
         if (!isActiveAndEnabled) {
@@ -183,8 +194,8 @@ public class PlayerPossession : MonoBehaviourPun {
             characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
 
-        if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.value)) {
-            Look(mouseDelta * mouseSensitivity.value);
+        if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue())) {
+            Look(mouseDelta * mouseSensitivity.GetValue());
         }
         eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
 
@@ -342,6 +353,8 @@ public class PlayerPossession : MonoBehaviourPun {
             return;
         }
         if (!chatGroup.interactable) {
+            chatInput.enabled = true;
+            chatDisplay.ForceVisible(true);
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             chatInput.Select();
@@ -352,8 +365,13 @@ public class PlayerPossession : MonoBehaviourPun {
             back.action.started += OnBack;
             StopCoroutine(nameof(WaitAndThenSubscribe));
             StartCoroutine(nameof(WaitAndThenSubscribe));
+            
             controls.DeactivateInput();
             chatInput.onDeselect.AddListener(OnTextDeselect);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else {
+            OnTextSubmit(chatInput.text);
         }
     }
     IEnumerator WaitAndThenSubscribe() {

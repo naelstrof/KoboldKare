@@ -812,6 +812,30 @@ MonoBehaviour:
     m_Localized: Ajustar el nivel de crouch
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Apodo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: Carne molida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Hamburguesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Harina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: "Paleta de pi\xF1a"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

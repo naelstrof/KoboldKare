@@ -3421,6 +3421,8 @@ MonoBehaviour:
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
     type: 3}
+  textInput: {fileID: 1234408531855058166, guid: acb4be3cbc0aef64bb53f08e3f08d4b8,
+    type: 3}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}
   targetGroup: {fileID: 11400000, guid: 525c4fe63b8a78246b988e367600049d, type: 2}
@@ -4138,6 +4140,8 @@ MonoBehaviour:
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
     type: 3}
+  textInput: {fileID: 1234408531855058166, guid: acb4be3cbc0aef64bb53f08e3f08d4b8,
+    type: 3}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}
   targetGroup: {fileID: 11400000, guid: 6489b155b99595a46a9b437ff1f744c1, type: 2}
@@ -4417,6 +4421,8 @@ MonoBehaviour:
   upSelect: {fileID: 0}
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
+    type: 3}
+  textInput: {fileID: 1234408531855058166, guid: acb4be3cbc0aef64bb53f08e3f08d4b8,
     type: 3}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}
@@ -10130,7 +10136,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.2
+  m_fontSize: 32.45
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12656,6 +12662,7 @@ GameObject:
   - component: {fileID: 8298682615481124282}
   - component: {fileID: 6295258041270185133}
   - component: {fileID: 6489079882250573063}
+  - component: {fileID: 7631385928551424154}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12888,21 +12895,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ba9e300f9cc72647950194676f9c5ff, type: 2}
   - {fileID: 11400000, guid: be95cd2d702feee418f854733f0d5cd9, type: 2}
   - {fileID: 11400000, guid: 7b5ad26f12ee3a34d951f5c56a80a9e7, type: 2}
-  - {fileID: 11400000, guid: 490034450c537d14f9c6efef3f13fb0b, type: 2}
+  - {fileID: 11400000, guid: e2b992ffca4fe9847aae24dd2885cafa, type: 2}
   - {fileID: 11400000, guid: 1316983b7ec041b45b10e952f3298237, type: 2}
   - {fileID: 11400000, guid: 5c5321aa6b3cebf4ead0f4a258881a2f, type: 2}
   - {fileID: 11400000, guid: ab761a8c5491cd34580b7ddb5051df7a, type: 2}
   - {fileID: 11400000, guid: 086347b5df9970a4687c12d3014b66d0, type: 2}
-  - {fileID: 11400000, guid: 16e2bc5d7c3567d4da2ae9a99d8a3eba, type: 2}
-  - {fileID: 11400000, guid: 5d2297fbad0caf24b8edc26ee167eca6, type: 2}
+  - {fileID: 11400000, guid: 28ca3a73e165f034b955ce7f56808bd1, type: 2}
+  - {fileID: 11400000, guid: 9e372e52e8a3a9d4083ac49ee3776f7b, type: 2}
   - {fileID: 11400000, guid: f5d6f6b5fa8a3dc47a6b13ca711692fa, type: 2}
-  - {fileID: 11400000, guid: da7f3fef64bea564b8c73932e3b7e381, type: 2}
-  - {fileID: 11400000, guid: e910e9a905d1e3141ad160c9bce35980, type: 2}
-  - {fileID: 11400000, guid: 63fe002eaf40e2a4b801eb8a010df1c6, type: 2}
+  - {fileID: 11400000, guid: e70ed340e0e7a1646a9b845723b44072, type: 2}
+  - {fileID: 11400000, guid: 0666b101a8697c848af6ef646c2eda10, type: 2}
+  - {fileID: 11400000, guid: 6313e3c9952d0d643bba1fe4c44fddc0, type: 2}
   - {fileID: 11400000, guid: 90c6ee18d668e324db7d22b11083595e, type: 2}
-  - {fileID: 11400000, guid: 91e08e91154df74479d80562fce257a3, type: 2}
+  - {fileID: 11400000, guid: 9413254de5df80042b0315e4f83d93ab, type: 2}
   - {fileID: 11400000, guid: 25795c7613648b5449baf371e1948fe7, type: 2}
-  - {fileID: 11400000, guid: c3cb2ae50e5251646b16c9ca6b7672d0, type: 2}
+  - {fileID: 11400000, guid: ed5f8fe7a228d3b419108c601073f6a6, type: 2}
+  - {fileID: 11400000, guid: fe84194317b6a2b44a864dbd55ba4391, type: 2}
 --- !u!114 &6656111697390988985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12939,6 +12947,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c7726a1072e4b494f81c3ad8bae29195, type: 2}
   - {fileID: 11400000, guid: ba40fc5a595feee42bf14b729dbfdce8, type: 2}
   - {fileID: 11400000, guid: ab6a14994d81d1246858260c00038968, type: 2}
+  - {fileID: 11400000, guid: 5e62e56f8bbad43438be263b739d1f9d, type: 2}
+  - {fileID: 11400000, guid: 56cbef9aacb50c54ea39c7eb8296e9cf, type: 2}
   reactions:
   - {fileID: 11400000, guid: 591f1d8dd39373c4b85f917725267110, type: 2}
   - {fileID: 11400000, guid: 7ddfc6f85ab42ff409dec7ee0b338210, type: 2}
@@ -12948,6 +12958,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee43090721864c8468005ffd89e52ace, type: 2}
   - {fileID: 11400000, guid: c6c6dba5436612e4890f92cf0f4eff0f, type: 2}
   - {fileID: 11400000, guid: 78c6ba43c9ecba74d96b19f846c4ced2, type: 2}
+  - {fileID: 11400000, guid: d3db170f709460b4593b62301180fadf, type: 2}
 --- !u!114 &1347546203939439728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13182,6 +13193,78 @@ MonoBehaviour:
   texelsPerMeter: 512
   dilationShader: {fileID: 4800000, guid: 1d78aa10aa84d2f41b4343bb6cca3cb5, type: 3}
   dilate: 1
+--- !u!114 &7631385928551424154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561188790633409797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2f3225e3416e44aa29666045bd692b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commands:
+  - rid: 8920608363450728450
+  - rid: 8920608363450728448
+  - rid: 8920608363450728451
+  - rid: 8920608363450728449
+  references:
+    version: 2
+    RefIds:
+    - rid: 8920608363450728448
+      type: {class: CommandHelp, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 8920608363450728449
+      type: {class: CommandGive, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        bucket:
+          gameObject: {fileID: 114852081462200378, guid: 974826cd1bddc204db36aab32aadf599,
+            type: 3}
+          photonName: Bucket
+    - rid: 8920608363450728450
+      type: {class: CommandCheats, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 8920608363450728451
+      type: {class: CommandList, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
 --- !u!1 &7586070052874400603
 GameObject:
   m_ObjectHideFlags: 0
@@ -15386,6 +15469,8 @@ MonoBehaviour:
   upSelect: {fileID: 5029447008042853450}
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
+    type: 3}
+  textInput: {fileID: 1234408531855058166, guid: acb4be3cbc0aef64bb53f08e3f08d4b8,
     type: 3}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}
@@ -18688,6 +18773,8 @@ MonoBehaviour:
   upSelect: {fileID: 0}
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
+    type: 3}
+  textInput: {fileID: 1234408531855058166, guid: acb4be3cbc0aef64bb53f08e3f08d4b8,
     type: 3}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}

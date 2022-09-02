@@ -6,36 +6,59 @@ using UnityEngine.Events;
 using UnityScriptableSettings;
 
 public class PlayerKoboldLoader : MonoBehaviour {
-    private static readonly string[] settingNames = {"Hue", "Brightness", "Saturation", "Dick", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
+    private static readonly string[] settingNames = {"Hue", "Brightness", "Saturation", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
     public Kobold targetKobold;
     void Start() {
-        //KoboldGenes genes = new KoboldGenes();
         foreach(string settingName in settingNames) {
-            var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
-            option.onValueChange -= OnValueChange;
-            option.onValueChange += OnValueChange;
-            //genes = ProcessOption(genes, option);
+            var option = UnityScriptableSettings.SettingsManager.GetSetting(settingName);
+            if (option is SettingFloat optionFloat) {
+                optionFloat.changed -= OnValueChange;
+                optionFloat.changed += OnValueChange;
+            } else {
+                throw new UnityException($"Setting {settingName} is not a SettingFloat");
+            }
         }
-        
+        var dickOption = UnityScriptableSettings.SettingsManager.GetSetting("Dick");
+        if (dickOption is SettingInt optionInt) {
+            optionInt.changed -= OnValueChange;
+            optionInt.changed += OnValueChange;
+        } else {
+            throw new UnityException($"Setting Dick is not a SettingInt");
+        }
+
         targetKobold.SetGenes(GetPlayerGenes());
     }
     void OnDestroy() {
         foreach(string settingName in settingNames) {
-            var option = UnityScriptableSettings.ScriptableSettingsManager.instance.GetSetting(settingName);
-            option.onValueChange -= OnValueChange;
+            var option = UnityScriptableSettings.SettingsManager.GetSetting(settingName);
+            if (option is SettingFloat optionFloat) {
+                optionFloat.changed -= OnValueChange;
+            }
+        }
+        var dickOption = UnityScriptableSettings.SettingsManager.GetSetting("Dick");
+        if (dickOption is SettingInt optionInt) {
+            optionInt.changed -= OnValueChange;
+            optionInt.changed += OnValueChange;
         }
     }
-    private static KoboldGenes ProcessOption(KoboldGenes genes, UnityScriptableSettings.ScriptableSetting setting) {
+    private static KoboldGenes ProcessOption(KoboldGenes genes, SettingInt setting) {
+        switch (setting.name) {
+            case "Dick":
+                genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)0;
+                break;
+        }
+        return genes;
+    }
+    private static KoboldGenes ProcessOption(KoboldGenes genes, SettingFloat setting) {
         switch(setting.name) {
-            case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.value*255f); break;
-            case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.value*255f); break;
-            case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.value*255f); break;
-            case "Dick": genes.dickEquip = (setting.value == 0f) ? byte.MaxValue : (byte)0; break;
-            case "DickSize": genes.dickSize = Mathf.Lerp(0f, 10f, setting.value); break;
-            case "BallSize": genes.ballSize = Mathf.Lerp(5f, 10f, setting.value); break;
-            case "DickThickness": genes.dickThickness = Mathf.Lerp(0.3f, 0.7f, setting.value); break;
-            case "BoobSize": genes.breastSize = setting.value * 30f; break;
-            case "KoboldSize": genes.baseSize = setting.value * 20f; break;
+            case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
+            case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
+            case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
+            case "DickSize": genes.dickSize = Mathf.Lerp(0f, 10f, setting.GetValue()); break;
+            case "BallSize": genes.ballSize = Mathf.Lerp(5f, 10f, setting.GetValue()); break;
+            case "DickThickness": genes.dickThickness = Mathf.Lerp(0.3f, 0.7f, setting.GetValue()); break;
+            case "BoobSize": genes.breastSize = setting.GetValue() * 30f; break;
+            case "KoboldSize": genes.baseSize = setting.GetValue() * 20f; break;
         }
         return genes;
     }
@@ -43,12 +66,17 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public static KoboldGenes GetPlayerGenes() {
         KoboldGenes genes = new KoboldGenes();
         foreach (string setting in settingNames) {
-            genes = ProcessOption(genes, ScriptableSettingsManager.instance.GetSetting(setting));
+            genes = ProcessOption(genes, SettingsManager.GetSetting(setting) as SettingFloat);
         }
+        genes = ProcessOption(genes, SettingsManager.GetSetting("Dick") as SettingInt);
         return genes;
     }
 
-    public void OnValueChange(UnityScriptableSettings.ScriptableSetting setting) {
-        targetKobold.SetGenes(ProcessOption(targetKobold.GetGenes(), setting));
+    void OnValueChange(int newValue) {
+        targetKobold.SetGenes(GetPlayerGenes());
+    }
+
+    void OnValueChange(float newValue) {
+        targetKobold.SetGenes(GetPlayerGenes());
     }
 }

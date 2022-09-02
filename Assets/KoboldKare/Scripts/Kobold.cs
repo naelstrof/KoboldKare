@@ -380,7 +380,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void SendChat(string message) {
-        photonView.RPC(nameof(RPCSendChat), RpcTarget.All, new object[]{message});
+        photonView.RPC(nameof(RPCSendChat), RpcTarget.All, message);
     }
     [PunRPC]
     public void RPCSendChat(string message) {
@@ -388,6 +388,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (displayMessageRoutine != null) {
             StopCoroutine(displayMessageRoutine);
         }
+        CheatsProcessor.AppendText($"{photonView.Owner.NickName}: {message}\n");
+        CheatsProcessor.ProcessCommand(this, message);
         displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
     }
     IEnumerator DisplayMessage(string message, float duration) {

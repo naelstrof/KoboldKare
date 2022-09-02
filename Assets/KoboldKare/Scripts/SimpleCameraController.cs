@@ -70,7 +70,7 @@ public class SimpleCameraController : MonoBehaviour
     [Tooltip("Whether or not to invert our Y axis for mouse input to rotation.")]
     public bool invertY = false;
 
-    public UnityScriptableSettings.ScriptableSetting mouseSensitivity;
+    public UnityScriptableSettings.SettingFloat mouseSensitivity;
 
     void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
@@ -113,8 +113,8 @@ public class SimpleCameraController : MonoBehaviour
         //{
             //var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
             var mouseMovement = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
-            m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivity.value;
-            m_TargetCameraState.pitch -= mouseMovement.y * mouseSensitivity.value;
+            m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivity.GetValue();
+            m_TargetCameraState.pitch -= mouseMovement.y * mouseSensitivity.GetValue();
             m_TargetCameraState.roll = 0;
         //}
         

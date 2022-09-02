@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,35 +8,43 @@ using UnityEngine.Rendering.Universal;
 namespace UnityScriptableSettings {
 
 public class CameraSettingListener : MonoBehaviour {
-    public ScriptableSetting antiAliasing;
-    public ScriptableSetting fov;
+    public SettingInt antiAliasing;
+    public SettingFloat fov;
     private UniversalAdditionalCameraData camData;
     private Camera cam;
     // Start is called before the first frame update
-    void Start() {
+
+    private void OnEnable() {
         cam = GetComponent<Camera>();
         camData = GetComponent<UniversalAdditionalCameraData>();
-        antiAliasing.onValueChange += OnValueChanged;
-        fov.onValueChange += OnValueChanged;
-        OnValueChanged(antiAliasing);
-        OnValueChanged(fov);
+        antiAliasing.changed += OnAntiAliasingChanged;
+        fov.changed += OnFOVChanged;
+        OnAntiAliasingChanged(antiAliasing.GetValue());
+        OnFOVChanged(fov.GetValue());
     }
-    public void OnValueChanged(ScriptableSetting option) {
+
+    private void OnDisable() {
+        antiAliasing.changed -= OnAntiAliasingChanged;
+        fov.changed -= OnFOVChanged;
+    }
+
+    void OnAntiAliasingChanged(int value) {
         if (cam == null) {
             return;
         }
-        if (option == antiAliasing) {
-            cam.allowMSAA = (option.value != 0f);
-            camData.antialiasing = option.value == 0 ? AntialiasingMode.None : AntialiasingMode.SubpixelMorphologicalAntiAliasing;
-            switch(Mathf.FloorToInt(option.value)-1) {
-                case 0: camData.antialiasingQuality = AntialiasingQuality.Low; break;
-                case 1: camData.antialiasingQuality = AntialiasingQuality.Medium; break;
-                case 2: camData.antialiasingQuality = AntialiasingQuality.High; break;
-            }
+        cam.allowMSAA = (value != 0f);
+        camData.antialiasing = value == 0 ? AntialiasingMode.None : AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+        switch(value-1) {
+            case 0: camData.antialiasingQuality = AntialiasingQuality.Low; break;
+            case 1: camData.antialiasingQuality = AntialiasingQuality.Medium; break;
+            case 2: camData.antialiasingQuality = AntialiasingQuality.High; break;
         }
-        if (option == fov) {
-            cam.fieldOfView = option.value;
+    }
+    void OnFOVChanged(float value) {
+        if (cam == null) {
+            return;
         }
+        cam.fieldOfView = value;
     }
 }
 

@@ -934,6 +934,30 @@ MonoBehaviour:
       \u0440\u0456\u0432\u0435\u043D\u044C Crouch"
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: "\u041F\u0440\u0456\u0437\u0432\u0438\u0441\u044C\u043A\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "\u042F\u043B\u043E\u0432\u0438\u0447\u0438\u0439 \u0444\u0430\u0440\u0448"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: "\u0422\u0456\u0441\u0442\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: "\u0413\u0430\u043C\u0431\u0443\u0440\u0433\u0435\u0440"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: "\u0411\u043E\u0440\u043E\u0448\u043D\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: "\u0410\u043D\u0430\u043D\u0430\u0441\u043E\u0432\u0438\u0439 \u0435\u0441\u043A\u0456\u0437"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

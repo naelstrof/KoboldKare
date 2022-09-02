@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
             InputOptions.SaveControls();
-            UnityScriptableSettings.ScriptableSettingsManager.instance.Save();
+            UnityScriptableSettings.SettingsManager.Save();
             MultiplayerTab.gameObject.SetActive(false);
             OptionsTab.gameObject.SetActive(false);
             MainViewTab.gameObject.SetActive(true);

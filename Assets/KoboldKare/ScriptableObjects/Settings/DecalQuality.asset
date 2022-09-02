@@ -22,18 +22,9 @@ MonoBehaviour:
     m_WaitForCompletion: 1
     m_LocalVariables: []
   group: {fileID: 11400000, guid: 525c4fe63b8a78246b988e367600049d, type: 2}
-  OnSettingDisabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSettingEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSettingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  defaultValue: 1
-  minValue: 0
-  maxValue: 1
-  wholeNumbers: 0
+  defaultValue: 0.7
+  min: 0
+  max: 1
   references:
-    version: 1
+    version: 2
+    RefIds: []

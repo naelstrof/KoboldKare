@@ -25,7 +25,7 @@ public class ReagentDatabase : MonoBehaviour {
         if (GetInstance().reagentDictionary.ContainsKey(name)) {
             return GetInstance().reagentDictionary[name];
         }
-        throw new UnityException("Failed to find reagent with name " + name);
+        return null;
     }
     public static ScriptableReagent GetReagent(short id) {
         return GetInstance().reagents[id];

@@ -9,31 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dafb8c8e957bf7c40933893dec866d78, type: 3}
+  m_Script: {fileID: 11500000, guid: a8d3be3b9bf4b6942aaa76327f68d42a, type: 3}
   m_Name: Brightness
   m_EditorClassIdentifier: 
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
-      m_KeyId: 516099198999
+      m_KeyId: 516099198992
       m_Key: 
     m_FallbackState: 0
-    m_WaitForCompletion: 1
+    m_WaitForCompletion: 0
     m_LocalVariables: []
   group: {fileID: 11400000, guid: 6489b155b99595a46a9b437ff1f744c1, type: 2}
-  OnSettingDisabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSettingEnabled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSettingChanged:
-    m_PersistentCalls:
-      m_Calls: []
   defaultValue: 0.5
-  minValue: 0
-  maxValue: 1
-  wholeNumbers: 0
+  min: 0
+  max: 1
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -38,7 +38,6 @@ public class DickInfoEditor : Editor {
 // DickInfo is mainly used to have an in-scene reference to a bunch of dick info. Most of the functionality of a dick is split between DickEquipment.cs, and an external addon called PenetrationTech
 public class DickInfo : MonoBehaviour {
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-    private Task attachTask;
     private Kobold attachedKobold;
 
     //[PenetratorListener(typeof(KoboldDickListener), "Kobold Dick Listener")]

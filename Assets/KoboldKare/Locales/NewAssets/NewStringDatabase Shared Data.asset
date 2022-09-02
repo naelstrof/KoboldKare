@@ -783,6 +783,30 @@ MonoBehaviour:
     m_Key: CONTROLS_CROUCH_ADJUST
     m_Metadata:
       m_Items: []
+  - m_Id: 209952603934085120
+    m_Key: SETTING_NICKNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Key: REAGENT_GROUND_BEEF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Key: REAGENT_DOUGH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Key: REAGENT_BURGER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Key: REAGENT_FLOUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Key: REAGENT_PINEAPPLE_POPSICLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

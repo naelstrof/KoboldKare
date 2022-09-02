@@ -205,7 +205,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: 'QUESTO GIOCO MOSTRA PERSONAGGI DI FANTASIA CHE PARTECIPANO A <#FF0000>
+      COMPORTAMENTI SESSUALMENTE ESPLICITI <#FFFFFF>
+
+
+      FACENDO CLIC SU <#008CFF>
+      PLAY <#FFFFFF> STAI INDICANDO CHE:'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -734,8 +739,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: Abbiamo bisogno di Kobolds di provenienza locale, iniziando in gravidanza
-      alcuni dei tuoi kobold.
+    m_Localized: Abbiamo bisogno di Kobolds di provenienza locale, inizia facendo
+      in gravidanza ad alcuni dei tuoi kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -809,6 +814,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 202998194956193792
     m_Localized: Regola il livello di accovacciamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Soprannome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: Carne di manzo macinata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Impasto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Farina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Girsicle di ananas
     m_Metadata:
       m_Items: []
   references:

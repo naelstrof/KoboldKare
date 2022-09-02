@@ -114,8 +114,6 @@ GameObject:
   - component: {fileID: 3802869793506233498}
   - component: {fileID: 3802869793506233574}
   - component: {fileID: 3802869793506233575}
-  - component: {fileID: 3802869793506233573}
-  - component: {fileID: 8879040054808017739}
   - component: {fileID: 2921766919259690664}
   m_Layer: 11
   m_Name: MiniRadio
@@ -336,7 +334,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8879040054808017739}
   - {fileID: 2921766919259690664}
   sceneViewId: 0
   InstantiationId: 0
@@ -360,45 +357,6 @@ MonoBehaviour:
   renderers:
   - {fileID: 2524008433901609213}
   center: {fileID: 3696391589264120722}
---- !u!114 &3802869793506233573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4037450937342886184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f451a5411de70f4eaead23381fb5442, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8879040054808017739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4037450937342886184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 099e6bc9ca3617542a14db2a54e640ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onSprite: {fileID: 0}
-  offSprite: {fileID: 0}
-  nextTrack: {fileID: 21300000, guid: d986134b53509f745841963fcbae2521, type: 3}
-  aud: {fileID: 3802869793506233498}
-  tracks:
-  - {fileID: 8300000, guid: 8828c8afdab168644bc739d7f0d59ed6, type: 3}
-  - {fileID: 8300000, guid: 57b0e45b6da883d4392cd1a8675938a6, type: 3}
-  - {fileID: 8300000, guid: 58c9f60eb6081f44b849b298deea9c90, type: 3}
-  - {fileID: 8300000, guid: 89aaf19f3ad0af347a6387d03927b358, type: 3}
-  - {fileID: 8300000, guid: 0fde2517573a2b24485366d617823693, type: 3}
-  - {fileID: 8300000, guid: 4d8bdd62339826c4282f54d7438b0ecd, type: 3}
-  - {fileID: 8300000, guid: d7122b8bdb3abd341ac74a7e95559aca, type: 3}
-  - {fileID: 8300000, guid: 6ab9127a3c716bc4f808415d39502d09, type: 3}
-  - {fileID: 8300000, guid: 42dc00a8c1fc1704eb8fa3fc254907a6, type: 3}
-  - {fileID: 8300000, guid: 4cf6a9f82df6f0047a780fb9564c215d, type: 3}
 --- !u!114 &2921766919259690664
 MonoBehaviour:
   m_ObjectHideFlags: 0

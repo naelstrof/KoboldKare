@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "DETTE SPIL skildrer FIKTIONELLE KARAKTERER, DER DELTAGER I <#FF0000>
+      SEKSUEL EKSPLITIGT OPF\xD8RSEL <#FFFFFF>\n\nVED AT KLIKKE p\xE5 <#008CFF> SPIL
+      <#FFFFFF> ER DU AT ERKL\xC6RE AT:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -786,7 +788,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695177
     m_Localized: "Jeg er ligeglad med, hvad du g\xF8r med det efter, vi har brug
-      for et stort \xE6g for at komme ud af en Kobold."
+      for et stort \xE6g for at komme ud af en kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -807,6 +809,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 202998194956193792
     m_Localized: Juster Crouch -niveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: "K\xE6lenavn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: "Hakket oksek\xF8d"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Dej
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Mel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Ananas Popsicle
     m_Metadata:
       m_Items: []
   references:

@@ -6,17 +6,15 @@ using UnityEngine.Rendering.Universal;
 
 namespace UnityScriptableSettings {
 [CreateAssetMenu(fileName = "AmbientOcclusionSetting", menuName = "Unity Scriptable Setting/KoboldKare/Ambient Occlusion", order = 1)]
-public class AmbientOcclusionSetting : ScriptableSettingLocalizedDropdown {
+public class AmbientOcclusionSetting : SettingLocalizedDropdown {
     public UniversalRendererData forwardRenderer;
-    public override void SetValue(float value) {
-
+    public override void SetValue(int value) {
         foreach(var feature in forwardRenderer.rendererFeatures) {
             if (feature.name.Contains("AmbientOcclusion") ) {
                 feature.SetActive(value != 0);
                 break;
             }
         }
-
         base.SetValue(value);
     }
 }

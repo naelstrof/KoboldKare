@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 3338872823994835069}
   - component: {fileID: 7769274206757498702}
   m_Layer: 25
-  m_Name: KnottedDickEquippable
+  m_Name: KnottedDick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

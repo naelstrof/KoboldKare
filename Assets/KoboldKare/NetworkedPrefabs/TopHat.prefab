@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 3195098777781111908}
   - component: {fileID: 5246803348042347016}
   m_Layer: 11
-  m_Name: TopHatEquippable
+  m_Name: TopHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

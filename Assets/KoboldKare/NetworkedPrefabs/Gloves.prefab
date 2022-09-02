@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5172680930516748441}
   - component: {fileID: 1146692008098899073}
   m_Layer: 11
-  m_Name: GlovesEquippable
+  m_Name: Gloves
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

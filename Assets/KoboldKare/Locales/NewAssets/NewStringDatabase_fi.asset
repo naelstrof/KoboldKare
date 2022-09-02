@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "T\xC4M\xC4 PELI KUVAA KUVATTELUJA HENKIL\xD6J\xC4 OSALLISTUNA <#FF0000>
+      SEKSUAALISEEN K\xC4YTT\xD6\xD6N <#FFFFFF>\n\nNAPSAUTALLA <#008CFF> PELAA <#FFFFFF>
+      TOTEAT, ETT\xC4:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -808,6 +810,30 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 202998194956193792
     m_Localized: "S\xE4\xE4d\xE4 Crouch -tasoa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603934085120
+    m_Localized: Nimimerkki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445248
+    m_Localized: Jauheliha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445249
+    m_Localized: Taikina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445250
+    m_Localized: Hampurilainen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445251
+    m_Localized: Jauhot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209952603963445252
+    m_Localized: Ananaspopsicle
     m_Metadata:
       m_Items: []
   references:

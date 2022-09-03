@@ -10,7 +10,6 @@ public class ActionHint : MonoBehaviour {
     public InputActionReference action;
     public TMPro.TextMeshProUGUI text;
     public Image image;
-    private Coroutine switchIconTask;
     private bool switching = false;
     private enum State {
         KeyboardMouse,
@@ -21,12 +20,7 @@ public class ActionHint : MonoBehaviour {
         switching = true;
         state = bindingIndex;
         string displayString = action.action.bindings[(int)bindingIndex].path;
-        if (isActiveAndEnabled) {
-            if (switchIconTask != null) {
-                return;
-            }
-            switchIconTask = StartCoroutine(WaitThenCheckKey(displayString));
-        }
+        GameManager.instance.StartCoroutine(WaitThenCheckKey(displayString));
     }
     private void OnActionChange(object obj, InputActionChange change)
     {

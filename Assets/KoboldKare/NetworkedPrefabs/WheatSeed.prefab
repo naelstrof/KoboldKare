@@ -356,6 +356,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WheatDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 6742019512519556756, guid: 10247bbae099ca345bf1cd911b4e5847,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f4001d3f901b5c243b2331da19323558, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10247bbae099ca345bf1cd911b4e5847, type: 3}
 --- !u!23 &1635650526462627251 stripped

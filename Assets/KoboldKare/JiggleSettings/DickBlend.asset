@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DickBlend
   m_EditorClassIdentifier: 
   blendSettings:
+  - {fileID: 11400000, guid: cec1ffd22456aee438a14ffabf97caac, type: 2}
   - {fileID: 11400000, guid: d1785d5ba817ba54daef31df424da111, type: 2}
   - {fileID: 11400000, guid: 03dffc499c279c345909a88f85f62462, type: 2}
   normalizedBlend: 0

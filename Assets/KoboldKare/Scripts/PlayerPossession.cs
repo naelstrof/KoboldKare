@@ -9,6 +9,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -59,6 +60,7 @@ public class PlayerPossession : MonoBehaviourPun {
     private bool rotating;
     private bool grabbing;
     private bool trackingHip;
+    private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
         if (equipmentUI.activeInHierarchy) {
@@ -77,20 +79,12 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
     private void OnTextDeselect(string t) {
-        /*if (chatInput != null) {
-            chatInput.text="";
-            chatInput.onSubmit.RemoveListener(OnTextSubmit);
-            chatInput.onDeselect.RemoveListener(OnTextDeselect);
-        }
-        if (chatGroup != null) {
-            chatGroup.interactable = false;
-            chatGroup.alpha = 0f;
-        }
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        controls.ActivateInput();
-        back.action.started -= OnBack;*/
     }
+
+    private void OnCancelTextSubmit(InputAction.CallbackContext ctx) {
+        OnTextSubmit("");
+    }
+
     private void OnTextSubmit(string t) {
         chatInput.text="";
         chatGroup.interactable = false;
@@ -107,11 +101,10 @@ public class PlayerPossession : MonoBehaviourPun {
         if (!string.IsNullOrEmpty(t)) {
             kobold.SendChat(t);
         }
+        inputModule.cancel.action.performed -= OnCancelTextSubmit;
     }
     private void Start() {
-        if (!isActiveAndEnabled) {
-            return;
-        }
+        inputModule = FindObjectOfType<InputSystemUIInputModule>();
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -370,6 +363,7 @@ public class PlayerPossession : MonoBehaviourPun {
             chatInput.onDeselect.AddListener(OnTextDeselect);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            inputModule.cancel.action.performed += OnCancelTextSubmit;
         } else {
             OnTextSubmit(chatInput.text);
         }

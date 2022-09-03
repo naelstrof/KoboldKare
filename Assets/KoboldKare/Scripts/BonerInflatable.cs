@@ -13,12 +13,16 @@ public class BonerInflatable : InflatableListener {
     private string limpBlendshape;
     [SerializeField]
     private string flaccidBlendshape;
+    
     [SerializeField]
     private List<SkinnedMeshRenderer> targetRenderers;
-    //[SerializeField]
-    //private JiggleRigBuilder rigBuilder;
+    
+    
+    [SerializeField]
+    private JiggleRigBuilder rigBuilder;
 
-    //private JiggleSettingsBlend targetBlend;
+    private JiggleSettingsBlend targetBlend;
+    
     private List<int> limpBlendshapeIDs;
     private List<int> flaccidBlendshapeIDs;
     public override void OnEnable() {
@@ -29,18 +33,18 @@ public class BonerInflatable : InflatableListener {
             flaccidBlendshapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flaccidBlendshape));
         }
 
-        //if (rigBuilder.jiggleRigs == null || rigBuilder.jiggleRigs.Count <= 0) {
-            //throw new UnityException("Jiggle rig builder must have at least one JiggleRig on it");
-        //}
+        if (rigBuilder.jiggleRigs == null || rigBuilder.jiggleRigs.Count <= 0) {
+            throw new UnityException("Jiggle rig builder must have at least one JiggleRig on it");
+        }
 
-        //foreach (var jiggleRig in rigBuilder.jiggleRigs) {
-            //if (!(jiggleRig.jiggleSettings is JiggleSettingsBlend)) {
-                //throw new UnityException("Jiggle rig needs a blended jigglesettings");
-            //}
-            //targetBlend = JiggleSettingsBlend.Instantiate((JiggleSettingsBlend)jiggleRig.jiggleSettings);
-            //jiggleRig.jiggleSettings = targetBlend;
-            //break;
-        //}
+        foreach (var jiggleRig in rigBuilder.jiggleRigs) {
+            if (!(jiggleRig.jiggleSettings is JiggleSettingsBlend)) {
+                throw new UnityException("Jiggle rig needs a blended jigglesettings");
+            }
+            targetBlend = JiggleSettingsBlend.Instantiate((JiggleSettingsBlend)jiggleRig.jiggleSettings);
+            jiggleRig.jiggleSettings = targetBlend;
+            break;
+        }
     }
 
     public override void OnSizeChanged(float newSize) {
@@ -51,6 +55,6 @@ public class BonerInflatable : InflatableListener {
             targetRenderers[i].SetBlendShapeWeight(limpBlendshapeIDs[i], limpTriggerAmount * 100f);
             targetRenderers[i].SetBlendShapeWeight(flaccidBlendshapeIDs[i], flaccidTriggerAmount * 100f);
         }
-        //targetBlend.normalizedBlend = 1f - flaccidTriggerAmount;
+        targetBlend.normalizedBlend = Mathf.Clamp01(size);
     }
 }

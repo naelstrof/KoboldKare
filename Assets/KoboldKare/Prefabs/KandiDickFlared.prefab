@@ -64,6 +64,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5070525113970390520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247859021363750079}
+  m_Layer: 0
+  m_Name: JiggleTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1247859021363750079
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5070525113970390520}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.031150416, z: 0.11707526}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6532258477141756564}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -77.939, y: 0, z: 0}
+--- !u!1 &5764286929892108027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3244748852446975173}
+  m_Layer: 0
+  m_Name: JiggleMiddle (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3244748852446975173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764286929892108027}
+  m_LocalRotation: {x: -0, y: 5.3623847e-14, z: -6.6291855e-14, w: 1}
+  m_LocalPosition: {x: 0, y: 0.04198303, z: 0.10555751}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6532258477141756564}
+  m_Father: {fileID: 5688532021288971835}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -77.939, y: 0, z: 0}
 --- !u!1 &7065954616549386873
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5688532021288971835}
   m_Layer: 0
-  m_Name: JiggleEnd
+  m_Name: JiggleMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,11 +151,44 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7065954616549386873}
   m_LocalRotation: {x: -0.6289078, y: -0, z: -3.4106054e-13, w: 0.7774799}
-  m_LocalPosition: {x: 0, y: 0.467, z: -0.165}
+  m_LocalPosition: {x: -0, y: 0.116, z: -0.022}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3244748852446975173}
   m_Father: {fileID: 501530407804742356}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -77.939, y: 0, z: 0}
+--- !u!1 &8561884930638859876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6532258477141756564}
+  m_Layer: 0
+  m_Name: JiggleMiddle (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6532258477141756564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8561884930638859876}
+  m_LocalRotation: {x: -3.8518594e-34, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.04246775, z: 0.112612255}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1247859021363750079}
+  m_Father: {fileID: 3244748852446975173}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -77.939, y: 0, z: 0}
 --- !u!1001 &1329374299755020038
@@ -212,7 +308,13 @@ MonoBehaviour:
   - renderer: {fileID: 3204937175823472697}
     mask: -1
   virtualSquashAndStretch: 1
-  tipTarget: {fileID: 5688532021288971835}
+  poseTarget:
+  - {fileID: 501530407804742356}
+  - {fileID: 5688532021288971835}
+  - {fileID: 3244748852446975173}
+  - {fileID: 6532258477141756564}
+  - {fileID: 1247859021363750079}
+  poseTension: 0.75
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
   penetrationMarginOfError: 1
@@ -445,6 +547,7 @@ MonoBehaviour:
         flaccidBlendshape: Flaccid
         targetRenderers:
         - {fileID: 3204937175823472697}
+        rigBuilder: {fileID: 8941345980336474460}
     - rid: 5882124739971907588
       type: {class: InflatableDick, ns: , asm: Assembly-CSharp}
       data:
@@ -466,7 +569,7 @@ MonoBehaviour:
   interpolate: 1
   jiggleRigs:
   - rootTransform: {fileID: 501530407804742356}
-    jiggleSettings: {fileID: 11400000, guid: d1785d5ba817ba54daef31df424da111, type: 2}
+    jiggleSettings: {fileID: 11400000, guid: d081ebe3eba24584dbb41d9ebe1c8116, type: 2}
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0

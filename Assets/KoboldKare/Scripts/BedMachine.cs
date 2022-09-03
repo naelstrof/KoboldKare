@@ -22,7 +22,7 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         return sleepingSprite;
     }
     public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() > 1f) {
+        if (k.GetEnergy() >= 1f) {
             return false;
         }
         foreach (var station in stations) {

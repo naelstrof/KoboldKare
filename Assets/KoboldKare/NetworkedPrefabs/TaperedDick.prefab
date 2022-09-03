@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &236076529512914605
+--- !u!1 &844268727887005594
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,60 +8,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5704891683557793720}
-  m_Layer: 25
-  m_Name: DickTip
+  - component: {fileID: 1992827229004889800}
+  m_Layer: 0
+  m_Name: Dick.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5704891683557793720
+--- !u!4 &1992827229004889800
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236076529512914605}
-  m_LocalRotation: {x: -0.7071068, y: -0.000000032596287, z: -0.000000026106132, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.488, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 230718598870528215}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!1 &332403436240386143
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 230718598870528215}
-  m_Layer: 25
-  m_Name: DickRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &230718598870528215
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332403436240386143}
-  m_LocalRotation: {x: 0.6852387, y: 0.010373189, z: 0.0095186625, w: 0.7281825}
-  m_LocalPosition: {x: 0.000046942456, y: -0.07218656, z: 0.06313235}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 844268727887005594}
+  m_LocalRotation: {x: -2.3715077e-10, y: 4.611849e-10, z: -1.8644641e-11, w: 1}
+  m_LocalPosition: {x: 7.730705e-12, y: 0.10716644, z: -7.273684e-10}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5704891683557793720}
-  m_Father: {fileID: 3274802653691403969}
-  m_RootOrder: 1
+  - {fileID: 4874913263265707210}
+  m_Father: {fileID: 4363558648416920614}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2328179705269708604
 GameObject:
@@ -292,7 +261,12 @@ MonoBehaviour:
   - renderer: {fileID: 109394161160481697}
     mask: -2
   virtualSquashAndStretch: 1
-  tipTarget: {fileID: 5704891683557793720}
+  poseTarget:
+  - {fileID: 2313961921946403493}
+  - {fileID: 4363558648416920614}
+  - {fileID: 1992827229004889800}
+  - {fileID: 4874913263265707210}
+  poseTension: 0.75
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
   penetrationMarginOfError: 1.25
@@ -381,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interpolate: 1
   jiggleRigs:
-  - rootTransform: {fileID: 230718598870528215}
+  - rootTransform: {fileID: 2313961921946403493}
     jiggleSettings: {fileID: 11400000, guid: d1785d5ba817ba54daef31df424da111, type: 2}
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
@@ -491,17 +465,115 @@ MonoBehaviour:
       m_RotationOrder: 4
     bounceDuration: 1
     listeners:
-    - rid: 5882124715073208344
+    - rid: 8920608400659447819
   startFrozen: 1
   gibSound: {fileID: 11400000, guid: f7f1939f20ebb1147a4311c7dc948715, type: 2}
   centerTransform: {fileID: 6604670135079664008}
   references:
     version: 2
     RefIds:
-    - rid: 5882124715073208344
-      type: {class: InflatableTransform, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
+    - rid: 8920608400659447819
+      type: {class: InflatableDick, ns: , asm: Assembly-CSharp}
       data:
         targetTransform: {fileID: 6604670135079664008}
+        targetJiggleRoot: {fileID: 0}
+        targetPenetrator: {fileID: 1320140597333020404}
+--- !u!1 &5841510172020278099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2313961921946403493}
+  m_Layer: 25
+  m_Name: JiggleRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2313961921946403493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5841510172020278099}
+  m_LocalRotation: {x: 0.6852387, y: 0.010373189, z: 0.009518663, w: 0.7281825}
+  m_LocalPosition: {x: 0.00004930806, y: -0.07218723, z: 0.06313045}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4363558648416920614}
+  m_Father: {fileID: 3274802653691403969}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6559425099452817266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4874913263265707210}
+  m_Layer: 0
+  m_Name: Dick.003
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4874913263265707210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559425099452817266}
+  m_LocalRotation: {x: -2.3737814e-10, y: 4.6129148e-10, z: -1.8189896e-12, w: 1}
+  m_LocalPosition: {x: 3.1377567e-11, y: 0.107166454, z: -8.471943e-10}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1992827229004889800}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8437683958385523249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4363558648416920614}
+  m_Layer: 0
+  m_Name: Dick.001
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4363558648416920614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8437683958385523249}
+  m_LocalRotation: {x: 0.00000032805409, y: -0.0000000018091059, z: 0.000000009256837,
+    w: 1}
+  m_LocalPosition: {x: 5.2295945e-12, y: 0.10716647, z: -2.5011104e-11}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1992827229004889800}
+  m_Father: {fileID: 2313961921946403493}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2622365803986604249
 PrefabInstance:
   m_ObjectHideFlags: 0

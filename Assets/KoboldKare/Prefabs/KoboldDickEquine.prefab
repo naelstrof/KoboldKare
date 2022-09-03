@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &15753944182698557
+--- !u!1 &399009349456561556
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,29 +8,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4855000224091205294}
+  - component: {fileID: 1232849074291727142}
   m_Layer: 0
-  m_Name: DickBase
+  m_Name: Dick.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4855000224091205294
+--- !u!4 &1232849074291727142
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 15753944182698557}
-  m_LocalRotation: {x: 0.68060434, y: 0.015925888, z: 0.009737799, w: 0.73241335}
-  m_LocalPosition: {x: 0.002073596, y: -0.07148347, z: 0.063743316}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 399009349456561556}
+  m_LocalRotation: {x: -2.1555027e-10, y: 4.667129e-10, z: 2.7284839e-12, w: 1}
+  m_LocalPosition: {x: -0.0000000015702426, y: 0.10716647, z: -0.000000017213324}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 418770539342809887}
-  m_Father: {fileID: 6807857188757251609}
-  m_RootOrder: 2
+  - {fileID: 674261688449602952}
+  m_Father: {fileID: 8154079415056098109}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2207641327489002572
 GameObject:
@@ -162,42 +162,11 @@ Transform:
   m_Children:
   - {fileID: 4549868196879854992}
   - {fileID: 8003517335756057479}
-  - {fileID: 4855000224091205294}
   - {fileID: 9000013800218957590}
+  - {fileID: 5867785377840280453}
   m_Father: {fileID: 6890102201856665919}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2498622419892731496
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 418770539342809887}
-  m_Layer: 0
-  m_Name: DickEnd
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &418770539342809887
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2498622419892731496}
-  m_LocalRotation: {x: -0.7071068, y: 0.0000000074505797, z: -0.000000010244547, w: 0.70710677}
-  m_LocalPosition: {x: -0, y: 0.455, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4855000224091205294}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &2764203274634515034
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,8 +354,39 @@ Transform:
   m_Children:
   - {fileID: 1596651377246320591}
   m_Father: {fileID: 6807857188757251609}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 72.766, y: 7.236, z: 6.968}
+--- !u!1 &4004916780473759316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 674261688449602952}
+  m_Layer: 25
+  m_Name: Dick.003
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &674261688449602952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4004916780473759316}
+  m_LocalRotation: {x: 4.831691e-10, y: 4.667484e-10, z: -2.273737e-12, w: 1}
+  m_LocalPosition: {x: 2.6466296e-10, y: 0.10716645, z: -0.000000030139063}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1232849074291727142}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4108992139794153283
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,11 +656,12 @@ MonoBehaviour:
         targetRenderers:
         - {fileID: 2987425613198561351}
         - {fileID: 7315451754972725502}
+        rigBuilder: {fileID: 8284837355911774605}
     - rid: 5882124739971907589
       type: {class: InflatableDick, ns: , asm: Assembly-CSharp}
       data:
         targetTransform: {fileID: 9000013800218957590}
-        targetJiggleRoot: {fileID: 4855000224091205294}
+        targetJiggleRoot: {fileID: 5867785377840280453}
         targetPenetrator: {fileID: 5521368089599830723}
 --- !u!205 &7114996326512174768
 LODGroup:
@@ -699,8 +700,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interpolate: 1
   jiggleRigs:
-  - rootTransform: {fileID: 4855000224091205294}
-    jiggleSettings: {fileID: 11400000, guid: d1785d5ba817ba54daef31df424da111, type: 2}
+  - rootTransform: {fileID: 5867785377840280453}
+    jiggleSettings: {fileID: 11400000, guid: d081ebe3eba24584dbb41d9ebe1c8116, type: 2}
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
@@ -726,7 +727,12 @@ MonoBehaviour:
   - renderer: {fileID: 7315451754972725502}
     mask: -2
   virtualSquashAndStretch: 1
-  tipTarget: {fileID: 418770539342809887}
+  poseTarget:
+  - {fileID: 5867785377840280453}
+  - {fileID: 8154079415056098109}
+  - {fileID: 1232849074291727142}
+  - {fileID: 674261688449602952}
+  poseTension: 0.75
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
   penetrationMarginOfError: 1
@@ -789,6 +795,38 @@ Transform:
   m_Father: {fileID: 6827762471943035006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7271857689515970214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5867785377840280453}
+  m_Layer: 25
+  m_Name: JiggleRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5867785377840280453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7271857689515970214}
+  m_LocalRotation: {x: 0.6806044, y: 0.015925888, z: 0.009737799, w: 0.73241323}
+  m_LocalPosition: {x: 0.002073596, y: -0.071483485, z: 0.063743316}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8154079415056098109}
+  m_Father: {fileID: 6807857188757251609}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 72.766, y: 7.236, z: 6.968}
 --- !u!1 &7435952999770324837
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +856,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 876299492429646086}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7646678991178250780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8154079415056098109}
+  m_Layer: 0
+  m_Name: Dick.001
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8154079415056098109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7646678991178250780}
+  m_LocalRotation: {x: 0.0000002600955, y: -4.2096815e-10, z: 0.0000000069353523,
+    w: 1}
+  m_LocalPosition: {x: 0.0000000011508519, y: 0.10716644, z: 0.000000034536697}
+  m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1232849074291727142}
+  m_Father: {fileID: 5867785377840280453}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8550076620946361337

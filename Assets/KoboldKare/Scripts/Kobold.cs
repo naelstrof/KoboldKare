@@ -344,6 +344,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private void Update() {
         // Throbbing!
         foreach(var dick in activeDicks) {
+            if (dick == null) { continue; }
             dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.info);
         }
     }

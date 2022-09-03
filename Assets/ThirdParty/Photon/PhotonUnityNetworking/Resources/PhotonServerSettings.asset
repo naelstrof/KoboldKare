@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 33
+    AppVersion: 34
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -92,6 +92,7 @@ MonoBehaviour:
   - Die
   - AddMoney
   - SetEnergyRPC
+  - SetCreature
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

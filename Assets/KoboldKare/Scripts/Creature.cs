@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable {
+public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable, IPunInstantiateMagicCallback {
     [SerializeField]
     private PhotonGameObjectReference spawnOnDeath;
     [SerializeField]
@@ -13,8 +14,22 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     [SerializeField]
     private float health = 1f;
 
+    [SerializeField] private float speed = 4f;
+
+    [SerializeField] private CreaturePath targetPath;
+
+    private float distanceTravelled = 0f;
+    private float distanceTravelledVel;
+    private float networkedDistanceTravelled = 0f;
+    public PhotonView photonView { get; private set; }
+
+    void Awake() {
+        photonView = GetComponentInParent<PhotonView>();
+    }
+
     [SerializeField] private AudioPack gibSound;
     private void OnValidate() {
+
         spawnOnDeath.OnValidate();
     }
     public bool CanGrab(Kobold kobold) {
@@ -31,6 +46,28 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     public Transform GrabTransform() {
         return transform;
     }
+
+    public void Update() {
+        if (targetPath == null) {
+            return;
+        }
+
+        if (!photonView.IsMine) {
+            if (Mathf.Abs(distanceTravelled - networkedDistanceTravelled) > 1f) {
+                distanceTravelled = networkedDistanceTravelled;
+            }
+            distanceTravelled = Mathf.SmoothDamp(distanceTravelled, networkedDistanceTravelled, ref distanceTravelledVel, 1f);
+        } else {
+            distanceTravelled += Time.deltaTime*speed;
+            if (distanceTravelled > targetPath.GetSpline().arcLength) {
+                distanceTravelled -= targetPath.GetSpline().arcLength;
+            }
+        }
+
+        transform.position = targetPath.GetSpline().GetPositionFromDistance(distanceTravelled);
+        transform.forward = targetPath.GetSpline().GetVelocityFromDistance(distanceTravelled).normalized;
+    }
+
 
     public float GetHealth() {
         return health;
@@ -67,15 +104,27 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(health);
+            stream.SendNext(distanceTravelled);
         } else {
             // we sync death via RPC, so we just sync the health variable without triggering anything else.
             health = (float)stream.ReceiveNext();
+            networkedDistanceTravelled = (float)stream.ReceiveNext();
         }
     }
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.rigidbody != null && collision.impulse.magnitude > 1f) {
             Damage(collision.impulse.magnitude);
+        }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData == null) {
+            return;
+        }
+
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is int) {
+            targetPath = PhotonNetwork.GetPhotonView((int)info.photonView.InstantiationData[0]).GetComponentInChildren<CreaturePath>();
         }
     }
 }

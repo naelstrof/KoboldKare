@@ -85,6 +85,8 @@ MonoBehaviour:
   splashPrefab: {fileID: 4785729701484657558, guid: ffc10736419710a428fc41240fe5f2fe,
     type: 3}
   health: 3
+  speed: 4
+  targetPath: {fileID: 0}
   gibSound: {fileID: 11400000, guid: f7f1939f20ebb1147a4311c7dc948715, type: 2}
 --- !u!114 &2556136579896807763
 MonoBehaviour:

@@ -159,6 +159,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2619749422985145952, guid: 4fdcd0e20d0bfc54c8f48f79627e78c4,
         type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2619749422985145952, guid: 4fdcd0e20d0bfc54c8f48f79627e78c4,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5c774609f312ab44fbb47ab3cee0f9db, type: 2}

@@ -15,6 +15,7 @@ public class KoboldJawOpenListener : PenetrableListener {
     private float jawVelocity;
     private float jawMoveAmount;
     private float girthRadiusMemory;
+    private bool zeroOutNow;
 
     protected override void OnPenetrationDepthChange(float newDepth) {
         base.OnPenetrationDepthChange(newDepth);
@@ -29,12 +30,20 @@ public class KoboldJawOpenListener : PenetrableListener {
     public override void Update() {
         base.Update();
         jawMoveAmount = Mathf.SmoothDamp(jawMoveAmount, girthRadiusMemory, ref jawVelocity, 0.25f);
+        if (zeroOutNow && jawMoveAmount != 0f) {
+            jawTransform.localPosition = startingLocalPosition + jawOpenDirection * jawMoveAmount;
+        }
     }
 
     protected override void OnPenetrationGirthRadiusChange(float newGirthRadius) {
         base.OnPenetrationGirthRadiusChange(newGirthRadius);
         girthRadiusMemory = newGirthRadius;
-        jawTransform.localPosition = startingLocalPosition + jawOpenDirection*jawMoveAmount;
+        if (newGirthRadius != 0f) {
+            zeroOutNow = false;
+            jawTransform.localPosition = startingLocalPosition + jawOpenDirection * jawMoveAmount;
+        } else {
+            zeroOutNow = true;
+        }
     }
 
     public override void OnEnable(Penetrable p) {

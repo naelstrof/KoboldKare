@@ -23,7 +23,7 @@ public class GenericEdible : GenericUsable {
     public override void LocalUse(Kobold k) {
         base.LocalUse(k);
         // Only successfully eat if we own both the edible, and the kobold. Otherwise, wait for ownership to successfully transfer
-        float spillAmount = Mathf.Min(container.maxVolume * 0.5f, k.bellyContainer.maxVolume - k.bellyContainer.volume);
+        float spillAmount = Mathf.Min(10f, k.bellyContainer.maxVolume - k.bellyContainer.volume);
         ReagentContents spill = container.Spill(spillAmount);
         photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillAmount);
         k.bellyContainer.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spill, photonView.ViewID);

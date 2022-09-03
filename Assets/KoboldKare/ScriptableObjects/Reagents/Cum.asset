@@ -27,7 +27,7 @@ MonoBehaviour:
   consumesMetabolization: 0
   metabolizationHalfLife: 60
   cleaningAgent: 0
-  calories: 0.01
+  calories: 0.001
   display: {fileID: 4074273719157461319, guid: a5e747e3c0e5bbc4388a00236396c0c5, type: 3}
   references:
     version: 2

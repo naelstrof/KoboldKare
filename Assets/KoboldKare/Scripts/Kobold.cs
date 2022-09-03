@@ -118,8 +118,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (energy < amount) {
             return false;
         }
-        energy -= amount;
-        energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+        SetEnergyRPC(energy - amount);
         if (!photonView.IsMine) {
             photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.Others, energy);
         }
@@ -128,6 +127,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     [PunRPC]
     public void SetEnergyRPC(float newEnergy) {
+        float diff = newEnergy - energy;
+        if (diff < 0f && photonView.IsMine) {
+            SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + diff * 5f));
+        }
+
         energy = newEnergy;
         energy = Mathf.Max(0, energy);
         energyChanged?.Invoke(energy, GetGenes().maxEnergy);
@@ -218,20 +222,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
-    }
-    
-    void OnMidnight(object ignore) {
-        int hitCount = 0;
-        foreach (RaycastHit h in Physics.RaycastAll(transform.position + Vector3.up * 400f,
-                     Vector3.down, 400f, SpoilableHandler.GetSafeZoneMask(), QueryTriggerInteraction.Collide)) {
-            hitCount++;
-        }
-        if (hitCount % 2 != 0) {
-            if (energy != GetGenes().maxEnergy) {
-                energy = GetGenes().maxEnergy;
-                energyChanged?.Invoke(energy, GetGenes().maxEnergy);
-            }
-        }
     }
 
     private void Awake() {

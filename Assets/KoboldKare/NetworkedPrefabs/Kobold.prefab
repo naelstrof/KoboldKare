@@ -6224,7 +6224,7 @@ MonoBehaviour:
       data:
         t: 0.96
         playPack: {fileID: 11400000, guid: c1651254df0a85748841b5a2b7299d09, type: 2}
-        delayVariance: 2
+        delayVariance: 10
     - rid: 8920608380542517259
       type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
       data:
@@ -12347,7 +12347,7 @@ MonoBehaviour:
       data:
         t: 0
         playPack: {fileID: 11400000, guid: c1651254df0a85748841b5a2b7299d09, type: 2}
-        delayVariance: 2
+        delayVariance: 10
 --- !u!1 &6852960065056215170
 GameObject:
   m_ObjectHideFlags: 0

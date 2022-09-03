@@ -427,7 +427,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             genes.breastSize += melonJuiceVolume * multi;
             genes.dickSize += eggplantJuiceVolume * multi;
             genes.baseSize += growthSerumVolume * multi;
-            //genes.fatSize += milkShakeVolume * multi;
             genes.ballSize += pineappleJuiceVolume * multi;
             
             // Mushroom juice is poisonous!
@@ -456,6 +455,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         energyChanged?.Invoke(energy, GetMaxEnergy());
         if (overflow > 0f) {
             SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + overflow));
+        }
+
+
+        float yogurtVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("Yogurt"));
+        if (yogurtVolume > 0f) {
+            SetGenes(GetGenes().With(metabolizeCapacitySize: GetGenes().metabolizeCapacitySize + yogurtVolume));
         }
 
         vol.DumpNonConsumable();

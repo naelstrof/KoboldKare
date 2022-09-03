@@ -39,6 +39,7 @@ public class CommandGive : Command {
                 contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
                 obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
                 output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
+                return;
             }
 
             throw new CheatsProcessor.CommandException($"Spawning reagents requires a 3rd number argument.");

@@ -41,14 +41,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Vector2 hipVector;
     private Vector2 desiredHipVector;
     private bool lookEnabled = true;
-    private Coroutine lookAtTween;
 
     public void SetLookEnabled(bool lookEnabled) {
         this.lookEnabled = lookEnabled;
-        if (lookAtTween != null) {
-            StopCoroutine(lookAtTween);
-        }
-        lookAtTween = StartCoroutine(SetLookRoutine());
     }
 
     IEnumerator SetLookRoutine() {
@@ -276,17 +271,16 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         //}
 
-        if (lookEnabled) {
-            if (animating) {
-                currentStation.SetLookAtPosition(lookPos);
-                currentStation.SetHipOffset(hipVector);
-                handler.SetLookAtWeight(handler.GetWeight(), 0f, 1f, 1f, 0.45f);
-            } else {
-                handler.SetLookAtWeight(handler.GetWeight(), 0.22f, 1f, 1f, 0.45f);
-            }
-
-            handler.SetLookAtPosition(lookPos);
+        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 0.7f : 0f, Time.deltaTime));
+        if (animating) {
+            currentStation.SetLookAtPosition(lookPos);
+            currentStation.SetHipOffset(hipVector);
+            handler.SetLookAtWeight(handler.GetWeight(), 0f, 1f, 1f, 0.45f);
+        } else {
+            handler.SetLookAtWeight(handler.GetWeight(), 0.22f, 1f, 1f, 0.45f);
         }
+
+        handler.SetLookAtPosition(lookPos);
     }
 
     [PunRPC]

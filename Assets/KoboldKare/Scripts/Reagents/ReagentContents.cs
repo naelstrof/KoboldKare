@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -31,10 +32,15 @@ public class ReagentContents : IEnumerable<Reagent> {
         return maxVolume;
     }
     public void SetMaxVolume(float newMaxVolume) {
+        if (Math.Abs(maxVolume - newMaxVolume) < 0.001f) {
+            return;
+        }
+
         maxVolume = newMaxVolume;
         if (contents != null && maxVolume < volume) {
             Spill(volume-maxVolume);
         }
+        changed?.Invoke(this);
     }
     private const float metabolizationVolumeEpsilon = 0.1f;
     public float volume {

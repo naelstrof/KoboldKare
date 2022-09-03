@@ -37,8 +37,8 @@ public class EnergyBarDisplay : MonoBehaviour {
         energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
     }
 
-    void OnEnergyChanged(int value, int maxValue) {
-        if (Mathf.RoundToInt(desiredValue) == value && Mathf.RoundToInt(desiredMaxValue) == maxValue) {
+    void OnEnergyChanged(float value, float maxValue) {
+        if (Math.Abs(desiredValue - value) < 0.01f && Math.Abs(desiredMaxValue - maxValue) < 0.01f) {
             return;
         }
 

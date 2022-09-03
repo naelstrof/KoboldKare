@@ -154,6 +154,15 @@ public class ReagentContents : IEnumerable<Reagent> {
         // If we're majorly a cleaning agent...
         return totalCleanerVolume > volume*0.5f;
     }
+
+    public float GetCalories() {
+        float totalCalories = 0f;
+        foreach(var pair in contents) {
+            totalCalories += pair.Value.volume * ReagentDatabase.GetReagent(pair.Key).calories;
+        }
+        return totalCalories;
+    }
+
     public Color GetColor() {
         float v = volume;
         if (v <= 0f) {

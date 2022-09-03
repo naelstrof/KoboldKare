@@ -844,6 +844,38 @@ MonoBehaviour:
     m_Localized: Pineapple Popsicle
     m_Metadata:
       m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Banana split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "Ob\u0159\xEDzen\xFD humanoidn\xED penis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Dort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: "Vaje\u010Dn\xFD ko\u0148ak"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Jogurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: "Kol\xE1\u010D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "M\xEDchan\xE1 vejce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: "Ve\u010De\u0159e vejce"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -788,7 +788,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695177
     m_Localized: "Jeg er ligeglad med, hvad du g\xF8r med det efter, vi har brug
-      for et stort \xE6g for at komme ud af en kobold."
+      for et stort \xE6g for at komme ud af en Kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -833,6 +833,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 209952603963445252
     m_Localized: Ananas Popsicle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Banana split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "Omg\xE5s humanoid penis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Kage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: Eggnog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Yoghurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Pie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "R\xF8r\xE6g"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: "\xC6ggemiddag"
     m_Metadata:
       m_Items: []
   references:

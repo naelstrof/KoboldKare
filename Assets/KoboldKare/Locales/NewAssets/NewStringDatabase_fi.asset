@@ -749,7 +749,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: Toimita suuria rintoja Kobolds.
+    m_Localized: "Toimita suuria rintakeh\xE4t."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -834,6 +834,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 209952603963445252
     m_Localized: Ananaspopsicle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Banaanin jako
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "Ympyr\xF6ity humanoidinen penis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Kakku
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: Munatoti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Jogurtti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Piirakka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: Munakokkelia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: Muna -illallinen
     m_Metadata:
       m_Items: []
   references:

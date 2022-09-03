@@ -20,7 +20,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         public bool isFemaleExclusiveAnatomy = false;
     }
 
-    public delegate void EnergyChangedAction(int value, int maxValue);
+    public delegate void EnergyChangedAction(float value, float maxValue);
     public event EnergyChangedAction energyChanged;
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
@@ -45,7 +45,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public ReagentContents metabolizedContents;
     
     [SerializeField]
-    private byte energy = 1;
+    private float energy = 1f;
 
     [SerializeField]
     private AudioPack tummyGrumbles;
@@ -121,15 +121,15 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         energy -= amount;
         energyChanged?.Invoke(energy, GetGenes().maxEnergy);
         if (!photonView.IsMine) {
-            photonView.RPC(nameof(Kobold.ConsumeEnergyRPC), RpcTarget.Others, amount);
+            photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.Others, energy);
         }
         return true;
     }
 
     [PunRPC]
-    public void ConsumeEnergyRPC(byte amount) {
-        energy -= amount;
-        energy = (byte)Mathf.Max(0, energy);
+    public void SetEnergyRPC(float newEnergy) {
+        energy = newEnergy;
+        energy = Mathf.Max(0, energy);
         energyChanged?.Invoke(energy, GetGenes().maxEnergy);
     }
 
@@ -143,12 +143,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-    public int GetEnergy() {
+    public float GetEnergy() {
         return energy;
     }
-    public int GetMaxEnergy() {
+    public float GetMaxEnergy() {
         if (GetGenes() == null) {
-            return 1;
+            return 1f;
         }
 
         return GetGenes().maxEnergy;
@@ -232,15 +232,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 energyChanged?.Invoke(energy, GetGenes().maxEnergy);
             }
         }
-    }
-
-    [PunRPC]
-    public void Rest() {
-        if (energy != GetGenes().maxEnergy) {
-            energy = GetGenes().maxEnergy;
-            energyChanged?.Invoke(energy, GetGenes().maxEnergy);
-        }
-        stimulation = 0f;
     }
 
     private void Awake() {
@@ -423,21 +414,19 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void ProcessReagents(ReagentContents contents, float multi) {
-        
         float melonJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
         float eggplantJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
         float growthSerumVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
-        float milkShakeVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MilkShake"));
         float pineappleJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
         float mushroomJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MushroomJuice"));
-        float sum = (mushroomJuiceVolume + melonJuiceVolume + eggplantJuiceVolume + growthSerumVolume + milkShakeVolume + pineappleJuiceVolume) * multi;
+        float sum = (mushroomJuiceVolume + melonJuiceVolume + eggplantJuiceVolume + growthSerumVolume + pineappleJuiceVolume) * multi;
 
         if (sum != 0f) {
             KoboldGenes genes = GetGenes();
             genes.breastSize += melonJuiceVolume * multi;
             genes.dickSize += eggplantJuiceVolume * multi;
             genes.baseSize += growthSerumVolume * multi;
-            genes.fatSize += milkShakeVolume * multi;
+            //genes.fatSize += milkShakeVolume * multi;
             genes.ballSize += pineappleJuiceVolume * multi;
             
             // Mushroom juice is poisonous!
@@ -460,6 +449,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         ReagentContents vol = bellyContainer.Metabolize(f);
         // Reagents that don't affect metabolization limits
         bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
+
+        float overflow = Mathf.Max(energy + vol.GetCalories() - GetMaxEnergy(), 0);
+        energy = Mathf.MoveTowards(energy,GetMaxEnergy(), vol.GetCalories());
+        energyChanged?.Invoke(energy, GetMaxEnergy());
+        if (overflow > 0f) {
+            SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + overflow));
+        }
 
         vol.DumpNonConsumable();
         
@@ -503,10 +499,16 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             stream.SendNext(GetGenes());
             stream.SendNext(arousal);
             stream.SendNext(metabolizedContents);
+            stream.SendNext(energy);
         } else {
             SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
             metabolizedContents.Copy((ReagentContents)stream.ReceiveNext());
+            float newEnergy = (float)stream.ReceiveNext();
+            if (Math.Abs(newEnergy - energy) > 0.01f) {
+                energy = newEnergy;
+                energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+            }
         }
     }
 

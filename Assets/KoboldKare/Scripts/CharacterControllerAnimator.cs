@@ -40,7 +40,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Vector2 hipVectorVelocity;
     private Vector2 hipVector;
     private Vector2 desiredHipVector;
-    private bool lookEnabled;
+    private bool lookEnabled = true;
     private Coroutine lookAtTween;
 
     public void SetLookEnabled(bool lookEnabled) {
@@ -144,6 +144,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private void Start() {
         tempDir = Vector3.forward;
         handler.SetWeight(0.7f);
+        lookEnabled = true;
     }
 
     private IEnumerator AnimationRoutine() {

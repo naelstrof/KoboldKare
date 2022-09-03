@@ -25,8 +25,10 @@ MonoBehaviour:
   emission: {r: 0, g: 0, b: 0, a: 1}
   value: 2
   consumesMetabolization: 1
-  metabolizationHalfLife: 30
+  metabolizationHalfLife: 40
   cleaningAgent: 0
+  calories: 0.05
+  display: {fileID: 0}
   references:
     version: 2
     RefIds: []

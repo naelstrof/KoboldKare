@@ -837,6 +837,38 @@ MonoBehaviour:
     m_Localized: Popsicle d'ananas
     m_Metadata:
       m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Banane split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "P\xE9nis humano\xEFde circurant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: "G\xE2teau"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: Lait de poule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Yaourt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Tarte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "\u0152uf brouill\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: "D\xEEner aux \u0153ufs"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

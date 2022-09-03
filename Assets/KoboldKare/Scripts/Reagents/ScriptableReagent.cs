@@ -17,6 +17,7 @@ public class ScriptableReagent : ScriptableObject {
     public bool consumesMetabolization;
     public float metabolizationHalfLife;
     public bool cleaningAgent;
+    public float calories = 0f;
     public GameObject display;
     public Reagent GetReagent( float volume ) {
         return new Reagent() {

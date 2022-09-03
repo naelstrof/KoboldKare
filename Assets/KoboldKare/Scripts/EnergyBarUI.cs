@@ -27,7 +27,7 @@ public class EnergyBarUI : MonoBehaviour {
         OnEnergyChanged(targetKobold.GetEnergy(), targetKobold.GetMaxEnergy());
     }
 
-    private void OnEnergyChanged(int energy, int maxEnergy) {
+    private void OnEnergyChanged(float energy, float maxEnergy) {
         StopAllCoroutines();
         // Ensure we have all our bars available.
         for (int i = energyBars.Count; i < maxEnergy; i++) {

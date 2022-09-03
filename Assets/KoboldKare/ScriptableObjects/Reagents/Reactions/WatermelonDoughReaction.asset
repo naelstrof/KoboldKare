@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32869a6bcc471024096a008764badf8f, type: 3}
+  m_Name: WatermelonDoughReaction
+  m_EditorClassIdentifier: 
+  reactions: []
+  reactants:
+  - reactant: {fileID: 11400000, guid: 0011764867947d84bb1166d2d7886105, type: 2}
+    coefficient: 1
+  - reactant: {fileID: 11400000, guid: ab6a14994d81d1246858260c00038968, type: 2}
+    coefficient: 1
+  products:
+  - reactant: {fileID: 11400000, guid: 47768886bcb27df4996e55c86ddcf089, type: 2}
+    coefficient: 2
+  references:
+    version: 2
+    RefIds: []

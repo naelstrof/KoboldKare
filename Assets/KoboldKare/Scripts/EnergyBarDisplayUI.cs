@@ -24,7 +24,7 @@ public class EnergyBarDisplayUI : MonoBehaviour {
         running = false;
     }
 
-    void OnEnergyChanged(int energy, int maxEnergy) {
+    void OnEnergyChanged(float energy, float maxEnergy) {
         targetWidth = energy * energyToPixel;
         targetBackgroundWidth = maxEnergy * energyToPixel;
         if (!running) {

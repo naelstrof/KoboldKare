@@ -536,7 +536,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "B\xEAn tr\xE1i"
+    m_Localized: "Ph\xF2ng b\xEAn tr\xE1i"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -863,6 +863,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 209952603963445252
     m_Localized: "D\u1EE9a popsicle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: "Chu\u1ED1i chia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "D\u01B0\u01A1ng v\u1EADt h\xECnh ng\u01B0\u1EDDi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: "B\xE1nh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: Eggnog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: "S\u1EEFa chua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: "B\xE1nh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "Tr\u1EE9ng x\xE1o tr\u1ED9n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: "B\u1EEFa t\u1ED1i tr\u1EE9ng"
     m_Metadata:
       m_Items: []
   references:

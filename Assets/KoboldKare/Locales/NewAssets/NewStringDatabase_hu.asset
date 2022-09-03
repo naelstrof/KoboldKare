@@ -841,6 +841,38 @@ MonoBehaviour:
     m_Localized: "Anan\xE1sz popsicle"
     m_Metadata:
       m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: "Ban\xE1n Split"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: "K\xF6r\xFClv\xE9ve humanoid p\xE9nisz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Torta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: "Toj\xE1slik\u0151r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Joghurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Pite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "R\xE1ntotta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: "Toj\xE1svacsora"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

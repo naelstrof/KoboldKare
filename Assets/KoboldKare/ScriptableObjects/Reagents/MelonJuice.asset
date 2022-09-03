@@ -27,9 +27,8 @@ MonoBehaviour:
   consumesMetabolization: 1
   metabolizationHalfLife: 30
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls: []
+  calories: 0.05
+  display: {fileID: 0}
   references:
     version: 2
     RefIds: []

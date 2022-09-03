@@ -807,6 +807,38 @@ MonoBehaviour:
     m_Key: REAGENT_PINEAPPLE_POPSICLE
     m_Metadata:
       m_Items: []
+  - m_Id: 210151247266238464
+    m_Key: REAGENT_BANANA_SPLIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Key: EQUIPMENT_CUT_HUMANOID_PENIS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Key: REAGENT_CAKE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Key: REAGENT_EGGNOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Key: REAGENT_YOGURT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Key: REAGENT_PIE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Key: REAGENT_SCRAMBLED_EGG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Key: REAGENT_EGG_MEAL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

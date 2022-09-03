@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
       SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
@@ -831,6 +831,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 209952603963445252
     m_Localized: Ananas popsicle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Banana Split
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: Omkrets humanoid penis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Kake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: Eggnog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Yoghurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Pai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "Egger\xF8re"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: Eggmiddag
     m_Metadata:
       m_Items: []
   references:

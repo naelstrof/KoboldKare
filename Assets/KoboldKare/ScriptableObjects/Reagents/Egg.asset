@@ -23,11 +23,11 @@ MonoBehaviour:
     m_LocalVariables: []
   color: {r: 0.9528302, g: 0.8770902, b: 0.43596476, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
-  value: 1
+  value: 0.25
+  consumesMetabolization: 0
   metabolizationHalfLife: 240
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls: []
+  display: {fileID: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

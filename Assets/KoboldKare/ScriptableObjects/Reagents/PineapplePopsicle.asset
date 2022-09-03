@@ -16,17 +16,18 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
     m_TableEntryReference:
-      m_KeyId: 2228726966833152
+      m_KeyId: 209952603963445252
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
   color: {r: 0.9990681, g: 1, b: 0.6273585, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
-  value: 0.25
+  value: 2
   consumesMetabolization: 0
-  metabolizationHalfLife: 30
+  metabolizationHalfLife: 25
   cleaningAgent: 0
+  calories: 0.2
   display: {fileID: 3353357907096999620, guid: 8ffaa0e95da8d53419b12710d09c5d76, type: 3}
   references:
     version: 2

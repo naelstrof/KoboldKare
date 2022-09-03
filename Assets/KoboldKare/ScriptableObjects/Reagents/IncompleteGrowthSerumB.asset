@@ -24,22 +24,11 @@ MonoBehaviour:
   color: {r: 0, g: 0.2830189, b: 0.024261948, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
   value: 0.1
+  consumesMetabolization: 0
   metabolizationHalfLife: 30
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 92dd9569fd4bb8e4eb0186c7f06c7157, type: 2}
-        m_TargetAssemblyTypeName: ReagentSerializableCallbacks, Assembly-CSharp
-        m_MethodName: BubbleSound
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  calories: 0.1
+  display: {fileID: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

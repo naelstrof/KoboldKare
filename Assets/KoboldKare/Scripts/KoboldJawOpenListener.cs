@@ -9,26 +9,37 @@ public class KoboldJawOpenListener : PenetrableListener {
     [SerializeField] private Animator koboldAnimator;
     [SerializeField] private CharacterControllerAnimator controllerAnimator;
 
-    private Penetrable currentPenetrable;
     private static readonly int LookUp = Animator.StringToHash("LookUp");
     private Vector3 startingLocalPosition;
+    private bool lastWork;
+    private float jawVelocity;
+    private float jawMoveAmount;
+    private float girthRadiusMemory;
 
     protected override void OnPenetrationDepthChange(float newDepth) {
         base.OnPenetrationDepthChange(newDepth);
-        bool work = newDepth > currentPenetrable.GetSplinePath().GetDistanceFromTime(GetT(currentPenetrable));
-        koboldAnimator.SetBool(LookUp, work);
-        controllerAnimator.SetLookEnabled(!work);
+        bool work = newDepth > 0f;
+        if (work != lastWork) {
+            koboldAnimator.SetBool(LookUp, work);
+            controllerAnimator.SetLookEnabled(!work);
+            lastWork = work;
+        }
+    }
+
+    public override void Update() {
+        base.Update();
+        jawMoveAmount = Mathf.SmoothDamp(jawMoveAmount, girthRadiusMemory, ref jawVelocity, 0.25f);
     }
 
     protected override void OnPenetrationGirthRadiusChange(float newGirthRadius) {
         base.OnPenetrationGirthRadiusChange(newGirthRadius);
-        jawTransform.localPosition = startingLocalPosition + jawOpenDirection*newGirthRadius;
+        girthRadiusMemory = newGirthRadius;
+        jawTransform.localPosition = startingLocalPosition + jawOpenDirection*jawMoveAmount;
     }
 
     public override void OnEnable(Penetrable p) {
         base.OnEnable(p);
         startingLocalPosition = jawTransform.localPosition;
-        currentPenetrable = p;
     }
 
     public override void AssertValid() {
@@ -43,6 +54,19 @@ public class KoboldJawOpenListener : PenetrableListener {
         if (controllerAnimator == null) {
             throw new PenetrableListenerValidationException($"controllerAnimator is null on {this}");
         }
+    }
+
+    public override void OnDrawGizmosSelected(Penetrable p) {
+        base.OnDrawGizmosSelected(p);
+        #if UNITY_EDITOR
+            CatmullSpline path = p.GetSplinePath();
+            Vector3 position = path.GetPositionFromT(t);
+            Vector3 tangent = path.GetVelocityFromT(t).normalized;
+            Vector3 normal = path.GetBinormalFromT(t).normalized;
+            
+            UnityEditor.Handles.color = Color.yellow;
+            UnityEditor.Handles.DrawWireDisc(position, tangent, 0.025f);
+        #endif
     }
 
     public override void NotifyPenetration(Penetrable penetrable, Penetrator penetrator, float worldSpaceDistanceToPenisRoot, Penetrable.SetClipDistanceAction clipAction) {

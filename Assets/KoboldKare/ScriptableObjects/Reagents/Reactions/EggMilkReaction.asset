@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32869a6bcc471024096a008764badf8f, type: 3}
+  m_Name: EggMilkReaction
+  m_EditorClassIdentifier: 
+  reactions: []
+  reactants:
+  - reactant: {fileID: 11400000, guid: d699f0ca23be8724d8d579ba85e16857, type: 2}
+    coefficient: 1
+  - reactant: {fileID: 11400000, guid: 7fb71e9c403384941b7631a8990bda2c, type: 2}
+    coefficient: 1
+  products:
+  - reactant: {fileID: 11400000, guid: 08db202a0c4d64b4cb87d31d8e72ec75, type: 2}
+    coefficient: 2
+  references:
+    version: 2
+    RefIds: []

@@ -737,7 +737,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Z\xFCchten Sie Kobolds"
+    m_Localized: "Kobolds z\xFCchten"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
@@ -842,6 +842,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 209952603963445252
     m_Localized: Ananas Eis am Stiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247266238464
+    m_Localized: Bananenspaltung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210151247308181504
+    m_Localized: Umgehender humanoider Penis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210156174176735232
+    m_Localized: Kuchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449728
+    m_Localized: "Eierlik\xF6r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210159659429449729
+    m_Localized: Joghurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210160988449198080
+    m_Localized: Kuchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097664
+    m_Localized: "R\xFChrei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210162028410097665
+    m_Localized: Eieressen
     m_Metadata:
       m_Items: []
   references:

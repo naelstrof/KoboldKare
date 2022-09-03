@@ -13,8 +13,10 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private List<AnimationStation> stations;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
+    private WaitForSeconds energyGrantPeriod;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
+        energyGrantPeriod = new WaitForSeconds(1f);
     }
     public override Sprite GetSprite(Kobold k) {
         return sleepingSprite;
@@ -54,25 +56,27 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         }
         PhotonView view = PhotonNetwork.GetPhotonView(targetID);
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
-            StartCoroutine(WaitThenSleep(kobold));
+            StartCoroutine(SleepRoutine(kobold));
         }
     }
 
-    private IEnumerator WaitThenSleep(Kobold k) {
-        yield return new WaitForSeconds(10f);
-        if (k == null) {
-            yield break;
-        }
-
-        bool stillSleeping = false;
-        foreach (var station in GetAnimationStations()) {
-            if (station.info.user == k) {
-                stillSleeping = true;
+    private IEnumerator SleepRoutine(Kobold k) {
+        bool stillSleeping = true;
+        float startStimulation = k.stimulation;
+        while (k != null && stillSleeping && k.GetEnergy() < 1f) {
+            if (k.photonView.IsMine) {
+                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.1f, 1f));
+                k.stimulation = Mathf.MoveTowards(startStimulation, 0f, 1f);
             }
+            stillSleeping = false;
+            foreach (var station in GetAnimationStations()) {
+                if (station.info.user == k) {
+                    stillSleeping = true;
+                }
+            }
+            yield return energyGrantPeriod;
         }
-
         if (stillSleeping) {
-            k.photonView.RPC(nameof(Kobold.Rest), RpcTarget.All);
             k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
         }
     }

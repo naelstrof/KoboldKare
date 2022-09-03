@@ -51,9 +51,6 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     //}
     [PunRPC]
     private void Sleep(int targetID) {
-        if (!photonView.IsMine) {
-            return;
-        }
         PhotonView view = PhotonNetwork.GetPhotonView(targetID);
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
             StartCoroutine(SleepRoutine(kobold));
@@ -76,7 +73,7 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
             }
             yield return energyGrantPeriod;
         }
-        if (stillSleeping) {
+        if (stillSleeping && k.photonView.IsMine) {
             k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
         }
     }

@@ -15264,7 +15264,7 @@ MonoBehaviour:
   controller: {fileID: 8398179079861015653}
   stimulation: 0
   stimulationMax: 10
-  stimulationMin: -50
+  stimulationMin: -20
   koboldAnimator: {fileID: 6506915555083475516}
   arousal: 0
   nippleBarbells: {fileID: 7327823432158866843}

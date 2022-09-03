@@ -101,7 +101,7 @@ public class KoboldGenes {
         return c;
     }
 
-    private const short byteCount = sizeof(float) * 8 + sizeof(byte) * 5;
+    private const short byteCount = sizeof(float) * 9 + sizeof(byte) * 4;
     public static short Serialize(StreamBuffer outStream, object customObject) {
         KoboldGenes genes = (KoboldGenes)customObject;
         byte[] bytes = new byte[byteCount];

@@ -41,8 +41,9 @@ public class InflatableDick : InflatableListener {
         
         targetTransform.localScale = squishedStartScale*Mathf.Max(newSize,0.05f);
         if (targetJiggleRoot != null) {
+            // No need to shrink the jiggle
             targetJiggleRoot.localScale =
-                startJiggleScale * Mathf.Max(newSize, 1f + Mathf.Max(0f, dickThicknessRatio - 0.5f));
+                startJiggleScale * Mathf.Max(newSize, 1f);
         }
 
         targetPenetrator.SetPenetrationMarginOfError(Mathf.Min(0.1f+1f/newSize, 1f));

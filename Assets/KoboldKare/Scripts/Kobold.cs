@@ -369,9 +369,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (displayMessageRoutine != null) {
             StopCoroutine(displayMessageRoutine);
         }
-        CheatsProcessor.AppendText($"{photonView.Owner.NickName}: {message}\n");
-        CheatsProcessor.ProcessCommand(this, message);
-        displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
+
+        foreach (var player in PhotonNetwork.PlayerList) {
+            if ((Kobold)player.TagObject != this) continue;
+            CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
+            CheatsProcessor.ProcessCommand(this, message);
+            displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
+            break;
+        }
     }
     IEnumerator DisplayMessage(string message, float duration) {
         chatText.text = message;
@@ -422,7 +427,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             genes.baseSize = Mathf.Max(genes.baseSize-mushroomJuiceVolume * multi * 0.2f, 0f);
             genes.ballSize = Mathf.Max(genes.ballSize-mushroomJuiceVolume * multi * 0.2f,0f);
             genes.dickSize = Mathf.Max(genes.dickSize-mushroomJuiceVolume * multi * 0.2f, 0.2f);
-            genes.fatSize = Mathf.Max(genes.fatSize-mushroomJuiceVolume * multi * 0.2f,-5f);
+            genes.fatSize = Mathf.Max(genes.fatSize-mushroomJuiceVolume * multi * 0.2f,-2f);
             genes.breastSize = Mathf.Max(genes.breastSize-mushroomJuiceVolume * multi * 0.2f,0f);
             genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(mushroomJuiceVolume*6f) * multi), 0, 255);
             

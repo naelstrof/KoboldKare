@@ -16,7 +16,19 @@ public class DickEquipment : Equipment {
         if (info == null) {
             throw new UnityException("Dick equipment is missing the DickInfo monobehavior. It's needed to be able to equip!");
         }
+
+        info.equipmentInstanceID = GetInstanceID();
         info.AttachTo(k);
         return stuff;
+    }
+
+    public override GameObject OnUnequip(Kobold k, bool dropOnGround = true) {
+        for (int i = 0; i < k.activeDicks.Count; i++) {
+            if (k.activeDicks[i].info.equipmentInstanceID == GetInstanceID()) {
+                k.activeDicks[i].info.RemoveFrom(k);
+                break;
+            }
+        }
+        return base.OnUnequip(k, dropOnGround);
     }
 }

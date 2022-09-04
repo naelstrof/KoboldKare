@@ -40,6 +40,8 @@ public class DickInfoEditor : Editor {
 public class DickInfo : MonoBehaviour {
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private Kobold attachedKobold;
+    [HideInInspector]
+    public int equipmentInstanceID;
 
     //[PenetratorListener(typeof(KoboldDickListener), "Kobold Dick Listener")]
     private class KoboldDickListener : PenetratorListener {
@@ -87,6 +89,7 @@ public class DickInfo : MonoBehaviour {
         public HumanBodyBones parent;
         [HideInInspector]
         public Transform parentTransform;
+
         public void Destroy() {
             GameObject.Destroy(dick.gameObject);
         }
@@ -103,10 +106,7 @@ public class DickInfo : MonoBehaviour {
             set.ballSizeInflater.OnEnable();
         }
     }
-    private void RemoveFrom(Kobold k) {
-        if (k == null) {
-            return;
-        }
+    public void RemoveFrom(Kobold k) {
         // Must've been removed already
         foreach (DickSet set in dicks) {
             if (!k.activeDicks.Contains(set)) {
@@ -255,7 +255,7 @@ public class DickInfo : MonoBehaviour {
         k.animator.enabled = animatorWasEnabled;
     }
 
-    private void OnDestroy() {
-        RemoveFrom(attachedKobold);
-    }
+    //private void OnDestroy() {
+        //RemoveFrom(attachedKobold);
+    //}
 }

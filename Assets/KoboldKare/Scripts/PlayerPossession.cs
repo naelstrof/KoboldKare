@@ -111,6 +111,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["SwitchGrabMode"].performed += OnShiftMode;
         controls.actions["Grab"].performed += OnGrabInput;
         controls.actions["Grab"].canceled += OnGrabCancelled;
+        controls.actions["Gib"].performed += OnGibInput;
         controls.actions["Rotate"].performed += OnRotateInput;
         controls.actions["Rotate"].canceled += OnRotateCancelled;
         controls.actions["ActivateGrab"].performed += OnActivateGrabInput;
@@ -130,6 +131,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["SwitchGrabMode"].performed -= OnShiftMode;
         controls.actions["Grab"].performed -= OnGrabInput;
         controls.actions["Grab"].canceled -= OnGrabCancelled;
+        controls.actions["Gib"].performed -= OnGibInput;
         controls.actions["Rotate"].performed -= OnRotateInput;
         controls.actions["Rotate"].canceled -= OnRotateCancelled;
         controls.actions["ActivateGrab"].performed -= OnActivateGrabInput;
@@ -310,19 +312,25 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
 
-    public void OnActivateGrabInput(InputAction.CallbackContext ctx) {
+    void OnActivateGrabInput(InputAction.CallbackContext ctx) {
         grabber.TryActivate();
         pGrabber.TryFreeze();
         StartCoroutine(PauseInputForSeconds(0.5f));
     }
-    public void OnActivateGrabCancelled(InputAction.CallbackContext ctx) {
+    void OnActivateGrabCancelled(InputAction.CallbackContext ctx) {
         grabber.TryStopActivate();
     }
-    public void OnUnfreezeInput(InputAction.CallbackContext ctx) {
+    void OnUnfreezeInput(InputAction.CallbackContext ctx) {
         pGrabber.TryUnfreeze();
     }
-    public void OnUnfreezeAllInput(InputAction.CallbackContext ctx) {
+    void OnUnfreezeAllInput(InputAction.CallbackContext ctx) {
         pGrabber.UnfreezeAll();
+    }
+
+    void OnGibInput(InputAction.CallbackContext ctx) {
+        if (photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject == kobold) {
+            PhotonNetwork.Destroy(kobold.gameObject);
+        }
     }
 
     public void OnResetCamera() {

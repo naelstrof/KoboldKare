@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6051016ef15b0a645988afb75ea09aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipmentInstanceID: 0
   dicks:
   - dickContainer: {fileID: 1819226711850428771}
     dick: {fileID: 8590122414135819578}
@@ -467,7 +468,6 @@ MonoBehaviour:
     info: {fileID: 0}
     parent: 0
     parentTransform: {fileID: 0}
-    dickIdentifier: 0
   references:
     version: 2
     RefIds:
@@ -505,6 +505,9 @@ MonoBehaviour:
   jiggleRigs:
   - rootTransform: {fileID: 7512632386406070227}
     jiggleSettings: {fileID: 11400000, guid: d081ebe3eba24584dbb41d9ebe1c8116, type: 2}
+    ignoredTransforms: []
+  - rootTransform: {fileID: 627412111881008200}
+    jiggleSettings: {fileID: 11400000, guid: d943a7f4642c57f4b879d9bf693868ec, type: 2}
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0

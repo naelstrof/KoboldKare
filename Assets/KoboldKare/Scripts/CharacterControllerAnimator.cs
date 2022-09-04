@@ -271,13 +271,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
         //}
 
-        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 0.7f : 0f, Time.deltaTime));
+        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 0.7f : 0.4f, Time.deltaTime));
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
             currentStation.SetHipOffset(hipVector);
-            handler.SetLookAtWeight(handler.GetWeight(), 0f, 1f, 1f, 0.45f);
+            handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.45f);
         } else {
-            handler.SetLookAtWeight(handler.GetWeight(), 0.22f, 1f, 1f, 0.45f);
+            handler.SetLookAtWeight(handler.GetWeight(), 0.3f, 0.8f, 1f, 0.45f);
         }
 
         handler.SetLookAtPosition(lookPos);

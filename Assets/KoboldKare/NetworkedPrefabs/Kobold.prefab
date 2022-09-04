@@ -14965,6 +14965,9 @@ MonoBehaviour:
   - penetratable: {fileID: 2507841614434118606}
     ragdollAttachBody: {fileID: 139429597399395155}
     isFemaleExclusiveAnatomy: 1
+  - penetratable: {fileID: 6801546507248158888}
+    ragdollAttachBody: {fileID: 220631205513813554}
+    isFemaleExclusiveAnatomy: 0
   attachPoints:
   - {fileID: 4363336214978915131}
   - {fileID: 6506915555090380202}

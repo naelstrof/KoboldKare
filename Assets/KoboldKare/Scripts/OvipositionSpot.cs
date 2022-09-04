@@ -26,7 +26,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     }
     
     public override bool CanUse(Kobold k) {
-        return k.bellyContainer.GetVolumeOf(egg) > 5f && station.info.user == null && k.GetEnergy() > 0;
+        return k.bellyContainer.GetVolumeOf(egg) > 5f && station.info.user == null && k.GetEnergy() >= 1f;
     }
 
     public override void LocalUse(Kobold k) {

@@ -30,6 +30,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private JigglePhysics.JiggleRigBuilder tailRig;
 
+    private Kobold kobold;
+
     [SerializeField]
     private LODGroup group;
     
@@ -117,6 +119,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
     private void Awake() {
+        kobold = GetComponent<Kobold>();
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -167,6 +170,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private void Ragdoll() {
         if (ragdolled) {
             return;
+        }
+
+        foreach (var dickSet in kobold.activeDicks) {
+            foreach (var penn in kobold.penetratables) {
+                if (!penn.penetratable.name.Contains("Mouth")) {
+                    continue;
+                }
+
+                dickSet.dick.RemoveIgnorePenetrable(penn.penetratable);
+            }
         }
 
         foreach (var lod in group.GetLODs()) {
@@ -224,6 +237,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private void StandUp() {
         if (!ragdolled) {
             return;
+        }
+        foreach (var dickSet in kobold.activeDicks) {
+            foreach (var penn in kobold.penetratables) {
+                if (!penn.penetratable.name.Contains("Mouth")) {
+                    continue;
+                }
+
+                dickSet.dick.AddIgnorePenetrable(penn.penetratable);
+            }
         }
         foreach (var lod in group.GetLODs()) {
             foreach (Renderer renderer in lod.renderers) {

@@ -108,13 +108,16 @@ public class ReagentContents : IEnumerable<Reagent> {
         changed?.Invoke(this);
     }
 
-    public void DumpNonConsumable() {
+    public ReagentContents DumpNonConsumable() {
+        ReagentContents output = new ReagentContents();
         foreach (var pair in contents) {
             if (!ReagentDatabase.GetReagent(pair.Key).consumesMetabolization) {
+                output.AddMix(pair.Value);
                 pair.Value.volume = 0f;
             }
         }
         changed?.Invoke(this);
+        return output;
     }
 
     public ReagentContents Metabolize(float deltaTime) {

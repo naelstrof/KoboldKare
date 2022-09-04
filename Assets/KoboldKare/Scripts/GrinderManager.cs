@@ -35,7 +35,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         return onSprite;
     }
     public override bool CanUse(Kobold k) {
-        return k.GetEnergy() > 0 && !grinding && station.info.user == null && constructed;
+        return k.GetEnergy() >= 1f && !grinding && station.info.user == null && constructed;
     }
 
     public override void LocalUse(Kobold k) {

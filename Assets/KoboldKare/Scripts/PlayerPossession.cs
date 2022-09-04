@@ -1,22 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using UnityEngine.InputSystem;
 using Photon.Pun;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
 using UnityEngine.UI;
-using System.IO;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
-using Object = UnityEngine.Object;
 
 public class PlayerPossession : MonoBehaviourPun {
-    public UnityEngine.InputSystem.PlayerInput controls;
+    public PlayerInput controls;
     public float coyoteTime = 0.2f;
     //public Grabber grabber;
     public User user;
@@ -176,7 +169,7 @@ public class PlayerPossession : MonoBehaviourPun {
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
         if (erectionUp-erectionDown != 0f) {
-            kobold.PumpUpDick((erectionUp-erectionDown)*Time.deltaTime*0.3f);
+            kobold.PumpUpDick((erectionUp-erectionDown*2f)*Time.deltaTime*0.3f);
         }
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);

@@ -127,7 +127,13 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             this.collider = collider;
             this.localColliderPosition = localColliderPosition;
             this.localHitNormal = localHitNormal;
+            this.owner = owner;
+            this.view = view;
+            this.unfreezePack = unfreezePack;
             body = collider.GetComponentInParent<Rigidbody>();
+            if (body == null ) {
+                return;
+            }
             savedQuaternion = body.rotation;
             Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
             bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
@@ -139,9 +145,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             handDisplayAnimator.SetBool(GrabbingHash, true);
             handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
             photonView = collider.GetComponentInParent<PhotonView>();
-            this.owner = owner;
-            this.view = view;
-            this.unfreezePack = unfreezePack;
             frozen = false;
             targetKobold = collider.GetComponentInParent<Kobold>();
             if (targetKobold != null) {
@@ -219,14 +222,16 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         public Vector3 GetWorldPosition() {
             if (collider != null) {
                 return collider.transform.TransformPoint(localColliderPosition);
-            } else {
+            }
+            if (handTransform != null) {
                 return handTransform.transform.position;
             }
+            return Vector3.zero;
         }
 
         public bool Valid() {
             bool valid = body != null && owner != null && photonView != null && joint != null;
-            if (Time.time - creationTime > 2f) {
+            if (Time.time - creationTime > 2f && valid) {
                 valid &= Equals(photonView.Controller, owner.photonView.Controller);
             }
             return valid;
@@ -452,6 +457,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
         Collider[] colliders = otherPhotonView.GetComponentsInChildren<Collider>();
         currentGrab = new Grab(kobold, previewHandAnimator.gameObject, view, colliders[colliderNum], localHit, localHitNormal, unfreezeSound);
+        if (!currentGrab.Valid()) {
+            currentGrab = null;
+            return;
+        }
         currentGrab.SetVisibility(handVisibilityEvent.GetLastInvokeValue());
     }
 

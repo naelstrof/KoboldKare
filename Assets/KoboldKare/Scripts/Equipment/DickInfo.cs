@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,8 +87,6 @@ public class DickInfo : MonoBehaviour {
         public HumanBodyBones parent;
         [HideInInspector]
         public Transform parentTransform;
-        [HideInInspector]
-        public int dickIdentifier;
         public void Destroy() {
             GameObject.Destroy(dick.gameObject);
         }
@@ -104,11 +103,14 @@ public class DickInfo : MonoBehaviour {
             set.ballSizeInflater.OnEnable();
         }
     }
-    /*public void OnDickMovement(float movementAmount) {
-        attachedKobold.PumpUpDick(Mathf.Abs(movementAmount));
-        attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
-    }*/
-    public void RemoveFrom(Kobold k) {
+    private void RemoveFrom(Kobold k) {
+        // Must've been removed already
+        foreach (DickSet set in dicks) {
+            if (!k.activeDicks.Contains(set)) {
+                return;
+            }
+        }
+
         foreach (DickSet set in dicks) {
             k.activeDicks.Remove(set);
             foreach (var penset in k.penetratables) {
@@ -248,5 +250,9 @@ public class DickInfo : MonoBehaviour {
             }
         }
         k.animator.enabled = animatorWasEnabled;
+    }
+
+    private void OnDestroy() {
+        RemoveFrom(attachedKobold);
     }
 }

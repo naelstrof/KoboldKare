@@ -334,7 +334,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private void Update() {
         // Throbbing!
         foreach(var dick in activeDicks) {
-            if (dick == null) { continue; }
             dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.info);
         }
     }
@@ -439,21 +438,15 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         ReagentContents vol = bellyContainer.Metabolize(f);
         // Reagents that don't affect metabolization limits
         bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
-
-        float overflow = Mathf.Max(energy + vol.GetCalories() - GetMaxEnergy(), 0);
-        energy = Mathf.MoveTowards(energy,GetMaxEnergy(), vol.GetCalories());
-        energyChanged?.Invoke(energy, GetMaxEnergy());
-        if (overflow > 0f) {
-            SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + overflow));
-        }
-
-
+        
         float yogurtVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("Yogurt"));
         if (yogurtVolume > 0f) {
             SetGenes(GetGenes().With(metabolizeCapacitySize: GetGenes().metabolizeCapacitySize + yogurtVolume));
         }
 
-        vol.DumpNonConsumable();
+        ReagentContents consumed = vol.DumpNonConsumable();
+        float energyGained = 0f;
+        energyGained += consumed.GetCalories();
         
         // Can't over-metabolize, put some back if it doesn't fit
         float maxMetabolization = (metabolizedContents.GetMaxVolume() - metabolizedContents.volume);
@@ -463,11 +456,22 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         bellyContainer.OnChange.Invoke(bellyContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
 
-        if (vol.volume <= 0f) {
+        if (vol.volume > 0f) {
+            metabolizedContents.AddMix(vol);
+            energyGained += vol.GetCalories();
+            ProcessReagents(vol, 1f);
+        }
+
+        if (energyGained == 0f) {
             return;
         }
-        metabolizedContents.AddMix(vol);
-        ProcessReagents(vol, 1f);
+
+        float overflow = Mathf.Max(energy + energyGained - GetMaxEnergy(), 0);
+        if (overflow > 0f) {
+            SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + overflow));
+        }
+        energy = Mathf.MoveTowards(energy,GetMaxEnergy(), energyGained);
+        energyChanged?.Invoke(energy, GetMaxEnergy());
     }
 
     IEnumerator WaitAndThenStopGargling(float time) {

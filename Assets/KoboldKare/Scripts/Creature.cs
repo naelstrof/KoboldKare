@@ -53,7 +53,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
         }
 
         if (!photonView.IsMine) {
-            if (Mathf.Abs(distanceTravelled - networkedDistanceTravelled) > 1f) {
+            if (Mathf.Abs(distanceTravelled - networkedDistanceTravelled) > 5f) {
                 distanceTravelled = networkedDistanceTravelled;
             }
             distanceTravelled = Mathf.SmoothDamp(distanceTravelled, networkedDistanceTravelled, ref distanceTravelledVel, 1f);

@@ -19,27 +19,4 @@ public class DickEquipment : Equipment {
         info.AttachTo(k);
         return stuff;
     }
-    public override GameObject OnUnequip(Kobold k, bool dropOnGround = true) {
-        GameObject groundPrefab = base.OnUnequip(k, dropOnGround);
-        ReagentContents contents = new ReagentContents();
-        // Search for a dick that matches our equipment, then use the info to remove all the dicks associated with it.
-        foreach(DickInfo.DickSet set in k.activeDicks) {
-            if (set.dickIdentifier == GetInstanceID()) {
-                contents.AddMix(ReagentDatabase.GetID(ReagentDatabase.GetReagent("GrowthSerum")), k.GetGenes().dickSize);
-            }
-        }
-        foreach(DickInfo.DickSet set in k.activeDicks) {
-            if (set.dickIdentifier == GetInstanceID()) {
-                set.info.RemoveFrom(k);
-                break;
-            }
-        }
-        if (groundPrefab != null) {
-            GenericReagentContainer container = groundPrefab.GetComponentInChildren<GenericReagentContainer>();
-            if (container != null) {
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, contents, container.photonView.ViewID);
-            }
-        }
-        return groundPrefab;
-    }
 }

@@ -10,7 +10,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
     public Kobold targetKobold;
     void Start() {
         foreach(string settingName in settingNames) {
-            var option = UnityScriptableSettings.SettingsManager.GetSetting(settingName);
+            var option = SettingsManager.GetSetting(settingName);
             if (option is SettingFloat optionFloat) {
                 optionFloat.changed -= OnValueChange;
                 optionFloat.changed += OnValueChange;
@@ -18,7 +18,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 throw new UnityException($"Setting {settingName} is not a SettingFloat");
             }
         }
-        var dickOption = UnityScriptableSettings.SettingsManager.GetSetting("Dick");
+        var dickOption = SettingsManager.GetSetting("Dick");
         if (dickOption is SettingInt optionInt) {
             optionInt.changed -= OnValueChange;
             optionInt.changed += OnValueChange;
@@ -30,15 +30,14 @@ public class PlayerKoboldLoader : MonoBehaviour {
     }
     void OnDestroy() {
         foreach(string settingName in settingNames) {
-            var option = UnityScriptableSettings.SettingsManager.GetSetting(settingName);
+            var option = SettingsManager.GetSetting(settingName);
             if (option is SettingFloat optionFloat) {
                 optionFloat.changed -= OnValueChange;
             }
         }
-        var dickOption = UnityScriptableSettings.SettingsManager.GetSetting("Dick");
+        var dickOption = SettingsManager.GetSetting("Dick");
         if (dickOption is SettingInt optionInt) {
             optionInt.changed -= OnValueChange;
-            optionInt.changed += OnValueChange;
         }
     }
     private static KoboldGenes ProcessOption(KoboldGenes genes, SettingInt setting) {

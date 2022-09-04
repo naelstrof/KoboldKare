@@ -104,6 +104,9 @@ public class DickInfo : MonoBehaviour {
         }
     }
     private void RemoveFrom(Kobold k) {
+        if (k == null) {
+            return;
+        }
         // Must've been removed already
         foreach (DickSet set in dicks) {
             if (!k.activeDicks.Contains(set)) {

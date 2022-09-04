@@ -65,7 +65,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public IEnumerator CreatePublicRoomRoutine() {
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8 });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false });
     }
     public void JoinMatch(string roomName) {
         GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName));

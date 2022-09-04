@@ -31,7 +31,7 @@ public class CreateRoomOnPress : MonoBehaviour {
     public IEnumerator CreateRoomRoutine() {
         //if (saveDropdown.value == 0) {
             yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-            PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn });
+            PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false});
         //} else {
             //SaveManager.SaveList list = SaveManager.GetSaveList(false);
             //SaveManager.Load(list.fileNames[saveDropdown.value - 1], true, (int)maxPlayersField.value, roomNameField.text, !isPrivate.isOn);

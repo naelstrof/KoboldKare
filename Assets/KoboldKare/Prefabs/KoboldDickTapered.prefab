@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5420316839902838148}
   m_Layer: 0
-  m_Name: Dick.001
+  m_Name: JiggleMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,43 +25,12 @@ Transform:
   m_GameObject: {fileID: 184634770264182796}
   m_LocalRotation: {x: 0.00000031501918, y: -0.0000000018065976, z: 0.000000008867573,
     w: 1}
-  m_LocalPosition: {x: 0.0000000025986537, y: 0.10716647, z: 0.000000042099714}
+  m_LocalPosition: {x: -0, y: 0.228, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8132193477164600483}
   m_Father: {fileID: 6863006943197425550}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &943923486233379286
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8516453024200380054}
-  m_Layer: 25
-  m_Name: Dick.003
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8516453024200380054
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 943923486233379286}
-  m_LocalRotation: {x: -2.339675e-10, y: 4.662368e-10, z: -4.8467614e-27, w: 1}
-  m_LocalPosition: {x: 1.5415935e-10, y: 0.10716646, z: -0.000000031306854}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8132193477164600483}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &980143979624869103
@@ -234,9 +203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6051016ef15b0a645988afb75ea09aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipmentInstanceID: 0
   dicks:
   - dickContainer: {fileID: 2277990634531112218}
-    dick: {fileID: 8338697229190893412}
+    dick: {fileID: 7606286754834010797}
     ballSizeInflater:
       bounceCurve:
         serializedVersion: 2
@@ -400,7 +370,6 @@ MonoBehaviour:
     info: {fileID: 0}
     parent: 0
     parentTransform: {fileID: 0}
-    dickIdentifier: 0
   references:
     version: 2
     RefIds:
@@ -418,7 +387,7 @@ MonoBehaviour:
       data:
         targetTransform: {fileID: 445928784052510322}
         targetJiggleRoot: {fileID: 6863006943197425550}
-        targetPenetrator: {fileID: 8338697229190893412}
+        targetPenetrator: {fileID: 7606286754834010797}
 --- !u!114 &4793994125830434200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,7 +577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8132193477164600483}
   m_Layer: 0
-  m_Name: Dick.002
+  m_Name: JiggleTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,11 +591,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6424930672842216318}
   m_LocalRotation: {x: -6.998562e-10, y: 4.662226e-10, z: -9.094947e-13, w: 1}
-  m_LocalPosition: {x: 1.6825652e-10, y: 0.107166484, z: -0.000000017915681}
+  m_LocalPosition: {x: -0, y: 0.226, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8516453024200380054}
+  m_Children: []
   m_Father: {fileID: 5420316839902838148}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -639,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 445928784052510322}
-  - component: {fileID: 8338697229190893412}
+  - component: {fileID: 7606286754834010797}
   m_Layer: 25
   m_Name: Dick
   m_TagString: Untagged
@@ -663,7 +631,7 @@ Transform:
   m_Father: {fileID: 4550134514307820235}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8338697229190893412
+--- !u!114 &7606286754834010797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -672,50 +640,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 6532421199761545219}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cbbb6ebbc2ca34f96806a97b1b263c, type: 3}
+  m_Script: {fileID: 11500000, guid: 23a7e8f42d640dd4e9bb9648a7e6b732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localRootForward: {x: -0, y: 1, z: -0}
-  localRootUp: {x: 0, y: 0, z: -1}
+  localRootForward: {x: 0, y: 1, z: 0}
+  localRootUp: {x: -0, y: -0, z: -1}
   localRootRight: {x: 1, y: 0, z: 0}
   rootBone: {fileID: 445928784052510322}
   targetRenderers:
   - renderer: {fileID: 2078939398311573404}
     mask: -1
   - renderer: {fileID: 1428654809774251947}
-    mask: -2
+    mask: -1
   virtualSquashAndStretch: 1
-  poseTarget:
-  - {fileID: 6863006943197425550}
-  - {fileID: 5420316839902838148}
-  - {fileID: 8132193477164600483}
-  - {fileID: 8516453024200380054}
-  poseTension: 0.75
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1
-  autoPenetrate: -1
+  penetrationMarginOfError: 0.5
+  autoPenetrate: 3
   ignorePenetrables: []
   listeners:
-  - rid: 0
-  - rid: 2
-  - rid: 8920608380542517255
+  - rid: 8920608445913890830
+  - rid: 8920608445913890831
+  - rid: 8920608445913890832
+  middlePoseTarget: {fileID: 5420316839902838148}
+  tipTarget: {fileID: 8132193477164600483}
   references:
     version: 2
     RefIds:
-    - rid: 0
+    - rid: 8920608445913890830
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
         localDist: 0
-        knotForceFactor: 0.3
-    - rid: 2
+        knotForceFactor: 0.2
+    - rid: 8920608445913890831
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.733
+        localDist: 0.657
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
         activateOnEnter: 1
         activateOnExit: 0
-    - rid: 8920608380542517255
+    - rid: 8920608445913890832
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
         localDist: 0

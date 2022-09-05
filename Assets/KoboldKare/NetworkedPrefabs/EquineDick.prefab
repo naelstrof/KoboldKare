@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6012326764946379771}
   m_Layer: 25
-  m_Name: Dick.001
+  m_Name: JiggleMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,11 +57,11 @@ Transform:
   m_GameObject: {fileID: 2346639424203880830}
   m_LocalRotation: {x: 0.0000002600955, y: -4.2096815e-10, z: 0.0000000069353523,
     w: 1}
-  m_LocalPosition: {x: 0.0000000011508519, y: 0.10716644, z: 0.000000034536697}
+  m_LocalPosition: {x: -0, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4227543227270688911}
+  - {fileID: 4345765830800788081}
   m_Father: {fileID: 5981315308552374419}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +75,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4345765830800788081}
   m_Layer: 25
-  m_Name: Dick.003
+  m_Name: JiggleTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,12 +88,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2686747292119462725}
-  m_LocalRotation: {x: 4.831691e-10, y: 4.667484e-10, z: -2.273737e-12, w: 1}
-  m_LocalPosition: {x: 2.6466296e-10, y: 0.10716645, z: -0.000000030139063}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_LocalRotation: {x: -0.00000017068855, y: -0.000000002372999, z: -0.0000000032100618,
+    w: 1}
+  m_LocalPosition: {x: 0, y: 0.22700009, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4227543227270688911}
+  m_Father: {fileID: 6012326764946379771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2761880677638422027
@@ -206,38 +207,6 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &3279986854083036397
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4227543227270688911}
-  m_Layer: 25
-  m_Name: Dick.002
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4227543227270688911
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3279986854083036397}
-  m_LocalRotation: {x: -2.1555027e-10, y: 4.667129e-10, z: 2.7284839e-12, w: 1}
-  m_LocalPosition: {x: -0.0000000015702426, y: 0.10716647, z: -0.000000017213324}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4345765830800788081}
-  m_Father: {fileID: 6012326764946379771}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3729554680024515055
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,13 +221,13 @@ GameObject:
   - component: {fileID: 5694019223350617998}
   - component: {fileID: 9031729285690142174}
   - component: {fileID: 7633934662170762724}
-  - component: {fileID: 7381712563764229017}
   - component: {fileID: 633940069110604374}
   - component: {fileID: 8137013097932000980}
   - component: {fileID: 2526945743667253145}
   - component: {fileID: 4629107860876871005}
   - component: {fileID: 293259445133589673}
   - component: {fileID: 655239102578782322}
+  - component: {fileID: 3046655550918066655}
   m_Layer: 25
   m_Name: EquineDick
   m_TagString: Aimable
@@ -380,79 +349,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVolume: 1
---- !u!114 &7381712563764229017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3729554680024515055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73cbbb6ebbc2ca34f96806a97b1b263c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localRootForward: {x: -0, y: 1, z: -0}
-  localRootUp: {x: 0, y: 0, z: -1}
-  localRootRight: {x: 1, y: 0, z: 0}
-  rootBone: {fileID: 2230137211620606355}
-  targetRenderers:
-  - renderer: {fileID: 5431348726783690434}
-    mask: -1
-  - renderer: {fileID: 545152962633438843}
-    mask: -2
-  virtualSquashAndStretch: 1
-  poseTarget:
-  - {fileID: 5981315308552374419}
-  - {fileID: 6012326764946379771}
-  - {fileID: 4227543227270688911}
-  - {fileID: 4345765830800788081}
-  poseTension: 0.75
-  girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
-  penetratedHole: {fileID: 0}
-  penetrationMarginOfError: 1.5
-  autoPenetrate: -1
-  ignorePenetrables: []
-  listeners:
-  - rid: 0
-  - rid: 2
-  - rid: 3
-  - rid: 4
-  - rid: 8920608380542517250
-  references:
-    version: 2
-    RefIds:
-    - rid: 0
-      type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        localDist: 0
-        knotForceFactor: 0.3
-    - rid: 2
-      type: {class: PenetratorNoCollideListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        localDist: 0
-        body: {fileID: 4675835026641688813}
-    - rid: 3
-      type: {class: PenetratorRigidbodyListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        localDist: 0
-        body: {fileID: 4675835026641688813}
-        angularForceMultiplier: 30
-        planarAlignmentForceMultiplier: 4
-        friction: 0.5
-    - rid: 4
-      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
-      data:
-        localDist: 0.807
-        pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
-        activateOnEnter: 1
-        activateOnExit: 0
-    - rid: 8920608380542517250
-      type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
-      data:
-        localDist: 0
-        pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
-        volume: 1
 --- !u!136 &633940069110604374
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -616,7 +512,76 @@ MonoBehaviour:
       data:
         targetTransform: {fileID: 403445864755311612}
         targetJiggleRoot: {fileID: 0}
-        targetPenetrator: {fileID: 7381712563764229017}
+        targetPenetrator: {fileID: 3046655550918066655}
+--- !u!114 &3046655550918066655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729554680024515055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a7e8f42d640dd4e9bb9648a7e6b732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localRootForward: {x: 0, y: 1, z: 0}
+  localRootUp: {x: -0, y: -0, z: -1}
+  localRootRight: {x: 1, y: 0, z: 0}
+  rootBone: {fileID: 2230137211620606355}
+  targetRenderers:
+  - renderer: {fileID: 5431348726783690434}
+    mask: -1
+  - renderer: {fileID: 545152962633438843}
+    mask: -1
+  virtualSquashAndStretch: 1
+  girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
+  penetratedHole: {fileID: 0}
+  penetrationMarginOfError: 0.5
+  autoPenetrate: 3
+  ignorePenetrables: []
+  listeners:
+  - rid: 8920608445913890844
+  - rid: 8920608445913890845
+  - rid: 8920608445913890846
+  - rid: 8920608445913890847
+  - rid: 8920608445913890848
+  middlePoseTarget: {fileID: 6012326764946379771}
+  tipTarget: {fileID: 4345765830800788081}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8920608445913890844
+      type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        localDist: 0
+        knotForceFactor: 0.2
+    - rid: 8920608445913890845
+      type: {class: PenetratorNoCollideListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        localDist: 0
+        body: {fileID: 4675835026641688813}
+    - rid: 8920608445913890846
+      type: {class: PenetratorRigidbodyListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        localDist: 0
+        body: {fileID: 4675835026641688813}
+        angularForceMultiplier: 30
+        planarAlignmentForceMultiplier: 4
+        friction: 0.5
+    - rid: 8920608445913890847
+      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
+      data:
+        localDist: 0.712
+        pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
+        activateOnEnter: 1
+        activateOnExit: 0
+    - rid: 8920608445913890848
+      type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
+      data:
+        localDist: 0
+        pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
+        volume: 1
 --- !u!1001 &5189641523864866709
 PrefabInstance:
   m_ObjectHideFlags: 0

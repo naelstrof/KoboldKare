@@ -14959,15 +14959,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   koboldStatus: {fileID: 11400000, guid: 034c23eea8c98044da5255cb9e8983d9, type: 2}
   penetratables:
-  - penetratable: {fileID: 4863948698846290488}
-    ragdollAttachBody: {fileID: 139429597399395155}
-    isFemaleExclusiveAnatomy: 0
   - penetratable: {fileID: 2507841614434118606}
     ragdollAttachBody: {fileID: 139429597399395155}
     isFemaleExclusiveAnatomy: 1
+    canLayEgg: 1
+  - penetratable: {fileID: 4863948698846290488}
+    ragdollAttachBody: {fileID: 139429597399395155}
+    isFemaleExclusiveAnatomy: 0
+    canLayEgg: 1
   - penetratable: {fileID: 6801546507248158888}
     ragdollAttachBody: {fileID: 220631205513813554}
     isFemaleExclusiveAnatomy: 0
+    canLayEgg: 0
   attachPoints:
   - {fileID: 4363336214978915131}
   - {fileID: 6506915555090380202}

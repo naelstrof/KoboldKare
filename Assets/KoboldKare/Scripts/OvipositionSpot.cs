@@ -73,7 +73,15 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
         if (targetPenetrable == null) {
             foreach (var penetrable in k.penetratables) {
-                if (penetrable.penetratable.isActiveAndEnabled) {
+                if (penetrable.penetratable.isActiveAndEnabled && penetrable.isFemaleExclusiveAnatomy && penetrable.canLayEgg) {
+                    targetPenetrable = penetrable.penetratable;
+                }
+            }
+        }
+        
+        if (targetPenetrable == null) {
+            foreach (var penetrable in k.penetratables) {
+                if (penetrable.penetratable.isActiveAndEnabled && penetrable.canLayEgg) {
                     targetPenetrable = penetrable.penetratable;
                 }
             }

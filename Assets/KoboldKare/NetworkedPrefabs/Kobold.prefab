@@ -13286,7 +13286,7 @@ MonoBehaviour:
     - rid: 0
       type: {class: ClipListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        t: 0.222
+        t: 0.231
         allowForAllTheWayThrough: 0
         endT: 1
     - rid: 1
@@ -13310,9 +13310,9 @@ MonoBehaviour:
     - rid: 2
       type: {class: LengthwiseBoneDepthPenetrableListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        t: 0.637
+        t: 0.633
         targetTransform: {fileID: 5449752281887230005}
-        girthScaleMultiplier: 12
+        girthScaleMultiplier: 4
     - rid: 5882124739971907585
       type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
       data:

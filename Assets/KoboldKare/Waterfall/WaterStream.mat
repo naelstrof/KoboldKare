@@ -103,8 +103,8 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShalowColor: {r: 0, g: 0.58681357, b: 0.6037736, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _WaterSpeed1: {r: -0.015, g: 0.4, b: 0, a: 0}
-    - _WaterSpeed2: {r: 0.12, g: 0.25, b: 0, a: 0}
+    - _WaterSpeed1: {r: -0.015, g: 0.2, b: 0, a: 0}
+    - _WaterSpeed2: {r: 0.12, g: 0.1, b: 0, a: 0}
     - _WhiteWashSpeed: {r: 0, g: 0.22, b: 0, a: 0}
     - _WobbleSpeed: {r: -0.1, g: 0.15, b: 0, a: 0}
   m_BuildTextureStacks: []

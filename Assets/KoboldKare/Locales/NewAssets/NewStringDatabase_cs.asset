@@ -907,6 +907,14 @@ MonoBehaviour:
       k nalezen\xED vlastn\xEDch n\xE1zv\u016F."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: "Poset\xE1 p\xE9ro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "\u017Debrovan\xFD p\xE9ro s m\u011Bkk\xFDmi tal\xED\u0159i a ostny."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

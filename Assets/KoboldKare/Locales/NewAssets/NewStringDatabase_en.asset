@@ -918,6 +918,14 @@ MonoBehaviour:
     m_Localized: Equips the specified Equipment. Use /list to find proper names.
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Plated Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: A ribbed dick with soft plates and barbs.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

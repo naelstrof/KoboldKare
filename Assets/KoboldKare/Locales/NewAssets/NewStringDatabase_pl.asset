@@ -907,6 +907,14 @@ MonoBehaviour:
       znale\u017A\u0107 nazwy w\u0142a\u015Bciwych."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Plaked Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "\u017Bebrowany kutas z mi\u0119kkimi p\u0142ytami i kolcami."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

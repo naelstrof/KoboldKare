@@ -673,9 +673,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 83373358009864192
     m_Localized: "\xA1Bienvenido a Koboldkare!\n\nKoboldkare es un juego sin DRM.
-      \xA1Sea seguro compartiendo, Koboldkare no necesita una grieta para jugar!\n\n\xA1Muchas
-      gracias por apoyar el juego!\n\nVerifique el vapor, la picaz\xF3n y el patre\xF3n
-      para obtener actualizaciones y notas de parche.\n"
+      \xA1Ten cuidado comparti\xE9ndolo ya que Koboldkare no necesita de un crack
+      o similares para jugar!\n\n\xA1Muchas gracias por apoyar el juego!\n\nVerifica
+      Steam, Itch.io y el Patreon para obtener actualizaciones y notas de parche."
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -757,7 +757,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Cum infla Kobolds.
+    m_Localized: Infla con semen a tus kobolds
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
@@ -898,6 +898,14 @@ MonoBehaviour:
   - m_Id: 211654220131651588
     m_Localized: Equipa el equipo especificado. Use /List para encontrar nombres
       propios.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Polla chapada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "Una polla acanalada con placas blandas y p\xFAas."
     m_Metadata:
       m_Items: []
   references:

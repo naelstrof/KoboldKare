@@ -905,6 +905,14 @@ MonoBehaviour:
       a megfelel\u0151 nevek megtal\xE1l\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Fasz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

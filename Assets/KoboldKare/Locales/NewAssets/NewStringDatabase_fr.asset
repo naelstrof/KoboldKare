@@ -900,6 +900,14 @@ MonoBehaviour:
       trouver des noms appropri\xE9s."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: "Bite plaqu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "Une bite c\xF4tel\xE9e avec des assiettes et des barbes mous."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

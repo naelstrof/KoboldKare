@@ -900,6 +900,14 @@ MonoBehaviour:
       oikeat nimet."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Maalattu munaa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "Unutettu munaa pehmeill\xE4 levyill\xE4 ja barbeilla."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

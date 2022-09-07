@@ -898,6 +898,14 @@ MonoBehaviour:
       navn."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Belagt pikk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: En ribbet pikk med myke tallerkener og pigger.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

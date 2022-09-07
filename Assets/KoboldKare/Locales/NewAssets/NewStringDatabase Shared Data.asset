@@ -867,6 +867,14 @@ MonoBehaviour:
     m_Key: CHEAT_EQUIP_HELP
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Key: EQUIPMENT_PLATED_DICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Key: EQUIPMENT_PLATED_DICK_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -932,6 +932,15 @@ MonoBehaviour:
       th\xEDch h\u1EE3p."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: "B\u1EA5m v\xE0o tinh ranh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "M\u1ED9t tinh ranh c\xF3 g\xE2n v\u1EDBi c\xE1c t\u1EA5m m\u1EC1m
+      v\xE0 Barbs."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

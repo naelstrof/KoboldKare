@@ -906,6 +906,14 @@ MonoBehaviour:
       a g\u0103si nume proprii."
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Dick placat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: "O pula cu nervuri cu farfurii moi \u0219i barbe."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

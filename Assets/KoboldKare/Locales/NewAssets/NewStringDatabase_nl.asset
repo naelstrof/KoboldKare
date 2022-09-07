@@ -922,6 +922,14 @@ MonoBehaviour:
       vinden.
     m_Metadata:
       m_Items: []
+  - m_Id: 211765989932060672
+    m_Localized: Vergulde lul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211765989965615104
+    m_Localized: Een geribbelde lul met zachte platen en weerhaken.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

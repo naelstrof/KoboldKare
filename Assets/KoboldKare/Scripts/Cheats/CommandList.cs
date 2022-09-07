@@ -33,6 +33,14 @@ public class CommandList : Command {
             output.Append("}\n");
             didSomething = true;
         }
+        if (args.Length == 1 || args[1] == "equipment") {
+            output.Append("Equipment = {");
+            foreach (var equipment in EquipmentDatabase.GetEquipments()) {
+                output.Append($"{equipment.name},\n");
+            }
+            output.Append("}\n");
+            didSomething = true;
+        }
 
         if (!didSomething) {
             throw new CheatsProcessor.CommandException("Usage: /list {prefabs,objects,reagents,}");

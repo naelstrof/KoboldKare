@@ -737,7 +737,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Kobolds z\xFCchten"
+    m_Localized: "Z\xFCchten Sie Kobolds"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
@@ -800,12 +800,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Makro Kobold erstellen
+    m_Localized: Erzeuge einen Makro-Kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Sie m\xFCssen mindestens die Gr\xF6\xDFe eines Hauses haben. Viel
-      Gl\xFCck."
+    m_Localized: "Er muss mindestens so gro\xDF wie ein Haus sein. Viel Gl\xFCck."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -817,7 +816,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 202998194956193792
-    m_Localized: Passen Sie die Crouch -Ebene an
+    m_Localized: Hocktiefe anpassen
     m_Metadata:
       m_Items: []
   - m_Id: 209952603934085120
@@ -874,6 +873,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Eieressen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Ein Clubbett -Penis mit weichen fleischigen Widerhaken und niedrigen
+      B\xE4llen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Aktiviert oder deaktiviert serverweite Cheats.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Zeigt diese Nachricht an.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Listet alle Reagenzien, Vorbereitungen und Ausr\xFCstungen auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Gibt das angegebene Reagenz oder Prefab. Verwenden Sie /Liste, um
+      alle Eigennamen zu finden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Befasst sich mit der angegebenen Ausr\xFCstung. Verwenden Sie /Liste,
+      um Eigennamen zu finden."
     m_Metadata:
       m_Items: []
   references:

@@ -173,6 +173,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return properties;
     }
 
+    [PunRPC]
+    public void SetDickRPC(short dickID) {
+        SetGenes(GetGenes().With(dickEquip: (byte)dickID));
+    }
+
     public override void SetGenes(KoboldGenes newGenes) {
         // Set dick
         var inventory = GetComponent<KoboldInventory>();

@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPIL skildrer FIKTIONELLE KARAKTERER, DER DELTAGER I <#FF0000>
-      SEKSUEL EKSPLITIGT OPF\xD8RSEL <#FFFFFF>\n\nVED AT KLIKKE p\xE5 <#008CFF> SPIL
+      SEKSUEL EKSPLITIGT ADF\xC6RD <#FFFFFF>\n\nVED AT KLIKKE p\xE5 <#008CFF> SPIL
       <#FFFFFF> ER DU AT ERKL\xC6RE AT:"
     m_Metadata:
       m_Items: []
@@ -788,7 +788,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695177
     m_Localized: "Jeg er ligeglad med, hvad du g\xF8r med det efter, vi har brug
-      for et stort \xE6g for at komme ud af en Kobold."
+      for et stort \xE6g for at komme ud af en kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -865,6 +865,37 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: "\xC6ggemiddag"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "En klubbed penis med bl\xF8de k\xF8dfulde modhager og lavt h\xE6ngende
+      kugler."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "Aktiverer eller deaktiverer serverd\xE6kkende snyderi.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Viser denne meddelelse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Lister alle reagenser, pr\xE6fabrikker og udstyr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "Giver det specificerede reagens eller pr\xE6fabrik. Brug /liste
+      til at finde alle rigtige navne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Udstyrer det specificerede udstyr. Brug /liste til at finde egentlige
+      navne.
     m_Metadata:
       m_Items: []
   references:

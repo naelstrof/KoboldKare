@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516057255936
-    m_Localized: "Opci\xF3n"
+    m_Localized: Opciones
     m_Metadata:
       m_Items: []
   - m_Id: 516086616064
@@ -109,7 +109,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810387
-    m_Localized: Resplandecer
+    m_Localized: Bloom
     m_Metadata:
       m_Items: []
   - m_Id: 516090810388
@@ -227,7 +227,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: Muevete
+    m_Localized: Movimiento
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004712
-    m_Localized: Escombros claros
+    m_Localized: Remover escombros
     m_Metadata:
       m_Items: []
   - m_Id: 516095004713
@@ -355,7 +355,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198986
-    m_Localized: gordo
+    m_Localized: Grasa
     m_Metadata:
       m_Items: []
   - m_Id: 516099198987
@@ -503,7 +503,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: "C\xE1mara gratis"
+    m_Localized: "C\xE1mara libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -672,10 +672,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "\xA1Bienvenido a Koboldkare!\r\n\r\nKoboldkare es un juego sin
-      DRM. \xA1Sea seguro compartiendo, Koboldkare no necesita una grieta para jugar!\r\n\r\n\xA1Muchas
+    m_Localized: "\xA1Bienvenido a Koboldkare!\n\nKoboldkare es un juego sin DRM.
+      \xA1Sea seguro compartiendo, Koboldkare no necesita una grieta para jugar!\n\n\xA1Muchas
       gracias por apoyar el juego!\n\nVerifique el vapor, la picaz\xF3n y el patre\xF3n
-      para obtener actualizaciones y notas de parche.\r\n"
+      para obtener actualizaciones y notas de parche.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -866,6 +866,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Cena de huevo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Polla punta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Un pene de clubbed con p\xFAas suaves y carnosas y bolas bajas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Habilita o deshabilita los trucos de todo el servidor.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Muestra este mensaje.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: Enumera todos los reactivos, prefabricados y equipos.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Da el reactivo especificado, o prefabricado. Use /List para encontrar
+      todos los nombres propios.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Equipa el equipo especificado. Use /List para encontrar nombres
+      propios.
     m_Metadata:
       m_Items: []
   references:

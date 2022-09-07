@@ -20,7 +20,7 @@ public class ActionHint : MonoBehaviour {
         switching = true;
         state = bindingIndex;
         string displayString = action.action.bindings[(int)bindingIndex].path;
-        GameManager.instance.StartCoroutine(WaitThenCheckKey(displayString));
+        GameManager.StartCoroutineStatic(WaitThenCheckKey(displayString));
     }
     private void OnActionChange(object obj, InputActionChange change)
     {

@@ -839,6 +839,34 @@ MonoBehaviour:
     m_Key: REAGENT_EGG_MEAL
     m_Metadata:
       m_Items: []
+  - m_Id: 211626638807977984
+    m_Key: EQUIPMENT_SPIKEY_DICK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Key: EQUIPMENT_SPIKEY_DICK_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Key: CHEAT_CHEATS_HELP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Key: CHEAT_HELP_HELP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Key: CHEAT_LIST_HELP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Key: CHEAT_GIVE_HELP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Key: CHEAT_EQUIP_HELP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

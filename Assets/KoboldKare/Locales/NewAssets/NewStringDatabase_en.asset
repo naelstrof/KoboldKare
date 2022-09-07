@@ -682,19 +682,17 @@ MonoBehaviour:
   - m_Id: 83373358009864192
     m_Localized: 'Welcome to KoboldKare!
 
-      
 
-      KoboldKare is a DRM-free
-      game. Please be safe sharing, KoboldKare does NOT need a crack to play!
-
-      
-
-      Thank
-      you so much for supporting the game!
+      KoboldKare is a DRM-free game. Please
+      be safe sharing, KoboldKare does NOT need a crack to play!
 
 
-      Check Steam, Itch, and Patreon
-      for updates and patch notes.
+      Thank you
+      so much for supporting the game!
+
+
+      Check Steam, Itch, and Patreon for
+      updates and patch notes.
 
 '
     m_Metadata:
@@ -887,6 +885,37 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Egg Dinner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: A clubbed penis with soft fleshy barbs, and low hanging balls.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Enables or disables server-wide cheats.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Displays this message.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: Lists all Reagents, Prefabs, and Equipment.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Gives the specified Reagent, or Prefab. Use /list to find all proper
+      names.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Equips the specified Equipment. Use /list to find proper names.
     m_Metadata:
       m_Items: []
   references:

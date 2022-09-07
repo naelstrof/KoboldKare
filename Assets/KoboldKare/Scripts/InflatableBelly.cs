@@ -66,8 +66,8 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
             return;
         }
         skinnedMeshRenderers.RemoveAt(index);
-        blendshapeStartIDs.RemoveAt(renderer.sharedMesh.GetBlendShapeIndex(blendShapeStartName));
-        blendshapeContinueIDs.RemoveAt(renderer.sharedMesh.GetBlendShapeIndex(blendShapeContinueName));
+        blendshapeStartIDs.RemoveAt(index);
+        blendshapeContinueIDs.RemoveAt(index);
     }
 
     public override void OnSizeChanged(float newSize) {

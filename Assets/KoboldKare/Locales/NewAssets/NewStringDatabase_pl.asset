@@ -679,10 +679,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Witamy w Koboldkare!\r\n\r\nKoboldkare to gra wolna od DRM. Prosimy
-      o bezpieczne dzielenie si\u0119, Koboldkare nie potrzebuje crack, aby zagra\u0107!\r\n\r\nDzi\u0119kuj\u0119
+    m_Localized: "Witamy w Koboldkare!\n\nKoboldkare to gra wolna od DRM. Prosimy
+      o bezpieczne dzielenie si\u0119, Koboldkare nie potrzebuje crack, aby zagra\u0107!\n\nDzi\u0119kuj\u0119
       bardzo za wsparcie gry!\n\nSprawd\u017A Steam, Itch i Patreon, aby uzyska\u0107
-      aktualizacje i notatki \u0142atki.\r\n"
+      aktualizacje i notatki \u0142atki.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -874,6 +874,37 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Obiad z jajka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Penis z mi\u0119kkimi mi\u0119sistymi kolcami i niskimi wisz\u0105cymi
+      pi\u0142kami."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "W\u0142\u0105cza lub wy\u0142\u0105cza kody ca\u0142ego serwera.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: "Wy\u015Bwietla t\u0119 wiadomo\u015B\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Wymienia wszystkie odczynniki, prefabrykty i sprz\u0119t."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "Daje okre\u015Blony odczynnik lub prefabrykat. U\u017Cyj /list,
+      aby znale\u017A\u0107 wszystkie nazwy w\u0142a\u015Bciwych."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Wyposa\u017Ca okre\u015Blony sprz\u0119t. U\u017Cyj /lista, aby
+      znale\u017A\u0107 nazwy w\u0142a\u015Bciwych."
     m_Metadata:
       m_Items: []
   references:

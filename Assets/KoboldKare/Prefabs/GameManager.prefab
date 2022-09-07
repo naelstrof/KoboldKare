@@ -12999,6 +12999,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: edcb0428e67695545a9e33f82825ed78, type: 2}
   - {fileID: 11400000, guid: c4eba2981bb368b47ba825725bd4077f, type: 2}
   - {fileID: 11400000, guid: 92bcf1c8cd2bdc94da2ac50e48c3d9c9, type: 2}
+  - {fileID: 11400000, guid: 00122bb902a42ce46bc25840fac0bdbf, type: 2}
 --- !u!114 &1690795527870271038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13226,6 +13227,7 @@ MonoBehaviour:
   - rid: 8920608363450728448
   - rid: 8920608363450728451
   - rid: 8920608363450728449
+  - rid: 8920608474244317185
   references:
     version: 2
     RefIds:
@@ -13234,9 +13236,9 @@ MonoBehaviour:
       data:
         description:
           m_TableReference:
-            m_TableCollectionName: 
+            m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
           m_TableEntryReference:
-            m_KeyId: 0
+            m_KeyId: 211654220131651585
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
@@ -13246,9 +13248,9 @@ MonoBehaviour:
       data:
         description:
           m_TableReference:
-            m_TableCollectionName: 
+            m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
           m_TableEntryReference:
-            m_KeyId: 0
+            m_KeyId: 211654220131651587
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
@@ -13262,9 +13264,9 @@ MonoBehaviour:
       data:
         description:
           m_TableReference:
-            m_TableCollectionName: 
+            m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
           m_TableEntryReference:
-            m_KeyId: 0
+            m_KeyId: 211654220131651584
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0
@@ -13274,9 +13276,21 @@ MonoBehaviour:
       data:
         description:
           m_TableReference:
-            m_TableCollectionName: 
+            m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
           m_TableEntryReference:
-            m_KeyId: 0
+            m_KeyId: 211654220131651586
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 8920608474244317185
+      type: {class: CommandEquip, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+          m_TableEntryReference:
+            m_KeyId: 211654220131651588
             m_Key: 
           m_FallbackState: 0
           m_WaitForCompletion: 0

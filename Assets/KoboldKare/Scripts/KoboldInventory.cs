@@ -36,6 +36,14 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         }
         return null;
     }
+
+    [PunRPC]
+    public void PickupEquipmentRPC(short equipmentID, int groundPrefabID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
+        Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
+        PickupEquipment(equip, view == null ? null : view.gameObject);
+    }
+
     public void PickupEquipment(Equipment thing, GameObject groundPrefab) {
         GameObject[] displays = thing.OnEquip(kobold, groundPrefab);
 

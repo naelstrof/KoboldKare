@@ -687,12 +687,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Ch\xE0o m\u1EEBng b\u1EA1n \u0111\u1EBFn v\u1EDBi Koboldkare!\r\n\r\nKoboldkare
+    m_Localized: "Ch\xE0o m\u1EEBng b\u1EA1n \u0111\u1EBFn v\u1EDBi Koboldkare!\n\nKoboldkare
       l\xE0 m\u1ED9t tr\xF2 ch\u01A1i kh\xF4ng c\xF3 DRM. Xin vui l\xF2ng chia s\u1EBB
       an to\xE0n, Koboldkare kh\xF4ng c\u1EA7n m\u1ED9t v\u1EBFt n\u1EE9t \u0111\u1EC3
-      ch\u01A1i!\r\n\r\nC\u1EA3m \u01A1n b\u1EA1n r\u1EA5t nhi\u1EC1u v\xEC \u0111\xE3
+      ch\u01A1i!\n\nC\u1EA3m \u01A1n b\u1EA1n r\u1EA5t nhi\u1EC1u v\xEC \u0111\xE3
       h\u1ED7 tr\u1EE3 tr\xF2 ch\u01A1i!\n\nKi\u1EC3m tra h\u01A1i n\u01B0\u1EDBc,
-      ng\u1EE9a v\xE0 Patreon \u0111\u1EC3 c\u1EADp nh\u1EADt v\xE0 ghi ch\xFA v\xE1.\r\n"
+      ng\u1EE9a v\xE0 Patreon \u0111\u1EC3 c\u1EADp nh\u1EADt v\xE0 ghi ch\xFA v\xE1.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -895,6 +895,41 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: "B\u1EEFa t\u1ED1i tr\u1EE9ng"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "M\u1ED9t d\u01B0\u01A1ng v\u1EADt c\xE2u l\u1EA1c b\u1ED9 v\u1EDBi
+      nh\u1EEFng con barbs m\u1EC1m, v\xE0 nh\u1EEFng qu\u1EA3 b\xF3ng treo th\u1EA5p."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "Cho ph\xE9p ho\u1EB7c v\xF4 hi\u1EC7u h\xF3a c\xE1c gian l\u1EADn
+      to\xE0n b\u1ED9 m\xE1y ch\u1EE7.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: "Hi\u1EC3n th\u1ECB tin nh\u1EAFn n\xE0y."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Li\u1EC7t k\xEA t\u1EA5t c\u1EA3 c\xE1c thu\u1ED1c th\u1EED, prefab
+      v\xE0 thi\u1EBFt b\u1ECB."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "\u0110\u01B0a ra thu\u1ED1c th\u1EED \u0111\u01B0\u1EE3c ch\u1EC9
+      \u0111\u1ECBnh, ho\u1EB7c prefab. S\u1EED d\u1EE5ng /danh s\xE1ch \u0111\u1EC3
+      t\xECm t\u1EA5t c\u1EA3 c\xE1c t\xEAn th\xEDch h\u1EE3p."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Trang b\u1ECB c\xE1c thi\u1EBFt b\u1ECB \u0111\u01B0\u1EE3c ch\u1EC9
+      \u0111\u1ECBnh. S\u1EED d\u1EE5ng /danh s\xE1ch \u0111\u1EC3 t\xECm t\xEAn
+      th\xEDch h\u1EE3p."
     m_Metadata:
       m_Items: []
   references:

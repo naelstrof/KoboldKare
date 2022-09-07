@@ -296,7 +296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
-    m_Localized: Reset
+    m_Localized: Resetten
     m_Metadata:
       m_Items: []
   - m_Id: 516095004711
@@ -424,7 +424,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199001
-    m_Localized: Contrast
+    m_Localized: Contrasteren
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
@@ -888,6 +888,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Eierdiner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey lul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: Een knuppenden met zachte vlezige weerhaken en lage hangende ballen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Schakelt serverbrede cheats in of uit.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Geeft dit bericht weer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: Geeft alle reagentia, prefabs en apparatuur weer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Geeft het gespecificeerde reagens of prefab. Gebruik /lijst om alle
+      eigennamen te vinden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Rust de opgegeven apparatuur uit. Gebruik /lijst om eigennamen te
+      vinden.
     m_Metadata:
       m_Items: []
   references:

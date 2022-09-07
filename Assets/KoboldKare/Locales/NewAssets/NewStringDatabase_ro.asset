@@ -675,11 +675,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Bine a\u021Bi venit la Koboldkare!\r\n\r\nKoboldkare este un joc
-      f\u0103r\u0103 DRM. V\u0103 rug\u0103m s\u0103 fi\u021Bi \xEEn siguran\u021B\u0103,
-      Koboldkare nu are nevoie de o fisur\u0103 pentru a juca!\r\n\r\nV\u0103 mul\u021Bumesc
-      foarte mult pentru sus\u021Binerea jocului!\n\nVerifica\u021Bi aburul, m\xE2nc\u0103rimea
-      \u0219i Patreon pentru actualiz\u0103ri \u0219i note de patch.\r\n"
+    m_Localized: "Bine a\u021Bi venit la Koboldkare!\n\nKoboldkare este un joc f\u0103r\u0103
+      DRM. V\u0103 rug\u0103m s\u0103 fi\u021Bi \xEEn siguran\u021B\u0103, Koboldkare
+      nu are nevoie de o fisur\u0103 pentru a juca!\n\nV\u0103 mul\u021Bumesc foarte
+      mult pentru sus\u021Binerea jocului!\n\nVerifica\u021Bi aburul, m\xE2nc\u0103rimea
+      \u0219i Patreon pentru actualiz\u0103ri \u0219i note de patch.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -873,6 +873,37 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Cina de ou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Un penis \xEEn club cu barbe moi c\u0103rnoase \u0219i bile de
+      ag\u0103\u021Bare joas\u0103."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "Activeaz\u0103 sau dezactiveaz\u0103 trucurile la nivel de server.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: "Afi\u0219eaz\u0103 acest mesaj."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Listeaz\u0103 to\u021Bi reactivii, prefabricatele \u0219i echipamentele."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "D\u0103 reactivul specificat sau prefabricat. Utiliza\u021Bi /lista
+      pentru a g\u0103si toate numele proprii."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Echipeaz\u0103 echipamentul specificat. Utiliza\u021Bi /lista pentru
+      a g\u0103si nume proprii."
     m_Metadata:
       m_Items: []
   references:

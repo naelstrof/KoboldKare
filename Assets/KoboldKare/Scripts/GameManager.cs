@@ -37,6 +37,13 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private GameObject MainViewTab;
 
+    public static Coroutine StartCoroutineStatic(IEnumerator routine) {
+        if (instance == null) {
+            return null;
+        }
+        return instance.StartCoroutine(routine);
+    }
+
     [HideInInspector]
     public bool isPaused = false;
 

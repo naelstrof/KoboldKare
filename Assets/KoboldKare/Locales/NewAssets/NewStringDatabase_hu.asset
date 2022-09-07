@@ -873,6 +873,38 @@ MonoBehaviour:
     m_Localized: "Toj\xE1svacsora"
     m_Metadata:
       m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: "T\xFCsk\xE9s fasz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
+      f\xFCgg\u0151 goly\xF3kkal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "Enged\xE9lyezi vagy letiltja a kiszolg\xE1l\xF3ra kiterjed\u0151
+      csal\xE1sokat.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: "Megjelen\xEDti ezt az \xFCzenetet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Felsorolja az \xF6sszes reagens, el\u0151regy\xE1rt \xE9s felszerel\xE9st."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "Adja meg a megadott reagenst vagy az el\u0151fajt\xE1t. Haszn\xE1lja
+      /list\xE1t haszn\xE1lja az \xF6sszes megfelel\u0151 n\xE9v megtal\xE1l\xE1s\xE1hoz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Felhelyezi a megadott berendez\xE9st. Haszn\xE1lja /list\xE1t haszn\xE1l
+      a megfelel\u0151 nevek megtal\xE1l\xE1s\xE1hoz."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

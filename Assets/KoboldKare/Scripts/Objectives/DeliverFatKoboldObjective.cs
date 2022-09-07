@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using KoboldKare;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -9,17 +11,19 @@ public class DeliverFatKoboldObjective : DragonMailObjective {
     private int koboldCount = 0;
     [SerializeField]
     private int maxKobolds = 5;
+
+    [SerializeField] private GameEventPhotonView soldGameObjectEvent;
     
     public override void Register() {
-        DumpsterDoor.soldObject += OnSoldObject;
+        soldGameObjectEvent.AddListener(OnSoldObject);
     }
     
     public override void Unregister() {
-        DumpsterDoor.soldObject -= OnSoldObject;
+        soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
     
-    private void OnSoldObject(GameObject obj, float worth) {
-        Kobold k = obj.GetComponentInParent<Kobold>();
+    private void OnSoldObject(PhotonView view) {
+        Kobold k = view.GetComponent<Kobold>();
         if (k == null) {
             return;
         }

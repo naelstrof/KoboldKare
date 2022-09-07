@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
       SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
@@ -670,10 +670,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Velkommen til Koboldkare!\r\n\r\nKoboldkare er et DRM-gratis spill.
-      V\xE6r trygg deling, koboldkare trenger ikke en sprekk for \xE5 spille!\r\n\r\nTusen
+    m_Localized: "Velkommen til Koboldkare!\n\nKoboldkare er et DRM-gratis spill.
+      V\xE6r trygg deling, koboldkare trenger ikke en sprekk for \xE5 spille!\n\nTusen
       takk for at du st\xF8tter spillet!\n\nKontroller damp, kl\xF8e og Patreon for
-      oppdateringer og lappnotater.\r\n"
+      oppdateringer og lappnotater.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -863,6 +863,39 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Eggmiddag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Spikey Dick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "En klubbseng penis med myke kj\xF8ttfulle pigger og lave hengende
+      baller."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Aktiverer eller deaktiverer serveromfattende juksekoder.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Viser denne meldingen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: Viser alle reagenser, prefabs og utstyr.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "Gir det spesifiserte reagenset, eller prefab. Bruk /liste for \xE5
+      finne alle riktige navn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "Utstyr det spesifiserte utstyret. Bruk /liste for \xE5 finne riktige
+      navn."
     m_Metadata:
       m_Items: []
   references:

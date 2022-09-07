@@ -671,10 +671,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
-    m_Localized: "Bem -vindo ao Koboldkare!\r\n\r\nKoboldkare \xE9 um jogo sem DRM.
-      Por favor, seja um compartilhamento seguro, Koboldkare n\xE3o precisa de uma
-      rachadura para jogar!\r\n\r\nMuito obrigado por apoiar o jogo!\n\nVerifique
-      Steam, Imch e Patreon para obter atualiza\xE7\xF5es e notas de patch.\r\n"
+    m_Localized: "Bem -vindo ao Koboldkare!\n\nKoboldkare \xE9 um jogo sem DRM. Por
+      favor, seja um compartilhamento seguro, Koboldkare n\xE3o precisa de uma rachadura
+      para jogar!\n\nMuito obrigado por apoiar o jogo!\n\nVerifique Steam, Imch e
+      Patreon para obter atualiza\xE7\xF5es e notas de patch.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -865,6 +865,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 210162028410097665
     m_Localized: Jantar de ovo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Dick Spikey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Um p\xEAnis tampa com farpas carnudas macias e bolas baixas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Ativa ou desativa os truques em todo o servidor.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Exibe esta mensagem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "Lista todos os reagentes, pr\xE9 -fabricados e equipamentos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Fornece o reagente especificado, ou prefab. Use /lista para encontrar
+      todos os nomes adequados.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Encapa o equipamento especificado. Use /lista para encontrar nomes
+      adequados.
     m_Metadata:
       m_Items: []
   references:

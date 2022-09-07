@@ -872,6 +872,38 @@ MonoBehaviour:
     m_Localized: Cena d'uovo
     m_Metadata:
       m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: Dick spikey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: Un pene clubbato con barbi carnosi morbidi e palline basse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: 'Abilita o disabilita i trucchi a livello di server.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Visualizza questo messaggio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: Elenca tutti i reagenti, i prefabbricati e le attrezzature.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: Fornisce il reagente specificato o il prefabbricata. Utilizzare
+      /elenco per trovare tutti i nomi propri.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: Equipaggia l'attrezzatura specificata. Utilizzare /elenco per trovare
+      nomi propri.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

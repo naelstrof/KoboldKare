@@ -869,6 +869,37 @@ MonoBehaviour:
     m_Localized: "D\xEEner aux \u0153ufs"
     m_Metadata:
       m_Items: []
+  - m_Id: 211626638807977984
+    m_Localized: "Bite \xE9pineuse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211626638837338112
+    m_Localized: "Un p\xE9nis en vieillit\xE9 avec des barbes charnues douces et
+      des boules suspendues."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651584
+    m_Localized: "Active ou d\xE9sactive les tricheurs \xE0 l'\xE9chelle du serveur.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651585
+    m_Localized: Affiche ce message.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651586
+    m_Localized: "R\xE9pertorie tous les r\xE9actifs, pr\xE9fabriqu\xE9s et \xE9quipements."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651587
+    m_Localized: "Donne le r\xE9actif sp\xE9cifi\xE9 ou le pr\xE9fab. Utilisez /
+      liste pour trouver tous les noms propres."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 211654220131651588
+    m_Localized: "\xC9quipe l'\xE9quipement sp\xE9cifi\xE9. Utiliser / liste pour
+      trouver des noms appropri\xE9s."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

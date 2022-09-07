@@ -12,25 +12,15 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     public Kobold kobold;
     private ProceduralDeformation proceduralDeformation;
     public LODGroup group;
-    public JigglePhysics.JiggleSkin physics;
+    public JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
     public void OnEnable() {
-        foreach (SkinnedMeshRenderer s in dissolveTargets) {
-            foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
-                m.SetFloat("_Head", 0f);
-            }
-        }
-
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
         RegenerateMirror();
     }
 
     public void OnDisable() {
-        foreach (SkinnedMeshRenderer s in dissolveTargets) {
-            foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
-                m.SetFloat("_Head", 1f);
-            }
-        }
+        DestroyMirror();
     }
 
     public void Update() {
@@ -40,7 +30,8 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             }
         }
     }
-    public void RegenerateMirror() {
+
+    private void DestroyMirror() {
         foreach(GameObject g in mirrorObjects) {
             foreach (SkinnedMeshRenderer r in g.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                 if (kobold.koboldBodyRenderers.Contains(r)) {
@@ -65,7 +56,16 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             }
             Destroy(g);
         }
+        foreach (SkinnedMeshRenderer s in dissolveTargets) {
+            foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
+                m.SetFloat("_Head", 1f);
+            }
+            s.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+    }
 
+    private void RegenerateMirror() {
+        DestroyMirror();
         LOD[] lods = group.GetLODs();
         List<Renderer> renderers = new List<Renderer>(lods[0].renderers);
         for(int i=0;i<renderers.Count;i++) {

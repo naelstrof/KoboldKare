@@ -24,11 +24,14 @@ MonoBehaviour:
   color: {r: 0.9433962, g: 0.4138483, b: 0.8431626, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
   value: 0.5
-  consumesMetabolization: 1
   metabolizationHalfLife: 30
   cleaningAgent: 0
   calories: 0.05
   display: {fileID: 0}
+  consumptionEvent:
+    rid: 8920608498324865047
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8920608498324865047
+      type: {class: MelonJuiceConsumption, ns: , asm: Assembly-CSharp}

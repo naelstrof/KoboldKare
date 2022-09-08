@@ -24,11 +24,16 @@ MonoBehaviour:
   color: {r: 1, g: 0.3066038, b: 0.37808454, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
   value: 0.5
-  consumesMetabolization: 0
   metabolizationHalfLife: 30
   cleaningAgent: 0
   calories: 0
   display: {fileID: 0}
+  consumptionEvent:
+    rid: 8920608498324865046
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8920608498324865046
+      type: {class: CumConsumption, ns: , asm: Assembly-CSharp}
+      data:
+        eggReagent: {fileID: 11400000, guid: cf45304516a585b41b686355a8ecd9b0, type: 2}

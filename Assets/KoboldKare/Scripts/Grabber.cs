@@ -1,12 +1,8 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Grabber : MonoBehaviourPun {
     public Kobold player;
@@ -19,9 +15,10 @@ public class Grabber : MonoBehaviourPun {
 
     [SerializeField] private GameObject activateUI;
     [SerializeField] private GameObject throwUI;
+    private ColliderSorter sorter;
 
     private bool activating;
-    private class GrabInfo  {
+    private class GrabInfo {
         public IGrabbable grabbable { get; private set; }
         public Rigidbody body { get; private set; }
         public CollisionDetectionMode collisionDetectionMode { get; private set; }
@@ -289,6 +286,7 @@ public class Grabber : MonoBehaviourPun {
     private void Awake() {
         grabbedObjects = new List<GrabInfo>();
         giveBackKobolds = new List<GiveBackKobold>();
+        sorter = new ColliderSorter();
     }
 
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
@@ -306,12 +304,45 @@ public class Grabber : MonoBehaviourPun {
         averageForward = Vector3.Normalize(averageForward);
         averageUp = Vector3.Normalize(averageUp);
     }
+
+    private class ColliderSorter : IComparer<Collider> {
+        private Ray internalRay;
+        private const int checkCount = 4;
+        public void SetRay(Ray ray) {
+            internalRay = ray;
+        }
+
+        public int Compare(Collider x, Collider y) {
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+            float closestX = float.MaxValue;
+            float closestY = float.MaxValue;
+            if (x is MeshCollider { convex: false }) {
+                return -1;
+            }
+            if (y is MeshCollider { convex: false }) {
+                return 1;
+            }
+
+            for (int i = 0; i < checkCount; i++) {
+                float t = (float)i / (float)checkCount;
+                Vector3 checkPoint = internalRay.GetPoint(t);
+                closestX = Mathf.Min(closestX, Vector3.Distance(checkPoint, x.ClosestPoint(checkPoint)));
+                closestY = Mathf.Min(closestY, Vector3.Distance(checkPoint,y.ClosestPoint(checkPoint)));
+            }
+            return closestX.CompareTo(closestY);
+        }
+    }
+
     public void TryGrab() {
         if (grabbedObjects.Count >= maxGrabCount) {
             return;
         }
 
         int hits = Physics.OverlapSphereNonAlloc(view.position, 1f, colliders);
+        sorter.SetRay(new Ray(view.position, view.forward));
+        System.Array.Sort(colliders, 0, hits, sorter);
         for (int i = 0; i < hits; i++) {
             IGrabbable grabbable = colliders[i].GetComponentInParent<IGrabbable>();
             if (grabbable == null || grabbable == (IGrabbable)player) {

@@ -14,6 +14,8 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     public LODGroup group;
     public JiggleSkin physics;
     public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
+    private static readonly int Head = Shader.PropertyToID("_Head");
+
     public void OnEnable() {
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
         RegenerateMirror();
@@ -33,6 +35,9 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
 
     private void DestroyMirror() {
         foreach(GameObject g in mirrorObjects) {
+            if (g == null) {
+                continue;
+            }
             foreach (SkinnedMeshRenderer r in g.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                 if (kobold.koboldBodyRenderers.Contains(r)) {
                     kobold.koboldBodyRenderers.Remove(r);
@@ -56,9 +61,11 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             }
             Destroy(g);
         }
+
+        mirrorObjects.Clear();
         foreach (SkinnedMeshRenderer s in dissolveTargets) {
             foreach (Material m in s.GetComponent<SkinnedMeshRenderer>().materials) {
-                m.SetFloat("_Head", 1f);
+                m.SetFloat(Head, 1f);
             }
             s.gameObject.layer = LayerMask.NameToLayer("Player");
         }
@@ -121,10 +128,10 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
             }
             foreach(Material m in g.GetComponent<SkinnedMeshRenderer>().materials) {
-                m.SetFloat("_Head", 1f);
+                m.SetFloat(Head, 1f);
             }
             foreach(Material m in s.materials) {
-                m.SetFloat("_Head", 0f);
+                m.SetFloat(Head, 0f);
             }
             s.gameObject.layer = LayerMask.NameToLayer("LocalPlayer");
         }

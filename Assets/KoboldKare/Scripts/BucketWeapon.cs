@@ -56,14 +56,14 @@ public class BucketWeapon : GenericWeapon {
         GameObject bestDisplay = null;
         float bestVolume = 0f;
         foreach (var reagent in contents) {
-            if (ReagentDatabase.GetReagent(reagent.id).display == null) {
+            if (ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab() == null) {
                 continue;
             }
             if (reagent.volume < 5f) {
                 continue;
             }
             if (reagent.volume > bestVolume) {
-                bestDisplay = ReagentDatabase.GetReagent(reagent.id).display;
+                bestDisplay = ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab();
                 bestVolume = reagent.volume;
             }
         }

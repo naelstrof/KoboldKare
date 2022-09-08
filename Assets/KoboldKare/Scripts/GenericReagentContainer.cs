@@ -65,31 +65,23 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
 
     private bool filled = false;
     private bool emptied = false;
-    private bool ready = false;
     protected void Awake() {
-        if(ready){return;}
-
         OnChange ??= new ReagentContainerChangedEvent();
         OnFilled ??= new ReagentContainerChangedEvent();
         OnEmpty ??= new ReagentContainerChangedEvent();
 
-        contents = new ReagentContents(startingMaxVolume);
-        //Debug.Log("[Generic Reagent Container] :: Initializing Contents...");
-    }
-    public void Start() {
-        if(ready){return;}
-
-        if (startingReagents != null) {
-            foreach (var reagent in startingReagents) {
-                AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+        if (contents == null) {
+            contents = new ReagentContents(startingMaxVolume);
+            if (startingReagents != null) {
+                foreach (var reagent in startingReagents) {
+                    AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+                }
             }
         }
-
+    }
+    public void Start() {
         filled = isFull;
         emptied = isEmpty;
-        ready = true;
-
-        //Debug.Log(string.Format("[Generic Reagent Container] :: States of isFull, isEmpty, filled, and emptied: {0},{1},{2},{3}",isFull,isEmpty,filled,emptied));
     }
     [PunRPC]
     public ReagentContents Spill(float spillVolume) {
@@ -227,20 +219,14 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
 
     public void Save(BinaryWriter writer) {
-        if (contents == null) {
-            Awake(); Start();
-        }
+        contents ??= new ReagentContents(startingMaxVolume);
         contents.Serialize(writer);
     }
 
     public void Load(BinaryReader reader) {
-        if (contents == null) {
-            Awake(); Start();
-        }
-        //Debug.Log("[Generic Reagent Container] :: <Deserialization Process> Starting for GRC of "+gameObject.name);
+        contents ??= new ReagentContents(startingMaxVolume);
+        contents.Clear();
         contents.Deserialize(reader);
-        //Debug.Log("[Generic Reagent Container] :: <Firing OnReagentContents Change if Valid.......>");
         OnReagentContentsChanged(InjectType.Metabolize);
-        ready = true;
     }
 }

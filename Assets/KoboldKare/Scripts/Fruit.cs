@@ -30,7 +30,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     }
 
     private bool GetFrozen() {
-        return body.constraints == RigidbodyConstraints.FreezeAll;
+        return itemParticles.enabled;
     }
 
     private void Awake() {
@@ -46,6 +46,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         fruitInflater.OnEnable();
 
         container.OnChange.AddListener(OnReagentContentsChanged);
+        container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
+        OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
         photonView.ObservedComponents.Add(container);
         if (centerTransform == null) {
             centerTransform = transform;
@@ -58,8 +60,6 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
     void Start() {
         SpoilableHandler.AddSpoilable(this);
-        container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
-        OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
         SetFrozen(startFrozen);
         PlayAreaEnforcer.AddTrackedObject(photonView);
     }

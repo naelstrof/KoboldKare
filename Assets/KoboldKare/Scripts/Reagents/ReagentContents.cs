@@ -103,21 +103,9 @@ public class ReagentContents : IEnumerable<Reagent> {
         changed?.Invoke(this);
         return spillContents;
     }
-    private void Clear() {
+    public void Clear() {
         contents.Clear();
         changed?.Invoke(this);
-    }
-
-    public ReagentContents DumpNonConsumable() {
-        ReagentContents output = new ReagentContents();
-        foreach (var pair in contents) {
-            if (!ReagentDatabase.GetReagent(pair.Key).consumesMetabolization) {
-                output.AddMix(pair.Value);
-                pair.Value.volume = 0f;
-            }
-        }
-        changed?.Invoke(this);
-        return output;
     }
 
     public ReagentContents Metabolize(float deltaTime) {
@@ -127,7 +115,7 @@ public class ReagentContents : IEnumerable<Reagent> {
             return metabolizeContents;
         }
         foreach(var pair in contents) {
-            float metabolizationHalfLife = ReagentDatabase.GetReagent(pair.Key).metabolizationHalfLife;
+            float metabolizationHalfLife = ReagentDatabase.GetReagent(pair.Key).GetMetabolizationHalfLife();
             float metaHalfLife = metabolizationHalfLife == 0 ? pair.Value.volume : pair.Value.volume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
             // halflife on a tiny value suuucks, just kill it if the value gets small enough so we don't spam incredibly tiny updates.
             if (pair.Value.volume <= metabolizationVolumeEpsilon) {
@@ -156,7 +144,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     public bool IsCleaningAgent() {
         float totalCleanerVolume = 0f;
         foreach(var pair in contents) {
-            if (ReagentDatabase.GetReagent(pair.Key).cleaningAgent) {
+            if (ReagentDatabase.GetReagent(pair.Key).IsCleaningAgent()) {
                 totalCleanerVolume += pair.Value.volume;
             }
         }
@@ -167,7 +155,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     public float GetCalories() {
         float totalCalories = 0f;
         foreach(var pair in contents) {
-            totalCalories += pair.Value.volume * ReagentDatabase.GetReagent(pair.Key).calories;
+            totalCalories += pair.Value.volume * ReagentDatabase.GetReagent(pair.Key).GetCalories();
         }
         return totalCalories;
     }
@@ -182,14 +170,14 @@ public class ReagentContents : IEnumerable<Reagent> {
             if (pair.Value.volume <= 0f) {
                 continue;
             }
-            totalColor += ReagentDatabase.GetReagent(pair.Key).color*((pair.Value.volume)/v);
+            totalColor += ReagentDatabase.GetReagent(pair.Key).GetColor()*((pair.Value.volume)/v);
         }
         return totalColor;
     }
     public float GetValue() {
         float totalValue = 0f;
         foreach(var pair in contents) {
-            totalValue += ReagentDatabase.GetReagent(pair.Key).value*pair.Value.volume;
+            totalValue += ReagentDatabase.GetReagent(pair.Key).GetValue()*pair.Value.volume;
         }
         return totalValue;
     }

@@ -24,11 +24,16 @@ MonoBehaviour:
   color: {r: 0.624261, g: 0.48246706, b: 0.735849, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 0}
   value: 2
-  consumesMetabolization: 0
   metabolizationHalfLife: 30
   cleaningAgent: 0
   calories: 0.025
   display: {fileID: 5959614492232341571, guid: 02d269733eb483441ba20af30d587d27, type: 3}
+  consumptionEvent:
+    rid: 8920608498324865058
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8920608498324865058
+      type: {class: YogurtConsumption, ns: , asm: Assembly-CSharp}
+      data:
+        maxPerGeneration: 20

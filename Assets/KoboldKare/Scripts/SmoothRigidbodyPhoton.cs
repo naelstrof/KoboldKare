@@ -74,15 +74,16 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     }
 
     public void Save(BinaryWriter writer) {
-        writer.Write(body.position.x);
-        writer.Write(body.position.y);
-        writer.Write(body.position.z);
+        var position = body.transform.position;
+        writer.Write(position.x);
+        writer.Write(position.y);
+        writer.Write(position.z);
     }
 
     public void Load(BinaryReader reader) {
         float x = reader.ReadSingle();
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
-        body.position = new Vector3(x, y, z);
+        body.transform.position = new Vector3(x, y, z);
     }
 }

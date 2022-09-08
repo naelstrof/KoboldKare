@@ -26,8 +26,12 @@ MonoBehaviour:
   value: 1
   metabolizationHalfLife: 180
   cleaningAgent: 0
-  onExist:
-    m_PersistentCalls:
-      m_Calls: []
+  calories: 0
+  display: {fileID: 0}
+  consumptionEvent:
+    rid: 8920608498324865038
   references:
-    version: 1
+    version: 2
+    RefIds:
+    - rid: 8920608498324865038
+      type: {class: DefaultConsumption, ns: , asm: Assembly-CSharp}

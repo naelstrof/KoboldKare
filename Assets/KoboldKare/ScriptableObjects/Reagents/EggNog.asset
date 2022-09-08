@@ -24,11 +24,14 @@ MonoBehaviour:
   color: {r: 0.8301887, g: 0.7752586, b: 0.6696333, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 0}
   value: 2
-  consumesMetabolization: 0
   metabolizationHalfLife: 45
   cleaningAgent: 0
   calories: 0.2
   display: {fileID: 8477958244143360031, guid: 5426b1b8ac2980547ba1314205a2a443, type: 3}
+  consumptionEvent:
+    rid: 8920608498324865035
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 8920608498324865035
+      type: {class: DefaultConsumption, ns: , asm: Assembly-CSharp}

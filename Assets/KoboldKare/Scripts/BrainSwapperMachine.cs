@@ -52,7 +52,7 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     }
     [PunRPC]
     private IEnumerator SwapAfterTime() {
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(4f);
         if (!photonView.IsMine) {
             yield break;
         }

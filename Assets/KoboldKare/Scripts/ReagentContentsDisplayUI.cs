@@ -63,7 +63,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             Image targetImage = new GameObject("colorBlock", typeof(Image)).GetComponent<Image>();
             targetImage.sprite = imageSprite;
             targetImage.transform.SetParent(transform, false);
-            targetImage.color = ReagentDatabase.GetReagent(reagents[i].id).color;
+            targetImage.color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
             targetImage.type = Image.Type.Sliced;
             targetImage.fillCenter = true;
             targetImage.pixelsPerUnitMultiplier = 2f;
@@ -82,7 +82,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         if (isActiveAndEnabled) {
             StopAllCoroutines();
             for (int i = 0; i < reagents.Count; i++) {
-                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).color;
+                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
                 StartCoroutine(TweenWidth(images[i], reagents[i].volume * volumeToPixels));
             }
 
@@ -90,7 +90,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             StartCoroutine(TweenWidth(background, contents.GetMaxVolume() * volumeToPixels));
         } else {
             for (int i = 0; i < reagents.Count; i++) {
-                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).color;
+                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
                 images[i].sizeDelta = new Vector2(reagents[i].volume * volumeToPixels, images[i].sizeDelta.y);
             }
 

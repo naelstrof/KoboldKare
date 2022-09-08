@@ -62,7 +62,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
     public List<Renderer> koboldBodyRenderers;
-    private float internalSex = 0f;
+    //private float internalSex = 0f;
     [SerializeField]
     private List<Transform> nipples;
     public Transform hip;
@@ -76,6 +76,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private List<Vector3> savedJointAnchors = new List<Vector3>();
     public float arousal = 0f;
     public GameObject nippleBarbells;
+    private ReagentContents consumedReagents;
+    private ReagentContents addbackReagents;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in belly.GetInflatableListeners()) {
@@ -231,6 +233,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void Awake() {
+        consumedReagents = new ReagentContents();
+        addbackReagents = new ReagentContents();
         bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
         bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
         metabolizedContents = new ReagentContents(20f);
@@ -358,14 +362,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             PumpUpDick(-Time.deltaTime * 0.01f);
         }
     }
-
-    [PunRPC]
-    public ReagentContents SpillMetabolizedContents(float volume) {
-        ReagentContents v = metabolizedContents.Spill(volume);
-        ProcessReagents(v, -1f);
-        return v;
-    }
-
     public void SendChat(string message) {
         photonView.RPC(nameof(RPCSendChat), RpcTarget.All, message);
     }
@@ -414,30 +410,27 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return f/baseNum;
     }
 
-    public void ProcessReagents(ReagentContents contents, float multi) {
-        float melonJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MelonJuice"));
-        float eggplantJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("EggplantJuice"));
-        float growthSerumVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("GrowthSerum"));
-        float pineappleJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("PineappleJuice"));
-        float mushroomJuiceVolume = contents.GetVolumeOf(ReagentDatabase.GetReagent("MushroomJuice"));
-        float sum = (mushroomJuiceVolume + melonJuiceVolume + eggplantJuiceVolume + growthSerumVolume + pineappleJuiceVolume) * multi;
-
-        if (sum != 0f) {
-            KoboldGenes genes = GetGenes();
-            genes.breastSize += melonJuiceVolume * multi;
-            genes.dickSize += eggplantJuiceVolume * multi;
-            genes.baseSize += growthSerumVolume * multi;
-            genes.ballSize += pineappleJuiceVolume * multi;
-            
-            // Mushroom juice is poisonous!
-            genes.baseSize = Mathf.Max(genes.baseSize-mushroomJuiceVolume * multi * 0.2f, 0f);
-            genes.ballSize = Mathf.Max(genes.ballSize-mushroomJuiceVolume * multi * 0.2f,0f);
-            genes.dickSize = Mathf.Max(genes.dickSize-mushroomJuiceVolume * multi * 0.2f, 0.2f);
-            genes.fatSize = Mathf.Max(genes.fatSize-mushroomJuiceVolume * multi * 0.2f,-2f);
-            genes.breastSize = Mathf.Max(genes.breastSize-mushroomJuiceVolume * multi * 0.2f,0f);
-            genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(mushroomJuiceVolume*6f) * multi), 0, 255);
-            
-            SetGenes(genes);
+    public void ProcessReagents(ReagentContents contents) {
+        addbackReagents.Clear();
+        KoboldGenes genes = GetGenes();
+        float newEnergy = energy;
+        foreach (var pair in contents) {
+            ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);
+            float processedAmount = pair.volume;
+            reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents, ref addbackReagents, ref genes, ref newEnergy);
+            pair.volume -= processedAmount;
+        }
+        bellyContainer.AddMixRPC(contents, -1);
+        bellyContainer.AddMixRPC(addbackReagents, -1);
+        float overflowEnergy = Mathf.Max(newEnergy - GetMaxEnergy(), 0f);
+        if (overflowEnergy != 0f) {
+            genes = genes.With(fatSize: genes.fatSize + overflowEnergy);
+        }
+        SetGenes(genes);
+        
+        if (Math.Abs(energy - newEnergy) > 0.001f) {
+            energy = Mathf.Clamp(newEnergy, 0f, GetMaxEnergy());
+            energyChanged?.Invoke(energy, GetMaxEnergy());
         }
     }
     
@@ -447,42 +440,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.08f);
         ReagentContents vol = bellyContainer.Metabolize(f);
-        // Reagents that don't affect metabolization limits
-        bellyContainer.GetContents().AddMix(ReagentDatabase.GetReagent("Egg").GetReagent(vol.GetVolumeOf(ReagentDatabase.GetReagent("Cum"))*3f), bellyContainer);
-        
-        float yogurtVolume = vol.GetVolumeOf(ReagentDatabase.GetReagent("Yogurt"));
-        if (yogurtVolume > 0f) {
-            SetGenes(GetGenes().With(metabolizeCapacitySize: GetGenes().metabolizeCapacitySize + yogurtVolume));
-        }
-
-        ReagentContents consumed = vol.DumpNonConsumable();
-        float energyGained = 0f;
-        energyGained += consumed.GetCalories();
-        
-        // Can't over-metabolize, put some back if it doesn't fit
-        float maxMetabolization = (metabolizedContents.GetMaxVolume() - metabolizedContents.volume);
-        if (vol.volume > maxMetabolization) {
-            bellyContainer.GetContents().AddMix(vol.Spill(vol.volume - maxMetabolization), bellyContainer);
-        }
-
-        bellyContainer.OnChange.Invoke(bellyContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
-
-        if (vol.volume > 0f) {
-            metabolizedContents.AddMix(vol);
-            energyGained += vol.GetCalories();
-            ProcessReagents(vol, 1f);
-        }
-
-        if (energyGained == 0f) {
-            return;
-        }
-
-        float overflow = Mathf.Max(energy + energyGained - GetMaxEnergy(), 0);
-        if (overflow > 0f) {
-            SetGenes(GetGenes().With(fatSize: GetGenes().fatSize + overflow));
-        }
-        energy = Mathf.MoveTowards(energy,GetMaxEnergy(), energyGained);
-        energyChanged?.Invoke(energy, GetMaxEnergy());
+        ProcessReagents(vol);
     }
 
     IEnumerator WaitAndThenStopGargling(float time) {
@@ -490,7 +448,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         gargleSource.Pause();
         gargleSource.enabled = false;
     }
-    public void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    private void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
         if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume) {
             return;
@@ -510,11 +468,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             stream.SendNext(GetGenes());
             stream.SendNext(arousal);
             stream.SendNext(metabolizedContents);
+            stream.SendNext(consumedReagents);
             stream.SendNext(energy);
         } else {
             SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
             metabolizedContents.Copy((ReagentContents)stream.ReceiveNext());
+            consumedReagents.Copy((ReagentContents)stream.ReceiveNext());
             float newEnergy = (float)stream.ReceiveNext();
             if (Math.Abs(newEnergy - energy) > 0.01f) {
                 energy = newEnergy;

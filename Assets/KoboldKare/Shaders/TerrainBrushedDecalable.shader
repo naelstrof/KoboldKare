@@ -538,15 +538,14 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				float2 texCoord2_g6 = IN.ase_texcoord9.zw * float2( 1,1 ) + float2( 0,0 );
 				float4 tex2DNode3_g6 = SAMPLE_TEXTURE2D_LOD( _DecalColorMap, sampler_DecalColorMap, texCoord2_g6, 0.0 );
 				float fresnelNdotV16_g6 = dot( WorldNormal, WorldViewDirection );
-				float fresnelNode16_g6 = ( 0.5 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
+				float fresnelNode16_g6 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
 				float4 lerpResult7_g6 = lerp( lerpResult37_g31 , tex2DNode3_g6 , ( tex2DNode3_g6.a * fresnelNode16_g6 ));
 				
 				float3 lerpResult43_g31 = lerp( UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapB, sampler_BumpMapB, WorldUV9_g31 ), 1.0f ) , UnpackNormalScale( SAMPLE_TEXTURE2D( _BumpMapA, sampler_BumpMapA, WorldUV9_g31 ), 1.0f ) , temp_output_36_0_g31);
 				
 				float4 lerpResult38_g31 = lerp( SAMPLE_TEXTURE2D( _SmoothnessB, sampler_BaseColorMapB, WorldUV9_g31 ) , SAMPLE_TEXTURE2D( _SmoothnessA, sampler_BaseColorMapA, WorldUV9_g31 ) , temp_output_36_0_g31);
 				float4 break10_g6 = lerpResult38_g31;
-				float lerpResult9_g6 = lerp( break10_g6.a , 0.9 , tex2DNode3_g6.a);
-				float4 appendResult11_g6 = (float4(break10_g6.r , break10_g6.g , break10_g6.b , lerpResult9_g6));
+				float4 appendResult11_g6 = (float4(break10_g6.r , break10_g6.g , break10_g6.b , break10_g6.a));
 				
 				float3 Albedo = lerpResult7_g6.rgb;
 				float3 Normal = lerpResult43_g31;
@@ -1588,7 +1587,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord6.xyz;
 				float fresnelNdotV16_g6 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g6 = ( 0.5 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
+				float fresnelNode16_g6 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
 				float4 lerpResult7_g6 = lerp( lerpResult37_g31 , tex2DNode3_g6 , ( tex2DNode3_g6.a * fresnelNode16_g6 ));
 				
 				
@@ -1887,7 +1886,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
 				float fresnelNdotV16_g6 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g6 = ( 0.5 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
+				float fresnelNode16_g6 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g6 , 0.0001 ), 2.0 ) );
 				float4 lerpResult7_g6 = lerp( lerpResult37_g31 , tex2DNode3_g6 , ( tex2DNode3_g6.a * fresnelNode16_g6 ));
 				
 				
@@ -2661,7 +2660,7 @@ Shader "TerrainBrush/TerrainBrushedDecalable"
 }
 /*ASEBEGIN
 Version=18935
-696;658;1528;724;-1852.741;167.0923;1;True;False
+433;500;1528;724;-1852.741;167.0923;1;True;False
 Node;AmplifyShaderEditor.BreakToComponentsNode;137;2394.67,233.2173;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.FunctionNode;138;2093.958,-19.85583;Inherit;False;ApplyDecals;16;;6;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;5;FLOAT;18;FLOAT;20;FLOAT3;14;FLOAT4;15;COLOR;13
 Node;AmplifyShaderEditor.FunctionNode;164;1700.67,57.21732;Inherit;False;TerrainPlanarProjection;0;;31;7f77f62b983d6b14cae371e33a438508;0;1;47;FLOAT2;0,0;False;3;COLOR;0;FLOAT3;44;COLOR;45
@@ -2685,4 +2684,4 @@ WireConnection;146;4;137;3
 WireConnection;146;18;138;20
 WireConnection;146;19;138;18
 ASEEND*/
-//CHKSM=200D751D8087B8F2708ADCC48D698FAC9B9D6A1E
+//CHKSM=F463A75C59ACCCD1A98F7AD1C8190003E527CD11

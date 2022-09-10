@@ -542,7 +542,6 @@ MonoBehaviour:
   ignorePenetrables: []
   listeners:
   - rid: 8920608445913890844
-  - rid: 8920608445913890845
   - rid: 8920608445913890846
   - rid: 8920608445913890847
   - rid: 8920608445913890848
@@ -554,17 +553,13 @@ MonoBehaviour:
     - rid: 8920608445913890844
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         knotForceFactor: 0.2
-    - rid: 8920608445913890845
-      type: {class: PenetratorNoCollideListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        localDist: 0
-        body: {fileID: 4675835026641688813}
+        friction: 2.5
+        force: 12
+        elasticity: 30
     - rid: 8920608445913890846
       type: {class: PenetratorRigidbodyListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         body: {fileID: 4675835026641688813}
         angularForceMultiplier: 30
         planarAlignmentForceMultiplier: 4
@@ -572,14 +567,13 @@ MonoBehaviour:
     - rid: 8920608445913890847
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.712
+        localDistanceFromTipOfDick: 0.553
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
         activateOnEnter: 1
         activateOnExit: 0
     - rid: 8920608445913890848
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
         volume: 1
 --- !u!1001 &5189641523864866709

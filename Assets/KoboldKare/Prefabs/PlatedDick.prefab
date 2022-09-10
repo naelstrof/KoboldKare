@@ -191,6 +191,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 53170983706997477, guid: 5cfe9d22eb8b8714c9351aad0e0a789b,
         type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 53170983706997477, guid: 5cfe9d22eb8b8714c9351aad0e0a789b,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4ada49c5a4d94624f8fbedcef210942c, type: 2}
@@ -459,6 +464,7 @@ MonoBehaviour:
   - rid: 8920608482280079360
   - rid: 8920608482280079361
   - rid: 8920608482280079362
+  - rid: 8920608544167297027
   middlePoseTarget: {fileID: 8701024094432164950}
   tipTarget: {fileID: 3683691066800381819}
   references:
@@ -467,21 +473,29 @@ MonoBehaviour:
     - rid: 8920608482280079360
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         knotForceFactor: 0.2
+        friction: 2.5
+        force: 12
+        elasticity: 30
     - rid: 8920608482280079361
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.534
+        localDistanceFromTipOfDick: 0.364
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
         activateOnEnter: 1
         activateOnExit: 0
     - rid: 8920608482280079362
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
         volume: 1
+    - rid: 8920608544167297027
+      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
+      data:
+        localDistanceFromTipOfDick: 0.74
+        pack: {fileID: 11400000, guid: d035a4d1ac446f4469be99a8da0d16ff, type: 2}
+        activateOnEnter: 0
+        activateOnExit: 1
 --- !u!4 &717978536564401050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5cfe9d22eb8b8714c9351aad0e0a789b,

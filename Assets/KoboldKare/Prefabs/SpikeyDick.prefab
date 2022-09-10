@@ -192,6 +192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 366644682379721508, guid: 751a52dce9c27a641adb12025bd93ea0,
         type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 366644682379721508, guid: 751a52dce9c27a641adb12025bd93ea0,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d1e50b9ee3aa7744bafdd10405d5eb82, type: 2}
@@ -495,19 +500,20 @@ MonoBehaviour:
     - rid: 8920608498324865059
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         knotForceFactor: 0.2
+        friction: 2.5
+        force: 12
+        elasticity: 30
     - rid: 8920608498324865060
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.582
+        localDistanceFromTipOfDick: 0.509
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
         activateOnEnter: 1
         activateOnExit: 0
     - rid: 8920608498324865061
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
         volume: 1
 --- !u!4 &2907372977814504014 stripped

@@ -399,7 +399,7 @@ MonoBehaviour:
     attachPoint: 0
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
-    attachPosition: {x: -0.0000003428246, y: 0.87515575, z: 0.081303276}
+    attachPosition: {x: -0.0000003428246, y: 0.86462754, z: 0.101978905}
     cumSoundPack: {fileID: 11400000, guid: 6a026e8e8fe32d948a722fccae91b39a, type: 2}
     info: {fileID: 0}
     parent: 0
@@ -453,8 +453,8 @@ MonoBehaviour:
   listeners:
   - rid: 8920608445913890819
   - rid: 8920608445913890820
-  - rid: 8920608445913890823
   - rid: 8920608445913890822
+  - rid: 8920608544167297025
   middlePoseTarget: {fileID: 5688532021288971835}
   tipTarget: {fileID: 1247859021363750079}
   references:
@@ -463,27 +463,29 @@ MonoBehaviour:
     - rid: 8920608445913890819
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         knotForceFactor: 0.2
+        friction: 2.5
+        force: 12
+        elasticity: 30
     - rid: 8920608445913890820
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.202
+        localDistanceFromTipOfDick: 0.202
         pack: {fileID: 11400000, guid: d035a4d1ac446f4469be99a8da0d16ff, type: 2}
         activateOnEnter: 0
         activateOnExit: 1
     - rid: 8920608445913890822
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
         volume: 1
-    - rid: 8920608445913890823
-      type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
+    - rid: 8920608544167297025
+      type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
-        localDist: 0.63
+        localDistanceFromTipOfDick: 0.5
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
-        volume: 1
+        activateOnEnter: 1
+        activateOnExit: 0
 --- !u!114 &8941345980336474460
 MonoBehaviour:
   m_ObjectHideFlags: 0

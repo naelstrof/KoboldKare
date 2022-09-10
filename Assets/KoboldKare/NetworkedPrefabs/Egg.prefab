@@ -146,12 +146,10 @@ MonoBehaviour:
     - rid: 0
       type: {class: PenetratorNoCollideListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         body: {fileID: 4875906831416810367}
     - rid: 1
       type: {class: PenetratorRigidbodyListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         body: {fileID: 4875906831416810367}
         angularForceMultiplier: 30
         planarAlignmentForceMultiplier: 4

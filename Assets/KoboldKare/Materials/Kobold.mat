@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Kobold
   m_Shader: {fileID: 4800000, guid: bc0a95306787ee14c8cba6b6697de1e1, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _PENETRATION_DEFORMATION_DETAIL_ON
   m_InvalidKeywords:
   - _DISPLACEMENT_LOCK_TILING_SCALE
   - _EMISSION
@@ -297,6 +298,7 @@ Material:
     - _NormalMapSpace: 0
     - _NormalScale: 1
     - _OcclusionStrength: 1
+    - _PENETRATION_DEFORMATION_DETAIL: 1
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
     - _PPDMinSamples: 5

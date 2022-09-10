@@ -418,9 +418,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);
             float processedAmount = pair.volume;
             reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents, ref addbackReagents, ref genes, ref newEnergy);
-            pair.volume -= processedAmount;
         }
-        bellyContainer.AddMixRPC(contents, -1);
         bellyContainer.AddMixRPC(addbackReagents, -1);
         float overflowEnergy = Mathf.Max(newEnergy - GetMaxEnergy(), 0f);
         if (overflowEnergy != 0f) {

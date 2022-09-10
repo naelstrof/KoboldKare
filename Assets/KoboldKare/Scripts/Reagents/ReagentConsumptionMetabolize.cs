@@ -9,7 +9,7 @@ public class ReagentConsumptionMetabolize : ReagentConsumptionEvent {
         float spaceAvailable = k.metabolizedContents.GetMaxVolume()-k.metabolizedContents.volume;
         float mixAmount = Mathf.Min(spaceAvailable, amountProcessed);
         k.metabolizedContents.AddMix(scriptableReagent.GetReagent(mixAmount));
-        addBack.AddMix(scriptableReagent.GetReagent(amountProcessed - mixAmount));
+        //addBack.AddMix(scriptableReagent.GetReagent(amountProcessed - mixAmount));
         amountProcessed = mixAmount;
         base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
     }

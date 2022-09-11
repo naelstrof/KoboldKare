@@ -192,7 +192,7 @@ public class Grabber : MonoBehaviourPun {
     }
 
     private List<GiveBackKobold> giveBackKobolds;
-    private float thrownUntouchableTime = 0.4f;
+    //private float thrownUntouchableTime = 0.4f;
     private static Collider[] colliders = new Collider[32];
     
     [SerializeField]
@@ -245,7 +245,7 @@ public class Grabber : MonoBehaviourPun {
 
             if (giveBackKobold.kobold.photonView.IsMine) {
                 foreach (Player p in PhotonNetwork.PlayerList) {
-                    if (giveBackKobold.kobold.photonView.IsMine && p.TagObject == giveBackKobold.kobold) {
+                    if (giveBackKobold.kobold.photonView.IsMine && (Kobold)p.TagObject == giveBackKobold.kobold) {
                         giveBackKobold.kobold.photonView.TransferOwnership(p);
                         break;
                     }
@@ -257,7 +257,7 @@ public class Grabber : MonoBehaviourPun {
 
     public void AddGivebackKobold(Kobold other) {
         foreach (Player p in PhotonNetwork.PlayerList) {
-            if (p.TagObject == other) {
+            if ((Kobold)p.TagObject == other) {
                 GiveBackKobold giveBackKobold = new GiveBackKobold(){kobold = other};
                 giveBackKobold.routine = StartCoroutine(GiveBackKoboldAfterDelay(giveBackKobold));
                 giveBackKobolds.Add(giveBackKobold);

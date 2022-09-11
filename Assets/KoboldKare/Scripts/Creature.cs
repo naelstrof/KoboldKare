@@ -21,11 +21,6 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     private float distanceTravelled = 0f;
     private float distanceTravelledVel;
     private float networkedDistanceTravelled = 0f;
-    public PhotonView photonView { get; private set; }
-
-    void Awake() {
-        photonView = GetComponentInParent<PhotonView>();
-    }
 
     [SerializeField] private AudioPack gibSound;
     private void OnValidate() {

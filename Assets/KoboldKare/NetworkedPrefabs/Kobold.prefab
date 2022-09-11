@@ -15344,6 +15344,7 @@ MonoBehaviour:
     listeners:
     - rid: 4
     - rid: 5
+  milkSplatMaterial: {fileID: 2100000, guid: 3821f9133468bfa449f3dbee8d5a1aff, type: 2}
   energy: 1
   tummyGrumbles: {fileID: 11400000, guid: 67a1644657f256b47ab2a61a75c069d6, type: 2}
   garglePack: {fileID: 11400000, guid: 2098de8eac6d5e0419986616fa2a8f15, type: 2}

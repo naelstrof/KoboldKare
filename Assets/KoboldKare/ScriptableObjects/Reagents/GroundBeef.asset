@@ -29,9 +29,16 @@ MonoBehaviour:
   calories: 0.1
   display: {fileID: 0}
   consumptionEvent:
-    rid: 8920608498324865040
+    rid: 8920608568533581827
   references:
     version: 2
     RefIds:
-    - rid: 8920608498324865040
-      type: {class: DefaultConsumption, ns: , asm: Assembly-CSharp}
+    - rid: 8920608568533581827
+      type: {class: StrengthGivingConsumption, ns: , asm: Assembly-CSharp}
+      data:
+        requiredCumulativeReagent: 5
+        maximumTriggerCount: 1
+        floaterInfoPrefab:
+          gameObject: {fileID: 2105268475169688605, guid: f19f212c05f978d4ea4196b7b5698849,
+            type: 3}
+          photonName: MuscleFloaters

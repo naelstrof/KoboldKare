@@ -35,14 +35,10 @@ public class CommandGive : Command {
                 obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
                 output.Append($"Spawned bucket filled with {value} {args[1]}.\n");
                 return;
-            } else {
-                contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
-                obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
-                output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
-                return;
             }
-
-            throw new CheatsProcessor.CommandException($"Spawning reagents requires a 3rd number argument.");
+            contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
+            obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
+            output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
             return;
         }
 
@@ -51,11 +47,10 @@ public class CommandGive : Command {
                 ObjectiveManager.GiveStars(value);
                 output.Append($"Gave {value} {args[1]}.\n");
                 return;
-            } else {
-                ObjectiveManager.GiveStars(999);
-                output.Append($"Gave 999 {args[1]}.\n");
-                return;
             }
+            ObjectiveManager.GiveStars(999);
+            output.Append($"Gave 999 {args[1]}.\n");
+            return;
         }
 
         if (args[1].ToLower() == "money" || args[1].ToLower() == "dosh" || args[1].ToLower() == "dollars") {
@@ -63,11 +58,10 @@ public class CommandGive : Command {
                 kobold.photonView.RPC(nameof(MoneyHolder.AddMoney), RpcTarget.All, value);
                 output.Append($"Gave {value} {args[1]} to {kobold.photonView.Owner.NickName}.\n");
                 return;
-            } else {
-                kobold.photonView.RPC(nameof(MoneyHolder.AddMoney), RpcTarget.All, 999f);
-                output.Append($"Gave 999 {args[1]} to {kobold.photonView.Owner.NickName}.\n");
-                return;
             }
+            kobold.photonView.RPC(nameof(MoneyHolder.AddMoney), RpcTarget.All, 999f);
+            output.Append($"Gave 999 {args[1]} to {kobold.photonView.Owner.NickName}.\n");
+            return;
         }
 
         throw new CheatsProcessor.CommandException($"There is no prefab, reagent, or resource with name {args[1]}.");

@@ -40,6 +40,7 @@ public class DickInfoEditor : Editor {
 public class DickInfo : MonoBehaviour {
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private Kobold attachedKobold;
+    private bool cumming = false;
     [HideInInspector]
     public int equipmentInstanceID;
 
@@ -62,7 +63,7 @@ public class DickInfo : MonoBehaviour {
         protected override void OnPenetrationDepthChange(float depthDist) {
             base.OnPenetrationDepthChange(depthDist);
             float movementAmount = depthDist - lastDepthDist;
-            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount*0.5f));
+            attachedKobold.PumpUpDick(Mathf.Abs(movementAmount*0.15f));
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
             dickSet.inside = depthDist != 0f && depthDist < penetrableMem.GetSplinePath().arcLength;
@@ -141,6 +142,11 @@ public class DickInfo : MonoBehaviour {
         }
     }
     public IEnumerator CumRoutine(DickSet set) {
+        while (cumming) {
+            yield return null;
+        }
+
+        cumming = true;
         float ballSize = attachedKobold.GetGenes().ballSize;
         // (1-1/(x/maxInput+1)) * maxPossibleResult
         float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 60f + 5f;
@@ -210,8 +216,7 @@ public class DickInfo : MonoBehaviour {
                     attachedKobold.photonView.ViewID);
             }
         }
-        //yield return new WaitForSeconds(3f);
-        //attachedKobold.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+        cumming = false;
     }
     public void AttachTo(Kobold k) {
         attachedKobold = k;

@@ -8,6 +8,8 @@ using Photon.Pun;
 using PenetrationTech;
 using System.IO;
 using Naelstrof.Inflatable;
+using Naelstrof.Mozzarella;
+using SkinnedMeshDecals;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -44,6 +46,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private Inflatable sizeInflater;
     [SerializeField]
     private Inflatable boobs;
+    [SerializeField]
+    private Material milkSplatMaterial;
 
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
@@ -82,6 +86,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
     private static Collider[] colliders = new Collider[32];
+    private WaitForSeconds waitSpurt;
+    private bool milking = false;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in belly.GetInflatableListeners()) {
@@ -110,12 +116,50 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             return closestX.CompareTo(closestY);
         }
     }
+    
+    [PunRPC]
+    public IEnumerator MilkRoutine() {
+        while (milking) {
+            yield return null;
+        }
+        milking = true;
+        int pulses = 12;
+        // Now do some milk stuff.
+        for (int i = 0; i < pulses; i++) {
+            foreach (Transform t in GetNipples()) {
+                if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
+                    mozzarella.SetFollowTransform(t);
+                    ReagentContents alloc = new ReagentContents();
+                    alloc.AddMix(ReagentDatabase.GetReagent("Milk").GetReagent(GetGenes().breastSize/(pulses*GetNipples().Count)));
+                    mozzarella.SetVolumeMultiplier(alloc.volume);
+                    mozzarella.SetLocalForward(Vector3.up);
+                    Color color = alloc.GetColor();
+                    mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
+                        if (photonView.IsMine) {
+                            GenericReagentContainer container =
+                                hit.collider.GetComponentInParent<GenericReagentContainer>();
+                            if (container != null && this != null) {
+                                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
+                                    alloc.Spill(alloc.volume * 0.1f), photonView.ViewID);
+                            }
+                        }
+                        milkSplatMaterial.color = color;
+                        PaintDecal.RenderDecalForCollider(hit.collider, milkSplatMaterial,
+                            hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),
+                            Vector2.one * (volume * 4f), length);
+                    };
+                }
+            }
+            yield return waitSpurt;
+        }
+        milking = false;
+    }
 
     public List<Transform> GetNipples() {
         return nipples;
     }
 
-    public Coroutine displayMessageRoutine;
+    private Coroutine displayMessageRoutine;
     public Ragdoller ragdoller;
     public void AddStimulation(float s) {
         stimulation += s;
@@ -262,6 +306,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void Awake() {
+        waitSpurt = new WaitForSeconds(1f);
         usableColliderComparer = new UsableColliderComparer();
         grabber = GetComponentInChildren<Grabber>(true);
         consumedReagents = new ReagentContents();
@@ -362,7 +407,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (velocity.magnitude > 3f) {
             StartCoroutine(ThrowRoutine());
         } else {
-            int hits = Physics.OverlapSphereNonAlloc(transform.position, Mathf.Max(1f, transform.localScale.x),
+            int hits = Physics.OverlapSphereNonAlloc(transform.position, Mathf.Max(1f, Mathf.Log(1f+transform.localScale.x,2f)),
                 colliders, GameManager.instance.usableHitMask, QueryTriggerInteraction.Collide);
             usableColliderComparer.SetCheckPoint(transform.position);
             Array.Sort(colliders, 0, hits, usableColliderComparer);
@@ -449,6 +494,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         addbackReagents.Clear();
         KoboldGenes genes = GetGenes();
         float newEnergy = energy;
+        float passiveEnergyGeneration = 0.05f;
+        energy += passiveEnergyGeneration;
         foreach (var pair in contents) {
             ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);
             float processedAmount = pair.volume;

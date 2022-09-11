@@ -29,9 +29,12 @@ MonoBehaviour:
   calories: 0.2
   display: {fileID: 530389842574366120, guid: afe7c3b290f23ca4d99b2dc71b26cd00, type: 3}
   consumptionEvent:
-    rid: 8920608498324865051
+    rid: 8920608568533581829
   references:
     version: 2
     RefIds:
-    - rid: 8920608498324865051
-      type: {class: DefaultConsumption, ns: , asm: Assembly-CSharp}
+    - rid: 8920608568533581829
+      type: {class: MilkedInstantlyConsumption, ns: , asm: Assembly-CSharp}
+      data:
+        requiredCumulativeReagent: 5
+        maximumTriggerCount: -1

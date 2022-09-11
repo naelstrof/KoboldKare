@@ -29,14 +29,14 @@ MonoBehaviour:
   calories: 0.5
   display: {fileID: 4782960180314960837, guid: e8bcef6a0b3384b4aacb50de5c1212a7, type: 3}
   consumptionEvent:
-    rid: 8920608563485736960
+    rid: 8920608568533581824
   references:
     version: 2
     RefIds:
-    - rid: 8920608563485736960
-      type: {class: BurgerConsumption, ns: , asm: Assembly-CSharp}
+    - rid: 8920608568533581824
+      type: {class: StrengthGivingConsumption, ns: , asm: Assembly-CSharp}
       data:
-        requiredCumulativeReagent: 9
+        requiredCumulativeReagent: 5
         floaterInfoPrefab:
           gameObject: {fileID: 2105268475169688605, guid: f19f212c05f978d4ea4196b7b5698849,
             type: 3}

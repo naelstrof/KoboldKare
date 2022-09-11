@@ -351,10 +351,7 @@ MonoBehaviour:
     - {x: 0.0000002942998, y: -0.7071115, z: -0.0000003390052, w: 0.7071153}
     - {x: 0.00000029429953, y: -0.7071108, z: -0.00000033900488, w: 0.70711464}
   editSelection: 3
-  previewActive: 1
   animProgress: 26.049873
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -715,10 +712,7 @@ MonoBehaviour:
     - {x: 0.7071508, y: 0.0000016647217, z: -0.0000017549514, w: 0.70715046}
     - {x: 0.7071439, y: 0.0000016647058, z: -0.0000017549349, w: 0.70714355}
   editSelection: 0
-  previewActive: 1
   animProgress: 26.052076
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -859,9 +853,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   milkingSprite: {fileID: 21300000, guid: 775c36010e943454ab66e38726c40e0a, type: 3}
   stations:
-  - {fileID: 4616607658227266327}
   - {fileID: 5204249533228825337}
-  milkSplatMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4, type: 2}
+  - {fileID: 4616607658227266327}
   stream: {fileID: 1737490455208737195}
 --- !u!114 &8095303334753861437
 MonoBehaviour:
@@ -883,6 +876,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6015390302830895525}
+  - {fileID: 1737490455208737195}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

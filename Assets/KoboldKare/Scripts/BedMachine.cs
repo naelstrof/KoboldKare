@@ -62,7 +62,7 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         float startStimulation = k.stimulation;
         while (k != null && stillSleeping && k.GetEnergy() < 1f) {
             if (k.photonView.IsMine) {
-                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.1f, 1f));
+                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.2f, 1f));
                 k.stimulation = Mathf.MoveTowards(startStimulation, 0f, 1f);
             }
             stillSleeping = false;

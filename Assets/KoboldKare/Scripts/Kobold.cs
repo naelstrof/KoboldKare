@@ -494,8 +494,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         addbackReagents.Clear();
         KoboldGenes genes = GetGenes();
         float newEnergy = energy;
-        float passiveEnergyGeneration = 0.05f;
-        energy += passiveEnergyGeneration;
+        float passiveEnergyGeneration = 0.025f;
+        if (newEnergy < 1f) {
+            if (ragdoller.ragdolled) {
+                passiveEnergyGeneration *= 4f;
+            }
+            newEnergy = Mathf.MoveTowards(newEnergy, 1f, passiveEnergyGeneration);
+        }
         foreach (var pair in contents) {
             ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);
             float processedAmount = pair.volume;

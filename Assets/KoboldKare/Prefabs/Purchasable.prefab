@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 34.663, y: 3.569, z: 446.485}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7097769071569518087}
   m_Father: {fileID: 0}
@@ -65,7 +66,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211327513617741650}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.25
@@ -85,10 +86,6 @@ MonoBehaviour:
   displaySprite: {fileID: 21300000, guid: e9dff82264b70634f89d563e2897391b, type: 3}
   purchasable: {fileID: 11400000, guid: 33922d723fe2dac4ba302e0b2b9171f1, type: 2}
   purchaseSoundPack: {fileID: 11400000, guid: 7fad22e049b590c4d9d22348fcbe6a68, type: 2}
-  restockEvent: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
-  purchased:
-    m_PersistentCalls:
-      m_Calls: []
   floater: {fileID: 1497417145065887878}
 --- !u!1001 &4779736219637102494
 PrefabInstance:
@@ -159,12 +156,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2867974c4a974b4188471b7372f9440, type: 3}
---- !u!4 &7097769071569518087 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2365902294067579289, guid: a2867974c4a974b4188471b7372f9440,
-    type: 3}
-  m_PrefabInstance: {fileID: 4779736219637102494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1497417145065887878 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6238308129993584408, guid: a2867974c4a974b4188471b7372f9440,
@@ -177,3 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d04ea9b50c55f4b9cf345204060c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7097769071569518087 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2365902294067579289, guid: a2867974c4a974b4188471b7372f9440,
+    type: 3}
+  m_PrefabInstance: {fileID: 4779736219637102494}
+  m_PrefabAsset: {fileID: 0}

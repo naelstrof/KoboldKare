@@ -44,6 +44,12 @@ namespace Naelstrof.Inflatable {
             }
         }
 
+        public void SetSizeInstant(float newSize) {
+            foreach (InflatableListener listener in listeners) {
+                listener.OnSizeChanged(newSize);
+            }
+        }
+
         public void OnEnable() {
             foreach (var listener in listeners) {
                 listener.OnEnable();

@@ -200,6 +200,10 @@ public class Grabber : MonoBehaviourPun {
     public void OnDestroy() {
         TryDrop();
     }
+
+    public void SetMaxGrabCount(int count) {
+        maxGrabCount = count;
+    }
     public void Validate() {
         bool canActivate = false;
         bool canThrow = false;
@@ -340,8 +344,9 @@ public class Grabber : MonoBehaviourPun {
             return;
         }
 
-        int hits = Physics.OverlapSphereNonAlloc(view.position, 1f, colliders);
-        sorter.SetRay(new Ray(view.position, view.forward));
+        var position = view.position;
+        int hits = Physics.OverlapSphereNonAlloc(position, 1f, colliders);
+        sorter.SetRay(new Ray(position, view.forward));
         System.Array.Sort(colliders, 0, hits, sorter);
         for (int i = 0; i < hits; i++) {
             IGrabbable grabbable = colliders[i].GetComponentInParent<IGrabbable>();
@@ -356,7 +361,11 @@ public class Grabber : MonoBehaviourPun {
                 }
             }
 
-            if (!contains && grabbable.CanGrab(player)) {
+            if (contains) {
+                continue;
+            }
+
+            if (grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
                 GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength);
                 // Destroyed on grab, creatures gib on grab.

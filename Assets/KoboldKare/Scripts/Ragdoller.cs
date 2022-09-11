@@ -40,6 +40,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
+    private void FixedUpdate() {
+        if (!ragdolled) {
+            return;
+        }
+
+        Vector3 diff = transform.position - hip.position;
+        transform.position -= diff * 0.5f;
+        hip.position += diff * 0.5f;
+    }
+
     public void SetLocked(bool newLockState) {
         locked = newLockState;
         if (locked && ragdolled) {

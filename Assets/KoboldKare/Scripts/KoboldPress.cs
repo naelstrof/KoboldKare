@@ -46,7 +46,7 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
         }
 
         if (slot == 0) {
-            return k.GetEnergy() >= 1f && k.metabolizedContents.volume > 0f;
+            return k.GetEnergy() >= 1f && k.bellyContainer.volume > 0f;
         }
         
         return k.GetEnergy() >= 1f;

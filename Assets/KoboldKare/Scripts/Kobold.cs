@@ -37,12 +37,15 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public GenericReagentContainer bellyContainer { get; private set; }
     [SerializeField]
     private Inflatable belly;
+    private Grabber grabber;
     [SerializeField]
     private Inflatable fatnessInflater;
     [SerializeField]
     private Inflatable sizeInflater;
     [SerializeField]
     private Inflatable boobs;
+
+    private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
     
     [SerializeField]
@@ -78,6 +81,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public GameObject nippleBarbells;
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
+    private static Collider[] colliders = new Collider[32];
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in belly.GetInflatableListeners()) {
@@ -88,6 +92,22 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         foreach (var listener in boobs.GetInflatableListeners()) {
             yield return listener;
+        }
+    }
+    private class UsableColliderComparer : IComparer<Collider> {
+        private Vector3 checkPoint;
+
+        public void SetCheckPoint(Vector3 position) {
+            checkPoint = position;
+        }
+
+        public int Compare(Collider x, Collider y) {
+            if (ReferenceEquals(x, y)) return 0;
+            if (ReferenceEquals(null, y)) return 1;
+            if (ReferenceEquals(null, x)) return -1;
+            float closestX = Vector3.Distance(checkPoint, x.ClosestPointOnBounds(checkPoint));
+            float closestY =  Vector3.Distance(checkPoint,y.ClosestPointOnBounds(checkPoint));
+            return closestX.CompareTo(closestY);
         }
     }
 
@@ -150,6 +170,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
+    private static readonly int Carried = Animator.StringToHash("Carried");
+    private static readonly int Quaff = Animator.StringToHash("Quaff");
+
     public float GetEnergy() {
         return energy;
     }
@@ -202,7 +225,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.info);
             dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.info);
         }
-        sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f+newGenes.baseSize/20f,2f), 0.2f), this);
+        grabber.SetMaxGrabCount(newGenes.grabCount);
+        if (ragdoller.ragdolled) {
+            sizeInflater.SetSizeInstant(Mathf.Max(Mathf.Log(1f + newGenes.baseSize / 20f, 2f), 0.2f));
+        } else {
+            sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f + newGenes.baseSize / 20f, 2f), 0.2f), this);
+        }
+
         fatnessInflater.SetSize(Mathf.Log(1f + newGenes.fatSize / 20f, 2f), this);
         boobs.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
         bellyContainer.maxVolume = newGenes.bellySize;
@@ -233,6 +262,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void Awake() {
+        usableColliderComparer = new UsableColliderComparer();
+        grabber = GetComponentInChildren<Grabber>(true);
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
         bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
@@ -284,7 +315,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
         grabbed = true;
-        animator.SetBool("Carried", true);
+        animator.SetBool(Carried, true);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         
@@ -315,7 +346,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
-        animator.SetBool("Carried", false);
+        animator.SetBool(Carried, false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
         controller.enabled = true;
@@ -331,8 +362,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (velocity.magnitude > 3f) {
             StartCoroutine(ThrowRoutine());
         } else {
-            foreach (Collider c in Physics.OverlapSphere(transform.position, 1f, GameManager.instance.usableHitMask,
-                         QueryTriggerInteraction.Collide)) {
+            int hits = Physics.OverlapSphereNonAlloc(transform.position, Mathf.Max(1f, transform.localScale.x),
+                colliders, GameManager.instance.usableHitMask, QueryTriggerInteraction.Collide);
+            usableColliderComparer.SetCheckPoint(transform.position);
+            Array.Sort(colliders, 0, hits, usableColliderComparer);
+            for (int i=0;i<hits;i++) {
+                Collider c = colliders[i];
                 GenericUsable usable = c.GetComponentInParent<GenericUsable>();
                 if (usable != null && usable.CanUse(this)) {
                     usable.LocalUse(this);
@@ -453,7 +488,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume) {
             return;
         }
-        koboldAnimator.SetTrigger("Quaff");
+        koboldAnimator.SetTrigger(Quaff);
         if (gargleSource.enabled == false || !gargleSource.isPlaying) {
             gargleSource.enabled = true;
             garglePack.Play(gargleSource);
@@ -467,7 +502,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (stream.IsWriting) {
             stream.SendNext(GetGenes());
             stream.SendNext(arousal);
-            stream.SendNext(metabolizedContents);
             stream.SendNext(consumedReagents);
             stream.SendNext(energy);
         } else {

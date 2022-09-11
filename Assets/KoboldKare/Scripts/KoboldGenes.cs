@@ -22,11 +22,12 @@ public class KoboldGenes {
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
     public float dickThickness;
+    public byte grabCount = 1;
 
     public KoboldGenes With(float? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
             float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
-            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null) {
+            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null, byte? grabCount = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
             baseSize = baseSize ?? this.baseSize,
@@ -40,7 +41,8 @@ public class KoboldGenes {
             brightness = brightness ?? this.brightness,
             saturation = saturation ?? this.saturation,
             dickEquip = dickEquip ?? this.dickEquip,
-            dickThickness = dickThickness ?? this.dickThickness
+            dickThickness = dickThickness ?? this.dickThickness,
+            grabCount = grabCount ?? this.grabCount
         };
     }
 
@@ -50,7 +52,7 @@ public class KoboldGenes {
             var equipments = EquipmentDatabase.GetEquipments();
             while (dick == null) {
                 foreach(var equipment in equipments) {
-                    if (equipment is DickEquipment && UnityEngine.Random.Range(0f,1f) > 0.9f) {
+                    if (equipment is DickEquipment && Random.Range(0f,1f) > 0.9f) {
                         dick = equipment;
                     }
                 }
@@ -77,7 +79,7 @@ public class KoboldGenes {
 
     public static KoboldGenes Mix(KoboldGenes a, KoboldGenes b) {
         KoboldGenes c;
-        if (UnityEngine.Random.Range(0f, 1f) > 0.5f) {
+        if (Random.Range(0f, 1f) > 0.5f) {
             c = (KoboldGenes)a.MemberwiseClone();
         } else {
             c = (KoboldGenes)b.MemberwiseClone();
@@ -97,11 +99,12 @@ public class KoboldGenes {
         c.baseSize = Mathf.Lerp(a.baseSize, b.baseSize, 0.5f);
         c.maxEnergy = Mathf.Lerp(a.maxEnergy, b.maxEnergy, 0.5f);
         c.dickThickness = Mathf.Lerp(a.dickThickness, b.dickThickness, 0.5f);
+        c.grabCount = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(a.grabCount, b.grabCount, 0.5f)),1);
         
         return c;
     }
 
-    private const short byteCount = sizeof(float) * 9 + sizeof(byte) * 4;
+    private const short byteCount = sizeof(float) * 9 + sizeof(byte) * 5;
     public static short Serialize(StreamBuffer outStream, object customObject) {
         KoboldGenes genes = (KoboldGenes)customObject;
         byte[] bytes = new byte[byteCount];
@@ -118,6 +121,7 @@ public class KoboldGenes {
         bytes[index++] = genes.brightness;
         bytes[index++] = genes.saturation;
         bytes[index++] = genes.dickEquip;
+        bytes[index++] = genes.grabCount;
         Protocol.Serialize(genes.dickThickness, bytes, ref index);
         outStream.Write(bytes, 0, byteCount);
         return byteCount;
@@ -140,6 +144,7 @@ public class KoboldGenes {
             genes.brightness = bytes[index++];
             genes.saturation = bytes[index++];
             genes.dickEquip = bytes[index++];
+            genes.grabCount = bytes[index++];
             Protocol.Deserialize(out genes.dickThickness, bytes, ref index);
         }
         return genes;
@@ -158,6 +163,7 @@ public class KoboldGenes {
         writer.Write(brightness);
         writer.Write(saturation);
         writer.Write(dickEquip);
+        writer.Write(grabCount);
         writer.Write(dickThickness);
     }
 
@@ -174,6 +180,7 @@ public class KoboldGenes {
         brightness = reader.ReadByte();
         saturation = reader.ReadByte();
         dickEquip = reader.ReadByte();
+        grabCount = reader.ReadByte();
         dickThickness = reader.ReadSingle();
         return this;
     }
@@ -192,6 +199,7 @@ public class KoboldGenes {
            brightness: {brightness}
            saturation: {saturation}
            dickEquip: {dickEquip}
+           grabCount: {grabCount}
            dickThickness: {dickThickness}";
     }
 }

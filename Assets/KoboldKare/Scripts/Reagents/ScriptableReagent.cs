@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,5 +40,9 @@ public class ScriptableReagent : ScriptableObject {
             id = ReagentDatabase.GetID(this),
             volume = volume,
         };
+    }
+
+    private void OnValidate() {
+        consumptionEvent.OnValidate();
     }
 }

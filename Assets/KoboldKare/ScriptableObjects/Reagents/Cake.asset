@@ -29,9 +29,15 @@ MonoBehaviour:
   calories: 0.5
   display: {fileID: 8414986315520214398, guid: e2bcdf8be1dbe2841b3d58fef9d8a6fe, type: 3}
   consumptionEvent:
-    rid: 8920608498324865030
+    rid: 8920608563485736961
   references:
     version: 2
     RefIds:
-    - rid: 8920608498324865030
-      type: {class: DefaultConsumption, ns: , asm: Assembly-CSharp}
+    - rid: 8920608563485736961
+      type: {class: CakeConsumption, ns: , asm: Assembly-CSharp}
+      data:
+        requiredCumulativeReagent: 9
+        floaterInfoPrefab:
+          gameObject: {fileID: 2105268475169688605, guid: 7e38c0db2be3dfe4d8f30c1483108852,
+            type: 3}
+          photonName: EnergyFloaters

@@ -499,7 +499,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             if (ragdoller.ragdolled) {
                 passiveEnergyGeneration *= 4f;
             }
-            newEnergy = Mathf.MoveTowards(newEnergy, 1f, passiveEnergyGeneration);
+            newEnergy = Mathf.MoveTowards(newEnergy, 1.1f, passiveEnergyGeneration);
         }
         foreach (var pair in contents) {
             ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);

@@ -990,6 +990,10 @@ MonoBehaviour:
       Swap -kroppe med dem!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: Pik tykkelse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

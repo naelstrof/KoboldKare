@@ -951,6 +951,10 @@ MonoBehaviour:
     m_Key: OBJECTIVE_BODY_SWAP_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Key: SETTING_DICK_THICKNESS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

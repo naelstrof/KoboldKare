@@ -1032,6 +1032,10 @@ MonoBehaviour:
       \uC2A4\uC651\uD558\uC2ED\uC2DC\uC624!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "\uAC70\uC2DC\uAE30 \uB450\uAED8"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -958,6 +958,10 @@ MonoBehaviour:
     m_Localized: "\u54E6\uFF01\u8FD9\u5C31\u662F\u5B83\u7684\u5DE5\u4F5C\u65B9\u5F0F\uFF0C\u9009\u62E9\u60A8\u559C\u6B22\u7684Kobold\u5E76\u4E0E\u4ED6\u4EEC\u4EA4\u6362\u5C38\u4F53\uFF01"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "\u8FEA\u514B\u539A\u5EA6"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

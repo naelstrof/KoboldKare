@@ -208,10 +208,10 @@ MonoBehaviour:
     m_Localized: 'DIESES SPIEL ZEIGT FIKTIONALE CHARAKTERE IN <#FF0000>SEXUELL EXPLIZITEN
       HANDLUNGEN.<#FFFFFF>
 
-      
 
-      Wenn du auf <#008CFF>SPIELEN<#FFFFFF>
-      klickst, gibst du Folgendes an:'
+
+      Wenn du auf <#008CFF>SPIELEN<#FFFFFF> klickst,
+      gibst du Folgendes an:'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -998,6 +998,10 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: "Ohh! So funktioniert es, w\xE4hlen Sie Ihren Lieblingskobold und
       tauschen Sie mit ihnen K\xF6rper aus!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: Schwanz Dicke
     m_Metadata:
       m_Items: []
   references:

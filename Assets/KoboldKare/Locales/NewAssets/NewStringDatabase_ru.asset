@@ -1169,6 +1169,10 @@ MonoBehaviour:
       \u043A\u043E\u0440\u043F\u0443\u0441\u044B Kobold \u0438 Shap!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "\u0414\u0438\u043A \u0422\u043E\u043B\u0449\u0438\u043D\u0430"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

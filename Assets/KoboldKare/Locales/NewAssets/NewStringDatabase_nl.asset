@@ -684,19 +684,19 @@ MonoBehaviour:
   - m_Id: 83373358009864192
     m_Localized: 'Welkom bij Koboldkare!
 
-      
-
-      Koboldkare is een DRM-vrij
-      spel. Wees alstublieft veilig delen, Koboldkare heeft geen crack nodig om te
-      spelen!
-
-      
-
-      Heel erg bedankt voor het steunen van het spel!
 
 
-      Controleer
-      stoom, jeuk en Patreon voor updates en patchnotities.
+      Koboldkare is een DRM-vrij spel.
+      Wees alstublieft veilig delen, Koboldkare heeft geen crack nodig om te spelen!
+
+
+
+      Heel
+      erg bedankt voor het steunen van het spel!
+
+
+      Controleer stoom, jeuk en
+      Patreon voor updates en patchnotities.
 
 '
     m_Metadata:
@@ -1012,6 +1012,10 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: Oh! Dat is hoe het werkt, kies je favoriete Kobold- en ruil lichamen
       met hen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: Penis dikte
     m_Metadata:
       m_Items: []
   references:

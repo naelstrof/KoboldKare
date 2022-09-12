@@ -999,6 +999,10 @@ MonoBehaviour:
       \xE9s cser\xE9lje ki vel\xFCk!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "Fasz Vastags\xE1g"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

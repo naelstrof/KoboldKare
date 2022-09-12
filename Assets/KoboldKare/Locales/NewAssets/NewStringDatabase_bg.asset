@@ -1168,6 +1168,10 @@ MonoBehaviour:
       \u0441\u0438 \u0442\u0435\u043B\u0430 \u043D\u0430 Kobold \u0438 Swap!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "\u0414\u0438\u043A \u0414\u0435\u0431\u0435\u043B\u0438\u043D\u0430"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

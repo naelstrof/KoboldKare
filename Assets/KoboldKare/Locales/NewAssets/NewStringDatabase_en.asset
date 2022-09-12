@@ -401,7 +401,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
-    m_Localized: Sex
+    m_Localized: Femininity - Masculinity
     m_Metadata:
       m_Items: []
   - m_Id: 516099198996
@@ -409,11 +409,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: Top bottom
+    m_Localized: Top - Bottom
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
-    m_Localized: Thickness
+    m_Localized: Kobold Thickness
     m_Metadata:
       m_Items: []
   - m_Id: 516099198999
@@ -1008,6 +1008,10 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: Ohh! That's how it works, pick your favorite kobold and swap bodies
       with them!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: Dick Thickness
     m_Metadata:
       m_Items: []
   references:

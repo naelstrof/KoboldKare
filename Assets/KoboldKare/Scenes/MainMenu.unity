@@ -2623,6 +2623,29 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8350809288681488242, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: settings.Array.size
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350809288681488242, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: settings.Array.data[29]
+      value: 
+      objectReference: {fileID: 11400000, guid: 27b4ca4a820f7cd48bf8dbe267757b18,
+        type: 2}
+    - target: {fileID: 8350809288681488242, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: settings.Array.data[30]
+      value: 
+      objectReference: {fileID: 11400000, guid: 874024a58d96d3e4d8f1f0b18c49fdc9,
+        type: 2}
+    - target: {fileID: 8350809288681488242, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: settings.Array.data[31]
+      value: 
+      objectReference: {fileID: 11400000, guid: 324fbf3cf92ae794b8337dc1b1fb363c,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 364d21a5e4c0c464784d42f01767a083, type: 3}
 --- !u!114 &625158204 stripped

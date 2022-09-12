@@ -999,6 +999,10 @@ MonoBehaviour:
       Kobold a Swap!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "Tlou\u0161\u0165ka penisu"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

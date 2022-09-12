@@ -396,7 +396,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
-    m_Localized: Seks
+    m_Localized: "Kobieco\u015B\u0107 - M\u0119sko\u015B\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198996
@@ -404,11 +404,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: "G\xF3ra d\xF3\u0142"
+    m_Localized: "G\xF3ra - D\xF3\u0142"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
-    m_Localized: "Grubo\u015B\u0107"
+    m_Localized: "Grubo\u015B\u0107 Kobolda"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198999
@@ -428,11 +428,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: Rozmiar kutasa
+    m_Localized: Rozmiar Penisa
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: Rozmiar piersi
+    m_Localized: Rozmiar Piersi
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
@@ -548,7 +548,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: "Rozmiar pi\u0142ek"
+    m_Localized: "Rozmiar J\u0105der"
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -997,6 +997,10 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: "Och! Tak to dzia\u0142a, wybierz swoje ulubione Kobold i zamie\u0144
       na nich cia\u0142a!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: "Grubo\u015B\u0107 Penisa"
     m_Metadata:
       m_Items: []
   references:

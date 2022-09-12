@@ -990,6 +990,10 @@ MonoBehaviour:
       med dem!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213714927872802816
+    m_Localized: pikk Tykkelse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

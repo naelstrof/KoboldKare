@@ -907,6 +907,90 @@ MonoBehaviour:
     m_Localized: Um pau com nervuras com pratos macios e farpas.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Coloque ovos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Precisamos de kobolds de origem local, engravid\xE1 -los e depois
+      coloc\xE1 -los na esta\xE7\xE3o de cria\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: "Cozinhe hamb\xFArguer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Enviei suprimentos para fazer um hamb\xFArguer, usar o moedor para
+      combin\xE1 -los e alimentar os Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Esta\xE7\xE3o de ordenha de desbloqueio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Precisamos expandir nossas exporta\xE7\xF5es de alimentos, comprar
+      o contrato da esta\xE7\xE3o de leite no Escrit\xF3rio de Constru\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Fa\xE7a alimentos \xE0 base de leite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: Ouvi leite e gelo para uma boa bebida, o mesmo com iogurte feito
+      de leite e porra ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Suco up kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Suas partes precisam ser maiores, aliment\xE1 -las de berinjela,
+      mel\xE3o ou suco de abacaxi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Investigue caverna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "H\xE1 um cara assustador na caverna falando sobre imortalidade?
+      Descubra o que se trata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Compre o Swapper Body.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Compre a m\xE1quina de troca corporal do cara assustador. Precisamos
+      otimizar nossa fazenda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. bem -vindo ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: Eu tenho o segredo para a imortalidade aqui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "Por um pre\xE7o, claro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Corpos de troca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! \xC9 assim que funciona, escolha seus corpos favoritos de
+      Kobold e trocar com eles!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

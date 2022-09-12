@@ -24,14 +24,19 @@ public class PlantKoboldObjective : DragonMailObjective {
     public override void Unregister() {
         PlantSpawnEventHandler.RemoveListener(OnPlant);
     }
-    private void OnPlant(GameObject obj, ScriptablePlant plant) {
-        if (plant == targetPlant) {
-            plants++;
-            TriggerUpdate();
-        }
 
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        plants++;
+        TriggerUpdate();
         if (plants >= maxPlants) {
             TriggerComplete();
+        }
+    }
+
+    private void OnPlant(GameObject obj, ScriptablePlant plant) {
+        if (plant == targetPlant) {
+            Advance(obj.transform.position);
         }
     }
 

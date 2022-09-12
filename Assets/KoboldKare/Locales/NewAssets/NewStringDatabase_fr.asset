@@ -908,6 +908,90 @@ MonoBehaviour:
     m_Localized: "Une bite c\xF4tel\xE9e avec des assiettes et des barbes mous."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Pondre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Nous avons besoin de kobolds d'origine locale, de les rendre enceintes,
+      puis de les mettre \xE0 la station de reproduction."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cuisiner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "J'ai envoy\xE9 des fournitures pour faire un hamburger, utiliser
+      le broyeur pour les combiner et nourrir les Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Station de traite de d\xE9verrouillage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Nous devons \xE9tendre nos exportations alimentaires, acheter le
+      contrat de la station de lait au bureau de construction."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Faire des aliments \xE0 base de lait"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "J'ai entendu du lait et de la glace faire une bonne boisson, la
+      m\xEAme chose avec du yaourt \xE0 base de lait et de sperme ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Juice up kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Leurs pi\xE8ces doivent \xEAtre plus grandes, les nourrir auberge,
+      au melon ou au jus d'ananas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "Enqu\xEAter sur la grotte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Il y a un gars effrayant dans la grotte qui parle d'immortalit\xE9?
+      D\xE9couvrez de quoi il s'agit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Achetez le corps du corps.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Achetez la machine d'\xE9change de corps aupr\xE8s du gars effrayant.
+      Nous en aurons besoin pour optimiser notre ferme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. bienvenue ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "J'ai le secret de l'immortalit\xE9 ici"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "Pour un prix, bien s\xFBr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: "\xC9changer des corps"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! C'est comme \xE7a que cela fonctionne, choisissez votre kobold
+      pr\xE9f\xE9r\xE9 et \xE9changez des corps avec eux!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

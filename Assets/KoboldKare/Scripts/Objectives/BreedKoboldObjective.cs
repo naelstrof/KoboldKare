@@ -18,13 +18,18 @@ public class BreedKoboldObjective : DragonMailObjective {
     public override void Unregister() {
         OvipositionSpot.oviposition -= OnOviposit;
     }
-    
-    private void OnOviposit(GameObject egg) {
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
         eggs++;
         TriggerUpdate();
         if (eggs >= maxEggs) {
             TriggerComplete();
         }
+    }
+
+    private void OnOviposit(GameObject egg) {
+        Advance(egg.transform.position);
     }
     public override string GetTextBody() {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";

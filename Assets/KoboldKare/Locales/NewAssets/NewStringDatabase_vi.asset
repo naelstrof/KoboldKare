@@ -941,6 +941,99 @@ MonoBehaviour:
       v\xE0 Barbs."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: "\u0110\u1EBB tr\u1EE9ng"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Ch\xFAng t\xF4i c\u1EA7n c\xE1c kobold c\xF3 ngu\u1ED3n g\u1ED1c
+      \u0111\u1ECBa ph\u01B0\u01A1ng, khi\u1EBFn ch\xFAng mang thai, sau \u0111\xF3
+      \u0111\u1EB7t ch\xFAng t\u1EA1i tr\u1EA1m nh\xE2n gi\u1ED1ng."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: "N\u1EA5u burger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "T\xF4i \u0111\xE3 g\u1EEDi \u0111\u1ED3 d\xF9ng \u0111\u1EC3 l\xE0m
+      m\u1ED9t chi\u1EBFc burger, s\u1EED d\u1EE5ng m\xE1y xay \u0111\u1EC3 k\u1EBFt
+      h\u1EE3p ch\xFAng v\xE0 cho kobold \u0103n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "M\u1EDF kh\xF3a tr\u1EA1m s\u1EEFa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Ch\xFAng t\xF4i c\u1EA7n m\u1EDF r\u1ED9ng xu\u1EA5t kh\u1EA9u
+      th\u1EF1c ph\u1EA9m, mua h\u1EE3p \u0111\u1ED3ng tr\u1EA1m s\u1EEFa t\u1EA1i
+      V\u0103n ph\xF2ng X\xE2y d\u1EF1ng."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "L\xE0m th\u1EF1c ph\u1EA9m d\u1EF1a tr\xEAn s\u1EEFa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "T\xF4i \u0111\xE3 nghe s\u1EEFa v\xE0 \u0111\xE1 l\xE0m cho m\u1ED9t
+      th\u1EE9c u\u1ED1ng ngon, gi\u1ED1ng v\u1EDBi s\u1EEFa chua l\xE0m t\u1EEB
+      s\u1EEFa v\xE0 ki\xEAm ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: "N\u01B0\u1EDBc \xE9p l\xEAn kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "C\xE1c b\u1ED9 ph\u1EADn c\u1EE7a h\u1ECD c\u1EA7n ph\u1EA3i l\u1EDBn
+      h\u01A1n, cho ch\xFAng \u0103n c\xE0 t\xEDm, d\u01B0a ho\u1EB7c n\u01B0\u1EDBc
+      \xE9p d\u1EE9a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "\u0110i\u1EC1u tra hang \u0111\u1ED9ng"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "C\xF3 m\u1ED9t anh ch\xE0ng ma qu\xE1i trong hang n\xF3i v\u1EC1
+      s\u1EF1 b\u1EA5t t\u1EED? T\xECm hi\u1EC3u nh\u1EEFng g\xEC \u0111\xF3 l\xE0
+      v\u1EC1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Mua body Swapper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Mua m\xE1y ho\xE1n \u0111\u1ED5i c\u01A1 th\u1EC3 t\u1EEB anh ch\xE0ng
+      ma qu\xE1i. Ch\xFAng t\xF4i s\u1EBD c\u1EA7n n\xF3 \u0111\u1EC3 t\u1ED1i \u01B0u
+      h\xF3a trang tr\u1EA1i c\u1EE7a ch\xFAng t\xF4i."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: "Oh ho ho .. ch\xE0o m\u1EEBng ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "T\xF4i \u0111\xE3 c\xF3 b\xED m\u1EADt cho s\u1EF1 b\u1EA5t t\u1EED
+      \u1EDF \u0111\xE2y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "cho m\u1ED9t gi\xE1 t\u1EA5t nhi\xEAn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: "Trao \u0111\u1ED5i c\u01A1 th\u1EC3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! \u0110\xF3 l\xE0 c\xE1ch n\xF3 ho\u1EA1t \u0111\u1ED9ng, ch\u1ECDn
+      c\u01A1 th\u1EC3 kobold y\xEAu th\xEDch c\u1EE7a b\u1EA1n v\xE0 trao \u0111\u1ED5i
+      c\u01A1 th\u1EC3 v\u1EDBi ch\xFAng!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -42,7 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _WaterNormal:
         m_Texture: {fileID: 2800000, guid: 0ecd96c200a42234db5bc56da13d3550, type: 3}
-        m_Scale: {x: 10, y: 20}
+        m_Scale: {x: 8, y: 8}
         m_Offset: {x: 0, y: 0}
     - _WavesMask:
         m_Texture: {fileID: 2800000, guid: 989a2fe683fce174f96139ad18f4e484, type: 3}

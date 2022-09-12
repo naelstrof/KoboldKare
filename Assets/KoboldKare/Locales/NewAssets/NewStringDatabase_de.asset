@@ -916,6 +916,90 @@ MonoBehaviour:
     m_Localized: Ein gerippter Schwanz mit weichen Tellern und Widerhaken.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Eier legen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: Wir brauchen Kobolds aus der Region, lassen sie schwanger und setzen
+      sie dann auf die Brutstation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Burger kochen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Ich habe Vorr\xE4te geschickt, um einen Burger zu machen, die M\xFChle
+      zu verwenden, um sie zu kombinieren und die Kobolds zu f\xFCttern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: Melkstation freischalten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Wir m\xFCssen unsere Lebensmittelexporte erweitern und den Milchstationsvertrag
+      im Baub\xFCro kaufen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Machen Sie Milch auf Milchbasis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Ich habe geh\xF6rt, dass Milch und Eis f\xFCr ein sch\xF6nes Getr\xE4nk
+      sorgen, das gleiche mit Joghurt aus Milch und Sperma ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Saft auf Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Ihre Teile m\xFCssen gr\xF6\xDFer sein und ihnen Aubergine, Melone
+      oder Ananasaft f\xFCttern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "H\xF6hle untersuchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Es gibt einen gruseligen Typ in der H\xF6hle, der \xFCber Unsterblichkeit
+      spricht? Finden Sie heraus, worum es geht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: "Kaufen Sie den K\xF6rpertausch."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: Kaufen Sie die Body -Tauschmaschine vom gruseligen Kerl. Wir werden
+      es brauchen, um unsere Farm zu optimieren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho. Willkommen ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: Ich habe hier das Geheimnis der Unsterblichkeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "F\xFCr einen Preis nat\xFCrlich."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: "K\xF6rpertausch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! So funktioniert es, w\xE4hlen Sie Ihren Lieblingskobold und
+      tauschen Sie mit ihnen K\xF6rper aus!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

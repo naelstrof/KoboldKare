@@ -908,6 +908,90 @@ MonoBehaviour:
     m_Localized: "Una polla acanalada con placas blandas y p\xFAas."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Poner huevos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Necesitamos kobolds de origen local, los embarazan y luego los
+      colocamos en la estaci\xF3n de reproducci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cocinar hamburguesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: He enviado suministros para hacer una hamburguesa, usar el molinillo
+      para combinarlos y alimentar a los Kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Desbloquear la estaci\xF3n de orde\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Necesitamos expandir nuestras exportaciones de alimentos, comprar
+      el contrato de la estaci\xF3n de leche en la oficina de construcci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Hacer alimentos a base de leche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "He o\xEDdo que la leche y el hielo hacen una buena bebida, lo mismo
+      con el yogur hecho de leche y semen ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Jugo up kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Sus piezas deben ser m\xE1s grandes, alimentarlos con berenjena,
+      mel\xF3n o jugo de pi\xF1a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Investigar la cueva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "\xBFHay un tipo espeluznante en la cueva que habla de inmortalidad?
+      Descubra de qu\xE9 se trata."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Compre el swapper del cuerpo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Compre la m\xE1quina Swap Body Swap del tipo espeluznante. Lo necesitaremos
+      para optimizar nuestra granja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. bienvenido ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Tengo el secreto de la inmortalidad aqu\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: Por un precio, por supuesto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Cambiar cuerpos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "\xA1Oh! \xA1As\xED es como funciona, elige tu kobold favorito y
+      cambie los cuerpos con ellos!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

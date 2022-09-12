@@ -21,12 +21,19 @@ public class SellKoboldObjective : DragonMailObjective {
     public override void Unregister() {
         soldObject.RemoveListener(OnEntitySold);
     }
-    private void OnEntitySold(PhotonView obj) {
-        if (obj.GetComponentInChildren<Kobold>() != null) {
-            kobolds++;
-        }
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        kobolds++;
+        TriggerUpdate();
         if (kobolds >= maxKobolds) {
             TriggerComplete();
+        }
+    }
+
+    private void OnEntitySold(PhotonView obj) {
+        if (obj.GetComponentInChildren<Kobold>() != null) {
+            Advance(obj.transform.position);
         }
     }
 

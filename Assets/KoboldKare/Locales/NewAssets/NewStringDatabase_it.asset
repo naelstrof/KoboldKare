@@ -912,6 +912,90 @@ MonoBehaviour:
     m_Localized: Un cazzo a coste con piastre morbide e barbi.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Deporre uova
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: Abbiamo bisogno di koldo di provenienza locale, prepararli alla
+      gravidanza, quindi metterli alla stazione di allevamento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cuocere hamburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: Ho inviato rifornimenti per fare un hamburger, usare la smerigliatrice
+      per combinarli e dare da mangiare ai kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: Sblocca la stazione di mungitura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: Dobbiamo espandere le nostre esportazioni alimentari, acquistare
+      il contratto di stazione di latte presso l'ufficio di costruzione.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Crea cibi a base di latte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Ho sentito il latte e il ghiaccio \xE8 un bel drink, lo stesso
+      con yogurt a base di latte e sperma ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Juice Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Le loro parti devono essere pi\xF9 grandi, nutrire loro melanzane,
+      melone o succo di ananas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Indagare sulla caverna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "C'\xE8 un ragazzo spettrale nella grotta che parla di immortalit\xE0?
+      Scopri di cosa si tratta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Acquista il body swapper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: Acquista la macchina per lo swap sul corpo dal ragazzo spettrale.
+      Ne avremo bisogno per ottimizzare la nostra fattoria.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. benvenuto ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Ho il segreto dell'immortalit\xE0 qui"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: per un prezzo ovviamente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Scambiare corpi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! \xC8 cos\xEC che funziona, scegli i tuoi corpi kobold e swap
+      preferiti con loro!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

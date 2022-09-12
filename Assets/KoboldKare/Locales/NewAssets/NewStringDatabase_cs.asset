@@ -915,6 +915,90 @@ MonoBehaviour:
     m_Localized: "\u017Debrovan\xFD p\xE9ro s m\u011Bkk\xFDmi tal\xED\u0159i a ostny."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: "Sn\xE1\u0161et vejce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Pot\u0159ebujeme kobolds na m\xEDstn\xED \xFArovni, ot\u011Bhotn\xEDme
+      je a pot\xE9 je postav\xEDme na \u017Eivnou stanici."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cook Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Poslal jsem z\xE1soby, abych vytvo\u0159il hamburger, pomoc\xED
+      brusky je kombinoval a nakrmil kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Odemkn\u011Bte dojic\xED stanici"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Mus\xEDme roz\u0161\xED\u0159it n\xE1\u0161 v\xFDvoz potravin,
+      koupit si smlouvu o ml\xE9\u010Dn\xE9 stanici ve stavebn\xEDm \xFA\u0159adu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Vytvo\u0159te potraviny na b\xE1zi ml\xE9ka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Sly\u0161el jsem, \u017Ee ml\xE9ko a led d\u011Bl\xE1 p\u011Bkn\xFD
+      n\xE1poj, stejn\u011B jako jogurt vyroben\xFD z ml\xE9ka a cum ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: "\u0160\u0165\xE1va nahoru kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Jejich \u010D\xE1sti mus\xED b\xFDt v\u011Bt\u0161\xED, nakrmit
+      je lilek, meloun nebo ananasovou \u0161\u0165\xE1vu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Prozkoumejte jeskyni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "V jeskyni je stra\u0161ideln\xFD \u010Dlov\u011Bk, kter\xFD mluv\xED
+      o nesmrtelnosti? Zjist\u011Bte, o co jde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Kupte si swapper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Kupte si stroj na v\xFDm\u011Bnu t\u011Bla od stra\u0161ideln\xE9ho
+      chlapa. Budeme pot\u0159ebovat, abychom optimalizovali na\u0161i farmu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: "Ach Ho Ho .. V\xEDtejte ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "M\xE1m tu tajemstv\xED nesmrtelnosti"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "Za cenu samoz\u0159ejm\u011B."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: "V\xFDm\u011Bnn\xE9 t\u011Bla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ach! Tak to funguje, vyberte si s nimi obl\xEDben\xE1 t\u011Bla
+      Kobold a Swap!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

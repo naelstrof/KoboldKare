@@ -930,6 +930,90 @@ MonoBehaviour:
     m_Localized: Een geribbelde lul met zachte platen en weerhaken.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Eieren leggen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: We hebben lokaal geproduceerde Kobolds nodig, krijgen ze zwanger
+      en zet ze vervolgens bij het broedstation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Kookburger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Ik heb benodigdheden gestuurd om een \u200B\u200Bhamburger te maken,
+      de molen te gebruiken om ze te combineren en de Kobolds te voeden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: Ontgrendel het melkstation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: We moeten onze voedseluitvoer uitbreiden, het Melkstationcontract
+      kopen bij het bouwkantoor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Maak voedsel op basis van melk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: Ik heb gehoord dat melk en ijs een lekker drankje zorgt, hetzelfde
+      met yoghurt gemaakt van melk en sperma ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Sap Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: Hun delen moeten groter zijn, ze geven aan aubergine, meloen of
+      ananassap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Onderzoek de grot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: Is er een griezelige man in de grot die over onsterfelijkheid spreekt?
+      Ontdek waar dat over gaat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Koop de Body Swapper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: Koop de Body Swap -machine van de Spooky Guy. We hebben het nodig
+      om onze boerderij te optimaliseren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. welkom ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: Ik heb hier het geheim van onsterfelijkheid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: voor een prijs natuurlijk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Ruillichamen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: Oh! Dat is hoe het werkt, kies je favoriete Kobold- en ruil lichamen
+      met hen!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

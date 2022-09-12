@@ -908,6 +908,90 @@ MonoBehaviour:
     m_Localized: "Unutettu munaa pehmeill\xE4 levyill\xE4 ja barbeilla."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Munia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Tarvitsemme paikallisesti hankittuja Koboldeja, tulemme heid\xE4t
+      raskaaksi ja aseta ne sitten jalostusasemalle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: "Keit\xE4 hampurilainen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Olen l\xE4hett\xE4nyt tarvikkeita hampurilaisen valmistamiseksi,
+      yhdist\xE4m\xE4\xE4n ne ja ruokkivat Koboldsia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: Avaa lypsyasema
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Meid\xE4n on laajennettava elintarvikkeiden vienti\xE4mme, ostettava
+      maitoasemasopimus rakennustoimistosta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Tee maitopohjaisia \u200B\u200Bruokia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Olen kuullut maitoa ja j\xE4\xE4t\xE4, joka tekee mukavan juoman,
+      samoin maidosta ja cumista valmistetulla jogurtilla ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Mehu kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: Niiden osien on oltava isompia, ruokkia heille munakoiso-, meloni-
+      tai ananasmehua.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Tutkia luolaa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Luolassa on pelottava kaveri, joka puhuu kuolemattomuudesta? Ota
+      selv\xE4\xE4, mist\xE4 se on kyse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Osta kehonvaihto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Osta vartalonvaihtokone pelottavalta kaverilta. Tarvitsemme sit\xE4
+      maatilan optimoimiseksi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Voi ho ho .. Tervetuloa ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Minulla on salaisuus kuolemattomuuteen t\xE4\xE4ll\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: hintaan tietysti.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Vaihda runkoja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Voi! N\xE4in se toimii, valitse suosikki Kobold ja vaihda rungosi
+      heid\xE4n kanssaan!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

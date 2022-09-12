@@ -875,6 +875,82 @@ MonoBehaviour:
     m_Key: EQUIPMENT_PLATED_DICK_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Key: OBJECTIVE_LAY_EGGS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Key: OBJECTIVE_LAY_EGGS_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Key: OBJECTIVE_COOK_BURGER_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Key: OBJECTIVE_COOK_BURGER_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Key: OBJECTIVE_UNLOCK_MILK_TABLE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Key: OBJECTIVE_UNLOCK_MILK_TABLE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Key: OBJECTIVE_MAKE_MILK_BASED_FOODS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Key: OBJECTIVE_MAKE_MILK_BASED_FOODS_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Key: OBJECTIVE_MAKE_PARTS_LARGER_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Key: OBJECTIVE_MAKE_PARTS_LARGER_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Key: OBJECTIVE_INVESTIGATE_CAVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Key: OBJECTIVE_INVESTIGATE_CAVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Key: OBJECTIVE_PURCHASE_BODY_SWAP_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Key: OBJECTIVE_PURCHASE_BODY_SWAP_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Key: CREEPY_GUY_DIALOGUE_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Key: CREEPY_GUY_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Key: CREEPY_GUY_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Key: OBJECTIVE_BODY_SWAP_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Key: OBJECTIVE_BODY_SWAP_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

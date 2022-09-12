@@ -11,6 +11,8 @@ public class DragonMailObjective : ISavable, IPunObservable {
     public bool autoAdvance = false;
     [SerializeField]
     protected LocalizedString title;
+    [SerializeField]
+    protected PhotonGameObjectReference starExplosion;
 
     public virtual string GetTitle() => title.GetLocalizedString();
     public delegate void ObjectiveAction(DragonMailObjective obj);
@@ -23,6 +25,17 @@ public class DragonMailObjective : ISavable, IPunObservable {
     }
     protected void TriggerUpdate() {
         updated.Invoke(this);
+    }
+
+    protected virtual void Advance(Vector3 position) {
+        if (!PhotonNetwork.IsMasterClient) return;
+        GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
+        obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
+    }
+
+    IEnumerator DestroyAfterTime(GameObject obj) {
+        yield return new WaitForSeconds(5f);
+        PhotonNetwork.Destroy(obj);
     }
 
     public virtual void Register() {
@@ -45,6 +58,7 @@ public class DragonMailObjective : ISavable, IPunObservable {
     }
 
     public virtual void OnValidate() {
+        starExplosion.OnValidate();
     }
 
 }

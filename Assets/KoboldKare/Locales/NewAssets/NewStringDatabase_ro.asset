@@ -914,6 +914,91 @@ MonoBehaviour:
     m_Localized: "O pula cu nervuri cu farfurii moi \u0219i barbe."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: A depune oua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Avem nevoie de kobolduri provenite local, de a le r\u0103m\xE2ne
+      \xEEns\u0103rcinate, apoi de a le pune la sta\u021Bia de reproducere."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: "G\u0103ti\u021Bi burgerul"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Am trimis provizii pentru a face un burger, a folosi polizorul
+      pentru a le combina \u0219i a hr\u0103ni Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Debloca\u021Bi sta\u021Bia de muls"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Trebuie s\u0103 ne extindem exporturile de produse alimentare,
+      s\u0103 achizi\u021Bion\u0103m contractul de sta\u021Bii de lapte la biroul
+      de construc\u021Bii."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Face\u021Bi alimente pe baz\u0103 de lapte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Am auzit c\u0103 laptele \u0219i ghea\u021Ba face o b\u0103utur\u0103
+      frumoas\u0103, la fel cu iaurtul f\u0103cut din lapte \u0219i sperm\u0103 ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: "Sucuri \xEEn sus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "P\u0103r\u021Bile lor trebuie s\u0103 fie mai mari, s\u0103 le
+      hr\u0103neasc\u0103 vinete, pepene sau suc de ananas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "Cerceta\u021Bi pe\u0219tera"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Exist\u0103 un tip \xEEnfrico\u0219\u0103tor \xEEn pe\u0219ter\u0103
+      care vorbe\u0219te despre nemurire? Afla\u021Bi despre ce este vorba."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: "Cump\u0103ra\u021Bi swapper -ul corpului."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Cump\u0103ra\u021Bi ma\u0219ina de schimb de corp de la tipul \xEEnfrico\u0219\u0103tor.
+      Vom avea nevoie de ea pentru a ne optimiza ferma."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: "Oh Ho Ho .. Bine a\u021Bi venit ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: Am secretul nemuririi aici
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "pentru un pre\u021B, desigur."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Swap Corps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! A\u0219a func\u021Bioneaz\u0103, alege -\u021Bi corpurile
+      preferate \u0219i schimb\xE2nd corpurile cu ele!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

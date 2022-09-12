@@ -926,6 +926,90 @@ MonoBehaviour:
     m_Localized: A ribbed dick with soft plates and barbs.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Lay Eggs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: We need locally sourced kobolds, get them pregnant, then set them
+      at the breeding station.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cook Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: I've sent supplies to make a burger, use the grinder to combine
+      them and feed the kobolds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: Unlock Milking Station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: We need to expand our food exports, purchase the milk station contract
+      at the construction office.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Make Milk-based Foods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: I've heard milk and ice makes for a nice drink, same with yogurt
+      made from milk and cum...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Juice up Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: Their parts need to be bigger, feed them eggplant, melon, or pineapple
+      juice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: Investigate Cave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: There's a spooky guy in the cave talking about immortality? Find
+      out what that's about.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Purchase the body swapper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: Purchase the body swap machine from the spooky guy. We'll need it
+      to optimize our farm.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho.. welcome...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: I've got the secret to immortality here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: for a price of course.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Swap bodies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: Ohh! That's how it works, pick your favorite kobold and swap bodies
+      with them!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

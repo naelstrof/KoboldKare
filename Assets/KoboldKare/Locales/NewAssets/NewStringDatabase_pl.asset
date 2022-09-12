@@ -756,7 +756,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
+    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -913,6 +913,90 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 211765989965615104
     m_Localized: "\u017Bebrowany kutas z mi\u0119kkimi p\u0142ytami i kolcami."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: "Nie\u015B\u0107 si\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Potrzebujemy lokalnych kobold\xF3w, zaj\u015B\u0107 w ci\u0105\u017C\u0119,
+      a nast\u0119pnie ustawi\u0107 na stacji hodowlanej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: "Gotowa\u0107 burger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Wys\u0142a\u0142em zapasy, aby zrobi\u0107 burgera, u\u017Cy\u0107
+      szlifierki, aby je po\u0142\u0105czy\u0107 i nakarmi\u0107 Kobolds."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "Odblokuj stacj\u0119 dojenia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Musimy rozszerzy\u0107 nasz eksport \u017Cywno\u015Bci, kupi\u0107
+      kontrakt na stacji mlecznej w biurze budowlanym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Tw\xF3rz \u017Cywno\u015B\u0107 na bazie mleka"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "S\u0142ysza\u0142em, jak mleko i l\xF3d tworz\u0105 \u0142adny
+      nap\xF3j, taki sam z jogurtem wykonanym z mleka i spermy ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Sok w Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Ich cz\u0119\u015Bci musz\u0105 by\u0107 wi\u0119ksze, karmi\u0105
+      je bak\u0142a\u017Cana, melon lub sok ananasowy."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "Zbadaj jaskini\u0119"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "W jaskini jest upiorny facet, kt\xF3ry m\xF3wi o nie\u015Bmiertelno\u015Bci?
+      Dowiedz si\u0119, o co chodzi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: Kup Swapper Body.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Kup maszyn\u0119 wymiany cia\u0142a od upiornego faceta. Potrzebujemy
+      go, aby zoptymalizowa\u0107 nasz\u0105 farm\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. witaj ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Mam tutaj sekret nie\u015Bmiertelno\u015Bci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "Oczywi\u015Bcie za cen\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: "Zamie\u0144 cia\u0142a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Och! Tak to dzia\u0142a, wybierz swoje ulubione Kobold i zamie\u0144
+      na nich cia\u0142a!"
     m_Metadata:
       m_Items: []
   references:

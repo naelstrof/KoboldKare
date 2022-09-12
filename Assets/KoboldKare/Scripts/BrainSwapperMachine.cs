@@ -7,6 +7,9 @@ using UnityEngine;
 using Vilar.AnimationStation;
 
 public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
+    public delegate void BodySwapAction(Kobold a, Kobold b);
+
+    public static event BodySwapAction bodySwapped;
     [SerializeField]
     private Sprite sleepingSprite;
     [SerializeField]
@@ -137,6 +140,10 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
                     bPlayer.TagObject = bKobold;
                 }
             }
+        }
+
+        if (aView != null && bView != null) {
+            bodySwapped?.Invoke(aView.GetComponent<Kobold>(), bView.GetComponent<Kobold>());
         }
     }
 

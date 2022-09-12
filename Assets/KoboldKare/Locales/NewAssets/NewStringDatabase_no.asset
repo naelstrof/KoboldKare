@@ -906,6 +906,90 @@ MonoBehaviour:
     m_Localized: En ribbet pikk med myke tallerkener og pigger.
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: Legge egg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Vi trenger lokalt hentet Kobolds, f\xE5 dem gravide, og setter
+      dem deretter p\xE5 hekkestasjonen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cook Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Jeg har sendt forsyninger for \xE5 lage en burger, bruke kvernen
+      til \xE5 kombinere dem og mate koboldene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "L\xE5s opp melkestasjon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Vi m\xE5 utvide mateksporten, kj\xF8pe melkestasjonskontrakten
+      p\xE5 byggekontoret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: Lag melkebaserte matvarer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Jeg har h\xF8rt melk og is gir en god drink, det samme med yoghurt
+      laget av melk og s\xE6d ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Juice opp kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Delene deres m\xE5 v\xE6re st\xF8rre, mate dem aubergine, melon
+      eller ananasjuice."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "Unders\xF8k hule"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Det er en nifs fyr i hulen som snakker om ud\xF8delighet? Finn
+      ut hva det handler om."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: "Kj\xF8p kroppsswapperen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "Kj\xF8p Body Swap Machine fra den nifs fyren. Vi trenger det for
+      \xE5 optimalisere g\xE5rden v\xE5r."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: Oh ho ho .. velkommen ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Jeg har hemmeligheten bak ud\xF8delighet her"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "for en pris selvf\xF8lgelig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Bytt kropper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "\xC5h! Slik fungerer det, velg dine favoritt kobold og bytt kropper
+      med dem!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

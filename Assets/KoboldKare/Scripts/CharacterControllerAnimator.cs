@@ -289,7 +289,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     private void StopAnimation() {
-        kobold.GetComponent<Ragdoller>().SetLocked(false);
         if (!animating) {
             return;
         }
@@ -318,6 +317,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         solver.enabled = false;
         controller.enabled = true;
         kobold.body.isKinematic = false;
+        kobold.GetComponent<Ragdoller>().SetLocked(false);
         solver.CleanUp();
     }
 

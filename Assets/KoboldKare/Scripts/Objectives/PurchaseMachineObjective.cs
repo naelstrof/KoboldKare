@@ -18,10 +18,16 @@ public class PurchaseMachineObjective : DragonMailObjective {
     public override void Unregister() {
         ConstructionContract.purchasedEvent -= OnContractSold;
     }
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        TriggerComplete();
+    }
+
     private void OnContractSold(ConstructionContract contract) {
         if (contract is MachineConstructionContract machineContract) {
             if (machineContract.GetMachines().Contains(targetMachine)) {
-                TriggerComplete();
+                Advance(targetMachine.transform.position);
             }
         }
     }

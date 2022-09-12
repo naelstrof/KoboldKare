@@ -24,9 +24,14 @@ public class KoboldCreateObjective : DragonMailObjective {
 
     private void OnEntitySpawn(GameObject obj) {
         if (obj.GetComponentInChildren<Kobold>() != null) {
-            kobolds++;
-            TriggerUpdate();
+            Advance(obj.transform.position);
         }
+    }
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        kobolds++;
+        TriggerUpdate();
         if (kobolds >= maxKobolds) {
             TriggerComplete();
         }

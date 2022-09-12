@@ -906,6 +906,90 @@ MonoBehaviour:
     m_Localized: "En ribben pik med bl\xF8de plader og modhager."
     m_Metadata:
       m_Items: []
+  - m_Id: 213469775633371136
+    m_Localized: "L\xE6gge \xE6g"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314176
+    m_Localized: "Vi har brug for lokalt fremskaffede kobolds, f\xE5 dem gravide
+      og derefter s\xE6tte dem p\xE5 avlsstationen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314177
+    m_Localized: Cook Burger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314178
+    m_Localized: "Jeg har sendt forsyninger for at lave en burger, bruge kv\xE6rnen
+      til at kombinere dem og fodre kobolderne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314179
+    m_Localized: "L\xE5s op for malkestation"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314180
+    m_Localized: "Vi er n\xF8dt til at udvide vores f\xF8devareeksport ved at k\xF8be
+      m\xE6lkestationskontrakten p\xE5 byggekontoret."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314181
+    m_Localized: "Lav m\xE6lkebaserede f\xF8devarer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314182
+    m_Localized: "Jeg har h\xF8rt m\xE6lk og is giver en dejlig drink, det samme
+      med yoghurt lavet af m\xE6lk og sperm ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314183
+    m_Localized: Juice op Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213469775675314184
+    m_Localized: "Deres dele skal v\xE6re st\xF8rre, fodre dem aubergine, melon eller
+      ananasjuice."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810347585536
+    m_Localized: "Unders\xF8g Cave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945664
+    m_Localized: "Der er en uhyggelig fyr i hulen, der taler om ud\xF8delighed? Find
+      ud af, hvad det handler om."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945665
+    m_Localized: "K\xF8b kroppens swapper."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945666
+    m_Localized: "K\xF8b The Body Swap Machine fra den uhyggelige fyr. Vi har brug
+      for det for at optimere vores g\xE5rd."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945667
+    m_Localized: "\xC5h ho ho .. velkommen ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945668
+    m_Localized: "Jeg har hemmeligheden bag ud\xF8delighed her"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213551810376945669
+    m_Localized: "til en pris selvf\xF8lgelig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853120
+    m_Localized: Swap kroppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213569843006853121
+    m_Localized: "Ohh! S\xE5dan fungerer det, v\xE6lg dine foretrukne Kobold- og
+      Swap -kroppe med dem!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KoboldKare;
 using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class BucketWeapon : GenericWeapon {
+    public delegate void FoodCreateAction(BucketWeapon bucket, ScriptableReagent food);
+
+    public static event FoodCreateAction foodCreated;
     [SerializeField]
     private PhotonGameObjectReference bucketSplashProjectile;
     [SerializeField]
@@ -55,6 +59,7 @@ public class BucketWeapon : GenericWeapon {
     void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         GameObject bestDisplay = null;
         float bestVolume = 0f;
+        short bestID = -1;
         foreach (var reagent in contents) {
             if (ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab() == null) {
                 continue;
@@ -65,6 +70,7 @@ public class BucketWeapon : GenericWeapon {
             if (reagent.volume > bestVolume) {
                 bestDisplay = ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab();
                 bestVolume = reagent.volume;
+                bestID = reagent.id;
             }
         }
 
@@ -74,7 +80,8 @@ public class BucketWeapon : GenericWeapon {
         }
 
         if (bestDisplay != null && currentDisplay == null) {
-            currentDisplay = GameObject.Instantiate(bestDisplay, transform);
+            foodCreated?.Invoke(this, ReagentDatabase.GetReagent(bestID));
+            currentDisplay = Instantiate(bestDisplay, transform);
             defaultBucketDisplay.SetActive(false);
         }
     }

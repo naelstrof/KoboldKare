@@ -8,7 +8,7 @@ using SkinnedMeshDecals;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class MilkingTable : GenericUsable, IAnimationStationSet {
+public class MilkingTable : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private Sprite milkingSprite;
     [SerializeField]

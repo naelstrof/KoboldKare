@@ -273,6 +273,7 @@ MonoBehaviour:
   container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
   defaultBucketDisplay: {fileID: 5734314245941284669}
+  foodCreateEvent: {fileID: 11400000, guid: 5c4def85cd2c8dc46ac78c18cf1121f6, type: 2}
   body: {fileID: 7403922466466801549}
   bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
   projectileCount: 1

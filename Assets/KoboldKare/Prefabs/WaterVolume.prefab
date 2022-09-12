@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.30177265, z: -0, w: 0.95338}
   m_LocalPosition: {x: 0, y: -28, z: 0}
   m_LocalScale: {x: 70, y: 70, z: 189.19461}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4451852234672056430}
   m_RootOrder: 0
@@ -74,6 +75,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -157.9, y: 11.4, z: -817}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4451852234131868825}
   m_Father: {fileID: 0}
@@ -91,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3f45b3ca4b0cd408f314264ac39cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillRate: 20
+  fillRate: 40
   fluidScaler: {fileID: 0}
   fluidRenderers: []
   decalDipMaterial: {fileID: 2100000, guid: d25c2296f8334404f976c6dfba3823e7, type: 2}

@@ -114,7 +114,7 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
     }
     
     [PunRPC]
-    void SellObject(int viewID) {
+    IEnumerator SellObject(int viewID) {
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
@@ -125,20 +125,24 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
         soldGameEvent.Raise(view);
         poof.SendEvent("TriggerPoof");
         sellPack.PlayOneShot(sellSource);
+
+        if (!view.IsMine) {
+            yield break;
+        }
+
+        // Just wait a very short while so that we don't shuffle the order of our commands (sell -> delete)
+        yield return new WaitForSeconds(0.1f);
+        PhotonNetwork.Destroy(view.gameObject);
         
-        if (view.IsMine) {
-            PhotonNetwork.Destroy(view.gameObject);
-        
-            int i = 0;
-            while(totalWorth > 0f) {
-                float currentPayout = FloorNearestPower(5f,totalWorth);
-                //currentPayout = Mathf.Min(payout, currentPayout);
-                totalWorth -= currentPayout;
-                totalWorth = Mathf.Max(totalWorth,0f);
-                float up = Mathf.Floor((float)i/4f)*0.2f;
-                PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
-                i++;
-            }
+        int i = 0;
+        while(totalWorth > 0f) {
+            float currentPayout = FloorNearestPower(5f,totalWorth);
+            //currentPayout = Mathf.Min(payout, currentPayout);
+            totalWorth -= currentPayout;
+            totalWorth = Mathf.Max(totalWorth,0f);
+            float up = Mathf.Floor((float)i/4f)*0.2f;
+            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
+            i++;
         }
     }
 

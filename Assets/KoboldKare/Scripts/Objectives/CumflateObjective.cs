@@ -17,9 +17,11 @@ public class CumflateObjective : DragonMailObjective {
 
     private int cumflated;
     public override void Register() {
+        base.Register();
         GenericReagentContainer.containerFilled += OnContainerFilled;
     }
     public override void Unregister() {
+        base.Unregister();
         GenericReagentContainer.containerFilled -= OnContainerFilled;
     }
     private void OnContainerFilled(GenericReagentContainer container) {

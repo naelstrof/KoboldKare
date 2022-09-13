@@ -1000,6 +1000,32 @@ MonoBehaviour:
       tauschen Sie mit ihnen K\xF6rper aus!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Durch einen Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Erfahren Sie mehr \xFCber die Realit\xE4tselastizit\xE4t von Kobolds
+      und verwenden Sie Auberginensaft."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "Leg ein gro\xDFes Ei"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Legen Sie ein Huuuuge -Ei, so gro\xDF wie Sie es bekommen k\xF6nnen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Kobolds aufblasen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Verwenden Sie die Inflater -Maschine, um sie gro\xDF und rund zu
+      machen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

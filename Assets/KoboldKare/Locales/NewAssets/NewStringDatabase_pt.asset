@@ -991,6 +991,31 @@ MonoBehaviour:
       Kobold e trocar com eles!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-Through a Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: Saiba mais sobre a elasticidade da realidade de Kobolds, use suco
+      de berinjela.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Coloque um grande ovo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Coloque um ovo Huuuuge, o maior poss\xEDvel!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Inflar kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Use a m\xE1quina inflater para torn\xE1 -los grandes e redondos."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

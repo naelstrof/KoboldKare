@@ -15,10 +15,12 @@ public class DeliverLargeMemberKoboldsObjective : DragonMailObjective {
     [SerializeField] private GameEventPhotonView soldGameObjectEvent;
     
     public override void Register() {
+        base.Register();
         soldGameObjectEvent.AddListener(OnSoldObject);
     }
     
     public override void Unregister() {
+        base.Unregister();
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
     

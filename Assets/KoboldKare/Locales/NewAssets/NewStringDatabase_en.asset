@@ -1010,6 +1010,31 @@ MonoBehaviour:
       with them!
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through a kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: Learn more about the reality-bending elasticity of kobolds, use
+      Eggplant Juice.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Lay a big egg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: Lay a huuuuge egg, as big as you can get it!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Inflate Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: Use the inflater machine to make them big and round.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

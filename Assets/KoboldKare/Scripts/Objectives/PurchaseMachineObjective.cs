@@ -7,15 +7,17 @@ using UnityEngine;
 using UnityEngine.Localization;
 
 [System.Serializable]
-public class PurchaseMachineObjective : DragonMailObjective {
+public class PurchaseMachineObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
     [SerializeField]
     private UsableMachine targetMachine;
     public override void Register() {
+        base.Register();
         ConstructionContract.purchasedEvent += OnContractSold;
     }
     public override void Unregister() {
+        base.Unregister();
         ConstructionContract.purchasedEvent -= OnContractSold;
     }
 

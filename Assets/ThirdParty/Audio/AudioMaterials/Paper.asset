@@ -31,3 +31,4 @@ MonoBehaviour:
     scrapeSound: {fileID: 8300000, guid: 2119ddc9b3381264bb4ade54a97bddcd, type: 3}
   associatedMaterials:
   - {fileID: 13400000, guid: ee851eefe73d48946a1a99d7acb40d03, type: 2}
+  - {fileID: 13400000, guid: f270ac034e826a049a4ff86e913ff904, type: 2}

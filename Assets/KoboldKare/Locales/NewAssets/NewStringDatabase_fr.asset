@@ -992,6 +992,31 @@ MonoBehaviour:
       pr\xE9f\xE9r\xE9 et \xE9changez des corps avec eux!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through un kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "En savoir plus sur l'\xE9lasticit\xE9 qui p\xE8se la r\xE9alit\xE9
+      des Kobolds, utilisez du jus d'aubergine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "Pondre un gros \u0153uf"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Posez un \u0153uf huuuuge, aussi grand que possible!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Gonfler les kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: Utilisez la machine d'influence pour les rendre grandes et rondes.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

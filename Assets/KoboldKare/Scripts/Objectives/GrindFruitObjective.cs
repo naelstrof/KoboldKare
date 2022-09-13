@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 
 [System.Serializable]
-public class GrindFruitObjective : DragonMailObjective {
+public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
     [SerializeField]
@@ -18,6 +18,7 @@ public class GrindFruitObjective : DragonMailObjective {
     private int maxFruit = 4;
     
     public override void Register() {
+        base.Register();
         GrinderManager.grindedObject += OnGrindedObject;
         if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(fruit.photonName, fruitSpawnLocation.position, fruitSpawnLocation.rotation);
@@ -25,6 +26,7 @@ public class GrindFruitObjective : DragonMailObjective {
     }
     
     public override void Unregister() {
+        base.Unregister();
         GrinderManager.grindedObject -= OnGrindedObject;
     }
 

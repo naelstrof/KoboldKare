@@ -14985,11 +14985,11 @@ MonoBehaviour:
   inputWalking: 0
   gravityMod: {x: 0, y: -4, z: 0}
   jumpStrength: 8
-  speed: 9
+  speed: 8
   crouchSpeed: 4
-  walkSpeedMultiplier: 0.45
-  accel: 8
-  crouchAccel: 6
+  walkSpeedMultiplier: 0.4
+  accel: 7
+  crouchAccel: 5
   airAccel: 20
   stepHeight: 1
   stepHeightCrouched: 0.5

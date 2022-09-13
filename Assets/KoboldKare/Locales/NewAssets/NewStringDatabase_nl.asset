@@ -1014,6 +1014,31 @@ MonoBehaviour:
       met hen!
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through a kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
+      gebruik auberginesap.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Leg een groot ei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: Leg een Huuuuge -ei, zo groot als je het kunt krijgen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Kobolds opblazen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: Gebruik de inflater -machine om ze groot en rond te maken.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

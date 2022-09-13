@@ -15,10 +15,12 @@ public class KoboldCreateObjective : DragonMailObjective {
     
     private int kobolds = 0;
     public override void Register() {
+        base.Register();
         FarmSpawnEventHandler.AddListener(OnEntitySpawn);
     }
 
     public override void Unregister() {
+        base.Unregister();
         FarmSpawnEventHandler.RemoveListener(OnEntitySpawn);
     }
 

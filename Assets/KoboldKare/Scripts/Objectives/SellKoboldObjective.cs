@@ -7,7 +7,7 @@ using UnityEngine.Localization;
 using KoboldKare;
 
 [System.Serializable]
-public class SellKoboldObjective : DragonMailObjective {
+public class SellKoboldObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private int maxKobolds = 1;
     [SerializeField]
@@ -16,9 +16,11 @@ public class SellKoboldObjective : DragonMailObjective {
     [SerializeField]
     private GameEventPhotonView soldObject;
     public override void Register() {
+        base.Register();
         soldObject.AddListener(OnEntitySold);
     }
     public override void Unregister() {
+        base.Unregister();
         soldObject.RemoveListener(OnEntitySold);
     }
 

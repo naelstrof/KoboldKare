@@ -38,6 +38,9 @@ public class DickInfoEditor : Editor {
 #endif
 // DickInfo is mainly used to have an in-scene reference to a bunch of dick info. Most of the functionality of a dick is split between DickEquipment.cs, and an external addon called PenetrationTech
 public class DickInfo : MonoBehaviour {
+    public delegate void CumThroughAction(Penetrable penetrable);
+
+    public static event CumThroughAction cumThrough;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private Kobold attachedKobold;
     private bool cumming = false;
@@ -67,6 +70,7 @@ public class DickInfo : MonoBehaviour {
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
             dickSet.inside = depthDist != 0f && depthDist < penetrableMem.GetSplinePath().arcLength;
+            dickSet.overpenetrated = depthDist >= penetrableMem.GetSplinePath().arcLength;
         }
     }
 
@@ -96,6 +100,7 @@ public class DickInfo : MonoBehaviour {
         }
 
         public bool inside { get; set; }
+        public bool overpenetrated { get; set; }
     }
     public List<DickSet> dicks = new List<DickSet>();
     public void Awake() {
@@ -176,6 +181,10 @@ public class DickInfo : MonoBehaviour {
             }
 
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<GenericReagentContainer>() == null) {
+                if (set.overpenetrated) {
+                    cumThrough?.Invoke(pennedHole);
+                }
+
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));

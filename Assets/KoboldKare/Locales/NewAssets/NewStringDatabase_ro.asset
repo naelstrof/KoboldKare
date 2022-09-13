@@ -740,8 +740,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Avem nevoie de kobolduri provenite local, \xEEncepe\u021Bi prin
-      a -\u021Bi pune \xEEns\u0103rcina\u021Bi o parte din Kobolds."
+    m_Localized: "Avem nevoie de Kobolds provenite local, \xEEncepe\u021Bi prin a
+      -\u021Bi pune \xEEns\u0103rcina\u021Bi unele dintre Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -997,6 +997,32 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: "Ohh! A\u0219a func\u021Bioneaz\u0103, alege -\u021Bi corpurile
       preferate \u0219i schimb\xE2nd corpurile cu ele!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-a fost un kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Afla\u021Bi mai multe despre elasticitatea de \xEEndoire a realit\u0103\u021Bii
+      Kobolds, folosi\u021Bi suc de vinete."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Pune un ou mare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Pune\u021Bi un ou de huuuuge, c\xE2t de mare pute\u021Bi ob\u021Bine!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: "Umfl\u0103 Kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Folosi\u021Bi ma\u0219ina inflater pentru a le face mari \u0219i
+      rotunde."
     m_Metadata:
       m_Items: []
   references:

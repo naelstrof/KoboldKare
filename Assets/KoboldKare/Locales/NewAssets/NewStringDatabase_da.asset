@@ -990,6 +990,31 @@ MonoBehaviour:
       Swap -kroppe med dem!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through en kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "L\xE6r mere om virkelighedsb\xF8jende elasticitet af kobolds, brug
+      aubergine juice."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "L\xE6g et stort \xE6g"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "L\xE6g et huuuuge \xE6g, s\xE5 stort som du kan f\xE5 det!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Oppust kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Brug inflatermaskinen til at g\xF8re dem store og runde."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

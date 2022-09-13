@@ -230,7 +230,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
 
         public bool Valid() {
-            bool valid = body != null && owner != null && photonView != null && joint != null;
+            bool valid = body != null && owner != null && photonView != null && joint != null && collider != null;
             if (Time.time - creationTime > 2f && valid) {
                 valid &= Equals(photonView.Controller, owner.photonView.Controller);
             }

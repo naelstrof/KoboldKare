@@ -951,6 +951,30 @@ MonoBehaviour:
     m_Key: OBJECTIVE_BODY_SWAP_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Key: OBJECTIVE_CUM_THROUGH_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Key: OBJECTIVE_CUM_THROUGH_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Key: OBJECTIVE_LAY_BIG_EGG_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Key: OBJECTIVE_LAY_BIG_EGG_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Key: OBJECTIVE_INFLATE_KOBOLDS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Key: OBJECTIVE_INFLATE_KOBOLDS_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

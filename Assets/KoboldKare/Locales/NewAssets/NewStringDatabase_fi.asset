@@ -992,6 +992,32 @@ MonoBehaviour:
       heid\xE4n kanssaan!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: "Cum-l\xE4pimuru kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Lis\xE4tietoja Koboldsin todellisuuden taipumisesta, k\xE4yt\xE4
+      munakoisomehua."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Munia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: Aseta huuuge -muna niin iso kuin voit saada sen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: "T\xE4ydent\xE4\xE4 Koboldsia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "K\xE4yt\xE4 tulehduksen konetta tehd\xE4ksesi niist\xE4 suuria
+      ja py\xF6reit\xE4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

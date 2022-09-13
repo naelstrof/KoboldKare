@@ -34,6 +34,10 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         return sleepingSprite;
     }
     public override bool CanUse(Kobold k) {
+        if (!constructed) {
+            return false;
+        }
+
         foreach (var station in stations) {
             if (station.info.user == null) {
                 return true;

@@ -992,6 +992,31 @@ MonoBehaviour:
       cambie los cuerpos con ellos!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through a Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Obtenga m\xE1s informaci\xF3n sobre la elasticidad que doblaba
+      la realidad de los kobolds, use el jugo de berenjena."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Poner un gran huevo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "\xA1Pon un huevo huuuuge, tan grande como puedas conseguirlo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Inflar kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Use la m\xE1quina inflator para que sean grandes y redondas."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1034,6 +1034,34 @@ MonoBehaviour:
       c\u01A1 th\u1EC3 v\u1EDBi ch\xFAng!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: "X\u1EED l\xFD m\u1ED9t kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "T\xECm hi\u1EC3u th\xEAm v\u1EC1 \u0111\u1ED9 co gi\xE3n u\u1ED1n
+      th\u1EF1c t\u1EBF c\u1EE7a kobold, s\u1EED d\u1EE5ng n\u01B0\u1EDBc \xE9p c\xE0
+      t\xEDm."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "\u0110\u1EB7t m\u1ED9t qu\u1EA3 tr\u1EE9ng l\u1EDBn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "\u0110\u1EB7t m\u1ED9t qu\u1EA3 tr\u1EE9ng Huuuuge, l\u1EDBn nh\u01B0
+      b\u1EA1n c\xF3 th\u1EC3 nh\u1EADn \u0111\u01B0\u1EE3c n\xF3!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: "B\u0103ng ph\u1ED3ng kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "S\u1EED d\u1EE5ng m\xE1y bi\u1EBFn ch\u1EA5t \u0111\u1EC3 l\xE0m
+      cho ch\xFAng l\u1EDBn v\xE0 tr\xF2n."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

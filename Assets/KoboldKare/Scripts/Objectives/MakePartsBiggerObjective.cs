@@ -18,11 +18,13 @@ public class MakePartsBiggerObjective : DragonMailObjective {
     private int maxPartsBigger = 6;
     
     public override void Register() {
+        base.Register();
         throw new NotImplementedException();
         //genesChangedEvent.AddListener(OnGenesChangedEvent);
     }
     
     public override void Unregister() {
+        base.Unregister();
         throw new NotImplementedException();
         //genesChangedEvent.RemoveListener(OnGenesChangedEvent);
     }

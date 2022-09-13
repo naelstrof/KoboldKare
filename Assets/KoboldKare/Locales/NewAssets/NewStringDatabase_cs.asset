@@ -999,6 +999,33 @@ MonoBehaviour:
       Kobold a Swap!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-Through a Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Zjist\u011Bte v\xEDce o elasticit\u011B kobolds oh\xFDbaj\xEDc\xED
+      realitu, pou\u017Eijte \u0161\u0165\xE1vu lilku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "Polo\u017Ete velk\xE9 vejce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Polo\u017Ete vejce Huuuuge, tak velk\xE9, jak to m\u016F\u017Eete
+      z\xEDskat!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Nafouknout Kobolds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Pou\u017Eijte stroj napaden\xED, aby z nich ud\u011Blali velk\xE9
+      a kulat\xE9."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

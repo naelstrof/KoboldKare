@@ -996,6 +996,31 @@ MonoBehaviour:
       preferiti con loro!"
     m_Metadata:
       m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-through a kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
+      usa il succo di melanzane."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: Deporre un grande uovo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Metti un uovo di Huuuuge, pi\xF9 grande che puoi ottenerlo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: Gonfiando i kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: Usa la macchina per inflati per renderli grandi e rotondi.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

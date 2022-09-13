@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem k\xE9szleteket, hogy hamburgert k\xE9sz\xEDtsek, a dar\xE1l\xF3val
-      kombin\xE1ljuk \u0151ket \xE9s etetem a Kobolds -ot."
+      kombin\xE1ljuk \u0151ket \xE9s t\xE1pl\xE1ljam a Kobolds -ot."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -997,6 +997,32 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: "Ohh! \xCDgy m\u0171k\xF6dik, v\xE1lassza ki a kedvenc Koboldot,
       \xE9s cser\xE9lje ki vel\xFCk!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: "Cum-\xE1tkarbold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171-hajl\xEDt\xF3
+      rugalmass\xE1g\xE1r\xF3l, haszn\xE1ljon padlizs\xE1nlevet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "Tegyen egy nagy toj\xE1st"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Helyezzen egy huuuuge toj\xE1st, amennyire csak tudsz!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: "Felf\xFAjja a Koboldsot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "Haszn\xE1lja a felf\xFAj\xE1si g\xE9pet, hogy nagy \xE9s kerek
+      legyen."
     m_Metadata:
       m_Items: []
   references:

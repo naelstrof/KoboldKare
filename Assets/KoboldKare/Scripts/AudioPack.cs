@@ -22,12 +22,12 @@ public class AudioPack : ScriptableObject {
         source.outputAudioMixerGroup = group;
         source.clip = clips[Random.Range(0, clips.Length)];
         source.volume = volume;
-        source.pitch = Random.Range(0.7f,1.3f);
+        source.pitch = Random.Range(0.75f,1.25f);
         source.Play();
     }
     public void PlayOneShot(AudioSource source) {
         source.outputAudioMixerGroup = group;
-        source.pitch = Random.Range(0.7f,1.3f);
+        source.pitch = Random.Range(0.75f,1.25f);
         source.PlayOneShot(clips[Random.Range(0, clips.Length)], volume);
     }
 }

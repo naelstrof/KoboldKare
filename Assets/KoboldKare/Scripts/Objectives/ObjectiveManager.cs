@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
-public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
+public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnPhotonViewOwnerChange {
     private static ObjectiveManager instance;
     [SerializeReference, SerializeReferenceButton]
     [SerializeField] private List<DragonMailObjective> objectives;
@@ -55,6 +58,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     }
     void Start() {
         SwitchToObjective(null);
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    void OnLocaleChanged(Locale locale) {
+        objectiveUpdated?.Invoke(currentObjective);
     }
 
     void OnObjectiveComplete(DragonMailObjective objective) {
@@ -82,7 +90,9 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
         }
         currentObjective = newObjective;
         if (newObjective != null) {
-            currentObjective.Register();
+            if (photonView.IsMine) {
+                currentObjective.Register();
+            }
             currentObjective.completed += OnObjectiveComplete;
             currentObjective.updated += OnObjectiveUpdated;
         }
@@ -129,6 +139,12 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable {
     private void OnValidate() {
         foreach (var obj in objectives) {
             obj.OnValidate();
+        }
+    }
+
+    public void OnOwnerChange(Player newOwner, Player previousOwner) {
+        if (currentObjective != null) {
+            SwitchToObjective(currentObjective);
         }
     }
 }

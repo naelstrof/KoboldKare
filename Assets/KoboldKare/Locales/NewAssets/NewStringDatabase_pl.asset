@@ -756,7 +756,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
+    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -930,7 +930,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Wys\u0142a\u0142em zapasy, aby zrobi\u0107 burgera, u\u017Cy\u0107
-      szlifierki, aby je po\u0142\u0105czy\u0107 i nakarmi\u0107 Kobolds."
+      szlifierki do ich po\u0142\u0105czenia i karmienia kobold\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -997,6 +997,32 @@ MonoBehaviour:
   - m_Id: 213569843006853121
     m_Localized: "Och! Tak to dzia\u0142a, wybierz swoje ulubione Kobold i zamie\u0144
       na nich cia\u0142a!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567786430464
+    m_Localized: Cum-przez Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790592
+    m_Localized: "Dowiedz si\u0119 wi\u0119cej o elastyczno\u015Bci zwi\u0105zanej
+      z rzeczywisto\u015Bci\u0105 Kobold\xF3w, u\u017Cyj soku z bak\u0142a\u017Cana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790593
+    m_Localized: "Z\u0142o\u017Cy\u0107 du\u017Ce jajko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790594
+    m_Localized: "Po\u0142\xF3\u017C jajko Huuuuge, tak du\u017Ce, jak mo\u017Cesz
+      je zdoby\u0107!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790595
+    m_Localized: "Napompowa\u0107 Kobolds"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213767567815790596
+    m_Localized: "U\u017Cyj maszyny do nadawania, aby by\u0142y du\u017Ce i okr\u0105g\u0142e."
     m_Metadata:
       m_Items: []
   references:

@@ -7,8 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Foundation
+    second: {fileID: 2100000, guid: 78ad526973308b84a96804855bc2fe52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OtherWood
+    second: {fileID: 2100000, guid: 670bd3aab1827a7498e28593162de7c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Void
     second: {fileID: 2100000, guid: 2c6b13626b726384da1a453d4766eafa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: acbc8f68102bc8f4fa0d6c15f5d2f2b7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

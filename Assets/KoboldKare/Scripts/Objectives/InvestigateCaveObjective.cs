@@ -25,12 +25,14 @@ public class InvestigateCaveObjective : DragonMailObjective {
     [SerializeField]
     private LocalizedString description;
     public override void Register() {
+        base.Register();
         caveArea.isTrigger = true;
         detector ??= caveArea.gameObject.AddComponent<KoboldDetector>();
         KoboldDetector.entered += OnKoboldEnterZone;
     }
 
     public override void Unregister() {
+        base.Unregister();
         KoboldDetector.entered -= OnKoboldEnterZone;
         if (detector != null) {
             Object.Destroy(detector);

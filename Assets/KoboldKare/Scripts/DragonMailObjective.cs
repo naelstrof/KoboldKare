@@ -8,7 +8,7 @@ using UnityEngine.Localization;
 
 [System.Serializable]
 public class DragonMailObjective : ISavable, IPunObservable {
-    public bool autoAdvance = false;
+    public bool autoAdvance;
     [SerializeField]
     protected LocalizedString title;
     [SerializeField]
@@ -16,7 +16,6 @@ public class DragonMailObjective : ISavable, IPunObservable {
 
     public virtual string GetTitle() => title.GetLocalizedString();
     public delegate void ObjectiveAction(DragonMailObjective obj);
-
     public event ObjectiveAction completed;
     public event ObjectiveAction updated;
     protected void TriggerComplete() {

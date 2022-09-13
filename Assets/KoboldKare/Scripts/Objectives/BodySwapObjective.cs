@@ -5,13 +5,15 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class BodySwapObjective : DragonMailObjective {
+public class BodySwapObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
     public override void Register() {
+        base.Register();
         BrainSwapperMachine.bodySwapped += OnBodySwap;
     }
     public override void Unregister() {
+        base.Unregister();
         BrainSwapperMachine.bodySwapped -= OnBodySwap;
     }
 

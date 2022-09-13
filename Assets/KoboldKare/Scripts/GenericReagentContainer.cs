@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable {
     public delegate void ContainerFilledAction(GenericReagentContainer container);
     public static event ContainerFilledAction containerFilled;
+    public static event ContainerFilledAction containerInflated;
     [System.Serializable]
     public class InspectorReagent {
         public ScriptableReagent reagent;
@@ -103,7 +104,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
             return false;
         }
         contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
-        OnReagentContentsChanged(injectType);
+        // OnReagentContentsChanged(injectType);
         return true;
     }
     private bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
@@ -149,6 +150,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
 
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged(InjectType.Inject);
+        containerInflated?.Invoke(this);
     }
 
     public ReagentContents Peek() => new ReagentContents(contents);

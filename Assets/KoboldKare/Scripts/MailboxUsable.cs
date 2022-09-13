@@ -10,6 +10,7 @@ public class MailboxUsable : GenericUsable {
     [SerializeField] private Sprite useSprite;
     [SerializeField] private AudioPack mailWaiting;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject spaceBeam;
     private AudioSource mailWaitingSource;
 
     private bool hasMail = true;
@@ -27,6 +28,8 @@ public class MailboxUsable : GenericUsable {
             mailWaitingSource.spatialBlend = 1f;
             mailWaitingSource.loop = true;
         }
+
+        spaceBeam.SetActive(true);
         mailWaiting.Play(mailWaitingSource);
         ObjectiveManager.AddObjectiveSwappedListener(OnObjectiveSwapped);
         OnObjectiveSwapped(ObjectiveManager.GetCurrentObjective());
@@ -43,12 +46,14 @@ public class MailboxUsable : GenericUsable {
             mailWaitingSource.enabled = false;
             animator.SetBool("HasMail", false);
             animator.SetTrigger("GetMail");
+            spaceBeam.SetActive(false);
             return;
         }
         hasMail = true;
         mailWaitingSource.enabled = true;
         mailWaiting.Play(mailWaitingSource);
         animator.SetBool("HasMail", true);
+        spaceBeam.SetActive(true);
     }
 
     /*void OnMidnight(object ignore) {

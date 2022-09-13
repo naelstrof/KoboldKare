@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 
 [System.Serializable]
-public class PlantKoboldObjective : DragonMailObjective {
+public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     [SerializeField] private ScriptablePlant targetPlant;
     [SerializeField] private int maxPlants = 1;
     [SerializeField] private LocalizedString description;
@@ -15,6 +15,7 @@ public class PlantKoboldObjective : DragonMailObjective {
     
     private int plants = 0;
     public override void Register() {
+        base.Register();
         PlantSpawnEventHandler.AddListener(OnPlant);
         if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(eggPrefab.photonName, mailBox.transform.position, Quaternion.identity,
@@ -22,6 +23,7 @@ public class PlantKoboldObjective : DragonMailObjective {
         }
     }
     public override void Unregister() {
+        base.Unregister();
         PlantSpawnEventHandler.RemoveListener(OnPlant);
     }
 

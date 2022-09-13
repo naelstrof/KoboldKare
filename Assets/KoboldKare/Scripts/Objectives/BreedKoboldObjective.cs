@@ -6,16 +6,18 @@ using UnityEngine;
 using UnityEngine.Localization;
 
 [System.Serializable]
-public class BreedKoboldObjective : DragonMailObjective {
+public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private int maxEggs = 5;
     [SerializeField]
     private LocalizedString description;
     private int eggs = 0;
     public override void Register() {
+        base.Register();
         OvipositionSpot.oviposition += OnOviposit;
     }
     public override void Unregister() {
+        base.Unregister();
         OvipositionSpot.oviposition -= OnOviposit;
     }
 

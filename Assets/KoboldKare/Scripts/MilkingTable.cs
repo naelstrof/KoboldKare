@@ -32,7 +32,7 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         return milkingSprite;
     }
     public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() < 1f) {
+        if (k.GetEnergy() < 1f || !constructed) {
             return false;
         }
         foreach (var station in stations) {

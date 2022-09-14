@@ -31,7 +31,7 @@ public class PenetratorAudioPackListener : PenetratorListener {
             return;
         }
 
-        if ((newDepth > oldDepth && oldDepth <= 0f && activateOnEnter) || (newDepth == 0f && oldDepth > 0f && activateOnExit)) {
+        if ((newDepth > 0f && oldDepth <= 0f && activateOnEnter) || (newDepth <= 0f && oldDepth > 0f && activateOnExit)) {
             GameManager.instance.SpawnAudioClipInWorld(pack, penetrator.transform.position);
         }
         oldDepth = newDepth;

@@ -473,11 +473,7 @@ namespace Vilar.AnimationStation {
 		public void AddLoop() {
 			if (loops == null) loops = new List<AnimationLooper>();
 			AnimationLooper loop;
-			if (loops.Count!=0) {
-				loop = new AnimationLooper(loops[loops.Count - 1]);
-            } else {
-				loop = new AnimationLooper();
-            }
+			loop = loops.Count!=0 ? new AnimationLooper(loops[selectedLoop]) : new AnimationLooper();
 			loops.Add(loop);
 			selectedLoop = loops.Count - 1;
 			progress = selectedLoop;

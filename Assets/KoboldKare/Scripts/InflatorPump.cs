@@ -28,6 +28,8 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private Material cumCleanProjectorMaterial;
     [SerializeField]
+    private Vector3 axis;
+    [SerializeField]
     private AudioPack inflaterSloshPack;
     [SerializeField] private List<AnimationStation> stations;
 
@@ -75,7 +77,6 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
     }
 
     protected override void Start() {
-        base.Start();
         readOnlyStations = stations.AsReadOnly();
         blendshapeID = pumpRenderer.sharedMesh.GetBlendShapeIndex("Expand");
         startPos = body.position;
@@ -94,6 +95,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         pumpAnimator.enabled = constructed;
         pumper.enabled = constructed;
         sloshSource.enabled = false;
+        base.Start();
     }
 
     public override void SetConstructed(bool isConstructed) {
@@ -106,7 +108,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         if (!constructed) {
             return;
         }
-        Vector3 axis = -Vector3.right;
+        //Vector3 axis = -Vector3.right;
         float distance = Vector3.Dot(body.transform.position-startPos, axis);
         float clamp = Mathf.Clamp01(distance/maxDistance);
         pumpRenderer.SetBlendShapeWeight(blendshapeID, (1f-clamp) * 100f);

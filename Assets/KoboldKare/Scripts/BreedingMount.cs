@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class BreedingMount : GenericUsable, IAnimationStationSet {
+public class BreedingMount : UsableMachine, IAnimationStationSet {
     [SerializeField] private Sprite useSprite;
     [SerializeField] private AnimationStation station;
     [SerializeField] private FluidStream stream;
@@ -31,7 +31,7 @@ public class BreedingMount : GenericUsable, IAnimationStationSet {
     }
 
     public override bool CanUse(Kobold k) {
-        return k.GetEnergy() > 0 && station.info.user == null;
+        return constructed && k.GetEnergy() > 0 && station.info.user == null;
     }
     public override Sprite GetSprite(Kobold k) {
         return useSprite;

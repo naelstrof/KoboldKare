@@ -503,10 +503,7 @@ MonoBehaviour:
     - {x: 0, y: 0, z: 0, w: 1}
     - {x: 0, y: 0, z: 0, w: 1}
   editSelection: 0
-  previewActive: 1
   animProgress: 27.82399
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -796,6 +793,7 @@ MonoBehaviour:
   - {fileID: 1832895902}
   renderTargets:
   - {fileID: 5808541817558895261}
+  detailOnly: 0
 --- !u!114 &1832895902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,6 +846,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9102e5b71956ac44986688727c85bbde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructed: 0
+  trackedConstructedObjects:
+  - {fileID: 2614752462802733371}
   useSprite: {fileID: 21300000, guid: 314b60a9991ab334184fff2831c8a15e, type: 3}
   station: {fileID: 8141541667155781494}
   stream: {fileID: 7673482707527759551}

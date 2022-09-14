@@ -429,6 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructed: 1
   trackedConstructedObjects: []
+  suckZone: {fileID: 5460425087074685386}
   mailSprite: {fileID: 21300000, guid: 27712d2f9bbe5b64baceb5004c158549, type: 3}
   stations:
   - {fileID: 813309497274286429}
@@ -438,7 +439,6 @@ MonoBehaviour:
     gameObject: {fileID: 5605572581541272102, guid: 32035abfbf56df34d9f5c85a5dd460c6,
       type: 3}
     photonName: MoneyPile
-  suckLocation: {fileID: 4045679087775510058}
   sellPack: {fileID: 11400000, guid: 2fe5b5c5bfdebf6409d8a592d85d9547, type: 2}
   poof: {fileID: 634465358718552423}
   soldGameEvent: {fileID: 11400000, guid: c837b5ea2b9474f4f86bbc853a6c84bc, type: 2}

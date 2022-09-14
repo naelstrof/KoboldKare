@@ -31,7 +31,7 @@ public class PenetratorAudioPackListener : PenetratorListener {
             return;
         }
 
-        if ((newDepth > oldDepth && oldDepth == 0f && activateOnEnter) || (newDepth == 0f && oldDepth != 0f && activateOnExit)) {
+        if ((newDepth > oldDepth && oldDepth <= 0f && activateOnEnter) || (newDepth == 0f && oldDepth > 0f && activateOnExit)) {
             GameManager.instance.SpawnAudioClipInWorld(pack, penetrator.transform.position);
         }
         oldDepth = newDepth;
@@ -49,6 +49,5 @@ public class PenetratorAudioPackListener : PenetratorListener {
         float realDist = (1f - localDistanceFromTipOfDick) * a.GetWorldLength();
         float penetrateDist = realDist - distToHole;
         OnPenetrationDepthChange(penetrateDist);
-        OnPenetrationKnotForceChange(penetrateDist > 0f ? a.GetKnotForce(a.GetWorldLength() - penetrateDist) : 0f);
     }
 }

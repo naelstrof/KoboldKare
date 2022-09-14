@@ -41,6 +41,14 @@ public class CommandList : Command {
             output.Append("}\n");
             didSomething = true;
         }
+        if (args.Length == 1 || args[1] == "players") {
+            output.Append("Players = {\n");
+            foreach (var player in PhotonNetwork.PlayerList) {
+                output.Append($"{player.ActorNumber} {player.NickName},\n");
+            }
+            output.Append("}\n");
+            didSomething = true;
+        }
 
         if (!didSomething) {
             throw new CheatsProcessor.CommandException("Usage: /list {prefabs,objects,reagents,}");

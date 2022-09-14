@@ -1017,6 +1017,11 @@ MonoBehaviour:
     m_Localized: Utilisez la machine d'influence pour les rendre grandes et rondes.
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Donnez un coup de pied \xE0 un joueur avec l'ID de l'acteur cible.
+      Utilisez `/ List Players` pour trouver des identifiants d'acteurs."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

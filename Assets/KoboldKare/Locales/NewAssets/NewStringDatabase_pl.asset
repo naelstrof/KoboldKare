@@ -1025,6 +1025,11 @@ MonoBehaviour:
     m_Localized: "U\u017Cyj maszyny do nadawania, aby by\u0142y du\u017Ce i okr\u0105g\u0142e."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Kopaj gracza identyfikatorem aktora docelowego. U\u017Cyj `/List
+      Player`, aby znale\u017A\u0107 identyfikatory aktor\xF3w."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

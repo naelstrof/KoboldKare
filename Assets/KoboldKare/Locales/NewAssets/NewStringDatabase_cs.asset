@@ -1026,6 +1026,11 @@ MonoBehaviour:
       a kulat\xE9."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Nakopn\u011Bte hr\xE1\u010De c\xEDlov\xFDm hercem ID. Pou\u017Eijte
+      `/list Players` k nalezen\xED ID herc\u016F."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1015,6 +1015,11 @@ MonoBehaviour:
     m_Localized: "Brug inflatermaskinen til at g\xF8re dem store og runde."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Spark en spiller med m\xE5lskuespilleren ID. Brug `/listespillere
+      til at finde skuespiller -id'er."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

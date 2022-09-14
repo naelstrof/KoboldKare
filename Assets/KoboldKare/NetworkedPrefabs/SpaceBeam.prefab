@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ff8a6bb2c651d43b44689bb93d9241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleFactor: 0.15
+  scaleFactor: 0.18
   targetRenderer: {fileID: 2452953563651138793}
 --- !u!114 &7564204251150433704
 MonoBehaviour:

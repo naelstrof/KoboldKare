@@ -975,6 +975,10 @@ MonoBehaviour:
     m_Key: OBJECTIVE_INFLATE_KOBOLDS_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Key: CHEAT_KICK_HELP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using Vilar.AnimationStation;
 
-public class MailMachine : UsableMachine, IAnimationStationSet {
+public class MailMachine : SuckingMachine, IAnimationStationSet {
     [SerializeField]
     private Sprite mailSprite;
     [SerializeField]
@@ -21,13 +21,9 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private PhotonGameObjectReference moneyPile;
     [SerializeField]
-    private Transform suckLocation;
-    [SerializeField]
     private AudioPack sellPack;
-    
     private AudioSource sellSource;
     
-
     [SerializeField] private VisualEffect poof;
 
     [SerializeField]
@@ -39,12 +35,8 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private WaitForSeconds wait;
     private List<AnimationStation> availableStations;
-    private HashSet<Rigidbody> trackedRigidbodies;
-    private bool sucking;
-    private WaitForFixedUpdate waitForFixedUpdate;
-    void Awake() {
-        trackedRigidbodies = new HashSet<Rigidbody>();
-        waitForFixedUpdate = new WaitForFixedUpdate();
+    protected override void Awake() {
+        base.Awake();
         readOnlyStations = stations.AsReadOnly();
         wait = new WaitForSeconds(2f);
         availableStations = new List<AnimationStation>();
@@ -62,6 +54,10 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
         return mailSprite;
     }
     public override bool CanUse(Kobold k) {
+        if (!constructed) {
+            return false;
+        }
+
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject == k) {
                 return false;
@@ -73,7 +69,6 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
                 return true;
             }
         }
-        
         return true;
     }
 
@@ -103,7 +98,7 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
             if (station.info.user == null || !station.info.user.photonView.IsMine) {
                 continue;
             }
-            photonView.RPC(nameof(SellObject), RpcTarget.All, station.info.user.photonView.ViewID);
+            photonView.RPC(nameof(OnSwallowed), RpcTarget.All, station.info.user.photonView.ViewID);
         }
     }
 
@@ -114,7 +109,7 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
     }
     
     [PunRPC]
-    IEnumerator SellObject(int viewID) {
+    protected override IEnumerator OnSwallowed(int viewID) {
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
@@ -124,6 +119,10 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
         }
         soldGameEvent.Raise(view);
         poof.SendEvent("TriggerPoof");
+        // Kobolds can only be sold if they've already played the mail animation.
+        if (view.GetComponent<Kobold>() != null) {
+            mailAnimator.SetTrigger("Mail");
+        }
         sellPack.PlayOneShot(sellSource);
 
         if (!view.IsMine) {
@@ -152,66 +151,5 @@ public class MailMachine : UsableMachine, IAnimationStationSet {
 
     private void OnValidate() {
         moneyPile.OnValidate();
-    }
-
-    private bool ShouldStopTracking(Rigidbody body) {
-        if (body == null) {
-            return true;
-        }
-
-        float distance = Vector3.Distance(body.transform.TransformPoint(body.centerOfMass), suckLocation.position);
-        if (distance > 4f) {
-            return true;
-        }
-        if (Vector3.Distance(body.ClosestPointOnBounds(suckLocation.position), suckLocation.position) < 0.1f) {
-            PhotonView view = body.gameObject.GetComponentInParent<PhotonView>();
-            if (view != null && view.IsMine) {
-                photonView.RPC(nameof(SellObject), RpcTarget.All, view.ViewID);
-            }
-            mailAnimator.SetTrigger("Mail");
-            return true;
-        }
-        return false;
-    }
-
-    IEnumerator SuckAndSell() {
-        sucking = true;
-        while (isActiveAndEnabled && trackedRigidbodies.Count > 0) {
-            trackedRigidbodies.RemoveWhere(ShouldStopTracking);
-            foreach (var body in trackedRigidbodies) {
-                body.velocity = Vector3.MoveTowards(body.velocity, Vector3.zero, body.velocity.magnitude*Time.deltaTime * 10f);
-                body.AddForce((suckLocation.position-body.transform.TransformPoint(body.centerOfMass))*30f, ForceMode.Acceleration);
-            }
-            yield return waitForFixedUpdate;
-        }
-        sucking = false;
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        Kobold targetKobold = other.GetComponentInParent<Kobold>();
-        if (targetKobold != null) {
-            foreach (var player in PhotonNetwork.PlayerList) {
-                if ((Kobold)player.TagObject == targetKobold) {
-                    return;
-                }
-            }
-
-            if (targetKobold.grabbed || !targetKobold.GetComponent<Ragdoller>().ragdolled) {
-                return;
-            }
-
-            LocalUse(targetKobold);
-            return;
-        }
-
-        Rigidbody body = other.GetComponentInParent<Rigidbody>();
-        if (body != null && body.gameObject.GetComponent<MoneyPile>() == null) {
-            trackedRigidbodies.Add(body);
-            if (!sucking) {
-                sucking = true;
-                StartCoroutine(SuckAndSell());
-            }
-        }
-        
     }
 }

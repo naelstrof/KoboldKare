@@ -1026,6 +1026,11 @@ MonoBehaviour:
       machen."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: Treten Sie einen Spieler mit der Zielschauspieler -ID. Verwenden
+      Sie "/List Players", um Schauspieler -IDs zu finden.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

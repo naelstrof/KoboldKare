@@ -37,6 +37,10 @@ public class ObjectiveUIDisplay : MonoBehaviour {
     }
 
     void OnObjectiveUpdated(DragonMailObjective objective) {
+        if (objective == null) {
+            return;
+        }
+
         title.text = objective.GetTitle();
         description.text = objective.GetTextBody();
     }

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Naelstrof.Mozzarella;
 using PenetrationTech;
 using Photon.Pun;
 using SkinnedMeshDecals;
 using UnityEngine;
+using Vilar.AnimationStation;
 
-public class InflatorPump : MonoBehaviourPun {
+public class InflatorPump : UsableMachine, IAnimationStationSet {
+    [SerializeField]
+    private Sprite useSprite;
     [SerializeField]
     private Rigidbody body;
     [SerializeField]
@@ -25,6 +29,9 @@ public class InflatorPump : MonoBehaviourPun {
     private Material cumCleanProjectorMaterial;
     [SerializeField]
     private AudioPack inflaterSloshPack;
+    [SerializeField] private List<AnimationStation> stations;
+
+    private ReadOnlyCollection<AnimationStation> readOnlyStations;
 
     private AudioSource sloshSource;
 
@@ -37,8 +44,39 @@ public class InflatorPump : MonoBehaviourPun {
     private float inflateAmount;
     private float lastAccumulateTime = 0f;
     private static readonly int Pumping = Animator.StringToHash("Pumping");
+    
+    public override Sprite GetSprite(Kobold k) {
+        return useSprite;
+    }
 
-    void Start() {
+    public override bool CanUse(Kobold k) {
+        if (!constructed) {
+            return false;
+        }
+
+        foreach (AnimationStation station in stations) {
+            if (station.info.user == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public override void LocalUse(Kobold k) {
+        photonView.RequestOwnership();
+        for (int i = 0; i < stations.Count; i++) {
+            if (stations[i].info.user == null) {
+                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
+                    photonView.ViewID, i);
+                break;
+            }
+        }
+
+    }
+
+    protected override void Start() {
+        base.Start();
+        readOnlyStations = stations.AsReadOnly();
         blendshapeID = pumpRenderer.sharedMesh.GetBlendShapeIndex("Expand");
         startPos = body.position;
         inflateAmount = 1f;
@@ -53,11 +91,21 @@ public class InflatorPump : MonoBehaviourPun {
             sloshSource.spatialBlend = 1f;
             sloshSource.loop = false;
         }
-
+        pumpAnimator.enabled = constructed;
+        pumper.enabled = constructed;
         sloshSource.enabled = false;
     }
 
+    public override void SetConstructed(bool isConstructed) {
+        base.SetConstructed(isConstructed);
+        pumpAnimator.enabled = isConstructed;
+        pumper.enabled = isConstructed;
+    }
+
     void FixedUpdate() {
+        if (!constructed) {
+            return;
+        }
         Vector3 axis = -Vector3.right;
         float distance = Vector3.Dot(body.transform.position-startPos, axis);
         float clamp = Mathf.Clamp01(distance/maxDistance);
@@ -74,6 +122,9 @@ public class InflatorPump : MonoBehaviourPun {
     }
 
     private void Accumulate(float amount) {
+        if (!constructed) {
+            return;
+        }
         accumulation += amount;
         if (amount > 0.1) {
             lastAccumulateTime = Time.time;
@@ -93,7 +144,7 @@ public class InflatorPump : MonoBehaviourPun {
             sloshSource.enabled = true;
         }
         while (Time.time - lastAccumulateTime < 0.05f) {
-            if (!sloshSource.isPlaying) {
+            if (!sloshSource.isPlaying && sloshSource.gameObject.activeInHierarchy) {
                 inflaterSloshPack.Play(sloshSource);
             }
             yield return null;
@@ -139,5 +190,9 @@ public class InflatorPump : MonoBehaviourPun {
         pumpAnimator.SetBool(Pumping, false);
         spraying = false;
         sloshSource.enabled = false;
+    }
+
+    public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
+        return readOnlyStations;
     }
 }

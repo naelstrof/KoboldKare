@@ -1018,6 +1018,11 @@ MonoBehaviour:
       ja py\xF6reit\xE4."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Kiinnit\xE4 pelaaja kohdes\xE4\xE4timen tunnuksella. K\xE4yt\xE4
+      `/List Players` -n\xE4yttelij\xF6iden tunnuksia."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

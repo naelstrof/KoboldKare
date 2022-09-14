@@ -95,6 +95,8 @@ MonoBehaviour:
   - SetCreature
   - PickupEquipmentRPC
   - SetDickRPC
+  - Swallowed
+  - OnSwallowed
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

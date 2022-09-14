@@ -1016,6 +1016,11 @@ MonoBehaviour:
     m_Localized: "Use a m\xE1quina inflater para torn\xE1 -los grandes e redondos."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: Chute um jogador com o ID do ator alvo. Use `/list Players` para
+      encontrar IDs de atores.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

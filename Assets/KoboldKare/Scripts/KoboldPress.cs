@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class KoboldPress : GenericUsable, IAnimationStationSet {
+public class KoboldPress : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private List<AnimationStation> stations;
     [SerializeField]
@@ -16,7 +16,9 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
     
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private GenericReagentContainer container;
-    void Start() {
+
+    protected override void Start() {
+        base.Start();
         readOnlyStations = stations.AsReadOnly();
         
         container = gameObject.AddComponent<GenericReagentContainer>();
@@ -33,34 +35,20 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
     }
 
     public override bool CanUse(Kobold k) {
-        int slot = -1;
-        for (int i = 0; i < stations.Count; i++) {
-            if (stations[i].info.user == null) {
-                slot = i;
-                break;
-            }
-        }
-
-        if (slot == -1) {
+        if (!constructed) {
             return false;
         }
-
-        if (slot == 0) {
-            return k.GetEnergy() >= 1f && k.bellyContainer.volume > 0f;
+        if (stations[0].info.user == null) {
+            return k.bellyContainer.volume > 0f;
         }
-        
-        return k.GetEnergy() >= 1f;
+        return false;
     }
 
     public override void LocalUse(Kobold k) {
         base.LocalUse(k);
-        for (int i = 0; i < stations.Count; i++) {
-            if (stations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, i);
-                break;
-            }
+        if (stations[0].info.user == null) {
+            k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, 0);
         }
-
     }
 
     [PunRPC]
@@ -75,16 +63,10 @@ public class KoboldPress : GenericUsable, IAnimationStationSet {
         if (!photonView.IsMine) {
             yield break;
         }
-        foreach (var t in stations) {
-            if (t.info.user == null || t.info.user.GetEnergy() <= 0) {
-                yield break;
-            }
-        }
-        foreach (var t in stations) {
-            //t.info.user.photonView.RPC(nameof(Kobold.ConsumeEnergyRPC), RpcTarget.All, (byte)1);
-            t.info.user.TryConsumeEnergy(1);
-        }
         Kobold pressedKobold = stations[0].info.user;
+        if (pressedKobold == null) {
+            yield break;
+        }
         pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
             pressedKobold.bellyContainer.volume);
         ReagentContents spilled = pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume);

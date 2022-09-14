@@ -24,12 +24,11 @@ public class BodySwapObjective : ObjectiveWithSpaceBeam {
 
     void OnBodySwap(Kobold a, Kobold b) {
         foreach (var player in PhotonNetwork.PlayerList) {
-            if ((Kobold)player.TagObject == a || (Kobold)player.TagObject == b) {
-                if (a != null) {
-                    Advance(a.transform.position);
-                } else if (b != null) {
-                    Advance(b.transform.position);
-                }
+            if ((Kobold)player.TagObject != a && (Kobold)player.TagObject != b) continue;
+            if (a != null) {
+                Advance(a.transform.position);
+            } else if (b != null) {
+                Advance(b.transform.position);
             }
         }
     }

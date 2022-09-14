@@ -740,8 +740,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Avem nevoie de Kobolds provenite local, \xEEncepe\u021Bi prin a
-      -\u021Bi pune \xEEns\u0103rcina\u021Bi unele dintre Kobolds."
+    m_Localized: "Avem nevoie de kobolduri provenite local, \xEEncepe\u021Bi prin
+      a -\u021Bi pune \xEEns\u0103rcina\u021Bi o parte din Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -1023,6 +1023,11 @@ MonoBehaviour:
   - m_Id: 213767567815790596
     m_Localized: "Folosi\u021Bi ma\u0219ina inflater pentru a le face mari \u0219i
       rotunde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Loviti un juc\u0103tor cu ID -ul actorului \u021Bint\u0103. Utiliza\u021Bi
+      `/List Players` pentru a g\u0103si ID -uri de actor."
     m_Metadata:
       m_Items: []
   references:

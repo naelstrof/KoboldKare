@@ -59,7 +59,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
     private Rigidbody body;
 
     private void Awake() {
-        photonView = GetComponentInParent<PhotonView>();
+        photonView = GetComponentInParent<PhotonView>(true);
     }
 
     void Start() {

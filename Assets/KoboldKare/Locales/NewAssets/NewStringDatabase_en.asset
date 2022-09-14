@@ -1035,6 +1035,11 @@ MonoBehaviour:
     m_Localized: Use the inflater machine to make them big and round.
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: Kick a player with the target actor id. Use `/list players` to find
+      actor ids.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

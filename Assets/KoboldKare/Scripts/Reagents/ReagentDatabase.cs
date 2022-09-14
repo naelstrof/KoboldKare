@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ReagentDatabase : MonoBehaviour {
     private static ReagentDatabase instance;
-    private Dictionary<string,ScriptableReagent> reagentDictionary = new Dictionary<string, ScriptableReagent>();
+    private Dictionary<string,ScriptableReagent> reagentDictionary;
     private static ReagentDatabase GetInstance() {
         if (instance == null) {
             instance = Object.FindObjectOfType<ReagentDatabase>();
@@ -17,6 +17,7 @@ public class ReagentDatabase : MonoBehaviour {
         } else {
             instance = this;
         }
+        reagentDictionary = new Dictionary<string, ScriptableReagent>();
         foreach(var reagent in reagents) {
             reagentDictionary.Add(reagent.name, reagent);
         }

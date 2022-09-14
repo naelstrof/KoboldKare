@@ -1060,6 +1060,12 @@ MonoBehaviour:
       \uD06C\uACE0 \uB465\uAE00\uAC8C \uB9CC\uB4ED\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "\uB300\uC0C1 \uBC30\uC6B0 ID\uB85C \uD50C\uB808\uC774\uC5B4\uB97C
+      \uCC28\uC2ED\uC2DC\uC624. `/list \uD50C\uB808\uC774\uC5B4 '\uB97C \uC0AC\uC6A9\uD558\uC5EC
+      \uBC30\uC6B0 ID\uB97C \uCC3E\uC73C\uC2ED\uC2DC\uC624."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

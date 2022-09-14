@@ -1014,11 +1014,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: Gonfiando i kobold
+    m_Localized: Gonfiando i kobolds
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
     m_Localized: Usa la macchina per inflati per renderli grandi e rotondi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: Calci un giocatore con l'ID dell'attore bersaglio. Usa `/elenca
+      i giocatori" per trovare ID attore.
     m_Metadata:
       m_Items: []
   references:

@@ -1017,6 +1017,11 @@ MonoBehaviour:
     m_Localized: "Use la m\xE1quina inflator para que sean grandes y redondas."
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "Patea a un jugador con la identificaci\xF3n del actor objetivo.
+      Use `/List Players` para encontrar ID de actor."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

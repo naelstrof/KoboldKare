@@ -8,7 +8,7 @@ public class UsableMachine : GenericUsable {
     [SerializeField] protected bool constructed;
     [SerializeField]
     private GameObject[] trackedConstructedObjects;
-    public void SetConstructed(bool isConstructed) {
+    public virtual void SetConstructed(bool isConstructed) {
         constructed = isConstructed;
         foreach (GameObject obj in trackedConstructedObjects) {
             obj.SetActive(isConstructed);

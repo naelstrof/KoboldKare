@@ -5,7 +5,7 @@ using System.IO;
 using Photon.Pun;
 using UnityEngine;
 
-public class DrainUsable : GenericUsable {
+public class DrainUsable : UsableMachine {
     [SerializeField] private AudioPack drainSound;
     [SerializeField] private GenericReagentContainer drainContainer;
     [SerializeField] private Sprite displaySprite;
@@ -29,7 +29,7 @@ public class DrainUsable : GenericUsable {
     }
 
     public override bool CanUse(Kobold k) {
-        return base.CanUse(k) && drainContainer.volume > 0.01f;
+        return base.CanUse(k) && constructed && drainContainer.volume > 0.01f;
     }
 
     public override void Use() {

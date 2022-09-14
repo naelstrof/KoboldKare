@@ -6,13 +6,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
-using UnityEngine.Localization.Components;
-using TMPro;
 using System;
-using KoboldKare;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
@@ -88,6 +82,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.EnableCloseConnection = true;
     }
     public IEnumerator EnsureOnlineAndReadyToLoad(bool shouldLeaveRoom = true) {
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
@@ -102,6 +97,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        PhotonNetwork.EnableCloseConnection = true;
     }
     public void StartSinglePlayer() {
         GameManager.instance.StartCoroutine(SinglePlayerRoutine());
@@ -117,14 +113,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.InLobby) {
             PhotonNetwork.LeaveLobby();
         }
-    }
-    public void OnEnable() {
-        // GameManager actually adds us to the callbacks, PhotonNetwork doesn't initialize early enough to call it from here.
-        //PhotonNetwork.AddCallbackTarget(this);
-    }
-
-    public void OnDisable() {
-        //PhotonNetwork.RemoveCallbackTarget(this);
     }
     public void OnConnectedToMaster() {
         Debug.Log("OnConnectedToMaster() was called by PUN.");

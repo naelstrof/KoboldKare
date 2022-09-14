@@ -831,25 +831,10 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3473630937541108734}
-  - {fileID: 5644472075684772514}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5644472075684772514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 993755891380288165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
-  animationStations:
-  - {fileID: 2565282450752030601}
 --- !u!114 &7596093220093819395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,7 +855,6 @@ MonoBehaviour:
   - renderer: {fileID: 6534487358309324372}
     mask: -1
   virtualSquashAndStretch: 1
-  tipTarget: {fileID: 8151401046367917522}
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
   penetrationMarginOfError: 1
@@ -885,12 +869,13 @@ MonoBehaviour:
     - rid: 5882124972459032576
       type: {class: PenetratorKnotSquisher, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         knotForceFactor: 0.2
+        friction: 2.5
+        force: 12
+        elasticity: 30
     - rid: 5882124972459032577
       type: {class: PenetratorPassiveAudioListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
-        localDist: 0
         clip: {fileID: 8300000, guid: 53eea78a77cd4e646b99a332084493e3, type: 3}
         audioGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
           type: 2}
@@ -907,6 +892,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df65dcb86b90e04e962990f9d8d5624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructed: 0
+  trackedConstructedObjects:
+  - {fileID: 758731099246654864}
+  - {fileID: 8781348437073725412}
+  - {fileID: 8486880300359714321}
+  - {fileID: 3725257541956553204}
+  - {fileID: 2559483553043063010}
+  - {fileID: 2784091601756557941}
+  - {fileID: 2943490399496174040}
+  - {fileID: 5708955867427007617}
+  - {fileID: 6100673453319472424}
+  - {fileID: 6242391959014043912}
+  - {fileID: 7567880875446406241}
+  useSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
   body: {fileID: 1921293409251886885}
   joint: {fileID: 6347134227094379005}
   pumpRenderer: {fileID: 5145261967872395858}
@@ -918,6 +917,8 @@ MonoBehaviour:
   cumCleanProjectorMaterial: {fileID: 2100000, guid: 1947e62ffbc09c449a6080158aa1726a,
     type: 2}
   inflaterSloshPack: {fileID: 11400000, guid: 487b916b4c3b955449414e2685038905, type: 2}
+  stations:
+  - {fileID: 2565282450752030601}
   pumpAnimator: {fileID: 4377856060180391589}
 --- !u!1 &2559483553043063010 stripped
 GameObject:
@@ -939,6 +940,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8691780276856062721, guid: cdc3875707473004989d52b4b6b17298, type: 3}
+--- !u!1 &2784091601756557941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6365562192104237695, guid: cdc3875707473004989d52b4b6b17298,
+    type: 3}
+  m_PrefabInstance: {fileID: 75415941560748020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3725257541956553204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: cdc3875707473004989d52b4b6b17298,
+    type: 3}
+  m_PrefabInstance: {fileID: 75415941560748020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &5145261967872395858 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5074512353664290214, guid: cdc3875707473004989d52b4b6b17298,

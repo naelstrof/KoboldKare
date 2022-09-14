@@ -957,7 +957,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314184
     m_Localized: "Alkatr\xE9szeiknek nagyobbnak kell lenni\xFCk, padlizs\xE1n, dinnye
-      vagy anan\xE1szlevet kell t\xE1pl\xE1lniuk."
+      vagy anan\xE1szl\xE9 t\xE1pl\xE1lkozniuk kell."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
@@ -1023,6 +1023,12 @@ MonoBehaviour:
   - m_Id: 213767567815790596
     m_Localized: "Haszn\xE1lja a felf\xFAj\xE1si g\xE9pet, hogy nagy \xE9s kerek
       legyen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: "R\xFAgjon le egy lej\xE1tsz\xF3t a Target sz\xEDn\xE9sz azonos\xEDt\xF3val.
+      Haszn\xE1lja a `/lista lej\xE1tsz\xF3kat\" sz\xEDn\xE9szi azonos\xEDt\xF3k
+      megtal\xE1l\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   references:

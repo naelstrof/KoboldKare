@@ -1039,6 +1039,11 @@ MonoBehaviour:
     m_Localized: Gebruik de inflater -machine om ze groot en rond te maken.
     m_Metadata:
       m_Items: []
+  - m_Id: 214255575602089984
+    m_Localized: Schop een speler met de doelacteur -ID. Gebruik `/lijstspelers 'om
+      acteur -ID's te vinden.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

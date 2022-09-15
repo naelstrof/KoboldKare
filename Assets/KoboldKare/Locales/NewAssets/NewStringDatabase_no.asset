@@ -1020,6 +1020,42 @@ MonoBehaviour:
       \xE5 finne skuespiller -ID -er."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: "\xC5 hei..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Velkommen til undergrunnen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignorer r\xF8yken, f\xF8l deg fri til \xE5 bla gjennom varene."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Whoa! Du kommer til \xE5 pirke \xF8ye med."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Ja ok bare \xE5h .. hjelp deg selv antar jeg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Fortell meg at du har en lommebok.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Hallo! Vi konstruerer ting her.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Bare velg noe p\xE5 veggen, s\xE5 konstruerer vi det for deg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Har du noe imot \xE5 ta p\xE5 deg noen bukser?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

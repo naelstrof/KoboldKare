@@ -1022,6 +1022,43 @@ MonoBehaviour:
       Use `/List Players` para encontrar ID de actor."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh hola...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Bienvenido al metro.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignora el humo, si\xE9ntete libre de navegar por las mercanc\xEDas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "\xA1Vaya! Vas a llamar la atenci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "S\xED, est\xE1 bien solo eh .. ay\xFAdate, supongo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Por favor, dime que tienes una billetera.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "\xA1Hola! Construimos cosas aqu\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: Simplemente seleccione algo en la pared y lo construiremos para
+      usted.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... \xBFTe importar\xEDa ponerse unos pantalones?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

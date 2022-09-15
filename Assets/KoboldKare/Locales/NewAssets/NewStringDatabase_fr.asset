@@ -1022,6 +1022,43 @@ MonoBehaviour:
       Utilisez `/ List Players` pour trouver des identifiants d'acteurs."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh hey...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: "Bienvenue dans le m\xE9tro."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignorez la fum\xE9e, n'h\xE9sitez pas \xE0 parcourir les marchandises."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Whoa! Vous allez sortir un \u0153il."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: Ouais ok juste euh ... aidez-vous, je suppose.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Veuillez me dire que vous avez un portefeuille.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Bonjour! Nous construisons des trucs ici.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "S\xE9lectionnez simplement quelque chose sur le mur et nous le
+      construire pour vous."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... \xE7a te d\xE9range de mettre un pantalon?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

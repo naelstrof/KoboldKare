@@ -22,10 +22,14 @@ public class LaunchpadEditor : Editor {
 }
 #endif
 
-public class Launchpad : MonoBehaviour {
+public class Launchpad : UsableMachine {
     public Vector3 localTarget;
     public float flightTime = 5f;
     public float playerFlightTime = 4.5f;
+
+    public override bool CanUse(Kobold k) {
+        return false;
+    }
 
     public UnityEvent OnFire;
     [HideInInspector]
@@ -39,7 +43,18 @@ public class Launchpad : MonoBehaviour {
         controller.enabled = true;
     }
 
+    public override void SetConstructed(bool isConstructed) {
+        base.SetConstructed(isConstructed);
+        foreach (Collider coll in GetComponents<Collider>()) {
+            coll.enabled = isConstructed;
+        }
+    }
+
     private void OnTriggerEnter(Collider other) {
+        if (!constructed) {
+            return;
+        }
+
         var rigidbodies = other.GetAllComponents<Rigidbody>();
         if (rigidbodies.Length == 0) {
             return;

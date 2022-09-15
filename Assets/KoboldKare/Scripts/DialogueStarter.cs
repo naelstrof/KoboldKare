@@ -2,11 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 
 public class DialogueStarter : GenericUsable {
+    [Serializable]
+    private class DialogueInfo {
+        public int minimumStarCount;
+        public List<LocalizedString> dialogue;
+    }
+
     [SerializeField] private Sprite useSprite;
     [SerializeField]
     private Animator animator;
@@ -14,8 +19,8 @@ public class DialogueStarter : GenericUsable {
     private TMPro.TMP_Text text;
     [SerializeField]
     private AudioPack sansUndertaleVocals;
-    [SerializeField]
-    private List<LocalizedString> dialogue;
+
+    [SerializeField] private List<DialogueInfo> dialogueInfos;
 
     private StringBuilder stringBuilder;
     private AudioSource source;
@@ -30,7 +35,7 @@ public class DialogueStarter : GenericUsable {
 
     private void Awake() {
         stringBuilder = new StringBuilder();
-        textDelay = new WaitForSeconds(0.16f);
+        textDelay = new WaitForSeconds(0.1f);
         lineDelay = new WaitForSeconds(3f);
         if (source == null) {
             source = gameObject.AddComponent<AudioSource>();
@@ -62,9 +67,16 @@ public class DialogueStarter : GenericUsable {
         source.enabled = true;
         animator.SetTrigger("Talk");
         talking = true;
+        List<LocalizedString> dialogue = null;
+        foreach (var dialogueCheck in dialogueInfos) {
+            if (ObjectiveManager.GetStars() <= dialogueCheck.minimumStarCount) {
+                dialogue = dialogueCheck.dialogue;
+            }
+        }
+        dialogue ??= dialogueInfos[0].dialogue;
         foreach (var line in dialogue) {
             float startTime = Time.time;
-            float duration = 2f;
+            float duration = 1.5f;
             string targetString = line.GetLocalizedString();
             while (Time.time < startTime + duration) {
                 float t = (Time.time - startTime) / duration;

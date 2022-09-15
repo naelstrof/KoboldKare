@@ -756,7 +756,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
+    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -1028,6 +1028,43 @@ MonoBehaviour:
   - m_Id: 214255575602089984
     m_Localized: "Kopaj gracza identyfikatorem aktora docelowego. U\u017Cyj `/List
       Player`, aby znale\u017A\u0107 identyfikatory aktor\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: "No cze\u015B\u0107..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Witamy w metrze.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Zignoruj \u200B\u200Bdym, mo\u017Cesz przegl\u0105da\u0107 towary."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! Wyrzucisz oko.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Tak, okej, tylko uh\u2026 pom\xF3\u017C sobie, chyba."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Prosz\u0119, powiedz mi, \u017Ce masz portfel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Witam! Konstruujemy tutaj.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Po prostu wybierz co\u015B na \u015Bcianie, a my skonstruujemy
+      to dla Ciebie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Czy masz co\u015B przeciwko za\u0142o\u017Ceniu spodni?"
     m_Metadata:
       m_Items: []
   references:

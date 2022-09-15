@@ -1031,6 +1031,42 @@ MonoBehaviour:
       `/list Players` k nalezen\xED ID herc\u016F."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Ahoj ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: "V\xEDtejte v podzem\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignorujte kou\u0159, nev\xE1hejte proch\xE1zet zbo\u017E\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Whoa! Vyhod\xED\u0161 to."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Jo dob\u0159e, jen uh .. Pomozte si mysl\xEDm."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Pros\xEDm, \u0159ekn\u011Bte mi, \u017Ee m\xE1te pen\u011B\u017Eenku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "Ahoj! Zde konstruujeme v\u011Bci."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Sta\u010D\xED vybrat n\u011Bco na zdi a my to za v\xE1s vytvo\u0159\xEDme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... nevad\xED v\xE1m d\xE1t n\u011Bjak\xE9 kalhoty?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

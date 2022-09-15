@@ -1068,6 +1068,48 @@ MonoBehaviour:
       \u0111\u1EC3 t\xECm ID di\u1EC5n vi\xEAn."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: "\u1ED2 n\xE0y ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: "Ch\xE0o m\u1EEBng b\u1EA1n \u0111\u1EBFn d\u01B0\u1EDBi l\xF2ng
+      \u0111\u1EA5t."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "B\u1ECF qua kh\xF3i, c\u1EA3m th\u1EA5y t\u1EF1 do \u0111\u1EC3
+      duy\u1EC7t c\xE1c s\u1EA3n ph\u1EA9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "\xC1i ch\xE0! B\u1EA1n s\u1EBD ch\u1ECDc m\u1ED9t m\u1EAFt ra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "V\xE2ng, \u0111\u01B0\u1EE3c r\u1ED3i, ch\u1EC9 c\u1EA7n gi\xFAp
+      b\u1EA3n th\xE2n t\xF4i, t\xF4i \u0111o\xE1n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Xin vui l\xF2ng cho t\xF4i bi\u1EBFt b\u1EA1n c\xF3 m\u1ED9t v\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "Xin ch\xE0o! Ch\xFAng t\xF4i x\xE2y d\u1EF1ng c\xF4ng c\u1EE5 \u1EDF
+      \u0111\xE2y."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Ch\u1EC9 c\u1EA7n ch\u1ECDn m\u1ED9t c\xE1i g\xEC \u0111\xF3 tr\xEAn
+      t\u01B0\u1EDDng v\xE0 ch\xFAng t\xF4i s\u1EBD x\xE2y d\u1EF1ng n\xF3 cho b\u1EA1n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... B\u1EA1n c\xF3 phi\u1EC1n khi m\u1EB7c m\u1ED9t s\u1ED1 qu\u1EA7n
+      kh\xF4ng?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

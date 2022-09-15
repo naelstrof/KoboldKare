@@ -1014,7 +1014,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: Gonfiando i kobolds
+    m_Localized: Gonfiando i kobold
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
@@ -1024,6 +1024,42 @@ MonoBehaviour:
   - m_Id: 214255575602089984
     m_Localized: Calci un giocatore con l'ID dell'attore bersaglio. Usa `/elenca
       i giocatori" per trovare ID attore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh Ehi...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Benvenuti nel sottosuolo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: Ignora il fumo, sentiti libero di sfogliare le merci.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! Stai per fare un occhio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "S\xEC, ok, solo ... Aiutati, immagino."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Per favore dimmi che hai un portafoglio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Ciao! Costruiamo cose qui.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: Basta selezionare qualcosa sul muro e lo costruiremo per te.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: ... Ti dispiace indossare dei pantaloni?
     m_Metadata:
       m_Items: []
   references:

@@ -232,7 +232,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnRegionListReceived(RegionHandler regionHandler) {
-        //Debug.Log("We recieved a list i guess:" + regionHandler);
     }
 
     public void OnRoomListUpdate(List<RoomInfo> roomList) {
@@ -267,11 +266,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps) {
-        //if (playerList.ContainsKey(targetPlayer.ActorNumber)) {
-        //if (playerList[targetPlayer.ActorNumber] != null) {
-        //playerList[targetPlayer.ActorNumber].GetComponent<Kobold>().Load(changedProps);
-        //}
-        //}
     }
     public void OnWebRpcResponse(OperationResponse response) {
     }

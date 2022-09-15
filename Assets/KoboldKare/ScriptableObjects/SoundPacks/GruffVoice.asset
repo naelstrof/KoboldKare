@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6f9b7d146f27a4198eefc8b2871596, type: 3}
+  m_Name: GruffVoice
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 0715ac2d73a7e9a48aae0c398483e03b, type: 3}
+  - {fileID: 8300000, guid: 28b7ab4af94f69e45bc9d07d0ea078ed, type: 3}
+  - {fileID: 8300000, guid: c26bd8bf0255cd045b2a1fe7d4be04fe, type: 3}
+  - {fileID: 8300000, guid: c39d6f35cc4a0934c96b2646b1e26d1b, type: 3}
+  - {fileID: 8300000, guid: daddc3f1b0b1bf640aac591906718198, type: 3}
+  - {fileID: 8300000, guid: a640e75692c8496448d6815386e7abf5, type: 3}
+  volume: 1
+  group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}

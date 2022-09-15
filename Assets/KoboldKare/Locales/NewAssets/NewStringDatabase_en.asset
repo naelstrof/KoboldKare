@@ -1040,6 +1040,42 @@ MonoBehaviour:
       actor ids.
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh hey...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Welcome to the underground.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: Ignore the smoke, feel free to browse the wares.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! You're going to poke an eye out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: Yeah okay just uh.. help yourself I guess.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Please tell me you have a wallet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Hello! We construct stuff here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: Just select something on the wall and we'll construct it for you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: ...do you mind putting on some pants?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

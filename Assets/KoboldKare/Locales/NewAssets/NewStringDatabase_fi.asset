@@ -1023,6 +1023,42 @@ MonoBehaviour:
       `/List Players` -n\xE4yttelij\xF6iden tunnuksia."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Ai hei...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Tervetuloa metroon.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: Ohita savu, voit vapaasti selata tavaroita.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Voi! Aiot pist\xE4\xE4 silm\xE4n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Joo okei vain uh .. auta itse\xE4si luulen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Kerro minulle, ett\xE4 sinulla on lompakko."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "Hei! Rakennamme tavaroita t\xE4nne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Valitse vain jotain sein\xE4lt\xE4 ja rakennamme sen sinulle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: ... Haluatko laittaa housuja?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

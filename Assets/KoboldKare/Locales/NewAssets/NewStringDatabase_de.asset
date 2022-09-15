@@ -1031,6 +1031,43 @@ MonoBehaviour:
       Sie "/List Players", um Schauspieler -IDs zu finden.
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh hallo...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Willkommen im Untergrund.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignorieren Sie den Rauch, k\xF6nnen Sie die Waren st\xF6bern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! Du wirst ein Auge ausstechen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: Ja, okay, nur, halte ich dir selbst, denke ich.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Bitte sagen Sie mir, dass Sie eine Brieftasche haben.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Hallo! Wir konstruieren hier Sachen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "W\xE4hlen Sie einfach etwas an der Wand aus und wir werden es f\xFCr
+      Sie erstellen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... St\xF6rt es Sie, ein paar Hosen anzuziehen?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

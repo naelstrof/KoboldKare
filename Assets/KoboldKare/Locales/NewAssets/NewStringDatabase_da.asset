@@ -1020,6 +1020,43 @@ MonoBehaviour:
       til at finde skuespiller -id'er."
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: "\xC5h hej ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Velkommen til Underground.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignorer r\xF8g, er du velkommen til at gennemse varerne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Whoa! Du kommer til at stikke \xF8je ud."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Ja okay bare uh .. hj\xE6lp dig selv antager jeg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Fort\xE6l mig venligst, at du har en tegnebog."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Hej! Vi konstruerer ting her.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "V\xE6lg bare noget p\xE5 v\xE6ggen, s\xE5 konstruerer vi det til
+      dig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Har du noget imod at s\xE6tte p\xE5 nogle bukser?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

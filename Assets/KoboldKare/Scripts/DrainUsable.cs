@@ -10,7 +10,8 @@ public class DrainUsable : UsableMachine {
     [SerializeField] private GenericReagentContainer drainContainer;
     [SerializeField] private Sprite displaySprite;
     private AudioSource audioSource;
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;

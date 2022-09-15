@@ -1044,6 +1044,42 @@ MonoBehaviour:
       acteur -ID's te vinden.
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh Hoi...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Welkom in de underground.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: Negeer de rook, voel je vrij om door de waren te bladeren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! Je gaat in de gaten kijken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Ja ok\xE9 gewoon uh .. help jezelf, denk ik."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: Vertel me alsjeblieft dat je een portemonnee hebt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Hallo! We construeren hier dingen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: Selecteer gewoon iets op de muur en we zullen het voor u construeren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Vind je het erg om een \u200B\u200Bbroek aan te trekken?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

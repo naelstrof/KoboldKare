@@ -477,6 +477,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         Vector3 localHitNormal = hit.collider.transform.InverseTransformDirection(hit.normal);
 
         PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
+        if (otherView == null) {
+            return;
+        }
         Collider[] colliders = otherView.GetComponentsInChildren<Collider>();
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i] == hit.collider) {

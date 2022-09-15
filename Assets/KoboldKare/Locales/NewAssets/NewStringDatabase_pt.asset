@@ -1021,6 +1021,42 @@ MonoBehaviour:
       encontrar IDs de atores.
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh ei ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: Bem -vindo ao underground.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignore a fuma\xE7a, fique \xE0 vontade para navegar nos produtos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Uau! Voc\xEA vai zombar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Sim, ok, s\xF3 uh .. Ajude a si mesmo, eu acho."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "Por favor, diga -me que voc\xEA tem uma carteira."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "Ol\xE1! Constru\xEDmos coisas aqui."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Basta selecionar algo na parede e constru\xEDmos para voc\xEA."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Voc\xEA se importa de colocar algumas cal\xE7as?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

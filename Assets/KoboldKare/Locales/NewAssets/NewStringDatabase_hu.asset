@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem k\xE9szleteket, hogy hamburgert k\xE9sz\xEDtsek, a dar\xE1l\xF3val
-      kombin\xE1ljuk \u0151ket \xE9s t\xE1pl\xE1ljam a Kobolds -ot."
+      kombin\xE1ljuk \u0151ket \xE9s etetem a Kobolds -ot."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1029,6 +1029,44 @@ MonoBehaviour:
     m_Localized: "R\xFAgjon le egy lej\xE1tsz\xF3t a Target sz\xEDn\xE9sz azonos\xEDt\xF3val.
       Haszn\xE1lja a `/lista lej\xE1tsz\xF3kat\" sz\xEDn\xE9szi azonos\xEDt\xF3k
       megtal\xE1l\xE1s\xE1hoz."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: "\xD3, h\xE9 ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: "\xDCdv\xF6z\xF6lj\xFCk a f\xF6ldalatti."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ne hagyja figyelmen k\xEDv\xFCl a f\xFCst\xF6t, nyugodtan keresse
+      meg az \xE1rut."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: Whoa! Forogni fogsz.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Igen, ok\xE9, csak uh .. seg\xEDts magadnak."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "K\xE9rem, mondja meg, hogy van p\xE9nzt\xE1rc\xE1d."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: "Szia! Itt k\xE9sz\xEDt\xFCnk cuccokat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Csak v\xE1lasszon valamit a falon, \xE9s elk\xE9sz\xEDtj\xFCk az
+      \xD6n sz\xE1m\xE1ra."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Nem b\xE1nja, hogy feltesz egy nadr\xE1got?"
     m_Metadata:
       m_Items: []
   references:

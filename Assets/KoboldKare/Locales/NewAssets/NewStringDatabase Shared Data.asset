@@ -979,6 +979,42 @@ MonoBehaviour:
     m_Key: CHEAT_KICK_HELP
     m_Metadata:
       m_Items: []
+  - m_Id: 214537223010832384
+    m_Key: ZARNI_DIALOGUE_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Key: ZARNI_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Key: ZARNI_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Key: GRUFF_SHOP_DIALOGUE_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Key: GRUFF_SHOP_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Key: GRUFF_SHOP_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

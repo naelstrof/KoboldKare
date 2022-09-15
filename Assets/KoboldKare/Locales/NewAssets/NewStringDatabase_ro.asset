@@ -740,8 +740,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Avem nevoie de kobolduri provenite local, \xEEncepe\u021Bi prin
-      a -\u021Bi pune \xEEns\u0103rcina\u021Bi o parte din Kobolds."
+    m_Localized: "Avem nevoie de Kobolds provenite local, \xEEncepe\u021Bi prin a
+      -\u021Bi pune \xEEns\u0103rcina\u021Bi unele dintre Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -1028,6 +1028,44 @@ MonoBehaviour:
   - m_Id: 214255575602089984
     m_Localized: "Loviti un juc\u0103tor cu ID -ul actorului \u021Bint\u0103. Utiliza\u021Bi
       `/List Players` pentru a g\u0103si ID -uri de actor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223010832384
+    m_Localized: Oh, hei ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775424
+    m_Localized: "Bine a\u021Bi venit \xEEn subteran."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775425
+    m_Localized: "Ignora\u021Bi fumul, nu ezita\u021Bi s\u0103 r\u0103sfoi\u021Bi
+      produsele."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775426
+    m_Localized: "Vai! Ai de g\xE2nd s\u0103 -\u021Bi arunci un ochi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775427
+    m_Localized: "Da, bine, doar uh .. ajut\u0103 -te, cred."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775428
+    m_Localized: "V\u0103 rog s\u0103 -mi spune\u021Bi c\u0103 ave\u021Bi un portofel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775429
+    m_Localized: Salut! Construim lucruri aici.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775430
+    m_Localized: "Selecta\u021Bi ceva pe perete \u0219i \xEEl vom construi pentru
+      dvs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214537223052775431
+    m_Localized: "... Te deranjeaz\u0103 s\u0103 pui ni\u0219te pantaloni?"
     m_Metadata:
       m_Items: []
   references:

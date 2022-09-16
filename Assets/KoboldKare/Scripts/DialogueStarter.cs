@@ -35,7 +35,7 @@ public class DialogueStarter : GenericUsable {
 
     private void Awake() {
         stringBuilder = new StringBuilder();
-        textDelay = new WaitForSeconds(0.1f);
+        textDelay = new WaitForSeconds(0.16f);
         lineDelay = new WaitForSeconds(3f);
         if (source == null) {
             source = gameObject.AddComponent<AudioSource>();
@@ -76,8 +76,8 @@ public class DialogueStarter : GenericUsable {
         dialogue ??= dialogueInfos[0].dialogue;
         foreach (var line in dialogue) {
             float startTime = Time.time;
-            float duration = 1.5f;
             string targetString = line.GetLocalizedString();
+            float duration = 0.025f*targetString.Length;
             while (Time.time < startTime + duration) {
                 float t = (Time.time - startTime) / duration;
                 int desiredLength = Mathf.RoundToInt(targetString.Length * t);

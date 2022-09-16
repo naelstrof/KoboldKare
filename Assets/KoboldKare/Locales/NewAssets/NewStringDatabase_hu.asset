@@ -957,7 +957,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314184
     m_Localized: "Alkatr\xE9szeiknek nagyobbnak kell lenni\xFCk, padlizs\xE1n, dinnye
-      vagy anan\xE1szl\xE9 t\xE1pl\xE1lkozniuk kell."
+      vagy anan\xE1szlevet kell t\xE1pl\xE1lniuk."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
@@ -1067,6 +1067,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 214537223052775431
     m_Localized: "... Nem b\xE1nja, hogy feltesz egy nadr\xE1got?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214891307416997888
+    m_Localized: Fasz hossza
     m_Metadata:
       m_Items: []
   references:

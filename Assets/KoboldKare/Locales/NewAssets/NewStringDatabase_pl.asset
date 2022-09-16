@@ -756,7 +756,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
+    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w metrze.
+    m_Localized: Witamy w podziemiu.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1065,6 +1065,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 214537223052775431
     m_Localized: "... Czy masz co\u015B przeciwko za\u0142o\u017Ceniu spodni?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214891307416997888
+    m_Localized: "D\u0142ugo\u015B\u0107 kutasa"
     m_Metadata:
       m_Items: []
   references:

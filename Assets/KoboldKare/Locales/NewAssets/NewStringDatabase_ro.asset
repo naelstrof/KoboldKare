@@ -1068,6 +1068,10 @@ MonoBehaviour:
     m_Localized: "... Te deranjeaz\u0103 s\u0103 pui ni\u0219te pantaloni?"
     m_Metadata:
       m_Items: []
+  - m_Id: 214891307416997888
+    m_Localized: Lungimea pula
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

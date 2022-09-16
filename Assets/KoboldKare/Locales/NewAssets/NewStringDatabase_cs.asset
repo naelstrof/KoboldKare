@@ -1067,6 +1067,10 @@ MonoBehaviour:
     m_Localized: "... nevad\xED v\xE1m d\xE1t n\u011Bjak\xE9 kalhoty?"
     m_Metadata:
       m_Items: []
+  - m_Id: 214891307416997888
+    m_Localized: "D\xE9lka pt\xE1ka"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5460018047282148035
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EquineDildoNoDeform
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_ValidKeywords:
+  - _METALLICSPECGLOSSMAP
+  - _NORMALMAP
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: e1fd3edf0f1657a47ab6af5e21c5fe8d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: ecd85df6f6505444eb1be8248886cbd7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DecalColorMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: e1fd3edf0f1657a47ab6af5e21c5fe8d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 2800000, guid: c84b66d0f6fe65d469c6766685b5908f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 2800000, guid: 4e2759229cadba44d99744ca7075c928, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaClip: 0
+    - _AlphaCutoff: 0.5
+    - _Blend: 0
+    - _BlendshapeMultiplier: 1.8487743
+    - _BulgePercentage: 0.1
+    - _BumpScale: 1
+    - _CLIP_DICK: 0
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _ClipDick: 0
+    - _Cull: 2
+    - _CumActive: 0
+    - _CumAmount: 0
+    - _CumProgress: 0
+    - _Cutoff: 0.5
+    - _DEFORM_BALLS: 1
+    - _DeformBalls: 0
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DickLength: 0.9433643
+    - _DickWorldLength: 1
+    - _DistanceToHole: 0
+    - _DstBlend: 0
+    - _EndClip: 0
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
+    - _HoleProgress: 183.02863
+    - _INVISIBLE_WHEN_INSIDE: 0
+    - _InvisibleWhenInside: 0
+    - _Metallic: 0
+    - _ModelScale: 3.697548
+    - _NOBLENDSHAPES: 0
+    - _NoBlendshapes: 0
+    - _OcclusionStrength: 1
+    - _OrifaceLength: 1
+    - _OrificeLength: 1
+    - _Parallax: 0.005
+    - _PenetrationDepth: -1
+    - _PenetratorBlendshapeMultiplier: 1.8487743
+    - _PenetratorBulgePercentage: 0.1
+    - _PenetratorCumActive: 0
+    - _PenetratorCumProgress: 0
+    - _PenetratorLength: 0.9433643
+    - _PenetratorSquishPullAmount: 0
+    - _PinchBuffer: 0.25
+    - _PullAmount: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Smoothness: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SquashStretchCorrection: 1
+    - _SquishAmount: 0
+    - _SquishPullAmount: 0
+    - _SrcBlend: 1
+    - _StartClip: 0
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZWrite: 1
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DickForward: {r: 0.0074142697, g: 0.0733652, b: 0.9972776, a: 0}
+    - _DickForwardWorld: {r: 0, g: 0, b: 0, a: 0}
+    - _DickOrigin: {r: 0.0029824157, g: -0.14057969, b: 0.0033543974, a: 0}
+    - _DickRight: {r: 0.9992901, g: 0.03629504, b: -0.010099294, a: 0}
+    - _DickRightWorld: {r: 0, g: 0, b: 0, a: 0}
+    - _DickRootWorld: {r: 0, g: 0, b: 0, a: 0}
+    - _DickUp: {r: 0.036937185, g: -0.99664444, b: 0.07304401, a: 0}
+    - _DickUpWorld: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HueBrightnessContrastSaturation: {r: 0, g: 0.5, b: 0.5, a: 0.5}
+    - _OrifaceOutWorldNormal: {r: 0, g: 1, b: 0, a: 0}
+    - _OrifaceOutWorldPosition1: {r: 0, g: -0.33, b: 0, a: 0}
+    - _OrifaceOutWorldPosition2: {r: 0, g: -0.66, b: 0, a: 0}
+    - _OrifaceOutWorldPosition3: {r: -0.00007962735, g: -1.0160426, b: -0.00018752366,
+        a: 0}
+    - _OrifaceWorldNormal: {r: 0, g: 1, b: 0, a: 0}
+    - _OrifaceWorldPosition: {r: -0.00007962735, g: -0.016042592, b: -0.00018752366,
+        a: 0}
+    - _OrificeNormal: {r: 0, g: 1, b: 0, a: 0}
+    - _OrificeOutWorldPosition1: {r: 0, g: 1, b: 0, a: 0}
+    - _OrificeOutWorldPosition2: {r: 0, g: 4, b: 0, a: 0}
+    - _OrificeOutWorldPosition3: {r: 0, g: 2, b: 0, a: 0}
+    - _OrificePosition: {r: 0, g: 0, b: 0, a: 0}
+    - _OrificeWorldNormal: {r: 0, g: 0, b: 0, a: 0}
+    - _OrificeWorldPosition: {r: 0, g: 3, b: 0, a: 0}
+    - _PenetratorForward: {r: 0.0074142697, g: 0.0733652, b: 0.9972776, a: 0}
+    - _PenetratorOrigin: {r: 0.0029675167, g: -0.14058279, b: 0.0033646575, a: 0}
+    - _PenetratorRight: {r: 0.9993031, g: 0.035942636, b: -0.010073465, a: 0}
+    - _PenetratorUp: {r: 0.03658384, g: -0.9966572, b: 0.073047586, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []

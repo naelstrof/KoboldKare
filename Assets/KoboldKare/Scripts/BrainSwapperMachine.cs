@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.VFX;
 using Vilar.AnimationStation;
 
 public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
@@ -15,6 +16,8 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private List<AnimationStation> stations;
 
+    [SerializeField] private VisualEffect lightning;
+    [SerializeField] private AudioPack thunderSound;
     [SerializeField] private AudioPack brainSwapSound;
     private AudioSource brainSwapSoundSource;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
@@ -88,6 +91,8 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
 
     [PunRPC]
     private void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB, float moneyA, float moneyB) {
+        thunderSound.PlayOneShot(brainSwapSoundSource);
+        lightning.Play();
         brainSwapSound.Play(brainSwapSoundSource);
         PhotonView aView = PhotonNetwork.GetPhotonView(aViewID);
         PhotonView bView = PhotonNetwork.GetPhotonView(bViewID);

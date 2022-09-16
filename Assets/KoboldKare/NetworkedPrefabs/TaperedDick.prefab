@@ -642,6 +642,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5818050968148970997, guid: cd599d6e0e2c186488a8e0b98b1e6f96,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 592fe42b148f8034cac19fb877d44c06, type: 2}
     - target: {fileID: 6050923306594025331, guid: cd599d6e0e2c186488a8e0b98b1e6f96,
         type: 3}
       propertyPath: m_RootOrder
@@ -702,6 +707,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TaperedDildoDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 6897165124909442498, guid: cd599d6e0e2c186488a8e0b98b1e6f96,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 592fe42b148f8034cac19fb877d44c06, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd599d6e0e2c186488a8e0b98b1e6f96, type: 3}
 --- !u!137 &109394161160481697 stripped

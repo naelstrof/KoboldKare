@@ -584,7 +584,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (info.photonView.InstantiationData.Length > 1 && info.photonView.InstantiationData[1] is bool) {
             if ((bool)info.photonView.InstantiationData[1] == true) {
                 GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
-                info.Sender.TagObject = this;
+                if (info.Sender != null) { // Possible for instantiated kobold's owner to have disconnected. (late join instantiate).
+                    info.Sender.TagObject = this;
+                }
             } else {
                 GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
                 FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);

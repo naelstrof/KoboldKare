@@ -58,7 +58,6 @@ public class SuckingMachine : UsableMachine {
 
     IEnumerator SuckAndSwallow() {
         sucking = true;
-        Debug.Log("Sucking");
         while (isActiveAndEnabled && trackedRigidbodies.Count > 0) {
             trackedRigidbodies.RemoveWhere(ShouldStopTracking);
             foreach (var body in trackedRigidbodies) {

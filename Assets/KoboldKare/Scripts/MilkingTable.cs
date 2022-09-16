@@ -73,7 +73,7 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
                 yield break;
             }
         }
-        stations[^1].info.user.photonView.RPC(nameof(Kobold.MilkRoutine), RpcTarget.All);
+        stations[0].info.user.photonView.RPC(nameof(Kobold.MilkRoutine), RpcTarget.All);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

@@ -1,3 +1,4 @@
+using System;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -33,8 +34,11 @@ public class GenericFluidVolume : MonoBehaviourPun {
         StartCoroutine(DrainProcess());
     }
 
-    public void Start() {
+    private void Awake() {
         dippedObjects = new HashSet<PhotonView>();
+    }
+
+    public void Start() {
         volumeContainer.OnChange.AddListener(OnReagentContainerChanged);
         OnReagentContainerChanged(volumeContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
     }

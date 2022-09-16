@@ -844,8 +844,8 @@ MonoBehaviour:
   - {fileID: 5905337877946871655}
   milkingSprite: {fileID: 21300000, guid: 775c36010e943454ab66e38726c40e0a, type: 3}
   stations:
-  - {fileID: 5204249533228825337}
   - {fileID: 4616607658227266327}
+  - {fileID: 5204249533228825337}
   stream: {fileID: 1737490455208737195}
 --- !u!114 &8095303334753861437
 MonoBehaviour:

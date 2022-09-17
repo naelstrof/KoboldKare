@@ -415,7 +415,7 @@ MonoBehaviour:
     attachPoint: 0
     cumSplatProjectorMaterial: {fileID: 2100000, guid: 274ee3d452dc0c548a30e3e4f93791a4,
       type: 2}
-    attachPosition: {x: -0.0000003428246, y: 0.87931937, z: -0.038448613}
+    attachPosition: {x: -0.0000003428246, y: 0.87931937, z: -0.017928977}
     cumSoundPack: {fileID: 11400000, guid: 6a026e8e8fe32d948a722fccae91b39a, type: 2}
     info: {fileID: 0}
     parent: 0

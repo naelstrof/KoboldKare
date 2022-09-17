@@ -26,6 +26,7 @@ public class Launchpad : UsableMachine {
     public Vector3 localTarget;
     public float flightTime = 5f;
     public float playerFlightTime = 4.5f;
+    private WaitForFixedUpdate waitForFixedUpdate;
 
     public override bool CanUse(Kobold k) {
         return false;
@@ -36,6 +37,23 @@ public class Launchpad : UsableMachine {
     public Vector3 playerGravityMod = new Vector3(0f, -4f, 0f);
     private float fireDelay = 1f;
     private float lastFireTime;
+
+    private void Awake() {
+        waitForFixedUpdate = new WaitForFixedUpdate();
+    }
+
+    private IEnumerator HighQualityCollision(Rigidbody body) {
+        // Already high quality, don't want to mess with it.
+        if (body.collisionDetectionMode != CollisionDetectionMode.Discrete) {
+            yield break;
+        }
+
+        body.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        while (body.velocity.magnitude > 1f) {
+            yield return waitForFixedUpdate;
+        }
+        body.collisionDetectionMode = CollisionDetectionMode.Discrete;
+    }
 
     private IEnumerator DisableControllerForTime(KoboldCharacterController controller) {
         controller.enabled = false;
@@ -59,6 +77,8 @@ public class Launchpad : UsableMachine {
         if (rigidbodies.Length == 0) {
             return;
         }
+
+
         KoboldCharacterController controller = other.GetComponentInParent<KoboldCharacterController>();
         float gravity = Physics.gravity.y;
         float alteredFlightTime = flightTime;
@@ -66,7 +86,12 @@ public class Launchpad : UsableMachine {
             gravity = Physics.gravity.y + controller.gravityMod.y*controller.transform.lossyScale.x;
             alteredFlightTime = playerFlightTime;
             StartCoroutine(DisableControllerForTime(controller));
+        } else {
+            foreach (Rigidbody body in rigidbodies) {
+                StartCoroutine(HighQualityCollision(body));
+            }
         }
+
         float initialYVelocity = (transform.TransformVector(localTarget).y - .5f * gravity * (alteredFlightTime * alteredFlightTime)) / alteredFlightTime;
         float xDistance = transform.TransformVector(localTarget).With(y: 0).magnitude;
         float initialXVelocity = xDistance/alteredFlightTime;

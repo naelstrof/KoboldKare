@@ -706,38 +706,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: Grow your first kobold!
+    m_Localized: It's alive!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: Water and time will grow the kobold, take care of it.
+    m_Localized: Water the egg and wait for your kobold to reach maturity.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: Transfer kobold via pneumatic network.
+    m_Localized: Transfer kobold to the Dragon Lord via pneumatic network.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: You have Dragon patron's attention... now transfer the goods. You
-      will be rewarded.
+    m_Localized: Good work, now send me the new kobold and I will reward you for
+      your efforts.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Plant an egg!
+    m_Localized: An egg for the Dragon Lord!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: Dragon patron seeks capable Karetaker, plant an egg into supple
-      earth.
+    m_Localized: I am Nymrianth, the Dragon Lord. I command you to begin work as
+      a Kobold Karetaker and grow me a kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: Purchase an industrial fruit blender.
+    m_Localized: Upgrade your farm!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: These kobolds need to be fed, find the construction contract at
-      the construction office.
+    m_Localized: Go down into town and purchase a grinder, look for the construction
+      shop manned by a sheep. The one in the hard hat.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -745,16 +745,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: Kobolds need the food prepared, use the grinder to grind up fruit
+    m_Localized: You kobolds have interesting bodies, try grinding up some fruit
+      and then feed it to a kobold and see what happens.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: Breed kobolds
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: We need locally sourced kobolds, start by getting some of your kobolds
-      pregnant.
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -762,8 +762,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: I need a delivery of a breed of kobolds with large dicks, I expect
-      you to handle this.
+    m_Localized: I require kobolds with large dicks, prepare one and send it to me
+      quickly.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
@@ -771,52 +771,52 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: I need a delivery of a breed of kobolds with large breasts, I expect
-      you to handle this.
+    m_Localized: I need you to deliver me a kobold with large titties, I'm talking
+      massive, I expect you to handle this and I expect you to not ask questions.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Cum inflate kobolds.
+    m_Localized: Cumflate kobolds!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: The kobolds need to be filled to the brim, don't talk to me further
-      about this.
+    m_Localized: Fill a kobold with cum until they can't take anymore, I need to
+      see how durable your kind really are.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: Penetrate all the way through.
+    m_Localized: All the way through!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: I can't even begin to think of an explanation, just take care of
-      it.
+    m_Localized: Let's do another endurance test, penetrate a kobold with a dick
+      longer then it's body.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: Deliver fattened kobolds
+    m_Localized: Tummy Time!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: Milkshakes go straight to the thighs, its in our best interest to
-      have a few superheavy kobolds.
+    m_Localized: Its in our best interest to have a few superheavy kobolds, fatten
+      some up and send them to me.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: Oviposit a very large egg.
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: I don't care what you do with it after, we need a large egg to come
-      out of a kobold.
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Create macro kobold
+    m_Localized: Create a macro kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: They need to be at least the size of a house. Good luck.
+    m_Localized: Create for me a kobold so tall that they can look over a house with
+      ease.
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -927,21 +927,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: Lay Eggs
+    m_Localized: Lay an egg!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: We need locally sourced kobolds, get them pregnant, then set them
-      at the breeding station.
+    m_Localized: Eggs from the store aren't as good. Find a good kobold, get them
+      pregnant, then set them at the breeding station.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Cook Burger
+    m_Localized: Burger time!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: I've sent supplies to make a burger, use the grinder to combine
-      them and feed the kobolds.
+    m_Localized: I've sent you some supplies to make a burger, use the grinder to
+      combine them and then feed it to a kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -954,12 +954,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: Make Milk-based Foods
+    m_Localized: Make some Milk-Based foods!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: I've heard milk and ice makes for a nice drink, same with yogurt
-      made from milk and cum...
+    m_Localized: Kobold milk has a lot of nutritional value, try combining it with
+      other things in a bucket to make new foods.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -967,17 +967,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: Their parts need to be bigger, feed them eggplant, melon, or pineapple
-      juice.
+    m_Localized: I need you to run some experiments; feed your kobolds eggplant,
+      melon, or pineapple juice. This should cause parts of their bodies to grow.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Investigate Cave
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: There's a spooky guy in the cave talking about immortality? Find
-      out what that's about.
+    m_Localized: I'm sensing a dark presence in the nearby caves, go and investigate
+      for me.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -985,8 +985,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Purchase the body swap machine from the spooky guy. We'll need it
-      to optimize our farm.
+    m_Localized: Purchase the body swapper from the creep in the cave.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1002,37 +1001,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Swap bodies
+    m_Localized: Weird Science!
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: Ohh! That's how it works, pick your favorite kobold and swap bodies
-      with them!
+    m_Localized: What an interesting device you've obtained. Go and try using it,
+      bring another kobold along with you.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cum-through a kobold
+    m_Localized: Cumming through!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Learn more about the reality-bending elasticity of kobolds, use
-      Eggplant Juice.
+    m_Localized: Learn more about the reality-bending elasticity of kobolds, fuck
+      a kobold with a dick larger than it's body.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: Lay a big egg
+    m_Localized: We're gonna need a bigger nest.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: Lay a huuuuge egg, as big as you can get it!
+    m_Localized: I want you to make one of your kobolds lay a big egg. I'm talking
+      a large egg here, as big as you can get it really.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: Inflate Kobolds
+    m_Localized: Big and Round!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: Use the inflater machine to make them big and round.
+    m_Localized: Use an inflater machine to make a kobold big and round. I think
+      it could be fun to see them roll around or something.
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1041,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Oh hey...
+    m_Localized: Hey stranger...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1053,7 +1054,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! You're going to poke an eye out.
+    m_Localized: Whoa! You're gonna poke an eye out.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1061,11 +1062,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: Please tell me you have a wallet.
+    m_Localized: Where are you keeping your money anyway...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Hello! We construct stuff here.
+    m_Localized: Hello! You're from that farm over there right? Looking to upgrade?
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1073,11 +1074,138 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: ...do you mind putting on some pants?
+    m_Localized: Uh... you mind putting on some pants?
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
     m_Localized: Dick Length
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885794521088
+    m_Localized: So... you need something new from me...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Localized: I'll do it, for a price of course...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464129
+    m_Localized: There's stuff out front over there and behind me too, so really
+      get up in here, no need to be shy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Localized: Welcome back, buying or just browsing?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Localized: Lookin' good today, need any help carrying anything?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Localized: Hi! Need any help today?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Localized: Do you think I'd look good in a hat?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464134
+    m_Localized: Need something built?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Localized: There's my favorite customer!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Localized: Sorry, I'm all out of things to build for you! Thanks for being
+      such a loyal customer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Localized: I'll just stand here in case some other naked kobold wants me to
+      build them fetish machines.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Localized: Triple Stuffed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Localized: Aha wouldn't it be so funny if you stuck 3 dildos into a kobold's
+      mouth... I command you to do that.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Localized: Sell Micro Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Localized: 'I would like a really small kobold that can fit into... small,
+      intimate crevices. '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Localized: Manifest Destiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Localized: Use explosives to blow up the debris on the farm so you can have
+      more space.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Localized: Make the perfect kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Localized: I have decided that I need a consort, create the perfect kobold
+      for me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Localized: Purchase a pneumatic contract
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Localized: They're perfect! I'm going to be... quite busy... I am promoting
+      you to a Kobold Karetaker Overseer position, you will purchase kobolds on my
+      behalf from other Kobold Karetakers, find someone to build the needed tubing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Localized: KoboldKare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Localized: I guess I'm the boss now! I should try buying a kobold with the
+      new pneumatic system.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Localized: Welcome! Looking to buy some seeds? We've got kobold eggs too!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Localized: Need help finding something?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Localized: Welcome to the casino, here for business, or pleasure?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Localized: From your lack of clothes I'll guess a little of both. You can play
+      the panchinko machine to earn some adornments.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Localized: Don't be a stranger.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Localized: Safe-for-work Main Menu
     m_Metadata:
       m_Items: []
   references:

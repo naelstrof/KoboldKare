@@ -909,21 +909,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: Pondre
+    m_Localized: Pondre un oeuf!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: "Nous avons besoin de kobolds d'origine locale, de les rendre enceintes,
-      puis de les mettre \xE0 la station de reproduction."
+    m_Localized: "Les \u0153ufs du magasin ne sont pas aussi bons. Trouvez un bon
+      kobold, cr\xE9ez-les enceinte, puis placez-les \xE0 la station de reproduction."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Cuisiner
+    m_Localized: Temps de hamburger!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "J'ai envoy\xE9 des fournitures pour faire un hamburger, utiliser
-      le broyeur pour les combiner et nourrir les Kobolds."
+    m_Localized: "Je vous ai envoy\xE9 des fournitures pour faire un hamburger, utiliser
+      le broyeur pour les combiner, puis le nourrir \xE0 un kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -936,12 +936,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Faire des aliments \xE0 base de lait"
+    m_Localized: "Faites des aliments \xE0 base de lait!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "J'ai entendu du lait et de la glace faire une bonne boisson, la
-      m\xEAme chose avec du yaourt \xE0 base de lait et de sperme ..."
+    m_Localized: Kobold Milk a beaucoup de valeur nutritionnelle, essayez de le combiner
+      avec d'autres choses dans un seau pour faire de nouveaux aliments.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -949,17 +949,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "Leurs pi\xE8ces doivent \xEAtre plus grandes, les nourrir auberge,
-      au melon ou au jus d'ananas."
+    m_Localized: "J'ai besoin que vous ex\xE9cutiez quelques exp\xE9riences; Nourrissez
+      votre jus de kobolds, melon ou jus d'ananas. Cela devrait faire cro\xEEtre
+      des parties de leur corps."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "Enqu\xEAter sur la grotte"
+    m_Localized: "Sp\xE9l\xE9ologie!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Il y a un gars effrayant dans la grotte qui parle d'immortalit\xE9?
-      D\xE9couvrez de quoi il s'agit."
+    m_Localized: "Je ressens une sombre pr\xE9sence dans les grottes voisines, je
+      vais enqu\xEAter pour moi."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -967,8 +968,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "Achetez la machine d'\xE9change de corps aupr\xE8s du gars effrayant.
-      Nous en aurons besoin pour optimiser notre ferme."
+    m_Localized: Achetez le Swapper du corps dans le fluage dans la grotte.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -984,37 +984,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: "\xC9changer des corps"
+    m_Localized: "Science \xE9trange!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Ohh! C'est comme \xE7a que cela fonctionne, choisissez votre kobold
-      pr\xE9f\xE9r\xE9 et \xE9changez des corps avec eux!"
+    m_Localized: "Quel appareil int\xE9ressant que vous avez obtenu. Allez et essayez
+      de l'utiliser, apportez un autre Kobold avec vous."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cum-through un kobold
+    m_Localized: "Cumming \xE0 travers!"
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "En savoir plus sur l'\xE9lasticit\xE9 qui p\xE8se la r\xE9alit\xE9
-      des Kobolds, utilisez du jus d'aubergine."
+    m_Localized: "Apprenez-en plus sur l'\xE9lasticit\xE9 de la r\xE9alit\xE9 de
+      Kobolds, baise un kobold avec une bite plus grande que son corps."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: "Pondre un gros \u0153uf"
+    m_Localized: Nous allons avoir besoin d'un nid plus gros.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Posez un \u0153uf huuuuge, aussi grand que possible!"
+    m_Localized: "Je veux que vous fassiez un de vos kobolds ponde un gros \u0153uf.
+      Je parle d'un gros \u0153uf ici, aussi grand que vous pouvez l'obtenir vraiment."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: Gonfler les kobolds
+    m_Localized: Grand et rond!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: Utilisez la machine d'influence pour les rendre grandes et rondes.
+    m_Localized: "Utilisez une machine d'influence pour rendre un kobold grand et
+      rond. Je pense que cela pourrait \xEAtre amusant de les voir rouler ou quelque
+      chose comme \xE7a."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1023,7 +1026,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Oh hey...
+    m_Localized: "H\xE9 \xE9tranger..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1035,7 +1038,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Vous allez sortir un \u0153il."
+    m_Localized: "Whoa! Tu vas sortir un \u0153il."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1043,11 +1046,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: Veuillez me dire que vous avez un portefeuille.
+    m_Localized: "O\xF9 gardez-vous votre argent de toute fa\xE7on ..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Bonjour! Nous construisons des trucs ici.
+    m_Localized: "Bonjour! Vous \xEAtes de cette ferme l\xE0-bas, non? Vous cherchez
+      \xE0 mettre \xE0 niveau?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1056,11 +1060,141 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "... \xE7a te d\xE9range de mettre un pantalon?"
+    m_Localized: "Euh ... \xE7a te d\xE9range de mettre du pantalon?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
     m_Localized: Longueur de bite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Localized: Triple en peluche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Localized: "Aha ne serait pas si dr\xF4le si vous colliez 3 godes dans la bouche
+      d'un Kobold ... Je vous commande de le faire."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Localized: Vendre du micro Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Localized: "Je voudrais un tr\xE8s petit kobold qui peut s'adapter \xE0 ...
+      de petites crevasses intimes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Localized: "Destin\xE9e manifeste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Localized: "Utilisez des explosifs pour faire sauter les d\xE9bris de la ferme
+      afin que vous puissiez avoir plus d'espace."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Localized: Faire le kobold parfait
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Localized: "J'ai d\xE9cid\xE9 que j'ai besoin d'un \xE9pouse, de cr\xE9er le
+      kobold parfait pour moi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Localized: Acheter un contrat pneumatique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Localized: "Ils sont parfaits! Je vais \xEAtre ... Assez occup\xE9 ... Je vous
+      fais la promotion d'un poste de surveillant de Kobold Karetaker, vous ach\xE8terez
+      des kobolds en mon nom \xE0 d'autres kobold karetakers, trouverez quelqu'un
+      pour construire le tube n\xE9cessaire."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Localized: Koboldkare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Localized: "Je suppose que je suis le patron maintenant! Je devrais essayer
+      d'acheter un Kobold avec le nouveau syst\xE8me pneumatique."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Localized: "Accueillir! Vous cherchez \xE0 acheter des graines? Nous avons
+      aussi des \u0153ufs de kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Localized: Besoin d'aide pour trouver quelque chose?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Localized: Bienvenue au casino, ici pour les affaires ou le plaisir?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Localized: "De votre manque de v\xEAtements, je suppose un peu des deux. Vous
+      pouvez jouer la machine Panchinko pour gagner des ornements."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Localized: "Ne soyez pas un \xE9tranger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885794521088
+    m_Localized: Alors ... tu as besoin de quelque chose de nouveau de moi ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Localized: "Je vais le faire, pour un prix bien s\xFBr ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464129
+    m_Localized: "Il y a des trucs devant l\xE0-bas et derri\xE8re moi aussi, alors
+      vraiment levez-vous ici, pas besoin d'\xEAtre timide."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Localized: Bienvenue, acheter ou simplement naviguer?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Localized: Vous semblez bien aujourd'hui, avez-vous besoin d'aide pour transporter
+      quoi que ce soit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Localized: Salut! Besoin d'aide aujourd'hui?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Localized: Pensez-vous que j'aurais l'air bien dans un chapeau?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464134
+    m_Localized: Besoin de quelque chose construit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Localized: "Il y a mon client pr\xE9f\xE9r\xE9!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Localized: "D\xE9sol\xE9, je suis tout \xE0 fait hors des choses \xE0 construire
+      pour vous! Merci d'\xEAtre un client aussi fid\xE8le."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Localized: "Je vais juste rester ici au cas o\xF9 un autre Kobold nu veut que
+      je les construise."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Localized: "Menu principal en toute s\xE9curit\xE9"
     m_Metadata:
       m_Items: []
   references:

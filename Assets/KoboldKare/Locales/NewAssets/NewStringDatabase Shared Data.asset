@@ -943,6 +943,14 @@ MonoBehaviour:
     m_Key: CREEPY_GUY_DIALOGUE_2
     m_Metadata:
       m_Items: []
+  - m_Id: 215233885794521088
+    m_Key: CREEPY_GUY_DIALOGUE_TUBE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Key: CREEPY_GUY_DIALOGUE_TUBE_2
+    m_Metadata:
+      m_Items: []
   - m_Id: 213569843006853120
     m_Key: OBJECTIVE_BODY_SWAP_TITLE
     m_Metadata:
@@ -991,6 +999,18 @@ MonoBehaviour:
     m_Key: ZARNI_DIALOGUE_2
     m_Metadata:
       m_Items: []
+  - m_Id: 215233885836464129
+    m_Key: ZARNI_DIALOGUE_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Key: ZARNI_DIALOGUE_STAR_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Key: ZARNI_DIALOGUE_STAR_2
+    m_Metadata:
+      m_Items: []
   - m_Id: 214537223052775426
     m_Key: GRUFF_SHOP_DIALOGUE_0
     m_Metadata:
@@ -1001,6 +1021,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 214537223052775428
     m_Key: GRUFF_SHOP_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Key: GRUFF_SHOP_DIALOGUE_STAR_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Key: GRUFF_SHOP_DIALOGUE_STAR_2
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
@@ -1015,8 +1043,96 @@ MonoBehaviour:
     m_Key: GRUFF_CONSTRUCTION_DIALOGUE_2
     m_Metadata:
       m_Items: []
+  - m_Id: 215233885836464134
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_STAR_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_STAR_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_DONE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Key: GRUFF_CONSTRUCTION_DIALOGUE_DONE_2
+    m_Metadata:
+      m_Items: []
   - m_Id: 214891307416997888
     m_Key: SETTING_MULTIPLAYER_DICK_LENGTH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Key: OBJECTIVE_KOBOLD_DILDO_STUFF_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Key: OBJECTIVE_KOBOLD_DILDO_STUFF_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Key: OBJECTIVE_KOBOLD_SELL_MICRO_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Key: OBJECTIVE_KOBOLD_SELL_MICRO_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Key: OBJECTIVE_EXPAND_FARM_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Key: OBJECTIVE_EXPAND_FARM_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Key: OBJECTIVE_MAKE_ME_A_PARTNER_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Key: OBJECTIVE_MAKE_ME_A_PARTNER_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Key: OBJECTIVE_IM_BUSY_NOW_TAKE_CARE_OF_THINGS_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Key: OBJECTIVE_IM_BUSY_NOW_TAKE_CARE_OF_THINGS_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Key: OBJECTIVE_KOBOLDKARE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Key: OBJECTIVE_KOBOLDKARE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Key: POSSUM_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Key: POSSUM_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Key: FLYNN_DIALOGUE_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Key: FLYNN_DIALOGUE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Key: FLYNN_DIALOGUE_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Key: SETTING_SAFE_FOR_WORK_MENU
     m_Metadata:
       m_Items: []
   m_Metadata:

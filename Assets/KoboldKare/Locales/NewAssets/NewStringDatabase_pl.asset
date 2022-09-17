@@ -694,38 +694,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: "Wyhoduj sw\xF3j pierwszy Kobold!"
+    m_Localized: "To \u017Cyje!"
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Woda i czas wzro\u015Bnie Kobold, zajmij si\u0119 tym."
+    m_Localized: "Podlewaj jajko i poczekaj, a\u017C tw\xF3j Kobold osi\u0105gnie
+      dojrza\u0142o\u015B\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Przenie\u015B Kobold przez sie\u0107 pneumatyczn\u0105."
+    m_Localized: "Przenie\u015B Kobolda do Dragon Lord za po\u015Brednictwem sieci
+      pneumatycznej."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Masz uwag\u0119 smoka patrona ... teraz przenie\u015B towar. Zostaniesz
-      nagrodzony."
+    m_Localized: "Dobra robota, teraz wy\u015Blij mi nowy Kobold i nagrodz\u0119
+      ci\u0119 za twoje wysi\u0142ki."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: "Posad\u017A jajko!"
+    m_Localized: Jajko dla Smok Lorda!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Dragon Patron szuka zdolnego Karetakera, posadzi jajko na gi\u0119tk\u0105
-      ziemi\u0119."
+    m_Localized: "Jestem Nymrianth, smokiem Lord. Polecam ci rozpocz\u0105\u0107
+      prac\u0119 jako Kobold Karetaker i wyhodowa\u0107 mnie Kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: "Kup przemys\u0142owy mikser owocowy."
+    m_Localized: "Ulepsz swoj\u0105 farm\u0119!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Te koboldowie musz\u0105 by\u0107 karmione, znale\u017A\u0107 umow\u0119
-      o budow\u0119 w biurze budowlanym."
+    m_Localized: "Zejd\u017A do miasta i kup m\u0142ynek, poszukaj sklepu budowlanego
+      obsadzonego owc\u0105. Ten w twardym kapeluszu."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -733,17 +735,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Kobolds potrzebuj\u0105 przygotowanego jedzenia, u\u017Cyj szlifierki
-      do szlifowania owoc\xF3w"
+    m_Localized: "Wy, kobold\xF3w, masz ciekawe cia\u0142a, spr\xF3buj zmierzy\u0107
+      troch\u0119 owoc\xF3w, a nast\u0119pnie nakarm je Kobold i zobacz, co si\u0119
+      stanie."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: Resore Kobolds
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Potrzebujemy lokalnych kobold\xF3w, zacznij od zaj\u015Bcia w ci\u0105\u017C\u0119
-      Kobolds."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -751,61 +753,63 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: "Potrzebuj\u0119 dostawy rasy Kobolds z du\u017Cymi kutasami, spodziewam
-      si\u0119, \u017Ce poradzisz sobie z tym."
+    m_Localized: "Potrzebuj\u0119 kobold\xF3w z du\u017Cymi kutasami, przygotuj jeden
+      i wysy\u0142aj mi szybko."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
+    m_Localized: "Dostarczaj du\u017Ce piersi Kobolds."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: "Potrzebuj\u0119 dostarczenia rasy Kobolds z du\u017Cymi piersiami,
-      spodziewam si\u0119, \u017Ce poradzisz sobie z tym."
+    m_Localized: "Potrzebuj\u0119, aby\u015B dostarczy\u0142 mi Kobold z du\u017Cymi
+      cyckami, m\xF3wi\u0119 ogromnie, oczekuj\u0119, \u017Ce poradzisz sobie z tym
+      i oczekuj\u0119, \u017Ce nie zadasz pyta\u0144."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Sperma nadmuchi Kobolds.
+    m_Localized: Cumflate Kobolds!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Koboldowie musz\u0105 by\u0107 wype\u0142nione po brzegi, nie rozmawiaj
-      ze mn\u0105 dalej."
+    m_Localized: "Wype\u0142nij Kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
+      ju\u017C mogli znie\u015B\u0107, musz\u0119 zobaczy\u0107, jak trwa\u0142y
+      jest tw\xF3j rodzaj."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: "Przenika\u0107 przez ca\u0142\u0105 drog\u0119."
+    m_Localized: "Przez ca\u0142\u0105 drog\u0119!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: "Nie mog\u0119 nawet zacz\u0105\u0107 my\u015Ble\u0107 o wyja\u015Bnieniu,
-      po prostu zadbaj o to."
+    m_Localized: "Zr\xF3bmy kolejny test wytrzyma\u0142o\u015Bciowy, d\u0142u\u017Cej
+      przeniknij Kobolda z kutasem, ni\u017C jego cia\u0142o."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: Dostarcz wygrane Kobolds
+    m_Localized: "Czas le\u017Caczkowania!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Koktajle mleczne id\u0105 prosto do uda, w naszym najlepszym interesie
-      jest kilka superchodowych kobold\xF3w."
+    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku super\xF3wek
+      Kobold\xF3w, ugotuj troch\u0119 i wys\u0142a\u0107 je do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: "Oviposit bardzo du\u017Ce jajko."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: "Nie obchodzi mnie, co z tym robisz, potrzebujemy du\u017Cego jajka,
-      aby wyj\u015B\u0107 z Kobolda."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Utw\xF3rz makro Kobold"
+    m_Localized: "Utw\xF3rz makro Kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Musz\u0105 by\u0107 co najmniej wielko\u015Bci domu. Powodzenia."
+    m_Localized: "Stw\xF3rz dla mnie Kobold tak wysoki, \u017Ce mog\u0105 z \u0142atwo\u015Bci\u0105
+      obejrze\u0107 dom."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -916,21 +920,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: "Nie\u015B\u0107 si\u0119"
+    m_Localized: "Po\u0142\xF3\u017C jajko!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: "Potrzebujemy lokalnych kobold\xF3w, zaj\u015B\u0107 w ci\u0105\u017C\u0119,
-      a nast\u0119pnie ustawi\u0107 na stacji hodowlanej."
+    m_Localized: "Jajka ze sklepu nie s\u0105 tak dobre. Znajd\u017A dobrego kobolda,
+      zajd\u017A w ci\u0105\u017C\u0119, a nast\u0119pnie ustaw na stacji hodowli."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: "Gotowa\u0107 burger"
+    m_Localized: Czas burgera!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Wys\u0142a\u0142em zapasy, aby zrobi\u0107 burgera, u\u017Cy\u0107
-      szlifierki do ich po\u0142\u0105czenia i karmienia kobold\xF3w."
+    m_Localized: "Wys\u0142a\u0142em ci kilka zapas\xF3w, aby zrobi\u0107 burgera,
+      u\u017Cy\u0107 szlifierki, aby je po\u0142\u0105czy\u0107, a nast\u0119pnie
+      nakarm go Koboldem."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -943,12 +948,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Tw\xF3rz \u017Cywno\u015B\u0107 na bazie mleka"
+    m_Localized: "Zr\xF3b troch\u0119 potraw na bazie mleka!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "S\u0142ysza\u0142em, jak mleko i l\xF3d tworz\u0105 \u0142adny
-      nap\xF3j, taki sam z jogurtem wykonanym z mleka i spermy ..."
+    m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      nowe potrawy."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -956,17 +962,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "Ich cz\u0119\u015Bci musz\u0105 by\u0107 wi\u0119ksze, karmi\u0105
-      je bak\u0142a\u017Cana, melon lub sok ananasowy."
+    m_Localized: "Potrzebuj\u0119, aby\u015B przeprowadzi\u0142 eksperymenty; Karmij
+      bak\u0142a\u017Can Kobolds, melon lub sok ananasowy. Powinno to spowodowa\u0107
+      wzrost cz\u0119\u015Bci ich cia\u0142."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "Zbadaj jaskini\u0119"
+    m_Localized: Splunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "W jaskini jest upiorny facet, kt\xF3ry m\xF3wi o nie\u015Bmiertelno\u015Bci?
-      Dowiedz si\u0119, o co chodzi."
+    m_Localized: "Wyczuwam ciemn\u0105 obecno\u015B\u0107 w pobliskich jaskiniach,
+      id\u017A dla mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -974,8 +981,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "Kup maszyn\u0119 wymiany cia\u0142a od upiornego faceta. Potrzebujemy
-      go, aby zoptymalizowa\u0107 nasz\u0105 farm\u0119."
+    m_Localized: Kup Swapper Body From the Creep in the Cave.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -991,38 +997,42 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: "Zamie\u0144 cia\u0142a"
+    m_Localized: Dziwna nauka!
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Och! Tak to dzia\u0142a, wybierz swoje ulubione Kobold i zamie\u0144
-      na nich cia\u0142a!"
+    m_Localized: "Co za ciekawe urz\u0105dzenie, kt\xF3re uzyska\u0142e\u015B. Id\u017A
+      i spr\xF3buj go u\u017Cy\u0107, zabierz kolejny Kobold ze sob\u0105."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cum-przez Kobold
+    m_Localized: Cumming przez!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Dowiedz si\u0119 wi\u0119cej o elastyczno\u015Bci zwi\u0105zanej
-      z rzeczywisto\u015Bci\u0105 Kobold\xF3w, u\u017Cyj soku z bak\u0142a\u017Cana."
+    m_Localized: "Dowiedz si\u0119 wi\u0119cej o elastyczno\u015Bci zakr\u0119caj\u0105cej
+      rzeczywisto\u015Bci Koboldsa, pieprzy\u0107 Kobolda z kutasem wi\u0119kszym
+      ni\u017C jego cia\u0142o."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: "Z\u0142o\u017Cy\u0107 du\u017Ce jajko"
+    m_Localized: "B\u0119dziemy potrzebowa\u0107 wi\u0119kszego gniazda."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Po\u0142\xF3\u017C jajko Huuuuge, tak du\u017Ce, jak mo\u017Cesz
-      je zdoby\u0107!"
+    m_Localized: "Chc\u0119, \u017Ceby\u015B zrobi\u0142 jeden z twoich kobold\xF3w
+      z\u0142o\u017Cy\u0142 du\u017Ce jajko. M\xF3wi\u0119 tutaj o du\u017Cym jajku,
+      tak du\u017Ce, jak to mo\u017Cliwe."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: "Napompowa\u0107 Kobolds"
+    m_Localized: "Du\u017Ce i okr\u0105g\u0142e!"
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "U\u017Cyj maszyny do nadawania, aby by\u0142y du\u017Ce i okr\u0105g\u0142e."
+    m_Localized: "U\u017Cyj maszyny do inflatera, aby uzyska\u0107 du\u017Cy i okr\u0105g\u0142y
+      KOBOLD. My\u015Bl\u0119, \u017Ce fajnie mo\u017Ce by\u0107 widzie\u0107, jak
+      si\u0119 tocz\u0105 lub co\u015B."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1031,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "No cze\u015B\u0107..."
+    m_Localized: "Cze\u015B\u0107 nieznajomy..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1043,7 +1053,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Wyrzucisz oko.
+    m_Localized: "Whoa! Wyci\u0105gniesz oko."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1051,11 +1061,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Prosz\u0119, powiedz mi, \u017Ce masz portfel."
+    m_Localized: "Gdzie i tak trzymasz swoje pieni\u0105dze ..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Witam! Konstruujemy tutaj.
+    m_Localized: "Witam! Jeste\u015B tam z tej farmy, prawda? Chcesz ulepszy\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1064,11 +1074,140 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "... Czy masz co\u015B przeciwko za\u0142o\u017Ceniu spodni?"
+    m_Localized: "Uh ... masz nic przeciwko za\u0142o\u017Ceniu spodni?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
     m_Localized: "D\u0142ugo\u015B\u0107 kutasa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Localized: "Potr\xF3jnie nadziewany"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Localized: "Aha nie by\u0142oby tak zabawne, gdyby\u015B w\u0142o\u017Cy\u0142
+      3 wibratory w usta Kobolda ... rozkazuj\u0119 ci to zrobi\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Localized: Sprzedaj mikro Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Localized: "Chcia\u0142bym naprawd\u0119 ma\u0142y kobold, kt\xF3ry mo\u017Ce
+      zmie\u015Bci\u0107 si\u0119 w ... ma\u0142ych, intymnych szczelinach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Localized: Manifest Destiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Localized: "U\u017Cyj materia\u0142\xF3w wybuchowych, aby wysadzi\u0107 gruz
+      na farmie, aby\u015B m\xF3g\u0142 mie\u0107 wi\u0119cej miejsca."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Localized: "Stw\xF3rz idealn\u0105 kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Localized: "Zdecydowa\u0142em, \u017Ce potrzebuj\u0119 ma\u0142\u017Conka,
+      stw\xF3rz dla mnie idealny Kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Localized: "Kup umow\u0119 pneumatyczn\u0105"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Localized: "S\u0105 idealne! B\u0119d\u0119 ... do\u015B\u0107 zaj\u0119ty
+      ... Promuj\u0119 ci\u0119 do pozycji nadzorcy Kobolda Karetaker, kupisz Kobolds
+      w moim imieniu od innych Kobold Karetakers, znajd\u017A kogo\u015B, kto zbuduje
+      potrzebn\u0105 rurk\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Localized: Koboldkare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Localized: "My\u015Bl\u0119, \u017Ce jestem teraz szefem! Powinienem spr\xF3bowa\u0107
+      kupi\u0107 Kobolda z nowym systemem pneumatycznym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Localized: "Witamy! Chcesz kupi\u0107 nasiona? Mamy te\u017C jajka kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Localized: "Potrzebujesz pomocy w znalezieniu czego\u015B?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Localized: "Witamy w kasynie, tutaj dla biznesu lub przyjemno\u015Bci?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Localized: "Z braku ubra\u0144 zgadn\u0119 troch\u0119 obu. Mo\u017Cesz zagra\u0107
+      w maszyn\u0119 Panchinko, aby zdoby\u0107 ozdoby."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Localized: "Nie b\u0105d\u017A nieznajomym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885794521088
+    m_Localized: "Wi\u0119c ... potrzebujesz ode mnie czego\u015B nowego ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie za cen\u0119 ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464129
+    m_Localized: "S\u0105 te\u017C rzeczy z przodu i za mn\u0105, wi\u0119c naprawd\u0119
+      wsta\u0144, nie trzeba by\u0107 nie\u015Bmia\u0142ym."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Localized: "Witamy z powrotem, kupujesz czy po prostu przegl\u0105danie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Localized: "Dzi\u015B wygl\u0105dasz dobrze, potrzebujesz pomocy w noszeniu
+      czegokolwiek?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Localized: "Cze\u015B\u0107! Potrzebujesz jakiej\u015B pomocy dzisiaj?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Localized: "My\u015Blisz, \u017Ce dobrze wygl\u0105da\u0142bym w kapeluszu?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464134
+    m_Localized: "Potrzebujesz czego\u015B zbudowanego?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Localized: "Jest m\xF3j ulubiony klient!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Localized: "Przepraszam, jestem dla ciebie gotowy do budowy! Dzi\u0119ki za
+      bycie tak lojalnym klientem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Localized: "Po prostu b\u0119d\u0119 tutaj, na wypadek, gdyby jaki\u015B inny
+      nagie Kobold chcia\u0142, \u017Cebym zbudowa\u0142 je fetysze."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Localized: "Menu g\u0142\xF3wne dla bezpiecznego dla pracy"
     m_Metadata:
       m_Items: []
   references:

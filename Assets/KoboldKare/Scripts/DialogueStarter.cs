@@ -13,6 +13,7 @@ public class DialogueStarter : GenericUsable {
     }
 
     [SerializeField] private Sprite useSprite;
+    [SerializeField] private GameObject speechBackgroundBubble;
     [SerializeField]
     private Animator animator;
     [SerializeField]
@@ -22,7 +23,6 @@ public class DialogueStarter : GenericUsable {
 
     [SerializeField] private List<DialogueInfo> dialogueInfos;
 
-    private StringBuilder stringBuilder;
     private AudioSource source;
     private WaitForSeconds textDelay;
     private WaitForSeconds lineDelay;
@@ -34,7 +34,6 @@ public class DialogueStarter : GenericUsable {
     }
 
     private void Awake() {
-        stringBuilder = new StringBuilder();
         textDelay = new WaitForSeconds(0.16f);
         lineDelay = new WaitForSeconds(3f);
         if (source == null) {
@@ -64,6 +63,8 @@ public class DialogueStarter : GenericUsable {
             yield return null;
         }
 
+        speechBackgroundBubble.SetActive(true);
+
         source.enabled = true;
         animator.SetTrigger("Talk");
         talking = true;
@@ -78,18 +79,15 @@ public class DialogueStarter : GenericUsable {
             float startTime = Time.time;
             string targetString = line.GetLocalizedString();
             float duration = 0.025f*targetString.Length;
+            text.text = targetString;
+            text.maxVisibleCharacters = 0;
             while (Time.time < startTime + duration) {
                 float t = (Time.time - startTime) / duration;
-                int desiredLength = Mathf.RoundToInt(targetString.Length * t);
-                if (stringBuilder.Length != desiredLength) {
-                    stringBuilder.Clear();
-                    stringBuilder.Append(targetString.Substring(0,desiredLength));
-                    text.text = stringBuilder.ToString();
-                    sansUndertaleVocals.Play(source);
-                }
+                text.maxVisibleCharacters = Mathf.RoundToInt(targetString.Length * t);
+                sansUndertaleVocals.Play(source);
                 yield return textDelay;
             }
-            text.text = targetString;
+            text.maxVisibleCharacters = targetString.Length;
             sansUndertaleVocals.Play(source);
             yield return lineDelay;
             text.text = "";
@@ -97,5 +95,6 @@ public class DialogueStarter : GenericUsable {
 
         source.enabled = false;
         talking = false;
+        speechBackgroundBubble.SetActive(false);
     }
 }

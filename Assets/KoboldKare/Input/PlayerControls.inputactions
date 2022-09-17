@@ -119,7 +119,7 @@
                     "id": "7510dd96-6f61-4110-9d86-de97aa3cee5e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=1.5)",
                     "initialStateCheck": false
                 },
                 {
@@ -247,6 +247,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ResetHip",
+                    "type": "Button",
+                    "id": "b360048e-3170-4172-8c7f-120562864941",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -874,6 +883,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CrouchAdjust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3bd0dc1-590f-4c3c-97b6-025d3972cc6a",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetHip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dbf09612-fe4f-4f34-b2b0-035624ac2d4f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetHip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

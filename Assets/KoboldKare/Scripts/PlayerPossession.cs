@@ -122,6 +122,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["CrouchAdjust"].performed += OnCrouchAdjustInput;
         controls.actions["HipControl"].performed += OnActivateHipInput;
         controls.actions["HipControl"].canceled += OnCanceledHipInput;
+        controls.actions["ResetHip"].performed += OnResetHipInput;
     }
 
     private void OnDisable() {
@@ -142,6 +143,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["CrouchAdjust"].performed -= OnCrouchAdjustInput;
         controls.actions["HipControl"].performed -= OnActivateHipInput;
         controls.actions["HipControl"].canceled -= OnCanceledHipInput;
+        controls.actions["ResetHip"].performed -= OnResetHipInput;
     }
 
     private void OnDestroy() {
@@ -279,6 +281,9 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
     
+    public void OnResetHipInput(InputAction.CallbackContext ctx) {
+        characterControllerAnimator.SetHipVector(Vector2.zero);
+    }
     public void OnActivateHipInput(InputAction.CallbackContext ctx) {
         trackingHip = true;
     }

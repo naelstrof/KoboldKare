@@ -9,7 +9,7 @@ public class MoneyFloater : MonoBehaviour {
     private TMPro.TMP_Text text;
     private Coroutine routine;
     private int nextUpdate;
-    private const float fadeDistance = 10f;
+    private const float fadeDistance = 5f;
     public void SetBounds(Bounds target) {
         textTransform.position = target.center;
         textTransform.localScale = Vector3.one * target.size.magnitude;
@@ -31,19 +31,16 @@ public class MoneyFloater : MonoBehaviour {
             for(int i=0;i<nextUpdate;i++) {
                 yield return null;
             }
+            Camera check = Camera.main;
             // Skip if camera is null
-            if (Camera.main == null) {
+            if (check == null) {
                 nextUpdate = 64;
                 continue;
             }
-            float distance = textTransform.DistanceTo(Camera.main.transform);
-            textTransform.LookAt(Camera.main.transform, Vector3.up);
+            float distance = textTransform.DistanceTo(check.transform);
+            textTransform.LookAt(check.transform, Vector3.up);
             text.alpha = Mathf.Clamp01(fadeDistance-distance);
-            if (distance < fadeDistance+1f) {
-                nextUpdate = 1;
-            } else {
-                nextUpdate = 64;
-            }
+            nextUpdate = distance < fadeDistance+1f ? 1 : 64;
         }
     }
 }

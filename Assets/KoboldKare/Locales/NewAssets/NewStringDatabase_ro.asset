@@ -691,39 +691,42 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: "Cre\u0219te -\u021Bi primul Kobold!"
+    m_Localized: E viu!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Apa \u0219i timpul vor cre\u0219te Kobold, va avea grij\u0103 de
-      ea."
+    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi ca Kobold s\u0103
+      ajung\u0103 la maturitate."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Transfer Kobold prin re\u021Bea pneumatic\u0103."
+    m_Localized: "Transfera\u021Bi Kobold \xEEn The Dragon Lord prin re\u021Beaua
+      pneumatic\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Ave\u021Bi aten\u021Bia lui Dragon Patron ... acum transfera\u021Bi
-      m\u0103rfurile. Vei fi r\u0103spl\u0103tit."
+    m_Localized: "Munc\u0103 bun\u0103, acum trimite -mi noul Kobold \u0219i te voi
+      r\u0103spl\u0103ti pentru eforturile tale."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: "Planteaz\u0103 un ou!"
+    m_Localized: Un ou pentru domnul dragon!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Dragon Patron caut\u0103 Karetaker capabil, s\u0103 planteze un
-      ou pe P\u0103m\xE2ntul suplu."
+    m_Localized: "Eu sunt Nymrianth, domnul dragonului. \xCE\u021Bi poruncesc s\u0103
+      \xEEncepi s\u0103 lucrezi ca un Karetaker Kobold \u0219i s\u0103 -mi cre\u0219ti
+      un Kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: "Cump\u0103ra\u021Bi un blender de fructe industriale."
+    m_Localized: "Actualiza\u021Bi -v\u0103 ferma!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Aceste kobolds trebuie s\u0103 fie alimentate, s\u0103 g\u0103seasc\u0103
-      contractul de construc\u021Bie la biroul de construc\u021Bii."
+    m_Localized: "Cobor\xE2\u021Bi \xEEn ora\u0219 \u0219i cump\u0103ra\u021Bi o
+      polizor, c\u0103uta\u021Bi magazinul de construc\u021Bii condus de o oaie.
+      Cel din p\u0103l\u0103ria dur\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -731,17 +734,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Kobolds au nevoie de m\xE2ncarea preg\u0103tit\u0103, folosi\u021Bi
-      r\xE2\u0219ni\u021Ba pentru a m\u0103cina fructele"
+    m_Localized: "Voi ave\u021Bi corpuri interesante, \xEEncerca\u021Bi s\u0103 m\u0103tura\u021Bi
+      ni\u0219te fructe \u0219i apoi s\u0103 le hr\u0103ni\u021Bi cu un kobold \u0219i
+      s\u0103 vede\u021Bi ce se \xEEnt\xE2mpl\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: Race Kobolds
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Avem nevoie de Kobolds provenite local, \xEEncepe\u021Bi prin a
-      -\u021Bi pune \xEEns\u0103rcina\u021Bi unele dintre Kobolds."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -749,8 +752,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: "Am nevoie de o livrare a unei rase de kobolds cu pic\u0103turi
-      mari, m\u0103 a\u0219tept s\u0103 te descurci cu asta."
+    m_Localized: "Am nevoie de kobolds cu p\xE2lcuri mari, preg\u0103tesc unul \u0219i
+      mi -l trimit repede."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
@@ -758,53 +761,54 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: "Am nevoie de o livrare a unei rase de kobolds cu s\xE2ni mari,
-      m\u0103 a\u0219tept s\u0103 te descurci cu asta."
+    m_Localized: "Am nevoie s\u0103 -mi livrezi un kobold cu \u021B\xE2\u021Be mari,
+      vorbesc masiv, m\u0103 a\u0219tept s\u0103 te descurci cu asta \u0219i m\u0103
+      a\u0219tept s\u0103 nu pui \xEEntreb\u0103ri."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: "Cum umfl\u0103 kobolds."
+    m_Localized: Cumflate kobolds!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Kobolds trebuie s\u0103 fie umplu\u021Bi p\xE2n\u0103 la cap\u0103t,
-      nu -mi vorbi\u021Bi mai departe despre asta."
+    m_Localized: "Umple\u021Bi un kobold cu sperma p\xE2n\u0103 nu mai pot lua, trebuie
+      s\u0103 v\u0103d c\xE2t de durabil\u0103 este genul t\u0103u."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: "P\u0103trunde p\xE2n\u0103 la cap\u0103t."
+    m_Localized: "P\xE2n\u0103 la cap\u0103t!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: "Nici m\u0103car nu pot \xEEncepe s\u0103 m\u0103 g\xE2ndesc la
-      o explica\u021Bie, ci doar s\u0103 am grij\u0103 de ea."
+    m_Localized: "S\u0103 facem un alt test de anduran\u021B\u0103, s\u0103 p\u0103trund\u0103
+      pe un kobold cu un pula mai mult dec\xE2t corpul s\u0103u."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: "Livra\u021Bi Kobolds \xEEngr\u0103\u0219at"
+    m_Localized: "Timp de burt\u0103!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Milkshake -urile merg direct la coapse, este \xEEn interesul nostru
-      s\u0103 avem c\xE2teva Kobolds superheavy."
+    m_Localized: "Este \xEEn interesul nostru s\u0103 avem c\xE2\u021Biva kobolds
+      superheavy, s\u0103 \xEEngr\u0103\u0219\u0103m unii \u0219i s\u0103 le trimite\u021Bi
+      la mine."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: Oviposi un ou foarte mare.
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: "Nu -mi pas\u0103 ce faci cu el, avem nevoie de un ou mare pentru
-      a ie\u0219i dintr -un kobold."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Crea\u021Bi macro kobold"
+    m_Localized: "Crea\u021Bi un macro kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Ei trebuie s\u0103 fie cel pu\u021Bin de dimensiunea unei case.
-      Mult noroc."
+    m_Localized: "Crea\u021Bi pentru mine un kobold at\xE2t de \xEEnalt \xEEnc\xE2t
+      pot privi o cas\u0103 cu u\u0219urin\u021B\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -915,21 +919,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: A depune oua
+    m_Localized: Pune un ou!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: "Avem nevoie de kobolduri provenite local, de a le r\u0103m\xE2ne
-      \xEEns\u0103rcinate, apoi de a le pune la sta\u021Bia de reproducere."
+    m_Localized: "Ou\u0103le din magazin nu sunt la fel de bune. G\u0103si\u021Bi
+      un kobold bun, r\u0103m\xE2ne\u021Bi \xEEns\u0103rcina\u021Bi, apoi pune\u021Bi
+      -le la sta\u021Bia de reproducere."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: "G\u0103ti\u021Bi burgerul"
+    m_Localized: Timp de burger!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Am trimis provizii pentru a face un burger, a folosi polizorul
-      pentru a le combina \u0219i a hr\u0103ni Kobolds."
+    m_Localized: "\u021Ai -am trimis c\xE2teva provizii pentru a face un burger,
+      pentru a folosi polizorul pentru a le combina \u0219i apoi pentru a -l hr\u0103ni
+      \xEEntr -un kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -943,12 +949,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Face\u021Bi alimente pe baz\u0103 de lapte"
+    m_Localized: "Face\u021Bi ni\u0219te alimente pe baz\u0103 de lapte!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Am auzit c\u0103 laptele \u0219i ghea\u021Ba face o b\u0103utur\u0103
-      frumoas\u0103, la fel cu iaurtul f\u0103cut din lapte \u0219i sperm\u0103 ..."
+    m_Localized: "Kobold Milk are mult\u0103 valoare nutritiv\u0103, \xEEncerca\u021Bi
+      s\u0103 o combina\u021Bi cu alte lucruri dintr -o g\u0103leat\u0103 pentru
+      a face alimente noi."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -956,17 +963,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "P\u0103r\u021Bile lor trebuie s\u0103 fie mai mari, s\u0103 le
-      hr\u0103neasc\u0103 vinete, pepene sau suc de ananas."
+    m_Localized: "Am nevoie de tine s\u0103 conduci c\xE2teva experimente; Hr\u0103ne\u0219te
+      -\u021Bi vinetele, pepeneul sau sucul de ananas. Acest lucru ar trebui s\u0103
+      creasc\u0103 p\u0103r\u021Bi ale corpului lor."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "Cerceta\u021Bi pe\u0219tera"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Exist\u0103 un tip \xEEnfrico\u0219\u0103tor \xEEn pe\u0219ter\u0103
-      care vorbe\u0219te despre nemurire? Afla\u021Bi despre ce este vorba."
+    m_Localized: "Simt o prezen\u021B\u0103 \xEEntunecat\u0103 \xEEn pe\u0219terile
+      din apropiere, merg \u0219i investigheaz\u0103 pentru mine."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -974,8 +982,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "Cump\u0103ra\u021Bi ma\u0219ina de schimb de corp de la tipul \xEEnfrico\u0219\u0103tor.
-      Vom avea nevoie de ea pentru a ne optimiza ferma."
+    m_Localized: "Cump\u0103ra\u021Bi Swapper -ul corpului de la fluajul din pe\u0219ter\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -991,38 +998,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Swap Corps
+    m_Localized: "\u0218tiin\u021B\u0103 ciudat\u0103!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Ohh! A\u0219a func\u021Bioneaz\u0103, alege -\u021Bi corpurile
-      preferate \u0219i schimb\xE2nd corpurile cu ele!"
+    m_Localized: "Ce dispozitiv interesant a\u021Bi ob\u021Binut. Du -te \u0219i
+      \xEEncearc\u0103 s\u0103 -l folose\u0219ti, adu -\u021Bi un alt kobold \xEEmpreun\u0103
+      cu tine."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cum-a fost un kobold
+    m_Localized: Cumming prin!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Afla\u021Bi mai multe despre elasticitatea de \xEEndoire a realit\u0103\u021Bii
-      Kobolds, folosi\u021Bi suc de vinete."
+    m_Localized: "Afla\u021Bi mai multe despre elasticitatea care se \xEEndoaie a
+      realit\u0103\u021Bii Kobolds, dracu\u021Bi-v\u0103 un kobold cu o pula mai
+      mare dec\xE2t corpul s\u0103u."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: Pune un ou mare
+    m_Localized: Vom avea nevoie de un cuib mai mare.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Pune\u021Bi un ou de huuuuge, c\xE2t de mare pute\u021Bi ob\u021Bine!"
+    m_Localized: "Vreau s\u0103 faci ca unul dintre kobold -urile tale s\u0103 depun\u0103
+      un ou mare. Vorbesc aici un ou mare, c\xE2t de mare po\u021Bi ob\u021Bine cu
+      adev\u0103rat."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: "Umfl\u0103 Kobolds"
+    m_Localized: "Big \u0219i rotund!"
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "Folosi\u021Bi ma\u0219ina inflater pentru a le face mari \u0219i
-      rotunde."
+    m_Localized: "Folosi\u021Bi o ma\u0219in\u0103 de umfl\u0103tur\u0103 pentru
+      a face un kobold mare \u0219i rotund. Cred c\u0103 ar putea fi distractiv s\u0103
+      -i v\u0103d rostogolindu -se sau ceva."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1031,7 +1043,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Oh, hei ...
+    m_Localized: "Hei str\u0103in ..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1044,7 +1056,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Vai! Ai de g\xE2nd s\u0103 -\u021Bi arunci un ochi."
+    m_Localized: "Vai! O s\u0103 arunc\u0103m un ochi."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1052,11 +1064,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "V\u0103 rog s\u0103 -mi spune\u021Bi c\u0103 ave\u021Bi un portofel."
+    m_Localized: "Unde \xEE\u021Bi p\u0103strezi banii oricum ..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Salut! Construim lucruri aici.
+    m_Localized: "Salut! E\u0219ti din acea ferm\u0103 de acolo, nu? C\u0103uta\u021Bi
+      s\u0103 face\u021Bi upgrade?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1065,11 +1078,144 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "... Te deranjeaz\u0103 s\u0103 pui ni\u0219te pantaloni?"
+    m_Localized: "Uh ... te deranjeaz\u0103 s\u0103 pui ni\u0219te pantaloni?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
     m_Localized: Lungimea pula
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Localized: Triple umplute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Localized: "Aha nu ar fi at\xE2t de amuzant dac\u0103 ai bloca 3 dildo -uri
+      \xEEn gura unui Kobold ... \xEE\u021Bi poruncesc s\u0103 faci asta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Localized: "Vinde\u021Bi Micro Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Localized: "A\u0219 dori un kobold cu adev\u0103rat mic, care s\u0103 se \xEEncadreze
+      \xEEn ... fisuri mici, intime."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Localized: Destinul manifest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Localized: "Folosi\u021Bi explozibili pentru a exploda resturile de la ferm\u0103,
+      astfel \xEEnc\xE2t s\u0103 pute\u021Bi avea mai mult spa\u021Biu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Localized: "Face\u021Bi Kobold -ul perfect"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Localized: "Am decis c\u0103 am nevoie de o consoart\u0103, s\u0103 creez kobold
+      perfect pentru mine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Localized: "Cump\u0103ra\u021Bi un contract pneumatic"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Localized: "Sunt perfecte! O s\u0103 fiu ... destul de ocupat ... V\u0103 promovez
+      \xEEntr -o pozi\u021Bie de supraveghere a Karetaker Karetaker, ve\u021Bi cump\u0103ra
+      Kobolds \xEEn numele meu de la al\u021Bi Karetakers Kobold, ve\u021Bi g\u0103si
+      pe cineva care s\u0103 construiasc\u0103 tubul necesar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Localized: Koboldkare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Localized: "Cred c\u0103 sunt \u0219eful acum! Ar trebui s\u0103 \xEEncerc
+      s\u0103 cump\u0103r un kobold cu noul sistem pneumatic."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Localized: "Bine ati venit! C\u0103uta\u021Bi s\u0103 cump\u0103ra\u021Bi ni\u0219te
+      semin\u021Be? Avem \u0219i ou\u0103 Kobold!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Localized: "Ave\u021Bi nevoie de ajutor pentru a g\u0103si ceva?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Localized: "Bine a\u021Bi venit la cazinou, aici pentru afaceri sau pl\u0103cere?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Localized: "Din lipsa ta de haine, voi ghici pu\u021Bin din ambele. Pute\u021Bi
+      juca ma\u0219ina Panchinko pentru a c\xE2\u0219tiga unele podoabe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Localized: "Nu fi str\u0103in."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885794521088
+    m_Localized: Deci ... ai nevoie de ceva nou de la mine ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Localized: "O voi face, la un pre\u021B, desigur ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464129
+    m_Localized: "Sunt lucruri \xEEn fa\u021B\u0103 acolo \u0219i \xEEn spatele meu,
+      a\u0219a c\u0103 \xEEntr -adev\u0103r urca\u021Bi aici, nu este nevoie s\u0103
+      fi\u021Bi timizi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Localized: "Bine a\u021Bi venit \xEEnapoi, cump\u0103ra\u021Bi sau pur \u0219i
+      simplu navigare?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Localized: "Arat\u0103 bine ast\u0103zi, ai nevoie de ajutor pentru a transporta
+      ceva?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Localized: "Bun\u0103! Ai nevoie de ajutor ast\u0103zi?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Localized: "Crezi c\u0103 a\u0219 ar\u0103ta bine \xEEntr -o p\u0103l\u0103rie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464134
+    m_Localized: Ai nevoie de ceva construit?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Localized: "Exist\u0103 clientul meu preferat!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Localized: "\xCEmi pare r\u0103u, sunt cu to\u021Bii din lucruri de construit
+      pentru tine! V\u0103 mul\u021Bumim c\u0103 a\u021Bi fost un client at\xE2t
+      de fidel."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold gol vor s\u0103
+      le construiesc ma\u0219ini feti\u0219."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Localized: "Meniu principal pentru munc\u0103 pentru munc\u0103"
     m_Metadata:
       m_Items: []
   references:

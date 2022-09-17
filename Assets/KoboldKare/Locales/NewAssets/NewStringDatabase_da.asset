@@ -907,21 +907,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: "L\xE6gge \xE6g"
+    m_Localized: "L\xE6g et \xE6g!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: "Vi har brug for lokalt fremskaffede kobolds, f\xE5 dem gravide
-      og derefter s\xE6tte dem p\xE5 avlsstationen."
+    m_Localized: "\xC6g fra butikken er ikke s\xE5 gode. Find en god kobold, f\xE5
+      dem gravide og s\xE6t dem derefter p\xE5 avlsstationen."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Cook Burger
+    m_Localized: Burger tid!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Jeg har sendt forsyninger for at lave en burger, bruge kv\xE6rnen
-      til at kombinere dem og fodre kobolderne."
+    m_Localized: "Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
+      kv\xE6rnen til at kombinere dem og derefter fodre den til en kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -934,12 +934,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Lav m\xE6lkebaserede f\xF8devarer"
+    m_Localized: "Lav nogle m\xE6lkebaserede f\xF8devarer!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Jeg har h\xF8rt m\xE6lk og is giver en dejlig drink, det samme
-      med yoghurt lavet af m\xE6lk og sperm ..."
+    m_Localized: "Kobold Milk har en masse ern\xE6ringsv\xE6rdi, pr\xF8v at kombinere
+      den med andre ting i en spand for at lave nye f\xF8devarer."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -947,17 +947,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "Deres dele skal v\xE6re st\xF8rre, fodre dem aubergine, melon eller
-      ananasjuice."
+    m_Localized: "Jeg har brug for dig til at k\xF8re nogle eksperimenter; Foder
+      din Kobolds aubergine, melon eller ananasjuice. Dette skulle f\xE5 dele af
+      deres kroppe til at vokse."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "Unders\xF8g Cave"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Der er en uhyggelig fyr i hulen, der taler om ud\xF8delighed? Find
-      ud af, hvad det handler om."
+    m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
+      huler, g\xE5 og unders\xF8ge for mig."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -965,8 +966,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "K\xF8b The Body Swap Machine fra den uhyggelige fyr. Vi har brug
-      for det for at optimere vores g\xE5rd."
+    m_Localized: "K\xF8b kroppens swapper fra kryben i hulen."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -982,37 +982,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Swap kroppe
+    m_Localized: "M\xE6rkelig videnskab!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Ohh! S\xE5dan fungerer det, v\xE6lg dine foretrukne Kobold- og
-      Swap -kroppe med dem!"
+    m_Localized: "Hvilken interessant enhed du har f\xE5et. G\xE5 og pr\xF8v at bruge
+      det, tag en anden Kobold med dig."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cum-through en kobold
+    m_Localized: Cumming igennem!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "L\xE6r mere om virkelighedsb\xF8jende elasticitet af kobolds, brug
-      aubergine juice."
+    m_Localized: "L\xE6r mere om virkelighedsb\xF8jende elasticitet af kobolds, fuck
+      a kobold med en pik st\xF8rre end dets krop."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: "L\xE6g et stort \xE6g"
+    m_Localized: "Vi har brug for et st\xF8rre rede."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "L\xE6g et huuuuge \xE6g, s\xE5 stort som du kan f\xE5 det!"
+    m_Localized: "Jeg vil have dig til at f\xE5 en af \u200B\u200Bdine kobolds til
+      at l\xE6gge et stort \xE6g. Jeg taler et stort \xE6g her, s\xE5 stort som du
+      kan f\xE5 det virkelig."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
-    m_Localized: Oppust kobolds
+    m_Localized: Stor og rund!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "Brug inflatermaskinen til at g\xF8re dem store og runde."
+    m_Localized: "Brug en inflatermaskine til at g\xF8re en Kobold stor og rund.
+      Jeg tror, \u200B\u200Bdet kunne v\xE6re sjovt at se dem rulle rundt eller noget."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1021,7 +1024,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "\xC5h hej ..."
+    m_Localized: Hej fremmed ...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1033,7 +1036,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Du kommer til at stikke \xF8je ud."
+    m_Localized: "Whoa! Du vil stikke \xF8je med."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1041,11 +1044,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Fort\xE6l mig venligst, at du har en tegnebog."
+    m_Localized: Hvor holder du alligevel dine penge ...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Hej! Vi konstruerer ting her.
+    m_Localized: "Hej! Du er fra den g\xE5rd derovre, ikke? \xD8nsker du at opgradere?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1054,11 +1057,140 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "... Har du noget imod at s\xE6tte p\xE5 nogle bukser?"
+    m_Localized: "Uh ... har du noget imod at s\xE6tte p\xE5 nogle bukser?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
     m_Localized: "Dick l\xE6ngde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464138
+    m_Localized: Tredobbelt udstoppet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464139
+    m_Localized: "Aha ville det ikke v\xE6re s\xE5 sjovt, hvis du stak 3 dildoer
+      i en Kobolds mund ... Jeg kommanderer dig til at g\xF8re det."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464140
+    m_Localized: "S\xE6lg Micro Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464141
+    m_Localized: "Jeg vil gerne have en rigtig lille kobold, der kan passe ind i
+      ... sm\xE5, intime spalter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464142
+    m_Localized: Manifest Destiny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464143
+    m_Localized: "Brug spr\xE6ngstoffer til at spr\xE6nge affaldet p\xE5 g\xE5rden,
+      s\xE5 du kan have mere plads."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464144
+    m_Localized: Lav den perfekte Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464145
+    m_Localized: Jeg har besluttet, at jeg har brug for en konsort, skabe den perfekte
+      Kobold til mig.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464146
+    m_Localized: "K\xF8b en pneumatisk kontrakt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464147
+    m_Localized: "De er perfekte! Jeg bliver ... ganske travlt ... Jeg promoverer
+      dig til en Kobold Karetaker -tilsynsf\xF8rende position, du vil k\xF8be kobolds
+      p\xE5 mine vegne fra andre Kobold Karetakers, finde nogen til at bygge det
+      n\xF8dvendige r\xF8r."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464148
+    m_Localized: Koboldkare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464149
+    m_Localized: "Jeg g\xE6tter p\xE5, at jeg er chef nu! Jeg skulle pr\xF8ve at
+      k\xF8be en Kobold med det nye pneumatiske system."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464150
+    m_Localized: "Velkommen! \xD8nsker du at k\xF8be nogle fr\xF8? Vi har ogs\xE5
+      kobold\xE6g!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464151
+    m_Localized: "Brug for hj\xE6lp til at finde noget?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464152
+    m_Localized: "Velkommen til casinoet her for forretning eller forn\xF8jelse?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464153
+    m_Localized: "Fra din mangel p\xE5 t\xF8j g\xE6tter jeg lidt af begge dele. Du
+      kan afspille panchinko -maskinen for at tjene nogle udsmykninger."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464154
+    m_Localized: "V\xE6r ikke en fremmed."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885794521088
+    m_Localized: "S\xE5 ... du har brug for noget nyt fra mig ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464128
+    m_Localized: "Jeg g\xF8r det, til en pris selvf\xF8lgelig ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464129
+    m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
+      op her, ikke n\xF8dvendigt at v\xE6re genert."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464130
+    m_Localized: "Velkommen tilbage, k\xF8b eller bare gennems\xF8gning?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464131
+    m_Localized: "Ser det godt ud i dag, har brug for hj\xE6lp til at b\xE6re noget?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464132
+    m_Localized: "Hej! Brug for hj\xE6lp i dag?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464133
+    m_Localized: Tror du, jeg ville se godt ud i en hat?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464134
+    m_Localized: Brug for noget bygget?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464135
+    m_Localized: Der er min yndlingskunde!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464136
+    m_Localized: "Beklager, jeg er alt ude af ting at bygge for dig! Tak for at v\xE6re
+      s\xE5dan en loyal kunde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215233885836464137
+    m_Localized: "Jeg vil bare st\xE5 her, hvis nogle andre n\xF8gne Kobold vil have
+      mig til at bygge dem fetishmaskiner."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 215247205985472512
+    m_Localized: Safe-for-work hovedmenu
     m_Metadata:
       m_Items: []
   references:

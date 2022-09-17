@@ -15,6 +15,8 @@ public class ConstructionContract : GenericUsable {
     [SerializeField]
     private MoneyFloater floater;
 
+    [SerializeField] private AudioPack purchaseSound;
+
     [SerializeField] private int starRequirement = 1;
     private bool bought;
 
@@ -55,6 +57,7 @@ public class ConstructionContract : GenericUsable {
     public override void Use() {
         base.Use();
         SetState(true);
+        GameManager.instance.SpawnAudioClipInWorld(purchaseSound, transform.position);
         purchasedEvent?.Invoke(this);
     }
 

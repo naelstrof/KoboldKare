@@ -74,14 +74,14 @@
       "hash": "43f2e5a44389e8c9f058c7076900b2042dec7b9e"
     },
     "com.naelstrof.unityscriptablesettings": {
-      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.3.1",
+      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.3.2",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.localization": "1.0.4",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "4c115cd0e6381b85fea5a0e98da9bb8c201f751d"
+      "hash": "3f72ad9e11f0f380d05a7c8b1b47621fdf2a6c68"
     },
     "com.textus-games.serialized-reference-ui": {
       "version": "https://github.com/TextusGames/UnitySerializedReferenceUI.git",

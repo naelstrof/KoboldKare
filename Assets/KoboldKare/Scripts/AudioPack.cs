@@ -18,6 +18,10 @@ public class AudioPack : ScriptableObject {
         return clips[Random.Range(0, clips.Length)];
     }
 
+    public float GetVolume() {
+        return volume;
+    }
+
     public void Play(AudioSource source) {
         source.outputAudioMixerGroup = group;
         source.clip = clips[Random.Range(0, clips.Length)];

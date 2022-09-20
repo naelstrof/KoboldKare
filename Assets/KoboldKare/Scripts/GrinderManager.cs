@@ -77,7 +77,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         if (station.info.user.TryConsumeEnergy(1)) {
             station.info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
             photonView.RPC(nameof(BeginGrind), RpcTarget.All);
-            yield return new WaitForSeconds(12f);
+            yield return new WaitForSeconds(18f);
             photonView.RPC(nameof(StopGrind), RpcTarget.All);
         }
     }

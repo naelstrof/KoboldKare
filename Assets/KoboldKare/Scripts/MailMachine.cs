@@ -131,8 +131,12 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
 
         // Just wait a very short while so that we don't shuffle the order of our commands (sell -> delete)
         yield return new WaitForSeconds(0.1f);
-        PhotonNetwork.Destroy(view.gameObject);
         
+        // It is technically possible for it to be destroyed at this point already.
+        if (view != null) {
+            PhotonNetwork.Destroy(view.gameObject);
+        }
+
         int i = 0;
         while(totalWorth > 0f) {
             float currentPayout = FloorNearestPower(5f,totalWorth);

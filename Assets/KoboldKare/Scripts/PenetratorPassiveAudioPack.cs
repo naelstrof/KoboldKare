@@ -8,8 +8,6 @@ public class PenetratorPassiveAudioPack : PenetratorListener {
     [SerializeField]
     private AudioPack pack;
 
-    [Range(0f,1f)]
-    [SerializeField] private float volume = 1f;
     private AudioSource source;
 
     public override void OnEnable(Penetrator newPenetrator) {
@@ -20,7 +18,6 @@ public class PenetratorPassiveAudioPack : PenetratorListener {
 
         source = newPenetrator.gameObject.AddComponent<AudioSource>();
         source.loop = false;
-        source.volume = volume;
         source.maxDistance = 8f;
         source.minDistance = 0f;
         source.spatialBlend = 1f;
@@ -40,8 +37,8 @@ public class PenetratorPassiveAudioPack : PenetratorListener {
         if (!Application.isPlaying) {
             return;
         }
-        source.volume = Mathf.MoveTowards(source.volume, 0f, Time.deltaTime*volume);
-        source.pitch = Mathf.Lerp(0.5f, 1f, source.volume / volume);
+        source.volume = Mathf.MoveTowards(source.volume, 0f, Time.deltaTime*pack.GetVolume());
+        source.pitch = Mathf.Lerp(0.5f, 1f, source.volume / Mathf.Max(pack.GetVolume(),0.01f));
         if (source.volume == 0f && lastDepth == 0f) {
             source.enabled = false;
         }
@@ -61,7 +58,7 @@ public class PenetratorPassiveAudioPack : PenetratorListener {
         }
         
         float diff = Mathf.Abs(depth - lastDepth);
-        source.volume = Mathf.Min(source.volume+diff*50f*volume, volume);
+        source.volume = Mathf.Min(source.volume+diff*50f*pack.GetVolume(), pack.GetVolume());
         lastDepth = depth;
     }
 }

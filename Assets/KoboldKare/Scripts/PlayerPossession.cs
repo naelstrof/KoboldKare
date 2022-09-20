@@ -201,6 +201,10 @@ public class PlayerPossession : MonoBehaviourPun {
         controller.inputDir = wishDir;
     }
 
+    public Vector3 GetEyePosition() {
+        return eyes.transform.position;
+    }
+
     public Vector3 GetEyeDir() {
         return Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
     }

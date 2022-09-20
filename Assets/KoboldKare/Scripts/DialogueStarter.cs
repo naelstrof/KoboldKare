@@ -70,7 +70,7 @@ public class DialogueStarter : GenericUsable {
         talking = true;
         List<LocalizedString> dialogue = null;
         foreach (var dialogueCheck in dialogueInfos) {
-            if (ObjectiveManager.GetStars() <= dialogueCheck.minimumStarCount) {
+            if (ObjectiveManager.GetStars() >= dialogueCheck.minimumStarCount) {
                 dialogue = dialogueCheck.dialogue;
             }
         }

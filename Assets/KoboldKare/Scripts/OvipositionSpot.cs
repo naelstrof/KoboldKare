@@ -102,9 +102,13 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             yield break;
         }
 
+        ReagentContents eggContents = new ReagentContents();
+        eggContents.AddMix(ReagentDatabase.GetReagent("ScrambledEgg").GetReagent(eggVolume));
+        d.gameObject.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID);
+
         photonView.RPC(nameof(EggLayed), RpcTarget.All, d.GetComponentInParent<PhotonView>().ViewID);
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();
-        d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
+        //d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
         body.isKinematic = true;
         // Manually control penetration parameters
         d.Penetrate(targetPenetrable);

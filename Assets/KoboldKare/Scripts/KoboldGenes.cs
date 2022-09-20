@@ -62,22 +62,32 @@ public class KoboldGenes {
         };
     }
 
-    public KoboldGenes Randomize(float multiplier=1f) {
-        if (Random.Range(0f,1f) > 0.5f) {
-            Equipment dick = null;
-            var equipments = EquipmentDatabase.GetEquipments();
-            while (dick == null) {
-                foreach(var equipment in equipments) {
-                    if (equipment is DickEquipment && Random.Range(0f,1f) > 0.9f) {
-                        dick = equipment;
-                    }
-                }
+    private byte GetRandomDick() {
+        var equipments = EquipmentDatabase.GetEquipments();
+        float totalDicks = 0f;
+        foreach(var equipment in equipments) {
+            if (equipment is DickEquipment) {
+                totalDicks += 1f;
             }
+        }
+        float randomSelection = Random.Range(0f, totalDicks);
+        float selection = 0f;
+        foreach(var equipment in equipments) {
+            if (equipment is not DickEquipment) continue;
+            selection += 1f;
+            if (!(selection >= randomSelection)) continue;
+            return (byte)equipments.IndexOf(equipment);
+        }
+        return byte.MaxValue;
+    }
 
+    public KoboldGenes Randomize(float multiplier=1f) {
+        // Slight bias for male kobolds, as they have more variety.
+        if (Random.Range(0f,1f) > 0.4f) {
             breastSize = Random.Range(0f, 10f)*multiplier;
             ballSize = Random.Range(10f, 20f)*multiplier;
             dickSize = Random.Range(0f, 20f)*multiplier;
-            dickEquip = (byte)equipments.IndexOf(dick);
+            dickEquip = GetRandomDick();
         } else {
             breastSize = Random.Range(10f, 40f)*multiplier;
             ballSize = Random.Range(5f, 25f)*multiplier;
@@ -96,6 +106,20 @@ public class KoboldGenes {
 
     public static KoboldGenes Mix(KoboldGenes a, KoboldGenes b) {
         KoboldGenes c;
+        // This should never happen.
+        if (a == null && b == null) {
+            Debug.LogError("Tried to mix two null gene pools, how does this happen?");
+            return new KoboldGenes().Randomize(1f);
+        }
+        
+        // Single parent? Also shouldn't happen.
+        if (a == null) {
+            return b;
+        }
+        if (b == null) {
+            return a;
+        }
+
         if (Random.Range(0f, 1f) > 0.5f) {
             c = (KoboldGenes)a.MemberwiseClone();
         } else {

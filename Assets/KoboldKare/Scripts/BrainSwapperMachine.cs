@@ -90,7 +90,7 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     }
 
     [PunRPC]
-    private void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB, float moneyA, float moneyB) {
+    public void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB, float moneyA, float moneyB) {
         thunderSound.PlayOneShot(brainSwapSoundSource);
         lightning.Play();
         brainSwapSound.Play(brainSwapSoundSource);

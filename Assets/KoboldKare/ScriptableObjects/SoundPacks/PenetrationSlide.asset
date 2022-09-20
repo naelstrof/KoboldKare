@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a5eda92d351542349a7522d14a9df834, type: 3}
   - {fileID: 8300000, guid: 351ec9ee35d1bfe47a8f72f474b37e98, type: 3}
   - {fileID: 8300000, guid: eacaefc59d37ebd458dbdb43384455ef, type: 3}
-  volume: 1
+  volume: 0.8
   group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}

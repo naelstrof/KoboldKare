@@ -18,7 +18,7 @@ public class CommandSkip : Command {
 
         switch (args.Length) {
             case 1:
-                output.Append("Skipped objective.");
+                output.Append("Skipped objective.\n");
                 ObjectiveManager.SkipObjective();
                 return;
             case 2: {
@@ -30,7 +30,7 @@ public class CommandSkip : Command {
                     ObjectiveManager.SkipObjective();
                 }
 
-                output.Append($"Skipped {skipCount.ToString()} objectives.");
+                output.Append($"Skipped {skipCount.ToString()} objectives.\n");
                 return;
             }
             default:

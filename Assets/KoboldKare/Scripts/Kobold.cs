@@ -24,7 +24,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public delegate void EnergyChangedAction(float value, float maxValue);
+    public delegate void KoboldSpawnAction(Kobold kobold);
     public event EnergyChangedAction energyChanged;
+    public static event KoboldSpawnAction spawned;
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
 
@@ -572,6 +574,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData == null) {
+            spawned?.Invoke(this);
             return;
         }
 
@@ -592,6 +595,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
             }
         }
+        spawned?.Invoke(this);
     }
 
     public void Save(BinaryWriter writer) {

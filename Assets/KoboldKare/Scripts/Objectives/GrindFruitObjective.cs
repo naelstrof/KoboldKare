@@ -20,6 +20,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     public override void Register() {
         base.Register();
         GrinderManager.grindedObject += OnGrindedObject;
+        ElectricBlender.grindedObject += OnGrindedObject;
         if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(fruit.photonName, fruitSpawnLocation.position, fruitSpawnLocation.rotation);
         }
@@ -28,6 +29,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     public override void Unregister() {
         base.Unregister();
         GrinderManager.grindedObject -= OnGrindedObject;
+        ElectricBlender.grindedObject -= OnGrindedObject;
     }
 
     protected override void Advance(Vector3 position) {

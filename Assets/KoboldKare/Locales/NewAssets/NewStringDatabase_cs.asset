@@ -801,11 +801,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Vytvo\u0159te makro kobold"
+    m_Localized: Prodejte makro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Mus\xED to b\xFDt alespo\u0148 velikost domu. Hodn\u011B \u0161t\u011Bst\xED."
+    m_Localized: "Kobold tak vysok\xFD, \u017Ee se mohou d\xEDvat na d\u016Fm, tajn\xFD
+      recept ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1076,11 +1077,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: "Triple pln\u011Bn\xFD"
+    m_Localized: "\u010Cty\u0159n\xE1sobn\xE9 pln\u011Bn\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha by to nebylo tak z\xE1bavn\xE9, kdybyste zastr\u010Dili 3 dilda
+    m_Localized: "Aha by to nebylo tak z\xE1bavn\xE9, kdybyste zastr\u010Dili 4 dilda
       do \xFAst Kobolda ... p\u0159ikazuji v\xE1m, abyste to ud\u011Blali."
     m_Metadata:
       m_Items: []
@@ -1094,7 +1095,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Manifest Destiny
+    m_Localized: "Ko\u010Di\u010D\xED tastrofa"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1203,6 +1204,65 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Hlavn\xED nab\xEDdka bezpe\u010Dn\xE9 pro pr\xE1ci"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: "Grind v\xEDce ovoce!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Nedostatek ovoce z minul\xE9ho \u010Dasu, pot\u0159ebuji v\xEDc."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: "Velk\xE1 vejce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Pot\u0159ebujete, abyste polo\u017Eili v\xEDce velk\xFDch vajec,
+      posledn\xED nesta\u010Dilo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Fat Kobold Plemeno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Pot\u0159ebujeme plemeno tlust\xE9ho koboldu, v\xEDte, aby fungovaly
+      jako pap\xEDrov\xE9 hmotnosti a zast\xE1vky dve\u0159\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: "Velk\xE9 plemeno Dick Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Pot\u0159ebujeme velk\xE9 \u010Dlensk\xE9 plemeno Kobold, v\xEDte
+      ... chovat se jako pap\xEDrov\xE9 hmotnosti a zast\xE1vky dve\u0159\xED."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: "Vytvo\u0159te plemeno makro kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: "Velk\xFD..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: "Vytvo\u0159te velk\xE9 plemeno koboldu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Maminka dojiva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: "Vytvo\u0159te plemeno Micro Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Pot\u0159ebujete levnou sadu kondom\u016F."
     m_Metadata:
       m_Items: []
   references:

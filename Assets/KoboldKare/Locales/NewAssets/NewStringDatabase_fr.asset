@@ -794,11 +794,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Cr\xE9er macro kobold"
+    m_Localized: Vendre une macro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Ils doivent \xEAtre au moins la taille d'une maison. Bonne chance."
+    m_Localized: "Un kobold si grand qu'ils peuvent regarder par-dessus une maison,
+      recette secr\xE8te ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1068,11 +1069,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triple en peluche
+    m_Localized: "Quadrupl\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha ne serait pas si dr\xF4le si vous colliez 3 godes dans la bouche
+    m_Localized: "Aha ne serait pas si dr\xF4le si vous colliez 4 godes dans la bouche
       d'un Kobold ... Je vous commande de le faire."
     m_Metadata:
       m_Items: []
@@ -1086,7 +1087,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: "Destin\xE9e manifeste"
+    m_Localized: Chat-tastrophe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1195,6 +1196,65 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Menu principal en toute s\xE9curit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Broyer plus de fruits!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Pas assez de fruits de la derni\xE8re fois, besoin de plus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Gros oeufs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Besoin de vous pour pondre plus de gros \u0153ufs, le dernier ne
+      suffisait pas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Race gras kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Nous avons besoin d'une graisse Kobold, vous savez, pour agir comme
+      des poids de papier et des arr\xEAts de porte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big Dick Kobold Race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Nous avons besoin d'une race Kobold \xE0 grand membre, vous savez
+      ... pour agir comme des poids de papier et des arr\xEAts de porte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: "Cr\xE9ez une race macro Kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Gros...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: "Cr\xE9ez une grande race Kobold \xE0 poitrine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Momy Maichers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: "Cr\xE9er une race micro-kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Besoin d'un ensemble de pr\xE9servatifs bon march\xE9 \xE0 utiliser."
     m_Metadata:
       m_Items: []
   references:

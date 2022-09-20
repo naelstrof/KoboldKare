@@ -792,11 +792,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Opret Macro Kobold
+    m_Localized: "S\xE6lg en makro Kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "De skal v\xE6re mindst st\xF8rrelsen p\xE5 et hus. Held og lykke."
+    m_Localized: "En Kobold s\xE5 h\xF8j, at de kan se over et hus, hemmelig opskrift
+      ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1064,12 +1065,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Tredobbelt udstoppet
+    m_Localized: Firedoblet fyldt
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha ville det ikke v\xE6re s\xE5 sjovt, hvis du stak 3 dildoer
-      i en Kobolds mund ... Jeg kommanderer dig til at g\xF8re det."
+    m_Localized: "Aha ville det ikke v\xE6re s\xE5 sjovt, hvis du stak 4 dildoer
+      ind i en Kobolds mund ... Jeg kommanderer dig til at g\xF8re det."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1082,7 +1083,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Manifest Destiny
+    m_Localized: Cat-tastrophe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1150,7 +1151,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ingen grund til at v\xE6re genert."
+      op her, ikke n\xF8dvendigt at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1189,6 +1190,65 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: Safe-for-work hovedmenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Slib mere frugt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: Ikke nok frugt fra sidste gang, har brug for mere.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: "Store \xE6g"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Brug for dig til at l\xE6gge flere store \xE6g, den sidste var
+      ikke nok."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Fat Kobold Race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Vi har brug for en fed kobold race, du ved, for at fungere som
+      papirv\xE6gte og d\xF8rstop."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Stor pik kobold race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Vi har brug for et stort medlem Kobold -race, du ved ... for at
+      fungere som papirv\xE6gte og d\xF8rstop."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Opret en makro kobold race.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Stor...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Opret en stor brystet kobold race.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mommy Milkers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Opret en mikro kobold race
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Brug for et billigt s\xE6t kondomer til at bruge."
     m_Metadata:
       m_Items: []
   references:

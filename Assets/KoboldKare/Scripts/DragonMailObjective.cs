@@ -20,10 +20,10 @@ public class DragonMailObjective : ISavable, IPunObservable {
     public event ObjectiveAction updated;
     protected void TriggerComplete() {
         TriggerUpdate();
-        completed.Invoke(this);
+        completed?.Invoke(this);
     }
     protected void TriggerUpdate() {
-        updated.Invoke(this);
+        updated?.Invoke(this);
     }
 
     protected virtual void Advance(Vector3 position) {

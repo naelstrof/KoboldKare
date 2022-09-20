@@ -800,11 +800,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Erzeuge einen Makro-Kobold.
+    m_Localized: Verkaufe einen Makrokobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Er muss mindestens so gro\xDF wie ein Haus sein. Viel Gl\xFCck."
+    m_Localized: "Ein Kobold so gro\xDF, dass sie \xFCber ein Haus schauen k\xF6nnen,
+      geheimes Rezept ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1078,11 +1079,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Dreifach ausgestopft
+    m_Localized: "Vierfach gef\xFCllt"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha w\xE4re nicht so lustig, wenn du 3 Dildos in den Mund eines
+    m_Localized: "Aha w\xE4re nicht so lustig, wenn du 4 Dildos in den Mund eines
       Kobolds steckst ... Ich befehle dir, das zu tun."
     m_Metadata:
       m_Items: []
@@ -1096,7 +1097,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Manifestiertes Schicksal
+    m_Localized: Cat-Tastrophe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1205,6 +1206,64 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Safe-for-Work-Hauptmen\xFC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Mahlen Sie mehr Obst!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Nicht genug Fr\xFCchte vom letzten Mal, brauchen mehr."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: "Gro\xDFe Eier"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "M\xFCssen Sie mehr gro\xDFe Eier legen, der letzte war nicht genug."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Fette Kobold -Rasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Wir brauchen eine fette Kobold -Rasse, um als Papiergewichte und
+      T\xFCrstopps zu fungieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big Dick Kobold Rasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Wir brauchen ein gro\xDFes Mitglied Kobold Rasse, wissen Sie, um
+      als Papiergewichte und T\xFCrstopps zu fungieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Erstellen Sie eine Makro -Kobold -Rasse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: "Gro\xDF..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: "Erstellen Sie eine gro\xDFe Kobold -Rasse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mama Melker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Erstellen Sie eine Micro Kobold -Rasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Ben\xF6tigen Sie eine billige Menge Kondome, um sie zu verwenden."
     m_Metadata:
       m_Items: []
   references:

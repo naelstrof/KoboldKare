@@ -763,14 +763,6 @@ MonoBehaviour:
     m_Key: DELIVER_LARGE_EGG_OBJECTIVE_DESCRIPTION
     m_Metadata:
       m_Items: []
-  - m_Id: 198589332866695178
-    m_Key: CREATE_MACRO_KOBOLD_TITLE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 198589332866695179
-    m_Key: CREATE_MACRO_KOBOLD_DESCRIPTION
-    m_Metadata:
-      m_Items: []
   - m_Id: 202939310757433344
     m_Key: REAGENT_MUSHROOM
     m_Metadata:
@@ -1141,6 +1133,78 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Key: SETTING_SAFE_FOR_WORK_MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Key: FRUIT_GRIND_2_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Key: FRUIT_GRIND_2_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Key: OBJECTIVE_LAY_BIG_EGG_2_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Key: OBJECTIVE_LAY_BIG_EGG_2_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Key: FATTEN_KOBOLD_2_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Key: FATTEN_KOBOLD_2_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_2_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Key: DELIVER_KOBOLD_LARGE_MEMBER_2_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695178
+    m_Key: CREATE_MACRO_KOBOLD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198589332866695179
+    m_Key: CREATE_MACRO_KOBOLD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Key: CREATE_MACRO_2_KOBOLD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Key: CREATE_MACRO_2_KOBOLD_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_2_OBJECTIVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Key: DELIVER_KOBOLD_LARGE_BREAST_2_OBJECTIVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Key: OBJECTIVE_KOBOLD_SELL_MICRO_2_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Key: OBJECTIVE_KOBOLD_SELL_MICRO_2_DESCRIPTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Key: OBJECTIVE_SPACE_KOBOLD_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Key: OBJECTIVE_SPACE_KOBOLD_DESCRIPTION
     m_Metadata:
       m_Items: []
   m_Metadata:

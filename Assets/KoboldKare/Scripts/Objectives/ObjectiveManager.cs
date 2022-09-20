@@ -49,6 +49,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         return instance.currentObjective;
     }
 
+    public static void SkipObjective() {
+        instance.OnObjectiveComplete(instance.objectives[instance.currentObjectiveIndex]);
+        instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
+    }
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -138,7 +143,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
 
     private void OnValidate() {
         foreach (var obj in objectives) {
-            obj.OnValidate();
+            obj?.OnValidate();
         }
     }
 

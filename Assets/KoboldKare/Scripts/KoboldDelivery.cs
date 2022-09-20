@@ -18,6 +18,10 @@ public class KoboldDelivery : UsableMachine {
     private AudioSource source;
     private static readonly int Dispense = Animator.StringToHash("Dispense");
 
+    public delegate void SpawnedKoboldAction(Kobold kob);
+
+    public static event SpawnedKoboldAction spawnedKobold;
+    
     private float GetPrice() {
         return 50f + priceSelector.GetSelected() * 50f * priceSelector.GetSelected();
     }
@@ -73,8 +77,9 @@ public class KoboldDelivery : UsableMachine {
         poof.SendEvent("TriggerPoof");
         KoboldGenes genes =
             new KoboldGenes().Randomize(0.4f + priceSelector.GetSelected() * priceSelector.GetSelected());
-        PhotonNetwork.InstantiateRoomObject(koboldPrefab.photonName, popOutLocation.transform.position,
+        GameObject obj = PhotonNetwork.InstantiateRoomObject(koboldPrefab.photonName, popOutLocation.transform.position,
             Quaternion.identity, 0, new object[] { genes, false });
+        spawnedKobold?.Invoke(obj.GetComponent<Kobold>());
         source.enabled = true;
         popPack.Play(source);
         yield return new WaitForSeconds(source.clip.length+0.1f);

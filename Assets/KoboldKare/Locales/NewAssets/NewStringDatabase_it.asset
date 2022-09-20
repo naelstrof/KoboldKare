@@ -797,11 +797,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Crea macro kobold
+    m_Localized: Vendi una macro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Devono essere almeno le dimensioni di una casa. Buona fortuna.
+    m_Localized: "Un kobold cos\xEC alto che possono guardare oltre una casa, ricetta
+      segreta ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1071,11 +1072,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triplo ripieno
+    m_Localized: Quadruplo ripieno
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha non sarebbe cos\xEC divertente se avessi bloccato 3 dildo nella
+    m_Localized: "Aha non sarebbe cos\xEC divertente se avessi bloccato 4 dildo nella
       bocca di un kobold ... ti comando di farlo."
     m_Metadata:
       m_Items: []
@@ -1089,7 +1090,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Destino manifesto
+    m_Localized: Gatto-tastrofo
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1196,6 +1197,65 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: Menu principale sicuro per il lavoro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: "Macina pi\xF9 frutta!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Non abbastanza frutta dall'ultima volta, necessiti di pi\xF9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Grandi uova
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Ho bisogno che tu deponga di uova pi\xF9 grandi, l'ultima non era
+      abbastanza."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Razza kobold grassa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: Abbiamo bisogno di una razza grassa kobold, sai, per agire come
+      pesi di carta e fermate.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big Dick Kobold Breed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: Abbiamo bisogno di una grande razza kobold membro, sai ... per agire
+      come pesi di carta e fermate delle porte.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Crea una razza macro kobold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Grande...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Crea una grande razza kobold a petto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mommy Milkers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Crea una razza micro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: Hai bisogno di un set economico di preservativi da utilizzare.
     m_Metadata:
       m_Items: []
   references:

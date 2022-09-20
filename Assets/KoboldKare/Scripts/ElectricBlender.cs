@@ -14,6 +14,7 @@ public class ElectricBlender : SuckingMachine {
     [SerializeField] private VisualEffect poof;
     [SerializeField] private AudioPack grindSound;
     private AudioSource source;
+    public static event GrinderManager.GrindedObjectAction grindedObject;
 
     protected override void Awake() {
         base.Awake();
@@ -61,6 +62,7 @@ public class ElectricBlender : SuckingMachine {
         GenericReagentContainer otherContainer = view.GetComponent<GenericReagentContainer>();
         if (otherContainer != null) {
             container.AddMixRPC(otherContainer.GetContents(), viewID);
+            grindedObject?.Invoke(otherContainer.GetContents());
         }
         yield return base.OnSwallowed(viewID);
     }

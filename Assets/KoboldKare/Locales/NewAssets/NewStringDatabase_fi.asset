@@ -793,11 +793,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Luo makrokobold
+    m_Localized: Myy makrokobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Niiden on oltava ainakin talon kokoisia. Onnea.
+    m_Localized: "Kobold niin pitk\xE4, ett\xE4 he voivat katsoa talon yli, salainen
+      resepti ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1066,11 +1067,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Kolminkertainen
+    m_Localized: Nelinkertainen
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha Eik\xF6 se olisi niin hauskaa, jos olet kiinni 3 dildoa Koboldin
+    m_Localized: "Aha Eik\xF6 se olisi niin hauskaa, jos olet jumissa 4 dildoa Koboldin
       suuhun ... K\xE4sittelen sinua tekem\xE4\xE4n niin."
     m_Metadata:
       m_Items: []
@@ -1084,7 +1085,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Kohtalo
+    m_Localized: Kissa
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1135,7 +1136,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464153
     m_Localized: "Vaatteiden puutteesta arvaa v\xE4h\xE4n molemmista. Voit pelata
-      Panchinko -konetta ansaitaksesi koristeita."
+      Panchinko -konetta ansaitaksesi joitain koristeita."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1192,6 +1193,64 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Turvallinen ty\xF6h\xF6n p\xE4\xE4valikko"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: "Jauhaa enemm\xE4n hedelmi\xE4!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Ei tarpeeksi hedelm\xE4\xE4 viime kerralla, tarvitse enemm\xE4n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Isot munat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Tarvitset sinun antaa enemm\xE4n suuria munia, viimeinen ei tarpeeksi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Rasva Kobold -rotu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Tarvitsemme rasvaa Kobold -rotu, tied\xE4tte, toimittaaksemme paperipainoina
+      ja ovipys\xE4kkin\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Iso munakobold rotu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Tarvitsemme suuren j\xE4senen Kobold -rodun, tied\xE4t ... toimiaksesi
+      paperipainoina ja ovipys\xE4kkein\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Luo makrokobold -rotu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Iso...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Luo iso rintainen Kobold -rotu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: "\xC4iti -lyps\xE4j\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Luo mikrokobold -rotu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Tarvitsetko halvan kondomien k\xE4ytett\xE4v\xE4n kondomien joukon."
     m_Metadata:
       m_Items: []
   references:

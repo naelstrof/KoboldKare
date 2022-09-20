@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
+      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -789,12 +791,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Lag en makrokobold.
+    m_Localized: Selg en makrokobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Lag for meg en kobold s\xE5 h\xF8y at de med letthet kan se over
-      et hus."
+    m_Localized: "En kobold s\xE5 h\xF8y at de kan se over et hus, hemmelig oppskrift
+      ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1064,11 +1066,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Trippel fylt
+    m_Localized: Firedoblet fylt
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha ville ikke det v\xE6re s\xE5 morsomt hvis du stakk 3 dildoer
+    m_Localized: "Aha ville ikke det v\xE6re s\xE5 morsomt hvis du stakk 4 dildoer
       i en Kobolds munn ... Jeg ber deg om \xE5 gj\xF8re det."
     m_Metadata:
       m_Items: []
@@ -1082,7 +1084,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Manifest skjebne
+    m_Localized: Katt-tastrofe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1190,6 +1192,64 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: Safe-for-arbeid hovedmeny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Slip mer frukt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: Ikke nok frukt fra forrige gang, trenger mer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Store egg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Trenger du \xE5 legge flere store egg, den siste var ikke nok."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Fat kobold rase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Vi trenger en feit kobold rase, du vet, for \xE5 fungere som papirvekter
+      og d\xF8rstopp."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Stor Dick Kobold rase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Vi trenger et stort medlem av Kobold, du vet ... for \xE5 fungere
+      som papirvekter og d\xF8rstopp."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Lag en makro kobold rase.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Stor...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Lag en stor brystet kobold rase.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mamma -melkere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Lag en Micro kobold rase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Trenger et billig sett med kondomer \xE5 bruke."
     m_Metadata:
       m_Items: []
   references:

@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 5736165027386625321}
   - component: {fileID: 9107813013329669987}
   - component: {fileID: 5522465077939100562}
+  - component: {fileID: 7355394929100533615}
   m_Layer: 25
   m_Name: KandiDick
   m_TagString: Aimable
@@ -395,6 +396,18 @@ MonoBehaviour:
         pack: {fileID: 11400000, guid: 348362a85013f4b46b98a806ae70841f, type: 2}
         activateOnEnter: 1
         activateOnExit: 0
+--- !u!114 &7355394929100533615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729554680024515055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a6dec93f731204bacce7a87c594739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4161592134247328330
 GameObject:
   m_ObjectHideFlags: 0

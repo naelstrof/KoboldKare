@@ -811,12 +811,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Create a macro kobold.
+    m_Localized: Sell a macro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Create for me a kobold so tall that they can look over a house with
-      ease.
+    m_Localized: A Kobold so tall that they can look over a house, secret recipe...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1129,11 +1128,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triple Stuffed
+    m_Localized: Quadruple Stuffed
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: Aha wouldn't it be so funny if you stuck 3 dildos into a kobold's
+    m_Localized: Aha wouldn't it be so funny if you stuck 4 dildos into a kobold's
       mouth... I command you to do that.
     m_Metadata:
       m_Items: []
@@ -1147,7 +1146,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Manifest Destiny
+    m_Localized: Cat-tastrophe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1214,6 +1213,72 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216333655518793728
     m_Localized: There's nothing else for you here.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Grind more fruit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: Not enough fruit from last time, need more.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Large eggs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: Need you to lay more large eggs, the last one wasn't enough.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Fat kobold breed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: We need a fat kobold breed, you know, to act as paper weights and
+      door stops.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big dick kobold breed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: We need a big member kobold breed, you know... to act as paper weights
+      and door stops.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Create a macro kobold breed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Big...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Create a big breasted kobold breed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mommy milkers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Create a micro kobold breed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: Need a cheap set of condoms to use.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space Program
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: Get a kobold way off the ground. I don't care how you do it!
     m_Metadata:
       m_Items: []
   references:

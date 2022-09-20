@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS DE FIC\xC7\xC3O PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
+      PLAY <#FFFFFF> VOC\xCA EST\xC1 AFIRMANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -790,12 +792,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Crie uma macro kobold.
+    m_Localized: Venda uma macro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Crie para mim um Kobold t\xE3o alto que eles podem olhar para uma
-      casa com facilidade."
+    m_Localized: "Um kobold t\xE3o alto que eles podem olhar por cima de uma casa,
+      receita secreta ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1064,11 +1066,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triplo empalhado
+    m_Localized: Quadruplas recheadas
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha n\xE3o seria t\xE3o engra\xE7ado se voc\xEA enfiasse 3 vibradores
+    m_Localized: "Aha n\xE3o seria t\xE3o engra\xE7ado se voc\xEA enfiasse 4 vibradores
       na boca de um Kobold ... eu ordeno que voc\xEA fa\xE7a isso."
     m_Metadata:
       m_Items: []
@@ -1082,7 +1084,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Destino manifesto
+    m_Localized: Gato-tastrofe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1189,6 +1191,65 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: Menu principal seguro para o trabalho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Moa mais frutas!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Fruta insuficiente da \xFAltima vez, preciso de mais."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Ovos grandes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Precisa que voc\xEA precise de mais ovos grandes, o \xFAltimo n\xE3o
+      foi suficiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: "Ra\xE7a gorda Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Precisamos de uma ra\xE7a Kobold gorda, voc\xEA sabe, para atuar
+      como pesos de papel e paradas de portas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: "Ra\xE7a Big Dick Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Precisamos de um grande membro Kobold ra\xE7a, voc\xEA sabe ...
+      para agir como pesos em papel e paradas de portas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: "Crie uma ra\xE7a macro kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Grande...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: "Crie uma grande ra\xE7a Kobold de peito."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: "Ordenhadores da mam\xE3e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: "Crie uma ra\xE7a micro kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: Precisa de um conjunto barato de preservativos para usar.
     m_Metadata:
       m_Items: []
   references:

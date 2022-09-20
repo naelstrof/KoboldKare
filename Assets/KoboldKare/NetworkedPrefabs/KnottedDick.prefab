@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3338872823994835069}
   - component: {fileID: 7769274206757498702}
   - component: {fileID: 3419052706320574724}
+  - component: {fileID: 4985421260818380468}
   m_Layer: 25
   m_Name: KnottedDick
   m_TagString: Untagged
@@ -354,6 +355,18 @@ MonoBehaviour:
       data:
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
         volume: 1
+--- !u!114 &4985421260818380468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439163416004354994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a6dec93f731204bacce7a87c594739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3996681494219455433
 GameObject:
   m_ObjectHideFlags: 0

@@ -792,12 +792,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Crea un macro kobold.
+    m_Localized: Vender un macro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Crea para m\xED un kobold tan alto que puedan mirar por encima
-      de una casa con facilidad."
+    m_Localized: Un kobold tan alto que pueden mirar por encima de una casa, receta
+      secreta ...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1066,12 +1066,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triple peluche
+    m_Localized: "Cu\xE1druple relleno"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aj\xE1, \xBFno ser\xEDa tan divertido si estuvieras atrapado a
-      3 consoladores en la boca de un Kobold ... te ordeno que hagas eso?"
+    m_Localized: "Aha, \xBFno ser\xEDa tan divertido si estuvieras atrapado 4 consoladores
+      en la boca de un kobold ... te ordeno que hagas eso?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1084,7 +1084,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Destino manifiesto
+    m_Localized: "T\xE1strofe de gato"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1187,11 +1187,70 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Me quedar\xE9 aqu\xED en caso de que alg\xFAn otro Kobold desnudo
-      quiera que las construya m\xE1quinas fetiche."
+      quiera que las construya m\xE1quinas de fetiche."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Men\xFA principal seguro para el trabajo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: "\xA1Muela m\xE1s fruta!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "No hay suficiente fruta de la \xFAltima vez, necesito m\xE1s."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Huevos grandes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Necesito que pongas m\xE1s huevos grandes, el \xFAltimo no fue
+      suficiente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: Raza gorda kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: Necesitamos una raza gorda de Kobold, ya sabes, para actuar como
+      pesas de papel y paradas en la puerta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big Dick Kobold Breed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: Necesitamos un gran miembro Kobold Breed, ya sabes ... para actuar
+      como pesas de papel y paradas en la puerta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: Crea una raza macro Kobold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Grande...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: Crea una gran raza Kobold de pecho.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: "Madristas de mam\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: Crear una raza micro kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: Necesita un conjunto barato de condones para usar.
     m_Metadata:
       m_Items: []
   references:

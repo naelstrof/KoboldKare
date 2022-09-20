@@ -205,7 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
+      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
+      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -800,12 +802,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Crea\u021Bi un macro kobold."
+    m_Localized: "Vinde\u021Bi un macro kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Crea\u021Bi pentru mine un kobold at\xE2t de \xEEnalt \xEEnc\xE2t
-      pot privi o cas\u0103 cu u\u0219urin\u021B\u0103."
+    m_Localized: "Un kobold at\xE2t de \xEEnalt \xEEnc\xE2t pot privi peste o cas\u0103,
+      re\u021Beta secret\u0103 ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1082,12 +1084,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Triple umplute
+    m_Localized: Cvadruplu umplut
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha nu ar fi at\xE2t de amuzant dac\u0103 ai bloca 3 dildo -uri
-      \xEEn gura unui Kobold ... \xEE\u021Bi poruncesc s\u0103 faci asta."
+    m_Localized: "Aha nu ar fi at\xE2t de amuzant dac\u0103 ai bloca 4 dilde \xEEn
+      gura unui Kobold ... \xEE\u021Bi poruncesc s\u0103 faci asta."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1100,7 +1102,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Destinul manifest
+    m_Localized: CAT-TASTROPHE
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1212,6 +1214,68 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: "Meniu principal pentru munc\u0103 pentru munc\u0103"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620096
+    m_Localized: Grind mai multe fructe!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620097
+    m_Localized: "Nu sunt suficiente fructe din ultima dat\u0103, au nevoie de mai
+      mult."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620098
+    m_Localized: Oua mari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620099
+    m_Localized: "Ave\u021Bi nevoie s\u0103 depune\u021Bi mai multe ou\u0103 mari,
+      ultimul nu a fost suficient."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620100
+    m_Localized: "Rasa gras\u0103 kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620101
+    m_Localized: "Avem nevoie de o ras\u0103 gras\u0103 de kobold, \u0219ti\u021Bi,
+      pentru a ac\u021Biona ca greut\u0103\u021Bi de h\xE2rtie \u0219i opriri ale
+      u\u0219ii."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620102
+    m_Localized: Big Dick Kobold rase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620103
+    m_Localized: "Avem nevoie de o ras\u0103 mare Kobold, \u0219tii ... pentru a
+      ac\u021Biona ca greut\u0103\u021Bi de h\xE2rtie \u0219i opriri u\u0219ii."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620104
+    m_Localized: "Crea\u021Bi o ras\u0103 macro Kobold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620105
+    m_Localized: Mare...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620106
+    m_Localized: "Crea\u021Bi o ras\u0103 de kobold cu s\xE2nii mari."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783215620107
+    m_Localized: Mami Milkers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814400
+    m_Localized: "Crea\u021Bi o ras\u0103 micro kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216462783219814401
+    m_Localized: "Ave\u021Bi nevoie de un set ieftin de prezervative pentru a fi
+      utilizat."
     m_Metadata:
       m_Items: []
   references:

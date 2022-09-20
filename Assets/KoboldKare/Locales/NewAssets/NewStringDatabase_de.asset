@@ -1017,8 +1017,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Ich m\xF6chte, dass Sie einen Ihrer Kobolds ein gro\xDFes Ei legen.
-      Ich spreche hier \xFCber ein gro\xDFes Ei, so gro\xDF wie Sie es wirklich bekommen
-      k\xF6nnen."
+      So gro\xDF wie du es wirklich bekommen kannst."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1049,11 +1048,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Du wirst ein Auge ausstechen.
+    m_Localized: Whoa! Du bist wie, wirklich nackt.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Ja, okay, nur, halte ich dir selbst, denke ich.
+    m_Localized: Wie auch immer, nur, halte ich dir selbst, denke ich.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1115,14 +1114,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Kaufen Sie einen pneumatischen Vertrag
+    m_Localized: Legrohr
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "Sie sind perfekt! Ich werde ... ziemlich besch\xE4ftigt sein ...
-      Ich f\xF6rdere Sie zu einer Kobold Karetaker -Aufseherposition, Sie werden
-      Kobolds in meinem Namen von anderen Kobold -Karetakern kaufen und jemanden
-      finden, der die ben\xF6tigte Schl\xE4uche baut."
+      Ich f\xF6rdere Sie zu einer Aufseherposition, Sie werden Kobolds in meinem
+      Namen von anderen Kobold -Karetakern kaufen und jemanden finden, der den ben\xF6tigten
+      Schlauch baut."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

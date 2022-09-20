@@ -14,11 +14,19 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     private List<GameObject> debris;
     [SerializeField]
     private PhotonGameObjectReference plantPrefab;
+
+    public delegate void FarmTileClearedAction(SoilTile tile);
+    public static event FarmTileClearedAction tileCleared;
+    
     [PunRPC]
     public void SetDebris(bool newHasDebris) {
         hasDebris = newHasDebris;
         foreach (GameObject obj in debris) {
             obj.SetActive(hasDebris);
+        }
+
+        if (hasDebris == false) {
+            tileCleared?.Invoke(this);
         }
     }
 

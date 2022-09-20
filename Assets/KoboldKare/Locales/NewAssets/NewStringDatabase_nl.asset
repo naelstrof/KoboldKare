@@ -1030,7 +1030,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: Ik wil dat je een van je Kobolds laat leggen, een groot ei legt.
-      Ik heb het hier over een groot ei, zo groot als je het echt kunt krijgen.
+      Zo groot als je het echt kunt krijgen.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1061,11 +1061,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Je gaat in de gaten kijken.
+    m_Localized: Whoa! Je bent zo, echt naakt.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Ja ok\xE9 gewoon uh .. help jezelf, denk ik."
+    m_Localized: Hoe dan ook, alleen uh .. help jezelf denk ik.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1125,13 +1125,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Koop een pneumatisch contract
+    m_Localized: Legpijp
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: Ze zijn perfect! Ik ga ... behoorlijk druk zijn ... Ik promoot je
-      tot een Kobold Karetaker -opzichter -positie, je zult kobolds namens mij kopen
-      bij andere Kobold Karetakers, zoek iemand om de benodigde slang te bouwen.
+      tot een functie van een opzichter, je zult kobolds namens mij kopen bij andere
+      Kobold Karetakers, zoek iemand om de benodigde slang te bouwen.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

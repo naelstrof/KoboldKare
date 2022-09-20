@@ -30,7 +30,7 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         }
     }
 
-    private void OnOviposit(GameObject egg) {
+    protected virtual void OnOviposit(GameObject egg) {
         Advance(egg.transform.position);
     }
     public override string GetTextBody() {

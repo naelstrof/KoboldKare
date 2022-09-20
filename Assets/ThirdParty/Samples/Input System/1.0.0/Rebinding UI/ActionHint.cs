@@ -58,7 +58,7 @@ public class ActionHint : MonoBehaviour {
             // Wait for the localization system to initialize, loading Locales, preloading etc.
             var otherAsync = LocalizationSettings.SelectedLocaleAsync;
             yield return new WaitUntil(()=>otherAsync.IsDone);
-            if (otherAsync.Result != null){
+            if (otherAsync.IsValid() && otherAsync.Result != null){
                 yield return LocalizationSettings.InitializationOperation;
                 var asyncOp = LocalizationSettings.AssetDatabase.GetLocalizedAssetAsync<Sprite>("InputTexturesTable", key);
                 yield return new WaitUntil(()=>asyncOp.IsDone);

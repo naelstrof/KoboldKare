@@ -1002,7 +1002,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
+      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1010,8 +1010,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Voglio che tu faccia uno dei tuoi koboldi detti un grande uovo.
-      Sto parlando di un grande uovo qui, il pi\xF9 grande che puoi ottenerlo davvero."
+    m_Localized: Voglio che tu faccia uno dei tuoi koboldi detti un grande uovo.
+      Big come puoi davvero.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1042,11 +1042,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Farai un occhio.
+    m_Localized: Whoa! Sei tipo, davvero nudo.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "S\xEC, ok, solo ... Aiutati, immagino."
+    m_Localized: Comunque solo uh .. aiuta te stesso immagino.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1107,14 +1107,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Acquista un contratto pneumatico
+    m_Localized: Tubo di posa
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "Sono perfetti! Sar\xF2 ... abbastanza impegnato ... ti sto promuovendo
-      in una posizione di sorvegliante Kobold Karetaker, acquisterai Kobolds per
-      mio conto da altri kobold Karetakers, trovo qualcuno per costruire il tubo
-      necessario."
+      in una posizione di sorvegliante, acquisterai Kobolds per mio conto da altri
+      kobold Karetakers, troverai qualcuno per costruire il tubo necessario."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

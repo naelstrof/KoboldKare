@@ -1007,7 +1007,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Haluan sinun tekev\xE4n yhden koboldistasi munan suuren munan.
-      Puhun t\xE4\xE4ll\xE4 suuresta munasta, niin iso kuin voit saada sen todella."
+      Niin iso kuin voit saada sen todella."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1038,11 +1038,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Voi! Aiot pist\xE4\xE4 silm\xE4n."
+    m_Localized: Voi! Olet kuin todella alasti.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Joo okei vain uh .. auta itse\xE4si luulen."
+    m_Localized: "Joka tapauksessa vain uh .. auta itse\xE4si luulen."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1102,13 +1102,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Osta pneumaattinen sopimus
+    m_Localized: Makaava putki
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "Ne ovat t\xE4ydellisi\xE4! Aion olla ... melko kiireinen ... mainostan
-      sinua Kobold Karetakerin valvoja -asentoon, ostat Koboldsin puolestani muilta
-      Kobold Karetakersilta, l\xF6yt\xE4\xE4 joku rakentaa tarvittavat putket."
+      sinua valvojan asentoon, ostat Koboldsin puolestani muilta Kobold Karetakersilta,
+      l\xF6yt\xE4\xE4 joku rakentaa tarvittavat letkut."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

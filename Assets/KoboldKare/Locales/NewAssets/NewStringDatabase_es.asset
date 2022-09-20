@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Barras de metal simples seguras de cuerpo, hipoal\xE9rgicas. (S\xED,
+    m_Localized: "Barras de metal simples, seguras de cuerpo, hipoal\xE9rgicas. (S\xED,
       entran en tus pezones)."
     m_Metadata:
       m_Items: []
@@ -691,11 +691,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: Riegue el huevo y espere a que su Kobold alcance la madurez.
+    m_Localized: Riegue el huevo y espere a que su Kobold crezca.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Transfiera Kobold al Drag\xF3n Lord a trav\xE9s de la red neum\xE1tica."
+    m_Localized: El primero de muchos.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
@@ -704,12 +704,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: "\xA1Un huevo para el Drag\xF3n Lord!"
+    m_Localized: "\xA1Un huevo del Drag\xF3n Lord!"
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
     m_Localized: "Soy Nymrianth, el Se\xF1or del Drag\xF3n. Te ordeno que comience
-      a trabajar como Kobold Karetaker y me crezcan un Kobold."
+      a trabajar como Kobold Karetaker y plantar un huevo."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -1006,8 +1006,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Quiero que hagas que uno de tus kobolds ponga un gran huevo. Estoy
-      hablando de un huevo grande aqu\xED, tan grande como puedes conseguirlo realmente."
+    m_Localized: Quiero que hagas que uno de tus kobolds ponga un gran huevo. Tan
+      grande como puedes conseguirlo realmente.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1037,11 +1037,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "\xA1Vaya! Vas a meter un ojo."
+    m_Localized: "\xA1Vaya! Eres como, realmente desnudo."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "S\xED, est\xE1 bien solo eh .. ay\xFAdate, supongo."
+    m_Localized: "De todos modos solo uh ... ay\xFAdate, supongo."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1102,14 +1102,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Comprar un contrato neum\xE1tico"
+    m_Localized: Pipa
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "\xA1Ellos son perfectos! Voy a estar ... bastante ocupado ... Te
-      estoy promocionando a una posici\xF3n de supervisor de Kobold Karetaker, comprar\xE1s
-      Kobolds en mi nombre de otros Kobold Karetakers, encuentre a alguien para construir
-      el tubo necesario."
+      estoy promocionando a una posici\xF3n de supervisor, comprar\xE1s Kobolds en
+      mi nombre de otros Kobold Karetakers, encuentre a alguien para construir el
+      tubo necesario."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

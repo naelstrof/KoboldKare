@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class DeliverLargeMemberKoboldsObjective : DragonMailObjective {
+public class DeliverLargeMemberKoboldsObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
     private int koboldCount = 0;
@@ -23,7 +23,16 @@ public class DeliverLargeMemberKoboldsObjective : DragonMailObjective {
         base.Unregister();
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
-    
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        koboldCount++;
+        TriggerUpdate();
+        if (koboldCount >= maxKobolds) {
+            TriggerComplete();
+        }
+    }
+
     private void OnSoldObject(PhotonView view) {
         Kobold k = view.GetComponent<Kobold>();
         if (k == null) {
@@ -31,12 +40,7 @@ public class DeliverLargeMemberKoboldsObjective : DragonMailObjective {
         }
 
         if (k.GetGenes().dickSize >= 15f) {
-            koboldCount++;
-            TriggerUpdate();
-        }
-
-        if (koboldCount >= maxKobolds) {
-            TriggerComplete();
+            Advance(spaceBeamTarget.position);
         }
     }
 

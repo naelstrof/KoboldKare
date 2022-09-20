@@ -62,7 +62,7 @@ public class KoboldGenes {
         };
     }
 
-    public KoboldGenes Randomize() {
+    public KoboldGenes Randomize(float multiplier=1f) {
         if (Random.Range(0f,1f) > 0.5f) {
             Equipment dick = null;
             var equipments = EquipmentDatabase.GetEquipments();
@@ -74,19 +74,20 @@ public class KoboldGenes {
                 }
             }
 
-            breastSize = Random.Range(0f, 10f);
-            ballSize = Random.Range(10f, 20f);
-            dickSize = Random.Range(0f, 20f);
+            breastSize = Random.Range(0f, 10f)*multiplier;
+            ballSize = Random.Range(10f, 20f)*multiplier;
+            dickSize = Random.Range(0f, 20f)*multiplier;
             dickEquip = (byte)equipments.IndexOf(dick);
         } else {
-            breastSize = Random.Range(10f, 40f);
-            ballSize = Random.Range(5f, 25f);
-            dickSize = Random.Range(0f, 20f);
+            breastSize = Random.Range(10f, 40f)*multiplier;
+            ballSize = Random.Range(5f, 25f)*multiplier;
+            dickSize = Random.Range(0f, 20f)*multiplier;
             dickEquip = byte.MaxValue;
         }
 
-        dickThickness = RandomGaussian(0f, 1f);
-        baseSize = Random.Range(14f, 24f);
+        fatSize = Random.Range(0f, 3f);
+        dickThickness = RandomGaussian(0f, 1f)*multiplier;
+        baseSize = Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Mathf.RoundToInt(RandomGaussian(0,255));
         saturation = (byte)Mathf.RoundToInt(RandomGaussian(0,255));

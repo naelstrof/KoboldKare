@@ -928,7 +928,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem neked n\xE9h\xE1ny kell\xE9ket, hogy hamburgert k\xE9sz\xEDtsenek,
-      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak add meg."
+      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak adj\xE1k."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1014,7 +1014,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Azt akarom, hogy k\xE9sz\xEDtsen egyik koboldodat egy nagy toj\xE1st.
-      Itt egy nagy toj\xE1sr\xF3l besz\xE9lek, olyan nagy, amennyire csak tudsz."
+      Annyira nagy, amennyit csak tudsz megszerezni."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1047,11 +1047,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Kih\xFAzza a szem\xE9t."
+    m_Localized: Whoa! Olyan vagy, mint nagyon meztelen.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Igen, ok\xE9, csak uh .. seg\xEDts magadnak."
+    m_Localized: "Egy\xE9bk\xE9nt csak uh .. seg\xEDts magadnak."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1113,14 +1113,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "V\xE1s\xE1roljon pneumatikus szerz\u0151d\xE9st"
+    m_Localized: "Teker\xE1l\xF3 cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "T\xF6k\xE9letesek! \xC9n leszek ... nagyon elfoglalt ... Kobold
-      Karetaker fel\xFCgyeleti poz\xEDci\xF3j\xE1v\xE1 teszem t\xE9ged, a Kobolds
-      -ot a nev\xE9ben m\xE1s Kobold Karetakert\u0151l v\xE1s\xE1rolod, tal\xE1lsz
-      valakit, aki fel\xE9p\xEDtheti a sz\xFCks\xE9ges cs\xF6vet."
+    m_Localized: "T\xF6k\xE9letesek! \xC9n leszek ... nagyon elfoglalt ... el\u0151l\xE9ptetem
+      t\xE9ged egy fel\xFCgyel\u0151 poz\xEDci\xF3ba, a nevemben m\xE1s Kobold Karetakert\u0151l
+      v\xE1s\xE1rolsz Kobolds -ot, tal\xE1lsz valakit, aki fel\xE9p\xEDtheti a sz\xFCks\xE9ges
+      cs\xF6vet."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

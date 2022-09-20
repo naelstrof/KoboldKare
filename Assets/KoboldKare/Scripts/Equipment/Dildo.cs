@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Naelstrof.Inflatable;
+using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
 
@@ -9,6 +10,12 @@ public class Dildo : GenericEquipment, IValuedGood {
     [SerializeField]
     private Inflatable dildoSizeInflatable;
     private GenericReagentContainer container;
+    [SerializeField] private Penetrator listenPenetrator;
+
+    public delegate void PenetrateAction(Penetrator penetrator, Penetrable penetrable);
+
+    public static event PenetrateAction dildoPenetrateStart;
+    public static event PenetrateAction dildoPenetrateEnd;
 
     private void Awake() {
         dildoSizeInflatable.OnEnable();
@@ -16,6 +23,23 @@ public class Dildo : GenericEquipment, IValuedGood {
         container.type = GenericReagentContainer.ContainerType.Mouth;
         container.OnChange.AddListener(OnContentsChanged);
         photonView.ObservedComponents.Add(container);
+    }
+
+    private void OnEnable() {
+        listenPenetrator.penetrationStart += OnPenetrationStart;
+        listenPenetrator.penetrationEnd += OnPenetrationEnd;
+    }
+
+    private void OnDisable() {
+        listenPenetrator.penetrationStart -= OnPenetrationStart;
+        listenPenetrator.penetrationEnd -= OnPenetrationEnd;
+    }
+
+    private void OnPenetrationStart(Penetrable penetrable) {
+        dildoPenetrateStart?.Invoke(listenPenetrator, penetrable);
+    }
+    private void OnPenetrationEnd(Penetrable penetrable) {
+        dildoPenetrateEnd?.Invoke(listenPenetrator, penetrable);
     }
 
     private void Start() {

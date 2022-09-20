@@ -1007,7 +1007,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Je veux que vous fassiez un de vos kobolds ponde un gros \u0153uf.
-      Je parle d'un gros \u0153uf ici, aussi grand que vous pouvez l'obtenir vraiment."
+      Aussi grand que vous pouvez l'obtenir vraiment."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1038,11 +1038,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Tu vas sortir un \u0153il."
+    m_Localized: Whoa! Tu es comme, vraiment nu.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Ouais ok juste euh ... aidez-vous, je suppose.
+    m_Localized: Quoi qu'il en soit juste euh ... aidez-vous, je suppose.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1104,14 +1104,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Acheter un contrat pneumatique
+    m_Localized: Tuyau de pose
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "Ils sont parfaits! Je vais \xEAtre ... Assez occup\xE9 ... Je vous
-      fais la promotion d'un poste de surveillant de Kobold Karetaker, vous ach\xE8terez
-      des kobolds en mon nom \xE0 d'autres kobold karetakers, trouverez quelqu'un
-      pour construire le tube n\xE9cessaire."
+    m_Localized: "Ils sont parfaits! Je vais \xEAtre ... assez occup\xE9 ... Je vous
+      fais la promotion \xE0 un poste de surveillant, vous ach\xE8terez des kobolds
+      en mon nom aupr\xE8s d'autres Kobold Karetakers, trouverez quelqu'un pour construire
+      le tube n\xE9cessaire."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

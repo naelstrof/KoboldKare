@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class DeliverFatKoboldObjective : DragonMailObjective {
+public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
     private int koboldCount = 0;
@@ -23,7 +23,17 @@ public class DeliverFatKoboldObjective : DragonMailObjective {
         base.Unregister();
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
-    
+
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        koboldCount++;
+        TriggerUpdate();
+
+        if (koboldCount >= maxKobolds) {
+            TriggerComplete();
+        }
+    }
+
     private void OnSoldObject(PhotonView view) {
         Kobold k = view.GetComponent<Kobold>();
         if (k == null) {
@@ -31,12 +41,7 @@ public class DeliverFatKoboldObjective : DragonMailObjective {
         }
 
         if (k.GetGenes().fatSize >= 5f) {
-            koboldCount++;
-            TriggerUpdate();
-        }
-
-        if (koboldCount >= maxKobolds) {
-            TriggerComplete();
+            Advance(spaceBeamTarget.position);
         }
     }
 

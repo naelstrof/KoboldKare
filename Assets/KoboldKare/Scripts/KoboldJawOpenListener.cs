@@ -31,7 +31,7 @@ public class KoboldJawOpenListener : PenetrableListener {
         base.Update();
         jawMoveAmount = Mathf.SmoothDamp(jawMoveAmount, girthRadiusMemory, ref jawVelocity, 0.25f);
         if (zeroOutNow && jawMoveAmount != 0f) {
-            jawTransform.localPosition = startingLocalPosition + jawTransform.parent.InverseTransformDirection(jawTransform.TransformDirection(jawOpenDirection)) * jawMoveAmount;
+            jawTransform.localPosition = startingLocalPosition + jawTransform.parent.InverseTransformDirection(jawTransform.TransformDirection(jawOpenDirection)) * jawMoveAmount*0.5f;
         }
     }
 
@@ -40,7 +40,7 @@ public class KoboldJawOpenListener : PenetrableListener {
         girthRadiusMemory = newGirthRadius;
         if (newGirthRadius != 0f) {
             zeroOutNow = false;
-            jawTransform.localPosition = startingLocalPosition + jawTransform.parent.InverseTransformDirection(jawTransform.TransformDirection(jawOpenDirection)) * jawMoveAmount;
+            jawTransform.localPosition = startingLocalPosition + jawTransform.parent.InverseTransformDirection(jawTransform.TransformDirection(jawOpenDirection)) * jawMoveAmount*0.5f;
         } else {
             zeroOutNow = true;
         }

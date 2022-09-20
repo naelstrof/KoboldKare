@@ -205,9 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
-      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
-      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -593,8 +591,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Bare simple de metal hipoallergetice. (Da, ei merg \xEEn sfarcurile
-      tale.)"
+    m_Localized: "Bare metalice simple, sigure de corp, hipoallergetice. (Da, ei
+      merg \xEEn sfarcurile tale.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -695,13 +693,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi ca Kobold s\u0103
-      ajung\u0103 la maturitate."
+    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 v\u0103
+      creasc\u0103 kobold -ul."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Transfera\u021Bi Kobold \xEEn The Dragon Lord prin re\u021Beaua
-      pneumatic\u0103."
+    m_Localized: "Primul dintre mul\u021Bi."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
@@ -710,13 +707,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Un ou pentru domnul dragon!
+    m_Localized: Un ou din dragonul Domnului!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
     m_Localized: "Eu sunt Nymrianth, domnul dragonului. \xCE\u021Bi poruncesc s\u0103
-      \xEEncepi s\u0103 lucrezi ca un Karetaker Kobold \u0219i s\u0103 -mi cre\u0219ti
-      un Kobold."
+      \xEEncepi s\u0103 lucrezi ca un Karetaker Kobold \u0219i s\u0103 plantezi un
+      ou."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -1023,8 +1020,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Vreau s\u0103 faci ca unul dintre kobold -urile tale s\u0103 depun\u0103
-      un ou mare. Vorbesc aici un ou mare, c\xE2t de mare po\u021Bi ob\u021Bine cu
-      adev\u0103rat."
+      un ou mare. Oric\xE2t de mare po\u021Bi ob\u021Bine cu adev\u0103rat."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1056,11 +1052,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Vai! O s\u0103 arunc\u0103m un ochi."
+    m_Localized: "Vai! E\u0219ti ca, \xEEntr -adev\u0103r dezbr\u0103cat."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Da, bine, doar uh .. ajut\u0103 -te, cred."
+    m_Localized: "Oricum, doar uh .. ajut\u0103 -te, cred."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1122,14 +1118,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Cump\u0103ra\u021Bi un contract pneumatic"
+    m_Localized: "A\u0219ez\xE2nd \u021Beav\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "Sunt perfecte! O s\u0103 fiu ... destul de ocupat ... V\u0103 promovez
-      \xEEntr -o pozi\u021Bie de supraveghere a Karetaker Karetaker, ve\u021Bi cump\u0103ra
-      Kobolds \xEEn numele meu de la al\u021Bi Karetakers Kobold, ve\u021Bi g\u0103si
-      pe cineva care s\u0103 construiasc\u0103 tubul necesar."
+    m_Localized: "Sunt perfecte! Voi fi ... destul de ocupat ... V\u0103 promovez
+      \xEEntr -o pozi\u021Bie de supraveghere, ve\u021Bi cump\u0103ra Kobolds \xEEn
+      numele meu de la al\u021Bi Karetakers Kobold, ve\u021Bi g\u0103si pe cineva
+      care s\u0103 construiasc\u0103 tubul necesar."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

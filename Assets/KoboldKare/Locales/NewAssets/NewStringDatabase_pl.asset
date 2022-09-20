@@ -597,8 +597,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Proste, bezpieczne, hipoallergetyczne metalowe pr\u0119ty. (Tak,
-      id\u0105 w twoich sutkach.)"
+    m_Localized: "Proste, bezpieczne dla cia\u0142a, hipoallergetyczne metalowe pr\u0119ty.
+      (Tak, id\u0105 w twoich sutkach.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -698,13 +698,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Podlewaj jajko i poczekaj, a\u017C tw\xF3j Kobold osi\u0105gnie
-      dojrza\u0142o\u015B\u0107."
+    m_Localized: "Podlewaj jajko i poczekaj, a\u017C tw\xF3j Kobold si\u0119 wyrosnie."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Przenie\u015B Kobolda do Dragon Lord za po\u015Brednictwem sieci
-      pneumatycznej."
+    m_Localized: Pierwszy z wielu.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
@@ -713,12 +711,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Jajko dla Smok Lorda!
+    m_Localized: Jajko od smoka Lorda!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Jestem Nymrianth, smokiem Lord. Polecam ci rozpocz\u0105\u0107
-      prac\u0119 jako Kobold Karetaker i wyhodowa\u0107 mnie Kobold."
+    m_Localized: "Jestem Nymrianth, smokiem Lord. Musz\u0119 zacz\u0105\u0107 prac\u0119
+      jako Kobold Karetaker i posadzam jajko."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -953,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1021,8 +1019,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Chc\u0119, \u017Ceby\u015B zrobi\u0142 jeden z twoich kobold\xF3w
-      z\u0142o\u017Cy\u0142 du\u017Ce jajko. M\xF3wi\u0119 tutaj o du\u017Cym jajku,
-      tak du\u017Ce, jak to mo\u017Cliwe."
+      z\u0142o\u017Cy\u0142 du\u017Ce jajko. Tak du\u017Ce, jak to mo\u017Cliwe."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1045,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w podziemiu.
+    m_Localized: Witamy w metrze.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1053,11 +1050,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Wyci\u0105gniesz oko."
+    m_Localized: "Whoa! Jeste\u015B naprawd\u0119 nagi."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Tak, okej, tylko uh\u2026 pom\xF3\u017C sobie, chyba."
+    m_Localized: "W ka\u017Cdym razie, tylko uh\u2026 pom\xF3\u017C sobie, chyba."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1118,14 +1115,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Kup umow\u0119 pneumatyczn\u0105"
+    m_Localized: "Rura uk\u0142adaj\u0105ca"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "S\u0105 idealne! B\u0119d\u0119 ... do\u015B\u0107 zaj\u0119ty
-      ... Promuj\u0119 ci\u0119 do pozycji nadzorcy Kobolda Karetaker, kupisz Kobolds
-      w moim imieniu od innych Kobold Karetakers, znajd\u017A kogo\u015B, kto zbuduje
-      potrzebn\u0105 rurk\u0119."
+      ... Promuj\u0119 ci\u0119 na stanowisko nadzorcy, kupisz Kobolds w moim imieniu
+      od innych Kobold Karetakers, znajd\u017A kogo\u015B, kto zbuduje potrzebn\u0105
+      rurk\u0119."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

@@ -947,7 +947,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste ji
+    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste jej
       kombinovat s jin\xFDmi v\u011Bcmi v kbel\xEDku, abyste mohli vyr\xE1b\u011Bt
       nov\xE1 j\xEDdla."
     m_Metadata:
@@ -1017,8 +1017,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Chci, abyste vytvo\u0159ili jeden z va\u0161ich kobolds, kter\xFD
-      polo\u017Eil velk\xE9 vejce. Mluv\xEDm tady o velk\xE9m vejci, tak velk\xE9,
-      jak to dok\xE1\u017Eete opravdu."
+      polo\u017Eil velk\xE9 vejce. Jak velk\xFD, jak to dok\xE1\u017Eete opravdu."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1049,11 +1048,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Vyhod\xED\u0161 to."
+    m_Localized: "Whoa! Jsi jako, opravdu nah\xFD."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Jo dob\u0159e, jen uh .. Pomozte si mysl\xEDm."
+    m_Localized: "Ka\u017Edop\xE1dn\u011B jen uh .. Pomozte si mysl\xEDm."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1113,14 +1112,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Koupit pneumatickou smlouvu
+    m_Localized: "Polo\u017Een\xED potrub\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "Jsou perfektn\xED! Budu ... docela zanepr\xE1zdn\u011Bn ... propaguji
-      v\xE1s na pozici Kobold Karetaker dozorce, koup\xEDte si Kobolds jm\xE9nem
-      od jin\xFDch Karetaker\u016F Kobold, najdete n\u011Bkoho, kdo postav\xED pot\u0159ebn\xE9
-      hadi\u010Dky."
+      v\xE1s na pozici dozorce, koup\xEDte si Kobolds jm\xE9nem od jin\xFDch Karetaker\u016F
+      Kobold, najdete n\u011Bkoho, kdo bude postavit pot\u0159ebn\xE9 hadi\u010Dky."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

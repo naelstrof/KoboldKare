@@ -1005,8 +1005,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Jeg vil have dig til at f\xE5 en af \u200B\u200Bdine kobolds til
-      at l\xE6gge et stort \xE6g. Jeg taler et stort \xE6g her, s\xE5 stort som du
-      kan f\xE5 det virkelig."
+      at l\xE6gge et stort \xE6g. S\xE5 stor som du kan f\xE5 det virkelig."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1036,11 +1035,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Du vil stikke \xF8je med."
+    m_Localized: "Whoa! Du er ligesom, virkelig n\xF8gen."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Ja okay bare uh .. hj\xE6lp dig selv antager jeg."
+    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1101,14 +1100,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "K\xF8b en pneumatisk kontrakt"
+    m_Localized: "L\xE6gningsr\xF8r"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "De er perfekte! Jeg bliver ... ganske travlt ... Jeg promoverer
-      dig til en Kobold Karetaker -tilsynsf\xF8rende position, du vil k\xF8be kobolds
-      p\xE5 mine vegne fra andre Kobold Karetakers, finde nogen til at bygge det
-      n\xF8dvendige r\xF8r."
+      dig til en tilsynsf\xF8rende position, du vil k\xF8be kobolds p\xE5 mine vegne
+      fra andre Kobold Karetakers, finde nogen til at bygge det n\xF8dvendige r\xF8r."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1152,7 +1150,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ikke n\xF8dvendigt at v\xE6re genert."
+      op her, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130

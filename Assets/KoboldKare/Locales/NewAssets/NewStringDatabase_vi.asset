@@ -1053,9 +1053,8 @@ MonoBehaviour:
   - m_Id: 213767567815790594
     m_Localized: "T\xF4i mu\u1ED1n b\u1EA1n l\xE0m cho m\u1ED9t trong nh\u1EEFng
       kobold c\u1EE7a b\u1EA1n \u0111\u1EB7t m\u1ED9t qu\u1EA3 tr\u1EE9ng l\u1EDBn.
-      T\xF4i \u0111ang n\xF3i m\u1ED9t qu\u1EA3 tr\u1EE9ng l\u1EDBn \u1EDF \u0111\xE2y,
-      l\u1EDBn nh\u01B0 b\u1EA1n c\xF3 th\u1EC3 nh\u1EADn \u0111\u01B0\u1EE3c n\xF3
-      th\u1EF1c s\u1EF1."
+      L\u1EDBn nh\u01B0 b\u1EA1n c\xF3 th\u1EC3 c\xF3 \u0111\u01B0\u1EE3c n\xF3 th\u1EF1c
+      s\u1EF1."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1090,13 +1089,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "\xC1i ch\xE0! B\u1EA1n s\u1EBD ch\u1ECDc m\u1ED9t con m\u1EAFt
-      ra."
+    m_Localized: "\xC1i ch\xE0! B\u1EA1n gi\u1ED1ng nh\u01B0, th\u1EF1c s\u1EF1 kh\u1ECFa
+      th\xE2n."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "V\xE2ng, \u0111\u01B0\u1EE3c r\u1ED3i, ch\u1EC9 c\u1EA7n gi\xFAp
-      b\u1EA3n th\xE2n t\xF4i, t\xF4i \u0111o\xE1n."
+    m_Localized: "D\xF9 sao c\u0169ng ch\u1EC9 c\u1EA7n uh .. h\xE3y gi\xFAp m\xECnh
+      t\xF4i \u0111o\xE1n."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1164,15 +1163,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Mua m\u1ED9t h\u1EE3p \u0111\u1ED3ng kh\xED n\xE9n"
+    m_Localized: "\u1ED0ng \u0111\u1EB7t"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "Ch\xFAng ho\xE0n h\u1EA3o! T\xF4i s\u1EBD ... kh\xE1 b\u1EADn r\u1ED9n
-      ... T\xF4i \u0111ang qu\u1EA3ng b\xE1 cho b\u1EA1n m\u1ED9t v\u1ECB tr\xED
-      gi\xE1m s\xE1t karetaker Kobold, b\u1EA1n s\u1EBD thay m\u1EB7t t\xF4i mua
-      kobold t\u1EEB nh\u1EEFng ng\u01B0\u1EDDi ch\xE8o thuy\u1EC1n kobold kh\xE1c,
-      t\xECm ai \u0111\xF3 \u0111\u1EC3 x\xE2y d\u1EF1ng \u1ED1ng c\u1EA7n thi\u1EBFt."
+      ... T\xF4i \u0111ang th\xFAc \u0111\u1EA9y b\u1EA1n \u0111\u1EBFn m\u1ED9t
+      v\u1ECB tr\xED gi\xE1m s\xE1t, b\u1EA1n s\u1EBD thay m\u1EB7t t\xF4i mua kobold
+      t\u1EEB nh\u1EEFng ng\u01B0\u1EDDi l\xE0m vi\u1EC7c kobold kh\xE1c, t\xECm
+      ai \u0111\xF3 \u0111\u1EC3 x\xE2y d\u1EF1ng \u1ED1ng c\u1EA7n thi\u1EBFt."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

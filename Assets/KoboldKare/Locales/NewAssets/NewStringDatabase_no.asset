@@ -205,9 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
-      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -588,7 +586,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Enkle kroppssikre, hypoallergetiske metallstenger. (Ja de g\xE5r
+    m_Localized: "Enkle, kroppssikre, hypoallergetiske metallstenger. (Ja de g\xE5r
       i brystvortene dine.)"
     m_Metadata:
       m_Items: []
@@ -689,11 +687,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Vann egget og vent p\xE5 at kobolden din kommer til modenhet."
+    m_Localized: "Vann egget og vent p\xE5 at kobolden din vokser."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Overf\xF8r Kobold til Dragon Lord via pneumatisk nettverk."
+    m_Localized: "Den f\xF8rste av mange."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
@@ -702,12 +700,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Et egg til dragen herre!
+    m_Localized: Et egg fra dragen herre!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
     m_Localized: "Jeg er nymrianth, dragen herre. Jeg befaler deg \xE5 begynne \xE5
-      jobbe som Kobold Karetaker og dyrke meg en Kobold."
+      jobbe som Kobold Karetaker og plante et egg."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -1007,8 +1005,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Jeg vil at du skal f\xE5 en av koboldene dine til \xE5 legge et
-      stort egg. Jeg snakker et stort egg her, s\xE5 stort som du virkelig kan f\xE5
-      det."
+      stort egg. S\xE5 stor du kan f\xE5 det virkelig."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1038,11 +1035,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Whoa! Du kommer til \xE5 pirke et \xF8ye."
+    m_Localized: Whoa! Du er som, virkelig naken.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Ja ok bare \xE5h .. hjelp deg selv antar jeg."
+    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1103,14 +1100,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Kj\xF8p en pneumatisk kontrakt"
+    m_Localized: "Legging av r\xF8r"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "De er perfekte! Jeg kommer til \xE5 v\xE6re ... ganske opptatt
-      ... Jeg promoterer deg til en Kobold Karetaker -tilsynsposisjon, du vil kj\xF8pe
-      Kobolds p\xE5 mine vegne fra andre Kobold Karetakers, finne noen til \xE5 bygge
-      det n\xF8dvendige r\xF8ret."
+      ... Jeg promoterer deg til en tilsynsmannsstilling, du vil kj\xF8pe kobolds
+      p\xE5 mine vegne fra andre Kobold Karetakers, finne noen til \xE5 bygge det
+      n\xF8dvendige slangen."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148

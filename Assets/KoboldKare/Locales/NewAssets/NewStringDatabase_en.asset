@@ -598,7 +598,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: Simple body-safe, hypoallergetic metal bars. (Yes they go in your
+    m_Localized: Simple, body-safe, hypoallergetic metal bars. (Yes they go in your
       nipples.)
     m_Metadata:
       m_Items: []
@@ -710,11 +710,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: Water the egg and wait for your kobold to reach maturity.
+    m_Localized: Water the egg and wait for your kobold to grow.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: Transfer kobold to the Dragon Lord via pneumatic network.
+    m_Localized: The first of many.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
@@ -723,12 +723,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: An egg for the Dragon Lord!
+    m_Localized: An egg from the Dragon Lord!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
     m_Localized: I am Nymrianth, the Dragon Lord. I command you to begin work as
-      a Kobold Karetaker and grow me a kobold.
+      a Kobold Karetaker and plant an egg.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -1023,8 +1023,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: I want you to make one of your kobolds lay a big egg. I'm talking
-      a large egg here, as big as you can get it really.
+    m_Localized: I want you to make one of your kobolds lay a big egg. As big as
+      you can get it really.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1054,11 +1054,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! You're gonna poke an eye out.
+    m_Localized: Whoa! You're like, really naked.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Yeah okay just uh.. help yourself I guess.
+    m_Localized: Anyway just uh.. help yourself I guess.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1165,13 +1165,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Purchase a pneumatic contract
+    m_Localized: Laying Pipe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: They're perfect! I'm going to be... quite busy... I am promoting
-      you to a Kobold Karetaker Overseer position, you will purchase kobolds on my
-      behalf from other Kobold Karetakers, find someone to build the needed tubing.
+      you to an Overseer position, you will purchase kobolds on my behalf from other
+      Kobold Karetakers, find someone to build the needed tubing.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1206,6 +1206,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215247205985472512
     m_Localized: Safe-for-work Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: There's nothing else for you here... for now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: There's nothing else for you here.
     m_Metadata:
       m_Items: []
   references:

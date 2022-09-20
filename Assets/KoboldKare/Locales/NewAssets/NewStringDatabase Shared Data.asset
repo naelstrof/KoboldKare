@@ -943,12 +943,20 @@ MonoBehaviour:
     m_Key: CREEPY_GUY_DIALOGUE_2
     m_Metadata:
       m_Items: []
+  - m_Id: 216333655481044992
+    m_Key: CREEPY_GUY_DIALOGUE_PRETUBE
+    m_Metadata:
+      m_Items: []
   - m_Id: 215233885794521088
     m_Key: CREEPY_GUY_DIALOGUE_TUBE_1
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
     m_Key: CREEPY_GUY_DIALOGUE_TUBE_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Key: CREEPY_GUY_DIALOGUE_POSTTUBE
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120

@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour {
     private GameObject OptionsTab;
     [SerializeField]
     private GameObject MainViewTab;
+    [SerializeField]
+    private GameObject CreditsTab;
 
     public static Coroutine StartCoroutineStatic(IEnumerator routine) {
         if (instance == null) {
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour {
             UnityScriptableSettings.SettingsManager.Save();
             MultiplayerTab.gameObject.SetActive(false);
             OptionsTab.gameObject.SetActive(false);
+            CreditsTab.gameObject.SetActive(false);
             MainViewTab.gameObject.SetActive(true);
         }
         if (pause) {

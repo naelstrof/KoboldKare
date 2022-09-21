@@ -1050,7 +1050,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey vreemdeling ...
+    m_Localized: Hey Bud.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1179,11 +1179,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Welkom terug, kopen of gewoon browsen?
+    m_Localized: Hey maatje!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: Ziet er vandaag goed uit, hulp nodig bij het dragen van iets?
+    m_Localized: Ziet er vandaag goed uit, heb je hulp nodig bij het dragen van iets?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1272,6 +1272,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: Een goedkope set condooms nodig om te gebruiken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space Program
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: Haal een Kobold ver van de grond. Het kan me niet schelen hoe je
+      het doet!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   references:

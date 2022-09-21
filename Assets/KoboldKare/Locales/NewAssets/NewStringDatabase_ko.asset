@@ -921,7 +921,7 @@ MonoBehaviour:
   - m_Id: 211654220131651587
     m_Localized: "\uC9C0\uC815\uB41C \uC2DC\uC57D \uB610\uB294 \uC0AC\uC804 \uB7A9\uC744
       \uC81C\uACF5\uD569\uB2C8\uB2E4. \uBAA8\uB4E0 \uC801\uC808\uD55C \uC774\uB984\uC744
-      \uCC3E\uAE30 \uC704\uD574 /\uBAA9\uB85D\uC744 \uC0AC\uC6A9\uD558\uC2ED\uC2DC\uC624."
+      \uCC3E\uC73C\uB824\uBA74 /\uBAA9\uB85D\uC744 \uC0AC\uC6A9\uD558\uC2ED\uC2DC\uC624."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
@@ -1070,7 +1070,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "\uC800\uAE30\uC694..."
+    m_Localized: "\uC548\uB155 \uBC84\uB4DC."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1220,13 +1220,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "\uB2E4\uC2DC \uC624\uC2E0 \uAC83\uC744 \uD658\uC601\uD569\uB2C8\uB2E4,
-      \uAD6C\uB9E4 \uB610\uB294 \uD0D0\uC0C9?"
+    m_Localized: "\uC774\uBD10, \uCE5C\uAD6C!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: "\uC624\uB298\uC740 \uC88B\uC544 \uBCF4\uC774\uC9C0\uB9CC, \uBB34\uC5C7\uC774\uB4E0
-      \uD734\uB300\uD558\uB294 \uB370 \uB3C4\uC6C0\uC774 \uD544\uC694\uD558\uC2ED\uB2C8\uAE4C?"
+    m_Localized: "\uC624\uB298\uC740 \uC88B\uC544 \uBCF4\uC774\uACE0, \uBB50\uB4E0\uC9C0
+      \uB3C4\uC640 \uC904 \uC218 \uC788\uB2C8?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1325,6 +1324,20 @@ MonoBehaviour:
   - m_Id: 216462783219814401
     m_Localized: "\uC0AC\uC6A9\uD558\uB824\uBA74 \uC800\uB834\uD55C \uCF58\uB3D4
       \uC138\uD2B8\uAC00 \uD544\uC694\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: "\uCF54\uB4DC \uC6B0\uC8FC \uD504\uB85C\uADF8\uB7A8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "\uC9C0\uC0C1\uC5D0\uC11C Kobold\uB97C \uC5BB\uC73C\uC2ED\uC2DC\uC624.
+      \uB098\uB294 \uB2F9\uC2E0\uC774 \uADF8\uAC83\uC744 \uC5B4\uB5BB\uAC8C\uD558\uB294\uC9C0
+      \uC0C1\uAD00\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "\uD06C\uB808\uB527"
     m_Metadata:
       m_Items: []
   references:

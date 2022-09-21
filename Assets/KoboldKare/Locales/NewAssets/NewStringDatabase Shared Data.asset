@@ -1207,6 +1207,10 @@ MonoBehaviour:
     m_Key: OBJECTIVE_SPACE_KOBOLD_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 216833884877803520
+    m_Key: BUTTON_CREDITS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

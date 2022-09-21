@@ -1025,7 +1025,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Ei estranho...
+    m_Localized: Ei, camarada.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1156,7 +1156,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Bem -vindo de volta, comprando ou apenas navegando?
+    m_Localized: Ei amigo!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1250,6 +1250,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: Precisa de um conjunto barato de preservativos para usar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Programa Espacial Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Fa\xE7a um Kobold do ch\xE3o. Eu n\xE3o me importo como voc\xEA
+      faz isso!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "Cr\xE9ditos"
     m_Metadata:
       m_Items: []
   references:

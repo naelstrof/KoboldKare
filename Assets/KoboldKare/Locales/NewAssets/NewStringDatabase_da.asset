@@ -1024,7 +1024,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hej fremmed ...
+    m_Localized: Hej knopp.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1155,7 +1155,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Velkommen tilbage, k\xF8b eller bare gennems\xF8gning?"
+    m_Localized: Hej ven!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1240,7 +1240,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mommy Milkers
+    m_Localized: Mor Milkers
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1249,6 +1249,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Brug for et billigt s\xE6t kondomer til at bruge."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space Program
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "F\xE5 en kobold langt v\xE6k fra jorden. Jeg er ligeglad med, hvordan
+      du g\xF8r det!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Kreditter
     m_Metadata:
       m_Items: []
   references:

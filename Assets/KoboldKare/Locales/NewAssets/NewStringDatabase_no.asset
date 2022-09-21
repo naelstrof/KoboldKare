@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
       SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
@@ -1025,7 +1025,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hei fremmed...
+    m_Localized: Hei knopp.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1157,7 +1157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Velkommen tilbake, kj\xF8pe eller bare bla gjennom?"
+    m_Localized: Hei kompis!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1250,6 +1250,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Trenger et billig sett med kondomer \xE5 bruke."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space Program
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "F\xE5 en kobold vei fra bakken. Jeg bryr meg ikke om hvordan du
+      gj\xF8r det!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Studiepoeng
     m_Metadata:
       m_Items: []
   references:

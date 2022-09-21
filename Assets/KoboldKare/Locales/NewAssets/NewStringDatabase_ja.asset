@@ -990,7 +990,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "\u3061\u3087\u3063\u3068\u898B\u77E5\u3089\u306C\u4EBA..."
+    m_Localized: "\u306D\u3048\u82BD\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1111,11 +1111,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "\u3069\u3046\u3044\u305F\u3057\u307E\u3057\u3066\u3001\u8CFC\u5165\u3001\u8CFC\u5165\u3001\u307E\u305F\u306F\u95B2\u89A7\u3059\u308B\u3060\u3051\u3067\u3059\u304B\uFF1F"
+    m_Localized: "\u30D0\u30C7\u30A3\u306D\u3048\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: "\u4ECA\u65E5\u306F\u3088\u304F\u898B\u3066\u304F\u3060\u3055\u3044\u3001\u4F55\u304B\u3092\u904B\u3076\u305F\u3081\u306B\u4F55\u304B\u52A9\u3051\u304C\u5FC5\u8981\u3067\u3059\u304B\uFF1F"
+    m_Localized: "\u4ECA\u65E5\u306F\u3088\u304F\u898B\u3066\u304F\u3060\u3055\u3044\u3001\u4F55\u304B\u3092\u904B\u3076\u306E\u306B\u52A9\u3051\u304C\u5FC5\u8981\u3067\u3059\u304B\uFF1F"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1200,6 +1200,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "\u4F7F\u7528\u3059\u308B\u306B\u306F\u3001\u30B3\u30F3\u30C9\u30FC\u30E0\u306E\u5B89\u4FA1\u306A\u30BB\u30C3\u30C8\u304C\u5FC5\u8981\u3067\u3059\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: "Kobold Space\u30D7\u30ED\u30B0\u30E9\u30E0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "\u5730\u9762\u304B\u3089\u30B3\u30DC\u30EB\u30C9\u306E\u9053\u3092\u624B\u306B\u5165\u308C\u307E\u3057\u3087\u3046\u3002\u79C1\u306F\u3042\u306A\u305F\u304C\u305D\u308C\u3092\u3059\u308B\u65B9\u6CD5\u3092\u6C17\u306B\u3057\u307E\u305B\u3093\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "\u30AF\u30EC\u30B8\u30C3\u30C8"
     m_Metadata:
       m_Items: []
   references:

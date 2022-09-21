@@ -996,7 +996,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Milyen \xE9rdekes eszk\xF6zt szerezt\xE9l. Menj \xE9s pr\xF3b\xE1ld
+    m_Localized: "Milyen \xE9rdekes eszk\xF6zt szerzett. Menj \xE9s pr\xF3b\xE1ld
       meg haszn\xE1lni, hozza mag\xE1val egy m\xE1sik Koboldot."
     m_Metadata:
       m_Items: []
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hej idegen...
+    m_Localized: "H\xE9 Bud."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1169,12 +1169,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "\xDCdv\xF6z\xF6lj\xFCk, v\xE1s\xE1rol vagy csak b\xF6ng\xE9szhet?"
+    m_Localized: "H\xE9 haver!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: "Ma j\xF3l n\xE9z ki, b\xE1rmilyen seg\xEDts\xE9gre van sz\xFCks\xE9ge
-      b\xE1rmi hordoz\xE1s\xE1ban?"
+    m_Localized: "Ma j\xF3l n\xE9z ki, seg\xEDts\xE9gre van sz\xFCks\xE9ge b\xE1rmi
+      hordoz\xE1s\xE1ban?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1265,6 +1265,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Sz\xFCks\xE9ge van egy olcs\xF3 \xF3vszerk\xE9szletre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: "Kobold \u0171rprogram"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "L\xE9pjen egy koboldra a f\xF6ldr\u0151l. Nem \xE9rdekel, hogy
+      csin\xE1lod!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "J\xF3v\xE1\xEDr\xE1s"
     m_Metadata:
       m_Items: []
   references:

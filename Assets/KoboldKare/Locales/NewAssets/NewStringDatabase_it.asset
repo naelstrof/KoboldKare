@@ -1003,7 +1003,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
+      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1031,7 +1031,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey straniero...
+    m_Localized: Hey amico.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1162,7 +1162,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Bentornato, comprare o semplicemente navigare?
+    m_Localized: Ciao amico!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1256,6 +1256,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: Hai bisogno di un set economico di preservativi da utilizzare.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Programma spaziale kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: Ottieni un kobold lontano da terra. Non mi interessa come lo fai!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Crediti
     m_Metadata:
       m_Items: []
   references:

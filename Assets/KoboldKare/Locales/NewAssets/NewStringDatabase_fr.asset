@@ -1027,7 +1027,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "H\xE9 \xE9tranger..."
+    m_Localized: Salut mon pote.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1160,7 +1160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Bienvenue, acheter ou simplement naviguer?
+    m_Localized: "H\xE9 mon pote!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1255,6 +1255,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Besoin d'un ensemble de pr\xE9servatifs bon march\xE9 \xE0 utiliser."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Programme spatial Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Faites un chemin Kobold du sol. Je me fiche de la fa\xE7on dont
+      vous le faites!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "Cr\xE9dits"
     m_Metadata:
       m_Items: []
   references:

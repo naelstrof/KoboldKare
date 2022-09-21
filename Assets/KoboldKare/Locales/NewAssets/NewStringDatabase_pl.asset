@@ -1038,11 +1038,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "Cze\u015B\u0107 nieznajomy..."
+    m_Localized: Hej kolego.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w metrze.
+    m_Localized: Witamy w podziemiu.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1169,7 +1169,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Witamy z powrotem, kupujesz czy po prostu przegl\u0105danie?"
+    m_Localized: Hej kolego!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1264,6 +1264,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Potrzebujesz taniego zestawu prezerwatyw do u\u017Cycia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Program kosmiczny Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Zdob\u0105d\u017A Kobold Way Off the Ground. Nie obchodzi mnie,
+      jak to robisz!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Kredyty
     m_Metadata:
       m_Items: []
   references:

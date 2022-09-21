@@ -1041,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey stranger...
+    m_Localized: Hey bud.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1094,11 +1094,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Welcome back, buying or just browsing?
+    m_Localized: Hey buddy!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: Lookin' good today, need any help carrying anything?
+    m_Localized: Lookin' good today, need help carrying anything?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1279,6 +1279,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216470162770546689
     m_Localized: Get a kobold way off the ground. I don't care how you do it!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   references:

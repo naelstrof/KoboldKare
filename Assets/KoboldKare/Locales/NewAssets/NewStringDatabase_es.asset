@@ -1025,7 +1025,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "Hola extra\xF1o..."
+    m_Localized: Hola amigo.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1157,7 +1157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "\xBFBienvenido de regreso, compra o simplemente navegando?"
+    m_Localized: "\xA1Hey amigo!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1187,7 +1187,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Me quedar\xE9 aqu\xED en caso de que alg\xFAn otro Kobold desnudo
-      quiera que las construya m\xE1quinas de fetiche."
+      quiera que las construya m\xE1quinas fetiche."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1251,6 +1251,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: Necesita un conjunto barato de condones para usar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Programa espacial de Kobold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Saca un kobold del suelo. \xA1No me importa c\xF3mo lo haces!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: "Cr\xE9ditos"
     m_Metadata:
       m_Items: []
   references:

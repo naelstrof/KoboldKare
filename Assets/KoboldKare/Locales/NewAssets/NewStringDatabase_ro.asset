@@ -1041,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "Hei str\u0103in ..."
+    m_Localized: Hei Bud.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1176,8 +1176,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Bine a\u021Bi venit \xEEnapoi, cump\u0103ra\u021Bi sau pur \u0219i
-      simplu navigare?"
+    m_Localized: Hei amice!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1276,6 +1275,19 @@ MonoBehaviour:
   - m_Id: 216462783219814401
     m_Localized: "Ave\u021Bi nevoie de un set ieftin de prezervative pentru a fi
       utilizat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: "Programul spa\u021Bial Kobold"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Ob\u021Bine\u021Bi un drum Kobold de pe p\u0103m\xE2nt. Nu -mi
+      pas\u0103 cum o faci!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: credite
     m_Metadata:
       m_Items: []
   references:

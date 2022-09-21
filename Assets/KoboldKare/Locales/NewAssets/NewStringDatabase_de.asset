@@ -1037,7 +1037,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey fremder...
+    m_Localized: Hey Kumpel.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1170,7 +1170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Willkommen zur\xFCck, kaufen oder einfach nur durchsuchen?"
+    m_Localized: Hey Kumpel!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1264,6 +1264,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Ben\xF6tigen Sie eine billige Menge Kondome, um sie zu verwenden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space -Programm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: Holen Sie sich einen Kobold weit vom Boden. Es ist mir egal, wie
+      du es machst!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   references:

@@ -948,7 +948,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste jej
+    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste ji
       kombinovat s jin\xFDmi v\u011Bcmi v kbel\xEDku, abyste mohli vyr\xE1b\u011Bt
       nov\xE1 j\xEDdla."
     m_Metadata:
@@ -1037,7 +1037,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: "Ahoj cizin\u010De..."
+    m_Localized: Ahoj Bud.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1169,7 +1169,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "V\xEDtejte zp\u011Bt, n\xE1kup nebo jen proch\xE1zen\xED?"
+    m_Localized: "Hej k\xE1mo!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1263,6 +1263,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Pot\u0159ebujete levnou sadu kondom\u016F."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546688
+    m_Localized: Kobold Space Program
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216470162770546689
+    m_Localized: "Z\xEDskejte Kobold cestu ze zem\u011B. Je mi jedno, jak to d\u011Bl\xE1\u0161!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216833884877803520
+    m_Localized: Kredity
     m_Metadata:
       m_Items: []
   references:

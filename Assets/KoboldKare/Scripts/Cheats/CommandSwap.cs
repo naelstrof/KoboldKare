@@ -11,7 +11,9 @@ public class CommandSwap : Command {
         if (args.Length != 1) {
             throw new CheatsProcessor.CommandException("Usage: /swap");
         }
-
+        if (!CheatsProcessor.GetCheatsEnabled()) {
+            throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
+        }
         BrainSwapperMachine machine = Object.FindObjectOfType<BrainSwapperMachine>();
         if (machine == null) {
             throw new CheatsProcessor.CommandException("Couldn't find the brain swapper machine, its required to exist in the world in order to trigger a swap...");

@@ -11,6 +11,9 @@ public class ExpandFarmObjective : ObjectiveWithSpaceBeam {
 
     [SerializeField]
     private SoilTile[] tiles;
+
+    [SerializeField]
+    private MonoBehaviour thinker;
     
     public override void Register() {
         bool found = false;
@@ -23,10 +26,15 @@ public class ExpandFarmObjective : ObjectiveWithSpaceBeam {
         base.Register();
         SoilTile.tileCleared += OnTileClear;
         if (!found) {
-            TriggerComplete();
+            thinker.StartCoroutine(WaitThenClear());
         }
     }
-    
+
+    private IEnumerator WaitThenClear() {
+        yield return null;
+        TriggerComplete();
+    }
+
     public override void Unregister() {
         base.Unregister();
         SoilTile.tileCleared -= OnTileClear;

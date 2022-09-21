@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -25,8 +26,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         instance.objectiveChanged?.Invoke(null);
     }
 
+    public static bool HasMail() {
+        return instance.currentObjective == null && instance.currentObjectiveIndex < instance.objectives.Count;
+    }
     public static void GetMail() {
-        instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
+        instance.SwitchToObjective(instance.currentObjectiveIndex >= instance.objectives.Count ? null : instance.objectives[instance.currentObjectiveIndex]);
     }
     public delegate void ObjectiveChangedAction(DragonMailObjective newObjective);
     private event ObjectiveChangedAction objectiveChanged;
@@ -50,8 +54,8 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public static void SkipObjective() {
-        instance.OnObjectiveComplete(instance.objectives[instance.currentObjectiveIndex]);
-        instance.SwitchToObjective(instance.objectives[instance.currentObjectiveIndex]);
+        instance.OnObjectiveComplete(GetCurrentObjective());
+        instance.SwitchToObjective(instance.currentObjectiveIndex >= instance.objectives.Count ? null : instance.objectives[instance.currentObjectiveIndex]);
     }
 
     private void Awake() {
@@ -72,7 +76,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
 
     void OnObjectiveComplete(DragonMailObjective objective) {
         currentObjectiveIndex++;
-        if (objective.autoAdvance) {
+        if (objective is { autoAdvance: true }) {
             SwitchToObjective(objectives[currentObjectiveIndex]);
         } else {
             stars++;
@@ -114,11 +118,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     public void Load(BinaryReader reader) {
         bool hasObjective = reader.ReadBoolean();
         currentObjectiveIndex = reader.ReadInt32();
-        if (hasObjective) {
-            SwitchToObjective(objectives[currentObjectiveIndex]);
-        } else {
-            SwitchToObjective(null);
-        }
+        SwitchToObjective(hasObjective ? GetCurrentObjective() : null);
         objectives[currentObjectiveIndex].Load(reader);
     }
 
@@ -132,11 +132,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
             stars = (int)stream.ReceiveNext();
             bool hasObjective = (bool)stream.ReceiveNext();
             currentObjectiveIndex = (int)stream.ReceiveNext();
-            if (hasObjective) {
-                SwitchToObjective(objectives[currentObjectiveIndex]);
-            } else {
-                SwitchToObjective(null);
-            }
+            SwitchToObjective(hasObjective ? GetCurrentObjective() : null);
         }
         objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
     }

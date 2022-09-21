@@ -40,7 +40,7 @@ public class MailboxUsable : GenericUsable {
     }
 
     void OnObjectiveSwapped(DragonMailObjective obj) {
-        if (obj != null) {
+        if (obj != null || !ObjectiveManager.HasMail()) {
             hasMail = false;
             mailWaitingSource.Stop();
             mailWaitingSource.enabled = false;
@@ -49,6 +49,7 @@ public class MailboxUsable : GenericUsable {
             spaceBeam.SetActive(false);
             return;
         }
+
         hasMail = true;
         mailWaitingSource.enabled = true;
         mailWaiting.Play(mailWaitingSource);

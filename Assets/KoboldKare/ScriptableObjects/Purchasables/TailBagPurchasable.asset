@@ -16,5 +16,5 @@ MonoBehaviour:
   spawnPrefab:
     gameObject: {fileID: 5605572581541272102, guid: 4471a7aea07acb443aa85ca878c62a45,
       type: 3}
-    photonName: TailbagEquippable
-  cost: 100
+    photonName: Tailbag
+  cost: 20

@@ -11,6 +11,8 @@ public class AudioPack : ScriptableObject {
     private float volume = 1f;
     [SerializeField]
     private AudioMixerGroup group;
+    [SerializeField]
+    private float pitchRange = 0.2f;
     //public AudioClip GetRandomClip() {
         //return clips[Random.Range(0, clips.Length)];
     //}
@@ -26,12 +28,12 @@ public class AudioPack : ScriptableObject {
         source.outputAudioMixerGroup = group;
         source.clip = clips[Random.Range(0, clips.Length)];
         source.volume = volume;
-        source.pitch = Random.Range(0.75f,1.25f);
+        source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.Play();
     }
     public void PlayOneShot(AudioSource source) {
         source.outputAudioMixerGroup = group;
-        source.pitch = Random.Range(0.75f,1.25f);
+        source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.PlayOneShot(clips[Random.Range(0, clips.Length)], volume);
     }
 }

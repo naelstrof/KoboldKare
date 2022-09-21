@@ -2656,7 +2656,7 @@ MonoBehaviour:
   speechBackgroundBubble: {fileID: 1567381813676028738}
   animator: {fileID: 95644911095823980}
   text: {fileID: 1567381814821780658}
-  sansUndertaleVocals: {fileID: 11400000, guid: 4bb8b189df8295a42b3736a510558d68,
+  sansUndertaleVocals: {fileID: 11400000, guid: 854f5869129beaf4eaabf388108e0092,
     type: 2}
   dialogueInfos:
   - minimumStarCount: 0

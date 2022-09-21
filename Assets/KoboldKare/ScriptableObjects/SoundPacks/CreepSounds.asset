@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 00f0bef9bc3b81149afa79f2ceb5e7e0, type: 3}
-  - {fileID: 8300000, guid: 86f3abc320b2edc46afc056ff9bee97f, type: 3}
   - {fileID: 8300000, guid: 760eaff3d8ab6e148b994906ac447405, type: 3}
-  - {fileID: 8300000, guid: de9f04ceb02ef8c45bb477c695457848, type: 3}
   - {fileID: 8300000, guid: ff144aa1641548246b274479381ada43, type: 3}
   - {fileID: 8300000, guid: 56bd7980cd00bdb468c37a8bf5a6ce0e, type: 3}
   volume: 1.2
   group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}
+  pitchRange: 0.2

@@ -83,11 +83,11 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             StopAllCoroutines();
             for (int i = 0; i < reagents.Count; i++) {
                 images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
-                StartCoroutine(TweenWidth(images[i], reagents[i].volume * volumeToPixels));
+                StartCoroutine(TweenWidth(images[i], Mathf.Min(reagents[i].volume * volumeToPixels,3000f)));
             }
 
-            StartCoroutine(TweenWidth(rectTransform, contents.volume * volumeToPixels));
-            StartCoroutine(TweenWidth(background, contents.GetMaxVolume() * volumeToPixels));
+            StartCoroutine(TweenWidth(rectTransform, Mathf.Min(contents.volume * volumeToPixels, 3000f)));
+            StartCoroutine(TweenWidth(background, Mathf.Min(contents.GetMaxVolume() * volumeToPixels, 3000f)));
         } else {
             for (int i = 0; i < reagents.Count; i++) {
                 images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
@@ -107,7 +107,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             float t = (Time.time - startTime) / duration;
             float bounceSample = bounceCurve.Evaluate(t);
             targetImage.sizeDelta = new Vector2(
-                Mathf.Max(Mathf.LerpUnclamped(startingWidth, targetWidth, bounceSample), 0f),
+                Mathf.Clamp(Mathf.LerpUnclamped(startingWidth, targetWidth, bounceSample),0f,float.MaxValue),
                 targetImage.sizeDelta.y);
             yield return null;
         }

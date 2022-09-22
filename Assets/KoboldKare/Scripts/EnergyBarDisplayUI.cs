@@ -25,8 +25,8 @@ public class EnergyBarDisplayUI : MonoBehaviour {
     }
 
     void OnEnergyChanged(float energy, float maxEnergy) {
-        targetWidth = energy * energyToPixel;
-        targetBackgroundWidth = maxEnergy * energyToPixel;
+        targetWidth = Mathf.Min(energy * energyToPixel,3000f);
+        targetBackgroundWidth = Mathf.Min(maxEnergy * energyToPixel,3000f);
         if (!running) {
             StartCoroutine(EnergyLerpRoutine(filledBar.sizeDelta.x, barBackground.sizeDelta.x));
         }
@@ -39,9 +39,9 @@ public class EnergyBarDisplayUI : MonoBehaviour {
         while (Time.time < startTime+duration) {
             float t = (Time.time - startTime) / duration;
             float bounceSample = bounceCurve.Evaluate(t);
-            filledBar.sizeDelta = new Vector2(Mathf.LerpUnclamped(startWidth, targetWidth, bounceSample),
+            filledBar.sizeDelta = new Vector2(Mathf.Clamp(Mathf.LerpUnclamped(startWidth, targetWidth, bounceSample), 0f, float.MaxValue),
                 filledBar.sizeDelta.y);
-            barBackground.sizeDelta = new Vector2(Mathf.LerpUnclamped(startBackgroundWidth, targetBackgroundWidth, bounceSample),
+            barBackground.sizeDelta = new Vector2(Mathf.Clamp(Mathf.LerpUnclamped(startBackgroundWidth, targetBackgroundWidth, bounceSample), 0f, float.MaxValue),
                 barBackground.sizeDelta.y);
             yield return null;
         }

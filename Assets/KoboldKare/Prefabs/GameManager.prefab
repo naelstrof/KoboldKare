@@ -15885,6 +15885,7 @@ MonoBehaviour:
   - rid: 8920608638277255169
   - rid: 8920608768974127123
   - rid: 8920608790810198018
+  - rid: 8920608816464920578
   references:
     version: 2
     RefIds:
@@ -15978,6 +15979,18 @@ MonoBehaviour:
           m_LocalVariables: []
     - rid: 8920608790810198018
       type: {class: CommandSwap, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 8920608816464920578
+      type: {class: CommandImpulse101, ns: , asm: Assembly-CSharp}
       data:
         description:
           m_TableReference:

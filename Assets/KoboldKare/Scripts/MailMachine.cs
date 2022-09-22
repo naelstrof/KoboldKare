@@ -114,7 +114,8 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
             if (v != null) {
-                totalWorth += v.GetWorth();
+                float add = Mathf.Min(v.GetWorth(), 1953125f);
+                totalWorth = Mathf.Min(totalWorth+add,1953125f);
             }
         }
         soldGameEvent.Raise(view);
@@ -137,6 +138,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             PhotonNetwork.Destroy(view.gameObject);
         }
 
+        totalWorth = Mathf.Min(totalWorth, 1953125f);
         int i = 0;
         while(totalWorth > 0f) {
             float currentPayout = FloorNearestPower(5f,totalWorth);

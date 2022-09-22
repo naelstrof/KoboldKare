@@ -8,10 +8,6 @@ using UnityEngine.Localization;
 public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
     [SerializeField]
     private LocalizedString description;
-    private int koboldCount = 0;
-    [SerializeField]
-    private int maxKobolds = 1;
-
     [SerializeField] private GameEventPhotonView soldGameObjectEvent;
     
     public override void Register() {
@@ -26,11 +22,7 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
 
     protected override void Advance(Vector3 position) {
         base.Advance(position);
-        koboldCount++;
-        TriggerUpdate();
-        if (koboldCount >= maxKobolds) {
-            TriggerComplete();
-        }
+        TriggerComplete();
     }
 
     private void OnSoldObject(PhotonView view) {
@@ -60,7 +52,7 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
     }
 
     public override string GetTitle() {
-        return $"{title.GetLocalizedString()} {koboldCount.ToString()}/{maxKobolds.ToString()}";
+        return $"{title.GetLocalizedString()} 0/1";
     }
 
     public override string GetTextBody() {

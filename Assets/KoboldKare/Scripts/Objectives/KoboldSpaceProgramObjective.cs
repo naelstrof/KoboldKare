@@ -29,6 +29,11 @@ public class KoboldSpaceProgram : DragonMailObjective {
         logicOwner.StopCoroutine(routine);
     }
 
+    protected override void Advance(Vector3 position) {
+        base.Advance(position);
+        TriggerComplete();
+    }
+
     private void OnKoboldSpawn(Kobold kobold) {
         kobolds.Add(kobold);
     }
@@ -45,6 +50,7 @@ public class KoboldSpaceProgram : DragonMailObjective {
             }
             if (maxHeightKobold != null && maxHeight > height) {
                 Advance(maxHeightKobold.transform.position);
+                yield break;
             }
             currentMaxHeight = maxHeight;
             TriggerUpdate();

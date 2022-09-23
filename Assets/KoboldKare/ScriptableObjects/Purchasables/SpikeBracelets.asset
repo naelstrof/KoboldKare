@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570dbde195e565469bd523b46057ff7, type: 3}
   m_Name: SpikeBracelets
   m_EditorClassIdentifier: 
-  display: {fileID: 5605572581541272102, guid: cd3bcb5c1635f6746aac112a39fc63d4, type: 3}
+  display: {fileID: 5605572581541272102, guid: 599881b76eebf904ab82b064446dd29f, type: 3}
   spawnPrefab:
-    gameObject: {fileID: 4410874938388445847, guid: ea07f03a9950e324d8a4f3a515b6eea2,
+    gameObject: {fileID: 5605572581541272102, guid: cd3bcb5c1635f6746aac112a39fc63d4,
       type: 3}
     photonName: SpikeyBracelet
   cost: 10

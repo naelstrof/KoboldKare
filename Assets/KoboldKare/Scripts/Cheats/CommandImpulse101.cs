@@ -16,12 +16,13 @@ public class CommandImpulse101 : Command {
         }
 
         k.photonView.RequestOwnership();
+        float maxValue = 99999f;
         KoboldGenes genes = k.GetGenes();
-        genes.maxEnergy = float.MaxValue;
-        genes.bellySize = float.MaxValue;
-        genes.metabolizeCapacitySize = float.MaxValue;
+        genes.maxEnergy = maxValue; 
+        genes.bellySize = maxValue;
+        genes.metabolizeCapacitySize = maxValue;
         k.SetGenes(genes);
-        k.photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.All, float.MaxValue);
+        k.photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.All, maxValue/2f);
         output.Append("Maximized stats.\n");
     }
 }

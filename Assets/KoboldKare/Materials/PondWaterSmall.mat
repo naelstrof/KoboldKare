@@ -8,12 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PondWaterSmall
-  m_Shader: {fileID: 4800000, guid: a9cde6543f2604b4cbd3023847cb9c0b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 92d824d5634a5ba4a85a4e5642ee1c99, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _BLENDMODE_ALPHA
-  - _ENABLE_FOG_ON_TRANSPARENT
-  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -123,8 +120,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WaterNormal:
-        m_Texture: {fileID: 2800000, guid: c99e3b024b25a3d49bc9f43817625d98, type: 3}
-        m_Scale: {x: 48, y: 48}
+        m_Texture: {fileID: 2800000, guid: 0ecd96c200a42234db5bc56da13d3550, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WavesMask:
+        m_Texture: {fileID: 2800000, guid: 2acd802d82f31ad42a4920540c8c53a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WhiteWash:
+        m_Texture: {fileID: 2800000, guid: 0d155125868e5e447883699a77dce2bd, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
@@ -167,7 +172,7 @@ Material:
     - _DisplacementLockObjectScale: 1
     - _DisplacementLockTilingScale: 1
     - _DisplacementMode: 0
-    - _Distortion: 0.03
+    - _Distortion: 0.08
     - _DistortionBlendMode: 0
     - _DistortionBlur: 0.1
     - _DistortionBlurBlendMode: 0
@@ -195,10 +200,10 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
-    - _FoamDepth: 0.76
-    - _FoamFalloff: -19.34
-    - _FoamSmoothness: 0.65
-    - _FoamSpecular: 0.24
+    - _FoamDepth: 1.05
+    - _FoamFalloff: -35.96
+    - _FoamSmoothness: 0.2
+    - _FoamSpecular: 0
     - _FogIntensity: 1
     - _FrameRate: 32
     - _FresnelBias: -0.3
@@ -282,10 +287,11 @@ Material:
     - _UVEmissive: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _WaterDepth: 1
+    - _WaterDepth: 1.62
     - _WaterFalloff: -2
     - _WaterSmoothness: 0.89
-    - _WaterSpecular: 0.2
+    - _WaterSpecular: 0.05
+    - _WaveWobble: 0
     - _ZTestDepthEqualForOpaque: 4
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 8
@@ -295,7 +301,7 @@ Material:
     - _BaseColor: {r: 0.041829593, g: 0.046281226, b: 0.18867892, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepColor: {r: 0, g: 0, b: 0, a: 0}
+    - _DeepColor: {r: 0, g: 0.1574858, b: 0.38679248, a: 0}
     - _DepthColor: {r: 0.04182975, g: 0.04628139, b: 0.18867913, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
@@ -316,8 +322,12 @@ Material:
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _WaterColor: {r: 0.19811317, g: 0.19811317, b: 0.19811317, a: 1}
     - _WaterSpeed: {r: 0.2, g: -2.78, b: 0, a: 0}
+    - _WaterSpeed1: {r: -0.015, g: 0.1, b: 0, a: 0}
+    - _WaterSpeed2: {r: 0.12, g: 0.01, b: 0, a: 0}
     - _WaterSpeedAlso: {r: 1, g: -0.5, b: 0, a: 0}
     - _WaveScale: {r: 6, g: 6, b: 0, a: 0}
+    - _WhiteWashSpeed: {r: 0, g: 0.01, b: 0, a: 0}
+    - _WobbleSpeed: {r: -0.1, g: 0.01, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5582715370362076289
 MonoBehaviour:

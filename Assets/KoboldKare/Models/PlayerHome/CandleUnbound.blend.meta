@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Wax
+    second: {fileID: 2100000, guid: dacff8122c143a6468a4d715d2315673, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Wick
     second: {fileID: 442973616483567852, guid: 4afcd0cd7445db54394b520d4e46594d, type: 3}
   materials:

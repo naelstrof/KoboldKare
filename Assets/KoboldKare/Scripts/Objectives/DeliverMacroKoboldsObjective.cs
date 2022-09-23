@@ -40,7 +40,7 @@ public class DeliverMacroKoboldObjective : ObjectiveWithSpaceBeam {
             return;
         }
 
-        if (k.GetGenes().baseSize >= 2f) {
+        if (k.GetGenes().baseSize >= 20f) {
             Advance(spaceBeamTarget.position);
         }
     }

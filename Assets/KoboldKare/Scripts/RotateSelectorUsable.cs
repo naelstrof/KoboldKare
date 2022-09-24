@@ -32,6 +32,10 @@ public class RotateSelectorUsable : UsableMachine {
         }
     }
 
+    public override bool CanUse(Kobold k) {
+        return constructed;
+    }
+
     public override Sprite GetSprite(Kobold k) {
         return useSprite;
     }

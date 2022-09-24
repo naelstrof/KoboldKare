@@ -50,7 +50,7 @@ public class KoboldDelivery : UsableMachine {
 
     public override bool CanUse(Kobold k) {
         MoneyHolder holder = k.GetComponent<MoneyHolder>();
-        return holder.HasMoney(GetPrice());
+        return constructed && holder.HasMoney(GetPrice());
     }
 
     public override void LocalUse(Kobold k) {

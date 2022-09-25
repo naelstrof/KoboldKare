@@ -12019,7 +12019,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.5
+  m_fontSize: 32.85
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24604,6 +24604,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Jeschke
 
+    Gizdormi
+
+    Dr. 0range
+
+    Jack
+
+    BlueOrca
+
+    Phoneme
+
     ls
 
     stinkhorn
@@ -24820,21 +24830,32 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Vore Day 2020 Soundpack
 
+    Bomb Model
+
+    Fat Blendshape
+
+    Kobold
+    Art 1
+
+    Kobold Art 2
+
+    Old House
+
     bleep
 
     heater 1
 
-    neck crack pure
+    neck crack
+    pure
 
-    city
-    traffic 2
+    city traffic 2
 
     bubbling01
 
     frisbee hitting lampost
 
-    wind blowing in the
-    bush on the top of kitt peak mountain
+    wind
+    blowing in the bush on the top of kitt peak mountain
 
     walking in long grass
 

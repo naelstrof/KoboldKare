@@ -222,13 +222,13 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
 
     public void Save(BinaryWriter writer) {
         contents ??= new ReagentContents(startingMaxVolume);
-        contents.Serialize(writer);
+        contents.Save(writer);
     }
 
     public void Load(BinaryReader reader) {
         contents ??= new ReagentContents(startingMaxVolume);
         contents.Clear();
-        contents.Deserialize(reader);
+        contents.Load(reader);
         OnReagentContentsChanged(InjectType.Metabolize);
     }
 }

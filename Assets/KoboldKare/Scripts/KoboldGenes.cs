@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
-public class KoboldGenes {
+public class KoboldGenes : ISavable {
     public float maxEnergy = 5f;
     public float baseSize = 20f;
     public float fatSize;
@@ -191,7 +191,7 @@ public class KoboldGenes {
         return genes;
     }
 
-    public void Serialize(BinaryWriter writer) {
+    public void Save(BinaryWriter writer) {
         writer.Write(maxEnergy);
         writer.Write(baseSize);
         writer.Write(fatSize);
@@ -208,7 +208,7 @@ public class KoboldGenes {
         writer.Write(dickThickness);
     }
 
-    public KoboldGenes Deserialize(BinaryReader reader) {
+    public void Load(BinaryReader reader) {
         maxEnergy = reader.ReadSingle();
         baseSize = reader.ReadSingle();
         fatSize = reader.ReadSingle();
@@ -223,7 +223,6 @@ public class KoboldGenes {
         dickEquip = reader.ReadByte();
         grabCount = reader.ReadByte();
         dickThickness = reader.ReadSingle();
-        return this;
     }
 
     public override string ToString() {

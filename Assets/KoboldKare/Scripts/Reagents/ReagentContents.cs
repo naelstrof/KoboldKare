@@ -13,7 +13,7 @@ public class Reagent {
     public float volume;
 }
 
-public class ReagentContents : IEnumerable<Reagent> {
+public class ReagentContents : IEnumerable<Reagent>, ISavable {
     public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
     public ReagentContentsChangedAction changed;
@@ -213,7 +213,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         return reagentContents;
     }
-    public void Serialize(BinaryWriter outStream) {
+    public void Save(BinaryWriter outStream) {
         int count = 0;
         foreach (KeyValuePair<short, Reagent> pair in contents) {
             if (pair.Value.volume <= 0f) {
@@ -232,7 +232,7 @@ public class ReagentContents : IEnumerable<Reagent> {
             outStream.Write(pair.Value.volume);
         }
     }
-    public void Deserialize(BinaryReader inStream) {
+    public void Load(BinaryReader inStream) {
         Clear();
         maxVolume = inStream.ReadSingle();
         int count = inStream.ReadInt32();

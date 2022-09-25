@@ -74,11 +74,13 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     public override void Save(BinaryWriter writer) {
         base.Save(writer);
         genes ??= new KoboldGenes().Randomize();
-        genes.Serialize(writer);
+        genes.Save(writer);
     }
 
     public override void Load(BinaryReader reader) {
         base.Load(reader);
-        genes = new KoboldGenes().Deserialize(reader);
+        KoboldGenes loadedGenes = new KoboldGenes();
+        loadedGenes.Load(reader);
+        genes = loadedGenes;
     }
 }

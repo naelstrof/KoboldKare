@@ -170,7 +170,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         writer.Write(transform.position.x);
         writer.Write(transform.position.y);
         writer.Write(transform.position.z);
-        GetGenes().Serialize(writer);
+        GetGenes().Save(writer);
     }
 
     public void Load(BinaryReader reader) {
@@ -179,7 +179,9 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         float y = reader.ReadSingle();
         float z = reader.ReadSingle();
         transform.position = new Vector3(x,y,z);
-        SetGenes(new KoboldGenes().Deserialize(reader));
+        KoboldGenes loadedGenes = new KoboldGenes();
+        loadedGenes.Load(reader);
+        SetGenes(loadedGenes);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

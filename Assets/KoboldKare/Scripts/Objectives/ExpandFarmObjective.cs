@@ -10,14 +10,11 @@ public class ExpandFarmObjective : ObjectiveWithSpaceBeam {
     private LocalizedString description;
 
     [SerializeField]
-    private SoilTile[] tiles;
-
-    [SerializeField]
     private MonoBehaviour thinker;
     
     public override void Register() {
         bool found = false;
-        foreach (var tile in tiles) {
+        foreach (var tile in Object.FindObjectsOfType<SoilTile>()) {
             if (!tile.GetDebris()) continue;
             spaceBeamTarget = tile.transform;
             found = true;

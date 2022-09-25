@@ -146,11 +146,11 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         writer.Write(velocity.x);
         writer.Write(velocity.y);
         writer.Write(velocity.z);
-        contents.Serialize(writer);
+        contents.Save(writer);
         bool hasGenes = GetGenes() != null;
         writer.Write(hasGenes);
         if (hasGenes) {
-            GetGenes().Serialize(writer);
+            GetGenes().Save(writer);
         }
         writer.Write(splashed);
     }
@@ -161,10 +161,12 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         float vz = reader.ReadSingle();
         velocity = new Vector3(vx, vy, vz);
         contents = new ReagentContents();
-        contents.Deserialize(reader);
+        contents.Load(reader);
         bool hasGenes = reader.ReadBoolean();
         if (hasGenes) {
-            SetGenes(new KoboldGenes().Deserialize(reader));
+            KoboldGenes loadedGenes = new KoboldGenes();
+            loadedGenes.Load(reader);
+            SetGenes(loadedGenes);
         }
         bool newSplashed = reader.ReadBoolean();
         if (newSplashed && !splashed) {

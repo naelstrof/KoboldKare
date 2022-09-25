@@ -599,28 +599,31 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void Save(BinaryWriter writer) {
-        GetGenes().Serialize(writer);
+        GetGenes().Save(writer);
+        writer.Write(arousal);
+        metabolizedContents.Save(writer);
+        consumedReagents.Save(writer);
+        bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == this;
+        writer.Write(isPlayerControlled);
     }
 
     public void Load(BinaryReader reader) {
-        SetGenes(new KoboldGenes().Deserialize(reader));
+        KoboldGenes loadedGenes = new KoboldGenes();
+        loadedGenes.Load(reader);
+        SetGenes(loadedGenes);
+        arousal = reader.ReadSingle();
+        metabolizedContents.Load(reader);
+        consumedReagents.Load(reader);
+        bool isPlayerControlled = reader.ReadBoolean();
+        if (isPlayerControlled) {
+            PhotonNetwork.LocalPlayer.TagObject = this;
+            GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
+            GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+        }
     }
 
     public float GetWorth() {
         KoboldGenes genes = GetGenes();
         return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
-    
-    // Misbehaving, somehow triggers on own butt.
-    /*[PunRPC]
-    public void PenetrateRPC(int viewID, int dickID, int penetrableID) {
-        PhotonView other = PhotonNetwork.GetPhotonView(viewID);
-        Penetrable[] penetrables = other.GetComponentsInChildren<Penetrable>();
-        // Only penetrate if we already aren't
-        if (!activeDicks[dickID].dick.TryGetPenetrable(out Penetrable checkPen) || checkPen != penetrables[penetrableID]) {
-            activeDicks[dickID].dick.Penetrate(penetrables[penetrableID]);
-        }
-    }*/
-    
-    
 }

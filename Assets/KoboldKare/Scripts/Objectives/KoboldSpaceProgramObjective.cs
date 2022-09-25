@@ -26,7 +26,9 @@ public class KoboldSpaceProgram : DragonMailObjective {
     public override void Unregister() {
         base.Unregister();
         Kobold.spawned -= OnKoboldSpawn;
-        logicOwner.StopCoroutine(routine);
+        if (routine != null) {
+            logicOwner.StopCoroutine(routine);
+        }
     }
 
     protected override void Advance(Vector3 position) {

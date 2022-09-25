@@ -478,7 +478,6 @@ MonoBehaviour:
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
-        volume: 1
     - rid: 8920608544167297025
       type: {class: PenetratorAudioPackListener, ns: , asm: Assembly-CSharp}
       data:
@@ -502,6 +501,9 @@ MonoBehaviour:
   jiggleRigs:
   - rootTransform: {fileID: 501530407804742356}
     jiggleSettings: {fileID: 11400000, guid: d081ebe3eba24584dbb41d9ebe1c8116, type: 2}
+    ignoredTransforms: []
+  - rootTransform: {fileID: 4718061006931670491}
+    jiggleSettings: {fileID: 11400000, guid: d943a7f4642c57f4b879d9bf693868ec, type: 2}
     ignoredTransforms: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0

@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour {
         if (pause) {
             //OnPause.Invoke();
         }
+        isPaused = pause;
         if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -69,7 +70,6 @@ public class GameManager : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        isPaused = pause;
         mainCanvas.SetActive(isPaused || SceneManager.GetActiveScene().name == "MainMenu");
 
         if (!PhotonNetwork.OfflineMode || SceneManager.GetActiveScene().name == "MainMenu") {

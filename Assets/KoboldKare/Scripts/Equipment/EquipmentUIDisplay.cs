@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Components;
@@ -38,7 +40,8 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
             et.triggers.Add(entry);
         }
     }
-    void Start() {
+
+    private void OnEnable() {
         UpdateDisplay(inventory.GetAllEquipment());
     }
 
@@ -99,6 +102,14 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
             et.triggers.Add(entry);
 
             spawnedUI.Add(ui);
+        }
+
+        if (spawnedUI.Count <= 0) return;
+        if (spawnedUI[0] == null) return;
+        foreach (Selectable selectable in spawnedUI[0].GetComponentsInChildren<Selectable>()) {
+            if (selectable == null || !selectable.IsInteractable()) continue;
+            selectable.Select();
+            break;
         }
     }
 }

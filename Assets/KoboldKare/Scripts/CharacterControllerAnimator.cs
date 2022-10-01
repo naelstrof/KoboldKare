@@ -231,7 +231,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (jumped != controller.jumped && !controller.jumped) {
             jumped = controller.jumped;
         }
-        Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.01f);
+        Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.000001f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
         //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
@@ -327,7 +327,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
         Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 45f;
+        float deflectionForgivenessDegrees = 20f;
         var forward = body.transform.forward;
         Vector3 cross = Vector3.Cross(forward, fdir);
         float angleDiff = Mathf.Max(Vector3.Angle(forward, fdir) - deflectionForgivenessDegrees, 0f);

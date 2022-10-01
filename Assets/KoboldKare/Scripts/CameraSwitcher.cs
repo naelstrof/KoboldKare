@@ -29,7 +29,7 @@ public class CameraSwitcher : MonoBehaviour {
     }
 
     public void Update() {
-        uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * 30f * ((int)mode+0.5f), Time.deltaTime*2f);
+        uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * (30f * ((int)mode+0.5f)), Time.deltaTime*2f);
     }
 
     public void OnSwitchCamera() {
@@ -51,6 +51,9 @@ public class CameraSwitcher : MonoBehaviour {
     }
 
     public void SwitchCamera(CameraMode cameraMode) {
+        if (Cursor.lockState != CursorLockMode.Locked) {
+            return;
+        }
         mode = cameraMode;
         firstperson.enabled = false;
         //firstperson.GetComponent<AudioListener>().enabled = false;

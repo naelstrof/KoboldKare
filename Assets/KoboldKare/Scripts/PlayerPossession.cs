@@ -56,10 +56,8 @@ public class PlayerPossession : MonoBehaviourPun {
     private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
-        if (equipmentUI.activeInHierarchy) {
-            equipmentUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+        if (GetEquipmentUI()) {
+            SetEquipmentUI(false);
             return;
         }
         GameManager.instance.Pause(!GameManager.instance.isPaused);
@@ -310,15 +308,28 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void OnGrabPushPull(InputAction.CallbackContext ctx) {
-        float delta = ctx.ReadValue<float>();
-        pGrabber.TryAdjustDistance(delta * 0.0005f);
+        if (ctx.control.device is Mouse) {
+            float delta = ctx.ReadValue<float>();
+            pGrabber.TryAdjustDistance(delta * 0.0005f);
+        } else {
+            float delta = ctx.ReadValue<float>();
+            pGrabber.TryAdjustDistance(delta * 0.25f);
+        }
     }
     
     public void OnCrouchAdjustInput(InputAction.CallbackContext ctx) {
-        float delta = ctx.ReadValue<float>();
-        if (!pGrabber.TryAdjustDistance(0f)) {
-            controller.SetInputCrouched(controller.GetInputCrouched() - delta * 0.0005f);
+        if (ctx.control.device is Mouse) {
+            float delta = ctx.ReadValue<float>();
+            if (!pGrabber.TryAdjustDistance(0f)) {
+                controller.SetInputCrouched(controller.GetInputCrouched() - delta * 0.0005f);
+            }
+        } else {
+            float target = ctx.ReadValue<float>();
+            if (!pGrabber.TryAdjustDistance(0f)) {
+                controller.SetInputCrouched(target);
+            }
         }
+
     }
 
     void OnActivateGrabInput(InputAction.CallbackContext ctx) {
@@ -392,18 +403,29 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
 
+    public void SetEquipmentUI(bool enable) {
+        if (!enable) {
+            equipmentUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        } else {
+            equipmentUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    public bool GetEquipmentUI() {
+        return equipmentUI.activeInHierarchy;
+    }
+
+    public void ToggleEquipmentUI() {
+        SetEquipmentUI(!GetEquipmentUI());
+    }
+
     public void OnViewStats( InputValue value ) {
         if (value.Get<float>() >= 0.5f) {
-            if (equipmentUI.activeInHierarchy) {
-                equipmentUI.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            } else {
-                equipmentUI.SetActive(true);
-                equipmentUI.GetComponentInChildren<Selectable>()?.Select();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
+            ToggleEquipmentUI();
         }
     }
 }

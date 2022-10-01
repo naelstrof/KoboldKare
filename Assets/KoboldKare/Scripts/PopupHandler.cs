@@ -83,6 +83,10 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
         SpawnPopup(name);
     }
 
+    public bool PopupIsActive() {
+        return popups.Count > 0;
+    }
+
     public void ClearPopup(Popup p) {
         if (p == null) {
             return;

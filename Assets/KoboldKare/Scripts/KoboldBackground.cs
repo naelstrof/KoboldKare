@@ -6,22 +6,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class KoboldBackground : MonoBehaviour {
-    public Animator animator;
-    public Image kobold;
-    public Image trees;
-    public Image mountain;
-    IEnumerator KoboldBackgroundRoutine() {
-        while(isActiveAndEnabled) {
-            yield return new WaitForSecondsRealtime(Random.Range(0f,8f));
-            animator.SetTrigger("Blink");
-        }
-    }
-    void OnEnable() {
-        StartCoroutine(KoboldBackgroundRoutine());
-    }
-    void OnDisable() {
-        StopAllCoroutines();
-    }
+    [SerializeField]
+    private Image kobold;
+    [SerializeField]
+    private Image trees;
+    [SerializeField]
+    private Image mountain;
     void Update() {
         RectTransform rk = kobold.GetComponent<RectTransform>();
         RectTransform tk = trees.GetComponent<RectTransform>();

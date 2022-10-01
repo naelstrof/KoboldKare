@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour {
     private GameObject MainViewTab;
     [SerializeField]
     private GameObject CreditsTab;
+    [SerializeField]
+    private GameObject SaveTab;
 
     public static Coroutine StartCoroutineStatic(IEnumerator routine) {
         if (instance == null) {
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour {
             MultiplayerTab.gameObject.SetActive(false);
             OptionsTab.gameObject.SetActive(false);
             CreditsTab.gameObject.SetActive(false);
+            SaveTab.gameObject.SetActive(false);
             MainViewTab.gameObject.SetActive(true);
         }
         if (pause) {

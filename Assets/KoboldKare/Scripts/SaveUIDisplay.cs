@@ -33,6 +33,7 @@ public class SaveUIDisplay : MonoBehaviour {
                 newSaveItem.transform.Find("LoadDeletePanel").transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => { RefreshUI(SaveManager.RemoveSave(save.fileName)); });
                 saveList.Add(newSaveItem);
             }
+            saveList[0].transform.Find("LoadDeletePanel").transform.GetChild(0).GetComponent<Button>().Select();
         }
         else{ // If we don't have any saves, show the text/image that tells user we ain't got none.
             noSavesText.SetActive(true);

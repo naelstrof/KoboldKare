@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class StealFocus : MonoBehaviour{
     void Start(){
-        StartCoroutine(waitABit());
+        StartCoroutine(WaitABit());
     }
 
-    IEnumerator waitABit(){
+    IEnumerator WaitABit(){
         yield return new WaitForSeconds(0.1f);
         GetComponent<Selectable>().Select();
     }

@@ -6,6 +6,7 @@ using KoboldKare;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using Steamworks;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.UI;
 using Cursor = UnityEngine.Cursor;
@@ -399,11 +400,9 @@ public class PlayerPossession : MonoBehaviourPun {
             inputModule.cancel.action.performed += OnCancelTextSubmit;
             if (SteamManager.Initialized) {
                 RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
-                bool shown = SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
-                if (shown) {
-                    StartCoroutine(nameof(MaintainFocus));
-                }
+                SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
             }
+            StartCoroutine(nameof(MaintainFocus));
             chatInput.Select();
             chatInput.onDeselect.AddListener(OnTextDeselect);
         } else {
@@ -413,10 +412,10 @@ public class PlayerPossession : MonoBehaviourPun {
 
     IEnumerator MaintainFocus() {
         yield return new WaitForSecondsRealtime(0.1f);
-        while (chatGroup.interactable && chatGroup.alpha > 0f) {
+        while (chatGroup.interactable) {
             yield return new WaitForSecondsRealtime(0.1f);
-            if (!chatInput.isFocused) {
-                chatInput.Select();
+            if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
+                EventSystem.current.SetSelectedGameObject(chatInput.gameObject);
             }
         }
     }

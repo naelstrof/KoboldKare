@@ -74,14 +74,21 @@
       "hash": "4aed4d3917396098f724c755208e857dbdecd942"
     },
     "com.naelstrof.unityscriptablesettings": {
-      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.3.4",
+      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.3.5",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.localization": "1.0.4",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "c7fd0607729dab7c12b40fd4042b9f4df042e374"
+      "hash": "95badab911c608170ab0c7d935d61ec5c7833c03"
+    },
+    "com.rlabrecque.steamworks.net": {
+      "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "53d17180582752d7d8c9a757742da3a52dfc33d4"
     },
     "com.textus-games.serialized-reference-ui": {
       "version": "https://github.com/TextusGames/UnitySerializedReferenceUI.git",

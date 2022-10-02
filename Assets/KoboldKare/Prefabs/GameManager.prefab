@@ -4115,6 +4115,7 @@ GameObject:
   - component: {fileID: 1543806161786563762}
   - component: {fileID: 8455759053451294651}
   - component: {fileID: 8731534084199490852}
+  - component: {fileID: 3783648723776739261}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4209,6 +4210,18 @@ MonoBehaviour:
     type: 3}
   titles: []
   targetGroup: {fileID: 11400000, guid: 525c4fe63b8a78246b988e367600049d, type: 2}
+--- !u!114 &3783648723776739261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021268913745193181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315fe52e5217a594fb7091ca789e998d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2121586117410194445
 GameObject:
   m_ObjectHideFlags: 0
@@ -4835,6 +4848,7 @@ GameObject:
   - component: {fileID: 6930496059253054202}
   - component: {fileID: 521774479653243170}
   - component: {fileID: 8208458332313565591}
+  - component: {fileID: 3849953476133753661}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -4929,6 +4943,18 @@ MonoBehaviour:
     type: 3}
   titles: []
   targetGroup: {fileID: 11400000, guid: 6489b155b99595a46a9b437ff1f744c1, type: 2}
+--- !u!114 &3849953476133753661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370143779477816174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315fe52e5217a594fb7091ca789e998d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2412000816819818186
 GameObject:
   m_ObjectHideFlags: 0
@@ -5118,6 +5144,7 @@ GameObject:
   - component: {fileID: 3115949828484451767}
   - component: {fileID: 5407209432408413886}
   - component: {fileID: 8702938269137144035}
+  - component: {fileID: 733045409445853792}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -5212,6 +5239,18 @@ MonoBehaviour:
     type: 3}
   titles: []
   targetGroup: {fileID: 11400000, guid: 90ed0fa44a6db0d4fa349ef811bad85a, type: 2}
+--- !u!114 &733045409445853792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476519118284245464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315fe52e5217a594fb7091ca789e998d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2624399904250576476
 GameObject:
   m_ObjectHideFlags: 0
@@ -12104,7 +12143,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.55
+  m_fontSize: 26.75
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15422,6 +15461,7 @@ GameObject:
   - component: {fileID: 6489079882250573063}
   - component: {fileID: 7631385928551424154}
   - component: {fileID: 1571778077590375759}
+  - component: {fileID: 4483520804052400930}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16127,6 +16167,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigate: {fileID: 88792249404920804, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
+--- !u!114 &4483520804052400930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561188790633409797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435e90706a8d08e468dd3898d92275d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7586070052874400603
 GameObject:
   m_ObjectHideFlags: 0
@@ -18469,6 +18521,7 @@ GameObject:
   - component: {fileID: 3948340636546240079}
   - component: {fileID: 4405094259039304940}
   - component: {fileID: 1034675674897954524}
+  - component: {fileID: 4888697743987532821}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -18563,6 +18616,18 @@ MonoBehaviour:
     type: 3}
   titles: []
   targetGroup: {fileID: 11400000, guid: a6378d42c7f8c054b8a4bd0a2d575134, type: 2}
+--- !u!114 &4888697743987532821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040330176160596616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315fe52e5217a594fb7091ca789e998d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8040330176281352349
 GameObject:
   m_ObjectHideFlags: 0
@@ -24745,7 +24810,7 @@ MonoBehaviour:
 
     Jack
 
-    BlueOrca
+    BigCozyOrca
 
     Phoneme
 

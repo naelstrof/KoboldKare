@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 3740611849521824406}
   - component: {fileID: 3219526858835740884}
   - component: {fileID: 3800686077724775146}
+  - component: {fileID: 4748180389576187174}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -811,6 +812,19 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &4748180389576187174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577272588809731207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b14b57256715a4c871f96e0e014dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 0
 --- !u!1 &1794044965986466051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4117,8 +4131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 310.75, y: 0}
-  m_SizeDelta: {x: 621.5, y: 0}
+  m_AnchoredPosition: {x: 345, y: 0}
+  m_SizeDelta: {x: 690, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &273440122327004829
 MonoBehaviour:

@@ -417,6 +417,9 @@ public class PlayerPossession : MonoBehaviourPun {
             if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
                 EventSystem.current.SetSelectedGameObject(chatInput.gameObject);
             }
+            if (!chatInput.IsActive()) {
+                chatInput.ActivateInputField();
+            }
         }
     }
 

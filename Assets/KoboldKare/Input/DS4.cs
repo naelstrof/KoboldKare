@@ -14,6 +14,9 @@ public class DS4 : MonoBehaviour {
         if (pad == null) {
             return Quaternion.identity;
         }
+        if (pad.name != "DualShock4GamepadHID") {
+            return Quaternion.identity;
+        }
         float x = ProcessRawData(pad.GetChildControl<ButtonControl>("gyro X 14").ReadValue()) * scale;
         float y = ProcessRawData(pad.GetChildControl<ButtonControl>("gyro Y 16").ReadValue()) * scale;
         float z = -ProcessRawData(pad.GetChildControl<ButtonControl>("gyro Z 18").ReadValue()) * scale;

@@ -399,7 +399,10 @@ public class PlayerPossession : MonoBehaviourPun {
             inputModule.cancel.action.performed += OnCancelTextSubmit;
             if (SteamManager.Initialized) {
                 RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
-                SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
+                bool shown = SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
+                if (shown) {
+                    StartCoroutine(nameof(MaintainFocus));
+                }
             }
             chatInput.Select();
             chatInput.onDeselect.AddListener(OnTextDeselect);
@@ -407,10 +410,20 @@ public class PlayerPossession : MonoBehaviourPun {
             OnTextSubmit(chatInput.text);
         }
     }
+
+    IEnumerator MaintainFocus() {
+        yield return new WaitForSecondsRealtime(0.1f);
+        while (chatGroup.interactable && chatGroup.alpha > 0f) {
+            yield return new WaitForSecondsRealtime(0.1f);
+            if (!chatInput.isFocused) {
+                chatInput.Select();
+            }
+        }
+    }
+
     IEnumerator WaitAndThenSubscribe() {
         yield return new WaitForSecondsRealtime(0.1f);
         chatInput.onSubmit.AddListener(OnTextSubmit);
-        chatInput.Select();
     }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {

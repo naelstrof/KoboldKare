@@ -408,7 +408,7 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
     IEnumerator WaitAndThenSubscribe() {
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSecondsRealtime(0.1f);
         chatInput.onSubmit.AddListener(OnTextSubmit);
     }
     public void OnRagdoll( InputValue value ) {

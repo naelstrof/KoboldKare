@@ -821,7 +821,7 @@
                 {
                     "name": "",
                     "id": "3e8830ff-bd5b-4e06-9c7e-1cd269ce1f0e",
-                    "path": "",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -920,7 +920,7 @@
                 {
                     "name": "",
                     "id": "a0a84b87-e624-48f8-b3f1-a38b6b466b8d",
-                    "path": "<Keyboard>/f5",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

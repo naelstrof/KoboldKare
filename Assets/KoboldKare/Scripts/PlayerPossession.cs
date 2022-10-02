@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using Steamworks;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.UI;
 using Cursor = UnityEngine.Cursor;
@@ -93,6 +95,9 @@ public class PlayerPossession : MonoBehaviourPun {
             kobold.SendChat(t);
         }
         inputModule.cancel.action.performed -= OnCancelTextSubmit;
+        if (SteamManager.Initialized) {
+            SteamUtils.DismissFloatingGamepadTextInput();
+        }
     }
     private void Start() {
         inputModule = FindObjectOfType<InputSystemUIInputModule>();
@@ -177,7 +182,16 @@ public class PlayerPossession : MonoBehaviourPun {
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
 
         //pGrabber.inputRotation = rotate;
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
+        Quaternion gyro = DS4.GetRotation(3000);
+        Vector3 rawRotation = gyro.eulerAngles;
+        if (controls.actions["GyroEnable"].ReadValue<float>() > 0.5f) {
+            rawRotation = new Vector3(Mathf.DeltaAngle(0, rawRotation.x), Mathf.DeltaAngle(0, rawRotation.y),
+                Mathf.DeltaAngle(0, rawRotation.z));
+        } else {
+            rawRotation = Vector3.zero;
+        }
+        Vector2 gyroDelta = new Vector2(-rawRotation.z + rawRotation.y, -rawRotation.x);
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue() + gyroDelta + controls.actions["Look"].ReadValue<Vector2>() * 40f;
         if (trackingHip) {
             characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
@@ -385,6 +399,10 @@ public class PlayerPossession : MonoBehaviourPun {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inputModule.cancel.action.performed += OnCancelTextSubmit;
+            if (SteamManager.Initialized) {
+                RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
+                SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
+            }
         } else {
             OnTextSubmit(chatInput.text);
         }

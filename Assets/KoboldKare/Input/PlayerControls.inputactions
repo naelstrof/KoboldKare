@@ -256,6 +256,15 @@
                     "processors": "",
                     "interactions": "MultiTap",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GyroEnable",
+                    "type": "Button",
+                    "id": "a0e1daf4-0f59-49b5-878f-be5463f6e2e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -905,6 +914,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ResetHip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0a84b87-e624-48f8-b3f1-a38b6b466b8d",
+                    "path": "<Keyboard>/rightBracket",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GyroEnable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b7b0a3c-7759-4a3c-bd2e-0ab7263ca767",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GyroEnable",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

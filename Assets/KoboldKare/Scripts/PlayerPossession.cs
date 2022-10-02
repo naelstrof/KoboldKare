@@ -385,7 +385,6 @@ public class PlayerPossession : MonoBehaviourPun {
             chatDisplay.ForceVisible(true);
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
-            chatInput.Select();
             if (inputRagdolled) {
                 kobold.ragdoller.PopRagdoll();
             }
@@ -395,7 +394,6 @@ public class PlayerPossession : MonoBehaviourPun {
             StartCoroutine(nameof(WaitAndThenSubscribe));
             
             controls.DeactivateInput();
-            chatInput.onDeselect.AddListener(OnTextDeselect);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inputModule.cancel.action.performed += OnCancelTextSubmit;
@@ -403,6 +401,8 @@ public class PlayerPossession : MonoBehaviourPun {
                 RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
                 SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
             }
+            chatInput.Select();
+            chatInput.onDeselect.AddListener(OnTextDeselect);
         } else {
             OnTextSubmit(chatInput.text);
         }
@@ -410,6 +410,7 @@ public class PlayerPossession : MonoBehaviourPun {
     IEnumerator WaitAndThenSubscribe() {
         yield return new WaitForSecondsRealtime(0.1f);
         chatInput.onSubmit.AddListener(OnTextSubmit);
+        chatInput.Select();
     }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {

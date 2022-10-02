@@ -133,7 +133,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (station.info.user != null) {
             station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
         }
-        StartCoroutine(AnimationRoutine());
+
+        if (isActiveAndEnabled) {
+            StartCoroutine(AnimationRoutine());
+        } else {
+            GameManager.instance.StartCoroutine(AnimationRoutine());
+        }
     }
 
     private void Start() {
@@ -369,9 +374,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
              currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {
             PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
             IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
-            if (animating) {
-                StopAnimation();
-            }
             BeginAnimation(set, set.GetAnimationStations()[animationID]);
         }
     }

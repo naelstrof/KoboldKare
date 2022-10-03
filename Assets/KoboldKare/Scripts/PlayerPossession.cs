@@ -127,6 +127,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["HipControl"].performed += OnActivateHipInput;
         controls.actions["HipControl"].canceled += OnCanceledHipInput;
         controls.actions["ResetHip"].performed += OnResetHipInput;
+        controls.actions["Chat"].performed += OnChatInput;
     }
 
     private void OnDisable() {
@@ -148,6 +149,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["HipControl"].performed -= OnActivateHipInput;
         controls.actions["HipControl"].canceled -= OnCanceledHipInput;
         controls.actions["ResetHip"].performed -= OnResetHipInput;
+        controls.actions["Chat"].performed -= OnChatInput;
     }
 
     private void OnDestroy() {
@@ -377,19 +379,16 @@ public class PlayerPossession : MonoBehaviourPun {
     public void OnBack(InputAction.CallbackContext context) {
         OnTextDeselect("");
     }
-    public void OnChat() {
+    public void OnChatInput(InputAction.CallbackContext context) {
         if (!enabled || GameManager.instance.isPaused) {
             return;
         }
         if (!chatGroup.interactable) {
             StartCoroutine(nameof(MaintainFocus));
-            chatInput.Select();
             chatInput.enabled = true;
             chatDisplay.ForceVisible(true);
-            chatInput.Select();
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
-            chatInput.Select();
             if (inputRagdolled) {
                 kobold.ragdoller.PopRagdoll();
             }
@@ -398,9 +397,7 @@ public class PlayerPossession : MonoBehaviourPun {
             StopCoroutine(nameof(WaitAndThenSubscribe));
             StartCoroutine(nameof(WaitAndThenSubscribe));
             
-            chatInput.Select();
             controls.DeactivateInput();
-            chatInput.Select();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             inputModule.cancel.action.performed += OnCancelTextSubmit;

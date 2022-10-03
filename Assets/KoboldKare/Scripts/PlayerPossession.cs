@@ -96,6 +96,7 @@ public class PlayerPossession : MonoBehaviourPun {
             kobold.SendChat(t);
         }
         inputModule.cancel.action.performed -= OnCancelTextSubmit;
+        StopCoroutine(nameof(MaintainFocus));
         if (SteamManager.Initialized) {
             SteamUtils.DismissFloatingGamepadTextInput();
         }
@@ -380,7 +381,7 @@ public class PlayerPossession : MonoBehaviourPun {
         OnTextDeselect("");
     }
     public void OnChatInput(InputAction.CallbackContext context) {
-        if (!enabled || GameManager.instance.isPaused) {
+        if (GameManager.instance.isPaused) {
             return;
         }
         if (!chatGroup.interactable) {
@@ -414,7 +415,7 @@ public class PlayerPossession : MonoBehaviourPun {
 
     IEnumerator MaintainFocus() {
         yield return new WaitForSecondsRealtime(0.1f);
-        while (chatGroup.interactable) {
+        while (isActiveAndEnabled) {
             yield return new WaitForSecondsRealtime(0.1f);
             if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
                 EventSystem.current.SetSelectedGameObject(chatInput.gameObject);

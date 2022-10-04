@@ -190,6 +190,9 @@ public class DickInfo : MonoBehaviour {
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
+                        if (attachedKobold == null) {
+                            return;
+                        }
                         if (attachedKobold.photonView.IsMine) {
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();

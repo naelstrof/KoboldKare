@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CommandTextDisplay : MonoBehaviour {
     [SerializeField]
@@ -50,6 +51,7 @@ public class CommandTextDisplay : MonoBehaviour {
     }
 
     IEnumerator WaitThenRemove() {
+        group.interactable = false;
         yield return waitForSeconds;
         yield return new WaitUntil(() => !forceVisible);
         float startTime = Time.time;

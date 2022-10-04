@@ -19,6 +19,9 @@ public class NavigateSelectSomething : MonoBehaviour {
     }
 
     void OnPerformed(InputAction.CallbackContext ctx) {
+        if (Cursor.lockState == CursorLockMode.Locked) {
+            return;
+        }
         if (EventSystem.current.currentSelectedGameObject == null || !EventSystem.current.currentSelectedGameObject.activeInHierarchy || !EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>().IsInteractable()) {
             foreach (Selectable selectable in FindObjectsOfType<Selectable>()) {
                 if (selectable.IsInteractable() && selectable.isActiveAndEnabled) {

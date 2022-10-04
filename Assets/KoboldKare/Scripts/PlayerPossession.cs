@@ -132,6 +132,7 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     private void OnDisable() {
+        OnTextSubmit("");
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(false);
         }
@@ -386,6 +387,7 @@ public class PlayerPossession : MonoBehaviourPun {
         }
         if (!chatGroup.interactable) {
             StartCoroutine(nameof(MaintainFocus));
+
             chatInput.enabled = true;
             chatDisplay.ForceVisible(true);
             chatGroup.interactable = true;
@@ -420,9 +422,7 @@ public class PlayerPossession : MonoBehaviourPun {
             if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
                 EventSystem.current.SetSelectedGameObject(chatInput.gameObject);
             }
-            if (!chatInput.IsActive()) {
-                chatInput.ActivateInputField();
-            }
+            chatInput.ActivateInputField();
         }
     }
 

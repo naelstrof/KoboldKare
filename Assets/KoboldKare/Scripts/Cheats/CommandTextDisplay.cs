@@ -37,8 +37,13 @@ public class CommandTextDisplay : MonoBehaviour {
             group.interactable = true;
             group.alpha = 1f;
         } else {
-            StopAllCoroutines();
-            StartCoroutine(WaitThenRemove());
+            if (isActiveAndEnabled) {
+                StopAllCoroutines();
+                StartCoroutine(WaitThenRemove());
+            } else {
+                group.interactable = false;
+                group.alpha = 0f;
+            }
         }
 
         forceVisible = visible;

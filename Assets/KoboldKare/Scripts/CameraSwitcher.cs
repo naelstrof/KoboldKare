@@ -9,6 +9,8 @@ public class CameraSwitcher : MonoBehaviour {
     public Camera thirdperson;
     public Camera freecam;
     public Transform uiSlider;
+
+    private bool initialized = false;
     //public GameObject UIElements;
     public PlayerPossession possession;
     public enum CameraMode {
@@ -19,6 +21,7 @@ public class CameraSwitcher : MonoBehaviour {
     }
     public CameraMode mode = CameraMode.FirstPerson;
     public void OnEnable() {
+        initialized = false;
         SwitchCamera(CameraMode.FirstPerson);
     }
 
@@ -51,9 +54,11 @@ public class CameraSwitcher : MonoBehaviour {
     }
 
     public void SwitchCamera(CameraMode cameraMode) {
-        if (Cursor.lockState != CursorLockMode.Locked) {
+        if (Cursor.lockState != CursorLockMode.Locked && initialized) {
             return;
         }
+
+        initialized = true;
         mode = cameraMode;
         firstperson.enabled = false;
         //firstperson.GetComponent<AudioListener>().enabled = false;

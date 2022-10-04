@@ -33,11 +33,13 @@ public class SaveUIDisplay : MonoBehaviour {
                 newSaveItem.transform.Find("LoadDeletePanel").transform.GetChild(1).GetComponent<Button>().onClick.AddListener(() => { RefreshUI(SaveManager.RemoveSave(save.fileName)); });
                 saveList.Add(newSaveItem);
             }
-            Transform find = saveList[0].transform.Find("LoadDeletePanel");
-            if (find != null) {
-                Transform child = find.GetChild(0);
-                if (child != null) {
-                    child.GetComponent<Button>().Select();
+            if (saveList[0] != null) {
+                Transform find = saveList[0].transform.Find("LoadDeletePanel");
+                if (find != null) {
+                    Transform child = find.GetChild(0);
+                    if (child != null) {
+                        child.GetComponent<Button>().Select();
+                    }
                 }
             }
         }

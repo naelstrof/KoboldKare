@@ -417,7 +417,7 @@ public class PlayerPossession : MonoBehaviourPun {
 
     IEnumerator MaintainFocus() {
         yield return new WaitForSecondsRealtime(0.1f);
-        while (isActiveAndEnabled) {
+        while (chatGroup.interactable && isActiveAndEnabled) {
             yield return new WaitForSecondsRealtime(0.1f);
             if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
                 EventSystem.current.SetSelectedGameObject(chatInput.gameObject);

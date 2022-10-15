@@ -112,14 +112,18 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         bool hasObjective = currentObjective != null;
         writer.Write(hasObjective);
         writer.Write(currentObjectiveIndex);
-        objectives[currentObjectiveIndex].Save(writer);
+        if (hasObjective) {
+            objectives[currentObjectiveIndex].Save(writer);
+        }
     }
 
     public void Load(BinaryReader reader) {
         bool hasObjective = reader.ReadBoolean();
         currentObjectiveIndex = reader.ReadInt32();
         SwitchToObjective(hasObjective ? GetCurrentObjective() : null);
-        objectives[currentObjectiveIndex].Load(reader);
+        if (hasObjective) {
+            objectives[currentObjectiveIndex].Load(reader);
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

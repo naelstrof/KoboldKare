@@ -388,12 +388,10 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     }
 
     public void Save(BinaryWriter writer) {
-        writer.Write(inputJump);
         writer.Write(targetCrouched);
     }
 
     public void Load(BinaryReader reader) {
-        inputJump = reader.ReadBoolean();
         targetCrouched = reader.ReadSingle();
     }
 

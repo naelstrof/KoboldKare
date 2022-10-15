@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +85,10 @@ public class PlayerPossession : MonoBehaviourPun {
         chatGroup.alpha = 0f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        controls.ActivateInput();
+        if (isActiveAndEnabled) {
+            controls.ActivateInput();
+        }
+
         chatInput.onSubmit.RemoveListener(OnTextSubmit);
         chatInput.onDeselect.RemoveListener(OnTextDeselect);
         chatScrollView.normalizedPosition = new Vector2(0, 0);
@@ -111,6 +113,10 @@ public class PlayerPossession : MonoBehaviourPun {
     private void OnEnable() {
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(true);
+        }
+
+        if (controls == null) {
+            controls = GetComponent<PlayerInput>();
         }
 
         controls.actions["SwitchGrabMode"].performed += OnShiftMode;

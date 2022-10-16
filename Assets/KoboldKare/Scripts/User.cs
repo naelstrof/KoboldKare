@@ -25,7 +25,6 @@ public class User : MonoBehaviourPun {
     public UnityEvent OnUse;
     public Sprite unknownUsableSprite;
     private HashSet<Tuple<GenericUsable,GameObject>> possibleUsables = new HashSet<Tuple<GenericUsable,GameObject>>();
-    private HashSet<Tuple<GenericUsable,GameObject>> removeLater = new HashSet<Tuple<GenericUsable,GameObject>>();
     private GenericUsable closestUsable = null;
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
@@ -45,18 +44,9 @@ public class User : MonoBehaviourPun {
             possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
         }
     }
-    private void OnTriggerExit(Collider other) {
-        GenericUsable g = other.GetComponentInParent<GenericUsable>();
-        if (g!=null) {
-            removeLater.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
-            //possibleUsables.RemoveWhere(o=>o.Item1 == g);
-        }
-    }
-
-    void FixedUpdate() {
-        possibleUsables.ExceptWith(removeLater);
-        removeLater.Clear();
+    void Update() {
         SortGrabbables();
+        possibleUsables.Clear();
     }
 
     void SortGrabbables() {
@@ -74,13 +64,14 @@ public class User : MonoBehaviourPun {
             }
         }
         closestUsable = closest;
-        if (closestUsable != null ) {
+        if (closestUsable != null) {
             if (closestUsable.GetSprite(kobold) == null) {
                 OnEnterUsable.Invoke(unknownUsableSprite);
             } else {
                 OnEnterUsable.Invoke(closestUsable.GetSprite(kobold));
             }
         } else {
+            closestUsable = null;
             OnExitUsable.Invoke();
         }
     }

@@ -25,6 +25,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     public event SwitchAction switched;
     
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
+    private bool growing;
 
     void Start() {
         container.OnFilled.AddListener(OnFilled);
@@ -35,6 +36,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     }
 
     IEnumerator GrowRoutine() {
+        growing = true;
         yield return new WaitForSeconds(30f);
         if (!photonView.IsMine) {
             yield break;
@@ -46,6 +48,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.All, container.volume);
         photonView.RPC(nameof(SwitchToRPC), RpcTarget.AllBufferedViaServer,
             PlantDatabase.GetID(plant.possibleNextGenerations[Random.Range(0, plant.possibleNextGenerations.Length)]));
+        growing = false;
     }
 
     void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
@@ -171,6 +174,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         writer.Write(transform.position.y);
         writer.Write(transform.position.z);
         GetGenes().Save(writer);
+        writer.Write(growing);
     }
 
     public void Load(BinaryReader reader) {
@@ -182,6 +186,19 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         KoboldGenes loadedGenes = new KoboldGenes();
         loadedGenes.Load(reader);
         SetGenes(loadedGenes);
+        // Growing.
+        if (reader.ReadBoolean()) {
+            foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
+                renderer.material.SetFloat("_BounceAmount", 1f);
+                StartCoroutine(DarkenMaterial(renderer.material));
+            }
+            wateredEffect.SendEvent("Play");
+            audioSource.Play();
+            effect.gameObject.SetActive(false);
+            effect.gameObject.SetActive(true);
+            StopCoroutine(nameof(GrowRoutine));
+            StartCoroutine(nameof(GrowRoutine));
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

@@ -69,7 +69,8 @@ public class DickInfo : MonoBehaviour {
             attachedKobold.PumpUpDick(Mathf.Abs(movementAmount*0.15f));
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
-            dickSet.inside = depthDist != 0f && depthDist < penetrableMem.GetSplinePath().arcLength;
+            ClipListener clipListener = (ClipListener)penetrableMem.listeners.Find((o) => o is ClipListener);
+            dickSet.inside = depthDist != 0f && (depthDist < penetrableMem.GetSplinePath().arcLength || (clipListener != null && !clipListener.GetAllowForAllTheWayThrough()));
             dickSet.overpenetrated = depthDist >= penetrableMem.GetSplinePath().arcLength;
         }
     }

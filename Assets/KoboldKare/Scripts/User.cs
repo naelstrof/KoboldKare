@@ -44,7 +44,7 @@ public class User : MonoBehaviourPun {
             possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
         }
     }
-    void Update() {
+    void FixedUpdate() {
         SortGrabbables();
         possibleUsables.Clear();
     }

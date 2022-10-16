@@ -109,6 +109,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public void Save(BinaryWriter writer) {
+        writer.Write(stars);
         bool hasObjective = currentObjective != null;
         writer.Write(hasObjective);
         writer.Write(currentObjectiveIndex);
@@ -118,9 +119,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public void Load(BinaryReader reader) {
+        stars = reader.ReadInt32();
         bool hasObjective = reader.ReadBoolean();
         currentObjectiveIndex = reader.ReadInt32();
-        SwitchToObjective(hasObjective ? GetCurrentObjective() : null);
+        SwitchToObjective(hasObjective ? objectives[currentObjectiveIndex] : null);
         if (hasObjective) {
             objectives[currentObjectiveIndex].Load(reader);
         }

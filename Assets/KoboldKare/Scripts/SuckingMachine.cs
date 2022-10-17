@@ -1,15 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using KoboldKare;
-using Naelstrof.Mozzarella;
 using Photon.Pun;
-using SkinnedMeshDecals;
 using UnityEngine;
-using UnityEngine.VFX;
-using Vilar.AnimationStation;
 
 public class SuckingMachine : UsableMachine {
     [SerializeField]
@@ -34,6 +26,10 @@ public class SuckingMachine : UsableMachine {
     protected virtual IEnumerator OnSwallowed(int viewID) {
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         yield return new WaitForSeconds(0.1f);
+        // Possible that it has already been removed.
+        if (view == null) {
+            yield break;
+        }
         PhotonNetwork.Destroy(view.gameObject);
     }
 

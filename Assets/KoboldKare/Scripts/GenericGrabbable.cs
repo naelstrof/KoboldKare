@@ -35,6 +35,9 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
 
     public void Start() {
         foreach(var pair in rendererMaterialPairs) {
+            if (pair == null || pair.renderer == null) {
+                continue;
+            }
             pair.defaultMaterial = pair.renderer.material;
         }
         PlayAreaEnforcer.AddTrackedObject(photonView);

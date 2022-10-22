@@ -1,30 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityScriptableSettings;
 
 public class Follower : MonoBehaviour {
     public Transform target;
-    //public Transform targetTarget;
     public float distance = 0.12f;
-    private Kobold internalKobold;
-    public Kobold kobold {
-        get {
-            if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
-            }
-            return internalKobold;
-        }
-    }
-    bool ragdoll = false;
-    void Start() {
-        kobold.ragdoller.RagdollEvent += RagdollEvent;
+    private Kobold kobold;
+    [SerializeField]
+    private SettingInt motionSicknessReducer;
+    private Vector3 startingPosition;
+    bool ragdoll;
+    
+    void Awake() {
+        kobold = GetComponentInParent<Kobold>();
+        startingPosition = transform.localPosition;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
+        motionSicknessReducer.changed += OnMotionSicknessReducerChanged;
+        OnMotionSicknessReducerChanged(motionSicknessReducer.GetValue());
+        kobold.ragdoller.RagdollEvent += RagdollEvent;
     }
     void OnDestroy() {
         if (kobold !=null) {
             kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
     }
+
+    void OnMotionSicknessReducerChanged(int value) {
+        enabled = value == 0;
+        transform.localPosition = startingPosition;
+    }
+
     void LateUpdate() {
         transform.position -= transform.up*distance;
         Vector3 a = transform.localPosition;
@@ -32,7 +38,7 @@ public class Follower : MonoBehaviour {
         if (ragdoll) {
             transform.localPosition = b;
         } else {
-            transform.localPosition = Vector3.MoveTowards(a, b, Vector3.Distance(a,b)*Time.deltaTime*5f);
+            transform.localPosition = Vector3.MoveTowards(a, b, Time.deltaTime*5f);
         }
         transform.position += transform.up*distance;
     }
@@ -40,5 +46,11 @@ public class Follower : MonoBehaviour {
     public void RagdollEvent(bool ragdolled) {
         ragdoll = ragdolled;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
+        if (ragdolled && !enabled) {
+            enabled = true;
+        } else if (!ragdolled && motionSicknessReducer.GetValue() == 1) {
+            transform.localPosition = startingPosition;
+            enabled = false;
+        }
     }
 }

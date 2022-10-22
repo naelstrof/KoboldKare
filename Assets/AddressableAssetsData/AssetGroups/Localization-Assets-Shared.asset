@@ -79,6 +79,35 @@ MonoBehaviour:
     - Locale-uk
     - Locale-vi
     - Locale
+  - m_GUID: d1610599218d48042bffac0712c379a6
+    m_Address: XboxOne_Dpad
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ar
+    - Locale-bg
+    - Locale-zh-Hans
+    - Locale-cs
+    - Locale-da
+    - Locale-nl
+    - Locale-en
+    - Locale-fi
+    - Locale-fr
+    - Locale-de
+    - Locale-el
+    - Locale-hu
+    - Locale-it
+    - Locale-ja
+    - Locale-ko
+    - Locale-no
+    - Locale-pl
+    - Locale-pt
+    - Locale-ro
+    - Locale-rm
+    - Locale-ru
+    - Locale-es
+    - Locale-th
+    - Locale-uk
+    - Locale-vi
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

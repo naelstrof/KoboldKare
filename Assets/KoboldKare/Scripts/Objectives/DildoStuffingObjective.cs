@@ -73,6 +73,9 @@ public class DildoStuffingObjective : ObjectiveWithSpaceBeam {
 
     public override string GetTitle() {
         int maxInsertedDildos = 0;
+        if (penetrationMemory == null) {
+            penetrationMemory = new Dictionary<Kobold, HashSet<Dildo>>();
+        }
         foreach (var pair in penetrationMemory) {
             maxInsertedDildos = Mathf.Max(pair.Value.Count, maxInsertedDildos);
         }

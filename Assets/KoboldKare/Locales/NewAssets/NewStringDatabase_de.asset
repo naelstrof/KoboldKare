@@ -800,12 +800,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Verkaufe einen Makrokobold
+    m_Localized: Big McLarghuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Ein Kobold so gro\xDF, dass sie \xFCber ein Haus schauen k\xF6nnen,
-      geheimes Rezept ..."
+    m_Localized: "Machen Sie einen Kobold so gro\xDF, dass sie \xFCber ein Haus schauen
+      k\xF6nnen, geheimes Rezept ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1209,61 +1209,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Mahlen Sie mehr Obst!
+    m_Localized: Saft es auf den Weg!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Nicht genug Fr\xFCchte vom letzten Mal, brauchen mehr."
+    m_Localized: "Ich m\xF6chte viele verschiedene Arten von Kobold, und das bedeutet,
+      dass Sie mehr Fruchts\xE4fte ben\xF6tigen. Mahlen Sie mehr Obst!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Gro\xDFe Eier"
+    m_Localized: "Ein Dutzend gro\xDFe, vielleicht mehr."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "M\xFCssen Sie mehr gro\xDFe Eier legen, der letzte war nicht genug."
+    m_Localized: "Ich m\xF6chte mehr gro\xDFe Kobold -Eier sehen, kommen Sie darauf!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Fette Kobold -Rasse
+    m_Localized: 'Rasse: Bauchzeit!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Wir brauchen eine fette Kobold -Rasse, um als Papiergewichte und
-      T\xFCrstopps zu fungieren."
+    m_Localized: "Ich m\xF6chte viele fette Kobolds, sie sind wirklich n\xFCtzlich
+      als Papiergewichte und Kissen."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Rasse
+    m_Localized: 'Rasse: Wurstfest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Wir brauchen ein gro\xDFes Mitglied Kobold Rasse, wissen Sie, um
-      als Papiergewichte und T\xFCrstopps zu fungieren."
+    m_Localized: "Ich brauche viele Kobolds mit riesigen Schw\xE4nzen, es ist f\xFCr
+      meine Pl\xE4ne von entscheidender Bedeutung."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Erstellen Sie eine Makro -Kobold -Rasse.
+    m_Localized: 'Rasse: Big McLarghuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Gro\xDF..."
+    m_Localized: "Ich m\xF6chte mehr von dieser riesigen Art von Kobold, sie sind
+      wirklich n\xFCtzlich f\xFCr die Reinigung der Decke."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Erstellen Sie eine gro\xDFe Kobold -Rasse."
+    m_Localized: "Rasse: Titten, gro\xDFe!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mama Melker
+    m_Localized: "Schicken Sie mir viele gro\xDFe Boobie Kobolds. Dieser ist nicht
+      f\xFCr die Praktikabilit\xE4t, es macht nur Spa\xDF, zu wackeln."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Erstellen Sie eine Micro Kobold -Rasse
+    m_Localized: 'Rasse: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Ben\xF6tigen Sie eine billige Menge Kondome, um sie zu verwenden."
+    m_Localized: "Machen Sie mich viele kleine Kobolds, ihre Gr\xF6\xDFe und dehnbare
+      K\xF6rper machen sie wirklich gut, wiederverwendbare Kondome."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1271,12 +1275,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Holen Sie sich einen Kobold weit vom Boden. Es ist mir egal, wie
-      du es machst!
+    m_Localized: Ich bin gespannt darauf, wie gut Kobolds mit Luft Reibung macht,
+      und schicke einen in den Himmel.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Bewegungskrankheit Reduzierer
     m_Metadata:
       m_Items: []
   references:

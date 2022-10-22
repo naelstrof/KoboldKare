@@ -797,12 +797,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Vendi una macro kobold
+    m_Localized: Grande mclargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Un kobold cos\xEC alto che possono guardare oltre una casa, ricetta
-      segreta ..."
+    m_Localized: "Rendi un kobold cos\xEC alto che possono guardare oltre una casa,
+      ricetta segreta ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1003,7 +1003,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
+      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1200,62 +1200,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "Macina pi\xF9 frutta!"
+    m_Localized: Juice It Up!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Non abbastanza frutta dall'ultima volta, necessiti di pi\xF9."
+    m_Localized: "Voglio molti tipi diversi di kobold, e ci\xF2 significa che hai
+      bisogno di pi\xF9 succhi di frutta. Macina pi\xF9 frutta!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Grandi uova
+    m_Localized: "Una dozzina di grandi, forse di pi\xF9."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Ho bisogno che tu deponga di uova pi\xF9 grandi, l'ultima non era
-      abbastanza."
+    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, raggiungerlo!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Razza kobold grassa
+    m_Localized: 'Razza: Tummy Time!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: Abbiamo bisogno di una razza grassa kobold, sai, per agire come
-      pesi di carta e fermate.
+    m_Localized: Voglio un sacco di kold grassi, sono davvero utili come pesi di
+      carta e cuscini.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Breed
+    m_Localized: 'Razza: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: Abbiamo bisogno di una grande razza kobold membro, sai ... per agire
-      come pesi di carta e fermate delle porte.
+    m_Localized: "Ho bisogno di molti kobolds con cazzi giganti, \xE8 vitale per
+      i miei piani."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Crea una razza macro kobold.
+    m_Localized: 'Razza: Big McLargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Grande...
+    m_Localized: "Voglio pi\xF9 di quel tipo gigante di kobold, sono davvero utili
+      per pulire il soffitto."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Crea una grande razza kobold a petto.
+    m_Localized: 'Razza: tette, grandi!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mommy Milkers
+    m_Localized: "Mandami un sacco di grandi boobi kobolds. Questo non \xE8 per la
+      praticit\xE0, sono solo divertenti da sfoggiare."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Crea una razza micro kobold
+    m_Localized: 'Razza: itty bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Hai bisogno di un set economico di preservativi da utilizzare.
+    m_Localized: Fammi un sacco di piccoli kold, le loro dimensioni e i corpi elastici
+      li rendono davvero buoni e riutilizzabili.
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1263,11 +1266,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Ottieni un kobold lontano da terra. Non mi interessa come lo fai!
+    m_Localized: Sono curioso di sapere quanto bene Kobolds con l'attrito d'aria,
+      mandano uno sfregando nel cielo.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Crediti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Reduttore di cinetosi
     m_Metadata:
       m_Items: []
   references:

@@ -801,12 +801,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Prodejte makro kobold
+    m_Localized: "Velk\xFD McLargehuge"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Kobold tak vysok\xFD, \u017Ee se mohou d\xEDvat na d\u016Fm, tajn\xFD
-      recept ..."
+    m_Localized: "Ud\u011Blejte kobold tak vysok\xFD, \u017Ee se mohou pod\xEDvat
+      na d\u016Fm, tajn\xFD recept ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1207,62 +1207,68 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "Grind v\xEDce ovoce!"
+    m_Localized: "\u0160\u0165\xE1va!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Nedostatek ovoce z minul\xE9ho \u010Dasu, pot\u0159ebuji v\xEDc."
+    m_Localized: "Chci spoustu r\u016Fzn\xFDch typ\u016F Kobold, a to znamen\xE1,
+      \u017Ee pot\u0159ebujete v\xEDce ovocn\xFDch \u0161\u0165\xE1v. Grind v\xEDce
+      ovoce!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Velk\xE1 vejce"
+    m_Localized: "Tucet velk\xFDch, mo\u017En\xE1 v\xEDce."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Pot\u0159ebujete, abyste polo\u017Eili v\xEDce velk\xFDch vajec,
-      posledn\xED nesta\u010Dilo."
+    m_Localized: "Chci vid\u011Bt v\xEDce velk\xFDch koboldov\xFDch vajec, dostat
+      se k tomu!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Fat Kobold Plemeno
+    m_Localized: "Plemeno: \u010Cas na b\u0159icho!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Pot\u0159ebujeme plemeno tlust\xE9ho koboldu, v\xEDte, aby fungovaly
-      jako pap\xEDrov\xE9 hmotnosti a zast\xE1vky dve\u0159\xED."
+    m_Localized: "Chci hodn\u011B tlust\xFDch kobolds, jsou opravdu u\u017Eite\u010Dn\xE9
+      jako pap\xEDrov\xE9 hmotnosti a pol\u0161t\xE1\u0159e."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Velk\xE9 plemeno Dick Kobold"
+    m_Localized: 'Breed: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Pot\u0159ebujeme velk\xE9 \u010Dlensk\xE9 plemeno Kobold, v\xEDte
-      ... chovat se jako pap\xEDrov\xE9 hmotnosti a zast\xE1vky dve\u0159\xED."
+    m_Localized: "Pot\u0159ebuji hodn\u011B kobolds s ob\u0159\xEDmi kohouty, je
+      to pro m\xE9 pl\xE1ny z\xE1sadn\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Vytvo\u0159te plemeno makro kobold."
+    m_Localized: "Plemeno: Velk\xE1 McLargehuge"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Velk\xFD..."
+    m_Localized: "Chci v\xEDce z toho ob\u0159\xEDho typu Kobold, jsou opravdu u\u017Eite\u010Dn\xE9
+      pro \u010Di\u0161t\u011Bn\xED stropu."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Vytvo\u0159te velk\xE9 plemeno koboldu."
+    m_Localized: "Plemeno: prsa, velk\xE1!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Maminka dojiva
+    m_Localized: "Po\u0161lete mi spoustu velk\xFDch boobie kobolds. Tenhle nen\xED
+      pro prakti\u010Dnost, jsou prost\u011B z\xE1bavn\xE9."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: "Vytvo\u0159te plemeno Micro Kobold"
+    m_Localized: 'Plemeno: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Pot\u0159ebujete levnou sadu kondom\u016F."
+    m_Localized: "Ud\u011Blejte z m\u011B spoustu mal\xFDch kobolds, jejich velikosti
+      a nata\u017Een\xFDch t\u011Bl je opravdu dobr\xE9, opakovan\u011B pou\u017Eiteln\xE9
+      kondomy."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1270,11 +1276,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Z\xEDskejte Kobold cestu ze zem\u011B. Je mi jedno, jak to d\u011Bl\xE1\u0161!"
+    m_Localized: "Zaj\xEDmalo by m\u011B, jak dob\u0159e maj\xED Kobolds s t\u0159en\xEDm
+      vzduchu, pos\xEDlejte jeden vrhaj\xEDc\xED se na oblohu."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Kredity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Reduktor nemoci pohybu
     m_Metadata:
       m_Items: []
   references:

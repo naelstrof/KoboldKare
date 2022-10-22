@@ -792,12 +792,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "S\xE6lg en makro Kobold"
+    m_Localized: Big Mclargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "En Kobold s\xE5 h\xF8j, at de kan se over et hus, hemmelig opskrift
-      ..."
+    m_Localized: "Lav en kobold s\xE5 h\xF8j, at de kan se over et hus, hemmelig
+      opskrift ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1193,62 +1193,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Slib mere frugt!
+    m_Localized: Juice det op!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: Ikke nok frugt fra sidste gang, har brug for mere.
+    m_Localized: Jeg vil have en masse forskellige typer Kobold, og det betyder,
+      at du har brug for flere frugtsaft. Slib mere frugt!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Store \xE6g"
+    m_Localized: "Et dusin store, m\xE5ske mere."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Brug for dig til at l\xE6gge flere store \xE6g, den sidste var
-      ikke nok."
+    m_Localized: "Jeg vil se flere store kobold\xE6g, komme til det!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Fat Kobold Race
+    m_Localized: 'Race: Tummy tid!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Vi har brug for en fed kobold race, du ved, for at fungere som
-      papirv\xE6gte og d\xF8rstop."
+    m_Localized: "Jeg vil have en masse fede kobolds, de er virkelig nyttige som
+      papirv\xE6gte og puder."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Stor pik kobold race
+    m_Localized: "Race: p\xF8lsefest"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Vi har brug for et stort medlem Kobold -race, du ved ... for at
-      fungere som papirv\xE6gte og d\xF8rstop."
+    m_Localized: Jeg har brug for en masse kobolds med gigantiske haner, det er vigtigt
+      for mine planer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Opret en makro kobold race.
+    m_Localized: 'Race: Big Mclargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Stor...
+    m_Localized: "Jeg vil have mere af den k\xE6mpe type Kobold, de er virkelig nyttige
+      til reng\xF8ring af loftet."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Opret en stor brystet kobold race.
+    m_Localized: 'Race: bryster, store!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mor Milkers
+    m_Localized: Send mig en masse store boobie kobolds. Denne er ikke for praktisk,
+      de er bare sjove at vride.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Opret en mikro kobold race
+    m_Localized: 'Race: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Brug for et billigt s\xE6t kondomer til at bruge."
+    m_Localized: "G\xF8r mig en masse sm\xE5 kobolds, deres st\xF8rrelse og stretchy
+      kroppe g\xF8r dem virkelig gode, genanvendelige kondomer."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1256,12 +1259,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "F\xE5 en kobold langt v\xE6k fra jorden. Jeg er ligeglad med, hvordan
-      du g\xF8r det!"
+    m_Localized: Jeg er nysgerrig efter, hvor godt Kobolds klarer sig med luftfriktion,
+      send en, der kaster sig ud i himlen.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Kreditter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: "Bev\xE6gelsessyge reduktion"
     m_Metadata:
       m_Items: []
   references:

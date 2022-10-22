@@ -767,7 +767,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: Deliver large breasted kobolds.
+    m_Localized: Tits, big ones!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -811,11 +811,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Sell a macro kobold
+    m_Localized: Big McLargeHuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: A Kobold so tall that they can look over a house, secret recipe...
+    m_Localized: Make a Kobold so tall that they can look over a house, secret recipe...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1216,61 +1216,64 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Grind more fruit!
+    m_Localized: Juice it up!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: Not enough fruit from last time, need more.
+    m_Localized: I want a lot of different types of kobold, and that means you need
+      more fruit juices. Grind more fruit!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Large eggs
+    m_Localized: A dozen big ones, maybe more.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Need you to lay more large eggs, the last one wasn't enough.
+    m_Localized: I want to see more large kobold eggs, get to it!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Fat kobold breed
+    m_Localized: 'Breed: Tummy Time!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: We need a fat kobold breed, you know, to act as paper weights and
-      door stops.
+    m_Localized: I want a lot of fat kobolds, they're really useful as paper weights
+      and pillows.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big dick kobold breed
+    m_Localized: 'Breed: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: We need a big member kobold breed, you know... to act as paper weights
-      and door stops.
+    m_Localized: I need a lot of kobolds with giant cocks, it's vital to my plans.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Create a macro kobold breed.
+    m_Localized: 'Breed: Big McLargeHuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Big...
+    m_Localized: I want more of that giant type of kobold, they're really useful
+      for cleaning the ceiling.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Create a big breasted kobold breed.
+    m_Localized: 'Breed: Tits, big ones!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mommy milkers
+    m_Localized: Send me a lot of big boobie kobolds. This one isn't for practicality,
+      they're just fun to jiggle.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Create a micro kobold breed
+    m_Localized: 'Breed: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Need a cheap set of condoms to use.
+    m_Localized: Make me a lot of small kobolds, their size and stretchy bodies make
+      them really good, reusable condoms.
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1278,11 +1281,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Get a kobold way off the ground. I don't care how you do it!
+    m_Localized: I'm curious about how well Kobolds do with air friction, send one
+      hurtling into the sky.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Motion Sickness Reducer
     m_Metadata:
       m_Items: []
   references:

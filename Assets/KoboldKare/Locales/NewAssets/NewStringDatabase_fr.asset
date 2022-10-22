@@ -794,12 +794,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Vendre une macro kobold
+    m_Localized: Big mclargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Un kobold si grand qu'ils peuvent regarder par-dessus une maison,
-      recette secr\xE8te ..."
+    m_Localized: "Rendre un kobold si grand qu'ils peuvent regarder par-dessus une
+      maison, une recette secr\xE8te ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1199,62 +1199,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Broyer plus de fruits!
+    m_Localized: Juice!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Pas assez de fruits de la derni\xE8re fois, besoin de plus."
+    m_Localized: "Je veux beaucoup de diff\xE9rents types de kobold, ce qui signifie
+      que vous avez besoin de plus de jus de fruits. Broyer plus de fruits!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Gros oeufs
+    m_Localized: "Une douzaine de grandes, peut-\xEAtre plus."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Besoin de vous pour pondre plus de gros \u0153ufs, le dernier ne
-      suffisait pas."
+    m_Localized: "Je veux voir plus de gros \u0153ufs de kobold, y arriver!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Race gras kobold
+    m_Localized: 'Race: temps du ventre!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Nous avons besoin d'une graisse Kobold, vous savez, pour agir comme
-      des poids de papier et des arr\xEAts de porte."
+    m_Localized: Je veux beaucoup de gros kobolds, ils sont vraiment utiles comme
+      poids de papier et oreillers.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Race
+    m_Localized: 'Race: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Nous avons besoin d'une race Kobold \xE0 grand membre, vous savez
-      ... pour agir comme des poids de papier et des arr\xEAts de porte."
+    m_Localized: "J'ai besoin de beaucoup de kobolds avec des bites g\xE9antes, c'est
+      vital pour mes plans."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Cr\xE9ez une race macro Kobold."
+    m_Localized: 'Race: Big Mclargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Gros...
+    m_Localized: "Je veux plus de ce type g\xE9ant de kobold, ils sont vraiment utiles
+      pour nettoyer le plafond."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Cr\xE9ez une grande race Kobold \xE0 poitrine."
+    m_Localized: 'Race: seins, grands!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Momy Maichers
+    m_Localized: "Envoyez-moi beaucoup de gros kobolds. Celui-ci n'est pas pour l'aspect
+      pratique, ils sont juste amusants \xE0 secouer."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: "Cr\xE9er une race micro-kobold"
+    m_Localized: 'Race: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Besoin d'un ensemble de pr\xE9servatifs bon march\xE9 \xE0 utiliser."
+    m_Localized: "Faites-moi beaucoup de petits kobolds, leur taille et leurs corps
+      extensibles en font de tr\xE8s bons pr\xE9servatifs r\xE9utilisables."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1262,12 +1265,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Faites un chemin Kobold du sol. Je me fiche de la fa\xE7on dont
-      vous le faites!"
+    m_Localized: "Je suis curieux de savoir \xE0 quel point Kobolds fait avec le
+      frottement de l'air, envoyez-en un qui se pr\xE9cipite dans le ciel."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: "Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: "R\xE9ducteur du mal des transports"
     m_Metadata:
       m_Items: []
   references:

@@ -206,7 +206,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
       SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
@@ -746,7 +746,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: Lever store brystkoblinger.
+    m_Localized: Pupper, store!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -791,12 +791,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Selg en makrokobold
+    m_Localized: Big McLargeHuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "En kobold s\xE5 h\xF8y at de kan se over et hus, hemmelig oppskrift
-      ..."
+    m_Localized: "Gj\xF8r en kobold s\xE5 h\xF8y at de kan se over et hus, hemmelig
+      oppskrift ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1195,61 +1195,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Slip mer frukt!
+    m_Localized: Juice det opp!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: Ikke nok frukt fra forrige gang, trenger mer.
+    m_Localized: Jeg vil ha mange forskjellige typer kobold, og det betyr at du trenger
+      mer fruktjuicer. Slip mer frukt!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Store egg
+    m_Localized: Et titalls store, kanskje mer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Trenger du \xE5 legge flere store egg, den siste var ikke nok."
+    m_Localized: Jeg vil se flere store koboldegg, komme til det!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Fat kobold rase
+    m_Localized: 'Rase: Magetid!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Vi trenger en feit kobold rase, du vet, for \xE5 fungere som papirvekter
-      og d\xF8rstopp."
+    m_Localized: Jeg vil ha mye fete kobolds, de er veldig nyttige som papirvekter
+      og puter.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Stor Dick Kobold rase
+    m_Localized: "Rase: P\xF8lsefest"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Vi trenger et stort medlem av Kobold, du vet ... for \xE5 fungere
-      som papirvekter og d\xF8rstopp."
+    m_Localized: Jeg trenger mange kobolder med gigantiske kuker, det er viktig for
+      planene mine.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Lag en makro kobold rase.
+    m_Localized: 'Rase: Big McLargeHuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Stor...
+    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
+      for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Lag en stor brystet kobold rase.
+    m_Localized: 'Rase: Pupper, store!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mamma -melkere
+    m_Localized: "Send meg mange store Boobie Kobolds. Denne er ikke for praktisk,
+      de er bare morsomme \xE5 vende seg."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Lag en Micro kobold rase
+    m_Localized: 'Rase: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Trenger et billig sett med kondomer \xE5 bruke."
+    m_Localized: "Gj\xF8r meg mange sm\xE5 kobolder, deres st\xF8rrelse og t\xF8yelige
+      kropper gj\xF8r dem veldig gode, gjenbrukbare kondomer."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1257,12 +1261,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "F\xE5 en kobold vei fra bakken. Jeg bryr meg ikke om hvordan du
-      gj\xF8r det!"
+    m_Localized: "Jeg er nysgjerrig p\xE5 hvor godt Kobolds gj\xF8r med luftfriksjon,
+      send en som surrer inn i himmelen."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Studiepoeng
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Bevegelsessyke redusering
     m_Metadata:
       m_Items: []
   references:

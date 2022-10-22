@@ -1211,6 +1211,10 @@ MonoBehaviour:
     m_Key: BUTTON_CREDITS
     m_Metadata:
       m_Items: []
+  - m_Id: 228010423070457856
+    m_Key: SETTING_MOTION_SICKNESS_REDUCER
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

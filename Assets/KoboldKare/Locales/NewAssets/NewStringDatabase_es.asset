@@ -748,7 +748,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: Entregar kobolds de pecho grande.
+    m_Localized: Tetas, grandes!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -792,12 +792,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Vender un macro kobold
+    m_Localized: Gran McLargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Un kobold tan alto que pueden mirar por encima de una casa, receta
-      secreta ...
+    m_Localized: Haz un kobold tan alto que puedan mirar por encima de una casa,
+      receta secreta ...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1195,62 +1195,64 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "\xA1Muela m\xE1s fruta!"
+    m_Localized: "\xA1Juice!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "No hay suficiente fruta de la \xFAltima vez, necesito m\xE1s."
+    m_Localized: "Quiero muchos tipos diferentes de Kobold, y eso significa que necesita
+      m\xE1s jugos de frutas. \xA1Muela m\xE1s fruta!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Huevos grandes
+    m_Localized: "Una docena de grandes, tal vez m\xE1s."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Necesito que pongas m\xE1s huevos grandes, el \xFAltimo no fue
-      suficiente."
+    m_Localized: "Quiero ver m\xE1s huevos de Kobold grandes, \xA1llegue a eso!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Raza gorda kobold
+    m_Localized: "Raza: \xA1Tiempo de barriga!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: Necesitamos una raza gorda de Kobold, ya sabes, para actuar como
-      pesas de papel y paradas en la puerta.
+    m_Localized: "Quiero muchos kobolds gordos, son realmente \xFAtiles como pesas
+      y almohadas de papel."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Breed
+    m_Localized: 'Raza: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: Necesitamos un gran miembro Kobold Breed, ya sabes ... para actuar
-      como pesas de papel y paradas en la puerta.
+    m_Localized: Necesito muchos kobolds con pollas gigantes, es vital para mis planes.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Crea una raza macro Kobold.
+    m_Localized: 'Raza: Big McLargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Grande...
+    m_Localized: "Quiero m\xE1s de ese tipo gigante de Kobold, son realmente \xFAtiles
+      para limpiar el techo."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Crea una gran raza Kobold de pecho.
+    m_Localized: 'Raza: tetas, grandes!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Madristas de mam\xE1"
+    m_Localized: "Env\xEDame muchos grandes boobie kobolds. Este no es por la practicidad,
+      es divertido sacudirse."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Crear una raza micro kobold
+    m_Localized: 'Raza: itty bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Necesita un conjunto barato de condones para usar.
+    m_Localized: "Hazme muchos kobolds peque\xF1os, su tama\xF1o y cuerpos el\xE1sticos
+      los hacen muy buenos y reutilizables condones."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1258,11 +1260,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Saca un kobold del suelo. \xA1No me importa c\xF3mo lo haces!"
+    m_Localized: "Tengo curiosidad sobre lo bien que lo hace Kobolds con la fricci\xF3n
+      del aire, env\xEDa uno al cielo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: "Cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Reductor de enfermos de movimiento
     m_Metadata:
       m_Items: []
   references:

@@ -815,12 +815,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Verkoop een macro kobold
+    m_Localized: Grote McLargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Een kobold zo lang dat ze over een huis kunnen kijken, geheim recept
-      ...
+    m_Localized: Maak een kobold zo lang dat ze over een huis kunnen kijken, geheim
+      recept ...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1217,61 +1217,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Maal meer fruit!
+    m_Localized: Sap It Up!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: Niet genoeg fruit van de vorige keer, meer nodig.
+    m_Localized: Ik wil veel verschillende soorten Kobold, en dat betekent dat je
+      meer vruchtensappen nodig hebt. Maal meer fruit!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Grote eieren
+    m_Localized: Een dozijn grote, misschien meer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Wil je meer grote eieren leggen, de laatste was niet genoeg.
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Dikke Kobold -ras
+    m_Localized: 'Ras: buiktijd!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: We hebben een Fat Kobold -ras nodig, weet je, om te fungeren als
-      papieren gewichten en deurstops.
+    m_Localized: Ik wil veel dikke kobolds, ze zijn echt nuttig als papiergewichten
+      en kussens.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Ras
+    m_Localized: 'Ras: worstfeest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: We hebben een groot lid Kobold -ras nodig, weet je ... om te fungeren
-      als papiergewichten en deurstops.
+    m_Localized: Ik heb veel Kobolds nodig met gigantische pikken, het is van vitaal
+      belang voor mijn plannen.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Cre\xEBer een macro Kobold -ras."
+    m_Localized: 'Ras: grote McLargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Groot...
+    m_Localized: Ik wil meer van dat gigantische type Kobold, ze zijn echt nuttig
+      voor het schoonmaken van het plafond.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Cre\xEBer een Kobold -ras met grote borsten."
+    m_Localized: 'Ras: tieten, grote!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mama Milkers
+    m_Localized: Stuur me veel Big Boobie Kobolds. Deze is niet voor bruikbaarheid,
+      ze zijn gewoon leuk om te scheuren.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: "Cre\xEBer een Micro Kobold -ras"
+    m_Localized: 'Ras: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Een goedkope set condooms nodig om te gebruiken.
+    m_Localized: Maak me veel kleine kobolds, hun grootte en rekbare lichamen maken
+      ze echt goede, herbruikbare condooms.
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1279,12 +1283,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Haal een Kobold ver van de grond. Het kan me niet schelen hoe je
-      het doet!
+    m_Localized: Ik ben benieuwd hoe goed Kobolds het doen met luchtwrijving, stuur
+      er een in de lucht.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Reductor voor bewegingsziekte
     m_Metadata:
       m_Items: []
   references:

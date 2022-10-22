@@ -591,14 +591,19 @@ MonoBehaviour:
     m_Key: <DualShock4GamepadHID>/rightTriggerButton
     m_Metadata:
       m_Items: []
+  - m_Id: 228016197909839872
+    m_Key: <Gamepad>/dpad/y
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
-    - id: 0
+    - rid: 0
   m_KeyGenerator:
-    id: 1
+    rid: 1
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries:
@@ -4490,9 +4495,36 @@ MonoBehaviour:
           - th
           - uk
           - vi
+        - m_KeyId: 228016197909839872
+          m_TableCodes:
+          - ar
+          - bg
+          - zh-Hans
+          - cs
+          - da
+          - nl
+          - en
+          - fi
+          - fr
+          - de
+          - el
+          - hu
+          - it
+          - ja
+          - ko
+          - no
+          - pl
+          - pt
+          - ro
+          - rm
+          - ru
+          - es
+          - th
+          - uk
+          - vi
         m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-    00000001:
+    - rid: 1
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:

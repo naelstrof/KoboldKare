@@ -756,7 +756,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dostarczaj du\u017Ce piersi kobolds."
+    m_Localized: "Cycki, du\u017Ce!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
@@ -802,12 +802,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Sprzedaj makro Kobold
+    m_Localized: Big Mclargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Kobold tak wysoki, \u017Ce mog\u0105 spojrze\u0107 na dom, tajny
-      przepis ..."
+    m_Localized: "Zr\xF3b kobolda tak wysokiego, \u017Ce mog\u0105 spojrze\u0107
+      na dom, tajny przepis ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -951,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1208,62 +1208,68 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "Zamieszaj wi\u0119cej owoc\xF3w!"
+    m_Localized: Sok!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Za ma\u0142o owoc\xF3w od ostatniego razu potrzebuj\u0119 wi\u0119cej."
+    m_Localized: "Chc\u0119 wielu r\xF3\u017Cnych rodzaj\xF3w Kobolda, a to oznacza,
+      \u017Ce \u200B\u200Bpotrzebujesz wi\u0119cej sok\xF3w owocowych. Zamieszaj
+      wi\u0119cej owoc\xF3w!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Du\u017Ce jajka"
+    m_Localized: "Tuzin du\u017Cych, mo\u017Ce wi\u0119cej."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Potrzebujesz z\u0142o\u017Cy\u0107 wi\u0119cej du\u017Cych jaj,
-      ostatnia nie wystarczy\u0142a."
+    m_Localized: "Chc\u0119 zobaczy\u0107 wi\u0119cej du\u017Cych jaj kobold, przejd\u017A
+      do tego!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Gruba rasa Kobold
+    m_Localized: 'Rasa: czas na brzuch!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Potrzebujemy grubej rasy Kobolda, aby dzia\u0142a\u0107 jak ci\u0119\u017Cary
-      papierowe i drzwi."
+    m_Localized: "Chc\u0119 du\u017Co grubych kobold\xF3w, s\u0105 naprawd\u0119
+      przydatne jako ci\u0119\u017Cary papierowe i poduszki."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Big Dick Kobold Breed
+    m_Localized: 'Rasa: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Potrzebujemy du\u017Cego cz\u0142onka Kobold Breed, wiesz ... aby
-      dzia\u0142a\u0107 jak ci\u0119\u017Cary papierowe i przystanki drzwi."
+    m_Localized: "Potrzebuj\u0119 du\u017Co Kobold\xF3w z gigantycznymi kutasami,
+      jest to niezb\u0119dne dla moich plan\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Utw\xF3rz ras\u0119 makro Kobold."
+    m_Localized: 'Rasa: Big McLargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Du\u017Ca..."
+    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobolda, s\u0105
+      naprawd\u0119 przydatne do czyszczenia sufitu."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Stw\xF3rz du\u017C\u0105 ras\u0119 Kobold."
+    m_Localized: "Rasa: cycki, du\u017Ce!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Mommy mleki
+    m_Localized: "Wy\u015Blij mi du\u017Co du\u017Cych kobold\xF3w. Ten nie jest
+      praktyczno\u015Bci\u0105, po prostu s\u0105 fajne."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: "Utw\xF3rz ras\u0119 mikro Kobold"
+    m_Localized: 'Rasa: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Potrzebujesz taniego zestawu prezerwatyw do u\u017Cycia."
+    m_Localized: "Zr\xF3b mi du\u017Co ma\u0142ych kobold\xF3w, a ich rozmiar i rozci\u0105gliwe
+      cia\u0142a sprawiaj\u0105, \u017Ce s\u0105 naprawd\u0119 dobre, wielokrotnego
+      u\u017Cytku."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1271,12 +1277,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Zdob\u0105d\u017A Kobold Way Off the Ground. Nie obchodzi mnie,
-      jak to robisz!"
+    m_Localized: "Jestem ciekawy, jak dobrze Koboldowie radz\u0105 sobie z tarciem
+      powietrznym, wy\u015Blij jedno w niebo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Kredyty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: Reduktor choroby lokalizacji
     m_Metadata:
       m_Items: []
   references:

@@ -793,11 +793,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Myy makrokobold
+    m_Localized: Iso mclargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Kobold niin pitk\xE4, ett\xE4 he voivat katsoa talon yli, salainen
+    m_Localized: "Tee Kobold niin pitk\xE4, ett\xE4 he voivat katsoa talon yli, salainen
       resepti ..."
     m_Metadata:
       m_Items: []
@@ -1196,61 +1196,67 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "Jauhaa enemm\xE4n hedelmi\xE4!"
+    m_Localized: Mehu se!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Ei tarpeeksi hedelm\xE4\xE4 viime kerralla, tarvitse enemm\xE4n."
+    m_Localized: "Haluan paljon erityyppisi\xE4 Koboldia, ja se tarkoittaa, ett\xE4
+      tarvitset enemm\xE4n hedelm\xE4mehuja. Jauhaa enemm\xE4n hedelmi\xE4!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: Isot munat
+    m_Localized: "Kymmenkunta isoa, ehk\xE4 enemm\xE4n."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Tarvitset sinun antaa enemm\xE4n suuria munia, viimeinen ei tarpeeksi."
+    m_Localized: "Haluan n\xE4hd\xE4 enemm\xE4n suuria Kobold -munia, p\xE4\xE4st\xE4
+      siihen!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: Rasva Kobold -rotu
+    m_Localized: 'Rotu: Vatsan aika!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Tarvitsemme rasvaa Kobold -rotu, tied\xE4tte, toimittaaksemme paperipainoina
-      ja ovipys\xE4kkin\xE4."
+    m_Localized: "Haluan paljon rasvaa Koboldsia, ne ovat todella hy\xF6dyllisi\xE4
+      paperipainona ja tyynyt."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Iso munakobold rotu
+    m_Localized: 'Rodu: Makkarafestivaali'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Tarvitsemme suuren j\xE4senen Kobold -rodun, tied\xE4t ... toimiaksesi
-      paperipainoina ja ovipys\xE4kkein\xE4."
+    m_Localized: "Tarvitsen paljon Koboldsia j\xE4ttil\xE4isill\xE4 kukoilla, se
+      on elint\xE4rke\xE4\xE4 suunnitelmilleni."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: Luo makrokobold -rotu.
+    m_Localized: 'Rotu: Big McLargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Iso...
+    m_Localized: "Haluan enemm\xE4n siit\xE4 j\xE4ttil\xE4istyypist\xE4 Koboldia,
+      ne ovat todella hy\xF6dyllisi\xE4 katon puhdistamisessa."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: Luo iso rintainen Kobold -rotu.
+    m_Localized: 'Rotu: tissit, suuret!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "\xC4iti -lyps\xE4j\xE4"
+    m_Localized: "L\xE4het\xE4 minulle paljon suuria boobie Koboldsia. T\xE4m\xE4
+      ei ole k\xE4yt\xE4nn\xF6llisyytt\xE4, he ovat vain hauskoja roikkua."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: Luo mikrokobold -rotu
+    m_Localized: 'Rodu: itty bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Tarvitsetko halvan kondomien k\xE4ytett\xE4v\xE4n kondomien joukon."
+    m_Localized: "Tee minusta paljon pieni\xE4 koboleja, niiden koko ja joustavat
+      rungot tekev\xE4t niist\xE4 todella hyvi\xE4, uudelleenk\xE4ytett\xE4vi\xE4
+      kondomia."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1258,11 +1264,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Hanki Kobold pois maasta. En v\xE4lit\xE4 kuinka teet sen!"
+    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
+      kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: Hyvitykset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: "Liikuntataudin v\xE4hent\xE4j\xE4"
     m_Metadata:
       m_Items: []
   references:

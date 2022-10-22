@@ -798,12 +798,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Adjon el egy makr\xF3 koboldot"
+    m_Localized: Nagy mclargehug
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Olyan magas kobold, hogy \xE1tn\xE9zhetnek egy h\xE1zat, titkos
-      recept ..."
+    m_Localized: "K\xE9sz\xEDtsen olyan magas koboldot, hogy \xE1tn\xE9zzen egy h\xE1zat,
+      titkos recept ..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1208,63 +1208,66 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "Csiszoljon t\xF6bb gy\xFCm\xF6lcs\xF6t!"
+    m_Localized: "L\xE9!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Nincs el\xE9g gy\xFCm\xF6lcs az utols\xF3 id\u0151r\u0151l, t\xF6bbre
-      van sz\xFCks\xE9g."
+    m_Localized: "Sok k\xFCl\xF6nf\xE9le t\xEDpus\xFA koboldot akarok, \xE9s ez azt
+      jelenti, hogy t\xF6bb gy\xFCm\xF6lcslevet kell. Csiszoljon t\xF6bb gy\xFCm\xF6lcs\xF6t!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Nagy toj\xE1sok"
+    m_Localized: "Egy tucat nagy, tal\xE1n m\xE9g t\xF6bbet."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Sz\xFCks\xE9ge van arra, hogy t\xF6bb nagy toj\xE1st tegyen, az
-      utols\xF3 nem volt el\xE9g."
+    m_Localized: "Szeretn\xE9k m\xE9g t\xF6bb nagy kobold toj\xE1st l\xE1tni, odajutni!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: "K\xF6v\xE9r kobold fajta"
+    m_Localized: "Fajta: hasi id\u0151!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Sz\xFCks\xE9g\xFCnk van egy k\xF6v\xE9r koboldfajt\xE1ra, tudod,
-      hogy pap\xEDr s\xFAlyk\xE9nt \xE9s ajt\xF3meg\xE1ll\xF3k\xE9nt m\u0171k\xF6dj\xFCnk."
+    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, nagyon hasznosak pap\xEDr
+      s\xFAlyk\xE9nt \xE9s p\xE1rnak\xE9nt."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: Nagy fasz kobold fajta
+    m_Localized: "Fajta: kolb\xE1szfesztiv\xE1l"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Sz\xFCks\xE9g\xFCnk van egy nagy tagra, Kobold Breed -re, tudod
-      ... hogy pap\xEDr s\xFAlyk\xE9nt \xE9s ajt\xF3meg\xE1ll\xF3k\xE9nt viselkedj\xFCnk."
+    m_Localized: "Nagyon sok koboldra van sz\xFCks\xE9gem \xF3ri\xE1si kakasokkal,
+      ez elengedhetetlen a terveimhez."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Hozzon l\xE9tre egy makr\xF3 kobold fajt\xE1t."
+    m_Localized: 'Fajta: nagy mclargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Nagy...
+    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
+      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Hozzon l\xE9tre egy nagy mell\u0171 kobold fajt\xE1t."
+    m_Localized: 'Fajta: cicik, nagyok!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Anyu fej\u0151k"
+    m_Localized: "K\xFCldj nekem sok Big Boobie Kobolds -t. Ez nem a praktikuss\xE1g
+      \xE9rdek\xE9ben, csak sz\xF3rakoztat\xF3an ugr\xE1lnak."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: "Hozzon l\xE9tre egy mikro -kobold fajt\xE1t"
+    m_Localized: 'Fajta: itty bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Sz\xFCks\xE9ge van egy olcs\xF3 \xF3vszerk\xE9szletre."
+    m_Localized: "K\xE9sz\xEDtsen nekem sok apr\xF3 koboldot, m\xE9ret\xFCk \xE9s
+      elasztikus test\xFCk nagyon j\xF3, \xFAjrafelhaszn\xE1lhat\xF3 \xF3vszerr\xE9
+      teszik \u0151ket."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1272,12 +1275,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "L\xE9pjen egy koboldra a f\xF6ldr\u0151l. Nem \xE9rdekel, hogy
-      csin\xE1lod!"
+    m_Localized: "K\xEDv\xE1ncsi vagyok, hogy Kobolds mennyire j\xF3l teljes\xEDt
+      a leveg\u0151 s\xFArl\xF3d\xE1s\xE1val, k\xFCldje el az \xE9get az \xE9gbe."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
     m_Localized: "J\xF3v\xE1\xEDr\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 228010423070457856
+    m_Localized: "Mozg\xE1sbetegs\xE9gcs\xF6kkent\u0151"
     m_Metadata:
       m_Items: []
   references:

@@ -471,4 +471,11 @@ public class PlayerPossession : MonoBehaviourPun {
             ToggleEquipmentUI();
         }
     }
+    // This fixes a bug where OnRagdoll isn't called when the application isn't in focus.
+    void OnApplicationFocus(bool hasFocus) {
+        if (hasFocus && inputRagdolled) {
+            kobold.ragdoller.PopRagdoll();
+            inputRagdolled = false;
+        }
+    }
 }

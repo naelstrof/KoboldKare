@@ -124,17 +124,23 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             GameManager.instance.StartCoroutine(OnDisconnectRoutine(cause));
         }
     }
-    public IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
-        if (cause != DisconnectCause.DisconnectByClientLogic && cause != DisconnectCause.None) {
-            yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-            PopupHandler.instance.SpawnPopup("Disconnect", true, cause.ToString());
-        }
+
+    private IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
+        if (cause == DisconnectCause.DisconnectByClientLogic || cause == DisconnectCause.None) yield break;
+        PopupHandler.instance.ClearAllPopups();
+        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        PopupHandler.instance.SpawnPopup("Disconnect", true, cause.ToString());
     }
 
-    public IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
+    private IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PopupHandler.instance.ClearAllPopups();
+        yield return LevelLoader.instance.LoadLevel("MainMenu");
         PopupHandler.instance.SpawnPopup("Disconnect", true, "Error " + returnCode + ": " + message);
+    }
+
+    public void TriggerDisconnect() {
+        OnDisconnected(DisconnectCause.DisconnectByDisconnectMessage);
     }
 
     public void OnJoinRoomFailed(short returnCode, string message) {

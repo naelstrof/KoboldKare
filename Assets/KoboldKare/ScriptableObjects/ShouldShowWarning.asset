@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShouldShowWarning
   m_EditorClassIdentifier: 
   startingValue: 1
-  startingMax: 100
+  startingMax: 1
   startingMin: 0
   OnExhaust:
     m_PersistentCalls:

@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 51900204}
   - component: {fileID: 51900203}
   - component: {fileID: 51900202}
+  - component: {fileID: 51900206}
   m_Layer: 5
   m_Name: Canvas - 18Check
   m_TagString: Untagged
@@ -296,13 +297,26 @@ RectTransform:
   m_Children:
   - {fileID: 14592878}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &51900206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51900200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2719f4edbdc190841a5dcb50809e11d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldShow: {fileID: 11400000, guid: ed795e1340dae2147824a2ac6002aa41, type: 2}
 --- !u!1 &123988988 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8040330175790417844, guid: 364d21a5e4c0c464784d42f01767a083,
@@ -1633,7 +1647,7 @@ PrefabInstance:
     - target: {fileID: 7097516722698545567, guid: 5aae5d272202bc242b4b39d4f12fc9b4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7097516722698545567, guid: 5aae5d272202bc242b4b39d4f12fc9b4,
         type: 3}

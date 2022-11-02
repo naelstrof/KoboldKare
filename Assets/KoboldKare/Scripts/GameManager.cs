@@ -145,6 +145,17 @@ public class GameManager : MonoBehaviour {
         Destroy(g, source.clip.length);
         return source.clip;
     }
+    
+    public void QuitToMenu(){
+        StartCoroutine(QuitToMenuRoutine());
+    }
+
+    private IEnumerator QuitToMenuRoutine() {
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        PhotonNetwork.OfflineMode = false;
+    }
 
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {
         if (group == null) {

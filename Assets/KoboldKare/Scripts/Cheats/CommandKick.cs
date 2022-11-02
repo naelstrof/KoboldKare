@@ -22,6 +22,11 @@ public class CommandKick : Command {
         }
 
         foreach (var player in PhotonNetwork.PlayerList) {
+            if (player.ActorNumber == actorNum && Equals(player, PhotonNetwork.LocalPlayer) && Application.isEditor) {
+                NetworkManager.instance.TriggerDisconnect();
+                return;
+            }
+
             if (player.ActorNumber == actorNum && Equals(player, PhotonNetwork.LocalPlayer)) {
                 throw new CheatsProcessor.CommandException("Don't kick yourself :(");
             }

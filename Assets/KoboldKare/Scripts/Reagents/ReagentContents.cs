@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ExitGames.Client.Photon;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -13,7 +14,7 @@ public class Reagent {
     public float volume;
 }
 
-public class ReagentContents : IEnumerable<Reagent>, ISavable {
+public class ReagentContents : IEnumerable<Reagent> {
     public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
     public ReagentContentsChangedAction changed;
@@ -213,33 +214,32 @@ public class ReagentContents : IEnumerable<Reagent>, ISavable {
         }
         return reagentContents;
     }
-    public void Save(BinaryWriter outStream) {
-        int count = 0;
+    public void Save(JSONNode node, string key) {
+        JSONNode rootNode = JSONNode.Parse("{}");
+        rootNode["maxVolume"] = maxVolume;
+        JSONArray reagents = new JSONArray();
         foreach (KeyValuePair<short, Reagent> pair in contents) {
+            JSONNode reagentPair = JSONNode.Parse("{}");
             if (pair.Value.volume <= 0f) {
                 continue;
             }
-            count++;
-        }
 
-        outStream.Write(maxVolume);
-        outStream.Write(count);
-        foreach (KeyValuePair<short, Reagent> pair in contents) {
-            if (pair.Value.volume <= 0f) {
-                continue;
-            }
-            outStream.Write(pair.Key);
-            outStream.Write(pair.Value.volume);
+            reagentPair["name"] = ReagentDatabase.GetReagent(pair.Key).name;
+            reagentPair["volume"] = pair.Value.volume;
+            reagents.Add(reagentPair);
         }
+        rootNode["reagents"] = reagents;
+        node[key] = rootNode;
     }
-    public void Load(BinaryReader inStream) {
+    public void Load(JSONNode node, string key) {
+        JSONNode rootNode = node[key];
         Clear();
-        maxVolume = inStream.ReadSingle();
-        int count = inStream.ReadInt32();
-        for(int i=0;i<count;i++) {
-            short id = inStream.ReadInt16();
-            float volume = inStream.ReadSingle();
-            OverrideReagent(id, volume);
+        maxVolume = rootNode["maxVolume"];
+        JSONArray reagents = rootNode["reagents"].AsArray;
+        for(int i=0;i<reagents.Count;i++) {
+            string name = reagents[i]["name"];
+            float vol = reagents[i]["volume"];
+            OverrideReagent(ReagentDatabase.GetID(ReagentDatabase.GetReagent(name)), vol);
         }
     }
 

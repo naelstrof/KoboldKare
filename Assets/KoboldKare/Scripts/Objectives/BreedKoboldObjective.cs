@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -37,12 +38,12 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer) {
-        writer.Write(eggs);
+    public override void Save(JSONNode node) {
+        node["eggs"] = eggs;
     }
 
-    public override void Load(BinaryReader reader) {
-        eggs = reader.ReadInt32();
+    public override void Load(JSONNode node) {
+        eggs = node["eggs"];
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

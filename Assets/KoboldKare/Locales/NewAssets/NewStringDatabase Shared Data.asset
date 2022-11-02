@@ -1215,6 +1215,14 @@ MonoBehaviour:
     m_Key: SETTING_MOTION_SICKNESS_REDUCER
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Key: MENU_FAILED_TO_LOAD_SAVE_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Key: MENU_FAILED_TO_LOAD_SAVE_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1287,6 +1287,15 @@ MonoBehaviour:
     m_Localized: Bewegungskrankheit Reduzierer
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "Vers\xE4umnis zu laden sparen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: Konnte das Speichern nicht laden! Es kann mit einer anderen Version
+      von Koboldkare gespeichert werden.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

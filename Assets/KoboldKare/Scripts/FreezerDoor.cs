@@ -4,6 +4,7 @@ using System.IO;
 using Photon.Pun;
 using UnityEngine;
 using KoboldKare;
+using SimpleJSON;
 
 public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
     public bool shouldSpawnIceCube {get; set;}
@@ -25,15 +26,15 @@ public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
             PhotonNetwork.Instantiate(iceCube.photonName, transform.position, Quaternion.identity);
         }
     }
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        shouldSpawnIceCube = reader.ReadBoolean();
-        iceCubeSpawned = reader.ReadBoolean();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        shouldSpawnIceCube = node["shouldSpawnIceCube"];
+        iceCubeSpawned = node["iceCubeSpawned"];
     }
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(shouldSpawnIceCube);
-        writer.Write(iceCubeSpawned);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["shouldSpawnIceCube"] = shouldSpawnIceCube;
+        node["iceCubeSpawned"] = iceCubeSpawned;
     }
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);

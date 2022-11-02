@@ -18,7 +18,13 @@ public class CommandEquip : Command {
             throw new CheatsProcessor.CommandException("/equip requires at least one argument. Use `/list equipment` to find what you can equip.");
         }
 
-        Equipment tryEquipment = EquipmentDatabase.GetEquipment(args[1]);
+        Equipment tryEquipment;
+        try {
+            tryEquipment = EquipmentDatabase.GetEquipment(args[1]);
+        } catch (UnityException exception) {
+            throw new CheatsProcessor.CommandException(exception.Message);
+        }
+
         if (tryEquipment != null) {
             if (tryEquipment is DickEquipment) {
                 output.Append($"Equipped {tryEquipment.name} by modifying Kobold genes.");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 
 public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonViewControllerChange {
@@ -56,13 +57,13 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
             worth = (float)stream.ReceiveNext();
         }
     }
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(worth);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["worth"] = worth;
     }
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        worth = reader.ReadSingle();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        worth = node["worth"];
     }
 
     public void OnControllerChange(Player newController, Player previousController) {

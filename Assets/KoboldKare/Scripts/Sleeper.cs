@@ -4,6 +4,7 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using SimpleJSON;
 
 public class Sleeper : GenericUsable {
     public GameEventGeneric startSleep;
@@ -37,6 +38,6 @@ public class Sleeper : GenericUsable {
         sleep.Raise(null);
         DayNightCycle.StaticSleep();
     }
-    public override void Save(BinaryWriter writer) { }
-    public override void Load(BinaryReader reader) { }
+    public override void Save(JSONNode writer) { }
+    public override void Load(JSONNode reader) { }
 }

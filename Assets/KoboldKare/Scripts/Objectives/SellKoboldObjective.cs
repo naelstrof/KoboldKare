@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
 using KoboldKare;
+using SimpleJSON;
 
 [System.Serializable]
 public class SellKoboldObjective : ObjectiveWithSpaceBeam {
@@ -43,12 +44,12 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
         return $"{kobold.GetLocalizedString()} {kobolds.ToString()}/{maxKobolds.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer) {
-        writer.Write(kobolds);
+    public override void Save(JSONNode node) {
+        node["kobolds"] = kobolds;
     }
 
-    public override void Load(BinaryReader reader) {
-        kobolds = reader.ReadInt32();
+    public override void Load(JSONNode node) {
+        kobolds = node["kobolds"];
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

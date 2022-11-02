@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using KoboldKare;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
@@ -93,16 +94,16 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
         }
     }
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(inStock);
-        writer.Write(PurchasableDatabase.GetID(purchasable));
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["inStock"] = inStock;
+        node["purchaseID"] = (int)PurchasableDatabase.GetID(purchasable);
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        display.SetActive(reader.ReadBoolean());
-        short currentPurchasable = (short)reader.ReadInt16();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        display.SetActive(node["inStock"]);
+        short currentPurchasable = (short)(node["purchaseID"].AsInt);
         SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
     }
 

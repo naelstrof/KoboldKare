@@ -6,6 +6,7 @@ using JigglePhysics;
 using Naelstrof.BodyProportion;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -330,11 +331,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
     }
-    public void Save(BinaryWriter writer) {
-        writer.Write(ragdolled);
+    public void Save(JSONNode node) {
+        node["ragdolled"] = ragdolled;
     }
-    public void Load(BinaryReader reader) {
-        SetRagdolled(reader.ReadBoolean());
+    public void Load(JSONNode node) {
+        SetRagdolled(node["ragdolled"]);
     }
 
     public void OnOwnerChange(Player newOwner, Player previousOwner) {

@@ -1272,6 +1272,15 @@ MonoBehaviour:
     m_Localized: "Redutor de doen\xE7a de movimento"
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: Falha ao carregar salvamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "N\xE3o foi poss\xEDvel carregar o salvamento! Pode ser salvo com
+      uma vers\xE3o diferente do Koboldkare."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

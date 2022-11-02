@@ -1288,6 +1288,15 @@ MonoBehaviour:
     m_Localized: Reduktor nemoci pohybu
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "Nepoda\u0159ilo se na\u010D\xEDst ulo\u017Eit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Nelze na\u010D\xEDst ulo\u017Eit! M\u016F\u017Ee b\xFDt ulo\u017Een
+      jinou verz\xED Koboldkare."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

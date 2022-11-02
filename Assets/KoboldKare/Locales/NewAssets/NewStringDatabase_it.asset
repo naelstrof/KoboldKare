@@ -1003,7 +1003,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
+      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1276,6 +1276,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 228010423070457856
     m_Localized: Reduttore di cinetosi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: Impossibile caricare Salva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Impossibile caricare il salvataggio! Pu\xF2 essere salvato con
+      una versione diversa di Koboldkare."
     m_Metadata:
       m_Items: []
   references:

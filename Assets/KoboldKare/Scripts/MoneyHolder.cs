@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGood {
@@ -37,8 +38,8 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
     public bool HasMoney(float amount) {
         return money >= amount;
     }
-    public void Load(BinaryReader reader) {
-        money = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        money = node["money"];
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
@@ -49,8 +50,8 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(money);
+    public void Save(JSONNode node) {
+        node["money"] = money;
     }
 
     public float GetWorth() {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using TMPro;
 using UnityEngine.VFX;
@@ -67,28 +68,34 @@ public class StarDoor : GenericUsable {
         }
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(transform.position.x);
-        writer.Write(transform.position.y);
-        writer.Write(transform.position.z);
-        
-        writer.Write(transform.rotation.x);
-        writer.Write(transform.rotation.y);
-        writer.Write(transform.rotation.z);
-        writer.Write(transform.rotation.w);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["position.x"] = transform.position.x;
+        node["position.y"] = transform.position.y;
+        node["position.z"] = transform.position.z;
+        node["rotation.x"] = transform.rotation.x;
+        node["rotation.y"] = transform.rotation.y;
+        node["rotation.z"] = transform.rotation.z;
+        node["rotation.w"] = transform.rotation.w;
+        node["scale.x"] = transform.localScale.x;
+        node["scale.y"] = transform.localScale.y;
+        node["scale.z"] = transform.localScale.z;
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        float x = reader.ReadSingle();
-        float y = reader.ReadSingle();
-        float z = reader.ReadSingle();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        float x = node["position.x"];
+        float y = node["position.y"];
+        float z = node["position.z"];
         transform.position = new Vector3(x, y, z);
-        x = reader.ReadSingle();
-        y = reader.ReadSingle();
-        z = reader.ReadSingle();
-        float w = reader.ReadSingle();
-        transform.rotation = new Quaternion(x, y, z, w);
+        float rx = node["rotation.x"];
+        float ry = node["rotation.y"];
+        float rz = node["rotation.z"];
+        float rw = node["rotation.w"];
+        transform.rotation = new Quaternion(rx, ry, rz,rw);
+        float sx = node["scale.x"];
+        float sy = node["scale.y"];
+        float sz = node["scale.z"];
+        transform.localScale = new Vector3(sx, sy, sz);
     }
 }

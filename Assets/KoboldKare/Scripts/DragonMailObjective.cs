@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Localization;
@@ -47,10 +48,10 @@ public class DragonMailObjective : ISavable, IPunObservable {
         return "";
     }
 
-    public virtual void Save(BinaryWriter writer) {
+    public virtual void Save(JSONNode node) {
     }
 
-    public virtual void Load(BinaryReader reader) {
+    public virtual void Load(JSONNode node) {
     }
 
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

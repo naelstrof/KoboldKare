@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SimpleJSON;
 using Object = UnityEngine.Object;
 
 public static class SaveManager {
@@ -60,16 +61,25 @@ public static class SaveManager {
 
     public static bool IsLoadable(string filename, out string lastError) {
         using FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read);
-        BinaryReader reader = new BinaryReader(file);
-        if (reader.ReadString() != saveHeader) {
+        using StreamReader reader = new StreamReader(file);
+        string fileContents = reader.ReadToEnd();
+        JSONNode node;
+        try {
+            node = JSONNode.Parse(fileContents);
+        } catch {
+            lastError = $"Not a json file: {filename}";
+            return false;
+        }
+
+        if (node["header"] != saveHeader) {
             lastError = $"Not a save file: {filename}";
             return false;
         }
-        string fileVersion = reader.ReadString();
-        if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
-            lastError = "Cannot load save file, it was saved with a different version of KoboldKare.";
-            return false;
+
+        if (node["version"] != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+            Debug.LogWarning("Loading old version of KoboldKare... Might not work correctly!");
         }
+
         lastError = "";
         return true;
     }
@@ -81,40 +91,44 @@ public static class SaveManager {
         if (!Directory.Exists(saveDataPath)) {
             Directory.CreateDirectory(saveDataPath);
         }
-        using(FileStream file = new FileStream(savePath, FileMode.CreateNew, FileAccess.Write)) {
-            BinaryWriter writer = new BinaryWriter(file);
-            writer.Write(saveHeader);
-            writer.Write(PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion);
-            //Debug.Log("viewCount: "+PhotonNetwork.ViewCount);
-            int viewCount = 0;
-            foreach (PhotonView view in PhotonNetwork.PhotonViewCollection) {
-                if (view.name.Contains("DontSave")) {
-                    continue;
-                }
-                viewCount++;
+        JSONNode rootNode = JSONNode.Parse("{}");
+        rootNode["header"] = saveHeader;
+        rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
+        int viewCount = 0;
+        foreach (PhotonView view in PhotonNetwork.PhotonViewCollection) {
+            if (view.name.Contains("DontSave")) {
+                continue;
             }
+            viewCount++;
+        }
 
-            writer.Write(viewCount);
-            // We need to enable all our saved objects, they don't have proper viewids otherwise
-            foreach(PhotonView view in Object.FindObjectsOfType<PhotonView>(true)) {
-                if (view.gameObject.activeInHierarchy || ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(
-                        PrefabifyGameObjectName(view.gameObject))) continue;
-                var gameObject = view.gameObject;
-                Debug.LogError( $"Found a disabled static viewID {view.ViewID} {gameObject.name}, this is not allowed as it prevents unique id assignments!", gameObject);
-                return;
+        JSONArray savedObjects = new JSONArray();
+        // We need to enable all our saved objects, they don't have proper viewids otherwise
+        foreach(PhotonView view in Object.FindObjectsOfType<PhotonView>(true)) {
+            if (view.gameObject.activeInHierarchy || ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(
+                    PrefabifyGameObjectName(view.gameObject))) continue;
+            var gameObject = view.gameObject;
+            Debug.LogError( $"Found a disabled static viewID {view.ViewID} {gameObject.name}, this is not allowed as it prevents unique id assignments!", gameObject);
+            return;
+        }
+        foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
+            if (view.name.Contains("DontSave")) {
+                continue;
             }
-            foreach(PhotonView view in PhotonNetwork.PhotonViewCollection) {
-                if (view.name.Contains("DontSave")) {
-                    continue;
-                }
-                writer.Write(view.ViewID);
-                writer.Write(PrefabifyGameObjectName(view.gameObject));
-                foreach(var observable in view.ObservedComponents) {
-                    if (observable is ISavable savable) {
-                        savable.Save(writer);
-                    }
+            JSONNode objectNode = JSONNode.Parse("{}");
+            objectNode["viewID"] = view.ViewID;
+            objectNode["name"] = PrefabifyGameObjectName(view.gameObject);
+            foreach(var observable in view.ObservedComponents) {
+                if (observable is ISavable savable) {
+                    savable.Save(objectNode);
                 }
             }
+            savedObjects.Add(objectNode);
+        }
+        rootNode["objects"] = savedObjects;
+        using (FileStream file = new FileStream(savePath, FileMode.CreateNew, FileAccess.Write)) {
+            using StreamWriter writer = new StreamWriter(file);
+            writer.Write(rootNode.ToString());
         }
         // Save a screenshot of what's going on.
         string imageSavePath = string.Format("{0}{1}{2}", saveDataPath, filename, imageExtension);
@@ -158,35 +172,35 @@ public static class SaveManager {
             return;
         }
         CleanUpImmediate();
-        using FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read);
-        BinaryReader reader = new BinaryReader(file);
-        if (reader.ReadString() != saveHeader) {
+        JSONNode rootNode;
+        using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
+            using StreamReader reader = new StreamReader(file);
+            rootNode = JSONNode.Parse(reader.ReadToEnd());
+        }
+        if (rootNode["header"] != saveHeader) {
             throw new UnityException($"Not a save file: {filename}");
         }
-        string fileVersion = reader.ReadString();
+        string fileVersion = rootNode["version"];
             
         if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
-            throw new UnityException("Cannot load save file, it was saved with a different version of KoboldKare.");
+            Debug.Log("Load save file with a different version, it might not load correctly...");
         }
 
-        int viewCount = reader.ReadInt32();
-        for(int i=0;i<viewCount;i++) {
-            int viewID = reader.ReadInt32();
-            string prefabName = reader.ReadString();
+        JSONArray array = rootNode["objects"].AsArray;
+        for(int i=0;i<array.Count;i++) {
+            JSONNode objectNode = array[i];
+            int viewID = objectNode["viewID"];
+            string prefabName = objectNode["name"];
             PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-                
             if(((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)){
                 GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                 view = obj.GetComponent<PhotonView>();
             }
             if (view == null) {
-                Debug.Log("[SaveManager] <Deserialization Log> :: Running deep check when view returned null...");
                 foreach(PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
-                    if (deepCheck.ViewID == viewID) {
-                        view = deepCheck;
-                        Debug.Log("[SaveManager] <Deserialization Log> :: Deep check successful!");
-                        break;
-                    }
+                    if (deepCheck.ViewID != viewID) continue;
+                    view = deepCheck;
+                    break;
                 }
             }
             if (view == null) {
@@ -195,7 +209,7 @@ public static class SaveManager {
             try {
                 foreach(Component observable in view.ObservedComponents) {
                     if (observable is ISavable savable) {
-                        savable.Load(reader);
+                        savable.Load(objectNode);
                     }
                 }
             } catch {
@@ -206,6 +220,7 @@ public static class SaveManager {
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
         if (!IsLoadable(filename, out string lastError)) {
+            PopupHandler.instance.SpawnPopup("FailedLoad");
             throw new UnityException(lastError);
         }
         //Ensure we show the player that the game is loading while we load
@@ -222,6 +237,7 @@ public static class SaveManager {
             LoadImmediate(filename);
         } catch {
             GameManager.instance.loadListener.Hide();
+            PopupHandler.instance.SpawnPopup("FailedLoad");
             throw;
         }
 

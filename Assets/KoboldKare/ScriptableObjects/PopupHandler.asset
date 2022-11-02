@@ -31,3 +31,6 @@ MonoBehaviour:
   - name: ChangeRegion
     popupPrefab: {fileID: 7097516722698545566, guid: 5aae5d272202bc242b4b39d4f12fc9b4,
       type: 3}
+  - name: FailedLoad
+    popupPrefab: {fileID: 8139072932483966557, guid: eb6471a7bfdaf28408d79c416db41eae,
+      type: 3}

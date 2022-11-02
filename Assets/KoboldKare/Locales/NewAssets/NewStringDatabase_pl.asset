@@ -951,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1287,6 +1287,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 228010423070457856
     m_Localized: Reduktor choroby lokalizacji
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "Nie uda\u0142o si\u0119 za\u0142adowa\u0107 zapisu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Nie mog\u0142em za\u0142adowa\u0107 zapisu! Mo\u017Cna go zapisa\u0107
+      z inn\u0105 wersj\u0105 Koboldkare."
     m_Metadata:
       m_Items: []
   references:

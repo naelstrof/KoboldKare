@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 using System.IO;
+using SimpleJSON;
 
 public class ConstructionContract : GenericUsable {
     public delegate void ConstructionContractPurchaseAction(ConstructionContract contract);
@@ -61,12 +62,12 @@ public class ConstructionContract : GenericUsable {
         purchasedEvent?.Invoke(this);
     }
 
-    public override void Save(BinaryWriter writer){   
-        writer.Write(bought);
+    public override void Save(JSONNode node) {
+        node["bought"] = bought;
     }
 
-    public override void Load(BinaryReader reader){
-        bought = reader.ReadBoolean();
+    public override void Load(JSONNode node){
+        bought = node["bought"];
         SetState(bought);
     }
 

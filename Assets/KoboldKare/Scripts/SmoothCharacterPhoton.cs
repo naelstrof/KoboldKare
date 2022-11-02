@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 
 public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable {
@@ -74,16 +75,16 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(body.position.x);
-        writer.Write(body.position.y);
-        writer.Write(body.position.z);
+    public void Save(JSONNode node) {
+        node["position.x"] = body.position.x;
+        node["position.y"] = body.position.y;
+        node["position.z"] = body.position.z;
     }
 
-    public void Load(BinaryReader reader) {
-        float x = reader.ReadSingle();
-        float y = reader.ReadSingle();
-        float z = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        float x = node["position.x"];
+        float y = node["position.y"];
+        float z = node["position.z"];
         body.position = new Vector3(x, y, z);
     }
 }

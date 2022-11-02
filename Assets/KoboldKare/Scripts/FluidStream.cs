@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using PenetrationTech;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
@@ -305,9 +306,9 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer) {
+    public void Save(JSONNode node) {
     }
 
-    public void Load(BinaryReader reader) {
+    public void Load(JSONNode node) {
     }
 }

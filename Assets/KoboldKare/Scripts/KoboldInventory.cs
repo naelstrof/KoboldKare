@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 [RequireComponent(typeof(Kobold))]
@@ -110,18 +111,19 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(equipment.Count);
+    public void Save(JSONNode node) {
+        JSONArray equipments = new JSONArray();
         foreach(Equipment e in equipment) {
-            writer.Write(EquipmentDatabase.GetID(e));
+            equipments.Add(EquipmentDatabase.GetID(e));
         }
+        node["equipments"] = equipments;
     }
 
-    public void Load(BinaryReader reader) {
-        int count = reader.ReadInt32();
+    public void Load(JSONNode node) {
+        JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
-        for(int i=0;i<count;i++) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(reader.ReadInt16()));
+        for(int i=0;i<equipments.Count;i++) {
+            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)equipments[i].AsInt));
         }
         ReplaceEquipmentWith(staticIncomingEquipment);
     }

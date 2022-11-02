@@ -9,6 +9,8 @@
 // ----------------------------------------------------------------------------
 
 
+using SimpleJSON;
+
 namespace Photon.Pun
 {
     using System.IO;
@@ -109,53 +111,52 @@ namespace Photon.Pun
             }
         }
 
-        public void Save(BinaryWriter writer) {
-            writer.Write(this.m_Body.position.x);
-            writer.Write(this.m_Body.position.y);
-            writer.Write(this.m_Body.position.z);
-
-            writer.Write(this.m_Body.rotation.x);
-            writer.Write(this.m_Body.rotation.y);
-            writer.Write(this.m_Body.rotation.z);
-            writer.Write(this.m_Body.rotation.w);
+        public void Save(JSONNode node) {
+            node["position.x"] = m_Body.position.x;
+            node["position.y"] = m_Body.position.y;
+            node["position.z"] = m_Body.position.z;
+            
+            node["rotation.x"] = m_Body.rotation.x;
+            node["rotation.y"] = m_Body.rotation.y;
+            node["rotation.z"] = m_Body.rotation.z;
+            node["rotation.w"] = m_Body.rotation.w;
 
             if (this.m_SynchronizeVelocity) {
-                writer.Write(this.m_Body.velocity.x);
-                writer.Write(this.m_Body.velocity.y);
-                writer.Write(this.m_Body.velocity.z);
+                node["velocity.x"] = m_Body.velocity.x;
+                node["velocity.y"] = m_Body.velocity.y;
+                node["velocity.z"] = m_Body.velocity.z;
             }
 
             if (this.m_SynchronizeAngularVelocity) {
-                writer.Write(this.m_Body.angularVelocity.x);
-                writer.Write(this.m_Body.angularVelocity.y);
-                writer.Write(this.m_Body.angularVelocity.z);
+                node["angularVelocity.x"] = m_Body.angularVelocity.x;
+                node["angularVelocity.y"] = m_Body.angularVelocity.y;
+                node["angularVelocity.z"] = m_Body.angularVelocity.z;
             }
         }
 
-        public void Load(BinaryReader reader) {
-            
-            float posx = reader.ReadSingle();
-            float posy = reader.ReadSingle();
-            float posz = reader.ReadSingle();
+        public void Load(JSONNode node) {
+            float posx = node["position.x"];
+            float posy = node["position.y"];
+            float posz = node["position.z"];
             this.m_NetworkPosition = new Vector3(posx, posy, posz);
             this.m_Body.position = this.m_NetworkPosition;
             this.m_Body.transform.position = this.m_NetworkPosition; //Force update?
-            float rotx = reader.ReadSingle();
-            float roty = reader.ReadSingle();
-            float rotz = reader.ReadSingle();
-            float rotw = reader.ReadSingle();
+            float rotx = node["rotation.x"];
+            float roty = node["rotation.y"];
+            float rotz = node["rotation.z"];
+            float rotw = node["rotation.w"];
             this.m_NetworkRotation = new Quaternion(rotx, roty, rotz, rotw);
             this.m_Body.rotation = this.m_NetworkRotation;
             if (this.m_SynchronizeVelocity) {
-                float velx = reader.ReadSingle();
-                float vely = reader.ReadSingle();
-                float velz = reader.ReadSingle();
+                float velx = node["velocity.x"];
+                float vely = node["velocity.y"];
+                float velz = node["velocity.z"];
                 this.m_Body.velocity = new Vector3(velx, vely, velz);
             }
             if (this.m_SynchronizeAngularVelocity) {
-                float vangx = reader.ReadSingle();
-                float vangy = reader.ReadSingle();
-                float vangz = reader.ReadSingle();
+                float vangx = node["angularVelocity.x"];
+                float vangy = node["angularVelocity.y"];
+                float vangz = node["angularVelocity.z"];
                 this.m_Body.angularVelocity = new Vector3(vangx, vangy, vangz);
             }
         }

@@ -1296,6 +1296,15 @@ MonoBehaviour:
     m_Localized: "Reductor de boal\u0103 de mi\u0219care"
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "Nu a reu\u0219it s\u0103 \xEEncarce economisire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Nu am putut \xEEnc\u0103rca salvarea! Poate fi salvat cu o versiune
+      diferit\u0103 de Koboldkare."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

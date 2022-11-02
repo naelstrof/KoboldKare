@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 public class UsableMachine : GenericUsable {
@@ -19,14 +20,14 @@ public class UsableMachine : GenericUsable {
         SetConstructed(constructed);
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(constructed);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["constructed"] = constructed;
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        SetConstructed(reader.ReadBoolean());
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        SetConstructed(node["constructed"]);
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

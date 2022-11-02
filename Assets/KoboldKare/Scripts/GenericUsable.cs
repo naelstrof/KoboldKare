@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,8 +24,8 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     public void RPCUse() {
         Use();
     }
-    public virtual void Save(BinaryWriter writer) { }
-    public virtual void Load(BinaryReader reader) { }
+    public virtual void Save(JSONNode node) { }
+    public virtual void Load(JSONNode node) { }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 }

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
-public class KoboldGenes : ISavable {
+public class KoboldGenes {
     public float maxEnergy = 5f;
     public float baseSize = 20f;
     public float fatSize;
@@ -191,38 +192,41 @@ public class KoboldGenes : ISavable {
         return genes;
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(maxEnergy);
-        writer.Write(baseSize);
-        writer.Write(fatSize);
-        writer.Write(ballSize);
-        writer.Write(dickSize);
-        writer.Write(breastSize);
-        writer.Write(bellySize);
-        writer.Write(metabolizeCapacitySize);
-        writer.Write(hue);
-        writer.Write(brightness);
-        writer.Write(saturation);
-        writer.Write(dickEquip);
-        writer.Write(grabCount);
-        writer.Write(dickThickness);
+    public void Save(JSONNode node, string key) {
+        JSONNode rootNode = JSONNode.Parse("{}");
+        rootNode["maxEnergy"] = maxEnergy;
+        rootNode["baseSize"] = baseSize;
+        rootNode["fatSize"] = fatSize;
+        rootNode["ballSize"] = ballSize;
+        rootNode["dickSize"] = dickSize;
+        rootNode["breastSize"] = breastSize;
+        rootNode["bellySize"] = bellySize;
+        rootNode["metabolizeCapacitySize"] = metabolizeCapacitySize;
+        rootNode["hue"] = (int)hue;
+        rootNode["brightness"] = (int)brightness;
+        rootNode["saturation"] = (int)saturation;
+        rootNode["dickEquip"] = (int)dickEquip;
+        rootNode["grabCount"] = (int)grabCount;
+        rootNode["dickThickness"] = dickThickness;
+        node[key] = rootNode;
     }
 
-    public void Load(BinaryReader reader) {
-        maxEnergy = reader.ReadSingle();
-        baseSize = reader.ReadSingle();
-        fatSize = reader.ReadSingle();
-        ballSize = reader.ReadSingle();
-        dickSize = reader.ReadSingle();
-        breastSize = reader.ReadSingle();
-        bellySize = reader.ReadSingle();
-        metabolizeCapacitySize = reader.ReadSingle();
-        hue = reader.ReadByte();
-        brightness = reader.ReadByte();
-        saturation = reader.ReadByte();
-        dickEquip = reader.ReadByte();
-        grabCount = reader.ReadByte();
-        dickThickness = reader.ReadSingle();
+    public void Load(JSONNode node, string key) {
+        JSONNode rootNode = node[key];
+        maxEnergy = rootNode["maxEnergy"];
+        baseSize = rootNode["baseSize"];
+        fatSize = rootNode["fatSize"];
+        ballSize = rootNode["ballSize"];
+        dickSize = rootNode["dickSize"];
+        breastSize = rootNode["breastSize"];
+        bellySize = rootNode["bellySize"];
+        metabolizeCapacitySize = rootNode["metabolizeCapacitySize"];
+        hue = (byte)rootNode["hue"].AsInt;
+        brightness = (byte)rootNode["brightness"].AsInt;
+        saturation = (byte)rootNode["saturation"].AsInt;
+        dickEquip = (byte)rootNode["dickEquip"].AsInt;
+        grabCount = (byte)rootNode["grabCount"].AsInt;
+        dickThickness = rootNode["dickThickness"];
     }
 
     public override string ToString() {

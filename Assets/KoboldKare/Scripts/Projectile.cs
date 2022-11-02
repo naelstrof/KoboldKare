@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -142,33 +143,33 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(velocity.x);
-        writer.Write(velocity.y);
-        writer.Write(velocity.z);
-        contents.Save(writer);
+    public void Save(JSONNode node) {
+        node["velocity.x"] = velocity.x;
+        node["velocity.y"] = velocity.y;
+        node["velocity.z"] = velocity.z;
+        contents.Save(node, "fluidContents");
         bool hasGenes = GetGenes() != null;
-        writer.Write(hasGenes);
+        node["hasGenes"] = hasGenes;
         if (hasGenes) {
-            GetGenes().Save(writer);
+            GetGenes().Save(node,"genes");
         }
-        writer.Write(splashed);
+        node["splashed"] = splashed;
     }
 
-    public void Load(BinaryReader reader) {
-        float vx = reader.ReadSingle();
-        float vy = reader.ReadSingle();
-        float vz = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        float vx = node["velocity.x"];
+        float vy = node["velocity.y"];
+        float vz = node["velocity.z"];
         velocity = new Vector3(vx, vy, vz);
         contents = new ReagentContents();
-        contents.Load(reader);
-        bool hasGenes = reader.ReadBoolean();
+        contents.Load(node, "fluidContents");
+        bool hasGenes = node["hasGenes"];
         if (hasGenes) {
             KoboldGenes loadedGenes = new KoboldGenes();
-            loadedGenes.Load(reader);
+            loadedGenes.Load(node,"genes");
             SetGenes(loadedGenes);
         }
-        bool newSplashed = reader.ReadBoolean();
+        bool newSplashed = node["splashed"];
         if (newSplashed && !splashed) {
             OnSplash();
         }

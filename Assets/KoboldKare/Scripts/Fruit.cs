@@ -6,6 +6,7 @@ using System.IO;
 using ExitGames.Client.Photon.StructWrapping;
 using Naelstrof.Inflatable;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
@@ -85,14 +86,14 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(GetFrozen());
-        writer.Write(health);
+    public void Save(JSONNode node) {
+        node["frozen"] = GetFrozen();
+        node["health"] = health;
     }
 
-    public void Load(BinaryReader reader) {
-        SetFrozen(reader.ReadBoolean());
-        health = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        SetFrozen(node["frozen"]);
+        health = node["health"];
     }
 
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {

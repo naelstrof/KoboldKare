@@ -7,6 +7,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using System.IO;
+using SimpleJSON;
 
 public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField]
@@ -48,11 +49,11 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             daysPast = (int)stream.ReceiveNext();
         }
     }
-    public void Save(BinaryWriter writer) {
-        writer.Write(daysPast);
+    public void Save(JSONNode node) {
+        node["daysPast"] = daysPast;
     }
-    public void Load(BinaryReader reader) {
-        daysPast = reader.ReadInt32();
+    public void Load(JSONNode node) {
+        daysPast = node["daysPast"];
     }
     private void Sleep() {
         midnightEvent.Raise(null);

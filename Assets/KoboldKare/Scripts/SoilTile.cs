@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
@@ -93,18 +94,18 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(hasDebris);
+    public void Save(JSONNode node) {
+        node["hasDebris"] = hasDebris;
         if (planted == null) {
-            writer.Write((int)-1);
+            node["planted"] = -1;
         } else {
-            writer.Write(planted.photonView.ViewID);
+            node["planted"] = planted.photonView.ViewID;
         }
     }
 
-    public void Load(BinaryReader reader) {
-        SetDebris(reader.ReadBoolean());
-        int viewID = reader.ReadInt32();
+    public void Load(JSONNode node) {
+        SetDebris(node["hasDebris"]);
+        int viewID = node["planted"];
         SetPlantedRPC(viewID);
     }
 

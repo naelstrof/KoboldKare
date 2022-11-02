@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource), typeof(Rigidbody))]
 public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbable {
@@ -60,11 +61,11 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(grabbed);
+    public void Save(JSONNode node) {
+        node["grabbed"] = grabbed;
     }
 
-    public void Load(BinaryReader reader) {
-        SetState(reader.ReadBoolean());
+    public void Load(JSONNode node) {
+        SetState(node["grabbed"]);
     }
 }

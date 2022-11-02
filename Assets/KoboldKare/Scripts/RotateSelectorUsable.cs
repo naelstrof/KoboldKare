@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 public class RotateSelectorUsable : UsableMachine {
@@ -71,14 +72,14 @@ public class RotateSelectorUsable : UsableMachine {
         }
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(GetSelected());
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["selected"] = GetSelected();
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        SetSelected(reader.ReadInt32());
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        SetSelected(node["selected"]);
     }
 
     IEnumerator DisableAfterTime() {

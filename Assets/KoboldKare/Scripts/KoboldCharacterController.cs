@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.IO;
+using SimpleJSON;
 
 [RequireComponent(typeof(Rigidbody))]
 public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
@@ -387,12 +388,12 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(targetCrouched);
+    public void Save(JSONNode node) {
+        node["targetCrouched"] = targetCrouched;
     }
 
-    public void Load(BinaryReader reader) {
-        targetCrouched = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        targetCrouched = node.GetValueOrDefault("targetCrouched", 0f);
     }
 
 }

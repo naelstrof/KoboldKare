@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 using Photon.Pun;
 using KoboldKare;
 using System.IO;
+using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
 public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, ISavable {
@@ -168,37 +169,36 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         }
     }
     
-    public void Save(BinaryWriter writer) {
-        writer.Write(PlantDatabase.GetID(plant));
-        writer.Write(transform.position.x);
-        writer.Write(transform.position.y);
-        writer.Write(transform.position.z);
-        GetGenes().Save(writer);
-        writer.Write(growing);
+    public void Save(JSONNode node) {
+        node["plantID"] = PlantDatabase.GetID(plant);
+        node["position.x"] = transform.position.x;
+        node["position.y"] = transform.position.y;
+        node["position.z"] = transform.position.z;
+        GetGenes().Save(node, "genes");
+        node["growing"] = growing;
     }
 
-    public void Load(BinaryReader reader) {
-        SwitchTo(PlantDatabase.GetPlant(reader.ReadInt16()));
-        float x = reader.ReadSingle();
-        float y = reader.ReadSingle();
-        float z = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        SwitchTo(PlantDatabase.GetPlant((short)node["plantID"].AsInt));
+        float x = node.GetValueOrDefault("position.x", 0f);
+        float y = node.GetValueOrDefault("position.y", 0f);
+        float z = node.GetValueOrDefault("position.z", 0f);
         transform.position = new Vector3(x,y,z);
         KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(reader);
+        loadedGenes.Load(node, "genes");
         SetGenes(loadedGenes);
-        // Growing.
-        if (reader.ReadBoolean()) {
-            foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
-                renderer.material.SetFloat("_BounceAmount", 1f);
-                StartCoroutine(DarkenMaterial(renderer.material));
-            }
-            wateredEffect.SendEvent("Play");
-            audioSource.Play();
-            effect.gameObject.SetActive(false);
-            effect.gameObject.SetActive(true);
-            StopCoroutine(nameof(GrowRoutine));
-            StartCoroutine(nameof(GrowRoutine));
+        
+        if (!node.GetValueOrDefault("growing", false)) return;
+        foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {
+            renderer.material.SetFloat("_BounceAmount", 1f);
+            StartCoroutine(DarkenMaterial(renderer.material));
         }
+        wateredEffect.SendEvent("Play");
+        audioSource.Play();
+        effect.gameObject.SetActive(false);
+        effect.gameObject.SetActive(true);
+        StopCoroutine(nameof(GrowRoutine));
+        StartCoroutine(nameof(GrowRoutine));
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

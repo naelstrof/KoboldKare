@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using System.IO;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -220,15 +221,14 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
     }
 
-    public void Save(BinaryWriter writer) {
+    public void Save(JSONNode node) {
         contents ??= new ReagentContents(startingMaxVolume);
-        contents.Save(writer);
+        contents.Save(node, "contents");
     }
 
-    public void Load(BinaryReader reader) {
+    public void Load(JSONNode node) {
         contents ??= new ReagentContents(startingMaxVolume);
-        contents.Clear();
-        contents.Load(reader);
+        contents.Load(node, "contents");
         OnReagentContentsChanged(InjectType.Metabolize);
     }
 }

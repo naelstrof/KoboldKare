@@ -17,13 +17,14 @@ public class Follower : MonoBehaviour {
         startingPosition = transform.localPosition;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
         motionSicknessReducer.changed += OnMotionSicknessReducerChanged;
-        OnMotionSicknessReducerChanged(motionSicknessReducer.GetValue());
         kobold.ragdoller.RagdollEvent += RagdollEvent;
+        OnMotionSicknessReducerChanged(motionSicknessReducer.GetValue());
     }
     void OnDestroy() {
         if (kobold !=null) {
             kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
+        motionSicknessReducer.changed -= OnMotionSicknessReducerChanged;
     }
 
     void OnMotionSicknessReducerChanged(int value) {

@@ -8,6 +8,7 @@ using Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
+using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource))]
 public class Pachinko : GenericUsable {
@@ -148,6 +149,6 @@ public class Pachinko : GenericUsable {
     void OnValidate() {
         pachinkoBallPrefab.OnValidate();
     }
-    public override void Save(BinaryWriter writer) { }
-    public override void Load(BinaryReader reader) { }
+    public override void Save(JSONNode node) { }
+    public override void Load(JSONNode node) { }
 }

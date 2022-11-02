@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -50,12 +51,12 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         return description.GetLocalizedString();
     }
 
-    public override void Save(BinaryWriter writer) {
-        writer.Write(plants);
+    public override void Save(JSONNode node) {
+        node["plants"] = plants;
     }
 
-    public override void Load(BinaryReader reader) {
-        plants = reader.ReadInt32();
+    public override void Load(JSONNode node) {
+        plants = node["plants"];
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

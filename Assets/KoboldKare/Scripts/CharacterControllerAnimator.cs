@@ -8,6 +8,7 @@ using Vilar.AnimationStation;
 using Photon.Pun;
 using System.IO;
 using PenetrationTech;
+using SimpleJSON;
 
 public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISavable {
     private Kobold kobold;
@@ -356,19 +357,19 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             desiredHipVector = (Vector2)stream.ReceiveNext();
         }
     }
-    public void Save(BinaryWriter writer) {
+    public void Save(JSONNode node) {
         if (animating) {
-            writer.Write(currentStationSet.photonView.ViewID);
-            writer.Write(currentStationSet.GetAnimationStations().IndexOf(currentStation));
+            node["currentStationSetID"] = currentStationSet.photonView.ViewID;
+            node["stationIndex"] = currentStationSet.GetAnimationStations().IndexOf(currentStation);
         } else {
-            writer.Write(-1);
-            writer.Write(-1);
+            node["currentStationSetID"] = -1;
+            node["stationIndex"] = -1;
         }
     }
 
-    public void Load(BinaryReader reader) {
-        int photonViewID = reader.ReadInt32();
-        int animationID = reader.ReadInt32();
+    public void Load(JSONNode node) {
+        int photonViewID = node.GetValueOrDefault("currentStationSetID", -1);
+        int animationID = node.GetValueOrDefault("stationIndex", -1);
         if (photonViewID != -1 &&
             (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
              currentStation == null || currentStationSet.GetAnimationStations().IndexOf(currentStation) != animationID)) {

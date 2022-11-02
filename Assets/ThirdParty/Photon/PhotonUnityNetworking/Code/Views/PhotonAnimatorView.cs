@@ -9,6 +9,8 @@
 // ----------------------------------------------------------------------------
 
 
+using SimpleJSON;
+
 namespace Photon.Pun
 {
     using System.Collections.Generic;
@@ -569,11 +571,11 @@ namespace Photon.Pun
         }
 
         // Hopefully we just don't need these, we don't use them yet
-        public void Save(BinaryWriter writer) {
+        public void Save(JSONNode node) {
             throw new System.NotImplementedException();
         }
 
-        public void Load(BinaryReader reader) {
+        public void Load(JSONNode node) {
             throw new System.NotImplementedException();
         }
 

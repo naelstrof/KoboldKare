@@ -9,6 +9,7 @@ using PenetrationTech;
 using System.IO;
 using Naelstrof.Inflatable;
 using Naelstrof.Mozzarella;
+using SimpleJSON;
 using SkinnedMeshDecals;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -598,23 +599,23 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         spawned?.Invoke(this);
     }
 
-    public void Save(BinaryWriter writer) {
-        GetGenes().Save(writer);
-        writer.Write(arousal);
-        metabolizedContents.Save(writer);
-        consumedReagents.Save(writer);
+    public void Save(JSONNode node) {
+        GetGenes().Save(node, "genes");
+        node["arousal"] = arousal;
+        metabolizedContents.Save(node, "metabolizedContents");
+        consumedReagents.Save(node, "consumedReagents");
         bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == this;
-        writer.Write(isPlayerControlled);
+        node["isPlayerControlled"] = isPlayerControlled;
     }
 
-    public void Load(BinaryReader reader) {
+    public void Load(JSONNode node) {
         KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(reader);
+        loadedGenes.Load(node, "genes");
         SetGenes(loadedGenes);
-        arousal = reader.ReadSingle();
-        metabolizedContents.Load(reader);
-        consumedReagents.Load(reader);
-        bool isPlayerControlled = reader.ReadBoolean();
+        arousal = node["arousal"];
+        metabolizedContents.Load(node, "metabolizedContents");
+        consumedReagents.Load(node, "consumedReagents");
+        bool isPlayerControlled = node["isPlayerControlled"];
         if (isPlayerControlled) {
             PhotonNetwork.LocalPlayer.TagObject = this;
             GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);

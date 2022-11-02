@@ -7,6 +7,7 @@ using UnityEngine;
 using Photon.Pun;
 using System.Linq;
 using KoboldKare;
+using SimpleJSON;
 
 public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private GameObject handDisplayPrefab;
@@ -690,9 +691,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer) {
+    public void Save(JSONNode node) {
     }
 
-    public void Load(BinaryReader reader) {
+    public void Load(JSONNode node) {
     }
 }

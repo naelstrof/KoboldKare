@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using KoboldKare;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -213,11 +214,11 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(rainAmount);
+    public void Save(JSONNode node) {
+        node["rainAmount"] = rainAmount;
     }
 
-    public void Load(BinaryReader reader) {
-        rainAmount = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        rainAmount = node["rainAmount"];
     }
 }

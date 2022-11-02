@@ -4,6 +4,7 @@ using System.IO;
 using JigglePhysics;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 
 public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable {
@@ -73,17 +74,17 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         }
     }
 
-    public void Save(BinaryWriter writer) {
+    public void Save(JSONNode node) {
         var position = body.transform.position;
-        writer.Write(position.x);
-        writer.Write(position.y);
-        writer.Write(position.z);
+        node["position.x"] = position.x;
+        node["position.y"] = position.y;
+        node["position.z"] = position.z;
     }
 
-    public void Load(BinaryReader reader) {
-        float x = reader.ReadSingle();
-        float y = reader.ReadSingle();
-        float z = reader.ReadSingle();
+    public void Load(JSONNode node) {
+        float x = node["position.x"];
+        float y = node["position.y"];
+        float z = node["position.z"];
         body.transform.position = new Vector3(x, y, z);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -42,12 +43,12 @@ public class CumflateObjective : DragonMailObjective {
         return $"{title.GetLocalizedString()} {cumflated.ToString()}/{cumflatedMax.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer) {
-        writer.Write(cumflated);
+    public override void Save(JSONNode node) {
+        node["cumflated"] = cumflated;
     }
 
-    public override void Load(BinaryReader reader) {
-        cumflated = reader.ReadInt32();
+    public override void Load(JSONNode node) {
+        cumflated = node["cumflated"];
         TriggerUpdate();
     }
 

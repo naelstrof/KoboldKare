@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using Photon.Pun;
+using SimpleJSON;
 
 public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     //public List<GameObject> _plantPrefabs;
@@ -71,16 +72,16 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         }
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
+    public override void Save(JSONNode node) {
+        base.Save(node);
         genes ??= new KoboldGenes().Randomize();
-        genes.Save(writer);
+        genes.Save(node, "genes");
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
+    public override void Load(JSONNode node) {
+        base.Load(node);
         KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(reader);
+        loadedGenes.Load(node, "genes");
         genes = loadedGenes;
     }
 }

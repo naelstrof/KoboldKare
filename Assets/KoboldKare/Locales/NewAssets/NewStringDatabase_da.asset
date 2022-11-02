@@ -1151,7 +1151,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ikke n\xF8dvendigt at v\xE6re genert."
+      op her, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1269,6 +1269,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 228010423070457856
     m_Localized: "Bev\xE6gelsessyge reduktion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "Kunne ikke indl\xE6se gem"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Kunne ikke indl\xE6se gemningen! Det kan gemmes med en anden version
+      af Koboldkare."
     m_Metadata:
       m_Items: []
   references:

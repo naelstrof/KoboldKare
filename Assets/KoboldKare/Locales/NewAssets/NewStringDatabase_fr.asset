@@ -1277,6 +1277,15 @@ MonoBehaviour:
     m_Localized: "R\xE9ducteur du mal des transports"
     m_Metadata:
       m_Items: []
+  - m_Id: 231982103588818944
+    m_Localized: "\xC9chec de la sauvegarde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 231982103609790464
+    m_Localized: "Ne pouvait pas charger la sauvegarde! Il peut \xEAtre enregistr\xE9
+      avec une version diff\xE9rente de Koboldkare."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

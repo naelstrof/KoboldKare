@@ -6,6 +6,7 @@ using Photon.Pun;
 using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
+using SimpleJSON;
 
 public class GrinderManager : UsableMachine, IAnimationStationSet {
     public delegate void GrindedObjectAction(ReagentContents contents);
@@ -188,9 +189,9 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         return stations;
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        bool newGrinding = reader.ReadBoolean();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        bool newGrinding = node["grinding"];
         if (!grinding && newGrinding) {
             BeginGrind();
         } else if (grinding && !newGrinding) {
@@ -198,8 +199,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         }
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(grinding);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["grinding"] = grinding;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 
 public class DrainUsable : UsableMachine {
@@ -63,17 +64,17 @@ public class DrainUsable : UsableMachine {
         }
     }
 
-    public override void Load(BinaryReader reader) {
-        base.Load(reader);
-        bool newDraining = reader.ReadBoolean();
+    public override void Load(JSONNode node) {
+        base.Load(node);
+        bool newDraining = node["draining"];
         if (!draining && newDraining) {
             StartCoroutine(Drain());
         }
         draining = newDraining;
     }
 
-    public override void Save(BinaryWriter writer) {
-        base.Save(writer);
-        writer.Write(draining);
+    public override void Save(JSONNode node) {
+        base.Save(node);
+        node["draining"] = draining;
     }
 }

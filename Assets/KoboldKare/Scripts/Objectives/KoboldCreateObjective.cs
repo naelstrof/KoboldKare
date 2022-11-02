@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -47,12 +48,12 @@ public class KoboldCreateObjective : DragonMailObjective {
         return $"{title.GetLocalizedString()} {kobolds.ToString()}/{maxKobolds.ToString()}";
     }
 
-    public override void Save(BinaryWriter writer) {
-        writer.Write(kobolds);
+    public override void Save(JSONNode node) {
+        node["kobolds"] = kobolds;
     }
 
-    public override void Load(BinaryReader reader) {
-        kobolds = reader.ReadInt32();
+    public override void Load(JSONNode node) {
+        kobolds = node["kobolds"];
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

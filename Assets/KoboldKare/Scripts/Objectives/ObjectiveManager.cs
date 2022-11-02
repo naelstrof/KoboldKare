@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -108,23 +109,23 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         objectiveChanged?.Invoke(currentObjective);
     }
 
-    public void Save(BinaryWriter writer) {
-        writer.Write(stars);
+    public void Save(JSONNode node) {
+        node["stars"] = stars;
         bool hasObjective = currentObjective != null;
-        writer.Write(hasObjective);
-        writer.Write(currentObjectiveIndex);
+        node["hasObjective"] = hasObjective;
+        node["currentObjectiveIndex"] = currentObjectiveIndex;
         if (hasObjective) {
-            objectives[currentObjectiveIndex].Save(writer);
+            objectives[currentObjectiveIndex].Save(node);
         }
     }
 
-    public void Load(BinaryReader reader) {
-        stars = reader.ReadInt32();
-        bool hasObjective = reader.ReadBoolean();
-        currentObjectiveIndex = reader.ReadInt32();
+    public void Load(JSONNode node) {
+        stars = node["stars"];
+        bool hasObjective = node["hasObjective"];
+        currentObjectiveIndex = node["currentObjectiveIndex"];
         SwitchToObjective(hasObjective ? objectives[currentObjectiveIndex] : null);
         if (hasObjective) {
-            objectives[currentObjectiveIndex].Load(reader);
+            objectives[currentObjectiveIndex].Load(node);
         }
     }
 

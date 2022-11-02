@@ -10,6 +10,7 @@ public class Follower : MonoBehaviour {
     [SerializeField]
     private SettingInt motionSicknessReducer;
     private Vector3 startingPosition;
+    private CharacterControllerAnimator characterAnimator;
     bool ragdoll;
     
     void Awake() {
@@ -18,6 +19,8 @@ public class Follower : MonoBehaviour {
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
         motionSicknessReducer.changed += OnMotionSicknessReducerChanged;
         kobold.ragdoller.RagdollEvent += RagdollEvent;
+        characterAnimator = GetComponentInParent<CharacterControllerAnimator>();
+        characterAnimator.animationStateChanged += OnAnimationStateChanged;
         OnMotionSicknessReducerChanged(motionSicknessReducer.GetValue());
     }
     void OnDestroy() {
@@ -25,6 +28,16 @@ public class Follower : MonoBehaviour {
             kobold.ragdoller.RagdollEvent -= RagdollEvent;
         }
         motionSicknessReducer.changed -= OnMotionSicknessReducerChanged;
+        characterAnimator.animationStateChanged -= OnAnimationStateChanged;
+    }
+
+    void OnAnimationStateChanged(bool animating) {
+        if (animating && !enabled) {
+            enabled = true;
+        } else if (!animating && motionSicknessReducer.GetValue() == 1) {
+            transform.localPosition = startingPosition;
+            enabled = false;
+        }
     }
 
     void OnMotionSicknessReducerChanged(int value) {
@@ -36,7 +49,7 @@ public class Follower : MonoBehaviour {
         transform.position -= transform.up*distance;
         Vector3 a = transform.localPosition;
         Vector3 b = transform.parent.InverseTransformPoint(target.position);
-        if (ragdoll) {
+        if (ragdoll || characterAnimator.IsAnimating()) {
             transform.localPosition = b;
         } else {
             transform.localPosition = Vector3.MoveTowards(a, b, Time.deltaTime*5f);

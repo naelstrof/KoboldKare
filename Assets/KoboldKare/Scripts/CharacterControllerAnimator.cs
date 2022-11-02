@@ -34,6 +34,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     [SerializeField]
     private AudioPack footstepPack;
 
+    public delegate void AnimationStateChangeAction(bool animating);
+
+    public AnimationStateChangeAction animationStateChanged;
+
     private Vector2 eyeRot;
     private float speedLerp;
     private Vector2 networkedEyeRot;
@@ -140,6 +144,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         } else {
             GameManager.instance.StartCoroutine(AnimationRoutine());
         }
+        animationStateChanged?.Invoke(true);
     }
 
     private void Start() {
@@ -306,6 +311,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
         currentStation = null;
         currentStationSet = null;
+        animationStateChanged?.Invoke(false);
     }
 
     private IEnumerator StopAnimationRoutine() {

@@ -389,7 +389,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     }
 
     public void Save(JSONNode node) {
-        node["targetCrouched"] = targetCrouched;
+        node["targetCrouched"] = inputCrouched;
     }
 
     public void Load(JSONNode node) {

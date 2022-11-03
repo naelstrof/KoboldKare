@@ -14,7 +14,7 @@ public class BombUsable : GenericUsable, IDamagable {
     [SerializeField]
     private VisualEffect effect;
     private GenericReagentContainer container;
-    void Start() {
+    void Awake() {
         container = GetComponent<GenericReagentContainer>();
         animator = GetComponent<Animator>();
     }
@@ -37,10 +37,12 @@ public class BombUsable : GenericUsable, IDamagable {
         if (photonView.IsMine) {
             // Mix the water with the potassium...
             // It should sizzle and blow up.
-            ReagentContents contents = new ReagentContents();
-            contents.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(40f));
-            container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                contents, container.photonView.ViewID);
+            ReagentContents water = new ReagentContents();
+            water.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(20f));
+            ReagentContents potassium = new ReagentContents();
+            potassium.AddMix(ReagentDatabase.GetReagent("Potassium").GetReagent(20f));
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, water, container.photonView.ViewID);
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, potassium, container.photonView.ViewID);
         }
         fired = true;
     }

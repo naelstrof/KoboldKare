@@ -576,7 +576,6 @@ MonoBehaviour:
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
-        volume: 1
 --- !u!114 &4897858389562194135
 MonoBehaviour:
   m_ObjectHideFlags: 0

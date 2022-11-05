@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator QuitToMenuRoutine() {
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        ObjectiveManager.GetCurrentObjective()?.Unregister();
         yield return LevelLoader.instance.LoadLevel("MainMenu");
         PhotonNetwork.OfflineMode = false;
     }

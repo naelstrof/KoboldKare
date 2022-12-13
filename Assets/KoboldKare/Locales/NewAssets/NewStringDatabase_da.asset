@@ -331,7 +331,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
-    m_Localized: Melon Juice
+    m_Localized: "Melounov\xE1 \u0161\u0165\xE1va"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198981
@@ -379,7 +379,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer
+    m_Localized: "Hra v\xEDce hr\xE1\u010D\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -503,11 +503,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: "Cam\xE9ra libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Sticky Freecam
+    m_Localized: "Upevn\u011Bn\xE1 kamera"
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
@@ -539,7 +539,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness
+    m_Localized: Baculatost
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
@@ -555,7 +555,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -663,7 +663,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Steam Audio
+    m_Localized: Audio Steam
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
@@ -837,7 +837,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247266238464
-    m_Localized: Banana split
+    m_Localized: "Ban\xE1nov\xFD z\xE1kusek"
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
@@ -1151,7 +1151,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ingen grund til at v\xE6re genert."
+      op her, ikke n\xF8dvendigt at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1278,6 +1278,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "Kunne ikke indl\xE6se gemningen! Det kan gemmes med en anden version
       af Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: Der er intet andet for dig her ... indtil videre.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: Der er intet andet for dig her.
     m_Metadata:
       m_Items: []
   references:

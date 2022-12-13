@@ -1282,6 +1282,14 @@ MonoBehaviour:
       av Koboldkare.
     m_Metadata:
       m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Det er ingenting annet for deg her ... forel\xF8pig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: Det er ingenting annet for deg her.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

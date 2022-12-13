@@ -157,7 +157,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004678
-    m_Localized: "Proyecci\xF3n de Panini"
+    m_Localized: "Proyecci\xF3n Panini"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004679
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004698
-    m_Localized: Gibraltar
+    m_Localized: "auto destrucci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: Modo de agarre de interruptor
+    m_Localized: Cambiar modo de agarre
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -287,7 +287,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004710
-    m_Localized: Reiniciar
+    m_Localized: Restablecer
     m_Metadata:
       m_Items: []
   - m_Id: 516095004711
@@ -367,7 +367,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198989
-    m_Localized: "Esc\xE1ner reactivo"
+    m_Localized: "Esc\xE1ner de reactivos"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198990
@@ -419,11 +419,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Polla
+    m_Localized: Pene
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: "Tama\xF1o de la polla"
+    m_Localized: "Tama\xF1o del pene"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino
+    m_Localized: Equino acampanado
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -439,7 +439,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Equino
+    m_Localized: Equino acampanado
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -447,7 +447,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199009
-    m_Localized: Ninguna
+    m_Localized: Ninguno
     m_Metadata:
       m_Items: []
   - m_Id: 516099199010
@@ -463,7 +463,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: "Todav\xEDa no se encuentran habitaciones ..."
+    m_Localized: "Todav\xEDa no se encuentran salas ...(habitaci\xF3n refers specifically
+      to the room of a house it's not correct for game rooms)"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
@@ -475,7 +476,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016
-    m_Localized: "Nombre de la habitaci\xF3n:"
+    m_Localized: 'Nombre de la sala:'
     m_Metadata:
       m_Items: []
   - m_Id: 516099199017
@@ -487,11 +488,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: "Tama\xF1o de Kobold"
+    m_Localized: "Tama\xF1o del Kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
-    m_Localized: "Crear juego p\xFAblico"
+    m_Localized: "Crear una sala p\xFAblica"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393280
@@ -507,11 +508,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: Freecam pegajoso
+    m_Localized: "C\xE1mara libre pegajosa"
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: Navegador de servidor
+    m_Localized: Buscador de salas
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
@@ -523,11 +524,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: "Encontrar habitaci\xF3n al azar"
+    m_Localized: Encontrando sala aleatoria
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Habitaci\xF3n izquierda"
+    m_Localized: Sala abandonada
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -547,11 +548,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
-    m_Localized: Calidad de los espejo
+    m_Localized: Calidad de los reflejos
     m_Metadata:
       m_Items: []
   - m_Id: 10484814208094208
-    m_Localized: "Hemipen\xED"
+    m_Localized: Hemipene
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
@@ -559,7 +560,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Target Framerate
+    m_Localized: Framerate objetivo
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
@@ -576,17 +577,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: Un simple hardhat para proteger la cabeza de los escombros que caen.
+    m_Localized: Un simple casco de seguridad para proteger la cabeza de los escombros
+      que caen.
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Un m\xE1gico unido con un nudo, anillo medial y algunas crestas
-      baches."
+    m_Localized: "Un accesorio\_m\xE1gico con un nudo, anillo medial y algunas crestas
+      y vaches."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "Un accesible m\xE1gico que es largo, cil\xEDndrico y tiene una
-      punta abierta. \xA1Tiene una gran acci\xF3n telesc\xF3pica!"
+    m_Localized: "Un accesorio\_m\xE1gico que es largo, cil\xEDndrico y tiene una
+      punta c\xF3nica. \xA1Tiene una gr\xE1n acci\xF3n telesc\xF3pica!"
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
@@ -599,12 +601,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Un accesible m\xE1gico que es largo y se le da un punto. \xA1Sus
-      bolas est\xE1n internalizadas!"
+    m_Localized: "Un accessorio m\xE1gico que es largo, tiene una forma cilindrica
+      y termina en una punta c\xF3nica. \xA1Sus bolas son internas!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: La polla de Kandi
+    m_Localized: El pene de Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -612,7 +614,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Collar de pico
+    m_Localized: Collar de pinchos
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -624,7 +626,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
-    m_Localized: Guardar carga
+    m_Localized: Guardar/Cargar
     m_Metadata:
       m_Items: []
   - m_Id: 43807311896563712
@@ -652,7 +654,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
-    m_Localized: "Erecci\xF3n hacia abajo"
+    m_Localized: "Desinflar erecci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
@@ -668,7 +670,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
-    m_Localized: Hardware acelerado
+    m_Localized: "Aceleraci\xF3n por Hardware"
     m_Metadata:
       m_Items: []
   - m_Id: 83373358009864192
@@ -679,7 +681,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Cambia regi\xF3n"
+    m_Localized: "Cambiar de regi\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
@@ -837,7 +839,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247266238464
-    m_Localized: Banana split
+    m_Localized: "Ban\xE1nov\xFD z\xE1kusek"
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
@@ -1187,7 +1189,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Me quedar\xE9 aqu\xED en caso de que alg\xFAn otro Kobold desnudo
-      quiera que las construya m\xE1quinas fetiche."
+      quiera que las construya m\xE1quinas de fetiche."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1199,7 +1201,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Quiero muchos tipos diferentes de Kobold, y eso significa que necesita
+    m_Localized: "Quiero muchos tipos diferentes de Kobold, y eso significa que necesitas
       m\xE1s jugos de frutas. \xA1Muela m\xE1s fruta!"
     m_Metadata:
       m_Items: []
@@ -1242,8 +1244,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Env\xEDame muchos grandes boobie kobolds. Este no es por la practicidad,
-      es divertido sacudirse."
+    m_Localized: "Tetas que no te hagan una rusa si no una Uni\xF3n Sovi\xE9tica.
+      Este no es por la practicidad, es divertido sacudirse."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1279,6 +1281,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "\xA1No se pudo cargar el ahorro! Se puede guardar con una versi\xF3n
       diferente de Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "No hay nada m\xE1s para ti aqu\xED ... por ahora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "No hay nada m\xE1s para ti aqu\xED."
     m_Metadata:
       m_Items: []
   references:

@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810375
-    m_Localized: "N\xEDzk\xFD"
+    m_Localized: "N\xEDzk\xE1"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810376
-    m_Localized: "Vysok\xFD"
+    m_Localized: "Vysok\xE1"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810377
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004700
-    m_Localized: Chytit
+    m_Localized: "Pou\u017E\xEDt v chycen\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
@@ -694,110 +694,110 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: "P\u011Bstujte sv\u016Fj prvn\xED kobold!"
+    m_Localized: "Nech vyr\u016Fst sv\xE9ho prvn\xEDho kobolda!"
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Voda a \u010Das r\u016Fst kobold, postarejte se o to."
+    m_Localized: "Voda a \u010Das zaru\u010D\xED r\u016Fst kobold\u016F. Postarej
+      se o to."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "P\u0159eneste Kobold prost\u0159ednictv\xEDm pneumatick\xE9 s\xEDt\u011B."
+    m_Localized: "P\u0159eve\u010F kobolda pomoc\xED pneumatick\xE9 s\xEDt\u011B."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "M\xE1te pozornost draka patrona ... nyn\xED p\u0159eve\u010Fte
-      zbo\u017E\xED. Budete odm\u011Bn\u011Bni."
+    m_Localized: "Upoutal jsi pozornost Dra\u010D\xEDho patrona... nyn\xED p\u0159eve\u010F
+      zbo\u017E\xED. Samoz\u0159ejm\u011B za odm\u011Bnu."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Zasadit vejce!
+    m_Localized: "Zasa\u010F vejce!"
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Dragon Patron hled\xE1 schopn\xE9ho karetakera, zasad\xED vejce
-      do pru\u017En\xE9 Zem\u011B."
+    m_Localized: "Dra\u010D\xED patron hled\xE1 schopn\xE9 pe\u010Dovatele! Zasa\u010F
+      vejce do nakyp\u0159en\xE9 p\u016Fdy"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: "Kupte si pr\u016Fmyslov\xFD ovocn\xFD mix\xE9r."
+    m_Localized: "Kup si pr\u016Fmyslov\xFD ovocn\xFD mix\xE9r."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Tyto Kobolds mus\xED b\xFDt krmeny, najd\u011Bte stavebn\xED smlouvu
-      ve stavebn\xEDm \xFA\u0159adu."
+    m_Localized: "Koboldi pot\u0159ebuj\xED nakrmit, najdi stavebn\xED smlouvu ve
+      stavebn\xED kancel\xE1\u0159i."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
-    m_Localized: "Krmte ovocnou \u0161\u0165\xE1vou Kobolds"
+    m_Localized: "Nakrm koboldy ovocnou \u0161\u0165\xE1vou."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Kobolds pot\u0159ebuje p\u0159ipraven\xE9 j\xEDdlo, pou\u017Eijte
-      ml\xFDnek k rozdrcen\xED ovoce"
+    m_Localized: "Koboldi pot\u0159ebuj\xED n\u011Bjak\xE9 j\xEDdlo, pou\u017Eij
+      ml\xFDnek na rozemlet\xED ovoce."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: Plemeno kobolds
+    m_Localized: "Plemeno kobold\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Pot\u0159ebujeme m\xEDstn\u011B poch\xE1zej\xEDc\xED Kobolds, za\u010Dneme
-      t\xEDm, \u017Ee n\u011Bkter\xE9 z va\u0161ich Kobolds t\u011Bhotn\xE9."
+    m_Localized: "Pot\u0159ebujeme dod\xE1vku m\xEDstn\xEDch kobold\u016F, za\u010Dn\u011Bme
+      oplodn\u011Bn\xEDm tv\xFDch kobold\u016F."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Dod\xE1vejte velk\xE9 Dick Kobolds."
+    m_Localized: "Dod\xE1n\xED kobold\u016F s velk\xFDm penisem."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: "Pot\u0159ebuji dod\xE1vku plemene Kobolds s velk\xFDmi pt\xE1ky,
-      o\u010Dek\xE1v\xE1m, \u017Ee to zvl\xE1dnete."
+    m_Localized: "O\u010Dek\xE1v\xE1m dod\xE1n\xED kobold\u016F s obrovsk\xFDmi pt\xE1ky!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Dod\xE1vejte velk\xE9 prsa kobolds."
+    m_Localized: "Dod\xE1n\xED kobold\u016F s velk\xFDmi prsy."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: "Pot\u0159ebuji dod\xE1vku plemene Kobolds s velk\xFDmi prsy, o\u010Dek\xE1v\xE1m,
-      \u017Ee to zvl\xE1dnete."
+    m_Localized: "O\u010Dek\xE1v\xE1m \u017Ee zvl\xE1dne\u0161 dod\xE1n\xED kobold\u016F
+      s velmi velk\xFDmi prsy."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Cum nafouknout kobolds.
+    m_Localized: "Napln\u011Bn\xED spermatem."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Kobolds mus\xED b\xFDt napln\u011Bn a\u017E po okraj, o tom se
-      mnou nemluvte."
+    m_Localized: "Koboldi mus\xED b\xFDt napln\u011Bni a\u017E po okraj, v\xEDc o
+      tom diskutovat nehodl\xE1m."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: Proniknout celou cestu.
+    m_Localized: Penetrovat skrz na skrz.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: "Nem\u016F\u017Eu ani za\u010D\xEDt myslet na vysv\u011Btlen\xED,
-      jen se o to postarejte."
+    m_Localized: "Nenapad\xE1 m\u011B jak to vysv\u011Btlit, prost\u011B se o to
+      postarej."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: "Dod\xE1vejte v\xFDkrmn\xE9 kobolds"
+    m_Localized: "Dod\xE1n\xED vykrmen\xFDch kobold\u016F."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Ml\xE9\u010Dn\xE9 koktejly jdou rovnou na stehna, je v na\u0161em
-      nejlep\u0161\xEDm z\xE1jmu m\xEDt n\u011Bkolik superheavy kobolds."
+    m_Localized: "Ml\xE9\u010Dn\xE9 koktejly jdou rovnou do stehen, je ve tv\xE9m
+      nejlep\u0161\xEDm z\xE1jmu m\xEDt p\xE1r supert\u011B\u017Ek\xFDch kobold\u016F."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: "Oviposite velmi velk\xE9 vejce."
+    m_Localized: "Nakl\xE1st velmi velk\xE9 vejce."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: "Nezaj\xEDm\xE1 m\u011B, co s t\xEDm d\u011Bl\xE1\u0161, pot\u0159ebujeme
-      velk\xE9 vejce, aby vy\u0161lo z koboldu."
+    m_Localized: "Je mi jedno co s n\xEDm pak ud\u011Bl\xE1\u0161, ale pot\u0159ebujeme
+      z kobolda dostat obrovsk\xE9 vejce!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -814,11 +814,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 202987527876431872
-    m_Localized: "Ovl\xE1d\xE1n\xED ky\u010Dle"
+    m_Localized: "Ovl\xE1d\xE1n\xED bok\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 202998194956193792
-    m_Localized: "Upravte \xFArove\u0148 kr\u010Den\xED"
+    m_Localized: "\xDAprava \xFArovn\u011B skr\u010Den\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 209952603934085120
@@ -842,15 +842,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 209952603963445252
-    m_Localized: Pineapple Popsicle
+    m_Localized: "Ananasov\xFD nanuk"
     m_Metadata:
       m_Items: []
   - m_Id: 210151247266238464
-    m_Localized: Banana split
+    m_Localized: "Ban\xE1nov\xFD z\xE1kusek"
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: "Ob\u0159\xEDzen\xFD humanoidn\xED penis"
+    m_Localized: "ob\u0159ezan\xFD humanoidn\xED penis"
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
@@ -874,20 +874,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210162028410097665
-    m_Localized: "Ve\u010De\u0159e vejce"
+    m_Localized: "vaje\u010Dn\xFD pokrm"
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Spikey Dick
+    m_Localized: "Ostnat\xFD penis"
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubov\xFD penis s m\u011Bkk\xFDmi masami a n\xEDzk\xFDmi vis\xEDc\xEDmi
-      koulemi."
+    m_Localized: "Ubit\xFD penis s masit\xFDmi m\u011Bkk\xFDmi ostny a n\xEDzko vis\xEDc\xEDma
+      koulema"
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
-    m_Localized: "Povoluje nebo deaktivuje podvody na cel\xE9m serveru.\n"
+    m_Localized: "P\u0159\xEDkaz aktivuje nebo deaktivuje cheaty pro cel\xFD server"
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651585
@@ -895,29 +895,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651586
-    m_Localized: "Uv\xE1d\xED v\u0161echna \u010Dinidla, prefabsy a vybaven\xED."
+    m_Localized: "Zobraz\xED seznam v\u0161ech \u010Dinidel, p\u0159\xEDsad a vybaven\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: "D\xE1v\xE1 zadan\xE9 \u010Dinidlo nebo prefab. Pou\u017Eijte /seznam
-      k nalezen\xED v\u0161ech vlastn\xEDch n\xE1zv\u016F."
+    m_Localized: "D\xE1v\xE1 konkr\xE9tn\xED zadan\xE9 \u010Dinidlo, nebo p\u0159\xEDsadu.
+      Pou\u017Eij p\u0159\xEDkaz /list k nalezen\xED spr\xE1vn\xE9ho n\xE1zvu po\u017Eadovan\xE9ho
+      p\u0159edm\u011Btu."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: "Vybav\xED zadan\xE9 za\u0159\xEDzen\xED. Pou\u017Eijte /seznam
-      k nalezen\xED vlastn\xEDch n\xE1zv\u016F."
+    m_Localized: "Vybav\xED konkr\xE9tn\xEDm vybaven\xEDm. Pou\u017Eijte p\u0159\xEDkaz
+      /list\_k nalezen\xED spr\xE1vn\xE9ho n\xE1zvu po\u017Eadovan\xE9ho p\u0159edm\u011Btu."
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: "Poset\xE1 p\xE9ro"
+    m_Localized: "\u017Debrovan\xFD penis"
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "\u017Debrovan\xFD p\xE9ro s m\u011Bkk\xFDmi tal\xED\u0159i a ostny."
+    m_Localized: "\u017Debrovan\xFD penis s m\u011Bkk\xFDmi v\xFDstupky tvaru tal\xED\u0159e
+      a ostny."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: "Polo\u017Ete vejce!"
+    m_Localized: "Nakl\xE1st vejce!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
@@ -948,7 +950,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste ji
+    m_Localized: "Kobold Milk m\xE1 hodn\u011B nutri\u010Dn\xED hodnoty, zkuste jej
       kombinovat s jin\xFDmi v\u011Bcmi v kbel\xEDku, abyste mohli vyr\xE1b\u011Bt
       nov\xE1 j\xEDdla."
     m_Metadata:
@@ -1081,45 +1083,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha by to nebylo tak z\xE1bavn\xE9, kdybyste zastr\u010Dili 4 dilda
-      do \xFAst Kobolda ... p\u0159ikazuji v\xE1m, abyste to ud\u011Blali."
+    m_Localized: "Nebylo by z\xE1bavn\xE9 narvat koboldovi do \xFAst 4 dilda najednou?!
+      Rozkazuji k proveden\xED tohoto pokusu!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Prodat Micro Kobold
+    m_Localized: Prodej mikro Kobolda
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: "Cht\u011Bl bych opravdu mal\xFD kobold, kter\xFD se vejde do ...
-      mal\xE9, intimn\xED \u0161t\u011Brbiny."
+    m_Localized: "Pot\u0159ebuji velmi mali\u010Dk\xE9ho kobolda, kter\xFD by se
+      ve\u0161el do.... velmi mal\xE9ho prostoru. Jako intimn\xED \xFAdr\u017Eb\xE1\u0159e..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: "Ko\u010Di\u010D\xED tastrofa"
+    m_Localized: "Ko\u010Dkotastrofa"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
-    m_Localized: "Pou\u017Eijte v\xFDbu\u0161niny k vyhozen\xED trosek na farm\u011B,
-      abyste mohli m\xEDt v\xEDce m\xEDsta."
+    m_Localized: "pou\u017Eijte v\xFDbu\u0161niny na odkl\xEDzen\xED sutin z farmy,
+      bude tak v\xEDce m\xEDsta na p\u011Bstov\xE1n\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: "Ud\u011Blejte perfektn\xED kobold"
+    m_Localized: "Vytvo\u0159te perfektn\xEDho kobolda"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
-    m_Localized: "Rozhodl jsem se, \u017Ee pot\u0159ebuji cho\u0165, vytvo\u0159te
-      pro m\u011B perfektn\xED kobold."
+    m_Localized: "Rozhodl jsem se \u017Ee je \u010Das naj\xEDt si cho\u0165. Vytvo\u0159te
+      pro mne perfektn\xEDho kobolda!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Polo\u017Een\xED potrub\xED"
+    m_Localized: "Pokl\xE1d\xE1n\xED potrub\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "Jsou perfektn\xED! Budu ... docela zanepr\xE1zdn\u011Bn ... propaguji
-      v\xE1s na pozici dozorce, koup\xEDte si Kobolds jm\xE9nem od jin\xFDch Karetaker\u016F
-      Kobold, najdete n\u011Bkoho, kdo bude postavit pot\u0159ebn\xE9 hadi\u010Dky."
+    m_Localized: "Jsou perfektn\xED! Budu te\u010F... docela zanepr\xE1zdn\u011Bn...
+      proto v\xE1s povy\u0161uji na pozici Dozorce, budete m\xFDm jm\xE9nem nakupovat
+      Koboldy od jin\xFDch opatrovn\xEDk\u016F. Najd\u011Bte n\u011Bkoho kdo postav\xED
+      nezbytn\xE9 potrub\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1127,13 +1130,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
-    m_Localized: "Mysl\xEDm, \u017Ee jsem te\u010F \u0161\xE9f! M\u011Bl bych se
-      pokusit zakoupit kobold s nov\xFDm pneumatick\xFDm syst\xE9mem."
+    m_Localized: "Mysl\xEDm, \u017Ee te\u010F jsem tu \u0161\xE9f! M\u011Bl bych
+      zkusit zakoupit kobolda pomoc\xED nov\xE9ho pneumatick\xE9ho syst\xE9mu!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "V\xEDtejte! Hled\xE1te koupit n\u011Bkter\xE1 semena? M\xE1me tak\xE9
-      vejce Kobold!"
+    m_Localized: "V\xEDtejte! Je libo n\u011Bjak\xE1 semena ke koupi? M\xE1me v nab\xEDdce
+      i vejce!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1141,17 +1144,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "V\xEDtejte v kasinu, zde pro podnik\xE1n\xED nebo pot\u011B\u0161en\xED?"
+    m_Localized: "V\xEDtejte v kas\xEDnu! Jste tu pracovn\u011B, nebo se jen pobavit?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: "Z va\u0161eho nedostatku oble\u010Den\xED h\xE1d\xE1m trochu obou.
-      M\u016F\u017Eete p\u0159ehr\xE1vat stroj Panchinko, abyste z\xEDskali n\u011Bkolik
-      ozdoby."
+    m_Localized: "Z nedostatku oble\u010Den\xED h\xE1d\xE1m, \u017Ee tak trochu od
+      oboj\xEDho. M\u016F\u017Eete si zahr\xE1t Pachinko, t\u0159eba vypadne n\u011Bjak\xFD
+      u\u017Eite\u010Dn\xFD kousek."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
-    m_Localized: "Nebu\u010F cizinec."
+    m_Localized: "Neost\xFDchej se."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885794521088
@@ -1198,12 +1201,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Budu tady st\xE1t jen pro p\u0159\xEDpad, \u017Ee by n\u011Bjak\xFD
-      jin\xFD nah\xFD Kobold chce, abych je postavil feti\u0161sk\xE9 stroje."
+    m_Localized: "Budu tu st\xE1t jen pro p\u0159\xEDpad, \u017Ee by n\u011Bjak\xFD
+      jin\xFD naz\xED koboldi cht\u011Bli, abych si z nich ud\u011Blal erotickou
+      hra\u010Dku!"
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Hlavn\xED nab\xEDdka bezpe\u010Dn\xE9 pro pr\xE1ci"
+    m_Localized: "Hlavn\xED nab\xEDdka bezpe\u010Dnosti pr\xE1ce."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1211,9 +1215,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Chci spoustu r\u016Fzn\xFDch typ\u016F Kobold, a to znamen\xE1,
-      \u017Ee pot\u0159ebujete v\xEDce ovocn\xFDch \u0161\u0165\xE1v. Grind v\xEDce
-      ovoce!"
+    m_Localized: "Chci spoustu kobold\u016F od ka\u017Ed\xE9ho typu! Pro tebe to
+      znamen\xE1 nasb\xEDrat v\xEDce ovoce a ud\u011Blat mnohem v\xEDce d\u017Eus\u016F!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1221,44 +1224,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Chci vid\u011Bt v\xEDce velk\xFDch koboldov\xFDch vajec, dostat
-      se k tomu!"
+    m_Localized: "Chci m\xEDt v\xEDce velk\xFDch vajec! Dej se do toho!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: "Plemeno: \u010Cas na b\u0159icho!"
+    m_Localized: "Plemeno: Pand\u011Br\xE1\u010D!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Chci hodn\u011B tlust\xFDch kobolds, jsou opravdu u\u017Eite\u010Dn\xE9
-      jako pap\xEDrov\xE9 hmotnosti a pol\u0161t\xE1\u0159e."
+    m_Localized: "Chci hodn\u011B opravdu obtloustl\xFDch Kobold\u016F, jsou velmi
+      u\u017Eite\u010Dn\xED jako pol\u0161t\xE1\u0159, nebo jako t\u011B\u017E\xEDtko."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: 'Breed: Sausage Fest'
+    m_Localized: "Plemeno: P\xE1rkov\xE1 slavnost"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Pot\u0159ebuji hodn\u011B kobolds s ob\u0159\xEDmi kohouty, je
-      to pro m\xE9 pl\xE1ny z\xE1sadn\xED."
+    m_Localized: "Pot\u0159ebuji Koboldy s obrovsk\xFDm p\xE9rem, je to nezbytn\xE9
+      pro m\xE9 rostlinstvo!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Plemeno: Velk\xE1 McLargehuge"
+    m_Localized: "Plemeno: Ohromn\u011B McMegaObrovsk\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Chci v\xEDce z toho ob\u0159\xEDho typu Kobold, jsou opravdu u\u017Eite\u010Dn\xE9
-      pro \u010Di\u0161t\u011Bn\xED stropu."
+    m_Localized: "Chci v\xEDc ob\u0159\xEDch kobold\u016F! Jejich rozm\u011Bry je
+      \u010Din\xED u\u017Eite\u010Dn\xE9 na ut\xEDr\xE1n\xED st\u0159ech a strop\u016F."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Plemeno: prsa, velk\xE1!"
+    m_Localized: 'Plemeno: Megakozy!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Po\u0161lete mi spoustu velk\xFDch boobie kobolds. Tenhle nen\xED
-      pro prakti\u010Dnost, jsou prost\u011B z\xE1bavn\xE9."
+    m_Localized: "Po\u0161lete mi spoustu megakoz\xE1ck\xFDch kobold\u016F! Jejich
+      obrovsk\xE9 vnady nejsou u\u017Eite\u010Dn\xE9, ale je sranda s nimi t\u0159epat!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1266,9 +1268,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Ud\u011Blejte z m\u011B spoustu mal\xFDch kobolds, jejich velikosti
-      a nata\u017Een\xFDch t\u011Bl je opravdu dobr\xE9, opakovan\u011B pou\u017Eiteln\xE9
-      kondomy."
+    m_Localized: "Vytvo\u0159 spoustu mal\xFDch kobold\u016F. Jejich velikost a pru\u017En\xE1
+      t\u011Bl\xED\u010Dka je \u010Din\xED u\u017Eite\u010Dn\xE9! Stejn\u011B jako
+      znovupou\u017Eiteln\xFD kondom!"
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1276,25 +1278,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Zaj\xEDmalo by m\u011B, jak dob\u0159e maj\xED Kobolds s t\u0159en\xEDm
-      vzduchu, pos\xEDlejte jeden vrhaj\xEDc\xED se na oblohu."
+    m_Localized: "Zaj\xEDmalo by m\u011B jak koboldi odol\xE1vaj\xED t\u0159en\xED
+      vzduchu! Zaho\u010F kobolda vzh\u016Fru ke hv\u011Bzd\xE1m!"
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
-    m_Localized: Kredity
+    m_Localized: "Auto\u0159i"
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Reduktor nemoci pohybu
+    m_Localized: "omezova\u010D nemoci z pohybu"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: "Nepoda\u0159ilo se na\u010D\xEDst ulo\u017Eit"
+    m_Localized: "Nepoda\u0159ilo se na\u010D\xEDst/ulo\u017Eit"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
-    m_Localized: "Nelze na\u010D\xEDst ulo\u017Eit! M\u016F\u017Ee b\xFDt ulo\u017Een
-      jinou verz\xED Koboldkare."
+    m_Localized: "Nelze na\u010D\xEDst/ulo\u017Eit! M\u016F\u017Ee b\xFDt zp\u016Fsobeno
+      jinou verz\xED hry."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Tady pro v\xE1s nen\xED nic jin\xE9ho ... prozat\xEDm."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Tady pro v\xE1s nen\xED nic jin\xE9ho."
     m_Metadata:
       m_Items: []
   references:

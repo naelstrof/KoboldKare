@@ -497,7 +497,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: "Cam\xE9ra libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -1064,7 +1064,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "\u4ED6\u4EEC\u5F88\u5B8C\u7F8E\uFF01\u6211\u5C06\u53D8\u5F97...\u5F88\u5FD9...\u6211\u6B63\u5728\u5411\u60A8\u63D0\u5347\u60A8\u7684\u7763\u519B\u804C\u4F4D\uFF0C\u60A8\u5C06\u4EE3\u8868\u5176\u4ED6Kobold
+    m_Localized: "\u4ED6\u4EEC\u5F88\u5B8C\u7F8E\uFF01\u6211\u5C06\u8981...\u5F88\u5FD9...\u6211\u6B63\u5728\u5411\u60A8\u63D0\u5347\u60A8\u7684\u7763\u519B\u804C\u4F4D\uFF0C\u60A8\u5C06\u4EE3\u8868\u5176\u4ED6Kobold
       Karetakers\u8D2D\u4E70Kobolds\uFF0C\u627E\u5230\u4E00\u4E2A\u4EBA\u6765\u5EFA\u9020\u6240\u9700\u7684\u7BA1\u9053\u3002"
     m_Metadata:
       m_Items: []
@@ -1222,6 +1222,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 231982103609790464
     m_Localized: "\u65E0\u6CD5\u52A0\u8F7D\u4FDD\u5B58\uFF01\u5B83\u53EF\u4EE5\u7528\u4E0D\u540C\u7248\u672C\u7684Koboldkare\u4FDD\u5B58\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "\u73B0\u5728\u6CA1\u6709\u522B\u7684\u4E86...\u73B0\u5728\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "\u8FD9\u91CC\u522B\u65E0\u5176\u4ED6\u3002"
     m_Metadata:
       m_Items: []
   references:

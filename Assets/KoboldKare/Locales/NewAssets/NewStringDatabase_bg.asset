@@ -549,7 +549,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: "Cam\xE9ra libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -603,7 +603,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -729,7 +729,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
-    m_Localized: Steam Audio
+    m_Localized: Audio Steam
     m_Metadata:
       m_Items: []
   - m_Id: 82631738259984384
@@ -1183,7 +1183,7 @@ MonoBehaviour:
       \u0437\u0430 \u0435\u043B\u0430\u0441\u0442\u0438\u0447\u043D\u043E\u0441\u0442\u0442\u0430
       \u043D\u0430 \u043F\u0440\u0438\u0432\u044A\u0440\u0437\u0432\u0430\u043D\u0435\u0442\u043E
       \u043D\u0430 \u0440\u0435\u0430\u043B\u043D\u043E\u0441\u0442\u0442\u0430 \u043D\u0430
-      \u041A\u043E\u0431\u043E\u043B\u0434\u0441, \u0447\u0443\u043A\u0430\u0439\u0442\u0435
+      \u041A\u043E\u0431\u043E\u043B\u0434\u0441, \u0447\u0443\u043A\u0430\u0439
       \u043A\u043E\u0431\u043E\u043B\u0434 \u0441 \u043F\u0438\u0448\u043A\u0430,
       \u043F\u043E-\u0433\u043E\u043B\u044F\u043C \u043E\u0442 \u0442\u044F\u043B\u043E\u0442\u043E."
     m_Metadata:
@@ -1591,6 +1591,16 @@ MonoBehaviour:
       \u0437\u0430\u043F\u0430\u0437\u0432\u0430\u043D\u0435\u0442\u043E! \u041C\u043E\u0436\u0435
       \u0434\u0430 \u0441\u0435 \u0437\u0430\u043F\u0430\u0437\u0438 \u0441 \u0440\u0430\u0437\u043B\u0438\u0447\u043D\u0430
       \u0432\u0435\u0440\u0441\u0438\u044F \u043D\u0430 Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "\u0422\u0443\u043A \u043D\u044F\u043C\u0430 \u043D\u0438\u0449\u043E
+      \u0434\u0440\u0443\u0433\u043E \u0437\u0430 \u0432\u0430\u0441 ... \u0437\u0430\u0441\u0435\u0433\u0430."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "\u0422\u0443\u043A \u043D\u044F\u043C\u0430 \u043D\u0438\u0449\u043E
+      \u0434\u0440\u0443\u0433\u043E \u0437\u0430 \u0432\u0430\u0441."
     m_Metadata:
       m_Items: []
   references:

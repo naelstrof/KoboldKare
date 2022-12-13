@@ -588,17 +588,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38135240696844291
     m_Localized: "Un ata\u0219at magic care este lung, cilindric \u0219i are un v\xE2rf
       evazat. Are o mare ac\u021Biune telescopic\u0103!"
     m_Metadata:
       m_Items: []
-  - m_Id: 38135240696844291
+  - m_Id: 38140087290613760
     m_Localized: "Bare metalice simple, sigure de corp, hipoallergetice. (Da, ei
       merg \xEEn sfarcurile tale.)"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 38140087290613760
-    m_Localized: ...
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
@@ -1303,6 +1303,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "Nu am putut \xEEnc\u0103rca salvarea! Poate fi salvat cu o versiune
       diferit\u0103 de Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Nu este nimic altceva pentru tine aici ... deocamdat\u0103."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: Nu este nimic altceva pentru tine aici.
     m_Metadata:
       m_Items: []
   references:

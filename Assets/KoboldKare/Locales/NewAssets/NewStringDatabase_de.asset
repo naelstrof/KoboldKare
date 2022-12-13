@@ -560,7 +560,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -693,20 +693,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: Wachsen Sie Ihren ersten Kobold!
+    m_Localized: Ziehe deinen ersten Kobold auf!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Wasser und Zeit werden den Kobold wachsen und sich darum k\xFCmmern."
+    m_Localized: "Der Kobold w\xE4chst mit Wasser und Geduld. K\xFCmmern Sie sich
+      darum."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "\xDCbertragen Sie Kobold \xFCber pneumatisches Netzwerk."
+    m_Localized: "Verschicke einen Kobold \xFCber das pneumatische Netzwerk."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Sie haben die Aufmerksamkeit des Drachenpatrons ... \xDCbertragen
-      Sie jetzt die Ware. Du wirst belohnt."
+    m_Localized: Sie haben die Aufmerksamkeit eines Drachenklienten... Schicken Sie
+      die Waren jetzt ab. Sie werden belohnt.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
@@ -714,89 +715,89 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Drachenpatron sucht einen f\xE4higen Karetaker, pflanzt ein Ei
-      in geschmeidige Erde."
+    m_Localized: "Ein Drachenklient sucht einen f\xE4higen Betreuer. Pflanzen Sie
+      ein Ei in fruchtbarem Boden."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: Kaufen Sie einen industriellen Fruchtmixer.
+    m_Localized: Kaufe einen industriellen Entsafter.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Diese Kobolds m\xFCssen gef\xFCttert werden und den Bauvertrag
-      im Baub\xFCro finden."
+    m_Localized: "Diese Kobolde m\xFCssen gef\xFCttert werden. Den Bauvertrag k\xF6nnen
+      Sie im Baub\xFCro finden."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
-    m_Localized: "F\xFCttern Sie Kobolds Fruchtsaft"
+    m_Localized: Gib den Kobolden Fruchtsaft
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Kobolds braucht das Essen zubereitet und benutze die M\xFChle,
-      um Fr\xFCchte zu mahlen"
+    m_Localized: "Sie m\xFCssen das Futter f\xFCr die Kobolde selbst zubereiten.
+      Benutzen Sie den Entsafter um Fr\xFCchte zu verarbeiten."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Z\xFCchten Sie Kobolds"
+    m_Localized: "Z\xFCchte Kobolde"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: Wir brauchen Kobolds aus der Region, damit einige Ihrer Kobolds
-      schwanger werden.
+    m_Localized: "Wir brauchen Kobolde aus der Region. Fangen Sie damit an, ein paar
+      Ihrer Kobolde zu schw\xE4ngern."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Liefern Sie gro\xDFen Schwanz Kobolds."
+    m_Localized: "Liefere Kobolde mit gro\xDFem Penis."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: "Ich brauche eine Lieferung einer Rasse von Kobolds mit gro\xDFen
-      Schw\xE4nzen, ich erwarte, dass Sie damit umgehen."
+    m_Localized: "Ich brauche eine Lieferung von Kobolden mit gro\xDFen Schw\xE4nzen.
+      Ich erwarte, dass Sie sich darum k\xFCmmern."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Liefern Sie gro\xDFe Kobolds."
+    m_Localized: "Liefere Kobolde mit gro\xDFen Br\xFCsten."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: "Ich brauche eine Lieferung einer Rasse von Kobolds mit gro\xDFen
-      Br\xFCsten, ich erwarte, dass Sie damit umgehen."
+    m_Localized: "Ich brauche eine Lieferung von Kobolden mit gro\xDFen Br\xFCsten.
+      Ich erwarte, dass Sie sich darum k\xFCmmern."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Sperma blasen Kobolds auf.
+    m_Localized: Pumpe Kobolde mit Sperma auf.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Die Kobolds m\xFCssen bis zum Rand gef\xFCllt sein, sprechen Sie
-      nicht weiter mit mir."
+    m_Localized: "The Kobolde m\xFCssen zum Bersten gef\xFCllt sein. Stellen Sie
+      keine weiteren Fragen."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: Durchdringen den ganzen Weg durch.
+    m_Localized: "Dringe durch den ganzen K\xF6rper."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: "Ich kann nicht einmal an eine Erkl\xE4rung denken, k\xFCmmern Sie
-      sich einfach darum."
+    m_Localized: "Mir f\xE4llt nicht einmal ansatzweise eine Erkl\xE4rung ein. K\xFCmmern
+      Sie sich einfach darum."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: Liefern Sie Masted Kobolds
+    m_Localized: "Liefere gem\xE4stete Kobolde."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Milchshakes gehen direkt bis zu den Oberschenkel, es ist in unserem
-      besten Interesse, ein paar \xFCberdurchschnittliche Kobolds zu haben."
+    m_Localized: "Milchshakes gehen direkt auf die H\xFCften. Es ist zu unser aller
+      Vorteil, ein paar richtig schwere Kobolde zu haben."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: "Oviposit ein sehr gro\xDFes Ei."
+    m_Localized: "Lege ein sehr gro\xDFes Ei."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: "Es ist mir egal, was Sie danach damit machen, wir brauchen ein
-      gro\xDFes Ei, um aus einem Kobold herauszukommen."
+    m_Localized: "Mir ist gleich, was Sie dann damit machen. Es ist notwendig, dass
+      ein gro\xDFes Ei aus einem Kobold herauskommt."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -877,7 +878,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Spikey Dick
+    m_Localized: "Ostnat\xFD penis"
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
@@ -1294,6 +1295,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: Konnte das Speichern nicht laden! Es kann mit einer anderen Version
       von Koboldkare gespeichert werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Hier gibt es nichts anderes f\xFCr dich ... im Moment."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Hier gibt es nichts anderes f\xFCr dich."
     m_Metadata:
       m_Items: []
   references:

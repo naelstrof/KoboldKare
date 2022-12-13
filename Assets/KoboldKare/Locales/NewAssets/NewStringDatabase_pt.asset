@@ -205,9 +205,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ESTE JOGO RETRATA PERSONAGENS DE FIC\xC7\xC3O PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
-      PLAY <#FFFFFF> VOC\xCA EST\xC1 AFIRMANDO QUE:"
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
+      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -1279,6 +1279,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "N\xE3o foi poss\xEDvel carregar o salvamento! Pode ser salvo com
       uma vers\xE3o diferente do Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "N\xE3o h\xE1 mais nada para voc\xEA aqui ... por enquanto."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "N\xE3o h\xE1 mais nada para voc\xEA aqui."
     m_Metadata:
       m_Items: []
   references:

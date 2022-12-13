@@ -504,7 +504,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: "Cam\xE9ra libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -556,7 +556,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -1282,6 +1282,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 231982103609790464
     m_Localized: Tallenna ei voinut ladata! Se voidaan tallentaa eri versiolla Koboldkarista.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "T\xE4\xE4ll\xE4 ei ole mit\xE4\xE4n muuta ... toistaiseksi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "T\xE4\xE4ll\xE4 ei ole mit\xE4\xE4n muuta sinulle."
     m_Metadata:
       m_Items: []
   references:

@@ -210,8 +210,9 @@ MonoBehaviour:
   - m_Id: 516095004691
     m_Localized: "\uC774 \uAC8C\uC784\uC740 <#FF0000>\uC5D0 \uCC38\uC5EC\uD558\uB294
       \uAC00\uC0C1\uC758 \uCE90\uB9AD\uD130\uB97C \uBB18\uC0AC\uD569\uB2C8\uB2E4.
-      <#FFFFFF>\n\n<#008CFF> PLAY <#FFFFFF>\uB97C \uD074\uB9AD\uD558\uBA74 \uB2E4\uC74C\uACFC
-      \uAC19\uC774 \uB9D0\uD569\uB2C8\uB2E4."
+      \uC131\uC801\uC73C\uB85C \uB178\uACE8\uC801\uC778 \uD589\uB3D9 <#FFFFFF>\n\n<#008CFF>
+      \uD50C\uB808\uC774 <#FFFFFF>\uB97C \uD074\uB9AD\uD558\uBA74 \uADC0\uD558\uB294
+      \uB2E4\uC74C\uACFC \uAC19\uC774 \uC9C4\uC220\uD569\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -1359,6 +1360,16 @@ MonoBehaviour:
     m_Localized: "\uC800\uC7A5\uC744\uB85C\uB4DC \uD560 \uC218 \uC5C6\uC5C8\uC2B5\uB2C8\uB2E4!
       Koboldkare\uC758 \uB2E4\uB978 \uBC84\uC804\uC73C\uB85C \uC800\uC7A5 \uB420
       \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "\uC5EC\uAE30\uC5D0 \uB2F9\uC2E0\uC744\uC704\uD55C \uAC83\uC774
+      \uC5C6\uC2B5\uB2C8\uB2E4 ... \uC9C0\uAE08\uC740."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "\uC5EC\uAE30\uC5D0 \uB2F9\uC2E0\uC744\uC704\uD55C \uAC83\uC774
+      \uC5C6\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
   references:

@@ -141,7 +141,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004674
-    m_Localized: Volume principale
+    m_Localized: Volume Principal
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
@@ -320,7 +320,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198976
-    m_Localized: Ghiaccio
+    m_Localized: Hielo
     m_Metadata:
       m_Items: []
   - m_Id: 516099198977
@@ -384,7 +384,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: Multiplayer
+    m_Localized: "Hra v\xEDce hr\xE1\u010D\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -436,7 +436,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino
+    m_Localized: Equino acampanado
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -508,7 +508,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: Freecam
+    m_Localized: "Cam\xE9ra libre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
@@ -560,7 +560,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -842,7 +842,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247266238464
-    m_Localized: Banana split
+    m_Localized: "Ban\xE1nov\xFD z\xE1kusek"
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
@@ -1285,6 +1285,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "Impossibile caricare il salvataggio! Pu\xF2 essere salvato con
       una versione diversa di Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Non c'\xE8 nient'altro per te qui ... per ora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Non c'\xE8 nient'altro per te qui."
     m_Metadata:
       m_Items: []
   references:

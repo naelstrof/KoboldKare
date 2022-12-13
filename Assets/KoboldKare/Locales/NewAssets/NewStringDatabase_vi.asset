@@ -549,7 +549,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
-    m_Localized: Chubbiness
+    m_Localized: Baculatost
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
@@ -565,7 +565,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -899,7 +899,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Spikey Dick
+    m_Localized: "Ostnat\xFD penis"
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
@@ -1369,6 +1369,15 @@ MonoBehaviour:
     m_Localized: "Kh\xF4ng th\u1EC3 t\u1EA3i ti\u1EBFt ki\u1EC7m! N\xF3 c\xF3 th\u1EC3
       \u0111\u01B0\u1EE3c l\u01B0u v\u1EDBi m\u1ED9t phi\xEAn b\u1EA3n kh\xE1c c\u1EE7a
       Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Kh\xF4ng c\xF3 g\xEC kh\xE1c cho b\u1EA1n \u1EDF \u0111\xE2y ...
+      b\xE2y gi\u1EDD."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Kh\xF4ng c\xF3 g\xEC kh\xE1c cho b\u1EA1n \u1EDF \u0111\xE2y."
     m_Metadata:
       m_Items: []
   references:

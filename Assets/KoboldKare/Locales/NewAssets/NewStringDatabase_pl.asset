@@ -98,7 +98,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
-    m_Localized: "Jako\u015B\u0107 naklejek"
+    m_Localized: "Jako\u015B\u0107 kalkomanii"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810385
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w podziemiu.
+    m_Localized: Witamy w metrze.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1296,6 +1296,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "Nie mog\u0142em za\u0142adowa\u0107 zapisu! Mo\u017Cna go zapisa\u0107
       z inn\u0105 wersj\u0105 Koboldkare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Nie ma tu nic wi\u0119cej ... na razie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Nie ma tu nic wi\u0119cej."
     m_Metadata:
       m_Items: []
   references:

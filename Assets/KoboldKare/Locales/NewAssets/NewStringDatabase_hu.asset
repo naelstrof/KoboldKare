@@ -557,7 +557,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: Synchronisation verticale
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem neked n\xE9h\xE1ny kell\xE9ket, hogy hamburgert k\xE9sz\xEDtsenek,
-      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak adj\xE1k."
+      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak add meg."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1294,6 +1294,14 @@ MonoBehaviour:
   - m_Id: 231982103609790464
     m_Localized: "Nem tudtam bet\xF6lteni a ment\xE9st! Menthet\u0151 a Koboldkare
       m\xE1sik verzi\xF3j\xE1val."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655481044992
+    m_Localized: "Nincs m\xE1s neked itt ... egyel\u0151re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 216333655518793728
+    m_Localized: "Itt nincs m\xE1s neked."
     m_Metadata:
       m_Items: []
   references:

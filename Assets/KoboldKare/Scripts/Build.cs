@@ -49,7 +49,7 @@ public class Build {
 
     [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "true");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();

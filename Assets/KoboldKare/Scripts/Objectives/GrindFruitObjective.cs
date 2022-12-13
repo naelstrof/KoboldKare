@@ -42,7 +42,11 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnGrindedObject(ReagentContents contents) {
-        Advance(successSpawnLocation.position);
+        if (successSpawnLocation == null) {
+            Advance(Vector3.zero);
+        } else {
+            Advance(successSpawnLocation.position);
+        }
     }
 
     public override string GetTitle() {

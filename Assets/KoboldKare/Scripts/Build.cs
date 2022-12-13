@@ -11,11 +11,14 @@ using UnityEditor;
 //using UnityEngine.Localization;
 
 public class Build {
-    static string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
+    static readonly string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
     private static string outputDirectory {
         get {
             string dir = Environment.GetEnvironmentVariable("BUILD_DIR");
-            return dir.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+            if (dir == null) {
+                throw new UnityException("Tried to build game without specifying build directory!");
+            }
+            return string.Format("{0}{1}", dir.TrimEnd(Path.DirectorySeparatorChar), Path.DirectorySeparatorChar);
         }
     }
     [MenuItem("KoboldKare/BuildLinux")]
@@ -24,8 +27,8 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare";
-        Debug.Log("#### BUILDING TO " + output + "####");
+        string output = $"{outputDirectory}KoboldKare";
+        Debug.Log($"#### BUILDING TO {output}####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -37,8 +40,8 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.app";
-        Debug.Log("#### BUILDING TO " + output + "####");
+        string output = $"{outputDirectory}KoboldKare.app";
+        Debug.Log($"#### BUILDING TO {output}####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
@@ -50,9 +53,9 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.exe";
-        Debug.Log("#### BUILDING TO " + output + "####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.Development);
+        string output = $"{outputDirectory}KoboldKare.exe";
+        Debug.Log($"#### BUILDING TO {output}####");
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
@@ -63,17 +66,17 @@ public class Build {
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
-        string output = outputDirectory+"KoboldKare.exe";
-        Debug.Log("#### BUILDING TO " + output + "####");
+        string output = $"{outputDirectory}KoboldKare.exe";
+        Debug.Log($"#### BUILDING TO {output}####");
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 
-        string gitcommit = Environment.GetEnvironmentVariable("GIT_COMMIT").Substring(0,7); 
+        string gitcommit = Environment.GetEnvironmentVariable("GIT_COMMIT")?.Substring(0,8); 
         if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(gitcommit)) {
-            PlayerSettings.bundleVersion = version + "_" + gitcommit;
+            PlayerSettings.bundleVersion = $"{version}_{gitcommit}";
         } else if (!String.IsNullOrEmpty(version)) {
             PlayerSettings.bundleVersion = version;
         }

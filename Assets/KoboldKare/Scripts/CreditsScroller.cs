@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CreditsScroller : MonoBehaviour {
@@ -9,12 +6,17 @@ public class CreditsScroller : MonoBehaviour {
     [SerializeField]
     private float height;
     private float startTime = 0f;
+    private RectTransform target;
+    private float startY;
     private void OnEnable() {
         startTime = Time.unscaledTime;
+        target = GetComponent<RectTransform>();
+        startY = target.anchoredPosition.y;
     }
 
     void Update() {
-        float currentPosition = Mathf.Repeat((Time.unscaledTime-startTime) * speed, height+100f)-100f;
-        transform.position = transform.position.With(y:currentPosition);
+        float currentPosition = Mathf.Repeat((Time.unscaledTime-startTime) * speed, height);
+        target.anchoredPosition = new Vector2(target.anchoredPosition.x, startY+currentPosition);
+        //transform.position = transform.position.With(y:currentPosition);
     }
 }

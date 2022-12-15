@@ -463,8 +463,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
-    m_Localized: "Todav\xEDa no se encuentran salas ...(habitaci\xF3n refers specifically
-      to the room of a house it's not correct for game rooms)"
+    m_Localized: "Todav\xEDa no se encuentran salas ..."
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014

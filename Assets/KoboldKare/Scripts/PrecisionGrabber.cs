@@ -677,13 +677,16 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (currentGrab != null) {
                 stream.SendNext(currentGrab.GetRotation());
                 stream.SendNext(currentGrab.GetDistance());
+                //stream.SendNext(previewGrab);
             } else {
                 stream.SendNext(Quaternion.identity);
                 stream.SendNext(2f);
+                //stream.SendNext(previewGrab);
             }
         } else {
             Quaternion rot = (Quaternion)stream.ReceiveNext();
             float dist  = (float)stream.ReceiveNext();
+            //previewGrab = (bool)stream.ReceiveNext();
             if (currentGrab != null) {
                 currentGrab.SetRotation(rot);
                 currentGrab.SetDistance(dist);

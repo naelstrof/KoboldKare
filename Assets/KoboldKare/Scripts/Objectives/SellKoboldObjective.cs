@@ -25,7 +25,7 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
         soldObject.RemoveListener(OnEntitySold);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         kobolds++;
         TriggerUpdate();
@@ -36,7 +36,7 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
 
     private void OnEntitySold(PhotonView obj) {
         if (obj.GetComponentInChildren<Kobold>() != null) {
-            Advance(obj.transform.position);
+            ObjectiveManager.NetworkAdvance(obj.transform.position, $"{obj.ViewID.ToString()}{kobolds.ToString()}");
         }
     }
 

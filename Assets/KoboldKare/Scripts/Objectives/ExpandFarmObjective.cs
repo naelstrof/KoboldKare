@@ -37,13 +37,13 @@ public class ExpandFarmObjective : ObjectiveWithSpaceBeam {
         SoilTile.tileCleared -= OnTileClear;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
 
     private void OnTileClear(SoilTile tile) {
-        Advance(tile.transform.position);
+        ObjectiveManager.NetworkAdvance(tile.transform.position, tile.photonView.ViewID.ToString());
     }
 
     public override string GetTitle() {

@@ -72,7 +72,7 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         ReagentContents spilled = pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume);
         
         container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
-            pressedKobold.photonView.ViewID);
+            pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

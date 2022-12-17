@@ -9,7 +9,7 @@ using System.IO;
 using SimpleJSON;
 
 public class GrinderManager : UsableMachine, IAnimationStationSet {
-    public delegate void GrindedObjectAction(ReagentContents contents);
+    public delegate void GrindedObjectAction(int viewID, ReagentContents contents);
 
     public static event GrindedObjectAction grindedObject;
         
@@ -108,9 +108,9 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     [PunRPC]
-    void Grind(ReagentContents incomingContents, KoboldGenes genes) {
-        grindedObject?.Invoke(incomingContents);
-        container.AddMixRPC(incomingContents, photonView.ViewID);
+    void Grind(int viewID, ReagentContents incomingContents, KoboldGenes genes) {
+        grindedObject?.Invoke(viewID, incomingContents);
+        container.AddMixRPC(incomingContents, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         container.SetGenes(genes);
         fluidStream.OnFire(container);
     }
@@ -160,7 +160,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         GenericReagentContainer genericReagentContainer = view.GetComponentInChildren<GenericReagentContainer>();
         // Finally we grind it
         if (genericReagentContainer != null) {
-            photonView.RPC(nameof(Grind), RpcTarget.All, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
+            photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
         }
         
         IDamagable d = view.GetComponentInParent<IDamagable>();

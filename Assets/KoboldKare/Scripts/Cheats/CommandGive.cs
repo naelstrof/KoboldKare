@@ -32,12 +32,12 @@ public class CommandGive : Command {
             ReagentContents contents = new ReagentContents();
             if (args.Length > 2 && float.TryParse(args[2], out float value)) {
                 contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(value));
-                obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
+                obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 output.Append($"Spawned bucket filled with {value} {args[1]}.\n");
                 return;
             }
             contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
-            obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID);
+            obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
             output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
             return;
         }

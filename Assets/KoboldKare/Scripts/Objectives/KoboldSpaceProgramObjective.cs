@@ -31,7 +31,7 @@ public class KoboldSpaceProgram : DragonMailObjective {
         }
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
@@ -51,7 +51,7 @@ public class KoboldSpaceProgram : DragonMailObjective {
                 }
             }
             if (maxHeightKobold != null && maxHeight > height) {
-                Advance(maxHeightKobold.transform.position);
+                ObjectiveManager.NetworkAdvance(maxHeightKobold.transform.position, maxHeightKobold.photonView.ViewID.ToString());
                 yield break;
             }
             currentMaxHeight = maxHeight;

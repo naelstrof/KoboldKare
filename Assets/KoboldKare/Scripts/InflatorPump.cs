@@ -158,7 +158,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                 GenericReagentContainer holeContainer = penetrable.GetComponentInParent<GenericReagentContainer>();
                 if (holeContainer != null) {
                     holeContainer.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents,
-                        container.photonView.ViewID);
+                        container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 }
             } else {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
@@ -169,7 +169,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                         if (photonView.IsMine) {
                             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (cont != null && cont != container) {
-                                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc.Spill(alloc.volume * 0.1f), photonView.ViewID);
+                                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc.Spill(alloc.volume * 0.1f), photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                             }
                         }
                         

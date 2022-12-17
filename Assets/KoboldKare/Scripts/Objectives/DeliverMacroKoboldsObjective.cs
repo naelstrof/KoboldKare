@@ -24,7 +24,7 @@ public class DeliverMacroKoboldObjective : ObjectiveWithSpaceBeam {
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         koboldCount++;
         TriggerUpdate();
@@ -41,7 +41,7 @@ public class DeliverMacroKoboldObjective : ObjectiveWithSpaceBeam {
         }
 
         if (k.GetGenes().baseSize >= 20f) {
-            Advance(spaceBeamTarget.position);
+            ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, view.ViewID.ToString());
         }
     }
 

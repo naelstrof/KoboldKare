@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 43
+    AppVersion: 44
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -97,6 +97,9 @@ MonoBehaviour:
   - SetDickRPC
   - Swallowed
   - OnSwallowed
+  - OnFoodCreatedEvent
+  - SpawnHooray
+  - AdvanceObjective
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

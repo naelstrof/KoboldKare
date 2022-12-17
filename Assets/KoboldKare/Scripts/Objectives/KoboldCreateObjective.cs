@@ -26,12 +26,13 @@ public class KoboldCreateObjective : DragonMailObjective {
     }
 
     private void OnEntitySpawn(GameObject obj) {
-        if (obj.GetComponentInChildren<Kobold>() != null) {
-            Advance(obj.transform.position);
+        Kobold k = obj.GetComponentInChildren<Kobold>();
+        if (k != null) {
+            ObjectiveManager.NetworkAdvance(obj.transform.position, k.photonView.ViewID.ToString());
         }
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         kobolds++;
         TriggerUpdate();

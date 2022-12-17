@@ -20,8 +20,8 @@ public class DildoStuffingObjective : ObjectiveWithSpaceBeam {
         penetrationMemory[k].Add(d);
         penetrationMemory[k].RemoveWhere((o) => o == null);
         TriggerUpdate();
-        if (k != null && penetrationMemory[k].Count >= minDildosInserted) {
-            Advance(k.transform.position);
+        if (penetrationMemory[k].Count >= minDildosInserted) {
+            ObjectiveManager.NetworkAdvance(k.transform.position, k.photonView.ToString());
         }
     }
 
@@ -66,7 +66,7 @@ public class DildoStuffingObjective : ObjectiveWithSpaceBeam {
         RemoveInsertion(k, d);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }

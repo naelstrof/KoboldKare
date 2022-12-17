@@ -27,6 +27,8 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private bool growing;
+    public delegate void PlantSpawnEventAction(GameObject obj, ScriptablePlant plant);
+    public static event PlantSpawnEventAction planted;
 
     void Start() {
         container.OnFilled.AddListener(OnFilled);
@@ -130,13 +132,13 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
         }
 
+        planted?.Invoke(photonView.gameObject, plant);
+
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
         } else {
             SetGenes(new KoboldGenes().Randomize());
         }
-
-        PlantSpawnEventHandler.TriggerPlantSpawnEvent(photonView.gameObject, plant);
     }
 
     void UndarkenMaterials(){

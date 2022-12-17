@@ -32,7 +32,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         ElectricBlender.grindedObject -= OnGrindedObject;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         fruitCount++;
         TriggerUpdate();
@@ -41,9 +41,9 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         }
     }
 
-    private void OnGrindedObject(ReagentContents contents) {
+    private void OnGrindedObject(int viewID, ReagentContents contents) {
         if (successSpawnLocation == null) {
-            Advance(Vector3.zero);
+            ObjectiveManager.NetworkAdvance(Vector3.zero, $"{viewID.ToString()}");
         } else {
             Advance(successSpawnLocation.position);
         }

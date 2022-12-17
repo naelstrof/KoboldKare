@@ -226,7 +226,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             float perVolume = (midairContents.volume * percentageLoss) + 1f;
             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
             if (cont != null) {
-                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, midairContents.Spill(perVolume), container.photonView.ViewID);
+                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, midairContents.Spill(perVolume), container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
             }
         }
     }

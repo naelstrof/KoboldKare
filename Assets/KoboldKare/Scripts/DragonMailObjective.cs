@@ -27,15 +27,7 @@ public class DragonMailObjective : ISavable, IPunObservable {
         updated?.Invoke(this);
     }
 
-    protected virtual void Advance(Vector3 position) {
-        if (!PhotonNetwork.IsMasterClient) return;
-        GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
-        obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
-    }
-
-    IEnumerator DestroyAfterTime(GameObject obj) {
-        yield return new WaitForSeconds(5f);
-        PhotonNetwork.Destroy(obj);
+    public virtual void Advance(Vector3 position) {
     }
 
     public virtual void Register() {

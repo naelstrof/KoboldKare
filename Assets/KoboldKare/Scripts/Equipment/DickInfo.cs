@@ -199,7 +199,7 @@ public class DickInfo : MonoBehaviour {
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (container != null && attachedKobold != null) {
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    alloc.Spill(alloc.volume * 0.1f), attachedKobold.photonView.ViewID);
+                                    alloc.Spill(alloc.volume * 0.1f), attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                                 //container.SetGenes(attachedKobold.GetGenes());
                             }
                         }
@@ -226,7 +226,7 @@ public class DickInfo : MonoBehaviour {
                 ReagentContents alloc = new ReagentContents();
                 alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc,
-                    attachedKobold.photonView.ViewID);
+                    attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
             }
         }
         cumming = false;

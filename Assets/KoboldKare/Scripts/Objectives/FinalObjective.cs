@@ -17,13 +17,13 @@ public class FinalObjective : ObjectiveWithSpaceBeam {
         KoboldDelivery.spawnedKobold -= OnSpawnedKobold;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
 
     void OnSpawnedKobold(Kobold a) {
-        Advance(a.transform.position);
+        ObjectiveManager.NetworkAdvance(a.transform.position, $"{a.photonView.ViewID}");
     }
 
     public override string GetTextBody() {

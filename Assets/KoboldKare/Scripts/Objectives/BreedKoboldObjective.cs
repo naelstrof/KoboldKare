@@ -22,7 +22,7 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         OvipositionSpot.oviposition -= OnOviposit;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         eggs++;
         TriggerUpdate();
@@ -32,7 +32,7 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     protected virtual void OnOviposit(GameObject egg) {
-        Advance(egg.transform.position);
+        ObjectiveManager.NetworkAdvance(egg.transform.position, egg.GetPhotonView().ToString());
     }
     public override string GetTextBody() {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";

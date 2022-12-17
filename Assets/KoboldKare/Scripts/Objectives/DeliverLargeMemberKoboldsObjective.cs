@@ -24,7 +24,7 @@ public class DeliverLargeMemberKoboldsObjective : ObjectiveWithSpaceBeam {
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         koboldCount++;
         TriggerUpdate();
@@ -40,7 +40,7 @@ public class DeliverLargeMemberKoboldsObjective : ObjectiveWithSpaceBeam {
         }
 
         if (k.GetGenes().dickSize >= 15f) {
-            Advance(spaceBeamTarget.position);
+            ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, k.photonView.ToString());
         }
     }
 

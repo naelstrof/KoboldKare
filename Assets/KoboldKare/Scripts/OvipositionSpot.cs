@@ -104,7 +104,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
         ReagentContents eggContents = new ReagentContents();
         eggContents.AddMix(ReagentDatabase.GetReagent("ScrambledEgg").GetReagent(eggVolume));
-        d.gameObject.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID);
+        d.gameObject.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
 
         photonView.RPC(nameof(EggLayed), RpcTarget.All, d.GetComponentInParent<PhotonView>().ViewID);
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();

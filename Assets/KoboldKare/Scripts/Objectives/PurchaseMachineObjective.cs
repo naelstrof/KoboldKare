@@ -21,7 +21,7 @@ public class PurchaseMachineObjective : ObjectiveWithSpaceBeam {
         ConstructionContract.purchasedEvent -= OnContractSold;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
@@ -29,7 +29,7 @@ public class PurchaseMachineObjective : ObjectiveWithSpaceBeam {
     private void OnContractSold(ConstructionContract contract) {
         if (contract is MachineConstructionContract machineContract) {
             if (machineContract.GetMachines().Contains(targetMachine)) {
-                Advance(targetMachine.transform.position);
+                ObjectiveManager.NetworkAdvance(targetMachine.transform.position, $"{contract.photonView.ViewID.ToString()}");
             }
         }
     }

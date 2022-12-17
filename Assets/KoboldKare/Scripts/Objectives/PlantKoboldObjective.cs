@@ -17,7 +17,7 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     private int plants = 0;
     public override void Register() {
         base.Register();
-        PlantSpawnEventHandler.AddListener(OnPlant);
+        Plant.planted += OnPlant;
         if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(eggPrefab.photonName, mailBox.transform.position, Quaternion.identity,
                 0, new object[] { new KoboldGenes().Randomize() });
@@ -25,10 +25,10 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     }
     public override void Unregister() {
         base.Unregister();
-        PlantSpawnEventHandler.RemoveListener(OnPlant);
+        Plant.planted -= OnPlant;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         plants++;
         TriggerUpdate();
@@ -39,7 +39,7 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
 
     private void OnPlant(GameObject obj, ScriptablePlant plant) {
         if (plant == targetPlant) {
-            Advance(obj.transform.position);
+            ObjectiveManager.NetworkAdvance(obj.transform.position, $"PlantKoboldObjective{obj.GetPhotonView().ViewID.ToString()}");
         }
     }
 

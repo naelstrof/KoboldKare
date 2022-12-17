@@ -24,7 +24,7 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         koboldCount++;
         TriggerUpdate();
@@ -39,7 +39,7 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
             return;
         }
         if (k.GetGenes().breastSize > 14f) {
-            Advance(spaceBeamTarget.position);
+            ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, $"{view.ViewID.ToString()}");
         }
     }
 

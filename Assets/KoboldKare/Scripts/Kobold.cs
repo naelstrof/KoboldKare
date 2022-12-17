@@ -143,7 +143,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (container != null && this != null) {
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    alloc.Spill(alloc.volume * 0.1f), photonView.ViewID);
+                                    alloc.Spill(alloc.volume * 0.1f), photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
                             }
                         }
                         milkSplatMaterial.color = color;
@@ -510,8 +510,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents, ref addbackReagents, ref genes, ref newEnergy);
             pair.volume -= processedAmount;
         }
-        bellyContainer.AddMixRPC(contents, -1); 
-        bellyContainer.AddMixRPC(addbackReagents, -1);
+        bellyContainer.AddMixRPC(contents, -1, (byte)GenericReagentContainer.InjectType.Inject); 
+        bellyContainer.AddMixRPC(addbackReagents, -1, (byte)GenericReagentContainer.InjectType.Inject);
         float overflowEnergy = Mathf.Max(newEnergy - GetMaxEnergy(), 0f);
         if (overflowEnergy != 0f) {
             genes = genes.With(fatSize: genes.fatSize + overflowEnergy);
@@ -540,7 +540,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
-        if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume) {
+        if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume*0.99f) {
             return;
         }
         koboldAnimator.SetTrigger(Quaff);

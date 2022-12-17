@@ -13,12 +13,12 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         public ScriptableReagent reagent;
         public float volume;
     }
-    public enum ContainerType {
+    public enum ContainerType : byte {
         OpenTop,
         Sealed,
         Mouth,
     }
-    public enum InjectType {
+    public enum InjectType : byte {
         Inject,
         Spray,
         Flood,
@@ -118,7 +118,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
 
     [PunRPC]
-    public void AddMixRPC(ReagentContents incomingReagents, int geneViewID) {
+    public void AddMixRPC(ReagentContents incomingReagents, int geneViewID, byte injectType) {
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
         // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
@@ -129,11 +129,11 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
             }
         }
         contents.AddMix(incomingReagents, this);
-        OnReagentContentsChanged(InjectType.Inject);
+        OnReagentContentsChanged((InjectType)injectType);
     }
     
     [PunRPC]
-    public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID) {
+    public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID, byte injectType) {
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
         // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
@@ -150,7 +150,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
 
         contents.AddMix(incomingReagents, this);
-        OnReagentContentsChanged(InjectType.Inject);
+        OnReagentContentsChanged((InjectType)injectType);
         containerInflated?.Invoke(this);
     }
 

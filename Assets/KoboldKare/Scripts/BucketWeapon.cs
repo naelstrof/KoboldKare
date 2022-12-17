@@ -76,6 +76,7 @@ public class BucketWeapon : GenericWeapon {
 
         if ((bestDisplay == null && currentDisplay != null) || (currentDisplay != null && bestDisplay != null && !currentDisplay.name.Contains(bestDisplay.name))) {
             Destroy(currentDisplay);
+            currentDisplay = null;
             defaultBucketDisplay.SetActive(true);
         }
 

@@ -23,14 +23,14 @@ public class InflateKoboldObjective : DragonMailObjective {
         GenericReagentContainer.containerInflated -= OnInflatedEvent;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
 
     private void OnInflatedEvent(GenericReagentContainer container) {
         if (container.maxVolume > 20f && container.TryGetComponent(out Kobold kobold)) {
-            Advance(kobold.transform.position);
+            ObjectiveManager.NetworkAdvance(kobold.transform.position, $"{kobold.photonView.ViewID.ToString()}");
         }
     }
 

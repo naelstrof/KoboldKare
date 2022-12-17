@@ -61,8 +61,7 @@ public class GenericFluidVolume : MonoBehaviourPun {
                 float spillVolume = Mathf.Min(container.maxVolume - container.volume,
                     fillRate * Time.deltaTime);
                 ReagentContents spill = volumeContainer.Spill(spillVolume);
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spill,
-                    volumeContainer.photonView.ViewID);
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spill, volumeContainer.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Flood);
                 volumeContainer.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillVolume);
             }
         }

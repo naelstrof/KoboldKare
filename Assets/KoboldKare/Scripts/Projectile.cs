@@ -110,7 +110,7 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
             float perVolume = contents.volume / hitContainers.Count;
             foreach (GenericReagentContainer container in hitContainers) {
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                    contents.Spill(perVolume), photonView.ViewID);
+                    contents.Spill(perVolume), photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
             }
         }
 

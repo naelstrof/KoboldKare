@@ -17,7 +17,7 @@ public class BodySwapObjective : ObjectiveWithSpaceBeam {
         BrainSwapperMachine.bodySwapped -= OnBodySwap;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
@@ -26,9 +26,9 @@ public class BodySwapObjective : ObjectiveWithSpaceBeam {
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject != a && (Kobold)player.TagObject != b) continue;
             if (a != null) {
-                Advance(a.transform.position);
+                ObjectiveManager.NetworkAdvance(a.transform.position, $"{a.photonView.ViewID.ToString()}");
             } else if (b != null) {
-                Advance(b.transform.position);
+                ObjectiveManager.NetworkAdvance(b.transform.position, $"{b.photonView.ViewID.ToString()}");
             }
         }
     }

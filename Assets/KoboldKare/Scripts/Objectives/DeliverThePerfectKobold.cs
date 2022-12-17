@@ -20,7 +20,7 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
         soldGameObjectEvent.RemoveListener(OnSoldObject);
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
@@ -47,7 +47,7 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
         // 150 would be the maximum value of a kobold generated randomly. This means that a value of 200 would be at least 50 units of metabolized something.
         // 210 would be at least 3 generations of fluid intake.
         if (sum > 210f) {
-            Advance(spaceBeamTarget.position);
+            ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, view.ViewID.ToString());
         }
     }
 

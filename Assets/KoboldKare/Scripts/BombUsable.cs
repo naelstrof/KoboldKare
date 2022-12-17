@@ -41,8 +41,8 @@ public class BombUsable : GenericUsable, IDamagable {
             water.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(20f));
             ReagentContents potassium = new ReagentContents();
             potassium.AddMix(ReagentDatabase.GetReagent("Potassium").GetReagent(20f));
-            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, water, container.photonView.ViewID);
-            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, potassium, container.photonView.ViewID);
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, water, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, potassium, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         }
         fired = true;
     }

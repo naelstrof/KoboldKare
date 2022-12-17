@@ -14,9 +14,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     private static ObjectiveManager instance;
     [SerializeReference, SerializeReferenceButton]
     [SerializeField] private List<DragonMailObjective> objectives;
+    [SerializeField] protected PhotonGameObjectReference starExplosion;
     private DragonMailObjective currentObjective;
     private int currentObjectiveIndex;
     private int stars = 0;
+    private List<string> advanceInstances;
 
     public static int GetStars() {
         return instance.stars;
@@ -36,6 +38,27 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     public delegate void ObjectiveChangedAction(DragonMailObjective newObjective);
     private event ObjectiveChangedAction objectiveChanged;
     private event ObjectiveChangedAction objectiveUpdated;
+
+    [PunRPC]
+    private void AdvanceObjective(Vector3 position) {
+        if (!PhotonNetwork.IsMasterClient) return;
+        GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
+        obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
+        currentObjective?.Advance(position);
+    }
+
+    public static void NetworkAdvance(Vector3 position, string advanceInstance) {
+        if (!PhotonNetwork.IsMasterClient || instance.advanceInstances.Contains(advanceInstance)) {
+            return;
+        }
+        instance.advanceInstances.Add(advanceInstance);
+        instance.photonView.RPC(nameof(AdvanceObjective), RpcTarget.All, position);
+    }
+
+    IEnumerator DestroyAfterTime(GameObject obj) {
+        yield return new WaitForSeconds(5f);
+        PhotonNetwork.Destroy(obj);
+    }
 
     public static void AddObjectiveSwappedListener(ObjectiveChangedAction action) {
         instance.objectiveChanged += action;
@@ -62,6 +85,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     private void Awake() {
         if (instance == null) {
             instance = this;
+            advanceInstances = new List<string>();
         } else {
             Destroy(gameObject);
         }
@@ -76,6 +100,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     void OnObjectiveComplete(DragonMailObjective objective) {
+        advanceInstances.Clear();
         currentObjectiveIndex++;
         if (objective is { autoAdvance: true }) {
             SwitchToObjective(objectives[currentObjectiveIndex]);
@@ -99,7 +124,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
             currentObjective.updated -= OnObjectiveUpdated;
         }
         currentObjective = newObjective;
-        if (newObjective != null) {
+        if (currentObjective != null) {
             if (photonView.IsMine) {
                 currentObjective.Register();
             }
@@ -139,7 +164,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
             stars = (int)stream.ReceiveNext();
             bool hasObjective = (bool)stream.ReceiveNext();
             currentObjectiveIndex = (int)stream.ReceiveNext();
-            SwitchToObjective(hasObjective ? GetCurrentObjective() : null);
+            SwitchToObjective(hasObjective ? objectives[currentObjectiveIndex] : null);
         }
         objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
     }
@@ -148,6 +173,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         foreach (var obj in objectives) {
             obj?.OnValidate();
         }
+        starExplosion.OnValidate();
     }
 
     public void OnOwnerChange(Player newOwner, Player previousOwner) {

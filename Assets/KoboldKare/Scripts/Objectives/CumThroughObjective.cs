@@ -24,7 +24,7 @@ public class CumThroughObjective : DragonMailObjective {
         DickInfo.cumThrough -= OnCumThrough;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         TriggerComplete();
     }
@@ -32,7 +32,7 @@ public class CumThroughObjective : DragonMailObjective {
     private void OnCumThrough(Penetrable genes) {
         Kobold kobold = genes.GetComponentInParent<Kobold>();
         if (kobold != null) {
-            Advance(kobold.transform.position);
+            ObjectiveManager.NetworkAdvance(kobold.transform.position, kobold.photonView.ViewID.ToString());
         }
     }
 

@@ -61,8 +61,8 @@ public class ElectricBlender : SuckingMachine {
         StartCoroutine(WaitThenDisableSound());
         GenericReagentContainer otherContainer = view.GetComponent<GenericReagentContainer>();
         if (otherContainer != null) {
-            container.AddMixRPC(otherContainer.GetContents(), viewID);
-            grindedObject?.Invoke(otherContainer.GetContents());
+            container.AddMixRPC(otherContainer.GetContents(), viewID, (byte)GenericReagentContainer.InjectType.Inject);
+            grindedObject?.Invoke(viewID, otherContainer.GetContents());
         }
         yield return base.OnSwallowed(viewID);
     }

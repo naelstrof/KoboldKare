@@ -25,7 +25,7 @@ public class CreateFoodObjective : DragonMailObjective {
         BucketWeapon.foodCreated -= OnFoodCreatedEvent;
     }
 
-    protected override void Advance(Vector3 position) {
+    public override void Advance(Vector3 position) {
         base.Advance(position);
         foodMade++;
         TriggerUpdate();
@@ -36,7 +36,7 @@ public class CreateFoodObjective : DragonMailObjective {
 
     private void OnFoodCreatedEvent(BucketWeapon bucket, ScriptableReagent reagent) {
         if (reagentFilter.Contains(reagent)) {
-            Advance(bucket.transform.position);
+            ObjectiveManager.NetworkAdvance(bucket.transform.position, $"{bucket.photonView.ViewID.ToString()}{foodMade.ToString()}");
         }
     }
 

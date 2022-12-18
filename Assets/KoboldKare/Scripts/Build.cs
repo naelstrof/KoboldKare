@@ -37,6 +37,12 @@ public class Build {
     [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings(
+            "Standalone",
+            "OSXUniversal",
+            "Architecture",
+            "x64ARM64" // Possible values: "x64" "ARM64" "x64ARM64"
+        );
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();

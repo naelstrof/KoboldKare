@@ -693,39 +693,38 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684424032256
-    m_Localized: Ziehe deinen ersten Kobold auf!
+    m_Localized: Es lebt!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Der Kobold w\xE4chst mit Wasser und Geduld. K\xFCmmern Sie sich
-      darum."
+    m_Localized: "Gie\xDFen Sie das Ei und warten Sie, bis ihr Kobold w\xE4chst."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
-    m_Localized: "Verschicke einen Kobold \xFCber das pneumatische Netzwerk."
+    m_Localized: Der Erste von Vielen.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: Sie haben die Aufmerksamkeit eines Drachenklienten... Schicken Sie
-      die Waren jetzt ab. Sie werden belohnt.
+    m_Localized: "Gute Arbeit. Jetzt schicken Sie mir den neuen Kobold und ich werde
+      Sie f\xFCr Ihre M\xFChen Belohnen."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Pflanze ein Ei!
+    m_Localized: Ein Ei vom Drachenherrscher!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Ein Drachenklient sucht einen f\xE4higen Betreuer. Pflanzen Sie
-      ein Ei in fruchtbarem Boden."
+    m_Localized: Ich bin Nymrianth, der Drachenherrscher. Ich befehle Ihnen als Koboldbetreuer
+      zu arbeiten und ein Ei zu pflanzen.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: Kaufe einen industriellen Entsafter.
+    m_Localized: "R\xFCste deine Farm auf!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Diese Kobolde m\xFCssen gef\xFCttert werden. Den Bauvertrag k\xF6nnen
-      Sie im Baub\xFCro finden."
+    m_Localized: "Gehen Sie in die Stadt und kaufen Sie eine M\xFChle. Suchen Sie
+      nach dem Baub\xFCro mit einem Schaf. Einem Schaf mit Schutzhelm."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -733,17 +732,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Sie m\xFCssen das Futter f\xFCr die Kobolde selbst zubereiten.
-      Benutzen Sie den Entsafter um Fr\xFCchte zu verarbeiten."
+    m_Localized: "Ihre Kobolde haben einen interessanten K\xF6rper. Zermahlen Sie
+      ein paar Fr\xFCchte, verf\xFCttern Sie sie an einen Kobold und schauen Sie,
+      was passiert."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
-    m_Localized: "Z\xFCchte Kobolde"
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500868
-    m_Localized: "Wir brauchen Kobolde aus der Region. Fangen Sie damit an, ein paar
-      Ihrer Kobolde zu schw\xE4ngern."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
@@ -751,17 +750,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: "Ich brauche eine Lieferung von Kobolden mit gro\xDFen Schw\xE4nzen.
-      Ich erwarte, dass Sie sich darum k\xFCmmern."
+    m_Localized: "Ich brauche Kobolde mit einem gro\xDFen Penis. Stellen Sie einen
+      her und schicken Sie ihn mir schnell."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: "Liefere Kobolde mit gro\xDFen Br\xFCsten."
+    m_Localized: "Titten! Riesenm\xF6pse!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
-    m_Localized: "Ich brauche eine Lieferung von Kobolden mit gro\xDFen Br\xFCsten.
-      Ich erwarte, dass Sie sich darum k\xFCmmern."
+    m_Localized: "Sie m\xFCssen mir einen Kobold mit gro\xDFen Br\xFCsten zuschicken,
+      ich rede von Riesenteilen. Ich erwarte, dass Sie sich darum k\xFCmmern und
+      keine Fragen stellen."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
@@ -769,35 +769,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "The Kobolde m\xFCssen zum Bersten gef\xFCllt sein. Stellen Sie
-      keine weiteren Fragen."
+    m_Localized: "F\xFCllen Sie einen Kobold mit Sperma, bis es nicht mehr geht.
+      Ich muss sehen, wie strapazierf\xE4hig Ihre Spezies wirklich ist."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
-    m_Localized: "Dringe durch den ganzen K\xF6rper."
+    m_Localized: Ganz hindurch!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695173
-    m_Localized: "Mir f\xE4llt nicht einmal ansatzweise eine Erkl\xE4rung ein. K\xFCmmern
-      Sie sich einfach darum."
+    m_Localized: "Lassen Sie uns einen weiteren Ausdauertest versuchen. Penetrieren
+      Sie einen Kobold mit einem Penis, der l\xE4nger als dessen K\xF6rper ist."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: "Liefere gem\xE4stete Kobolde."
+    m_Localized: Mahlzeit!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Milchshakes gehen direkt auf die H\xFCften. Es ist zu unser aller
-      Vorteil, ein paar richtig schwere Kobolde zu haben."
+    m_Localized: "Es ist zu unser aller Gunsten, ein paar richtig schwere Kobolde
+      zu haben. M\xE4sten Sie ein paar und schicken Sie sie mir."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
-    m_Localized: "Lege ein sehr gro\xDFes Ei."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695177
-    m_Localized: "Mir ist gleich, was Sie dann damit machen. Es ist notwendig, dass
-      ein gro\xDFes Ei aus einem Kobold herauskommt."
+    m_Localized: '-'
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
@@ -842,19 +841,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 209952603963445252
-    m_Localized: Ananas Eis am Stiel
+    m_Localized: Ananaseis am Stiel
     m_Metadata:
       m_Items: []
   - m_Id: 210151247266238464
-    m_Localized: Bananenspaltung
+    m_Localized: Banana Split
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: Umgehender humanoider Penis
+    m_Localized: Beschnittener Menschenpenis
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
-    m_Localized: Kuchen
+    m_Localized: Pastete
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449728
@@ -862,11 +861,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449729
-    m_Localized: Joghurt
+    m_Localized: Jogurt
     m_Metadata:
       m_Items: []
   - m_Id: 210160988449198080
-    m_Localized: Kuchen
+    m_Localized: Pastete
     m_Metadata:
       m_Items: []
   - m_Id: 210162028410097664
@@ -874,22 +873,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210162028410097665
-    m_Localized: Eieressen
+    m_Localized: Eierspeise
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: "Ostnat\xFD penis"
+    m_Localized: Stachliger Penis
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Ein Clubbett -Penis mit weichen fleischigen Widerhaken und niedrigen
-      B\xE4llen."
+    m_Localized: "Ein keulenf\xF6rmiger Penis mit weichen, dicken Stacheln und tiefh\xE4ngenden
+      Hoden."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
-    m_Localized: 'Aktiviert oder deaktiviert serverweite Cheats.
-
-'
+    m_Localized: Aktiviert oder deaktiviert serverweite Cheats.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651585
@@ -897,61 +894,61 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651586
-    m_Localized: "Listet alle Reagenzien, Vorbereitungen und Ausr\xFCstungen auf."
+    m_Localized: Listet alle Reagenzien, Prefabs und Accessoires auf.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: Gibt das angegebene Reagenz oder Prefab. Verwenden Sie /Liste, um
-      alle Eigennamen zu finden.
+    m_Localized: Gibt das angegebene Reagenz oder Prefab. Nutze den Befehl /list,
+      um alle Bezeichnungen zu sehen.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: "Befasst sich mit der angegebenen Ausr\xFCstung. Verwenden Sie /Liste,
-      um Eigennamen zu finden."
+    m_Localized: "R\xFCstet das angegebene Accessoire aus. Nutze den Befehl /list,
+      um alle Bezeichnungen zu sehen."
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Schwanz plattiert
+    m_Localized: Plattierter Penis
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: Ein gerippter Schwanz mit weichen Tellern und Widerhaken.
+    m_Localized: Ein gerippter Penis mit weichen Platten und Stacheln.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: Ein Ei legen!
+    m_Localized: Lege ein Ei!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: Eier aus dem Laden sind nicht so gut. Finden Sie einen guten Kobold,
-      lassen Sie sie schwanger und stellen Sie sie dann auf die Brutstation.
+    m_Localized: "Eier aus dem Laden sind nicht so gut. Finde einen guten Kobold,
+      schw\xE4ngere ihn, und dann bringe ihn zur Brutstation."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Burgerzeit!
+    m_Localized: "Zeit f\xFCr Burger!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Ich habe Ihnen einige Vorr\xE4te geschickt, um einen Burger zu
-      machen, die M\xFChle zu verwenden, um sie zu kombinieren und dann einem Kobold
-      zu f\xFCttern."
+    m_Localized: "Ich habe Ihnen die Zutaten f\xFCr einen Burger geschickt. Nutzen
+      Sie die M\xFChle, um sie zu mischen und f\xFCttern Sie einen Kobold damit."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
-    m_Localized: Melkstation freischalten
+    m_Localized: Schalte die Melkstation frei
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
-    m_Localized: "Wir m\xFCssen unsere Lebensmittelexporte erweitern und den Milchstationsvertrag
-      im Baub\xFCro kaufen."
+    m_Localized: "Wir m\xFCssen unsere Lebensmittelexporte erweitern. Kaufen Sie
+      den Vertrag f\xFCr die Melkstation im Baub\xFCro."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: Machen Sie einige Lebensmittel auf Milchbasis!
+    m_Localized: Stelle ein paar Milchspeisen her!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Kobold Milk hat einen gro\xDFen N\xE4hrwert."
+    m_Localized: "Koboldmilch hat einen hohen N\xE4hrwert. Versuchen Sie diese mit
+      anderen Dingen zu kombinieren, um neue Speisen herzustellen."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183

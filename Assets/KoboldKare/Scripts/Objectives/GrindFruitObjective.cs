@@ -43,9 +43,9 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
 
     private void OnGrindedObject(int viewID, ReagentContents contents) {
         if (successSpawnLocation == null) {
-            ObjectiveManager.NetworkAdvance(Vector3.zero, $"{viewID.ToString()}");
+            ObjectiveManager.NetworkAdvance(Vector3.zero, viewID.ToString());
         } else {
-            Advance(successSpawnLocation.position);
+            ObjectiveManager.NetworkAdvance(successSpawnLocation.position, viewID.ToString());
         }
     }
 

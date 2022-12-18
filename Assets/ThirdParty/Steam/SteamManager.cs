@@ -66,7 +66,12 @@ public class SteamManager : MonoBehaviour {
 			Destroy(gameObject);
 			return;
 		}
+
 		s_instance = this;
+
+#if UNITY_EDITOR
+		return;
+#endif
 
 		if(s_EverInitialized) {
 			// This is almost always an error.

@@ -555,13 +555,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(GetGenes());
             stream.SendNext(arousal);
             stream.SendNext(metabolizedContents);
             stream.SendNext(consumedReagents);
             stream.SendNext(energy);
+            stream.SendNext(GetGenes());
         } else {
-            SetGenes((KoboldGenes)stream.ReceiveNext());
             arousal = (float)stream.ReceiveNext();
             metabolizedContents.Copy((ReagentContents)stream.ReceiveNext());
             consumedReagents.Copy((ReagentContents)stream.ReceiveNext());
@@ -570,6 +569,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 energy = newEnergy;
                 energyChanged?.Invoke(energy, GetGenes().maxEnergy);
             }
+            SetGenes((KoboldGenes)stream.ReceiveNext());
         }
     }
 
@@ -611,7 +611,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public void Load(JSONNode node) {
         KoboldGenes loadedGenes = new KoboldGenes();
         loadedGenes.Load(node, "genes");
-        SetGenes(loadedGenes);
         arousal = node["arousal"];
         metabolizedContents.Load(node, "metabolizedContents");
         consumedReagents.Load(node, "consumedReagents");
@@ -621,6 +620,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
             GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         }
+        SetGenes(loadedGenes);
     }
 
     public float GetWorth() {

@@ -12,8 +12,6 @@ public class DragonMailObjective : ISavable, IPunObservable {
     public bool autoAdvance;
     [SerializeField]
     protected LocalizedString title;
-    [SerializeField]
-    protected PhotonGameObjectReference starExplosion;
 
     public virtual string GetTitle() => title.GetLocalizedString();
     public delegate void ObjectiveAction(DragonMailObjective obj);
@@ -50,7 +48,6 @@ public class DragonMailObjective : ISavable, IPunObservable {
     }
 
     public virtual void OnValidate() {
-        starExplosion.OnValidate();
     }
 
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 using Vilar.AnimationStation;
 
 public class OvipositionSpot : GenericUsable, IAnimationStationSet {
-    public delegate void OvipositionAction(GameObject egg);
+    public delegate void OvipositionAction(int eggID);
     public static event OvipositionAction oviposition;
         
     [SerializeField]
@@ -43,14 +43,6 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         stations.Add(station);
         readOnlyStations = stations.AsReadOnly();
         egg = ReagentDatabase.GetReagent("Egg");
-    }
-
-    [PunRPC]
-    private void EggLayed(int viewID) {
-        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-        if (view != null) {
-            oviposition?.Invoke(view.gameObject);
-        }
     }
 
     IEnumerator EggLayingRoutine() {
@@ -106,7 +98,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         eggContents.AddMix(ReagentDatabase.GetReagent("ScrambledEgg").GetReagent(eggVolume));
         d.gameObject.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
 
-        photonView.RPC(nameof(EggLayed), RpcTarget.All, d.GetComponentInParent<PhotonView>().ViewID);
+        oviposition?.Invoke(d.GetComponentInParent<PhotonView>().ViewID);
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();
         //d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
         body.isKinematic = true;

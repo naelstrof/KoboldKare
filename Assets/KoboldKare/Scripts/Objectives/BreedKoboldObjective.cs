@@ -31,8 +31,10 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         }
     }
 
-    protected virtual void OnOviposit(GameObject egg) {
-        ObjectiveManager.NetworkAdvance(egg.transform.position, egg.GetPhotonView().ToString());
+    protected virtual void OnOviposit(int eggID) {
+        PhotonView view = PhotonNetwork.GetPhotonView(eggID);
+        
+        ObjectiveManager.NetworkAdvance(view == null ? Vector3.zero : view.transform.position, eggID.ToString());
     }
     public override string GetTextBody() {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";

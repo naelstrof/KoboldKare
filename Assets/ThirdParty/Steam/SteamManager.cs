@@ -69,9 +69,9 @@ public class SteamManager : MonoBehaviour {
 
 		s_instance = this;
 
-#if UNITY_EDITOR
-		return;
-#endif
+		if (Application.isEditor) {
+			return;
+		}
 
 		if(s_EverInitialized) {
 			// This is almost always an error.

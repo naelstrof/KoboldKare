@@ -42,11 +42,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnGrindedObject(int viewID, ReagentContents contents) {
-        if (successSpawnLocation == null) {
-            ObjectiveManager.NetworkAdvance(Vector3.zero, viewID.ToString());
-        } else {
-            ObjectiveManager.NetworkAdvance(successSpawnLocation.position, viewID.ToString());
-        }
+        ObjectiveManager.NetworkAdvance(successSpawnLocation == null ? Vector3.zero : successSpawnLocation.position, viewID.ToString());
     }
 
     public override string GetTitle() {
@@ -60,5 +56,18 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     public override void OnValidate() {
         base.OnValidate();
         fruit.OnValidate();
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream, info);
+        if (stream.IsWriting) {
+            stream.SendNext(fruitCount);
+        } else {
+            int newFruitCount = (int)stream.ReceiveNext();
+            if (newFruitCount != fruitCount) {
+                fruitCount = newFruitCount;
+                TriggerUpdate();
+            }
+        }
     }
 }

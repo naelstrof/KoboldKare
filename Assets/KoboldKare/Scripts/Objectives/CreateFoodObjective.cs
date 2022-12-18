@@ -47,4 +47,17 @@ public class CreateFoodObjective : DragonMailObjective {
     public override string GetTextBody() {
         return description.GetLocalizedString();
     }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream, info);
+        if (stream.IsWriting) {
+            stream.SendNext(foodMade);
+        } else {
+            int newFoodMade = (int)stream.ReceiveNext();
+            if (newFoodMade != foodMade) {
+                foodMade = newFoodMade;
+                TriggerUpdate();
+            }
+        }
+    }
 }

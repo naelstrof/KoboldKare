@@ -51,4 +51,16 @@ public class DeliverLargeMemberKoboldsObjective : ObjectiveWithSpaceBeam {
     public override string GetTextBody() {
         return description.GetLocalizedString();
     }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream, info);
+        if (stream.IsWriting) {
+            stream.SendNext(koboldCount);
+        } else {
+            int newKoboldCount = (int)stream.ReceiveNext();
+            if (newKoboldCount != koboldCount) {
+                koboldCount = newKoboldCount;
+                TriggerUpdate();
+            }
+        }
+    }
 }

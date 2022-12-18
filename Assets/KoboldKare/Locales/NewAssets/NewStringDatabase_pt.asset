@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
-    m_Localized: Carregar
+    m_Localized: Carga
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
@@ -206,8 +206,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
-      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -232,7 +232,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
-    m_Localized: Pular
+    m_Localized: Saltar
     m_Metadata:
       m_Items: []
   - m_Id: 516095004697
@@ -356,7 +356,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198986
-    m_Localized: Gordo
+    m_Localized: Gordura
     m_Metadata:
       m_Items: []
   - m_Id: 516099198987
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
-    m_Localized: Espessura
+    m_Localized: Grossura
     m_Metadata:
       m_Items: []
   - m_Id: 516099198999
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
-    m_Localized: Juntar
+    m_Localized: Junte-se
     m_Metadata:
       m_Items: []
   - m_Id: 516099199016

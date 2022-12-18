@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
-    m_Localized: "Salva\u021Bi"
+    m_Localized: salva
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
@@ -1066,7 +1066,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: "Salut! E\u0219ti din acea ferm\u0103 de acolo, nu? C\u0103uta\u021Bi
+    m_Localized: "Buna! E\u0219ti din acea ferm\u0103 de acolo, nu? C\u0103uta\u021Bi
       s\u0103 face\u021Bi upgrade?"
     m_Metadata:
       m_Items: []

@@ -128,7 +128,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810391
-    m_Localized: Trawa
+    m_Localized: Trawka
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
-    m_Localized: "Anulowa\u0107"
+    m_Localized: "anulowa\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
@@ -686,7 +686,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Zmienia\u0107 region"
+    m_Localized: "Zmie\u0144 region"
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
@@ -1135,7 +1135,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "Witamy! Chcesz kupi\u0107 nasiona? Mamy te\u017C jajka kobold!"
+    m_Localized: "Witam! Chcesz kupi\u0107 nasiona? Mamy te\u017C jajka kobold!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151

@@ -202,7 +202,7 @@ public class PlayerPossession : MonoBehaviourPun {
             rawRotation = Vector3.zero;
         }
         Vector2 gyroDelta = new Vector2(-rawRotation.z + rawRotation.y, -rawRotation.x);
-        Vector2 mouseDelta = Mouse.current.delta.ReadValue() + gyroDelta + controls.actions["Look"].ReadValue<Vector2>() * 40f;
+        Vector2 mouseDelta = gyroDelta + controls.actions["Look"].ReadValue<Vector2>();
         if (trackingHip) {
             characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
@@ -236,7 +236,7 @@ public class PlayerPossession : MonoBehaviourPun {
     void Update() {
         if (Cursor.lockState != CursorLockMode.Locked) {
             // Clear the deltas so they don't add up.
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
+            Vector2 mouseDelta = controls.actions["Look"].ReadValue<Vector2>();
             eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
@@ -256,7 +256,7 @@ public class PlayerPossession : MonoBehaviourPun {
                 photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
             }
         } else {
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue() + controls.actions["Look"].ReadValue<Vector2>() * 40f;
+            Vector2 mouseDelta = controls.actions["Look"].ReadValue<Vector2>();
             eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;

@@ -1295,6 +1295,10 @@ MonoBehaviour:
     m_Localized: "Non c'\xE8 nient'altro per te qui."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: Look invert-asse
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

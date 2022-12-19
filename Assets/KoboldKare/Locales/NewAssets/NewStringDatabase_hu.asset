@@ -1304,6 +1304,10 @@ MonoBehaviour:
     m_Localized: "Itt nincs m\xE1s neked."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "Invert megjelen\xE9s y-tengely"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

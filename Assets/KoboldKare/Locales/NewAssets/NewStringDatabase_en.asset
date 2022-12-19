@@ -1302,6 +1302,10 @@ MonoBehaviour:
       of KoboldKare.
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: Invert Look Y-Axis
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

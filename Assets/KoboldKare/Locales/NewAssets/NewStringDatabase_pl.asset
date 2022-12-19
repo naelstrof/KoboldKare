@@ -1306,6 +1306,10 @@ MonoBehaviour:
     m_Localized: "Nie ma tu nic wi\u0119cej."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "Odwr\xF3\u0107 o\u015B y"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

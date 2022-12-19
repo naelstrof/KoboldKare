@@ -1380,6 +1380,10 @@ MonoBehaviour:
     m_Localized: "Kh\xF4ng c\xF3 g\xEC kh\xE1c cho b\u1EA1n \u1EDF \u0111\xE2y."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "\u0110\u1EA3o ng\u01B0\u1EE3c l\u1EA1i tr\u1EE5c y"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

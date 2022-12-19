@@ -1223,6 +1223,10 @@ MonoBehaviour:
     m_Key: MENU_FAILED_TO_LOAD_SAVE_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Key: SETTING_INVERT_LOOK_Y_AXIS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

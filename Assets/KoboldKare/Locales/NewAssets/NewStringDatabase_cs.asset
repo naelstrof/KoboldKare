@@ -1310,6 +1310,10 @@ MonoBehaviour:
     m_Localized: "U\u017E tu pro v\xE1s nic nem\xE1m."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "Invertn\xED vzhled y-osa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

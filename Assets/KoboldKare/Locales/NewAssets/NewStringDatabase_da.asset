@@ -1288,6 +1288,10 @@ MonoBehaviour:
     m_Localized: Der er intet andet for dig her.
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: Inverter se y-aksen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

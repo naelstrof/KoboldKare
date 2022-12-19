@@ -1292,6 +1292,10 @@ MonoBehaviour:
     m_Localized: "T\xE4\xE4ll\xE4 ei ole mit\xE4\xE4n muuta sinulle."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "K\xE4\xE4nn\xE4yt Y-akseli"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1290,6 +1290,10 @@ MonoBehaviour:
     m_Localized: "No hay nada m\xE1s para ti aqu\xED."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: Invertir el eje Y
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

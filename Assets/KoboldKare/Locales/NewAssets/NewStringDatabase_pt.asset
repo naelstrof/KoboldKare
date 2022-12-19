@@ -1289,6 +1289,10 @@ MonoBehaviour:
     m_Localized: "N\xE3o h\xE1 mais nada para voc\xEA aqui."
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: Inverter Olhe Y-eixo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

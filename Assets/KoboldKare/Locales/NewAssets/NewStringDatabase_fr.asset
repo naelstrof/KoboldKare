@@ -1294,6 +1294,10 @@ MonoBehaviour:
     m_Localized: Il n'y a rien d'autre pour vous ici.
     m_Metadata:
       m_Items: []
+  - m_Id: 248938687950692352
+    m_Localized: "Axis Y invers\xE9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -143,6 +143,15 @@
                 {
                     "name": "Look",
                     "type": "Value",
+                    "id": "4090fef1-e70e-46df-ba96-6d72d632fb7c",
+                    "expectedControlType": "Vector2",
+                    "processors": "InvertVector2(invertX=false,invertY=false)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookJoystick",
+                    "type": "Value",
                     "id": "bbcd3efa-011d-46f8-96c1-cf5b735277d3",
                     "expectedControlType": "Vector2",
                     "processors": "InvertVector2(invertX=false,invertY=false)",
@@ -622,23 +631,12 @@
                 },
                 {
                     "name": "",
-                    "id": "0e1ec216-0f5f-4073-821f-9bdd6d10dfa2",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bada4e66-ed08-4f80-ab39-b12d3f3f56f3",
-                    "path": "<Mouse>/delta",
+                    "id": "8023d09a-f9ce-4907-a5d7-96f62fe86d43",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "LookJoystick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -947,6 +945,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "GyroEnable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6609b54-e62b-49cb-b70d-1ac9f4a728e5",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc5906a4-0d30-41f5-b2f8-ec132e1a75c9",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e1ec216-0f5f-4073-821f-9bdd6d10dfa2",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
+                    "groups": "",
+                    "action": "LookJoystick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

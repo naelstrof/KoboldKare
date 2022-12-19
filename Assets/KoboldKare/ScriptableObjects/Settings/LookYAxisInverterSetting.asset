@@ -40,8 +40,9 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  inputActionReference: {fileID: 7879116401219392340, guid: b80237a58ac8c22458251d7c9dcacf88,
-    type: 3}
+  inputActionReferences:
+  - {fileID: -165321924527915773, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
+  - {fileID: 7879116401219392340, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   references:
     version: 2
     RefIds: []

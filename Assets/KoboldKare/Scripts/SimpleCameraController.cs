@@ -112,7 +112,7 @@ public class SimpleCameraController : MonoBehaviour
         //if (Input.GetMouseButton(1))
         //{
             //var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
-            var mouseMovement = controls.actions["Look"].ReadValue<Vector2>();
+            var mouseMovement = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
             m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivity.GetValue();
             m_TargetCameraState.pitch -= mouseMovement.y * mouseSensitivity.GetValue();
             m_TargetCameraState.roll = 0;

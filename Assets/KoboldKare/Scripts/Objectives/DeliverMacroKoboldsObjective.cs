@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KoboldKare;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -42,6 +43,17 @@ public class DeliverMacroKoboldObjective : ObjectiveWithSpaceBeam {
 
         if (k.GetGenes().baseSize >= 20f) {
             ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, view.ViewID.ToString());
+        }
+    }
+    
+    public override void Save(JSONNode node) {
+        node["koboldCount"] = koboldCount;
+    }
+
+    public override void Load(JSONNode node) {
+        if (node.HasKey("koboldCount")) {
+            koboldCount = node["koboldCount"];
+            TriggerUpdate();
         }
     }
 

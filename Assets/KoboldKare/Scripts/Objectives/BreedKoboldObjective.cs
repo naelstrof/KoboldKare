@@ -46,6 +46,7 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
 
     public override void Load(JSONNode node) {
         eggs = node["eggs"];
+        TriggerUpdate();
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

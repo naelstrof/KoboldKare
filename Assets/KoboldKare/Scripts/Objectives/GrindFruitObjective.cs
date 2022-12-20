@@ -1,4 +1,5 @@
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -56,6 +57,16 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     public override void OnValidate() {
         base.OnValidate();
         fruit.OnValidate();
+    }
+    public override void Save(JSONNode node) {
+        node["fruitCount"] = fruitCount;
+    }
+
+    public override void Load(JSONNode node) {
+        if (node.HasKey("fruitCount")) {
+            fruitCount = node["fruitCount"];
+            TriggerUpdate();
+        }
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

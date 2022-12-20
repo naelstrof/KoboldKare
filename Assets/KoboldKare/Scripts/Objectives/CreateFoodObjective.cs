@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using KoboldKare;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -46,6 +47,16 @@ public class CreateFoodObjective : DragonMailObjective {
 
     public override string GetTextBody() {
         return description.GetLocalizedString();
+    }
+    public override void Save(JSONNode node) {
+        node["foodMade"] = foodMade;
+    }
+
+    public override void Load(JSONNode node) {
+        if (node.HasKey("foodMade")) {
+            foodMade = node["foodMade"];
+            TriggerUpdate();
+        }
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

@@ -12,6 +12,8 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     private Sprite sleepingSprite;
     [SerializeField]
     private List<AnimationStation> stations;
+    [SerializeField]
+    private float maxEnergy = 3f;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private WaitForSeconds energyGrantPeriod;
     void Awake() {
@@ -22,7 +24,7 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         return sleepingSprite;
     }
     public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() >= 1f) {
+        if (k.GetEnergy() >= maxEnergy) {
             return false;
         }
         foreach (var station in stations) {
@@ -60,9 +62,9 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     private IEnumerator SleepRoutine(Kobold k) {
         bool stillSleeping = true;
         float startStimulation = k.stimulation;
-        while (k != null && stillSleeping && k.GetEnergy() < 1f) {
+        while (k != null && stillSleeping && k.GetEnergy() < maxEnergy) {
             if (k.photonView.IsMine) {
-                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.2f, 1f));
+                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.2f, maxEnergy));
                 k.stimulation = Mathf.MoveTowards(startStimulation, 0f, 1f);
             }
             stillSleeping = false;

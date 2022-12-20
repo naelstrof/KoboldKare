@@ -100,8 +100,10 @@ MonoBehaviour:
   slider: {fileID: 4599972096618288255, guid: 4164e6c49ea5bf340ad1947507dac1b7, type: 3}
   dropdown: {fileID: 1234408531855058166, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
     type: 3}
+  textInput: {fileID: 0}
   groupTitle: {fileID: 1234408531855058166, guid: b7f61b3a2e12de4448fccfd06520c7b0,
     type: 3}
+  titles: []
   targetGroup: {fileID: 11400000, guid: 6489b155b99595a46a9b437ff1f744c1, type: 2}
 --- !u!1 &1291729440215294607
 GameObject:
@@ -728,8 +730,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1936966853479124332}
   m_HandleRect: {fileID: 8120469048756053888}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -875,6 +877,7 @@ GameObject:
   - component: {fileID: 3149616809795845476}
   - component: {fileID: 7887564161657231484}
   - component: {fileID: 1793355845681219590}
+  - component: {fileID: 4028921590250439466}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1039,6 +1042,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &4028921590250439466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6406024604646208890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7586255536646058617
 GameObject:
   m_ObjectHideFlags: 0

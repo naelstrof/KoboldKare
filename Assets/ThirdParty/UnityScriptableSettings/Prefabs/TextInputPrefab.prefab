@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 3491672540827152359}
   - component: {fileID: 893341687325603863}
   - component: {fileID: 7458848262002875495}
+  - component: {fileID: 8536730689452854828}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -400,6 +401,18 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &8536730689452854828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244009123942485142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2900434264963600613
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +424,7 @@ GameObject:
   - component: {fileID: 3651763516239428547}
   - component: {fileID: 6775947488587670155}
   - component: {fileID: 9140394125519583420}
+  - component: {fileID: 4873207030596224788}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -536,6 +550,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4873207030596224788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2900434264963600613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5394462801862909648
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +627,7 @@ GameObject:
   - component: {fileID: 4737812371927779929}
   - component: {fileID: 5959762024337042414}
   - component: {fileID: 7440934456163232453}
+  - component: {fileID: -5755085152938003627}
   m_Layer: 5
   m_Name: Placeholder
   m_TagString: Untagged
@@ -746,3 +773,15 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &-5755085152938003627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5778079079457550672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

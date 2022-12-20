@@ -150,7 +150,7 @@ public class ReagentContents : IEnumerable<Reagent> {
             }
         }
         // If we're majorly a cleaning agent...
-        return totalCleanerVolume > volume*0.5f;
+        return totalCleanerVolume >= volume*0.5f;
     }
 
     public float GetCalories() {

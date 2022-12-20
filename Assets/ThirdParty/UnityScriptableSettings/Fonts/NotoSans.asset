@@ -2558,8 +2558,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33c858fc183b7bc4b8f162f2903d5e26, type: 2}
   - {fileID: 11400000, guid: 572e188652b8a5343b4ece59b095ba62, type: 2}
   - {fileID: 11400000, guid: 49064148ba2177e47a451d64f1a332e3, type: 2}
-  - {fileID: 11400000, guid: c6a9518d9fd5e4041a07d69535bfb059, type: 2}
   - {fileID: 11400000, guid: e37e8d47bd7ef074287ff3ba38ce7ad0, type: 2}
+  - {fileID: 11400000, guid: 32d2b3f86c0eabc4d9a20c027d8cc519, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 5a95f221a96c74646a49fb51a85d2afc

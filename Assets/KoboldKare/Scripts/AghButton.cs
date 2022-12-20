@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 #if UNITY_EDITOR
+using TMPro;
 using UnityEditor;
 using UnityEditor.PackageManager;
 
@@ -26,6 +27,49 @@ public static class AghButton {
         }
 
         Debug.Log("None found!");
+    }
+
+    private static int RTLFix(TMP_Text t) {
+        if (t.GetComponent<TextRTLFixer>() != null) {
+            return 0;
+        }
+        Undo.RecordObject(t.gameObject, "added component");
+        t.gameObject.AddComponent<TextRTLFixer>();
+        EditorUtility.SetDirty(t.gameObject);
+        return 1;
+    }
+
+    [MenuItem("Tools/KoboldKare/Text RTL Fixer")]
+    public static void RTLFixer() {
+        int fixes = 0;
+        Undo.IncrementCurrentGroup();
+        Undo.SetCurrentGroupName("Added components");
+        var undoIndex = Undo.GetCurrentGroup();
+        foreach(GameObject g in Selection.gameObjects) {
+            foreach(TMP_Text t in g.GetComponentsInChildren<TMP_Text>(true)) {
+                fixes += RTLFix(t);
+            }
+        }
+        foreach (var g in Object.FindObjectsOfType<GameObject>()) {
+            foreach (TMP_Text t in g.GetComponentsInChildren<TMP_Text>(true)) {
+                fixes += RTLFix(t);
+            }
+        }
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            foreach(TMP_Text t in go.GetComponentsInChildren<TMP_Text>(true)) {
+                if (t.GetComponent<TextRTLFixer>() == null) {
+                    Selection.activeGameObject = go;
+                    Debug.Log($"Fixed {fixes} text mesh pros, need assistance, open this prefab and run again.");
+                    return;
+                }
+                //fixes += RTLFix(t);
+            }
+        }
+        Undo.CollapseUndoOperations(undoIndex);
+        Debug.Log($"Fixed {fixes} text mesh pros, none found left!");
     }
 
     [MenuItem("Tools/KoboldKare/HomogenizeButtons")]

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6552902853143482823}
   - component: {fileID: 6552902853143482822}
   - component: {fileID: 7952862019158698133}
+  - component: {fileID: -5175241587153756108}
   m_Layer: 9
   m_Name: SpeechText
   m_TagString: Untagged
@@ -185,6 +186,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e6153228eeb8e748971885e77be0f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5175241587153756108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552902853143482824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6552902854146268726

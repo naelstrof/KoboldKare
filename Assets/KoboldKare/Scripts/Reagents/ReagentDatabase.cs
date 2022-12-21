@@ -5,12 +5,6 @@ using UnityEngine;
 public class ReagentDatabase : MonoBehaviour {
     private static ReagentDatabase instance;
     private Dictionary<string,ScriptableReagent> reagentDictionary;
-    private static ReagentDatabase GetInstance() {
-        if (instance == null) {
-            instance = Object.FindObjectOfType<ReagentDatabase>();
-        }
-        return instance;
-    }
     public void Awake() {
         if (instance != null) {
             Destroy(this);
@@ -23,28 +17,28 @@ public class ReagentDatabase : MonoBehaviour {
         }
     }
     public static ScriptableReagent GetReagent(string name) {
-        if (GetInstance().reagentDictionary.ContainsKey(name)) {
-            return GetInstance().reagentDictionary[name];
+        if (instance.reagentDictionary.ContainsKey(name)) {
+            return instance.reagentDictionary[name];
         }
         return null;
     }
     public static ScriptableReagent GetReagent(short id) {
-        return GetInstance().reagents[id];
+        return instance.reagents[id];
     }
     public static short GetID(ScriptableReagent reagent) {
-        if (GetInstance() == null) {
+        if (instance == null) {
             return 0;
         }
-        return (short)GetInstance().reagents.IndexOf(reagent);
+        return (short)instance.reagents.IndexOf(reagent);
     }
-    public static List<ScriptableReagent> GetReagents() => GetInstance().reagents;
+    public static List<ScriptableReagent> GetReagents() => instance.reagents;
     public List<ScriptableReagent> reagents;
     public List<ScriptableReagentReaction> reactions;
     public static void DoReactions(GenericReagentContainer container, ScriptableReagent introducedReactant) {
         DoReactions(container, GetID(introducedReactant));
     }
     public static void DoReactions(GenericReagentContainer container, short introducedReactant) {
-        foreach(var reaction in GetInstance().reactions) {
+        foreach(var reaction in instance.reactions) {
             reaction.DoReaction(container);
         }
     }

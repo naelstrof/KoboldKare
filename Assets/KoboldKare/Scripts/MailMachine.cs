@@ -101,12 +101,6 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             photonView.RPC(nameof(OnSwallowed), RpcTarget.All, station.info.user.photonView.ViewID);
         }
     }
-
-    private float FloorNearestPower(float baseNum, float target) {
-        float f = baseNum;
-        for(;f<=target;f*=baseNum) {}
-        return f/baseNum;
-    }
     
     [PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
@@ -139,16 +133,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         }
 
         totalWorth = Mathf.Min(totalWorth, 1953125f);
-        int i = 0;
-        while(totalWorth > 0f) {
-            float currentPayout = FloorNearestPower(5f,totalWorth);
-            //currentPayout = Mathf.Min(payout, currentPayout);
-            totalWorth -= currentPayout;
-            totalWorth = Mathf.Max(totalWorth,0f);
-            float up = Mathf.Floor((float)i/4f)*0.2f;
-            PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position + payoutLocation.forward * ((i%4) * 0.25f) + payoutLocation.up*up, payoutLocation.rotation, 0, new object[]{currentPayout});
-            i++;
-        }
+        PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{totalWorth});
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

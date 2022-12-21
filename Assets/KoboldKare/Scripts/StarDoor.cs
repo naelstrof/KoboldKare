@@ -80,6 +80,7 @@ public class StarDoor : GenericUsable {
         node["scale.x"] = transform.localScale.x;
         node["scale.y"] = transform.localScale.y;
         node["scale.z"] = transform.localScale.z;
+        node["starRequirement"] = starRequirement;
     }
 
     public override void Load(JSONNode node) {
@@ -97,5 +98,9 @@ public class StarDoor : GenericUsable {
         float sy = node["scale.y"];
         float sz = node["scale.z"];
         transform.localScale = new Vector3(sx, sy, sz);
+        if (node.HasKey("starRequirement")) {
+            starRequirement = node["starRequirement"];
+            text.text = starRequirement.ToString();
+        }
     }
 }

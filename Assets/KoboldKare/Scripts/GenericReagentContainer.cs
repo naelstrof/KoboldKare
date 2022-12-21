@@ -71,17 +71,14 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         OnChange ??= new ReagentContainerChangedEvent();
         OnFilled ??= new ReagentContainerChangedEvent();
         OnEmpty ??= new ReagentContainerChangedEvent();
-
-        if (contents == null) {
-            contents = new ReagentContents(startingMaxVolume);
-            if (startingReagents != null) {
-                foreach (var reagent in startingReagents) {
-                    AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
-                }
-            }
-        }
+        contents ??= new ReagentContents(startingMaxVolume);
     }
     public void Start() {
+        if (startingReagents != null) {
+            foreach (var reagent in startingReagents) {
+                AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+            }
+        }
         filled = isFull;
         emptied = isEmpty;
     }
@@ -105,7 +102,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
             return false;
         }
         contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
-        // OnReagentContentsChanged(injectType);
+        OnReagentContentsChanged(injectType);
         return true;
     }
     private bool AddMix(ReagentContents incomingReagents, InjectType injectType) {

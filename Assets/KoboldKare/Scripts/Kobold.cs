@@ -31,7 +31,18 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
 
-    public List<Transform> attachPoints = new List<Transform>();
+    [SerializeField]
+    private List<Equipment.AttachPointReference> attachPoints;
+
+    public Transform GetAttachPointTransform(Equipment.AttachPoint attachPoint) {
+        foreach (var point in attachPoints) {
+            if (point.attachPoint == attachPoint) {
+                return point.targetTransform;
+            }
+        }
+
+        return null;
+    }
 
     public AudioClip[] yowls;
     public Animator animator;

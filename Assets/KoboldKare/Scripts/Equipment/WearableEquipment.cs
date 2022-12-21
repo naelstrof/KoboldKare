@@ -22,7 +22,7 @@ public class WearableEquipment : Equipment {
             int ecount = inventory.GetEquipmentInstanceCount(this);
 
             if (p.stacks) {
-                Transform targetAttach = k.attachPoints[(int)p.attachPoint];
+                Transform targetAttach = k.GetAttachPointTransform(p.attachPoint);
                 Vector3 targetForward = Vector3.up;
                 if (targetAttach.childCount != 0) {
                     targetForward = targetAttach.GetChild(0).localPosition.normalized;
@@ -41,7 +41,7 @@ public class WearableEquipment : Equipment {
                 wearable.transform.localPosition += offset;
                 stuff[i++] = wearable;
             } else {
-                GameObject wearable = GameObject.Instantiate(p.wearablePrefab, k.attachPoints[(int)p.attachPoint] );
+                GameObject wearable = GameObject.Instantiate(p.wearablePrefab, k.GetAttachPointTransform(p.attachPoint));
                 stuff[i++] = wearable;
             }
         }

@@ -16202,18 +16202,32 @@ MonoBehaviour:
     isFemaleExclusiveAnatomy: 0
     canLayEgg: 0
   attachPoints:
-  - {fileID: 4363336214978915131}
-  - {fileID: 6506915555090380202}
-  - {fileID: 6506915555090380214}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 6506915555090380194}
-  - {fileID: 6506915555090380206}
-  - {fileID: 6506915555090380200}
-  - {fileID: 6506915555090380278}
-  - {fileID: 6506915555090380272}
-  - {fileID: 6506915555090380282}
-  - {fileID: 6506915555090380276}
+  - attachPoint: 0
+    targetTransform: {fileID: 4363336214978915131}
+  - attachPoint: 1
+    targetTransform: {fileID: 6506915555090380202}
+  - attachPoint: 2
+    targetTransform: {fileID: 6506915555090380214}
+  - attachPoint: 3
+    targetTransform: {fileID: 6506915555090380232}
+  - attachPoint: 4
+    targetTransform: {fileID: 6506915555090380244}
+  - attachPoint: 5
+    targetTransform: {fileID: 6506915555090380242}
+  - attachPoint: 6
+    targetTransform: {fileID: 6506915555090380194}
+  - attachPoint: 7
+    targetTransform: {fileID: 6506915555090380206}
+  - attachPoint: 8
+    targetTransform: {fileID: 6506915555090380200}
+  - attachPoint: 9
+    targetTransform: {fileID: 6506915555090380278}
+  - attachPoint: 10
+    targetTransform: {fileID: 6506915555090380272}
+  - attachPoint: 11
+    targetTransform: {fileID: 6506915555090380282}
+  - attachPoint: 12
+    targetTransform: {fileID: 6506915555090380276}
   yowls:
   - {fileID: 8300000, guid: 7b62197ed2a36a94caec86483d6feea7, type: 3}
   - {fileID: 8300000, guid: 1cbc240a5eceecc4ca643343bff8c92c, type: 3}

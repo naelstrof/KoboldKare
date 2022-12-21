@@ -22,12 +22,14 @@ public class Equipment : ScriptableObject {
         Feet,
         Butt,
         Hands,
+        Chest,
     }
     public enum AttachPoint {
         Misc = -1,
         Crotch = 0,
         Neck,
         Head,
+        Chest,
         LeftNipple,
         RightNipple,
         TailBase,
@@ -37,6 +39,14 @@ public class Equipment : ScriptableObject {
         RightHand,
         LeftForearm,
         RightForearm,
+    }
+    
+    [System.Serializable]
+    public class AttachPointReference {
+        [SerializeField]
+        public AttachPoint attachPoint;
+        [SerializeField]
+        public Transform targetTransform;
     }
 
     public bool canManuallyUnequip = true;

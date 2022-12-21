@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: TopHat
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 9f42e36bfe1e0074685f5aaba93ff78f, type: 3}
-  hideInFirstPersonWhenWorn: 0
+  hideInFirstPersonWhenWorn: 1
   canManuallyUnequip: 1
   slot: 2
   groundPrefab:
-    gameObject: {fileID: 6614596883837501892, guid: d699c705401906e41a160011aedb02b0,
+    gameObject: {fileID: 5605572581541272102, guid: 548aa0c098057f244bf888156ef74dcf,
       type: 3}
     photonName: TopHat
   localizedName:
@@ -39,11 +39,11 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   wearables:
-  - wearablePrefab: {fileID: 919132149155446097, guid: 9fb93f4b242293a448c1cc43f1a31a9e,
+  - wearablePrefab: {fileID: 6028349103657660877, guid: b2651a97ee02afd47bfff1a32bf282c3,
       type: 3}
     attachPoint: 2
-    stacks: 1
-    stackOffset: {x: 0, y: 0.7, z: 0}
+    stacks: 0
+    stackOffset: {x: 0, y: 0, z: 0}
   references:
     version: 2
     RefIds: []

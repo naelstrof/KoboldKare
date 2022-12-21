@@ -242,7 +242,7 @@ public class DickInfo : MonoBehaviour {
                 set.parentTransform = k.animator.GetBoneTransform(set.parent);
             }
             set.info = this;
-            set.dickContainer.parent = k.attachPoints[(int)set.attachPoint];
+            set.dickContainer.parent = k.GetAttachPointTransform(set.attachPoint);
             set.dickContainer.localScale = scale;
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;

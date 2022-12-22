@@ -44,6 +44,7 @@ public class KoboldSpaceProgram : DragonMailObjective {
         while (logicOwner.isActiveAndEnabled) {
             float maxHeight = 0f;
             Kobold maxHeightKobold = null;
+            kobolds.RemoveWhere((o) => o == null);
             foreach (var kobold in kobolds) {
                 if (kobold.transform.position.y > maxHeight) {
                     maxHeightKobold = kobold;

@@ -8,7 +8,7 @@ using UnityEngine;
 using Vilar.AnimationStation;
 
 public class OvipositionSpot : GenericUsable, IAnimationStationSet {
-    public delegate void OvipositionAction(int eggID);
+    public delegate void OvipositionAction(int koboldID, int eggID);
     public static event OvipositionAction oviposition;
         
     [SerializeField]
@@ -96,9 +96,10 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
         ReagentContents eggContents = new ReagentContents();
         eggContents.AddMix(ReagentDatabase.GetReagent("ScrambledEgg").GetReagent(eggVolume));
-        d.gameObject.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+        PhotonView eggView = d.gameObject.GetPhotonView();
+        eggView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, eggContents, k.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
 
-        oviposition?.Invoke(d.GetComponentInParent<PhotonView>().ViewID);
+        oviposition?.Invoke(k.photonView.ViewID, eggView.ViewID);
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();
         //d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
         body.isKinematic = true;

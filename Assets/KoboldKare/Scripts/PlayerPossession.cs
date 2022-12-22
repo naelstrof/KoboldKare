@@ -463,6 +463,10 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void ToggleEquipmentUI() {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         SetEquipmentUI(!GetEquipmentUI());
     }
 

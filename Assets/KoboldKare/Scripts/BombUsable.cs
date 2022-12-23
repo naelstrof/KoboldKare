@@ -56,9 +56,7 @@ public class BombUsable : GenericUsable, IDamagable {
         if (!fired) {
             Fire();
         } else {
-            if (photonView.IsMine) {
-                PhotonNetwork.Destroy(gameObject);
-            }
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 

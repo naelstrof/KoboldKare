@@ -4,7 +4,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable {
+public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable, IPunInstantiateMagicCallback {
     public delegate void ContainerFilledAction(GenericReagentContainer container);
     public static event ContainerFilledAction containerFilled;
     public static event ContainerFilledAction containerInflated;
@@ -128,7 +128,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
     }
-    
+
     [PunRPC]
     public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID, byte injectType) {
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
@@ -166,7 +166,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         filled = isFull;
         OnChange.Invoke(contents, injectType);
         if (!emptied && isEmpty) {
-            SetGenes(new KoboldGenes());
+            SetGenes(null);
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
             OnEmpty.Invoke(contents, injectType);
         }
@@ -215,6 +215,15 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
             ReagentContents newContents = (ReagentContents)stream.ReceiveNext();
             contents.Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
+        }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData == null) {
+            return;
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
+            SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
         }
     }
 

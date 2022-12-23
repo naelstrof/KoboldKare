@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: dbb7c23f47de0e149b0fa1d15aaa36ae, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
   slot: 7
   groundPrefab:
     gameObject: {fileID: 5605572581541272102, guid: e19ec61e30e580d4480bdd0fc79fb3d3,
       type: 3}
-    photonName: GlovesEquippable
+    photonName: Gloves
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
@@ -37,18 +38,17 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply:
-  - {fileID: 11400000, guid: e4b6c82e07d0cc34e9019e57496a22fd, type: 2}
   wearables:
   - wearablePrefab: {fileID: 5294754968132538092, guid: b701099ced404bf4698d919ef7d82ffc,
-      type: 3}
-    attachPoint: 8
-    stacks: 0
-    stackOffset: {x: 0, y: 0, z: 0}
-  - wearablePrefab: {fileID: 6689783756949498760, guid: 0e40209a7649f1446ae0313a2dc18c6d,
       type: 3}
     attachPoint: 9
     stacks: 0
     stackOffset: {x: 0, y: 0, z: 0}
+  - wearablePrefab: {fileID: 6689783756949498760, guid: 0e40209a7649f1446ae0313a2dc18c6d,
+      type: 3}
+    attachPoint: 10
+    stacks: 0
+    stackOffset: {x: 0, y: 0, z: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: bdc31b4dc54d7d34c9ecb81b42122f62, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
   slot: -1
   groundPrefab:
     gameObject: {fileID: 5605572581541272102, guid: 5caba9854a5d73c4dbed957bf746e25c,
       type: 3}
-    photonName: TailCollarEqiuppable
+    photonName: TailCollar
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
@@ -37,12 +38,12 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply: []
   wearables:
   - wearablePrefab: {fileID: 4941677989420624985, guid: 4e4fe1946f50d8141909324e2b27cecf,
       type: 3}
-    attachPoint: 5
+    attachPoint: 6
     stacks: 1
     stackOffset: {x: 0, y: 0.05, z: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

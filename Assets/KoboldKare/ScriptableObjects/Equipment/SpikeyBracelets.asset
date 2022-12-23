@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: bdc31b4dc54d7d34c9ecb81b42122f62, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
   slot: -1
   groundPrefab:
     gameObject: {fileID: 5605572581541272102, guid: cd3bcb5c1635f6746aac112a39fc63d4,
       type: 3}
-    photonName: SpikeyBraceletEquippable
+    photonName: SpikeyBracelet
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
@@ -37,17 +38,17 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply: []
   wearables:
-  - wearablePrefab: {fileID: 4410874938388445847, guid: ea07f03a9950e324d8a4f3a515b6eea2,
-      type: 3}
-    attachPoint: 10
-    stacks: 1
-    stackOffset: {x: 0, y: -0.03, z: 0}
   - wearablePrefab: {fileID: 4410874938388445847, guid: ea07f03a9950e324d8a4f3a515b6eea2,
       type: 3}
     attachPoint: 11
     stacks: 1
     stackOffset: {x: 0, y: -0.03, z: 0}
+  - wearablePrefab: {fileID: 4410874938388445847, guid: ea07f03a9950e324d8a4f3a515b6eea2,
+      type: 3}
+    attachPoint: 12
+    stacks: 1
+    stackOffset: {x: 0, y: -0.03, z: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

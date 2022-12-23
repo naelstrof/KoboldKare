@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 34dc0b9cee101264a9cf02a834f02bcf, type: 3}
   hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
   slot: 5
   groundPrefab:
     gameObject: {fileID: 5605572581541272102, guid: 8951fb1a948fc9d4ea8da627ec9ba72d,
       type: 3}
-    photonName: HighHeelsEquippable
+    photonName: HighHeels
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
@@ -37,18 +38,17 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  effectsToApply:
-  - {fileID: 11400000, guid: 5e6806414b3d89f48b8c05e07fe3414e, type: 2}
   wearables:
   - wearablePrefab: {fileID: 698732803216093715, guid: d51955e1ad33c8647927b33d9206a774,
-      type: 3}
-    attachPoint: 6
-    stacks: 0
-    stackOffset: {x: 0, y: 0, z: 0}
-  - wearablePrefab: {fileID: 2234263794653502814, guid: 87402cb5a22fc25469f279edd6d461e0,
       type: 3}
     attachPoint: 7
     stacks: 0
     stackOffset: {x: 0, y: 0, z: 0}
+  - wearablePrefab: {fileID: 2234263794653502814, guid: 87402cb5a22fc25469f279edd6d461e0,
+      type: 3}
+    attachPoint: 8
+    stacks: 0
+    stackOffset: {x: 0, y: 0, z: 0}
   references:
-    version: 1
+    version: 2
+    RefIds: []

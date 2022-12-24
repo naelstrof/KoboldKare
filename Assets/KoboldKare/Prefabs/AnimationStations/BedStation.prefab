@@ -351,10 +351,7 @@ MonoBehaviour:
     - {x: 0, y: 0.6087685, z: 0, w: 0.7933594}
     - {x: 0, y: 0.6087784, z: 0, w: 0.7933712}
   editSelection: 1
-  previewActive: 1
   animProgress: 34.407482
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -716,10 +713,7 @@ MonoBehaviour:
     - {x: -0.43045956, y: -0.5609858, z: -0.56098413, w: 0.43046087}
     - {x: -0.43045956, y: -0.5609858, z: -0.56098413, w: 0.43046087}
   editSelection: 1
-  previewActive: 1
   animProgress: 34.407482
-  lastEditorTime: 0
-  lookAtPosition: {x: 0, y: 0, z: 0}
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -800,6 +794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructed: 1
+  trackedConstructedObjects: []
   breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
   animationStations:
   - {fileID: 3139046140534680885}

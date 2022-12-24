@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class BreedingStation : GenericUsable, IAnimationStationSet {
+public class BreedingStation : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private Sprite breedingSprite;
     [SerializeField]
@@ -22,6 +22,10 @@ public class BreedingStation : GenericUsable, IAnimationStationSet {
     }
 
     public override bool CanUse(Kobold k) {
+        if (!constructed) {
+            return false;
+        }
+
         foreach (AnimationStation station in animationStations) {
             if (station.info.user == null) {
                 return true;

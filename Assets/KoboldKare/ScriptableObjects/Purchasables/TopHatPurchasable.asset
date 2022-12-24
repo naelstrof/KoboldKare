@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0570dbde195e565469bd523b46057ff7, type: 3}
   m_Name: TopHatPurchasable
   m_EditorClassIdentifier: 
-  display: {fileID: 6614596883837501892, guid: d699c705401906e41a160011aedb02b0, type: 3}
+  display: {fileID: 296189292432169238, guid: 6c359b95c9fea3146838bd6dbe2227be, type: 3}
   spawnPrefab:
-    gameObject: {fileID: 6614596883837501892, guid: d699c705401906e41a160011aedb02b0,
+    gameObject: {fileID: 5605572581541272102, guid: 548aa0c098057f244bf888156ef74dcf,
       type: 3}
-    photonName: TopHatEquippable
-  cost: 50
+    photonName: TopHat
+  cost: 10

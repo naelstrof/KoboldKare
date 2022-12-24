@@ -22,6 +22,10 @@ public class BreedingStation : UsableMachine, IAnimationStationSet {
     }
 
     public override bool CanUse(Kobold k) {
+        if (!constructed) {
+            return false;
+        }
+
         foreach (AnimationStation station in animationStations) {
             if (station.info.user == null) {
                 return true;

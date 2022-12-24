@@ -27,7 +27,9 @@ public class UsableMachine : GenericUsable {
 
     public override void Load(JSONNode node) {
         base.Load(node);
-        SetConstructed(node["constructed"]);
+        if (node.HasKey("constructed")) {
+            SetConstructed(node["constructed"]);
+        }
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

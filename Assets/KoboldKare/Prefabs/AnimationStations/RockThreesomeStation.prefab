@@ -809,6 +809,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460572374f6a3884bb290ea1b92ebd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructed: 1
+  trackedConstructedObjects: []
   breedingSprite: {fileID: 21300000, guid: 4b322339cb0956a428014ff67cf4c26d, type: 3}
   animationStations:
   - {fileID: 7183119216713928338}

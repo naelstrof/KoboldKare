@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class BreedingStation : GenericUsable, IAnimationStationSet {
+public class BreedingStation : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private Sprite breedingSprite;
     [SerializeField]

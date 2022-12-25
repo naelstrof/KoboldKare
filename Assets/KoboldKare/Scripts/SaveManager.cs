@@ -204,7 +204,8 @@ public static class SaveManager {
                 }
             }
             if (view == null) {
-                throw new UnityException($"Failed to find view id {viewID} with name {prefabName}. Failed to load...");
+                Debug.LogError($"Failed to find view id {viewID} with name {prefabName}...Skipping");
+                continue;
             }
             try {
                 foreach(Component observable in view.ObservedComponents) {

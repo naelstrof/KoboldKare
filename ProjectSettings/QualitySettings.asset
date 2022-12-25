@@ -83,3 +83,5 @@ QualitySettings:
   m_PerPlatformDefaultQuality:
     Server: 0
     Standalone: 1
+    WebGL: 0
+    Windows Store Apps: 0

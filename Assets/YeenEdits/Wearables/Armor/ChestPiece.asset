@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd92f616eb846994e99a37d339d48784, type: 3}
+  m_Name: ChestPiece
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 88683833f4308384aac8e0dbf4adc88c, type: 3}
+  hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
+  slot: 8
+  groundPrefab:
+    gameObject: {fileID: 2748142235640710243, guid: 605a8a9893df4824fa39c399fbc0ead0,
+      type: 3}
+    photonName: ChestArm01
+  localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 35653807596163072
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  localizedDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 38135240696844288
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  wearables:
+  - wearablePrefab: {fileID: 786472240319612926, guid: 80547d0166858144ca36a0600008dea2,
+      type: 3}
+    attachPoint: 3
+    stacks: 0
+    stackOffset: {x: 0, y: 0, z: 0}
+  references:
+    version: 2
+    RefIds: []

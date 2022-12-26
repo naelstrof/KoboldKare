@@ -566,16 +566,16 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(arousal);
+            stream.SendNext((byte)Mathf.RoundToInt(arousal*255f));
             stream.SendNext(metabolizedContents);
             stream.SendNext(consumedReagents);
-            stream.SendNext(energy);
+            stream.SendNext((byte)Mathf.RoundToInt((energy/GetMaxEnergy())*255f));
             stream.SendNext(GetGenes());
         } else {
-            arousal = (float)stream.ReceiveNext();
+            arousal = (byte)stream.ReceiveNext()/255f;
             metabolizedContents.Copy((ReagentContents)stream.ReceiveNext());
             consumedReagents.Copy((ReagentContents)stream.ReceiveNext());
-            float newEnergy = (float)stream.ReceiveNext();
+            float newEnergy = ((byte)stream.ReceiveNext()/255f)*GetMaxEnergy();
             if (Math.Abs(newEnergy - energy) > 0.01f) {
                 energy = newEnergy;
                 energyChanged?.Invoke(energy, GetGenes().maxEnergy);

@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: 964fd09eb1637e044848f281b24be71f
   - enabled: 1
     path: Assets/KoboldKare/Scenes/MainMap.unity
-    guid: ca620b8d136104d4f9323c619d2dcce3
+    guid: 6e526b4b02d74304da54674720eaf458
   - enabled: 1
     path: Assets/KoboldKare/Scenes/ErrorScene.unity
     guid: 26318fec5bcca86458a8dab753d4b12c

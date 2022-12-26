@@ -70,6 +70,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.JoinRoom(roomName);
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
+        if (Application.isEditor && !PhotonNetwork.GameVersion.Contains("Editor")) {
+            PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
+        }
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
         PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         if (PhotonNetwork.InRoom) {
@@ -85,6 +88,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.EnableCloseConnection = true;
     }
     public IEnumerator EnsureOnlineAndReadyToLoad(bool shouldLeaveRoom = true) {
+        if (Application.isEditor && !PhotonNetwork.GameVersion.Contains("Editor")) {
+            PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
+        }
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");

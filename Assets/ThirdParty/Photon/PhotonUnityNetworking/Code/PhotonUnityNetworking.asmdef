@@ -3,8 +3,8 @@
     "rootNamespace": "",
     "references": [
         "PhotonRealtime",
-        "KoboldKare.ISavable",
-        "SimpleJSON"
+        "SimpleJSON",
+        "KoboldKare.ISavable"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

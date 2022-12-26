@@ -3,6 +3,21 @@ Photon Realtime C# Client - Changelog
 Exit Games GmbH - www.photonengine.com - forum.photonengine.com
 
 
+Version 4.1.6.17 (02. August 2022)
+    Added: DisconnectCause.ApplicationQuit. Can be used when your app disconnects on application quit: lbc.Disconnect(DisconnectCause.ApplicationQuit).
+    Note: The ConnectionHandler will use this to differentiate a regular disconnect from one that is triggered by Unity / app-quit.
+
+Version 4.1.6.16 (22. June 2022)
+    Fixed: Formatting issue in debug logs for WebGL exports.
+    Changed: Best Region selection. A weighted ping value is used now. Out of the 5 attempts, the worst is discarded (usually the first) and the best is counted in twice (it is the fastest). In WebGL, HTTP is used to ping servers and when a request didn't finish, the next attempt will be delayed a bit.
+    Changed: HTTP Ping class for Best Region selection in WebGL changed from Unity's WWW class to UnityWebRequest.
+
+Version 4.1.6.15 (10. June 2022)
+    Changed: Sharding / Clustering support. Clients will no longer connect to a random cluster by default. To do so, make sure to add "/*" to the region code, if your game supports sharding / multiple clusters. This is only done in very high CCU cases.
+
+Version 4.1.6.14 (26. April 2022)
+    Added: Warning log if SocketWebTcp could not be found at runtime in Unity WebGL exports.
+
 Version 4.1.6.11 (22. November 2021)
     Changed: For Unity, PhotonEditorUtils.IsPrefab to use the correct prefab stage utility for Unity 2021.2 and up.
     Added: CustomAuthenticationType.Epic to authenticate via Epic Online Services (EOS).

@@ -17,7 +17,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         Debug.Log("PhotonRoomListSpawner :: Connected to master");
     }
     public override void OnLeftLobby(){
-        //ClearRoomList();
+        ClearRoomList();
         Debug.Log("[PhotonRoomListSpawner] :: Player left lobby");
     }
 
@@ -65,10 +65,10 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         hideOnRoomsFound.SetActive(roomList.Count == 0);
     }
 
-    //private void ClearRoomList(){
-        //foreach(GameObject g in roomPrefabs) {
-            //Destroy(g);
-        //}
-        //roomPrefabs.Clear();
-    //}
+    private void ClearRoomList(){
+        foreach(GameObject g in roomPrefabs) {
+            Destroy(g);
+        }
+        roomPrefabs.Clear();
+    }
 }

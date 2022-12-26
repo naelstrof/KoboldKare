@@ -17,7 +17,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         Debug.Log("PhotonRoomListSpawner :: Connected to master");
     }
     public override void OnLeftLobby(){
-        ClearRoomList();
+        //ClearRoomList();
         Debug.Log("[PhotonRoomListSpawner] :: Player left lobby");
     }
 
@@ -39,13 +39,19 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior
         Debug.Log("[PhotonRoomListSpawner] :: Got room list update from master server");
-        ClearRoomList();
+        //ClearRoomList();
         //Build UI from current room list
         foreach (RoomInfo info in roomList){
             if (info.RemovedFromList) {
+                for (int i = 0; i < roomPrefabs.Count; i++) {
+                    if (roomPrefabs[i].transform.Find("Name").GetComponent<TextMeshProUGUI>().text == info.Name) {
+                        Destroy(roomPrefabs[i]);
+                        roomPrefabs.RemoveAt(i--);
+                    }
+                }
                 continue;
             }
-            GameObject room = GameObject.Instantiate(roomPrefab, this.transform);
+            GameObject room = Instantiate(roomPrefab, this.transform);
             roomPrefabs.Add(room);
             room.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = info.Name;
             room.transform.Find("Info").GetComponent<TextMeshProUGUI>().text = info.PlayerCount + "/" + info.MaxPlayers;
@@ -59,10 +65,10 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         hideOnRoomsFound.SetActive(roomList.Count == 0);
     }
 
-    private void ClearRoomList(){
-        foreach(GameObject g in roomPrefabs) {
-            Destroy(g);
-        }
-        roomPrefabs.Clear();
-    }
+    //private void ClearRoomList(){
+        //foreach(GameObject g in roomPrefabs) {
+            //Destroy(g);
+        //}
+        //roomPrefabs.Clear();
+    //}
 }

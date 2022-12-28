@@ -50,7 +50,6 @@ public class MailboxUsable : GenericUsable {
             return;
         }
 
-        Debug.Log(ObjectiveManager.HasMail());
         hasMail = true;
         mailWaitingSource.enabled = true;
         mailWaiting.Play(mailWaitingSource);

@@ -64,19 +64,19 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
 
     private IEnumerator CrusherRoutine() {
         // added by Godeken
-        anim.SetBool("BeingPressed", true);
+        yield return new WaitForSeconds(1f);
+        
+        anim.SetTrigger("BeingPressed");
 
         yield return new WaitForSeconds(6f);
         
         if (!photonView.IsMine) {
-            anim.SetBool("BeingPressed", false);
             yield break;
         }
 
         Kobold pressedKobold = stations[0].info.user;
 
         if (pressedKobold == null) {
-            anim.SetBool("BeingPressed", false);
             yield break;
         }
         pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
@@ -85,9 +85,6 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         
         container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
             pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-        
-        // added by Godeken
-        anim.SetBool("BeingPressed", false);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

@@ -178,6 +178,8 @@ public static class AghButton {
                     c.spatialize = false;
                     count++;
                     Selection.activeGameObject = g;
+                    EditorUtility.SetDirty(g);
+                    EditorUtility.SetDirty(c);
                 }
             }
         }
@@ -187,6 +189,8 @@ public static class AghButton {
                     c.spatialize = false;
                     count++;
                     Selection.activeGameObject = g;
+                    EditorUtility.SetDirty(g);
+                    EditorUtility.SetDirty(c);
                 }
             }
         }

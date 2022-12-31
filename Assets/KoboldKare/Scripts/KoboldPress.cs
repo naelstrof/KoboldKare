@@ -13,7 +13,10 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     private Sprite useSprite;
     [SerializeField]
     private FluidStream stream;
-    
+
+    // added by Godeken
+    [SerializeField] private Animator anim;
+
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private GenericReagentContainer container;
 
@@ -25,6 +28,7 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         container.type = GenericReagentContainer.ContainerType.Mouth;
         photonView.ObservedComponents.Add(container);
         container.OnChange.AddListener(OnReagentContentsChanged);
+        
     }
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         stream.OnFire(container);
@@ -45,7 +49,7 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
-        base.LocalUse(k);
+        base.LocalUse(k);       
         if (stations[0].info.user == null) {
             k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, 0);
         }
@@ -59,12 +63,20 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     }
 
     private IEnumerator CrusherRoutine() {
+        // added by Godeken
+        anim.SetBool("BeingPressed", true);
+
         yield return new WaitForSeconds(6f);
+        
         if (!photonView.IsMine) {
+            anim.SetBool("BeingPressed", false);
             yield break;
         }
+
         Kobold pressedKobold = stations[0].info.user;
+
         if (pressedKobold == null) {
+            anim.SetBool("BeingPressed", false);
             yield break;
         }
         pressedKobold.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others,
@@ -73,6 +85,9 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         
         container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
             pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+        
+        // added by Godeken
+        anim.SetBool("BeingPressed", false);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

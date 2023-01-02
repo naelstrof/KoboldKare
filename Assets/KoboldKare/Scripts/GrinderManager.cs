@@ -161,7 +161,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         if (kobold != null) {
             kobold.StartCoroutine(RagdollForTime(kobold));
             foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-                r.AddExplosionForce(400f, transform.position+Vector3.down*5f, 100f);
+                r.AddExplosionForce(4000f, transform.position+Vector3.down*5f, 100f);
             }
             if (!deny.isPlaying) {
                 deny.Play();

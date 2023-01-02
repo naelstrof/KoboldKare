@@ -32,6 +32,11 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private GenericReagentContainer container;
 
+    // added by Godeken
+    [SerializeField] private Animator anim;
+    [SerializeField] private float animMinSpeed = 0.9f;
+    [SerializeField] private float animMaxSpeed = 1.2f;
+
     public override Sprite GetSprite(Kobold k) {
         return onSprite;
     }
@@ -67,7 +72,16 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     }
 
     IEnumerator WaitThenConsumeEnergy() {
-        yield return new WaitForSeconds(8f);
+
+        //added by Godeken
+        yield return new WaitForSeconds(1f);
+        anim.SetTrigger("Cranking");
+        anim.speed = animMinSpeed;
+        yield return new WaitForSeconds(3f);
+        anim.speed = animMaxSpeed;
+        yield return new WaitForSeconds(4f);
+        
+
         if (!photonView.IsMine) {
             yield break;
         }
@@ -100,6 +114,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
 
     [PunRPC]
     public override void Use() {
+
         StopCoroutine(nameof(WaitThenConsumeEnergy));
         StartCoroutine(nameof(WaitThenConsumeEnergy));
     }

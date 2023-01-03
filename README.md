@@ -9,9 +9,4 @@ Please read [LICENSE](LICENSE) to ensure you have license to do what you want wi
 
 ## Contributing
 
-This repository is currently in shambles and is being fixed as you read this!
-TODO: fill out contributing stuff here
-
-## Attributions
-
-You can find a list of assets, their authors, and their licenses within [Attributions.txt](Attributions.txt)
+You can learn how to contribute to KoboldKare by reading [CONTRIBUTING.md](CONTRIBUTING.md)

@@ -1227,6 +1227,18 @@ MonoBehaviour:
     m_Key: SETTING_INVERT_LOOK_Y_AXIS
     m_Metadata:
       m_Items: []
+  - m_Id: 254924482117312512
+    m_Key: REAGENT_BOOB_SHRINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Key: REAGENT_BALL_SHRINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Key: REAGENT_DICK_SHRINK
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

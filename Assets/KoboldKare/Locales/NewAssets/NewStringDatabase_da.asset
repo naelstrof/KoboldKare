@@ -1151,7 +1151,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ikke n\xF8dvendigt at v\xE6re genert."
+      op her, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1290,6 +1290,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 248938687950692352
     m_Localized: Inverter se y-aksen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: Boob-shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: Kugler-krympe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: Dick-Shrink
     m_Metadata:
       m_Items: []
   references:

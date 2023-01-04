@@ -1384,6 +1384,18 @@ MonoBehaviour:
     m_Localized: "\u0110\u1EA3o ng\u01B0\u1EE3c l\u1EA1i tr\u1EE5c y"
     m_Metadata:
       m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: Boob-shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: "B\xF3ng-shrink"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: Dick-shrink
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

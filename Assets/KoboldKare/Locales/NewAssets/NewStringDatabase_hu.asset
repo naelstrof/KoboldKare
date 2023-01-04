@@ -1308,6 +1308,18 @@ MonoBehaviour:
     m_Localized: "Invert megjelen\xE9s y-tengely"
     m_Metadata:
       m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: "Boob-b\xFCtyk\xF6s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: "Goly\xF3goly\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: "Fasz l\xE1nc"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

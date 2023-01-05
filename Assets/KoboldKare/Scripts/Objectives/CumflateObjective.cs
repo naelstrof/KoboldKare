@@ -53,10 +53,15 @@ public class CumflateObjective : DragonMailObjective {
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream,info);
         if (stream.IsWriting) {
             stream.SendNext(cumflated);
         } else {
-            cumflated = (int)stream.ReceiveNext();
+            int newCumflated = (int)stream.ReceiveNext();
+            if (cumflated != newCumflated) {
+                cumflated = newCumflated;
+                TriggerUpdate();
+            }
         }
     }
 }

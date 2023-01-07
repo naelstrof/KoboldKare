@@ -1239,6 +1239,10 @@ MonoBehaviour:
     m_Key: REAGENT_DICK_SHRINK
     m_Metadata:
       m_Items: []
+  - m_Id: 255663042125979648
+    m_Key: KOBOLD_VIEWER_BUTTON
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

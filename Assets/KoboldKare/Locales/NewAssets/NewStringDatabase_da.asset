@@ -1304,6 +1304,10 @@ MonoBehaviour:
     m_Localized: Dick-Shrink
     m_Metadata:
       m_Items: []
+  - m_Id: 255663042125979648
+    m_Localized: Skjul menu
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

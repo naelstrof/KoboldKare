@@ -581,6 +581,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 energyChanged?.Invoke(energy, GetGenes().maxEnergy);
             }
             SetGenes((KoboldGenes)stream.ReceiveNext());
+            
+            PhotonProfiler.LogRecieve(sizeof(byte) + sizeof(float) + KoboldGenes.byteCount + metabolizedContents.GetNetworkSize() + consumedReagents.GetNetworkSize());
         }
     }
 

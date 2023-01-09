@@ -1,0 +1,7 @@
+{
+    "name": "com.naelstrof.photon.profiler",
+    "displayName": "Photon Profiler",
+    "version": "0.0.1",
+    "unity": "2020.3",
+    "description": "A Photon profiler to help identify network usage."
+}

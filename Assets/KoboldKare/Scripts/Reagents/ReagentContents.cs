@@ -132,6 +132,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         return metabolizeContents;
     }
 
+
     public float GetVolumeOf(short id) {
         if (contents.ContainsKey(id)) {
             return contents[id].volume;
@@ -184,7 +185,8 @@ public class ReagentContents : IEnumerable<Reagent> {
     }
     public static short SerializeReagentContents(StreamBuffer outStream, object customObject) {
         ReagentContents reagentContents = (ReagentContents)customObject;
-        short size = (short)(sizeof(float)+(sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
+        //short size = (short)(sizeof(float)+(sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
+        short size = reagentContents.GetNetworkSize();
         byte[] bytes = new byte[size];
         int index = 0;
         Protocol.Serialize(reagentContents.maxVolume, bytes, ref index);
@@ -196,6 +198,10 @@ public class ReagentContents : IEnumerable<Reagent> {
             Protocol.Serialize(pair.Value.volume, bytes, ref index);
         }
         outStream.Write(bytes, 0, size);
+        return size;
+    }
+    public short GetNetworkSize() {
+        short size = (short)(sizeof(float)+(sizeof(short) + sizeof(float)) * contents.Count);
         return size;
     }
     public static object DeserializeReagentContents(StreamBuffer inStream, short length) {

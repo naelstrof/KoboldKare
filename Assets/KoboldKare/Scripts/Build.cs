@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 #if UNITY_EDITOR
+using System.Runtime.InteropServices;
 using UnityEditor.Build.Reporting;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -12,7 +13,9 @@ using UnityEditor;
 //using UnityEngine.Localization;
 
 public class Build {
+    
     static readonly string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
+    private const string buildStatusVariable = "BUILD_RESULT";
     private static string outputDirectory {
         get {
             string dir = Environment.GetEnvironmentVariable("BUILD_DIR");
@@ -22,8 +25,27 @@ public class Build {
             return string.Format("{0}{1}", dir.TrimEnd(Path.DirectorySeparatorChar), Path.DirectorySeparatorChar);
         }
     }
+    
+    private static void SetEnvironmentVariable(string name, string value) {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+            System.Diagnostics.Process.Start("/bin/bash", $"-c export {name} = {value}");
+        } else {
+            Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.User);
+        }
+    }
+
+    private static string ResultToString(BuildResult result) {
+        switch (result) {
+            case BuildResult.Unknown: return "Unknown";
+            case BuildResult.Succeeded: return "Succeeded";
+            case BuildResult.Cancelled: return "Cancelled";
+            case BuildResult.Failed: return "Failed"; 
+            default: return result.ToString();
+        }
+    }
+
     static void BuildLinux() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable, ResultToString(BuildResult.Unknown));
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -33,11 +55,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable,  ResultToString(report.summary.result));
     }
 
     static void BuildMac() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable, ResultToString(BuildResult.Unknown));
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SetPlatformSettings(
             "Standalone",
@@ -53,11 +75,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable,  ResultToString(report.summary.result));
     }
 
     static void BuildWindows() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable, ResultToString(BuildResult.Unknown));
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -67,11 +89,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable,  ResultToString(report.summary.result));
     }
 
     static void BuildWindows32() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable, ResultToString(BuildResult.Unknown));
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -81,7 +103,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
+        SetEnvironmentVariable(buildStatusVariable,  ResultToString(report.summary.result));
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 

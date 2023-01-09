@@ -23,7 +23,7 @@ public class Build {
         }
     }
     static void BuildLinux() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -33,11 +33,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
     }
 
     static void BuildMac() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SetPlatformSettings(
             "Standalone",
@@ -53,11 +53,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
     }
 
     static void BuildWindows() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -67,11 +67,11 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
     }
 
     static void BuildWindows32() {
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0", EnvironmentVariableTarget.User);
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -81,7 +81,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
-        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0", EnvironmentVariableTarget.User);
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 

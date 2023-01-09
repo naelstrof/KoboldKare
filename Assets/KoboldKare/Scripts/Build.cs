@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using UnityEditor.Build.Reporting;
 #if UNITY_EDITOR
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -32,6 +33,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
     [MenuItem("KoboldKare/BuildMac")]
@@ -51,6 +53,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
     [MenuItem("KoboldKare/BuildWindows")]
@@ -64,6 +67,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
     [MenuItem("KoboldKare/BuildWindows32")]
@@ -77,6 +81,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 

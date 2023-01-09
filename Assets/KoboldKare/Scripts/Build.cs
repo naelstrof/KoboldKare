@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
-using UnityEditor.Build.Reporting;
 #if UNITY_EDITOR
+using UnityEditor.Build.Reporting;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor;
@@ -22,8 +22,8 @@ public class Build {
             return string.Format("{0}{1}", dir.TrimEnd(Path.DirectorySeparatorChar), Path.DirectorySeparatorChar);
         }
     }
-    [MenuItem("KoboldKare/BuildLinux")]
     static void BuildLinux() {
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -36,8 +36,8 @@ public class Build {
         Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
-    [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SetPlatformSettings(
             "Standalone",
@@ -56,8 +56,8 @@ public class Build {
         Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
-    [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();
@@ -70,8 +70,8 @@ public class Build {
         Environment.SetEnvironmentVariable("BUILD_SUCCESS", report.summary.result == BuildResult.Succeeded ? "1" : "0");
     }
 
-    [MenuItem("KoboldKare/BuildWindows32")]
     static void BuildWindows32() {
+        Environment.SetEnvironmentVariable("BUILD_SUCCESS", "0");
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
         AddressableAssetSettings.BuildPlayerContent();

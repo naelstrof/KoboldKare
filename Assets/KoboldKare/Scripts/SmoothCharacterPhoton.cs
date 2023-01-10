@@ -13,7 +13,6 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
     private Vector3 currentVelocity;
-    private BitBuffer bitBuffer;
     private struct Frame {
         public Vector3 position;
         public Quaternion rotation;
@@ -37,7 +36,6 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         
         lastFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
-        bitBuffer = new BitBuffer();
     }
     
     private void LateUpdate() {
@@ -67,7 +65,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, PlayAreaEnforcer.GetWorldBounds());
             QuantizedQuaternion quantizedRotation = SmallestThree.Quantize(body.transform.rotation);
             
-            bitBuffer.Clear();
+            BitBuffer bitBuffer = new BitBuffer(8);
             bitBuffer.AddUInt(quantizedPosition.x)
                      .AddUInt(quantizedPosition.y)
                      .AddUInt(quantizedPosition.z)
@@ -92,7 +90,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                 lastFrame = newFrame;
                 init = true;
             }
-            PhotonProfiler.LogReceive(bitBuffer.Length);
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
 

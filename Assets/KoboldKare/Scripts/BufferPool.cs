@@ -26,7 +26,7 @@ public class BufferPool : MonoBehaviour {
         byte[] bytes = new byte[length];
         inStream.Read(bytes, 0, length);
         
-        BitBuffer buffer = new BitBuffer(length);
+        BitBuffer buffer = new BitBuffer(length/4+1);
         buffer.FromArray(bytes, length);
         return buffer;
     }

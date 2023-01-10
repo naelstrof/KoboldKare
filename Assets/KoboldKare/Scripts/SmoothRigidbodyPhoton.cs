@@ -20,14 +20,12 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private Frame lastFrame;
     private Frame newFrame;
     private bool init = false;
-    private BitBuffer bitBuffer;
     
     private void Awake() {
         body = GetComponent<Rigidbody>();
         //jiggleRigs = GetComponentsInChildren<JiggleRigBuilder>();
         lastFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
-        bitBuffer = new BitBuffer();
     }
     
     private void LateUpdate() {
@@ -61,7 +59,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, PlayAreaEnforcer.GetWorldBounds());
             QuantizedQuaternion quantizedRotation = SmallestThree.Quantize(body.transform.rotation);
 
-            bitBuffer.Clear();
+            BitBuffer bitBuffer = new BitBuffer(8);
             bitBuffer.AddUInt(quantizedPosition.x)
                      .AddUInt(quantizedPosition.y)
                      .AddUInt(quantizedPosition.z)
@@ -87,7 +85,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                 lastFrame = newFrame;
                 init = true;
             }
-            PhotonProfiler.LogReceive(bitBuffer.Length);
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
 

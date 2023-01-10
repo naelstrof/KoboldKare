@@ -9,7 +9,7 @@ public class BufferPool : MonoBehaviour {
     private BitBuffer bitBuffer;
     private Dictionary<int,byte[]> byteArrays;
     private void Awake() {
-        if (instance == null && instance != this) {
+        if (instance != null && instance != this) {
             Destroy(this);
             return;
         }

@@ -9,6 +9,8 @@
 // ----------------------------------------------------------------------------
 
 
+using NetStack.Serialization;
+
 namespace Photon.Pun
 {
     using System;

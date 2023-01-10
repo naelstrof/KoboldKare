@@ -72,6 +72,22 @@ namespace NetStack.Serialization {
 			}
 		}
 
+		public override bool Equals(object obj) {
+			if (obj is BitBuffer other) {
+				if (other.Length != Length) {
+					return false;
+				}
+				for (int i = 0; i < Length; i++) {
+					if (other.chunks[i] != chunks[i]) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+			return base.Equals(obj);
+		}
+
 		public bool IsFinished {
 			get {
 				return nextPosition == readPosition;

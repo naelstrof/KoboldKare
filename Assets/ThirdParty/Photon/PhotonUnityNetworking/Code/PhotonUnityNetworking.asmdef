@@ -4,7 +4,8 @@
     "references": [
         "PhotonRealtime",
         "SimpleJSON",
-        "KoboldKare.ISavable"
+        "KoboldKare.ISavable",
+        "NetStack"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

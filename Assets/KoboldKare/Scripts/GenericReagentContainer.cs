@@ -235,6 +235,8 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // This buffer might be shared.
+            buffer.SetReadPosition(0);
             SetGenes(buffer.ReadKoboldGenes());
             PhotonProfiler.LogReceive(buffer.Length);
         }

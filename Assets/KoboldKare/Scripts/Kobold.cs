@@ -578,9 +578,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             ushort quantizedEnergy = HalfPrecision.Quantize(energy);
             sendBuffer.AddUShort(quantizedEnergy);
             sendBuffer.AddKoboldGenes(GetGenes());
+            stream.SendNext(sendBuffer);
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
-            
             arousal = data.ReadByte()/255f;
             metabolizedContents.Copy(data.ReadReagentContents());
             consumedReagents.Copy(data.ReadReagentContents());
@@ -602,6 +602,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // Might be a shared buffer
+            buffer.SetReadPosition(0);
             SetGenes(buffer.ReadKoboldGenes());
             bool isPlayer = buffer.ReadBool();
             if (isPlayer) {

@@ -56,7 +56,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private Rigidbody body;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         BoundedRange[] worldBounds = PlayAreaEnforcer.GetWorldBounds();
-        int bitsPerElement = 12;
+        int bitsPerElement = 10;
         
         if (stream.IsWriting) {
             QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, worldBounds);
@@ -70,8 +70,6 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                      .Add(bitsPerElement, quantizedRotation.a)
                      .Add(bitsPerElement, quantizedRotation.b)
                      .Add(bitsPerElement, quantizedRotation.c);
-            Debug.Log(worldBounds[0].GetRequiredBits() + " " + worldBounds[1].GetRequiredBits() + " " +
-                      worldBounds[2].GetRequiredBits());
             stream.SendNext(bitBuffer);
             
             lastFrame = newFrame;

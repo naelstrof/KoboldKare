@@ -44,9 +44,9 @@ public class PlayAreaEnforcer : MonoBehaviour {
         OcclusionArea area = GetComponent<OcclusionArea>();
         bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
         worldBounds = new BoundedRange[] {
-            new(bounds.min.x, bounds.max.x, 0.05f),
-            new(bounds.min.y, bounds.max.y, 0.05f),
-            new(bounds.min.z, bounds.max.z, 0.05f),
+            new(bounds.min.x, bounds.max.x, 0.08f),
+            new(bounds.min.y, bounds.max.y, 0.08f),
+            new(bounds.min.z, bounds.max.z, 0.08f),
         };
         trackedObjects = new List<PhotonView>();
     }

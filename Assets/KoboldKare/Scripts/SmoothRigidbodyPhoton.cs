@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable {
@@ -75,7 +69,6 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                      .AddUInt(quantizedRotation.c);
             byte[] byteArray = BufferPool.GetArrayBuffer(bitBuffer.Length);
             bitBuffer.ToArray(byteArray);
-            Debug.Log(byteArray + " " + bitBuffer.Length);
             stream.SendNext(byteArray);
             
             lastFrame = newFrame;
@@ -84,7 +77,6 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             byte[] byteArray = (byte[])stream.ReceiveNext();
             BitBuffer bitBuffer = BufferPool.GetBitBuffer();
             bitBuffer.FromArray(byteArray, byteArray.Length);
-            Debug.Log(byteArray + " " + bitBuffer.Length);
             QuantizedVector3 quantizedPosition = new QuantizedVector3(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
             QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
 

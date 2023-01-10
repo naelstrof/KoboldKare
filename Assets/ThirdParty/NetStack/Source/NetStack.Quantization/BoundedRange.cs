@@ -89,6 +89,8 @@ namespace NetStack.Quantization {
 			mask = (uint)((1L << requiredBits) - 1);
 		}
 
+		public int GetRequiredBits() => requiredBits;
+
 		private int Log2(uint value) {
 			value |= value >> 1;
 			value |= value >> 2;

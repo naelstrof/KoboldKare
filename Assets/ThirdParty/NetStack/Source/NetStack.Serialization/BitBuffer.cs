@@ -73,19 +73,30 @@ namespace NetStack.Serialization {
 		}
 
 		public override bool Equals(object obj) {
-			if (obj is BitBuffer other) {
-				if (other.Length != Length) {
-					return false;
-				}
-				for (int i = 0; i < Length; i++) {
-					if (other.chunks[i] != chunks[i]) {
-						return false;
-					}
-				}
+			if (obj is not BitBuffer other) return base.Equals(obj);
+			
+			int numChunks = (nextPosition >> 5) + 1;
+			int length = Length;
 
-				return true;
+			for (int i = 0; i < numChunks; i++) {
+				int dataIdx = i * 4;
+				uint chunkA = chunks[i];
+				uint chunkB = other.chunks[i];
+
+				if (dataIdx < length && (byte)chunkA != (byte)chunkB)
+					return false;
+
+				if (dataIdx + 1 < length && (byte)(chunkA >> 8) != (byte)(chunkB >> 8))
+					return false;
+
+				if (dataIdx + 2 < length && (byte)(chunkA >> 16) != (byte)(chunkB >> 16))
+					return false;
+
+				if (dataIdx + 3 < length && (byte)(chunkA >> 24) != (byte)(chunkB >> 24))
+					return false;
 			}
-			return base.Equals(obj);
+
+			return true;
 		}
 
 		public bool IsFinished {

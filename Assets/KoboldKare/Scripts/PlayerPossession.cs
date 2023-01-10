@@ -58,6 +58,10 @@ public class PlayerPossession : MonoBehaviourPun {
     private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (GetEquipmentUI()) {
             SetEquipmentUI(false);
             return;

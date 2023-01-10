@@ -85,22 +85,18 @@ namespace NetStack.Serialization {
 				uint chunkB = other.chunks[i];
 
 				if (dataIdx < length && (byte)chunkA != (byte)chunkB) {
-					Debug.Log(this + "\n" + other);
 					return false;
 				}
 
 				if (dataIdx + 1 < length && (byte)(chunkA >> 8) != (byte)(chunkB >> 8)) {
-					Debug.Log(this + "\n" + other);
 					return false;
 				}
 
 				if (dataIdx + 2 < length && (byte)(chunkA >> 16) != (byte)(chunkB >> 16)) {
-					Debug.Log(this + "\n" + other);
 					return false;
 				}
 
 				if (dataIdx + 3 < length && (byte)(chunkA >> 24) != (byte)(chunkB >> 24)) {
-					Debug.Log(this + "\n" + other);
 					return false;
 				}
 			}
@@ -184,7 +180,7 @@ namespace NetStack.Serialization {
 		}
 
 		public int ToArray(byte[] data) {
-			Add(1, 1);
+			//Add(1, 1);
 
 			int numChunks = (nextPosition >> 5) + 1;
 			int length = data.Length;

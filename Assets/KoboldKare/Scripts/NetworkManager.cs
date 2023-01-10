@@ -110,6 +110,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
         PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
+        PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();

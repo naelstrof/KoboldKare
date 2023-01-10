@@ -13,6 +13,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
     private Vector3 currentVelocity;
+    private BitBuffer bitBuffer;
     private struct Frame {
         public Vector3 position;
         public Quaternion rotation;
@@ -36,6 +37,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         
         lastFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
+        bitBuffer = new BitBuffer();
     }
     
     private void LateUpdate() {
@@ -65,7 +67,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, PlayAreaEnforcer.GetWorldBounds());
             QuantizedQuaternion quantizedRotation = SmallestThree.Quantize(body.transform.rotation);
             
-            BitBuffer bitBuffer = BufferPool.GetBitBuffer();
+            bitBuffer.Clear();
             bitBuffer.AddUInt(quantizedPosition.x)
                      .AddUInt(quantizedPosition.y)
                      .AddUInt(quantizedPosition.z)
@@ -77,9 +79,9 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             lastFrame = newFrame;
             newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         } else {
-            BitBuffer bitBuffer = (BitBuffer)stream.ReceiveNext();
-            QuantizedVector3 quantizedPosition = new QuantizedVector3(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
-            QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            QuantizedVector3 quantizedPosition = new QuantizedVector3(data.ReadUInt(), data.ReadUInt(), data.ReadUInt());
+            QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(data.ReadUInt(), data.ReadUInt(), data.ReadUInt(), data.ReadUInt());
 
             Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
             Quaternion realRotation = SmallestThree.Dequantize(quantizedRotation);

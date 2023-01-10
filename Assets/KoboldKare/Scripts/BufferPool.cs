@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class BufferPool : MonoBehaviour {
     private static BufferPool instance;
-    [ThreadStatic]
-    private BitBuffer bitBuffer;
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(this);
@@ -15,11 +13,6 @@ public class BufferPool : MonoBehaviour {
         }
 
         instance = this;
-        bitBuffer = new BitBuffer(1024);
-    }
-    public static BitBuffer GetBitBuffer() {
-        instance.bitBuffer.Clear();
-        return instance.bitBuffer;
     }
     public static short SerializeBitBuffer(StreamBuffer outStream, object customObject) {
         BitBuffer buffer = (BitBuffer)customObject;
@@ -32,7 +25,8 @@ public class BufferPool : MonoBehaviour {
     public static object DeserializeBitBuffer(StreamBuffer inStream, short length) {
         byte[] bytes = new byte[length];
         inStream.Read(bytes, 0, length);
-        BitBuffer buffer = GetBitBuffer();
+        
+        BitBuffer buffer = new BitBuffer(length);
         buffer.FromArray(bytes, length);
         return buffer;
     }

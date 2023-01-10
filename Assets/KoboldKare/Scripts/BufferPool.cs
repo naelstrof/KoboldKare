@@ -19,6 +19,7 @@ public class BufferPool : MonoBehaviour {
         byteArrays = new Dictionary<int, byte[]>();
     }
     public static BitBuffer GetBitBuffer() {
+        instance.bitBuffer.Clear();
         return instance.bitBuffer;
     }
 

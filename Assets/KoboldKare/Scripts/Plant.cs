@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 using Photon.Pun;
 using KoboldKare;
 using System.IO;
+using NetStack.Serialization;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
@@ -129,19 +130,18 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
-            SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
-            PhotonProfiler.LogReceive(sizeof(short));
-        }
-
-        planted?.Invoke(photonView.gameObject, plant);
-
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
-            SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
-            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            
+            SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
+            SetGenes(buffer.ReadKoboldGenes());
+            PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize());
+            Debug.LogError("Plant created without proper instantiation data!");
         }
+        
+        planted?.Invoke(photonView.gameObject, plant);
     }
 
     void UndarkenMaterials(){

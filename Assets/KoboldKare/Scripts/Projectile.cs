@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -177,17 +179,24 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView == null || info.photonView.InstantiationData == null || info.photonView.InstantiationData[0] is not ReagentContents) {
-            return;
+        if (info.photonView == null || info.photonView.InstantiationData == null || info.photonView.InstantiationData[0] is not BitBuffer) {
+            throw new UnityException("Projectile created without proper instantiation data!");
         }
 
-        contents = (ReagentContents)info.photonView.InstantiationData[0];
+        BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+        
+        contents = buffer.ReadReagentContents();
         Color color = contents.GetColor();
         splashEffect.SetVector4("Color", new Vector4(color.r,color.g,color.b, color.a));
         projectileBlob.material.SetColor(FluidColor, color);
-        velocity = (Vector3)info.photonView.InstantiationData[1];
+
+        float vx = HalfPrecision.Dequantize(buffer.ReadUShort());
+        float vy = HalfPrecision.Dequantize(buffer.ReadUShort());
+        float vz = HalfPrecision.Dequantize(buffer.ReadUShort());
+        velocity = new Vector3(vx, vy, vz);
+        
         splashed = false;
-        SetGenes((KoboldGenes)info.photonView.InstantiationData[2]);
-        PhotonProfiler.LogReceive(contents.GetNetworkSize() + KoboldGenes.byteCount + sizeof(float)*3);
+        SetGenes(buffer.ReadKoboldGenes());
+        PhotonProfiler.LogReceive(buffer.Length);
     }
 }

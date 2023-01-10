@@ -115,6 +115,10 @@ namespace NetStack.Serialization {
 			nextPosition = 0;
 		}
 
+		public void SetReadPosition(int pos) {
+			readPosition = pos;
+		}
+
 		[MethodImpl(256)]
 		public BitBuffer Add(int numBits, uint value) {
 			#if ENABLE_MONO || ENABLE_IL2CPP

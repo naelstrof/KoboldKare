@@ -80,8 +80,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
         }
-        PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
-        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         
         if (PhotonNetwork.InRoom) {
@@ -108,8 +106,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         PhotonNetwork.OfflineMode = false;
-        PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
-        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -198,7 +194,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (spawnPoints.Count > 0) {
             pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
         }
-        GameObject player = PhotonNetwork.Instantiate("Kobold", pos, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetPlayerGenes(), true});
+        
+        BitBuffer playerData = new BitBuffer(16);
+        playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
+        playerData.AddBool(true);// Is player kobold
+        
+        GameObject player = PhotonNetwork.Instantiate("Kobold", pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }

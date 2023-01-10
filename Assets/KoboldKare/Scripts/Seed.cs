@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using NetStack.Serialization;
 using UnityEngine;
 using Photon.Pun;
 using SimpleJSON;
@@ -65,9 +66,10 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null) {
-            genes = (KoboldGenes)info.photonView.InstantiationData[0];
-            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            genes = buffer.ReadKoboldGenes();
+            PhotonProfiler.LogReceive(buffer.Length);
         } else {
             genes = new KoboldGenes().Randomize();
         }

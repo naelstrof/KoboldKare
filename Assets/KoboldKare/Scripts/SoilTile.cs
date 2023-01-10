@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ExitGames.Client.Photon.StructWrapping;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -88,9 +89,12 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
 
+        BitBuffer spawnData = new BitBuffer(16);
+        spawnData.AddShort(plantID);
+        spawnData.AddKoboldGenes(myGenes);
         GameObject obj = PhotonNetwork.InstantiateRoomObject(plantPrefab.photonName, GetPlantPosition(),
             Quaternion.LookRotation(Vector3.forward, Vector3.up), 0,
-            new object[] { plantID, myGenes });
+            new object[] { spawnData });
         photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All,
             obj.GetComponent<Plant>().photonView.ViewID);
     }

@@ -83,6 +83,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             PhotonNetwork.InstantiateRoomObject(purchasable.spawnPrefab.photonName, transform.position, Quaternion.identity, 0, new object[]{new KoboldGenes().Randomize()});
             StartCoroutine(Restock());
         }
+        PhotonProfiler.LogReceive(1);
     }
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
@@ -92,6 +93,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             display.SetActive((bool)stream.ReceiveNext());
             short currentPurchasable = (short)stream.ReceiveNext();
             SwapTo(PurchasableDatabase.GetPurchasable(currentPurchasable));
+            PhotonProfiler.LogReceive(sizeof(bool)+sizeof(short));
         }
     }
     public override void Save(JSONNode node) {

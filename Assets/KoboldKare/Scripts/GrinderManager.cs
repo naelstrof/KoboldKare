@@ -58,6 +58,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = false;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     [PunRPC]
@@ -69,6 +70,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = true;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     IEnumerator WaitThenConsumeEnergy() {

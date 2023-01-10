@@ -62,6 +62,7 @@ public class CumflateObjective : DragonMailObjective {
                 cumflated = newCumflated;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

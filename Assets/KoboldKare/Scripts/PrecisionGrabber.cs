@@ -463,6 +463,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         currentGrab.SetVisibility(handVisibilityEvent.GetLastInvokeValue());
+        PhotonProfiler.LogReceive(sizeof(int)*2+sizeof(float)*6);
     }
 
     public void TryGrab() {
@@ -691,6 +692,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 currentGrab.SetRotation(rot);
                 currentGrab.SetDistance(dist);
             }
+            PhotonProfiler.LogReceive(sizeof(float)*4+sizeof(float));
         }
     }
 

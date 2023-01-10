@@ -38,6 +38,7 @@ public class UsableMachine : GenericUsable {
             stream.SendNext(constructed);
         } else {
             SetConstructed((bool)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
 }

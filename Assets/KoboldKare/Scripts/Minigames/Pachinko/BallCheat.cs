@@ -38,5 +38,6 @@ public class BallCheat : MonoBehaviourPun, IPunInstantiateMagicCallback {
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         pachinko = PhotonNetwork.GetPhotonView((int)(info.photonView.InstantiationData[0])).GetComponent<Pachinko>();
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 }

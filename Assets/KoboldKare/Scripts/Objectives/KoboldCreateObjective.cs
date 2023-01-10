@@ -61,7 +61,12 @@ public class KoboldCreateObjective : DragonMailObjective {
         if (stream.IsWriting) {
             stream.SendNext(kobolds);
         } else {
-            kobolds = (int)stream.ReceiveNext();
+            int newKobolds = (int)stream.ReceiveNext();
+            if (newKobolds != kobolds) {
+                kobolds = newKobolds;
+                TriggerUpdate();
+            }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

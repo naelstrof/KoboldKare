@@ -44,6 +44,7 @@ public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
         } else {
             shouldSpawnIceCube = (bool)stream.ReceiveNext();
             iceCubeSpawned = (bool)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(bool) * 2);
         }
     }
     void OnValidate() {

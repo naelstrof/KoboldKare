@@ -86,6 +86,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
+        PhotonProfiler.LogReceive(sizeof(float));
         return spillContents;
     }
 
@@ -127,6 +128,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
+        PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagents.GetNetworkSize());
     }
 
     [PunRPC]
@@ -149,6 +151,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
         containerInflated?.Invoke(this);
+        PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagents.GetNetworkSize());
     }
 
     public ReagentContents Peek() => new ReagentContents(contents);
@@ -215,6 +218,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
             ReagentContents newContents = (ReagentContents)stream.ReceiveNext();
             contents.Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
+            PhotonProfiler.LogReceive(newContents.GetNetworkSize());
         }
     }
 
@@ -224,6 +228,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
+            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
         }
     }
 

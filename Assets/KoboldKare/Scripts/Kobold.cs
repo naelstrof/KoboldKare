@@ -133,6 +133,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     
     [PunRPC]
     public IEnumerator MilkRoutine() {
+        PhotonProfiler.LogReceive(1);
         while (milking) {
             yield return null;
         }
@@ -582,7 +583,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             }
             SetGenes((KoboldGenes)stream.ReceiveNext());
             
-            PhotonProfiler.LogRecieve(sizeof(byte) + sizeof(float) + KoboldGenes.byteCount + metabolizedContents.GetNetworkSize() + consumedReagents.GetNetworkSize());
+            PhotonProfiler.LogReceive(sizeof(byte) + sizeof(float) + KoboldGenes.byteCount + metabolizedContents.GetNetworkSize() + consumedReagents.GetNetworkSize());
         }
     }
 
@@ -594,6 +595,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
+            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
         } else {
             SetGenes(new KoboldGenes().Randomize());
         }

@@ -140,6 +140,7 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
                 OnSplash();
             }
             splashed = newSplash;
+            PhotonProfiler.LogReceive(sizeof(float) * 3 + sizeof(bool));
         }
     }
 
@@ -187,5 +188,6 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         velocity = (Vector3)info.photonView.InstantiationData[1];
         splashed = false;
         SetGenes((KoboldGenes)info.photonView.InstantiationData[2]);
+        PhotonProfiler.LogReceive(contents.GetNetworkSize() + KoboldGenes.byteCount + sizeof(float)*3);
     }
 }

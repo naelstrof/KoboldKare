@@ -72,6 +72,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                 lastFrame = newFrame;
                 init = true;
             }
+            PhotonProfiler.LogReceive(sizeof(float)*7);
         }
     }
 

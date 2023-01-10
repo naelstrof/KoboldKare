@@ -13,36 +13,33 @@ public class PhotonProfilerEditor : Editor {
         base.OnInspectorGUI();
         ((PhotonProfiler)target).OnInspectorGUI();
     }
+    private void OnSceneGUI() {
+        Repaint();
+    }
 }
 #endif
 
 public class PhotonProfiler : MonoBehaviour {
     private int selectedFrame;
     private const int maxFrames = 200;
-    private string selectedStack;
+    private ByteFrame selectedByteFrame;
+    private KeyValuePair<string,int>? selectedStackBytes;
+    private List<KeyValuePair<string, int>> reuseSortedByteFrame;
     private static PhotonProfiler instance;
-    private class ByteFrame {
-        private Dictionary<string, int> data;
-        public Dictionary<string,int>.Enumerator GetEnumerator() {
-            return data.GetEnumerator();
-        }
-        
+    private bool foldoutAnalysis = false;
+    private class ByteFrame : Dictionary<string,int> {
         public int GetTotalByteCount() {
             int total = 0;
-            foreach (var pair in data) {
+            foreach (var pair in this) {
                 total += pair.Value;
             }
             return total;
         }
-
-        public ByteFrame() {
-            data = new Dictionary<string, int>();
-        }
         public void Log(string stack, int byteCount) {
-            if (data.ContainsKey(stack)) {
-                data[stack] += byteCount;
+            if (ContainsKey(stack)) {
+                this[stack] += byteCount;
             } else {
-                data.Add(stack, byteCount);
+                Add(stack, byteCount);
             }
         }
     }
@@ -60,7 +57,7 @@ public class PhotonProfiler : MonoBehaviour {
         return maxTotal;
     }
 
-    public static void LogRecieve(int byteCount) {
+    public static void LogReceive(int byteCount) {
         instance.currentReceivedFrame.Log(Environment.StackTrace, byteCount);
     }
 
@@ -100,24 +97,66 @@ public class PhotonProfiler : MonoBehaviour {
             return;
         }
 
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+        Rect screen = GUILayoutUtility.GetLastRect();
+        
         GUILayout.Space(200f);
-        EditorGUI.DrawRect(new Rect(0, 0, Screen.width, 200f), Color.black);
+        EditorGUI.DrawRect(new Rect(screen.x, screen.y, screen.width, 200f), Color.black);
         int maxHeight = GetMaxByteTotal(receiveFrames);
         float heightAspect = 200f / (float)maxHeight;
-        float x = Screen.width*(1f-(float)receiveFrames.Count/(float)maxFrames);
+        float x = screen.x+screen.width*(1f-(float)receiveFrames.Count/(float)maxFrames);
         int frameNum = 0;
         foreach (var frame in receiveFrames) {
-            int total = frame.GetTotalByteCount();
-            float width = ((float)maxFrames / (float)Screen.width);
+            int width = Mathf.Max((int)((float)screen.width / (float)maxFrames), 1);
             float xPosition = x + frameNum * width;
             //float totalBarHeight = (float)frame.GetTotalByteCount() / (float)maxHeight;
-            float currentY = 0f;
-            foreach (var data in frame) {
-                GUI.Button(new Rect(xPosition, currentY, width, data.Value), Texture2D.whiteTexture);
-                currentY += data.Value;
+            if (xPosition > screen.width) {
+                break;
+            }
+
+            int height = Mathf.Max((int)(frame.GetTotalByteCount() * heightAspect), 1);
+            Rect buttonRect = new Rect(xPosition, 200+screen.y-height, width, height);
+            if (GUI.Button(buttonRect, Texture2D.whiteTexture)) {
+                HandlePress(frame, null);
             }
             frameNum++;
         }
+
+        if (selectedByteFrame != null) {
+            foldoutAnalysis = EditorGUILayout.Foldout(foldoutAnalysis, "Frame analysis");
+            if (foldoutAnalysis) {
+                reuseSortedByteFrame ??= new List<KeyValuePair<string, int>>();
+                reuseSortedByteFrame.Clear();
+                reuseSortedByteFrame.AddRange(selectedByteFrame);
+                reuseSortedByteFrame.Sort(SortByteData);
+                foreach (var byteGroup in reuseSortedByteFrame) {
+                    if (GUILayout.Button(byteGroup.Value.ToString())) {
+                        selectedStackBytes = byteGroup;
+                    }
+                }
+            }
+        }
+
+        if (selectedStackBytes != null) {
+            EditorGUILayout.HelpBox($"{selectedStackBytes.Value.Value.ToString()} bytes were sent via the following stack trace:\n {selectedStackBytes.Value.Key}",
+                MessageType.Info);
+        }
+
+        EditorUtility.SetDirty(gameObject);
+    }
+
+    private int SortByteData(KeyValuePair<string, int> a, KeyValuePair<string, int> b) {
+        return b.Value.CompareTo(a.Value);
+    }
+
+    private void HandlePress(ByteFrame frame, KeyValuePair<string, int>? stackBytes) {
+        if (EditorApplication.isPaused == false) {
+            EditorApplication.isPaused = true;
+        }
+        selectedStackBytes = stackBytes;
+        selectedByteFrame = frame;
     }
 #endif
 }

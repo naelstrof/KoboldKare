@@ -67,6 +67,7 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null) {
             genes = (KoboldGenes)info.photonView.InstantiationData[0];
+            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
         } else {
             genes = new KoboldGenes().Randomize();
         }

@@ -33,9 +33,11 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
         Die();
+        PhotonProfiler.LogReceive(sizeof(int));
     }
     [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+        PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
 
     public Transform GrabTransform() {
@@ -104,6 +106,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
             // we sync death via RPC, so we just sync the health variable without triggering anything else.
             health = (float)stream.ReceiveNext();
             networkedDistanceTravelled = (float)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(float) * 2);
         }
     }
 
@@ -120,6 +123,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
 
         if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is int) {
             targetPath = PhotonNetwork.GetPhotonView((int)info.photonView.InstantiationData[0]).GetComponentInChildren<CreaturePath>();
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

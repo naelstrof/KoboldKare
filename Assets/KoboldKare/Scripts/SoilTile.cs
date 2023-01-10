@@ -21,6 +21,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     
     [PunRPC]
     public void SetDebris(bool newHasDebris) {
+        PhotonProfiler.LogReceive(sizeof(bool));
         hasDebris = newHasDebris;
         foreach (GameObject obj in debris) {
             obj.SetActive(hasDebris);
@@ -73,6 +74,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             stream.SendNext(hasDebris);
         } else {
             SetDebris((bool)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
     

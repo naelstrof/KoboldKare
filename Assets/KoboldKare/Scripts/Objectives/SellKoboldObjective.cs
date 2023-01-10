@@ -56,7 +56,12 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
         if (stream.IsWriting) {
             stream.SendNext(kobolds);
         } else {
-            kobolds = (int)stream.ReceiveNext();
+            int newKobolds = (int)stream.ReceiveNext();
+            if (kobolds != newKobolds) {
+                kobolds = newKobolds;
+                TriggerUpdate();
+            }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

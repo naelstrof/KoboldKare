@@ -36,6 +36,7 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
             worth = (float)info.photonView.InstantiationData[0];
+            PhotonProfiler.LogReceive(sizeof(float));
         }
     }
     public override void LocalUse(Kobold k) {
@@ -55,6 +56,7 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
             stream.SendNext(worth);
         } else {
             worth = (float)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(float));
         }
     }
     public override void Save(JSONNode node) {

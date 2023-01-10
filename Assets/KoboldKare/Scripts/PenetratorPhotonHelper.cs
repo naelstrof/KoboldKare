@@ -38,5 +38,6 @@ public class PenetratorPhotonHelper : MonoBehaviourPun {
         if (!penetrator.TryGetPenetrable(out Penetrable checkPen) || checkPen != penetrables[penetrableID]) {
             penetrator.Penetrate(penetrables[penetrableID]);
         }
+        PhotonProfiler.LogReceive(sizeof(int) * 2);
     }
 }

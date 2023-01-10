@@ -75,6 +75,7 @@ public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
                 koboldCount = newKoboldCount;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

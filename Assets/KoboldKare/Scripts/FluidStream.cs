@@ -303,6 +303,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             } else {
                 firing = false;
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 

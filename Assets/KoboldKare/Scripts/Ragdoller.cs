@@ -147,6 +147,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     [PunRPC]
     public void PushRagdoll() {
+        PhotonProfiler.LogReceive(1);
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -161,6 +162,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
     [PunRPC]
     public void PopRagdoll() {
+        PhotonProfiler.LogReceive(1);
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -318,10 +320,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
             }
         } else {
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            int totalSentBytes = sizeof(bool);
+            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             if ((bool)stream.ReceiveNext()) {
                 for(int i=0;i<ragdollBodies.Length;i++) {
                     rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
+                    totalSentBytes += sizeof(float) * 7;
                 }
             } else {
                 for (int i = 0; i < ragdollBodies.Length; i++) {
@@ -329,6 +333,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                         ragdollBodies[i].transform.rotation, Time.time);
                 }
             }
+            PhotonProfiler.LogReceive(totalSentBytes);
         }
     }
     public void Save(JSONNode node) {

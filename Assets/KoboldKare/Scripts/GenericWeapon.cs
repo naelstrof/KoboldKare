@@ -23,8 +23,10 @@ public class GenericWeapon : MonoBehaviourPun {
 
     [PunRPC]
     protected virtual void OnFireRPC(int playerID) {
+        PhotonProfiler.LogReceive(sizeof(int));
     }
     [PunRPC]
     protected virtual void OnEndFireRPC(int playerID) {
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 }

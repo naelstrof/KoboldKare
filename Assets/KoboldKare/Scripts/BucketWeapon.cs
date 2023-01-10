@@ -92,6 +92,7 @@ public class BucketWeapon : GenericWeapon {
         base.OnFireRPC(viewID);
         bucketAnimator.SetTrigger(Fire);
         playerFired = PhotonNetwork.GetPhotonView(viewID).GetComponentInParent<Kobold>();
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     // Called from the animator

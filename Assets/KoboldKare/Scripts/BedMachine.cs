@@ -57,6 +57,7 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
             StartCoroutine(SleepRoutine(kobold));
         }
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     private IEnumerator SleepRoutine(Kobold k) {

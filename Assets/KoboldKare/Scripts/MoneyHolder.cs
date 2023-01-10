@@ -26,6 +26,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
         }
         money += add;
         moneyChanged.Invoke(money);
+        PhotonProfiler.LogReceive(sizeof(float));
     }
     public bool ChargeMoney(float amount) {
         if (money < amount) {
@@ -47,6 +48,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
             stream.SendNext(money);
         } else {
             money = (float)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(float));
         }
     }
 

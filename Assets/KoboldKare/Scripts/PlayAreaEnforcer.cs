@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NetStack.Quantization;
 using Photon.Pun;
 using UnityEngine;
 
@@ -8,7 +9,12 @@ public class PlayAreaEnforcer : MonoBehaviour {
     private WaitForSeconds wait;
     private Bounds bounds;
     private List<PhotonView> trackedObjects;
-    
+    private BoundedRange[] worldBounds;
+
+    public static BoundedRange[] GetWorldBounds() {
+        return instance.worldBounds;
+    }
+
     public static void AddTrackedObject(PhotonView obj) {
         if (instance == null) {
             return;
@@ -35,13 +41,18 @@ public class PlayAreaEnforcer : MonoBehaviour {
             instance = this;
         }
 
+        OcclusionArea area = GetComponent<OcclusionArea>();
+        bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
+        worldBounds = new BoundedRange[] {
+            new BoundedRange(bounds.min.x, bounds.max.x, 0.05f),
+            new BoundedRange(bounds.min.y, bounds.max.y, 0.05f),
+            new BoundedRange(bounds.min.z, bounds.max.z, 0.05f),
+        };
         trackedObjects = new List<PhotonView>();
     }
 
     void Start() {
         wait = new WaitForSeconds(5f);
-        OcclusionArea area = GetComponent<OcclusionArea>();
-        bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
         StartCoroutine(CheckForViolations());
     }
 

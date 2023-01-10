@@ -63,7 +63,12 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         if (stream.IsWriting) {
             stream.SendNext(plants);
         } else {
-            plants = (int)stream.ReceiveNext();
+            int newPlants = (int)stream.ReceiveNext();
+            if (newPlants != plants) {
+                plants = newPlants;
+                TriggerUpdate();
+            }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 

@@ -78,6 +78,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             return;
         }
         SwitchTo(checkPlant);
+        PhotonProfiler.LogReceive(sizeof(short));
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
@@ -130,12 +131,14 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
             SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
+            PhotonProfiler.LogReceive(sizeof(short));
         }
 
         planted?.Invoke(photonView.gameObject, plant);
 
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
             SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
+            PhotonProfiler.LogReceive(KoboldGenes.byteCount);
         } else {
             SetGenes(new KoboldGenes().Randomize());
         }

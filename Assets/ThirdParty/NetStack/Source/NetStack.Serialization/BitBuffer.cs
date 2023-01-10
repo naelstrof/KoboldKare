@@ -180,8 +180,6 @@ namespace NetStack.Serialization {
 		}
 
 		public int ToArray(byte[] data) {
-			//Add(1, 1);
-
 			int numChunks = (nextPosition >> 5) + 1;
 			int length = data.Length;
 

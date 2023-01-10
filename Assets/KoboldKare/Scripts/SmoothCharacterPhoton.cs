@@ -61,29 +61,27 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     
     private Rigidbody body;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        var worldBounds = PlayAreaEnforcer.GetWorldBounds();
+        
         if (stream.IsWriting) {
-            QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, PlayAreaEnforcer.GetWorldBounds());
-            QuantizedQuaternion quantizedRotation = SmallestThree.Quantize(body.transform.rotation);
-            
+            QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, worldBounds);
+            float angle = Vector3.SignedAngle(Vector3.forward, body.transform.forward, Vector3.up);
             BitBuffer bitBuffer = new BitBuffer(8);
-            bitBuffer.AddUInt(quantizedPosition.x)
-                     .AddUInt(quantizedPosition.y)
-                     .AddUInt(quantizedPosition.z)
-                     .AddUInt(quantizedRotation.m)
-                     .AddUInt(quantizedRotation.a)
-                     .AddUInt(quantizedRotation.b)
-                     .AddUInt(quantizedRotation.c);
+            bitBuffer.Add(worldBounds[0].GetRequiredBits(), quantizedPosition.x)
+                     .Add(worldBounds[1].GetRequiredBits(), quantizedPosition.y)
+                     .Add(worldBounds[2].GetRequiredBits(), quantizedPosition.z)
+                     .AddUShort(HalfPrecision.Quantize(angle));
+            
             stream.SendNext(bitBuffer);
             lastFrame = newFrame;
             newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
-            QuantizedVector3 quantizedPosition = new QuantizedVector3(data.ReadUInt(), data.ReadUInt(), data.ReadUInt());
-            QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(data.ReadUInt(), data.ReadUInt(), data.ReadUInt(), data.ReadUInt());
-
+            QuantizedVector3 quantizedPosition = new QuantizedVector3(data.Read(worldBounds[0].GetRequiredBits()), data.Read(worldBounds[1].GetRequiredBits()), data.Read(worldBounds[2].GetRequiredBits()));
             Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
-            Quaternion realRotation = SmallestThree.Dequantize(quantizedRotation);
-            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            float angle = HalfPrecision.Dequantize(data.ReadUShort());
+            Quaternion realRotation = Quaternion.AngleAxis(angle, Vector3.up);
+            
             lastFrame = newFrame;
             newFrame = new Frame(realPosition, realRotation, Time.time);
             if (!init) {

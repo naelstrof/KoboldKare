@@ -70,6 +70,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             byte[] byteArray = BufferPool.GetArrayBuffer(bitBuffer.Length);
             bitBuffer.ToArray(byteArray);
             stream.SendNext(byteArray);
+            Debug.Log("Writing position: " + body.transform.position);
             
             lastFrame = newFrame;
             newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
@@ -83,6 +84,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
             Quaternion realRotation = SmallestThree.Dequantize(quantizedRotation);
             
+            Debug.Log("Reading position: " + realPosition);
             lastFrame = newFrame;
             newFrame = new Frame(realPosition, realRotation, Time.time);
             if (!init) {

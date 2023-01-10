@@ -56,7 +56,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     private Rigidbody body;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         BoundedRange[] worldBounds = PlayAreaEnforcer.GetWorldBounds();
-        int bitsPerElement = 10;
+        int bitsPerElement = 12;
         
         if (stream.IsWriting) {
             QuantizedVector3 quantizedPosition = BoundedRange.Quantize(body.transform.position, worldBounds);
@@ -66,7 +66,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             bitBuffer.Add(worldBounds[0].GetRequiredBits(), quantizedPosition.x)
                      .Add(worldBounds[1].GetRequiredBits(), quantizedPosition.y)
                      .Add(worldBounds[2].GetRequiredBits(), quantizedPosition.z)
-                     .Add(bitsPerElement, quantizedRotation.m)
+                     .Add(2, quantizedRotation.m)
                      .Add(bitsPerElement, quantizedRotation.a)
                      .Add(bitsPerElement, quantizedRotation.b)
                      .Add(bitsPerElement, quantizedRotation.c);
@@ -77,7 +77,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
             QuantizedVector3 quantizedPosition = new QuantizedVector3(data.Read(worldBounds[0].GetRequiredBits()), data.Read(worldBounds[1].GetRequiredBits()), data.Read(worldBounds[2].GetRequiredBits()));
-            QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(data.Read(bitsPerElement), data.Read(bitsPerElement), data.Read(bitsPerElement), data.Read(bitsPerElement));
+            QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement), data.Read(bitsPerElement), data.Read(bitsPerElement));
 
             Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
             Quaternion realRotation = SmallestThree.Dequantize(quantizedRotation);

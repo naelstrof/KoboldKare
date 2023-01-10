@@ -66,6 +66,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             QuantizedQuaternion quantizedRotation = SmallestThree.Quantize(body.transform.rotation);
             
             BitBuffer bitBuffer = BufferPool.GetBitBuffer();
+            bitBuffer.Clear();
             bitBuffer.AddUInt(quantizedPosition.x)
                      .AddUInt(quantizedPosition.y)
                      .AddUInt(quantizedPosition.z)

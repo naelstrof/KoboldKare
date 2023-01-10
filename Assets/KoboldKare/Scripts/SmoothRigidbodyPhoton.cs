@@ -67,31 +67,25 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
                      .AddUInt(quantizedRotation.a)
                      .AddUInt(quantizedRotation.b)
                      .AddUInt(quantizedRotation.c);
-            byte[] byteArray = BufferPool.GetArrayBuffer(bitBuffer.Length);
-            bitBuffer.ToArray(byteArray);
-            stream.SendNext(byteArray);
-            Debug.Log("Writing position: " + body.transform.position);
+            stream.SendNext(bitBuffer);
             
             lastFrame = newFrame;
             newFrame = new Frame(body.transform.position, body.transform.rotation, Time.time);
         } else {
-            byte[] byteArray = (byte[])stream.ReceiveNext();
-            BitBuffer bitBuffer = BufferPool.GetBitBuffer();
-            bitBuffer.FromArray(byteArray, byteArray.Length);
+            BitBuffer bitBuffer = (BitBuffer)stream.ReceiveNext();
             QuantizedVector3 quantizedPosition = new QuantizedVector3(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
             QuantizedQuaternion quantizedRotation = new QuantizedQuaternion(bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt(), bitBuffer.ReadUInt());
 
             Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
             Quaternion realRotation = SmallestThree.Dequantize(quantizedRotation);
             
-            Debug.Log("Reading position: " + realPosition);
             lastFrame = newFrame;
             newFrame = new Frame(realPosition, realRotation, Time.time);
             if (!init) {
                 lastFrame = newFrame;
                 init = true;
             }
-            PhotonProfiler.LogReceive(byteArray.Length+5);
+            PhotonProfiler.LogReceive(bitBuffer.Length);
         }
     }
 

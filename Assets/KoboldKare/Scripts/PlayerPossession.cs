@@ -453,6 +453,10 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void SetEquipmentUI(bool enable) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (!enable) {
             equipmentUI.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;

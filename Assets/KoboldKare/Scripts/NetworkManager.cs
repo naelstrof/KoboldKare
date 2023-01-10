@@ -7,6 +7,7 @@ using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
 using System;
+using NetStack.Serialization;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
@@ -81,6 +82,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
         PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
+        PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
+        
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");

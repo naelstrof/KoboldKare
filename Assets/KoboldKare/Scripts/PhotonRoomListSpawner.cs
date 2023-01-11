@@ -84,4 +84,9 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         }
         roomPrefabs.Clear();
     }
+
+    public override void OnDisconnected(DisconnectCause cause) {
+        base.OnDisconnected(cause);
+        ClearRoomList();
+    }
 }

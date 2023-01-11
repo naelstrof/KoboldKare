@@ -5090,6 +5090,7 @@ GameObject:
   - component: {fileID: 3218254140895458977}
   - component: {fileID: 7311668983150941460}
   - component: {fileID: 5577167783986412922}
+  - component: {fileID: 1297502542146197046}
   m_Layer: 5
   m_Name: Button - Quick Play
   m_TagString: Untagged
@@ -5251,6 +5252,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastEvent: 0
   buttonType: 0
+--- !u!114 &1297502542146197046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148288624826861494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20518daf09687e441b916e6a12ba2a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2153354011034714731
 GameObject:
   m_ObjectHideFlags: 0
@@ -8555,6 +8568,7 @@ GameObject:
   - component: {fileID: 7437119022013876827}
   - component: {fileID: 5257610771183445603}
   - component: {fileID: 1302738008177423248}
+  - component: {fileID: 4617828831464225265}
   m_Layer: 5
   m_Name: Button - Custom Game
   m_TagString: Untagged
@@ -8704,6 +8718,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastEvent: 0
   buttonType: 0
+--- !u!114 &4617828831464225265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3770439265798997628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20518daf09687e441b916e6a12ba2a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3775499153095807068
 GameObject:
   m_ObjectHideFlags: 0
@@ -13879,7 +13905,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.8
+  m_fontSize: 33.9
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -26353,6 +26379,7 @@ GameObject:
   - component: {fileID: 1998580052781893462}
   - component: {fileID: 2361654315428186406}
   - component: {fileID: 4047027117415620235}
+  - component: {fileID: 4078993927060368718}
   m_Layer: 5
   m_Name: Button - Create from Save
   m_TagString: Untagged
@@ -26502,6 +26529,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastEvent: 0
   buttonType: 0
+--- !u!114 &4078993927060368718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8245874617857475900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20518daf09687e441b916e6a12ba2a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8294745669650031777
 GameObject:
   m_ObjectHideFlags: 0
@@ -28707,6 +28746,7 @@ GameObject:
   - component: {fileID: 27802653463423039}
   - component: {fileID: 7157573590794683408}
   - component: {fileID: 4670938905229452097}
+  - component: {fileID: 241050305737190466}
   m_Layer: 5
   m_Name: Button - Join Private Game
   m_TagString: Untagged
@@ -28856,6 +28896,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastEvent: 0
   buttonType: 0
+--- !u!114 &241050305737190466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205998983581157896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20518daf09687e441b916e6a12ba2a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2294987539144047450
 PrefabInstance:
   m_ObjectHideFlags: 0

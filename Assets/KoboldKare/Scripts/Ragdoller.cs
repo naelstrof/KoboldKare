@@ -318,7 +318,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        var worldBounds = PlayAreaEnforcer.GetWorldBounds();
+        var worldBounds = PlayAreaEnforcer.GetWorldBounds(true);
         int bitsPerElement = 12;
         if (stream.IsWriting) {
             BitBuffer sendBuffer = new BitBuffer(12);

@@ -77,8 +77,11 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.JoinRoom(roomName);
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
+        if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+            settings.AppSettings.AppVersion += "Editor";
+        }
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
-            PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
+            PhotonNetwork.GameVersion += "Editor";
         }
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         

@@ -10,13 +10,8 @@ public class PlayAreaEnforcer : MonoBehaviour {
     private Bounds bounds;
     private List<PhotonView> trackedObjects;
     private BoundedRange[] worldBounds;
-    private BoundedRange[] worldBoundsHighPrecision;
 
-    public static BoundedRange[] GetWorldBounds(bool highPrecision = false) {
-        if (highPrecision) {
-            return instance.worldBoundsHighPrecision;
-        }
-
+    public static BoundedRange[] GetWorldBounds() {
         return instance.worldBounds;
     }
 
@@ -52,11 +47,6 @@ public class PlayAreaEnforcer : MonoBehaviour {
             new(bounds.min.x, bounds.max.x, 0.05f),
             new(bounds.min.y, bounds.max.y, 0.05f),
             new(bounds.min.z, bounds.max.z, 0.05f),
-        };
-        worldBoundsHighPrecision = new BoundedRange[] {
-            new(bounds.min.x, bounds.max.x, 0.01f),
-            new(bounds.min.y, bounds.max.y, 0.01f),
-            new(bounds.min.z, bounds.max.z, 0.01f),
         };
         trackedObjects = new List<PhotonView>();
     }

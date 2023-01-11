@@ -78,7 +78,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
             QuantizedVector3 quantizedPosition = new QuantizedVector3(data.Read(worldBounds[0].GetRequiredBits()), data.Read(worldBounds[1].GetRequiredBits()), data.Read(worldBounds[2].GetRequiredBits()));
-            Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, PlayAreaEnforcer.GetWorldBounds());
+            Vector3 realPosition = BoundedRange.Dequantize(quantizedPosition, worldBounds);
             float angle = HalfPrecision.Dequantize(data.ReadUShort());
             Quaternion realRotation = Quaternion.AngleAxis(angle, Vector3.up);
             

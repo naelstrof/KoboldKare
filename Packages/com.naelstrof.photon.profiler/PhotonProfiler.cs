@@ -58,11 +58,15 @@ public class PhotonProfiler : MonoBehaviour {
     }
 
     public static void LogReceive(int byteCount) {
+#if UNITY_EDITOR
         instance.currentReceivedFrame.Log(Environment.StackTrace, byteCount);
+#endif
     }
 
     public static void LogSend(int byteCount) {
+#if UNITY_EDITOR
         instance.currentSentFrame.Log(Environment.StackTrace, byteCount);
+#endif
     }
 
     private void Awake() {
@@ -72,13 +76,16 @@ public class PhotonProfiler : MonoBehaviour {
         }
         
         instance = this;
+#if UNITY_EDITOR
         receiveFrames = new Queue<ByteFrame>();
         sentFrames = new Queue<ByteFrame>();
         currentSentFrame = new ByteFrame();
         currentReceivedFrame = new ByteFrame();
+#endif
     }
 
     private void LateUpdate() {
+#if UNITY_EDITOR
         receiveFrames.Enqueue(currentReceivedFrame);
         sentFrames.Enqueue(currentSentFrame);
         currentReceivedFrame = new ByteFrame();
@@ -88,6 +95,7 @@ public class PhotonProfiler : MonoBehaviour {
         if (sentFrames.Count > maxFrames) {
             sentFrames.Dequeue();
         }
+#endif
     }
 
 #if UNITY_EDITOR

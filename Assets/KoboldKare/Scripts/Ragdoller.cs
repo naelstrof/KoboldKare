@@ -53,7 +53,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
         Vector3 diff = transform.position - hipBody.position;
         transform.position -= diff * 0.5f;
-        hipBody.position += diff * 0.5f;
+        hipBody.transform.position += diff * 0.5f;
     }
 
     public void SetLocked(bool newLockState) {

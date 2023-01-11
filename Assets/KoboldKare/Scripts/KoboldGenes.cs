@@ -19,7 +19,7 @@ public static class KoboldGenesBitBufferExtension {
         ushort ballSizeQ = HalfPrecision.Quantize(genes.ballSize);
         ushort dickSizeQ = HalfPrecision.Quantize(genes.dickSize);
         ushort breastSizeQ = HalfPrecision.Quantize(genes.breastSize);
-        ushort bellySizeQ = HalfPrecision.Quantize(genes.breastSize);
+        ushort bellySizeQ = HalfPrecision.Quantize(genes.bellySize);
         ushort metabolizeCapacitySizeQ = HalfPrecision.Quantize(genes.metabolizeCapacitySize);
         ushort dickThicknessQ = HalfPrecision.Quantize(genes.dickThickness);
         buffer.AddUShort(maxEnergyQ);

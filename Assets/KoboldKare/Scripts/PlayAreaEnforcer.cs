@@ -36,11 +36,9 @@ public class PlayAreaEnforcer : MonoBehaviour {
 
     void Awake() {
         if (instance != null) {
-            Destroy(gameObject);
-        } else {
-            instance = this;
+            Destroy(instance);
         }
-
+        instance = this;
         OcclusionArea area = GetComponent<OcclusionArea>();
         bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
         worldBounds = new BoundedRange[] {
@@ -48,7 +46,7 @@ public class PlayAreaEnforcer : MonoBehaviour {
             new(bounds.min.y, bounds.max.y, 0.05f),
             new(bounds.min.z, bounds.max.z, 0.05f),
         };
-        Debug.Log("Using " + worldBounds[0].GetRequiredBits() + " bits for position data.");
+        Debug.Log($"Using {worldBounds[0].GetRequiredBits()}:{worldBounds[1].GetRequiredBits()}:{worldBounds[2].GetRequiredBits()} bits for X:Y:Z position data.");
         trackedObjects = new List<PhotonView>();
     }
 

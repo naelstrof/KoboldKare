@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using JigglePhysics;
 using Naelstrof.BodyProportion;
 using NetStack.Quantization;
 using NetStack.Serialization;
@@ -10,7 +7,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     public delegate void RagdollEventHandler(bool ragdolled);

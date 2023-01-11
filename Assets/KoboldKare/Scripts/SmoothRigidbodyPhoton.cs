@@ -94,9 +94,14 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
 
     public void Save(JSONNode node) {
         var position = body.transform.position;
+        var rotation = body.transform.rotation;
         node["position.x"] = position.x;
         node["position.y"] = position.y;
         node["position.z"] = position.z;
+        node["rotation.x"] = rotation.x;
+        node["rotation.y"] = rotation.y;
+        node["rotation.z"] = rotation.z;
+        node["rotation.w"] = rotation.w;
     }
 
     public void Load(JSONNode node) {
@@ -104,5 +109,12 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         float y = node["position.y"];
         float z = node["position.z"];
         body.transform.position = new Vector3(x, y, z);
+        if (node.HasKey("rotation.x")) {
+            float rx = node["rotation.x"];
+            float ry = node["rotation.y"];
+            float rz = node["rotation.z"];
+            float rw = node["rotation.w"];
+            body.transform.rotation = new Quaternion(rx, ry, rz, rw);
+        }
     }
 }

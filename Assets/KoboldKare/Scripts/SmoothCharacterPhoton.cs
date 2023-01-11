@@ -93,15 +93,21 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     }
 
     public void Save(JSONNode node) {
-        node["position.x"] = body.position.x;
-        node["position.y"] = body.position.y;
-        node["position.z"] = body.position.z;
+        node["position.x"] = body.transform.position.x;
+        node["position.y"] = body.transform.position.y;
+        node["position.z"] = body.transform.position.z;
+        float angle = Vector3.SignedAngle(Vector3.forward, body.transform.forward, Vector3.up);
+        node["angle"] = angle;
     }
 
     public void Load(JSONNode node) {
         float x = node["position.x"];
         float y = node["position.y"];
         float z = node["position.z"];
-        body.position = new Vector3(x, y, z);
+        body.transform.position = new Vector3(x, y, z);
+        if (node.HasKey("angle")) {
+            Quaternion realRotation = Quaternion.AngleAxis(node["angle"], Vector3.up);
+            body.transform.rotation = realRotation;
+        }
     }
 }

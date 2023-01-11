@@ -58,6 +58,7 @@ public class BombUsable : GenericUsable, IDamagable {
         } else {
             PhotonNetwork.Destroy(gameObject);
         }
+        PhotonProfiler.LogReceive(sizeof(float));
     }
 
     public void Heal(float amount) {

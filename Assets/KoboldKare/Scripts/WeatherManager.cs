@@ -211,6 +211,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             stream.SendNext(rainAmount);
         } else {
             rainAmount = (float)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(float));
         }
     }
 

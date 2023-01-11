@@ -1,12 +1,64 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using ExitGames.Client.Photon;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
+public static class KoboldGenesBitBufferExtension {
+    public static void AddKoboldGenes(this BitBuffer buffer, KoboldGenes genes) {
+        if (genes == null) {
+            buffer.AddBool(false);
+            return;
+        }
+        buffer.AddBool(true);
+        ushort maxEnergyQ = HalfPrecision.Quantize(genes.maxEnergy);
+        ushort baseSizeQ = HalfPrecision.Quantize(genes.baseSize);
+        ushort fatSizeQ = HalfPrecision.Quantize(genes.fatSize);
+        ushort ballSizeQ = HalfPrecision.Quantize(genes.ballSize);
+        ushort dickSizeQ = HalfPrecision.Quantize(genes.dickSize);
+        ushort breastSizeQ = HalfPrecision.Quantize(genes.breastSize);
+        ushort bellySizeQ = HalfPrecision.Quantize(genes.breastSize);
+        ushort metabolizeCapacitySizeQ = HalfPrecision.Quantize(genes.metabolizeCapacitySize);
+        ushort dickThicknessQ = HalfPrecision.Quantize(genes.dickThickness);
+        buffer.AddUShort(maxEnergyQ);
+        buffer.AddUShort(baseSizeQ);
+        buffer.AddUShort(fatSizeQ);
+        buffer.AddUShort(ballSizeQ);
+        buffer.AddUShort(dickSizeQ);
+        buffer.AddUShort(breastSizeQ);
+        buffer.AddUShort(bellySizeQ);
+        buffer.AddUShort(metabolizeCapacitySizeQ);
+        buffer.AddUShort(dickThicknessQ);
+        buffer.AddByte(genes.hue);
+        buffer.AddByte(genes.brightness);
+        buffer.AddByte(genes.saturation);
+        buffer.AddByte(genes.dickEquip);
+        buffer.AddByte(genes.grabCount);
+    }
+    public static KoboldGenes ReadKoboldGenes(this BitBuffer buffer) {
+        if (!buffer.ReadBool()) {
+            return null;
+        }
+        return new KoboldGenes {
+            maxEnergy = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            baseSize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            fatSize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            ballSize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            dickSize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            breastSize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            bellySize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            metabolizeCapacitySize = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            dickThickness = HalfPrecision.Dequantize(buffer.ReadUShort()),
+            hue = buffer.ReadByte(),
+            brightness = buffer.ReadByte(),
+            saturation = buffer.ReadByte(),
+            dickEquip = buffer.ReadByte(),
+            grabCount = buffer.ReadByte()
+        };
+    }
+}
 
 [System.Serializable]
 public class KoboldGenes {
@@ -18,11 +70,11 @@ public class KoboldGenes {
     public float breastSize;
     public float bellySize = 20f;
     public float metabolizeCapacitySize = 20f;
+    public float dickThickness;
     public byte hue;
     public byte brightness = 128;
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
-    public float dickThickness;
     public byte grabCount = 1;
     
     private static float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f) {
@@ -146,7 +198,7 @@ public class KoboldGenes {
         return c;
     }
 
-    private const short byteCount = sizeof(float) * 9 + sizeof(byte) * 5;
+    /*public const short byteCount = sizeof(float) * 9 + sizeof(byte) * 5;
     public static short Serialize(StreamBuffer outStream, object customObject) {
         KoboldGenes genes = (KoboldGenes)customObject;
         byte[] bytes = new byte[byteCount];
@@ -190,7 +242,7 @@ public class KoboldGenes {
             Protocol.Deserialize(out genes.dickThickness, bytes, ref index);
         }
         return genes;
-    }
+    }*/
 
     public void Save(JSONNode node, string key) {
         JSONNode rootNode = JSONNode.Parse("{}");

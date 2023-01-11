@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using NetStack.Serialization;
 using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
@@ -89,7 +90,9 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
         CatmullSpline path = targetPenetrable.GetSplinePath();
         KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponent<Kobold>().GetGenes(),k.bellyContainer.GetGenes());
-        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{mixedGenes}).GetComponentInChildren<Penetrator>();
+        BitBuffer spawnData = new BitBuffer(16);
+        spawnData.AddKoboldGenes(mixedGenes);
+        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
         if (d == null) {
             yield break;
         }

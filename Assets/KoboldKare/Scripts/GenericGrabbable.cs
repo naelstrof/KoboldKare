@@ -31,6 +31,7 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
                 pair.renderer.material = pair.pickedUpMaterial;
             }
         }
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     public void Start() {

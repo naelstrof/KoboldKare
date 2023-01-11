@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NetStack.Serialization;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -26,7 +27,9 @@ public class GenericEdible : GenericUsable {
         float spillAmount = Mathf.Min(10f, k.bellyContainer.maxVolume - k.bellyContainer.volume);
         ReagentContents spill = container.Spill(spillAmount);
         photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillAmount);
-        k.bellyContainer.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spill, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
+        BitBuffer buffer = new BitBuffer(4);
+        buffer.AddReagentContents(spill);
+        k.bellyContainer.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
     }
 
     public override void Use() {

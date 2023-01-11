@@ -47,6 +47,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             stream.SendNext(daysPast);
         } else {
             daysPast = (int)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
     public void Save(JSONNode node) {

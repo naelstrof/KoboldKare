@@ -1,17 +1,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using ExitGames.Client.Photon;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
-[System.Serializable]
+[Serializable]
 public class Reagent {
-    public short id;
+    public byte id;
     public float volume;
+}
+
+public static class ReagentContentsBitBufferExtension {
+    public static void AddReagentContents(this BitBuffer buffer, ReagentContents contents) {
+        ushort quantizedMaxVolume = HalfPrecision.Quantize(contents.GetMaxVolume());
+        buffer.AddUShort(quantizedMaxVolume);
+        buffer.AddByte((byte)contents.Count);
+        foreach (var pair in contents) {
+            buffer.AddByte(pair.id);
+            ushort quantizedVolume = HalfPrecision.Quantize(pair.volume);
+            buffer.AddUShort(quantizedVolume);
+        }
+    }
+    public static ReagentContents ReadReagentContents(this BitBuffer buffer) {
+        ushort quantizedMaxVolume = buffer.ReadUShort();
+        ReagentContents contents = new ReagentContents(HalfPrecision.Dequantize(quantizedMaxVolume));
+        byte count = buffer.ReadByte();
+        for (int i = 0; i < count; i++) {
+            byte id = buffer.ReadByte();
+            float volume = HalfPrecision.Dequantize(buffer.ReadUShort());
+            contents.OverrideReagent(id, volume);
+        }
+        return contents;
+    }
 }
 
 public class ReagentContents : IEnumerable<Reagent> {
@@ -24,7 +46,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     }
 
     public void Copy(ReagentContents other) {
-        contents = new Dictionary<short, Reagent>(other.contents);
+        contents = new Dictionary<byte, Reagent>(other.contents);
         maxVolume = other.maxVolume;
     }
 
@@ -55,8 +77,8 @@ public class ReagentContents : IEnumerable<Reagent> {
     }
     public int Count => contents.Count;
     [SerializeField]
-    private Dictionary<short,Reagent> contents = new Dictionary<short,Reagent>();
-    public void OverrideReagent(short id, float volume) {
+    private Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
+    public void OverrideReagent(byte id, float volume) {
         if (contents.ContainsKey(id)) {
             contents[id].volume = volume;
             return;
@@ -64,7 +86,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         contents.Add(id, new Reagent(){ id=id, volume=volume });
         changed?.Invoke(this);
     }
-    public void AddMix(short id, float addVolume, GenericReagentContainer worldContainer = null) {
+    public void AddMix(byte id, float addVolume, GenericReagentContainer worldContainer = null) {
         if (contents.ContainsKey(id)) {
             contents[id].volume = Mathf.Max(0f,contents[id].volume+addVolume);
         } else {
@@ -132,14 +154,15 @@ public class ReagentContents : IEnumerable<Reagent> {
         return metabolizeContents;
     }
 
-    public float GetVolumeOf(short id) {
+
+    public float GetVolumeOf(byte id) {
         if (contents.ContainsKey(id)) {
             return contents[id].volume;
         }
         return 0f;
     }
     public float GetVolumeOf(ScriptableReagent reagent) {
-        short id = ReagentDatabase.GetID(reagent);
+        byte id = ReagentDatabase.GetID(reagent);
         return GetVolumeOf(id);
     }
     public bool IsCleaningAgent() {
@@ -182,43 +205,11 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         return totalValue;
     }
-    public static short SerializeReagentContents(StreamBuffer outStream, object customObject) {
-        ReagentContents reagentContents = (ReagentContents)customObject;
-        short size = (short)(sizeof(float)+(sizeof(short) + sizeof(float)) * reagentContents.contents.Count);
-        byte[] bytes = new byte[size];
-        int index = 0;
-        Protocol.Serialize(reagentContents.maxVolume, bytes, ref index);
-        foreach (KeyValuePair<short, Reagent> pair in reagentContents.contents) {
-            if (pair.Value.volume <= 0f) {
-                continue;
-            }
-            Protocol.Serialize((short)pair.Key, bytes, ref index);
-            Protocol.Serialize(pair.Value.volume, bytes, ref index);
-        }
-        outStream.Write(bytes, 0, size);
-        return size;
-    }
-    public static object DeserializeReagentContents(StreamBuffer inStream, short length) {
-        ReagentContents reagentContents = new ReagentContents();
-        byte[] bytes = new byte[length];
-        inStream.Read(bytes, 0, length);
-        int index = 0;
-        Protocol.Deserialize(out float maxVolume, bytes, ref index);
-        reagentContents.maxVolume = maxVolume;
-        while (index < length) {
-            short id = 0;
-            float volume = 0;
-            Protocol.Deserialize(out id, bytes, ref index);
-            Protocol.Deserialize(out volume, bytes, ref index);
-            reagentContents.OverrideReagent(id, volume);
-        }
-        return reagentContents;
-    }
     public void Save(JSONNode node, string key) {
         JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["maxVolume"] = maxVolume;
         JSONArray reagents = new JSONArray();
-        foreach (KeyValuePair<short, Reagent> pair in contents) {
+        foreach (var pair in contents) {
             JSONNode reagentPair = JSONNode.Parse("{}");
             if (pair.Value.volume <= 0f) {
                 continue;

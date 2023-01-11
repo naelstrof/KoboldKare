@@ -83,6 +83,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         } else {
             SetFrozen((bool)stream.ReceiveNext());
             health = (float)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(bool) + sizeof(float));
         }
     }
 
@@ -133,6 +134,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
             Die();
             health = 0f;
         }
+
+        PhotonProfiler.LogReceive(sizeof(float));
     }
 
     public void Heal(float amount) {
@@ -142,6 +145,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
         SetFrozen(false);
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     public bool CanGrab(Kobold kobold) {
@@ -150,6 +154,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
     [PunRPC]
     public void OnReleaseRPC(int koboldId, Vector3 velocity) {
+        PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
 
     public Transform GrabTransform() {

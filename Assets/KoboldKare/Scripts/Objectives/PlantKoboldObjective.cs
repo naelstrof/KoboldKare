@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -19,8 +20,10 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         base.Register();
         Plant.planted += OnPlant;
         if (PhotonNetwork.IsMasterClient) {
+            BitBuffer buffer = new BitBuffer(4);
+            buffer.AddKoboldGenes(new KoboldGenes().Randomize());
             PhotonNetwork.InstantiateRoomObject(eggPrefab.photonName, mailBox.transform.position, Quaternion.identity,
-                0, new object[] { new KoboldGenes().Randomize() });
+                0, new object[] { buffer });
         }
     }
     public override void Unregister() {
@@ -63,7 +66,12 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         if (stream.IsWriting) {
             stream.SendNext(plants);
         } else {
-            plants = (int)stream.ReceiveNext();
+            int newPlants = (int)stream.ReceiveNext();
+            if (newPlants != plants) {
+                plants = newPlants;
+                TriggerUpdate();
+            }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 

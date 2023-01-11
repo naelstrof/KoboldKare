@@ -58,6 +58,10 @@ public class PlayerPossession : MonoBehaviourPun {
     private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (GetEquipmentUI()) {
             SetEquipmentUI(false);
             return;
@@ -449,6 +453,10 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void SetEquipmentUI(bool enable) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (!enable) {
             equipmentUI.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;

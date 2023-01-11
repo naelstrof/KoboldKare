@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using ExitGames.Client.Photon.StructWrapping;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     
     [PunRPC]
     public void SetDebris(bool newHasDebris) {
+        PhotonProfiler.LogReceive(sizeof(bool));
         hasDebris = newHasDebris;
         foreach (GameObject obj in debris) {
             obj.SetActive(hasDebris);
@@ -73,11 +75,12 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             stream.SendNext(hasDebris);
         } else {
             SetDebris((bool)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
     
     [PunRPC]
-    public void PlantRPC(int seed, short plantID, KoboldGenes myGenes) {
+    public void PlantRPC(int seed, BitBuffer spawnData) {
         PhotonView seedView = PhotonNetwork.GetPhotonView(seed);
         if (seedView != null && seedView.IsMine) {
             PhotonNetwork.Destroy(seedView);
@@ -86,9 +89,12 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
 
+        //BitBuffer spawnData = new BitBuffer(16);
+        //spawnData.AddShort(plantID);
+        //spawnData.AddKoboldGenes(myGenes);
         GameObject obj = PhotonNetwork.InstantiateRoomObject(plantPrefab.photonName, GetPlantPosition(),
             Quaternion.LookRotation(Vector3.forward, Vector3.up), 0,
-            new object[] { plantID, myGenes });
+            new object[] { spawnData });
         photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All,
             obj.GetComponent<Plant>().photonView.ViewID);
     }

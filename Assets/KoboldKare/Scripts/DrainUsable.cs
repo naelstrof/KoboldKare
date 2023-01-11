@@ -61,6 +61,7 @@ public class DrainUsable : UsableMachine {
                 StartCoroutine(Drain());
             }
             draining = newDraining;
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
 

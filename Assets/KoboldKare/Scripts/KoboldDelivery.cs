@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -77,8 +78,12 @@ public class KoboldDelivery : UsableMachine {
         poof.SendEvent("TriggerPoof");
         KoboldGenes genes =
             new KoboldGenes().Randomize(0.4f + priceSelector.GetSelected() * priceSelector.GetSelected());
+        BitBuffer playerSpawnData = new BitBuffer(16);
+        playerSpawnData.AddKoboldGenes(genes);
+        playerSpawnData.AddBool(false);
+        
         GameObject obj = PhotonNetwork.InstantiateRoomObject(koboldPrefab.photonName, popOutLocation.transform.position,
-            Quaternion.identity, 0, new object[] { genes, false });
+            Quaternion.identity, 0, new object[] { playerSpawnData });
         spawnedKobold?.Invoke(obj.GetComponent<Kobold>());
         source.enabled = true;
         popPack.Play(source);

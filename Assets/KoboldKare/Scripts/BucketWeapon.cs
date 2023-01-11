@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using KoboldKare;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -59,7 +61,7 @@ public class BucketWeapon : GenericWeapon {
     void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         GameObject bestDisplay = null;
         float bestVolume = 0f;
-        short bestID = -1;
+        byte bestID = 0;
         foreach (var reagent in contents) {
             if (ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab() == null) {
                 continue;
@@ -92,6 +94,7 @@ public class BucketWeapon : GenericWeapon {
         base.OnFireRPC(viewID);
         bucketAnimator.SetTrigger(Fire);
         playerFired = PhotonNetwork.GetPhotonView(viewID).GetComponentInParent<Kobold>();
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     // Called from the animator
@@ -110,9 +113,15 @@ public class BucketWeapon : GenericWeapon {
             }
 
             velocity += Random.insideUnitSphere * i * 2f;
+            BitBuffer instantiationData = new BitBuffer(16);
+            instantiationData.AddReagentContents(container.Spill(projectileVolume));
+            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.x));
+            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.y));
+            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.z));
+            instantiationData.AddKoboldGenes(container.GetGenes());
             GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
                 GetWeaponBarrelTransform().position,
-                GetWeaponBarrelTransform().rotation, 0, new object[] { container.Spill(projectileVolume), velocity, container.GetGenes()});
+                GetWeaponBarrelTransform().rotation, 0, new object[] { instantiationData });
             obj.GetComponent<Projectile>().LaunchFrom(body);
         }
 

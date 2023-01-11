@@ -69,6 +69,7 @@ public class RotateSelectorUsable : UsableMachine {
             stream.SendNext(GetSelected());
         } else {
             SetSelected((int)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 

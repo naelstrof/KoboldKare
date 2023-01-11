@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 using Photon.Pun;
 using KoboldKare;
 using System.IO;
+using NetStack.Serialization;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
@@ -78,6 +79,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             return;
         }
         SwitchTo(checkPlant);
+        PhotonProfiler.LogReceive(sizeof(short));
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
@@ -115,9 +117,12 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             foreach (var produce in newPlant.produces) {
                 int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<spawnCount;i++) {
+                    BitBuffer buffer = new BitBuffer(4);
+                    buffer.AddKoboldGenes(GetGenes());
+                    buffer.AddBool(false);
                     PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
                          transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
-                         new object[] { GetGenes(), false });
+                         new object[] { buffer });
                 }
             }
         }
@@ -128,17 +133,19 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is short) {
-            SwitchTo(PlantDatabase.GetPlant((short)info.photonView.InstantiationData[0]));
-        }
-
-        planted?.Invoke(photonView.gameObject, plant);
-
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[1] is KoboldGenes) {
-            SetGenes((KoboldGenes)info.photonView.InstantiationData[1]);
+        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // Could be shared by other OnPhotonInstantiates.
+            buffer.SetReadPosition(0);
+            SetGenes(buffer.ReadKoboldGenes());
+            SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
+            PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize());
+            Debug.LogError("Plant created without proper instantiation data!");
         }
+        
+        planted?.Invoke(photonView.gameObject, plant);
     }
 
     void UndarkenMaterials(){

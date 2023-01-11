@@ -127,6 +127,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
         IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
         BeginAnimation(set, set.GetAnimationStations()[animatorID]);
+        PhotonProfiler.LogReceive(sizeof(int) * 2);
     }
     
     private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
@@ -361,6 +362,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             }
             networkedAngle = Vector2.Distance(networkedEyeRot, eyeRot);
             desiredHipVector = (Vector2)stream.ReceiveNext();
+            PhotonProfiler.LogReceive(sizeof(float)*4);
         }
     }
     public void Save(JSONNode node) {

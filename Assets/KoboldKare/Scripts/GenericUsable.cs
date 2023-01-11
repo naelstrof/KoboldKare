@@ -22,6 +22,7 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     // A passthrough to call from RPC
     [PunRPC]
     public void RPCUse() {
+        PhotonProfiler.LogReceive(1);
         Use();
     }
     public virtual void Save(JSONNode node) { }

@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using JigglePhysics;
 using Naelstrof.BodyProportion;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using Photon.Pun;
 using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     public delegate void RagdollEventHandler(bool ragdolled);
@@ -27,9 +25,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public bool ragdolled {get; private set;}
     private int ragdollCount;
     [SerializeField]
-    private Transform hip;
+    private Rigidbody hipBody;
     [SerializeField]
     private JigglePhysics.JiggleRigBuilder tailRig;
+
+    private PositionPacket lastPacket;
+    private PositionPacket nextPacket;
 
     private Kobold kobold;
 
@@ -46,9 +47,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             return;
         }
 
-        Vector3 diff = transform.position - hip.position;
+        Vector3 diff = transform.position - hipBody.position;
         transform.position -= diff * 0.5f;
-        hip.position += diff * 0.5f;
+        hipBody.transform.position += diff * 0.5f;
     }
 
     public void SetLocked(bool newLockState) {
@@ -77,30 +78,38 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
     
     private List<SavedJointAnchor> jointAnchors;
+    
+    private struct PositionPacket {
+        public PositionPacket(float t, Vector3 p) {
+            time = t;
+            networkedPosition = p;
+        }
+        public float time;
+        public Vector3 networkedPosition;
+    }
 
     private class RigidbodyNetworkInfo {
         private struct Packet {
-            public Packet(float t, Vector3 p, Quaternion rot) {
+            public Packet(float t, Quaternion rot) {
                 time = t;
-                networkedPosition = p;
                 networkedRotation = rot;
             }
             public float time;
-            public Vector3 networkedPosition;
             public Quaternion networkedRotation;
         }
 
         public Rigidbody body { get; private set; }
         private Packet lastPacket;
         private Packet nextPacket;
+        private Vector3 savedLocalPosition;
         public RigidbodyNetworkInfo(Rigidbody body) {
             this.body = body;
-            lastPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
-            nextPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
+            savedLocalPosition = body.transform.localPosition;
+            lastPacket = nextPacket = new Packet(Time.time, body.transform.rotation);
         }
-        public void SetNetworkPosition(Vector3 position, Quaternion rotation, float time) {
+        public void SetNetworkPosition(Quaternion rotation, float time) {
             lastPacket = nextPacket;
-            nextPacket = new Packet(time, position, rotation);
+            nextPacket = new Packet(time, rotation);
         }
         public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
@@ -118,8 +127,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
                 float t = (time - lastPacket.time) / diff;
                 //body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
-                body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
-                                                              nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+                body.transform.localPosition = savedLocalPosition;
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
                     nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
             }
@@ -143,10 +151,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }
+        lastPacket = nextPacket = new PositionPacket(Time.time, hipBody.transform.position);
     }
 
     [PunRPC]
     public void PushRagdoll() {
+        PhotonProfiler.LogReceive(1);
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -161,6 +171,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
     [PunRPC]
     public void PopRagdoll() {
+        PhotonProfiler.LogReceive(1);
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -176,6 +187,18 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     void LateUpdate() {
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
+        }
+        if (photonView.IsMine) {
+            return;
+        }
+        if (ragdolled) {
+            float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+            float diff = nextPacket.time - lastPacket.time;
+            if (diff == 0f) {
+                return;
+            }
+            float t = (time - lastPacket.time) / diff;
+            hipBody.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition, nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
         }
     }
     private void Ragdoll() {
@@ -201,9 +224,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
         group.ForceLOD(0);
-
-        //jiggleRig.interpolate = false;
-        //jiggleSkin.interpolate = false;
         tailRig.enabled = false;
         animator.enabled = false;
         bodyProportion.enabled = false;
@@ -216,10 +236,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         oldCollisionMode = body.collisionDetectionMode;
         body.collisionDetectionMode = CollisionDetectionMode.Discrete;
-        //body.interpolation = RigidbodyInterpolation.None;
         body.isKinematic = true;
         body.detectCollisions = false;
-        //body.GetComponent<Collider>().enabled = false;
 
         // We need to know the final result of our ragdoll before we update the anchors.
         Physics.SyncTransforms();
@@ -266,20 +284,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
         group.ForceLOD(-1);
-        //jiggleRig.interpolate = true;
-        //jiggleSkin.interpolate = true;
         tailRig.enabled = true;
-        Vector3 diff = hip.position - body.transform.position;
+        Vector3 diff = hipBody.position - body.transform.position;
         body.transform.position += diff;
-        hip.position -= diff;
+        hipBody.position -= diff;
         body.transform.position += Vector3.up*0.5f;
-        Vector3 facingDir = hip.forward.With(y: 0f).normalized;
+        Vector3 facingDir = hipBody.transform.forward.With(y: 0f).normalized;
         body.transform.forward = facingDir;
         body.isKinematic = false;
         body.detectCollisions = true;
-        //body.GetComponent<Collider>().enabled = true;
         body.collisionDetectionMode = oldCollisionMode;
-        //body.interpolation = RigidbodyInterpolation.Interpolate;
         Vector3 averageVel = Vector3.zero;
         foreach (Rigidbody b in ragdollBodies) {
             averageVel += b.velocity;
@@ -287,48 +301,62 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         averageVel /= ragdollBodies.Length;
         body.velocity = averageVel;
         controller.enabled = true;
-        //RecursiveSetLayer(transform, LayerMask.NameToLayer("PlayerHitbox"), LayerMask.NameToLayer("Hitbox"));
         foreach (Rigidbody b in ragdollBodies) {
             b.interpolation = RigidbodyInterpolation.None;
             b.collisionDetectionMode = CollisionDetectionMode.Discrete;
             b.isKinematic = true;
         }
-        //foreach(var penSet in penetratables) {
-            //penSet.penetratable.SwitchBody(body);
-        //}
         animator.enabled = true;
         bodyProportion.enabled = true;
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;
-        //if (photonView.IsMine) {
-            //photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, false);
-        //}
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        int bitsPerElement = 12;
         if (stream.IsWriting) {
-            stream.SendNext(ragdolled);
+            BitBuffer sendBuffer = new BitBuffer(12);
+            sendBuffer.AddBool(ragdolled);
             if (ragdolled) {
-                for(int i=0;i<rigidbodyNetworkInfos.Count;i++) {
-                    Rigidbody ragbody = rigidbodyNetworkInfos[i].body;
-                    stream.SendNext(ragbody.transform.position);
-                    stream.SendNext(ragbody.transform.rotation);
-                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragbody.transform.position, ragbody.transform.rotation, Time.time);
+                Vector3 hipPosition = hipBody.transform.position;
+                
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.x), 0));
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.y), 0));
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.z), 0));
+                lastPacket = nextPacket;
+                nextPacket = new PositionPacket(Time.time, hipBody.transform.position);
+                foreach (var t in rigidbodyNetworkInfos) {
+                    Rigidbody ragbody = t.body;
+                    QuantizedQuaternion rot = SmallestThree.Quantize(ragbody.transform.rotation, bitsPerElement);
+                    sendBuffer.Add(2,rot.m);
+                    sendBuffer.Add(bitsPerElement,rot.a);
+                    sendBuffer.Add(bitsPerElement,rot.b);
+                    sendBuffer.Add(bitsPerElement,rot.c);
+                    t.SetNetworkPosition(ragbody.transform.rotation, Time.time);
                 }
             }
+            stream.SendNext(sendBuffer);
         } else {
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            if ((bool)stream.ReceiveNext()) {
-                for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            if (data.ReadBool()) {
+                lastPacket = nextPacket;
+                float xPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                float yPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                float zPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                nextPacket = new PositionPacket(Time.time, new Vector3(xPosition, yPosition, zPosition));
+
+                foreach (var t in rigidbodyNetworkInfos) {
+                    QuantizedQuaternion rot = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement),
+                        data.Read(bitsPerElement), data.Read(bitsPerElement));
+                    t.SetNetworkPosition(SmallestThree.Dequantize(rot), Time.time);
                 }
             } else {
-                for (int i = 0; i < ragdollBodies.Length; i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragdollBodies[i].transform.position,
-                        ragdollBodies[i].transform.rotation, Time.time);
+                foreach (var t in rigidbodyNetworkInfos) {
+                    t.SetNetworkPosition(t.body.transform.rotation, Time.time);
                 }
             }
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
     public void Save(JSONNode node) {

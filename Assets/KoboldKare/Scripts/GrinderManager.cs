@@ -6,6 +6,7 @@ using Photon.Pun;
 using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
+using NetStack.Serialization;
 using SimpleJSON;
 
 public class GrinderManager : UsableMachine, IAnimationStationSet {
@@ -58,6 +59,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = false;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     [PunRPC]
@@ -69,6 +71,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = true;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     IEnumerator WaitThenConsumeEnergy() {
@@ -123,9 +126,11 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     [PunRPC]
-    void Grind(int viewID, ReagentContents incomingContents, KoboldGenes genes) {
+    void Grind(int viewID, BitBuffer incomingContentsData, KoboldGenes genes) {
+        ReagentContents incomingContents = incomingContentsData.ReadReagentContents();
         grindedObject?.Invoke(viewID, incomingContents);
-        container.AddMixRPC(incomingContents, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+        incomingContentsData.SetReadPosition(0);
+        container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         container.SetGenes(genes);
         fluidStream.OnFire(container);
     }

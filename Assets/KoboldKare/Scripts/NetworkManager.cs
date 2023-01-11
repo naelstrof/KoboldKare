@@ -7,6 +7,7 @@ using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
 using System;
+using NetStack.Serialization;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
@@ -35,6 +36,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             settings.AppSettings.FixedRegion = region;
+            if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+                settings.AppSettings.AppVersion += "Editor";
+            }
+            if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
+                PhotonNetwork.GameVersion += "Editor";
+            }
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
@@ -70,11 +77,14 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.JoinRoom(roomName);
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
-        if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
-            PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
+        if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+            settings.AppSettings.AppVersion += "Editor";
         }
-        PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
-        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
+        if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
+            PhotonNetwork.GameVersion += "Editor";
+        }
+        PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
+        
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
@@ -88,16 +98,18 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.EnableCloseConnection = true;
     }
     public IEnumerator EnsureOnlineAndReadyToLoad(bool shouldLeaveRoom = true) {
-        if (Application.isEditor && !PhotonNetwork.GameVersion.Contains("Editor")) {
-            PhotonNetwork.GameVersion = PhotonNetwork.GameVersion + "Editor";
+        if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+            settings.AppSettings.AppVersion += "Editor";
+        }
+        if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
+            PhotonNetwork.GameVersion += "Editor";
         }
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         PhotonNetwork.OfflineMode = false;
-        PhotonPeer.RegisterType(typeof(ReagentContents), (byte)'R', ReagentContents.SerializeReagentContents, ReagentContents.DeserializeReagentContents);
-        PhotonPeer.RegisterType(typeof(KoboldGenes), (byte)'G', KoboldGenes.Serialize, KoboldGenes.Deserialize);
+        PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
@@ -185,7 +197,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (spawnPoints.Count > 0) {
             pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
         }
-        GameObject player = PhotonNetwork.Instantiate("Kobold", pos, Quaternion.identity, 0, new object[]{PlayerKoboldLoader.GetPlayerGenes(), true});
+        
+        BitBuffer playerData = new BitBuffer(16);
+        playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
+        playerData.AddBool(true);// Is player kobold
+        
+        GameObject player = PhotonNetwork.Instantiate("Kobold", pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }

@@ -76,6 +76,7 @@ public class ConstructionContract : GenericUsable {
             stream.SendNext(bought);
         } else {
             SetState((bool)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -51,6 +52,7 @@ public class ElectricBlender : SuckingMachine {
 
     [PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
+        PhotonProfiler.LogReceive(sizeof(int));
         if (!constructed) {
             yield break;
         }
@@ -61,7 +63,9 @@ public class ElectricBlender : SuckingMachine {
         StartCoroutine(WaitThenDisableSound());
         GenericReagentContainer otherContainer = view.GetComponent<GenericReagentContainer>();
         if (otherContainer != null) {
-            container.AddMixRPC(otherContainer.GetContents(), viewID, (byte)GenericReagentContainer.InjectType.Inject);
+            BitBuffer tempBuffer = new BitBuffer(16);
+            tempBuffer.AddReagentContents(otherContainer.GetContents());
+            container.AddMixRPC(tempBuffer, viewID, (byte)GenericReagentContainer.InjectType.Inject);
             grindedObject?.Invoke(viewID, otherContainer.GetContents());
         }
         yield return base.OnSwallowed(viewID);

@@ -45,6 +45,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
         obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
         currentObjective?.Advance(position);
+        PhotonProfiler.LogReceive(sizeof(float) * 3);
     }
 
     public static void NetworkAdvance(Vector3 position, string advanceInstance) {
@@ -165,6 +166,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
             bool hasObjective = (bool)stream.ReceiveNext();
             currentObjectiveIndex = (int)stream.ReceiveNext();
             SwitchToObjective(hasObjective ? objectives[currentObjectiveIndex] : null);
+            PhotonProfiler.LogReceive(sizeof(int)*2 + sizeof(bool));
         }
         objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
     }

@@ -66,6 +66,12 @@
       },
       "hash": "004148da90803c8bccc2bff5ff84f685ed26f804"
     },
+    "com.naelstrof.photon.profiler": {
+      "version": "file:com.naelstrof.photon.profiler",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.8",
       "depth": 0,

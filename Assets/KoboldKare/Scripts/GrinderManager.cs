@@ -126,9 +126,12 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     [PunRPC]
-    void Grind(int viewID, BitBuffer incomingContentsData, KoboldGenes genes) {
+    void Grind(int viewID, BitBuffer incomingContentsData) {
         ReagentContents incomingContents = incomingContentsData.ReadReagentContents();
+        KoboldGenes genes = incomingContentsData.ReadKoboldGenes();
+        
         grindedObject?.Invoke(viewID, incomingContents);
+        // reset before we send back.
         incomingContentsData.SetReadPosition(0);
         container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         container.SetGenes(genes);
@@ -180,7 +183,10 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         GenericReagentContainer genericReagentContainer = view.GetComponentInChildren<GenericReagentContainer>();
         // Finally we grind it
         if (genericReagentContainer != null) {
-            photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
+            BitBuffer buffer = new BitBuffer(4);
+            buffer.AddReagentContents(genericReagentContainer.GetContents());
+            buffer.AddKoboldGenes(genericReagentContainer.GetGenes());
+            photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID, buffer);
         }
         
         IDamagable d = view.GetComponentInParent<IDamagable>();

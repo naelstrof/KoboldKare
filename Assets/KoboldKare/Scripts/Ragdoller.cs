@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using JigglePhysics;
 using Naelstrof.BodyProportion;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using Photon.Pun;
 using Photon.Realtime;
 using SimpleJSON;
@@ -30,6 +32,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private Transform hip;
     [SerializeField]
     private JigglePhysics.JiggleRigBuilder tailRig;
+
+    private PositionPacket lastPacket;
+    private PositionPacket nextPacket;
 
     private Kobold kobold;
 
@@ -77,30 +82,38 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
     
     private List<SavedJointAnchor> jointAnchors;
+    
+    private struct PositionPacket {
+        public PositionPacket(float t, Vector3 p) {
+            time = t;
+            networkedPosition = p;
+        }
+        public float time;
+        public Vector3 networkedPosition;
+    }
 
     private class RigidbodyNetworkInfo {
         private struct Packet {
-            public Packet(float t, Vector3 p, Quaternion rot) {
+            public Packet(float t, Quaternion rot) {
                 time = t;
-                networkedPosition = p;
                 networkedRotation = rot;
             }
             public float time;
-            public Vector3 networkedPosition;
             public Quaternion networkedRotation;
         }
 
         public Rigidbody body { get; private set; }
         private Packet lastPacket;
         private Packet nextPacket;
+        private Vector3 savedLocalPosition;
         public RigidbodyNetworkInfo(Rigidbody body) {
             this.body = body;
-            lastPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
-            nextPacket = new Packet(Time.time, body.transform.position, body.transform.rotation);
+            savedLocalPosition = body.transform.localPosition;
+            lastPacket = nextPacket = new Packet(Time.time, body.transform.rotation);
         }
-        public void SetNetworkPosition(Vector3 position, Quaternion rotation, float time) {
+        public void SetNetworkPosition(Quaternion rotation, float time) {
             lastPacket = nextPacket;
-            nextPacket = new Packet(time, position, rotation);
+            nextPacket = new Packet(time, rotation);
         }
         public void UpdateState(bool ours, bool ragdolled) {
             if (ours) {
@@ -118,8 +131,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
                 float t = (time - lastPacket.time) / diff;
                 //body.velocity = (nextPacket.networkedPosition - lastPacket.networkedPosition) / (float)diff;
-                body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition,
-                                                              nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+                body.transform.localPosition = savedLocalPosition;
                 body.transform.rotation = Quaternion.LerpUnclamped(lastPacket.networkedRotation,
                     nextPacket.networkedRotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
             }
@@ -143,6 +155,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }
+        lastPacket = nextPacket = new PositionPacket(Time.time, hip.transform.position);
     }
 
     [PunRPC]
@@ -179,6 +192,18 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
+        if (photonView.IsMine) {
+            return;
+        }
+        if (ragdolled) {
+            float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+            float diff = nextPacket.time - lastPacket.time;
+            if (diff == 0f) {
+                return;
+            }
+            float t = (time - lastPacket.time) / diff;
+            body.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition, nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        }
     }
     private void Ragdoll() {
         if (ragdolled) {
@@ -203,9 +228,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
         group.ForceLOD(0);
-
-        //jiggleRig.interpolate = false;
-        //jiggleSkin.interpolate = false;
         tailRig.enabled = false;
         animator.enabled = false;
         bodyProportion.enabled = false;
@@ -218,10 +240,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         oldCollisionMode = body.collisionDetectionMode;
         body.collisionDetectionMode = CollisionDetectionMode.Discrete;
-        //body.interpolation = RigidbodyInterpolation.None;
         body.isKinematic = true;
         body.detectCollisions = false;
-        //body.GetComponent<Collider>().enabled = false;
 
         // We need to know the final result of our ragdoll before we update the anchors.
         Physics.SyncTransforms();
@@ -268,8 +288,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
         group.ForceLOD(-1);
-        //jiggleRig.interpolate = true;
-        //jiggleSkin.interpolate = true;
         tailRig.enabled = true;
         Vector3 diff = hip.position - body.transform.position;
         body.transform.position += diff;
@@ -279,9 +297,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         body.transform.forward = facingDir;
         body.isKinematic = false;
         body.detectCollisions = true;
-        //body.GetComponent<Collider>().enabled = true;
         body.collisionDetectionMode = oldCollisionMode;
-        //body.interpolation = RigidbodyInterpolation.Interpolate;
         Vector3 averageVel = Vector3.zero;
         foreach (Rigidbody b in ragdollBodies) {
             averageVel += b.velocity;
@@ -289,51 +305,61 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         averageVel /= ragdollBodies.Length;
         body.velocity = averageVel;
         controller.enabled = true;
-        //RecursiveSetLayer(transform, LayerMask.NameToLayer("PlayerHitbox"), LayerMask.NameToLayer("Hitbox"));
         foreach (Rigidbody b in ragdollBodies) {
             b.interpolation = RigidbodyInterpolation.None;
             b.collisionDetectionMode = CollisionDetectionMode.Discrete;
             b.isKinematic = true;
         }
-        //foreach(var penSet in penetratables) {
-            //penSet.penetratable.SwitchBody(body);
-        //}
         animator.enabled = true;
         bodyProportion.enabled = true;
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;
-        //if (photonView.IsMine) {
-            //photonView.RPC(nameof(SetRagdolled), RpcTarget.Others, false);
-        //}
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        var worldBounds = PlayAreaEnforcer.GetWorldBounds();
+        int bitsPerElement = 12;
         if (stream.IsWriting) {
-            stream.SendNext(ragdolled);
+            BitBuffer sendBuffer = new BitBuffer(12);
+            sendBuffer.AddBool(ragdolled);
             if (ragdolled) {
-                for(int i=0;i<rigidbodyNetworkInfos.Count;i++) {
-                    Rigidbody ragbody = rigidbodyNetworkInfos[i].body;
-                    stream.SendNext(ragbody.transform.position);
-                    stream.SendNext(ragbody.transform.rotation);
-                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragbody.transform.position, ragbody.transform.rotation, Time.time);
+                QuantizedVector3 hipPosition = BoundedRange.Quantize(hip.transform.position, worldBounds);
+                sendBuffer.Add(worldBounds[0].GetRequiredBits(), hipPosition.x);
+                sendBuffer.Add(worldBounds[1].GetRequiredBits(), hipPosition.y);
+                sendBuffer.Add(worldBounds[2].GetRequiredBits(), hipPosition.z);
+                lastPacket = nextPacket;
+                nextPacket = new PositionPacket(Time.time, hip.transform.position);
+                foreach (var t in rigidbodyNetworkInfos) {
+                    Rigidbody ragbody = t.body;
+                    QuantizedQuaternion rot = SmallestThree.Quantize(ragbody.transform.rotation, bitsPerElement);
+                    sendBuffer.Add(2,rot.m);
+                    sendBuffer.Add(bitsPerElement,rot.a);
+                    sendBuffer.Add(bitsPerElement,rot.b);
+                    sendBuffer.Add(bitsPerElement,rot.c);
+                    t.SetNetworkPosition(ragbody.transform.rotation, Time.time);
                 }
             }
+            stream.SendNext(sendBuffer);
         } else {
-            int totalSentBytes = sizeof(bool);
-            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            if ((bool)stream.ReceiveNext()) {
-                for(int i=0;i<ragdollBodies.Length;i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition((Vector3)stream.ReceiveNext(), (Quaternion)stream.ReceiveNext(), Time.time);
-                    totalSentBytes += sizeof(float) * 7;
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            if (data.ReadBool()) {
+                lastPacket = nextPacket;
+                QuantizedVector3 hipPositionQ = new QuantizedVector3(data.Read(worldBounds[0].GetRequiredBits()),
+                    data.Read(worldBounds[1].GetRequiredBits()), data.Read(worldBounds[2].GetRequiredBits()));
+                nextPacket = new PositionPacket(Time.time, BoundedRange.Dequantize(hipPositionQ, worldBounds));
+
+                foreach (var t in rigidbodyNetworkInfos) {
+                    QuantizedQuaternion rot = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement),
+                        data.Read(bitsPerElement), data.Read(bitsPerElement));
+                    t.SetNetworkPosition(SmallestThree.Dequantize(rot), Time.time);
                 }
             } else {
-                for (int i = 0; i < ragdollBodies.Length; i++) {
-                    rigidbodyNetworkInfos[i].SetNetworkPosition(ragdollBodies[i].transform.position,
-                        ragdollBodies[i].transform.rotation, Time.time);
+                foreach (var t in rigidbodyNetworkInfos) {
+                    t.SetNetworkPosition(t.body.transform.rotation, Time.time);
                 }
             }
-            PhotonProfiler.LogReceive(totalSentBytes);
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
     public void Save(JSONNode node) {

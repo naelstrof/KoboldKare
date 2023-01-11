@@ -318,16 +318,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        var worldBounds = PlayAreaEnforcer.GetWorldBounds();
         int bitsPerElement = 12;
         if (stream.IsWriting) {
             BitBuffer sendBuffer = new BitBuffer(12);
             sendBuffer.AddBool(ragdolled);
             if (ragdolled) {
-                QuantizedVector3 hipPosition = BoundedRange.Quantize(hipBody.transform.position, worldBounds);
-                sendBuffer.Add(worldBounds[0].GetRequiredBits(), hipPosition.x);
-                sendBuffer.Add(worldBounds[1].GetRequiredBits(), hipPosition.y);
-                sendBuffer.Add(worldBounds[2].GetRequiredBits(), hipPosition.z);
+                Vector3 hipPosition = hipBody.transform.position;
+                
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.x), 0));
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.y), 0));
+                sendBuffer.AddUInt(BitConverter.ToUInt32(BitConverter.GetBytes(hipPosition.z), 0));
                 lastPacket = nextPacket;
                 nextPacket = new PositionPacket(Time.time, hipBody.transform.position);
                 foreach (var t in rigidbodyNetworkInfos) {
@@ -345,9 +345,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
             if (data.ReadBool()) {
                 lastPacket = nextPacket;
-                QuantizedVector3 hipPositionQ = new QuantizedVector3(data.Read(worldBounds[0].GetRequiredBits()),
-                    data.Read(worldBounds[1].GetRequiredBits()), data.Read(worldBounds[2].GetRequiredBits()));
-                nextPacket = new PositionPacket(Time.time, BoundedRange.Dequantize(hipPositionQ, worldBounds));
+                float xPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                float yPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                float zPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+                nextPacket = new PositionPacket(Time.time, new Vector3(xPosition, yPosition, zPosition));
 
                 foreach (var t in rigidbodyNetworkInfos) {
                     QuantizedQuaternion rot = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement),

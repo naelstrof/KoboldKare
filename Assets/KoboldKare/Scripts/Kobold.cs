@@ -64,7 +64,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private Inflatable boobs;
     [SerializeField]
     private Material milkSplatMaterial;
-
+    [SerializeField]
+    private LayerMask heartHitMask;
+    
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
     
@@ -190,9 +192,29 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [PunRPC]
     public void Cum() {
         if (photonView.IsMine && activeDicks.Count == 0) {
-            BitBuffer buffer = new BitBuffer(16);
-            buffer.AddKoboldGenes(GetGenes());
-            PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0, new object[] { buffer });
+            bool foundHeart = false;
+            int hits = Physics.OverlapSphereNonAlloc(hip.position, 5f, colliders, heartHitMask);
+            for (int i = 0; i < hits; i++) {
+                // Found a nearby heart!
+                PhotonView fruitView = colliders[i].GetComponentInParent<PhotonView>();
+                if (fruitView != null && fruitView.name.Contains(heartPrefab.photonName)) {
+                    BitBuffer reagentBuffer = new BitBuffer(16);
+                    ReagentContents loveContents = new ReagentContents();
+                    loveContents.AddMix(ReagentDatabase.GetReagent("Love").GetReagent(10f));
+                    reagentBuffer.AddReagentContents(loveContents);
+                    fruitView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, reagentBuffer,
+                        photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+                    foundHeart = true;
+                    break;
+                }
+            }
+
+            // No nearby hearts, spawn a new one.
+            if (!foundHeart) {
+                BitBuffer buffer = new BitBuffer(16);
+                buffer.AddKoboldGenes(GetGenes());
+                PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0, new object[] { buffer });
+            }
         }
         foreach(var dickSet in activeDicks) {
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
@@ -83,7 +84,9 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
             pressedKobold.bellyContainer.volume);
         ReagentContents spilled = pressedKobold.bellyContainer.Spill(pressedKobold.bellyContainer.volume);
         
-        container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, spilled,
+        BitBuffer buffer = new BitBuffer(4);
+        buffer.AddReagentContents(spilled);
+        container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer,
             pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
     }
 

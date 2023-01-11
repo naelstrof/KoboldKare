@@ -49,7 +49,10 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
 
         if (bestTile != null && bestTile.GetPlantable()) {
             genes ??= new KoboldGenes().Randomize();
-            bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, PlantDatabase.GetID(plant), genes);
+            BitBuffer spawnData = new BitBuffer(16);
+            spawnData.AddKoboldGenes(genes);
+            spawnData.AddShort(PlantDatabase.GetID(plant));
+            bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
         }
 
     }

@@ -156,8 +156,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (container != null && this != null) {
+                                BitBuffer buffer = new BitBuffer(4);
+                                buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    alloc.Spill(alloc.volume * 0.1f), photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
+                                    buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
                             }
                         }
                         milkSplatMaterial.color = color;

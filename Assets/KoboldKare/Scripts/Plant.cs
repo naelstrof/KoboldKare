@@ -117,9 +117,12 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             foreach (var produce in newPlant.produces) {
                 int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<spawnCount;i++) {
+                    BitBuffer buffer = new BitBuffer(4);
+                    buffer.AddKoboldGenes(GetGenes());
+                    buffer.AddBool(false);
                     PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
                          transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
-                         new object[] { GetGenes(), false });
+                         new object[] { buffer });
                 }
             }
         }
@@ -132,9 +135,10 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
-            
-            SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
+            // Could be shared by other OnPhotonInstantiates.
+            buffer.SetReadPosition(0);
             SetGenes(buffer.ReadKoboldGenes());
+            SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize());

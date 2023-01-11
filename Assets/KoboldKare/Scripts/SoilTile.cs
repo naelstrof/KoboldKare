@@ -80,7 +80,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     }
     
     [PunRPC]
-    public void PlantRPC(int seed, short plantID, KoboldGenes myGenes) {
+    public void PlantRPC(int seed, BitBuffer spawnData) {
         PhotonView seedView = PhotonNetwork.GetPhotonView(seed);
         if (seedView != null && seedView.IsMine) {
             PhotonNetwork.Destroy(seedView);
@@ -89,9 +89,9 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
 
-        BitBuffer spawnData = new BitBuffer(16);
-        spawnData.AddShort(plantID);
-        spawnData.AddKoboldGenes(myGenes);
+        //BitBuffer spawnData = new BitBuffer(16);
+        //spawnData.AddShort(plantID);
+        //spawnData.AddKoboldGenes(myGenes);
         GameObject obj = PhotonNetwork.InstantiateRoomObject(plantPrefab.photonName, GetPlantPosition(),
             Quaternion.LookRotation(Vector3.forward, Vector3.up), 0,
             new object[] { spawnData });

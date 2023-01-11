@@ -158,7 +158,9 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
             if (pumper.TryGetPenetrable(out Penetrable penetrable)) {
                 GenericReagentContainer holeContainer = penetrable.GetComponentInParent<GenericReagentContainer>();
                 if (holeContainer != null) {
-                    holeContainer.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents,
+                    BitBuffer buffer = new BitBuffer(4);
+                    buffer.AddReagentContents(contents);
+                    holeContainer.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, buffer,
                         container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 }
             } else {

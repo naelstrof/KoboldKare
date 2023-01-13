@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 1
@@ -34,9 +34,9 @@ MonoBehaviour:
   m_MonoScriptBundleNaming: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 
+    m_Id: '[UnityEngine.Application.dataPath]/Mods'
   m_RemoteCatalogLoadPath:
-    m_Id: 
+    m_Id: '{UnityEngine.Application.persistentDataPath}/mods'
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: 
@@ -47,7 +47,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e2d60ced9fd9c0d4f89306f271bde1dc, type: 2}
   - {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
   - {fileID: 11400000, guid: cc1d525b07a7f174d910e2cd494c663d, type: 2}
-  - {fileID: 11400000, guid: 2c7a6060f88756843a85800f740e938f, type: 2}
   - {fileID: 11400000, guid: e768cca9830f9124891cc6fa2d0ae975, type: 2}
   - {fileID: 11400000, guid: c26f0207d2b6f8c4999e7d4217b1cc37, type: 2}
   - {fileID: 11400000, guid: d4f6297f0c298dd42bf66ca4c8f00ecf, type: 2}
@@ -102,6 +101,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ff351caa5210864dbba1be868ebdfc8, type: 2}
   - {fileID: 11400000, guid: 27a580137f3d7f54eb8e6f6eadb85830, type: 2}
   - {fileID: 11400000, guid: 7a107e44cf45fb5448b30ff63d36d484, type: 2}
+  - {fileID: 11400000, guid: 63279fc6650174c498b83a9aac682197, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -170,6 +170,7 @@ MonoBehaviour:
     - Locale-vi
     - Locale
     - LoadAtStart
+    - NetworkedPrefab
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

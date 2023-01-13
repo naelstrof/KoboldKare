@@ -49,6 +49,12 @@
       "dependencies": {},
       "hash": "cd88f9cf56dea2dd9130b180e239aaa019a1a5fe"
     },
+    "com.naelstrof.modding": {
+      "version": "file:com.naelstrof.modding",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.naelstrof.mozzarellatech": {
       "version": "file:com.naelstrof.mozzarella",
       "depth": 0,

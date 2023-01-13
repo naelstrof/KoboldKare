@@ -1,0 +1,7 @@
+{
+    "name": "com.naelstrof.modding",
+    "displayName": "Modding",
+    "version": "0.0.1",
+    "unity": "2020.3",
+    "description": "Tool that can organize, load, and replace assets via modding."
+}

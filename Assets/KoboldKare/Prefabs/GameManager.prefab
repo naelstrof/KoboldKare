@@ -17977,6 +17977,7 @@ MonoBehaviour:
   usableHitMask:
     serializedVersion: 2
     m_Bits: 2048
+  networkManager: {fileID: 11400000, guid: 2e0c29f704eb625469f31c13379f97b8, type: 2}
   volumeCurve:
     serializedVersion: 2
     m_Curve:
@@ -18039,6 +18040,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9752f706d88fa4f429ba00e1d3b5dc86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modPostProcessors:
+  - rid: 7257832569315262465
+  references:
+    version: 2
+    RefIds:
+    - rid: 7257832569315262465
+      type: {class: NetworkedPrefabPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: NetworkedPrefab
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18312,7 +18323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ac55988a08b8c4784e49236f27cb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefabs:
+  builtInPrefabs:
   - {fileID: 3102687797691339609, guid: e137b71360ce8944f98459e999796966, type: 3}
   - {fileID: 6224846685087297140, guid: 7597a93ae1300a749bd93af03fb91db6, type: 3}
   - {fileID: 2166678963712758225, guid: a1900d6ba02d06942a5bf1372da55eec, type: 3}
@@ -18323,7 +18334,6 @@ MonoBehaviour:
   - {fileID: 6224846685087297140, guid: 6b808ba6736e8bd4f97ec4ee2e827b6c, type: 3}
   - {fileID: 3729554680024515055, guid: 9c8d68eba3f57574b9467edd5fe0ec67, type: 3}
   - {fileID: 5605572581541272102, guid: e19ec61e30e580d4480bdd0fc79fb3d3, type: 3}
-  - {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae, type: 3}
   - {fileID: 5605572581541272102, guid: 8a27b56e63a6bf54f850be571ad924d6, type: 3}
   - {fileID: 6562367668383676920, guid: b47e824ef9dd0654bae5ca33a2d5dd4b, type: 3}
   - {fileID: 5605572581541272102, guid: 8951fb1a948fc9d4ea8da627ec9ba72d, type: 3}
@@ -18364,8 +18374,8 @@ MonoBehaviour:
   - {fileID: 2105268475169688605, guid: 7e38c0db2be3dfe4d8f30c1483108852, type: 3}
   - {fileID: 4909127261036313709, guid: 42fc2eef1f321a844a59836e8ccd423d, type: 3}
   - {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b, type: 3}
-  - {fileID: 3952780180659337047, guid: 7548b3cf5fa08fa4c8369bee88be162a, type: 3}
-  - {fileID: 1388518888101982767, guid: 90450263ed3cf284ca4f8b3e7d1614ac, type: 3}
+  - {fileID: 2748142235640710243, guid: 605a8a9893df4824fa39c399fbc0ead0, type: 3}
+  prefabReferences: []
 --- !u!114 &6873854542477212813
 MonoBehaviour:
   m_ObjectHideFlags: 0

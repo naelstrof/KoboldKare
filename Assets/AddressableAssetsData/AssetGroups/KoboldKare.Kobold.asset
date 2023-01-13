@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: KoboldKare.Kobold
+  m_EditorClassIdentifier: 
+  m_GroupName: KoboldKare.Kobold
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6c610ea65d10e3d439ffa0d3eb3d8a4f
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: db10bcb42f7927e43b1d523e6086a0c4, type: 2}
+    - {fileID: 11400000, guid: 45bca59f546bc994faf2d8381c704704, type: 2}

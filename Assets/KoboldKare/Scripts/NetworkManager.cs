@@ -176,7 +176,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //}
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
-        yield return new WaitUntil(() => !LevelLoader.loadingLevel);
+        yield return new WaitUntil(() => !LevelLoader.loadingLevel && ModManager.GetFinishedLoading());
         // If our kobold exists, don't spawn another
         if (PhotonNetwork.LocalPlayer.TagObject != null && (PhotonNetwork.LocalPlayer.TagObject as Kobold) != null) {
             yield break;

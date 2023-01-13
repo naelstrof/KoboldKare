@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
     public LayerMask usableHitMask;
+    [SerializeField]
+    private NetworkManager networkManager;
     public AnimationCurve volumeCurve;
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;

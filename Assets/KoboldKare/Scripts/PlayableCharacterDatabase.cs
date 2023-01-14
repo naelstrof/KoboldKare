@@ -9,6 +9,11 @@ public class PlayableCharacterDatabase : MonoBehaviour {
     private static PlayableCharacterDatabase instance;
     private List<PlayableCharcterInfo> playableCharacters;
     private ReadOnlyCollection<PlayableCharcterInfo> readOnlyPlayableCharacters;
+
+    public delegate void PlayableCharactersChangedAction(ReadOnlyCollection<PlayableCharcterInfo> playableCharacters);
+
+    private static event PlayableCharactersChangedAction playableCharactersChanged;
+    
     private const string JSONLocation = "modConfiguration.json";
     public class PlayableCharcterInfo {
         public bool enabled;
@@ -22,6 +27,13 @@ public class PlayableCharacterDatabase : MonoBehaviour {
             enabled = n["enabled"];
             key =n["key"];
         }
+    }
+
+    public static void AddPlayersChangedListener(PlayableCharactersChangedAction action) {
+        playableCharactersChanged += action;
+    }
+    public static void RemovePlayersChangedListener(PlayableCharactersChangedAction action) {
+        playableCharactersChanged -= action;
     }
 
     private void Awake() {

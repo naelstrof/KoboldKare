@@ -1185,7 +1185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: "Bun\u0103! Ai nevoie de ajutor ast\u0103zi?"
+    m_Localized: "Salut! Ai nevoie de ajutor ast\u0103zi?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
@@ -1327,6 +1327,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: Modding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: Configurare mod
     m_Metadata:
       m_Items: []
   references:

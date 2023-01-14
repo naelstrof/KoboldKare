@@ -1627,6 +1627,16 @@ MonoBehaviour:
       \u043E\u0441\u044C Y"
     m_Metadata:
       m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: "\u0418\u043D\u0432\u0435\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C
+      \u043E\u0441\u044C Y"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: "\u0418\u043D\u0432\u0435\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C
+      \u043E\u0441\u044C Y"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

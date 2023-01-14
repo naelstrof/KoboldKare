@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem neked n\xE9h\xE1ny kell\xE9ket, hogy hamburgert k\xE9sz\xEDtsenek,
-      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak add meg."
+      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak adj\xE1k."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -996,7 +996,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Milyen \xE9rdekes eszk\xF6zt szerzett. Menj \xE9s pr\xF3b\xE1ld
+    m_Localized: "Milyen \xE9rdekes eszk\xF6zt szerezt\xE9l. Menj \xE9s pr\xF3b\xE1ld
       meg haszn\xE1lni, hozza mag\xE1val egy m\xE1sik Koboldot."
     m_Metadata:
       m_Items: []
@@ -1318,6 +1318,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: "Fasz l\xE1nc"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: "M\xF3dos\xEDt\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: "Mod konfigur\xE1ci\xF3"
     m_Metadata:
       m_Items: []
   references:

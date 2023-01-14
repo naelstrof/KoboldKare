@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
-    m_Localized: Carga
+    m_Localized: Carregar
     m_Metadata:
       m_Items: []
   - m_Id: 516090810384
@@ -206,8 +206,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
-      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -232,7 +232,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
-    m_Localized: Saltar
+    m_Localized: Pular
     m_Metadata:
       m_Items: []
   - m_Id: 516095004697
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
-    m_Localized: Olhar
+    m_Localized: Veja
     m_Metadata:
       m_Items: []
   - m_Id: 516095004709
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
-    m_Localized: Grossura
+    m_Localized: Espessura
     m_Metadata:
       m_Items: []
   - m_Id: 516099198999
@@ -1303,6 +1303,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: Modding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: "Configura\xE7\xE3o do mod"
     m_Metadata:
       m_Items: []
   references:

@@ -16506,7 +16506,7 @@ MonoBehaviour:
   heartPrefab:
     gameObject: {fileID: 6562367668383676920, guid: b47e824ef9dd0654bae5ca33a2d5dd4b,
       type: 3}
-    photonName: Heart
+    optionalDatabase: {fileID: 0}
   activeDicks: []
   koboldBodyRenderers:
   - {fileID: 6506915555087688956}

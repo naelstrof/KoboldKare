@@ -25,6 +25,7 @@ MonoBehaviour:
   defaultValue: 0
   dropdownOptions:
   - Kobold
+  database: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847, type: 2}
   references:
     version: 2
     RefIds: []

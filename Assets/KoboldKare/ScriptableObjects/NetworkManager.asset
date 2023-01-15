@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b4445de9be59c4abcb295e34e9a3b6, type: 3}
   m_Name: NetworkManager
   m_EditorClassIdentifier: 
+  selectedPlayerPrefab: {fileID: 11400000, guid: 95eaa8b7f817151478392ea09909329f,
+    type: 2}
   settings: {fileID: 11400000, guid: ccba35f9efc9e5740af2e3b0f78fa2e9, type: 2}
-  SpawnEvent: {fileID: 11400000, guid: e40822d59419f7240a450f4c9e4c5c6e, type: 2}

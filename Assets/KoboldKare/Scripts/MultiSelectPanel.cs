@@ -50,6 +50,7 @@ public class MultiSelectPanel : MonoBehaviour {
             if (!obj.TryGetComponent(out MultiSelectToggle toggle)) {
                 throw new UnityException("Failed to get MultiSelectToggle from prefab, this shouldn't be possible!");
             }
+            instantiatedOptions.Add(toggle);
             toggle.SetOption(option);
         }
     }

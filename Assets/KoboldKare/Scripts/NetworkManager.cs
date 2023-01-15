@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
+    public PrefabSelectSingleSetting selectedPlayerPrefab;
     public ServerSettings settings;
     public bool online {
         get {
@@ -202,7 +203,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
         playerData.AddBool(true);// Is player kobold
         
-        GameObject player = PhotonNetwork.Instantiate("Kobold", pos, Quaternion.identity, 0, new object[]{playerData});
+        GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }

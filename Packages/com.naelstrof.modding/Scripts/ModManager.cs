@@ -119,7 +119,7 @@ public class ModManager : MonoBehaviour {
         yield return new WaitUntil(() => !sharedResourceInUse);
         sharedResourceInUse = true;
         foreach (var modPostProcessor in modPostProcessors) {
-            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.searchLabel.RuntimeKey);
+            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
             yield return assets;
             foreach (var location in assets.Result) {
                 var opHandle = Addressables.LoadAssetAsync<object>(location.PrimaryKey);
@@ -138,7 +138,7 @@ public class ModManager : MonoBehaviour {
         yield return new WaitUntil(() => !sharedResourceInUse);
         sharedResourceInUse = true;
         foreach (var modPostProcessor in modPostProcessors) {
-            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.searchLabel.RuntimeKey);
+            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
             yield return assets;
             foreach (var location in assets.Result) {
                 if (!loadedAssetHandles.ContainsKey(location)) {

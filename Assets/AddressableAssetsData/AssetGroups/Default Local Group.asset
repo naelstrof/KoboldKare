@@ -16,37 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: d53522b88d79eeb43b0cf963a8a95714
-  m_SerializeEntries:
-  - m_GUID: c03e2c2295efd074c8f62bae057e84ae
-    m_Address: Kobold
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - NetworkedPrefab
-    - PlayableCharacter
-  - m_GUID: e137b71360ce8944f98459e999796966
-    m_Address: Banana
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Fruit
-    - NetworkedPrefab
-  - m_GUID: a751d681912b4084f8f53000b749377f
-    m_Address: Melon
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Fruit
-    - NetworkedPrefab
-  - m_GUID: 489cb8e780e14014b904c97fd8a09dc7
-    m_Address: Pineapple
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Fruit
-    - NetworkedPrefab
-  - m_GUID: 3e37074b175176045ac3af82e92f423e
-    m_Address: Eggplant
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Fruit
-    - NetworkedPrefab
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

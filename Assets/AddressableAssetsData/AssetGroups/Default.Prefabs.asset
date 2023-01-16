@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a53f47df935a2e34fba6cf067a466f8a
+  m_SerializeEntries:
+  - m_GUID: c03e2c2295efd074c8f62bae057e84ae
+    m_Address: Kobold
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlayableCharacter
+  - m_GUID: e137b71360ce8944f98459e999796966
+    m_Address: Banana
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fruit
+  - m_GUID: a751d681912b4084f8f53000b749377f
+    m_Address: Melon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fruit
+  - m_GUID: 489cb8e780e14014b904c97fd8a09dc7
+    m_Address: Pineapple
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fruit
+  - m_GUID: 3e37074b175176045ac3af82e92f423e
+    m_Address: Eggplant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Fruit
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4576edd7bcf9d794e8daeb6d68603ca3, type: 2}
+    - {fileID: 11400000, guid: 0cac7a3133813b34191cb5478080bba2, type: 2}

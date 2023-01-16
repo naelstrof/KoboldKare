@@ -16,7 +16,6 @@ public class ModManager : MonoBehaviour {
     private bool ready;
     private bool sharedResourceInUse;
     private List<ModInfo> fullModList;
-    private Dictionary<IResourceLocation, AsyncOperationHandle<object>> loadedAssetHandles;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
 
@@ -121,12 +120,7 @@ public class ModManager : MonoBehaviour {
         foreach (var modPostProcessor in modPostProcessors) {
             var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
             yield return assets;
-            foreach (var location in assets.Result) {
-                var opHandle = Addressables.LoadAssetAsync<object>(location.PrimaryKey);
-                yield return opHandle;
-                modPostProcessor.LoadAsset(location, opHandle.Result);
-                loadedAssetHandles.Add(location, opHandle);
-            }
+            yield return modPostProcessor.LoadAllAssets(assets.Result);
         }
 
         sharedResourceInUse = false;
@@ -140,16 +134,7 @@ public class ModManager : MonoBehaviour {
         foreach (var modPostProcessor in modPostProcessors) {
             var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
             yield return assets;
-            foreach (var location in assets.Result) {
-                if (!loadedAssetHandles.ContainsKey(location)) {
-                    continue;
-                }
-
-                var assetHandle = loadedAssetHandles[location];
-                modPostProcessor.UnloadAsset(location, assetHandle.Result);
-                Addressables.Release(assetHandle);
-                loadedAssetHandles.Remove(location);
-            }
+            modPostProcessor.UnloadAllAssets(assets.Result);
         }
 
         sharedResourceInUse = false;
@@ -163,10 +148,13 @@ public class ModManager : MonoBehaviour {
 
         instance = this;
         fullModList = new List<ModInfo>();
-        loadedAssetHandles = new Dictionary<IResourceLocation, AsyncOperationHandle<object>>();
+        foreach(var modPostProcessor in modPostProcessors) {
+            modPostProcessor.Awake();
+        }
     }
 
     private IEnumerator ReloadMods() {
+        Debug.Log("Reloading..");
         ready = false;
         yield return UnloadMods();
         yield return new WaitUntil(() => !sharedResourceInUse);
@@ -191,6 +179,7 @@ public class ModManager : MonoBehaviour {
     }
 
     private IEnumerator Start() {
+        Debug.Log("Starting");
         LoadModListFromJson();
         ScanForNewMods();
         yield return ReloadMods();

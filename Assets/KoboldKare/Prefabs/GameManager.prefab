@@ -15171,7 +15171,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.3
+  m_fontSize: 26.7
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19805,17 +19805,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modPostProcessors:
-  - rid: 7257832569315262465
   - rid: 7257832617762881540
   - rid: 7257832617762881542
+  - rid: 7257832640060588034
+  - rid: 7257832640060588035
   references:
     version: 2
     RefIds:
-    - rid: 7257832569315262465
-      type: {class: NetworkedPrefabPostProcessor, ns: , asm: Assembly-CSharp}
-      data:
-        searchLabel:
-          m_LabelString: NetworkedPrefab
     - rid: 7257832617762881540
       type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
       data:
@@ -19830,6 +19826,16 @@ MonoBehaviour:
           m_LabelString: Fruit
         targetDatabase: {fileID: 11400000, guid: 5a715bf0bdf8de74d8efe8ebe2672a01,
           type: 2}
+    - rid: 7257832640060588034
+      type: {class: ReactionsPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Reaction
+    - rid: 7257832640060588035
+      type: {class: ReagentPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Reagent
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19977,61 +19983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537ed01512d9bac4c920127736303673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reagents:
-  - {fileID: 11400000, guid: 2028e04405fc5d146a345a4daac5a189, type: 2}
-  - {fileID: 11400000, guid: cf45304516a585b41b686355a8ecd9b0, type: 2}
-  - {fileID: 11400000, guid: ded1aaeb29406d3478894c7dafff61ec, type: 2}
-  - {fileID: 11400000, guid: e5adf269b9ec0d340b1c41167ec79b76, type: 2}
-  - {fileID: 11400000, guid: ba03dfd3c91a3bd4492d280daf00e569, type: 2}
-  - {fileID: 11400000, guid: 53a6cc4161eeb7c489eacefa0ab6c19f, type: 2}
-  - {fileID: 11400000, guid: 54e937ee60289114480db3c5e2f53aa8, type: 2}
-  - {fileID: 11400000, guid: ba1e9e0b37e2aee428f69d7cafbd05c6, type: 2}
-  - {fileID: 11400000, guid: ab11c5e8e08c8614eabab40825330808, type: 2}
-  - {fileID: 11400000, guid: 6a3ddb5dbc12f7e4b9c3e396cd58f3e9, type: 2}
-  - {fileID: 11400000, guid: 0011764867947d84bb1166d2d7886105, type: 2}
-  - {fileID: 11400000, guid: 7fb71e9c403384941b7631a8990bda2c, type: 2}
-  - {fileID: 11400000, guid: dccd6e2b38a616c4daf5b2638ae5ac3a, type: 2}
-  - {fileID: 11400000, guid: 8e137a91cb1f729438830cebcb658e9c, type: 2}
-  - {fileID: 11400000, guid: 8aea7d57d8982ea448cb144fbf99bcb3, type: 2}
-  - {fileID: 11400000, guid: d699f0ca23be8724d8d579ba85e16857, type: 2}
-  - {fileID: 11400000, guid: f8e23aff621a5594a84b2a269e9bb894, type: 2}
-  - {fileID: 11400000, guid: 14061ef517602ef4f93c1ff203d5e5d2, type: 2}
-  - {fileID: 11400000, guid: 432f03a666042844cb10ac8f54594a19, type: 2}
-  - {fileID: 11400000, guid: 0df9b29ce4962d140b59d12b5c018a67, type: 2}
-  - {fileID: 11400000, guid: c7726a1072e4b494f81c3ad8bae29195, type: 2}
-  - {fileID: 11400000, guid: ba40fc5a595feee42bf14b729dbfdce8, type: 2}
-  - {fileID: 11400000, guid: ab6a14994d81d1246858260c00038968, type: 2}
-  - {fileID: 11400000, guid: 5e62e56f8bbad43438be263b739d1f9d, type: 2}
-  - {fileID: 11400000, guid: 56cbef9aacb50c54ea39c7eb8296e9cf, type: 2}
-  - {fileID: 11400000, guid: 69b89945705013845a519f7f35786bfe, type: 2}
-  - {fileID: 11400000, guid: 2772d447886ca12459974cc147730c21, type: 2}
-  - {fileID: 11400000, guid: 08db202a0c4d64b4cb87d31d8e72ec75, type: 2}
-  - {fileID: 11400000, guid: bed8fc8dad7da90439bc44080ddb0e6f, type: 2}
-  - {fileID: 11400000, guid: 47768886bcb27df4996e55c86ddcf089, type: 2}
-  - {fileID: 11400000, guid: ae2a33ac2603ee34eaf8547395029f96, type: 2}
-  - {fileID: 11400000, guid: 64a37d7d0b348ab4bbbd80288dc330d6, type: 2}
-  - {fileID: 11400000, guid: 96f845d779467a14e8ececa1edc3fb3a, type: 2}
-  - {fileID: 11400000, guid: 141380da6f0bc8649af1917eaff8b3db, type: 2}
-  reactions:
-  - {fileID: 11400000, guid: 591f1d8dd39373c4b85f917725267110, type: 2}
-  - {fileID: 11400000, guid: 7ddfc6f85ab42ff409dec7ee0b338210, type: 2}
-  - {fileID: 11400000, guid: 42bc590e6a7412a4ca800caa30653d84, type: 2}
-  - {fileID: 11400000, guid: 9377755ed0b127648a2d47d6a50eae17, type: 2}
-  - {fileID: 11400000, guid: c9a9010105b82584293f65d7af7838e2, type: 2}
-  - {fileID: 11400000, guid: ee43090721864c8468005ffd89e52ace, type: 2}
-  - {fileID: 11400000, guid: c6c6dba5436612e4890f92cf0f4eff0f, type: 2}
-  - {fileID: 11400000, guid: 78c6ba43c9ecba74d96b19f846c4ced2, type: 2}
-  - {fileID: 11400000, guid: d3db170f709460b4593b62301180fadf, type: 2}
-  - {fileID: 11400000, guid: 3b0419fc412d2574ba183f37690bcdd9, type: 2}
-  - {fileID: 11400000, guid: 54d0648681fff5042868c4b68346a035, type: 2}
-  - {fileID: 11400000, guid: 8e84474d1df1fbc459adc4dfee6e5824, type: 2}
-  - {fileID: 11400000, guid: 49418a97aa6522542843376af1675473, type: 2}
-  - {fileID: 11400000, guid: 077da4bdaeec0444581d5e573cea7dc7, type: 2}
-  - {fileID: 11400000, guid: 793cd44f976680e4484bcac7416b6654, type: 2}
-  - {fileID: 11400000, guid: 1f0e755de5b4d8242bd20a9b839290c9, type: 2}
-  - {fileID: 11400000, guid: c54b88a658b72d04fb67540c1f8a3e01, type: 2}
-  - {fileID: 11400000, guid: af06ea3be2bf24d40908bf711e372abc, type: 2}
-  - {fileID: 11400000, guid: 09909fa5b6db008498558e6d14336fee, type: 2}
+  reagents: []
+  reactions: []
 --- !u!114 &1347546203939439728
 MonoBehaviour:
   m_ObjectHideFlags: 0

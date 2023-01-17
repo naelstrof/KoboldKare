@@ -7,6 +7,7 @@ using UnityEngine;
 public class ReagentDatabase : MonoBehaviour {
     private static ReagentDatabase instance;
     private Dictionary<string,ScriptableReagent> reagentDictionary;
+    private ScriptableReagent defaultReagent;
     private class ReagentSorter : IComparer<ScriptableReagent> {
         public int Compare(ScriptableReagent x, ScriptableReagent y) {
             return String.Compare(x.name, y.name, StringComparison.InvariantCulture);
@@ -20,6 +21,8 @@ public class ReagentDatabase : MonoBehaviour {
             instance = this;
         }
 
+        defaultReagent = ScriptableObject.CreateInstance<ScriptableReagent>();
+        
         reagentSorter = new ReagentSorter();
         reagentDictionary = new Dictionary<string, ScriptableReagent>();
         foreach(var reagent in reagents) {
@@ -31,18 +34,23 @@ public class ReagentDatabase : MonoBehaviour {
         }
     }
     public static ScriptableReagent GetReagent(string name) {
+        if (!ModManager.GetReady()) {
+            return instance.defaultReagent;
+        }
         if (instance.reagentDictionary.ContainsKey(name)) {
             return instance.reagentDictionary[name];
         }
+
         return null;
     }
     public static ScriptableReagent GetReagent(byte id) {
+        if (!ModManager.GetReady()) {
+            return instance.defaultReagent;
+        }
+        
         return instance.reagents[id];
     }
     public static byte GetID(ScriptableReagent reagent) {
-        if (instance == null) {
-            return 0;
-        }
         return (byte)instance.reagents.IndexOf(reagent);
     }
 

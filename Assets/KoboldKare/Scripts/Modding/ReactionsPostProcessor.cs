@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
@@ -12,10 +12,10 @@ public class ReactionsPostProcessor : ModPostProcessor {
         addedReactions = new List<ScriptableReagentReaction>();
     }
 
-    public override IEnumerator LoadAllAssets(IList<IResourceLocation> locations) {
+    public override async Task LoadAllAssets(IList<IResourceLocation> locations) {
         addedReactions.Clear();
         var opHandle = Addressables.LoadAssetsAsync<ScriptableReagentReaction>(locations, LoadReaction);
-        yield return opHandle;
+        await opHandle.Task;
     }
 
     private void LoadReaction(ScriptableReagentReaction reaction) {

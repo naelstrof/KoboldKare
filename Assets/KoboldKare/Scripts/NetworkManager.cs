@@ -202,7 +202,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         BitBuffer playerData = new BitBuffer(16);
         playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
         playerData.AddBool(true);// Is player kobold
-        
+
+        Debug.Log("Spawned player");
         GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();

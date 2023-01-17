@@ -109,17 +109,28 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
+
+        ModManager.AddFinishedLoadingListener(ReloadMapIfInEditor);
         // FIXME: Photon isn't initialized early enough for scriptable objects to add themselves as a callback...
         // So I do it here-- I guess!
         PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() {
+    private void ReloadMapIfInEditor() {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
-            NetworkManager.instance.StartSinglePlayer();
-            GameManager.instance.Pause(false);
+            StartCoroutine(ReloadMapRoutine());
         }
+    }
+
+    private IEnumerator ReloadMapRoutine() {
+        Debug.LogWarning("Reloading scene due to mods not being ready yet...");
+        yield return LevelLoader.instance.LoadLevel("MainMap");
+        NetworkManager.instance.StartSinglePlayer();
+        Pause(false);
+    }
+
+    void Start() {
         SaveManager.Init();
     }
     private void UIVisible(bool visible) {
@@ -187,6 +198,7 @@ public class GameManager : MonoBehaviour {
         if (instance != this) {
             return;
         }
+        ModManager.RemoveFinishedLoadingListener(ReloadMapIfInEditor);
         string targetString = NetworkManager.instance.settings.AppSettings.AppVersion;
         if (Application.isEditor && targetString.EndsWith("Editor")) {
             NetworkManager.instance.settings.AppSettings.AppVersion = targetString.Substring(0, targetString.Length - 6);

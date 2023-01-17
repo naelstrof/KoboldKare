@@ -34,7 +34,8 @@ public class LevelLoader : MonoBehaviour {
         loadingLevel = true;
         yield return new WaitForSecondsRealtime(1f);
         PhotonNetwork.LoadLevel(name);
-        while (!SceneManager.GetSceneByName(name).isLoaded) {
+        //while (!SceneManager.GetSceneByName(name).isLoaded) {
+        while (PhotonNetwork.LevelLoadingProgress != 1f) {
             yield return new WaitForEndOfFrame();
         }
         loadingLevel = false;

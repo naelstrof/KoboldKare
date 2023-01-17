@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
@@ -15,10 +16,10 @@ public class PrefabPostProcessor : ModPostProcessor {
         addedGameObjects = new List<GameObject>();
     }
 
-    public override IEnumerator LoadAllAssets(IList<IResourceLocation> locations) {
+    public override async Task LoadAllAssets(IList<IResourceLocation> locations) {
         addedGameObjects.Clear();
         var opHandle = Addressables.LoadAssetsAsync<GameObject>(locations, LoadPrefab);
-        yield return opHandle;
+        await opHandle.Task;
     }
     
     private void LoadPrefab(GameObject obj) {

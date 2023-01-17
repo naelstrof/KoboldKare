@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
+using UnityEngine.SceneManagement;
 
 public class ModManager : MonoBehaviour {
     private static ModManager instance;
     private bool ready;
-    private bool sharedResourceInUse;
+    private Mutex sharedResource;
     private List<ModInfo> fullModList;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
@@ -113,75 +113,76 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-
-    private IEnumerator LoadMods() {
-        yield return new WaitUntil(() => !sharedResourceInUse);
-        sharedResourceInUse = true;
-        foreach (var modPostProcessor in modPostProcessors) {
-            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-            yield return assets;
-            yield return modPostProcessor.LoadAllAssets(assets.Result);
+    private async Task LoadMods() {
+        try {
+            sharedResource.WaitOne();
+            foreach (var modPostProcessor in modPostProcessors) {
+                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
+                await assets.Task;
+                await modPostProcessor.LoadAllAssets(assets.Result);
+            }
+        } finally {
+            sharedResource.ReleaseMutex();
         }
-
-        sharedResourceInUse = false;
         ready = true;
         finishedLoading?.Invoke();
     }
 
-    private IEnumerator UnloadMods() {
-        yield return new WaitUntil(() => !sharedResourceInUse);
-        sharedResourceInUse = true;
-        foreach (var modPostProcessor in modPostProcessors) {
-            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-            yield return assets;
-            modPostProcessor.UnloadAllAssets(assets.Result);
+    private async Task UnloadMods() {
+        try {
+            sharedResource.WaitOne();
+            foreach (var modPostProcessor in modPostProcessors) {
+                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
+                await assets.Task;
+                modPostProcessor.UnloadAllAssets(assets.Result);
+            }
+        } finally {
+            sharedResource.ReleaseMutex();
         }
-
-        sharedResourceInUse = false;
     }
 
-    private void Awake() {
+    public static bool GetReady() => instance.ready;
+
+    private async void Awake() {
         if (instance != null && instance != this) {
             Destroy(this);
             return;
         }
 
+        ready = false;
+        sharedResource = new Mutex();
         instance = this;
         fullModList = new List<ModInfo>();
         foreach(var modPostProcessor in modPostProcessors) {
             modPostProcessor.Awake();
         }
-    }
 
-    private IEnumerator ReloadMods() {
-        Debug.Log("Reloading..");
-        ready = false;
-        yield return UnloadMods();
-        yield return new WaitUntil(() => !sharedResourceInUse);
-        
-        // Load all catalogues
-        sharedResourceInUse = true;
-        foreach (var modInfo in fullModList) {
-            if (!modInfo.enabled) {
-                continue;
-            }
-            var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
-            yield return loader;
-            modInfo.locator = loader.Result;
-        }
-        sharedResourceInUse = false;
-        
-        yield return LoadMods();
-    }
-
-    public static void Reload() {
-        instance.StartCoroutine(instance.ReloadMods());
-    }
-
-    private IEnumerator Start() {
-        Debug.Log("Starting");
         LoadModListFromJson();
         ScanForNewMods();
-        yield return ReloadMods();
+        await ReloadMods();
+    }
+
+    private async Task ReloadMods() {
+        ready = false;
+        await UnloadMods();
+        try {
+            sharedResource.WaitOne();
+            foreach (var modInfo in fullModList) {
+                if (!modInfo.enabled) {
+                    continue;
+                }
+
+                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
+                await loader.Task;
+                modInfo.locator = loader.Result;
+            }
+        } finally {
+            sharedResource.ReleaseMutex();
+        }
+        await LoadMods();
+    }
+
+    public static async void Reload() {
+        await instance.ReloadMods();
     }
 }

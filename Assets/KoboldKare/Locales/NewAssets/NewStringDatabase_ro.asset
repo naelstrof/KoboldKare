@@ -1329,6 +1329,10 @@ MonoBehaviour:
     m_Localized: Dick-shrink
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Modifica suma de\u021Binut\u0103\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

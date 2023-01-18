@@ -1320,6 +1320,10 @@ MonoBehaviour:
     m_Localized: "Fasz l\xE1nc"
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "T\xF6bbsz\xF6r\xF6s megragad\xE1s v\xE1lt\xE1sa\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

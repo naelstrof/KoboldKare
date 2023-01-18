@@ -5,6 +5,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityScriptableSettings;
 
 public static class KoboldGenesBitBufferExtension {
     public static void AddKoboldGenes(this BitBuffer buffer, KoboldGenes genes) {
@@ -36,6 +37,8 @@ public static class KoboldGenesBitBufferExtension {
         buffer.AddByte(genes.saturation);
         buffer.AddByte(genes.dickEquip);
         buffer.AddByte(genes.grabCount);
+        buffer.AddByte(genes.maxGrab);
+
     }
     public static KoboldGenes ReadKoboldGenes(this BitBuffer buffer) {
         if (!buffer.ReadBool()) {
@@ -55,7 +58,8 @@ public static class KoboldGenesBitBufferExtension {
             brightness = buffer.ReadByte(),
             saturation = buffer.ReadByte(),
             dickEquip = buffer.ReadByte(),
-            grabCount = buffer.ReadByte()
+            grabCount = buffer.ReadByte(),
+            maxGrab = buffer.ReadByte()
         };
     }
 }
@@ -76,7 +80,8 @@ public class KoboldGenes {
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
     public byte grabCount = 1;
-    
+    public byte maxGrab = 1;
+
     private static float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f) {
         float u, v, S;
         do {
@@ -96,7 +101,8 @@ public class KoboldGenes {
     public KoboldGenes With(float? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
             float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
-            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null, byte? grabCount = null) {
+            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null, byte? grabCount = null, 
+            byte? maxGrab = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
             baseSize = baseSize ?? this.baseSize,
@@ -111,7 +117,8 @@ public class KoboldGenes {
             saturation = saturation ?? this.saturation,
             dickEquip = dickEquip ?? this.dickEquip,
             dickThickness = dickThickness ?? this.dickThickness,
-            grabCount = grabCount ?? this.grabCount
+            grabCount = grabCount ?? this.grabCount,
+            maxGrab = maxGrab ?? this.maxGrab
         };
     }
 
@@ -182,6 +189,8 @@ public class KoboldGenes {
         // Blend hue, hue is angle-based, so it loops around. 
         float hueAngA = a.hue / 255f;
         float hueAngB = b.hue / 255f;
+        float grab1 = Mathf.Lerp(a.maxGrab, a.grabCount, (a.grabCount > a.maxGrab) ? 1f : 0f);  //these two check and update old kobolds to the new grab toggle system
+        float grab2 = Mathf.Lerp(b.maxGrab, b.grabCount, (b.grabCount > b.maxGrab) ? 1f : 0f);
         c.hue = (byte)Mathf.RoundToInt(FloatExtensions.CircularLerp(hueAngA, hueAngB, 0.5f) * 255f);
         c.brightness = (byte)Mathf.RoundToInt(Mathf.Lerp(a.brightness / 255f, b.brightness / 255f, 0.5f)*255f);
         c.saturation = (byte)Mathf.RoundToInt(Mathf.Lerp(a.saturation / 255f, b.saturation / 255f, 0.5f)*255f);
@@ -193,9 +202,18 @@ public class KoboldGenes {
         c.baseSize = Mathf.Lerp(a.baseSize, b.baseSize, 0.5f);
         c.maxEnergy = Mathf.Lerp(a.maxEnergy, b.maxEnergy, 0.5f);
         c.dickThickness = Mathf.Lerp(a.dickThickness, b.dickThickness, 0.5f);
-        c.grabCount = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(a.grabCount, b.grabCount, 0.5f)),1);
-        
+        c.maxGrab = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(grab1, grab2, 0.5f)),1);  //if removing the old kobold check, update grab1&2 to a.maxGrab and b.maxGrab
+        c.grabCount = c.maxGrab;
+
         return c;
+    }
+
+    public int GrabToggle() //toggles your grab from whatever the max is to 1 and back, returns the new value for the grabber
+    {
+        if (grabCount > maxGrab) { maxGrab = grabCount; }  //also updates max grab in case of old kobold. Can be removed later
+        if (maxGrab == grabCount) { grabCount = 1; }
+        else { grabCount = maxGrab; }
+        return grabCount;
     }
 
     /*public const short byteCount = sizeof(float) * 9 + sizeof(byte) * 5;
@@ -216,6 +234,7 @@ public class KoboldGenes {
         bytes[index++] = genes.saturation;
         bytes[index++] = genes.dickEquip;
         bytes[index++] = genes.grabCount;
+        bytes[index++] = genes.maxGrab;
         Protocol.Serialize(genes.dickThickness, bytes, ref index);
         outStream.Write(bytes, 0, byteCount);
         return byteCount;
@@ -239,6 +258,7 @@ public class KoboldGenes {
             genes.saturation = bytes[index++];
             genes.dickEquip = bytes[index++];
             genes.grabCount = bytes[index++];
+            genes.maxGrab = bytes[index++];
             Protocol.Deserialize(out genes.dickThickness, bytes, ref index);
         }
         return genes;
@@ -259,6 +279,7 @@ public class KoboldGenes {
         rootNode["saturation"] = (int)saturation;
         rootNode["dickEquip"] = (int)dickEquip;
         rootNode["grabCount"] = (int)grabCount;
+        rootNode["maxGrab"] = (int)maxGrab;
         rootNode["dickThickness"] = dickThickness;
         node[key] = rootNode;
     }
@@ -278,6 +299,7 @@ public class KoboldGenes {
         saturation = (byte)rootNode["saturation"].AsInt;
         dickEquip = (byte)rootNode["dickEquip"].AsInt;
         grabCount = (byte)rootNode["grabCount"].AsInt;
+        maxGrab = (byte)rootNode["maxGrab"].AsInt;
         dickThickness = rootNode["dickThickness"];
     }
 
@@ -296,6 +318,7 @@ public class KoboldGenes {
            saturation: {saturation}
            dickEquip: {dickEquip}
            grabCount: {grabCount}
+           maxGrab: {maxGrab}
            dickThickness: {dickThickness}";
     }
 }
@@ -309,6 +332,13 @@ public class GeneHolder : MonoBehaviourPun {
 
     public KoboldGenes GetGenes() {
         return genes;
+    }
+
+    public int ToggleMultiGrab()
+    {
+        int amount = genes.GrabToggle();
+        //Debug.Log("Geneholder: Amount- " + amount);
+        return amount;
     }
     public virtual void SetGenes(KoboldGenes newGenes) {
         genes = newGenes;

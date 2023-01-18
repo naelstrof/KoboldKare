@@ -1306,6 +1306,10 @@ MonoBehaviour:
     m_Localized: Dick-Shrink
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Sl\xE5 p\xE5 flere grep\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

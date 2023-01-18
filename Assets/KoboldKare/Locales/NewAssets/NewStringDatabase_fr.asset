@@ -1310,6 +1310,10 @@ MonoBehaviour:
     m_Localized: Bite
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Modifier le montant d\xE9tenu\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

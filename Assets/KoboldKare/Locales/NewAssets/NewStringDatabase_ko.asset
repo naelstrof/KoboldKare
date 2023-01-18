@@ -1387,6 +1387,10 @@ MonoBehaviour:
     m_Localized: Dick-Shrink
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "\uB2E4\uC911 \uC7A1\uAE30 \uC804\uD658\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

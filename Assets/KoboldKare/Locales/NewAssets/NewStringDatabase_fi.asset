@@ -1308,6 +1308,10 @@ MonoBehaviour:
     m_Localized: Muna
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Muuta nappaavaa m\xE4\xE4r\xE4\xE4\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

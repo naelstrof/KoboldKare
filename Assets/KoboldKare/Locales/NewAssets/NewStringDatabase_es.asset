@@ -1306,6 +1306,10 @@ MonoBehaviour:
     m_Localized: Polla
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Alternar agarre m\xFAltiple\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

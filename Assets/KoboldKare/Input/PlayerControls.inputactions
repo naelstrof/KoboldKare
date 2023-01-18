@@ -274,6 +274,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MultiGrabToggle",
+                    "type": "Button",
+                    "id": "0fc61288-bd62-43fe-9be2-801220acc166",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -764,8 +773,8 @@
                 {
                     "name": "",
                     "id": "2c38f9d2-ed5d-492b-830f-8655f719b29d",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
+                    "path": "<Gamepad>/start",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
@@ -830,7 +839,7 @@
                 {
                     "name": "",
                     "id": "3e8830ff-bd5b-4e06-9c7e-1cd269ce1f0e",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -978,6 +987,28 @@
                     "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
                     "groups": "",
                     "action": "LookJoystick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09bf6c37-150d-43a8-b8dd-5028c43d178b",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MultiGrabToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c45c2e8c-22eb-4aed-9374-fc63d49127b3",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MultiGrabToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

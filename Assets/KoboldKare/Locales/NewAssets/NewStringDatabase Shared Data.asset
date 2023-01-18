@@ -1239,6 +1239,10 @@ MonoBehaviour:
     m_Key: REAGENT_DICK_SHRINK
     m_Metadata:
       m_Items: []
+  - m_Id: 260006437095038976
+    m_Key: CONTROLS_MULTIGRAB_TOGGLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

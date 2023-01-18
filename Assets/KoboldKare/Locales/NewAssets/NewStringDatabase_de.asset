@@ -208,10 +208,10 @@ MonoBehaviour:
     m_Localized: 'DIESES SPIEL ZEIGT FIKTIONALE CHARAKTERE IN <#FF0000>SEXUELL EXPLIZITEN
       HANDLUNGEN.<#FFFFFF>
 
-      
 
-      Wenn du auf <#008CFF>SPIELEN<#FFFFFF>
-      klickst, gibst du Folgendes an:'
+
+      Wenn du auf <#008CFF>SPIELEN<#FFFFFF> klickst,
+      gibst du Folgendes an:'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -1316,6 +1316,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 260006437095038976
+    m_Localized: "Mehrfaches Greifen umschalten\r"
     m_Metadata:
       m_Items: []
   references:

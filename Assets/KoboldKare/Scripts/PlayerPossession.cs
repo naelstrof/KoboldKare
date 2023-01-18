@@ -126,6 +126,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["SwitchGrabMode"].performed += OnShiftMode;
         controls.actions["Grab"].performed += OnGrabInput;
         controls.actions["Grab"].canceled += OnGrabCancelled;
+        controls.actions["MultiGrabToggle"].performed += OnGrabToggleInput;
         controls.actions["Gib"].performed += OnGibInput;
         controls.actions["Rotate"].performed += OnRotateInput;
         controls.actions["Rotate"].canceled += OnRotateCancelled;
@@ -149,6 +150,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["SwitchGrabMode"].performed -= OnShiftMode;
         controls.actions["Grab"].performed -= OnGrabInput;
         controls.actions["Grab"].canceled -= OnGrabCancelled;
+        controls.actions["MultiGrabToggle"].performed -= OnGrabToggleInput;
         controls.actions["Gib"].performed -= OnGibInput;
         controls.actions["Rotate"].performed -= OnRotateInput;
         controls.actions["Rotate"].canceled -= OnRotateCancelled;
@@ -273,7 +275,7 @@ public class PlayerPossession : MonoBehaviourPun {
         }
         characterControllerAnimator.SetEyeRot(GetEyeRot());
     }
-    public void OnJump(InputValue value) {
+    public void OnJump(InputValue value) { 
         if (!isActiveAndEnabled) return;
         controller.inputJump = value.Get<float>() > 0f;
         if (!photonView.IsMine) {
@@ -313,7 +315,13 @@ public class PlayerPossession : MonoBehaviourPun {
             pGrabber.TryGrab();
         }
     }
-    
+
+    public void OnGrabToggleInput(InputAction.CallbackContext ctx)
+    {
+        int amount = kobold.ToggleMultiGrab();
+        grabber.SetMaxGrabCount(amount);
+    }
+
     public void OnResetHipInput(InputAction.CallbackContext ctx) {
         characterControllerAnimator.SetHipVector(Vector2.zero);
     }

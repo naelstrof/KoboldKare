@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Localization-String-Tables-Bulgarian
+  m_Name: Localization-String-Tables-Czech
   m_EditorClassIdentifier: 
-  m_GroupName: Localization-String-Tables-Bulgarian
+  m_GroupName: Localization-String-Tables-Czech
   m_Data:
     m_SerializedData: []
-  m_GUID: 16d91571b6e3a4d45900def5562ece0d
+  m_GUID: 66f876f0d9a298e45aecd20721d4788a
   m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 09a9c8d035d72544a8285288f19439e6, type: 2}
-    - {fileID: 11400000, guid: 9cc56cab27e9c17479d650920a0e9b9e, type: 2}
+    - {fileID: 11400000, guid: 8b2d1cbab17ef1949b56c14d07f067ae, type: 2}
+    - {fileID: 11400000, guid: 24e1ed96b8e271046a34fdcb75e1c066, type: 2}

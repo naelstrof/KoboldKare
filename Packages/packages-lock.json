@@ -21,12 +21,6 @@
       "dependencies": {},
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
-    "com.naelstrof.bodyproportion": {
-      "version": "file:com.naelstrof.bodyproportion",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.naelstrof.easing": {
       "version": "file:com.naelstrof.easing",
       "depth": 0,

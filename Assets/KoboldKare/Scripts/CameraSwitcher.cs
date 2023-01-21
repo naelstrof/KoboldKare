@@ -13,6 +13,7 @@ public class CameraSwitcher : MonoBehaviour {
     private bool initialized = false;
     //public GameObject UIElements;
     public PlayerPossession possession;
+    private KoboldCharacterController controller;
     public enum CameraMode {
         FirstPerson = 0,
         ThirdPerson,
@@ -21,6 +22,7 @@ public class CameraSwitcher : MonoBehaviour {
     }
     public CameraMode mode = CameraMode.FirstPerson;
     public void OnEnable() {
+        controller = GetComponentInParent<KoboldCharacterController>();
         initialized = false;
         SwitchCamera(CameraMode.FirstPerson);
     }
@@ -89,8 +91,8 @@ public class CameraSwitcher : MonoBehaviour {
                 freecam.GetComponent<SimpleCameraController>().enabled = true;
                 //freecam.GetComponent<AudioListener>().enabled = true;
                 possession.enabled = false;
-                possession.controller.inputDir = Vector3.zero;
-                possession.controller.inputJump = false;
+                controller.inputDir = Vector3.zero;
+                controller.inputJump = false;
                 if (FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(false);
                 }

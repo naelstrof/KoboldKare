@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityScriptableSettings;
 
 public class Follower : MonoBehaviour {
-    public Transform target;
     public float distance = 0.12f;
+    private Transform target;
     private Kobold kobold;
     [SerializeField]
     private SettingInt motionSicknessReducer;
@@ -15,6 +15,7 @@ public class Follower : MonoBehaviour {
     
     void Awake() {
         kobold = GetComponentInParent<Kobold>();
+        target = kobold.animator.GetBoneTransform(HumanBodyBones.Neck);
         startingPosition = transform.localPosition;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
         motionSicknessReducer.changed += OnMotionSicknessReducerChanged;

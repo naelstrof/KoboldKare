@@ -11,9 +11,9 @@ using SimpleJSON;
 public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
     [System.Serializable]
     public class PID {
-        public float P;
+        public float P = 1f;
         //public float I;
-        public float D;
+        public float D = 2f;
         private float error=0f;
         private float errorDifference = 0f;
         private float lastError=0f;
@@ -93,7 +93,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
 
     public float frictionMultiplier = 1f;
     public float speedMultiplier = 1f;
-    public List<AudioClip> footlands = new List<AudioClip>();
+    public AudioPack footland;
     private bool groundedMemory;
     private float distanceToGround;
 
@@ -103,7 +103,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
 
     public float airSpeedMultiplier = 1f;
     // Inputs, controlled by external player or AI script
+    [HideInInspector]
     public Vector3 inputDir = new Vector3(0, 0, 0);
+    [HideInInspector]
     public bool inputJump = false;
     private float inputCrouched = 0f;
     private float targetCrouched;
@@ -116,50 +118,51 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         return targetCrouched;
     }
 
+    [HideInInspector]
     public bool inputWalking = false;
 
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
-    public Vector3 gravityMod = new Vector3(0, -0.25f, 0);
+    public Vector3 gravityMod = new Vector3(0, -4f, 0);
     [Tooltip("Fixed impulse for how high the character jumps.")]
     public float jumpStrength = 8f;
     [Tooltip("The speed at which acceleration is no longer applied when the player is moving.")]
-    public float speed = 19f;
+    public float speed = 8f;
     [Tooltip("The speed at which acceleration is no longer applied when the player is crouch-moving.")]
-    public float crouchSpeed = 13f;
+    public float crouchSpeed = 4f;
     [Tooltip("Speed multiplier for when inputWalking is true.")]
     public float walkSpeedMultiplier = 0.4f;
     [Tooltip("How quickly the player reaches max speed while walking.")]
-    public float accel = 5f;
+    public float accel = 7f;
     [Tooltip("How quickly the player reaches max speed while crouch-walking.")]
-    public float crouchAccel = 2f;
+    public float crouchAccel = 5f;
     [Tooltip("How quickly the player reaches max speed while in the air.")]
-    public float airAccel = 6f;
+    public float airAccel = 20f;
     [SerializeField]
     [Tooltip("How high the character should float off the ground. (measured from capsule center to ground)")]
-    public float stepHeight = 1.2f;
+    public float stepHeight = 1f;
     [Tooltip("How high the character should float off the ground while crouched. (measured from capsule center to ground)")]
-    public float stepHeightCrouched = 0.6f;
+    public float stepHeightCrouched = 0.5f;
     [Tooltip("How far to raycast in order to suck the player to the floor, necessary for walking down slopes. (measured from capsule center to ground)")]
-    public float stepHeightCheckDistance = 1.6f;
+    public float stepHeightCheckDistance = 2f;
     [Tooltip("Basically the constraint settings for keeping the player a certain distance from the floor.")]
-    public PID groundingPID = new PID(0.9f,0f,1.8f);
+    public PID groundingPID = new PID(1f,0f,2f);
     [Tooltip("How fat the raycast is to check for walkable ground under the capsule collider.")]
-    public float groundCheckRadius = 0.2f;
+    public float groundCheckRadius = 0.14f;
     [Tooltip("How sharp the player movement is, high friction means sharper movement.")]
-    public float friction = 9f;
+    public float friction = 7f;
     [Tooltip("How sharp the player movement is while crouched, high friction means sharper movement.")]
-    public float crouchFriction = 11f;
+    public float crouchFriction = 10f;
 
     //[Tooltip("Mask of layers containing walkable ground. Should match up with whatever the capsule collides with.")]
     //public LayerMask hitLayer;
 
     [Tooltip("The collider of the player capsule.")]
-    new public CapsuleCollider collider;
+    public new CapsuleCollider collider;
     [Tooltip("How tall the collider should be during a full crouch.")]
-    public float crouchHeight = 0.75f;
+    public float crouchHeight = 0.6f;
     [Tooltip("Reference to the player model so we can push it up and down based on when we crouch.")]
     public Transform worldModel;
-    public float airCap = 0.6f;
+    public float airCap = 1f;
     private Vector3 defaultWorldModelPosition = Vector3.zero;
 
     private RaycastHit[] hitArray = new RaycastHit[5];
@@ -304,7 +307,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     private void CheckSounds() {
         if (grounded) {
             if ( grounded != groundedMemory ) {
-                GameManager.instance.SpawnAudioClipInWorld(footlands[Random.Range(0, footlands.Count - 1)], transform.position + Vector3.down * distanceToGround, 0.85f);
+                GameManager.instance.SpawnAudioClipInWorld(footland, transform.position + Vector3.down * distanceToGround);
             }
         }
         groundedMemory = grounded;

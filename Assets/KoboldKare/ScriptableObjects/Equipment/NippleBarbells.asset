@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf0211cb51a94a4cacc7882e34fb98e, type: 3}
+  m_Name: NippleBarbells
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: d22bacff5e06cbf4ca30f3144fb67fb8, type: 3}
+  hideInFirstPersonWhenWorn: 0
+  canManuallyUnequip: 1
+  slot: 3
+  groundPrefab:
+    gameObject: {fileID: 5605572581541272102, guid: b3cc9a25c97302d4eb8f89f2edd85aa2,
+      type: 3}
+    optionalDatabase: {fileID: 0}
+  localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 35594366247030784
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  localizedDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 38135240696844291
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  prefabContainingSkinnedMeshRenderers: {fileID: 919132149155446097, guid: 4269f5ab0e73a144ba5005642644f9f9,
+    type: 3}
+  references:
+    version: 2
+    RefIds: []

@@ -8,12 +8,13 @@ public class EnergyBarDisplayUI : MonoBehaviour {
     [SerializeField] private RectTransform filledBar;
     [SerializeField] private RectTransform barBackground;
     [SerializeField] private AnimationCurve bounceCurve;
-    [SerializeField] private Kobold targetKobold;
+    private Kobold targetKobold;
     
     private float targetWidth;
     private float targetBackgroundWidth;
     private bool running = false;
     private void OnEnable() {
+        targetKobold = GetComponentInParent<Kobold>();
         targetKobold.energyChanged += OnEnergyChanged;
         running = false;
         OnEnergyChanged(targetKobold.GetEnergy(), targetKobold.GetMaxEnergy());

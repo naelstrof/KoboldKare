@@ -5,16 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grabber : MonoBehaviourPun {
-    public Kobold player;
+    private Kobold player;
     private int maxGrabCount = 1;
     private Rigidbody body;
     [SerializeField]
-    private float springStrength = 1000f;
+    private float springStrength = 800f;
     [SerializeField][Range(0f,0.5f)]
-    private float dampingStrength = 0.1f;
+    private float dampingStrength = 0.4f;
 
-    [SerializeField] private GameObject activateUI;
-    [SerializeField] private GameObject throwUI;
+    public delegate void UIAction(bool active);
+
+    public event UIAction activateUIChanged;
+    public event UIAction throwUIChanged;
+
+    //[SerializeField] private GameObject activateUI;
+    //[SerializeField] private GameObject throwUI;
     private ColliderSorter sorter;
 
     private bool activating;
@@ -197,6 +202,11 @@ public class Grabber : MonoBehaviourPun {
     
     [SerializeField]
     private Transform view;
+
+    public void SetView(Transform newView) {
+        view = newView;
+    }
+
     public void OnDestroy() {
         TryDrop();
     }
@@ -222,16 +232,11 @@ public class Grabber : MonoBehaviourPun {
             }
         }
 
-        if (activateUI.activeSelf && !canActivate || !activateUI.activeSelf && canActivate) {
-            activateUI.SetActive(canActivate);
-        }
-
+        activateUIChanged?.Invoke(canActivate);
         if (!canActivate) {
-            if (canThrow && !throwUI.activeSelf || !canThrow && throwUI.activeSelf) {
-                throwUI.SetActive(canThrow);
-            }
-        } else if (throwUI.activeSelf) {
-            throwUI.SetActive(false);
+            throwUIChanged?.Invoke(canThrow);
+        } else {
+            throwUIChanged?.Invoke(false);
         }
     }
 
@@ -291,6 +296,7 @@ public class Grabber : MonoBehaviourPun {
         grabbedObjects = new List<GrabInfo>();
         giveBackKobolds = new List<GiveBackKobold>();
         sorter = new ColliderSorter();
+        player = GetComponent<Kobold>();
     }
 
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {

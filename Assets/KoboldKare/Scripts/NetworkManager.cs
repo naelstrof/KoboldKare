@@ -205,7 +205,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
         Debug.Log("Spawned player");
         GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
-        player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+        //player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }
     public void SpawnControllablePlayer() {

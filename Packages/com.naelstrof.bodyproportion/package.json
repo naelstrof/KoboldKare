@@ -1,7 +1,0 @@
-{
-    "name": "com.naelstrof.bodyproportion",
-    "displayName": "Body Proportion",
-    "version": "0.0.0",
-    "unity": "2020.3",
-    "description": "An asset post-processor and associated scripts to edit body proportions on the fly."
-}

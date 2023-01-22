@@ -242,7 +242,7 @@ public class Grabber : MonoBehaviourPun {
 
     private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
         while (giveBackKobold.kobold.photonView.IsMine) {
-            if (giveBackKobold.kobold.ragdoller.ragdolled) {
+            if (giveBackKobold.kobold.GetComponent<Ragdoller>().ragdolled) {
                 yield return new WaitForSeconds(5f);
             } else {
                 yield return new WaitForSeconds(0.25f);

@@ -45,26 +45,25 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return null;
     }
 
-    public Animator animator;
     [HideInInspector]
     public Rigidbody body;
-    public GameEventFloat MetabolizeEvent;
     
 
     public GenericReagentContainer bellyContainer { get; private set; }
-    [SerializeField]
-    private Inflatable belly;
+    [FormerlySerializedAs("belly")] [SerializeField]
+    private Inflatable bellyInflater;
     private Grabber grabber;
     [SerializeField]
     private Inflatable fatnessInflater;
     [SerializeField]
     private Inflatable sizeInflater;
-    [SerializeField]
-    private Inflatable boobs;
+    [FormerlySerializedAs("boobs")] [SerializeField]
+    private Inflatable boobsInflater;
     [SerializeField]
     private Material milkSplatMaterial;
     [SerializeField]
     private LayerMask heartHitMask;
+    [SerializeField] private PhotonGameObjectReference heartPrefab;
     
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
@@ -76,7 +75,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [FormerlySerializedAs("gurglePack")] [SerializeField]
     private AudioPack garglePack;
     
-    [SerializeField] private PhotonGameObjectReference heartPrefab;
     [HideInInspector]
     public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
     private AudioSource gargleSource;
@@ -95,7 +93,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [HideInInspector]
     public float stimulationMin = -20f;
     
-    public Animator koboldAnimator;
     private float lastPumpTime = 0f;
     public bool grabbed { get; private set; }
     private List<Vector3> savedJointAnchors = new List<Vector3>();
@@ -106,15 +103,20 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private static Collider[] colliders = new Collider[32];
     private WaitForSeconds waitSpurt;
     private bool milking = false;
+    public delegate void CarriedAction(bool carried);
+    public delegate void QuaffAction();
+
+    public event CarriedAction carriedChanged;
+    public event QuaffAction quaff;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
-        foreach (var listener in belly.GetInflatableListeners()) {
+        foreach (var listener in bellyInflater.GetInflatableListeners()) {
             yield return listener;
         }
         foreach (var listener in fatnessInflater.GetInflatableListeners()) {
             yield return listener;
         }
-        foreach (var listener in boobs.GetInflatableListeners()) {
+        foreach (var listener in boobsInflater.GetInflatableListeners()) {
             yield return listener;
         }
     }
@@ -180,7 +182,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return nipples;
     }
 
-    public Ragdoller ragdoller;
+    private Ragdoller ragdoller;
     public void AddStimulation(float s) {
         stimulation += s;
         if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
@@ -256,12 +258,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-    private static readonly int Carried = Animator.StringToHash("Carried");
-    private static readonly int Quaff = Animator.StringToHash("Quaff");
 
     public float GetEnergy() {
         return energy;
     }
+
+    public Ragdoller GetRagdoller() => ragdoller;
     public float GetMaxEnergy() {
         if (GetGenes() == null) {
             return 1f;
@@ -319,7 +321,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
 
         fatnessInflater.SetSize(Mathf.Log(1f + newGenes.fatSize / 20f, 2f), this);
-        boobs.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
+        boobsInflater.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
         bellyContainer.maxVolume = newGenes.bellySize;
         metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
         Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
@@ -348,6 +350,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void Awake() {
+        ragdoller = GetComponent<Ragdoller>();
         waitSpurt = new WaitForSeconds(1f);
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
@@ -358,9 +361,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         bellyContainer.maxVolume = 20f;
         photonView.ObservedComponents.Add(bellyContainer);
         grabber = GetComponentInChildren<Grabber>();
-        belly.OnEnable();
+        bellyInflater.OnEnable();
         sizeInflater.OnEnable();
-        boobs.OnEnable();
+        boobsInflater.OnEnable();
         fatnessInflater.OnEnable();
 
         if (tummyGrumbleSource == null) {
@@ -382,14 +385,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             gargleSource.spatialBlend = 1f;
             gargleSource.loop = true;
         }
-        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
+        bellyInflater.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
     }
 
     void Start() {
         controller = GetComponent<KoboldCharacterController>();
         body = GetComponent<Rigidbody>();
         lastPumpTime = Time.timeSinceLevelLoad;
-        MetabolizeEvent.AddListener(OnEventRaised);
+        DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
         PlayAreaEnforcer.AddTrackedObject(photonView);
         if (GetGenes() == null) {
@@ -397,14 +400,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
     private void OnDestroy() {
-        MetabolizeEvent.RemoveListener(OnEventRaised);
+        DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
         grabbed = true;
-        animator.SetBool(Carried, true);
+        carriedChanged?.Invoke(true);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         
@@ -435,7 +438,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
-        animator.SetBool(Carried, false);
+        carriedChanged?.Invoke(false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
         controller.enabled = true;
@@ -534,7 +537,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
     
-    private void OnEventRaised(float f) {
+    private void OnMetabolizationEvent(float f) {
         if (!photonView.IsMine) {
             return;
         }
@@ -549,11 +552,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         gargleSource.enabled = false;
     }
     private void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
+        bellyInflater.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
         if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume*0.99f) {
             return;
         }
-        koboldAnimator.SetTrigger(Quaff);
+
+        quaff?.Invoke();
         if (gargleSource.enabled == false || !gargleSource.isPlaying) {
             gargleSource.enabled = true;
             garglePack.Play(gargleSource);

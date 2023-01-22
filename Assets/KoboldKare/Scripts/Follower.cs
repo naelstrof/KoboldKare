@@ -15,18 +15,18 @@ public class Follower : MonoBehaviour {
     
     void Awake() {
         kobold = GetComponentInParent<Kobold>();
-        target = kobold.animator.GetBoneTransform(HumanBodyBones.Neck);
+        target = kobold.GetComponent<CharacterDescriptor>().GetDisplayAnimator().GetBoneTransform(HumanBodyBones.Neck);
         startingPosition = transform.localPosition;
         transform.localPosition = transform.parent.InverseTransformPoint(target.position);
         motionSicknessReducer.changed += OnMotionSicknessReducerChanged;
-        kobold.ragdoller.RagdollEvent += RagdollEvent;
+        kobold.GetRagdoller().RagdollEvent += RagdollEvent;
         characterAnimator = GetComponentInParent<CharacterControllerAnimator>();
         characterAnimator.animationStateChanged += OnAnimationStateChanged;
         OnMotionSicknessReducerChanged(motionSicknessReducer.GetValue());
     }
     void OnDestroy() {
         if (kobold !=null) {
-            kobold.ragdoller.RagdollEvent -= RagdollEvent;
+            kobold.GetRagdoller().RagdollEvent -= RagdollEvent;
         }
         motionSicknessReducer.changed -= OnMotionSicknessReducerChanged;
         characterAnimator.animationStateChanged -= OnAnimationStateChanged;

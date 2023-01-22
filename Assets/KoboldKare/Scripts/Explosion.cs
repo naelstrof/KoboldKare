@@ -22,7 +22,7 @@ public class Explosion : MonoBehaviourPun {
             Kobold k = c.GetComponentInParent<Kobold>();
             if (k != null && !kobolds.Contains(k)) {
                 kobolds.Add(k);
-                foreach (Rigidbody r in k.ragdoller.GetRagdollBodies()) {
+                foreach (Rigidbody r in k.GetRagdoller().GetRagdollBodies()) {
                     r.AddExplosionForce(3000f, transform.position, 5f);
                 }
                 k.body.AddExplosionForce(3000f, transform.position, 5f);

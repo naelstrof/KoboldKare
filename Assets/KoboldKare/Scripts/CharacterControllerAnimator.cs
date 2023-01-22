@@ -11,6 +11,8 @@ using PenetrationTech;
 using SimpleJSON;
 
 public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISavable {
+    private static readonly int Carried = Animator.StringToHash("Carried");
+    private static readonly int Quaff = Animator.StringToHash("Quaff");
     private Kobold kobold;
     private Vilar.IK.ClassicIK solver;
     private float randomSample => 1f+Mathf.SmoothStep(0.1f, 0.9f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
@@ -159,13 +161,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         
         footstepSoundManager.SetFootstepPack(footstepPack);
 
-        if (!playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).TryGetComponent(out FootInteractor existingLeftFootInteractor)) {
-            playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
-        }
-        
-        if (!playerModel.GetBoneTransform(HumanBodyBones.RightFoot).TryGetComponent(out FootInteractor existingRightFootInteractor)) {
-            playerModel.GetBoneTransform(HumanBodyBones.RightFoot).gameObject.AddComponent<FootInteractor>();
-        }
     }
 
     public void SetDefaultFootstepPack(AudioPack newFootstepPack) {
@@ -179,6 +174,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         kobold = GetComponentInParent<Kobold>();
         solver = GetComponentInChildren<Vilar.IK.ClassicIK>();
         playerModel = GetComponentInChildren<Animator>();
+        if (kobold != null) {
+            kobold.carriedChanged += OnCarriedChanged;
+            kobold.quaff += OnQuaff;
+        }
         handler = playerModel.gameObject.AddComponent<LookAtHandler>();
         controller = GetComponentInParent<KoboldCharacterController>();
         playerModel.gameObject.AddComponent<AnimatorExtender>();
@@ -187,8 +186,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         footIK.rightKneeHint = rightKneeHint;
         playerModel.gameObject.AddComponent<HandIK>();
         playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
-        playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
-        playerModel.GetBoneTransform(HumanBodyBones.RightFoot).gameObject.AddComponent<FootInteractor>();
+    }
+
+    private void OnQuaff() {
+        playerModel.SetTrigger(Quaff);
+    }
+
+    private void OnCarriedChanged(bool newCarry) {
+        playerModel.SetBool(Carried, newCarry);
     }
 
     [PunRPC]

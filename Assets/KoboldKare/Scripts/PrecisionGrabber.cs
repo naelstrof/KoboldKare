@@ -180,7 +180,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             frozen = false;
             targetKobold = collider.GetComponentInParent<Kobold>();
             if (targetKobold != null) {
-                targetKobold.ragdoller.PushRagdoll();
+                targetKobold.GetRagdoller().PushRagdoll();
                 body.maxAngularVelocity = 10f;
             } else {
                 body.maxAngularVelocity = 20f;
@@ -215,7 +215,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             joint = AddJoint(worldAnchor, rotation, affRotation);
             targetKobold = collider.GetComponentInParent<Kobold>();
             if (targetKobold != null) {
-                targetKobold.ragdoller.PushRagdoll();
+                targetKobold.GetRagdoller().PushRagdoll();
                 body.maxAngularVelocity = 10f;
             } else {
                 body.maxAngularVelocity = 20f;
@@ -347,7 +347,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
             
             if (targetKobold != null) {
-                targetKobold.ragdoller.PopRagdoll();
+                targetKobold.GetRagdoller().PopRagdoll();
                 if (targetKobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
                     foreach (Grab grab in owner.GetComponent<PrecisionGrabber>().frozenGrabs) {
                         if (grab.targetKobold == targetKobold) {

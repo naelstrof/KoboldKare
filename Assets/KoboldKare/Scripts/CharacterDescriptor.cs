@@ -206,6 +206,7 @@ public class CharacterDescriptor : MonoBehaviour {
             Handles.DrawWireDisc(lower, Vector3.up, radius);
         }
     }
+
 #endif
-    
+
 }

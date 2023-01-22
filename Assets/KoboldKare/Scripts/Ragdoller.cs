@@ -10,7 +10,6 @@ using UnityEngine;
 public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
-    [SerializeField]
     private Animator animator;
     private KoboldCharacterController controller;
     [SerializeField]
@@ -138,6 +137,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     private void Awake() {
+        animator = GetComponent<CharacterDescriptor>().GetDisplayAnimator();
         group = GetComponentInChildren<LODGroup>();
         kobold = GetComponent<Kobold>();
         body = GetComponent<Rigidbody>();

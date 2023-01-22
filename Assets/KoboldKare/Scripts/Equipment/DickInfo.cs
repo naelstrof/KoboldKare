@@ -238,13 +238,14 @@ public class DickInfo : MonoBehaviour {
     }
     public void AttachTo(Kobold k) {
         attachedKobold = k;
-        bool animatorWasEnabled = k.animator.enabled;
-        k.animator.enabled = true;
+        var attachedAnimator = k.GetComponent<CharacterDescriptor>().GetDisplayAnimator();
+        bool animatorWasEnabled = attachedAnimator.enabled;
+        attachedAnimator.enabled = true;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
-            set.parentTransform = k.animator.GetBoneTransform(set.parent);
+            set.parentTransform = attachedAnimator.GetBoneTransform(set.parent);
             while(set.parentTransform == null) {
-                set.parentTransform = k.animator.GetBoneTransform(set.parent);
+                set.parentTransform = attachedAnimator.GetBoneTransform(set.parent);
             }
             set.info = this;
             set.dickContainer.parent = k.GetAttachPointTransform(set.attachPoint);
@@ -275,7 +276,7 @@ public class DickInfo : MonoBehaviour {
                 rig.enabled = true;
             }
         }
-        k.animator.enabled = animatorWasEnabled;
+        attachedAnimator.enabled = animatorWasEnabled;
     }
 
     //private void OnDestroy() {

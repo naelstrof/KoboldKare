@@ -269,7 +269,7 @@ MonoBehaviour:
   bucketSplashProjectile:
     gameObject: {fileID: 6847052273168792518, guid: f42cf9decb64d9f4f9a00d76db944c15,
       type: 3}
-    photonName: FluidProjectile
+    optionalDatabase: {fileID: 0}
   container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
   defaultBucketDisplay: {fileID: 5734314245941284669}

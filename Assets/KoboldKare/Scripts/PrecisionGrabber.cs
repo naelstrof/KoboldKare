@@ -18,7 +18,14 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField] private VisualEffectAsset freezeVFX;
     [SerializeField] private AudioPack unfreezeSound;
     private Kobold kobold;
-    
+    private static List<PrecisionGrabber> allGrabbers;
+    public static void SetPinVisibility(bool visibility) {
+        foreach (var grabber in allGrabbers) {
+            grabber.SetVisibility(visibility);
+        }
+    }
+
+
     //[SerializeField] private GameEventFloat handVisibilityEvent;
     //[SerializeField] private GameObject freezeUI;
     //[SerializeField] private List<GameObject> activeUI;
@@ -396,6 +403,14 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         foreach (var fgrab in frozenGrabs) {
             fgrab.SetVisibility(newVisibility);
         }
+    }
+
+    private void OnEnable() {
+        allGrabbers ??= new List<PrecisionGrabber>();
+        allGrabbers.Add(this);
+    }
+    private void OnDisable() {
+        allGrabbers.Remove(this);
     }
 
     private void OnDestroy() {

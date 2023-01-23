@@ -8,7 +8,8 @@ public class Chatter : MonoBehaviourPun {
     [SerializeField]
     public TMPro.TMP_Text chatText;
     [SerializeField]
-    private float textSpeedPerCharacter, minTextTimeout;
+    private float textSpeedPerCharacter = 0.1f;
+    private float minTextTimeout = 2f;
     [SerializeField]
     private AudioPack yowls;
 
@@ -50,7 +51,7 @@ public class Chatter : MonoBehaviourPun {
         }
 
         foreach (var player in PhotonNetwork.PlayerList) {
-            if ((Kobold)player.TagObject != this) continue;
+            if ((Kobold)player.TagObject != GetComponent<Kobold>()) continue;
             CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
             CheatsProcessor.ProcessCommand(kobold, message);
             displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));

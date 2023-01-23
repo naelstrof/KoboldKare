@@ -136,6 +136,7 @@ public class PlayerPossession : MonoBehaviourPun {
         grabber.throwUIChanged += OnThrowChange;
         body = controller.GetComponent<Rigidbody>();
         animator = controller.GetComponentInChildren<Animator>();
+        inputModule = FindObjectOfType<InputSystemUIInputModule>();
     }
 
     private void OnTextSubmit(string t) {
@@ -164,7 +165,6 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
     private void Start() {
-        inputModule = FindObjectOfType<InputSystemUIInputModule>();
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -362,6 +362,7 @@ public class PlayerPossession : MonoBehaviourPun {
     public void OnShiftMode(InputAction.CallbackContext ctx) {
         bool shift = ctx.ReadValue<float>() > 0f;
         switchedMode = shift;
+        PrecisionGrabber.SetPinVisibility(shift);
         pGrabber.SetPreviewState(shift);
         if (!shift) {
             StartCoroutine(PauseInputForSeconds(0.5f));

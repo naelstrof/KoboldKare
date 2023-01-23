@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using System;
+using NetStack.Serialization;
 using Photon.Pun;
+using Photon.Realtime;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -22,7 +24,7 @@ public class CharacterDescriptorEditor : Editor {
 #endif
 
 [RequireComponent(typeof(Ragdoller), typeof(PhotonView), typeof(Kobold))]
-public class CharacterDescriptor : MonoBehaviour {
+public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private KoboldCharacterController characterController;
     private CapsuleCollider characterCollider;
     private Rigidbody body;
@@ -36,6 +38,7 @@ public class CharacterDescriptor : MonoBehaviour {
     private SmoothCharacterPhoton smoothCharacterPhoton;
     private PhotonView photonView;
     private Chatter chatter;
+    private ControlType controlType;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -79,6 +82,7 @@ public class CharacterDescriptor : MonoBehaviour {
         characterCollider.center = colliderOffset;
         characterCollider.height = colliderHeight;
         characterCollider.radius = colliderRadius;
+        characterCollider.material = spaceLubeMaterial;
         
         characterController = gameObject.AddComponent<KoboldCharacterController>();
         characterController.footland = footLand;
@@ -115,6 +119,7 @@ public class CharacterDescriptor : MonoBehaviour {
         ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Chest)));
         ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Neck)));
         ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Head)));
+        precisionGrabber.SetIgnoreColliders(ignoreColliders.ToArray());
 
         koboldInventory = gameObject.AddComponent<KoboldInventory>();
         moneyHolder = gameObject.AddComponent<MoneyHolder>();
@@ -140,6 +145,9 @@ public class CharacterDescriptor : MonoBehaviour {
         smoothCharacterPhoton = gameObject.AddComponent<SmoothCharacterPhoton>();
         photonView = GetComponent<PhotonView>();
         photonView.FindObservables();
+        if (controlType != ControlType.LocalPlayer) {
+            possession.gameObject.SetActive(false);
+        }
     }
 
     private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {
@@ -209,4 +217,39 @@ public class CharacterDescriptor : MonoBehaviour {
 
 #endif
 
+    public enum ControlType {
+        NetworkedPlayer,
+        LocalPlayer,
+        AIPlayer,
+    }
+
+    public void SetPlayerControlled(ControlType newControlType) {
+        controlType = newControlType;
+        if (possession != null) {
+            possession.gameObject.SetActive(newControlType == ControlType.LocalPlayer);
+        }
+        GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(newControlType == ControlType.AIPlayer);
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        bool isPlayer = false;
+        if (info.photonView.InstantiationData is { Length: > 0 } && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // Might be a shared buffer
+            buffer.SetReadPosition(0);
+            buffer.ReadKoboldGenes();
+            isPlayer = buffer.ReadBool();
+        }
+        
+        if (Equals(info.Sender, PhotonNetwork.LocalPlayer)) {
+            SetPlayerControlled(isPlayer ? ControlType.LocalPlayer : ControlType.AIPlayer);
+        } else {
+            SetPlayerControlled(isPlayer ? ControlType.NetworkedPlayer : ControlType.AIPlayer);
+        }
+        if (!isPlayer) {
+            FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
+        } else if (info.Sender != null) {
+            info.Sender.TagObject = GetComponent<Kobold>();
+        }
+    }
 }

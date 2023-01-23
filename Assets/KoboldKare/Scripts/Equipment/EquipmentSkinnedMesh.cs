@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JigglePhysics;
+using Naelstrof.Inflatable;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New SkinnedMeshEquipment", menuName = "Equipment/SkinnedMesh Equipment", order = 1)]
@@ -21,6 +22,18 @@ public class EquipmentSkinnedMesh : Equipment {
             skinnedMesh.bones = newBoneList;
             skinnedMesh.rootBone = targetSkinnedMesh.rootBone;
             k.koboldBodyRenderers.Add(skinnedMesh);
+            foreach (var inflater in k.GetAllInflatableListeners()) {
+                if (inflater is InflatableBreast inflatableBreast) {
+                    inflatableBreast.AddTargetRenderer(skinnedMesh);
+                }
+                if (inflater is InflatableBelly belly) {
+                    belly.AddTargetRenderer(skinnedMesh);
+                }
+                if (inflater is InflatableBlendShape inflatableBlendShape) {
+                   inflatableBlendShape.AddTargetRenderer(skinnedMesh);
+                }
+            }
+
             if (jiggleSkin != null) {
                 jiggleSkin.targetSkins.Add(skinnedMesh);
             }
@@ -35,6 +48,17 @@ public class EquipmentSkinnedMesh : Equipment {
         foreach (var skinnedMesh in search.GetComponentsInChildren<SkinnedMeshRenderer>()) {
             if (jiggleSkin != null) {
                 jiggleSkin.targetSkins.Remove(skinnedMesh);
+            }
+            foreach (var inflater in k.GetAllInflatableListeners()) {
+                if (inflater is InflatableBreast inflatableBreast) {
+                    inflatableBreast.RemoveTargetRenderer(skinnedMesh);
+                }
+                if (inflater is InflatableBelly belly) {
+                    belly.RemoveTargetRenderer(skinnedMesh);
+                }
+                if (inflater is InflatableBlendShape inflatableBlendShape) {
+                   inflatableBlendShape.RemoveTargetRenderer(skinnedMesh);
+                }
             }
             k.koboldBodyRenderers.Remove(skinnedMesh);
         }

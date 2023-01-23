@@ -1365,7 +1365,6 @@ MonoBehaviour:
     listeners:
     - rid: 4
     - rid: 5
-  milkSplatMaterial: {fileID: 2100000, guid: 3821f9133468bfa449f3dbee8d5a1aff, type: 2}
   heartHitMask:
     serializedVersion: 2
     m_Bits: 2048
@@ -1379,9 +1378,11 @@ MonoBehaviour:
   koboldBodyRenderers:
   - {fileID: 6506915555087688956}
   - {fileID: 2780399689652382999}
-  nipples:
-  - {fileID: 6506915555090380244}
-  - {fileID: 6506915555090380242}
+  milkLactator:
+    nipples:
+    - {fileID: 6506915555090380244}
+    - {fileID: 6506915555090380242}
+    milkSplatMaterial: {fileID: 2100000, guid: 3821f9133468bfa449f3dbee8d5a1aff, type: 2}
   hip: {fileID: 6506915555090380208}
   stimulation: 0
   stimulationMax: 10

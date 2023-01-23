@@ -60,8 +60,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [FormerlySerializedAs("boobs")] [SerializeField]
     private Inflatable boobsInflater;
     [SerializeField]
-    private Material milkSplatMaterial;
-    [SerializeField]
     private LayerMask heartHitMask;
     [SerializeField] private PhotonGameObjectReference heartPrefab;
     
@@ -81,8 +79,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private AudioSource tummyGrumbleSource;
     public List<Renderer> koboldBodyRenderers;
     //private float internalSex = 0f;
+    
     [SerializeField]
-    private List<Transform> nipples;
+    private MilkLactator milkLactator;
+    
     public Transform hip;
     private KoboldCharacterController controller;
     
@@ -101,8 +101,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
     private static Collider[] colliders = new Collider[32];
-    private WaitForSeconds waitSpurt;
-    private bool milking = false;
     public delegate void CarriedAction(bool carried);
     public delegate void QuaffAction();
 
@@ -138,48 +136,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     
     [PunRPC]
-    public IEnumerator MilkRoutine() {
-        PhotonProfiler.LogReceive(1);
-        while (milking) {
-            yield return null;
-        }
-        milking = true;
-        int pulses = 12;
-        // Now do some milk stuff.
-        for (int i = 0; i < pulses; i++) {
-            foreach (Transform t in GetNipples()) {
-                if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
-                    mozzarella.SetFollowTransform(t);
-                    ReagentContents alloc = new ReagentContents();
-                    alloc.AddMix(ReagentDatabase.GetReagent("Milk").GetReagent(GetGenes().breastSize/(pulses*GetNipples().Count)));
-                    mozzarella.SetVolumeMultiplier(alloc.volume);
-                    mozzarella.SetLocalForward(Vector3.up);
-                    Color color = alloc.GetColor();
-                    mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
-                        if (photonView.IsMine) {
-                            GenericReagentContainer container =
-                                hit.collider.GetComponentInParent<GenericReagentContainer>();
-                            if (container != null && this != null) {
-                                BitBuffer buffer = new BitBuffer(4);
-                                buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
-                                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
-                            }
-                        }
-                        milkSplatMaterial.color = color;
-                        PaintDecal.RenderDecalForCollider(hit.collider, milkSplatMaterial,
-                            hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),
-                            Vector2.one * (volume * 4f), length);
-                    };
-                }
-            }
-            yield return waitSpurt;
-        }
-        milking = false;
-    }
-
-    public List<Transform> GetNipples() {
-        return nipples;
+    public void MilkRoutine() {
+        milkLactator.StartMilking(this);
     }
 
     private Ragdoller ragdoller;
@@ -351,7 +309,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     private void Awake() {
         ragdoller = GetComponent<Ragdoller>();
-        waitSpurt = new WaitForSeconds(1f);
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
@@ -365,6 +322,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         sizeInflater.OnEnable();
         boobsInflater.OnEnable();
         fatnessInflater.OnEnable();
+        milkLactator.Awake();
 
         if (tummyGrumbleSource == null) {
             tummyGrumbleSource = hip.gameObject.AddComponent<AudioSource>();

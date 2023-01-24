@@ -16,12 +16,12 @@ public class CumThroughObjective : DragonMailObjective {
     
     public override void Register() {
         base.Register();
-        DickInfo.cumThrough += OnCumThrough;
+        DickDescriptor.cumThrough += OnCumThrough;
     }
     
     public override void Unregister() {
         base.Unregister();
-        DickInfo.cumThrough -= OnCumThrough;
+        DickDescriptor.cumThrough -= OnCumThrough;
     }
 
     public override void Advance(Vector3 position) {

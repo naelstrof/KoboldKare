@@ -21,15 +21,24 @@ public class PrefabDatabase : ScriptableObject {
     public class PrefabReferenceInfo {
         private bool enabled;
         private string key;
+        private GameObject prefab;
         private readonly PrefabDatabase parentDatabase;
-        public PrefabReferenceInfo(PrefabDatabase database, string primaryKey, bool enabled = true) {
+        public PrefabReferenceInfo(PrefabDatabase database, string primaryKey, GameObject newPrefab, bool enabled = true) {
             this.enabled = enabled;
             key = primaryKey;
+            prefab = newPrefab;
             parentDatabase = database;
         }
 
         public string GetKey() {
             return key;
+        }
+        public void SetPrefab(GameObject newPrefab) {
+            prefab = newPrefab;
+        }
+
+        public GameObject GetPrefab() {
+            return prefab;
         }
 
         public void SetEnabled(bool newValue) {
@@ -47,6 +56,26 @@ public class PrefabDatabase : ScriptableObject {
             enabled = n["enabled"];
             key =n["key"];
         }
+    }
+
+    public PrefabReferenceInfo GetRandom() {
+        float count = 0f;
+        foreach(var prefab in prefabReferenceInfos) {
+            if (prefab.GetEnabled()) {
+                count++;
+            }
+        }
+        float selection = Random.Range(0f,count);
+        float current = 0f;
+        foreach(var prefab in prefabReferenceInfos) {
+            if (!prefab.GetEnabled()) continue;
+            current++;
+            if (current >= selection) {
+                return prefab;
+            }
+        }
+
+        return null;
     }
 
     public void AddPrefabReferencesChangedListener(PrefabReferencesChangedAction action) {
@@ -104,7 +133,7 @@ public class PrefabDatabase : ScriptableObject {
         string data = Encoding.UTF8.GetString(b);
         JSONNode n = JSON.Parse(data);
         foreach (var node in n[name]) {
-            PrefabReferenceInfo info = new PrefabReferenceInfo(this, "");
+            PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
             info.Load(n);
             AddPrefab(info);
         }
@@ -120,13 +149,14 @@ public class PrefabDatabase : ScriptableObject {
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
 
-    public void AddPrefab(string newKey) {
+    public void AddPrefab(string newKey, GameObject prefabReference) {
         foreach (var info in prefabReferenceInfos) {
             if (info.GetKey() == newKey) {
+                info.SetPrefab(prefabReference);
                 return;
             }
         }
-        AddPrefab(new PrefabReferenceInfo(this, newKey)); 
+        AddPrefab(new PrefabReferenceInfo(this, newKey, prefabReference)); 
     }
 
     public void RemovePrefab(string key) {

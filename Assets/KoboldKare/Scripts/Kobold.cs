@@ -74,7 +74,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private AudioPack garglePack;
     
     [HideInInspector]
-    public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
+    public List<DickDescriptor.DickSet> activeDicks = new List<DickDescriptor.DickSet>();
     private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
     public List<Renderer> koboldBodyRenderers;
@@ -106,6 +106,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public event CarriedAction carriedChanged;
     public event QuaffAction quaff;
+    private GameObject dickObject;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in bellyInflater.GetInflatableListeners()) {
@@ -177,7 +178,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         foreach(var dickSet in activeDicks) {
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
-            dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
+            dickSet.descriptor.StartCoroutine(dickSet.descriptor.CumRoutine(dickSet));
         }
         PumpUpDick(1f);
         stimulation = stimulationMin;
@@ -251,25 +252,28 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public override void SetGenes(KoboldGenes newGenes) {
         // Set dick
-        var inventory = GetComponent<KoboldInventory>();
-        Equipment crotchEquipment = inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch);
-        if (crotchEquipment != null && EquipmentDatabase.GetID(crotchEquipment) != newGenes.dickEquip) {
-            inventory.RemoveEquipment(crotchEquipment,PhotonNetwork.InRoom);
-        }
-
-        if (newGenes.dickEquip != byte.MaxValue) {
-            if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
-                inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
+        if (newGenes.dickEquip == byte.MaxValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+            if (dickObject != null) {
+                dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
+                Destroy(dickObject);
             }
         }
+        
+        if (GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+            var dickDatabase = GameManager.GetPenisDatabase().GetPrefabReferenceInfos();
+            var selectedDick = dickDatabase[newGenes.dickEquip];
+            dickObject = Instantiate(selectedDick.GetPrefab(), GetAttachPointTransform(Equipment.AttachPoint.Crotch));
+            dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
+        }
+
         foreach (var dickSet in activeDicks) {
             foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
                 if (inflater is InflatableDick inflatableDick) {
                     inflatableDick.SetDickThickness(newGenes.dickThickness);
                 }
             }
-            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.info);
-            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.info);
+            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.descriptor);
+            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.descriptor);
         }
         grabber.SetMaxGrabCount(newGenes.grabCount);
         if (ragdoller.ragdolled) {
@@ -429,7 +433,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private void Update() {
         // Throbbing!
         foreach(var dick in activeDicks) {
-            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.info);
+            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.descriptor);
         }
     }
     private void FixedUpdate() {

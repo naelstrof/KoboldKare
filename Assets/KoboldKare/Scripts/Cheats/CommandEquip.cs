@@ -26,11 +26,6 @@ public class CommandEquip : Command {
         }
 
         if (tryEquipment != null) {
-            if (tryEquipment is DickEquipment) {
-                output.Append($"Equipped {tryEquipment.name} by modifying Kobold genes.");
-                kobold.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment));
-                return;
-            }
             output.Append($"Equipped {tryEquipment.name}.");
             kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All,
                 EquipmentDatabase.GetID(tryEquipment), -1);

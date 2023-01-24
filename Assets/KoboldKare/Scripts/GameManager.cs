@@ -43,6 +43,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private GameObject SaveTab;
 
+    [SerializeField] private PrefabDatabase penisDatabase;
+
+    public static PrefabDatabase GetPenisDatabase() => instance.penisDatabase;
+
     public static Coroutine StartCoroutineStatic(IEnumerator routine) {
         if (instance == null) {
             return null;

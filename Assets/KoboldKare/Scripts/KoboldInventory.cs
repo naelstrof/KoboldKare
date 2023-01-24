@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using Photon.Pun;
 using SimpleJSON;
@@ -43,6 +44,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
         Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
         PickupEquipment(equip, view == null ? null : view.gameObject);
+        PhotonProfiler.LogReceive(sizeof(short)+sizeof(int));
     }
 
     public void PickupEquipment(Equipment thing, GameObject groundPrefab) {
@@ -108,6 +110,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
                 staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)stream.ReceiveNext()));
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
+            PhotonProfiler.LogReceive(sizeof(short) * equipmentCount);
         }
     }
 

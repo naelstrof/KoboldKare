@@ -44,6 +44,7 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
         if (photonView.IsMine) {
             SetState(true);
         }
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     [PunRPC]
@@ -58,6 +59,7 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
             stream.SendNext(grabbed);
         } else {
             SetState((bool)stream.ReceiveNext());
+            PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
 

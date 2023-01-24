@@ -69,6 +69,7 @@ public class CreateFoodObjective : DragonMailObjective {
                 foodMade = newFoodMade;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

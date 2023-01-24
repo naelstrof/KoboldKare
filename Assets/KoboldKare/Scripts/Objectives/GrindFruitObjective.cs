@@ -79,6 +79,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
                 fruitCount = newFruitCount;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

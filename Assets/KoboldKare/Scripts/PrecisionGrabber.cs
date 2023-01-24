@@ -7,6 +7,8 @@ using UnityEngine;
 using Photon.Pun;
 using System.Linq;
 using KoboldKare;
+using NetStack.Quantization;
+using NetStack.Serialization;
 using SimpleJSON;
 
 public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
@@ -463,6 +465,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         currentGrab.SetVisibility(handVisibilityEvent.GetLastInvokeValue());
+        PhotonProfiler.LogReceive(sizeof(int)*2+sizeof(float)*6);
     }
 
     public void TryGrab() {
@@ -673,24 +676,35 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        int bitsPerElement = 12;
         if (stream.IsWriting) {
+            BitBuffer sendBuffer = new BitBuffer(4);
             if (currentGrab != null) {
-                stream.SendNext(currentGrab.GetRotation());
-                stream.SendNext(currentGrab.GetDistance());
-                //stream.SendNext(previewGrab);
+                sendBuffer.AddBool(true);
+                QuantizedQuaternion rot = SmallestThree.Quantize(currentGrab.GetRotation(), bitsPerElement);
+                sendBuffer.Add(2, rot.m);
+                sendBuffer.Add(bitsPerElement, rot.a);
+                sendBuffer.Add(bitsPerElement, rot.b);
+                sendBuffer.Add(bitsPerElement, rot.c);
+                sendBuffer.AddUShort(HalfPrecision.Quantize(currentGrab.GetDistance()));
             } else {
-                stream.SendNext(Quaternion.identity);
-                stream.SendNext(2f);
-                //stream.SendNext(previewGrab);
+                sendBuffer.AddBool(false);
             }
+            stream.SendNext(sendBuffer);
         } else {
-            Quaternion rot = (Quaternion)stream.ReceiveNext();
-            float dist  = (float)stream.ReceiveNext();
-            //previewGrab = (bool)stream.ReceiveNext();
-            if (currentGrab != null) {
-                currentGrab.SetRotation(rot);
-                currentGrab.SetDistance(dist);
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            if (!data.ReadBool()) {
+                PhotonProfiler.LogReceive(data.Length);
+                return;
             }
+            QuantizedQuaternion rot = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement), data.Read(bitsPerElement), data.Read(bitsPerElement));
+            ushort quantizedDistance = data.ReadUShort();
+            
+            if (currentGrab != null) {
+                currentGrab.SetRotation(SmallestThree.Dequantize(rot));
+                currentGrab.SetDistance(HalfPrecision.Dequantize(quantizedDistance));
+            }
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
 

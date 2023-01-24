@@ -58,6 +58,10 @@ public class PlayerPossession : MonoBehaviourPun {
     private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
     public void OnPause() {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (GetEquipmentUI()) {
             SetEquipmentUI(false);
             return;
@@ -270,6 +274,7 @@ public class PlayerPossession : MonoBehaviourPun {
         characterControllerAnimator.SetEyeRot(GetEyeRot());
     }
     public void OnJump(InputValue value) {
+        if (!isActiveAndEnabled) return;
         controller.inputJump = value.Get<float>() > 0f;
         if (!photonView.IsMine) {
             photonView.RequestOwnership();
@@ -290,6 +295,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controller.inputWalking = value.Get<float>() > 0f;
     }
     public void OnCrouch(InputValue value) {
+        if (!isActiveAndEnabled) return;
         //controller.inputCrouched = value.Get<float>();
         controller.SetInputCrouched(value.Get<float>());
     }
@@ -447,6 +453,10 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void SetEquipmentUI(bool enable) {
+        if (!isActiveAndEnabled) {
+            return;
+        }
+
         if (!enable) {
             equipmentUI.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;

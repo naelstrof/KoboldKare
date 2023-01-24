@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using System.IO;
+using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
@@ -56,7 +57,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     public bool isEmpty => Mathf.Approximately(contents.volume,0f);
     public bool IsCleaningAgent() => contents.IsCleaningAgent();
     public float GetVolumeOf(ScriptableReagent reagent) => contents.GetVolumeOf(reagent);
-    public float GetVolumeOf(short id) => contents.GetVolumeOf(id);
+    public float GetVolumeOf(byte id) => contents.GetVolumeOf(id);
     public InspectorReagent[] startingReagents;
     [SerializeField]
     private ReagentContents contents;
@@ -86,6 +87,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = contents.Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
+        PhotonProfiler.LogReceive(sizeof(float));
         return spillContents;
     }
 
@@ -105,7 +107,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         OnReagentContentsChanged(injectType);
         return true;
     }
-    private bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
         if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
@@ -115,7 +117,8 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
 
     [PunRPC]
-    public void AddMixRPC(ReagentContents incomingReagents, int geneViewID, byte injectType) {
+    public void AddMixRPC(BitBuffer incomingReagentsData, int geneViewID, byte injectType) {
+        ReagentContents incomingReagents = incomingReagentsData.ReadReagentContents();
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
         // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
@@ -127,10 +130,13 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         }
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
+        PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagentsData.Length);
     }
 
     [PunRPC]
-    public void ForceMixRPC(ReagentContents incomingReagents, int geneViewID, byte injectType) {
+    public void ForceMixRPC(BitBuffer incomingReagentData, int geneViewID, byte injectType) {
+        ReagentContents incomingReagents = incomingReagentData.ReadReagentContents();
+        
         PhotonView view = PhotonNetwork.GetPhotonView(geneViewID);
         // FIXME: Not smart enough to decide which source of genes to use. We prioritize kobolds, but this would be incorrect in the case that a kobold is vomiting cum on another. (The genes should be sourced from the stomach instead).
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
@@ -149,6 +155,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         contents.AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
         containerInflated?.Invoke(this);
+        PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagentData.Length);
     }
 
     public ReagentContents Peek() => new ReagentContents(contents);
@@ -210,11 +217,15 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext(contents);
+            BitBuffer bitBuffer = new BitBuffer(8);
+            bitBuffer.AddReagentContents(contents);
+            stream.SendNext(bitBuffer);
         } else {
-            ReagentContents newContents = (ReagentContents)stream.ReceiveNext();
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            ReagentContents newContents = data.ReadReagentContents();
             contents.Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
 
@@ -222,8 +233,15 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (info.photonView.InstantiationData == null) {
             return;
         }
-        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is KoboldGenes) {
-            SetGenes((KoboldGenes)info.photonView.InstantiationData[0]);
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // This buffer might be shared.
+            buffer.SetReadPosition(0);
+            SetGenes(buffer.ReadKoboldGenes());
+            PhotonProfiler.LogReceive(buffer.Length);
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is not BitBuffer) {
+            throw new UnityException("Unexpected spawn data for container");
         }
     }
 

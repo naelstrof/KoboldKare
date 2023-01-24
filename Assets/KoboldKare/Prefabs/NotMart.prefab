@@ -556,7 +556,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 1
   Mute: 0
-  Spatialize: 1
+  Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0.2
@@ -3724,7 +3724,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5594835734319197252}
-  sceneViewId: 237
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &5594835734319197252
@@ -4133,7 +4133,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4255,7 +4255,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4812,7 +4812,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 238
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -5189,7 +5189,7 @@ MonoBehaviour:
   - {fileID: 915706547747134165}
   - {fileID: 915706547747134167}
   - {fileID: 6171776625417682787}
-  sceneViewId: 240
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &6171776625417682787
@@ -5355,7 +5355,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 239
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6515,7 +6515,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 231
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6730,7 +6730,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 236
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6865,7 +6865,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 234
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7005,7 +7005,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 233
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7145,7 +7145,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 232
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7380,7 +7380,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 235
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7615,7 +7615,7 @@ PrefabInstance:
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
-      value: 230
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}

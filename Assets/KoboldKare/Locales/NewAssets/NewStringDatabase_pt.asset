@@ -206,8 +206,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
-      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
+      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -1291,6 +1291,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 248938687950692352
     m_Localized: Inverter Olhe Y-eixo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: Boob-srink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: Balls-Rink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: Dick-Shrink
     m_Metadata:
       m_Items: []
   references:

@@ -169,6 +169,45 @@ public static class AghButton {
 
         Debug.Log("No found errornous materials.");
     }
+    [MenuItem("Tools/KoboldKare/Find Spacialized Audio")]
+    public static void FindSpacializedAudio() {
+        int count = 0;
+        foreach(GameObject g in Selection.gameObjects) {
+            foreach(var c in g.GetComponents<AudioSource>()) {
+                if (c.spatialize) {
+                    c.spatialize = false;
+                    count++;
+                    Selection.activeGameObject = g;
+                    EditorUtility.SetDirty(g);
+                    EditorUtility.SetDirty(c);
+                }
+            }
+        }
+        foreach(var g in Object.FindObjectsOfType<GameObject>()) {
+            foreach(var c in g.GetComponents<AudioSource>()) {
+                if (c.spatialize) {
+                    c.spatialize = false;
+                    count++;
+                    Selection.activeGameObject = g;
+                    EditorUtility.SetDirty(g);
+                    EditorUtility.SetDirty(c);
+                }
+            }
+        }
+        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        foreach (var path in pathsToAssets) {
+            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            foreach(var c in go.GetComponentsInChildren<AudioSource>(true)) {
+                if (c.spatialize) {
+                    c.spatialize = false;
+                    count++;
+                    Selection.activeGameObject = go;
+                }
+            }
+        }
+        Debug.Log("Found and attempted to fix " + count + " audio sources.");
+    }
     [MenuItem("Tools/KoboldKare/Find Missing Script")]
     public static void FindMissingScript() {
         foreach(GameObject g in Selection.gameObjects) {

@@ -8,6 +8,7 @@ using KoboldKare;
 using Naelstrof.Easing;
 using Naelstrof.Inflatable;
 using Naelstrof.Mozzarella;
+using NetStack.Serialization;
 using Photon.Pun;
 using SkinnedMeshDecals;
 #if UNITY_EDITOR
@@ -198,8 +199,10 @@ public class DickInfo : MonoBehaviour {
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (container != null && attachedKobold != null) {
+                                BitBuffer buffer = new BitBuffer(4);
+                                buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    alloc.Spill(alloc.volume * 0.1f), attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+                                    buffer, attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                                 //container.SetGenes(attachedKobold.GetGenes());
                             }
                         }
@@ -225,7 +228,9 @@ public class DickInfo : MonoBehaviour {
             if (attachedKobold.photonView.IsMine) {
                 ReagentContents alloc = new ReagentContents();
                 alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc,
+                BitBuffer reagentBuffer = new BitBuffer(4);
+                reagentBuffer.AddReagentContents(alloc);
+                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, reagentBuffer,
                     attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
             }
         }

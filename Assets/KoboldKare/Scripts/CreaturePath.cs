@@ -48,6 +48,7 @@ public class CreaturePath : CatmullDisplay {
     [PunRPC]
     private void SetCreature(int viewID) {
         trackedCreature = PhotonNetwork.GetPhotonView(viewID);
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     private IEnumerator Think() {

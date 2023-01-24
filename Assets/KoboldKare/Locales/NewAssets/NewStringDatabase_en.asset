@@ -1306,6 +1306,18 @@ MonoBehaviour:
     m_Localized: Invert Look Y-Axis
     m_Metadata:
       m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: Boob-shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: Balls-shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: Dick-shrink
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

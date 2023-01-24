@@ -3,8 +3,9 @@
     "rootNamespace": "",
     "references": [
         "PhotonRealtime",
+        "SimpleJSON",
         "KoboldKare.ISavable",
-        "SimpleJSON"
+        "NetStack"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

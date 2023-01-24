@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757ca47f379963246843acce6f01e18f, type: 3}
+  m_Name: MushroomBoobJuice
+  m_EditorClassIdentifier: 
+  localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 254924482117312512
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  color: {r: 0.3882353, g: 0.31764707, b: 0.23529412, a: 1}
+  emission: {r: 0, g: 0, b: 0, a: 1}
+  value: 2
+  metabolizationHalfLife: 40
+  cleaningAgent: 0
+  calories: 0.05
+  display: {fileID: 0}
+  consumptionEvent:
+    rid: 5491594473645015041
+  references:
+    version: 2
+    RefIds:
+    - rid: 5491594473645015041
+      type: {class: MushBoobShrinkConsumption, ns: , asm: Assembly-CSharp}

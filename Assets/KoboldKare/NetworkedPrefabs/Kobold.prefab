@@ -946,8 +946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853401, y: -239.23642}
-  m_SizeDelta: {x: 43.706802, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -208.28473}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3644738630386898893
 CanvasRenderer:
@@ -2546,7 +2546,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5931381057884558864}
   m_HandleRect: {fileID: 1573526828679624520}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2760,8 +2760,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853401, y: -32.462345}
-  m_SizeDelta: {x: 43.706802, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -28.040674}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1312199178172712225
 CanvasRenderer:
@@ -3066,7 +3066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c222cd02c447941edb09ecb6433229ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5b4d18a34a1ca84a858c74572c2bf37, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3075,7 +3075,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 15
 --- !u!114 &9201785107198206085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4471,7 +4471,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8270594258579706942}
   m_HandleRect: {fileID: 9216074020422557067}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5012,8 +5012,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853409, y: -32.462345}
-  m_SizeDelta: {x: 43.706818, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -28.040674}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8889337153988171747
 CanvasRenderer:
@@ -6580,7 +6580,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -10}
-  m_SizeDelta: {x: 477.0681, y: 279.69876}
+  m_SizeDelta: {x: 546.2038, y: 244.3254}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &333123982069526441
 CanvasRenderer:
@@ -8220,8 +8220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853409, y: -170.31172}
-  m_SizeDelta: {x: 43.706818, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -148.20337}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &294383423229691500
 CanvasRenderer:
@@ -11683,8 +11683,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853409, y: -239.23642}
-  m_SizeDelta: {x: 43.706818, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -208.28473}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9149690509405909524
 CanvasRenderer:
@@ -12636,8 +12636,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -289.69876}
-  m_SizeDelta: {x: 477.0681, y: 279.69876}
+  m_AnchoredPosition: {x: 10, y: -254.3254}
+  m_SizeDelta: {x: 546.2038, y: 244.3254}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3811945729619894383
 CanvasRenderer:
@@ -14124,8 +14124,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853409, y: -101.38704}
-  m_SizeDelta: {x: 43.706818, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -88.122025}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1860303114230242941
 CanvasRenderer:
@@ -14311,8 +14311,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853401, y: -101.38704}
-  m_SizeDelta: {x: 43.706802, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -88.122025}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7133023481732117722
 CanvasRenderer:
@@ -15387,8 +15387,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 23.853401, y: -170.31172}
-  m_SizeDelta: {x: 43.706802, y: 60.92469}
+  m_AnchoredPosition: {x: 27.310188, y: -148.20337}
+  m_SizeDelta: {x: 50.620377, y: 52.08135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8106581988158783853
 CanvasRenderer:
@@ -16493,6 +16493,9 @@ MonoBehaviour:
     - rid: 4
     - rid: 5
   milkSplatMaterial: {fileID: 2100000, guid: 3821f9133468bfa449f3dbee8d5a1aff, type: 2}
+  heartHitMask:
+    serializedVersion: 2
+    m_Bits: 2048
   energy: 1
   tummyGrumbles: {fileID: 11400000, guid: 67a1644657f256b47ab2a61a75c069d6, type: 2}
   garglePack: {fileID: 11400000, guid: 2098de8eac6d5e0419986616fa2a8f15, type: 2}
@@ -16663,7 +16666,7 @@ MonoBehaviour:
   - {fileID: 3513761996189148957}
   body: {fileID: 4787937348439926609}
   bodyProportion: {fileID: 2103486266263749528}
-  hip: {fileID: 6506915555090380208}
+  hipBody: {fileID: 139429597399395155}
   tailRig: {fileID: 8353772991081287847}
   group: {fileID: 3248104343026095605}
 --- !u!114 &3736482642893614196
@@ -19773,13 +19776,13 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
-  m_EnablePreprocessing: 1
+  m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
 --- !u!4 &1905648332443602999 stripped
@@ -19917,7 +19920,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -20071,7 +20074,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868288}
-  m_Material: {fileID: 13400000, guid: 16a303d7eaab3bd4195ccce6fac4d794, type: 2}
+  m_Material: {fileID: 13400000, guid: aed15ac3b782c8c4a8403ba6c6039f0e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -20200,7 +20203,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -20318,7 +20321,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -20340,7 +20343,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868298}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: aed15ac3b782c8c4a8403ba6c6039f0e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.06
@@ -20564,7 +20567,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -20750,7 +20753,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -20776,7 +20779,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 1
   Mute: 0
-  Spatialize: 1
+  Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
@@ -21028,7 +21031,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21160,7 +21163,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21292,7 +21295,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21424,7 +21427,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21556,7 +21559,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21687,7 +21690,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21819,7 +21822,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -21950,7 +21953,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -22081,7 +22084,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -22213,7 +22216,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -22345,7 +22348,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -22501,7 +22504,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 15
+  m_ProjectionAngle: 5
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity

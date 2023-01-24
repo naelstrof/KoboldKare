@@ -50,10 +50,16 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
             stream.SendNext(eggs);
         } else {
-            eggs = (int)stream.ReceiveNext();
+            int newEggs = (int)stream.ReceiveNext();
+            if (eggs != newEggs) {
+                eggs = newEggs;
+                TriggerUpdate();
+            }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

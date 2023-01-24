@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 
@@ -32,12 +33,16 @@ public class CommandGive : Command {
             ReagentContents contents = new ReagentContents();
             if (args.Length > 2 && float.TryParse(args[2], out float value)) {
                 contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(value));
-                obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+                BitBuffer buffer = new BitBuffer(4);
+                buffer.AddReagentContents(contents);
+                obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, buffer, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 output.Append($"Spawned bucket filled with {value} {args[1]}.\n");
                 return;
             }
             contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
-            obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+            BitBuffer otherBuffer = new BitBuffer(4);
+            otherBuffer.AddReagentContents(contents);
+            obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, otherBuffer, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
             output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
             return;
         }

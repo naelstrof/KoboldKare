@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class PlantDatabase : MonoBehaviour {
     private static PlantDatabase instance;
-    private static PlantDatabase GetInstance() {
-        if (instance == null) {
-            instance = Object.FindObjectOfType<PlantDatabase>();
-        }
-        return instance;
-    }
     public void Awake() {
         if (instance != null) {
             Destroy(this);
@@ -18,7 +12,7 @@ public class PlantDatabase : MonoBehaviour {
         }
     }
     public static ScriptablePlant GetPlant(string name) {
-        foreach(var plant in GetInstance().plants) {
+        foreach(var plant in instance.plants) {
             if (plant.name == name) {
                 return plant;
             }
@@ -26,10 +20,10 @@ public class PlantDatabase : MonoBehaviour {
         return null;
     }
     public static ScriptablePlant GetPlant(short id) {
-        return GetInstance().plants[id];
+        return instance.plants[id];
     }
     public static short GetID(ScriptablePlant plant) {
-        return (short)GetInstance().plants.IndexOf(plant);
+        return (short)instance.plants.IndexOf(plant);
     }
     public List<ScriptablePlant> plants;
 }

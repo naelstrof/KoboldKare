@@ -74,6 +74,7 @@ public class DeliverMacroKoboldObjective : ObjectiveWithSpaceBeam {
                 koboldCount = newKoboldCount;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

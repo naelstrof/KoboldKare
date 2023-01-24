@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Naelstrof.Mozzarella;
+using NetStack.Serialization;
 using PenetrationTech;
 using Photon.Pun;
 using SkinnedMeshDecals;
@@ -157,7 +158,9 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
             if (pumper.TryGetPenetrable(out Penetrable penetrable)) {
                 GenericReagentContainer holeContainer = penetrable.GetComponentInParent<GenericReagentContainer>();
                 if (holeContainer != null) {
-                    holeContainer.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, contents,
+                    BitBuffer buffer = new BitBuffer(4);
+                    buffer.AddReagentContents(contents);
+                    holeContainer.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, buffer,
                         container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 }
             } else {
@@ -169,7 +172,9 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                         if (photonView.IsMine) {
                             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (cont != null && cont != container) {
-                                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, alloc.Spill(alloc.volume * 0.1f), photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+                                BitBuffer buffer = new BitBuffer(4);
+                                buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
+                                cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                             }
                         }
                         

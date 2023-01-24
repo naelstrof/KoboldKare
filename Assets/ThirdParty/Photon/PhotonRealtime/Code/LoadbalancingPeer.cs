@@ -108,6 +108,12 @@ namespace Photon.Realtime
             {
                 websocketType = Type.GetType("ExitGames.Client.Photon.SocketWebTcp, Assembly-CSharp", false);
             }
+            #if UNITY_WEBGL
+            if (websocketType == null && this.DebugOut >= DebugLevel.WARNING)
+            {
+                this.Listener.DebugReturn(DebugLevel.WARNING, "SocketWebTcp type not found in the usual Assemblies. This is required as wrapper for the browser WebSocket API. Make sure to make the PhotonLibs\\WebSocket code available.");
+            }
+            #endif
             #endif
 
             if (websocketType != null)
@@ -1162,7 +1168,7 @@ namespace Photon.Realtime
         /// <summary>(32758) Join can fail if the room (name) is not existing (anymore). This can happen when players leave while you join.</summary>
         public const int GameDoesNotExist = 0x7FFF - 9;
 
-        /// <summary>(32757) Authorization on the Photon Cloud failed becaus the concurrent users (CCU) limit of the app's subscription is reached.</summary>
+        /// <summary>(32757) Authorization on the Photon Cloud failed because the concurrent users (CCU) limit of the app's subscription is reached.</summary>
         /// <remarks>
         /// Unless you have a plan with "CCU Burst", clients might fail the authentication step during connect.
         /// Affected client are unable to call operations. Please note that players who end a game and return
@@ -1230,7 +1236,7 @@ namespace Photon.Realtime
         public const int JoinFailedFoundActiveJoiner = 32746; // 0x7FFF - 21,
 
         /// <summary>
-        /// (32745)  for SetProerties and Raisevent (if flag HttpForward is true) requests. Indicates the maximum allowd http requests per minute was reached.
+        /// (32745)  for SetProperties and RaiseEvent (if flag HttpForward is true) requests. Indicates the maximum allowed http requests per minute was reached.
         /// </summary>
         public const int HttpLimitReached = 32745; // 0x7FFF - 22,
 

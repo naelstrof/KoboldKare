@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class PurchasableDatabase : MonoBehaviour {
     private static PurchasableDatabase instance;
-    private static PurchasableDatabase GetInstance() {
-        if (instance == null) {
-            instance = Object.FindObjectOfType<PurchasableDatabase>();
-        }
-        return instance;
-    }
     public void Awake() {
         if (instance != null) {
             Destroy(this);
@@ -18,7 +12,7 @@ public class PurchasableDatabase : MonoBehaviour {
         }
     }
     public static ScriptablePurchasable GetPurchasable(string name) {
-        foreach(var purchasable in GetInstance().purchasables) {
+        foreach(var purchasable in instance.purchasables) {
             if (purchasable.name == name) {
                 return purchasable;
             }
@@ -26,10 +20,10 @@ public class PurchasableDatabase : MonoBehaviour {
         return null;
     }
     public static ScriptablePurchasable GetPurchasable(short id) {
-        return GetInstance().purchasables[id];
+        return instance.purchasables[id];
     }
     public static short GetID(ScriptablePurchasable purchasable) {
-        return (short)GetInstance().purchasables.IndexOf(purchasable);
+        return (short)instance.purchasables.IndexOf(purchasable);
     }
     public List<ScriptablePurchasable> purchasables;
 }

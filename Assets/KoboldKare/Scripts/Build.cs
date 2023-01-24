@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using System.IO;
 #if UNITY_EDITOR
+using System.Runtime.InteropServices;
+using UnityEditor.Build.Reporting;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor;
@@ -11,6 +13,7 @@ using UnityEditor;
 //using UnityEngine.Localization;
 
 public class Build {
+    
     static readonly string[] scenes = {"Assets/KoboldKare/Scenes/MainMenu.unity", "Assets/KoboldKare/Scenes/MainMap.unity", "Assets/KoboldKare/Scenes/ErrorScene.unity" };
     private static string outputDirectory {
         get {
@@ -21,7 +24,17 @@ public class Build {
             return string.Format("{0}{1}", dir.TrimEnd(Path.DirectorySeparatorChar), Path.DirectorySeparatorChar);
         }
     }
-    [MenuItem("KoboldKare/BuildLinux")]
+
+    private static int ResultToExitCode(BuildResult result) {
+        switch (result) {
+            case BuildResult.Succeeded: return 0;
+            case BuildResult.Failed: return 1; 
+            case BuildResult.Unknown: return 2;
+            case BuildResult.Cancelled: return 3;
+            default: return 4;
+        }
+    }
+
     static void BuildLinux() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
@@ -32,9 +45,9 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        EditorApplication.Exit(ResultToExitCode(report.summary.result));
     }
 
-    [MenuItem("KoboldKare/BuildMac")]
     static void BuildMac() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SetPlatformSettings(
@@ -51,9 +64,9 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        EditorApplication.Exit(ResultToExitCode(report.summary.result));
     }
 
-    [MenuItem("KoboldKare/BuildWindows")]
     static void BuildWindows() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
@@ -64,9 +77,9 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        EditorApplication.Exit(ResultToExitCode(report.summary.result));
     }
 
-    [MenuItem("KoboldKare/BuildWindows32")]
     static void BuildWindows32() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         AddressableAssetSettings.CleanPlayerContent(AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder);
@@ -77,6 +90,7 @@ public class Build {
         var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
+        EditorApplication.Exit(ResultToExitCode(report.summary.result));
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER"); 

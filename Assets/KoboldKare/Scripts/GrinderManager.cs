@@ -6,6 +6,7 @@ using Photon.Pun;
 using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
+using NetStack.Serialization;
 using SimpleJSON;
 
 public class GrinderManager : UsableMachine, IAnimationStationSet {
@@ -32,6 +33,11 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private GenericReagentContainer container;
 
+    // added by Godeken
+    [SerializeField] private Animator anim;
+    [SerializeField] private float animMinSpeed = 0.9f;
+    [SerializeField] private float animMaxSpeed = 1.2f;
+
     public override Sprite GetSprite(Kobold k) {
         return onSprite;
     }
@@ -53,6 +59,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = false;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     [PunRPC]
@@ -64,10 +71,20 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = true;
         }
+        PhotonProfiler.LogReceive(1);
     }
 
     IEnumerator WaitThenConsumeEnergy() {
-        yield return new WaitForSeconds(8f);
+
+        //added by Godeken
+        yield return new WaitForSeconds(1f);
+        anim.SetTrigger("Cranking");
+        anim.speed = animMinSpeed;
+        yield return new WaitForSeconds(3f);
+        anim.speed = animMaxSpeed;
+        yield return new WaitForSeconds(4f);
+        
+
         if (!photonView.IsMine) {
             yield break;
         }
@@ -100,6 +117,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
 
     [PunRPC]
     public override void Use() {
+
         StopCoroutine(nameof(WaitThenConsumeEnergy));
         StartCoroutine(nameof(WaitThenConsumeEnergy));
     }
@@ -108,9 +126,14 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedThingsCache.Clear();
     }
     [PunRPC]
-    void Grind(int viewID, ReagentContents incomingContents, KoboldGenes genes) {
+    void Grind(int viewID, BitBuffer incomingContentsData) {
+        ReagentContents incomingContents = incomingContentsData.ReadReagentContents();
+        KoboldGenes genes = incomingContentsData.ReadKoboldGenes();
+        
         grindedObject?.Invoke(viewID, incomingContents);
-        container.AddMixRPC(incomingContents, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+        // reset before we send back.
+        incomingContentsData.SetReadPosition(0);
+        container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         container.SetGenes(genes);
         fluidStream.OnFire(container);
     }
@@ -146,7 +169,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         if (kobold != null) {
             kobold.StartCoroutine(RagdollForTime(kobold));
             foreach (Rigidbody r in other.GetAllComponents<Rigidbody>()) {
-                r.AddExplosionForce(400f, transform.position+Vector3.down*5f, 100f);
+                r.AddExplosionForce(4000f, transform.position+Vector3.down*5f, 100f);
             }
             if (!deny.isPlaying) {
                 deny.Play();
@@ -160,7 +183,10 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         GenericReagentContainer genericReagentContainer = view.GetComponentInChildren<GenericReagentContainer>();
         // Finally we grind it
         if (genericReagentContainer != null) {
-            photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID, genericReagentContainer.GetContents(), genericReagentContainer.GetGenes());
+            BitBuffer buffer = new BitBuffer(4);
+            buffer.AddReagentContents(genericReagentContainer.GetContents());
+            buffer.AddKoboldGenes(genericReagentContainer.GetGenes());
+            photonView.RPC(nameof(Grind), RpcTarget.All, view.ViewID, buffer);
         }
         
         IDamagable d = view.GetComponentInParent<IDamagable>();

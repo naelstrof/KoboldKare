@@ -61,6 +61,7 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
                 koboldCount = newKoboldCount;
                 TriggerUpdate();
             }
+            PhotonProfiler.LogReceive(sizeof(int));
         }
     }
 }

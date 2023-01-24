@@ -3,6 +3,11 @@ PUN 2 - Changelog
 Exit Games GmbH - www.photonengine.com - forum.photonengine.com
 
 
+v2.41 (02. August 2022)
+Changed: PhotonHandler.MaxDatagrams to 10. The previous value was unnecessary low.
+Changed: PhotonHandler sending to send more datagrams in the next frame, if it has more than MaxDatagrams queued in any frame.
+Updated: Library, Realtime and Chat API to 4.1.6.17. More details in the change logs.
+
 v2.40 (22. November 2021)
 Fixed: Unity 2021.2 support. PhotonEditorUtils.IsPrefab now uses the correct prefab stage utility for Unity 2021.2 and up.
 Changed: PhotonHandler.Dispatch is now catching exceptions. It will count them but only provide the first one's callstack (to avoid log spamming).

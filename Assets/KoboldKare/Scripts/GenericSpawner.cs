@@ -5,9 +5,10 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using SimpleJSON;
 using Random = UnityEngine.Random;
 
-public class GenericSpawner : MonoBehaviourPun {
+public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField]
     private List<PhotonGameObjectReference> possibleSpawns = new List<PhotonGameObjectReference>();
     [SerializeField]
@@ -36,7 +37,7 @@ public class GenericSpawner : MonoBehaviourPun {
     public virtual IEnumerator SpawnRoutine() {
         yield return waitUntilCanSpawn;
         string randomPrefab = GetRandomPrefab();
-        lastSpawned = PhotonNetwork.InstantiateRoomObject(randomPrefab, transform.position, transform.rotation, 0, new object[] { new KoboldGenes().Randomize(), false });
+        lastSpawned = PhotonNetwork.InstantiateRoomObject(randomPrefab, transform.position, transform.rotation);
     }
 
     private void OnEnable() {
@@ -67,6 +68,44 @@ public class GenericSpawner : MonoBehaviourPun {
     public void OnValidate() {
         foreach (var photonGameObject in possibleSpawns) {
             photonGameObject.OnValidate();
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            if (lastSpawned != null) {
+                stream.SendNext(lastSpawned.GetPhotonView().ViewID);
+            } else {
+                stream.SendNext(-1);
+            }
+        } else {
+            int id = (int)stream.ReceiveNext();
+            if (id != -1) {
+                PhotonView view = PhotonNetwork.GetPhotonView(id);
+                lastSpawned = view == null ? null : view.gameObject;
+            } else {
+                lastSpawned = null;
+            }
+        }
+    }
+
+    public void Save(JSONNode node) {
+        if (lastSpawned != null) {
+            node["lastSpawned"] = lastSpawned.GetPhotonView().ViewID;
+        } else {
+            node["lastSpawned"] = -1;
+        }
+    }
+
+    public void Load(JSONNode node) {
+        if (node.HasKey("lastSpawned")) {
+            int id = node["lastSpawned"];
+            if (id != -1) {
+                PhotonView view = PhotonNetwork.GetPhotonView(id);
+                lastSpawned = view == null ? null : view.gameObject;
+            } else {
+                lastSpawned = null;
+            }
         }
     }
 }

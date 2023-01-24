@@ -181,6 +181,22 @@ public class GameManager : MonoBehaviour {
         //AudioSource.PlayClipAtPoint(clip, position, volume);
     }
 
+    public void OnDestroy() {
+        if (instance != this) {
+            return;
+        }
+        string targetString = NetworkManager.instance.settings.AppSettings.AppVersion;
+        if (Application.isEditor && targetString.EndsWith("Editor")) {
+            NetworkManager.instance.settings.AppSettings.AppVersion = targetString.Substring(0, targetString.Length - 6);
+        }
+        if (Application.isEditor && PhotonNetwork.GameVersion != null) {
+            targetString = PhotonNetwork.GameVersion;
+            if (targetString.EndsWith("Editor")) {
+                PhotonNetwork.GameVersion = targetString.Substring(0,targetString.Length-6);
+            }
+        }
+    }
+
     public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType){
         if(btn.buttonType == ButtonMouseOver.ButtonTypes.Default){
             if(evtType == ButtonMouseOver.EventType.Hover)

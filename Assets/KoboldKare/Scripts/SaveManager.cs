@@ -213,9 +213,11 @@ public static class SaveManager {
                         savable.Load(objectNode);
                     }
                 }
-            } catch {
+            } catch (Exception e) {
                 Debug.LogError($"Failed to load observable on photonView {viewID}, {prefabName}", view);
-                throw;
+                Debug.LogException(e);
+                // Try our best to load the save... anyway
+                //throw;
             }
         }
     }

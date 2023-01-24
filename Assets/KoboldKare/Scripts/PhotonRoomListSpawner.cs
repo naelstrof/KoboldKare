@@ -35,26 +35,45 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         StartCoroutine(RefreshRoomRoutine());
     }
 
+    private void SetupRoom(GameObject room, RoomInfo info) {
+        room.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = info.Name;
+        room.transform.Find("Info").GetComponent<TextMeshProUGUI>().text = info.PlayerCount + "/" + info.MaxPlayers;
+        if (info.IsOpen) {
+            room.transform.Find("Image").gameObject.SetActive(false);
+        }
+
+        room.GetComponent<Button>().onClick.RemoveAllListeners();
+        room.GetComponent<Button>().onClick.AddListener(() => {
+            NetworkManager.instance.JoinMatch(info.Name);
+        });
+    }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior
-        Debug.Log("[PhotonRoomListSpawner] :: Got room list update from master server");
-        ClearRoomList();
+        //Debug.Log("[PhotonRoomListSpawner] :: Got room list update from master server");
+        //ClearRoomList();
         //Build UI from current room list
-        foreach (RoomInfo info in roomList){
-            if (info.RemovedFromList) {
+        foreach (RoomInfo info in roomList) {
+            bool skip = false;
+            for (int i = 0; i < roomPrefabs.Count; i++) {
+                if (roomPrefabs[i].transform.Find("Name").GetComponent<TextMeshProUGUI>().text == info.Name) {
+                    if (info.RemovedFromList) {
+                        Destroy(roomPrefabs[i]);
+                        roomPrefabs.RemoveAt(i--);
+                    } else {
+                        SetupRoom(roomPrefabs[i], info);
+                    }
+                    skip = true;
+                }
+            }
+            
+            if (info.RemovedFromList || skip) {
                 continue;
             }
-            GameObject room = GameObject.Instantiate(roomPrefab, this.transform);
+
+            GameObject room = Instantiate(roomPrefab, transform);
             roomPrefabs.Add(room);
-            room.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = info.Name;
-            room.transform.Find("Info").GetComponent<TextMeshProUGUI>().text = info.PlayerCount + "/" + info.MaxPlayers;
-            if (info.IsOpen) {
-                room.transform.Find("Image").gameObject.SetActive(false);
-            }
-            room.GetComponent<Button>().onClick.AddListener(() => {
-                NetworkManager.instance.JoinMatch(info.Name);
-            });
+            SetupRoom(room, info);
         }
         hideOnRoomsFound.SetActive(roomList.Count == 0);
     }
@@ -64,5 +83,10 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
             Destroy(g);
         }
         roomPrefabs.Clear();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause) {
+        base.OnDisconnected(cause);
+        ClearRoomList();
     }
 }

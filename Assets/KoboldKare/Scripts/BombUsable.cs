@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
@@ -39,10 +40,16 @@ public class BombUsable : GenericUsable, IDamagable {
             // It should sizzle and blow up.
             ReagentContents water = new ReagentContents();
             water.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(20f));
+            BitBuffer bufferOne = new BitBuffer(4);
+            bufferOne.AddReagentContents(water);
+            
             ReagentContents potassium = new ReagentContents();
             potassium.AddMix(ReagentDatabase.GetReagent("Potassium").GetReagent(20f));
-            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, water, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, potassium, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+            BitBuffer bufferTwo = new BitBuffer(4);
+            bufferTwo.AddReagentContents(potassium);
+            
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, bufferOne, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+            container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, bufferTwo, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         }
         fired = true;
     }
@@ -58,6 +65,7 @@ public class BombUsable : GenericUsable, IDamagable {
         } else {
             PhotonNetwork.Destroy(gameObject);
         }
+        PhotonProfiler.LogReceive(sizeof(float));
     }
 
     public void Heal(float amount) {

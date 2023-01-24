@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NetStack.Quantization;
 using Photon.Pun;
 using UnityEngine;
 
@@ -8,7 +9,12 @@ public class PlayAreaEnforcer : MonoBehaviour {
     private WaitForSeconds wait;
     private Bounds bounds;
     private List<PhotonView> trackedObjects;
-    
+    private BoundedRange[] worldBounds;
+
+    public static BoundedRange[] GetWorldBounds() {
+        return instance.worldBounds;
+    }
+
     public static void AddTrackedObject(PhotonView obj) {
         if (instance == null) {
             return;
@@ -30,18 +36,22 @@ public class PlayAreaEnforcer : MonoBehaviour {
 
     void Awake() {
         if (instance != null) {
-            Destroy(gameObject);
-        } else {
-            instance = this;
+            Destroy(instance);
         }
-
+        instance = this;
+        OcclusionArea area = GetComponent<OcclusionArea>();
+        bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
+        worldBounds = new BoundedRange[] {
+            new(bounds.min.x, bounds.max.x, 0.05f),
+            new(bounds.min.y, bounds.max.y, 0.05f),
+            new(bounds.min.z, bounds.max.z, 0.05f),
+        };
+        Debug.Log($"Using {worldBounds[0].GetRequiredBits()}:{worldBounds[1].GetRequiredBits()}:{worldBounds[2].GetRequiredBits()} bits for X:Y:Z position data.");
         trackedObjects = new List<PhotonView>();
     }
 
     void Start() {
         wait = new WaitForSeconds(5f);
-        OcclusionArea area = GetComponent<OcclusionArea>();
-        bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));
         StartCoroutine(CheckForViolations());
     }
 

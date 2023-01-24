@@ -965,11 +965,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Compre el swapper del cuerpo.
+    m_Localized: Compra la maquina cambia mentes.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Compre el swapper del cuerpo del arrastre en la cueva.
+    m_Localized: Compra la maquina cambia mentes del caballero en la cueva.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1038,11 +1038,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "\xA1Vaya! Eres como, realmente desnudo."
+    m_Localized: "\xA1Rayos! \xA1Estas desnudo!"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "De todos modos solo uh ... ay\xFAdate, supongo."
+    m_Localized: De todos modos solo uh ... agarra los productos que quieras, supongo.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1085,7 +1085,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: "T\xE1strofe de gato"
+    m_Localized: Gatastrofe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1132,7 +1132,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "\xBFBienvenido al casino, aqu\xED por negocios o placer?"
+    m_Localized: "\xBFBienvenido al casino, vienes por negocio o placer?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1141,7 +1141,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
-    m_Localized: "No seas un extra\xF1o."
+    m_Localized: Vuelve pronto.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885794521088
@@ -1209,7 +1209,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Quiero ver m\xE1s huevos de Kobold grandes, \xA1llegue a eso!"
+    m_Localized: "Quiero ver m\xE1s huevos de Kobold grandes. \xA1A trabajar!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1217,8 +1217,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Quiero muchos kobolds gordos, son realmente \xFAtiles como pesas
-      y almohadas de papel."
+    m_Localized: "Quiero muchos kobolds gordos, son realmente \xFAtiles como pisa
+      papeles  y almohadas."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
@@ -1292,6 +1292,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 248938687950692352
     m_Localized: Invertir el eje Y
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482117312512
+    m_Localized: "S\xE1bado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284032
+    m_Localized: Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254924482138284033
+    m_Localized: Polla
     m_Metadata:
       m_Items: []
   references:

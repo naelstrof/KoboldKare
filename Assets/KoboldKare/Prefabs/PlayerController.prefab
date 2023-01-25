@@ -1778,7 +1778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369650a3c7304b54bbab3930bd69bb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   distance: 0.2
   motionSicknessReducer: {fileID: 11400000, guid: 4c2cc216468f8184296908c25640f6fe,
     type: 2}
@@ -3038,7 +3037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &887705302900164184
 Transform:
   m_ObjectHideFlags: 0
@@ -6015,7 +6014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9008a07ca1ee744b659814c630c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetKobold: {fileID: 0}
   targetContents: 1
   background: {fileID: 5319628257424349913}
   volumeToPixels: 1
@@ -7299,7 +7297,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  targetKobold: {fileID: 0}
 --- !u!1 &3989004548649523119
 GameObject:
   m_ObjectHideFlags: 0
@@ -13042,7 +13039,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingText: $
-  holder: {fileID: 0}
 --- !u!114 &5741867789170015147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13612,7 +13608,6 @@ MonoBehaviour:
   detailTitle: {fileID: 514915966816706308}
   noneSprite: {fileID: 21300000, guid: e063c52d29e94a849b5a707a2a372857, type: 3}
   detailedDisplay: {fileID: 194271187632423471}
-  inventory: {fileID: 0}
   inventoryUIPrefab: {fileID: 7910732832588918326, guid: a5d777badcde1324f976e75baf1aaa14,
     type: 3}
   slots:
@@ -14418,7 +14413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9008a07ca1ee744b659814c630c6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetKobold: {fileID: 0}
   targetContents: 0
   background: {fileID: 2232018935922141209}
   volumeToPixels: 1

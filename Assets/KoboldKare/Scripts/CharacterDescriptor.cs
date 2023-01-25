@@ -38,7 +38,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private SmoothCharacterPhoton smoothCharacterPhoton;
     private PhotonView photonView;
     private Chatter chatter;
-    private ControlType controlType;
+    private ControlType controlType = ControlType.AIPlayer;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -145,9 +145,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         smoothCharacterPhoton = gameObject.AddComponent<SmoothCharacterPhoton>();
         photonView = GetComponent<PhotonView>();
         photonView.FindObservables();
-        if (controlType != ControlType.LocalPlayer) {
-            possession.gameObject.SetActive(false);
-        }
+        possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
     }
 
     private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {

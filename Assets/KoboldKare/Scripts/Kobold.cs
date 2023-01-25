@@ -259,8 +259,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             }
         }
         
-        if (GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
-            var dickDatabase = GameManager.GetPenisDatabase().GetPrefabReferenceInfos();
+        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != byte.MaxValue) {
+            var dickDatabase = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
             var selectedDick = dickDatabase[newGenes.dickEquip];
             dickObject = Instantiate(selectedDick.GetPrefab(), GetAttachPointTransform(Equipment.AttachPoint.Crotch));
             dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);

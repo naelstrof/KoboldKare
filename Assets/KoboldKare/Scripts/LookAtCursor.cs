@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class LookAtCursor : MonoBehaviour {
     [Range(0f,20f)]
-    public float distanceFromCamera = 5f;
+    public float distanceFromCamera = 1f;
     private CharacterControllerAnimator characterAnimator;
     private Animator animator;
     void Start() {

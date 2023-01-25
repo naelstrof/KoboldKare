@@ -16,12 +16,9 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     private List<SkinnedMeshRenderer> dissolveTargets;
     private static readonly int Head = Shader.PropertyToID("_Head");
 
-    private void Awake() {
-        mirrorObjects = new List<GameObject>();
-        smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
-    }
-
     private void OnEnable() {
+        mirrorObjects ??= new List<GameObject>();
+        smrCopies ??= new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
         kobold = GetComponentInParent<Kobold>();
         physics = kobold.GetComponent<JiggleSkin>();
         group = kobold.GetComponentInChildren<LODGroup>();
@@ -31,6 +28,9 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     }
 
     public void SetDissolveTargets(ICollection<SkinnedMeshRenderer> newDissolveTargets) {
+        if (mirrorObjects == null) {
+            OnEnable();
+        }
         dissolveTargets = new List<SkinnedMeshRenderer>(newDissolveTargets);
         RegenerateMirror();
     }

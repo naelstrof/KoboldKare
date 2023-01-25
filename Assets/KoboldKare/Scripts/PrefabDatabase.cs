@@ -15,6 +15,7 @@ public class PrefabDatabase : ScriptableObject {
     public delegate void PrefabReferencesChangedAction(ReadOnlyCollection<PrefabReferenceInfo> prefabReferenceInfos);
 
     private event PrefabReferencesChangedAction prefabReferencesChanged;
+    private List<PrefabReferenceInfo> validInfos;
     
     private const string JSONLocation = "modConfiguration.json";
     [System.Serializable]
@@ -41,13 +42,17 @@ public class PrefabDatabase : ScriptableObject {
             return prefab;
         }
 
+        public bool IsValid() {
+            return enabled && prefab != null;
+        }
+
         public void SetEnabled(bool newValue) {
             enabled = newValue;
             parentDatabase.prefabReferencesChanged?.Invoke(parentDatabase.GetPrefabReferenceInfos());
         }
-        public bool GetEnabled() {
-            return enabled;
-        }
+        //public bool GetEnabled() {
+            //return enabled;
+        //}
         public void Save(JSONNode n) {
             n["enabled"] = enabled;
             n["key"] = key;
@@ -61,14 +66,14 @@ public class PrefabDatabase : ScriptableObject {
     public PrefabReferenceInfo GetRandom() {
         float count = 0f;
         foreach(var prefab in prefabReferenceInfos) {
-            if (prefab.GetEnabled()) {
+            if (prefab.IsValid()) {
                 count++;
             }
         }
         float selection = Random.Range(0f,count);
         float current = 0f;
         foreach(var prefab in prefabReferenceInfos) {
-            if (!prefab.GetEnabled()) continue;
+            if (!prefab.IsValid()) continue;
             current++;
             if (current >= selection) {
                 return prefab;
@@ -168,4 +173,24 @@ public class PrefabDatabase : ScriptableObject {
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
     public ReadOnlyCollection<PrefabReferenceInfo> GetPrefabReferenceInfos() => readOnlyPrefabReferenceInfos;
+
+    public List<PrefabReferenceInfo> GetValidPrefabReferenceInfos() {
+        validInfos ??= new List<PrefabReferenceInfo>();
+        validInfos.Clear();
+        foreach(var info in prefabReferenceInfos) {
+            if (info.IsValid()) {
+                validInfos.Add(info);
+            }
+        }
+        return validInfos;
+    }
+
+    public PrefabReferenceInfo GetInfoByName(string key) {
+        foreach(var info in prefabReferenceInfos) {
+            if (info.IsValid() && info.GetKey() == key) {
+                return info;
+            }
+        }
+        return null;
+    }
 }

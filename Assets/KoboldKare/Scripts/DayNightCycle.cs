@@ -22,9 +22,16 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     private event MetabolizeAction metabolizationTriggered;
 
     public static void AddMetabolizationListener(MetabolizeAction action) {
+        if (instance == null) {
+            return;
+        }
+
         instance.metabolizationTriggered += action;
     }
     public static void RemoveMetabolizationListener(MetabolizeAction action) {
+        if (instance == null) {
+            return;
+        }
         instance.metabolizationTriggered -= action;
     }
 

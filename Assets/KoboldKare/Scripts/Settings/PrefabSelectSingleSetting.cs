@@ -39,13 +39,14 @@ public class PrefabSelectSingleSetting : SettingDropdown {
         bool found = false;
         for (int i = 0; i < prefabs.Count; i++) {
             var prefab = prefabs[i];
-            if (!prefab.GetEnabled()) {
+            if (!prefab.IsValid()) {
                 continue;
             }
-            if (selectedPrefab == prefab.GetKey()) {
-                selectedValue = i;
-                found = true;
-            }
+
+            if (selectedPrefab != prefab.GetKey()) continue;
+            
+            selectedValue = i;
+            found = true;
         }
 
         if (found) {
@@ -59,7 +60,7 @@ public class PrefabSelectSingleSetting : SettingDropdown {
         var prefabs = database.GetPrefabReferenceInfos();
         for (int i = 0; i < prefabs.Count; i++) {
             var prefab = prefabs[i];
-            if (!prefab.GetEnabled()) {
+            if (!prefab.IsValid()) {
                 continue;
             }
             if (value == i) {
@@ -72,7 +73,7 @@ public class PrefabSelectSingleSetting : SettingDropdown {
     private void LoadDatabase(ReadOnlyCollection<PrefabDatabase.PrefabReferenceInfo> prefabs) {
         List<string> newOptions = new List<string>();
         foreach (var prefab in prefabs) {
-            if (!prefab.GetEnabled()) {
+            if (!prefab.IsValid()) {
                 continue;
             }
             newOptions.Add(prefab.GetKey());
@@ -83,7 +84,7 @@ public class PrefabSelectSingleSetting : SettingDropdown {
         if (string.IsNullOrEmpty(selectedPrefab)) {
             for (int i = 0; i < prefabs.Count; i++) {
                 var prefab = prefabs[i];
-                if (!prefab.GetEnabled()) {
+                if (!prefab.IsValid()) {
                     continue;
                 }
                 if (newSelectedValue == i) {
@@ -97,14 +98,13 @@ public class PrefabSelectSingleSetting : SettingDropdown {
     }
 
     public string GetPrefab() {
-        if (string.IsNullOrEmpty(selectedPrefab)) {
-            var prefabs = database.GetPrefabReferenceInfos();
-            foreach (var prefab in prefabs) {
-                if (!prefab.GetEnabled()) {
-                    continue;
-                }
-                return prefab.GetKey();
+        if (!string.IsNullOrEmpty(selectedPrefab)) return selectedPrefab;
+        var prefabs = database.GetPrefabReferenceInfos();
+        foreach (var prefab in prefabs) {
+            if (!prefab.IsValid()) {
+                continue;
             }
+            return prefab.GetKey();
         }
         return selectedPrefab;
     }

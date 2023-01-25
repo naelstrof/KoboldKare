@@ -117,7 +117,7 @@ public class KoboldGenes {
 
     private byte GetRandomDick() {
         var penisDatabase = GameManager.GetPenisDatabase();
-        var penises = penisDatabase.GetPrefabReferenceInfos();
+        var penises = penisDatabase.GetValidPrefabReferenceInfos();
         var selectedPenis = penisDatabase.GetRandom();
         if (selectedPenis == null) {
             throw new UnityException("Failed to get a penis, penis database is probably empty.");

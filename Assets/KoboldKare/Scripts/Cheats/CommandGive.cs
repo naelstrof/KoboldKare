@@ -70,12 +70,13 @@ public class CommandGive : Command {
         }
         
         if (args[1].ToLower() == "machines") {
-            var allContractsHolder = GameObject.Find("CityRegion/Shops/ConstructionOffice/Contracts");
-            var allContracts = allContractsHolder.GetComponentsInChildren<MachineConstructionContract>();
+            var allContracts = new List<MachineConstructionContract>();
+            allContracts.AddRange(GameObject.Find("CityRegion/Shops/ConstructionOffice/Contracts").GetComponentsInChildren<MachineConstructionContract>());
+            allContracts.AddRange(GameObject.Find("CaveRegion/CaveStuff/clownTent/TentContractsCanvas").GetComponentsInChildren<MachineConstructionContract>());
             foreach(var curContract in allContracts) {
                 curContract.LocalUse(kobold);
             }
-            output.Append($"Constructed all {allContracts.Length} machines.\n");
+            output.Append($"Constructed all {allContracts.Count} machines.\n");
             return;
         }
 

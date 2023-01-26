@@ -68,6 +68,16 @@ public class CommandGive : Command {
             output.Append($"Gave 999 {args[1]} to {kobold.photonView.Owner.NickName}.\n");
             return;
         }
+        
+        if (args[1].ToLower() == "machines") {
+            var allContractsHolder = GameObject.Find("CityRegion/Shops/ConstructionOffice/Contracts");
+            var allContracts = allContractsHolder.GetComponentsInChildren<MachineConstructionContract>();
+            foreach(var curContract in allContracts) {
+                curContract.LocalUse(kobold);
+            }
+            output.Append($"Constructed all {allContracts.Length} machines.\n");
+            return;
+        }
 
         throw new CheatsProcessor.CommandException($"There is no prefab, reagent, or resource with name {args[1]}.");
     }

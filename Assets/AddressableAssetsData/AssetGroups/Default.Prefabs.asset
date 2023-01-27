@@ -18,30 +18,240 @@ MonoBehaviour:
   m_GUID: a53f47df935a2e34fba6cf067a466f8a
   m_SerializeEntries:
   - m_GUID: c03e2c2295efd074c8f62bae057e84ae
-    m_Address: Kobold
+    m_Address: Prefab/Kobold
     m_ReadOnly: 0
     m_SerializedLabels:
     - PlayableCharacter
   - m_GUID: e137b71360ce8944f98459e999796966
-    m_Address: Banana
+    m_Address: Prefab/Banana
     m_ReadOnly: 0
     m_SerializedLabels:
     - Fruit
   - m_GUID: a751d681912b4084f8f53000b749377f
-    m_Address: Melon
+    m_Address: Prefab/Melon
     m_ReadOnly: 0
     m_SerializedLabels:
     - Fruit
   - m_GUID: 489cb8e780e14014b904c97fd8a09dc7
-    m_Address: Pineapple
+    m_Address: Prefab/Pineapple
     m_ReadOnly: 0
     m_SerializedLabels:
     - Fruit
   - m_GUID: 3e37074b175176045ac3af82e92f423e
-    m_Address: Eggplant
+    m_Address: Prefab/Eggplant
     m_ReadOnly: 0
     m_SerializedLabels:
     - Fruit
+  - m_GUID: 4441b6e83d770e143b9f1c46146e5b87
+    m_Address: Prefab/Mushroom
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 897ffc1903f30f145bfdc5a277236fc3
+    m_Address: Prefab/Wheat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: cf5c01008cb4b0545966476ef384ba09
+    m_Address: Prefab/Egg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: b36b0bebccf6b1940a66ab268ec4ab24
+    m_Address: Prefab/Fish
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 988d54bb93eebc240bc5357a907ac80f
+    m_Address: Prefab/Scanner
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: a1900d6ba02d06942a5bf1372da55eec
+    m_Address: Prefab/Bomb
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 974826cd1bddc204db36aab32aadf599
+    m_Address: Prefab/Bucket
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 342c30da0f214a840aba5dac0e3300a0
+    m_Address: Prefab/Chest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: e19ec61e30e580d4480bdd0fc79fb3d3
+    m_Address: Prefab/Gloves
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 9c8d68eba3f57574b9467edd5fe0ec67
+    m_Address: Prefab/EquineDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 8a27b56e63a6bf54f850be571ad924d6
+    m_Address: Prefab/Hardhat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: b47e824ef9dd0654bae5ca33a2d5dd4b
+    m_Address: Prefab/Heart
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 8951fb1a948fc9d4ea8da627ec9ba72d
+    m_Address: Prefab/HighHeels
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: c20c66225b257bc4687f182bbc47645f
+    m_Address: Prefab/Ice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 62f1f2d2e2495264eb99d130922d1213
+    m_Address: Prefab/KandiDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 7921b482c36dd4a4784f00103bdc5aaa
+    m_Address: Prefab/KnottedDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: b3cc9a25c97302d4eb8f89f2edd85aa2
+    m_Address: Prefab/NippleBarbellPiercingsEquippable
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 134db3fc1a92e3842b8bd5fc77245d86
+    m_Address: Prefab/NipplePump
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 019fccd267e489d4492642add12c8517
+    m_Address: Prefab/Onahole
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: dd679e613b97496439b1e547faff665f
+    m_Address: Prefab/Plant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 22c1090591e3eb34a856a3b2c53168c2
+    m_Address: Prefab/SpikeCollar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: cd3bcb5c1635f6746aac112a39fc63d4
+    m_Address: Prefab/SpikeyBracelet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 4471a7aea07acb443aa85ca878c62a45
+    m_Address: Prefab/Tailbag
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 5caba9854a5d73c4dbed957bf746e25c
+    m_Address: Prefab/TailCollar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: dbac19d8567b6274c91a4e67784e6cdb
+    m_Address: Prefab/TaperedDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 22d7856b7bcf7564b99ec468373055f5
+    m_Address: Prefab/Trough
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 548aa0c098057f244bf888156ef74dcf
+    m_Address: Prefab/TopHat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 8cd5fd1acfe2d5c4dbc3dba9b3b4e2ca
+    m_Address: Prefab/WateringCan
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: a5aad232361f1f340b126e83a4b7f50d
+    m_Address: Prefab/PachinkoBallDontSave
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 4129bd0bdd2339b4897dddb11a89b196
+    m_Address: Prefab/MiniRadio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 3c363aedbbf27c0499712568f15c3bb9
+    m_Address: Prefab/Debris
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 32035abfbf56df34d9f5c85a5dd460c6
+    m_Address: Prefab/MoneyPile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: f42cf9decb64d9f4f9a00d76db944c15
+    m_Address: Prefab/FluidProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: f1707ecf51f6ef944901322a17a07b71
+    m_Address: Prefab/SoilTile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 0b8285820d8b50f418c441f28314673c
+    m_Address: Prefab/StarDoor
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 1eb252bc61f5bf94cb2976c62bebb0eb
+    m_Address: Prefab/ExplosionDontSave
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 67fc5f4d16d6ff84cb32a77fa5286b95
+    m_Address: Prefab/Steak
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: f19f212c05f978d4ea4196b7b5698849
+    m_Address: Prefab/MuscleFloaters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 7e38c0db2be3dfe4d8f30c1483108852
+    m_Address: Prefab/EnergyFloaters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 42fc2eef1f321a844a59836e8ccd423d
+    m_Address: Prefab/StarBurst
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 175378b3ef3acc344b9287bed0f5296b
+    m_Address: Prefab/SpaceBeam
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+  - m_GUID: 605a8a9893df4824fa39c399fbc0ead0
+    m_Address: Prefab/ChestArm01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

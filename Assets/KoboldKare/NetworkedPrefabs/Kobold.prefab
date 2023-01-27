@@ -329,7 +329,6 @@ MonoBehaviour:
         jawTransform: {fileID: 6506915555090380210}
         jawOpenDirection: {x: 0, y: 0, z: 1}
         koboldAnimator: {fileID: 6506915555083475516}
-        controllerAnimator: {fileID: 0}
     - rid: 8920608380542517267
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:
@@ -714,7 +713,6 @@ MonoBehaviour:
         jawTransform: {fileID: 6506915555090380210}
         jawOpenDirection: {x: 0, y: 0, z: 1}
         koboldAnimator: {fileID: 6506915555083475516}
-        controllerAnimator: {fileID: 0}
     - rid: 8920608344300847121
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
       data:

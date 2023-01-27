@@ -19,23 +19,28 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
     private void OnEnable() {
         mirrorObjects ??= new List<GameObject>();
         smrCopies ??= new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
+        dissolveTargets ??= new List<SkinnedMeshRenderer>();
+        
         kobold = GetComponentInParent<Kobold>();
         physics = kobold.GetComponent<JiggleSkin>();
         group = kobold.GetComponentInChildren<LODGroup>();
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
-        dissolveTargets = new List<SkinnedMeshRenderer>();
-        RegenerateMirror();
+        if (isActiveAndEnabled) {
+            RegenerateMirror();
+        }
     }
 
     public void SetDissolveTargets(ICollection<SkinnedMeshRenderer> newDissolveTargets) {
-        if (mirrorObjects == null) {
-            OnEnable();
-        }
         dissolveTargets = new List<SkinnedMeshRenderer>(newDissolveTargets);
-        RegenerateMirror();
+        OnEnable();
     }
 
     private void OnDisable() {
+        foreach (var r in dissolveTargets) {
+            foreach(Material m in r.materials) {
+                m.SetFloat(Head, 1f);
+            }
+        }
         DestroyMirror();
     }
 

@@ -18,37 +18,37 @@ MonoBehaviour:
   m_GUID: a89aa2b31543d0e49ba4e28036e8daa7
   m_SerializeEntries:
   - m_GUID: e45907392f014eb4bbdc3ad4d264c692
-    m_Address: KoboldDickEquine
+    m_Address: Penis/KoboldDickEquine
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: 98059cbadb8e177438956260aef74383
-    m_Address: KoboldDickTapered
+    m_Address: Penis/KoboldDickTapered
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: 4c45d3c462664734ca8a17cb20150d50
-    m_Address: KoboldDickKnotted
+    m_Address: Penis/KoboldDickKnotted
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: b7c7bb879ff151448b3eabab18398131
-    m_Address: KandiDickFlared
+    m_Address: Penis/KandiDickFlared
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: 5e4057cb2de57644aa978751466b4887
-    m_Address: SpikeyDick
+    m_Address: Penis/SpikeyDick
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: 3590e2b62abbda044b27e216980d0aa3
-    m_Address: PlatedDick
+    m_Address: Penis/PlatedDick
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
   - m_GUID: 8d33370ea91cbef4794d348c3398a28a
-    m_Address: HumanoidDick
+    m_Address: Penis/HumanoidDick
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis

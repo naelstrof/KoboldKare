@@ -106,6 +106,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 595eec29e9b16a74aad796b7a40ccde6, type: 2}
   - {fileID: 11400000, guid: 9beca49fc6fa98348b6f822be221beb4, type: 2}
   - {fileID: 11400000, guid: f55c7b51779c27848a8ab2f246f50e20, type: 2}
+  - {fileID: 11400000, guid: a47365f3673297545b6aa2744d78d1f9, type: 2}
+  - {fileID: 11400000, guid: c2fdd168794aee74eac8e5dda442b7ad, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -180,6 +182,8 @@ MonoBehaviour:
     - Reagent
     - Reaction
     - Penis
+    - Plant
+    - Seed
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

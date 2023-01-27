@@ -80,6 +80,15 @@ public class PrefabDatabase : ScriptableObject {
             }
         }
 
+        #if UNITY_EDITOR
+        // Return an empty object to avoid errors in scene play mode.
+        if (!ModManager.GetReady()) {
+            GameObject temp = new GameObject("fake prefab");
+            Destroy(temp,1f);
+            temp.SetActive(false);
+            return new PrefabReferenceInfo(this, "fake", temp);
+        }
+#endif
         return null;
     }
 

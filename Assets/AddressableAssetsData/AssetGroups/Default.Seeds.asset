@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Seeds
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Seeds
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4b226b51a49383e45b1f7a487e2de3ab
+  m_SerializeEntries:
+  - m_GUID: 5f36404cc174b6f48b26a4fa1b1a78ac
+    m_Address: Seed/MelonSeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Seed
+  - m_GUID: 7597a93ae1300a749bd93af03fb91db6
+    m_Address: Seed/BananaSeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Seed
+  - m_GUID: 27c2ed7cb6f300b4c8052ca5ad5a65d8
+    m_Address: Seed/WheatSeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Seed
+  - m_GUID: afe4fb2c12e494c4a8834e3908f14d60
+    m_Address: Seed/PineappleSeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Seed
+  - m_GUID: 6b808ba6736e8bd4f97ec4ee2e827b6c
+    m_Address: Seed/EggplantSeed
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Seed
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e3296e23f384ab744ab42ffd88e72158, type: 2}
+    - {fileID: 11400000, guid: f6b67d5ea7b5647459f35a1cc5858790, type: 2}

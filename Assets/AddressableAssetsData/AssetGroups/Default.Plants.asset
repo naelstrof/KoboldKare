@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Plants
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Plants
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b4aa108e943926d48b57c220f53e5c04
+  m_SerializeEntries:
+  - m_GUID: 5cd56e481dbd3214fb4d56d2a988bce5
+    m_Address: Plant/Egg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 4cc96092934e5334d866752992ec3639
+    m_Address: Plant/KoboldBuried
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 267506272f65e6147ad233563b57906a
+    m_Address: Plant/KoboldSpawnPlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 101335a2b540c734096d6463599f0e56
+    m_Address: Plant/EggplantMound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 7bf6fde4be8bbea4fab10416859f199b
+    m_Address: Plant/EggplantSprout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 1ef79935b8a2b4047912375688a223b7
+    m_Address: Plant/EggplantPlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: b148e15d1ad880f41bb736d1699edce9
+    m_Address: Plant/MelonMound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 65f87e918d2a6e948a21dd3fbf86b415
+    m_Address: Plant/MelonSprout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: e57214523ddc5e34eb7903a4578a30a5
+    m_Address: Plant/MelonPlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: bb60cb0e9981bdb47bc0b517654ba115
+    m_Address: Plant/PineappleMound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 40702ba5cf8d52748adf9d116796b10e
+    m_Address: Plant/PineappleSprout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 33da26e995ce63b40a16c012d21e9cb1
+    m_Address: Plant/PineapplePlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 21cc043214f4fda4ea256d551183c292
+    m_Address: Plant/WheatMound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 5006d6ad78f32ec45848d143c70cc092
+    m_Address: Plant/WheatSprout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: accd6376f68d8ce4aa48f655a13426a0
+    m_Address: Plant/WheatPlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 445b098e8df3d3a4eb935ec40f76d58a
+    m_Address: Plant/BananaMound
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: b607ec73bdc85c647a45eab978488141
+    m_Address: Plant/BananaSprout
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  - m_GUID: 9b5fa10772c55724bb91b51429fa4521
+    m_Address: Plant/BananaPlant
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Plant
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ccf55c06955fe6f46849f5199dc20b66, type: 2}
+    - {fileID: 11400000, guid: f4cfd9138cfc1614a9a2d9090e04bde5, type: 2}

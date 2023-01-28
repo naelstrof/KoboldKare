@@ -16,24 +16,32 @@ public class Pachinko : GenericUsable {
     [System.Serializable]
     public class Prize {
         public Transform location;
-        public UnityEvent prizeGet;
-        public ScriptablePurchasable prizeSpawn;
+        public PrefabDatabase prizeSpawn;
         public VisualEffect spawnVFX;
+        public Shader displayShader;
+        
+        private GameObject display;
+        private PrefabDatabase.PrefabReferenceInfo prefabReference;
+        private VisualEffect spawnVFXInstance;
         public void Spawn() {
-            GameObject gobj = GameObject.Instantiate(prizeSpawn.display, location);
-            ScriptablePurchasable.DisableAllButGraphics(gobj);
-            spawnVFX = Instantiate(spawnVFX, location);
+            prefabReference = prizeSpawn.GetRandom();
+            if (display != null) {
+                Destroy(display);
+            }
+            display = GenericPurchasable.GenerateDisplay(prefabReference.GetPrefab(), displayShader, location);
+            //ScriptablePurchasable.DisableAllButGraphics(gobj);
+            if (spawnVFXInstance == null) {
+                spawnVFXInstance = Instantiate(spawnVFX, location);
+            }
         }
         public void Claim() {
-            if ( prizeSpawn.spawnPrefab != null) {
-                GameObject award = PhotonNetwork.Instantiate(prizeSpawn.spawnPrefab.photonName, location.position, location.rotation);
-                //TODO: Play particle system to mask/explain instantaneous spawning
-                if(award.GetComponent<Rigidbody>() != null) {
-                    award.GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * 10f, ForceMode.VelocityChange); //Shoot the prize out from its spawn spot
-                }
+            GameObject award = PhotonNetwork.Instantiate(prefabReference.GetKey(), location.position, location.rotation);
+            //TODO: Play particle system to mask/explain instantaneous spawning
+            if(award.GetComponent<Rigidbody>() != null) {
+                award.GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * 10f, ForceMode.VelocityChange); //Shoot the prize out from its spawn spot
             }
-            prizeGet.Invoke();
-            spawnVFX.Play();
+            spawnVFXInstance.Play();
+            Spawn();
         }
     }
     [Header("Pachinko!")]

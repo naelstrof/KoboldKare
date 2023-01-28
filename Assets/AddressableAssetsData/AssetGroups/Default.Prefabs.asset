@@ -86,7 +86,7 @@ MonoBehaviour:
     m_Address: Prefab/Gloves
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: 9c8d68eba3f57574b9467edd5fe0ec67
     m_Address: Prefab/EquineDick
     m_ReadOnly: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Address: Prefab/Hardhat
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: b47e824ef9dd0654bae5ca33a2d5dd4b
     m_Address: Prefab/Heart
     m_ReadOnly: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
     m_Address: Prefab/HighHeels
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: c20c66225b257bc4687f182bbc47645f
     m_Address: Prefab/Ice
     m_ReadOnly: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     m_Address: Prefab/Onahole
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: dd679e613b97496439b1e547faff665f
     m_Address: Prefab/Plant
     m_ReadOnly: 0
@@ -146,22 +146,22 @@ MonoBehaviour:
     m_Address: Prefab/SpikeCollar
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: cd3bcb5c1635f6746aac112a39fc63d4
     m_Address: Prefab/SpikeyBracelet
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: 4471a7aea07acb443aa85ca878c62a45
     m_Address: Prefab/Tailbag
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: 5caba9854a5d73c4dbed957bf746e25c
     m_Address: Prefab/TailCollar
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: dbac19d8567b6274c91a4e67784e6cdb
     m_Address: Prefab/TaperedDick
     m_ReadOnly: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
     m_Address: Prefab/TopHat
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   - m_GUID: 8cd5fd1acfe2d5c4dbc3dba9b3b4e2ca
     m_Address: Prefab/WateringCan
     m_ReadOnly: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Address: Prefab/ChestArm01
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - Cosmetic
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

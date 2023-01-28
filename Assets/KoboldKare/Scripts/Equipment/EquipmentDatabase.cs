@@ -1,41 +1,64 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipmentDatabase : MonoBehaviour {
     private static EquipmentDatabase instance;
-    private Dictionary<string,Equipment> equipmentDictionary = new Dictionary<string, Equipment>();
-    private static EquipmentDatabase GetInstance() {
-        if (instance == null) {
-            instance = Object.FindObjectOfType<EquipmentDatabase>();
-        }
-        return instance;
-    }
     public void Awake() {
         if (instance != null) {
             Destroy(this);
         } else {
             instance = this;
         }
-        foreach(var equipment in equipments) {
-            equipmentDictionary.Add(equipment.name, equipment);
-        }
-        if (equipmentDictionary.Count >= 256) {
+        
+        equipmentSorter = new EquipmentSorter();
+        
+        if (equipments.Count >= 256) {
             throw new UnityException("Too many equipment! Only 256 unique equipment allowed...");
         }
     }
+    private class EquipmentSorter : IComparer<Equipment> {
+        public int Compare(Equipment x, Equipment y) {
+            return String.Compare(x.name, y.name, StringComparison.InvariantCulture);
+        }
+    }
+    private EquipmentSorter equipmentSorter;
+    public static void AddEquipment(Equipment newEquipment) {
+        for (int i = 0; i < instance.equipments.Count; i++) {
+            var reagent = instance.equipments[i];
+            // Replace strategy
+            if (reagent.name == newEquipment.name) {
+                instance.equipments[i] = newEquipment;
+                instance.equipments.Sort(instance.equipmentSorter);
+                return;
+            }
+        }
+
+        instance.equipments.Add(newEquipment);
+        instance.equipments.Sort(instance.equipmentSorter);
+    }
+    
+    public static void RemoveEquipment(Equipment equipment) {
+        if (instance.equipments.Contains(equipment)) {
+            instance.equipments.Remove(equipment);
+        }
+    }
+    
     public static Equipment GetEquipment(string name) {
-        if (GetInstance().equipmentDictionary.ContainsKey(name)) {
-            return GetInstance().equipmentDictionary[name];
+        foreach (var equipment in instance.equipments) {
+            if (equipment.name == name) {
+                return equipment;
+            }
         }
         throw new UnityException("Failed to find equipment with name " + name);
     }
     public static Equipment GetEquipment(byte id) {
-        return GetInstance().equipments[id];
+        return instance.equipments[id];
     }
     public static byte GetID(Equipment equipment) {
-        return (byte)GetInstance().equipments.IndexOf(equipment);
+        return (byte)instance.equipments.IndexOf(equipment);
     }
-    public static List<Equipment> GetEquipments() => GetInstance().equipments;
+    public static List<Equipment> GetEquipments() => instance.equipments;
     public List<Equipment> equipments;
 }

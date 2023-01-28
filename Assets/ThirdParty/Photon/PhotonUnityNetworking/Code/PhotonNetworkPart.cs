@@ -10,6 +10,8 @@
 
 
 using NetStack.Serialization;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
 namespace Photon.Pun
 {
@@ -220,7 +222,7 @@ namespace Photon.Pun
 
 
         // for asynchronous network synched loading.
-        private static AsyncOperation _AsyncLevelLoadingOperation;
+        private static AsyncOperationHandle<SceneInstance> _AsyncLevelLoadingOperation;
 
         private static float _levelLoadingProgress = 0f;
 
@@ -237,9 +239,9 @@ namespace Photon.Pun
         {
             get
             {
-                if (_AsyncLevelLoadingOperation != null)
+                if (_AsyncLevelLoadingOperation.IsValid())
                 {
-                    _levelLoadingProgress = _AsyncLevelLoadingOperation.progress;
+                    _levelLoadingProgress = _AsyncLevelLoadingOperation.PercentComplete;
                 }
                 else if (_levelLoadingProgress > 0f)
                 {
@@ -259,10 +261,8 @@ namespace Photon.Pun
         private static void LeftRoomCleanup()
         {
             // Clean up if we were loading asynchronously.
-            if (_AsyncLevelLoadingOperation != null)
-            {
-                _AsyncLevelLoadingOperation.allowSceneActivation = false;
-                _AsyncLevelLoadingOperation = null;
+            if (_AsyncLevelLoadingOperation.IsValid()) {
+                _AsyncLevelLoadingOperation = default;
             }
 
 
@@ -1470,7 +1470,7 @@ namespace Photon.Pun
         {
             if (loadingLevelAndPausedNetwork)
             {
-                _AsyncLevelLoadingOperation = null;
+                _AsyncLevelLoadingOperation = default;
                 loadingLevelAndPausedNetwork = false;
                 PhotonNetwork.IsMessageQueueRunning = true;
             }
@@ -2122,6 +2122,10 @@ namespace Photon.Pun
 
         internal static void SetLevelInPropsIfSynced(object levelId)
         {
+            if (levelId is int) {
+                throw new UnityException("Cannot have level be set by int, Addressables need a string.");
+            }
+
             if (!PhotonNetwork.AutomaticallySyncScene || !PhotonNetwork.IsMasterClient || PhotonNetwork.CurrentRoom == null)
             {
                 return;
@@ -2161,15 +2165,14 @@ namespace Photon.Pun
 
 
             // if the new levelId does not match the current room-property, we can cancel existing loading (as we start a new one)
-            if (_AsyncLevelLoadingOperation != null)
+            if (_AsyncLevelLoadingOperation.IsValid())
             {
-                if (!_AsyncLevelLoadingOperation.isDone)
+                if (!_AsyncLevelLoadingOperation.IsDone)
                 {
                     Debug.LogWarning("PUN cancels an ongoing async level load, as another scene should be loaded. Next scene to load: " + levelId);
                 }
 
-                _AsyncLevelLoadingOperation.allowSceneActivation = false;
-                _AsyncLevelLoadingOperation = null;
+                _AsyncLevelLoadingOperation = default;
             }
 
 

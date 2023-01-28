@@ -22,9 +22,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     [SerializeField]
     private Shader displayShader;
 
-    [SerializeField]
-    private ScriptablePurchasable purchasable;
-    
     private string purchasablePhotonName;
     
     [SerializeField]
@@ -39,8 +36,6 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     [SerializeField]
     private MoneyFloater floater;
 
-    //public ScriptablePurchasable GetPurchasable() => purchasable;
-    public delegate void PurchasableChangedAction(ScriptablePurchasable newPurchasable);
     public virtual void Start() {
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
@@ -54,22 +49,12 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;
     }
-    protected void SwapTo(string targetPurchasable) {
-        if (purchasablePhotonName == targetPurchasable || !ModManager.GetReady()) {
-            return;
-        }
-        if (display != null) {
-            Destroy(display);
-        }
-        purchasablePhotonName = targetPurchasable;
-        display = new GameObject("Display");
-        display.transform.SetParent(transform);
-        display.transform.localPosition = Vector3.zero;
-        display.transform.localRotation = Quaternion.identity;
 
-        var targetPrefab = ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache[targetPurchasable];
-        Bounds encapsulate = new Bounds(transform.position, Vector3.zero);
-
+    public static GameObject GenerateDisplay(GameObject targetPrefab, Shader displayShader, Transform parent) {
+        GameObject newDisplay = new GameObject("Display");
+        newDisplay.transform.SetParent(parent);
+        newDisplay.transform.localPosition = Vector3.zero;
+        newDisplay.transform.localRotation = Quaternion.identity;
         List<Renderer> displayRenderers = new List<Renderer>(targetPrefab.GetComponentsInChildren<Renderer>());
         LODGroup checkGroup = targetPrefab.GetComponentInChildren<LODGroup>();
         if (checkGroup != null) {
@@ -88,50 +73,71 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
             if (!r.enabled) {
                 continue;
             }
+
             if (r is SkinnedMeshRenderer targetSkinnedMeshRenderer) {
-                var obj = new GameObject("DisplayPart",typeof(MeshRenderer), typeof(MeshFilter));
-                obj.transform.SetParent(display.transform);
+                var obj = new GameObject("DisplayPart", typeof(MeshRenderer), typeof(MeshFilter));
+                obj.transform.SetParent(newDisplay.transform);
                 obj.transform.localPosition = targetPrefab.transform.InverseTransformPoint(r.transform.position);
-                obj.transform.localRotation = Quaternion.Inverse(targetPrefab.transform.rotation)*r.transform.rotation;
+                obj.transform.localRotation =
+                    Quaternion.Inverse(targetPrefab.transform.rotation) * r.transform.rotation;
                 obj.transform.localScale = targetSkinnedMeshRenderer.rootBone.lossyScale;
                 var meshRenderer = obj.GetComponent<MeshRenderer>();
                 List<Material> newMaterials = new List<Material>();
-                foreach(var mat in targetSkinnedMeshRenderer.sharedMaterials) {
+                foreach (var mat in targetSkinnedMeshRenderer.sharedMaterials) {
                     newMaterials.Add(Material.Instantiate(mat));
                 }
+
                 foreach (var mat in newMaterials) {
                     mat.shader = displayShader;
                 }
+
                 meshRenderer.materials = newMaterials.ToArray();
                 var meshFilter = obj.GetComponent<MeshFilter>();
                 meshFilter.sharedMesh = targetSkinnedMeshRenderer.sharedMesh;
-                encapsulate.Encapsulate(meshRenderer.bounds);
             }
 
             if (r is MeshRenderer targetMeshRenderer) {
-                var obj = new GameObject("DisplayPart",typeof(MeshRenderer), typeof(MeshFilter));
-                obj.transform.SetParent(display.transform);
+                var obj = new GameObject("DisplayPart", typeof(MeshRenderer), typeof(MeshFilter));
+                obj.transform.SetParent(newDisplay.transform);
                 obj.transform.localPosition = targetPrefab.transform.InverseTransformPoint(r.transform.position);
-                obj.transform.localRotation = Quaternion.Inverse(targetPrefab.transform.rotation)*r.transform.rotation;
+                obj.transform.localRotation =
+                    Quaternion.Inverse(targetPrefab.transform.rotation) * r.transform.rotation;
                 obj.transform.localScale = r.transform.lossyScale;
                 var meshRenderer = obj.GetComponent<MeshRenderer>();
                 List<Material> newMaterials = new List<Material>();
-                foreach(var mat in targetMeshRenderer.sharedMaterials) {
+                foreach (var mat in targetMeshRenderer.sharedMaterials) {
                     newMaterials.Add(Material.Instantiate(mat));
                 }
+
                 foreach (var mat in newMaterials) {
                     mat.shader = displayShader;
                 }
+
                 meshRenderer.sharedMaterials = newMaterials.ToArray();
                 var meshFilter = obj.GetComponent<MeshFilter>();
                 var targetMeshFilter = r.GetComponent<MeshFilter>();
                 meshFilter.sharedMesh = targetMeshFilter.sharedMesh;
-                encapsulate.Encapsulate(targetMeshRenderer.bounds);
             }
-
         }
 
-        //Bounds centerBounds = ScriptablePurchasable.DisableAllButGraphics(display);
+        return newDisplay;
+    }
+
+    protected void SwapTo(string targetPurchasable) {
+        if (purchasablePhotonName == targetPurchasable || !ModManager.GetReady()) {
+            return;
+        }
+        if (display != null) {
+            Destroy(display);
+        }
+        purchasablePhotonName = targetPurchasable;
+        var targetPrefab = ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache[targetPurchasable];
+        display = GenerateDisplay(targetPrefab, displayShader, transform);
+        
+        Bounds encapsulate = new Bounds(transform.position, Vector3.zero);
+        foreach(var r in display.GetComponentsInChildren<Renderer>()) {
+            encapsulate.Encapsulate(r.bounds);
+        }
         floater.SetBounds(encapsulate);
         display.SetActive(inStock);
         floater.SetText(price.ToString());

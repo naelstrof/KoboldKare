@@ -19672,7 +19672,6 @@ GameObject:
   - component: {fileID: 1347546203939439728}
   - component: {fileID: 1690795527870271038}
   - component: {fileID: 8536427713948840408}
-  - component: {fileID: 6873854542477212813}
   - component: {fileID: 1878465994047708710}
   - component: {fileID: 9077834555265927992}
   - component: {fileID: 2834318638625028991}
@@ -19815,6 +19814,7 @@ MonoBehaviour:
   - rid: 7257832884800847873
   - rid: 7257832884800847876
   - rid: 7257832884800847877
+  - rid: 7257832916695908353
   references:
     version: 2
     RefIds:
@@ -19871,6 +19871,14 @@ MonoBehaviour:
         searchLabel:
           m_LabelString: Seed
         targetDatabase: {fileID: 11400000, guid: f4e12737025c85843b7957b67dd8ffa2,
+          type: 2}
+        networkedPrefabs: 1
+    - rid: 7257832916695908353
+      type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Cosmetic
+        targetDatabase: {fileID: 11400000, guid: 5953f84f337c12345b9e451e6f832759,
           type: 2}
         networkedPrefabs: 1
 --- !u!114 &5138500224039285429
@@ -20034,17 +20042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ade0a4a11185146ab42e90641dad56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipments:
-  - {fileID: 11400000, guid: 1168035d2d0bc13448755f0f073f461e, type: 2}
-  - {fileID: 11400000, guid: aa8095326872d2d4cbee52ca534c4232, type: 2}
-  - {fileID: 11400000, guid: 8fb800402920c5a43871ba27d9851d95, type: 2}
-  - {fileID: 11400000, guid: cb82ec0dce5a8b84f8aab9df8ae62633, type: 2}
-  - {fileID: 11400000, guid: 19da76885230c4240bcaa1095a8ddc66, type: 2}
-  - {fileID: 11400000, guid: edcb0428e67695545a9e33f82825ed78, type: 2}
-  - {fileID: 11400000, guid: c4eba2981bb368b47ba825725bd4077f, type: 2}
-  - {fileID: 11400000, guid: 7643c49d85c6c6742a744c261dbadade, type: 2}
-  - {fileID: 11400000, guid: 2d99811e241e50f45ac4286a4664156c, type: 2}
-  - {fileID: 11400000, guid: 863f4964edce0b749adec4b77b838fed, type: 2}
+  equipments: []
 --- !u!114 &1690795527870271038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20089,42 +20087,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   builtInPrefabs: []
---- !u!114 &6873854542477212813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6678f6218d03f6a488acb4b5847d493b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  purchasables:
-  - {fileID: 11400000, guid: 66a4b6d20fb90b0449015f9d61fc7275, type: 2}
-  - {fileID: 11400000, guid: a9ebf6e8cc250254ba4ae79d04368863, type: 2}
-  - {fileID: 11400000, guid: 33922d723fe2dac4ba302e0b2b9171f1, type: 2}
-  - {fileID: 11400000, guid: 7394d72c0d8bb554e97f4017c7a9000a, type: 2}
-  - {fileID: 11400000, guid: 0be7317f3495e0049b4f0c3bb42c1283, type: 2}
-  - {fileID: 11400000, guid: 5f30375a350596d4bbc95495c7530f2b, type: 2}
-  - {fileID: 11400000, guid: f84164ef62f7bf64a970b4bb94e26b4f, type: 2}
-  - {fileID: 11400000, guid: b0e9b09db0562dd46bb99ffd3fbc9efc, type: 2}
-  - {fileID: 11400000, guid: 308774b19397a2c44864dc9f825a9e75, type: 2}
-  - {fileID: 11400000, guid: c1de5610099f66a4e85ba78e89f0f582, type: 2}
-  - {fileID: 11400000, guid: 94905061cda213b4eb219ca535b2acb6, type: 2}
-  - {fileID: 11400000, guid: 564ddc1d89cdaeb478f9860fceae807a, type: 2}
-  - {fileID: 11400000, guid: 68ab2bcc59b18634993d9915a506a575, type: 2}
-  - {fileID: 11400000, guid: cd841ef25a2f50d4bbb28a89a0f36cf6, type: 2}
-  - {fileID: 11400000, guid: 2172a736d19be8d47a2c7f1e375a6d15, type: 2}
-  - {fileID: 11400000, guid: 6951725613aa28e4a965c086432bcb5d, type: 2}
-  - {fileID: 11400000, guid: 74407138233f66748b88f57006b0bdb3, type: 2}
-  - {fileID: 11400000, guid: 80e7d1e4bceb55142946a2ed586564ed, type: 2}
-  - {fileID: 11400000, guid: e62c1d3f96f9d5841835f4a5c486e633, type: 2}
-  - {fileID: 11400000, guid: 060b6b902ea097843b1a8cad38a65633, type: 2}
-  - {fileID: 11400000, guid: 1bc487e4f445fcc45bcd49294a95f6d9, type: 2}
-  - {fileID: 11400000, guid: 1d45b0fca3dd84943bb060720fdd7469, type: 2}
-  - {fileID: 11400000, guid: d6f727311c5055a4dba33c636026d635, type: 2}
 --- !u!114 &1878465994047708710
 MonoBehaviour:
   m_ObjectHideFlags: 0

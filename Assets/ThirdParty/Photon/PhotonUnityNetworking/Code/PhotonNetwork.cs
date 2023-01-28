@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 
+
 namespace Photon.Pun
 {
     using System.Diagnostics;
@@ -18,6 +19,7 @@ namespace Photon.Pun
     using System.Collections.Generic;
     using ExitGames.Client.Photon;
     using UnityEngine.SceneManagement;
+    using UnityEngine.AddressableAssets;
 
     using Photon.Realtime;
     using Debug = UnityEngine.Debug;
@@ -3060,14 +3062,15 @@ namespace Photon.Pun
                 return;
             }
 
-            if (PhotonNetwork.AutomaticallySyncScene)
-            {
+            if (PhotonNetwork.AutomaticallySyncScene) {
                 SetLevelInPropsIfSynced(levelNumber);
             }
 
+            throw new UnityException("Cannot load level via build index, as we should use addressables.");
+
             PhotonNetwork.IsMessageQueueRunning = false;
             loadingLevelAndPausedNetwork = true;
-            _AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelNumber,LoadSceneMode.Single);
+            //_AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelNumber,LoadSceneMode.Single);
         }
 
         /// <summary>This method wraps loading a level asynchronously and pausing network messages during the process.</summary>
@@ -3109,7 +3112,8 @@ namespace Photon.Pun
 
             PhotonNetwork.IsMessageQueueRunning = false;
             loadingLevelAndPausedNetwork = true;
-            _AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+            //_AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+            _AsyncLevelLoadingOperation = Addressables.LoadSceneAsync(levelName, LoadSceneMode.Single);
         }
 
         /// <summary>

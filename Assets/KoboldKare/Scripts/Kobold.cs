@@ -153,6 +153,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                     mozzarella.SetVolumeMultiplier(alloc.volume);
                     mozzarella.SetLocalForward(Vector3.up);
                     Color color = alloc.GetColor();
+                    mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (photonView.IsMine) {
                             GenericReagentContainer container =

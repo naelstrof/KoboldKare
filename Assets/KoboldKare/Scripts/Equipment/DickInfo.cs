@@ -209,6 +209,8 @@ public class DickInfo : MonoBehaviour {
                     ReagentContents alloc = new ReagentContents();
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
+                    Color color = alloc.GetColor();
+                    mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (attachedKobold == null) {
                             return;
@@ -227,7 +229,7 @@ public class DickInfo : MonoBehaviour {
 
                         //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.red, 5f);
                         if (alloc.volume > 0f) {
-                            set.cumSplatProjectorMaterial.color = alloc.GetColor();
+                            set.cumSplatProjectorMaterial.color = color;
                         }
                         PaintDecal.RenderDecalForCollider(hit.collider, set.cumSplatProjectorMaterial,
                             hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),

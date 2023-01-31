@@ -69,7 +69,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2274364764476756032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.052, z: 0.0219}
+  m_LocalPosition: {x: 0, y: -0.052, z: 0.0251}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -700,6 +700,188 @@ Transform:
   m_Father: {fileID: 4613256295653274016}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2924210045645442985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624112700736163710}
+  m_Layer: 13
+  m_Name: OutsidePenetrable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624112700736163710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2924210045645442985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.097, z: 0.239}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6072806224816537904}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3008864899484244289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8818876795878351904}
+  - component: {fileID: 1491743011633877979}
+  m_Layer: 13
+  m_Name: ButtPenetrable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8818876795878351904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3008864899484244289}
+  m_LocalRotation: {x: 0.24952519, y: -0.00000011543855, z: -0.000000029745735, w: 0.9683683}
+  m_LocalPosition: {x: 0, y: -0.08486545, z: -0.09447758}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4613256295653274016}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1491743011633877979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3008864899484244289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0550636f1faf54ea9fada34b07cd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {fileID: 8818876795878351904}
+  - {fileID: 2250249793511135589}
+  - {fileID: 6072806224816537904}
+  - {fileID: 624112700736163710}
+  splineTension: 0.5
+  listeners:
+  - rid: 7257832986391347200
+  - rid: 7257832986391347201
+  - rid: 7257832986391347202
+  - rid: 7257832986391347203
+  - rid: 7257832986391347204
+  - rid: 7257832986391347205
+  - rid: 7257832986391347206
+  references:
+    version: 2
+    RefIds:
+    - rid: 7257832986391347200
+      type: {class: PushPullExpandBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0
+        offsetCorrectionBone: {fileID: 603326326748828902}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          expandBlendshapeName: ExpandButt
+          pullBlendshapeName: ButtTug
+          pushBlendshapeName: ButtPush
+          expandBlendshapeID: 32
+          pullBlendshapeID: 33
+          pushBlendshapeID: 34
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.015
+        pullT: -0.01
+        pushT: 0.01
+        overdrive: 1
+    - rid: 7257832986391347201
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.219
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge1
+          blendshapeID: 40
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347202
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.262
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge2
+          blendshapeID: 41
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347203
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.308
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge3
+          blendshapeID: 42
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347204
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.344
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge4
+          blendshapeID: 43
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347205
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.572
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ThroatOpen
+          blendshapeID: 44
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
+    - rid: 7257832986391347206
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.698
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: BackwardThroatPenetrate
+          blendshapeID: 45
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
 --- !u!1 &6200774601068112980
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +928,37 @@ CapsuleCollider:
   m_Height: 0.40502483
   m_Direction: 1
   m_Center: {x: -0.009128271, y: 0.2129629, z: -0.0000015887027}
+--- !u!1 &6676432697898321424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2250249793511135589}
+  m_Layer: 13
+  m_Name: ButtPenetrable1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2250249793511135589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6676432697898321424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.02, z: 0.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4367537370113003704}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7807858163633924855
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +1006,37 @@ CapsuleCollider:
   m_Height: 0.40502483
   m_Direction: 1
   m_Center: {x: -0.0012635041, y: 0.21296285, z: -0.0000016521253}
+--- !u!1 &9014270494548346470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6453316820815694996}
+  m_Layer: 0
+  m_Name: Ignore
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6453316820815694996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9014270494548346470}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7253687785176845066}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2274364766201379967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1134,6 +1378,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.size
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[32]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[33]
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[34]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[43]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[44]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1633454708209498569, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
@@ -1646,6 +1925,12 @@ ConfigurableJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &603326326748828902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7507684555519055719, guid: 331e88294c292234a86925ccd7e83f87,
+    type: 3}
+  m_PrefabInstance: {fileID: 2274364766201379967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &662475372023914797 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
@@ -2262,6 +2547,12 @@ ConfigurableJoint:
 --- !u!4 &4126780173641975506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2798263691489245869, guid: 331e88294c292234a86925ccd7e83f87,
+    type: 3}
+  m_PrefabInstance: {fileID: 2274364766201379967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4367537370113003704 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2525594347270614215, guid: 331e88294c292234a86925ccd7e83f87,
     type: 3}
   m_PrefabInstance: {fileID: 2274364766201379967}
   m_PrefabAsset: {fileID: 0}

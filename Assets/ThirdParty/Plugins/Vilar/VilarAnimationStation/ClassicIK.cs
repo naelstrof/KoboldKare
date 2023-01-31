@@ -162,11 +162,11 @@ namespace Vilar.IK {
 			};
 			leftHandCorrection = new CorrectedTransform {
 				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftHand),
-				rotationCorrection = Quaternion.identity,
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftHand), Vector3.up),
 			};
 			rightHandCorrection = new CorrectedTransform {
 				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightHand),
-				rotationCorrection = Quaternion.identity,
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightHand), Vector3.up),
 			};
 			hipCorrection = new CorrectedTransform {
 				targetTransform = animator.GetBoneTransform(HumanBodyBones.Hips),

@@ -5,6 +5,7 @@ using System;
 using NetStack.Serialization;
 using Photon.Pun;
 using Photon.Realtime;
+using Vilar.IK;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -13,9 +14,15 @@ public class CharacterDescriptorEditor : Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         var characterDescriptor = (CharacterDescriptor)target;
-        if (characterDescriptor.InitializeIfNeeded()) {
+        if (characterDescriptor.InitializeIfNeeded(false)) {
             EditorUtility.SetDirty(characterDescriptor);
         }
+
+        if (GUILayout.Button("Reset default assets")) {
+            characterDescriptor.InitializeIfNeeded(true);
+            EditorUtility.SetDirty(characterDescriptor);
+        }
+
         if (characterDescriptor.GetDisplayAnimator() != null && GUILayout.Button("Create Ragdoll")) {
             throw new NotImplementedException("Haven't implemented ragdoll automation yet. Sorry!!");
         }
@@ -63,6 +70,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     [SerializeField] private AudioPack unfreezeAudioPack;
     [SerializeField] private TMPro.TMP_Text floatingTextPrefab;
     [SerializeField] private AudioPack chatYowlPack;
+    [SerializeField] private AnimationCurve antiPopCurveIK;
+    [SerializeField] private AnimationClip tposeIK;
 
     public Animator GetDisplayAnimator() {
         return displayAnimator;
@@ -76,7 +85,11 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         body.interpolation = RigidbodyInterpolation.Interpolate;
         body.collisionDetectionMode = CollisionDetectionMode.Continuous;
         body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            
+
+        var classicIK = displayAnimator.gameObject.AddComponent<ClassicIK>();
+        classicIK.SetAntiPopAndTPose(tposeIK, antiPopCurveIK);
+        classicIK.enabled = false;
+        
         gameObject.AddComponent<PhysicsAudio>();
         characterCollider = gameObject.AddComponent<CapsuleCollider>();
         characterCollider.center = colliderOffset;
@@ -169,29 +182,100 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     }
 
 #if UNITY_EDITOR
-    public bool InitializeIfNeeded() {
-        if (footLand != null || footstepPack != null || spaceLubeMaterial != null || circlePoof != null ||
+    public bool InitializeIfNeeded(bool force) {
+        if (force == false && (footLand != null || footstepPack != null || spaceLubeMaterial != null || circlePoof != null ||
             walkDust != null || playerPossessionPrefab != null || handDisplayPrefab != null || freezeVFXAsset != null ||
-            unfreezeAudioPack != null) return false;
-        footLand = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("112a2b2f14f04c1458dded07c0b00fe9"));
-        footstepPack = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("23b69436bc3d7a944a598da4b1206fc9"));
-        spaceLubeMaterial = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("efd1f3995e4a5bf4d8d9c8ce1d941afb"));
-        circlePoof = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("f20d228138364844893451ae57934590"));
-        walkDust = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("b96b53155ee08af498a985d2b06db2f2"));
+            unfreezeAudioPack != null)) return false;
+        var serializedObject = new SerializedObject(this);
+        
+        serializedObject.FindProperty("footLand").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("112a2b2f14f04c1458dded07c0b00fe9"));
+        serializedObject.FindProperty("footstepPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("23b69436bc3d7a944a598da4b1206fc9"));
+        serializedObject.FindProperty("spaceLubeMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("efd1f3995e4a5bf4d8d9c8ce1d941afb"));
+        serializedObject.FindProperty("circlePoof").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("f20d228138364844893451ae57934590"));
+        serializedObject.FindProperty("walkDust").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("b96b53155ee08af498a985d2b06db2f2"));
         var playerPossessionGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("118737100278bba4f87f35b3e4e0c086"));
-        playerPossessionPrefab = playerPossessionGameObject.GetComponent<PlayerPossession>();
-        handDisplayPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("3100fdf2173d9c744a5c465ae3b19715"));
-        freezeVFXAsset = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("3a30a12aee1b7d64e957ed14355d7461"));
-        unfreezeAudioPack = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("cd0a89d93b29b8a49942e072d4ff62df"));
+        serializedObject.FindProperty("playerPossessionPrefab").objectReferenceValue = playerPossessionGameObject.GetComponent<PlayerPossession>();
+        serializedObject.FindProperty("handDisplayPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("3100fdf2173d9c744a5c465ae3b19715"));
+        serializedObject.FindProperty("freezeVFXAsset").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("3a30a12aee1b7d64e957ed14355d7461"));
+        serializedObject.FindProperty("unfreezeAudioPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("cd0a89d93b29b8a49942e072d4ff62df"));
         var floatingTextGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("74149ab5c35e0da45a56910118a6dd59"));
-        floatingTextPrefab = floatingTextGameObject.GetComponent<TMPro.TMP_Text>();
-        chatYowlPack = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("165a7a3804fbb684cba72c68e0264320"));
+        serializedObject.FindProperty("floatingTextPrefab").objectReferenceValue = floatingTextGameObject.GetComponent<TMPro.TMP_Text>();
+        serializedObject.FindProperty("chatYowlPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("165a7a3804fbb684cba72c68e0264320"));
         photonView = GetComponent<PhotonView>();
-        photonView.OwnershipTransfer = OwnershipOption.Request;
-        photonView.observableSearch = PhotonView.ObservableSearch.AutoFindAll;
-        EditorUtility.SetDirty(photonView);
+        var photonViewSerializedObject = new SerializedObject(photonView);
+        photonViewSerializedObject.FindProperty("OwnershipTransfer").intValue = (int)OwnershipOption.Request;
+        photonViewSerializedObject.FindProperty("observableSearch").intValue = (int)PhotonView.ObservableSearch.AutoFindAll;
+        var popCurve = new AnimationCurve();
+        popCurve.AddKey(new Keyframe { time = 0f, value = 0f, outTangent = 1.3f });
+        popCurve.AddKey(new Keyframe { time = 1.1f, value = 1f, inTangent = 0.1f });
+        serializedObject.FindProperty("antiPopCurveIK").animationCurveValue = popCurve;
+        var TPoseAvatar = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath("46bd2d6ffa5c8c14f850b597913018ee"));
+        foreach(var asset in TPoseAvatar) {
+            if (asset is not AnimationClip clip || !clip.name.Contains("T-Pose")) continue;
+            serializedObject.FindProperty("tposeIK").objectReferenceValue = clip;
+            break;
+        }
+
+        var genericBounceCurve = AssetDatabase.LoadAssetAtPath<InflatableCurve>(AssetDatabase.GUIDToAssetPath("e18312d1b399ef44cbae03acd0a32afb"));
+        var bellyBounceCurve = AssetDatabase.LoadAssetAtPath<InflatableCurve>(AssetDatabase.GUIDToAssetPath("8bb8ec1eabdcb7043a4605858f604a8a"));
+        var kobold = GetComponent<Kobold>();
+        var koboldSerializedObject = new SerializedObject(kobold);
+        koboldSerializedObject.FindProperty("bellyInflater").FindPropertyRelative("bounce").objectReferenceValue = bellyBounceCurve;
+        koboldSerializedObject.FindProperty("fatnessInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
+        koboldSerializedObject.FindProperty("sizeInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
+        koboldSerializedObject.FindProperty("boobsInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
+        var attachPointArray = koboldSerializedObject.FindProperty("attachPoints");
+        CreateOrSetAttachPoint(Equipment.AttachPoint.Chest, displayAnimator.GetBoneTransform(HumanBodyBones.Chest),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.Head, displayAnimator.GetBoneTransform(HumanBodyBones.Head),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.Neck, displayAnimator.GetBoneTransform(HumanBodyBones.Neck),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftCalf, displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerLeg),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.RightCalf, displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerLeg),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftForearm, displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerArm),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.RightForearm, displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerArm),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftHand, displayAnimator.GetBoneTransform(HumanBodyBones.LeftHand),
+            attachPointArray);
+        CreateOrSetAttachPoint(Equipment.AttachPoint.RightHand, displayAnimator.GetBoneTransform(HumanBodyBones.RightHand),
+            attachPointArray);
+        
+        koboldSerializedObject.FindProperty("heartPrefab").FindPropertyRelative("gameObject").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("b47e824ef9dd0654bae5ca33a2d5dd4b"));
+        koboldSerializedObject.FindProperty("heartHitMask").intValue = 1 << LayerMask.NameToLayer("UsablePickups");
+        koboldSerializedObject.FindProperty("tummyGrumbles").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("67a1644657f256b47ab2a61a75c069d6")); 
+        koboldSerializedObject.FindProperty("garglePack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("2098de8eac6d5e0419986616fa2a8f15")); 
+        koboldSerializedObject.FindProperty("milkLactator").FindPropertyRelative("milkSplatMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath("3821f9133468bfa449f3dbee8d5a1aff"));
+
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        serializedObject.ApplyModifiedProperties();
+        photonViewSerializedObject.ApplyModifiedProperties();
+        koboldSerializedObject.ApplyModifiedProperties();
+        EditorUtility.SetDirty(gameObject);
         return true;
     }
+
+    private void CreateOrSetAttachPoint(Equipment.AttachPoint pointReference, Transform targetTransform, SerializedProperty prop) {
+        if (targetTransform == null) {
+            return;
+        }
+
+        for (int i = 0; i < prop.arraySize; i++) {
+            var targetProp = prop.GetArrayElementAtIndex(i);
+            if (targetProp.FindPropertyRelative("attachPoint").intValue != (int)pointReference) continue;
+            targetProp.FindPropertyRelative("targetTransform").objectReferenceValue = targetTransform;
+            return;
+        }
+
+        prop.InsertArrayElementAtIndex(0);
+        var newProp = prop.GetArrayElementAtIndex(0);
+        newProp.FindPropertyRelative("attachPoint").intValue = (int)pointReference;
+        newProp.FindPropertyRelative("targetTransform").objectReferenceValue = targetTransform;
+    }
+
     private void OnDrawGizmosSelected() {
         DrawWireCapsule(transform.localToWorldMatrix, colliderOffset+Vector3.up * (colliderHeight-colliderRadius*2f) * 0.5f,
             colliderOffset+Vector3.down * (colliderHeight-colliderRadius*2f) * 0.5f, colliderRadius);

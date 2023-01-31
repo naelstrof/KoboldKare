@@ -9,10 +9,10 @@ namespace Naelstrof.Inflatable {
         private float currentSize;
         private float targetSize;
         private bool tweenRunning = false;
-        [SerializeField]
-        private AnimationCurve bounceCurve;
-        [SerializeField]
-        private float bounceDuration;
+        //[SerializeField] private AnimationCurve bounceCurve;
+        //[SerializeField] private float bounceDuration;
+        [SerializeField] private InflatableCurve bounce;
+        
         [SerializeReference, SerializeReferenceButton]
         public List<InflatableListener> listeners = new List<InflatableListener>();
 
@@ -65,10 +65,10 @@ namespace Naelstrof.Inflatable {
         private IEnumerator TweenToNewSize() {
             float startSize = currentSize;
             float startTime = Time.time;
-            float endTime = Time.time+bounceDuration;
+            float endTime = Time.time+bounce.GetBounceDuration();
             while (Time.time < endTime) {
-                float t = (Time.time - startTime) / bounceDuration;
-                currentSize = Mathf.LerpUnclamped(startSize, targetSize, bounceCurve.Evaluate(t));
+                float t = (Time.time - startTime) / bounce.GetBounceDuration();
+                currentSize = Mathf.LerpUnclamped(startSize, targetSize, bounce.EvaluateCurve(t));
                 foreach (InflatableListener listener in listeners) {
                     listener.OnSizeChanged(currentSize);
                 }

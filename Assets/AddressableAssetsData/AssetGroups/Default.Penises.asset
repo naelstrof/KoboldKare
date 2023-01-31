@@ -52,6 +52,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Penis
+  - m_GUID: 78bb61ab86adf8241a7386999813c342
+    m_Address: Penis/KoboldDickPrehensile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

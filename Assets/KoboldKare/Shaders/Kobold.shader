@@ -4,20 +4,25 @@ Shader "Kobold"
 {
 	Properties
 	{
-		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
+		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[ASEBegin][Toggle(_PENETRATION_DEFORMATION_DETAIL_ON)] _PENETRATION_DEFORMATION_DETAIL("_PENETRATION_DEFORMATION_DETAIL", Float) = 0
 		_BaseColorMap("BaseColorMap", 2D) = "white" {}
 		_DecalColorMap("DecalColorMap", 2D) = "black" {}
 		_MaskMap("MaskMap", 2D) = "gray" {}
 		_NormalMap("NormalMap", 2D) = "bump" {}
+		[NoScaleOffset]_DetailNormalMap("DetailNormalMap", 2D) = "bump" {}
 		_HueBrightnessContrastSaturation("_HueBrightnessContrastSaturation", Vector) = (0,0.5,0.5,0.5)
 		_Head("Head", Range( 0 , 1)) = 1
 		_ThicknessMap("ThicknessMap", 2D) = "gray" {}
 		_SubsurfaceColor("SubsurfaceColor", Color) = (0.8396226,0.6059541,0.6059541,1)
 		_BoobLerp("BoobLerp", Range( 0 , 1)) = 0
+		_DetailTiling("DetailTiling", Range( 0 , 10)) = 3
+		_DetailAlpha("DetailAlpha", Range( 0 , 1)) = 1
 		_CompressibleDistance("CompressibleDistance", Range( 0 , 1)) = 0
-		[ASEEnd]_Smoothness("Smoothness", Range( 0 , 10)) = 0
+		_DetailNormalScale("DetailNormalScale", Range( 0 , 3)) = 1
+		_Smoothness("Smoothness", Range( 0 , 10)) = 0
+		[ASEEnd][NoScaleOffset]_DetailMaskMap("DetailMaskMap", 2D) = "gray" {}
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 		[HideInInspector]_QueueOffset("_QueueOffset", Float) = 0
@@ -278,6 +283,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -300,8 +308,10 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
+			sampler2D _DetailNormalMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
 			sampler2D _ThicknessMap;
@@ -315,7 +325,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -329,7 +339,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -357,25 +367,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.texcoord2;
-				texCoord3_g29.xy = v.texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.texcoord2;
+				texCoord3_g35.xy = v.texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				o.ase_texcoord8.xy = v.texcoord.xy;
 				o.ase_texcoord8.zw = v.texcoord1.xy;
@@ -385,7 +395,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -579,22 +589,35 @@ Shader "Kobold"
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord8.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord8.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
-				float fresnelNdotV16_g30 = dot( WorldNormal, WorldViewDirection );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord8.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord8.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
+				float fresnelNdotV16_g36 = dot( WorldNormal, WorldViewDirection );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
 				float4 appendResult72 = (float4(break76.r , break76.g , break76.b , temp_output_70_0));
 				
+				float lerpResult108 = lerp( 0.0 , _DetailNormalScale , tex2DNode113.a);
+				float3 unpack101 = UnpackNormalScale( tex2D( _DetailNormalMap, texCoord104 ), lerpResult108 );
+				unpack101.z = lerp( 1, unpack101.z, saturate(lerpResult108) );
 				float4 _NormalMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_NormalMap_ST);
 				float2 uv_NormalMap = IN.ase_texcoord8.xy * _NormalMap_ST_Instance.xy + _NormalMap_ST_Instance.zw;
 				
@@ -603,17 +626,17 @@ Shader "Kobold"
 				float4 tex2DNode16 = tex2D( _MaskMap, uv_MaskMap );
 				float lerpResult49 = lerp( 1.0 , tex2DNode16.g , _BoobLerp);
 				float4 appendResult73 = (float4(tex2DNode16.r , lerpResult49 , tex2DNode16.b , tex2DNode16.a));
-				float4 break10_g30 = appendResult73;
-				float4 appendResult11_g30 = (float4(break10_g30.r , break10_g30.g , break10_g30.b , break10_g30.a));
-				float4 break75 = appendResult11_g30;
+				float4 break10_g36 = appendResult73;
+				float4 appendResult11_g36 = (float4(break10_g36.r , break10_g36.g , break10_g36.b , break10_g36.a));
+				float4 break75 = appendResult11_g36;
 				
-				float temp_output_99_20 = tex2DNode3_g30.a;
+				float temp_output_99_20 = tex2DNode3_g36.a;
 				float4 _ThicknessMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_ThicknessMap_ST);
 				float2 uv_ThicknessMap = IN.ase_texcoord8.xy * _ThicknessMap_ST_Instance.xy + _ThicknessMap_ST_Instance.zw;
 				float4 temp_output_97_0 = ( ( 1.0 - temp_output_99_20 ) * ( ( 1.0 - tex2D( _ThicknessMap, uv_ThicknessMap ) ) * _SubsurfaceColor ) );
 				
 				float3 Albedo = appendResult72.xyz;
-				float3 Normal = UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f );
+				float3 Normal = BlendNormal( unpack101 , UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f ) );
 				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = break75.x;
@@ -901,6 +924,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -923,6 +949,7 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -932,7 +959,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -946,7 +973,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -977,25 +1004,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord3.xyz = ase_worldNormal;
@@ -1011,7 +1038,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1170,20 +1197,30 @@ Shader "Kobold"
 				#endif
 
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord2.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord2.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord2.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -1295,6 +1332,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -1317,6 +1357,7 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -1326,7 +1367,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -1340,7 +1381,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -1368,25 +1409,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord3.xyz = ase_worldNormal;
@@ -1402,7 +1443,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1544,20 +1585,30 @@ Shader "Kobold"
 				#endif
 
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord2.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord2.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord2.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -1668,6 +1719,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -1690,6 +1744,7 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -1699,7 +1754,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -1713,7 +1768,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -1741,25 +1796,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.texcoord2;
-				texCoord3_g29.xy = v.texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.texcoord2;
+				texCoord3_g35.xy = v.texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord5.xyz = ase_worldNormal;
@@ -1776,7 +1831,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -1917,20 +1972,30 @@ Shader "Kobold"
 				#endif
 
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord4.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord4.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord4.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord4.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord4.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord5.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -2037,6 +2102,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -2059,6 +2127,7 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -2068,7 +2137,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -2082,7 +2151,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -2110,25 +2179,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord3.xyz = ase_worldNormal;
@@ -2145,7 +2214,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -2280,20 +2349,30 @@ Shader "Kobold"
 				#endif
 
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord2.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord2.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord2.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord2.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord3.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -2394,6 +2473,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
@@ -2416,6 +2498,8 @@ Shader "Kobold"
 			#endif
 			CBUFFER_END
 			float4 _JiggleInfos[16];
+			sampler2D _DetailNormalMap;
+			sampler2D _DetailMaskMap;
 			sampler2D _NormalMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
@@ -2427,7 +2511,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -2441,7 +2525,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -2469,25 +2553,25 @@ Shader "Kobold"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				o.ase_texcoord4.xy = v.ase_texcoord.xy;
 				o.ase_color = v.ase_color;
@@ -2497,7 +2581,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -2649,28 +2733,41 @@ Shader "Kobold"
 					#endif
 				#endif
 
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord4.xy * temp_cast_0 + float2( 0,0 );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord4.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult108 = lerp( 0.0 , _DetailNormalScale , tex2DNode113.a);
+				float3 unpack101 = UnpackNormalScale( tex2D( _DetailNormalMap, texCoord104 ), lerpResult108 );
+				unpack101.z = lerp( 1, unpack101.z, saturate(lerpResult108) );
 				float4 _NormalMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_NormalMap_ST);
 				float2 uv_NormalMap = IN.ase_texcoord4.xy * _NormalMap_ST_Instance.xy + _NormalMap_ST_Instance.zw;
 				
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord4.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord4.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord4.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
 				ase_worldViewDir = normalize(ase_worldViewDir);
-				float fresnelNdotV16_g30 = dot( WorldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( WorldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
 				
-				float3 Normal = UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f );
+				float3 Normal = BlendNormal( unpack101 , UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f ) );
 				float Alpha = temp_output_70_0;
 				float AlphaClipThreshold = 0.5;
 				#ifdef ASE_DEPTH_WRITE_ON
@@ -2790,6 +2887,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef TESSELLATION_ON
 				float _TessPhongStrength;
@@ -2802,6 +2902,7 @@ Shader "Kobold"
 			CBUFFER_END
 
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -2811,7 +2912,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -2825,7 +2926,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -2865,25 +2966,25 @@ Shader "Kobold"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldPos = mul(GetObjectToWorldMatrix(), v.vertex).xyz;
 				o.ase_texcoord1.xyz = ase_worldPos;
@@ -2902,7 +3003,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -3008,21 +3109,31 @@ Shader "Kobold"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldPos = IN.ase_texcoord1.xyz;
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord2.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -3120,6 +3231,9 @@ Shader "Kobold"
 			float4 _SubsurfaceColor;
 			float _CompressibleDistance;
 			float _Smoothness;
+			float _DetailTiling;
+			float _DetailAlpha;
+			float _DetailNormalScale;
 			float _BoobLerp;
 			#ifdef TESSELLATION_ON
 				float _TessPhongStrength;
@@ -3132,6 +3246,7 @@ Shader "Kobold"
 			CBUFFER_END
 
 			float4 _JiggleInfos[16];
+			sampler2D _DetailMaskMap;
 			sampler2D _BaseColorMap;
 			sampler2D _DecalColorMap;
 			UNITY_INSTANCING_BUFFER_START(Kobold)
@@ -3141,7 +3256,7 @@ Shader "Kobold"
 			UNITY_INSTANCING_BUFFER_END(Kobold)
 
 
-			float3 GetSoftbodyOffset3_g31( float blend, float3 vertexPosition )
+			float3 GetSoftbodyOffset3_g37( float blend, float3 vertexPosition )
 			{
 				float3 vertexOffset = float3(0,0,0);
 				for(int i=0;i<8;i++) {
@@ -3155,7 +3270,7 @@ Shader "Kobold"
 				return vertexOffset;
 			}
 			
-			float4 MyCustomExpression1_g17( float4 hsbc, float4 startColor )
+			float4 MyCustomExpression1_g34( float4 hsbc, float4 startColor )
 			{
 				    float _Hue = 360 * hsbc.r;
 				    float _Brightness = hsbc.g * 2 - 1;
@@ -3196,25 +3311,25 @@ Shader "Kobold"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 
-				float blend3_g31 = length( v.ase_color.r );
-				float localGetDeformationFromPenetrators_float8_g29 = ( 0.0 );
-				float4 appendResult17_g29 = (float4(v.vertex.xyz , 1.0));
-				float4 transform16_g29 = mul(GetObjectToWorldMatrix(),appendResult17_g29);
-				float3 worldPosition8_g29 = (transform16_g29).xyz;
-				float4 texCoord3_g29 = v.ase_texcoord2;
-				texCoord3_g29.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
-				float4 uv28_g29 = texCoord3_g29;
-				float compressibleDistance8_g29 = _CompressibleDistance;
-				float smoothness8_g29 = _Smoothness;
-				float3 deformedPosition8_g29 = float3( 0,0,0 );
+				float blend3_g37 = length( v.ase_color.r );
+				float localGetDeformationFromPenetrators_float8_g35 = ( 0.0 );
+				float4 appendResult17_g35 = (float4(v.vertex.xyz , 1.0));
+				float4 transform16_g35 = mul(GetObjectToWorldMatrix(),appendResult17_g35);
+				float3 worldPosition8_g35 = (transform16_g35).xyz;
+				float4 texCoord3_g35 = v.ase_texcoord2;
+				texCoord3_g35.xy = v.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float4 uv28_g35 = texCoord3_g35;
+				float compressibleDistance8_g35 = _CompressibleDistance;
+				float smoothness8_g35 = _Smoothness;
+				float3 deformedPosition8_g35 = float3( 0,0,0 );
 				{
-				GetDeformationFromPenetrators_float(worldPosition8_g29,uv28_g29,compressibleDistance8_g29,smoothness8_g29,deformedPosition8_g29);
+				GetDeformationFromPenetrators_float(worldPosition8_g35,uv28_g35,compressibleDistance8_g35,smoothness8_g35,deformedPosition8_g35);
 				}
-				float4 appendResult21_g29 = (float4(deformedPosition8_g29 , 1.0));
-				float4 transform19_g29 = mul(GetWorldToObjectMatrix(),appendResult21_g29);
-				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g29).xyz , v.ase_color.g);
-				float3 vertexPosition3_g31 = lerpResult85;
-				float3 localGetSoftbodyOffset3_g31 = GetSoftbodyOffset3_g31( blend3_g31 , vertexPosition3_g31 );
+				float4 appendResult21_g35 = (float4(deformedPosition8_g35 , 1.0));
+				float4 transform19_g35 = mul(GetWorldToObjectMatrix(),appendResult21_g35);
+				float3 lerpResult85 = lerp( v.vertex.xyz , (transform19_g35).xyz , v.ase_color.g);
+				float3 vertexPosition3_g37 = lerpResult85;
+				float3 localGetSoftbodyOffset3_g37 = GetSoftbodyOffset3_g37( blend3_g37 , vertexPosition3_g37 );
 				
 				float3 ase_worldPos = mul(GetObjectToWorldMatrix(), v.vertex).xyz;
 				o.ase_texcoord1.xyz = ase_worldPos;
@@ -3233,7 +3348,7 @@ Shader "Kobold"
 				#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 				#endif
-				float3 vertexValue = ( localGetSoftbodyOffset3_g31 + lerpResult85 );
+				float3 vertexValue = ( localGetSoftbodyOffset3_g37 + lerpResult85 );
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 				#else
@@ -3339,21 +3454,31 @@ Shader "Kobold"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 				float4 _HueBrightnessContrastSaturation_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_HueBrightnessContrastSaturation);
-				float4 hsbc1_g17 = _HueBrightnessContrastSaturation_Instance;
+				float4 hsbc1_g34 = _HueBrightnessContrastSaturation_Instance;
+				float2 temp_cast_0 = (_DetailTiling).xx;
+				float2 texCoord104 = IN.ase_texcoord.xy * temp_cast_0 + float2( 0,0 );
+				float4 break110 = tex2D( _DetailMaskMap, texCoord104 );
+				float4 appendResult111 = (float4(break110.r , break110.g , break110.b , 1.0));
 				float4 _BaseColorMap_ST_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_BaseColorMap_ST);
 				float2 uv_BaseColorMap = IN.ase_texcoord.xy * _BaseColorMap_ST_Instance.xy + _BaseColorMap_ST_Instance.zw;
-				float4 startColor1_g17 = tex2D( _BaseColorMap, uv_BaseColorMap );
-				float4 localMyCustomExpression1_g17 = MyCustomExpression1_g17( hsbc1_g17 , startColor1_g17 );
-				float2 texCoord2_g30 = IN.ase_texcoord.zw * float2( 1,1 ) + float2( 0,0 );
-				float4 tex2DNode3_g30 = tex2Dlod( _DecalColorMap, float4( texCoord2_g30, 0, 0.0) );
+				float4 blendOpSrc106 = appendResult111;
+				float4 blendOpDest106 = tex2D( _BaseColorMap, uv_BaseColorMap );
+				float2 uv_DetailMaskMap113 = IN.ase_texcoord.xy;
+				float4 tex2DNode113 = tex2D( _DetailMaskMap, uv_DetailMaskMap113 );
+				float lerpResult109 = lerp( 0.0 , _DetailAlpha , tex2DNode113.a);
+				float4 lerpBlendMode106 = lerp(blendOpDest106,(( blendOpDest106 > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - blendOpDest106 ) * ( 1.0 - blendOpSrc106 ) ) : ( 2.0 * blendOpDest106 * blendOpSrc106 ) ),lerpResult109);
+				float4 startColor1_g34 = ( saturate( lerpBlendMode106 ));
+				float4 localMyCustomExpression1_g34 = MyCustomExpression1_g34( hsbc1_g34 , startColor1_g34 );
+				float2 texCoord2_g36 = IN.ase_texcoord.zw * float2( 1,1 ) + float2( 0,0 );
+				float4 tex2DNode3_g36 = tex2Dlod( _DecalColorMap, float4( texCoord2_g36, 0, 0.0) );
 				float3 ase_worldPos = IN.ase_texcoord1.xyz;
 				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
 				ase_worldViewDir = normalize(ase_worldViewDir);
 				float3 ase_worldNormal = IN.ase_texcoord2.xyz;
-				float fresnelNdotV16_g30 = dot( ase_worldNormal, ase_worldViewDir );
-				float fresnelNode16_g30 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g30 , 0.0001 ), 2.0 ) );
-				float4 lerpResult7_g30 = lerp( localMyCustomExpression1_g17 , tex2DNode3_g30 , saturate( ( tex2DNode3_g30.a * fresnelNode16_g30 ) ));
-				float4 break76 = lerpResult7_g30;
+				float fresnelNdotV16_g36 = dot( ase_worldNormal, ase_worldViewDir );
+				float fresnelNode16_g36 = ( 0.6 + 1.0 * pow( max( 1.0 - fresnelNdotV16_g36 , 0.0001 ), 2.0 ) );
+				float4 lerpResult7_g36 = lerp( localMyCustomExpression1_g34 , tex2DNode3_g36 , saturate( ( tex2DNode3_g36.a * fresnelNode16_g36 ) ));
+				float4 break76 = lerpResult7_g36;
 				float _Head_Instance = UNITY_ACCESS_INSTANCED_PROP(Kobold,_Head);
 				float lerpResult44 = lerp( IN.ase_color.a , break76.a , _Head_Instance);
 				float temp_output_70_0 = saturate( lerpResult44 );
@@ -3387,87 +3512,120 @@ Shader "Kobold"
 }
 /*ASEBEGIN
 Version=18935
-208;485;1855;833;-942.538;-214.7259;1;True;False
-Node;AmplifyShaderEditor.RangedFloatNode;48;-434.1562,203.4802;Inherit;False;Property;_BoobLerp;BoobLerp;11;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;16;-544.4865,-190.4665;Inherit;True;Property;_MaskMap;MaskMap;5;0;Create;True;0;0;0;False;0;False;-1;None;ba658213c23f3f044964ac264d664e2a;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;15;-1274.608,-290.526;Inherit;True;Property;_BaseColorMap;BaseColorMap;2;0;Create;True;0;0;0;False;0;False;-1;None;ca5c93517dba7944da1b2fb875dd04e6;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.Vector4Node;19;-799.3872,-467.9089;Inherit;False;InstancedProperty;_HueBrightnessContrastSaturation;_HueBrightnessContrastSaturation;7;0;Create;True;0;0;0;False;0;False;0,0.5,0.5,0.5;0,0.5,0.5,0.5;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+377;468;1855;1053;2409.072;1661.455;1.261638;True;False
+Node;AmplifyShaderEditor.RangedFloatNode;103;-2106.743,-1071.583;Inherit;False;Property;_DetailTiling;DetailTiling;13;0;Create;True;0;0;0;False;0;False;3;4.93;0;10;0;1;FLOAT;0
+Node;AmplifyShaderEditor.TexturePropertyNode;115;-1791.284,-1505.856;Inherit;True;Property;_DetailMaskMap;DetailMaskMap;18;1;[NoScaleOffset];Create;True;0;0;0;False;0;False;None;7372441d67c9bb545bf0a0a128f14f76;False;gray;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.TextureCoordinatesNode;104;-1793.436,-1093.945;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;114;-1441.121,-1513.814;Inherit;True;Property;_TextureSample1;Texture Sample 1;17;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;113;-1431.836,-1313.532;Inherit;True;Property;_TextureSample0;Texture Sample 0;17;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.BreakToComponentsNode;110;-936.4202,-1010.37;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.RangedFloatNode;105;-1659.686,-891.845;Inherit;False;Property;_DetailNormalScale;DetailNormalScale;16;0;Create;True;0;0;0;False;0;False;1;1;0;3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;107;-1650.106,-774.2557;Inherit;False;Property;_DetailAlpha;DetailAlpha;14;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.DynamicAppendNode;111;-774.6392,-1020.496;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;1;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.SamplerNode;16;-544.4865,-190.4665;Inherit;True;Property;_MaskMap;MaskMap;5;0;Create;True;0;0;0;False;0;False;-1;None;c8f00a1a7de5dfa4d99d5c5e8465a6b8;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;15;-1274.608,-290.526;Inherit;True;Property;_BaseColorMap;BaseColorMap;2;0;Create;True;0;0;0;False;0;False;-1;None;8e7e3c9dc0a56374dac4042cf7d4b6c0;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;48;-434.1562,203.4802;Inherit;False;Property;_BoobLerp;BoobLerp;12;0;Create;True;0;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;108;-716.5261,-1284.627;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;109;-1029.526,-739.6274;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;17;-68.73178,-952.5997;Inherit;True;Property;_NormalMap;NormalMap;6;0;Create;True;0;0;0;False;0;False;-1;None;efbf15fb654a60c418ebfe8b085efb8f;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector4Node;19;-423.4813,-822.4724;Inherit;False;InstancedProperty;_HueBrightnessContrastSaturation;_HueBrightnessContrastSaturation;8;0;Create;True;0;0;0;False;0;False;0,0.5,0.5,0.5;0,0.5,0.5,0.5;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.BlendOpsNode;106;-691.9363,-660.3837;Inherit;False;Overlay;True;3;0;FLOAT4;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;1;False;1;COLOR;0
 Node;AmplifyShaderEditor.LerpOp;49;-58.92234,-50.32614;Inherit;False;3;0;FLOAT;1;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;17;44.63414,-667.6108;Inherit;True;Property;_NormalMap;NormalMap;6;0;Create;True;0;0;0;False;0;False;-1;None;3fa8181c8565718469155288933d2cba;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;18;-461.8067,-324.5077;Inherit;False;HueShift;-1;;17;1952e423258605d4aaa526c67ba2eb7c;0;2;2;FLOAT4;0,0.5,0.5,0.5;False;3;COLOR;0,0,0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.RangedFloatNode;83;531.4572,827.8464;Inherit;False;Property;_CompressibleDistance;CompressibleDistance;12;0;Create;True;0;0;0;False;0;False;0;0.1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;101;-567.3115,-1164.562;Inherit;True;Property;_DetailNormalMap;DetailNormalMap;7;1;[NoScaleOffset];Create;True;0;0;0;False;0;False;-1;None;507ab3a7212db9349a8c40d618cde99e;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.DynamicAppendNode;73;413.1302,-257.8121;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.RangedFloatNode;84;542.8562,942.8711;Inherit;False;Property;_Smoothness;Smoothness;13;0;Create;True;0;0;0;False;0;False;0;3;0;10;0;1;FLOAT;0
+Node;AmplifyShaderEditor.BlendNormalsNode;102;317.6367,-1158.187;Inherit;False;0;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RangedFloatNode;83;531.4572,827.8464;Inherit;False;Property;_CompressibleDistance;CompressibleDistance;15;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;18;-312.1903,-453.5887;Inherit;False;HueShift;-1;;34;1952e423258605d4aaa526c67ba2eb7c;0;2;2;FLOAT4;0,0.5,0.5,0.5;False;3;COLOR;0,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.RangedFloatNode;84;542.8562,942.8711;Inherit;False;Property;_Smoothness;Smoothness;17;0;Create;True;0;0;0;False;0;False;0;0.5;0;10;0;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexColorNode;78;555.9571,613.9916;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;99;730.9473,-426.799;Inherit;False;ApplyDecals;3;;30;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;5;FLOAT;18;FLOAT;20;FLOAT3;14;FLOAT4;15;COLOR;13
-Node;AmplifyShaderEditor.FunctionNode;80;1019.166,691.4556;Inherit;False;PenetrableDeformation;0;;29;014b2db8766710a4c8429222ab5b0977;0;4;10;FLOAT3;0,0,0;False;11;FLOAT4;0,0,0,0;False;12;FLOAT;0;False;13;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;99;730.9473,-426.799;Inherit;False;ApplyDecals;3;;36;d9b89e1202461fa45af2324780068fb2;0;3;4;COLOR;0,0,0,0;False;5;FLOAT3;0,0,0;False;6;COLOR;0,0,0,0;False;5;FLOAT;18;FLOAT;20;FLOAT3;14;FLOAT4;15;COLOR;13
 Node;AmplifyShaderEditor.PosVertexDataNode;86;1170.772,363.0097;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.VertexColorNode;14;1125.933,-833.5338;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;36;910.418,-615.4736;Inherit;False;InstancedProperty;_Head;Head;8;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;80;1019.166,691.4556;Inherit;False;PenetrableDeformation;0;;35;014b2db8766710a4c8429222ab5b0977;0;4;10;FLOAT3;0,0,0;False;11;FLOAT4;0,0,0,0;False;12;FLOAT;0;False;13;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;76;1448.69,-996.402;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.LengthOpNode;79;752.6432,536.627;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.LerpOp;85;1496.326,394.0421;Inherit;False;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.LengthOpNode;79;752.6432,536.627;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.VertexColorNode;14;1125.933,-833.5338;Inherit;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;36;910.418,-615.4736;Inherit;False;InstancedProperty;_Head;Head;9;0;Create;True;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;77;1660.415,616.9894;Inherit;False;JigglePhysicsSoftbody;-1;;37;6ec46ef0369ac3449867136b98c25983;0;2;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.LerpOp;44;1457.205,-762.8445;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;1;False;2;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;77;1660.415,616.9894;Inherit;False;JigglePhysicsSoftbody;-1;;31;6ec46ef0369ac3449867136b98c25983;0;2;6;FLOAT3;0,0,0;False;10;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RangedFloatNode;39;898.8593,121.2402;Inherit;False;Constant;_AlphaClip;AlphaClip;6;0;Create;True;0;0;0;False;0;False;0.5;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;97;1120.949,67.20074;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.BreakToComponentsNode;75;1275.148,-128.7411;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.SamplerNode;40;-46.74971,347.6124;Inherit;True;Property;_ThicknessMap;ThicknessMap;9;0;Create;True;0;0;0;False;0;False;-1;None;55dc3839aea320b4d8e63b5b2d13b409;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.OneMinusNode;98;897.6778,-62.9167;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;594.9385,324.4233;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.DynamicAppendNode;72;1738.825,-994.7527;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;87;2024.133,389.8536;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;68;900.7033,201.0084;Inherit;False;Constant;_Float0;Float 0;9;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;42;252.8287,578.3058;Inherit;False;Property;_SubsurfaceColor;SubsurfaceColor;10;0;Create;True;0;0;0;False;0;False;0.8396226,0.6059541,0.6059541,1;0.6037736,0.03078062,0,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.OneMinusNode;41;312.6382,343.7343;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SaturateNode;70;1674.173,-746.1651;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;97;1120.949,67.20074;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;68;900.7033,201.0084;Inherit;False;Constant;_Float0;Float 0;9;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;42;252.8287,578.3058;Inherit;False;Property;_SubsurfaceColor;SubsurfaceColor;11;0;Create;True;0;0;0;False;0;False;0.8396226,0.6059541,0.6059541,1;0.8396226,0.6059541,0.6059541,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;594.9385,324.4233;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.OneMinusNode;98;897.6778,-62.9167;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;87;2024.133,389.8536;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.OneMinusNode;41;312.6382,343.7343;Inherit;False;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SamplerNode;40;-46.74971,347.6124;Inherit;True;Property;_ThicknessMap;ThicknessMap;10;0;Create;True;0;0;0;False;0;False;-1;None;4f838fc3a6d6aa04ca89d3ac013696d4;True;0;False;gray;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.DynamicAppendNode;72;1738.825,-994.7527;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.BreakToComponentsNode;75;1275.148,-128.7411;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;60;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;89;2152.365,-91.9964;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;65;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;63;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;62;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;89;2152.365,-91.9964;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;88;2152.365,-91.9964;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;65;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Universal2D;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;66;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;67;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;1;LightMode=UniversalGBuffer;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;64;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;60;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;61;2152.365,-171.9964;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;Kobold;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;1;LightMode=UniversalForwardOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;40;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;1;0;  Transmission Shadow;1,False,-1;0;Translucency;1;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;1,False,-1;0;  Scattering;2,False,-1;0;  Direct;1,False,-1;0;  Ambient;0.2,False,-1;0;  Shadow;1,False,-1;0;Cast Shadows;1;0;  Use Shadow Threshold;1;0;Receive Shadows;1;0;GPU Instancing;0;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;0;0;Debug Display;0;0;Clear Coat;1;637974989309817492;0;10;False;True;True;True;True;True;True;False;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;66;925.674,-72.54388;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormalsOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;88;2152.365,-91.9964;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;True;4;d3d11;glcore;gles;gles3;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;61;2152.365,-171.9964;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;2;Kobold;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;2;True;17;d3d9;d3d11;glcore;gles;gles3;metal;vulkan;xbox360;xboxone;xboxseries;ps4;playstation;psp2;n3ds;wiiu;switch;nomrt;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;False;False;True;1;LightMode=UniversalForwardOnly;False;False;0;Hidden/InternalErrorShader;0;0;Standard;40;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Transmission;1;0;  Transmission Shadow;0.5,False,-1;0;Translucency;1;0;  Translucency Strength;1,False,-1;0;  Normal Distortion;0.5,False,-1;0;  Scattering;2,False,-1;0;  Direct;0.9,False,-1;0;  Ambient;0.1,False,-1;0;  Shadow;0.5,False,-1;0;Cast Shadows;1;0;  Use Shadow Threshold;1;0;Receive Shadows;1;0;GPU Instancing;0;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;1;0;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;0;0;Debug Display;0;0;Clear Coat;1;637974989309817492;0;10;False;True;True;True;True;True;True;False;True;True;False;;False;0
+WireConnection;104;0;103;0
+WireConnection;114;0;115;0
+WireConnection;114;1;104;0
+WireConnection;113;0;115;0
+WireConnection;110;0;114;0
+WireConnection;111;0;110;0
+WireConnection;111;1;110;1
+WireConnection;111;2;110;2
+WireConnection;108;1;105;0
+WireConnection;108;2;113;4
+WireConnection;109;1;107;0
+WireConnection;109;2;113;4
+WireConnection;106;0;111;0
+WireConnection;106;1;15;0
+WireConnection;106;2;109;0
 WireConnection;49;1;16;2
 WireConnection;49;2;48;0
-WireConnection;18;2;19;0
-WireConnection;18;3;15;0
+WireConnection;101;1;104;0
+WireConnection;101;5;108;0
 WireConnection;73;0;16;1
 WireConnection;73;1;49;0
 WireConnection;73;2;16;3
 WireConnection;73;3;16;4
+WireConnection;102;0;101;0
+WireConnection;102;1;17;0
+WireConnection;18;2;19;0
+WireConnection;18;3;106;0
 WireConnection;99;4;18;0
-WireConnection;99;5;17;0
+WireConnection;99;5;102;0
 WireConnection;99;6;73;0
 WireConnection;80;12;83;0
 WireConnection;80;13;84;0
 WireConnection;76;0;99;13
-WireConnection;79;0;78;1
 WireConnection;85;0;86;0
 WireConnection;85;1;80;0
 WireConnection;85;2;78;2
+WireConnection;79;0;78;1
+WireConnection;77;6;85;0
+WireConnection;77;10;79;0
 WireConnection;44;0;14;4
 WireConnection;44;1;76;3
 WireConnection;44;2;36;0
-WireConnection;77;6;85;0
-WireConnection;77;10;79;0
+WireConnection;70;0;44;0
 WireConnection;97;0;98;0
 WireConnection;97;1;43;0
-WireConnection;75;0;99;15
-WireConnection;98;0;99;20
 WireConnection;43;0;41;0
 WireConnection;43;1;42;0
+WireConnection;98;0;99;20
+WireConnection;87;0;77;0
+WireConnection;87;1;85;0
+WireConnection;41;0;40;0
 WireConnection;72;0;76;0
 WireConnection;72;1;76;1
 WireConnection;72;2;76;2
 WireConnection;72;3;70;0
-WireConnection;87;0;77;0
-WireConnection;87;1;85;0
-WireConnection;41;0;40;0
-WireConnection;70;0;44;0
+WireConnection;75;0;99;15
 WireConnection;61;0;72;0
 WireConnection;61;1;99;14
 WireConnection;61;3;75;0
@@ -3481,4 +3639,4 @@ WireConnection;61;18;99;20
 WireConnection;61;19;99;18
 WireConnection;61;8;87;0
 ASEEND*/
-//CHKSM=9539E185BFFBAB113482D0DE7E2BBE5390FABD2F
+//CHKSM=BC13C1FF771009243C1BC4A5FDD39A1057FCE8E8

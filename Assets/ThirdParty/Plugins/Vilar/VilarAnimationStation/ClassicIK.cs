@@ -33,6 +33,12 @@ namespace Vilar.IK {
 
 		[SerializeField] private AnimationClip tpose;
 		[SerializeField] private AnimationCurve antiPop;
+
+		public void SetAntiPopAndTPose(AnimationClip newTPose, AnimationCurve newAntiPop) {
+			tpose = newTPose;
+			antiPop = newAntiPop;
+		}
+
 		[HideInInspector] public IKTargetSet targets { get; set; }
 
 		public float blendTarget;

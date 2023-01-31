@@ -391,7 +391,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void OnValidate() {
-        heartPrefab.OnValidate();
+        heartPrefab?.OnValidate();
     }
 
     public bool CanGrab(Kobold kobold) {

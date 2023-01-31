@@ -44,6 +44,25 @@ namespace Vilar.IK {
 		public float blendTarget;
 		private float blend;
 
+		private class CorrectedTransform {
+			public Transform targetTransform;
+			public Quaternion rotationCorrection;
+			public Vector3 position {
+				get => targetTransform.position;
+				set => targetTransform.position = value;
+			}
+			public Vector3 localPosition => targetTransform.localPosition;
+			public Quaternion rotation {
+				get => targetTransform.parent.rotation * targetTransform.localRotation * rotationCorrection;
+				set {
+					Quaternion localSet = Quaternion.Inverse(targetTransform.parent.rotation) * value;
+					targetTransform.localRotation = localSet*Quaternion.Inverse(rotationCorrection);
+				}
+			}
+			public Vector3 forward => rotation * Vector3.forward;
+			public Vector3 up => rotation * Vector3.up;
+		}
+
 		Transform hip;
 		Transform spine;
 		Transform chest;
@@ -70,9 +89,105 @@ namespace Vilar.IK {
 		Vector3 virtualHipLook;
 		Vector3 virtualMid;
 		Vector3 elbowHint;
+		private CorrectedTransform rightLowerArmCorrection;
+		private CorrectedTransform rightUpperArmCorrection;
+		private CorrectedTransform rightHandCorrection;
+		
+		private CorrectedTransform leftLowerArmCorrection;
+		private CorrectedTransform leftUpperArmCorrection;
+		private CorrectedTransform leftHandCorrection;
+		
+		private CorrectedTransform leftFootCorrection;
+		private CorrectedTransform rightFootCorrection;
+		private CorrectedTransform leftLowerLegCorrection;
+		private CorrectedTransform rightLowerLegCorrection;
+		private CorrectedTransform leftUpperLegCorrection;
+		private CorrectedTransform rightUpperLegCorrection;
+		
+		private CorrectedTransform hipCorrection;
+		private CorrectedTransform spineCorrection;
+		private CorrectedTransform chestCorrection;
+		private CorrectedTransform neckCorrection;
+		private CorrectedTransform headCorrection;
+
+		private Quaternion GetCorrection(Transform targetTransform, Vector3 desiredForward, bool pinnedRoll = true) {
+			Vector3 realForward = animator.transform.TransformDirection(desiredForward);
+			Vector3 parentForward = targetTransform.parent.InverseTransformDirection(realForward);
+			Quaternion fix = Quaternion.FromToRotation(targetTransform.localRotation*Vector3.forward, parentForward);
+			return pinnedRoll ? Quaternion.Euler(0,fix.eulerAngles.y,0) : fix;
+		}
 
 		private void Awake() {
 			//if (Application.isPlaying) { Initialize(); }
+			animator = GetComponentInChildren<Animator>();
+			leftFootCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftFoot),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftFoot), Vector3.up)
+			};
+			rightFootCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightFoot),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightFoot), Vector3.up)
+			};
+			leftLowerLegCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftLowerLeg),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftLowerLeg), Vector3.back)
+			};
+			rightLowerLegCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightLowerLeg),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightLowerLeg), Vector3.back)
+			};
+			leftUpperLegCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg), Vector3.back)
+			};
+			rightUpperLegCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightUpperLeg),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightUpperLeg), Vector3.back)
+			};
+			rightLowerArmCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightLowerArm),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightLowerArm), Vector3.forward),
+			};
+			leftLowerArmCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftLowerArm),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftLowerArm), Vector3.forward),
+			};
+			rightUpperArmCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightUpperArm),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.RightUpperArm), Vector3.forward),
+			};
+			leftUpperArmCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftUpperArm),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm), Vector3.forward),
+			};
+			leftHandCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.LeftHand),
+				rotationCorrection = Quaternion.identity,
+			};
+			rightHandCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.RightHand),
+				rotationCorrection = Quaternion.identity,
+			};
+			hipCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.Hips),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.Hips), Vector3.forward),
+			};
+			spineCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.Spine),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.Spine), Vector3.forward),
+			};
+			chestCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.Chest),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.Chest), Vector3.forward),
+			};
+			neckCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.Neck),
+				rotationCorrection = GetCorrection(animator.GetBoneTransform(HumanBodyBones.Neck), Vector3.forward),
+			};
+			headCorrection = new CorrectedTransform {
+				targetTransform = animator.GetBoneTransform(HumanBodyBones.Head),
+				rotationCorrection = Quaternion.identity,
+			};
 		}
 
         private void OnDisable() {
@@ -101,15 +216,20 @@ namespace Vilar.IK {
 			//animator.SetTrigger("TPose");
 			//animator.Update(Time.deltaTime);
 			//animator.SetTrigger("TPose");
-			SolveSpine();
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm), animator.GetBoneTransform(HumanBodyBones.LeftLowerArm), animator.GetBoneTransform(HumanBodyBones.LeftHand), targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), false, false);
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.RightUpperArm), animator.GetBoneTransform(HumanBodyBones.RightLowerArm), animator.GetBoneTransform(HumanBodyBones.RightHand), targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), false, false);
+			if (hipCorrection == null) {
+				Awake();
+				return;
+			}
+
+			SolveSpine(hipCorrection, spineCorrection, chestCorrection, neckCorrection, headCorrection);
+			SolveLimb(leftUpperArmCorrection, leftLowerArmCorrection, leftHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), false, false);
+			SolveLimb(rightUpperArmCorrection, rightLowerArmCorrection, rightHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), false, false);
 			correctShoulder(animator.GetBoneTransform(HumanBodyBones.LeftShoulder), animator.GetBoneTransform(HumanBodyBones.LeftUpperArm), animator.GetBoneTransform(HumanBodyBones.LeftLowerArm));
 			correctShoulder(animator.GetBoneTransform(HumanBodyBones.RightShoulder), animator.GetBoneTransform(HumanBodyBones.RightUpperArm), animator.GetBoneTransform(HumanBodyBones.RightLowerArm));
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm), animator.GetBoneTransform(HumanBodyBones.LeftLowerArm), animator.GetBoneTransform(HumanBodyBones.LeftHand), targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), true, false);
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.RightUpperArm), animator.GetBoneTransform(HumanBodyBones.RightLowerArm), animator.GetBoneTransform(HumanBodyBones.RightHand), targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), true, false);
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg), animator.GetBoneTransform(HumanBodyBones.LeftLowerLeg), animator.GetBoneTransform(HumanBodyBones.LeftFoot), targets.GetLocalPosition(IKTargetSet.parts.FOOTLEFT), targets.GetLocalRotation(IKTargetSet.parts.FOOTLEFT), targets.GetLocalPosition(IKTargetSet.parts.KNEELEFT), true, true);
-			SolveLimb(animator.GetBoneTransform(HumanBodyBones.RightUpperLeg), animator.GetBoneTransform(HumanBodyBones.RightLowerLeg), animator.GetBoneTransform(HumanBodyBones.RightFoot), targets.GetLocalPosition(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalRotation(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalPosition(IKTargetSet.parts.KNEERIGHT), true, true);
+			SolveLimb(leftUpperArmCorrection, leftLowerArmCorrection, leftHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), true, false);
+			SolveLimb(rightUpperArmCorrection, rightLowerArmCorrection, rightHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), true, false);
+			SolveLimb(leftUpperLegCorrection, leftLowerLegCorrection, leftFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTLEFT), targets.GetLocalRotation(IKTargetSet.parts.FOOTLEFT), targets.GetLocalPosition(IKTargetSet.parts.KNEELEFT), true, true);
+			SolveLimb(rightUpperLegCorrection, rightLowerLegCorrection, rightFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalRotation(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalPosition(IKTargetSet.parts.KNEERIGHT), true, true);
 		}
 		
 		private void TPoseForAFrame() {
@@ -160,7 +280,7 @@ namespace Vilar.IK {
 			neckLength = Vector3.Distance(head.position, neck.position)/neck.lossyScale.y;
 		}
 
-		private void SolveSpine() {
+		private void SolveSpine(CorrectedTransform hip, CorrectedTransform spine, CorrectedTransform chest, CorrectedTransform neck, CorrectedTransform head) {
 			if (targets == null) Initialize();
 			float soft = 0.2f;
 			hip.position = Vector3.Lerp(hip.position, transform.TransformPoint(targets.GetLocalPosition(IKTargetSet.parts.HIPS)), blend);
@@ -258,13 +378,13 @@ namespace Vilar.IK {
 			//head.rotation = Quaternion.LookRotation(head.up, -targets.head.forward) * Quaternion.Euler(90f, 0f, 0f);
 		}
 
-		private void SolveLimb(Transform upper, Transform lower, Transform end, Vector3 position, Quaternion rotation, Vector3 hint, bool noPop, bool kneeCorrection) {
+		private void SolveLimb(CorrectedTransform upper, CorrectedTransform lower, CorrectedTransform end, Vector3 position, Quaternion rotation, Vector3 hint, bool noPop, bool kneeCorrection) {
 			Vector3 targetPosition = transform.TransformPoint(position);
 			float upperLength = Vector3.Distance(upper.position, lower.position);
 			float lowerLength = Vector3.Distance(lower.position, end.position);
 			if (noPop) {
 				Vector3 targetOffset = (targetPosition - upper.localPosition);
-				targetPosition = upper.localPosition + targetOffset.normalized * antiPop.Evaluate(targetOffset.magnitude / (upperLength + lowerLength)) * targetOffset.magnitude;
+				targetPosition = upper.localPosition + targetOffset.normalized * (antiPop.Evaluate(targetOffset.magnitude / (upperLength + lowerLength)) * targetOffset.magnitude);
 			}
 			//upper.rotation = Quaternion.Slerp(
 			//	upper.localRotation,

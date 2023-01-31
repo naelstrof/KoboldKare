@@ -167,20 +167,38 @@ public class DickDescriptor : MonoBehaviour {
                 float t = ((Time.time - pulseStartTime) / pulseDuration);
                 foreach (var renderTarget in set.dick.GetTargetRenderers()) {
                     Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
-                    float easingStart = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.25f)*4f)));
-                    float easingMiddle = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.5f)*4f)));
-                    float easingEnd = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-0.75f)*4f)));
-                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum0"), easingStart*100f);
-                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum1"), easingMiddle*100f);
-                    ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum2"), easingEnd*100f);
+                    List<string> cumBlendShapeIndices = new List<string>();
+                    for (int j = 0; j < mesh.blendShapeCount; j++)
+                    {
+                        string name = mesh.GetBlendShapeName(j);
+                        if (name.ToLower().StartsWith("cum"))
+                        {
+                            cumBlendShapeIndices.Add(name);
+                        }
+                    }
+                    cumBlendShapeIndices.Sort();
+                    
+                    float stepSize = 1f / (cumBlendShapeIndices.Count + 1);
+
+                    for (int j = 0; j < cumBlendShapeIndices.Count; j++)
+                    {
+                        float easingStage = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-stepSize*(j+1))*4f)));
+                        ((SkinnedMeshRenderer)renderTarget.renderer)
+                            .SetBlendShapeWeight(mesh.GetBlendShapeIndex(cumBlendShapeIndices[j]), easingStage*100f);
+                    }
                 }
                 yield return null;
             }
             foreach (var renderTarget in set.dick.GetTargetRenderers()) {
                 Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
-                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum0"), 0f);
-                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum1"), 0f);
-                ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex("Cum2"), 0f);
+                for (int j = 0; j < mesh.blendShapeCount; j++)
+                {
+                    string name = mesh.GetBlendShapeName(j);
+                    if (name.ToLower().StartsWith("cum"))
+                    {
+                        ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex(name), 0f);
+                    }
+                }
             }
 
             if (!set.dick.TryGetPenetrable(out Penetrable pennedHole) || !set.inside || pennedHole.GetComponentInParent<GenericReagentContainer>() == null) {

@@ -136,6 +136,16 @@ public class ModManager : MonoBehaviour {
                 await assets.Task;
                 modPostProcessor.UnloadAllAssets(assets.Result);
             }
+
+            foreach (var mod in fullModList) {
+                if (mod.locator == null) {
+                    continue;
+                }
+                Addressables.RemoveResourceLocator(mod.locator);
+                Addressables.Release(mod.locator);
+                mod.locator = null;
+            }
+            
         } finally {
             sharedResource.ReleaseMutex();
         }

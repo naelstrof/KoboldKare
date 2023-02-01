@@ -61,9 +61,9 @@ public class KoboldJawOpenListener : PenetrableListener {
         if (koboldAnimator == null) {
             throw new PenetrableListenerValidationException($"KoboldAnimator is null on {this}");
         }
-        if (controllerAnimator == null) {
-            throw new PenetrableListenerValidationException($"controllerAnimator is null on {this}");
-        }
+        //if (controllerAnimator == null) {
+            //throw new PenetrableListenerValidationException($"controllerAnimator is null on {this}");
+        //}
     }
 
     public override void OnDrawGizmosSelected(Penetrable p) {

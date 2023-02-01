@@ -58,13 +58,13 @@
       }
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v6.0.7",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v6.1.2",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.textus-games.serialized-reference-ui": "1.0.0"
       },
-      "hash": "004148da90803c8bccc2bff5ff84f685ed26f804"
+      "hash": "3bc66fca6e99a976b3aa048cf5ee1e044eadacd2"
     },
     "com.naelstrof.photon.profiler": {
       "version": "file:com.naelstrof.photon.profiler",

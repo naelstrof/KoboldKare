@@ -1,5 +1,208 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1696315800970740316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4554384809529798155}
+  - component: {fileID: 7281651683423460863}
+  m_Layer: 13
+  m_Name: MouthPenetrable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4554384809529798155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696315800970740316}
+  m_LocalRotation: {x: 0.027180823, y: -0.04779728, z: 0.020650784, w: 0.9982736}
+  m_LocalPosition: {x: -0.021, y: 0.074, z: 0.191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6072806224816537904}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7281651683423460863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696315800970740316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0550636f1faf54ea9fada34b07cd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {fileID: 4554384809529798155}
+  - {fileID: 6072806224816537904}
+  - {fileID: 2250249793511135589}
+  - {fileID: 8818876795878351904}
+  splineTension: 0.5
+  listeners:
+  - rid: 7257832986391347200
+  - rid: 7257832986391347201
+  - rid: 7257832986391347202
+  - rid: 7257832986391347203
+  - rid: 7257832986391347204
+  - rid: 7257832997841534978
+  - rid: 7257832997841534979
+  - rid: 7257832997841534982
+  - rid: 7257832997841534983
+  - rid: 7257832997841534984
+  references:
+    version: 2
+    RefIds:
+    - rid: 7257832986391347200
+      type: {class: PushPullExpandBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 1
+        offsetCorrectionBone: {fileID: 603326326748828902}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          expandBlendshapeName: ExpandButt
+          pullBlendshapeName: ButtPush
+          pushBlendshapeName: ButtTug
+          expandBlendshapeID: 32
+          pullBlendshapeID: 34
+          pushBlendshapeID: 33
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.015
+        pullT: -0.01
+        pushT: 0.01
+        overdrive: 1
+    - rid: 7257832986391347201
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.816
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge1
+          blendshapeID: 40
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347202
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.784
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge2
+          blendshapeID: 41
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347203
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.75
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge3
+          blendshapeID: 42
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832986391347204
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.631
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ButtDepthBulge4
+          blendshapeID: 43
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 1
+    - rid: 7257832997841534978
+      type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        targetKobold: {fileID: 2274364766123311959}
+    - rid: 7257832997841534979
+      type: {class: ClipListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.211
+        allowForAllTheWayThrough: 1
+        endT: 0.961
+    - rid: 7257832997841534982
+      type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        jawTransform: {fileID: 1740413816555941781}
+        jawOpenDirection: {x: 0, y: 0, z: 1}
+        koboldAnimator: {fileID: 5691071212841091566}
+    - rid: 7257832997841534983
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.385
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: ThroatOpen
+          blendshapeID: 44
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
+    - rid: 7257832997841534984
+      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: vrc.v_aa
+          blendshapeID: 0
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
+--- !u!1 &1866706674204749941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5853875313183180259}
+  m_Layer: 13
+  m_Name: VagDepth1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5853875313183180259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866706674204749941}
+  m_LocalRotation: {x: -0.0725959, y: 0.018400386, z: 0.0013395896, w: 0.99719083}
+  m_LocalPosition: {x: 0.002, y: -0.016, z: 0.051}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4367537370113003704}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058929684186067133
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +624,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c086c07b18c617041925095cbbb8147c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  penetratables: []
+  penetratables:
+  - penetratable: {fileID: 1491743011633877979}
+    ragdollAttachBody: {fileID: 3283491410642377437}
+    isFemaleExclusiveAnatomy: 0
+    canLayEgg: 1
+  - penetratable: {fileID: 5877123502171522606}
+    ragdollAttachBody: {fileID: 3283491410642377437}
+    isFemaleExclusiveAnatomy: 1
+    canLayEgg: 1
+  - penetratable: {fileID: 7281651683423460863}
+    ragdollAttachBody: {fileID: 3283491410642377437}
+    isFemaleExclusiveAnatomy: 0
+    canLayEgg: 0
   attachPoints:
   - attachPoint: 0
     targetTransform: {fileID: 2274364764476756035}
@@ -789,6 +1004,9 @@ MonoBehaviour:
   - rid: 7257832986391347204
   - rid: 7257832986391347205
   - rid: 7257832986391347206
+  - rid: 7257832997841534978
+  - rid: 7257832997841534979
+  - rid: 7257832997841534982
   references:
     version: 2
     RefIds:
@@ -882,6 +1100,152 @@ MonoBehaviour:
         baseGirthRadius: 0
         blendShapeGirthRadius: 0.03
         overdrive: 0
+    - rid: 7257832997841534978
+      type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        targetKobold: {fileID: 2274364766123311959}
+    - rid: 7257832997841534979
+      type: {class: ClipListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.053
+        allowForAllTheWayThrough: 1
+        endT: 0.738
+    - rid: 7257832997841534982
+      type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0.7
+        jawTransform: {fileID: 1740413816555941781}
+        jawOpenDirection: {x: 0, y: 0, z: 1}
+        koboldAnimator: {fileID: 5691071212841091566}
+--- !u!1 &3224990935787654798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1746493092919804513}
+  - component: {fileID: 5877123502171522606}
+  m_Layer: 13
+  m_Name: VagPenetrable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1746493092919804513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3224990935787654798}
+  m_LocalRotation: {x: -0.10866894, y: -0.00000023700667, z: 0.000000025908694, w: 0.99407804}
+  m_LocalPosition: {x: 0, y: -0.09706293, z: 0.021763876}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4613256295653274016}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5877123502171522606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3224990935787654798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0550636f1faf54ea9fada34b07cd10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {fileID: 1746493092919804513}
+  - {fileID: 147579534700294704}
+  - {fileID: 5853875313183180259}
+  - {fileID: 8653493361714772449}
+  splineTension: 0.5
+  listeners:
+  - rid: 7257832997841534976
+  - rid: 7257832997841534977
+  - rid: 7257832997841534980
+  - rid: 7257832997841534981
+  references:
+    version: 2
+    RefIds:
+    - rid: 7257832997841534976
+      type: {class: LengthwiseBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.729
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: VagBulge
+          blendshapeID: 46
+        blendShapeTDepth: 0.05
+        overdrive: 1
+    - rid: 7257832997841534977
+      type: {class: PushPullExpandBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0
+        offsetCorrectionBone: {fileID: 2638293935477713754}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          expandBlendshapeName: VagExpand
+          pullBlendshapeName: VagTug
+          pushBlendshapeName: VagPush
+          expandBlendshapeID: 27
+          pullBlendshapeID: 35
+          pushBlendshapeID: 36
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.045
+        pullT: 0
+        pushT: 0
+        overdrive: 1
+    - rid: 7257832997841534980
+      type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
+      data:
+        t: 0
+        targetKobold: {fileID: 2274364766123311959}
+    - rid: 7257832997841534981
+      type: {class: ClipListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+      data:
+        t: 0.114
+        allowForAllTheWayThrough: 0
+        endT: 1
+--- !u!1 &3316939051205328722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8653493361714772449}
+  m_Layer: 13
+  m_Name: VagDepth2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8653493361714772449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316939051205328722}
+  m_LocalRotation: {x: -0.0725959, y: 0.018400386, z: 0.0013395896, w: 0.99719083}
+  m_LocalPosition: {x: 0.022, y: 0.222, z: 0.582}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4367537370113003704}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6200774601068112980
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1370,37 @@ CapsuleCollider:
   m_Height: 0.40502483
   m_Direction: 1
   m_Center: {x: -0.0012635041, y: 0.21296285, z: -0.0000016521253}
+--- !u!1 &8437554069864520516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 147579534700294704}
+  m_Layer: 13
+  m_Name: VagDepth0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &147579534700294704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8437554069864520516}
+  m_LocalRotation: {x: -0.0725959, y: 0.018400386, z: 0.0013395896, w: 0.99719083}
+  m_LocalPosition: {x: -0.0006, y: -0.1447, z: -0.0134}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4367537370113003704}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9014270494548346470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1552,7 @@ PrefabInstance:
     - target: {fileID: -5372476664398559616, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.00000009362675
       objectReference: {fileID: 0}
     - target: {fileID: -5372476664398559616, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
@@ -1382,12 +1777,17 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.size
-      value: 46
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[0]
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[27]
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
@@ -1397,12 +1797,17 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[33]
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[34]
-      value: 0
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[35]
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
@@ -1412,6 +1817,11 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[44]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[46]
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1633454708209498569, guid: 331e88294c292234a86925ccd7e83f87,
@@ -1678,7 +2088,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000021280723, y: 0.48060653, z: 0.0000024288893}
+  m_ConnectedAnchor: {x: 0.0000022624154, y: 0.48060635, z: -0.0000013411045}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
@@ -1841,7 +2251,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000007099061, y: 0.26654202, z: 0.00000068359077}
+  m_ConnectedAnchor: {x: -0.000000016557351, y: 0.26654217, z: 0.00000083399937}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -2128,7 +2538,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000021280723, y: 0.48060653, z: 0.0000024288893}
+  m_ConnectedAnchor: {x: -0.0000022624154, y: 0.48060635, z: -0.0000013411045}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
@@ -2362,6 +2772,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2274364766201379967}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1740413816555941781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8667428647010348054, guid: 331e88294c292234a86925ccd7e83f87,
+    type: 3}
+  m_PrefabInstance: {fileID: 2274364766201379967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2638293935477713754 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4968261009552730331, guid: 331e88294c292234a86925ccd7e83f87,
+    type: 3}
+  m_PrefabInstance: {fileID: 2274364766201379967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3016889947746470169 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5310289489313598106, guid: 331e88294c292234a86925ccd7e83f87,
@@ -2460,7 +2882,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000016018747, y: 0.22106269, z: 0.0000059399745}
+  m_ConnectedAnchor: {x: -0.00000015087426, y: 0.22106272, z: 0.000005962327}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: -1, z: 0}
   m_XMotion: 0
@@ -2621,7 +3043,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000027604422, y: 0.37389153, z: -0.0000057891666}
+  m_ConnectedAnchor: {x: 0.0000028312227, y: 0.37389165, z: 0.000006306988}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -2890,7 +3312,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000002188608, y: 0.16952261, z: 0.0000011175872}
+  m_ConnectedAnchor: {x: 0.000000015017577, y: 0.1695227, z: 0.0000012218953}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -3172,7 +3594,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000000033760443, y: 0.27583972, z: 0.0000010536751}
+  m_ConnectedAnchor: {x: -0.0000000031432137, y: 0.27583978, z: 0.0000011577504}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -3560,7 +3982,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000027604422, y: 0.37389153, z: -0.0000057891666}
+  m_ConnectedAnchor: {x: -0.0000028312227, y: 0.37389165, z: 0.000006306988}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -3692,7 +4114,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00001144875, y: 0.27836516, z: 0.0000011045487}
+  m_ConnectedAnchor: {x: -0.00001150649, y: 0.27836514, z: 0.0000011175871}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -3830,7 +4252,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000115269795, y: 0.27836534, z: 0.0000005951152}
+  m_ConnectedAnchor: {x: 0.0000114981085, y: 0.2783653, z: 0.00000060256576}
   serializedVersion: 2
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -4042,7 +4464,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000043213373, y: 0.22106287, z: 0.000005915762}
+  m_ConnectedAnchor: {x: 0.00000042468315, y: 0.22106284, z: 0.0000058971345}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: -1, z: 0}
   m_XMotion: 0

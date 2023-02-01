@@ -215,67 +215,7 @@ MonoBehaviour:
     reagent: {fileID: 11400000, guid: ded1aaeb29406d3478894c7dafff61ec, type: 2}
     volume: 10
   fruitInflater:
-    bounceCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.25
-        inSlope: 2
-        outSlope: 2
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.20167542
-        value: 2.502484
-        inSlope: 0.45121813
-        outSlope: 0.45121813
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.4
-        value: 0.46640015
-        inSlope: -1.8744586
-        outSlope: -1.8744586
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.6033672
-        value: 1.791847
-        inSlope: 0.56383085
-        outSlope: 0.56383085
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.803418
-        value: 0.71360475
-        inSlope: -2.3585095
-        outSlope: -2.3585095
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    bounceDuration: 1
+    bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}
     listeners:
     - rid: 8920608400659447818
   startFrozen: 1
@@ -354,7 +294,6 @@ MonoBehaviour:
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
-        volume: 1
 --- !u!114 &4985421260818380468
 MonoBehaviour:
   m_ObjectHideFlags: 0

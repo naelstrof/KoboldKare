@@ -12,12 +12,12 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     [SerializeField] private PrefabDatabase playerPrefabDatabase;
 
     private GameObject player;
+    private bool waiting = false;
     
 
     void Start() {
-        if (!ModManager.GetReady()) {
-            ModManager.AddFinishedLoadingListener(FinishedLoading);
-        } else {
+        ModManager.AddFinishedLoadingListener(FinishedLoading);
+        if (ModManager.GetReady()) {
             FinishedLoading();
         }
     }
@@ -27,6 +27,7 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         playerSetting.changed += OnChangedPlayer;
         GameManager.GetPenisDatabase().AddPrefabReferencesChangedListener(OnChangedPrefabDatabase);
         playerPrefabDatabase.AddPrefabReferencesChangedListener(OnChangedPrefabDatabase);
+        ModManager.RemoveFinishedLoadingListener(FinishedLoading);
     }
 
     private void OnDestroy() {
@@ -36,13 +37,24 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     }
 
     void OnChangedPrefabDatabase(ReadOnlyCollection<PrefabDatabase.PrefabReferenceInfo> infos) {
-        OnChangedPlayer();
+        StopAllCoroutines();
+        StartCoroutine(EnsureModsAreLoadedThenChangePlayer());
     }
     void OnChangedPlayer(int newValue = -1) {
+        StopAllCoroutines();
+        StartCoroutine(EnsureModsAreLoadedThenChangePlayer());
+    }
+
+    IEnumerator EnsureModsAreLoadedThenChangePlayer() {
         if (player != null) {
             Destroy(player);
         }
+        yield return new WaitUntil(ModManager.GetReady);
+        OnChangePlayerRoutine();
+    }
 
+
+    void OnChangePlayerRoutine(int newValue = -1) {
         foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
             if (!info.IsValid() || info.GetKey() != playerSetting.GetPrefab()) continue;
             player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);

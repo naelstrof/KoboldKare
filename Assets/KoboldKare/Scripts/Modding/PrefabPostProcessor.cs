@@ -25,6 +25,7 @@ public class PrefabPostProcessor : ModPostProcessor {
         if (networkedPrefabs) {
             PreparePool.AddPrefab(obj.name, obj);
         }
+        Debug.Log($"Loaded {obj.name}");
 
         targetDatabase.AddPrefab(obj.name, obj);
         addedGameObjects.Add(obj);
@@ -35,6 +36,7 @@ public class PrefabPostProcessor : ModPostProcessor {
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
+            Debug.Log($"Unloaded {obj.name}");
 
             targetDatabase.RemovePrefab(obj.name);
         }

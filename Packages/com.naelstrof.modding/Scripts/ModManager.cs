@@ -145,7 +145,6 @@ public class ModManager : MonoBehaviour {
                 Addressables.Release(mod.locator);
                 mod.locator = null;
             }
-            
         } finally {
             sharedResource.ReleaseMutex();
         }
@@ -181,8 +180,7 @@ public class ModManager : MonoBehaviour {
                 if (!modInfo.enabled) {
                     continue;
                 }
-
-                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
+                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath, true);
                 await loader.Task;
                 modInfo.locator = loader.Result;
             }
@@ -192,7 +190,7 @@ public class ModManager : MonoBehaviour {
         await LoadMods();
     }
 
-    public static async void Reload() {
+    public static async Task Reload() {
         await instance.ReloadMods();
     }
 }

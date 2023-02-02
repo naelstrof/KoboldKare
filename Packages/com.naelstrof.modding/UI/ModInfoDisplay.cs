@@ -26,6 +26,8 @@ public class ModInfoDisplay : MonoBehaviour {
         modInfoDisplaySpawner = spawner;
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(OnToggle);
+        toggle.SetIsOnWithoutNotify(newInfo.enabled);
+        
         moveUp.onClick.RemoveAllListeners();
         moveUp.onClick.AddListener(OnMoveUp);
         moveDown.onClick.RemoveAllListeners();
@@ -34,19 +36,22 @@ public class ModInfoDisplay : MonoBehaviour {
 
     private void OnToggle(bool newState) {
         info.enabled = newState;
-        ModManager.Reload();
+        StartCoroutine(ReloadWait());
     }
 
     private void OnMoveUp() {
         ModManager.IncrementPriority(info);
         modInfoDisplaySpawner.Refresh();
-        ModManager.Reload();
+        StartCoroutine(ReloadWait());
     }
     
     private void OnMoveDown() {
         ModManager.DecrementPriority(info);
         modInfoDisplaySpawner.Refresh();
-        ModManager.Reload();
+        StartCoroutine(ReloadWait());
     }
-    
+
+    private IEnumerator ReloadWait() {
+        yield return ModManager.Reload();
+    }
 }

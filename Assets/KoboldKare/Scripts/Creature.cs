@@ -83,7 +83,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     [PunRPC]
     private void Die() {
         var effect = GameObject.Instantiate(splashPrefab.gameObject, transform.position, Quaternion.identity);
-        effect.GetComponent<VisualEffect>().SetVector4("Color", spawnOnDeath.gameObject.GetComponent<Fruit>().startingReagent.reagent.GetColor());
+        effect.GetComponent<VisualEffect>().SetVector4("Color", Color.red);
         GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
         Destroy(effect, 5f);
         

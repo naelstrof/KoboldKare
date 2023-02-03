@@ -12,11 +12,28 @@ using SimpleJSON;
 public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     [SerializeField]
     private GameEventGeneric midnightEvent;
-    [SerializeField]
-    private GameEventFloat metabolizeEvent;
+    //[SerializeField]
+    //private GameEventFloat metabolizeEvent;
     private static DayNightCycle instance = null;
     private WaitForSeconds waitForTwoSeconds;
     private int daysPast = 0;
+
+    public delegate void MetabolizeAction(float time);
+    private event MetabolizeAction metabolizationTriggered;
+
+    public static void AddMetabolizationListener(MetabolizeAction action) {
+        if (instance == null) {
+            return;
+        }
+
+        instance.metabolizationTriggered += action;
+    }
+    public static void RemoveMetabolizationListener(MetabolizeAction action) {
+        if (instance == null) {
+            return;
+        }
+        instance.metabolizationTriggered -= action;
+    }
 
     public static void StaticSleep() {
         instance.Sleep();
@@ -37,7 +54,7 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
     private IEnumerator MetabolizeOccassionally() {
         while (isActiveAndEnabled) {
             yield return waitForTwoSeconds;
-            metabolizeEvent.Raise(2f);
+            metabolizationTriggered?.Invoke(2f);
         }
     }
 

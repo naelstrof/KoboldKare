@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Reagents
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Reagents
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a03cd674496f90e4582b4a420ff8028c
+  m_SerializeEntries:
+  - m_GUID: 141380da6f0bc8649af1917eaff8b3db
+    m_Address: Reagent/MushroomDickJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 96f845d779467a14e8ececa1edc3fb3a
+    m_Address: Reagent/MushroomBoobJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 64a37d7d0b348ab4bbbd80288dc330d6
+    m_Address: Reagent/MushroomBallJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ae2a33ac2603ee34eaf8547395029f96
+    m_Address: Reagent/EggDinner
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 47768886bcb27df4996e55c86ddcf089
+    m_Address: Reagent/Pie
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 5e62e56f8bbad43438be263b739d1f9d
+    m_Address: Reagent/Burger
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ab6a14994d81d1246858260c00038968
+    m_Address: Reagent/Dough
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: c7726a1072e4b494f81c3ad8bae29195
+    m_Address: Reagent/PineapplePopsicle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 14061ef517602ef4f93c1ff203d5e5d2
+    m_Address: Reagent/Wood
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 7fb71e9c403384941b7631a8990bda2c
+    m_Address: Reagent/Milk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ab11c5e8e08c8614eabab40825330808
+    m_Address: Reagent/IncompleteGrowthSerumB
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ba1e9e0b37e2aee428f69d7cafbd05c6
+    m_Address: Reagent/IncompleteGrowthSerumA
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 53a6cc4161eeb7c489eacefa0ab6c19f
+    m_Address: Reagent/GrowthSerum
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ba03dfd3c91a3bd4492d280daf00e569
+    m_Address: Reagent/Fat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: e5adf269b9ec0d340b1c41167ec79b76
+    m_Address: Reagent/Explosium
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 2028e04405fc5d146a345a4daac5a189
+    m_Address: Reagent/Blood
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ba40fc5a595feee42bf14b729dbfdce8
+    m_Address: Reagent/Flour
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 0df9b29ce4962d140b59d12b5c018a67
+    m_Address: Reagent/MushroomJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 8e137a91cb1f729438830cebcb658e9c
+    m_Address: Reagent/PineappleJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 8aea7d57d8982ea448cb144fbf99bcb3
+    m_Address: Reagent/Potassium
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 6a3ddb5dbc12f7e4b9c3e396cd58f3e9
+    m_Address: Reagent/Love
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 56cbef9aacb50c54ea39c7eb8296e9cf
+    m_Address: Reagent/GroundBeef
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 54e937ee60289114480db3c5e2f53aa8
+    m_Address: Reagent/Ice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: ded1aaeb29406d3478894c7dafff61ec
+    m_Address: Reagent/EggplantJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 0011764867947d84bb1166d2d7886105
+    m_Address: Reagent/MelonJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: d699f0ca23be8724d8d579ba85e16857
+    m_Address: Reagent/ScrambledEgg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 2772d447886ca12459974cc147730c21
+    m_Address: Reagent/Cake
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 08db202a0c4d64b4cb87d31d8e72ec75
+    m_Address: Reagent/EggNog
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 69b89945705013845a519f7f35786bfe
+    m_Address: Reagent/BananaSplit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: dccd6e2b38a616c4daf5b2638ae5ac3a
+    m_Address: Reagent/MilkShake
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: bed8fc8dad7da90439bc44080ddb0e6f
+    m_Address: Reagent/Yogurt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: cf45304516a585b41b686355a8ecd9b0
+    m_Address: Reagent/Egg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: 432f03a666042844cb10ac8f54594a19
+    m_Address: Reagent/Cum
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  - m_GUID: f8e23aff621a5594a84b2a269e9bb894
+    m_Address: Reagent/Water
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reagent
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1d000e35a6f36924b9d5a1b80809e545, type: 2}
+    - {fileID: 11400000, guid: 5cb0682f933dfab448eeb318f25c37db, type: 2}

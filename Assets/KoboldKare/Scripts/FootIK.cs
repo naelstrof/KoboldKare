@@ -6,13 +6,12 @@ using UnityEngine;
 public class FootIK : MonoBehaviour {
     private Animator targetAnimator;
     public Transform leftKneeHint;
-    [SerializeField]
     public Transform rightKneeHint;
 
     private Transform leftFoot;
     private Transform rightFoot;
     private Transform hips;
-    void Start() {
+    void Awake() {
         targetAnimator = GetComponent<Animator>();
         leftFoot = targetAnimator.GetBoneTransform(HumanBodyBones.LeftFoot);
         rightFoot = targetAnimator.GetBoneTransform(HumanBodyBones.RightFoot);
@@ -34,7 +33,8 @@ public class FootIK : MonoBehaviour {
             
             a.SetIKPosition(target, hit.point+hit.normal*0.05f*transform.lossyScale.x);
             a.SetIKHintPosition(hint, hintT.position);
-            a.SetIKRotation(target, Quaternion.FromToRotation(Vector3.up, hit.normal)*Quaternion.AngleAxis(-90f, foot.right)*foot.rotation);
+            Vector3 hintDir = (hintT.position - hit.point).normalized;
+            a.SetIKRotation(target, QuaternionExtensions.LookRotationUpPriority(hintDir, hit.normal));
         } else {
             a.SetIKHintPositionWeight(hint,0f);
             a.SetIKPositionWeight(target, 0f);

@@ -116,22 +116,13 @@ public class KoboldGenes {
     }
 
     private byte GetRandomDick() {
-        var equipments = EquipmentDatabase.GetEquipments();
-        float totalDicks = 0f;
-        foreach(var equipment in equipments) {
-            if (equipment is DickEquipment) {
-                totalDicks += 1f;
-            }
+        var penisDatabase = GameManager.GetPenisDatabase();
+        var penises = penisDatabase.GetValidPrefabReferenceInfos();
+        var selectedPenis = penisDatabase.GetRandom();
+        if (selectedPenis == null) {
+            throw new UnityException("Failed to get a penis, penis database is probably empty.");
         }
-        float randomSelection = Random.Range(0f, totalDicks);
-        float selection = 0f;
-        foreach(var equipment in equipments) {
-            if (equipment is not DickEquipment) continue;
-            selection += 1f;
-            if (!(selection >= randomSelection)) continue;
-            return (byte)equipments.IndexOf(equipment);
-        }
-        return byte.MaxValue;
+        return (byte)penises.IndexOf(selectedPenis);
     }
 
     public KoboldGenes Randomize(float multiplier=1f) {

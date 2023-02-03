@@ -5,16 +5,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Grabber : MonoBehaviourPun {
-    public Kobold player;
+    private Kobold player;
     private int maxGrabCount = 1;
     private Rigidbody body;
     [SerializeField]
-    private float springStrength = 1000f;
+    private float springStrength = 800f;
     [SerializeField][Range(0f,0.5f)]
-    private float dampingStrength = 0.1f;
+    private float dampingStrength = 0.4f;
+    [SerializeField]
+    private Vector3 defaultOffset = Vector3.forward;
 
-    [SerializeField] private GameObject activateUI;
-    [SerializeField] private GameObject throwUI;
+    public delegate void UIAction(bool active);
+
+    public event UIAction activateUIChanged;
+    public event UIAction throwUIChanged;
+
+    //[SerializeField] private GameObject activateUI;
+    //[SerializeField] private GameObject throwUI;
     private ColliderSorter sorter;
 
     private bool activating;
@@ -41,7 +48,7 @@ public class Grabber : MonoBehaviourPun {
                 t.gameObject.layer = toLayer;
             }
         }
-        public GrabInfo(Kobold owner, Transform grabber, IGrabbable grabbable, float springStrength, float dampingStrength) {
+        public GrabInfo(Kobold owner, Transform grabber, IGrabbable grabbable, float springStrength, float dampingStrength, Vector3 offset) {
             grabTime = Time.time;
             this.grabber = grabber;
             this.owner = owner;
@@ -64,13 +71,14 @@ public class Grabber : MonoBehaviourPun {
             driverConstraint.connectedBody = grabber;
             driverConstraint.dampingStrength = dampingStrength;
             driverConstraint.softness = 1f;
+            driverConstraint.connectedAnchor = offset;
             grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
                 driverConstraint.angleDamping = 0.1f;
                 driverConstraint.angleSpringSoftness = 60f;
-                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition();
+                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition()+offset;
             }
 
             kobold = grabbable.transform.GetComponentInParent<Kobold>();
@@ -130,19 +138,19 @@ public class Grabber : MonoBehaviourPun {
             valid = false;
         }
 
-        public void Set(Vector3 position, Quaternion viewRot) {
+        public void Set(Vector3 position, Quaternion viewRot, Vector3 offset) {
             driverConstraint.anchor = body.transform.InverseTransformPoint(grabbable.GrabTransform().position);
             if (weapon != null) {
                 Quaternion fq = Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().forward, viewRot*Vector3.forward)*Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().up, viewRot*Vector3.up);
                 driverConstraint.forwardVector = fq * body.transform.forward;
                 driverConstraint.upVector = fq * body.transform.up;
-                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition();
+                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition()+offset;
             } else {
-                driverConstraint.connectedAnchor = Vector3.zero;
+                driverConstraint.connectedAnchor = offset;
             }
 
             if (joint != null) {
-                joint.connectedAnchor = position;
+                joint.connectedAnchor = position+viewRot*offset;
             }
         }
         
@@ -197,6 +205,11 @@ public class Grabber : MonoBehaviourPun {
     
     [SerializeField]
     private Transform view;
+
+    public void SetView(Transform newView) {
+        view = newView;
+    }
+
     public void OnDestroy() {
         TryDrop();
     }
@@ -222,22 +235,17 @@ public class Grabber : MonoBehaviourPun {
             }
         }
 
-        if (activateUI.activeSelf && !canActivate || !activateUI.activeSelf && canActivate) {
-            activateUI.SetActive(canActivate);
-        }
-
+        activateUIChanged?.Invoke(canActivate);
         if (!canActivate) {
-            if (canThrow && !throwUI.activeSelf || !canThrow && throwUI.activeSelf) {
-                throwUI.SetActive(canThrow);
-            }
-        } else if (throwUI.activeSelf) {
-            throwUI.SetActive(false);
+            throwUIChanged?.Invoke(canThrow);
+        } else {
+            throwUIChanged?.Invoke(false);
         }
     }
 
     private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
         while (giveBackKobold.kobold.photonView.IsMine) {
-            if (giveBackKobold.kobold.ragdoller.ragdolled) {
+            if (giveBackKobold.kobold.GetComponent<Ragdoller>().ragdolled) {
                 yield return new WaitForSeconds(5f);
             } else {
                 yield return new WaitForSeconds(0.25f);
@@ -291,6 +299,7 @@ public class Grabber : MonoBehaviourPun {
         grabbedObjects = new List<GrabInfo>();
         giveBackKobolds = new List<GiveBackKobold>();
         sorter = new ColliderSorter();
+        player = GetComponent<Kobold>();
     }
 
     private void GetForwardAndUpVectors(GenericWeapon[] weapons, out Vector3 averageForward, out Vector3 averageUp, out Vector3 averageOffset) {
@@ -344,7 +353,7 @@ public class Grabber : MonoBehaviourPun {
             return;
         }
 
-        var position = view.position;
+        var position = view.position+view.TransformVector(defaultOffset);
         int hits = Physics.OverlapSphereNonAlloc(position, 1f, colliders);
         sorter.SetRay(new Ray(position, view.forward));
         System.Array.Sort(colliders, 0, hits, sorter);
@@ -367,7 +376,7 @@ public class Grabber : MonoBehaviourPun {
 
             if (grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
-                GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength);
+                GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength, defaultOffset);
                 // Destroyed on grab, creatures gib on grab.
                 if (!info.Valid()) {
                     return;
@@ -385,7 +394,7 @@ public class Grabber : MonoBehaviourPun {
     public void Update() {
         Validate();
         foreach (var grab in grabbedObjects) {
-            grab.Set(view.position, view.rotation);
+            grab.Set(view.position, view.rotation, defaultOffset);
         }
     }
     public void TryStopActivate() {

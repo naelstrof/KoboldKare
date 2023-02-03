@@ -17,7 +17,6 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
-    public StatusEffect koboldStatus;
     [System.Serializable]
     public class PenetrableSet {
         public Penetrable penetratable;
@@ -46,31 +45,27 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         return null;
     }
 
-    public AudioClip[] yowls;
-    public Animator animator;
+    [HideInInspector]
     public Rigidbody body;
-    public GameEventFloat MetabolizeEvent;
     
 
     public GenericReagentContainer bellyContainer { get; private set; }
-    [SerializeField]
-    private Inflatable belly;
-    private Grabber grabber;
+    [FormerlySerializedAs("belly")] [SerializeField]
+    private Inflatable bellyInflater;
+    private Grabber grabber => GetComponent<Grabber>();
     [SerializeField]
     private Inflatable fatnessInflater;
     [SerializeField]
     private Inflatable sizeInflater;
-    [SerializeField]
-    private Inflatable boobs;
-    [SerializeField]
-    private Material milkSplatMaterial;
+    [FormerlySerializedAs("boobs")] [SerializeField]
+    private Inflatable boobsInflater;
     [SerializeField]
     private LayerMask heartHitMask;
+    [SerializeField] private PhotonGameObjectReference heartPrefab;
     
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
     
-    [SerializeField]
     private float energy = 1f;
 
     [SerializeField]
@@ -78,43 +73,50 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [FormerlySerializedAs("gurglePack")] [SerializeField]
     private AudioPack garglePack;
     
-    public BodyProportionSimple bodyProportion;
-    public TMPro.TMP_Text chatText;
-    public float textSpeedPerCharacter, minTextTimeout;
-    [SerializeField] private PhotonGameObjectReference heartPrefab;
     [HideInInspector]
-    public List<DickInfo.DickSet> activeDicks = new List<DickInfo.DickSet>();
+    public List<DickDescriptor.DickSet> activeDicks = new List<DickDescriptor.DickSet>();
     private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
     public List<Renderer> koboldBodyRenderers;
     //private float internalSex = 0f;
+    
     [SerializeField]
-    private List<Transform> nipples;
+    private MilkLactator milkLactator;
+    
     public Transform hip;
-    public KoboldCharacterController controller;
+    private KoboldCharacterController controller;
+    
+    [HideInInspector]
     public float stimulation = 0f;
-    public float stimulationMax = 30f;
-    public float stimulationMin = -30f;
-    public Animator koboldAnimator;
+    [HideInInspector]
+    public float stimulationMax = 10f;
+    [HideInInspector]
+    public float stimulationMin = -20f;
+    
     private float lastPumpTime = 0f;
     public bool grabbed { get; private set; }
     private List<Vector3> savedJointAnchors = new List<Vector3>();
-    public float arousal = 0f;
-    public GameObject nippleBarbells;
+    private float arousal = 0f;
+    
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
     private static Collider[] colliders = new Collider[32];
-    private WaitForSeconds waitSpurt;
-    private bool milking = false;
+    public delegate void CarriedAction(bool carried);
+    public delegate void QuaffAction();
+
+    public event CarriedAction carriedChanged;
+    public event QuaffAction quaff;
+    private GameObject dickObject;
+    private bool initialized = false;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
-        foreach (var listener in belly.GetInflatableListeners()) {
+        foreach (var listener in bellyInflater.GetInflatableListeners()) {
             yield return listener;
         }
         foreach (var listener in fatnessInflater.GetInflatableListeners()) {
             yield return listener;
         }
-        foreach (var listener in boobs.GetInflatableListeners()) {
+        foreach (var listener in boobsInflater.GetInflatableListeners()) {
             yield return listener;
         }
     }
@@ -136,53 +138,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     
     [PunRPC]
-    public IEnumerator MilkRoutine() {
-        PhotonProfiler.LogReceive(1);
-        while (milking) {
-            yield return null;
-        }
-        milking = true;
-        int pulses = 12;
-        // Now do some milk stuff.
-        for (int i = 0; i < pulses; i++) {
-            foreach (Transform t in GetNipples()) {
-                if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
-                    mozzarella.SetFollowTransform(t);
-                    ReagentContents alloc = new ReagentContents();
-                    alloc.AddMix(ReagentDatabase.GetReagent("Milk").GetReagent(GetGenes().breastSize/(pulses*GetNipples().Count)));
-                    mozzarella.SetVolumeMultiplier(alloc.volume);
-                    mozzarella.SetLocalForward(Vector3.up);
-                    Color color = alloc.GetColor();
-                    mozzarella.SetLineColor(color);
-                    mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
-                        if (photonView.IsMine) {
-                            GenericReagentContainer container =
-                                hit.collider.GetComponentInParent<GenericReagentContainer>();
-                            if (container != null && this != null) {
-                                BitBuffer buffer = new BitBuffer(4);
-                                buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
-                                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                                    buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
-                            }
-                        }
-                        milkSplatMaterial.color = color;
-                        PaintDecal.RenderDecalForCollider(hit.collider, milkSplatMaterial,
-                            hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),
-                            Vector2.one * (volume * 4f), length);
-                    };
-                }
-            }
-            yield return waitSpurt;
-        }
-        milking = false;
+    public void MilkRoutine() {
+        milkLactator.StartMilking(this);
     }
 
-    public List<Transform> GetNipples() {
-        return nipples;
-    }
-
-    private Coroutine displayMessageRoutine;
-    public Ragdoller ragdoller;
+    private Ragdoller ragdoller => GetComponent<Ragdoller>();
     public void AddStimulation(float s) {
         stimulation += s;
         if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
@@ -219,7 +179,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
         foreach(var dickSet in activeDicks) {
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
-            dickSet.info.StartCoroutine(dickSet.info.CumRoutine(dickSet));
+            dickSet.descriptor.StartCoroutine(dickSet.descriptor.CumRoutine(dickSet));
         }
         PumpUpDick(1f);
         stimulation = stimulationMin;
@@ -258,12 +218,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-    private static readonly int Carried = Animator.StringToHash("Carried");
-    private static readonly int Quaff = Animator.StringToHash("Quaff");
 
     public float GetEnergy() {
         return energy;
     }
+
+    public Ragdoller GetRagdoller() => ragdoller;
     public float GetMaxEnergy() {
         if (GetGenes() == null) {
             return 1f;
@@ -293,25 +253,28 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     public override void SetGenes(KoboldGenes newGenes) {
         // Set dick
-        var inventory = GetComponent<KoboldInventory>();
-        Equipment crotchEquipment = inventory.GetEquipmentInSlot(Equipment.EquipmentSlot.Crotch);
-        if (crotchEquipment != null && EquipmentDatabase.GetID(crotchEquipment) != newGenes.dickEquip) {
-            inventory.RemoveEquipment(crotchEquipment,PhotonNetwork.InRoom);
-        }
-
-        if (newGenes.dickEquip != byte.MaxValue) {
-            if (!inventory.Contains(EquipmentDatabase.GetEquipments()[newGenes.dickEquip])) {
-                inventory.PickupEquipment(EquipmentDatabase.GetEquipments()[newGenes.dickEquip], null);
+        if (newGenes.dickEquip == byte.MaxValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+            if (dickObject != null) {
+                dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
+                Destroy(dickObject);
             }
         }
+        
+        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != byte.MaxValue) {
+            var dickDatabase = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
+            var selectedDick = dickDatabase[newGenes.dickEquip];
+            dickObject = Instantiate(selectedDick.GetPrefab(), GetAttachPointTransform(Equipment.AttachPoint.Crotch));
+            dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
+        }
+
         foreach (var dickSet in activeDicks) {
             foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
                 if (inflater is InflatableDick inflatableDick) {
                     inflatableDick.SetDickThickness(newGenes.dickThickness);
                 }
             }
-            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.info);
-            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.info);
+            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.descriptor);
+            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.descriptor);
         }
         grabber.SetMaxGrabCount(newGenes.grabCount);
         if (ragdoller.ragdolled) {
@@ -321,7 +284,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
 
         fatnessInflater.SetSize(Mathf.Log(1f + newGenes.fatSize / 20f, 2f), this);
-        boobs.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
+        boobsInflater.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
         bellyContainer.maxVolume = newGenes.bellySize;
         metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
         Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
@@ -348,11 +311,13 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
     }
-
     private void Awake() {
-        waitSpurt = new WaitForSeconds(1f);
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
         usableColliderComparer = new UsableColliderComparer();
-        grabber = GetComponentInChildren<Grabber>(true);
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
         bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
@@ -360,10 +325,11 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         metabolizedContents = new ReagentContents(20f);
         bellyContainer.maxVolume = 20f;
         photonView.ObservedComponents.Add(bellyContainer);
-        belly.OnEnable();
+        bellyInflater.OnEnable();
         sizeInflater.OnEnable();
-        boobs.OnEnable();
+        boobsInflater.OnEnable();
         fatnessInflater.OnEnable();
+        milkLactator.Awake();
 
         if (tummyGrumbleSource == null) {
             tummyGrumbleSource = hip.gameObject.AddComponent<AudioSource>();
@@ -384,12 +350,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             gargleSource.spatialBlend = 1f;
             gargleSource.loop = true;
         }
-        belly.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
+        bellyInflater.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
     }
 
     void Start() {
+        controller = GetComponent<KoboldCharacterController>();
+        body = GetComponent<Rigidbody>();
         lastPumpTime = Time.timeSinceLevelLoad;
-        MetabolizeEvent.AddListener(OnEventRaised);
+        DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
         PlayAreaEnforcer.AddTrackedObject(photonView);
         if (GetGenes() == null) {
@@ -397,14 +365,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
     private void OnDestroy() {
-        MetabolizeEvent.RemoveListener(OnEventRaised);
+        DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
         grabbed = true;
-        animator.SetBool(Carried, true);
+        carriedChanged?.Invoke(true);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         
@@ -426,7 +394,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     private void OnValidate() {
-        heartPrefab.OnValidate();
+        heartPrefab?.OnValidate();
     }
 
     public bool CanGrab(Kobold kobold) {
@@ -435,7 +403,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
 
     [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
-        animator.SetBool(Carried, false);
+        carriedChanged?.Invoke(false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
         controller.enabled = true;
@@ -468,7 +436,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private void Update() {
         // Throbbing!
         foreach(var dick in activeDicks) {
-            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.info);
+            dick.bonerInflater.SetSize(arousal*0.95f + (0.05f * Mathf.Clamp01(Mathf.Sin(Time.time*2f)))*arousal, dick.descriptor);
         }
     }
     private void FixedUpdate() {
@@ -485,37 +453,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (Time.timeSinceLevelLoad-lastPumpTime > 10f) {
             PumpUpDick(-Time.deltaTime * 0.01f);
         }
-    }
-    public void SendChat(string message) {
-        photonView.RPC(nameof(RPCSendChat), RpcTarget.All, message);
-    }
-    [PunRPC]
-    public void RPCSendChat(string message) {
-        GameManager.instance.SpawnAudioClipInWorld(yowls[UnityEngine.Random.Range(0,yowls.Length)], transform.position);
-        if (displayMessageRoutine != null) {
-            StopCoroutine(displayMessageRoutine);
-        }
-
-        foreach (var player in PhotonNetwork.PlayerList) {
-            if ((Kobold)player.TagObject != this) continue;
-            CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
-            CheatsProcessor.ProcessCommand(this, message);
-            displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
-            break;
-        }
-    }
-    IEnumerator DisplayMessage(string message, float duration) {
-        chatText.text = message;
-        chatText.alpha = 1f;
-        duration += message.Length * textSpeedPerCharacter; // Add additional seconds per character
-
-        yield return new WaitForSeconds(duration);
-        float endTime = Time.time + 1f;
-        while(Time.time < endTime) {
-            chatText.alpha = endTime-Time.time;
-            yield return null;
-        }
-        chatText.alpha = 0f;
     }
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
         PumpUpDick(Time.deltaTime * 0.02f);
@@ -565,7 +502,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         }
     }
     
-    private void OnEventRaised(float f) {
+    private void OnMetabolizationEvent(float f) {
         if (!photonView.IsMine) {
             return;
         }
@@ -580,11 +517,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         gargleSource.enabled = false;
     }
     private void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        belly.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
+        bellyInflater.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
         if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume*0.99f) {
             return;
         }
-        koboldAnimator.SetTrigger(Quaff);
+
+        quaff?.Invoke();
         if (gargleSource.enabled == false || !gargleSource.isPlaying) {
             gargleSource.enabled = true;
             garglePack.Play(gargleSource);
@@ -620,7 +558,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Awake();
         if (info.photonView.InstantiationData == null) {
+            SetGenes(new KoboldGenes().Randomize());
             spawned?.Invoke(this);
             return;
         }
@@ -630,16 +570,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             // Might be a shared buffer
             buffer.SetReadPosition(0);
             SetGenes(buffer.ReadKoboldGenes());
-            bool isPlayer = buffer.ReadBool();
-            if (isPlayer) {
-                GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
-                if (info.Sender != null) { // Possible for instantiated kobold's owner to have disconnected. (late join instantiate).
-                    info.Sender.TagObject = this;
-                }
-            } else {
-                GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
-                FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
-            }
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize());

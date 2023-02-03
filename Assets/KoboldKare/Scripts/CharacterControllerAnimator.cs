@@ -11,6 +11,8 @@ using PenetrationTech;
 using SimpleJSON;
 
 public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISavable {
+    private static readonly int Carried = Animator.StringToHash("Carried");
+    private static readonly int Quaff = Animator.StringToHash("Quaff");
     private Kobold kobold;
     private Vilar.IK.ClassicIK solver;
     private float randomSample => 1f+Mathf.SmoothStep(0.1f, 0.9f, Mathf.PerlinNoise(0f, Time.timeSinceLevelLoad*0.08f))*2f;
@@ -33,6 +35,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Transform headTransform;
     [SerializeField]
     private AudioPack footstepPack;
+
 
     public delegate void AnimationStateChangeAction(bool animating);
 
@@ -65,13 +68,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
 
     [SerializeField] private Rigidbody body;
-    [SerializeField] private PlayerPossession playerPossession;
 
-    [SerializeField] private float crouchedAnimationSpeedMultiplier = 1f;
-    [SerializeField] private float walkingAnimationSpeedMultiplier = 1f;
-    [SerializeField] private float standingAnimationSpeedMultiplier = 1f;
+    [SerializeField] private float crouchedAnimationSpeedMultiplier = 0.5f;
+    [SerializeField] private float walkingAnimationSpeedMultiplier = 2.5f;
+    [SerializeField] private float standingAnimationSpeedMultiplier = 0.13f;
     private float crouchLerper;
     private LookAtHandler handler;
+    private FootIK footIK;
+    private FootstepSoundManager footstepSoundManager;
 
     private Vector3 lastPosition;
     private bool animating;
@@ -105,21 +109,91 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         set = currentStationSet;
         return true;
     }
+    
+    public void SetKneeHints(Transform leftKnee, Transform rightKnee) {
+        leftKneeHint = leftKnee;
+        rightKneeHint = rightKnee;
+        footIK.leftKneeHint = leftKnee;
+        footIK.rightKneeHint = rightKnee;
+    }
+
+    public void SetHeadTransform(Transform newHeadTransform) {
+        headTransform = newHeadTransform;
+    }
+
+    public void SetVisualEffectSources(VisualEffect jump, VisualEffect walk) {
+        jumpDust = jump;
+        walkDust = walk;
+    }
+
+    public void SetBody(Rigidbody newBody) {
+        body = newBody;
+    }
+
+    public void SetPlayerModel(Animator newPlayerModel) {
+        playerModel = newPlayerModel;
+        if (!playerModel.TryGetComponent(out LookAtHandler existingHandler)) {
+            handler = playerModel.gameObject.AddComponent<LookAtHandler>();
+        } else {
+            handler = existingHandler;
+        }
+        if (!playerModel.TryGetComponent(out AnimatorExtender existingExtender)) {
+            playerModel.gameObject.AddComponent<AnimatorExtender>();
+        }
+
+        if (!playerModel.TryGetComponent(out FootIK existingFootIK)) {
+            footIK = playerModel.gameObject.AddComponent<FootIK>();
+        } else {
+            footIK = existingFootIK;
+        }
+        footIK.leftKneeHint = leftKneeHint;
+        footIK.rightKneeHint = rightKneeHint;
+        
+        if (!playerModel.TryGetComponent(out HandIK existingHandIK)) {
+            playerModel.gameObject.AddComponent<HandIK>();
+        }
+        
+        if (!playerModel.TryGetComponent(out FootstepSoundManager existingFootstepSoundManager)) {
+            footstepSoundManager = playerModel.gameObject.AddComponent<FootstepSoundManager>();
+        } else {
+            footstepSoundManager = existingFootstepSoundManager;
+        }
+        
+        footstepSoundManager.SetFootstepPack(footstepPack);
+
+    }
+
+    public void SetDefaultFootstepPack(AudioPack newFootstepPack) {
+        footstepPack = newFootstepPack;
+        if (footstepSoundManager != null) {
+            footstepSoundManager.SetFootstepPack(footstepPack);
+        }
+    }
 
     private void Awake() {
         kobold = GetComponentInParent<Kobold>();
         solver = GetComponentInChildren<Vilar.IK.ClassicIK>();
         playerModel = GetComponentInChildren<Animator>();
+        if (kobold != null) {
+            kobold.carriedChanged += OnCarriedChanged;
+            kobold.quaff += OnQuaff;
+        }
         handler = playerModel.gameObject.AddComponent<LookAtHandler>();
         controller = GetComponentInParent<KoboldCharacterController>();
         playerModel.gameObject.AddComponent<AnimatorExtender>();
-        FootIK ik = playerModel.gameObject.AddComponent<FootIK>();
-        ik.leftKneeHint = leftKneeHint;
-        ik.rightKneeHint = rightKneeHint;
+        footIK = playerModel.gameObject.AddComponent<FootIK>();
+        footIK.leftKneeHint = leftKneeHint;
+        footIK.rightKneeHint = rightKneeHint;
         playerModel.gameObject.AddComponent<HandIK>();
         playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
-        playerModel.GetBoneTransform(HumanBodyBones.LeftFoot).gameObject.AddComponent<FootInteractor>();
-        playerModel.GetBoneTransform(HumanBodyBones.RightFoot).gameObject.AddComponent<FootInteractor>();
+    }
+
+    private void OnQuaff() {
+        playerModel.SetTrigger(Quaff);
+    }
+
+    private void OnCarriedChanged(bool newCarry) {
+        playerModel.SetBool(Carried, newCarry);
     }
 
     [PunRPC]
@@ -279,9 +353,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         
         //Vector3 lookPos = controller.transform.position + controller.transform.forward;
         Vector3 lookPos = headTransform.position + eyeDir;
-        //if (playerPossession != null) {
-            //lookPos = playerPossession.GetEyeDir() * 4f + headTransform.position;
-        //}
 
         handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 0.7f : 0.4f, Time.deltaTime));
         if (animating) {
@@ -335,9 +406,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     void FixedUpdate() {
-        if (playerPossession == null) {
-            return;
-        }
         Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
         Vector3 fdir = characterRot * Vector3.forward;
         float deflectionForgivenessDegrees = 20f;

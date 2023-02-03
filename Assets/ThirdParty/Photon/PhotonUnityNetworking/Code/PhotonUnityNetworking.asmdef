@@ -5,7 +5,9 @@
         "PhotonRealtime",
         "SimpleJSON",
         "KoboldKare.ISavable",
-        "NetStack"
+        "NetStack",
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

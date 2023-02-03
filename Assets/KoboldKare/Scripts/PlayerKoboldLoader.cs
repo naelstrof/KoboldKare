@@ -7,8 +7,9 @@ using UnityScriptableSettings;
 
 public class PlayerKoboldLoader : MonoBehaviour {
     private static readonly string[] settingNames = {"Hue", "Brightness", "Saturation", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
-    public Kobold targetKobold;
+    private Kobold targetKobold;
     void Start() {
+        targetKobold = GetComponent<Kobold>();
         foreach(string settingName in settingNames) {
             var option = SettingsManager.GetSetting(settingName);
             if (option is SettingFloat optionFloat) {
@@ -43,7 +44,15 @@ public class PlayerKoboldLoader : MonoBehaviour {
     private static KoboldGenes ProcessOption(KoboldGenes genes, SettingInt setting) {
         switch (setting.name) {
             case "Dick":
-                genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)0;
+                var database = GameManager.GetPenisDatabase();
+                var validInfos = database.GetValidPrefabReferenceInfos();
+                var info = database.GetInfoByName("HumanoidDick");
+                if (info == null) {
+                    genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)0;
+                } else {
+                    genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)validInfos.IndexOf(info);
+                }
+
                 break;
         }
         return genes;

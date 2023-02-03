@@ -1239,6 +1239,14 @@ MonoBehaviour:
     m_Key: REAGENT_DICK_SHRINK
     m_Metadata:
       m_Items: []
+  - m_Id: 258142671894794240
+    m_Key: MODDING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Key: MOD_CONFIGURATION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

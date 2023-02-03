@@ -81,7 +81,7 @@ MonoBehaviour:
   spawnOnDeath:
     gameObject: {fileID: 1108172281563609256, guid: 67fc5f4d16d6ff84cb32a77fa5286b95,
       type: 3}
-    photonName: Steak
+    optionalDatabase: {fileID: 0}
   splashPrefab: {fileID: 4785729701484657558, guid: ffc10736419710a428fc41240fe5f2fe,
     type: 3}
   health: 3

@@ -10,17 +10,17 @@ using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using Photon.Pun;
 
-public class EquipmentUIDisplay : MonoBehaviourPun {
-    public Transform targetDisplay;
-    public LocalizedString noneString;
-    public LocalizeStringEvent detailDescription;
-    public LocalizeStringEvent detailTitle;
-    public Sprite noneSprite;
-    public Image detailedDisplay;
-    public KoboldInventory inventory;
-    public GameObject inventoryUIPrefab;
-    public List<EquipmentSlotDisplay> slots = new List<EquipmentSlotDisplay>();
-    [System.Serializable]
+public class EquipmentUIDisplay : MonoBehaviour {
+    [SerializeField] private Transform targetDisplay;
+    [SerializeField] private LocalizedString noneString;
+    [SerializeField] private LocalizeStringEvent detailDescription;
+    [SerializeField] private LocalizeStringEvent detailTitle;
+    [SerializeField] private Sprite noneSprite;
+    [SerializeField] private Image detailedDisplay;
+    private KoboldInventory inventory;
+    [SerializeField] private GameObject inventoryUIPrefab;
+    [SerializeField] private List<EquipmentSlotDisplay> slots = new List<EquipmentSlotDisplay>();
+    [Serializable]
     public class EquipmentSlotDisplay {
         public Image targetImage;
         public Sprite defaultSprite;
@@ -31,6 +31,7 @@ public class EquipmentUIDisplay : MonoBehaviourPun {
     }
     private List<GameObject> spawnedUI = new List<GameObject>();
     void Awake() {
+        inventory = GetComponentInParent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;
         foreach(var slot in slots) {
             EventTrigger et = slot.targetImage.gameObject.AddComponent<EventTrigger>();

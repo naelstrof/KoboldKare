@@ -128,7 +128,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810391
-    m_Localized: Trawka
+    m_Localized: Trawa
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
-    m_Localized: "anulowa\u0107"
+    m_Localized: Anuluj
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
@@ -951,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w podziemiu.
+    m_Localized: Witamy w metrze.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1320,6 +1320,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: Modowanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: "Konfiguracja mod\xF3w"
     m_Metadata:
       m_Items: []
   references:

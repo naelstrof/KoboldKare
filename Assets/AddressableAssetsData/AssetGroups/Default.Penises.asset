@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Penises
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Penises
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a89aa2b31543d0e49ba4e28036e8daa7
+  m_SerializeEntries:
+  - m_GUID: e45907392f014eb4bbdc3ad4d264c692
+    m_Address: Penis/KoboldDickEquine
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 98059cbadb8e177438956260aef74383
+    m_Address: Penis/KoboldDickTapered
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 4c45d3c462664734ca8a17cb20150d50
+    m_Address: Penis/KoboldDickKnotted
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: b7c7bb879ff151448b3eabab18398131
+    m_Address: Penis/KandiDickFlared
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 5e4057cb2de57644aa978751466b4887
+    m_Address: Penis/SpikeyDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 3590e2b62abbda044b27e216980d0aa3
+    m_Address: Penis/PlatedDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 8d33370ea91cbef4794d348c3398a28a
+    m_Address: Penis/HumanoidDick
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  - m_GUID: 78bb61ab86adf8241a7386999813c342
+    m_Address: Penis/KoboldDickPrehensile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Penis
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 880b93a1a0411714fbfe9643c359f476, type: 2}
+    - {fileID: 11400000, guid: 17b0bf003f7cfca4c88f7e18fed4429a, type: 2}

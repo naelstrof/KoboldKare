@@ -7,7 +7,7 @@ public class KoboldJawOpenListener : PenetrableListener {
     [SerializeField] private Transform jawTransform;
     [SerializeField] private Vector3 jawOpenDirection;
     [SerializeField] private Animator koboldAnimator;
-    [SerializeField] private CharacterControllerAnimator controllerAnimator;
+    private CharacterControllerAnimator controllerAnimator;
 
     private static readonly int LookUp = Animator.StringToHash("LookUp");
     private Vector3 startingLocalPosition;
@@ -49,6 +49,7 @@ public class KoboldJawOpenListener : PenetrableListener {
     public override void OnEnable(Penetrable p) {
         base.OnEnable(p);
         startingLocalPosition = jawTransform.localPosition;
+        controllerAnimator = koboldAnimator.GetComponentInParent<CharacterControllerAnimator>();
     }
 
     public override void AssertValid() {
@@ -60,9 +61,9 @@ public class KoboldJawOpenListener : PenetrableListener {
         if (koboldAnimator == null) {
             throw new PenetrableListenerValidationException($"KoboldAnimator is null on {this}");
         }
-        if (controllerAnimator == null) {
-            throw new PenetrableListenerValidationException($"controllerAnimator is null on {this}");
-        }
+        //if (controllerAnimator == null) {
+            //throw new PenetrableListenerValidationException($"controllerAnimator is null on {this}");
+        //}
     }
 
     public override void OnDrawGizmosSelected(Penetrable p) {

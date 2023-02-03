@@ -14,4 +14,8 @@ public class MachineConstructionContract : ConstructionContract {
             machine.SetConstructed(purchased);
         }
     }
+    
+    public void ForceState(bool purchased) {
+        SetState(purchased);
+    }
 }

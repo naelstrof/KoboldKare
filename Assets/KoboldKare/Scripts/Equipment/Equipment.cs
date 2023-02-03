@@ -64,7 +64,7 @@ public class Equipment : ScriptableObject {
         return null;
     }
     public virtual GameObject OnUnequip(Kobold k, bool dropOnGround = true) {
-        if (k.photonView.IsMine && groundPrefab.gameObject != null && dropOnGround) {
+        if (k.photonView.IsMine && groundPrefab.photonName != null && dropOnGround) {
             return PhotonNetwork.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
         }
         return null;

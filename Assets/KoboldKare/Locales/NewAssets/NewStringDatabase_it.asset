@@ -1003,7 +1003,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
+      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1031,7 +1031,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Ciao amico.
+    m_Localized: Hey amico.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1127,8 +1127,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: Benvenuto! Stai cercando di comprare dei semi? Abbiamo anche uova
-      kobold!
+    m_Localized: Ben arrivato! Stai cercando di comprare dei semi? Abbiamo anche
+      uova kobold!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1309,6 +1309,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: Modding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: Configurazione mod
     m_Metadata:
       m_Items: []
   references:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,16 @@ public class PlantDatabase : MonoBehaviour {
     public static ScriptablePlant GetPlant(short id) {
         return instance.plants[id];
     }
+
+    public static void AddPlant(ScriptablePlant newPlant) {
+        instance.plants.Add(newPlant);
+        instance.plants.Sort((a,b)=>String.Compare(a.name, b.name, StringComparison.InvariantCulture));
+    }
+    public static void RemovePlant(ScriptablePlant newPlant) {
+        instance.plants.Remove(newPlant);
+        instance.plants.Sort((a,b)=>String.Compare(a.name, b.name, StringComparison.InvariantCulture));
+    }
+
     public static short GetID(ScriptablePlant plant) {
         return (short)instance.plants.IndexOf(plant);
     }

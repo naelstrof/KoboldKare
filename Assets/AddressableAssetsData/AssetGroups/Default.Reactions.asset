@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Reactions
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Reactions
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7305fb88a1602c5468d758ff4417b8f0
+  m_SerializeEntries:
+  - m_GUID: 9377755ed0b127648a2d47d6a50eae17
+    m_Address: Reaction/GrowthSerumReactionB
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 42bc590e6a7412a4ca800caa30653d84
+    m_Address: Reaction/GrowthSerumReactionA
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 7ddfc6f85ab42ff409dec7ee0b338210
+    m_Address: Reaction/GrowthSerumReaction2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 591f1d8dd39373c4b85f917725267110
+    m_Address: Reaction/GrowthSerumReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 09909fa5b6db008498558e6d14336fee
+    m_Address: Reaction/MushDickShrinkJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: af06ea3be2bf24d40908bf711e372abc
+    m_Address: Reaction/MushBoobShrinkJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: c54b88a658b72d04fb67540c1f8a3e01
+    m_Address: Reaction/MushBallShrinkJuice
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 1f0e755de5b4d8242bd20a9b839290c9
+    m_Address: Reaction/EggDoughReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 793cd44f976680e4484bcac7416b6654
+    m_Address: Reaction/WatermelonDoughReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 077da4bdaeec0444581d5e573cea7dc7
+    m_Address: Reaction/CumMilkReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 49418a97aa6522542843376af1675473
+    m_Address: Reaction/EggMilkReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 8e84474d1df1fbc459adc4dfee6e5824
+    m_Address: Reaction/EggnogFlourReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 54d0648681fff5042868c4b68346a035
+    m_Address: Reaction/MilkEggFlourReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 3b0419fc412d2574ba183f37690bcdd9
+    m_Address: Reaction/MilkshakeBananaReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: d3db170f709460b4593b62301180fadf
+    m_Address: Reaction/DoughBeefReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: 78c6ba43c9ecba74d96b19f846c4ced2
+    m_Address: Reaction/WaterWheatReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: c6c6dba5436612e4890f92cf0f4eff0f
+    m_Address: Reaction/IcePineappleReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: ee43090721864c8468005ffd89e52ace
+    m_Address: Reaction/IceMilkReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  - m_GUID: c9a9010105b82584293f65d7af7838e2
+    m_Address: Reaction/PotassiumWaterReaction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Reaction
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 05e9b89adde708d40b86f8cfd25b37d4, type: 2}
+    - {fileID: 11400000, guid: 6f3877e2ca9c24544a5bdc45601a0aee, type: 2}

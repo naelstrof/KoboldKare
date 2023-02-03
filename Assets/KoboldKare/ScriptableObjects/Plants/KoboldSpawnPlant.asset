@@ -17,8 +17,8 @@ MonoBehaviour:
   possibleNextGenerations: []
   produces:
   - prefab:
-      gameObject: {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae,
-        type: 3}
-      photonName: GrabbableKobold4
+      gameObject: {fileID: 0}
+      optionalDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847,
+        type: 2}
     minProduce: 1
     maxProduce: 1

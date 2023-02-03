@@ -269,6 +269,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}
       listeners: []
     dickSizeInflater:
       bounceCurve:
@@ -332,6 +333,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}
       listeners:
       - rid: 5882124739971907587
     bonerInflater:
@@ -360,6 +362,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 049836be855ee594e900eddfc3778e1f, type: 2}
       listeners:
       - rid: 2
     attachPoint: 0
@@ -367,7 +370,7 @@ MonoBehaviour:
       type: 2}
     attachPosition: {x: 0.000049315724, y: 0.89064485, z: -0.046338648}
     cumSoundPack: {fileID: 11400000, guid: 6a026e8e8fe32d948a722fccae91b39a, type: 2}
-    info: {fileID: 0}
+    descriptor: {fileID: 0}
     parent: 0
     parentTransform: {fileID: 0}
   references:
@@ -685,7 +688,6 @@ MonoBehaviour:
       type: {class: PenetratorPassiveAudioPack, ns: , asm: Assembly-CSharp}
       data:
         pack: {fileID: 11400000, guid: 75b4e370e721eca448d7f6745d7889aa, type: 2}
-        volume: 1
 --- !u!1 &7565197061882451191
 GameObject:
   m_ObjectHideFlags: 0

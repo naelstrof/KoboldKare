@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour {
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
     public LayerMask usableHitMask;
+    [SerializeField]
+    private NetworkManager networkManager;
     public AnimationCurve volumeCurve;
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
@@ -40,6 +42,10 @@ public class GameManager : MonoBehaviour {
     private GameObject CreditsTab;
     [SerializeField]
     private GameObject SaveTab;
+
+    [SerializeField] private PrefabDatabase penisDatabase;
+
+    public static PrefabDatabase GetPenisDatabase() => instance.penisDatabase;
 
     public static Coroutine StartCoroutineStatic(IEnumerator routine) {
         if (instance == null) {
@@ -107,17 +113,28 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
+
+        ModManager.AddFinishedLoadingListener(ReloadMapIfInEditor);
         // FIXME: Photon isn't initialized early enough for scriptable objects to add themselves as a callback...
         // So I do it here-- I guess!
         PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start() {
+    private void ReloadMapIfInEditor() {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
-            NetworkManager.instance.StartSinglePlayer();
-            GameManager.instance.Pause(false);
+            StartCoroutine(ReloadMapRoutine());
         }
+    }
+
+    private IEnumerator ReloadMapRoutine() {
+        Debug.LogWarning("Reloading scene due to mods not being ready yet...");
+        yield return LevelLoader.instance.LoadLevel("MainMap");
+        NetworkManager.instance.StartSinglePlayer();
+        Pause(false);
+    }
+
+    void Start() {
         SaveManager.Init();
     }
     private void UIVisible(bool visible) {
@@ -185,6 +202,7 @@ public class GameManager : MonoBehaviour {
         if (instance != this) {
             return;
         }
+        ModManager.RemoveFinishedLoadingListener(ReloadMapIfInEditor);
         string targetString = NetworkManager.instance.settings.AppSettings.AppVersion;
         if (Application.isEditor && targetString.EndsWith("Editor")) {
             NetworkManager.instance.settings.AppSettings.AppVersion = targetString.Substring(0, targetString.Length - 6);

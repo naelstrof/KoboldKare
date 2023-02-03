@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6f9b7d146f27a4198eefc8b2871596, type: 3}
+  m_Name: Yowl
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 7b62197ed2a36a94caec86483d6feea7, type: 3}
+  - {fileID: 8300000, guid: 1cbc240a5eceecc4ca643343bff8c92c, type: 3}
+  - {fileID: 8300000, guid: 464738ddde86c8f48b9a0e0578abd85c, type: 3}
+  volume: 0.8
+  group: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}
+  pitchRange: 0.2

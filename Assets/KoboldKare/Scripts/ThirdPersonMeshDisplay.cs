@@ -7,25 +7,44 @@ using JigglePhysics;
 using PenetrationTech;
 
 public class ThirdPersonMeshDisplay : MonoBehaviour {
-    private List<GameObject> mirrorObjects = new List<GameObject>();
-    private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies = new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
-    public Kobold kobold;
+    private List<GameObject> mirrorObjects;
+    private Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer> smrCopies;
+    private Kobold kobold;
     private ProceduralDeformation proceduralDeformation;
-    public LODGroup group;
-    public JiggleSkin physics;
-    public List<SkinnedMeshRenderer> dissolveTargets = new List<SkinnedMeshRenderer>();
+    private LODGroup group;
+    private JiggleSkin physics;
+    private List<SkinnedMeshRenderer> dissolveTargets;
     private static readonly int Head = Shader.PropertyToID("_Head");
 
-    public void OnEnable() {
+    private void OnEnable() {
+        mirrorObjects ??= new List<GameObject>();
+        smrCopies ??= new Dictionary<SkinnedMeshRenderer, SkinnedMeshRenderer>();
+        dissolveTargets ??= new List<SkinnedMeshRenderer>();
+        
+        kobold = GetComponentInParent<Kobold>();
+        physics = kobold.GetComponent<JiggleSkin>();
+        group = kobold.GetComponentInChildren<LODGroup>();
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
-        RegenerateMirror();
+        if (isActiveAndEnabled) {
+            RegenerateMirror();
+        }
     }
 
-    public void OnDisable() {
+    public void SetDissolveTargets(ICollection<SkinnedMeshRenderer> newDissolveTargets) {
+        dissolveTargets = new List<SkinnedMeshRenderer>(newDissolveTargets);
+        OnEnable();
+    }
+
+    private void OnDisable() {
+        foreach (var r in dissolveTargets) {
+            foreach(Material m in r.materials) {
+                m.SetFloat(Head, 1f);
+            }
+        }
         DestroyMirror();
     }
 
-    public void Update() {
+    private void Update() {
         foreach(KeyValuePair<SkinnedMeshRenderer, SkinnedMeshRenderer> pair in smrCopies) {
             for(int i=0;i<pair.Key.sharedMesh.blendShapeCount;i++) {
                 pair.Value.SetBlendShapeWeight(i,pair.Key.GetBlendShapeWeight(i));
@@ -42,8 +61,11 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 if (kobold.koboldBodyRenderers.Contains(r)) {
                     kobold.koboldBodyRenderers.Remove(r);
                 }
-                if (physics.targetSkins.Contains(r)) {
-                    physics.targetSkins.Remove(r);
+
+                if (physics != null) {
+                    if (physics.targetSkins.Contains(r)) {
+                        physics.targetSkins.Remove(r);
+                    }
                 }
 
                 proceduralDeformation.RemoveTargetRenderer(r);
@@ -73,22 +95,26 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
 
     private void RegenerateMirror() {
         DestroyMirror();
-        LOD[] lods = group.GetLODs();
-        List<Renderer> renderers = new List<Renderer>(lods[0].renderers);
-        for(int i=0;i<renderers.Count;i++) {
-            if (renderers[i] == null || renderers[i].gameObject == null) {
-                renderers.RemoveAt(i);
-            }
-        }
-        foreach (GameObject g in mirrorObjects) {
-            foreach (SkinnedMeshRenderer r in g.GetComponentsInChildren<SkinnedMeshRenderer>()) {
-                if (renderers.Contains(r)) {
-                    renderers.Remove(r);
+        if (group != null) {
+            LOD[] lods = group.GetLODs();
+            List<Renderer> renderers = new List<Renderer>(lods[0].renderers);
+            for (int i = 0; i < renderers.Count; i++) {
+                if (renderers[i] == null || renderers[i].gameObject == null) {
+                    renderers.RemoveAt(i);
                 }
             }
+
+            foreach (GameObject g in mirrorObjects) {
+                foreach (SkinnedMeshRenderer r in g.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+                    if (renderers.Contains(r)) {
+                        renderers.Remove(r);
+                    }
+                }
+            }
+
+            lods[0].renderers = renderers.ToArray();
+            group.SetLODs(lods);
         }
-        lods[0].renderers = renderers.ToArray();
-        group.SetLODs(lods);
 
         mirrorObjects.Clear();
         smrCopies.Clear();
@@ -102,18 +128,23 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             g.transform.parent = s.transform.parent;
             smrCopies[s] = g.GetComponent<SkinnedMeshRenderer>();
             kobold.koboldBodyRenderers.Add(smrCopies[s]);
-            lods = group.GetLODs();
-            renderers = new List<Renderer>(lods[0].renderers);
-            for(int i=0;i<renderers.Count;i++) {
-                if (renderers[i] == null || renderers[i].gameObject == null) {
-                    renderers.RemoveAt(i);
+            if (group != null) {
+                var lods = group.GetLODs();
+                var renderers = new List<Renderer>(lods[0].renderers);
+                for (int i = 0; i < renderers.Count; i++) {
+                    if (renderers[i] == null || renderers[i].gameObject == null) {
+                        renderers.RemoveAt(i);
+                    }
                 }
+
+                renderers.Add(g.GetComponent<SkinnedMeshRenderer>());
+                lods[0].renderers = renderers.ToArray();
+                group.SetLODs(lods);
             }
-            renderers.Add(g.GetComponent<SkinnedMeshRenderer>());
-            lods[0].renderers = renderers.ToArray();
-            group.SetLODs(lods);
             if (s.gameObject.name == "Body") {
-                physics.targetSkins.Add(smrCopies[s]);
+                if (physics != null) {
+                    physics.targetSkins.Add(smrCopies[s]);
+                }
                 foreach (var inflatable in kobold.GetAllInflatableListeners()) {
                     if (inflatable is InflatableBreast breast) {
                         breast.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());

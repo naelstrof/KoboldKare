@@ -552,6 +552,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}
       listeners: []
     dickSizeInflater:
       bounceCurve:
@@ -615,6 +616,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}
       listeners:
       - rid: 7826749907349012488
     bonerInflater:
@@ -643,6 +645,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       bounceDuration: 1
+      bounce: {fileID: 11400000, guid: 049836be855ee594e900eddfc3778e1f, type: 2}
       listeners:
       - rid: 7826749907349012490
     attachPoint: 0
@@ -650,7 +653,7 @@ MonoBehaviour:
       type: 2}
     attachPosition: {x: 0.000049315724, y: 0.9085441, z: -0.046338648}
     cumSoundPack: {fileID: 11400000, guid: 6a026e8e8fe32d948a722fccae91b39a, type: 2}
-    info: {fileID: 0}
+    descriptor: {fileID: 0}
     parent: 0
     parentTransform: {fileID: 0}
   references:

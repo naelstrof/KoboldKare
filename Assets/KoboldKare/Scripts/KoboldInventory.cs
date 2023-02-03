@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     [PunRPC]
-    public void PickupEquipmentRPC(short equipmentID, int groundPrefabID) {
+    public void PickupEquipmentRPC(byte equipmentID, int groundPrefabID) {
         PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
         Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
         PickupEquipment(equip, view == null ? null : view.gameObject);
@@ -99,18 +100,21 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            stream.SendNext((byte)equipment.Count);
+            BitBuffer bitBuffer = new BitBuffer(4);
+            bitBuffer.AddByte((byte)equipment.Count);
             foreach(Equipment e in equipment) {
-                stream.SendNext(EquipmentDatabase.GetID(e));
+                bitBuffer.AddByte(EquipmentDatabase.GetID(e));
             }
+            stream.SendNext(bitBuffer);
         } else {
-            byte equipmentCount = (byte)stream.ReceiveNext();
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            byte equipmentCount = data.ReadByte();
             staticIncomingEquipment.Clear();
             for(int i=0;i<equipmentCount;i++) {
-                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)stream.ReceiveNext()));
+                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadByte()));
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
-            PhotonProfiler.LogReceive(sizeof(short) * equipmentCount);
+            PhotonProfiler.LogReceive(data.Length);
         }
     }
 
@@ -126,7 +130,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
         for(int i=0;i<equipments.Count;i++) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)equipments[i].AsInt));
+            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((byte)equipments[i].AsInt));
         }
         ReplaceEquipmentWith(staticIncomingEquipment);
     }

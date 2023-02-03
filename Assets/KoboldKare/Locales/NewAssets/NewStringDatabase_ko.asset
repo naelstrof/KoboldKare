@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004687
-    m_Localized: "~\uC5D0"
+    m_Localized: "\uC5D0"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004688
@@ -252,7 +252,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004699
-    m_Localized: "\uC0AC\uC6A9\uD558\uB2E4"
+    m_Localized: "\uC0AC\uC6A9"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004700
@@ -1276,7 +1276,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "12 \uAC1C\uC758 \uD070 \uAC83\uB4E4, \uC544\uB9C8\uB3C4 \uB354."
+    m_Localized: "12 \uAC1C\uC758 \uD070 \uAC83\uB4E4, \uC544\uB9C8\uB3C4 \uB354
+      \uB9CE\uC740 \uAC83\uB4E4."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
@@ -1385,6 +1386,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 254924482138284033
     m_Localized: Dick-Shrink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258142671894794240
+    m_Localized: "\uBAA8\uB529"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258400516968075264
+    m_Localized: "\uBAA8\uB4DC \uAD6C\uC131"
     m_Metadata:
       m_Items: []
   references:

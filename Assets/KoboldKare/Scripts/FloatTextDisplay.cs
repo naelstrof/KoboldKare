@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,13 +11,17 @@ public class FloatTextDisplay : MonoBehaviour {
     private TMPro.TextMeshProUGUI text;
     [SerializeField]
     private string startingText;
-    [SerializeField]
     private MoneyHolder holder;
     private float oldMoney;
     private Coroutine routine;
+
+    private void OnEnable() {
+        holder = GetComponentInParent<MoneyHolder>();
+    }
+
     void Start() {
         text = GetComponent<TMPro.TextMeshProUGUI>();
-        text.text = startingText + Mathf.Round(holder.GetMoney()).ToString();
+        text.text = startingText + Mathf.Round(holder.GetMoney());
         oldMoney = holder.GetMoney();
         holder.moneyChanged += OnMoneyChanged;
     }

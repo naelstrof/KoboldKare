@@ -221,13 +221,7 @@ MonoBehaviour:
     reagent: {fileID: 11400000, guid: 6a3ddb5dbc12f7e4b9c3e396cd58f3e9, type: 2}
     volume: 10
   fruitInflater:
-    bounceCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    bounceDuration: 0
+    bounce: {fileID: 11400000, guid: e18312d1b399ef44cbae03acd0a32afb, type: 2}
     listeners: []
   startFrozen: 0
   gibSound: {fileID: 11400000, guid: f7f1939f20ebb1147a4311c7dc948715, type: 2}

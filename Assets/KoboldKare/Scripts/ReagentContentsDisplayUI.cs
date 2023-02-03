@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ReagentContentsDisplayUI : MonoBehaviour {
-    [SerializeField] private Kobold targetKobold;
+    private Kobold targetKobold;
     [SerializeField] private TargetReagentContents targetContents;
     [SerializeField]
     private RectTransform background;
@@ -31,6 +31,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         images = new List<RectTransform>();
     }
     private void OnEnable() {
+        targetKobold = GetComponentInParent<Kobold>();
         switch (targetContents) {
             case TargetReagentContents.Belly:
                 targetKobold.bellyContainer.OnChange.AddListener(OnReagentContentsChangedOther);

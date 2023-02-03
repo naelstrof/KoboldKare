@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Cosmetics
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Cosmetics
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 6b3b77d3a31c8284895a2874b268f945
+  m_SerializeEntries:
+  - m_GUID: 605a8a9893df4824fa39c399fbc0ead0
+    m_Address: Prefab/ChestArm01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 548aa0c098057f244bf888156ef74dcf
+    m_Address: Prefab/TopHat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 5caba9854a5d73c4dbed957bf746e25c
+    m_Address: Prefab/TailCollar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 4471a7aea07acb443aa85ca878c62a45
+    m_Address: Prefab/Tailbag
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: cd3bcb5c1635f6746aac112a39fc63d4
+    m_Address: Prefab/SpikeyBracelet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 22c1090591e3eb34a856a3b2c53168c2
+    m_Address: Prefab/SpikeCollar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 019fccd267e489d4492642add12c8517
+    m_Address: Prefab/Onahole
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 8951fb1a948fc9d4ea8da627ec9ba72d
+    m_Address: Prefab/HighHeels
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: 8a27b56e63a6bf54f850be571ad924d6
+    m_Address: Prefab/Hardhat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  - m_GUID: e19ec61e30e580d4480bdd0fc79fb3d3
+    m_Address: Prefab/Gloves
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Cosmetic
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2862f9a654735fb49813a739b5a22257, type: 2}
+    - {fileID: 11400000, guid: da68368da46a55049b2279c5626812a4, type: 2}

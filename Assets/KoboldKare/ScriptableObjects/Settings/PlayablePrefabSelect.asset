@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecf4a316be583a439dc7cbd925581ab, type: 3}
+  m_Name: PlayablePrefabSelect
+  m_EditorClassIdentifier: 
+  localizedName:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 516095004716
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  group: {fileID: 11400000, guid: 6489b155b99595a46a9b437ff1f744c1, type: 2}
+  defaultValue: 0
+  dropdownOptions:
+  - Kobold
+  database: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847, type: 2}
+  references:
+    version: 2
+    RefIds: []

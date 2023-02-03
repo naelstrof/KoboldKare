@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Naelstrof.BodyProportion;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -11,30 +10,26 @@ using UnityEngine;
 public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
-    [SerializeField]
     private Animator animator;
-    [SerializeField]
     private KoboldCharacterController controller;
     [SerializeField]
     private Rigidbody[] ragdollBodies;
-    [SerializeField]
     private Rigidbody body;
     private CollisionDetectionMode oldCollisionMode;
-    [SerializeField]
-    private BodyProportionBase bodyProportion;
+    //[SerializeField]
+    //private BodyProportionBase bodyProportion;
     public bool ragdolled {get; private set;}
     private int ragdollCount;
     [SerializeField]
     private Rigidbody hipBody;
     [SerializeField]
-    private JigglePhysics.JiggleRigBuilder tailRig;
+    private List<JigglePhysics.JiggleRigBuilder> disableRigs;
 
     private PositionPacket lastPacket;
     private PositionPacket nextPacket;
 
     private Kobold kobold;
 
-    [SerializeField]
     private LODGroup group;
     
     private bool locked;
@@ -137,8 +132,15 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
 
+    private void Start() {
+        controller = GetComponent<KoboldCharacterController>();
+    }
+
     private void Awake() {
+        animator = GetComponent<CharacterDescriptor>().GetDisplayAnimator();
+        group = GetComponentInChildren<LODGroup>();
         kobold = GetComponent<Kobold>();
+        body = GetComponent<Rigidbody>();
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -216,17 +218,23 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
         }
 
-        foreach (var lod in group.GetLODs()) {
-            foreach (Renderer renderer in lod.renderers) {
-                if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
-                    skinnedMeshRenderer.updateWhenOffscreen = true;
+        if (group != null) {
+            foreach (var lod in group.GetLODs()) {
+                foreach (Renderer renderer in lod.renderers) {
+                    if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
+                        skinnedMeshRenderer.updateWhenOffscreen = true;
+                    }
                 }
             }
+
+            group.ForceLOD(0);
         }
-        group.ForceLOD(0);
-        tailRig.enabled = false;
+
+        foreach(var rig in disableRigs) {
+            rig.enabled = false;
+        }
         animator.enabled = false;
-        bodyProportion.enabled = false;
+        //bodyProportion.enabled = false;
         controller.enabled = false;
         foreach (Rigidbody b in ragdollBodies) {
             b.velocity = body.velocity;
@@ -240,9 +248,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         body.detectCollisions = false;
 
         // We need to know the final result of our ragdoll before we update the anchors.
-        Physics.SyncTransforms();
-        bodyProportion.ScaleSkeleton();
-        Physics.SyncTransforms();
+        //Physics.SyncTransforms();
+        //bodyProportion.ScaleSkeleton();
+        //Physics.SyncTransforms();
+        
         foreach (var savedJointAnchor in jointAnchors) {
             savedJointAnchor.Set();
         }
@@ -276,15 +285,19 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 dickSet.dick.AddIgnorePenetrable(penn.penetratable);
             }
         }
-        foreach (var lod in group.GetLODs()) {
-            foreach (Renderer renderer in lod.renderers) {
-                if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
-                    skinnedMeshRenderer.updateWhenOffscreen = false;
+        if (group != null) {
+            foreach (var lod in group.GetLODs()) {
+                foreach (Renderer renderer in lod.renderers) {
+                    if (renderer is SkinnedMeshRenderer skinnedMeshRenderer) {
+                        skinnedMeshRenderer.updateWhenOffscreen = false;
+                    }
                 }
             }
+            group.ForceLOD(-1);
         }
-        group.ForceLOD(-1);
-        tailRig.enabled = true;
+        foreach (var rig in disableRigs) {
+            rig.enabled = true;
+        }
         Vector3 diff = hipBody.position - body.transform.position;
         body.transform.position += diff;
         hipBody.position -= diff;
@@ -307,7 +320,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             b.isKinematic = true;
         }
         animator.enabled = true;
-        bodyProportion.enabled = true;
+        //bodyProportion.enabled = true;
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;

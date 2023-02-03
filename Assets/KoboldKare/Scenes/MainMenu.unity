@@ -2671,6 +2671,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5619718347981027232, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619718347981027232, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: managedReferences[8869783460724080640]
+      value: Assembly-CSharp SettingPostProcessor
+      objectReference: {fileID: 0}
     - target: {fileID: 5678890605441412389, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
       propertyPath: m_AnchorMax.x

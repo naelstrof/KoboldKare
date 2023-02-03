@@ -2,9 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Vilar.IK;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -46,6 +50,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private PhotonView photonView;
     private Chatter chatter;
     private ControlType controlType = ControlType.AIPlayer;
+    private Kobold kobold;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -57,28 +62,100 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     [SerializeField] private Transform rightKneeHint;
     [SerializeField] private Transform leftKneeHint;
     [SerializeField] private List<SkinnedMeshRenderer> bodyRenderers;
+
+    private AudioPack footLand;
+    private AudioPack footstepPack;
+    private PhysicMaterial spaceLubeMaterial;
+    private VisualEffectAsset circlePoof;
+    private VisualEffectAsset walkDust;
+    private PlayerPossession playerPossessionPrefab;
+    private GameObject handDisplayPrefab;
+    private VisualEffectAsset freezeVFXAsset;
+    private AudioPack unfreezeAudioPack;
+    private TMPro.TMP_Text floatingTextPrefab;
+    private AudioPack chatYowlPack;
+    private ClassicIK classicIK;
     
-    [Header("Special settings")]
-    [SerializeField] private AudioPack footLand;
-    [SerializeField] private AudioPack footstepPack;
-    [SerializeField] private PhysicMaterial spaceLubeMaterial;
-    [SerializeField] private VisualEffectAsset circlePoof;
-    [SerializeField] private VisualEffectAsset walkDust;
-    [SerializeField] private PlayerPossession playerPossessionPrefab;
-    [SerializeField] private GameObject handDisplayPrefab;
-    [SerializeField] private VisualEffectAsset freezeVFXAsset;
-    [SerializeField] private AudioPack unfreezeAudioPack;
-    [SerializeField] private TMPro.TMP_Text floatingTextPrefab;
-    [SerializeField] private AudioPack chatYowlPack;
+    private List<AsyncOperationHandle> tasks;
+    
+    [Header("Special Settings")]
     [SerializeField] private AnimationCurve antiPopCurveIK;
     [SerializeField] private AnimationClip tposeIK;
-
     public Animator GetDisplayAnimator() {
         return displayAnimator;
     }
 
-    void Awake() {
+    private void Awake() {
+        GameManager.StartCoroutineStatic(AwakeRoutine());
+    }
+
+    private IEnumerator AwakeRoutine() {
+        InitializeImmediately();
+        gameObject.SetActive(false);
+        var task = FindAssetsAsync();
+        yield return new WaitUntil(()=>task.IsCompleted);
+        InitializePreEnable();
+        gameObject.SetActive(true);
+        InitializePostEnable();
+    }
+
+    private async Task FindAssetsAsync() {
+        tasks = new List<AsyncOperationHandle>();
+        var footlandsTask = Addressables.LoadAssetAsync<AudioPack>( "Assets/KoboldKare/ScriptableObjects/SoundPacks/FootLands.asset");
+        var defaultFootstepTask =  Addressables.LoadAssetAsync<AudioPack>( "Assets/KoboldKare/ScriptableObjects/SoundPacks/DefaultFootsteps.asset");
+        var physicsMaterialTask =  Addressables.LoadAssetAsync<PhysicMaterial>("Assets/KoboldKare/Scripts/Physics/SpaceLube.physicMaterial");
+        var circlePoofVFXTask = Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/CirclePoof.vfx");
+        var walkDustVFXTask = Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/WalkDust.vfx");
+        var freezeVFXTask = Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/Freeze.vfx");
+        var playerPossessionPrefabTask = Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/PlayerController.prefab");
+        var handDisplayPrefabTask = Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/koboldhand.prefab");
+        var unfreezeAudioPackTask = Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Unfreeze.asset");
+        var floatingTextPrefabTask = Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/FloatingText.prefab");
+        var chatYowlPackTask = Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Yowl.asset");
+        tasks.Add(footlandsTask);
+        tasks.Add(defaultFootstepTask);
+        tasks.Add(physicsMaterialTask);
+        tasks.Add(circlePoofVFXTask);
+        tasks.Add(walkDustVFXTask);
+        tasks.Add(freezeVFXTask);
+        tasks.Add(playerPossessionPrefabTask);
+        tasks.Add(handDisplayPrefabTask);
+        tasks.Add(unfreezeAudioPackTask);
+        tasks.Add(floatingTextPrefabTask);
+        tasks.Add(chatYowlPackTask);
+        await Task.WhenAll(footlandsTask.Task, defaultFootstepTask.Task, physicsMaterialTask.Task,
+            circlePoofVFXTask.Task, walkDustVFXTask.Task, freezeVFXTask.Task, playerPossessionPrefabTask.Task,
+            handDisplayPrefabTask.Task, unfreezeAudioPackTask.Task, floatingTextPrefabTask.Task, chatYowlPackTask.Task);
+        footLand = footlandsTask.Result;
+        footstepPack = defaultFootstepTask.Result;
+        spaceLubeMaterial = physicsMaterialTask.Result;
+        circlePoof = circlePoofVFXTask.Result;
+        walkDust = walkDustVFXTask.Result;
+        playerPossessionPrefab = playerPossessionPrefabTask.Result.GetComponent<PlayerPossession>();
+        handDisplayPrefab = handDisplayPrefabTask.Result;
+        freezeVFXAsset = freezeVFXTask.Result;
+        unfreezeAudioPack = unfreezeAudioPackTask.Result;
+        floatingTextPrefab = floatingTextPrefabTask.Result.GetComponent<TMPro.TMP_Text>();
+        chatYowlPack = chatYowlPackTask.Result;
+    }
+
+    void InitializeImmediately() {
         body = gameObject.AddComponent<Rigidbody>();
+        classicIK = displayAnimator.gameObject.AddComponent<ClassicIK>();
+        gameObject.AddComponent<PhysicsAudio>();
+        characterCollider = gameObject.AddComponent<CapsuleCollider>();
+        characterController = gameObject.AddComponent<KoboldCharacterController>();
+        characterAnimator = gameObject.AddComponent<CharacterControllerAnimator>();
+        grabber = gameObject.AddComponent<Grabber>();
+        koboldInventory = gameObject.AddComponent<KoboldInventory>();
+        precisionGrabber = gameObject.AddComponent<PrecisionGrabber>();
+        koboldInventory = gameObject.AddComponent<KoboldInventory>();
+        moneyHolder = gameObject.AddComponent<MoneyHolder>();
+        smoothCharacterPhoton = gameObject.AddComponent<SmoothCharacterPhoton>();
+    }
+
+    void InitializePreEnable() {
+        kobold = GetComponent<Kobold>();
         body.mass = 10f;
         body.drag = 0f;
         body.angularDrag = 10f;
@@ -86,18 +163,14 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         body.collisionDetectionMode = CollisionDetectionMode.Continuous;
         body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        var classicIK = displayAnimator.gameObject.AddComponent<ClassicIK>();
         classicIK.SetAntiPopAndTPose(tposeIK, antiPopCurveIK);
         classicIK.enabled = false;
         
-        gameObject.AddComponent<PhysicsAudio>();
-        characterCollider = gameObject.AddComponent<CapsuleCollider>();
         characterCollider.center = colliderOffset;
         characterCollider.height = colliderHeight;
         characterCollider.radius = colliderRadius;
         characterCollider.material = spaceLubeMaterial;
         
-        characterController = gameObject.AddComponent<KoboldCharacterController>();
         characterController.footland = footLand;
         characterController.worldModel = displayAnimator.transform;
         characterController.collider = characterCollider;
@@ -108,46 +181,28 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         circlePoofEffectGameObject.transform.localPosition = Vector3.zero;
         circlePoofEffectGameObject.transform.localRotation = Quaternion.identity;
         VisualEffect circlePoofEffect = circlePoofEffectGameObject.GetComponent<VisualEffect>();
+        circlePoofEffect.visualEffectAsset = circlePoof;
         
         GameObject walkDustEffectGameObject = new GameObject("WalkDust", typeof(VisualEffect));
         walkDustEffectGameObject.transform.SetParent(displayAnimator.transform);
         walkDustEffectGameObject.transform.localPosition = Vector3.zero;
         walkDustEffectGameObject.transform.localRotation = Quaternion.identity;
         VisualEffect walkDustEffect = circlePoofEffectGameObject.GetComponent<VisualEffect>();
+        walkDustEffect.visualEffectAsset = walkDust;
         
-        characterAnimator = gameObject.AddComponent<CharacterControllerAnimator>();
+        characterAnimator.SetPlayerModel(displayAnimator);
         characterAnimator.SetKneeHints(leftKneeHint, rightKneeHint);
         characterAnimator.SetVisualEffectSources(circlePoofEffect, walkDustEffect);
         characterAnimator.SetDefaultFootstepPack(footstepPack);
-        characterAnimator.SetPlayerModel(displayAnimator);
         characterAnimator.SetBody(body);
-        characterAnimator.SetHeadTransform(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
 
-        grabber = gameObject.AddComponent<Grabber>();
-        
-        precisionGrabber = gameObject.AddComponent<PrecisionGrabber>();
         precisionGrabber.InitializeWithAssets(handDisplayPrefab, freezeVFXAsset, unfreezeAudioPack);
-
-        List<Collider> ignoreColliders = new List<Collider>();
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Chest)));
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Neck)));
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Head)));
-        precisionGrabber.SetIgnoreColliders(ignoreColliders.ToArray());
-
-        koboldInventory = gameObject.AddComponent<KoboldInventory>();
-        moneyHolder = gameObject.AddComponent<MoneyHolder>();
-    }
-
-    private void Start() {
+        
         var playerPossessionInstance = Instantiate(playerPossessionPrefab, transform);
         possession = playerPossessionInstance.GetComponent<PlayerPossession>();
-        thirdPersonMeshDisplay = playerPossessionInstance.GetComponent<ThirdPersonMeshDisplay>();
-        thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
         
         precisionGrabber.SetView(possession.eyes.transform);
         grabber.SetView(possession.eyes.transform);
-
-        koboldInventory = gameObject.AddComponent<KoboldInventory>();
 
         chatter = gameObject.AddComponent<Chatter>();
 
@@ -155,15 +210,28 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         chatter.SetTextOutput(floatingTextPrefabInstance.GetComponent<TMPro.TMP_Text>());
         chatter.SetYowlPack(chatYowlPack);
 
-        smoothCharacterPhoton = gameObject.AddComponent<SmoothCharacterPhoton>();
         photonView = GetComponent<PhotonView>();
         photonView.FindObservables();
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
     }
 
+    void InitializePostEnable() {
+        characterAnimator.SetHeadTransform(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
+        
+        List<Collider> ignoreColliders = new List<Collider>();
+        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Chest)));
+        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Neck)));
+        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Head)));
+        precisionGrabber.SetIgnoreColliders(ignoreColliders.ToArray());
+        
+        thirdPersonMeshDisplay = possession.GetComponent<ThirdPersonMeshDisplay>();
+        thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
+    }
+
     private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {
         List<Collider> colliders = new List<Collider>();
-        foreach (Transform t in target) {
+        for(int o=0;o<target.childCount;o++) {
+            Transform t = target.GetChild(o);
             bool found = false;
             for (int i = 0; i < (int)HumanBodyBones.LastBone; i++) {
                 if (t == target || t != animator.GetBoneTransform((HumanBodyBones)i)) continue;
@@ -181,26 +249,31 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         return colliders;
     }
 
+    private void OnDestroy() {
+        foreach(var task in tasks) {
+            Addressables.Release(task);
+        }
+    }
+
 #if UNITY_EDITOR
     public bool InitializeIfNeeded(bool force) {
-        if (force == false && (footLand != null || footstepPack != null || spaceLubeMaterial != null || circlePoof != null ||
-            walkDust != null || playerPossessionPrefab != null || handDisplayPrefab != null || freezeVFXAsset != null ||
-            unfreezeAudioPack != null)) return false;
+        if (force == false && GetComponent<PhotonView>().OwnershipTransfer == OwnershipOption.Request) return false;
         var serializedObject = new SerializedObject(this);
         
-        serializedObject.FindProperty("footLand").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("112a2b2f14f04c1458dded07c0b00fe9"));
-        serializedObject.FindProperty("footstepPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("23b69436bc3d7a944a598da4b1206fc9"));
-        serializedObject.FindProperty("spaceLubeMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("efd1f3995e4a5bf4d8d9c8ce1d941afb"));
-        serializedObject.FindProperty("circlePoof").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("f20d228138364844893451ae57934590"));
-        serializedObject.FindProperty("walkDust").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("b96b53155ee08af498a985d2b06db2f2"));
-        var playerPossessionGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("118737100278bba4f87f35b3e4e0c086"));
-        serializedObject.FindProperty("playerPossessionPrefab").objectReferenceValue = playerPossessionGameObject.GetComponent<PlayerPossession>();
-        serializedObject.FindProperty("handDisplayPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("3100fdf2173d9c744a5c465ae3b19715"));
-        serializedObject.FindProperty("freezeVFXAsset").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("3a30a12aee1b7d64e957ed14355d7461"));
-        serializedObject.FindProperty("unfreezeAudioPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("cd0a89d93b29b8a49942e072d4ff62df"));
-        var floatingTextGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("74149ab5c35e0da45a56910118a6dd59"));
-        serializedObject.FindProperty("floatingTextPrefab").objectReferenceValue = floatingTextGameObject.GetComponent<TMPro.TMP_Text>();
-        serializedObject.FindProperty("chatYowlPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("165a7a3804fbb684cba72c68e0264320"));
+        //serializedObject.FindProperty("footLand").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("112a2b2f14f04c1458dded07c0b00fe9"));
+        //serializedObject.FindProperty("footstepPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("23b69436bc3d7a944a598da4b1206fc9"));
+        //serializedObject.FindProperty("spaceLubeMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("efd1f3995e4a5bf4d8d9c8ce1d941afb"));
+        //serializedObject.FindProperty("circlePoof").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("f20d228138364844893451ae57934590"));
+        //serializedObject.FindProperty("walkDust").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("b96b53155ee08af498a985d2b06db2f2"));
+        //var playerPossessionGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("118737100278bba4f87f35b3e4e0c086"));
+        //serializedObject.FindProperty("playerPossessionPrefab").objectReferenceValue = playerPossessionGameObject.GetComponent<PlayerPossession>();
+        //serializedObject.FindProperty("handDisplayPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("3100fdf2173d9c744a5c465ae3b19715"));
+        //serializedObject.FindProperty("freezeVFXAsset").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("3a30a12aee1b7d64e957ed14355d7461"));
+        //serializedObject.FindProperty("unfreezeAudioPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("cd0a89d93b29b8a49942e072d4ff62df"));
+        //var floatingTextGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("74149ab5c35e0da45a56910118a6dd59"));
+        //serializedObject.FindProperty("floatingTextPrefab").objectReferenceValue = floatingTextGameObject.GetComponent<TMPro.TMP_Text>();
+        //serializedObject.FindProperty("chatYowlPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("165a7a3804fbb684cba72c68e0264320"));
+        
         photonView = GetComponent<PhotonView>();
         var photonViewSerializedObject = new SerializedObject(photonView);
         photonViewSerializedObject.FindProperty("OwnershipTransfer").intValue = (int)OwnershipOption.Request;

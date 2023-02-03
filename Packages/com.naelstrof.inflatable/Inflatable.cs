@@ -39,8 +39,13 @@ namespace Naelstrof.Inflatable {
                 Debug.LogError("Inflatable wasn't initialized.", tweener);
                 throw new UnityException("Inflatable wasn't initialized ");
             }
-            if (SetSize(newSize, out IEnumerator tween)) {
-                tweener.StartCoroutine(tween);
+
+            if (tweener.isActiveAndEnabled) {
+                if (SetSize(newSize, out IEnumerator tween)) {
+                    tweener.StartCoroutine(tween);
+                }
+            } else {
+                SetSizeInstant(newSize);
             }
         }
 

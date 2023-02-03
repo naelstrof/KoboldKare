@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -52,6 +53,7 @@ public class ModInfoDisplay : MonoBehaviour {
     }
 
     private IEnumerator ReloadWait() {
-        yield return ModManager.Reload();
+        Task t = ModManager.Reload();
+        yield return new WaitUntil(()=>t.IsCompleted);
     }
 }

@@ -132,9 +132,7 @@ public class ModManager : MonoBehaviour {
         try {
             sharedResource.WaitOne();
             foreach (var modPostProcessor in modPostProcessors) {
-                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-                await assets.Task;
-                modPostProcessor.UnloadAllAssets(assets.Result);
+                modPostProcessor.UnloadAllAssets();
             }
 
             foreach (var mod in fullModList) {
@@ -142,7 +140,6 @@ public class ModManager : MonoBehaviour {
                     continue;
                 }
                 Addressables.RemoveResourceLocator(mod.locator);
-                Addressables.Release(mod.locator);
                 mod.locator = null;
             }
         } finally {
@@ -180,7 +177,8 @@ public class ModManager : MonoBehaviour {
                 if (!modInfo.enabled) {
                     continue;
                 }
-                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath, true);
+
+                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
                 await loader.Task;
                 modInfo.locator = loader.Result;
             }

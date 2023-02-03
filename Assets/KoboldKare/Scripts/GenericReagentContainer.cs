@@ -1,11 +1,24 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using System.IO;
 using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, ISavable, IPunInstantiateMagicCallback {
+public class NoTouchGenericReagentContainer : GeneHolder {
+    [SerializeField]
+    protected float startingMaxVolume = float.MaxValue;
+    private ReagentContents contents;
+    protected virtual void Awake() {
+        contents ??= new ReagentContents(startingMaxVolume);
+    }
+    public ReagentContents GetContents() {
+        return contents ??= new ReagentContents(startingMaxVolume);
+    }
+}
+
+public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGood, IPunObservable, ISavable, IPunInstantiateMagicCallback {
     public delegate void ContainerFilledAction(GenericReagentContainer container);
     public static event ContainerFilledAction containerFilled;
     public static event ContainerFilledAction containerInflated;
@@ -39,40 +52,33 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
-    public float startingMaxVolume = float.MaxValue;
-    public float volume => contents.volume;
+    public float volume => GetContents().volume;
 
     public float maxVolume {
-        get => contents.GetMaxVolume();
+        get => GetContents().GetMaxVolume();
         set {
-            contents.SetMaxVolume(value);
-            OnChange.Invoke(contents, InjectType.Metabolize);
+            GetContents().SetMaxVolume(value);
+            OnChange?.Invoke(GetContents(), InjectType.Metabolize);
         }
     }
 
-    public Color GetColor() => contents.GetColor();
+    public Color GetColor() => GetContents().GetColor();
     public ContainerType type;
     public ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;
-    public bool isFull => Mathf.Approximately(contents.volume, contents.GetMaxVolume());
-    public bool isEmpty => Mathf.Approximately(contents.volume,0f);
-    public bool IsCleaningAgent() => contents.IsCleaningAgent();
-    public float GetVolumeOf(ScriptableReagent reagent) => contents.GetVolumeOf(reagent);
-    public float GetVolumeOf(byte id) => contents.GetVolumeOf(id);
+    public bool isFull => Mathf.Approximately(GetContents().volume, GetContents().GetMaxVolume());
+    public bool isEmpty => Mathf.Approximately(GetContents().volume,0f);
+    public bool IsCleaningAgent() => GetContents().IsCleaningAgent();
+    public float GetVolumeOf(ScriptableReagent reagent) => GetContents().GetVolumeOf(reagent);
+    public float GetVolumeOf(byte id) => GetContents().GetVolumeOf(id);
     public InspectorReagent[] startingReagents;
-    [SerializeField]
-    private ReagentContents contents;
-
-    public ReagentContents GetContents() {
-        return contents;
-    }
 
     private bool filled = false;
     private bool emptied = false;
-    protected void Awake() {
+    protected override void Awake() {
+        base.Awake();
         OnChange ??= new ReagentContainerChangedEvent();
         OnFilled ??= new ReagentContainerChangedEvent();
         OnEmpty ??= new ReagentContainerChangedEvent();
-        contents ??= new ReagentContents(startingMaxVolume);
     }
     public void Start() {
         if (startingReagents != null) {
@@ -85,7 +91,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
     [PunRPC]
     public ReagentContents Spill(float spillVolume) {
-        ReagentContents spillContents = contents.Spill(spillVolume);
+        ReagentContents spillContents = GetContents().Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
         PhotonProfiler.LogReceive(sizeof(float));
         return spillContents;
@@ -103,7 +109,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
-        contents.AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
+        GetContents().AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
@@ -111,7 +117,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
         if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
-        contents.AddMix(incomingReagents, this);
+        GetContents().AddMix(incomingReagents, this);
         OnReagentContentsChanged(injectType);
         return true;
     }
@@ -128,7 +134,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
                 SetGenes(geneHolder.GetGenes());
             }
         }
-        contents.AddMix(incomingReagents, this);
+        GetContents().AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
         PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagentsData.Length);
     }
@@ -146,36 +152,36 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
                 SetGenes(geneHolder.GetGenes());
             }
         }
-        maxVolume = Mathf.Max(contents.volume + incomingReagents.volume, maxVolume);
+        maxVolume = Mathf.Max(GetContents().volume + incomingReagents.volume, maxVolume);
         
         if (TryGetComponent(out Kobold kob)) {
             kob.SetGenes(kob.GetGenes().With(bellySize: maxVolume));
         }
 
-        contents.AddMix(incomingReagents, this);
+        GetContents().AddMix(incomingReagents, this);
         OnReagentContentsChanged((InjectType)injectType);
         containerInflated?.Invoke(this);
         PhotonProfiler.LogReceive(sizeof(int) + sizeof(byte) + incomingReagentData.Length);
     }
 
-    public ReagentContents Peek() => new ReagentContents(contents);
-    public ReagentContents Metabolize(float deltaTime) => contents.Metabolize(deltaTime);
-    public void OverrideReagent(Reagent r) => contents.OverrideReagent(r.id, r.volume);
-    public void OverrideReagent(ScriptableReagent r, float volume) => contents.OverrideReagent(ReagentDatabase.GetID(r), volume);
+    public ReagentContents Peek() => new(GetContents());
+    public ReagentContents Metabolize(float deltaTime) => GetContents().Metabolize(deltaTime);
+    public void OverrideReagent(Reagent r) => GetContents().OverrideReagent(r.id, r.volume);
+    public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent(ReagentDatabase.GetID(r), volume);
     public void OnReagentContentsChanged(InjectType injectType) {
         //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
             //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
-            OnFilled.Invoke(contents, injectType);
+            OnFilled.Invoke(GetContents(), injectType);
             containerFilled?.Invoke(this);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
-        OnChange.Invoke(contents, injectType);
+        OnChange.Invoke(GetContents(), injectType);
         if (!emptied && isEmpty) {
             SetGenes(null);
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
-            OnEmpty.Invoke(contents, injectType);
+            OnEmpty.Invoke(GetContents(), injectType);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;
@@ -190,7 +196,7 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
 
     public float GetWorth() {
-        return contents.GetValue();
+        return GetContents().GetValue();
     }
 
     public void OnValidate() {
@@ -207,8 +213,8 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     {
         string blah = "[";
         foreach(var reagent in ReagentDatabase.GetReagents()) {
-            if (contents.GetVolumeOf(reagent) != 0f) {
-                blah += reagent.name + ": " + contents.GetVolumeOf(reagent) + ", ";
+            if (GetContents().GetVolumeOf(reagent) != 0f) {
+                blah += reagent.name + ": " + GetContents().GetVolumeOf(reagent) + ", ";
             }
         }
         blah += "]";
@@ -218,12 +224,12 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             BitBuffer bitBuffer = new BitBuffer(8);
-            bitBuffer.AddReagentContents(contents);
+            bitBuffer.AddReagentContents(GetContents());
             stream.SendNext(bitBuffer);
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
             ReagentContents newContents = data.ReadReagentContents();
-            contents.Copy(newContents);
+            GetContents().Copy(newContents);
             OnReagentContentsChanged(InjectType.Metabolize);
             PhotonProfiler.LogReceive(data.Length);
         }
@@ -246,13 +252,11 @@ public class GenericReagentContainer : GeneHolder, IValuedGood, IPunObservable, 
     }
 
     public void Save(JSONNode node) {
-        contents ??= new ReagentContents(startingMaxVolume);
-        contents.Save(node, "contents");
+        GetContents().Save(node, "contents");
     }
 
     public void Load(JSONNode node) {
-        contents ??= new ReagentContents(startingMaxVolume);
-        contents.Load(node, "contents");
+        GetContents().Load(node, "contents");
         OnReagentContentsChanged(InjectType.Metabolize);
     }
 }

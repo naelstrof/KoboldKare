@@ -770,23 +770,6 @@ MonoBehaviour:
   leftKneeHint: {fileID: 2274364765800354390}
   bodyRenderers:
   - {fileID: 662475372023914797}
-  footLand: {fileID: 11400000, guid: 112a2b2f14f04c1458dded07c0b00fe9, type: 2}
-  footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
-  spaceLubeMaterial: {fileID: 13400000, guid: efd1f3995e4a5bf4d8d9c8ce1d941afb, type: 2}
-  circlePoof: {fileID: 8926484042661614526, guid: f20d228138364844893451ae57934590,
-    type: 3}
-  walkDust: {fileID: 8926484042661614526, guid: b96b53155ee08af498a985d2b06db2f2,
-    type: 3}
-  playerPossessionPrefab: {fileID: 8544051599655029854, guid: 118737100278bba4f87f35b3e4e0c086,
-    type: 3}
-  handDisplayPrefab: {fileID: 5848404021409221499, guid: 3100fdf2173d9c744a5c465ae3b19715,
-    type: 3}
-  freezeVFXAsset: {fileID: 8926484042661614526, guid: 3a30a12aee1b7d64e957ed14355d7461,
-    type: 3}
-  unfreezeAudioPack: {fileID: 11400000, guid: cd0a89d93b29b8a49942e072d4ff62df, type: 2}
-  floatingTextPrefab: {fileID: 4047396207486373366, guid: 74149ab5c35e0da45a56910118a6dd59,
-    type: 3}
-  chatYowlPack: {fileID: 11400000, guid: 165a7a3804fbb684cba72c68e0264320, type: 2}
   antiPopCurveIK:
     serializedVersion: 2
     m_Curve:

@@ -24,7 +24,7 @@ public class ReagentPostProcessor : ModPostProcessor {
         ReagentDatabase.AddReagent(reagent);
     }
 
-    public override void UnloadAllAssets(IList<IResourceLocation> locations) {
+    public override void UnloadAllAssets() {
         foreach (var reagent in addedReagents) {
             ReagentDatabase.RemoveReagent(reagent);
         }

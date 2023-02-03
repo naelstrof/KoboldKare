@@ -94,9 +94,8 @@ public class DickDescriptor : MonoBehaviour {
 
         [FormerlySerializedAs("info")] [HideInInspector]
         public DickDescriptor descriptor;
-        public HumanBodyBones parent;
-        [HideInInspector]
-        public Transform parentTransform;
+
+        public bool shouldDisableVagina = true;
 
         public void Destroy() {
             GameObject.Destroy(dick.gameObject);
@@ -123,6 +122,7 @@ public class DickDescriptor : MonoBehaviour {
             }
         }
 
+        bool shouldReenableVagina = false;
         foreach (DickSet set in dicks) {
             k.activeDicks.Remove(set);
             foreach (var penset in k.penetratables) {
@@ -131,12 +131,7 @@ public class DickDescriptor : MonoBehaviour {
                 //}
                 set.dick.RemoveIgnorePenetrable(penset.penetratable);
             }
-        }
-        bool shouldReenableVagina = true;
-        foreach(var dick in k.activeDicks) {
-            if (dick.parent == HumanBodyBones.Hips) {
-                shouldReenableVagina = false;
-            }
+            shouldReenableVagina |= set.shouldDisableVagina;
         }
         if (shouldReenableVagina) {
             foreach(var hole in k.penetratables) {
@@ -256,16 +251,14 @@ public class DickDescriptor : MonoBehaviour {
         cumming = false;
     }
     public void AttachTo(Kobold k) {
+        // Kobolds are kinda loaded asyncronously, so awake most certainly needs to be called.
+        Awake();
         attachedKobold = k;
         var attachedAnimator = k.GetComponent<CharacterDescriptor>().GetDisplayAnimator();
         bool animatorWasEnabled = attachedAnimator.enabled;
         attachedAnimator.enabled = true;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
-            set.parentTransform = attachedAnimator.GetBoneTransform(set.parent);
-            while(set.parentTransform == null) {
-                set.parentTransform = attachedAnimator.GetBoneTransform(set.parent);
-            }
             set.descriptor = this;
             set.dickContainer.parent = k.GetAttachPointTransform(set.attachPoint);
             set.dickContainer.localScale = scale;
@@ -279,7 +272,7 @@ public class DickDescriptor : MonoBehaviour {
             }
 
 
-            if (set.parent == HumanBodyBones.Hips) {
+            if (set.shouldDisableVagina) {
                 foreach(var hole in attachedKobold.penetratables) {
                     if (hole.isFemaleExclusiveAnatomy) {
                         hole.penetratable.gameObject.SetActive(false);

@@ -23,7 +23,7 @@ public class ReactionsPostProcessor : ModPostProcessor {
         addedReactions.Add(reaction);
     }
 
-    public override void UnloadAllAssets(IList<IResourceLocation> locations) {
+    public override void UnloadAllAssets() {
         foreach (var reaction in addedReactions) {
             ReagentDatabase.RemoveReagentReaction(reaction);
         }

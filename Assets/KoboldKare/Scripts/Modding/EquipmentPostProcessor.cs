@@ -24,7 +24,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
         EquipmentDatabase.AddEquipment(equipment);
     }
 
-    public override void UnloadAllAssets(IList<IResourceLocation> locations) {
+    public override void UnloadAllAssets() {
         foreach (var equipment in addedEquipments) {
             EquipmentDatabase.RemoveEquipment(equipment);
         }

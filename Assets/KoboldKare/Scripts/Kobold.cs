@@ -52,7 +52,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public GenericReagentContainer bellyContainer { get; private set; }
     [FormerlySerializedAs("belly")] [SerializeField]
     private Inflatable bellyInflater;
-    private Grabber grabber;
+    private Grabber grabber => GetComponent<Grabber>();
     [SerializeField]
     private Inflatable fatnessInflater;
     [SerializeField]
@@ -107,6 +107,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public event CarriedAction carriedChanged;
     public event QuaffAction quaff;
     private GameObject dickObject;
+    private bool initialized = false;
     
     public IEnumerable<InflatableListener> GetAllInflatableListeners() {
         foreach (var listener in bellyInflater.GetInflatableListeners()) {
@@ -141,7 +142,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         milkLactator.StartMilking(this);
     }
 
-    private Ragdoller ragdoller;
+    private Ragdoller ragdoller => GetComponent<Ragdoller>();
     public void AddStimulation(float s) {
         stimulation += s;
         if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
@@ -310,9 +311,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
         base.SetGenes(newGenes);
     }
-
     private void Awake() {
-        ragdoller = GetComponent<Ragdoller>();
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
@@ -321,7 +325,6 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         metabolizedContents = new ReagentContents(20f);
         bellyContainer.maxVolume = 20f;
         photonView.ObservedComponents.Add(bellyContainer);
-        grabber = GetComponentInChildren<Grabber>();
         bellyInflater.OnEnable();
         sizeInflater.OnEnable();
         boobsInflater.OnEnable();
@@ -555,6 +558,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Awake();
         if (info.photonView.InstantiationData == null) {
             SetGenes(new KoboldGenes().Randomize());
             spawned?.Invoke(this);

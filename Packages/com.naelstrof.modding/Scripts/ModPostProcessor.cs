@@ -14,7 +14,6 @@ public class ModPostProcessor {
     public virtual AssetLabelReference GetSearchLabel() => searchLabel;
     public virtual async Task LoadAllAssets(IList<IResourceLocation> locations) {
     }
-    public virtual void UnloadAllAssets(IList<IResourceLocation> locations) {
-        Addressables.Release(locations);
+    public virtual void UnloadAllAssets() {
     }
 }

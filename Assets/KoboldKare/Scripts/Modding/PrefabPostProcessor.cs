@@ -22,22 +22,28 @@ public class PrefabPostProcessor : ModPostProcessor {
     }
     
     private void LoadPrefab(GameObject obj) {
+        for (int i = 0; i < addedGameObjects.Count; i++) {
+            if (addedGameObjects[i].name != obj.name) continue;
+            if (networkedPrefabs) {
+                PreparePool.RemovePrefab(obj.name);
+            }
+            targetDatabase.RemovePrefab(obj.name);
+            addedGameObjects.RemoveAt(i);
+            break;
+        }
+
         if (networkedPrefabs) {
             PreparePool.AddPrefab(obj.name, obj);
         }
-        Debug.Log($"Loaded {obj.name}");
-
         targetDatabase.AddPrefab(obj.name, obj);
         addedGameObjects.Add(obj);
     }
 
-    public override void UnloadAllAssets(IList<IResourceLocation> locations) {
+    public override void UnloadAllAssets() {
         foreach (var obj in addedGameObjects) {
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
-            Debug.Log($"Unloaded {obj.name}");
-
             targetDatabase.RemovePrefab(obj.name);
         }
     }

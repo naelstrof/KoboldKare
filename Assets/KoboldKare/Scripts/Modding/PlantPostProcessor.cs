@@ -24,7 +24,7 @@ public class PlantPostProcessor : ModPostProcessor {
         PlantDatabase.AddPlant(plant);
     }
 
-    public override void UnloadAllAssets(IList<IResourceLocation> locations) {
+    public override void UnloadAllAssets() {
         foreach (var plant in addedPlants) {
             PlantDatabase.RemovePlant(plant);
         }

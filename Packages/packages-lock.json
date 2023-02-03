@@ -80,14 +80,14 @@
       "hash": "4aed4d3917396098f724c755208e857dbdecd942"
     },
     "com.naelstrof.unityscriptablesettings": {
-      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.4.4",
+      "version": "https://github.com/naelstrof/UnityScriptableSettings.git#v2.4.5",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.localization": "1.0.4",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "ce05f8fee72f779819f4c8dbe32c835a31b2d3c9"
+      "hash": "6e36bec2daf4a77781f5639987d4aab5ed9fe3bf"
     },
     "com.rlabrecque.steamworks.net": {
       "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",

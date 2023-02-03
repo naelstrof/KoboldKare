@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/KoboldKare/Scenes/MainMenu.unity
     guid: 964fd09eb1637e044848f281b24be71f
-  - enabled: 1
+  - enabled: 0
     path: Assets/KoboldKare/Scenes/ErrorScene.unity
     guid: 26318fec5bcca86458a8dab753d4b12c
   m_configObjects:

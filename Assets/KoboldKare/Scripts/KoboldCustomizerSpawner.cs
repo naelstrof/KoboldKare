@@ -59,9 +59,9 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
             if (!info.IsValid() || info.GetKey() != playerSetting.GetPrefab()) continue;
             player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
             player.AddComponent<PlayerKoboldLoader>();
-            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX |
-                                                           RigidbodyConstraints.FreezePositionZ |
-                                                           RigidbodyConstraints.FreezeRotation;
+            //player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX |
+                                                           //RigidbodyConstraints.FreezePositionZ |
+                                                           //RigidbodyConstraints.FreezeRotation;
             player.GetComponent<CharacterDescriptor>().GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
             break;
         }

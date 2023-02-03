@@ -19815,6 +19815,7 @@ MonoBehaviour:
   - rid: 7257832884800847876
   - rid: 7257832884800847877
   - rid: 7257832916695908353
+  - rid: 8869783460724080641
   references:
     version: 2
     RefIds:
@@ -19881,6 +19882,11 @@ MonoBehaviour:
         targetDatabase: {fileID: 11400000, guid: 5953f84f337c12345b9e451e6f832759,
           type: 2}
         networkedPrefabs: 1
+    - rid: 8869783460724080641
+      type: {class: SettingPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Setting
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19982,40 +19988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d06cb462699104eaf44c0fb0389844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings:
-  - {fileID: 11400000, guid: bb77432e934b2a640b790439567c119b, type: 2}
-  - {fileID: 11400000, guid: 60e5ceb642d20db49aaf28e594de4795, type: 2}
-  - {fileID: 11400000, guid: fd7f79ff15c04e945989da9adeb86153, type: 2}
-  - {fileID: 11400000, guid: f9eacf3f54d58bb4d926cb7bfed5cfcc, type: 2}
-  - {fileID: 11400000, guid: 6fee6cf4e2973aa46827ef8858876c1a, type: 2}
-  - {fileID: 11400000, guid: 59596dc6db69bbc4a9aa9db5e0f4f319, type: 2}
-  - {fileID: 11400000, guid: b3bc2e3f5c8247d408ec8059725ded8a, type: 2}
-  - {fileID: 11400000, guid: a772337b990bdec49bc2768cc2ce5121, type: 2}
-  - {fileID: 11400000, guid: b92a7538ce9706540975df576faa9ce4, type: 2}
-  - {fileID: 11400000, guid: 2e1ff686954285c4e81e3c9c8bc28d7a, type: 2}
-  - {fileID: 11400000, guid: 4ba9e300f9cc72647950194676f9c5ff, type: 2}
-  - {fileID: 11400000, guid: be95cd2d702feee418f854733f0d5cd9, type: 2}
-  - {fileID: 11400000, guid: 7b5ad26f12ee3a34d951f5c56a80a9e7, type: 2}
-  - {fileID: 11400000, guid: e2b992ffca4fe9847aae24dd2885cafa, type: 2}
-  - {fileID: 11400000, guid: 1316983b7ec041b45b10e952f3298237, type: 2}
-  - {fileID: 11400000, guid: 5c5321aa6b3cebf4ead0f4a258881a2f, type: 2}
-  - {fileID: 11400000, guid: ab761a8c5491cd34580b7ddb5051df7a, type: 2}
-  - {fileID: 11400000, guid: 086347b5df9970a4687c12d3014b66d0, type: 2}
-  - {fileID: 11400000, guid: 28ca3a73e165f034b955ce7f56808bd1, type: 2}
-  - {fileID: 11400000, guid: 9e372e52e8a3a9d4083ac49ee3776f7b, type: 2}
-  - {fileID: 11400000, guid: f5d6f6b5fa8a3dc47a6b13ca711692fa, type: 2}
-  - {fileID: 11400000, guid: e70ed340e0e7a1646a9b845723b44072, type: 2}
-  - {fileID: 11400000, guid: 0666b101a8697c848af6ef646c2eda10, type: 2}
-  - {fileID: 11400000, guid: 6313e3c9952d0d643bba1fe4c44fddc0, type: 2}
-  - {fileID: 11400000, guid: 90c6ee18d668e324db7d22b11083595e, type: 2}
-  - {fileID: 11400000, guid: 9413254de5df80042b0315e4f83d93ab, type: 2}
-  - {fileID: 11400000, guid: 25795c7613648b5449baf371e1948fe7, type: 2}
-  - {fileID: 11400000, guid: ed5f8fe7a228d3b419108c601073f6a6, type: 2}
-  - {fileID: 11400000, guid: fe84194317b6a2b44a864dbd55ba4391, type: 2}
-  - {fileID: 11400000, guid: 29bfdd3e2adaed44bb415c5c7d763d86, type: 2}
-  - {fileID: 11400000, guid: 4c2cc216468f8184296908c25640f6fe, type: 2}
-  - {fileID: 11400000, guid: a71cc3c77483c4c46b08fd5e8586a99c, type: 2}
-  - {fileID: 11400000, guid: 95eaa8b7f817151478392ea09909329f, type: 2}
+  settings: []
 --- !u!114 &6656111697390988985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20055,25 +20028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9064ce04b8f171941a73af1dc6175f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plants:
-  - {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
-  - {fileID: 11400000, guid: 4cc96092934e5334d866752992ec3639, type: 2}
-  - {fileID: 11400000, guid: 267506272f65e6147ad233563b57906a, type: 2}
-  - {fileID: 11400000, guid: 101335a2b540c734096d6463599f0e56, type: 2}
-  - {fileID: 11400000, guid: 7bf6fde4be8bbea4fab10416859f199b, type: 2}
-  - {fileID: 11400000, guid: 1ef79935b8a2b4047912375688a223b7, type: 2}
-  - {fileID: 11400000, guid: 445b098e8df3d3a4eb935ec40f76d58a, type: 2}
-  - {fileID: 11400000, guid: b607ec73bdc85c647a45eab978488141, type: 2}
-  - {fileID: 11400000, guid: 9b5fa10772c55724bb91b51429fa4521, type: 2}
-  - {fileID: 11400000, guid: bb60cb0e9981bdb47bc0b517654ba115, type: 2}
-  - {fileID: 11400000, guid: 40702ba5cf8d52748adf9d116796b10e, type: 2}
-  - {fileID: 11400000, guid: 33da26e995ce63b40a16c012d21e9cb1, type: 2}
-  - {fileID: 11400000, guid: b148e15d1ad880f41bb736d1699edce9, type: 2}
-  - {fileID: 11400000, guid: 65f87e918d2a6e948a21dd3fbf86b415, type: 2}
-  - {fileID: 11400000, guid: e57214523ddc5e34eb7903a4578a30a5, type: 2}
-  - {fileID: 11400000, guid: 21cc043214f4fda4ea256d551183c292, type: 2}
-  - {fileID: 11400000, guid: 5006d6ad78f32ec45848d143c70cc092, type: 2}
-  - {fileID: 11400000, guid: accd6376f68d8ce4aa48f655a13426a0, type: 2}
+  plants: []
 --- !u!114 &8536427713948840408
 MonoBehaviour:
   m_ObjectHideFlags: 0

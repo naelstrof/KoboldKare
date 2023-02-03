@@ -101,7 +101,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ff351caa5210864dbba1be868ebdfc8, type: 2}
   - {fileID: 11400000, guid: 27a580137f3d7f54eb8e6f6eadb85830, type: 2}
   - {fileID: 11400000, guid: 7a107e44cf45fb5448b30ff63d36d484, type: 2}
-  - {fileID: 11400000, guid: 63279fc6650174c498b83a9aac682197, type: 2}
   - {fileID: 11400000, guid: 4d4564fafea9faf4aa0e9355ddffcaa1, type: 2}
   - {fileID: 11400000, guid: 595eec29e9b16a74aad796b7a40ccde6, type: 2}
   - {fileID: 11400000, guid: 9beca49fc6fa98348b6f822be221beb4, type: 2}
@@ -111,6 +110,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c1da991e7a1d644429f6ebd2a76fb0b2, type: 2}
   - {fileID: 11400000, guid: 64c2b8ec3fa7ba34d96c959c8d36d5e7, type: 2}
   - {fileID: 11400000, guid: 8bbb883e1260a164d9640f27376b699c, type: 2}
+  - {fileID: 11400000, guid: 369507a006233db488ca1ec1856a3fc6, type: 2}
+  - {fileID: 11400000, guid: 63279fc6650174c498b83a9aac682197, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -189,6 +190,7 @@ MonoBehaviour:
     - Seed
     - Cosmetic
     - Equipment
+    - Setting
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

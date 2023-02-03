@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default.Maps
+  m_Name: Default.Scenes
   m_EditorClassIdentifier: 
-  m_GroupName: Default.Maps
+  m_GroupName: Default.Scenes
   m_Data:
     m_SerializedData: []
   m_GUID: 2c86f8179d731524f8fad16b2b0f89f1
@@ -20,7 +20,18 @@ MonoBehaviour:
   - m_GUID: 6e526b4b02d74304da54674720eaf458
     m_Address: MainMap
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
+  - m_GUID: 26318fec5bcca86458a8dab753d4b12c
+    m_Address: ErrorScene
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 964fd09eb1637e044848f281b24be71f
+    m_Address: MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

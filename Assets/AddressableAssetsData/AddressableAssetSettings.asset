@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 1
+  m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 1
@@ -29,16 +29,16 @@ MonoBehaviour:
   m_ContiguousBundles: 0
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
-  m_ShaderBundleNaming: 1
+  m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
-  m_MonoScriptBundleNaming: 0
+  m_MonoScriptBundleNaming: 1
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: '[UnityEngine.Application.dataPath]/Mods'
   m_RemoteCatalogLoadPath:
     m_Id: '{UnityEngine.Application.persistentDataPath}/mods'
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 2
+  m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: cb5c44df00353a44e921b6da495f67c0, type: 2}

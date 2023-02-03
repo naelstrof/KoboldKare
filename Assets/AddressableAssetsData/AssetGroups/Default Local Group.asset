@@ -1181,6 +1181,66 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+  - m_GUID: e3265ab4bf004d28a9537516768c1c75
+    m_Address: Assets/ThirdParty/TextMesh Pro/Fonts/LiberationSans.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ba9bc1d411d9834479f8f8a390d3ab25
+    m_Address: Assets/KoboldKare/Textures/ico_crosshair.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9ed9798648979ee40a95590d01150373
+    m_Address: Assets/KoboldKare/Textures/ico_checkmark.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 2e0c29f704eb625469f31c13379f97b8
+    m_Address: Assets/KoboldKare/ScriptableObjects/NetworkManager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 4b322339cb0956a428014ff67cf4c26d
+    m_Address: Assets/KoboldKare/Textures/ico_fug.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d5b4d18a34a1ca84a858c74572c2bf37
+    m_Address: Assets/KoboldKare/Textures/RoundedRectangle.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: dc38d0aad56e64e49b1e0de5ec4e6e1d
+    m_Address: Assets/KoboldKare/Textures/ico_magnifying_looking_glass.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1289c1ba46ebc28429061760a342f625
+    m_Address: Assets/KoboldKare/Textures/ico_bubbles.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 99221d5c5e229a64db8b3cabbf12a2bc
+    m_Address: Assets/KoboldKare/Scripts/GameEvents/SleepStart.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e063c52d29e94a849b5a707a2a372857
+    m_Address: Assets/KoboldKare/Textures/ico_emptyslot.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 27712d2f9bbe5b64baceb5004c158549
+    m_Address: Assets/KoboldKare/Textures/ico_kobold_paperdoll.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1cbc240a5eceecc4ca643343bff8c92c
+    m_Address: Assets/ThirdParty/Audio/Public Domain/yowl2.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

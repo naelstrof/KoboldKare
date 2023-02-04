@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6c610ea65d10e3d439ffa0d3eb3d8a4f
-  m_SerializeEntries:
-  - m_GUID: 9e5b26f3a223aeb4d84a97ad337e693e
-    m_Address: Assets/KoboldKare/Lilith/Lilith.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PlayableCharacter
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

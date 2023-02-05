@@ -12,8 +12,6 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     [SerializeField] private PrefabDatabase playerPrefabDatabase;
 
     private GameObject player;
-    private bool waiting = false;
-    
 
     void Start() {
         ModManager.AddFinishedLoadingListener(FinishedLoading);
@@ -49,6 +47,7 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         if (player != null) {
             Destroy(player);
         }
+        
         yield return new WaitUntil(ModManager.GetReady);
         OnChangePlayerRoutine();
     }
@@ -63,7 +62,17 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
                                                            //RigidbodyConstraints.FreezePositionZ |
                                                            //RigidbodyConstraints.FreezeRotation;
             player.GetComponent<CharacterDescriptor>().GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
-            break;
+            return;
+        }
+
+        foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
+            if (!info.IsValid()) continue;
+            player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
+            player.AddComponent<PlayerKoboldLoader>();
+            //player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX |
+                                                           //RigidbodyConstraints.FreezePositionZ |
+                                                           //RigidbodyConstraints.FreezeRotation;
+            player.GetComponent<CharacterDescriptor>().GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
         }
     }
 }

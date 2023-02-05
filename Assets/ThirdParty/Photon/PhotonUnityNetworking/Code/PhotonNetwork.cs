@@ -3186,7 +3186,8 @@ namespace Photon.Pun
 
 
             // try to load the resource / asset (ServerSettings a.k.a. PhotonServerSettings)
-            photonServerSettings = (ServerSettings)Resources.Load(PhotonNetwork.ServerSettingsFileName, typeof(ServerSettings));
+            photonServerSettings = Addressables.LoadAssetAsync<ServerSettings>(PhotonNetwork.ServerSettingsFileName).WaitForCompletion();
+            
             if (photonServerSettings != null)
             {
                 return;
@@ -3194,8 +3195,7 @@ namespace Photon.Pun
 
 
             // create the ScriptableObject if it could not be loaded
-            if (photonServerSettings == null)
-            {
+            if (photonServerSettings == null) {
                 photonServerSettings = (ServerSettings)ScriptableObject.CreateInstance("ServerSettings");
                 if (photonServerSettings == null)
                 {

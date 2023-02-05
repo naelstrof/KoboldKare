@@ -2538,6 +2538,116 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+  - m_GUID: dd89cf5b9246416f84610a006f916af7
+    m_Address: Shaders/TMP_SDF Overlay
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Shaders/TMP_SDF
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: bc1ede39bf3643ee8e493720e4259791
+    m_Address: Shaders/TMP_SDF-Mobile Masking
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 8682f98173389a249915d8550590628d
+    m_Address: Shaders/TMP_SDF-Mobile-Bouncy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Shaders/TMP_SDF-Mobile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: cf81c85f95fe47e1a27f6ae460cf182c
+    m_Address: Shaders/TMP_Sprite
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 48bb5f55d8670e349b6e614913f9d910
+    m_Address: Shaders/TMP_Bitmap-Custom-Atlas
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 85187c2149c549c5b33f0cdb02836b17
+    m_Address: Shaders/TMP_SDF-Surface-Mobile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 128e987d567d4e2c824d754223b3f3b0
+    m_Address: Shaders/TMP_Bitmap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1e3b057af24249748ff873be7fafee47
+    m_Address: Shaders/TMP_Bitmap-Mobile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a02a7d8c237544f1962732b55a9aebf1
+    m_Address: Shaders/TMP_SDF-Mobile Overlay
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f7ada0af4f174f0694ca6a487b8f543d
+    m_Address: Shaders/TMP_SDF-Surface
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 407bc68d299748449bbf7f48ee690f8d
+    m_Address: Shaders/TMPro
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d930090c0cd643c7b55f19a38538c162
+    m_Address: Shaders/TMPro_Surface
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3997e2241185407d80309a82f9148466
+    m_Address: Shaders/TMPro_Properties
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: c41005c129ba4d66911b75229fd70b45
+    m_Address: EmojiOne
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f952c082cb03451daed3ee968ac6c63e
+    m_Address: Default Style Sheet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: dffef66376be4fa480fb02b19edbe903
+    m_Address: Sprites/EmojiOne
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3f5b5dff67a942289a9defa416b206f3
+    m_Address: TextSettings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d82c1b31c7e74239bff1220585707d2b
+    m_Address: LineBreaking Leading Characters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: fade42e8bc714b018fac513c043d323b
+    m_Address: LineBreaking Following Characters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ccba35f9efc9e5740af2e3b0f78fa2e9
+    m_Address: PhotonServerSettings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

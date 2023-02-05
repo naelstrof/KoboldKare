@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 1
@@ -111,7 +111,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64c2b8ec3fa7ba34d96c959c8d36d5e7, type: 2}
   - {fileID: 11400000, guid: 8bbb883e1260a164d9640f27376b699c, type: 2}
   - {fileID: 11400000, guid: 369507a006233db488ca1ec1856a3fc6, type: 2}
-  - {fileID: 11400000, guid: 63279fc6650174c498b83a9aac682197, type: 2}
   - {fileID: 11400000, guid: 75412ac5cd8f1344cbfdcfb1b107af51, type: 2}
   - {fileID: 11400000, guid: 893aa9d34dfd1e845a1ca5bf5f059df9, type: 2}
   m_BuildSettings:

@@ -98,18 +98,15 @@ public class ModManager : MonoBehaviour {
             Directory.CreateDirectory(modCatalogPath);
         }
 
-        foreach (string modPath in Directory.EnumerateDirectories(modCatalogPath)) {
-            foreach (string filePath in Directory.EnumerateFiles(modPath)) {
-                if (!filePath.EndsWith(".json")) {
-                    continue;
-                }
-                DirectoryInfo info = new DirectoryInfo(modPath);
-                AddMod(new ModInfo {
-                    enabled = false,
-                    modName = info.Name,
-                    cataloguePath = filePath
-                });
+        foreach (string filePath in Directory.EnumerateFiles(modCatalogPath)) {
+            if (!filePath.EndsWith(".json")) {
+                continue;
             }
+            AddMod(new ModInfo {
+                enabled = false,
+                modName = Path.GetFileName(filePath),
+                cataloguePath = filePath
+            });
         }
     }
 
@@ -128,7 +125,7 @@ public class ModManager : MonoBehaviour {
         finishedLoading?.Invoke();
     }
 
-    private async Task UnloadMods() {
+    private void UnloadMods() {
         try {
             sharedResource.WaitOne();
             foreach (var modPostProcessor in modPostProcessors) {
@@ -170,7 +167,7 @@ public class ModManager : MonoBehaviour {
 
     private async Task ReloadMods() {
         ready = false;
-        await UnloadMods();
+        UnloadMods();
         try {
             sharedResource.WaitOne();
             foreach (var modInfo in fullModList) {

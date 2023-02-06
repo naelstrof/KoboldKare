@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Localization-StringTables_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
-  m_StaticContent: 1
+  m_StaticContent: 0

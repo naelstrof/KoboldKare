@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ErrorScene_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: 893aa9d34dfd1e845a1ca5bf5f059df9, type: 2}
-  m_StaticContent: 1
+  m_StaticContent: 0

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: 4d4564fafea9faf4aa0e9355ddffcaa1, type: 2}
-  m_StaticContent: 1
+  m_StaticContent: 0

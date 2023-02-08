@@ -98,15 +98,19 @@ public class ModManager : MonoBehaviour {
             Directory.CreateDirectory(modCatalogPath);
         }
 
-        foreach (string filePath in Directory.EnumerateFiles(modCatalogPath)) {
-            if (!filePath.EndsWith(".json")) {
-                continue;
+        foreach (string directory in Directory.EnumerateDirectories(modCatalogPath)) {
+            foreach (string filePath in Directory.EnumerateFiles(directory)) {
+                if (!filePath.EndsWith(".json")) {
+                    continue;
+                }
+
+                DirectoryInfo info = new DirectoryInfo(directory);
+                AddMod(new ModInfo {
+                    enabled = false,
+                    modName = info.Name,
+                    cataloguePath = filePath
+                });
             }
-            AddMod(new ModInfo {
-                enabled = false,
-                modName = Path.GetFileName(filePath),
-                cataloguePath = filePath
-            });
         }
     }
 

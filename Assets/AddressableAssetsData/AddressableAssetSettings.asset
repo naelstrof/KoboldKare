@@ -34,9 +34,9 @@ MonoBehaviour:
   m_MonoScriptBundleNaming: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 2f36a52bfa226b34caa647813ed5efe8
+    m_Id: eade48156203f4241a89a5b6edd9af81
   m_RemoteCatalogLoadPath:
-    m_Id: e06b6288b2d066a459be799528f0d38f
+    m_Id: cf9518c89bbbfac49a9548b1e750d555
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
@@ -113,6 +113,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
   - {fileID: 11400000, guid: c1da991e7a1d644429f6ebd2a76fb0b2, type: 2}
   - {fileID: 11400000, guid: 75412ac5cd8f1344cbfdcfb1b107af51, type: 2}
+  - {fileID: 11400000, guid: 236eb5a3aaf1bbf488a6d45b27468861, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -130,14 +131,10 @@ MonoBehaviour:
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 6076937f9c4820f46b22d372e60cea0e
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: b51db494635b20f4c997ad3265bfc584
-        m_Value: ServerData/[BuildTarget]
-      - m_Id: feefb4829cf0f934ca0187ba1d8e719a
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
-      - m_Id: 2f36a52bfa226b34caa647813ed5efe8
-        m_Value: '[UnityEngine.Application.dataPath]/Mods'
-      - m_Id: e06b6288b2d066a459be799528f0d38f
-        m_Value: '{UnityEngine.Application.persistentDataPath}/mods'
+      - m_Id: eade48156203f4241a89a5b6edd9af81
+        m_Value: '[UnityEngine.Application.dataPath]/Mods/Lilith/[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: cf9518c89bbbfac49a9548b1e750d555
+        m_Value: '{UnityEngine.Application.persistentDataPath}/mods/Lilith/{ModManager.runningPlatform}'
     m_ProfileEntryNames:
     - m_Id: e2bcd3dc48b125a488bb819e7fc68741
       m_Name: BuildTarget
@@ -148,17 +145,11 @@ MonoBehaviour:
     - m_Id: 6076937f9c4820f46b22d372e60cea0e
       m_Name: Local.LoadPath
       m_InlineUsage: 0
-    - m_Id: b51db494635b20f4c997ad3265bfc584
-      m_Name: Remote.BuildPath
+    - m_Id: eade48156203f4241a89a5b6edd9af81
+      m_Name: LilithModExample.BuildPath
       m_InlineUsage: 0
-    - m_Id: feefb4829cf0f934ca0187ba1d8e719a
-      m_Name: Remote.LoadPath
-      m_InlineUsage: 0
-    - m_Id: 2f36a52bfa226b34caa647813ed5efe8
-      m_Name: Mod.BuildPath
-      m_InlineUsage: 0
-    - m_Id: e06b6288b2d066a459be799528f0d38f
-      m_Name: Mod.LoadPath
+    - m_Id: cf9518c89bbbfac49a9548b1e750d555
+      m_Name: LilithModExample.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:

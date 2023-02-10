@@ -19,6 +19,26 @@ public class ModManager : MonoBehaviour {
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
 
+    public static string runningPlatform {
+        get {
+            switch (Application.platform) {
+                case RuntimePlatform.LinuxPlayer:
+                case RuntimePlatform.LinuxServer:
+                case RuntimePlatform.LinuxEditor:
+                    return "StandaloneLinux64";
+                case RuntimePlatform.WindowsPlayer:
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsServer:
+                    return IntPtr.Size == 8 ? "StandaloneWindows64" : "StandaloneWindows";
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                case RuntimePlatform.OSXServer:
+                    return "StandaloneOSX";
+                default: return "Unknown";
+            }
+        }
+    }
+
     public delegate void ModReadyAction();
     private event ModReadyAction finishedLoading;
     
@@ -73,9 +93,7 @@ public class ModManager : MonoBehaviour {
         string data = Encoding.UTF8.GetString(b);
         JSONNode n = JSON.Parse(data);
         foreach (var node in n) {
-            ModInfo info = new ModInfo();
-            info.Load(n);
-            AddMod(info);
+            AddMod(new ModInfo(n));
         }
     }
 
@@ -105,11 +123,7 @@ public class ModManager : MonoBehaviour {
                 }
 
                 DirectoryInfo info = new DirectoryInfo(directory);
-                AddMod(new ModInfo {
-                    enabled = false,
-                    modName = info.Name,
-                    cataloguePath = filePath
-                });
+                AddMod(new ModInfo(info.Name, filePath, ModInfo.ModSource.LocalModFolder));
             }
         }
     }

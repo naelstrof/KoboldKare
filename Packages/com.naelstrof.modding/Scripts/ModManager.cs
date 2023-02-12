@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.SceneManagement;
 
 public class ModManager : MonoBehaviour {
@@ -18,7 +19,7 @@ public class ModManager : MonoBehaviour {
     private List<ModInfo> fullModList;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
-    public static string currentLoadingMod = "";
+    public static string currentLoadingMod = "<currentLoadingMod>";
     public static string runningPlatform {
         get {
             switch (Application.platform) {
@@ -174,6 +175,13 @@ public class ModManager : MonoBehaviour {
             Destroy(this);
             return;
         }
+        
+        Addressables.InternalIdTransformFunc += location => {
+            if (location.InternalId.Contains("<currentLoadingMod>")) {
+                return location.InternalId.Replace("<currentLoadingMod>", currentLoadingMod);
+            }
+            return location.InternalId;
+        };
 
         ready = false;
         sharedResource = new Mutex();
@@ -198,7 +206,7 @@ public class ModManager : MonoBehaviour {
                     continue;
                 }
 
-                // This is a static set for Addressables to read.
+                AddressablesRuntimeProperties.ClearCachedPropertyValues(); 
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}{runningPlatform}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
                 await loader.Task;

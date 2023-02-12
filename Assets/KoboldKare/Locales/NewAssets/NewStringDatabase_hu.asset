@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "K\xFCldtem neked n\xE9h\xE1ny kell\xE9ket, hogy hamburgert k\xE9sz\xEDtsenek,
-      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak add meg."
+      a dar\xE1l\xF3val kombin\xE1ljuk \u0151ket, majd egy koboldnak adj\xE1k."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1330,6 +1330,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 268693956486176768
     m_Localized: "Let\xF6lt\xE9s ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: "V\xE1lasszon"
     m_Metadata:
       m_Items: []
   references:

@@ -1330,6 +1330,10 @@ MonoBehaviour:
     m_Localized: Wird heruntergeladen...
     m_Metadata:
       m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: "W\xE4hlen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

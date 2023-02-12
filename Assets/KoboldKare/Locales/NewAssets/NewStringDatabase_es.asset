@@ -1318,6 +1318,10 @@ MonoBehaviour:
     m_Localized: Descarga ...
     m_Metadata:
       m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: Seleccionar
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

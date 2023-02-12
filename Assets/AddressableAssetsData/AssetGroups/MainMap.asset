@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+  - m_GUID: e5bb806c8348428459b804bb5da6b78d
+    m_Address: PlayableMainMap
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlayableMap
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

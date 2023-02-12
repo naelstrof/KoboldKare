@@ -12,6 +12,8 @@ using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
+    [SerializeField]
+    private PlayableMap selectedMap;
     public PrefabSelectSingleSetting selectedPlayerPrefab;
     public ServerSettings settings;
     public bool online {
@@ -118,6 +120,14 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.EnableCloseConnection = true;
     }
+
+    public void SetSelectedMap(PlayableMap map) {
+        selectedMap = map;
+    }
+    public PlayableMap GetSelectedMap() {
+        return selectedMap;
+    }
+
     public void StartSinglePlayer() {
         GameManager.instance.StartCoroutine(SinglePlayerRoutine());
     }
@@ -125,7 +135,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOfflineAndReadyToLoad());
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.JoinRandomRoom();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("MainMap").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName((string)selectedMap.unityScene.RuntimeKey).isLoaded);
     }
 
     public void LeaveLobby() {
@@ -242,8 +252,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnCreatedRoom() {
-        if (SceneManager.GetActiveScene().name != "MainMap" && SceneManager.GetActiveScene().name != "MainMapRedo") {
-            LevelLoader.instance.LoadLevel("MainMap");
+        if (SceneManager.GetActiveScene().name != (string)selectedMap.unityScene.RuntimeKey) {
+            LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
         }
     }
 

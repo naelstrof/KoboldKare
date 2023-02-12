@@ -177,7 +177,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     //public Transform hipsTransform;
     private void Start() {
         body = GetComponent<Rigidbody>();
-        body.useGravity = photonView.IsMine;
+        body.useGravity = photonView.IsMine || !PhotonNetwork.InRoom;
         colliderFullHeight = collider.height;
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
@@ -343,7 +343,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         }
         CheckSounds();
         velocity += groundVelocity;
-        if (photonView.IsMine) {
+        if (photonView.IsMine || !PhotonNetwork.InRoom) {
             body.velocity = velocity;
         }
     }

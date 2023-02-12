@@ -232,7 +232,7 @@ public static class SaveManager {
             GameManager.instance.loadListener.Show();
         }
 
-        if (SceneManager.GetActiveScene().name != "MainMap") {
+        if (SceneManager.GetActiveScene().name != (string)NetworkManager.instance.GetSelectedMap().unityScene.RuntimeKey) {
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
         yield return new WaitForSecondsRealtime(1f);

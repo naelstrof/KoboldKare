@@ -951,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Witamy w metrze.
+    m_Localized: Witamy w podziemiu.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1332,6 +1332,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 268693956486176768
     m_Localized: "\u015Aci\u0105ganie..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: "Wybiera\u0107"
     m_Metadata:
       m_Items: []
   references:

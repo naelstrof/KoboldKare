@@ -1338,6 +1338,10 @@ MonoBehaviour:
     m_Localized: "Stahov\xE1n\xED ..."
     m_Metadata:
       m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: Vybrat
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

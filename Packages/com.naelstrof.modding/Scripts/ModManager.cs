@@ -106,7 +106,7 @@ public class ModManager : MonoBehaviour {
         string data = Encoding.UTF8.GetString(b);
         JSONNode n = JSON.Parse(data);
         foreach (var node in n) {
-            AddMod(new ModInfo(n));
+            AddMod(new ModInfo(node));
         }
     }
 

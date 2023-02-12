@@ -1251,6 +1251,10 @@ MonoBehaviour:
     m_Key: STEAMWORKS_DOWNLOADING
     m_Metadata:
       m_Items: []
+  - m_Id: 269043733614874624
+    m_Key: MENU_SELECT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

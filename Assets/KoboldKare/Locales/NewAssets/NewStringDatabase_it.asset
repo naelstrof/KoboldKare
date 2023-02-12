@@ -1003,7 +1003,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Scopri di pi\xF9 sull'elasticit\xE0 della realt\xE0 di Kobolds,
-      fanculo un kobold con un cazzo pi\xF9 grande del suo corpo."
+      scopa un kobold con un cazzo pi\xF9 grande del suo corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1321,6 +1321,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 268693956486176768
     m_Localized: Download ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 269043733614874624
+    m_Localized: Selezionare
     m_Metadata:
       m_Items: []
   references:

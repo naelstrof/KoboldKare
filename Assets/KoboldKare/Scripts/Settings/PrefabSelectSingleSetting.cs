@@ -98,7 +98,6 @@ public class PrefabSelectSingleSetting : SettingDropdown {
     }
 
     public string GetPrefab() {
-        if (!string.IsNullOrEmpty(selectedPrefab)) return selectedPrefab;
         var prefabs = database.GetValidPrefabReferenceInfos();
         foreach (var prefab in prefabs) {
             if (prefab.GetKey() == selectedPrefab) {

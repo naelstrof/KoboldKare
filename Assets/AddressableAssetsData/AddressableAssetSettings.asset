@@ -29,14 +29,14 @@ MonoBehaviour:
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
-  m_ShaderBundleNaming: 0
+  m_ShaderBundleNaming: 1
   m_ShaderBundleCustomNaming: 
-  m_MonoScriptBundleNaming: 0
+  m_MonoScriptBundleNaming: 2
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: eade48156203f4241a89a5b6edd9af81
+    m_Id: f078c492991cd4645865c4a00d66593d
   m_RemoteCatalogLoadPath:
-    m_Id: cf9518c89bbbfac49a9548b1e750d555
+    m_Id: ceff3233a4557c64d87dc0c731eb219e
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
@@ -113,7 +113,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
   - {fileID: 11400000, guid: c1da991e7a1d644429f6ebd2a76fb0b2, type: 2}
   - {fileID: 11400000, guid: 75412ac5cd8f1344cbfdcfb1b107af51, type: 2}
-  - {fileID: 11400000, guid: 236eb5a3aaf1bbf488a6d45b27468861, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -132,9 +131,13 @@ MonoBehaviour:
       - m_Id: 6076937f9c4820f46b22d372e60cea0e
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: eade48156203f4241a89a5b6edd9af81
-        m_Value: '[UnityEngine.Application.dataPath]/Mods/Lilith/[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+        m_Value: C:/Users/Naelstrof/AppData/LocalLow/Naelstrof/KoboldKare/mods/Lilith/StandaloneWindows64
       - m_Id: cf9518c89bbbfac49a9548b1e750d555
-        m_Value: '{UnityEngine.Application.persistentDataPath}/mods/Lilith/{ModManager.runningPlatform}'
+        m_Value: '{ModManager.currentLoadingMod}'
+      - m_Id: f078c492991cd4645865c4a00d66593d
+        m_Value: C:/Users/Naelstrof/AppData/LocalLow/Naelstrof/KoboldKare/mods/Lilith/StandaloneWindows64
+      - m_Id: ceff3233a4557c64d87dc0c731eb219e
+        m_Value: '{ModManager.currentLoadingMod}'
     m_ProfileEntryNames:
     - m_Id: e2bcd3dc48b125a488bb819e7fc68741
       m_Name: BuildTarget
@@ -146,10 +149,16 @@ MonoBehaviour:
       m_Name: Local.LoadPath
       m_InlineUsage: 0
     - m_Id: eade48156203f4241a89a5b6edd9af81
-      m_Name: LilithModExample.BuildPath
+      m_Name: Mod.BuildPath
       m_InlineUsage: 0
     - m_Id: cf9518c89bbbfac49a9548b1e750d555
-      m_Name: LilithModExample.LoadPath
+      m_Name: Mod.LoadPath
+      m_InlineUsage: 0
+    - m_Id: f078c492991cd4645865c4a00d66593d
+      m_Name: ContentCatalog.BuildPath
+      m_InlineUsage: 0
+    - m_Id: ceff3233a4557c64d87dc0c731eb219e
+      m_Name: ContentCatalog.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:

@@ -1008,7 +1008,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Rare wetenschap!
+    m_Localized: Gekke wetenschap!
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
@@ -1334,6 +1334,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 258400516968075264
     m_Localized: Mod -configuratie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: Downloaden ...
     m_Metadata:
       m_Items: []
   references:

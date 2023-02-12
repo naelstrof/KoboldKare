@@ -1318,6 +1318,10 @@ MonoBehaviour:
     m_Localized: Configuration du mod
     m_Metadata:
       m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: "T\xE9l\xE9chargement..."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1247,6 +1247,10 @@ MonoBehaviour:
     m_Key: MOD_CONFIGURATION
     m_Metadata:
       m_Items: []
+  - m_Id: 268693956486176768
+    m_Key: STEAMWORKS_DOWNLOADING
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

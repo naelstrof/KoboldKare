@@ -472,7 +472,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199014
-    m_Localized: Anuluj
+    m_Localized: "Anulowa\u0107"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199015
@@ -540,7 +540,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228726966833152
-    m_Localized: Sok z ananasa
+    m_Localized: Sok ananasowy
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387584
@@ -686,7 +686,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
-    m_Localized: "Zmie\u0144 region"
+    m_Localized: "Zmienia\u0107 region"
     m_Metadata:
       m_Items: []
   - m_Id: 130815543218851840
@@ -1062,7 +1062,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: "Witam! Jeste\u015B tam z tej farmy, prawda? Chcesz ulepszy\u0107?"
+    m_Localized: "Cze\u015B\u0107! Jeste\u015B tam z tej farmy, prawda? Chcesz ulepszy\u0107?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
@@ -1135,7 +1135,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "Witam! Chcesz kupi\u0107 nasiona? Mamy te\u017C jajka kobold!"
+    m_Localized: "Powitanie! Chcesz kupi\u0107 nasiona? Mamy te\u017C jajka kobold!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1328,6 +1328,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 258400516968075264
     m_Localized: "Konfiguracja mod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: "\u015Aci\u0105ganie..."
     m_Metadata:
       m_Items: []
   references:

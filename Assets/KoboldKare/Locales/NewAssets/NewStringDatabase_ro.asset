@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
-    m_Localized: salva
+    m_Localized: "Salva\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810383
@@ -219,7 +219,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
-    m_Localized: bine
+    m_Localized: Bine
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
@@ -229,7 +229,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: Mutare
+    m_Localized: "Mi\u0219care"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
@@ -1066,7 +1066,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: "Buna! E\u0219ti din acea ferm\u0103 de acolo, nu? C\u0103uta\u021Bi
+    m_Localized: "Buna ziua! E\u0219ti din acea ferm\u0103 de acolo, nu? C\u0103uta\u021Bi
       s\u0103 face\u021Bi upgrade?"
     m_Metadata:
       m_Items: []
@@ -1185,7 +1185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: "Salut! Ai nevoie de ajutor ast\u0103zi?"
+    m_Localized: "Bun\u0103! Ai nevoie de ajutor ast\u0103zi?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
@@ -1335,6 +1335,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 258400516968075264
     m_Localized: Configurare mod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: "Desc\u0103rcarea..."
     m_Metadata:
       m_Items: []
   references:

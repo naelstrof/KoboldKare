@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using SimpleJSON;
@@ -16,7 +17,7 @@ using UnityEngine.AddressableAssets;
 public class UploadWorkshopModWizard : ScriptableWizard {
 
 	[SerializeField]
-	private SteamWorkshopItem item;
+	private SteamWorkshopItem mod;
 
 	private SerializedObject serializedObject;
 	private static AddressableAssetSettings settings;
@@ -29,22 +30,49 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 	}
 
 	private void OnGUI() {
-		if (!item.Busy()) {
-			var itemProp = serializedObject.FindProperty("item");
-			EditorGUILayout.PropertyField(itemProp);
-			if (GUILayout.Button("Set Preview Texture")) {
-				serializedObject.FindProperty("item").FindPropertyRelative("previewTexturePath").stringValue =
-					EditorUtility.OpenFilePanel("Preview Texture", "", "png,jpg,gif");
-			}
-
-			serializedObject.ApplyModifiedProperties();
-			if (GUILayout.Button("Upload")) {
-				item.Upload();
+		EditorGUILayout.LabelField("Status");
+		string status = mod.GetStatus(out MessageType messageType);
+		EditorGUILayout.HelpBox(status, messageType);
+		//Rect progressBarRect = GUILayoutUtility.GetRect(new GUIContent("Progress bar"), GUIStyle.none);
+		//progressBarRect.width -= 8;
+		//progressBarRect.x += 4;
+		//EditorGUI.ProgressBar(progressBarRect, mod.GetProgress(), "Upload progress");
+		
+		var modProp = serializedObject.FindProperty(nameof(mod));
+		
+		ulong publishedFiledID = (ulong)modProp.FindPropertyRelative("publishedFileId").longValue;
+		if (publishedFiledID != (ulong)PublishedFileId_t.Invalid) {
+			string url = $"https://steamcommunity.com/sharedfiles/filedetails/?id={publishedFiledID.ToString()}";
+			if (EditorGUILayout.LinkButton(url)) {
+				Application.OpenURL(url);
 			}
 		}
 
-		Rect progressBarRect = GUILayoutUtility.GetRect(new GUIContent("Progress bar"), GUIStyle.none);
-		EditorGUI.ProgressBar(progressBarRect, item.GetProgress(), "Upload progress");
+		if (mod.ShouldTryLoad()) {
+			mod.Load(modProp);
+			EditorUtility.SetDirty(this);
+		}
+
+		EditorGUILayout.PropertyField(modProp);
+		serializedObject.ApplyModifiedProperties();
+		GUILayout.BeginHorizontal();
+		GUI.enabled = mod.IsValid();
+		if (GUILayout.Button("Build")) {
+			if (mod.IsBuilt()) {
+				if (EditorUtility.DisplayDialog("Danger!",
+					    "This will replace the old build (cache remains), are you sure?", "I'm sure","Cancel")) {
+					mod.Build();
+				}
+			} else {
+				mod.Build();
+			}
+		}
+		GUI.enabled = mod.IsBuilt();
+		if (GUILayout.Button("Upload")) {
+			mod.Upload();
+		}
+		GUI.enabled = true;
+		GUILayout.EndHorizontal();
 	}
 
 
@@ -84,7 +112,7 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 		    initializeCount--;
 	    }
 
-	    if (initializeCount==0) {
+	    if (initializeCount==0 && !Application.isPlaying) {
 		    SteamAPI.Shutdown();
 	    }
     }

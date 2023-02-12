@@ -22,8 +22,6 @@ using Steamworks;
 [DisallowMultipleComponent]
 public class SteamManager : MonoBehaviour {
 #if !DISABLESTEAMWORKS
-	protected static bool s_EverInitialized = false;
-
 	protected static SteamManager s_instance;
 	protected static SteamManager Instance {
 		get {
@@ -55,7 +53,6 @@ public class SteamManager : MonoBehaviour {
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
 	private static void InitOnPlayMode()
 	{
-		s_EverInitialized = false;
 		s_instance = null;
 	}
 #endif
@@ -68,18 +65,6 @@ public class SteamManager : MonoBehaviour {
 		}
 
 		s_instance = this;
-
-		if (Application.isEditor) {
-			return;
-		}
-
-		if(s_EverInitialized) {
-			// This is almost always an error.
-			// The most common case where this happens is when SteamManager gets destroyed because of Application.Quit(),
-			// and then some Steamworks code in some other OnDestroy gets called afterwards, creating a new SteamManager.
-			// You should never call Steamworks functions in OnDestroy, always prefer OnDisable if possible.
-			throw new System.Exception("Tried to Initialize the SteamAPI twice in one session!");
-		}
 
 		// We want our SteamManager Instance to persist across scenes.
 		DontDestroyOnLoad(gameObject);
@@ -127,7 +112,6 @@ public class SteamManager : MonoBehaviour {
 			return;
 		}
 
-		s_EverInitialized = true;
 	}
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.

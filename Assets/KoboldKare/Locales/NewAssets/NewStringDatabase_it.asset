@@ -1031,7 +1031,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey amico.
+    m_Localized: Ciao amico.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
@@ -1127,8 +1127,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: Ben arrivato! Stai cercando di comprare dei semi? Abbiamo anche
-      uova kobold!
+    m_Localized: Benvenuto! Stai cercando di comprare dei semi? Abbiamo anche uova
+      kobold!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1170,7 +1170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: Ciao! Hai bisogno di aiuto oggi?
+    m_Localized: CIAO! Hai bisogno di aiuto oggi?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
@@ -1317,6 +1317,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 258400516968075264
     m_Localized: Configurazione mod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: Download ...
     m_Metadata:
       m_Items: []
   references:

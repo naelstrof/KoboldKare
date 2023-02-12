@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: "Xin ch\xE0o! C\u1EA7n b\u1EA5t k\u1EF3 s\u1EF1 gi\xFAp \u0111\u1EE1
+    m_Localized: "CH\xC0O! C\u1EA7n b\u1EA5t k\u1EF3 s\u1EF1 gi\xFAp \u0111\u1EE1
       ng\xE0y h\xF4m nay?"
     m_Metadata:
       m_Items: []
@@ -1317,7 +1317,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i kobold kh\u1ED5ng l\u1ED3
+    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i Kobold kh\u1ED5ng l\u1ED3
       \u0111\xF3, ch\xFAng th\u1EF1c s\u1EF1 h\u1EEFu \xEDch \u0111\u1EC3 l\xE0m
       s\u1EA1ch tr\u1EA7n nh\xE0."
     m_Metadata:
@@ -1402,6 +1402,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 258400516968075264
     m_Localized: "C\u1EA5u h\xECnh mod"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 268693956486176768
+    m_Localized: "T\u1EA3i xu\u1ED1ng ..."
     m_Metadata:
       m_Items: []
   references:

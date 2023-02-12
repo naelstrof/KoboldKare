@@ -18,7 +18,7 @@ public class ModManager : MonoBehaviour {
     private List<ModInfo> fullModList;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
-
+    public static string currentLoadingMod = "";
     public static string runningPlatform {
         get {
             switch (Application.platform) {
@@ -62,16 +62,28 @@ public class ModManager : MonoBehaviour {
         instance.finishedLoading -= action;
     }
 
+    public static void AddMod(string modPath) {
+        instance.AddMod(new ModInfo(modPath, ModInfo.ModSource.SteamWorkshop));
+    }
+
+    public static void RemoveMod(string modPath) {
+        for (int i = 0; i < instance.fullModList.Count; i++) {
+            if (instance.fullModList[i].modPath == modPath) {
+                instance.fullModList.RemoveAt(i);
+            }
+        }
+    }
+
     private void AddMod(ModInfo info) {
         bool modFound = false;
         foreach (var search in fullModList) {
-            if (search.modName == info.modName) {
+            if (search.cataloguePath == info.cataloguePath) {
                 modFound = true;
                 break;
             }
         }
         if (modFound) {
-            throw new Exception($"Mod already existed with name {info.modName}, skipping...");
+            throw new Exception($"Mod already existed with catalog path {info.cataloguePath}, skipping...");
         }
         fullModList.Add(info);
     }
@@ -117,14 +129,7 @@ public class ModManager : MonoBehaviour {
         }
 
         foreach (string directory in Directory.EnumerateDirectories(modCatalogPath)) {
-            foreach (string filePath in Directory.EnumerateFiles(directory)) {
-                if (!filePath.EndsWith(".json")) {
-                    continue;
-                }
-
-                DirectoryInfo info = new DirectoryInfo(directory);
-                AddMod(new ModInfo(info.Name, filePath, ModInfo.ModSource.LocalModFolder));
-            }
+            AddMod(new ModInfo(directory, ModInfo.ModSource.LocalModFolder));
         }
     }
 
@@ -193,6 +198,8 @@ public class ModManager : MonoBehaviour {
                     continue;
                 }
 
+                // This is a static set for Addressables to read.
+                currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}{runningPlatform}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
                 await loader.Task;
                 modInfo.locator = loader.Result;

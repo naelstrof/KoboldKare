@@ -24,13 +24,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
             Debug.LogError("User isn't logged into Steam, cannot use workshop!");
             yield break;
         }
-
-        var result = SteamUser.UserHasLicenseForApp(SteamUser.GetSteamID(), SteamUtils.GetAppID());
-        if (result != EUserHasLicenseForAppResult.k_EUserHasLicenseResultHasLicense) {
-            Debug.LogError("User doesn't own the game, cannot use workshop!");
-            yield break;
-        }
-
+        
         uint subscribedItemCount = SteamUGC.GetNumSubscribedItems();
         PublishedFileId_t[] fileIds = new PublishedFileId_t[subscribedItemCount];
         uint populatedCount = SteamUGC.GetSubscribedItems(fileIds, subscribedItemCount);
@@ -41,13 +35,11 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         StartCoroutine(EnsureAllAreDownloaded(fileIds, populatedCount));
     }
 
-    private void LicenseCheck(EUserHasLicenseForAppResult result, bool apiError) {
-    }
-
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count) {
         yield return LocalizationSettings.InitializationOperation;
         yield return new WaitUntil(() => !busy);
         progressBarAnimator.SetBool("Active", true);
+        progressBar.SetProgress(0f);
         var handle = downloadingText.GetLocalizedStringAsync();
         yield return handle;
         targetText.text = handle.Result;
@@ -70,6 +62,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                 yield return null;
             }
         }
+        progressBar.SetProgress(1f);
         progressBarAnimator.SetBool("Active", false);
     }
     private void OnDownloadItemResult(DownloadItemResult_t downloadItemResultT) {

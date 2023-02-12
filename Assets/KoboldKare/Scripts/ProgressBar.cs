@@ -14,7 +14,7 @@ public class ProgressBar : MonoBehaviour {
     }
 
     public void SetProgress(float progress) {
-        var outlineSizeDelta = outline.sizeDelta;
-        progressBar.sizeDelta = new Vector2(outlineSizeDelta.x*progress, outlineSizeDelta.y);
+        var outlineRect = outline.rect;
+        progressBar.sizeDelta = new Vector2(outlineRect.width*progress, outlineRect.height);
     }
 }

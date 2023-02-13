@@ -12,8 +12,18 @@ public class MapSelectUI : MonoBehaviour {
     [SerializeField] private GameObject mapSelectPanel;
     
     private List<GameObject> panels;
+
     private void OnEnable() {
-        panels = new List<GameObject>();
+        Regenerate();
+        ModManager.AddFinishedLoadingListener(Regenerate);
+    }
+    private void Regenerate() {
+        panels ??= new List<GameObject>();
+        foreach (var obj in panels) {
+            Destroy(obj);
+        }
+        panels.Clear();
+        
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
             var obj = Instantiate(previewSelectPanelPrefab.gameObject, transform);
             panels.Add(obj);
@@ -22,6 +32,7 @@ public class MapSelectUI : MonoBehaviour {
         }
     }
     private void OnDisable() {
+        ModManager.RemoveFinishedLoadingListener(Regenerate);
         foreach (var obj in panels) {
             Destroy(obj);
         }

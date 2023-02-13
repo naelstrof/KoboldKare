@@ -250,7 +250,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
             rootNode["modList"] = modArray;
             rootNode["config"] = PrefabDatabase.GetJSONConfiguration();
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, Receivers = ReceiverGroup.Others, TargetActors = new []{other.ActorNumber}};
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
             PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }
     }
@@ -347,9 +347,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             return;
         }
 
-        if (photonEvent.Sender != 0) return; // Only accept this event from a server.
+        //if (photonEvent.Sender != 0) return; // Only accept this event from a server.
         
         string data = (string)photonEvent.CustomData;
+        Debug.Log($"Recieved mod handshake from {photonEvent.Sender}! {data}");
         JSONNode rootNode = JSONNode.Parse(data);
         GameManager.StartCoroutineStatic(CheckModRoutine(rootNode));
     }

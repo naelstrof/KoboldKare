@@ -105,20 +105,9 @@ public class PrefabDatabase : ScriptableObject {
         LoadPlayerConfiguration();
     }
 
-    private void SavePlayerConfiguration() {
+    public string SavePlayerConfiguration() {
         string jsonLocation = $"{Application.persistentDataPath}/{JSONLocation}";
-        if (!File.Exists(jsonLocation)) {
-            using FileStream quickWrite = File.Open(jsonLocation, FileMode.CreateNew);
-            byte[] write = { (byte)'{', (byte)'}', (byte)'\n' };
-            quickWrite.Write(write, 0, write.Length);
-            quickWrite.Close();
-        }
-        using FileStream file = File.Open(jsonLocation, FileMode.Open);
-        byte[] b = new byte[file.Length];
-        file.Read(b,0,(int)file.Length);
-        file.Close();
-        string data = Encoding.UTF8.GetString(b);
-        JSONNode n = JSON.Parse(data);
+        JSONNode n = JSON.Parse(GetJSONConfiguration());
         var rootNode = new JSONArray();
         foreach (var info in prefabReferenceInfos) {
             JSONNode node = JSONNode.Parse("{}");
@@ -127,11 +116,13 @@ public class PrefabDatabase : ScriptableObject {
         }
         n[name] = rootNode;
         using FileStream fileWrite = File.Create(jsonLocation);
-        fileWrite.Write(Encoding.UTF8.GetBytes(n.ToString(2)),0,n.ToString(2).Length);
+        string writeString = n.ToString(2);
+        fileWrite.Write(Encoding.UTF8.GetBytes(writeString),0,writeString.Length);
         fileWrite.Close();
+        return writeString;
     }
 
-    private void LoadPlayerConfiguration() {
+    public static string GetJSONConfiguration() {
         string jsonLocation = $"{Application.persistentDataPath}/{JSONLocation}";
         if (!File.Exists(jsonLocation)) {
             using FileStream quickWrite = File.Open(jsonLocation, FileMode.CreateNew);
@@ -139,13 +130,23 @@ public class PrefabDatabase : ScriptableObject {
             quickWrite.Write(write, 0, write.Length);
             quickWrite.Close();
         }
-
         using FileStream file = File.Open(jsonLocation, FileMode.Open);
         byte[] b = new byte[file.Length];
         file.Read(b,0,(int)file.Length);
         file.Close();
-        string data = Encoding.UTF8.GetString(b);
-        JSONNode n = JSON.Parse(data);
+        return Encoding.UTF8.GetString(b);
+    }
+
+    public void LoadPlayerConfiguration(string json) {
+        JSONNode n = JSON.Parse(json);
+        foreach (var node in n[name]) {
+            PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
+            info.Load(n);
+            AddPrefab(info);
+        }
+    }
+    public void LoadPlayerConfiguration() {
+        JSONNode n = JSON.Parse(GetJSONConfiguration());
         foreach (var node in n[name]) {
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
             info.Load(n);

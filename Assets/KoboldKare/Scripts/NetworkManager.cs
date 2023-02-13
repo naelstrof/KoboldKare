@@ -8,14 +8,17 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
 using System;
 using NetStack.Serialization;
+using SimpleJSON;
+using Steamworks;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
-public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks {
+public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks, IOnEventCallback {
     [SerializeField]
     private PlayableMap selectedMap;
     public PrefabSelectSingleSetting selectedPlayerPrefab;
     public ServerSettings settings;
+
     public bool online {
         get {
             return PhotonNetwork.OfflineMode != true && PhotonNetwork.PlayerList.Length > 1;
@@ -86,8 +89,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
         }
+        PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
-        
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
@@ -112,6 +115,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         PhotonNetwork.OfflineMode = false;
+        PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -135,7 +139,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOfflineAndReadyToLoad());
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.JoinRandomRoom();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName((string)selectedMap.unityScene.RuntimeKey).isLoaded);
+        yield return null;
+        yield return new WaitUntil(() => !LevelLoader.loadingLevel);
     }
 
     public void LeaveLobby() {
@@ -234,10 +239,19 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public void OnPlayerEnteredRoom(Player other) {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
-        if (PhotonNetwork.IsMasterClient) {
-            //RPCSetMoney(money.data);
-            Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-            //DayNightCycle.instance?.ForceUpdate();
+        if (PhotonNetwork.IsMasterClient) {// Raise a handshake event to the joining player.
+            JSONNode rootNode = JSONNode.Parse("{}");
+            JSONArray modArray = new JSONArray();
+            foreach (var mod in ModManager.GetLoadedMods()) {
+                JSONNode modNode = JSONNode.Parse("{}");
+                modNode["title"] = mod.title;
+                modNode["id"] = mod.id.ToString();
+                modArray.Add(modNode);
+            }
+            rootNode["modList"] = modArray;
+            rootNode["config"] = PrefabDatabase.GetJSONConfiguration();
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, Receivers = ReceiverGroup.Others, TargetActors = new []{other.ActorNumber}};
+            PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }
     }
 
@@ -326,5 +340,37 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest) {
+    }
+
+    public void OnEvent(EventData photonEvent) {
+        if (photonEvent.Code != 'M') {
+            return;
+        }
+
+        if (photonEvent.Sender != 0) return; // Only accept this event from a server.
+        
+        string data = (string)photonEvent.CustomData;
+        JSONNode rootNode = JSONNode.Parse(data);
+        GameManager.StartCoroutineStatic(CheckModRoutine(rootNode));
+    }
+
+    private IEnumerator CheckModRoutine(JSONNode rootNode) {
+        List<ModManager.ModStub> desiredMods = new List<ModManager.ModStub>();
+        foreach (var node in rootNode["modList"].AsArray) {
+            ulong.TryParse(node.Value["id"], out ulong result);
+            desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result));
+        }
+
+        if (ModManager.HasModsLoaded(desiredMods)) {
+            PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
+        } else {
+            string roomName = PhotonNetwork.CurrentRoom.Name;
+            PhotonNetwork.Disconnect();
+            yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+            yield return ModManager.SetLoadedMods(desiredMods);
+            PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
+            yield return EnsureOnlineAndReadyToLoad();
+            PhotonNetwork.JoinRoom(roomName);
+        }
     }
 }

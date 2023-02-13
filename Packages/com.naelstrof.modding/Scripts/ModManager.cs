@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SimpleJSON;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.Initialization;
@@ -19,6 +20,15 @@ public class ModManager : MonoBehaviour {
     private List<ModInfo> fullModList;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
+    public struct ModStub {
+        public string title;
+        public PublishedFileId_t id;
+        public ModStub(string title, PublishedFileId_t id) {
+            this.title = title;
+            this.id = id;
+        }
+    }
+
     public static string currentLoadingMod = "<currentLoadingMod>";
     public static string runningPlatform {
         get {
@@ -216,6 +226,84 @@ public class ModManager : MonoBehaviour {
             sharedResource.ReleaseMutex();
         }
         await LoadMods();
+    }
+
+    public static List<ModStub> GetLoadedMods() {
+        List<ModStub> loadedMods = new List<ModStub>();
+        foreach (var mod in GetFullModList()) {
+            if (mod.enabled) {
+                loadedMods.Add(new ModStub(mod.title, mod.publishedFileId));
+            }
+        }
+        return loadedMods;
+    }
+
+    public static bool HasModsLoaded(List<ModStub> stubs) {
+        foreach (var stub in stubs) {
+            bool found = false;
+            foreach (var mod in instance.fullModList) {
+                if (mod.title == stub.title && mod.publishedFileId == stub.id) {
+                    found = true;
+                    if (!mod.enabled) {
+                        return false;
+                    }
+
+                    break;
+                }
+            }
+
+            if (!found) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static IEnumerator SetLoadedMods(ICollection<ModStub> stubs) {
+        List<ModStub> neededMods = new List<ModStub>(stubs);
+        for(int i=0;i<neededMods.Count;i++) {
+            if (neededMods[i].id != PublishedFileId_t.Invalid) {
+                continue;
+            }
+
+            foreach (var mod in instance.fullModList) {
+                if (mod.title != neededMods[i].title) continue;
+                neededMods.RemoveAt(i);
+                break;
+            }
+        }
+        // Now we have a list of needed mods
+        foreach (var modStub in neededMods) {
+            if (modStub.id == PublishedFileId_t.Invalid) {
+                throw new UnityException($"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! Tell the mod creator to upload it to Steam, or you need to manually install it.");
+            }
+        }
+
+        foreach (var mod in instance.fullModList) {
+            mod.enabled = false;
+        }
+
+        PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
+        SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
+        yield return new WaitUntil(() => !SteamWorkshopModLoader.IsBusy);
+        foreach (var modStub in stubs) {
+            bool found = false;
+            foreach(var mod in instance.fullModList) {
+                if (mod.title == modStub.title && mod.publishedFileId == modStub.id) {
+                    found = true;
+                    mod.enabled = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                throw new UnityException($"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! It must have failed to download from the steam workshop, try logging into Steam!");
+            }
+        }
+
+        var reloadModTask = Reload();
+        yield return new WaitUntil(() => reloadModTask.IsCompleted);
     }
 
     public static async Task Reload() {

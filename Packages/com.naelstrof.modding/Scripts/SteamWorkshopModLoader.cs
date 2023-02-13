@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -9,6 +6,8 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
 public class SteamWorkshopModLoader : MonoBehaviour {
+    private static SteamWorkshopModLoader instance;
+    
     [SerializeField] private Animator progressBarAnimator;
     [SerializeField] private ProgressBar progressBar;
     [SerializeField] private TMP_Text targetText;
@@ -18,6 +17,16 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private Callback<ItemInstalled_t> m_ItemInstalled;
     private Callback<RemoteStoragePublishedFileSubscribed_t> m_RemoteStoragePublishedFileSubscribed;
     private Callback<RemoteStoragePublishedFileUnsubscribed_t> m_RemoteStoragePublishedFileUnsubscribed;
+
+    private void Awake() {
+        if (instance != null) {
+            Destroy(this);
+            return;
+        }
+
+        instance = this;
+    }
+
     private IEnumerator Start() {
         yield return new WaitUntil(() => SteamManager.Initialized);
         if (!SteamUser.BLoggedOn()) {
@@ -35,35 +44,48 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         StartCoroutine(EnsureAllAreDownloaded(fileIds, populatedCount));
     }
 
+    public static bool IsBusy => instance.busy;
+
+    public static void TryDownloadAllMods(PublishedFileId_t[] fileIds) {
+        instance.StartCoroutine(instance.EnsureAllAreDownloaded(fileIds, (uint)fileIds.Length));
+    }
+
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count) {
         yield return LocalizationSettings.InitializationOperation;
         yield return new WaitUntil(() => !busy);
+        busy = true;
         progressBarAnimator.SetBool("Active", true);
         progressBar.SetProgress(0f);
         var handle = downloadingText.GetLocalizedStringAsync();
         yield return handle;
         targetText.text = handle.Result;
-        
-        for(int i=0;i<count;i++) {
+
+        for (int i = 0; i < count; i++) {
             uint status = SteamUGC.GetItemState(fileIds[i]);
-            if ((status & (int)EItemState.k_EItemStateInstalled) != 0 && (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
+            if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&
+                (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
                 OnInstalledItem(fileIds[i]);
                 continue;
             }
+
             if ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
                 Debug.Log($"Downloading {fileIds[i]}...");
-                    SteamUGC.DownloadItem(fileIds[i], false);
+                SteamUGC.DownloadItem(fileIds[i], false);
             }
-            while((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0 || (status & (int)EItemState.k_EItemStateDownloading) != 0) {
+
+            while ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0 ||
+                   (status & (int)EItemState.k_EItemStateDownloading) != 0) {
                 SteamUGC.GetItemDownloadInfo(fileIds[i], out ulong punBytesDownloaded, out ulong punBytesTotal);
-                progressBar.SetProgress((float)punBytesDownloaded/(float)punBytesTotal);
+                progressBar.SetProgress((float)punBytesDownloaded / (float)punBytesTotal);
                 targetText.text = handle.Result;
                 status = SteamUGC.GetItemState(fileIds[i]);
                 yield return null;
             }
         }
+
         progressBar.SetProgress(1f);
         progressBarAnimator.SetBool("Active", false);
+        busy = false;
     }
     private void OnDownloadItemResult(DownloadItemResult_t downloadItemResultT) {
         Debug.Log($"Downloaded {downloadItemResultT.m_nPublishedFileId} with result {downloadItemResultT.m_eResult}");

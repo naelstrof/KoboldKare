@@ -80,7 +80,7 @@ MonoBehaviour:
   plantPrefab:
     gameObject: {fileID: 6224846685087297140, guid: dd679e613b97496439b1e547faff665f,
       type: 3}
-    photonName: Plant
+    optionalDatabase: {fileID: 0}
 --- !u!114 &1007072348121127480
 MonoBehaviour:
   m_ObjectHideFlags: 0

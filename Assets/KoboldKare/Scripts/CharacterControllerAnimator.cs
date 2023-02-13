@@ -232,6 +232,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         animating = true;
         solver.enabled = true;
         controller.enabled = false;
+        // For kobolds loading in a save, we might be trying to couple with a station when we aren't loaded yet....
+        yield return new WaitUntil(() => kobold != null);
         kobold.body.isKinematic = true;
         solver.Initialize();
         currentStation.SetProgress(0f);

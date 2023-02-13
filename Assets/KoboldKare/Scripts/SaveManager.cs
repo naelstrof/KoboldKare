@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
+using Steamworks;
 using Object = UnityEngine.Object;
 
 public static class SaveManager {
@@ -94,6 +95,16 @@ public static class SaveManager {
         JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["header"] = saveHeader;
         rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
+        rootNode["mapName"] = SceneManager.GetActiveScene().name;
+        JSONArray modList = new JSONArray();
+        foreach (var mod in ModManager.GetLoadedMods()) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = mod.title;
+            modNode["publishedFileId"] = mod.id.ToString();
+            modList.Add(modNode);
+        }
+        rootNode["modList"] = modList;
+        
         int viewCount = 0;
         foreach (PhotonView view in PhotonNetwork.PhotonViewCollection) {
             if (view.name.Contains("DontSave")) {
@@ -195,6 +206,23 @@ public static class SaveManager {
             if(((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)){
                 GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                 view = obj.GetComponent<PhotonView>();
+                // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
+                if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
+                    descriptor.finishedLoading += (v) => {
+                        try {
+                            foreach (Component observable in v.ObservedComponents) {
+                                if (observable is ISavable savable) {
+                                    savable.Load(objectNode);
+                                }
+                            }
+                        } catch (Exception e) {
+                            Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
+                            Debug.LogException(e);
+                            // Try our best to load the save... anyway
+                        }
+                    };
+                    continue;
+                }
             }
             if (view == null) {
                 foreach(PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
@@ -226,17 +254,46 @@ public static class SaveManager {
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw new UnityException(lastError);
         }
-        //Ensure we show the player that the game is loading while we load
-        if(SceneManager.GetActiveScene().name != "MainMenu"){
-            GameManager.instance.Pause(false);
-            GameManager.instance.loadListener.Show();
+
+        string mapName = "MainMap";
+        List<ModManager.ModStub> modStubs = new List<ModManager.ModStub>();
+        JSONNode rootNode;
+        using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
+            using StreamReader reader = new StreamReader(file);
+            rootNode = JSONNode.Parse(reader.ReadToEnd());
+            if (rootNode.HasKey("mapName")) {
+                mapName = rootNode["mapName"];
+            }
+
+            if (rootNode.HasKey("modList")) {
+                JSONArray mods = rootNode["modList"].AsArray;
+                foreach (var modStubNode in mods) {
+                    ulong.TryParse(modStubNode.Value["publishedFileId"], out ulong publishedId);
+                    modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId));
+                }
+            }
         }
 
-        if (SceneManager.GetActiveScene().name != (string)NetworkManager.instance.GetSelectedMap().unityScene.RuntimeKey) {
+        yield return ModManager.SetLoadedMods(modStubs);
+        Debug.Log("Successfully set loaded mods");
+
+        foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
+            if ((string)map.unityScene.RuntimeKey == mapName) {
+                Debug.Log("Set selected map");
+                NetworkManager.instance.SetSelectedMap(map);
+            }
+        }
+
+        //Ensure we show the player that the game is loading while we load
+        if(SceneManager.GetActiveScene().name != mapName){
+            GameManager.instance.Pause(false);
+            GameManager.instance.loadListener.Show();
+            Debug.Log("loading map...");
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.25f);
         try {
+            Debug.Log("Loaded immediately!");
             LoadImmediate(filename);
         } catch {
             GameManager.instance.loadListener.Hide();

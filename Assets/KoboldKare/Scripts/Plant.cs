@@ -142,7 +142,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize());
-            Debug.LogError("Plant created without proper instantiation data!");
+            Debug.LogWarning("Plant created without proper instantiation data!", gameObject);
         }
         
         planted?.Invoke(photonView.gameObject, plant);

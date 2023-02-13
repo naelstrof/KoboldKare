@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using SimpleJSON;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.AddressableAssets.ResourceLocators;
 
@@ -27,7 +28,7 @@ public class ModInfo {
 
     public bool enabled;
     public string title;
-    private ulong publishedFileId;
+    public PublishedFileId_t publishedFileId;
     public string description;
     public string modPath;
     public Texture2D preview;
@@ -53,7 +54,7 @@ public class ModInfo {
         var rootNode = JSONNode.Parse(reader.ReadToEnd());
         if (rootNode.HasKey("publishedFileId")) {
 	        if (ulong.TryParse(rootNode["publishedFileId"], out ulong output)) {
-                publishedFileId = output;
+                publishedFileId = (PublishedFileId_t)output;
 	        }
         }
         if (rootNode.HasKey("description")) {

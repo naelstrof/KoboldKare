@@ -77,6 +77,9 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private ClassicIK classicIK;
     
     private List<AsyncOperationHandle> tasks;
+    public delegate void FinishedLoadingAssetAction(PhotonView view);
+
+    public event FinishedLoadingAssetAction finishedLoading;
     
     [Header("Special Settings")]
     [SerializeField] private AnimationCurve antiPopCurveIK;
@@ -97,6 +100,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         InitializePreEnable();
         gameObject.SetActive(true);
         InitializePostEnable();
+        finishedLoading?.Invoke(photonView);
     }
 
     private async Task FindAssetsAsync() {
@@ -211,7 +215,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         chatter.SetYowlPack(chatYowlPack);
 
         photonView = GetComponent<PhotonView>();
-        photonView.FindObservables();
+        photonView.ObservedComponents.Clear();
+        photonView.FindObservables(true);
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
     }
 

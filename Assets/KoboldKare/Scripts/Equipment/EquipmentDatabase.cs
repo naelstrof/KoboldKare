@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EquipmentDatabase : MonoBehaviour {
@@ -54,6 +55,10 @@ public class EquipmentDatabase : MonoBehaviour {
         throw new UnityException("Failed to find equipment with name " + name);
     }
     public static Equipment GetEquipment(byte id) {
+        if (id >= instance.equipments.Count) {
+            Debug.LogError($"Failed to find equipment with id {id}, replaced it with first available equipment.");
+            return instance.equipments[0];
+        }
         return instance.equipments[id];
     }
     public static byte GetID(Equipment equipment) {

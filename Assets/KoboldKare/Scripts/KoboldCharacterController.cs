@@ -122,9 +122,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public bool inputWalking = false;
 
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
-    public Vector3 gravityMod = new Vector3(0, -4f, 0);
+    public Vector3 gravityMod = new Vector3(0, -0f, 0);
     [Tooltip("Fixed impulse for how high the character jumps.")]
-    public float jumpStrength = 8f;
+    public float jumpStrength = 5f;
     [Tooltip("The speed at which acceleration is no longer applied when the player is moving.")]
     public float speed = 8f;
     [Tooltip("The speed at which acceleration is no longer applied when the player is crouch-moving.")]

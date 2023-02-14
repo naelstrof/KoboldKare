@@ -450,6 +450,9 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (ignoreColliders.Contains(hit.collider)) {
                 continue;
             }
+            if (!SceneDescriptor.CanGrabFly() && hit.transform.IsChildOf(transform)) {
+                continue;
+            }
             if (hit.distance > maxDistance) {
                 continue;
             }

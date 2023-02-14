@@ -29,8 +29,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             return !online;
         }
     }
-    [NonSerialized]
-    private List<Transform> spawnPoints = new List<Transform>();
     public IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
@@ -197,29 +195,15 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.LocalPlayer.TagObject != null && (PhotonNetwork.LocalPlayer.TagObject as Kobold) != null) {
             yield break;
         }
-        //yield return new WaitUntil(()=>(!GameManager.instance.loadingLevel && !GameManager.instance.networkManager.loading));
-        for (int i = 0; i < spawnPoints.Count; i++) {
-            if (spawnPoints[i] == null) {
-                spawnPoints.RemoveAt(i--);
-            }
-        }
-        if (spawnPoints.Count == 0) {
-            foreach (GameObject g in GameObject.FindGameObjectsWithTag("PlayerSpawn")) {
-                spawnPoints.Add(g.transform);
-            }
-        }
-        //GameObject[] spawns = GameObject.FindGameObjectsWithTag("PlayerSpawn");
-        Vector3 pos = Vector3.zero;
-        if (spawnPoints.Count > 0) {
-            pos = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count - 1)].position;
-        }
+        
         
         BitBuffer playerData = new BitBuffer(16);
         playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
         playerData.AddBool(true);// Is player kobold
 
         Debug.Log("Spawned player");
-        GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
+        SceneDescriptor.GetSpawnLocationAndRotation(out Vector3 pos, out Quaternion rot);
+        GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, rot, 0, new object[]{playerData});
         //player.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
         PopupHandler.instance.ClearAllPopups();
     }
@@ -266,7 +250,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnCreatedRoom() {
-        if (SceneManager.GetActiveScene().name != (string)selectedMap.unityScene.RuntimeKey) {
+        if (SceneManager.GetActiveScene().name == "MainMenu") {
             LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
         }
     }

@@ -12,6 +12,9 @@ using UnityEngine.Localization.Components;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.Events;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
@@ -53,6 +56,19 @@ public class GameManager : MonoBehaviour {
         }
         return instance.StartCoroutine(routine);
     }
+    
+    #if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod]
+        private static void OnInitialize() {
+            // No gamemanager found! Spawn one.
+            if (FindObjectOfType<GameManager>() != null) return;
+            var path = AssetDatabase.GUIDToAssetPath("364d21a5e4c0c464784d42f01767a083");
+            GameObject freshGameManager = Instantiate( AssetDatabase.LoadAssetAtPath<GameObject>(path));
+            instance = freshGameManager.GetComponent<GameManager>();
+            DontDestroyOnLoad(freshGameManager);
+            Debug.LogError("Spawned a GameManager on the fly due to misconfigured scene. This is not intentional, and breaks hard references to required libraries. You should place a GameManager prefab into the scene.");
+        }
+    #endif
 
     [HideInInspector]
     public bool isPaused = false;
@@ -129,7 +145,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator ReloadMapRoutine() {
         Debug.LogWarning("Reloading scene due to mods not being ready yet...");
-        yield return LevelLoader.instance.LoadLevel("MainMap");
+        yield return LevelLoader.instance.LoadLevel(SceneManager.GetActiveScene().name);
         NetworkManager.instance.StartSinglePlayer();
         Pause(false);
     }

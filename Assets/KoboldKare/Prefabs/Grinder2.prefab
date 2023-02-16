@@ -226,7 +226,7 @@ MonoBehaviour:
   fluidStream: {fileID: 5226793357215369835}
   grindingCollider: {fileID: 2268034782778944109}
   container: {fileID: 7386906182868119582}
-  anim: {fileID: 0}
+  anim: {fileID: 5984125921932343754}
   animMinSpeed: 1
   animMaxSpeed: 1
 --- !u!65 &2268034782778944109

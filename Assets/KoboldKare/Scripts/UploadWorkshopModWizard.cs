@@ -15,7 +15,6 @@ using UnityEngine.AddressableAssets;
 #endif
 
 public class UploadWorkshopModWizard : ScriptableWizard {
-
 	[SerializeField]
 	private SteamWorkshopItem mod;
 

@@ -314,6 +314,11 @@ public class PlayerPossession : MonoBehaviourPun {
         return Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
     }
 
+    public void SetEyeDir(Vector3 dir) {
+        Quaternion face = Quaternion.FromToRotation(Vector3.forward, dir);
+        eyeRot = new Vector2(-face.eulerAngles.y, face.eulerAngles.x);
+    }
+
     // Update is called once per frame
     void Update() {
         if (Cursor.lockState != CursorLockMode.Locked) {

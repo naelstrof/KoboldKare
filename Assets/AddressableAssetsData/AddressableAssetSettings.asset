@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 1
+  m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 1
@@ -113,6 +113,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
   - {fileID: 11400000, guid: c1da991e7a1d644429f6ebd2a76fb0b2, type: 2}
   - {fileID: 11400000, guid: 75412ac5cd8f1344cbfdcfb1b107af51, type: 2}
+  - {fileID: 11400000, guid: 26ff967386c28c14f837fb346f1333be, type: 2}
+  - {fileID: 11400000, guid: ceb63b88ced386648b1a7f7c327b5b5d, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -131,13 +133,9 @@ MonoBehaviour:
       - m_Id: 6076937f9c4820f46b22d372e60cea0e
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: eade48156203f4241a89a5b6edd9af81
-        m_Value: C:/Users/Naelstrof/AppData/LocalLow/Naelstrof/KoboldKare/mods/Lilith/StandaloneWindows64
+        m_Value: '[UnityEngine.Application.persistentDataPath]/mods/SurfMap/[BuildTarget]'
       - m_Id: cf9518c89bbbfac49a9548b1e750d555
-        m_Value: '{ModManager.currentLoadingMod}'
-      - m_Id: f078c492991cd4645865c4a00d66593d
-        m_Value: C:/Users/Naelstrof/AppData/LocalLow/Naelstrof/KoboldKare/mods/Lilith/StandaloneWindows64
-      - m_Id: ceff3233a4557c64d87dc0c731eb219e
-        m_Value: '{ModManager.currentLoadingMod}'
+        m_Value: '{UnityEngine.Application.persistentDataPath}/mods/SurfMap/[BuildTarget]'
     m_ProfileEntryNames:
     - m_Id: e2bcd3dc48b125a488bb819e7fc68741
       m_Name: BuildTarget
@@ -153,12 +151,6 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: cf9518c89bbbfac49a9548b1e750d555
       m_Name: Mod.LoadPath
-      m_InlineUsage: 0
-    - m_Id: f078c492991cd4645865c4a00d66593d
-      m_Name: ContentCatalog.BuildPath
-      m_InlineUsage: 0
-    - m_Id: ceff3233a4557c64d87dc0c731eb219e
-      m_Name: ContentCatalog.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -211,12 +203,13 @@ MonoBehaviour:
   m_CertificateHandlerType:
     m_AssemblyName: 
     m_ClassName: 
-  m_ActivePlayerDataBuilderIndex: 3
+  m_ActivePlayerDataBuilderIndex: 4
   m_DataBuilders:
   - {fileID: 11400000, guid: d198d9ec52e8e43429b08d9fccde56cb, type: 2}
   - {fileID: 11400000, guid: 447ca40188cf7764e972bdec0f75f15d, type: 2}
   - {fileID: 11400000, guid: e49ea45df8f970341bb3955b9d8ebdda, type: 2}
   - {fileID: 11400000, guid: 1fc252ff1b0c21d4884ff55834b90380, type: 2}
+  - {fileID: 11400000, guid: 541ccd6f1620abf489a055f1a3f1466c, type: 2}
   m_ActiveProfileId: c86ec0499c53aa3449b63b4bfb49337b
   m_HostingServicesManager:
     m_HostingServiceInfos: []

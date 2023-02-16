@@ -23,16 +23,13 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         return possibleSpawns[Random.Range(0, possibleSpawns.Count)].photonName;
     }
     public virtual void Spawn() {
-        if (!PhotonNetwork.IsMasterClient) {
-            return;
-        }
         if (lastSpawned != null && lastSpawned.transform.DistanceTo(transform) < 1f) {
             return;
         }
         StartCoroutine(SpawnRoutine());
     }
     public virtual bool CanSpawn() {
-        return PhotonNetwork.InRoom && PhotonNetwork.IsConnectedAndReady;
+        return PhotonNetwork.IsMasterClient;
     }
     public virtual IEnumerator SpawnRoutine() {
         yield return waitUntilCanSpawn;

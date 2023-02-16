@@ -4,15 +4,16 @@ using UnityEngine;
 using KoboldKare;
 
 public class MusicManager : MonoBehaviour {
-    [SerializeField]
-    private GameEventGeneric sleepEvent;
     private AudioSource musicSource;
     [SerializeField]
-    private List<AudioClip> dayMusic;
+    private AudioPack music;
+    private bool waiting;
     [SerializeField]
-    private List<AudioClip> nightMusic;
-    private bool waiting = false;
-    public IEnumerator FadeOutAndStartOver() {
+    private float minWaitTime = 60f;
+    [SerializeField]
+    private float maxWaitTime = 220f;
+
+    private IEnumerator FadeOutAndStartOver() {
         float fadeoutTime = Time.time + 1f;
         while(Time.time<fadeoutTime) {
             musicSource.volume = fadeoutTime-Time.time;
@@ -27,34 +28,24 @@ public class MusicManager : MonoBehaviour {
         waiting = true;
         StartCoroutine(FadeOutAndStartOver());
     }
-    public IEnumerator WaitAndPlay(float time) {
+
+    private IEnumerator WaitAndPlay(float time) {
         yield return new WaitForSecondsRealtime(time);
-        AudioClip p = null;
-        if ( UnityEngine.Random.Range(0f,1f) > 0.25f ) {
-            p = dayMusic[Random.Range(0,dayMusic.Count)];
-        } else {
-            p = nightMusic[Random.Range(0,nightMusic.Count)];
+        if (music != null) {
+            music.Play(musicSource);
         }
-        musicSource.clip = p;
-        musicSource.Play();
         waiting = false;
     }
     void Start() {
-        musicSource = GetComponent<AudioSource>();
-        sleepEvent.AddListener(OnSleep);
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.bypassEffects = true;
+        musicSource.bypassListenerEffects = true;
+        musicSource.bypassReverbZones = true;
     }
-
-    void OnDestroy() {
-        sleepEvent.RemoveListener(OnSleep);
-    }
-    void OnSleep(object nothing) {
-        Interrupt();
-    }
-
     void Update() {
         if (!musicSource.isPlaying && !waiting) {
             waiting = true;
-            StartCoroutine(WaitAndPlay(UnityEngine.Random.Range(60, 220)));
+            StartCoroutine(WaitAndPlay(Random.Range(minWaitTime, maxWaitTime)));
         }
     }
 }

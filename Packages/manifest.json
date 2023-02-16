@@ -16,6 +16,7 @@
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.inputsystem": "1.3.0",
     "com.unity.localization": "1.3.2",
+    "com.unity.addressables": "https://github.com/juniordiscart/com.unity.addressables.git#1.19.19_multi-catalog",
     "com.unity.render-pipelines.core": "12.1.7",
     "com.unity.render-pipelines.universal": "12.1.7",
     "com.unity.scriptablebuildpipeline": "1.20.2",

@@ -1,21 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using PenetrationTech;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using System.Threading;
 using System.Threading.Tasks;
 using Steamworks;
 using UnityEditor;
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Build;
+using UnityEditor.AddressableAssets.Build.DataBuilders;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 
 [System.Serializable]
@@ -37,7 +36,7 @@ public class SteamWorkshopItem {
 	}
 
 
-	[SerializeField] private AddressableAssetGroup targetGroup;
+	[SerializeField] private ExternalCatalogSetup targetCatalog;
 	
 	[Header("Mod meta data")]
 	[SerializeField] private ulong publishedFileId = (ulong)PublishedFileId_t.Invalid;
@@ -56,6 +55,7 @@ public class SteamWorkshopItem {
 	private bool building = false;
 	private string lastMessage = "";
 	private MessageType lastMessageType;
+	private ExternalCatalogSetup loadedCatalog;
 	
 	private List<string> GetTags() {
 		List<string> newTags = new List<string>();
@@ -93,7 +93,10 @@ public class SteamWorkshopItem {
 			lastMessage = "Failed to upload, couldn't get a published file ID!";
 			throw new UnityException(lastMessage);
 		}
+
 		Save();
+		// Gotta tell inspectors to reload in order to see the new ID.
+		loadedCatalog = null;
 		
 		ItemUpdate();
 	}
@@ -128,12 +131,11 @@ public class SteamWorkshopItem {
 		}
 	}
 
+	private string modBuildPath => $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/{EditorUserBuildSettings.activeBuildTarget}";
+
 	private string modRoot {
 		get {
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"{Application.persistentDataPath}/mods/{targetGroup.name}/{EditorUserBuildSettings.activeBuildTarget}" );
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "ContentCatalog.BuildPath", $"{Application.persistentDataPath}/mods/{targetGroup.name}/{EditorUserBuildSettings.activeBuildTarget}" );
-			string fullPathWithBuildTarget = targetGroup.GetSchema<BundledAssetGroupSchema>().BuildPath.GetValue(targetGroup.Settings);
-			DirectoryInfo fullPath = Directory.GetParent(fullPathWithBuildTarget);
+			DirectoryInfo fullPath = Directory.GetParent(modBuildPath);
 			return fullPath.FullName;
 		}
 	}
@@ -171,18 +173,29 @@ public class SteamWorkshopItem {
 	}
 
 	public bool ShouldTryLoad() {
-		return targetGroup != null && publishedFileId == (ulong)PublishedFileId_t.Invalid && new DirectoryInfo(modRoot).Exists && File.Exists(jsonSavePath);
+		return targetCatalog != null && new DirectoryInfo(modRoot).Exists && File.Exists(jsonSavePath) && loadedCatalog != targetCatalog;
 	}
 
 	public string GetStatus(out MessageType messageType) {
 		if (!IsValid()) {
 			messageType = MessageType.Error;
-			if (targetGroup == null) {
-				return "Please specify an associated Addressable Asset Group to continue.";
+			if (targetCatalog == null) {
+				return "Please specify an associated External Catalog Setup asset to continue.";
 			}
 			if (previewSprite == null) {
 				return "Please specify the preview texture, this is required, sorry!";
 			}
+
+			if (targetCatalog.AssetGroups.Count <= 0) {
+				return "Target External catalog has no asset groups assigned. Please assign them.";
+			}
+
+			foreach (var assetGroup in targetCatalog.AssetGroups) {
+				if (assetGroup == null) {
+					return "One of the asset groups in the external catalog is null! Please fix it.";
+				}
+			}
+			return "For somereason this mod is invalid! The GetStatus() function must have not been updated after IsValid was changed.";
 		}
 		if (!SupportsBuildPlatform(BuildTarget.StandaloneLinux64) || !SupportsBuildPlatform(BuildTarget.StandaloneWindows64) || !SupportsBuildPlatform(BuildTarget.StandaloneWindows) || !SupportsBuildPlatform(BuildTarget.StandaloneOSX)) {
 			messageType = MessageType.Error;
@@ -232,7 +245,15 @@ public class SteamWorkshopItem {
 	}
 
 	public bool IsValid() {
-		return targetGroup != null && previewSprite != null;
+		if (targetCatalog == null || previewSprite == null || targetCatalog.AssetGroups == null || targetCatalog.AssetGroups.Count == 0) {
+			return false;
+		}
+		foreach (var targetGroup in targetCatalog.AssetGroups) {
+			if (targetGroup == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private async Task UpdateProgress() {
@@ -246,8 +267,29 @@ public class SteamWorkshopItem {
 		});
 	}
 
+	private void BuildForPlatform(BuildTarget target) {
+		EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, target);
+		//foreach (var targetGroup in targetCatalog.AssetGroups) {
+			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
+			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.LoadPath", $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
+		//}
+		ModManager.currentLoadingMod = modBuildPath;
+		targetCatalog.BuildPath = $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
+		targetCatalog.RuntimeLoadPath = "{ModManager.currentLoadingMod}/[BuildTarget]";
+		AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
+		if (!string.IsNullOrEmpty(result.Error)) {
+			throw new UnityException(result.Error);
+		}
+	}
+
 	public void Build() {
+		var buildTargetMemory = EditorUserBuildSettings.activeBuildTarget;
+		var packedMultiCatalogMode = AssetDatabase.LoadAssetAtPath<BuildScriptPackedMultiCatalogMode>(AssetDatabase.GUIDToAssetPath("541ccd6f1620abf489a055f1a3f1466c"));
+		if (!packedMultiCatalogMode.ExternalCatalogs.Contains(targetCatalog)) {
+			packedMultiCatalogMode.ExternalCatalogs.Add(targetCatalog);
+		}
 		try {
+			AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilderIndex = 4;
 			building = true;
 			currentModRoot = modRoot;
 			var directoryInfo = new DirectoryInfo(modRoot);
@@ -256,41 +298,28 @@ public class SteamWorkshopItem {
 			}
 
 			Directory.CreateDirectory(modRoot);
-			
+
 			// Write out the sprite to a render texture, so that we can ignore its "readOnly" state.
 			var rect = previewSprite.textureRect;
 			RenderTexture targetTexture = new RenderTexture((int)rect.width, (int)rect.height, 0);
 			CommandBuffer buffer = new CommandBuffer();
 			buffer.Blit(previewSprite.texture, targetTexture, Vector2.one, previewSprite.textureRectOffset);
 			Graphics.ExecuteCommandBuffer(buffer);
-			
+
 			// Then read-back the render texture to a regular texture2D.
 			Texture2D previewTextureWrite = new Texture2D((int)rect.width, (int)rect.height);
 			RenderTexture.active = targetTexture;
 			previewTextureWrite.ReadPixels(new Rect(0, 0, rect.width, rect.height), 0, 0);
 			File.WriteAllBytes(previewTexturePath, previewTextureWrite.EncodeToPNG());
-			
+
 			Save();
 
-			var buildTargetMemory = EditorUserBuildSettings.activeBuildTarget;
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "ContentCatalog.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			AddressableAssetSettings.BuildPlayerContent();
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "ContentCatalog.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			AddressableAssetSettings.BuildPlayerContent();
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "ContentCatalog.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			AddressableAssetSettings.BuildPlayerContent();
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "ContentCatalog.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetGroup.name}/[BuildTarget]" );
-			AddressableAssetSettings.BuildPlayerContent();
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
+			BuildForPlatform(BuildTarget.StandaloneWindows64);
+			BuildForPlatform(BuildTarget.StandaloneWindows);
+			BuildForPlatform(BuildTarget.StandaloneLinux64);
+			BuildForPlatform(BuildTarget.StandaloneOSX);
 		} finally {
+			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
 			building = false;
 		}
 	}
@@ -382,6 +411,8 @@ public class SteamWorkshopItem {
 	        JSONArray array = rootNode["tags"].AsArray;
 	        target.FindPropertyRelative("tags").intValue = (int)GetTagsFromJsonArray(array);
         }
+
+        loadedCatalog = targetCatalog;
 	}
 }
 

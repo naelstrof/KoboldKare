@@ -51,6 +51,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private Chatter chatter;
     private ControlType controlType = ControlType.AIPlayer;
     private Kobold kobold;
+    private Vector3 eyeDir;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -204,6 +205,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         var playerPossessionInstance = Instantiate(playerPossessionPrefab, transform);
         possession = playerPossessionInstance.GetComponent<PlayerPossession>();
+        possession.SetEyeDir(eyeDir);
         
         precisionGrabber.SetView(possession.eyes.transform);
         grabber.SetView(possession.eyes.transform);
@@ -231,6 +233,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         thirdPersonMeshDisplay = possession.GetComponent<ThirdPersonMeshDisplay>();
         thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
+        classicIK.Initialize();
     }
 
     private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {
@@ -257,6 +260,12 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private void OnDestroy() {
         foreach(var task in tasks) {
             Addressables.Release(task);
+        }
+    }
+    public void SetEyeDir(Vector3 dir) {
+        eyeDir = dir;
+        if (possession != null) {
+            possession.SetEyeDir(dir);
         }
     }
 

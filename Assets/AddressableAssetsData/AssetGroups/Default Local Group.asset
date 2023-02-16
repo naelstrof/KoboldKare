@@ -8452,6 +8452,10 @@ MonoBehaviour:
     m_Address: Assets/KoboldKare/ScriptableObjects/SoundPacks/Yowl.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 0114c2af4b9b1cd4e98c40e84037e72e
+    m_Address: Assets/KoboldKare/ScriptableObjects/SoundPacks/Music.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

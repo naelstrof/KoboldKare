@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(PlayAreaEnforcer))]
 [RequireComponent(typeof(OcclusionArea))]
+[RequireComponent(typeof(MusicManager))]
 public class SceneDescriptor : MonoBehaviour {
     private static SceneDescriptor instance;
     

@@ -73,6 +73,10 @@ namespace Naelstrof.Mozzarella {
         public void SetVolumeMultiplier(float multi) {
             volumeMultiplier = multi;
         }
+        
+        public void SetLineColor(Color color){
+            lineMaterial.color = color;
+        }
 
         private void Awake() {
             widthCurve = new AnimationCurve();
@@ -88,6 +92,7 @@ namespace Naelstrof.Mozzarella {
 
             lineRenderer = gameObject.AddComponent<LineRenderer>();
             lineRenderer.useWorldSpace = true;
+            lineRenderer.generateLightingData = true;
             lineRenderer.material = lineMaterial;
             lineRenderer.positionCount = 0;
         }

@@ -42,6 +42,7 @@ public class MilkLactator {
                     mozzarella.SetVolumeMultiplier(alloc.volume);
                     mozzarella.SetLocalForward(Vector3.up);
                     Color color = alloc.GetColor();
+                    mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (kobold.photonView.IsMine) {
                             GenericReagentContainer container =

@@ -168,6 +168,8 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                     ReagentContents alloc = new ReagentContents();
                     alloc.AddMix(contents);
                     mozzarella.SetVolumeMultiplier(alloc.volume);
+                    Color color = alloc.GetColor();
+                    mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
                         if (photonView.IsMine) {
                             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
@@ -179,7 +181,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                         }
                         
                         if (alloc.volume > 0f) {
-                            cumSplatProjectorMaterial.color = alloc.GetColor();
+                            cumSplatProjectorMaterial.color = color;
                         }
 
                         PaintDecal.RenderDecalForCollider(hit.collider, alloc.IsCleaningAgent() ? cumCleanProjectorMaterial : cumSplatProjectorMaterial,

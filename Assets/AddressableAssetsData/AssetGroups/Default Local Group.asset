@@ -8456,6 +8456,608 @@ MonoBehaviour:
     m_Address: Assets/KoboldKare/ScriptableObjects/SoundPacks/Music.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 93444af0948f1a04b8f4973481bc6cb8
+    m_Address: Assets/KoboldKare/Textures/circle.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e4073af7d9c4fc14dbe462510aa74304
+    m_Address: Assets/KoboldKare/Textures/ico_lightning.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: c275e095e84344b408ba66a4a30defa9
+    m_Address: Assets/KoboldKare/Materials/KoboldBasic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 715d367803dced8428ed198a468e2daa
+    m_Address: Assets/KoboldKare/Shaders/KoboldBasic.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1cbc240a5eceecc4ca643343bff8c92c
+    m_Address: Assets/ThirdParty/Audio/Public Domain/yowl2.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e18312d1b399ef44cbae03acd0a32afb
+    m_Address: Assets/KoboldKare/ScriptableObjects/BounceCurves/GenericBounce.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9002d9716d671ce4791acbdd2ae02ec3
+    m_Address: Assets/KoboldKare/ScriptableObjects/SoundPacks/WaterSplatterSmall.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 4728c092756adc6498992724834605ef
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereErase.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a38657f2c23d0dd4eae0ed985ddb62f5
+    m_Address: Assets/KoboldKare/VFX/Splatter.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 0cf2a31bc468c3b498ae9e7e91661950
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_0.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 989d6a1b8400b74408aaa3e351aa08a7
+    m_Address: Assets/KoboldKare/Materials/FluidStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 0aedd8bc1c4736945999458791d86fe5
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereSplat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 908f641d307e2c44c9074884f5de23fb
+    m_Address: Assets/KoboldKare/ScriptableObjects/FluidFlipbook.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: c412be3f061972c4a9cc6b651b38b5cb
+    m_Address: Assets/KoboldKare/ScriptableObjects/SoundPacks/Hose.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 908424a01c1c2a847ba8b1035206da1c
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_36.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 169027c09b907d3409f684d698983795
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_25.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1baa3e219ee2be843b69f265117d6ece
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_81.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 15f12741e18b1094e95ac5735ce304f7
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_73.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3fc97f41b75d95d4dbbf8b78df42656b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_8.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7f4de2a1c38cdf9409898da689094a13
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_21.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a979fdc16ae2b1a44a737c93bc2e65e2
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_26.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 87b926f1bc2c14b45941f74ef5c41f4c
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_80.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 77b4fbf19a62e7945bbbdd30e8498cab
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_39.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d08a17020e130874baa1776de45a4f88
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_32.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9a15292243e58b84c8b0893b5a8367b1
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_34.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 6f043bc235df15f4bb08a82eeeb02e02
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_24.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 6138d7739b1c4df40b13e7c4e7b5e367
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_5.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 631af983ed83bbe43a429a74d360a573
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_61.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: bf89dbb3abe6ec54ab9efd73436d5633
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_89.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: adc41fd367326ba48851e7c445e4b65b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_42.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f6c458145118a7547afd67c53466b9d8
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_10.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 423882341a6fc4b4ea6ff024386ce816
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_33.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ca0b6d34cba8a0941b62b865827f681e
+    m_Address: Assets/KoboldKare/Shaders/FluidStream.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 4950aa5480104144b840e2d04868c02c
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_40.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9b5ba7746fbd9d844a92e1594909af1f
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_77.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1c92c39468e894a44b196b957038ad59
+    m_Address: Assets/ThirdParty/Audio/Public Domain/test water valid 2.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5aafa5a4161510e49b31cb13fe7ec27b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_59.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 34d2920553d0e8043abca703fea43ca5
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_67.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7019f475efe8c794c96e913277da6053
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_7.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7f2187d5a9aae6a47815c5e77113fad4
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_55.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 0c16b7e50fbe2de45acf2d9e5e1cc7a9
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_66.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 0e6fd026392baa8448bd6643e1c54475
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_22.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 50e04826109089148b5e9ed6be8014cf
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_75.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: daf078264bb8ec44da1634ff41fbde25
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_18.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 12e840364b09a0e4483a6c29cfa92e9e
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_85.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: da132856ef97dc94ca85f3e0dbdedfb7
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_43.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1454d176ddb47d74480ef80ac043a416
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_82.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5ea94d9642aa65a49b5e33a209fa4594
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_84.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ed515fc6460e5e24bbe1bd5997bb3002
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_54.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 61501b2747d7d79488378702ac3abf45
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_58.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 8d0d3b27eca33894094bbb327212750a
+    m_Address: Assets/ThirdParty/Audio/Public Domain/water_nozzle.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e7741557e40175446b3b8cab3d95ee27
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_38.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: bd3538a726d28be41b493e0475ee7148
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_9.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 8f22caa725c0ddc4e9e0ae2beb29893d
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_31.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 84eeb6688cda4314ca0b112a6ab005cf
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e9351898dc5f0474da0bef850e614543
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_50.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a913ee98ecc0dfc40b588030d7a7273b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_88.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9f56c0a88b27590498f25c6809e3be32
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_12.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a010c8b8951f1fe478610330887e01e9
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_15.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d89eafb8c800ca441aefb8eb4dcbd0a1
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_64.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 84fe74c8a961af645a472b1dbeeb6d7b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_90.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: c781a819d40ee6e48ad539bfc97f68db
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_46.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: dd3a20b9594471b4880d675daf6a0476
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_47.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ff008ab9b4395f44fad42d88b1c2961d
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_68.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d39a756a64d91964ba5fc4a9582f4bcc
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_6.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ed13099a2bb453e4383e2167b91c26b3
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_60.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e3c36b9a02119e0439154964c1906c11
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_70.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5388f8aa7e7b8104685044d3975f1f1a
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_41.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 32bf01baf570f084bbbd3e4c3fac7ed7
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e6909dca4dda3674ab5bbca0a58b536c
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_37.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9c91930b4d9f63e43ba7246898e45053
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_13.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 82a30d0b9111a8b44bcb941cd5da2801
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_19.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5805949b177e2e240a1bf785209579f3
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjectorSubtractive.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: eb20599bcdbf4f6439f18e54ded66d0e
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_87.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 405e46bbd449749409b154bd10a1c135
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_45.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ffe162eb602998044a60c1fa1f75fd56
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_51.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 66c5071c83dba464385be8ca2f507593
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_27.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e9b70b1c57c212b42a2bb19d4c01373f
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_62.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a981322c637937f468732706866ca6f2
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_71.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 03862e2c14ae36a4395833775b93cd64
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_29.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7c42595c2e6fbc849a542e90b01d9e49
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_86.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 6d92bf7cbb388eb45b69bb752342144f
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_53.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 390c1f8cad2d50e4a9b50cb08fd7f259
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_56.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 2aa0c29c2b074564c9864c167e6e674b
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_63.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: fab3839cd505c87468aa1368f2575651
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_30.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 45b996bc29b7ffb49b8f7915c4c0a4d7
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_72.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 082ed0cc2825506479dcb1015a9f4446
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_20.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f6a613dcca997cf42aa0eaeefc2d7c71
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_78.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3cf37e0de5ede2d488ae832feb6f828a
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_35.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7a6b122d7a9430d4a846caed3e532521
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_76.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ee4a4d4d1c19bfc4fb483e405d188b89
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_69.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 2bdde29d8a553a84183428f1557771a7
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_44.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 4149239d554045946a09ad0931a600ca
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_16.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 977cc32ecd0dce247a7128c8d9518197
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_52.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 43ec592ed9e5e2849baef9f96ee4c5e4
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_48.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1b84e23e167704c4f9ba1f39d23846ca
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_28.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b8ecc56ed4c4cf4429e286fd63370598
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_74.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: c31a2a6e6ebfa454f9139b68779daf33
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_65.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: df9f30aec7c751748814cd44967cd75a
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_11.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 68a775ee6a77d5e4ea6b4caa34994bd6
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_49.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a522300f319ffc64fae7464a0cc11549
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_23.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 713c240ffe1d8ad4aa65f51779be7d92
+    m_Address: Assets/KoboldKare/Textures/WaterBlobShears_output.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: adf7fa3f173ca9444b15f9f215a85f62
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_14.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ba4d964f407b05c41b2f255dffb67b2d
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_83.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ce1eba7f711405c4c9205be2c244dfd5
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_17.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7b171d7fb7e09514490052cb111959fa
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_4.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 925093cf45a07fa4b837776c40baf59a
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_57.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 10460bdf44280ac4082228cbdd606804
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_79.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 0bb071efa7ece894486268fe0cd6d5bf
+    m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1f6de5ff156bab54ea2a2c6c86f5a859
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjector.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d597d2b91cfae2f4ca787b3e496f3954
+    m_Address: Assets/KoboldKare/ScriptableObjects/PlayableMaps/MainMapPreview.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b549c3091ea249d47823b4eeadea9505
+    m_Address: Assets/KoboldKare/Animations/SteamWorkshopCanvas.controller
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1e0439e99d829dc4aa78d6a91440016b
+    m_Address: Assets/KoboldKare/Prefabs/UI/MapPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f6551f99aa0862b4880492bd4e9e3ce6
+    m_Address: Assets/KoboldKare/Animations/SteamWorkshopInactive.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 632d3a1f883e35b40bcb44be67ce7b7b
+    m_Address: Assets/KoboldKare/Animations/SteamWorkshopActive.anim
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 6f9beed300de67140a63848bebd2dd1b
+    m_Address: Assets/KoboldKare/Textures/masks/SplashNormals_plain_circle.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d37782c56d2a2b449b723b624895593e
+    m_Address: Assets/KoboldKare/Textures/masks/SplashNormals_spots.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 78c488fd094234149a664bc3c38bdb6d
+    m_Address: Assets/KoboldKare/Textures/masks/splash1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f9abb34a377352041a6538abf2c31013
+    m_Address: Assets/KoboldKare/Prefabs/ShadedMozzarella.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 38ee4cdff26a5384faf2c0d623785d91
+    m_Address: Assets/KoboldKare/Materials/CumStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 08acf0bab1a569042874ac9a0feb5b44
+    m_Address: Assets/KoboldKare/Shaders/CumStream.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

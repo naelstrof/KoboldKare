@@ -252,6 +252,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
+        if (newGenes == null) {
+            return;
+        }
         // Set dick
         if (newGenes.dickEquip == byte.MaxValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
             if (dickObject != null) {

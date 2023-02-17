@@ -30,7 +30,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static string currentLoadingMod = "<currentLoadingMod>";
-    /*public static string runningPlatform {
+    public static string runningPlatform {
         get {
             switch (Application.platform) {
                 case RuntimePlatform.LinuxPlayer:
@@ -48,7 +48,7 @@ public class ModManager : MonoBehaviour {
                 default: return "Unknown";
             }
         }
-    }*/
+    }
 
     public delegate void ModReadyAction();
     private event ModReadyAction finishedLoading;

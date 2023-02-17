@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using PenetrationTech;
@@ -145,8 +146,8 @@ public class DickDescriptor : MonoBehaviour {
         }
     }
     public IEnumerator CumRoutine(DickSet set) {
-        while (cumming) {
-            yield return null;
+        if (cumming) {
+            yield return new WaitUntil(() => !cumming);
         }
 
         cumming = true;
@@ -163,35 +164,28 @@ public class DickDescriptor : MonoBehaviour {
                 foreach (var renderTarget in set.dick.GetTargetRenderers()) {
                     Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
                     List<string> cumBlendShapeIndices = new List<string>();
-                    for (int j = 0; j < mesh.blendShapeCount; j++)
-                    {
-                        string name = mesh.GetBlendShapeName(j);
-                        if (name.ToLower().StartsWith("cum"))
-                        {
-                            cumBlendShapeIndices.Add(name);
+                    for (int j = 0; j < mesh.blendShapeCount; j++) {
+                        string blendShapeName = mesh.GetBlendShapeName(j);
+                        if (blendShapeName.ToLower(CultureInfo.InvariantCulture).StartsWith("cum")) {
+                            cumBlendShapeIndices.Add(blendShapeName);
                         }
                     }
                     cumBlendShapeIndices.Sort();
                     
                     float stepSize = 1f / (cumBlendShapeIndices.Count + 1);
-
-                    for (int j = 0; j < cumBlendShapeIndices.Count; j++)
-                    {
+                    for (int j = 0; j < cumBlendShapeIndices.Count; j++) {
                         float easingStage = Mathf.Clamp01(Easing.Cubic.InOut(1f-(Mathf.Abs(t-stepSize*(j+1))*4f)));
-                        ((SkinnedMeshRenderer)renderTarget.renderer)
-                            .SetBlendShapeWeight(mesh.GetBlendShapeIndex(cumBlendShapeIndices[j]), easingStage*100f);
+                        ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex(cumBlendShapeIndices[j]), easingStage*100f);
                     }
                 }
                 yield return null;
             }
             foreach (var renderTarget in set.dick.GetTargetRenderers()) {
                 Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
-                for (int j = 0; j < mesh.blendShapeCount; j++)
-                {
-                    string name = mesh.GetBlendShapeName(j);
-                    if (name.ToLower().StartsWith("cum"))
-                    {
-                        ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex(name), 0f);
+                for (int j = 0; j < mesh.blendShapeCount; j++) {
+                    string blendShapeName = mesh.GetBlendShapeName(j);
+                    if (blendShapeName.ToLower(CultureInfo.InvariantCulture).StartsWith("cum")) {
+                        ((SkinnedMeshRenderer)renderTarget.renderer).SetBlendShapeWeight(mesh.GetBlendShapeIndex(blendShapeName), 0f);
                     }
                 }
             }
@@ -219,7 +213,6 @@ public class DickDescriptor : MonoBehaviour {
                                 buffer.AddReagentContents(alloc.Spill(alloc.volume * 0.1f));
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
                                     buffer, attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-                                //container.SetGenes(attachedKobold.GetGenes());
                             }
                         }
 
@@ -237,7 +230,7 @@ public class DickDescriptor : MonoBehaviour {
             }
             Vector3 holePos = pennedHole.GetSplinePath().GetPositionFromT(0f);
             Vector3 holeTangent = pennedHole.GetSplinePath().GetVelocityFromT(0f);
-            SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
+            PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();

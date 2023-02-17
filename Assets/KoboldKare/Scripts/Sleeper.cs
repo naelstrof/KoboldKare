@@ -36,7 +36,7 @@ public class Sleeper : GenericUsable {
         startSleep.Raise(null);
         yield return new WaitForSeconds(0.5f);
         sleep.Raise(null);
-        DayNightCycle.StaticSleep();
+        //DayNightCycle.StaticSleep();
     }
     public override void Save(JSONNode writer) { }
     public override void Load(JSONNode reader) { }

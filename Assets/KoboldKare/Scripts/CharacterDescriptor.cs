@@ -234,6 +234,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         thirdPersonMeshDisplay = possession.GetComponent<ThirdPersonMeshDisplay>();
         thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
         classicIK.Initialize();
+        kobold.SetGenes(kobold.GetGenes());
     }
 
     private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {

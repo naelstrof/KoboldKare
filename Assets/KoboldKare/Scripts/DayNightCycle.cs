@@ -9,15 +9,9 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using SimpleJSON;
 
-public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
-    [SerializeField]
-    private GameEventGeneric midnightEvent;
-    //[SerializeField]
-    //private GameEventFloat metabolizeEvent;
+public class DayNightCycle : MonoBehaviour {
     private static DayNightCycle instance = null;
     private WaitForSeconds waitForTwoSeconds;
-    private int daysPast = 0;
-
     public delegate void MetabolizeAction(float time);
     private event MetabolizeAction metabolizationTriggered;
 
@@ -33,10 +27,6 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         instance.metabolizationTriggered -= action;
-    }
-
-    public static void StaticSleep() {
-        instance.Sleep();
     }
 
     private void Awake() {
@@ -56,25 +46,5 @@ public class DayNightCycle : MonoBehaviourPun, IPunObservable, ISavable {
             yield return waitForTwoSeconds;
             metabolizationTriggered?.Invoke(2f);
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        // Just skip events, I don't care!!
-        if (stream.IsWriting) {
-            stream.SendNext(daysPast);
-        } else {
-            daysPast = (int)stream.ReceiveNext();
-            PhotonProfiler.LogReceive(sizeof(int));
-        }
-    }
-    public void Save(JSONNode node) {
-        node["daysPast"] = daysPast;
-    }
-    public void Load(JSONNode node) {
-        daysPast = node["daysPast"];
-    }
-    private void Sleep() {
-        midnightEvent.Raise(null);
-        daysPast++;
     }
 }

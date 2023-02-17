@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayAreaEnforcer))]
 [RequireComponent(typeof(OcclusionArea))]
 [RequireComponent(typeof(MusicManager))]
+[RequireComponent(typeof(DayNightCycle))]
 public class SceneDescriptor : MonoBehaviour {
     private static SceneDescriptor instance;
     

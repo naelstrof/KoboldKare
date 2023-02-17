@@ -263,6 +263,7 @@ public class SteamWorkshopItem {
 				EditorUtility.DisplayProgressBar(GetStatus(out MessageType ignoreType), "Uploading...",
 					(float)punBytesProcessed / (float)punBytesTotal);
 				Thread.Sleep(10);
+				SteamAPI.RunCallbacks();
 			}
 		});
 	}

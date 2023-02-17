@@ -30,7 +30,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static string currentLoadingMod = "<currentLoadingMod>";
-    public static string runningPlatform {
+    /*public static string runningPlatform {
         get {
             switch (Application.platform) {
                 case RuntimePlatform.LinuxPlayer:
@@ -48,7 +48,7 @@ public class ModManager : MonoBehaviour {
                 default: return "Unknown";
             }
         }
-    }
+    }*/
 
     public delegate void ModReadyAction();
     private event ModReadyAction finishedLoading;
@@ -217,7 +217,7 @@ public class ModManager : MonoBehaviour {
                 }
 
                 AddressablesRuntimeProperties.ClearCachedPropertyValues(); 
-                currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}{runningPlatform}";
+                currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
                 await loader.Task;
                 modInfo.locator = loader.Result;

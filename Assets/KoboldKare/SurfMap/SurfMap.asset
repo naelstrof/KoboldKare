@@ -16,7 +16,7 @@ MonoBehaviour:
   preview: {fileID: 21300000, guid: 11fede73838261045a2f474dc15caa14, type: 3}
   description: An example map that demonstrates some surf mechanics!
   unityScene:
-    m_AssetGUID: 
+    m_AssetGUID: d25494ab6e18a73438f35a3819eb44ed
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

@@ -1,13 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using KoboldKare;
-using Photon.Pun;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
-using UnityEngine.SceneManagement;
-using System.IO;
-using SimpleJSON;
 
 public class DayNightCycle : MonoBehaviour {
     private static DayNightCycle instance = null;
@@ -31,11 +23,10 @@ public class DayNightCycle : MonoBehaviour {
 
     private void Awake() {
         waitForTwoSeconds = new WaitForSeconds(2f);
-        if (instance == null) {
+        if (instance == null || instance == this) {
             instance = this;
-        } else if (instance != this) {
+        } else {
             Destroy(gameObject);
-            return;
         }
     }
     private void Start() {

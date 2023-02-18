@@ -275,7 +275,8 @@ public class PlayerPossession : MonoBehaviourPun {
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
 
         //pGrabber.inputRotation = rotate;
-        Quaternion gyro = DS4.GetRotation(3000);
+        //Quaternion gyro = DS4.GetRotation(3000);
+        Quaternion gyro = Quaternion.identity;
         Vector3 rawRotation = gyro.eulerAngles;
         if (controls.actions["GyroEnable"].ReadValue<float>() > 0.5f) {
             rawRotation = new Vector3(Mathf.DeltaAngle(0, rawRotation.x), Mathf.DeltaAngle(0, rawRotation.y),

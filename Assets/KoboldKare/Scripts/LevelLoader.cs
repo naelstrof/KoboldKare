@@ -1,10 +1,8 @@
 using KoboldKare;
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 public class LevelLoader : MonoBehaviour {
     public static LevelLoader instance;
@@ -34,7 +32,6 @@ public class LevelLoader : MonoBehaviour {
         loadingLevel = true;
         yield return new WaitForSecondsRealtime(1f);
         PhotonNetwork.LoadLevel(name);
-        //while (!SceneManager.GetSceneByName(name).isLoaded) {
         while (PhotonNetwork.LevelLoadingProgress != 1f) {
             yield return new WaitForEndOfFrame();
         }

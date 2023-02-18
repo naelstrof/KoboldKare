@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Shaders
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Shaders
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 261b741e4e99efa45abef2ee8dee5751
+  m_SerializeEntries:
+  - m_GUID: 1d78aa10aa84d2f41b4343bb6cca3cb5
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DilationShader.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 650dd9526735d5b46b79224bc6e94025
+    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Unlit.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5afa2da5947c4064a80635d32f4a80dd
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DecalProjectorSubtractive.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 92d824d5634a5ba4a85a4e5642ee1c99
+    m_Address: Assets/KoboldKare/Waterfall/WaterStream.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: def7000896e247349bf958c5d2a9a6f2
+    m_Address: Assets/KoboldKare/Shaders/StatueShader.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1415f2a892abc2149addb08105206ad7
+    m_Address: Assets/KoboldKare/Shaders/PachinkoShader.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b5df53a807ec78c44b18a18cd6a7b509
+    m_Address: Assets/KoboldKare/Shaders/Foliage.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: dd89cf5b9246416f84610a006f916af7
+    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF Overlay.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5e20287be7b43564d985873f3e0d2e79
+    m_Address: Assets/KoboldKare/Textures/Fog/FogScroller.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d3808acb956d60d428c1ad37dfa29dbf
+    m_Address: Assets/KoboldKare/Shaders/NipplePumpShader.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 42e0f16c77d25144ea2348ca1a254645
+    m_Address: Assets/KoboldKare/Shaders/Leafs URP.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1e9413cde3392d64184886f4f8a221bc
+    m_Address: Assets/KoboldKare/Shaders/Bark URP.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 26b46a3fa6c15d04c9ccdc878b96c6a5
+    m_Address: Assets/KoboldKare/Shaders/TerrainBrushedDecalable.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a9cde6543f2604b4cbd3023847cb9c0b
+    m_Address: Assets/KoboldKare/Shaders/WaterSample.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: bc0a95306787ee14c8cba6b6697de1e1
+    m_Address: Assets/KoboldKare/Shaders/Kobold.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 715d367803dced8428ed198a468e2daa
+    m_Address: Assets/KoboldKare/Shaders/KoboldBasic.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ca0b6d34cba8a0941b62b865827f681e
+    m_Address: Assets/KoboldKare/Shaders/FluidStream.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5805949b177e2e240a1bf785209579f3
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjectorSubtractive.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1f6de5ff156bab54ea2a2c6c86f5a859
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjector.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 08acf0bab1a569042874ac9a0feb5b44
+    m_Address: Assets/KoboldKare/Shaders/CumStream.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7e939ebe7fce1a54dbabe4a44aed8dbe
+    m_Address: Assets/KoboldKare/Shaders/KoboldKareSky.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 933532a4fcc9baf4fa0491de14d08ed7
+    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e6e9a19c3678ded42a3bc431ebef7dbd
+    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 14e0a43a18459694a816fde3a7abd01a
+    m_Address: Packages/com.naelstrof.penetrationtech/Shaders/GirthUnwrapRaw.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a3a4b45780bd450459e93b3068a3fdf5
+    m_Address: Assets/KoboldKare/Shaders/Dick.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 01fbbcdc080ae1f408f4d363f8bcc20d
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DecalProjector.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 5e1d12dd9f331b94da153b99f92b9e11
+    m_Address: Assets/ThirdParty/Plugins/Vilar/VilarEyes/VilarEyeV2.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9360c483d0aebd74f89a07886916938c
+    m_Address: Assets/KoboldKare/Shaders/MappedDecalable.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 9518223a6f4890b49bd34b6ba19ab433
+    m_Address: Assets/KoboldKare/Shaders/Rock.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 12b01ec06f90f98438c35c1028503f31
+    m_Address: Assets/KoboldKare/Shaders/GoldDissolve.shader
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cae92e6f372318b47953ee53556cfbe1, type: 2}
+    - {fileID: 11400000, guid: 39863ca0e4924da41ba3b37fa64a5f79, type: 2}

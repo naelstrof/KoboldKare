@@ -822,12 +822,12 @@ LightProbeGroup:
   m_SourcePositions:
   - {x: 1, y: 1, z: 1}
   - {x: 1, y: 1, z: -1}
-  - {x: 1, y: -1, z: 1}
-  - {x: 1, y: -1, z: -1}
+  - {x: 1, y: -0.77269113, z: 1}
+  - {x: 1, y: -0.77269113, z: -1}
   - {x: -1, y: 1, z: 1}
   - {x: -1, y: 1, z: -1}
-  - {x: -1, y: -1, z: 1}
-  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -0.77269113, z: 1}
+  - {x: -1, y: -0.77269113, z: -1}
   m_Dering: 1
 --- !u!4 &342830790
 Transform:
@@ -2094,7 +2094,7 @@ PrefabInstance:
     - target: {fileID: 720686211378421361, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
       propertyPath: m_fontSize
-      value: 27.45
+      value: 25.2
       objectReference: {fileID: 0}
     - target: {fileID: 912986412934654834, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
@@ -4058,7 +4058,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &1137025475
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4075,7 +4075,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &1137048811
 PrefabInstance:
   m_ObjectHideFlags: 0

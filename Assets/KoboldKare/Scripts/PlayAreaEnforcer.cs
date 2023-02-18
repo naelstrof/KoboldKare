@@ -35,9 +35,6 @@ public class PlayAreaEnforcer : MonoBehaviour {
     }
 
     void Awake() {
-        if (instance != null) {
-            Destroy(instance);
-        }
         instance = this;
         OcclusionArea area = GetComponent<OcclusionArea>();
         bounds = new Bounds(area.transform.TransformPoint(area.center), area.transform.TransformVector(area.size));

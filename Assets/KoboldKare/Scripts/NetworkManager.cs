@@ -201,8 +201,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         playerData.AddKoboldGenes(PlayerKoboldLoader.GetPlayerGenes());
         playerData.AddBool(true);// Is player kobold
 
-        Debug.Log("Spawned player");
         SceneDescriptor.GetSpawnLocationAndRotation(out Vector3 pos, out Quaternion rot);
+        Debug.Log($"Spawned player at {pos}");
         GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<CharacterDescriptor>(true).SetEyeDir(rot*Vector3.forward);
         PopupHandler.instance.ClearAllPopups();

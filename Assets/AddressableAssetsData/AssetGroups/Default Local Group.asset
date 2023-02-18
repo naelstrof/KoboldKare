@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: a6ba5b53c227ed040a2741e2f23a169c
-    m_Address: Assets/KoboldKare/VFX/Pickupable.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 49336634658f28c4b908870c156f87cc
     m_Address: Assets/KoboldKare/Materials/HardHat.mat
     m_ReadOnly: 0
@@ -49,16 +44,6 @@ MonoBehaviour:
     - default
   - m_GUID: 2fd9d85c73456ce44abf01332d5af513
     m_Address: Assets/KoboldKare/Scripts/Physics/Carpet.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 933532a4fcc9baf4fa0491de14d08ed7
-    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Lit.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: e6e9a19c3678ded42a3bc431ebef7dbd
-    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -122,11 +107,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 14e0a43a18459694a816fde3a7abd01a
-    m_Address: Packages/com.naelstrof.penetrationtech/Shaders/GirthUnwrapRaw.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: c38cd95aa6a0a9e4eb053826a61b0a1d
     m_Address: Assets/KoboldKare/Models/KoboldDickEquine.fbx
     m_ReadOnly: 0
@@ -182,11 +162,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: a3a4b45780bd450459e93b3068a3fdf5
-    m_Address: Assets/KoboldKare/Shaders/Dick.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: c6a51a68e5768654f8e614a5d167aefd
     m_Address: Assets/KoboldKare/Textures/equine_low_EquineDick_BaseMap.png
     m_ReadOnly: 0
@@ -214,11 +189,6 @@ MonoBehaviour:
     - default
   - m_GUID: 9c44ea8cd9bad9a41b2e1c4b503546e2
     m_Address: Assets/KoboldKare/Textures/Normal Map from Mesh EquineDick.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 01fbbcdc080ae1f408f4d363f8bcc20d
-    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DecalProjector.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -337,11 +307,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 5e1d12dd9f331b94da153b99f92b9e11
-    m_Address: Assets/ThirdParty/Plugins/Vilar/VilarEyes/VilarEyeV2.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 3e317d5e098b3724ba1a4fefaf462fd8
     m_Address: Assets/KoboldKare/Textures/KoboldEye_Diffuse.png
     m_ReadOnly: 0
@@ -359,11 +324,6 @@ MonoBehaviour:
     - default
   - m_GUID: ebaab750f57cad443a0a7a230e1bf198
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - baseColor.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 9360c483d0aebd74f89a07886916938c
-    m_Address: Assets/KoboldKare/Shaders/MappedDecalable.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -452,11 +412,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 3e2ac8a5f1253414c8847c150d75ccc3
     m_Address: Assets/ThirdParty/UnityScriptableSettings/Fonts/NotoSansJP-Regular.otf
     m_ReadOnly: 0
@@ -477,11 +432,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF-Mobile.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 636f3e42565e3494a8264d315e14f40d
     m_Address: Assets/KoboldKare/Textures/ico_bomb.png
     m_ReadOnly: 0
@@ -494,11 +444,6 @@ MonoBehaviour:
     - default
   - m_GUID: 246a44374346ff34ab15533132ec4805
     m_Address: Assets/KoboldKare/Materials/TransparentGlass.mat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 76a4af875ad89744ab0fc5fe0577c525
-    m_Address: Assets/KoboldKare/Shaders/Glass.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -524,11 +469,6 @@ MonoBehaviour:
     - default
   - m_GUID: ac39b0f87a9f9cb48b9b0cf60569a38c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_carved_crystal_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 9518223a6f4890b49bd34b6ba19ab433
-    m_Address: Assets/KoboldKare/Shaders/Rock.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -572,11 +512,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 98210835793df54469508dcfa0efcc66
-    m_Address: Assets/KoboldKare/VFX/GoldDissolve.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: ecf1482a8516caf4399c2657a6b03b71
     m_Address: Assets/KoboldKare/Models/CSGDoor2x3.obj
     m_ReadOnly: 0
@@ -609,11 +544,6 @@ MonoBehaviour:
     - default
   - m_GUID: 5bae68604bb66e3448788ea249dbaec0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parquet Ipe - normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 12b01ec06f90f98438c35c1028503f31
-    m_Address: Assets/KoboldKare/Shaders/GoldDissolve.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -692,11 +622,6 @@ MonoBehaviour:
     - default
   - m_GUID: b879b6bd80442044d88d1c81498b1c61
     m_Address: Assets/KoboldKare/Textures/CautionTape_basecolor.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 7e939ebe7fce1a54dbabe4a44aed8dbe
-    m_Address: Assets/KoboldKare/Shaders/KoboldKareSky.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -3580,11 +3505,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 1d78aa10aa84d2f41b4343bb6cca3cb5
-    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DilationShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 90ba18ecbd21b7d4582834fa9be4aa61
     m_Address: Assets/KoboldKare/Input/PlaystationDualShock.json
     m_ReadOnly: 0
@@ -4327,42 +4247,6 @@ MonoBehaviour:
     - default
   - m_GUID: 7025d0d64337dff41adca881007908c2
     m_Address: Assets/KoboldKare/Scenes/MainMapSettings.lighting
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 1eb6ab31a953f924a99e3d4da99ae587
-    m_Address: Assets/KoboldKare/VFX/FreezerColdness.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: b96b53155ee08af498a985d2b06db2f2
-    m_Address: Assets/KoboldKare/VFX/WalkDust.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 87f8d59673f682e41b58e36b87385285
-    m_Address: Assets/KoboldKare/VFX/ShowerEffect.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 2623f98780718e5489a3e912b48d1388
-    m_Address: Assets/KoboldKare/Waterfall/Waterfall.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 87e0a2a7b62867244b5155fa896a44ba
-    m_Address: Assets/KoboldKare/VFX/LaunchSite.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 971bff487d5f8e947be5b8bc9604cf9c
-    m_Address: Assets/KoboldKare/VFX/ToiletSparkles.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: ec44b98d7fa7d6240ae46abe9bee0f92
-    m_Address: Assets/ThirdParty/Samples/Visual Effect Graph/12.1.7/VisualEffectGraph
-      Additions/VFX/Lightning.vfx
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -5139,11 +5023,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 650dd9526735d5b46b79224bc6e94025
-    m_Address: Packages/com.unity.render-pipelines.universal/Shaders/Unlit.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 95099c52faa1a2f47b7d76bb97a5b7f7
     m_Address: Assets/ThirdParty/Audio/Public Domain/131302__reg7783__release-air-pffft.ogg
     m_ReadOnly: 0
@@ -5714,11 +5593,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 5afa2da5947c4064a80635d32f4a80dd
-    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/DecalProjectorSubtractive.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 1f84b7b58ce4cdb48878935e58649864
     m_Address: Assets/KoboldKare/Textures/DumpsterRoof_None_MaskMap.png
     m_ReadOnly: 0
@@ -5731,11 +5605,6 @@ MonoBehaviour:
     - default
   - m_GUID: 68b98bb55b520e7409bd8f5da37a7572
     m_Address: Assets/KoboldKare/Textures/Pachinko_Pachinko_Normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 92d824d5634a5ba4a85a4e5642ee1c99
-    m_Address: Assets/KoboldKare/Waterfall/WaterStream.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -6155,11 +6024,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: def7000896e247349bf958c5d2a9a6f2
-    m_Address: Assets/KoboldKare/Shaders/StatueShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 224b9108a247657448296ce01b585ed7
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzePatina_512_normal.tif
     m_ReadOnly: 0
@@ -6253,16 +6117,6 @@ MonoBehaviour:
   - m_GUID: 6827c498cc8a21c41b0f3329135d07a1
     m_Address: Assets/ThirdParty/Audio/Attribution 3.0 Unported (CC BY 3.0)/JeschkeSqrl/Waterbottle
       slosh/slosh15.wav
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 1415f2a892abc2149addb08105206ad7
-    m_Address: Assets/KoboldKare/Shaders/PachinkoShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: b5df53a807ec78c44b18a18cd6a7b509
-    m_Address: Assets/KoboldKare/Shaders/Foliage.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -6729,11 +6583,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: dd89cf5b9246416f84610a006f916af7
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF Overlay.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: d64ed26b32970a44cb1f1c9dcecac056
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Concrete Raw Soft - mask.png
     m_ReadOnly: 0
@@ -6766,11 +6615,6 @@ MonoBehaviour:
     - default
   - m_GUID: c008867be9be8174995074bdfd2ea6a8
     m_Address: Assets/KoboldKare/Textures/Pawnshop/RopeCrystal_RopeCrystal_Diffuse.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 5e20287be7b43564d985873f3e0d2e79
-    m_Address: Assets/KoboldKare/Textures/Fog/FogScroller.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -6816,11 +6660,6 @@ MonoBehaviour:
     - default
   - m_GUID: de91beab25016bd47b70a0269357cda9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Limestone_normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: d3808acb956d60d428c1ad37dfa29dbf
-    m_Address: Assets/KoboldKare/Shaders/NipplePumpShader.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -6932,11 +6771,6 @@ MonoBehaviour:
     - default
   - m_GUID: e7ad916cda5ea434cb618813467e7138
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarSegment_MetalBarsSemirusted_AlbedoTransparency.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 42e0f16c77d25144ea2348ca1a254645
-    m_Address: Assets/KoboldKare/Shaders/Leafs URP.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -7179,11 +7013,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 1e9413cde3392d64184886f4f8a221bc
-    m_Address: Assets/KoboldKare/Shaders/Bark URP.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 6f9577dd783f0de4f8b4eb2b6591e905
     m_Address: Assets/ThirdParty/Audio/Public Domain/325268__deleted-user-2104797__brick-on-soil.ogg
     m_ReadOnly: 0
@@ -7387,11 +7216,6 @@ MonoBehaviour:
     - default
   - m_GUID: cf7d793fc3bd15540a9115d5a0d3d107
     m_Address: Assets/ThirdParty/Audio/Public Domain/475193__sheyvan__impact-wood-1-small-box2.ogg
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 26b46a3fa6c15d04c9ccdc878b96c6a5
-    m_Address: Assets/KoboldKare/Shaders/TerrainBrushedDecalable.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -7792,11 +7616,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: a9cde6543f2604b4cbd3023847cb9c0b
-    m_Address: Assets/KoboldKare/Shaders/WaterSample.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 1f36aaac21385504c93c7c8901b07fe9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tempered Steel - mask.png
     m_ReadOnly: 0
@@ -7804,11 +7623,6 @@ MonoBehaviour:
     - default
   - m_GUID: 13b3aa6dc01e2754486ba951120d87f0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tempered Steel - normal.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: f20d228138364844893451ae57934590
-    m_Address: Assets/KoboldKare/VFX/CirclePoof.vfx
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -7832,10 +7646,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: bc0a95306787ee14c8cba6b6697de1e1
-    m_Address: Assets/KoboldKare/Shaders/Kobold.shader
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 42393e11ffa8d25499a61fbdc44a669d
     m_Address: Assets/KoboldKare/JiggleSettings/BreastsBlend.asset
     m_ReadOnly: 0
@@ -7858,10 +7668,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: dbdf3dbab824a8c448cb0f4cead4c467
     m_Address: Assets/KoboldKare/JiggleSettings/Tail.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 77945e2b70a17e648af633567ad5906f
-    m_Address: Assets/KoboldKare/VFX/Breath.vfx
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c4cab74b007296d43b66a134160bc69d
@@ -8428,10 +8234,6 @@ MonoBehaviour:
     m_Address: TextSettings
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 3a30a12aee1b7d64e957ed14355d7461
-    m_Address: Assets/KoboldKare/VFX/Freeze.vfx
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 118737100278bba4f87f35b3e4e0c086
     m_Address: Assets/KoboldKare/Prefabs/PlayerController.prefab
     m_ReadOnly: 0
@@ -8471,11 +8273,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 715d367803dced8428ed198a468e2daa
-    m_Address: Assets/KoboldKare/Shaders/KoboldBasic.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 1cbc240a5eceecc4ca643343bff8c92c
     m_Address: Assets/ThirdParty/Audio/Public Domain/yowl2.ogg
     m_ReadOnly: 0
@@ -8493,11 +8290,6 @@ MonoBehaviour:
     - default
   - m_GUID: 4728c092756adc6498992724834605ef
     m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereErase.mat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: a38657f2c23d0dd4eae0ed985ddb62f5
-    m_Address: Assets/KoboldKare/VFX/Splatter.vfx
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -8613,11 +8405,6 @@ MonoBehaviour:
     - default
   - m_GUID: 423882341a6fc4b4ea6ff024386ce816
     m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_33.fbx
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: ca0b6d34cba8a0941b62b865827f681e
-    m_Address: Assets/KoboldKare/Shaders/FluidStream.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -8816,11 +8603,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 5805949b177e2e240a1bf785209579f3
-    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjectorSubtractive.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: eb20599bcdbf4f6439f18e54ded66d0e
     m_Address: Assets/KoboldKare/Models/FluidFrames/fluid_87.fbx
     m_ReadOnly: 0
@@ -9001,11 +8783,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 1f6de5ff156bab54ea2a2c6c86f5a859
-    m_Address: Packages/com.naelstrof.skinnedmeshdecals/Shaders/SphereProjector.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: d597d2b91cfae2f4ca787b3e496f3954
     m_Address: Assets/KoboldKare/ScriptableObjects/PlayableMaps/MainMapPreview.png
     m_ReadOnly: 0
@@ -9050,11 +8827,6 @@ MonoBehaviour:
     - default
   - m_GUID: 38ee4cdff26a5384faf2c0d623785d91
     m_Address: Assets/KoboldKare/Materials/CumStream.mat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-  - m_GUID: 08acf0bab1a569042874ac9a0feb5b44
-    m_Address: Assets/KoboldKare/Shaders/CumStream.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

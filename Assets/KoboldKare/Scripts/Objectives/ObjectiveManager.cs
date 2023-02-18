@@ -84,7 +84,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     private void Awake() {
-        if (instance == null) {
+        if (instance == null || instance == this) {
             instance = this;
             advanceInstances = new List<string>();
         } else {

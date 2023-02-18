@@ -26,6 +26,7 @@ public class SceneDescriptor : MonoBehaviour {
 
     public static void GetSpawnLocationAndRotation(out Vector3 position, out Quaternion rotation) {
         if (instance == null || instance.spawnLocations == null || instance.spawnLocations.Length == 0) {
+            Debug.Log(instance);
             position = Vector3.zero;
             rotation = Quaternion.identity;
             return;

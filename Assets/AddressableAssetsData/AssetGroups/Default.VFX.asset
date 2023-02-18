@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.VFX
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.VFX
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b44453718ea451d438eaefa1574740d8
+  m_SerializeEntries:
+  - m_GUID: a6ba5b53c227ed040a2741e2f23a169c
+    m_Address: Assets/KoboldKare/VFX/Pickupable.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 98210835793df54469508dcfa0efcc66
+    m_Address: Assets/KoboldKare/VFX/GoldDissolve.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 1eb6ab31a953f924a99e3d4da99ae587
+    m_Address: Assets/KoboldKare/VFX/FreezerColdness.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b96b53155ee08af498a985d2b06db2f2
+    m_Address: Assets/KoboldKare/VFX/WalkDust.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 87f8d59673f682e41b58e36b87385285
+    m_Address: Assets/KoboldKare/VFX/ShowerEffect.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 2623f98780718e5489a3e912b48d1388
+    m_Address: Assets/KoboldKare/Waterfall/Waterfall.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 87e0a2a7b62867244b5155fa896a44ba
+    m_Address: Assets/KoboldKare/VFX/LaunchSite.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 971bff487d5f8e947be5b8bc9604cf9c
+    m_Address: Assets/KoboldKare/VFX/ToiletSparkles.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: ec44b98d7fa7d6240ae46abe9bee0f92
+    m_Address: Assets/ThirdParty/Samples/Visual Effect Graph/12.1.7/VisualEffectGraph
+      Additions/VFX/Lightning.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: f20d228138364844893451ae57934590
+    m_Address: Assets/KoboldKare/VFX/CirclePoof.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 77945e2b70a17e648af633567ad5906f
+    m_Address: Assets/KoboldKare/VFX/Breath.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3a30a12aee1b7d64e957ed14355d7461
+    m_Address: Assets/KoboldKare/VFX/Freeze.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a38657f2c23d0dd4eae0ed985ddb62f5
+    m_Address: Assets/KoboldKare/VFX/Splatter.vfx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1b94b325f6dc21f4cb15545505606363, type: 2}
+    - {fileID: 11400000, guid: 40cabd72abf8b3f47b49693959af187a, type: 2}

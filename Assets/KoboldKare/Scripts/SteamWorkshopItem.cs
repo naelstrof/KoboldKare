@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SimpleJSON;
 using UnityEngine;
 
@@ -275,7 +276,8 @@ public class SteamWorkshopItem {
 			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.LoadPath", $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
 		//}
 		ModManager.currentLoadingMod = modBuildPath;
-		targetCatalog.BuildPath = $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
+		targetCatalog.BuildPath =
+			$"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
 		targetCatalog.RuntimeLoadPath = "{ModManager.currentLoadingMod}/[BuildTarget]";
 		AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
 		if (!string.IsNullOrEmpty(result.Error)) {
@@ -315,8 +317,9 @@ public class SteamWorkshopItem {
 
 			Save();
 
-			BuildForPlatform(BuildTarget.StandaloneWindows64);
 			BuildForPlatform(BuildTarget.StandaloneWindows);
+			// Gotta build our platform last, otherwise it gets overridden.
+			BuildForPlatform(BuildTarget.StandaloneWindows64);
 			BuildForPlatform(BuildTarget.StandaloneLinux64);
 			BuildForPlatform(BuildTarget.StandaloneOSX);
 		} finally {

@@ -573,7 +573,7 @@ Shader "CumStream"
 
 				float3 BaseColor = _Color.rgb;
 				float3 Normal = normal10;
-				float3 Emission = ( ( _Color * 0.5 ) + tex2Dlod( _Texture0, float4( ( ( appendResult12_g1 * float2( 0.5,0.5 ) ) + float2( 0.5,0.5 ) ), 0, 0.0) ) ).rgb;
+				float3 Emission = tex2Dlod( _Texture0, float4( ( ( appendResult12_g1 * float2( 0.5,0.5 ) ) + float2( 0.5,0.5 ) ), 0, 0.0) ).rgb;
 				float3 Specular = 0.5;
 				float Metallic = 0.3;
 				float Smoothness = 1.0;
@@ -2430,7 +2430,7 @@ Shader "CumStream"
 
 				float3 BaseColor = _Color.rgb;
 				float3 Normal = normal10;
-				float3 Emission = ( ( _Color * 0.5 ) + tex2Dlod( _Texture0, float4( ( ( appendResult12_g1 * float2( 0.5,0.5 ) ) + float2( 0.5,0.5 ) ), 0, 0.0) ) ).rgb;
+				float3 Emission = tex2Dlod( _Texture0, float4( ( ( appendResult12_g1 * float2( 0.5,0.5 ) ) + float2( 0.5,0.5 ) ), 0, 0.0) ).rgb;
 				float3 Specular = 0.5;
 				float Metallic = 0.3;
 				float Smoothness = 1.0;
@@ -3104,30 +3104,23 @@ Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;7;False;;1;False;;1;False;;1;False;;7;False;;1;False;;1;False;;1;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;False;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;924,-249;Float;False;True;-1;2;UnityEditor.ShaderGraphLitGUI;0;12;CumStream;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;19;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;7;False;;1;False;;1;False;;1;False;;7;False;;1;False;;1;False;;1;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;3;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;255;False;;255;False;;255;False;;7;False;;1;False;;1;False;;1;False;;7;False;;1;False;;1;False;;1;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;False;0;0;Standard;41;Workflow;1;0;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Fragment Normal Space,InvertActionOnDeselection;0;0;Forward Only;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;638123051716117796;  Use Shadow Threshold;0;0;Receive Shadows;1;0;GPU Instancing;0;638123051380942943;LOD CrossFade;0;638123051475082389;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;0;638123051495295756;Override Baked GI;0;0;Extra Pre Pass;0;0;DOTS Instancing;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;0;0;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;Debug Display;0;0;Clear Coat;0;0;0;10;False;True;True;True;False;True;True;True;True;True;False;;False;0
 Node;AmplifyShaderEditor.ColorNode;15;-26.60633,-376.2976;Inherit;False;Property;_Color;Color;0;0;Create;True;0;0;0;False;0;False;1,1,1,1;1,0,0.9036121,2;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;26;531.1002,34.00062;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;25;258.7004,76.40069;Inherit;False;Constant;_EmissiveAmount;EmissiveAmount;2;0;Create;True;0;0;0;False;0;False;0.5;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;22;279.9999,203.9003;Inherit;False;Matcap;-1;;1;3297fc0c4239ae24d9ea9f47a459d950;0;2;21;SAMPLER2D;0;False;19;FLOAT3;0,0,1;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;27;705.0001,35.30056;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.TexturePropertyNode;24;4.699965,199.1004;Inherit;True;Property;_Texture0;Texture 0;1;0;Create;True;0;0;0;False;0;False;None;37d763773df0a014dbca7600e4cce47e;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RangedFloatNode;29;-289.1304,114.7863;Inherit;False;Constant;_VariationRate;Variation Rate;2;0;Create;True;0;0;0;False;0;False;7.5;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;28;-397.0304,18.58619;Inherit;False;Constant;_ThicknessVariation;Thickness Variation;2;0;Create;True;0;0;0;False;0;False;0.3;0;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;11;-318.9998,-125.4;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.CustomExpressionNode;10;-66.49992,-149.9001;Inherit;False;float thickWave = uv.x*thickWaveSpd@$float curThick = 1.0-(sin(thickWave)*0.5+0.5)*thickRange@$visible = curThick - (abs(uv.y-0.5)*2.0)@$$float acrossAng = ((((1.0-uv.y)-0.5)/curThick)+0.5)*3.14159@$float xWaveCos = cos(thickWave)*thickRange@$float xWaveSin = ((sin(thickWave)*0.5)+0.5)*thickRange + (1.0-thickRange)@$normal = float3($	xWaveCos,$	xWaveSin*cos(acrossAng),$	xWaveSin*sin(acrossAng)$)@;7;Create;5;True;uv;FLOAT2;0,0;In;;Inherit;False;True;thickRange;FLOAT;0.3;In;;Inherit;False;True;thickWaveSpd;FLOAT;10;In;;Inherit;False;True;normal;FLOAT3;0,0,0;Out;;Inherit;False;True;visible;FLOAT;0;Out;;Inherit;False;wave;True;False;0;;False;6;0;FLOAT;0;False;1;FLOAT2;0,0;False;2;FLOAT;0.3;False;3;FLOAT;10;False;4;FLOAT3;0,0,0;False;5;FLOAT;0;False;3;FLOAT;0;FLOAT3;5;FLOAT;6
+Node;AmplifyShaderEditor.FunctionNode;22;572.8003,-18.49962;Inherit;False;Matcap;-1;;1;3297fc0c4239ae24d9ea9f47a459d950;0;2;21;SAMPLER2D;0;False;19;FLOAT3;0,0,1;False;1;COLOR;0
+Node;AmplifyShaderEditor.TexturePropertyNode;24;273.5001,56.70042;Inherit;True;Property;_Texture0;Texture 0;1;0;Create;True;0;0;0;False;0;False;None;37d763773df0a014dbca7600e4cce47e;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 WireConnection;1;0;15;0
 WireConnection;1;1;10;5
-WireConnection;1;2;27;0
+WireConnection;1;2;22;0
 WireConnection;1;3;14;0
 WireConnection;1;4;13;0
 WireConnection;1;6;10;6
 WireConnection;1;7;12;0
-WireConnection;26;0;15;0
-WireConnection;26;1;25;0
-WireConnection;22;21;24;0
-WireConnection;22;19;10;5
-WireConnection;27;0;26;0
-WireConnection;27;1;22;0
 WireConnection;10;1;11;0
 WireConnection;10;2;28;0
 WireConnection;10;3;29;0
+WireConnection;22;21;24;0
+WireConnection;22;19;10;5
 ASEEND*/
-//CHKSM=F035132633FD02375A4C2516A0614E828BC4BDD4
+//CHKSM=B50A90645B40701B4FFE270B2CF39CB8D4B5375D

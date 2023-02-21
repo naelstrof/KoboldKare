@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class SteamWorkshopModLoader : MonoBehaviour {
     private static SteamWorkshopModLoader instance;
@@ -18,6 +19,22 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private Callback<RemoteStoragePublishedFileSubscribed_t> m_RemoteStoragePublishedFileSubscribed;
     private Callback<RemoteStoragePublishedFileUnsubscribed_t> m_RemoteStoragePublishedFileUnsubscribed;
 
+    public class FinishedDownloadingHandle : IEnumerator {
+        public delegate void FinishedDownloadingAction();
+        public event FinishedDownloadingAction finished;
+        private bool IsDone = false;
+        public FinishedDownloadingHandle() {
+            finished += () => IsDone = true;
+        }
+        public void Invoke() {
+            finished?.Invoke();
+        }
+        bool IEnumerator.MoveNext() {
+            return !IsDone;
+        }
+        void IEnumerator.Reset() {}
+        public object Current => IsDone;
+    }
     private void Awake() {
         if (instance != null) {
             Destroy(this);
@@ -41,51 +58,57 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         m_ItemInstalled = Callback<ItemInstalled_t>.Create(OnInstalledItem);
         m_RemoteStoragePublishedFileSubscribed = Callback<RemoteStoragePublishedFileSubscribed_t>.Create(OnItemSubscribed);
         m_RemoteStoragePublishedFileUnsubscribed = Callback<RemoteStoragePublishedFileUnsubscribed_t>.Create(OnItemUnsubscribed);
-        StartCoroutine(EnsureAllAreDownloaded(fileIds, populatedCount));
+        StartCoroutine(EnsureAllAreDownloaded(fileIds, populatedCount, null));
     }
 
     public static bool IsBusy => instance.busy;
 
-    public static void TryDownloadAllMods(PublishedFileId_t[] fileIds) {
-        instance.StartCoroutine(instance.EnsureAllAreDownloaded(fileIds, (uint)fileIds.Length));
+    public static FinishedDownloadingHandle TryDownloadAllMods(PublishedFileId_t[] fileIds) {
+        FinishedDownloadingHandle handle = new FinishedDownloadingHandle();
+        instance.StartCoroutine(instance.EnsureAllAreDownloaded(fileIds, (uint)fileIds.Length, handle));
+        return handle;
     }
 
-    private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count) {
-        yield return LocalizationSettings.InitializationOperation;
-        yield return new WaitUntil(() => !busy);
+    private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
         busy = true;
-        progressBarAnimator.SetBool("Active", true);
-        progressBar.SetProgress(0f);
-        var handle = downloadingText.GetLocalizedStringAsync();
-        yield return handle;
-        targetText.text = handle.Result;
+        try {
+            yield return LocalizationSettings.InitializationOperation;
+            yield return new WaitUntil(() => !busy);
+            progressBarAnimator.SetBool("Active", true);
+            progressBar.SetProgress(0f);
+            var handle = downloadingText.GetLocalizedStringAsync();
+            yield return handle;
+            targetText.text = handle.Result;
 
-        for (int i = 0; i < count; i++) {
-            uint status = SteamUGC.GetItemState(fileIds[i]);
-            if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&
-                (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
-                OnInstalledItem(fileIds[i]);
-                continue;
+            for (int i = 0; i < count; i++) {
+                uint status = SteamUGC.GetItemState(fileIds[i]);
+                if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&
+                    (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
+                    OnInstalledItem(fileIds[i]);
+                    continue;
+                }
+
+                if ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
+                    Debug.Log($"Downloading {fileIds[i]}...");
+                    SteamUGC.DownloadItem(fileIds[i], false);
+                }
+
+                while ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0 ||
+                       (status & (int)EItemState.k_EItemStateDownloading) != 0) {
+                    SteamUGC.GetItemDownloadInfo(fileIds[i], out ulong punBytesDownloaded, out ulong punBytesTotal);
+                    progressBar.SetProgress((float)punBytesDownloaded / (float)punBytesTotal);
+                    targetText.text = handle.Result;
+                    status = SteamUGC.GetItemState(fileIds[i]);
+                    yield return null;
+                }
             }
 
-            if ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
-                Debug.Log($"Downloading {fileIds[i]}...");
-                SteamUGC.DownloadItem(fileIds[i], false);
-            }
-
-            while ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0 ||
-                   (status & (int)EItemState.k_EItemStateDownloading) != 0) {
-                SteamUGC.GetItemDownloadInfo(fileIds[i], out ulong punBytesDownloaded, out ulong punBytesTotal);
-                progressBar.SetProgress((float)punBytesDownloaded / (float)punBytesTotal);
-                targetText.text = handle.Result;
-                status = SteamUGC.GetItemState(fileIds[i]);
-                yield return null;
-            }
+            progressBar.SetProgress(1f);
+            progressBarAnimator.SetBool("Active", false);
+        } finally {
+            busy = false;
         }
-
-        progressBar.SetProgress(1f);
-        progressBarAnimator.SetBool("Active", false);
-        busy = false;
+        finishedHandle?.Invoke();
     }
     private void OnDownloadItemResult(DownloadItemResult_t downloadItemResultT) {
         Debug.Log($"Downloaded {downloadItemResultT.m_nPublishedFileId} with result {downloadItemResultT.m_eResult}");
@@ -109,7 +132,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         if (SteamUtils.GetAppID() != subscribedItem.m_nAppID) {
             return;
         }
-        StartCoroutine(EnsureAllAreDownloaded(new []{subscribedItem.m_nPublishedFileId}, 1));
+        StartCoroutine(EnsureAllAreDownloaded(new []{subscribedItem.m_nPublishedFileId}, 1, null));
     }
     private void OnItemUnsubscribed(RemoteStoragePublishedFileUnsubscribed_t unsubscribedItem) {
         if (SteamUtils.GetAppID() != unsubscribedItem.m_nAppID) {

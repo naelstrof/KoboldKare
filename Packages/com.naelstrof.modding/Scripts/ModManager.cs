@@ -285,8 +285,7 @@ public class ModManager : MonoBehaviour {
         }
 
         PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
-        SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
-        yield return new WaitUntil(() => !SteamWorkshopModLoader.IsBusy);
+        yield return SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
         foreach (var modStub in stubs) {
             bool found = false;
             foreach(var mod in instance.fullModList) {

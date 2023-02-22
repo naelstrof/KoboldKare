@@ -95,6 +95,7 @@ namespace Naelstrof.Mozzarella {
             lineRenderer.generateLightingData = true;
             lineRenderer.material = lineMaterial;
             lineRenderer.positionCount = 0;
+            lineRenderer.textureMode = LineTextureMode.Tile;
         }
 
         void OnEnable() {

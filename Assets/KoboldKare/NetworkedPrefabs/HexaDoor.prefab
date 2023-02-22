@@ -335,6 +335,7 @@ Transform:
   m_Children:
   - {fileID: 2087340426}
   - {fileID: 8111577900574107454}
+  - {fileID: 2962179053065417840}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 75}
@@ -504,6 +505,102 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!1001 &3355603226013225883
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6362418212345882855}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.050232783
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_Name
+      value: HexaDoorPBR
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 31d69dae40750484580ed4bcc0b5c269,
+        type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b26621e2e145a4ea0b5e95ad80f6499f, type: 3}
+--- !u!4 &2962179053065417840 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b26621e2e145a4ea0b5e95ad80f6499f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3355603226013225883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8581789834477928661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -570,6 +667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HexaDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e537db329b774c24c81994da704682f3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e537db329b774c24c81994da704682f3, type: 3}

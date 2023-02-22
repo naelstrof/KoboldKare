@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5398620052157135855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5974845885052187544}
+  m_Layer: 10
+  m_Name: KitchenTableRoundPrefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5974845885052187544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5398620052157135855}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.1590161, y: 0.0029993872, z: -6.6472692}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8755495438450997397}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &9082491384619982718
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5974845885052187544}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9916937
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.99169356
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9916935
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: acbc8f68102bc8f4fa0d6c15f5d2f2b7, type: 2}
+    - target: {fileID: 919132149155446097, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_Name
+      value: KitchenTableRound
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 613a3aba6932533458de76adcc85ad26,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 613a3aba6932533458de76adcc85ad26, type: 3}
+--- !u!4 &8755495438450997397 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 613a3aba6932533458de76adcc85ad26,
+    type: 3}
+  m_PrefabInstance: {fileID: 9082491384619982718}
+  m_PrefabAsset: {fileID: 0}

@@ -8830,6 +8830,81 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+  - m_GUID: 3ca835d63f52fff43b7b510ebb04631b
+    m_Address: Assets/KoboldKare/Prefabs/DragonMailboxPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e4578ef7571cdc645a2a80c4f0843f9b
+    m_Address: Assets/KoboldKare/Prefabs/FarmFencePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 877a1df03499e824581d733cdce16008
+    m_Address: Assets/KoboldKare/Prefabs/EggBoxPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c6a9eae4cd0e1584f83fa0a8823d6720
+    m_Address: Assets/KoboldKare/Prefabs/MilkingTable.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: eb6ca36151ccc8b4da29544b121c6fbd
+    m_Address: Assets/KoboldKare/Prefabs/BarrelPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 58453b90f5743704ea48e54a0f375f26
+    m_Address: Assets/KoboldKare/Prefabs/HalfTableRoundPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 98f1ef2513f437740a5ff7b39eb28671
+    m_Address: Assets/KoboldKare/Prefabs/ChairPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0603ff3dfb282aa43aa6a2185a2f4b07
+    m_Address: Assets/KoboldKare/Prefabs/KitchenTablePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 69924b1992723a24d81eb4e095118221
+    m_Address: Assets/KoboldKare/Prefabs/SleepyHeadStationPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 568aa4ed9d1a512489954186b9ba28ea
+    m_Address: Assets/KoboldKare/Prefabs/CoverCapPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 394a576d9eba0d7438b8693669f1016b
+    m_Address: Assets/KoboldKare/Prefabs/CouchPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7b535faa9b2e93f45ab9f72be41e54e2
+    m_Address: Assets/KoboldKare/Prefabs/Blender.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 08614c981db68dd4fa4041368d19ad73
+    m_Address: Assets/KoboldKare/Prefabs/KitchenTableRoundPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8693412bc6e6de54d908006182e803c1
+    m_Address: Assets/KoboldKare/Prefabs/WinePressPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bd2b7e50c53eaaa469922a2674d12c25
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/stylized_wood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f653f041505bdfc4e950821ca7ec53c1
+    m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
+      - mask.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 124dd8f3c7944c044846ed338ee95f44
+    m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
+      - normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4aa24a456c7c5f54d8db96770e9f30f0
+    m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
+      - diffuse.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

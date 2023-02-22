@@ -3,18 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapSelectUI : MonoBehaviour {
     [SerializeField] private MapPreviewSelectPanel previewSelectPanelPrefab;
+    [SerializeField] private Image mapPreview;
     [SerializeField] private TMP_Text mapTitleText;
     [SerializeField] private TMP_Text mapDescriptionText;
-    [SerializeField] private GameObject mainMenuPanel;
-    [SerializeField] private GameObject mapSelectPanel;
+
+    private PlayableMap selectedMap;
     
     private List<GameObject> panels;
 
     private void OnEnable() {
-        Regenerate();
+        if (ModManager.GetFinishedLoading()) {
+            Regenerate();
+        }
         ModManager.AddFinishedLoadingListener(Regenerate);
     }
     private void Regenerate() {
@@ -25,6 +29,9 @@ public class MapSelectUI : MonoBehaviour {
         panels.Clear();
         
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
+            if (selectedMap == null) {
+                OnSelectMap(map);
+            }
             var obj = Instantiate(previewSelectPanelPrefab.gameObject, transform);
             panels.Add(obj);
             var mapPreview = obj.GetComponentInChildren<MapPreviewSelectPanel>();
@@ -38,13 +45,16 @@ public class MapSelectUI : MonoBehaviour {
         }
     }
 
-    public void OnHoverMap(PlayableMap map) {
+    //public void OnHoverMap(PlayableMap map) {
+        //mapTitleText.text = map.title;
+        //mapDescriptionText.text = map.description;
+    //}
+    public PlayableMap GetSelectedMap() => selectedMap;
+
+    public void OnSelectMap(PlayableMap map) {
         mapTitleText.text = map.title;
         mapDescriptionText.text = map.description;
-    }
-
-    public void OnSelectMap() {
-        mainMenuPanel.gameObject.SetActive(true);
-        mapSelectPanel.gameObject.SetActive(false);
+        mapPreview.sprite = map.preview;
+        selectedMap = map;
     }
 }

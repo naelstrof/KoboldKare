@@ -24,20 +24,18 @@ public class MapPreviewSelectPanel : MonoBehaviour, IPointerEnterHandler, ISelec
     }
     
     void OnClick() {
-        NetworkManager.instance.SetSelectedMap(playableMap);
-        NetworkManager.instance.StartSinglePlayer();
-        parentUI.OnSelectMap();
+        parentUI.OnSelectMap(playableMap);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
-        parentUI.OnHoverMap(playableMap);
+        //parentUI.OnHoverMap(playableMap);
     }
 
     public void OnSelect(BaseEventData eventData) {
-        parentUI.OnHoverMap(playableMap);
+        //parentUI.OnHoverMap(playableMap);
     }
 
     public void OnSubmit(BaseEventData eventData) {
-        parentUI.OnHoverMap(playableMap);
+        //parentUI.OnHoverMap(playableMap);
     }
 }

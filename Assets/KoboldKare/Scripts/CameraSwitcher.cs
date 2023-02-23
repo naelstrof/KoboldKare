@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraSwitcher : MonoBehaviour {
     public GameObject FPSCanvas;
-    public Camera firstperson;
-    public Camera thirdperson;
-    public Camera freecam;
+    private OrbitCameraBasicConfiguration firstpersonConfiguration;
+    private OrbitCameraCharacterConfiguration thirdpersonConfiguration;
+    private OrbitCameraBasicConfiguration thirdpersonRagdollConfiguration;
+    private OrbitCameraBasicConfiguration freecamConfiguration;
+    private SimpleCameraController freeCamController;
+    private Ragdoller ragdoller;
+    
     public Transform uiSlider;
+    private OrbitCameraConfiguration lastConfig;
 
     private bool initialized = false;
-    //public GameObject UIElements;
-    public PlayerPossession possession;
+    [SerializeField]
+    private PlayerPossession possession;
     private KoboldCharacterController controller;
     public enum CameraMode {
         FirstPerson = 0,
@@ -20,25 +27,77 @@ public class CameraSwitcher : MonoBehaviour {
         FreeCam,
         FreeCamLocked,
     }
-    public CameraMode mode = CameraMode.FirstPerson;
-    public void OnEnable() {
+    private CameraMode? mode = null;
+
+    void OnEnable() {
         controller = GetComponentInParent<KoboldCharacterController>();
+        ragdoller = GetComponentInParent<Ragdoller>();
+        ragdoller.RagdollEvent += OnRagdollEvent;
+        if (firstpersonConfiguration == null) {
+            var animator = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator();
+            var fpsPivotObj = new GameObject("FPSPivot", typeof(OrbitCameraFPSHeadPivot));
+            var fpsPivot = fpsPivotObj.GetComponent<OrbitCameraFPSHeadPivot>();
+            fpsPivot.Initialize(animator, HumanBodyBones.Head, 5f);
+            firstpersonConfiguration = new OrbitCameraBasicConfiguration();
+            firstpersonConfiguration.SetPivot(fpsPivot.GetComponent<OrbitCameraLerpTrackPivot>());
+            firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));
+            var freeCamObj = new GameObject("FreeCamPivot", typeof(SimpleCameraController));
+            freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform);
+            freeCamObj.transform.localPosition = Vector3.zero;
+            freeCamController = freeCamObj.GetComponent<SimpleCameraController>();
+            freeCamController.SetControls(GetComponent<PlayerInput>());
+            freecamConfiguration = new OrbitCameraBasicConfiguration();
+            freecamConfiguration.SetPivot(freeCamController);
+            freecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
+            OrbitCameraLerpTrackBasicPivot shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
+            shoulderPivot.SetInfo(new Vector2(0.33f, 0.33f), 1f);
+            shoulderPivot.Initialize(animator, HumanBodyBones.Head, 1f);
+            OrbitCameraLerpTrackBasicPivot buttPivot = new GameObject("ButtCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
+            buttPivot.SetInfo(new Vector2(0.33f, 0.1f), 1f);
+            buttPivot.Initialize(animator, HumanBodyBones.Hips, 1f);
+            thirdpersonConfiguration = new OrbitCameraCharacterConfiguration();
+            thirdpersonConfiguration.SetPivots(shoulderPivot, buttPivot);
+
+            var basicRagdollPivot = animator.GetBoneTransform(HumanBodyBones.Spine).gameObject.AddComponent<OrbitCameraPivotBasic>();
+            basicRagdollPivot.SetInfo(new Vector2(0.5f,0.33f), 1f);
+            thirdpersonRagdollConfiguration = new OrbitCameraBasicConfiguration();
+            thirdpersonRagdollConfiguration.SetPivot(basicRagdollPivot);
+            thirdpersonRagdollConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
+        }
         initialized = false;
-        SwitchCamera(CameraMode.FirstPerson);
+        OrbitCamera.AddConfiguration(firstpersonConfiguration);
+        lastConfig = firstpersonConfiguration;
+        if (!FPSCanvas.activeInHierarchy) {
+            FPSCanvas.SetActive(true);
+        }
+        mode = CameraMode.FirstPerson;
     }
 
-    public void OnDisable() {
-        firstperson.enabled = false;
-        thirdperson.enabled = false;
-        freecam.enabled = false;
+    void OnRagdollEvent(bool ragdolled) {
+        if (mode == CameraMode.ThirdPerson) {
+            if (ragdolled) {
+                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
+            } else {
+                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
+            }
+        }
     }
 
-    public void Update() {
+    void OnDisable() {
+        OrbitCamera.RemoveConfiguration(lastConfig);
+        ragdoller.RagdollEvent -= OnRagdollEvent;
+    }
+
+    void Update() {
         uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * (30f * ((int)mode+0.5f)), Time.deltaTime*2f);
     }
 
     public void OnSwitchCamera() {
-        int index = ((int)mode + 1) % 4;
+        if (mode == null) {
+            return;
+        }
+
+        int index = ((int)mode.Value + 1) % 4;
         SwitchCamera((CameraMode)index);
     }
 
@@ -60,36 +119,41 @@ public class CameraSwitcher : MonoBehaviour {
             return;
         }
 
+        if (mode == cameraMode) {
+            return;
+        }
+
         initialized = true;
         mode = cameraMode;
-        firstperson.enabled = false;
-        //firstperson.GetComponent<AudioListener>().enabled = false;
-        thirdperson.enabled = false;
-        //thirdperson.GetComponent<AudioListener>().enabled = false;
-        freecam.enabled = false;
-        //freecam.GetComponent<AudioListener>().enabled = false;
         possession.enabled = true;
-
-        freecam.GetComponent<SimpleCameraController>().enabled = false;
+        freeCamController.enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
-                firstperson.enabled = true;
-                //firstperson.GetComponent<AudioListener>().enabled = true;
+                OrbitCamera.ReplaceConfiguration(lastConfig, firstpersonConfiguration);
+                lastConfig = firstpersonConfiguration;
+                
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);
                 }
                 break;
             case CameraMode.ThirdPerson:
-                thirdperson.enabled = true;
-                //thirdperson.GetComponent<AudioListener>().enabled = true;
+                if (ragdoller.ragdolled) {
+                    OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
+                    lastConfig = thirdpersonRagdollConfiguration;
+                } else {
+                    OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
+                    lastConfig = thirdpersonConfiguration;
+                }
+
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);
                 }
                 break;
             case CameraMode.FreeCam:
-                freecam.enabled = true;
-                freecam.GetComponent<SimpleCameraController>().enabled = true;
-                //freecam.GetComponent<AudioListener>().enabled = true;
+                OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
+                freeCamController.SetRotationOffset(Quaternion.identity);
+                lastConfig = freecamConfiguration;
+                freeCamController.enabled = true;
                 possession.enabled = false;
                 controller.inputDir = Vector3.zero;
                 controller.inputJump = false;
@@ -98,9 +162,10 @@ public class CameraSwitcher : MonoBehaviour {
                 }
                 break;
             case CameraMode.FreeCamLocked:
-                freecam.enabled = true;
-                freecam.GetComponent<SimpleCameraController>().enabled = false;
-                //freecam.GetComponent<AudioListener>().enabled = true;
+                OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
+                freeCamController.SetRotationOffset(Quaternion.Inverse(freeCamController.transform.rotation));
+                lastConfig = freecamConfiguration;
+                freeCamController.enabled = false;
                 possession.enabled = true;
                 if (!FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(true);

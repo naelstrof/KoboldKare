@@ -146,7 +146,7 @@ Material:
     - _GlossyReflections: 0
     - _HeightBlendSmoothing: 0.1
     - _METALLICGLOSSMAP: 1
-    - _Metallic: 1
+    - _Metallic: 0
     - _NORMALMAP: 1
     - _OcclusionStrength: 1
     - _QueueControl: 0

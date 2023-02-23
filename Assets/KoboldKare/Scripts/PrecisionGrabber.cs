@@ -142,11 +142,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             configurableJoint.configuredInWorldSpace = true;
             configurableJoint.connectedBody = null;
             configurableJoint.connectedAnchor = worldPosition;
-            //var slerpDrive = configurableJoint.slerpDrive;
-            //slerpDrive.positionSpring = springForce*2f;
-            //slerpDrive.maximumForce = float.MaxValue;
-            //slerpDrive.positionDamper = 2f;
-            //configurableJoint.slerpDrive = slerpDrive;
             configurableJoint.xMotion = ConfigurableJointMotion.Limited;
             configurableJoint.yMotion = ConfigurableJointMotion.Limited;
             configurableJoint.zMotion = ConfigurableJointMotion.Limited;
@@ -303,8 +298,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 slerpDrive.positionDamper = 2f;
                 joint.slerpDrive = slerpDrive;
             }
-            savedQuaternion = Quaternion.AngleAxis(-delta.x, view.up)*savedQuaternion;
-            savedQuaternion = Quaternion.AngleAxis(delta.y, view.right)*savedQuaternion;
+            savedQuaternion = Quaternion.AngleAxis(-delta.x, OrbitCamera.GetPlayerIntendedRotation()*Vector3.up)*savedQuaternion;
+            savedQuaternion = Quaternion.AngleAxis(delta.y, OrbitCamera.GetPlayerIntendedRotation()*Vector3.right)*savedQuaternion;
         }
 
         public void AdjustDistance(float delta) {
@@ -317,7 +312,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 return;
             }
 
-            Vector3 holdPoint = view.position + view.forward * distance;
+            Vector3 holdPoint = GetViewPos() + view.forward * distance;
 
             if (joint != null) {
                 joint.connectedAnchor = holdPoint;
@@ -331,11 +326,11 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 body.velocity -= body.velocity * 0.5f;
                 Vector3 axis = view.forward;
                 Vector3 jointPos = body.transform.TransformPoint(bodyAnchor);
-                Vector3 center = (view.position + jointPos) / 2f;
+                Vector3 center = (GetViewPos() + jointPos) / 2f;
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
                 //Vector3 wantedPosition2 = center + axis * distance / 2f;
                 float ratio = Mathf.Clamp((body.mass / owner.body.mass), 0.75f, 1.25f);
-                Vector3 force = (wantedPosition1 - view.position) * (springForce * 0.15f);
+                Vector3 force = (wantedPosition1 - GetViewPos()) * (springForce * 0.15f);
                 owner.body.AddForce(force * ratio);
                 //body.AddForce(-force * (1f / ratio));
             }
@@ -365,6 +360,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                     targetKobold.photonView.RequestOwnership();
                 }
             }
+        }
+        private Vector3 GetViewPos() {
+            if (!photonView.IsMine) {
+                return view.position;
+            }
+
+            float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
+            Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
+            return viewPos;
         }
     }
 
@@ -438,8 +442,17 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
+    private Vector3 GetViewPos() {
+        if (!photonView.IsMine) {
+            return view.position;
+        }
+        float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
+        Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
+        return viewPos;
+    }
+
     private bool TryRaycastGrab(float maxDistance, out RaycastHit? previewHit) {
-        int numHits = Physics.RaycastNonAlloc(view.position, view.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
+        int numHits = Physics.RaycastNonAlloc(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
         if (numHits == 0) {
             previewHit = null;
             return false;

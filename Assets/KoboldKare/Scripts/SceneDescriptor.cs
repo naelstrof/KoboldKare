@@ -11,17 +11,24 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(OcclusionArea))]
 [RequireComponent(typeof(MusicManager))]
 [RequireComponent(typeof(DayNightCycle))]
-public class SceneDescriptor : MonoBehaviour {
+public class SceneDescriptor : OrbitCameraPivotBase {
     private static SceneDescriptor instance;
     
     [SerializeField] private Transform[] spawnLocations;
     [SerializeField] private bool canGrabFly = true;
+    [SerializeField, SerializeReference, SerializeReferenceButton] private OrbitCameraConfiguration baseCameraConfiguration;
     private AudioListener audioListener;
+    private OrbitCamera orbitCamera;
 
     private void Awake() {
         instance = this;
-        var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
-        audioListener = obj.GetComponent<AudioListener>();
+        //var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
+        //audioListener = obj.GetComponent<AudioListener>();
+        var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(OrbitCamera), typeof(AudioListener));
+        orbitCamera.GetComponent<Camera>().nearClipPlane = 0.1f;
+        if (baseCameraConfiguration != null) {
+            OrbitCamera.AddConfiguration(baseCameraConfiguration);
+        }
     }
 
     public static void GetSpawnLocationAndRotation(out Vector3 position, out Quaternion rotation) {

@@ -1,51 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityScriptableSettings;
 
-public class SimpleCameraController : MonoBehaviour
-{
-    public UnityEngine.InputSystem.PlayerInput controls;
-    class CameraState
-    {
-        public float yaw;
-        public float pitch;
-        public float roll;
+public class SimpleCameraController : OrbitCameraPivotBase {
+    private PlayerInput controls;
+    private SettingFloat fov;
+    private Quaternion offset;
+    class CameraState {
         public float x;
         public float y;
         public float z;
 
-        public void SetFromTransform(Transform t)
-        {
-            pitch = t.eulerAngles.x;
-            yaw = t.eulerAngles.y;
-            roll = t.eulerAngles.z;
+        public void SetFromTransform(Transform t) {
             x = t.position.x;
             y = t.position.y;
             z = t.position.z;
         }
 
-        public void Translate(Vector3 translation)
-        {
-            Vector3 rotatedTranslation = Quaternion.Euler(pitch, yaw, roll) * translation;
-
+        public void Translate(Vector3 translation) {
+            Vector3 rotatedTranslation = OrbitCamera.GetPlayerIntendedRotation() * translation;
             x += rotatedTranslation.x;
             y += rotatedTranslation.y;
             z += rotatedTranslation.z;
         }
 
-        public void LerpTowards(CameraState target, float positionLerpPct, float rotationLerpPct)
-        {
-            yaw = Mathf.Lerp(yaw, target.yaw, rotationLerpPct);
-            pitch = Mathf.Lerp(pitch, target.pitch, rotationLerpPct);
-            roll = Mathf.Lerp(roll, target.roll, rotationLerpPct);
-            
+        public void LerpTowards(CameraState target, float positionLerpPct) {
             x = Mathf.Lerp(x, target.x, positionLerpPct);
             y = Mathf.Lerp(y, target.y, positionLerpPct);
             z = Mathf.Lerp(z, target.z, positionLerpPct);
         }
 
-        public void UpdateTransform(Transform t)
-        {
-            t.eulerAngles = new Vector3(pitch, yaw, roll);
+        public void UpdateTransform(Transform t) {
             t.position = new Vector3(x, y, z);
         }
     }
@@ -77,6 +63,23 @@ public class SimpleCameraController : MonoBehaviour
         m_InterpolatingCameraState.SetFromTransform(transform);
     }
 
+    public void SetControls(PlayerInput controls) {
+        this.controls = controls;
+    }
+
+    public void SetRotationOffset(Quaternion offset) {
+        this.offset = offset;
+    }
+
+    public override Quaternion GetRotation(Quaternion camRotation) {
+        return offset*base.GetRotation(camRotation);
+    }
+
+    private void Start() {
+        fov = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
+        Debug.Log(fov);
+    }
+
     Vector3 GetInputTranslationDirection()
     {
         Vector3 direction = new Vector3();
@@ -91,41 +94,12 @@ public class SimpleCameraController : MonoBehaviour
         return direction;
     }
     
-    void LateUpdate()
-    {
-        // Exit Sample  
-
-        // Hide and lock cursor when right mouse button pressed
-        //if (Input.GetMouseButtonDown(1))
-        //{
-            //Cursor.lockState = CursorLockMode.Locked;
-        //}
-//
-        // Unlock and show cursor when right mouse button released
-        //if (Input.GetMouseButtonUp(1))
-        //{
-            //Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
-        //}
-
-        // Rotation
-        //if (Input.GetMouseButton(1))
-        //{
-            //var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
-            var mouseMovement = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
-            m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivity.GetValue();
-            m_TargetCameraState.pitch -= mouseMovement.y * mouseSensitivity.GetValue();
-            m_TargetCameraState.roll = 0;
-        //}
-        
-        // Translation
+    void LateUpdate() {
         var translation = GetInputTranslationDirection() * Time.deltaTime;
-
         // Speed up movement when shift key held
         if (controls.actions["Walk"].ReadValue<float>()>0.5f) {
             translation /= 10.0f;
         }
-        
         // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
         boost += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
         //boost += Input.mouseScrollDelta.y * 0.2f;
@@ -136,9 +110,16 @@ public class SimpleCameraController : MonoBehaviour
         // Framerate-independent interpolation
         // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
         var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / positionLerpTime) * Time.deltaTime);
-        var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
-        m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
+        m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct);
 
         m_InterpolatingCameraState.UpdateTransform(transform);
+    }
+
+    public override float GetDistanceFromPivot(Quaternion camRotation) {
+        return 0f;
+    }
+
+    public override float GetFOV(Quaternion camRotation) {
+        return fov.GetValue();
     }
 }

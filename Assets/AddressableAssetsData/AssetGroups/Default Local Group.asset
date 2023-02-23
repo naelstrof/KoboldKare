@@ -8142,10 +8142,6 @@ MonoBehaviour:
       Noises/NT5/10-24-2019/quietishgurglegrowl.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 8a5a2d1efe127b54ba3f6475be731bb8
-    m_Address: Assets/KoboldKare/Animations/AnimationIK/Running.anim
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 9884132e186e1124897a3fbc8f1198b9
     m_Address: Assets/ThirdParty/Audio/Attribution 3.0 Unported (CC BY 3.0)/JeschkeSqrl/Stomach
       Noises/NT5/10-24-2019/twobitsofburbling.wav

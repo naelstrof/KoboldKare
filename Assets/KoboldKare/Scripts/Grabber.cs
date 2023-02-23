@@ -37,7 +37,6 @@ public class Grabber : MonoBehaviourPun {
         private float springStrength;
         private float dampingStrength;
         private bool valid = true;
-        private Transform grabber;
         private float grabTime;
         public GenericWeapon weapon { get; private set; }
         private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
@@ -48,9 +47,8 @@ public class Grabber : MonoBehaviourPun {
                 t.gameObject.layer = toLayer;
             }
         }
-        public GrabInfo(Kobold owner, Transform grabber, IGrabbable grabbable, float springStrength, float dampingStrength, Vector3 offset) {
+        public GrabInfo(Kobold owner, IGrabbable grabbable, float springStrength, float dampingStrength, Vector3 viewPos, Quaternion viewRot, Vector3 offset) {
             grabTime = Time.time;
-            this.grabber = grabber;
             this.owner = owner;
             this.grabbable = grabbable;
             this.springStrength = springStrength;
@@ -68,17 +66,16 @@ public class Grabber : MonoBehaviourPun {
             driverConstraint = body.gameObject.AddComponent<DriverConstraint>();
             driverConstraint.springStrength = springStrength;
             driverConstraint.body = body;
-            driverConstraint.connectedBody = grabber;
             driverConstraint.dampingStrength = dampingStrength;
             driverConstraint.softness = 1f;
-            driverConstraint.connectedAnchor = offset;
+            driverConstraint.connectedAnchor = viewPos+viewRot*offset;
             grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
                 driverConstraint.angleDamping = 0.1f;
                 driverConstraint.angleSpringSoftness = 60f;
-                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition()+offset;
+                driverConstraint.connectedAnchor = viewPos+viewRot*(weapon.GetWeaponHoldPosition()+offset);
             }
 
             kobold = grabbable.transform.GetComponentInParent<Kobold>();
@@ -103,7 +100,7 @@ public class Grabber : MonoBehaviourPun {
             if (weapon != null) {
                 weapon.OnFire(owner);
             } else {
-                body.velocity += grabber.transform.forward * 10f;
+                body.velocity += OrbitCamera.GetPlayerIntendedRotation()* Vector3.forward * 10f;
                 Release();
             }
         }
@@ -144,9 +141,9 @@ public class Grabber : MonoBehaviourPun {
                 Quaternion fq = Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().forward, viewRot*Vector3.forward)*Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().up, viewRot*Vector3.up);
                 driverConstraint.forwardVector = fq * body.transform.forward;
                 driverConstraint.upVector = fq * body.transform.up;
-                driverConstraint.connectedAnchor = weapon.GetWeaponHoldPosition()+offset;
+                driverConstraint.connectedAnchor = position+viewRot*(weapon.GetWeaponHoldPosition()+offset);
             } else {
-                driverConstraint.connectedAnchor = offset;
+                driverConstraint.connectedAnchor = position+viewRot*offset;
             }
 
             if (joint != null) {
@@ -348,14 +345,23 @@ public class Grabber : MonoBehaviourPun {
         }
     }
 
+    private Vector3 GetViewPos() {
+        if (photonView.IsMine) {
+            return view.position;
+        }
+        float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
+        Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
+        return viewPos;
+    }
+
     public void TryGrab() {
         if (grabbedObjects.Count >= maxGrabCount) {
             return;
         }
 
-        var position = view.position+view.TransformVector(defaultOffset);
+        var position = GetViewPos()+OrbitCamera.GetPlayerIntendedRotation()*defaultOffset;
         int hits = Physics.OverlapSphereNonAlloc(position, 1f, colliders);
-        sorter.SetRay(new Ray(position, view.forward));
+        sorter.SetRay(new Ray(position, OrbitCamera.GetPlayerIntendedRotation()*Vector3.forward));
         System.Array.Sort(colliders, 0, hits, sorter);
         for (int i = 0; i < hits; i++) {
             IGrabbable grabbable = colliders[i].GetComponentInParent<IGrabbable>();
@@ -376,7 +382,7 @@ public class Grabber : MonoBehaviourPun {
 
             if (grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
-                GrabInfo info = new GrabInfo(player, view, grabbable, springStrength, dampingStrength, defaultOffset);
+                GrabInfo info = new GrabInfo(player, grabbable, springStrength, dampingStrength, GetViewPos(),OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
                 // Destroyed on grab, creatures gib on grab.
                 if (!info.Valid()) {
                     return;
@@ -394,7 +400,7 @@ public class Grabber : MonoBehaviourPun {
     public void Update() {
         Validate();
         foreach (var grab in grabbedObjects) {
-            grab.Set(view.position, view.rotation, defaultOffset);
+            grab.Set(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
         }
     }
     public void TryStopActivate() {
@@ -403,8 +409,8 @@ public class Grabber : MonoBehaviourPun {
             return;
         }
         activating = false;
-        for (int i = 0; i < grabbedObjects.Count; i++) {
-            grabbedObjects[i].StopActivate();
+        foreach (var t in grabbedObjects) {
+            t.StopActivate();
         }
     }
     public void TryActivate() {
@@ -413,8 +419,8 @@ public class Grabber : MonoBehaviourPun {
             return;
         }
         activating = true;
-        for (int i = 0; i < grabbedObjects.Count; i++) {
-            grabbedObjects[i].Activate();
+        foreach (var t in grabbedObjects) {
+            t.Activate();
         }
     }
 }

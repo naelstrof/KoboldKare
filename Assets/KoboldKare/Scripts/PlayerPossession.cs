@@ -14,7 +14,6 @@ using Cursor = UnityEngine.Cursor;
 public class PlayerPossession : MonoBehaviourPun {
     public PlayerInput controls;
     public float coyoteTime = 0.2f;
-    //public Grabber grabber;
     public User user;
     public CanvasGroup chatGroup;
     public CommandTextDisplay chatDisplay;
@@ -25,11 +24,6 @@ public class PlayerPossession : MonoBehaviourPun {
     private PrecisionGrabber pGrabber;
     public GameObject dickErectionHidable;
     private Grabber grabber;
-    public Camera eyes;
-
-    public Vector2 GetEyeRot() {
-        return eyeRot;
-    }
 
     public bool inputRagdolled;
     private Kobold cachedKobold;
@@ -207,6 +201,7 @@ public class PlayerPossession : MonoBehaviourPun {
             pGrabber.activeUIChanged += OnShiftGrabChange;
             pGrabber.freezeUIChanged += OnFreezeChange;
         }
+        OrbitCamera.SetPlayerInput(controls);
     }
 
     private void OnDisable() {
@@ -240,6 +235,7 @@ public class PlayerPossession : MonoBehaviourPun {
             pGrabber.activeUIChanged -= OnShiftGrabChange;
             pGrabber.freezeUIChanged -= OnFreezeChange;
         }
+        OrbitCamera.SetPlayerInput(null);
     }
 
     private void OnDestroy() {
@@ -255,16 +251,6 @@ public class PlayerPossession : MonoBehaviourPun {
         yield return new WaitForSeconds(delay);
         pauseInput = false;
     }
-    private Vector2 eyeRot;
-
-    private void Look(Vector2 delta) {
-        if (!rotating && !trackingHip) {
-            eyeRot += delta;
-        }
-        eyeRot.y = Mathf.Clamp(eyeRot.y, -90f, 90f);
-        eyeRot.x = Mathf.Repeat(eyeRot.x, 360f);
-    }
-
     void PlayerProcessing() {
         float erectionUp = controls.actions["ErectionUp"].ReadValue<float>();
         float erectionDown = controls.actions["ErectionDown"].ReadValue<float>();
@@ -291,9 +277,10 @@ public class PlayerPossession : MonoBehaviourPun {
         }
 
         if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue())) {
-            Look(mouseDelta * mouseSensitivity.GetValue());
+            OrbitCamera.SetTracking(true);
+        } else {
+            OrbitCamera.SetTracking(false);
         }
-        eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
 
         if (!pauseInput) {
             if (grabbing && !switchedMode && !pGrabber.HasGrab()) {
@@ -301,23 +288,10 @@ public class PlayerPossession : MonoBehaviourPun {
             }
         }
 
-        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
+        Quaternion characterRot = Quaternion.Euler(0, OrbitCamera.GetPlayerIntendedRotation().eulerAngles.y, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
         wishDir.y = 0;
         controller.inputDir = wishDir;
-    }
-
-    public Vector3 GetEyePosition() {
-        return eyes.transform.position;
-    }
-
-    public Vector3 GetEyeDir() {
-        return Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
-    }
-
-    public void SetEyeDir(Vector3 dir) {
-        Quaternion face = Quaternion.FromToRotation(Vector3.forward, dir);
-        eyeRot = new Vector2(-face.eulerAngles.y, face.eulerAngles.x);
     }
 
     // Update is called once per frame
@@ -325,7 +299,6 @@ public class PlayerPossession : MonoBehaviourPun {
         if (Cursor.lockState != CursorLockMode.Locked) {
             // Clear the deltas so they don't add up.
             Vector2 mouseDelta = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
-            eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
             return;
@@ -345,7 +318,6 @@ public class PlayerPossession : MonoBehaviourPun {
             }
         } else {
             Vector2 mouseDelta = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
-            eyes.transform.rotation = Quaternion.Euler(-eyeRot.y, eyeRot.x, 0);
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
         }
@@ -355,7 +327,7 @@ public class PlayerPossession : MonoBehaviourPun {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
-        characterControllerAnimator.SetEyeRot(GetEyeRot());
+        characterControllerAnimator.SetEyeDir(OrbitCamera.GetPlayerIntendedRotation()*Vector3.forward);
     }
     public void OnJump(InputValue value) {
         if (!isActiveAndEnabled) return;

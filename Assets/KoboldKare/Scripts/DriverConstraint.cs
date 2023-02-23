@@ -10,20 +10,16 @@ public class DriverConstraint : MonoBehaviour {
     public Vector3 anchor = Vector3.zero;
     public Vector3 forwardVector = Vector3.forward;
     public Vector3 upVector = Vector3.up;
-    //public Vector3 connectedBodyVelocityOverride = Vector3.zero;
     public float softness = 1f;
     public float angleSpringStrength = 0;
     public float angleSpringSoftness = 90;
     public float angleDamping = 1;
     public float dampingStrength = 0.25f;
     public bool applyForceToPoint = false;
-    private Vector3 lastPosition;
+    private Vector3? lastPosition;
     private void Start() {
         if (body == null) {
             body = GetComponent<Rigidbody>();
-        }
-        if (connectedBody) {
-            lastPosition = connectedBody.transform.TransformPoint(connectedAnchor);
         }
     }
     public void OnDestroy() {
@@ -35,6 +31,7 @@ public class DriverConstraint : MonoBehaviour {
         if (body == null) {
             return;
         }
+        lastPosition ??= connectedBody ? connectedBody.transform.TransformPoint(connectedAnchor) : connectedAnchor;
         Vector3 p1 = body.transform.TransformPoint(anchor);
         Vector3 p2;
         Vector3 velocityDifference;
@@ -43,7 +40,7 @@ public class DriverConstraint : MonoBehaviour {
         } else {
             p2 = connectedAnchor;
         }
-        Vector3 connectedVelocity = (p2-lastPosition)/Time.deltaTime;
+        Vector3 connectedVelocity = (p2-lastPosition.Value)/Time.deltaTime;
         lastPosition = p2;
         velocityDifference = body.velocity - connectedVelocity;
 

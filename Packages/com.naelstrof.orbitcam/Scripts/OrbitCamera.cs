@@ -1,0 +1,200 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityScriptableSettings;
+
+[RequireComponent(typeof(Camera))]
+public class OrbitCamera : MonoBehaviour {
+    [FormerlySerializedAs("configuration")] [SerializeField, SerializeReference, SerializeReferenceButton]
+    private OrbitCameraConfiguration currentConfiguration;
+    
+    [SerializeField]
+    private SettingFloat mouseSensitivity;
+    private static OrbitCamera instance;
+    private Vector2 _aim;
+    private Camera cam;
+    private bool tweening = false;
+    private PlayerInput controls;
+    private bool tracking = true;
+
+    private OrbitCameraConfiguration lastConfig;
+    private List<OrbitCameraConfiguration> orbitCameraConfigurations;
+
+    public struct OrbitCameraData {
+        public Vector3 position;
+        public float distance;
+        public float fov;
+        public Vector2 screenPoint;
+        public Quaternion rotation;
+
+        public OrbitCameraData(OrbitCameraPivotBase pivot, Quaternion camRotation) {
+            position = pivot.GetPivotPosition(camRotation);
+            distance = pivot.GetDistanceFromPivot(camRotation);
+            fov = pivot.GetFOV(camRotation);
+            screenPoint = pivot.GetScreenOffset(camRotation);
+            rotation = pivot.GetRotation(camRotation);
+        }
+
+        public static OrbitCameraData Lerp(OrbitCameraData pivotA, OrbitCameraData pivotB, float t) {
+            return new OrbitCameraData {
+                position = Vector3.Lerp(pivotA.position, pivotB.position, t),
+                distance = Mathf.Lerp(pivotA.distance, pivotB.distance, t),
+                fov = Mathf.Lerp(pivotA.fov, pivotB.fov, t),
+                screenPoint = Vector2.Lerp(pivotA.screenPoint, pivotB.screenPoint, t),
+                rotation = Quaternion.Lerp(pivotA.rotation, pivotB.rotation, t)
+            };
+        }
+    }
+    
+
+    private void Awake() {
+        orbitCameraConfigurations = new List<OrbitCameraConfiguration>();
+        orbitCameraConfigurations.Add(currentConfiguration);
+        
+        cam = GetComponent<Camera>();
+        instance = this;
+    }
+
+    private void Start() {
+        mouseSensitivity = SettingsManager.GetSetting("MouseSensitivity") as SettingFloat;
+    }
+
+    private void Update() {
+        // Always let player control
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+        if (Gamepad.current != null) {
+            mouseDelta += Gamepad.current.rightStick.ReadValue() * 40f;
+        }
+
+        if (controls != null) {
+            mouseDelta = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
+        }
+
+        if (mouseSensitivity != null) {
+            mouseDelta *= mouseSensitivity.GetValue();
+        }
+
+        if (tracking) {
+            _aim += mouseDelta;
+            _aim.x = Mathf.Repeat(_aim.x, 360f);
+            _aim.y = Mathf.Clamp(_aim.y, -89f, 89f);
+        }
+    }
+
+    private void SetOrbit(OrbitCameraData data) {
+        Quaternion cameraRot = data.rotation;
+        
+        cam.fieldOfView = data.fov;
+        float distance = data.distance;
+        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+        Vector2 desiredScreenPosition = data.screenPoint*screenSize;
+
+        transform.rotation = cameraRot;
+        transform.position = data.position + cameraRot * Vector3.back * distance;
+        
+        Ray screenRay = cam.ScreenPointToRay(desiredScreenPosition);
+        Vector3 desiredProjectedPoint = screenRay.GetPoint(distance);
+        Vector3 currentProjectedPoint = transform.position + cameraRot * Vector3.forward * distance;
+
+        transform.position -= (desiredProjectedPoint - currentProjectedPoint);
+    }
+
+    public static void ReplaceConfiguration(OrbitCameraConfiguration oldConfig, OrbitCameraConfiguration newConfig, float tweenDuration = 0.2f) {
+        int index = instance.orbitCameraConfigurations.IndexOf(oldConfig);
+        if (index == -1) {
+            throw new UnityException("No config found to replace!");
+        }
+        if (instance.orbitCameraConfigurations[index] == newConfig) {
+            return;
+        }
+        instance.orbitCameraConfigurations[index] = newConfig;
+        if (index == instance.orbitCameraConfigurations.Count - 1) {
+            instance.StartCoroutine(instance.TweenTo(newConfig, tweenDuration));
+        }
+    }
+    
+    public static void AddConfiguration(OrbitCameraConfiguration newConfig, float tweenDuration = 0.2f) {
+
+        if (instance.orbitCameraConfigurations.Contains(newConfig)) {
+            throw new UnityException("Tried to add a camera config more than once!");
+        }
+        
+        if (instance.currentConfiguration == null) {
+            instance.orbitCameraConfigurations.Add(newConfig);
+            instance.currentConfiguration = newConfig;
+            return;
+        }
+
+        instance.orbitCameraConfigurations.Add(newConfig);
+        if (instance.currentConfiguration != newConfig) {
+            instance.StartCoroutine(instance.TweenTo(newConfig, tweenDuration));
+        }
+    }
+
+    public static void RemoveConfiguration(OrbitCameraConfiguration config, float tweenDuration = 0.2f) {
+        instance.orbitCameraConfigurations.Remove(config);
+        if (instance.currentConfiguration == config) {
+            instance.StartCoroutine(instance.TweenTo(instance.orbitCameraConfigurations[^1], tweenDuration));
+        }
+    }
+
+    IEnumerator TweenTo(OrbitCameraConfiguration next, float duration) {
+        yield return new WaitUntil(() => !tweening);
+        if (next == instance.currentConfiguration) {
+            yield break;
+        }
+        tweening = true;
+        try {
+            float startTime = Time.time;
+            while (Time.time < startTime + duration) {
+                float t = (Time.time - startTime) / duration;
+                Quaternion cameraRotation = GetPlayerIntendedRotation();
+                SetOrbit(OrbitCameraData.Lerp(currentConfiguration.GetData(cameraRotation), next.GetData(cameraRotation), t));
+                yield return new WaitForEndOfFrame();
+            }
+            SetOrbit(next.GetData(GetPlayerIntendedRotation()));
+            currentConfiguration = next;
+        } finally {
+            tweening = false;
+        }
+        if (instance.currentConfiguration != instance.orbitCameraConfigurations[^1]) {
+            instance.StartCoroutine(instance.TweenTo(instance.orbitCameraConfigurations[^1], 0.2f));
+        }
+    }
+
+    private void LateUpdate() {
+        if (tweening) {
+            return;
+        }
+
+        Quaternion cameraRotation = GetPlayerIntendedRotation();
+        SetOrbit(currentConfiguration.GetData(cameraRotation));
+        cam.cullingMask = currentConfiguration.GetCullingMask();
+    }
+
+    public static Quaternion GetPlayerIntendedRotation() {
+        return Quaternion.Euler(-instance._aim.y, instance._aim.x, 0f);
+    }
+
+    public static Vector3 GetPlayerIntendedPosition() {
+        return instance.transform.position;
+    }
+
+    public static void SetPlayerIntendedFacingDirection(Vector3 dir) {
+        Quaternion lookDir = QuaternionExtensions.LookRotationUpPriority(dir, Vector3.up);
+        var euler = lookDir.eulerAngles;
+        instance._aim = new Vector2(-lookDir.y, lookDir.x);
+    }
+
+    public static void SetPlayerInput(PlayerInput input) {
+        instance.controls = input;
+    }
+
+    public static void SetTracking(bool tracking) {
+        instance.tracking = tracking;
+    }
+
+}

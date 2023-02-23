@@ -1,0 +1,7 @@
+{
+    "name": "com.naelstrof.extensions",
+    "displayName": "Naelstrof Extensions",
+    "version": "0.0.1",
+    "unity": "2020.3",
+    "description": "Basic extensions to base classes."
+}

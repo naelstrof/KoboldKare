@@ -64,8 +64,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
     }
 
-    private Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
-    private Vector3 networkedEyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
+    public Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
 
     [SerializeField] private Rigidbody body;
 
@@ -91,10 +90,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
-
-    public void SetEyeRot(Vector2 newEyeRot) {
-        this.eyeRot = newEyeRot;
-    }
     public void SetEyeDir(Vector3 newEyeDir) {
         Quaternion rot = Quaternion.LookRotation(newEyeDir);
         Vector3 euler = rot.eulerAngles;

@@ -205,11 +205,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         var playerPossessionInstance = Instantiate(playerPossessionPrefab, transform);
         possession = playerPossessionInstance.GetComponent<PlayerPossession>();
-        possession.SetEyeDir(eyeDir);
+        OrbitCamera.SetPlayerIntendedFacingDirection(eyeDir);
         
-        precisionGrabber.SetView(possession.eyes.transform);
-        grabber.SetView(possession.eyes.transform);
-
         chatter = gameObject.AddComponent<Chatter>();
 
         var floatingTextPrefabInstance = Instantiate(floatingTextPrefab.gameObject, transform);
@@ -224,6 +221,9 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
 
     void InitializePostEnable() {
         characterAnimator.SetHeadTransform(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
+        precisionGrabber.SetView(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
+        grabber.SetView(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
+
         
         List<Collider> ignoreColliders = new List<Collider>();
         ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Chest)));
@@ -266,7 +266,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     public void SetEyeDir(Vector3 dir) {
         eyeDir = dir;
         if (possession != null) {
-            possession.SetEyeDir(dir);
+            OrbitCamera.SetPlayerIntendedFacingDirection(eyeDir);
         }
     }
 
@@ -274,20 +274,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     public bool InitializeIfNeeded(bool force) {
         if (force == false && GetComponent<PhotonView>().OwnershipTransfer == OwnershipOption.Request) return false;
         var serializedObject = new SerializedObject(this);
-        
-        //serializedObject.FindProperty("footLand").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("112a2b2f14f04c1458dded07c0b00fe9"));
-        //serializedObject.FindProperty("footstepPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("23b69436bc3d7a944a598da4b1206fc9"));
-        //serializedObject.FindProperty("spaceLubeMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("efd1f3995e4a5bf4d8d9c8ce1d941afb"));
-        //serializedObject.FindProperty("circlePoof").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("f20d228138364844893451ae57934590"));
-        //serializedObject.FindProperty("walkDust").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("b96b53155ee08af498a985d2b06db2f2"));
-        //var playerPossessionGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("118737100278bba4f87f35b3e4e0c086"));
-        //serializedObject.FindProperty("playerPossessionPrefab").objectReferenceValue = playerPossessionGameObject.GetComponent<PlayerPossession>();
-        //serializedObject.FindProperty("handDisplayPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("3100fdf2173d9c744a5c465ae3b19715"));
-        //serializedObject.FindProperty("freezeVFXAsset").objectReferenceValue = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>(AssetDatabase.GUIDToAssetPath("3a30a12aee1b7d64e957ed14355d7461"));
-        //serializedObject.FindProperty("unfreezeAudioPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("cd0a89d93b29b8a49942e072d4ff62df"));
-        //var floatingTextGameObject = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("74149ab5c35e0da45a56910118a6dd59"));
-        //serializedObject.FindProperty("floatingTextPrefab").objectReferenceValue = floatingTextGameObject.GetComponent<TMPro.TMP_Text>();
-        //serializedObject.FindProperty("chatYowlPack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("165a7a3804fbb684cba72c68e0264320"));
         
         photonView = GetComponent<PhotonView>();
         var photonViewSerializedObject = new SerializedObject(photonView);

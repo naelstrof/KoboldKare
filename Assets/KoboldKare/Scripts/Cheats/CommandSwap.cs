@@ -19,8 +19,8 @@ public class CommandSwap : Command {
             throw new CheatsProcessor.CommandException("Couldn't find the brain swapper machine, its required to exist in the world in order to trigger a swap...");
         }
 
-        Vector3 aimPosition = k.GetComponentInChildren<PlayerPossession>(true).GetEyePosition();
-        Vector3 aimDir = k.GetComponentInChildren<PlayerPossession>(true).GetEyeDir();
+        Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
+        Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
         foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
             Kobold b = hit.collider.GetComponentInParent<Kobold>();
             if (b == null) continue;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraSwitcher : MonoBehaviour {
@@ -11,7 +7,10 @@ public class CameraSwitcher : MonoBehaviour {
     private OrbitCameraCharacterConfiguration thirdpersonConfiguration;
     private OrbitCameraBasicConfiguration thirdpersonRagdollConfiguration;
     private OrbitCameraBasicConfiguration freecamConfiguration;
+    private OrbitCameraBasicConfiguration lockedFreecamConfiguration;
+    private OrbitCameraLockedOffsetPivot lockedFreecamPivot;
     private SimpleCameraController freeCamController;
+    
     private Ragdoller ragdoller;
     
     public Transform uiSlider;
@@ -42,18 +41,18 @@ public class CameraSwitcher : MonoBehaviour {
             firstpersonConfiguration.SetPivot(fpsPivot.GetComponent<OrbitCameraLerpTrackPivot>());
             firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));
             var freeCamObj = new GameObject("FreeCamPivot", typeof(SimpleCameraController));
-            freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform);
-            freeCamObj.transform.localPosition = Vector3.zero;
+            freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform, false);
+            freeCamObj.transform.position = transform.position;
             freeCamController = freeCamObj.GetComponent<SimpleCameraController>();
             freeCamController.SetControls(GetComponent<PlayerInput>());
             freecamConfiguration = new OrbitCameraBasicConfiguration();
             freecamConfiguration.SetPivot(freeCamController);
             freecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
             OrbitCameraLerpTrackBasicPivot shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
-            shoulderPivot.SetInfo(new Vector2(0.33f, 0.33f), 1f);
+            shoulderPivot.SetInfo(new Vector2(0.33f, 0.33f), 0.6f);
             shoulderPivot.Initialize(animator, HumanBodyBones.Head, 1f);
             OrbitCameraLerpTrackBasicPivot buttPivot = new GameObject("ButtCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
-            buttPivot.SetInfo(new Vector2(0.33f, 0.1f), 1f);
+            buttPivot.SetInfo(new Vector2(0.33f, 0.1f), 0.8f);
             buttPivot.Initialize(animator, HumanBodyBones.Hips, 1f);
             thirdpersonConfiguration = new OrbitCameraCharacterConfiguration();
             thirdpersonConfiguration.SetPivots(shoulderPivot, buttPivot);
@@ -63,6 +62,11 @@ public class CameraSwitcher : MonoBehaviour {
             thirdpersonRagdollConfiguration = new OrbitCameraBasicConfiguration();
             thirdpersonRagdollConfiguration.SetPivot(basicRagdollPivot);
             thirdpersonRagdollConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
+            
+            lockedFreecamPivot = animator.GetBoneTransform(HumanBodyBones.Chest).gameObject.AddComponent<OrbitCameraLockedOffsetPivot>();
+            lockedFreecamConfiguration = new OrbitCameraBasicConfiguration();
+            lockedFreecamConfiguration.SetPivot(lockedFreecamPivot);
+            lockedFreecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
         }
         initialized = false;
         OrbitCamera.AddConfiguration(firstpersonConfiguration);
@@ -77,8 +81,10 @@ public class CameraSwitcher : MonoBehaviour {
         if (mode == CameraMode.ThirdPerson) {
             if (ragdolled) {
                 OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
+                lastConfig = thirdpersonRagdollConfiguration;
             } else {
-                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
+                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
+                lastConfig = thirdpersonConfiguration;
             }
         }
     }
@@ -123,6 +129,10 @@ public class CameraSwitcher : MonoBehaviour {
             return;
         }
 
+        if (mode == CameraMode.FreeCam) {
+            lockedFreecamPivot.Lock(freeCamController.transform.position, Quaternion.Inverse(ragdoller.transform.rotation));
+        }
+
         initialized = true;
         mode = cameraMode;
         possession.enabled = true;
@@ -151,7 +161,6 @@ public class CameraSwitcher : MonoBehaviour {
                 break;
             case CameraMode.FreeCam:
                 OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
-                freeCamController.SetRotationOffset(Quaternion.identity);
                 lastConfig = freecamConfiguration;
                 freeCamController.enabled = true;
                 possession.enabled = false;
@@ -162,9 +171,8 @@ public class CameraSwitcher : MonoBehaviour {
                 }
                 break;
             case CameraMode.FreeCamLocked:
-                OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
-                freeCamController.SetRotationOffset(Quaternion.Inverse(freeCamController.transform.rotation));
-                lastConfig = freecamConfiguration;
+                OrbitCamera.ReplaceConfiguration(lastConfig, lockedFreecamConfiguration);
+                lastConfig = lockedFreecamConfiguration;
                 freeCamController.enabled = false;
                 possession.enabled = true;
                 if (!FPSCanvas.activeInHierarchy) {

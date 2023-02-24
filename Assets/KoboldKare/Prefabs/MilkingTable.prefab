@@ -788,7 +788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructed: 0
   trackedConstructedObjects:
-  - {fileID: 5647942002867730652}
+  - {fileID: 8213927136341146123}
   milkingSprite: {fileID: 21300000, guid: 775c36010e943454ab66e38726c40e0a, type: 3}
   stations:
   - {fileID: 6882345636057130156}
@@ -1115,6 +1115,12 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e84750cad0cd465c864e8c48b65b113, type: 3}
+--- !u!1 &8213927136341146123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e84750cad0cd465c864e8c48b65b113,
+    type: 3}
+  m_PrefabInstance: {fileID: 9024319646958028634}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8842373229944135857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5e84750cad0cd465c864e8c48b65b113,

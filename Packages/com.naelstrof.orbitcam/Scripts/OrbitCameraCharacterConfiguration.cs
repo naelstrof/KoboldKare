@@ -16,6 +16,10 @@ public class OrbitCameraCharacterConfiguration : OrbitCameraConfiguration {
     }
     
     public override OrbitCamera.OrbitCameraData GetData(Quaternion cameraRotation) {
+        if (shoulderPivot == null) {
+            return new OrbitCamera.OrbitCameraData();
+        }
+
         OrbitCamera.OrbitCameraData topData = new OrbitCamera.OrbitCameraData(shoulderPivot, cameraRotation);
         OrbitCamera.OrbitCameraData bottomData = new OrbitCamera.OrbitCameraData(buttPivot, cameraRotation);
         Vector3 forward = cameraRotation * Vector3.forward;

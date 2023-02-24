@@ -9,10 +9,10 @@ public class OrbitCameraPivotBasic : OrbitCameraPivotBase {
     [SerializeField] private Vector2 screenOffset = Vector2.one * 0.5f;
     [SerializeField] float desiredDistanceFromPivot = 1f;
     
-    SettingFloat baseFOV;
-    private LayerMask obstacleMask;
-    private RaycastHit[] hitResults;
-    private HitResultSorter hitSorter;
+    protected SettingFloat baseFOV;
+    protected LayerMask obstacleMask;
+    protected RaycastHit[] hitResults;
+    protected HitResultSorter hitSorter;
 
     public void SetInfo(Vector2 screenOffset, float desiredDistanceFromPivot) {
         this.screenOffset = screenOffset;
@@ -26,7 +26,7 @@ public class OrbitCameraPivotBasic : OrbitCameraPivotBase {
         baseFOV = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
     }
 
-    private class HitResultSorter : IComparer<RaycastHit> {
+    protected class HitResultSorter : IComparer<RaycastHit> {
         public int Compare(RaycastHit x, RaycastHit y) {
             return x.distance.CompareTo(y.distance);
         }

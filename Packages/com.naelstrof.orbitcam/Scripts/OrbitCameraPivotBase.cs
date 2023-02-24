@@ -8,4 +8,5 @@ public class OrbitCameraPivotBase : MonoBehaviour {
     public virtual float GetDistanceFromPivot(Quaternion camRotation) => 1f;
     public virtual float GetFOV(Quaternion camRotation) => 1f;
     public virtual Quaternion GetRotation(Quaternion camRotation) => camRotation;
+    public virtual Quaternion GetPostRotationOffset(Quaternion camRotation) => Quaternion.identity;
 }

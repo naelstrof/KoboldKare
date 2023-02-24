@@ -19,6 +19,7 @@ public class OrbitCamera : MonoBehaviour {
     private bool tweening = false;
     private PlayerInput controls;
     private bool tracking = true;
+    private Quaternion postRotationOffset = Quaternion.identity;
 
     private OrbitCameraConfiguration lastConfig;
     private List<OrbitCameraConfiguration> orbitCameraConfigurations;
@@ -29,6 +30,8 @@ public class OrbitCamera : MonoBehaviour {
         public float fov;
         public Vector2 screenPoint;
         public Quaternion rotation;
+        // rotation applied to the camera after aiming is completed.
+        public Quaternion postRotationOffset;
 
         public OrbitCameraData(OrbitCameraPivotBase pivot, Quaternion camRotation) {
             position = pivot.GetPivotPosition(camRotation);
@@ -36,6 +39,7 @@ public class OrbitCamera : MonoBehaviour {
             fov = pivot.GetFOV(camRotation);
             screenPoint = pivot.GetScreenOffset(camRotation);
             rotation = pivot.GetRotation(camRotation);
+            postRotationOffset = pivot.GetPostRotationOffset(camRotation);
         }
 
         public static OrbitCameraData Lerp(OrbitCameraData pivotA, OrbitCameraData pivotB, float t) {
@@ -44,7 +48,8 @@ public class OrbitCamera : MonoBehaviour {
                 distance = Mathf.Lerp(pivotA.distance, pivotB.distance, t),
                 fov = Mathf.Lerp(pivotA.fov, pivotB.fov, t),
                 screenPoint = Vector2.Lerp(pivotA.screenPoint, pivotB.screenPoint, t),
-                rotation = Quaternion.Lerp(pivotA.rotation, pivotB.rotation, t)
+                rotation = Quaternion.Lerp(pivotA.rotation, pivotB.rotation, t),
+                postRotationOffset = Quaternion.Lerp(pivotA.postRotationOffset, pivotB.postRotationOffset, t)
             };
         }
     }
@@ -100,6 +105,8 @@ public class OrbitCamera : MonoBehaviour {
         Vector3 currentProjectedPoint = transform.position + cameraRot * Vector3.forward * distance;
 
         transform.position -= (desiredProjectedPoint - currentProjectedPoint);
+
+        postRotationOffset = data.postRotationOffset;
     }
 
     public static void ReplaceConfiguration(OrbitCameraConfiguration oldConfig, OrbitCameraConfiguration newConfig, float tweenDuration = 0.2f) {
@@ -151,11 +158,11 @@ public class OrbitCamera : MonoBehaviour {
             float startTime = Time.time;
             while (Time.time < startTime + duration) {
                 float t = (Time.time - startTime) / duration;
-                Quaternion cameraRotation = GetPlayerIntendedRotation();
+                Quaternion cameraRotation = Quaternion.Inverse(instance.postRotationOffset)*Quaternion.Euler(-instance._aim.y, instance._aim.x, 0f);
                 SetOrbit(OrbitCameraData.Lerp(currentConfiguration.GetData(cameraRotation), next.GetData(cameraRotation), t));
                 yield return new WaitForEndOfFrame();
             }
-            SetOrbit(next.GetData(GetPlayerIntendedRotation()));
+            SetOrbit(next.GetData(Quaternion.Inverse(instance.postRotationOffset)*Quaternion.Euler(-instance._aim.y, instance._aim.x, 0f)));
             currentConfiguration = next;
         } finally {
             tweening = false;
@@ -170,7 +177,7 @@ public class OrbitCamera : MonoBehaviour {
             return;
         }
 
-        Quaternion cameraRotation = GetPlayerIntendedRotation();
+        Quaternion cameraRotation = Quaternion.Inverse(instance.postRotationOffset)*Quaternion.Euler(-instance._aim.y, instance._aim.x, 0f);
         SetOrbit(currentConfiguration.GetData(cameraRotation));
         cam.cullingMask = currentConfiguration.GetCullingMask();
     }

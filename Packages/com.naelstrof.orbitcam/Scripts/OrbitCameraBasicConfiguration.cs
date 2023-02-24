@@ -9,6 +9,10 @@ public class OrbitCameraBasicConfiguration : OrbitCameraConfiguration {
     [SerializeField]
     private LayerMask cullingMask = ~0;
     public override OrbitCamera.OrbitCameraData GetData(Quaternion cameraRotation) {
+        if (pivot == null) {
+            return new OrbitCamera.OrbitCameraData();
+        }
+
         return new OrbitCamera.OrbitCameraData(pivot, cameraRotation);
     }
 

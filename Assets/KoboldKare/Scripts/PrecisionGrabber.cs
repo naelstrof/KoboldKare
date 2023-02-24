@@ -312,7 +312,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 return;
             }
 
-            Vector3 holdPoint = GetViewPos() + view.forward * distance;
+            Vector3 holdPoint = GetViewPos() + OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward * distance;
 
             if (joint != null) {
                 joint.connectedAnchor = holdPoint;
@@ -324,7 +324,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             // Manual axis alignment, for pole jumps!
             if (!body.transform.IsChildOf(owner.body.transform) && !body.isKinematic) {
                 body.velocity -= body.velocity * 0.5f;
-                Vector3 axis = view.forward;
+                Vector3 axis = OrbitCamera.GetPlayerIntendedRotation()*Vector3.forward;
                 Vector3 jointPos = body.transform.TransformPoint(bodyAnchor);
                 Vector3 center = (GetViewPos() + jointPos) / 2f;
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
@@ -365,7 +365,6 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (!photonView.IsMine) {
                 return view.position;
             }
-
             float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
             Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
             return viewPos;

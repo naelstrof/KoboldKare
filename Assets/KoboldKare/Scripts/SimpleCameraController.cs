@@ -6,7 +6,6 @@ using UnityScriptableSettings;
 public class SimpleCameraController : OrbitCameraPivotBase {
     private PlayerInput controls;
     private SettingFloat fov;
-    private Quaternion offset;
     class CameraState {
         public float x;
         public float y;
@@ -56,32 +55,21 @@ public class SimpleCameraController : OrbitCameraPivotBase {
     [Tooltip("Whether or not to invert our Y axis for mouse input to rotation.")]
     public bool invertY = false;
 
-    public UnityScriptableSettings.SettingFloat mouseSensitivity;
-
-    void OnEnable() {
+    public void SetControls(PlayerInput controls) {
+        this.controls = controls;
+    }
+    private void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
         m_InterpolatingCameraState.SetFromTransform(transform);
     }
 
-    public void SetControls(PlayerInput controls) {
-        this.controls = controls;
-    }
-
-    public void SetRotationOffset(Quaternion offset) {
-        this.offset = offset;
-    }
-
-    public override Quaternion GetRotation(Quaternion camRotation) {
-        return offset*base.GetRotation(camRotation);
-    }
-
     private void Start() {
+        m_TargetCameraState.SetFromTransform(transform);
+        m_InterpolatingCameraState.SetFromTransform(transform);
         fov = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
-        Debug.Log(fov);
     }
 
-    Vector3 GetInputTranslationDirection()
-    {
+    Vector3 GetInputTranslationDirection() {
         Vector3 direction = new Vector3();
         Vector2 moveInput = controls.actions["Move"].ReadValue<Vector2>();
         direction += new Vector3(moveInput.x,0f,moveInput.y);

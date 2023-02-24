@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class CameraSwitcher : MonoBehaviour {
     public GameObject FPSCanvas;
     private OrbitCameraBasicConfiguration firstpersonConfiguration;
+    private OrbitCameraFPSHeadPivot firstpersonPivot;
+    private OrbitCameraLerpTrackBasicPivot shoulderPivot, buttPivot;
     private OrbitCameraCharacterConfiguration thirdpersonConfiguration;
     private OrbitCameraBasicConfiguration thirdpersonRagdollConfiguration;
     private OrbitCameraBasicConfiguration freecamConfiguration;
@@ -35,10 +37,10 @@ public class CameraSwitcher : MonoBehaviour {
         if (firstpersonConfiguration == null) {
             var animator = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator();
             var fpsPivotObj = new GameObject("FPSPivot", typeof(OrbitCameraFPSHeadPivot));
-            var fpsPivot = fpsPivotObj.GetComponent<OrbitCameraFPSHeadPivot>();
-            fpsPivot.Initialize(animator, HumanBodyBones.Head, 5f);
+            firstpersonPivot = fpsPivotObj.GetComponent<OrbitCameraFPSHeadPivot>();
+            firstpersonPivot.Initialize(animator, HumanBodyBones.Head, 5f);
             firstpersonConfiguration = new OrbitCameraBasicConfiguration();
-            firstpersonConfiguration.SetPivot(fpsPivot.GetComponent<OrbitCameraLerpTrackPivot>());
+            firstpersonConfiguration.SetPivot(firstpersonPivot.GetComponent<OrbitCameraLerpTrackPivot>());
             firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));
             var freeCamObj = new GameObject("FreeCamPivot", typeof(SimpleCameraController));
             freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform, false);
@@ -48,10 +50,10 @@ public class CameraSwitcher : MonoBehaviour {
             freecamConfiguration = new OrbitCameraBasicConfiguration();
             freecamConfiguration.SetPivot(freeCamController);
             freecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
-            OrbitCameraLerpTrackBasicPivot shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
+            shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
             shoulderPivot.SetInfo(new Vector2(0.33f, 0.33f), 0.6f);
             shoulderPivot.Initialize(animator, HumanBodyBones.Head, 1f);
-            OrbitCameraLerpTrackBasicPivot buttPivot = new GameObject("ButtCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
+            buttPivot = new GameObject("ButtCamPivot", typeof(OrbitCameraLerpTrackBasicPivot)).GetComponent<OrbitCameraLerpTrackBasicPivot>();
             buttPivot.SetInfo(new Vector2(0.33f, 0.1f), 0.8f);
             buttPivot.Initialize(animator, HumanBodyBones.Hips, 1f);
             thirdpersonConfiguration = new OrbitCameraCharacterConfiguration();
@@ -83,6 +85,8 @@ public class CameraSwitcher : MonoBehaviour {
                 OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
                 lastConfig = thirdpersonRagdollConfiguration;
             } else {
+                shoulderPivot.SnapInstant();
+                buttPivot.SnapInstant();
                 OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
                 lastConfig = thirdpersonConfiguration;
             }
@@ -139,6 +143,7 @@ public class CameraSwitcher : MonoBehaviour {
         freeCamController.enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
+                firstpersonPivot.SnapInstant();
                 OrbitCamera.ReplaceConfiguration(lastConfig, firstpersonConfiguration);
                 lastConfig = firstpersonConfiguration;
                 
@@ -151,6 +156,8 @@ public class CameraSwitcher : MonoBehaviour {
                     OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
                     lastConfig = thirdpersonRagdollConfiguration;
                 } else {
+                    shoulderPivot.SnapInstant();
+                    buttPivot.SnapInstant();
                     OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
                     lastConfig = thirdpersonConfiguration;
                 }

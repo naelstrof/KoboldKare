@@ -11719,7 +11719,8 @@ MonoBehaviour:
   OnUse:
     m_PersistentCalls:
       m_Calls: []
-  unknownUsableSprite: {fileID: 0}
+  unknownUsableSprite: {fileID: 21300000, guid: ae7a3b58c16bf7945bf9d83459255997,
+    type: 3}
 --- !u!1 &6812936466331540840
 GameObject:
   m_ObjectHideFlags: 0

@@ -241,7 +241,7 @@ public class PlayerPossession : MonoBehaviourPun {
     private void OnDestroy() {
         if (gameObject.scene.isLoaded) {
             if (kobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
-                GameObject.Instantiate(diePrefab, transform.position, Quaternion.identity);
+                Instantiate(diePrefab, transform.position, Quaternion.identity);
             }
             playerDieEvent.Raise(transform.position);
         }
@@ -276,11 +276,14 @@ public class PlayerPossession : MonoBehaviourPun {
             characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
 
-        if (!rotating || !pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue())) {
-            OrbitCamera.SetTracking(true);
-        } else {
+        if (rotating && pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue())) {
             OrbitCamera.SetTracking(false);
+        } else if (rotating) {
+            OrbitCamera.SetTracking(false);
+        } else {
+            OrbitCamera.SetTracking(true);
         }
+        
 
         if (!pauseInput) {
             if (grabbing && !switchedMode && !pGrabber.HasGrab()) {

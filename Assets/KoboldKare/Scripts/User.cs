@@ -27,6 +27,12 @@ public class User : MonoBehaviourPun {
     private HashSet<Tuple<GenericUsable,GameObject>> possibleUsables = new HashSet<Tuple<GenericUsable,GameObject>>();
     private GenericUsable closestUsable = null;
 
+    public void LateUpdate() {
+        if (!photonView.IsMine) return;
+        transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
+        transform.position = transform.parent.position + OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward;
+    }
+
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
         yield return new WaitForSeconds(1f);
         yield return new WaitForEndOfFrame();

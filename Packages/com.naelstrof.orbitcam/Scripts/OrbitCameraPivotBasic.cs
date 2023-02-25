@@ -42,7 +42,8 @@ public class OrbitCameraPivotBasic : OrbitCameraPivotBase {
         int hits = Physics.RaycastNonAlloc(new Ray(transform.position, forward), hitResults, actualDistance, obstacleMask);
         if (hits > 0) {
             Array.Sort(hitResults, 0, hits, hitSorter);
-            actualDistance = hitResults[0].distance;
+            float camMinClipPlane = 0.15f;
+            actualDistance = Mathf.Max(hitResults[0].distance-camMinClipPlane,0f);
         }
         return actualDistance;
     }

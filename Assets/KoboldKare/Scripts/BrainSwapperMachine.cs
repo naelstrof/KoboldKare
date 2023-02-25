@@ -109,18 +109,12 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
             }
         }
 
-        if (aPlayer == null && bPlayer == null) {
-            return;
-        }
-
-
         if (aView != null) {
             if (aPlayer == PhotonNetwork.LocalPlayer) {
-                aView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-                aView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
+                aView.GetComponent<CharacterDescriptor>()
+                    .SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
             } else {
-                aView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
-                aView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
+                aView.GetComponent<CharacterDescriptor>().SetPlayerControlled(bPlayer == null ? CharacterDescriptor.ControlType.AIPlayer : CharacterDescriptor.ControlType.NetworkedPlayer);
             }
 
             if (aView.TryGetComponent(out MoneyHolder aMoneyHolder)) {
@@ -136,11 +130,10 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
 
         if (bView != null) {
             if (bPlayer == PhotonNetwork.LocalPlayer) {
-                bView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
-                bView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
+                bView.GetComponent<CharacterDescriptor>()
+                    .SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
             } else {
-                bView.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(false);
-                bView.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(true);
+                bView.GetComponent<CharacterDescriptor>().SetPlayerControlled(aPlayer == null ? CharacterDescriptor.ControlType.AIPlayer : CharacterDescriptor.ControlType.NetworkedPlayer);
             }
             if (bView.TryGetComponent(out MoneyHolder bMoneyHolder)) {
                 bMoneyHolder.SetMoney(moneyB);

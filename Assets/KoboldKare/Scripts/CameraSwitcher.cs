@@ -87,7 +87,7 @@ public class CameraSwitcher : MonoBehaviour {
             } else {
                 shoulderPivot.SnapInstant();
                 buttPivot.SnapInstant();
-                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
+                OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration, 0.4f);
                 lastConfig = thirdpersonConfiguration;
             }
         }

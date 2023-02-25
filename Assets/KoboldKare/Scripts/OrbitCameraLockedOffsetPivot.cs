@@ -16,9 +16,10 @@ public class OrbitCameraLockedOffsetPivot : OrbitCameraPivotBasic {
         float actualDistance = offset.magnitude;
         Vector3 dir = (camRotation * offset).normalized;
         int hits = Physics.RaycastNonAlloc(new Ray(transform.position, dir), hitResults, actualDistance, obstacleMask);
+        float cameraNearClipPlane = 0.15f;
         if (hits <= 0) return transform.position + dir * actualDistance;
         Array.Sort(hitResults, 0, hits, hitSorter);
-        actualDistance = hitResults[0].distance;
+        actualDistance = Mathf.Max(hitResults[0].distance-cameraNearClipPlane,0f);
         return transform.position + dir * actualDistance;
     }
 

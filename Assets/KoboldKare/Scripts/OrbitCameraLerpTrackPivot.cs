@@ -30,6 +30,11 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         Vector3 b = transform.parent.InverseTransformPoint(targetTransform.position);
         Vector3 correction = Vector3.ProjectOnPlane(b - a, transform.parent.InverseTransformDirection(OrbitCamera.GetPlayerIntendedRotation()*Vector3.right));
         float diff = Vector3.Distance(a, a+correction);
+        Vector3 correctionDiff = (b - a) - correction;
+        // Just snap left/right movement, to prevent motion sickness
+        if (correctionDiff.magnitude > 0.25f) {
+            a += correctionDiff;
+        }
         transform.localPosition = Vector3.MoveTowards(a, a+correction, (0.1f+diff)*Time.deltaTime*lerpTrackSpeed);
     }
 

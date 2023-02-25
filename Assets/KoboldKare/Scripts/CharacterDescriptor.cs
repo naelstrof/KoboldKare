@@ -205,7 +205,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         var playerPossessionInstance = Instantiate(playerPossessionPrefab, transform);
         possession = playerPossessionInstance.GetComponent<PlayerPossession>();
-        OrbitCamera.SetPlayerIntendedFacingDirection(eyeDir);
         
         chatter = gameObject.AddComponent<Chatter>();
 
@@ -399,6 +398,9 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         if (Equals(info.Sender, PhotonNetwork.LocalPlayer)) {
             SetPlayerControlled(isPlayer ? ControlType.LocalPlayer : ControlType.AIPlayer);
+            if (isPlayer) {
+                OrbitCamera.SetPlayerIntendedFacingDirection(eyeDir);
+            }
         } else {
             SetPlayerControlled(isPlayer ? ControlType.NetworkedPlayer : ControlType.AIPlayer);
         }

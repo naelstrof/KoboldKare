@@ -13,16 +13,17 @@ public class CommandCum : Command
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.\n");
         }
 
-        if (args.Length < 0 | args.Length > 2) 
+        if (args.Length < 0 | args.Length > 2)
         {
             throw new CheatsProcessor.CommandException("Usage: /cum <ballSize> or /cum\n");
         }
 
-        
-        if (args.Length != 1 && !int.TryParse(args[1], out _)) {
+
+        if (args.Length != 1 && !int.TryParse(args[1], out _))
+        {
             throw new CheatsProcessor.CommandException("You must supply a numeric value as the argument. /cum <ballSize>\n");
         }
-        
+
         if (args.Length == 2)
         {
             k.photonView.RequestOwnership();

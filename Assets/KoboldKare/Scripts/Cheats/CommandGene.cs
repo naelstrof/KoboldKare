@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Photon.Pun;
 using System.Reflection;
-using System.Linq;
 
 public class GeneUtilities
 {
-    
+
     public static (List<string>, List<string>, Type koboldType) getTheGenes()
     {
         List<string> geneList = new List<string>();
@@ -33,7 +32,7 @@ public class GeneUtilities
 public class CommandGene : Command
 {
     public override string GetArg0() => ("/gene");
-    
+
 
     public override void Execute(StringBuilder output, Kobold k, string[] args)
     {
@@ -43,7 +42,7 @@ public class CommandGene : Command
         {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
-        if ((args.Length < 2 | args.Length > 3) || (args[1] != "list" && args.Length == 2))
+        if ((args.Length < 2 | args.Length > 3) || (args[1] != "list" && (args.Length == 2 || !int.TryParse(args[2], out _))))
         {
             throw new CheatsProcessor.CommandException("Usage: /gene <gene> <numeric value> ; /gene list.");
         }
@@ -65,14 +64,6 @@ public class CommandGene : Command
 
             }
         }
-
-
-
-        if (!int.TryParse(args[2], out _))
-        {
-            throw new CheatsProcessor.CommandException("You must supply a numeric value as the second argument. /gene <gene> <numeric value>");
-        }
-
 
         for (int c = 0; c < GeneUtilities.geneList.Count; c++)
         {

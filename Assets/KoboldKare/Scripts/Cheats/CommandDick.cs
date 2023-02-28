@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Unity.VisualScripting;
 
 public class DickUtilities
 {
@@ -61,12 +60,11 @@ public class CommandDick : Command
             }
             throw new CheatsProcessor.CommandException("Please supply a valid index or dick name. Use /dick list to list names.");
         }
-        else if (!DickUtilities.penisDatabase.GetInfoByName(args[1]).IsUnityNull())
+        else if (DickUtilities.penisDatabase.GetInfoByName(args[1]) != null)
         {
             var selectedPenis = DickUtilities.penisDatabase.GetInfoByName(args[1]);
-            byte byteValue = (byte)DickUtilities.penises.IndexOf(selectedPenis);
             k.photonView.RequestOwnership();
-            k.SetDickRPC(dickID: byteValue);
+            k.SetDickRPC(dickID: (byte)DickUtilities.penises.IndexOf(selectedPenis));
             output.AppendLine("Set dick to " + args[1] + ".");
             return;
         }

@@ -1,78 +1,35 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 
-public class DickUtilities
-{
-    public static (PrefabDatabase,List<PrefabDatabase.PrefabReferenceInfo>) getTheDicks()
-    {
-        var penisDatabase = GameManager.GetPenisDatabase();
-        var penises = penisDatabase.GetValidPrefabReferenceInfos();
-        return (penisDatabase,penises);
-    }
-
-    public static PrefabDatabase penisDatabase = getTheDicks().Item1;
-    public static List<PrefabDatabase.PrefabReferenceInfo> penises = getTheDicks().Item2;
-
-}
-
-[System.Serializable]
-public class CommandDick : Command
-{
+[Serializable]
+public class CommandDick : Command {
     public override string GetArg0() => "/dick";
-    public override void Execute(StringBuilder output, Kobold k, string[] args)
-    {
+    public override void Execute(StringBuilder output, Kobold k, string[] args) {
         base.Execute(output, k, args);
-        if (!CheatsProcessor.GetCheatsEnabled())
-        {
+        if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
-        if (args.Length != 2)
-        {
+        if (args.Length != 2) {
             throw new CheatsProcessor.CommandException("Usage: /dick <index or name> ; /dick list.");
         }
-        // List command
-        if (String.Equals(args[1], "list", StringComparison.CurrentCultureIgnoreCase))
-        {
-            output.Append("Available dicks are: ");
-            for (int i = 0; i < DickUtilities.penises.Count; i++)
-            {
-                if (DickUtilities.penises[i] == DickUtilities.penises[^1])
-                {
-                    output.Append("and " + DickUtilities.penises[i].GetKey() + ".\n");
-                    return;
-                }
-                else
-                {
-                    output.Append(DickUtilities.penises[i].GetKey() + ", ");
-                }
-            }
-        }
+        var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
+        k.photonView.RequestOwnership();
         // Dick setting
-        if (int.TryParse(args[1], out int intValue))
-        {
-            if (DickUtilities.penises.Count - 1 >= intValue & intValue > -1)
-            {
-                k.photonView.RequestOwnership();
-                k.SetDickRPC(dickID: byte.Parse(args[1]));
-                output.AppendLine("Set dick to " + DickUtilities.penises[intValue].GetKey() + ".");
-                return;
+        if (byte.TryParse(args[1], out byte dickID)) {
+            if (dickID != byte.MaxValue && dickID >= infos.Count) {
+                throw new CheatsProcessor.CommandException($"Index is invalid, must be either {byte.MaxValue} or under {infos.Count-1}.");
             }
-            throw new CheatsProcessor.CommandException("Please supply a valid index or dick name. Use /dick list to list names.");
+            k.SetDickRPC(dickID: dickID);
+            output.AppendLine("Set dick to " + infos[dickID].GetKey() + ".");
+            return;
         }
-        else if (DickUtilities.penisDatabase.GetInfoByName(args[1]) != null)
-        {
-            var selectedPenis = DickUtilities.penisDatabase.GetInfoByName(args[1]);
-            k.photonView.RequestOwnership();
-            k.SetDickRPC(dickID: (byte)DickUtilities.penises.IndexOf(selectedPenis));
+        for (byte i=0;i<infos.Count;i++) {
+            if (infos[i].GetKey() != args[1]) continue;
+            k.SetDickRPC(dickID: i);
             output.AppendLine("Set dick to " + args[1] + ".");
             return;
         }
-        else
-        {
-            throw new CheatsProcessor.CommandException("Please supply a valid index or dick name. Use /dick list to list names.");
-        }
-
+        throw new CheatsProcessor.CommandException($"Couldn't find dick with name {args[1]}.");
     }
 
 }

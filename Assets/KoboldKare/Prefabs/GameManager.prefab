@@ -23465,9 +23465,35 @@ MonoBehaviour:
   - rid: 8920608768974127123
   - rid: 8920608790810198018
   - rid: 8920608816464920578
+  - rid: 1602997817464061954
+  - rid: 1602997817464061955
   references:
     version: 2
     RefIds:
+    - rid: 1602997817464061954
+      type: {class: CommandCum, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 1602997817464061955
+      type: {class: CommandDick, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
     - rid: 8920608363450728448
       type: {class: CommandHelp, ns: , asm: Assembly-CSharp}
       data:

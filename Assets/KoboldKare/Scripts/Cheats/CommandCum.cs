@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Text;
 
 [System.Serializable]
@@ -10,18 +11,12 @@ public class CommandCum : Command
         base.Execute(output, k, args);
         if (!CheatsProcessor.GetCheatsEnabled())
         {
-            throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.\n");
+            throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
 
-        if (args.Length < 0 | args.Length > 2)
+        if (args.Length > 2 || (args.Length != 1 && !int.TryParse(args[1], out _)))
         {
-            throw new CheatsProcessor.CommandException("Usage: /cum <ballSize> or /cum\n");
-        }
-
-
-        if (args.Length != 1 && !int.TryParse(args[1], out _))
-        {
-            throw new CheatsProcessor.CommandException("You must supply a numeric value as the argument. /cum <ballSize>\n");
+            throw new CheatsProcessor.CommandException("Usage: /cum <ballSize> ; /cum");
         }
 
         if (args.Length == 2)
@@ -29,16 +24,13 @@ public class CommandCum : Command
             k.photonView.RequestOwnership();
             KoboldGenes genes = k.GetGenes();
             float initialBallSize = genes.ballSize;
-            float floatValue = float.Parse(args[1]);
-            genes.ballSize = floatValue;
-            k.SetGenes(genes);
-            k.Cum();
-            genes.ballSize = initialBallSize;
-            k.SetGenes(genes);
+            k.SetGenes(genes.With(ballSize: float.Parse(args[1])));
+            k.photonView.RPC(nameof(Kobold.Cum), RpcTarget.All);
+            k.SetGenes(genes.With(ballSize: initialBallSize));
         }
         else
         {
-            k.Cum();
+            k.photonView.RPC(nameof(Kobold.Cum), RpcTarget.All);
         }
 
     }

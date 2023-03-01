@@ -33,7 +33,6 @@ public class CommandGene : Command
 {
     public override string GetArg0() => ("/gene");
 
-
     public override void Execute(StringBuilder output, Kobold k, string[] args)
     {
         base.Execute(output, k, args);
@@ -86,14 +85,28 @@ public class CommandGene : Command
                                 k.photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.All, value);
                                 break;
                             }
+                        case "dickThickness":
+                            if (float.Parse(args[2]) > 100)
+                            {
+                                throw new CheatsProcessor.CommandException("dickThickness only accepts values from 0 - 100.");
+                            }
+                            else
+                            {
+                                k.SetGenes(genes.With(dickThickness: float.Parse(args[2]) / 100));
+                            }
+                            break;
                         default:
                             if (GeneUtilities.geneTypes[c] == "System.Byte")
                             {
-                                var value = byte.Parse(args[2]);
-                                FieldInfo info = GeneUtilities.geneType.GetField(GeneUtilities.geneList[c]);
-                                info.SetValue(genes, value);
-                                break;
-
+                                if (byte.TryParse(args[2], out byte value))
+                                {
+                                    FieldInfo info = GeneUtilities.geneType.GetField(GeneUtilities.geneList[c]);
+                                    info.SetValue(genes, value);
+                                }
+                                else
+                                {
+                                    throw new CheatsProcessor.CommandException("You must supply a value between 0 and 255 for " + args[1] + ".");
+                                }
                             }
                             else if (GeneUtilities.geneTypes[c] == "System.Single")
                             {

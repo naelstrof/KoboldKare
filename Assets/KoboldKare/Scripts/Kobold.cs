@@ -199,7 +199,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     [PunRPC]
     public void SetEnergyRPC(float newEnergy) {
         float diff = newEnergy - energy;
-        if (diff < 0f && photonView.IsMine) {
+        if (diff < 0f && GetGenes().fatSize > 0f && photonView.IsMine) {
             SetGenes(GetGenes().With(fatSize: Mathf.Max(GetGenes().fatSize + diff, 0f)));
         }
 

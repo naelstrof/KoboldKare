@@ -218,6 +218,12 @@ public class Grabber : MonoBehaviourPun {
         bool canActivate = false;
         bool canThrow = false;
         for (int i = 0; i < grabbedObjects.Count; i++) {
+            if (grabbedObjects[i] == null || !grabbedObjects[i].Valid()) {
+                grabbedObjects[i]?.Release();
+                grabbedObjects.RemoveAt(i--);
+                continue;
+            }
+            
             if (grabbedObjects[i].weapon != null) {
                 canActivate = true;
             }
@@ -226,10 +232,6 @@ public class Grabber : MonoBehaviourPun {
                 canThrow = true;
             }
 
-            if (!grabbedObjects[i].Valid()) {
-                grabbedObjects[i].Release();
-                grabbedObjects.RemoveAt(i--);
-            }
         }
 
         activateUIChanged?.Invoke(canActivate);

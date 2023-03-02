@@ -8,11 +8,13 @@ public class OrbitCameraBasicConfiguration : OrbitCameraConfiguration {
     private OrbitCameraPivotBase pivot;
     [SerializeField]
     private LayerMask cullingMask = ~0;
+
+    private OrbitCamera.OrbitCameraData? lastData;
     public override OrbitCamera.OrbitCameraData GetData(Quaternion cameraRotation) {
         if (pivot == null) {
-            return new OrbitCamera.OrbitCameraData();
+            lastData ??= OrbitCamera.GetCurrentCameraData();
+            return lastData.Value;
         }
-
         return new OrbitCamera.OrbitCameraData(pivot, cameraRotation);
     }
 

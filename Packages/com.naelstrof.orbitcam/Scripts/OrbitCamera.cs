@@ -20,6 +20,7 @@ public class OrbitCamera : MonoBehaviour {
     private PlayerInput controls;
     private bool tracking = true;
     private Quaternion postRotationOffset = Quaternion.identity;
+    private OrbitCameraData currentCameraData;
 
     private OrbitCameraConfiguration lastConfig;
     private List<OrbitCameraConfiguration> orbitCameraConfigurations;
@@ -29,7 +30,7 @@ public class OrbitCamera : MonoBehaviour {
         public float distance;
         public float fov;
         public Vector2 screenPoint;
-        public Quaternion rotation;
+        public Quaternion rotation; 
         // rotation applied to the camera after aiming is completed.
         public Quaternion postRotationOffset;
 
@@ -107,6 +108,7 @@ public class OrbitCamera : MonoBehaviour {
         transform.position -= (desiredProjectedPoint - currentProjectedPoint);
 
         postRotationOffset = data.postRotationOffset;
+        currentCameraData = data;
     }
 
     public static void ReplaceConfiguration(OrbitCameraConfiguration oldConfig, OrbitCameraConfiguration newConfig, float tweenDuration = 0.2f) {
@@ -203,5 +205,5 @@ public class OrbitCamera : MonoBehaviour {
     public static void SetTracking(bool tracking) {
         instance.tracking = tracking;
     }
-
+    public static OrbitCameraData GetCurrentCameraData() => instance.currentCameraData;
 }

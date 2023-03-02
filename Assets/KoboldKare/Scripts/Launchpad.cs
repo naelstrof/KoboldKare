@@ -25,7 +25,6 @@ public class LaunchpadEditor : Editor {
 public class Launchpad : UsableMachine {
     public Vector3 localTarget;
     public float flightTime = 5f;
-    public float playerFlightTime = 4.5f;
     private WaitForFixedUpdate waitForFixedUpdate;
 
     public override bool CanUse(Kobold k) {
@@ -81,20 +80,13 @@ public class Launchpad : UsableMachine {
 
         KoboldCharacterController controller = other.GetComponentInParent<KoboldCharacterController>();
         float gravity = Physics.gravity.y;
-        float alteredFlightTime = flightTime;
-        if (controller != null && !controller.body.isKinematic) {
-            gravity = Physics.gravity.y + controller.gravityMod.y*controller.transform.lossyScale.x;
-            alteredFlightTime = playerFlightTime;
-            StartCoroutine(DisableControllerForTime(controller));
-        } else {
-            foreach (Rigidbody body in rigidbodies) {
-                StartCoroutine(HighQualityCollision(body));
-            }
+        foreach (Rigidbody body in rigidbodies) {
+            StartCoroutine(HighQualityCollision(body));
         }
 
-        float initialYVelocity = (transform.TransformVector(localTarget).y - .5f * gravity * (alteredFlightTime * alteredFlightTime)) / alteredFlightTime;
+        float initialYVelocity = (transform.TransformVector(localTarget).y - .5f * gravity * (flightTime * flightTime)) / flightTime;
         float xDistance = transform.TransformVector(localTarget).With(y: 0).magnitude;
-        float initialXVelocity = xDistance/alteredFlightTime;
+        float initialXVelocity = xDistance/flightTime;
 
         Vector3 xForceDir = transform.TransformVector(localTarget).With(y: 0).normalized;
         Vector3 yForceDir = Vector3.up;
@@ -113,11 +105,7 @@ public class Launchpad : UsableMachine {
         float initialXVelocity = xDistance/flightTime;
         float initialYVelocity = (transform.TransformVector(localTarget).y - .5f * Physics.gravity.y * (flightTime * flightTime))/flightTime;
 
-        // Players have extra g-forces on them
-        float initialpXVelocity = xDistance/playerFlightTime;
-        float initialpYVelocity = (transform.TransformVector(localTarget).y - .5f * (Physics.gravity.y+playerGravityMod.y) * (playerFlightTime * playerFlightTime))/playerFlightTime;
         Vector3 lastPos = transform.position;
-        Vector3 lastpPos = transform.position;
         Vector3 xForceDir = transform.TransformVector(localTarget).With(y: 0).normalized;
         Vector3 yForceDir = Vector3.up;
         Gizmos.color = Color.white;
@@ -127,12 +115,5 @@ public class Launchpad : UsableMachine {
             lastPos = sample;
         }
         Gizmos.DrawLine(lastPos, transform.TransformPoint(localTarget));
-        Gizmos.color = Color.green;
-        for (float t = 0; t < playerFlightTime; t+=0.5f) {
-            Vector3 psample = transform.position + xForceDir*initialpXVelocity*t + yForceDir * (initialpYVelocity*t + .5f * (Physics.gravity.y+playerGravityMod.y) * (t*t));
-            Gizmos.DrawLine(lastpPos, psample);
-            lastpPos = psample;
-        }
-        Gizmos.DrawLine(lastpPos, transform.TransformPoint(localTarget));
     }
 }

@@ -11,6 +11,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     private CharacterControllerAnimator characterControllerAnimator;
     protected SettingFloat fov;
     private float lerpTrackSpeed = 0.1f;
+    private Vector3 lastPosition;
     public virtual void Initialize(Animator targetAnimator, HumanBodyBones bone, float lerpTrackSpeed) {
         targetTransform = targetAnimator.GetBoneTransform(bone);
         transform.SetParent(targetAnimator.transform, false);
@@ -22,7 +23,11 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     }
 
     public override Vector3 GetPivotPosition(Quaternion camRotation) {
-        return ragdoller.ragdolled || characterControllerAnimator.IsAnimating() ? targetTransform.position : transform.position;
+        if (!isActiveAndEnabled) {
+            return lastPosition;
+        }
+        lastPosition = ragdoller.ragdolled || characterControllerAnimator.IsAnimating() ? targetTransform.position : transform.position;
+        return lastPosition;
     }
 
     private void LateUpdate() {

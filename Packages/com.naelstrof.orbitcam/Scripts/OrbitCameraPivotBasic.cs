@@ -45,6 +45,7 @@ public class OrbitCameraPivotBasic : OrbitCameraPivotBase {
             float camMinClipPlane = 0.15f;
             actualDistance = Mathf.Max(hitResults[0].distance-camMinClipPlane,0f);
         }
+
         return actualDistance;
     }
 
@@ -55,6 +56,7 @@ public class OrbitCameraPivotBasic : OrbitCameraPivotBase {
         }
 
         Vector3 forward = camRotation * Vector3.back;
-        return Mathf.Lerp(Mathf.Min(baseFOV.GetValue() * 1.5f,100f), baseFOV.GetValue(), Easing.OutCubic(Mathf.Clamp01(forward.y + 1f)));
+        float fov = Mathf.Lerp(Mathf.Min(baseFOV.GetValue() * 1.5f,100f), baseFOV.GetValue(), Easing.OutCubic(Mathf.Clamp01(forward.y + 1f)));
+        return fov;
     }
 }

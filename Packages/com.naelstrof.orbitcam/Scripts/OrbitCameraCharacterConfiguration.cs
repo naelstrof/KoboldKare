@@ -9,6 +9,8 @@ public class OrbitCameraCharacterConfiguration : OrbitCameraConfiguration {
     private OrbitCameraPivotBase shoulderPivot;
     [SerializeField]
     private OrbitCameraPivotBase buttPivot;
+
+    private OrbitCamera.OrbitCameraData? lastData;
     
     public void SetPivots(OrbitCameraPivotBase shoulder, OrbitCameraPivotBase butt) {
         shoulderPivot = shoulder;
@@ -17,7 +19,8 @@ public class OrbitCameraCharacterConfiguration : OrbitCameraConfiguration {
     
     public override OrbitCamera.OrbitCameraData GetData(Quaternion cameraRotation) {
         if (shoulderPivot == null) {
-            return new OrbitCamera.OrbitCameraData();
+            lastData ??= OrbitCamera.GetCurrentCameraData();
+            return lastData.Value;
         }
 
         OrbitCamera.OrbitCameraData topData = new OrbitCamera.OrbitCameraData(shoulderPivot, cameraRotation);

@@ -23,7 +23,7 @@ MonoBehaviour:
     m_LocalVariables: []
   color: {r: 0.9056604, g: 0.7403238, b: 0.54254186, a: 1}
   emission: {r: 0, g: 0, b: 0, a: 1}
-  value: 2
+  value: 0.5
   metabolizationHalfLife: 40
   cleaningAgent: 0
   calories: 0.05

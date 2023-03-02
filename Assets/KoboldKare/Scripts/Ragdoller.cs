@@ -365,6 +365,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                     t.SetNetworkPosition(SmallestThree.Dequantize(rot), Time.time);
                 }
             } else {
+                lastPacket = nextPacket;
+                nextPacket = new PositionPacket(Time.time, hipBody.position);
                 foreach (var t in rigidbodyNetworkInfos) {
                     t.SetNetworkPosition(t.body.transform.rotation, Time.time);
                 }

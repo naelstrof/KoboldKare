@@ -384,6 +384,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
             possession.gameObject.SetActive(newControlType == ControlType.LocalPlayer);
         }
         GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(newControlType == ControlType.AIPlayer);
+        GetComponent<KoboldCharacterController>().inputDir = Vector3.zero;
+        GetComponent<KoboldCharacterController>().inputJump = false;
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {

@@ -20,6 +20,13 @@ public class OnPlayerEnter : MonoBehaviour {
     public List<ConditionEventPair> onEnterEvents;
     [SerializeField]
     public List<ConditionEventPair> onExitEvents;
+
+    private LayerMask playerLayers;
+
+    private void Awake() {
+        playerLayers = LayerMask.GetMask("Player", "LocalPlayer", "MirrorReflection", "Hitbox");
+    }
+
     IEnumerator OnEnterDelay() {
         yield return new WaitForSeconds(delay);
         foreach (ConditionEventPair pair in onEnterEvents) {
@@ -46,27 +53,22 @@ public class OnPlayerEnter : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider other) {
-        if ( other.gameObject.layer != LayerMask.NameToLayer("Player")) {
+        if ( (1<<other.gameObject.layer & playerLayers) == 0) {
             return;
         }
-        if (other.transform.root.gameObject.layer != LayerMask.NameToLayer("Player")) {
-            return;
-        }
-        PlayerPossession p = other.transform.root.GetComponentInChildren<PlayerPossession>();
-        if (p != null && p.gameObject.activeInHierarchy) {
+        CharacterDescriptor p = other.transform.GetComponentInParent<CharacterDescriptor>();
+        if (p != null && p.GetPlayerControlled() == CharacterDescriptor.ControlType.LocalPlayer) {
             StopAllCoroutines();
             StartCoroutine(OnEnterDelay());
         }
     }
     public void OnTriggerExit(Collider other) {
-        if ( other.gameObject.layer != LayerMask.NameToLayer("Player")) {
+        if ( (1<<other.gameObject.layer & playerLayers) == 0) {
             return;
         }
-        if (other.transform.root.gameObject.layer != LayerMask.NameToLayer("Player")) {
-            return;
-        }
-        PlayerPossession p = other.transform.root.GetComponentInChildren<PlayerPossession>();
-        if (p != null &&p.gameObject.activeInHierarchy) {
+
+        CharacterDescriptor p = other.transform.GetComponentInParent<CharacterDescriptor>();
+        if (p != null && p.GetPlayerControlled() == CharacterDescriptor.ControlType.LocalPlayer) {
             StopAllCoroutines();
             StartCoroutine(OnExitDelay());
         }

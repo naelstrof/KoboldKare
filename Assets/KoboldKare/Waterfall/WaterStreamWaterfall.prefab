@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.79335344, z: -0, w: 0.6087613}
   m_LocalPosition: {x: 3.48, y: 9.39, z: 2.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6190463766006680472}
   - {fileID: 3506991438759099312}
@@ -64,6 +65,7 @@ Transform:
   m_LocalRotation: {x: -0.6939894, y: -0.093217015, z: -0.09136534, w: 0.7080549}
   m_LocalPosition: {x: -5.022, y: -9.61, z: 27.6402}
   m_LocalScale: {x: 3.1563, y: 0.6147, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 3
@@ -87,6 +89,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -127,8 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1437078633971756701}
   - component: {fileID: 1437078633971756702}
-  - component: {fileID: 2188870920731453084}
-  - component: {fileID: 462208095912634402}
+  - component: {fileID: 508401559642065405}
   m_Layer: 12
   m_Name: Audio Source
   m_TagString: Untagged
@@ -146,6 +148,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.13052583, z: -0, w: 0.99144495}
   m_LocalPosition: {x: 0.12, y: -7.65, z: 8.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 2
@@ -283,7 +286,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2188870920731453084
+--- !u!114 &508401559642065405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,58 +295,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1437078633971756642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c1197f81957d2540aeb71e2789c7ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: c904f963ce8722447893b41359ef6aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entered: 0
-  delay: 0.1
-  onEnterEvents:
-  - conditions: []
-    even:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1437078633971756702}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  onExitEvents:
-  - conditions: []
-    even:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1437078633971756702}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!135 &462208095912634402
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437078633971756642}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 17.91738
-  m_Center: {x: 0, y: 0, z: 0}
+  shouldInterruptMusic: 0
 --- !u!1 &4536820795065576166
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +327,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 1
@@ -395,6 +351,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -453,6 +410,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0.00000023029, y: -0.06, z: -0.000000061707}
   m_LocalScale: {x: -0.8498454, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 0
@@ -476,6 +434,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -534,6 +493,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 4
@@ -592,6 +552,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &6342944587825574793
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -601,6 +562,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -608,11 +570,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -643,8 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3749027085099218339}
   - component: {fileID: 5008644961296605090}
-  - component: {fileID: 2620664728326609119}
-  - component: {fileID: 8896067919033406910}
+  - component: {fileID: 5239093977528394594}
   m_Layer: 12
   m_Name: Brook
   m_TagString: Untagged
@@ -662,6 +618,7 @@ Transform:
   m_LocalRotation: {x: -0.049950223, y: -0.120590515, z: 0.37940946, w: 0.9159756}
   m_LocalPosition: {x: 1.48, y: -7.32, z: 8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 618455104386581588}
   m_RootOrder: 5
@@ -799,7 +756,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2620664728326609119
+--- !u!114 &5239093977528394594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -808,55 +765,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7844338092910286426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c1197f81957d2540aeb71e2789c7ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: c904f963ce8722447893b41359ef6aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entered: 0
-  delay: 0.1
-  onEnterEvents:
-  - conditions: []
-    even:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5008644961296605090}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  onExitEvents:
-  - conditions: []
-    even:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5008644961296605090}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!135 &8896067919033406910
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844338092910286426}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 17.91738
-  m_Center: {x: 0, y: 0, z: 0}
+  shouldInterruptMusic: 0

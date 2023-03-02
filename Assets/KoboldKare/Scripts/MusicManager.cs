@@ -4,6 +4,8 @@ using UnityEngine;
 using KoboldKare;
 
 public class MusicManager : MonoBehaviour {
+    private static MusicManager instance;
+    
     private AudioSource musicSource;
     [SerializeField]
     private AudioPack music;
@@ -24,9 +26,14 @@ public class MusicManager : MonoBehaviour {
         waiting = false;
     }
     public void Interrupt() {
-        StopAllCoroutines();
+        if (waiting) return;
         waiting = true;
+        StopAllCoroutines();
         StartCoroutine(FadeOutAndStartOver());
+    }
+
+    public static void InterruptStatic() {
+        instance.Interrupt();
     }
 
     private IEnumerator WaitAndPlay(float time) {
@@ -36,6 +43,15 @@ public class MusicManager : MonoBehaviour {
         }
         waiting = false;
     }
+
+    void Awake() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
+
     void Start() {
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.bypassEffects = true;

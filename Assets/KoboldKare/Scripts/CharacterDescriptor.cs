@@ -224,37 +224,12 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         grabber.SetView(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
 
         
-        List<Collider> ignoreColliders = new List<Collider>();
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Chest)));
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Neck)));
-        ignoreColliders.AddRange(GetDepthOneColliders(displayAnimator, displayAnimator.GetBoneTransform(HumanBodyBones.Head)));
-        precisionGrabber.SetIgnoreColliders(ignoreColliders.ToArray());
+        precisionGrabber.SetIgnoreColliders(displayAnimator.GetBoneTransform(HumanBodyBones.Neck).GetComponentsInChildren<Collider>());
         
         thirdPersonMeshDisplay = possession.GetComponent<ThirdPersonMeshDisplay>();
         thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
         classicIK.Initialize();
         kobold.SetGenes(kobold.GetGenes());
-    }
-
-    private List<Collider> GetDepthOneColliders(Animator animator, Transform target) {
-        List<Collider> colliders = new List<Collider>();
-        for(int o=0;o<target.childCount;o++) {
-            Transform t = target.GetChild(o);
-            bool found = false;
-            for (int i = 0; i < (int)HumanBodyBones.LastBone; i++) {
-                if (t == target || t != animator.GetBoneTransform((HumanBodyBones)i)) continue;
-                found = true;
-                break;
-            }
-            if (found) {
-                continue;
-            }
-
-            if (t.TryGetComponent(out Collider outCollider)) {
-                colliders.Add(outCollider);
-            }
-        }
-        return colliders;
     }
 
     private void OnDestroy() {
@@ -387,6 +362,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         GetComponent<KoboldCharacterController>().inputDir = Vector3.zero;
         GetComponent<KoboldCharacterController>().inputJump = false;
     }
+
+    public ControlType GetPlayerControlled() => controlType;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         bool isPlayer = false;

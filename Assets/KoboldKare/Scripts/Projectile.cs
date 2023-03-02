@@ -182,7 +182,8 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView == null || info.photonView.InstantiationData == null || info.photonView.InstantiationData[0] is not BitBuffer) {
-            throw new UnityException("Projectile created without proper instantiation data!");
+            Debug.LogWarning("Projectile created without proper instantiation data! If loading from a save then this is OK.");
+            return;
         }
 
         BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];

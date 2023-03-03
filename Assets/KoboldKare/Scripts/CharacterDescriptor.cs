@@ -165,7 +165,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         
         if (lodGroup == null) {
             lodGroup = gameObject.AddComponent<LODGroup>();
-            lodGroup.SetLODs(new[] { new LOD(0.05f, bodyRenderers.ToArray()) });
+            lodGroup.SetLODs(new[] { new LOD(0.01f, bodyRenderers.ToArray()) });
         }
 
         kobold = GetComponent<Kobold>();

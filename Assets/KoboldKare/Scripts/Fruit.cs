@@ -56,7 +56,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     }
 
     void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType type) {
-        fruitInflater.SetSize(Mathf.Log(1f + contents.volume / 20f, 2f), this);
+        fruitInflater.SetSize(Mathf.Max(Mathf.Log(1f + contents.volume / 20f, 2f),0.15f), this);
     }
 
     void Start() {

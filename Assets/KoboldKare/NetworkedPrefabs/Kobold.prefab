@@ -254,7 +254,6 @@ MonoBehaviour:
   listeners:
   - rid: 0
   - rid: 1
-  - rid: 2
   - rid: 5882124739971907584
   - rid: 8920608380542517249
   - rid: 8920608380542517259
@@ -296,21 +295,6 @@ MonoBehaviour:
         pullT: -0.025
         pushT: 0.01
         overdrive: 1
-    - rid: 2
-      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        t: 0.82
-        offsetCorrectionBone: {fileID: 8415318311738016194}
-        targets:
-        - skinnedMeshRenderer: {fileID: 6506915555087688956}
-          blendshapeName: MouthBackwardsPenetrate
-          blendshapeID: 50
-        - skinnedMeshRenderer: {fileID: 2780399689652382999}
-          blendshapeName: MouthBackwardsPenetrate
-          blendshapeID: 50
-        baseGirthRadius: 0
-        blendShapeGirthRadius: 0.05
-        overdrive: 0
     - rid: 5882124739971907584
       type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
       data:
@@ -326,8 +310,17 @@ MonoBehaviour:
       type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
       data:
         t: 0.778
-        jawTransform: {fileID: 6506915555090380210}
-        jawOpenDirection: {x: 0, y: 0, z: 1}
+        offsetCorrectionBone: {fileID: 8415318311738016194}
+        targets:
+        - skinnedMeshRenderer: {fileID: 6506915555087688956}
+          blendshapeName: MouthBackwardsPenetrate
+          blendshapeID: 50
+        - skinnedMeshRenderer: {fileID: 2780399689652382999}
+          blendshapeName: MouthBackwardsPenetrate
+          blendshapeID: 50
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.05
+        overdrive: 0
         koboldAnimator: {fileID: 6506915555083475516}
     - rid: 8920608380542517267
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
@@ -645,7 +638,6 @@ MonoBehaviour:
   - rid: 0
   - rid: 1
   - rid: 2
-  - rid: 8920608344300847108
   - rid: 8920608344300847109
   - rid: 8920608344300847121
   - rid: 8920608380542517248
@@ -691,8 +683,8 @@ MonoBehaviour:
         baseGirthRadius: 0.002
         blendShapeGirthRadius: 0.05
         overdrive: 1
-    - rid: 8920608344300847108
-      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
+    - rid: 8920608344300847109
+      type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
       data:
         t: 0
         offsetCorrectionBone: {fileID: 8415318311738016194}
@@ -706,12 +698,6 @@ MonoBehaviour:
         baseGirthRadius: 0
         blendShapeGirthRadius: 0.05
         overdrive: 0
-    - rid: 8920608344300847109
-      type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
-      data:
-        t: 0
-        jawTransform: {fileID: 6506915555090380210}
-        jawOpenDirection: {x: 0, y: 0, z: 1}
         koboldAnimator: {fileID: 6506915555083475516}
     - rid: 8920608344300847121
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}

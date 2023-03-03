@@ -60,7 +60,6 @@ MonoBehaviour:
   - rid: 7257832997841534979
   - rid: 7257832997841534982
   - rid: 7257832997841534983
-  - rid: 7257832997841534984
   references:
     version: 2
     RefIds:
@@ -145,8 +144,14 @@ MonoBehaviour:
       type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
       data:
         t: 0
-        jawTransform: {fileID: 1740413816555941781}
-        jawOpenDirection: {x: 0, y: 0, z: 1}
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: vrc.v_aa
+          blendshapeID: 0
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
         koboldAnimator: {fileID: 5691071212841091566}
     - rid: 7257832997841534983
       type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
@@ -157,18 +162,6 @@ MonoBehaviour:
         - skinnedMeshRenderer: {fileID: 662475372023914797}
           blendshapeName: ThroatOpen
           blendshapeID: 44
-        baseGirthRadius: 0
-        blendShapeGirthRadius: 0.03
-        overdrive: 0
-    - rid: 7257832997841534984
-      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        t: 0
-        offsetCorrectionBone: {fileID: 6453316820815694996}
-        targets:
-        - skinnedMeshRenderer: {fileID: 662475372023914797}
-          blendshapeName: vrc.v_aa
-          blendshapeID: 0
         baseGirthRadius: 0
         blendShapeGirthRadius: 0.03
         overdrive: 0
@@ -989,7 +982,6 @@ MonoBehaviour:
   - rid: 7257832986391347203
   - rid: 7257832986391347204
   - rid: 7257832986391347205
-  - rid: 7257832986391347206
   - rid: 7257832997841534978
   - rid: 7257832997841534979
   - rid: 7257832997841534982
@@ -1074,18 +1066,6 @@ MonoBehaviour:
         baseGirthRadius: 0
         blendShapeGirthRadius: 0.03
         overdrive: 0
-    - rid: 7257832986391347206
-      type: {class: SimpleBlendshapeListener, ns: PenetrationTech, asm: Naelstrof.PenetrationTech}
-      data:
-        t: 0.698
-        offsetCorrectionBone: {fileID: 6453316820815694996}
-        targets:
-        - skinnedMeshRenderer: {fileID: 662475372023914797}
-          blendshapeName: BackwardThroatPenetrate
-          blendshapeID: 45
-        baseGirthRadius: 0
-        blendShapeGirthRadius: 0.03
-        overdrive: 0
     - rid: 7257832997841534978
       type: {class: KoboldPenetrableListener, ns: , asm: Assembly-CSharp}
       data:
@@ -1101,8 +1081,14 @@ MonoBehaviour:
       type: {class: KoboldJawOpenListener, ns: , asm: Assembly-CSharp}
       data:
         t: 0.7
-        jawTransform: {fileID: 1740413816555941781}
-        jawOpenDirection: {x: 0, y: 0, z: 1}
+        offsetCorrectionBone: {fileID: 6453316820815694996}
+        targets:
+        - skinnedMeshRenderer: {fileID: 662475372023914797}
+          blendshapeName: BackwardThroatPenetrate
+          blendshapeID: 45
+        baseGirthRadius: 0
+        blendShapeGirthRadius: 0.03
+        overdrive: 0
         koboldAnimator: {fileID: 5691071212841091566}
 --- !u!1 &3224990935787654798
 GameObject:
@@ -1793,12 +1779,12 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[33]
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[34]
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: 331e88294c292234a86925ccd7e83f87,
         type: 3}
@@ -2780,12 +2766,6 @@ ConfigurableJoint:
 --- !u!4 &1736863098165631892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 331e88294c292234a86925ccd7e83f87,
-    type: 3}
-  m_PrefabInstance: {fileID: 2274364766201379967}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1740413816555941781 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8667428647010348054, guid: 331e88294c292234a86925ccd7e83f87,
     type: 3}
   m_PrefabInstance: {fileID: 2274364766201379967}
   m_PrefabAsset: {fileID: 0}

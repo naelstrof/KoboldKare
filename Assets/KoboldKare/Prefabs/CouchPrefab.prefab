@@ -276,7 +276,7 @@ PrefabInstance:
     - target: {fileID: 3451118302482216456, guid: fe7bc669f2ad842c7bf4b456634ccb31,
         type: 3}
       propertyPath: m_Convex
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3451118302482216456, guid: fe7bc669f2ad842c7bf4b456634ccb31,
         type: 3}

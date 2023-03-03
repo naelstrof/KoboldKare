@@ -64,17 +64,18 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         bool stillSleeping = true;
         float startStimulation = k.stimulation;
         while (k != null && stillSleeping && k.GetEnergy() < maxEnergy) {
+            yield return energyGrantPeriod;
             if (k.photonView.IsMine) {
                 k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.2f, maxEnergy));
                 k.stimulation = Mathf.MoveTowards(startStimulation, 0f, 1f);
             }
             stillSleeping = false;
             foreach (var station in GetAnimationStations()) {
+                Debug.Log(station.info.user);
                 if (station.info.user == k) {
                     stillSleeping = true;
                 }
             }
-            yield return energyGrantPeriod;
         }
         if (stillSleeping && k.photonView.IsMine) {
             k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);

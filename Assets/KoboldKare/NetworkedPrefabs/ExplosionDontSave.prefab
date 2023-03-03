@@ -135,7 +135,7 @@ AudioSource:
     m_RotationOrder: 4
 --- !u!95 &4587407516396029065
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -152,7 +152,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &5020179955434766880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMask:
     serializedVersion: 2
-    m_Bits: 3584
+    m_Bits: 134656
   scorchDecal: {fileID: 2100000, guid: 6cede52607bfdb64d96e271012abab8f, type: 2}
 --- !u!1 &7758223331431998969
 GameObject:

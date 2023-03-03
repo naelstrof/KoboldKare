@@ -76,16 +76,26 @@ public class KoboldGenes {
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
     public byte grabCount = 1;
-    
+
+    private static double NextGaussian (double mean, double standard_deviation, double min, double max) {
+        double x;
+        do {
+            x = NextGaussian(mean, standard_deviation);
+        } while (x < min || x > max);
+        return x;
+    }
+    private static double NextGaussian(double mean, double standard_deviation) {
+        return mean + RandomGaussian() * standard_deviation;
+    }
     private static double RandomGaussian() {
         double u, v, s;
         do {
-            u = 2.0 * Random.value - 1.0;
-            v = 2.0 * Random.value - 1.0;
+            u = 2.0f * Random.Range(0f,1f) - 1.0f;
+            v = 2.0f * Random.Range(0f,1f) - 1.0f;
             s = u * u + v * v;
-        } while (s >= 1.0);
+        } while (s >= 1.0 || s == 0f);
 
-        double fac = Math.Sqrt(-2.0 * Math.Log(s) / s);
+        double fac = Math.Sqrt(-2.0f * Math.Log(s) / s);
         return u * fac;
     }
 
@@ -136,11 +146,11 @@ public class KoboldGenes {
         }
 
         fatSize = Random.Range(0f, 3f);
-        dickThickness = (float)RandomGaussian();
+        dickThickness = (float)NextGaussian(0.5f, 0.12f, 0f, 1f);
         baseSize = Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);
-        brightness = (byte)Mathf.RoundToInt((float)RandomGaussian()*255f);
-        saturation = (byte)Mathf.RoundToInt((float)RandomGaussian()*255f);
+        brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,32f, 0f,255f));
+        saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,32f, 0f,255f));
         return this;
     }
 

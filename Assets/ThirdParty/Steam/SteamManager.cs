@@ -23,24 +23,11 @@ using Steamworks;
 public class SteamManager : MonoBehaviour {
 #if !DISABLESTEAMWORKS
 	protected static SteamManager s_instance;
-	protected static SteamManager Instance {
-		get {
-			if (s_instance == null) {
-				return new GameObject("SteamManager").AddComponent<SteamManager>();
-			}
-			else {
-				return s_instance;
-			}
-		}
-	}
+	protected static SteamManager Instance => s_instance;
 
 	protected bool m_bInitialized = false;
-	public static bool Initialized {
-		get {
-			return Instance.m_bInitialized;
-		}
-	}
-
+	public static bool Initialized => Instance != null && Instance.m_bInitialized;
+	
 	protected SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
 
 	[AOT.MonoPInvokeCallback(typeof(SteamAPIWarningMessageHook_t))]

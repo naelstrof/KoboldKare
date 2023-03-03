@@ -155,6 +155,10 @@ public class OrbitCamera : MonoBehaviour {
     }
 
     public static void RemoveConfiguration(OrbitCameraConfiguration config, float tweenDuration = 0.2f) {
+        if (instance == null) {
+            return;
+        }
+
         instance.orbitCameraConfigurations.Remove(config);
         if (instance.currentConfiguration == config) {
             instance.StartCoroutine(instance.TweenTo(instance.orbitCameraConfigurations[^1], tweenDuration));

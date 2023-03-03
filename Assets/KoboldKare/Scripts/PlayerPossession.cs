@@ -307,7 +307,7 @@ public class PlayerPossession : MonoBehaviourPun {
             return;
         }
         Cursor.visible = false;
-        if (isActiveAndEnabled) {
+        if (isActiveAndEnabled && !GameManager.instance.isPaused) {
             PlayerProcessing();
             bool shouldCancelAnimation = false;
             //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Rotate"].ReadValue<float>() > 0.5f);

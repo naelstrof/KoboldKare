@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour {
     public void Pause(bool pause) {
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
+            OrbitCamera.SetTracking(true);
             InputOptions.SaveControls();
             UnityScriptableSettings.SettingsManager.Save();
             MultiplayerTab.gameObject.SetActive(false);
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour {
             MainViewTab.gameObject.SetActive(true);
         }
         if (pause) {
-            //OnPause.Invoke();
+            OrbitCamera.SetTracking(false);
         }
         isPaused = pause;
         if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
@@ -102,17 +103,19 @@ public class GameManager : MonoBehaviour {
             return;
         }
         Time.timeScale = isPaused ? 0.0f : 1.0f;
-        if(selectOnPause != null)
+        if (selectOnPause != null) {
             selectOnPause.GetComponent<Selectable>().Select();
-        else
-            Debug.LogError("[GameManager] selectOnPause is not bound to the resume button! Button was not selected for controller support.");
+        } else {
+            Debug.LogError(
+                "[GameManager] selectOnPause is not bound to the resume button! Button was not selected for controller support.");
+        }
     }
 
     public void Quit() {
 #if UNITY_EDITOR
         // Application.Quit() does not work in the editor so
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-        UnityEditor.EditorApplication.isPlaying = false;
+        EditorApplication.isPlaying = false;
 #else
          Application.Quit();
 #endif

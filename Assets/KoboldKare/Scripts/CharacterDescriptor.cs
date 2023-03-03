@@ -52,6 +52,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private ControlType controlType = ControlType.AIPlayer;
     private Kobold kobold;
     private Vector3 eyeDir;
+    private LODGroup lodGroup;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -160,6 +161,13 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     }
 
     void InitializePreEnable() {
+        lodGroup = GetComponentInChildren<LODGroup>();
+        
+        if (lodGroup == null) {
+            lodGroup = gameObject.AddComponent<LODGroup>();
+            lodGroup.SetLODs(new[] { new LOD(0.05f, bodyRenderers.ToArray()) });
+        }
+
         kobold = GetComponent<Kobold>();
         body.mass = 10f;
         body.drag = 0f;

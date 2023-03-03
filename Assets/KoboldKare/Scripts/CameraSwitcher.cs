@@ -42,11 +42,13 @@ public class CameraSwitcher : MonoBehaviour {
             firstpersonConfiguration = new OrbitCameraBasicConfiguration();
             firstpersonConfiguration.SetPivot(firstpersonPivot.GetComponent<OrbitCameraLerpTrackPivot>());
             firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));
-            var freeCamObj = new GameObject("FreeCamPivot", typeof(SimpleCameraController));
-            freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform, false);
+            var freeCamObj = new GameObject("FreeCamPivot");
+            freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform);
             freeCamObj.transform.position = transform.position;
-            freeCamController = freeCamObj.GetComponent<SimpleCameraController>();
+            freeCamController = freeCamObj.AddComponent<SimpleCameraController>();
             freeCamController.SetControls(GetComponent<PlayerInput>());
+            freeCamController.enabled = false;
+            
             freecamConfiguration = new OrbitCameraBasicConfiguration();
             freecamConfiguration.SetPivot(freeCamController);
             freecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));

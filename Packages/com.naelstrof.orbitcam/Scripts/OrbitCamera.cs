@@ -33,14 +33,18 @@ public class OrbitCamera : MonoBehaviour {
         public Quaternion rotation; 
         // rotation applied to the camera after aiming is completed.
         public Quaternion postRotationOffset;
+        public bool clampYaw;
+        public bool clampPitch;
 
         public OrbitCameraData(OrbitCameraPivotBase pivot, Quaternion camRotation) {
-            position = pivot.GetPivotPosition(camRotation);
-            distance = pivot.GetDistanceFromPivot(camRotation);
-            fov = pivot.GetFOV(camRotation);
-            screenPoint = pivot.GetScreenOffset(camRotation);
             rotation = pivot.GetRotation(camRotation);
-            postRotationOffset = pivot.GetPostRotationOffset(camRotation);
+            position = pivot.GetPivotPosition(rotation);
+            distance = pivot.GetDistanceFromPivot(rotation);
+            fov = pivot.GetFOV(rotation);
+            screenPoint = pivot.GetScreenOffset(rotation);
+            postRotationOffset = pivot.GetPostRotationOffset(rotation);
+            clampPitch = pivot.GetClampPitch();
+            clampYaw = pivot.GetClampYaw();
         }
 
         public static OrbitCameraData Lerp(OrbitCameraData pivotA, OrbitCameraData pivotB, float t) {
@@ -50,7 +54,9 @@ public class OrbitCamera : MonoBehaviour {
                 fov = Mathf.Lerp(pivotA.fov, pivotB.fov, t),
                 screenPoint = Vector2.Lerp(pivotA.screenPoint, pivotB.screenPoint, t),
                 rotation = Quaternion.Lerp(pivotA.rotation, pivotB.rotation, t),
-                postRotationOffset = Quaternion.Lerp(pivotA.postRotationOffset, pivotB.postRotationOffset, t)
+                postRotationOffset = Quaternion.Lerp(pivotA.postRotationOffset, pivotB.postRotationOffset, t),
+                clampPitch = t<0.5f ? pivotA.clampPitch : pivotB.clampPitch,
+                clampYaw = t<0.5f ? pivotA.clampYaw : pivotB.clampYaw
             };
         }
     }
@@ -85,11 +91,16 @@ public class OrbitCamera : MonoBehaviour {
 
         if (tracking) {
             _aim += mouseDelta;
-            _aim.x = Mathf.Repeat(_aim.x, 360f);
-            _aim.y = Mathf.Clamp(_aim.y, -89f, 89f);
+            if (currentCameraData.clampYaw) {
+                _aim.x = Mathf.Clamp(_aim.x, -180f, 180f);
+            } else {
+                _aim.x = Mathf.Repeat(_aim.x+180f, 360f)-180f;
+            }
+            if (currentCameraData.clampPitch) {
+                _aim.y = Mathf.Clamp(_aim.y, -89f, 89f);
+            }
         }
     }
-
     private void SetOrbit(OrbitCameraData data) {
         Quaternion cameraRot = data.rotation;
         
@@ -173,9 +184,9 @@ public class OrbitCamera : MonoBehaviour {
             instance.StartCoroutine(instance.TweenTo(instance.orbitCameraConfigurations[^1], 0.2f));
         }
     }
-
+    public static Vector2 GetPlayerIntendedScreenAim() => instance._aim;
     private void LateUpdate() {
-        if (tweening) {
+        if (tweening || currentConfiguration == null) {
             return;
         }
 

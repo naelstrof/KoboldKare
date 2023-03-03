@@ -1,23 +1,28 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Photon.Pun;
-using UnityEditor;
 using UnityEngine;
-using UnityScriptableSettings;
 
 public class KoboldCustomizerSpawner : MonoBehaviour {
     [SerializeField] private PrefabSelectSingleSetting playerSetting; 
     [SerializeField] private PrefabDatabase playerPrefabDatabase;
+    private OrbitCameraConfigurationBlend cameraConfiguration;
 
     private GameObject player;
+    private OrbitCameraLockedLerpTrackPivot shoulderPivot;
+    private OrbitCameraLockedLerpTrackPivot buttPivot;
 
     void Start() {
         ModManager.AddFinishedLoadingListener(FinishedLoading);
         if (ModManager.GetReady()) {
             FinishedLoading();
         }
+        shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLockedLerpTrackPivot)).GetComponent<OrbitCameraLockedLerpTrackPivot>();
+        buttPivot = new GameObject("ButtPivot", typeof(OrbitCameraLockedLerpTrackPivot)).GetComponent<OrbitCameraLockedLerpTrackPivot>();
+        shoulderPivot.gameObject.SetActive(false);
+        buttPivot.gameObject.SetActive(false);
+        cameraConfiguration = new OrbitCameraConfigurationBlend();
+        cameraConfiguration.SetPivots(shoulderPivot, buttPivot, 0.5f);
     }
 
     void FinishedLoading() {
@@ -45,7 +50,12 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
 
     IEnumerator EnsureModsAreLoadedThenChangePlayer() {
         if (player != null) {
+            shoulderPivot.transform.SetParent(null);
+            buttPivot.transform.SetParent(null);
+            shoulderPivot.gameObject.SetActive(false);
+            buttPivot.gameObject.SetActive(false);
             Destroy(player);
+            OrbitCamera.RemoveConfiguration(cameraConfiguration);
         }
         
         yield return new WaitUntil(ModManager.GetReady);
@@ -53,26 +63,39 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     }
 
 
+    void HandlePlayerSpawn(GameObject player) {
+        player.AddComponent<PlayerKoboldLoader>();
+        var characterDescriptor = player.GetComponent<CharacterDescriptor>();
+        characterDescriptor.finishedLoading += (view) => {
+            shoulderPivot.SetInfo(new Vector2(0.666f, 0.666f), 2f);
+            shoulderPivot.Initialize(characterDescriptor.GetDisplayAnimator(), HumanBodyBones.Head, 1f);
+
+            buttPivot.SetInfo(new Vector2(0.666f, 0.333f), 2f);
+            buttPivot.Initialize(characterDescriptor.GetDisplayAnimator(), HumanBodyBones.Hips, 1f);
+            shoulderPivot.gameObject.SetActive(true);
+            buttPivot.gameObject.SetActive(true);
+
+            characterDescriptor.GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
+            OrbitCamera.AddConfiguration(cameraConfiguration);
+        };
+    }
+
+    private void OnDisable() {
+        OrbitCamera.RemoveConfiguration(cameraConfiguration);
+    }
+
     void OnChangePlayerRoutine(int newValue = -1) {
         foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
             if (!info.IsValid() || info.GetKey() != playerSetting.GetPrefab()) continue;
             player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
-            player.AddComponent<PlayerKoboldLoader>();
-            //player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX |
-                                                           //RigidbodyConstraints.FreezePositionZ |
-                                                           //RigidbodyConstraints.FreezeRotation;
-            player.GetComponent<CharacterDescriptor>().GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
+            HandlePlayerSpawn(player);
             return;
         }
 
         foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
             if (!info.IsValid()) continue;
             player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
-            player.AddComponent<PlayerKoboldLoader>();
-            //player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX |
-                                                           //RigidbodyConstraints.FreezePositionZ |
-                                                           //RigidbodyConstraints.FreezeRotation;
-            player.GetComponent<CharacterDescriptor>().GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
+            HandlePlayerSpawn(player);
         }
     }
 }

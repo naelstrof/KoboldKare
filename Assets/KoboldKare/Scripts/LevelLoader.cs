@@ -22,22 +22,30 @@ public class LevelLoader : MonoBehaviour {
             return;
         }
     }
-    public Coroutine LoadLevel(string name) {
+    public Coroutine LoadLevel(string mapName) {
         StopAllCoroutines();
-        return StartCoroutine(LoadLevelRoutine(name));
+        return StartCoroutine(LoadLevelRoutine(mapName));
     }
-    public IEnumerator LoadLevelRoutine(string name) {
-        GameManager.instance.Pause(false);
-        sceneLoadStart?.Invoke();
-        loadingLevel = true;
-        yield return new WaitForSecondsRealtime(1f);
-        PhotonNetwork.LoadLevel(name);
-        while (PhotonNetwork.LevelLoadingProgress != 1f) {
-            yield return new WaitForEndOfFrame();
+
+    private IEnumerator LoadLevelRoutine(string mapName) {
+        try {
+            GameManager.instance.Pause(false);
+            sceneLoadStart?.Invoke();
+            loadingLevel = true;
+            yield return new WaitForSecondsRealtime(1f);
+            try {
+                PhotonNetwork.LoadLevel(mapName);
+            } catch {
+                PopupHandler.instance.SpawnPopup("FailedLoad");
+                throw;
+            }
+            while (PhotonNetwork.LevelLoadingProgress != 1f) {
+                yield return new WaitForEndOfFrame();
+            }
+        } finally {
+            loadingLevel = false;
+            GameManager.instance.Pause(false);
+            sceneLoadEnd?.Invoke();
         }
-        loadingLevel = false;
-        PopupHandler.instance.ClearAllPopups();
-        GameManager.instance.Pause(false);
-        sceneLoadEnd?.Invoke();
     }
 }

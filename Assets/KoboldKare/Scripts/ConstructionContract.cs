@@ -33,7 +33,7 @@ public class ConstructionContract : GenericUsable {
         return displaySprite;
     }
     public override bool CanUse(Kobold k) {
-        return k.GetComponent<MoneyHolder>().HasMoney(cost) && !bought && ObjectiveManager.GetStars() > starRequirement || (ObjectiveManager.GetStars() == starRequirement && ObjectiveManager.GetCurrentObjective() != null);
+        return !bought && (k.GetComponent<MoneyHolder>().HasMoney(cost) && ObjectiveManager.GetStars() > starRequirement || (ObjectiveManager.GetStars() == starRequirement && ObjectiveManager.GetCurrentObjective() != null));
     }
     protected virtual void SetState(bool purchased) {
         bought = purchased;

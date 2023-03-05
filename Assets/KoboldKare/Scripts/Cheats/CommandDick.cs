@@ -10,7 +10,7 @@ public class CommandDick : Command {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
         if (args.Length != 2) {
-            throw new CheatsProcessor.CommandException("Usage: /dick <index or name> ; /dick list.");
+            throw new CheatsProcessor.CommandException("Usage: /dick <index or name>.");
         }
         var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
         k.photonView.RequestOwnership();

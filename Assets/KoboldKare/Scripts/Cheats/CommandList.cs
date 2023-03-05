@@ -25,6 +25,14 @@ public class CommandList : Command {
             output.Append("}\n");
             didSomething = true;
         }
+        if (args.Length == 1 || args[1] == "dicks") {
+            output.Append("Dicks = {");
+            foreach (var info in GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos()) {
+                output.Append($"{info.GetKey()},\n");
+            }
+            output.Append("}\n");
+            didSomething = true;
+        }
         if (args.Length == 1 || args[1] == "reagents") {
             output.Append("Reagents = {");
             foreach (var reagent in ReagentDatabase.GetReagents()) {
@@ -51,7 +59,7 @@ public class CommandList : Command {
         }
 
         if (!didSomething) {
-            throw new CheatsProcessor.CommandException("Usage: /list {prefabs,objects,reagents,}");
+            throw new CheatsProcessor.CommandException("Usage: /list {prefabs,objects,reagents,dicks}");
         }
     }
 }

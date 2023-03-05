@@ -12,7 +12,7 @@ namespace Naelstrof.Inflatable {
     public class InflatableBreast : InflatableListener {
         [SerializeField]
         private Transform baseBreastTransform;
-        [FormerlySerializedAs("targetTransform")] [SerializeField]
+        [SerializeField]
         private Transform breastTransform;
         [SerializeField]
         private string flatShape;
@@ -26,6 +26,8 @@ namespace Naelstrof.Inflatable {
         private JiggleSkin skinJiggle;
         [SerializeField]
         private Animator breastAnimator;
+        [SerializeField]
+        private Vector3 breastForward = Vector3.up;
 
         private JiggleSkin.JiggleZone skinZone;
         private float skinZoneStartRadius;
@@ -91,7 +93,7 @@ namespace Naelstrof.Inflatable {
             ((JiggleSettingsBlend)targetRig.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
             ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
             skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
-            baseBreastTransform.localScale = startScale + Vector3.one*Mathf.Max(newSize-2f, 0f);
+            baseBreastTransform.localScale = startScale + (Vector3.one-breastForward*0.25f)*Mathf.Max(newSize-2f, 0f);
             breastAnimator.SetFloat(BreastSize, newSize);
         }
     }

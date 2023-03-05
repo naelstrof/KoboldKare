@@ -261,6 +261,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static IEnumerator SetLoadedMods(ICollection<ModStub> stubs) {
+        Debug.Log("Loading mod stubs...");
         List<ModStub> neededMods = new List<ModStub>(stubs);
         for(int i=0;i<neededMods.Count;i++) {
             if (neededMods[i].id != PublishedFileId_t.Invalid) {

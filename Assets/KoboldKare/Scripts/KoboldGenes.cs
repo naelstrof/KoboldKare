@@ -4,6 +4,7 @@ using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
 
 public static class KoboldGenesBitBufferExtension {
@@ -78,6 +79,8 @@ public class KoboldGenes {
     public byte grabCount = 1;
 
     private static double NextGaussian (double mean, double standard_deviation, double min, double max) {
+        // While this is technically possible, don't want to churn numbers till the end of the universe to continue...
+        Assert.IsTrue(mean + standard_deviation * 3f > min && mean - standard_deviation * 3f < max);
         double x;
         do {
             x = NextGaussian(mean, standard_deviation);
@@ -144,8 +147,8 @@ public class KoboldGenes {
         ballSize = (float)NextGaussian(10f*meanMultiplier,5.5f*standardDeviationMultiplier,5f, float.MaxValue);
         dickSize = (float)NextGaussian(10f*meanMultiplier, 5.5f*standardDeviationMultiplier, 5f, float.MaxValue);
         fatSize = (float)NextGaussian(3f,3f*standardDeviationMultiplier,0f, float.MaxValue);
-        dickThickness = (float)NextGaussian(0.5f, 0.12f*standardDeviationMultiplier, 0f, 1f);
-        baseSize = (float)NextGaussian(20f*meanMultiplier, 2.5f*standardDeviationMultiplier, 0f, 1f);//Random.Range(14f, 24f)*multiplier;
+        dickThickness = (float)NextGaussian(0.5f, 0.12f*standardDeviationMultiplier, 0f, float.MaxValue);
+        baseSize = (float)NextGaussian(20f*meanMultiplier, 2.5f*standardDeviationMultiplier, 0f, float.MaxValue);//Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));

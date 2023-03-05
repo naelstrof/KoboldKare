@@ -305,6 +305,7 @@ public static class SaveManager {
         if(SceneManager.GetActiveScene().name != "MainMenu"){
             GameManager.instance.loadListener.Hide();
         }
+        GameManager.instance.Pause(false);
     }
     public static void Load(string filename) {
         //Debug.Log("[SaveManager] :: Loading in process...");

@@ -70,10 +70,10 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     }
 
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
-        busy = true;
         try {
             yield return LocalizationSettings.InitializationOperation;
             yield return new WaitUntil(() => !busy);
+            busy = true;
             progressBarAnimator.SetBool("Active", true);
             progressBar.SetProgress(0f);
             var handle = downloadingText.GetLocalizedStringAsync();

@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour {
     private GameObject SaveTab;
 
     [SerializeField] private PrefabDatabase penisDatabase;
+    private bool reloadedSceneAlready = false;
 
     public static PrefabDatabase GetPenisDatabase() => instance.penisDatabase;
 
@@ -141,8 +142,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ReloadMapIfInEditor() {
-        if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu") {
+        if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu" && !reloadedSceneAlready) {
             StartCoroutine(ReloadMapRoutine());
+            reloadedSceneAlready = true;
         }
     }
 

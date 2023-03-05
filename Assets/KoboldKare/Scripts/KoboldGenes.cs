@@ -131,26 +131,24 @@ public class KoboldGenes {
         return (byte)penises.IndexOf(selectedPenis);
     }
 
-    public KoboldGenes Randomize(float multiplier=1f) {
-        // Slight bias for male kobolds, as they have more variety.
+    public KoboldGenes Randomize(float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
+        // Slight bias for kobolds with dicks, as they have more variety.
         if (Random.Range(0f,1f) > 0.4f) {
-            breastSize = Random.Range(0f, 10f)*multiplier;
-            ballSize = Random.Range(10f, 20f)*multiplier;
-            dickSize = Random.Range(0f, 20f)*multiplier;
+            breastSize = (float)NextGaussian(2.5f*meanMultiplier,2.5f*standardDeviationMultiplier,0f, float.MaxValue);
             dickEquip = GetRandomDick();
         } else {
-            breastSize = Random.Range(10f, 40f)*multiplier;
-            ballSize = Random.Range(5f, 25f)*multiplier;
-            dickSize = Random.Range(0f, 20f)*multiplier;
+            breastSize = (float)NextGaussian(15f*meanMultiplier,5.5f*standardDeviationMultiplier,0f, float.MaxValue);
             dickEquip = byte.MaxValue;
         }
 
-        fatSize = Random.Range(0f, 3f);
-        dickThickness = (float)NextGaussian(0.5f, 0.12f, 0f, 1f);
-        baseSize = Random.Range(14f, 24f)*multiplier;
+        ballSize = (float)NextGaussian(10f*meanMultiplier,5.5f*standardDeviationMultiplier,5f, float.MaxValue);
+        dickSize = (float)NextGaussian(10f*meanMultiplier, 5.5f*standardDeviationMultiplier, 5f, float.MaxValue);
+        fatSize = (float)NextGaussian(3f,3f*standardDeviationMultiplier,0f, float.MaxValue);
+        dickThickness = (float)NextGaussian(0.5f, 0.12f*standardDeviationMultiplier, 0f, 1f);
+        baseSize = (float)NextGaussian(20f*meanMultiplier, 2.5f*standardDeviationMultiplier, 0f, 1f);//Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);
-        brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,32f, 0f,255f));
-        saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,32f, 0f,255f));
+        brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
+        saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         return this;
     }
 

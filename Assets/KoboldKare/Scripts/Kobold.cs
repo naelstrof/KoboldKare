@@ -283,8 +283,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                     inflatableDick.SetDickThickness(newGenes.dickThickness);
                 }
             }
-            dickSet.dickSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.descriptor);
-            dickSet.ballSizeInflater.SetSize(0.7f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.descriptor);
+            dickSet.dickSizeInflater.SetSize(Mathf.Max(0.5f,Mathf.Log(1f + newGenes.dickSize / 20f, 2f)), dickSet.descriptor);
+            dickSet.ballSizeInflater.SetSize(Mathf.Max(0.5f, Mathf.Log(1f + newGenes.ballSize / 20f, 2f)), dickSet.descriptor);
         }
         grabber.SetMaxGrabCount(newGenes.grabCount);
         if (ragdoller.ragdolled) {

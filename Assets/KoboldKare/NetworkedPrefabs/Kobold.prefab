@@ -1159,6 +1159,7 @@ MonoBehaviour:
         rigBuilder: {fileID: 3736482642893614196}
         skinJiggle: {fileID: 7646633552433837299}
         breastAnimator: {fileID: 6506915555083475516}
+        breastForward: {x: 0, y: 1, z: 0}
     - rid: 5
       type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
@@ -1172,6 +1173,7 @@ MonoBehaviour:
         rigBuilder: {fileID: 3736482642893614196}
         skinJiggle: {fileID: 7646633552433837299}
         breastAnimator: {fileID: 6506915555083475516}
+        breastForward: {x: 0, y: 1, z: 0}
     - rid: 5882124988304326676
       type: {class: InflatableBelly, ns: , asm: Assembly-CSharp}
       data:

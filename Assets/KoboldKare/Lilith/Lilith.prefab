@@ -711,6 +711,7 @@ MonoBehaviour:
         rigBuilder: {fileID: 2274364766123311954}
         skinJiggle: {fileID: 2274364766123311955}
         breastAnimator: {fileID: 5691071212841091566}
+        breastForward: {x: 0, y: 1, z: 0}
     - rid: 7257832963060269057
       type: {class: InflatableBelly, ns: , asm: Assembly-CSharp}
       data:
@@ -743,6 +744,7 @@ MonoBehaviour:
         rigBuilder: {fileID: 2274364766123311954}
         skinJiggle: {fileID: 2274364766123311955}
         breastAnimator: {fileID: 5691071212841091566}
+        breastForward: {x: 0, y: 1, z: 0}
 --- !u!114 &2274364766123311956
 MonoBehaviour:
   m_ObjectHideFlags: 0

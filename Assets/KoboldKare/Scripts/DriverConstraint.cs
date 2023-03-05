@@ -10,12 +10,10 @@ public class DriverConstraint : MonoBehaviour {
     public Vector3 anchor = Vector3.zero;
     public Vector3 forwardVector = Vector3.forward;
     public Vector3 upVector = Vector3.up;
-    public float softness = 1f;
-    public float angleSpringStrength = 0;
-    public float angleSpringSoftness = 90;
-    public float angleDamping = 1;
+    private float softness = 1f;
+    public float angleSpringStrength;
     public float dampingStrength = 0.25f;
-    public bool applyForceToPoint = false;
+    private bool applyForceToPoint = false;
     private Vector3? lastPosition;
     private void Start() {
         if (body == null) {
@@ -57,11 +55,11 @@ public class DriverConstraint : MonoBehaviour {
             body.angularVelocity = torque * angleSpringStrength;
         }
 
-        body.velocity -= velocityDifference * dampingStrength;
+        //body.velocity -= velocityDifference * dampingStrength;
         if (applyForceToPoint) {
-            body.AddForceAtPosition(force, p1);
+            body.AddForceAtPosition(force-velocityDifference*dampingStrength, p1, ForceMode.Acceleration);
         } else {
-            body.AddForce(force);
+            body.AddForce(force-velocityDifference*dampingStrength, ForceMode.Acceleration);
         }
     }
 }

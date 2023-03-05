@@ -9,9 +9,9 @@ public class Grabber : MonoBehaviourPun {
     private int maxGrabCount = 1;
     private Rigidbody body;
     [SerializeField]
-    private float springStrength = 800f;
-    [SerializeField][Range(0f,0.5f)]
-    private float dampingStrength = 0.4f;
+    private float springStrength = 200f;
+    [SerializeField][Range(0f,100f)]
+    private float dampingStrength = 10f;
     [SerializeField]
     private Vector3 defaultOffset = Vector3.forward;
 
@@ -64,17 +64,14 @@ public class Grabber : MonoBehaviourPun {
             body.collisionDetectionMode = CollisionDetectionMode.Continuous;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             driverConstraint = body.gameObject.AddComponent<DriverConstraint>();
-            driverConstraint.springStrength = springStrength;
+            driverConstraint.springStrength = this.springStrength;
             driverConstraint.body = body;
-            driverConstraint.dampingStrength = dampingStrength;
-            driverConstraint.softness = 1f;
+            driverConstraint.dampingStrength = this.dampingStrength;
             driverConstraint.connectedAnchor = viewPos+viewRot*offset;
             grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
-                driverConstraint.angleDamping = 0.1f;
-                driverConstraint.angleSpringSoftness = 60f;
                 driverConstraint.connectedAnchor = viewPos+viewRot*(weapon.GetWeaponHoldPosition()+offset);
             }
 

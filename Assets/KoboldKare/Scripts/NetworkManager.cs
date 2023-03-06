@@ -38,6 +38,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
         }
         if (!PhotonNetwork.IsConnected) {
+            PhotonNetwork.AutomaticallySyncScene = true;
             settings.AppSettings.FixedRegion = region;
             if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
                 settings.AppSettings.AppVersion += "Editor";
@@ -113,11 +114,11 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
 
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.OfflineMode = false;
         PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnected) {
-            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);

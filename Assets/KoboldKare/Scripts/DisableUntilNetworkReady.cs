@@ -18,13 +18,13 @@ public class DisableUntilNetworkReady : MonoBehaviourPunCallbacks {
         selectable.interactable = PhotonNetwork.IsConnected;
     }
 
-    public override void OnConnected() {
-        base.OnConnected();
+    public override void OnJoinedLobby() {
+        base.OnJoinedLobby();
         selectable.interactable = true;
     }
 
-    public override void OnDisconnected(DisconnectCause cause) {
-        base.OnDisconnected(cause);
+    public override void OnLeftLobby() {
+        base.OnLeftLobby();
         selectable.interactable = false;
     }
 }

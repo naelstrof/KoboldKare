@@ -168,7 +168,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
             SwitchToObjective(hasObjective ? objectives[currentObjectiveIndex] : null);
             PhotonProfiler.LogReceive(sizeof(int)*2 + sizeof(bool));
         }
-        objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
+
+        if (objectives.Count > 0 && currentObjectiveIndex > 0) {
+            objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
+        }
     }
 
     private void OnValidate() {

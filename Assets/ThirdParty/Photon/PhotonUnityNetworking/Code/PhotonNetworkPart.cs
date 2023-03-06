@@ -2114,7 +2114,11 @@ namespace Photon.Pun
             {
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
                 {
-                    PhotonNetwork.LoadLevel((string)sceneId);
+                    try {
+                        PhotonNetwork.LoadLevel((string)sceneId);
+                    } catch (UnityEngine.AddressableAssets.InvalidKeyException e) {
+                        Debug.LogException(e);
+                    }
                 }
             }
         }

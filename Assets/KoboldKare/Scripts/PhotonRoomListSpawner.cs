@@ -23,7 +23,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
     private IEnumerator RefreshRoomRoutine() {
         while (isActiveAndEnabled) {
-            if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady) {
+            if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady && PhotonNetwork.NetworkClientState != ClientState.JoiningLobby) {
                 PhotonNetwork.JoinLobby();
             }
             yield return new WaitForSeconds(1f);

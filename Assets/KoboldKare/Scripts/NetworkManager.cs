@@ -334,7 +334,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //if (photonEvent.Sender != 0) return; // Only accept this event from a server.
         
         string data = (string)photonEvent.CustomData;
-        Debug.Log($"Recieved mod handshake from {photonEvent.Sender}! {data}");
+        Debug.Log($"Received mod handshake from {photonEvent.Sender}! {data}");
         JSONNode rootNode = JSONNode.Parse(data);
         GameManager.StartCoroutineStatic(CheckModRoutine(rootNode));
     }

@@ -87,6 +87,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
         }
+        PhotonNetwork.AutomaticallySyncScene = false;
         PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
@@ -112,6 +113,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
+
+        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.OfflineMode = false;
         PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
@@ -232,6 +235,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 modNode["id"] = mod.id.ToString();
                 modArray.Add(modNode);
             }
+
+            rootNode["mapKey"] = (string)selectedMap.unityScene.RuntimeKey;
             rootNode["modList"] = modArray;
             rootNode["config"] = PrefabDatabase.GetJSONConfiguration();
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
@@ -348,6 +353,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
         if (ModManager.HasModsLoaded(desiredMods)) {
             PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
+            yield return LevelLoader.instance.LoadLevel(rootNode["mapKey"]);
         } else {
             string roomName = PhotonNetwork.CurrentRoom.Name;
             PhotonNetwork.Disconnect();

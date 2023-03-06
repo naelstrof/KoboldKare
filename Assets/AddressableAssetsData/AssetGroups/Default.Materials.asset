@@ -1,0 +1,1356 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default.Materials
+  m_EditorClassIdentifier: 
+  m_GroupName: Default.Materials
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e278dae60127cc548a739a41c93a8ba1
+  m_SerializeEntries:
+  - m_GUID: 31321ba15b8f8eb4c954353edc038b1d
+    m_Address: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Lit.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 031eaf776340eb847a7cb87aad3ce309
+    m_Address: Assets/KoboldKare/Scenes/TerrainBrushVolumeTerrainMatMainMap.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1947e62ffbc09c449a6080158aa1726a
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SplatErase.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3821f9133468bfa449f3dbee8d5a1aff
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/Splat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4728c092756adc6498992724834605ef
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereErase.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0aedd8bc1c4736945999458791d86fe5
+    m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereSplat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    - defaultMaterials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49336634658f28c4b908870c156f87cc
+    m_Address: Assets/KoboldKare/Materials/HardHat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ec851d314b42fd4ba48722003262e02
+    m_Address: Assets/KoboldKare/Materials/KoboldEquine.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 274ee3d452dc0c548a30e3e4f93791a4
+    m_Address: Assets/KoboldKare/Materials/CumDecal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e67706f0cb47eb044aabdc12e16250cc
+    m_Address: Assets/KoboldKare/Materials/GlossyDark 1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 796a7a65753e50a48abfb5a17f64cdb4
+    m_Address: Assets/KoboldKare/Materials/Chrome.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c1720b66c8e97343b3ad44978df7afc
+    m_Address: Assets/KoboldKare/Materials/KoboldDick.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c6caaf32f21d2349bed7a6995177c38
+    m_Address: Assets/KoboldKare/Materials/KandiDickFlared.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86b9b2d8768faea46805ca7185db33f3
+    m_Address: Assets/KoboldKare/Materials/KoboldEyes.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fd7c4c83c25fff47af4776f348ec0b0
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/Rocks.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae9a8c4272d25ab498f44c6737819f62
+    m_Address: Assets/KoboldKare/Materials/GoldDissolve.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 396f1662a5bcaa24c8a5bcd18b65da74
+    m_Address: Assets/KoboldKare/Materials/GoldKnob.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e9e17fcf95db35479c03e25de1e594d
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Fonts/NotoSans-NoNaN.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 670bd3aab1827a7498e28593162de7c1
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/parquet_wood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 540e3774582fb9c4289f1740d3162971
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/Fabric.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68bb3a77c99d9074688fa205f0beb650
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/plastic_brushed.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c708dd1e82446b4b99008c7627f8836
+    m_Address: Assets/KoboldKare/Materials/SkyboxMaterial.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6805c0408a2c49e4f8d2afbbb2806da3
+    m_Address: Assets/KoboldKare/Waterfall/LargeWaterFall.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f914d35060b50834287c4823cfa14f1f
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/LimestonyRock.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25c475509ea22c945868db017289250f
+    m_Address: Assets/KoboldKare/Materials/Area_Under_Construction.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27b56f50b7090784c8210ef678df7d83
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/natural_terrazo_brickwork_tile.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea83bf502f01f04419e370a65c0a7168
+    m_Address: Assets/KoboldKare/Materials/Casino/RedCover.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5faff460aae6f2d4b99ce99d0a670cb6
+    m_Address: Assets/KoboldKare/Materials/Z_Eyes.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e27ab7063d029e43a1d8968af9a89c0
+    m_Address: Assets/KoboldKare/Models/Casino/Material.002.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 194e8280a9334ee419e69fdefb2ae904
+    m_Address: Assets/KoboldKare/Materials/Casino/CasinoFancyLeather.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bf5b680638addd45b1b36501b9627f5
+    m_Address: Assets/KoboldKare/Materials/BeamMaterial.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7effe9809adeeee439c60327440e4a3f
+    m_Address: Assets/KoboldKare/Materials/Casino/GlossyDarkTile.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0d77c80f57b6e044b824b59d92d1d9d
+    m_Address: Assets/KoboldKare/Materials/Casino/TexturedBrassLitCheat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08ff38d0a8adbd04995874ab9786af9c
+    m_Address: Assets/KoboldKare/Materials/Light.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 487d99d0a2a131a4aa0fea85bd04eac5
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/BigConcreteTile.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb5d1cd060b986b498b50cf6e2a016fc
+    m_Address: Assets/KoboldKare/Materials/City/HedgeBrush.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6a3c9e04b5d8a24eba53a1a98dc2c25
+    m_Address: Assets/KoboldKare/Materials/Glass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9c610f0335353746bc57dc7fd80b6d3
+    m_Address: Assets/KoboldKare/Materials/ICE.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4beb2df098c1c4f4e8649d15b93a2ff0
+    m_Address: Assets/KoboldKare/Materials/PlayerHome/PlayerHomeTatami.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee04f21134a4331459b7183d1dd3b6f2
+    m_Address: Assets/KoboldKare/Materials/GrinderIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5e04a21f69a31f4f8c1a40cd81c8b01
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingBlue.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c6e33419daca1140967b1b5d85fecdc
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CardboardBoxLarge.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a0a6171606364b4f8d6939e8186db23
+    m_Address: Assets/KoboldKare/Materials/City/Stopsign.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbf804712c8d7474eaaba1f9266f2dbf
+    m_Address: Assets/KoboldKare/Materials/City/ShopSalePoster.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1a1e7b16b5c5ff4794a6abd3919dbaf
+    m_Address: Assets/KoboldKare/Materials/Gruff.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0059412a400e9a44bc1707090714dd6
+    m_Address: Assets/KoboldKare/Waterfall/CaveWaterStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c10f5120f4fccf4b80a82d06cef9c73
+    m_Address: Assets/KoboldKare/Materials/Casino/GlassTintedOpaque.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dacff8122c143a6468a4d715d2315673
+    m_Address: Assets/KoboldKare/Materials/Basic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd393222290f95c4aa7ec180e82b700b
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/JumpPad_Old.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7a03a22e9a780840b1642ccebacb1e5
+    m_Address: Assets/KoboldKare/Materials/Casino/CoverRed.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59270b22a03213540bb8d32f184f3a73
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/Bark.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9495f23226972ac499ad96df28d6d3cb
+    m_Address: Assets/KoboldKare/Materials/City/CheckoutLit.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f78e0421dcb7214c8828cd98bf172db
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CableRed.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c6b13626b726384da1a453d4766eafa
+    m_Address: Assets/KoboldKare/Materials/MatBlackDoubleside.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acfb35725c7c8e7409690f5aec054e1c
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/PipeCopper.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9b21782e0e10c7438f8e92b47a410c8
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_OilSpill.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7127ca2d3f691a45acc87d1526db725
+    m_Address: Assets/KoboldKare/Materials/Casino/BlackedOut.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71e49ea2699eeb143bb3083fef765b80
+    m_Address: Assets/KoboldKare/Materials/StillWater.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 915a19b26918fcc4aa8af4b9c37423f2
+    m_Address: Assets/KoboldKare/Materials/SellDumpsterA.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c41ddc2252115b4a9d4b1f4a0382d25
+    m_Address: Assets/KoboldKare/Materials/Z_Body.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8cd33e254f79aa4aaf7fa95e7f80ce0
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/stucco_white.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26ce26e2560290e48a6630b577f515d8
+    m_Address: Assets/KoboldKare/Materials/Casino/TexturedBrass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37dafcf21ab95714f8ae985dbfb3ba25
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/WallLightBasic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36b6fff2e00fa3f48b052a741ef29403
+    m_Address: Assets/KoboldKare/Waterfall/WaterFall.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73a35623dced32d408120eea30871608
+    m_Address: Assets/KoboldKare/Materials/Manhole.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98f0292316e35fc4d9a0d1b9221c5af4
+    m_Address: Assets/KoboldKare/Materials/Casino/GoblinMetal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00e374734330a2c48a3ffa497eeb1401
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_noRefunds.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62fe1a7343b8fea449fa6947dde68abd
+    m_Address: Assets/KoboldKare/Materials/BreedingStationIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 255d7b73a2e4e264ca8df39f0c98ba08
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_waterSpill.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 993365830a3eafe4384b23152084fef4
+    m_Address: Assets/KoboldKare/Materials/Casino/GlassTinted.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3af06d83db051a44ab33f3d520735975
+    m_Address: Assets/KoboldKare/Materials/FarmFence.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 855588394f9ae254d883af8632091a21
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Fonts/NotoSansNoDepth.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5ac18cbaa96a3948b0181a5c7ee1472
+    m_Address: Assets/KoboldKare/Waterfall/WaterStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af4edff34821ce94998688c06caf7d97
+    m_Address: Assets/KoboldKare/Waterfall/CaveWaterFall.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9e78a7fe82c167488c7526bdbe00e15
+    m_Address: Assets/KoboldKare/Trees/Modified Tree_meshes/Modified Treebillboard.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0494a8afd5188d84f9eef35e21285d03
+    m_Address: Packages/com.naelstrof.mozzarellatech/Mozzarella.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffceaa5a88383fe4ebe28c54912fbb03
+    m_Address: Assets/KoboldKare/Models/PlayerHome/SharedBush.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 950c2a83aa746e34eae3e1b00ad210f5
+    m_Address: Assets/KoboldKare/Models/Furniture/SharedProps.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b09efe78852b2fd478253fd90701d75f
+    m_Address: Assets/KoboldKare/Materials/Z_Shirt.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fee2cdc894f27649a91ba87cb03fbcf
+    m_Address: Assets/KoboldKare/Materials/Z_MainClothes.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51f52818060b84249804b0c69ac5bcee
+    m_Address: Assets/KoboldKare/Materials/Z_Hair.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 246a44374346ff34ab15533132ec4805
+    m_Address: Assets/KoboldKare/Materials/TransparentGlass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b44aa3f3e94e68243a40c647b7b37eec
+    m_Address: Assets/KoboldKare/Materials/TentMaterial.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9b34e7683be3634ca4785904e74db20
+    m_Address: Assets/KoboldKare/Materials/Silicone.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 633af90df9c4faf4fa13d00c4da48c16
+    m_Address: Assets/KoboldKare/Materials/Signpost_Purchasable.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0df3271bca2e90f49acda6fed94c7e29
+    m_Address: Assets/KoboldKare/Materials/SellDumpsterB.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9329160ccfbcbe84a89e79cf74773e7e
+    m_Address: Assets/KoboldKare/Materials/RunningWaterAgain.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 17dcc87ed134c11498a52c4b0f4876ab
+    m_Address: Assets/KoboldKare/Materials/PressContract.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a48af46961a67042944146d1b325e5f
+    m_Address: Assets/KoboldKare/Materials/PondWaterSmall.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f486684ddbb669f43bcfdad74d82f70c
+    m_Address: Assets/KoboldKare/Materials/PlayerHome/PlayerHomeDecoAntlersA.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffd4815d849d84f49903a70d4af732a7
+    m_Address: Assets/KoboldKare/Materials/PlayerHome/PlayerHomeBrazier.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0187ef66216d2047aeb9ad7a4770ed9
+    m_Address: Assets/KoboldKare/Materials/PlayerHome/FancyFabric.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5512dc441e7222143b777ce431921965
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/ZanyZtuff.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a12ce835cb0e34a4e95001fe08f550c1
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/WallLightBasic 1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 611855fc5dfa06d488f5b5bc3409a480
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/Trashcan.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a0d932c9be44da4ca7771c1196ac836
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/StoreMax5000.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64fc64161ca4d66439fbc2cdfba0026f
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/StonePedestal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68b930297f851e34bb4b84545ab28856
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/RopeCrystal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31427ec9b7ac45e40b6cbde90abc7a91
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/PipeRusted.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66a0d026689272c46b52adc6d9d2f9c9
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/PipeNormal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa65022e9f5f9db499d784a3d5ad060d
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/MetalBunkerDoor.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddc178bf3d5799240a5b4ec06bef3f41
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/MetalBeams.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e893b8dd7cb67248bd2e824c84e352c
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/MetalBarsSemirusted.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 919b1bccfa281e44ea5b3cb70b40ef70
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/MetalBarsDoorGate.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59a211ca234cd8f42b35bedb6e45dcec
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/MetalBarsDoor.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0f78d276c19ede4b9231371b8324806
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/LargeTruss.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93dd199a6b0dddd4bad43aeaab26f68b
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/Lamp.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2af0b895a0b9adc48b53f8ad15f0a8ad
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/ExposedBulb.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f62fb61a0a45edb43baa9c0ff31b7864
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/ElectricalPanel.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90d505ca0976e8047855bfb8af73057c
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_scratchesLarge.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ac785569ba8a93489d47dfba3a4706f
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_rubberStreak.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f42ecfd05ea47c46bfac19ff099b76f
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/decal_concretePitting.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e9e641ee353d584b8e77b34830d1236
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CrystalB.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52a3394c37d0e344293f11e682f89caf
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/ConcreteWall.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42bab896cd3a4654e91388d6ca3f9d49
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/ConcreteLanding.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3870936e2d5a714381bcbef7645afb8
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/Chainlink.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae80ff3705dde0648ae72b23b31e7b86
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CargoContainer.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 13bf5b8fb5d67614b91d8fb800f95b37
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CardboardClusters.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3b612ee0a0919c47b4a4cf457659996
+    m_Address: Assets/KoboldKare/Materials/Pawnshop/CarBattery.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 630e8689dd30d18478ad1db646ecd216
+    m_Address: Assets/KoboldKare/Materials/Pachinko.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08bd02041406a594ab928d910aeddf96
+    m_Address: Assets/KoboldKare/Materials/NipplePumpGlass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d970c4dd1ab1c1040a6da2df792c5007
+    m_Address: Assets/KoboldKare/Materials/MilkingTableIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eab7ca445c66ec54382660921dd6b8c4
+    m_Address: Assets/KoboldKare/Materials/MatBlack.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d40a91c9ff0ddf4da11433bbc0eac1b
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/zinc_roofing.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddf9ccea6ddcaf04e9ae6da645efc216
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/Woodplank (Snow).mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b4609bcae09e024f9713d1a71b0e3dc
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/trowled_concrete_lg.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abdfe8c9971c0304699d8624b872fba7
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/trowled_concrete.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b4205aeccfe9574ebe81611380e8baf
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/tinted_glass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4ecc18227c722749aee16fad49b8b67
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/tempered_steel.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd2b7e50c53eaaa469922a2674d12c25
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/stylized_wood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad8b22f4527527a49851c7c11405bbb7
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/plaster_acoustic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 844c83e9e1f9e644cb43b942897036ed
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/parquet_wood_non_decaled.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd307457ee831d440bdcced89adae388
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/parisian_sidewalk.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75f1dec866ac6004baf7bc2250edc343
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/ObeliskA.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 718b535a982da81418e5d801949de554
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/metallic_mesh_wall_panel.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ffbe8f7850d55b48abeb1053d34d10f
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/LimestonyRockNoBlend.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f363f6d35e3d6f449f7b10a4a557984
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/Leaf.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7e1d21d9af7e1f43b30fc92bd02b616
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/KoboPillar.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83456dfa6e6827c4d818eb4c17877b71
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/concrete_raw_soft_big.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78ad526973308b84a96804855bc2fe52
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/concrete_raw_soft.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99834da518f62d54f908347904e882d2
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/concrete_polished_matte_small.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70bff9b978ed63a46a838ad90735dedc
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/concrete_polished_matte.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53b05bce893953f4b980a11466b7c24a
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/ceramic_tiles.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 896da3ac4816e2946a5e70ac20060327
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/carpet_loop.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97bb51aa58d04ad4ca520e8d8e6fe735
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/BushyLeaf.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a6f15a6a8c2ecd4f84153600915700a
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/bricks_gunmetal_sm.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8989a78acea602a40bd5af0b25a2243a
+    m_Address: Assets/KoboldKare/Materials/MapMaterials/bricks_gunmetal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12a81fd7bb059aa43ac178a9620dde6c
+    m_Address: Assets/KoboldKare/Materials/KoboldDispenserIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98585a37f98699e40a42963245b7132e
+    m_Address: Assets/KoboldKare/Materials/KoboldDispenser.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b7a96e72d5f9b846b9f030d06fbbd43
+    m_Address: Assets/KoboldKare/Materials/KoboldDecal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c275e095e84344b408ba66a4a30defa9
+    m_Address: Assets/KoboldKare/Materials/KoboldBasic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0879cd5b2de0e5248bc78685d202fe23
+    m_Address: Assets/KoboldKare/Materials/KingPin.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29bfeab606ab9364d94238776d4d1659
+    m_Address: Assets/KoboldKare/Materials/JumpPadIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cea413e576a1ad44393f88ab4720dc7d
+    m_Address: Assets/KoboldKare/Materials/JapaneseBrick.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44890d99303a69744bb8efa95b1b926e
+    m_Address: Assets/KoboldKare/Materials/InflatorFluid.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22c8cd9a4b86f0c4493fff996d7abe7a
+    m_Address: Assets/KoboldKare/Materials/InflaterMachinePenetrator.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56bd08b679fb5c34b8bf31c29dbe97f1
+    m_Address: Assets/KoboldKare/Materials/InflaterMachineIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f03843597fdd90d45871c665cee62098
+    m_Address: Assets/KoboldKare/Materials/IceMachine.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f97839584f486f459ab3aa315413dda
+    m_Address: Assets/KoboldKare/Materials/HayTransparent.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44d2737f28d0cde4d939be7e619bb03e
+    m_Address: Assets/KoboldKare/Materials/Hay.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10f0241df2ec8234ea34eb747e303356
+    m_Address: Assets/KoboldKare/Materials/GrinderTwo.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff7d164f80eafa544b8e45c900f6d1e7
+    m_Address: Assets/KoboldKare/Materials/FoodTruck.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5eb176a08caac747b0d7ad318cc3753
+    m_Address: Assets/KoboldKare/Materials/Foliage.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 989d6a1b8400b74408aaa3e351aa08a7
+    m_Address: Assets/KoboldKare/Materials/FluidStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9df91db688463a4085cd24ba98ca154
+    m_Address: Assets/KoboldKare/Materials/Flask.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 693e2c1473ec7b248ac21e80784bf1fe
+    m_Address: Assets/KoboldKare/Materials/DumpsterZone.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4c07e780ac5a414da8a08774d387fb0
+    m_Address: Assets/KoboldKare/Materials/DumpsterRoof.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e142367929a62a45aecf42285ecd102
+    m_Address: Assets/KoboldKare/Materials/DirtPatchLarge.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 320bf319a28a3464daebe0bc6f135be4
+    m_Address: Assets/KoboldKare/Materials/DirtPatch.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d25c2296f8334404f976c6dfba3823e7
+    m_Address: Assets/KoboldKare/Materials/DipDecalSquare.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38ee4cdff26a5384faf2c0d623785d91
+    m_Address: Assets/KoboldKare/Materials/CumStream.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16a7c4ebc0be0a04c98fd3619f321aff
+    m_Address: Assets/KoboldKare/Materials/ClearDecalSquare.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 580fc4d76a9ffe848bf3de412f0b0dae
+    m_Address: Assets/KoboldKare/Materials/CityMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81b74278cb196934cbe8112efebf045a
+    m_Address: Assets/KoboldKare/Materials/City/TrafficLight_Base.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 210ed8145f6e97848ab24f1f54b48098
+    m_Address: Assets/KoboldKare/Materials/City/Tarpolin.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9573216acd0562449760717d655dcf8
+    m_Address: Assets/KoboldKare/Materials/City/StreetLight.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 430cfd585f573ad4dbe4265d96a1b629
+    m_Address: Assets/KoboldKare/Materials/City/Planter.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef7a9aec493d4bb428ec96c27e0dd3e2
+    m_Address: Assets/KoboldKare/Materials/City/Mailbox.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ed6c4756e34517478ba88efed80d24a
+    m_Address: Assets/KoboldKare/Materials/City/Fountain.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5854444bb80b8345b547391be0c7a5a
+    m_Address: Assets/KoboldKare/Materials/City/CheckoutProduce.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5513a21b3fa21cd4da8b775208f15099
+    m_Address: Assets/KoboldKare/Materials/City/CheckoutMark.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b2673b775e0571418fa791e9ce9842e
+    m_Address: Assets/KoboldKare/Materials/City/CheckoutHome.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22df326e8d6d6384781b1fe6e2578d61
+    m_Address: Assets/KoboldKare/Materials/City/CheckoutDiscount.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8c00ff817ada9b46889c4f6add2a9fc
+    m_Address: Assets/KoboldKare/Materials/CasinoStatue.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11ecbfc8e62d5164cb89d0466649ad78
+    m_Address: Assets/KoboldKare/Materials/Casino/VentCover.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4dbe10d7fb8e6ea468b6fce8c6fe8c33
+    m_Address: Assets/KoboldKare/Materials/Casino/ScreenPoweredDown.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c65c30a5fba0fed4bbe89a94a2ecf03f
+    m_Address: Assets/KoboldKare/Materials/Casino/PlasticDark.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4db23c72534e7345823bbad4f86559b
+    m_Address: Assets/KoboldKare/Materials/Casino/PaperGold.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e7cd25d5fa152c40abf149f322251e5
+    m_Address: Assets/KoboldKare/Materials/Casino/PaperBlack.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d02d448a0e3bf24b81e29167823db38
+    m_Address: Assets/KoboldKare/Materials/Casino/Paper.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 728c6466aa6d1e4418fd24c1c3bd86ef
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingYellow.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2075bad765c82044c80fcbf33049e1c2
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingSoftWhite.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1850ec550b1e11408674e1e2548813d
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingRed.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b6ecd0fa022f42409a12a33064e3fc8
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingPurple.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 879bedcde08334247892fdd147e05d6d
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingHardWhite.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f749d78723dc7a74aae9cbea118c383e
+    m_Address: Assets/KoboldKare/Materials/Casino/GlowingGreen.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1807ddbad4d2464478e7315e6f39ae61
+    m_Address: Assets/KoboldKare/Materials/Casino/GlassDarkBrownBottle.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bf47176f1140a14d9ce0a48defeca01
+    m_Address: Assets/KoboldKare/Materials/Casino/ElevatorFloorDecal.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 640975d8555b477469e44eee4da2dc70
+    m_Address: Assets/KoboldKare/Materials/Casino/DarkExteriorPaint.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d625ec819b6a7c4b903918592b28d23
+    m_Address: Assets/KoboldKare/Materials/Casino/CoverGold.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05908f3837eb6014a9bedd08347d7f91
+    m_Address: Assets/KoboldKare/Materials/Casino/CoverBlack.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b8ed908013510a498141d77f93d3a99
+    m_Address: Assets/KoboldKare/Materials/Casino/Cork.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58f9ee293ebd83a4698f4e454fc3308b
+    m_Address: Assets/KoboldKare/Materials/Casino/CasinoWalls.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb871b06faaca8744b71e3004a42983f
+    m_Address: Assets/KoboldKare/Materials/Casino/CasinoRoundRug.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96c6d62601811b3478034d686c4a89e2
+    m_Address: Assets/KoboldKare/Materials/Casino/CasinoPigIron.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2d45c0ef6376134595f8385403e04f7
+    m_Address: Assets/KoboldKare/Materials/Casino/CasinoLongRug.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7308b17b113151b4ab3eabca0bb0cee2
+    m_Address: Assets/KoboldKare/Materials/Casino/CardTable.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 920678048eb6ae94eadd7a19ef28db7c
+    m_Address: Assets/KoboldKare/Materials/Casino/Brass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8e9b98e324b1b24eb65830aa606ebce
+    m_Address: Assets/KoboldKare/Materials/Casino/BarrelOil.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29f23c9a028006f44a53e9eb822dba5b
+    m_Address: Assets/KoboldKare/Materials/BodySwapMachine.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8a2cecc865769141a6a3b5aaad90d51
+    m_Address: Assets/KoboldKare/Materials/BodySwapIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef87c4e4795b2364489cd261919b50ab
+    m_Address: Assets/KoboldKare/Materials/BodySwapGlass.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3972baf3ccb9c446ba6e538493fc1bb
+    m_Address: Assets/KoboldKare/Materials/BlueChrome.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25de637dba595544892c7f498a4ddd9b
+    m_Address: Assets/KoboldKare/Materials/BlueButton.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0651afff766677e4ab0ff745f1aab756
+    m_Address: Assets/KoboldKare/Materials/BlendShader.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c20030d49f15ea45b60a1852cd6e427
+    m_Address: Assets/KoboldKare/Materials/BlenderIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce941d2d520c5c5458e7374bb944d188
+    m_Address: Assets/KoboldKare/Materials/BlackPlastic.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44ca7dec95fa5a447b1cf8b7e6aed888
+    m_Address: Assets/KoboldKare/Materials/BathtubUpgradeIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fbc35270eedadb4299657846562415c
+    m_Address: Assets/KoboldKare/Materials/Basket.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acbc8f68102bc8f4fa0d6c15f5d2f2b7
+    m_Address: Assets/KoboldKare/Materials/AgedOakWood.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42f6f10a3b0df014fb211c9d4f16fd3b
+    m_Address: Assets/ThirdParty/Possum/Possum PC.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5ab9f4d1a00e1564d9be2f14b9459371, type: 2}
+    - {fileID: 11400000, guid: 345f8ed059a6ecb479732bfb85ca6200, type: 2}

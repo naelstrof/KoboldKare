@@ -55,7 +55,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d4564fafea9faf4aa0e9355ddffcaa1, type: 2}
   - {fileID: 11400000, guid: c2fdd168794aee74eac8e5dda442b7ad, type: 2}
   - {fileID: 11400000, guid: 369507a006233db488ca1ec1856a3fc6, type: 2}
-  - {fileID: 11400000, guid: 893aa9d34dfd1e845a1ca5bf5f059df9, type: 2}
+  - {fileID: 11400000, guid: f0e9968cd0406344aa05733f3b3ca9f1, type: 2}
+  - {fileID: 11400000, guid: e7a7ede0cee95bb4a98b19e5ab00e226, type: 2}
+  - {fileID: 11400000, guid: 761ae8ce87c77ea478494f06a7385d6b, type: 2}
+  - {fileID: 11400000, guid: 3b6b311e8ddb33148b96663a056bd65e, type: 2}
+  - {fileID: 11400000, guid: 3f8193e194e4d9a42a7be34f5b7d9143, type: 2}
+  - {fileID: 11400000, guid: 3fe633d247bbacf4db650ec7b151423b, type: 2}
+  - {fileID: 11400000, guid: 1224f41f702ddc64ca1d9e5eb147c650, type: 2}
   - {fileID: 11400000, guid: 696e9d6a029f28f4298ddacc5d6bcb1b, type: 2}
   - {fileID: 11400000, guid: e290be334aac9ce499cf16a34ae4a63a, type: 2}
   - {fileID: 11400000, guid: 8f7d9bfa64f1b704e8d20740f56a542e, type: 2}
@@ -114,8 +120,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9643d401603f41845892ae9c53830dfb, type: 2}
   - {fileID: 11400000, guid: 77bb7968e26c4c84a9611ef27b878812, type: 2}
   - {fileID: 11400000, guid: b34eab5c9c3b9c14fb47394c14633713, type: 2}
-  - {fileID: 11400000, guid: 3f8193e194e4d9a42a7be34f5b7d9143, type: 2}
-  - {fileID: 11400000, guid: 3fe633d247bbacf4db650ec7b151423b, type: 2}
+  - {fileID: 11400000, guid: 893aa9d34dfd1e845a1ca5bf5f059df9, type: 2}
   - {fileID: 11400000, guid: c1da991e7a1d644429f6ebd2a76fb0b2, type: 2}
   - {fileID: 11400000, guid: 75412ac5cd8f1344cbfdcfb1b107af51, type: 2}
   - {fileID: 11400000, guid: 26ff967386c28c14f837fb346f1333be, type: 2}
@@ -201,6 +206,9 @@ MonoBehaviour:
     - Locale
     - Preload
     - PlayableMap
+    - defaultAudio
+    - defaultTextures
+    - defaultMaterials
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

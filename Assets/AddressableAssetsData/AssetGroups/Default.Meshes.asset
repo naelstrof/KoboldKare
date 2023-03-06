@@ -2906,7 +2906,8 @@ MonoBehaviour:
   - m_GUID: b80e4b197c086c2459e70f09351d43ab
     m_Address: Assets/KoboldKare/Animations/thrustanimations.fbx
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c0148e77047c594994d03a52f093a82
     m_Address: Assets/KoboldKare/Animations/TentContractsIdle.anim
@@ -2929,12 +2930,14 @@ MonoBehaviour:
   - m_GUID: 003c6dbae5fa3344c99fab1f716f14f7
     m_Address: Assets/KoboldKare/Animations/TailPenetrated.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2dc663be8bab9ba4680a18315b550ae7
     m_Address: Assets/KoboldKare/Animations/TailIdle.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cef11cc283024634eac56ec583ea072c
     m_Address: Assets/KoboldKare/Animations/SurprisedFace.anim
@@ -2963,7 +2966,8 @@ MonoBehaviour:
   - m_GUID: 36eb6b7bdafd77c478b8bb53be816f25
     m_Address: Assets/KoboldKare/Animations/StandingIdle2.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93d709c23469b194ba3904e2c6a0b305
     m_Address: Assets/KoboldKare/Animations/SavePanel.controller
@@ -3082,7 +3086,8 @@ MonoBehaviour:
   - m_GUID: ef5deb0eff072164cb9d209cfae4cf64
     m_Address: Assets/KoboldKare/Animations/LookUp.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c20b4c2555aad446832371d9cfd8d3f
     m_Address: Assets/KoboldKare/Animations/KoboldRunForwardRight.anim
@@ -3297,12 +3302,14 @@ MonoBehaviour:
   - m_GUID: ab37e6be752312d4aa49c178237fa113
     m_Address: Assets/KoboldKare/Animations/BreastLarge.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93eb2177a645f2543a241cacbd0c601a
     m_Address: Assets/KoboldKare/Animations/BreastDefault.anim
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46bd2d6ffa5c8c14f850b597913018ee
     m_Address: Assets/KoboldKare/Animations/AnimationIK/xbot@T-Pose.fbx
@@ -3379,7 +3386,8 @@ MonoBehaviour:
   - m_GUID: 01936098084665e4bb7c834e8c46c5cc
     m_Address: Assets/KoboldKare/Animations/AdultKobold.controller
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 466d290c8fa4d3142a1f31820e094add
     m_Address: Assets/KoboldKare/Trees/SmallTree_meshes/SmallTree_LOD3.mesh
@@ -3479,6 +3487,96 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb69a8e51aa08a7459a0311a9878e096
     m_Address: Assets/ThirdParty/Possum/PossumHoodie.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45108b329569b47aaa56901d97730d62
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7afd1f49dc8c7401aa1ec1040ac9cec7
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e84750cad0cd465c864e8c48b65b113
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTable.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f795af31f04a4890bd263ee362e1699
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79289af57f0fb49d28e3f83bed2b82f7
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8494117ee4e2a413899331bd5c1eb791
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f020a293160d4cb3ba773e6264826b5
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c55adfb3de054c6b99b2632b1b16b8c
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec6d1c9247de244858c3964458df76ca
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96df56dcba6ec43fb9af090c5273dcd2
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe7bc669f2ad842c7bf4b456634ccb31
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3d9926fd88fe4dd09939d3fe74e9f1a
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90c06da79842448bc90ebd4e1eeaa43a
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f965d66bf7306470e8fca0624e876a3d
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBR.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b328527962d8a4d268b6d3ee07f6375c
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBR.fbx
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

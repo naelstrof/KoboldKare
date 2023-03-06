@@ -22,224 +22,192 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 88683833f4308384aac8e0dbf4adc88c
     m_Address: Assets/KoboldKare/Textures/ico_bag.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 314b60a9991ab334184fff2831c8a15e
     m_Address: Assets/KoboldKare/Textures/ico_hardhat.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f42e36bfe1e0074685f5aaba93ff78f
     m_Address: Assets/KoboldKare/Textures/ico_hat.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aef0d52182fe29d48985b053faf59e23
     m_Address: Assets/KoboldKare/Textures/equine_low_EquineDick_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6a51a68e5768654f8e614a5d167aefd
     m_Address: Assets/KoboldKare/Textures/equine_low_EquineDick_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3207072c6b926894ca9955969b0ce8f0
     m_Address: Assets/KoboldKare/Textures/Splat_Splat_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c44ea8cd9bad9a41b2e1c4b503546e2
     m_Address: Assets/KoboldKare/Textures/Normal Map from Mesh EquineDick.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2f369d12fa0c3144b8fa464d880dec52
     m_Address: Assets/KoboldKare/Textures/dick_low_Dick.001_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b5aefc08227662043a0fb60a69dad8df
     m_Address: Assets/KoboldKare/Textures/dick_low_Dick.001_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 497fe4dc767712e409ed141a239bd919
     m_Address: Assets/KoboldKare/Textures/dick_low_Dick.001_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ca5c93517dba7944da1b2fb875dd04e6
     m_Address: Assets/KoboldKare/Textures/Kobold_low_KoboldBody_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ab3b62e10e5538d4c8ddbc7f8bbcf14b
     m_Address: Assets/KoboldKare/Textures/KoboldEye_Height.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ba658213c23f3f044964ac264d664e2a
     m_Address: Assets/KoboldKare/Textures/Kobold_low_KoboldBody_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 14ad1216d75c58f4d825970897a4c9de
     m_Address: Assets/KoboldKare/Textures/eyecube.psd
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a7f4895be5036ad4bb2666a0bb7a6cb7
     m_Address: Assets/KoboldKare/Textures/KoboldEye_OpenGLNormal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3fa8181c8565718469155288933d2cba
     m_Address: Assets/KoboldKare/Textures/Kobold_low_KoboldBody_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e317d5e098b3724ba1a4fefaf462fd8
     m_Address: Assets/KoboldKare/Textures/KoboldEye_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ebaab750f57cad443a0a7a230e1bf198
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8154e40e71d46a041bbd294f4e8e2d4e
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - metallic.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43e879ee5caefab45b1f4569b36a83c0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4d52768fead19a4ab13f15b42b9d589
     m_Address: Assets/KoboldKare/Textures/ico_dig.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b3cb53257cb66ab4cb0f87b184c5a3b3
     m_Address: Assets/KoboldKare/Textures/ico_stop.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 636f3e42565e3494a8264d315e14f40d
     m_Address: Assets/KoboldKare/Textures/ico_bomb.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d15d36718819a5e4eaa4f11d2d247122
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_carved_crystal_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d98449520e2b0d4394830743dfc5e41
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/rock_crystal_limestone_edgemap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9911be683bd3dec42860f305106eb1f1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_carved_crystal_MetallicGlossiness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ac39b0f87a9f9cb48b9b0cf60569a38c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_carved_crystal_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 049174cd8710e224eb399038d835ec44
     m_Address: Assets/KoboldKare/Textures/ico_star.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5bae68604bb66e3448788ea249dbaec0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parquet Ipe - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 12adec6567d214644896c72e1055b7fb
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parquet Ipe - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7d2bc6669e22acc4da11431ce96a37db
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parquet Ipe - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 716833209dd305e4f87c95ec217fcc6e
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Plastic Brush Grain Medium
@@ -247,7 +215,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ef42edc2969abf542865ebd27c3fe3fb
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Plastic Brush Grain Medium
@@ -255,28 +222,24 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4cf70d15365f5914a99964dbdafc3d63
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Carpet Loop - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 31ec8528db8e33844a6d6024a7591f6d
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Carpet Loop - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2fdf680a844157f43bb47562565a8539
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Carpet Loop - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd8359fb330292a48a873580fa6b7df9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Plastic Brush Grain Medium
@@ -284,504 +247,432 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b879b6bd80442044d88d1c81498b1c61
     m_Address: Assets/KoboldKare/Textures/CautionTape_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f017ef0e9b9c83f459b7a9acc9990340
     m_Address: Assets/KoboldKare/Textures/Fog/Fog.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d51c3f501f716564d8dec899d6c8b349
     m_Address: Assets/KoboldKare/Textures/main menu background2.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3d6ddfd01de38d04c9cbb05b20b5f1a3
     m_Address: Assets/KoboldKare/Textures/ico_drain.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 775c36010e943454ab66e38726c40e0a
     m_Address: Assets/KoboldKare/Textures/ico_nipple.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b29a81a1ffbcef046af3d604d2408131
     m_Address: Assets/KoboldKare/Textures/ico_close.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 451488b10a2663e428099c7f6371fd74
     m_Address: Assets/KoboldKare/Textures/rider_logo_300x300.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 22ce00d14b547f44c9544e52cf99e003
     m_Address: Assets/KoboldKare/Textures/ico_server.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6606c626d543294dae6a09c02491472
     m_Address: Assets/KoboldKare/Textures/GradientSoftReverse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ee03b3923dcc28a469135677d57f8902
     m_Address: Assets/KoboldKare/Textures/loadingScreenNew.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c9ebfc53e3b9acb4fb5ec5e8066916b6
     m_Address: Assets/KoboldKare/Textures/GradientTransparent.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8cda6931d62bfa46875ecc96c8a1d03
     m_Address: Assets/KoboldKare/Textures/ico_clock.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ba9bc1d411d9834479f8f8a390d3ab25
     m_Address: Assets/KoboldKare/Textures/ico_crosshair.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 28e7c1f4172d75b4ca778831c0eb5f49
     m_Address: Assets/KoboldKare/Textures/ico_refresh.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3448810503b5fde48ac9a6ec44029e39
     m_Address: Assets/KoboldKare/Textures/ico_spawn.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f2761e853a894a84a8c8774457a12407
     m_Address: Assets/KoboldKare/Textures/sketch.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a869934696964e94c81a84bc3867f931
     m_Address: Assets/KoboldKare/Textures/GradientExtraSoft.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ed9798648979ee40a95590d01150373
     m_Address: Assets/KoboldKare/Textures/ico_checkmark.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2583b328697f0ef45a8e80af3431fe11
     m_Address: Assets/KoboldKare/Textures/Blender_logo_no_text.svg.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c12c9099a482f142801921202d45dda
     m_Address: Assets/KoboldKare/Textures/main menu background.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4b322339cb0956a428014ff67cf4c26d
     m_Address: Assets/KoboldKare/Textures/ico_fug.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ffdc6d69ba4991e46950ba1e91070e20
     m_Address: Assets/KoboldKare/Textures/unity-69-logo-png-transparent.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 599a5fd92bab81a4ab02e52d0b1b1c60
     m_Address: Packages/com.unity.analytics/DataPrivacy/DataPrivacyIcon.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6500dd6a6dc29c24abfcbe35d51b7a2c
     m_Address: Assets/KoboldKare/Textures/main menu background3.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5b4d18a34a1ca84a858c74572c2bf37
     m_Address: Assets/KoboldKare/Textures/RoundedRectangle.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc38d0aad56e64e49b1e0de5ec4e6e1d
     m_Address: Assets/KoboldKare/Textures/ico_magnifying_looking_glass.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1289c1ba46ebc28429061760a342f625
     m_Address: Assets/KoboldKare/Textures/ico_bubbles.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 181abc3b174fba4428d6dedd9fb9839f
     m_Address: Assets/KoboldKare/Textures/ico_water.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d3cc151c7539a7e4d8b839ee2356ee9a
     m_Address: Assets/KoboldKare/Textures/ico_save.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fbe3317cb30abb346926057929793b40
     m_Address: Assets/KoboldKare/Textures/ico_toggleon.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e063c52d29e94a849b5a707a2a372857
     m_Address: Assets/KoboldKare/Textures/ico_emptyslot.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ec1d383d2288b4b448cfa2b5ea958e56
     m_Address: Assets/KoboldKare/Textures/City/ObnoxiousRegisterScreen.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3658b08ec0738e74ab1202b701084aba
     m_Address: Assets/KoboldKare/Textures/Logo-3D-Shine-Shadow-01.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75e36cde8554a874dbf9abff953cd02b
     m_Address: Assets/KoboldKare/Textures/ico_open.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 27712d2f9bbe5b64baceb5004c158549
     m_Address: Assets/KoboldKare/Textures/ico_kobold_paperdoll.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 47aded6f33f154343a1f6d08d4d6631f
     m_Address: Assets/KoboldKare/Textures/ico_lock.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df345effaf631644aa47e7cfca0a48c7
     m_Address: Assets/KoboldKare/Textures/Pinups.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b40954007d18eca4389ad9b3fdbd37e5
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CarBattery_DefaultMaterial_Roughness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1cd72a1091493b04cb3dd48dd3f47813
     m_Address: Assets/KoboldKare/Textures/crack2.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ea1932206965b6a4981f07e8870ba17c
     m_Address: Assets/KoboldKare/Textures/FarmFence_FarmFence_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58fffa30f2d2b77459c728cc28ee2a93
     m_Address: Assets/KoboldKare/Textures/ico_brainjar.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3066fd3004a06804cb76752ea0b148b1
     m_Address: Assets/KoboldKare/Textures/DumpsterRoof_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dfe0884090ce3854ab77dd546d170a48
     m_Address: Assets/KoboldKare/Textures/foliagemap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7d1c4a50db265c940963ce985b8e557b
     m_Address: Assets/KoboldKare/Textures/City/StreetLight_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e9d5f506af20164590faaf0d1d03d30
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_hay_ground_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32367870e2ae7334da9e4ac162bfb78d
     m_Address: Assets/KoboldKare/Textures/Basket_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b689b70203e50047b511984002c1e13
     m_Address: Assets/KoboldKare/Textures/IceMachine_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fef6aa80a21d4c440a472f2a829dd265
     m_Address: Assets/KoboldKare/Textures/Playerhome/FloorTatamiPad_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 656ce090a7613304fb3ecb4dc9409232
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grass - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33947fa05d8252849a2c06195d997e66
     m_Address: Assets/KoboldKare/Textures/grass_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1258c3b0d26d43a45b0bcde452450dd1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/old_japanese_stone_pavers_basecolor.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c0e89b0024f1bb4f99997d8cb4dbcc4
     m_Address: Assets/KoboldKare/Textures/Casino/CardTable_Material.001_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b579bb0bfabc5546aac255a84d679dd
     m_Address: Assets/KoboldKare/Textures/Dumpster_Dumpster_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d9ff1e044c15eb439b652c2064a8b76
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_IronPitted_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 55d033e0e0ea2644c840799839d1c7c6
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Leave - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4de89be0cb3dc5e4a836e4e5174da2b4
     m_Address: Assets/KoboldKare/Textures/Pawnshop/LargeCeilingTruss_TrussMetal_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 80f3910160ca3b941a0dde93be6ed83e
     m_Address: Assets/KoboldKare/Textures/FarmFence_FarmFence_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c0d7ea31201276c49aac0703f82fb78a
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzeClean_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18ff3e313f501994495bd056cc26c0d4
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TexturesCom_Concrete_FloorPolished_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8cb72f315f658cd499b07ef060a2e367
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Leather_Tufted_512_roughness.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6392b441eaa80614ead429528f06274a
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Bark - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 73f3ef611c7bf5543ac5c0d1101f726e
     m_Address: Assets/KoboldKare/Textures/Pachinko_Pachinko_Emissive.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4cdefe914602ad24a8a5876160f94452
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Leather_Tufted_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0990eea17dc6cc248b9d3881045378cc
     m_Address: Assets/KoboldKare/Textures/flask_GlassFlask_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad95a1c10cdc1ae46bad6131181391e1
     m_Address: Assets/KoboldKare/Textures/Playerhome/FloorTatamiPad_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d46d93c197872734185ea1a2a5432298
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Lamp_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89a03dc1c9a63ce4fbea279e0830f420
     m_Address: Assets/KoboldKare/Textures/Casino/CardTable.psd
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1373d1d150972804ea48e7e5e584e8cf
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzeClean_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 653b89d1a32dad646be9724bae082400
     m_Address: Assets/KoboldKare/Textures/clownTent_TentMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da2f9ee15fc35484ebec14c09032474b
     m_Address: Assets/KoboldKare/Textures/City/StoreSalePoster.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9b9300232d90c2458ad8d0f245e748c
     m_Address: Assets/KoboldKare/Textures/kingpin_Kingpin_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad9d2e12121ccdd41ad0c3814b7ab9c5
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Metallic Mesh Wall Panel
@@ -789,742 +680,636 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4032e222109b7544ca25d66f5d781375
     m_Address: Assets/KoboldKare/Textures/Pawnshop/PastedCardboardCluster_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 01b6542205f5fa74fb1919df2f3f73d6
     m_Address: Assets/KoboldKare/Textures/Fog/tex_195955.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 92a3aa22916ff01498a03edd6b8cae7a
     m_Address: Assets/KoboldKare/Textures/WorldMap/Pillar_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb3dfc522604b5f4bbdfa12150efb10d
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/aged_oak_wood_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 45a5d1622b9fd354d813ac47ba08b9ac
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ExposedBulb_None_Emission.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7ee4a082310f0b645adaf4b61dd3f731
     m_Address: Assets/KoboldKare/Scenes/TerrainBrushOutputMainMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 135fc482f503cf64c95cb6e6154cff41
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ElectricalPanel_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 61d3f7825222c5d499e07658104ce1cf
     m_Address: Assets/KoboldKare/Textures/Pachinko_Pachinko_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 591b7982492c7d2458d965783f4a9bce
     m_Address: Assets/KoboldKare/Textures/City/StoreCheckoutSign.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dcd75a823abaa04448b22ee39a4ce6b0
     m_Address: Assets/KoboldKare/Textures/Overlay_dumpster.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7de8b823a7f931448097dbfe567edf9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stucco White  - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4deb3f92ed684d8469d35bc78cef777b
     m_Address: Assets/KoboldKare/Textures/WorldMap/ObeliskA_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ebbeada2da1ea0843a7a03dc12207758
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_OilSpill_Glossiness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b08270b24c6e42e4f83bc336b02ab223
     m_Address: Assets/KoboldKare/Textures/Dumpster_Dumpster_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d94ac5b2917e7be41a1e689c8f7ac20d
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StoreMax5000_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 051bbdb294fb899419e42e4e98defa00
     m_Address: Assets/KoboldKare/Textures/ico_breedingmount.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77358eb284966584dbcf0dbee97ed0ab
     m_Address: Assets/KoboldKare/Textures/WorldMap/Manhole.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2a7061d2e6783434db421223317707b2
     m_Address: Assets/KoboldKare/Textures/Grinder2_GrinderFrame_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 958ff5f2d08fdc24591f1fdd60f67884
     m_Address: Assets/KoboldKare/Textures/grass_metallic_gloss.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b5820ef2963e90446821999991f578ff
     m_Address: Assets/KoboldKare/Textures/CatererTruck_FoodTruck_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ca4aeff2504ea484199fec62dd346ccf
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_FloorScratchesLarge_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c23e650366325ea45976b357345b8f0b
     m_Address: Assets/KoboldKare/Textures/City/TrafficLight_Material.001_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1d98a1349a66c349b08c83c43b06bc5
     m_Address: Assets/KoboldKare/Textures/ico_inflater.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 130f43332cbedce4780c1227f222f844
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/chain_fence_normal.tga
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7112d733dffb39a4dbeb20d04448d9af
     m_Address: Assets/KoboldKare/Textures/Pawnshop/WallLightBasic_WallLight_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 11f905438ab9e0642abb604d13775c6c
     m_Address: Assets/KoboldKare/Textures/dirtrocks_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f2ab0f53d5b69854e93e5009604f9c41
     m_Address: Assets/KoboldKare/Textures/Casino/CasinoCarpetRound.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9bfaf63586eef24dbdfae601153bee8
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grey Tiles  - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fc7c348340c6a3f4b8f4db01a2af7074
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_ConcretePit_Specular.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af08969302cb9b94fab87940dd52ade5
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Lamp_DefaultMaterial_Emission.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 725627930d64e0e48816809e74b844e3
     m_Address: Assets/KoboldKare/Textures/Fog/AlphaMask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b882cd93788c9dc4596098dd43e436e2
     m_Address: Assets/KoboldKare/Textures/IceMachine_DefaultMaterial_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e8e439c3f8d0d3745ad86d6f7b615141
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StonePedestal_PedestalMat_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d06ad1d336da31744a6865b91ccc4965
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarSegment_MetalBarsSemirusted_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 23873dd37783f9f41920e20f1fa83116
     m_Address: Assets/KoboldKare/Textures/CatererTruck_FoodTruck_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32543af39399b01439ddff41be9ba724
     m_Address: Assets/KoboldKare/Textures/Playerhome/HungBrazier_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 721763043733d214dae745c438aeea68
     m_Address: Assets/KoboldKare/Textures/Water_Mist.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 403f97048232464428de4a4045f7f41a
     m_Address: Assets/KoboldKare/Textures/City/TrafficLight_Material.001_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e954af1433aea0948997985b1d145d7b
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGateDoor_Emission_AmbientOcclusion.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2693b624179a5d54582578fc18138bfc
     m_Address: Assets/KoboldKare/Textures/Pawnshop/PastedCardboardCluster_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a8ab734238971c44b11dd432f3e14b9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Concrete Raw Soft - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5bdde934c3e99af40bc4234a10f1ffce
     m_Address: Assets/KoboldKare/Textures/Area_Under_Construction.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 76e3dd44212ead74cb0da06ccd0cc9ec
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Acoustic Ceiling - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b5819e543d924bc42834273e21bdecde
     m_Address: Assets/KoboldKare/Textures/City/stripe_hard.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34cc9f542b87f8044817a35b911cfe25
     m_Address: Assets/KoboldKare/Textures/Basket_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a0082564edead0d40a13f1d59af19920
     m_Address: Assets/KoboldKare/Textures/Playerhome/WallMountDecoHorns_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a83f484a681e3641a897aa39d223db9
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TexturesCom_Concrete_FloorPolished_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a51e07845fafbb0458108df5b6a1e7fd
     m_Address: Assets/KoboldKare/Textures/FarmFence_FarmFence_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 313f93b4492f8444eb8ad793673662cd
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarSegment_MetalBarsSemirusted_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2769cfe4c5245314199d19f416cfdbb9
     m_Address: Assets/KoboldKare/Textures/koboldhole.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4f0b25f4cbb14e24b8580c9cab977a61
     m_Address: Assets/KoboldKare/Textures/Casino/VentMedium.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f4fa5f45d652bc428219c848096c958
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StoreMax5000_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8944f6f43c9b61f498dbd16b196e0469
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ExposedBulb_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4eae5ef4e7d99e644a4b8b10802dff83
     m_Address: Assets/KoboldKare/Textures/gruffForSubstance_gruffMat_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df7e8315061e59c479bec04f09a5a568
     m_Address: Assets/KoboldKare/Textures/Grinder2_GrinderFrame_BaseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 49f685158dc78f04cb48b1ccc7356101
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CardboardBoxLarge_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63fb07159d247ca4f8d7af51f7d7210c
     m_Address: Assets/KoboldKare/Textures/City/StreetLight_None_Emissive.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a494942557d0bd84e84c6495f6646d00
     m_Address: Assets/KoboldKare/Textures/brainSwapper_BodySwapMachine_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fe9d93358a9a6b24a9074ff14e02b1e9
     m_Address: Assets/KoboldKare/Textures/Pachinko_Pachinko_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b2a57455e005144ba6db051fa79e2cf
     m_Address: Assets/KoboldKare/Textures/ico_hand_grinder.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 57078855b91c0fb44a829e52f7db3f7a
     m_Address: Assets/KoboldKare/Textures/statue_low_DefaultMaterial_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f600b085e08d2e84ca9834687b6cd632
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grass - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5c3a6853f6977c47b989e9d45334fa8
     m_Address: Assets/KoboldKare/Textures/City/TreePlanter_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1705ef85c98ecd440b7c72d31d3161d8
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Gunmetal Combined - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7f8de79593db33b49937ba375b3a2f23
     m_Address: Assets/KoboldKare/Textures/Casino/CardTable_Material.001_Metallic.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 89100895644c164438f3caaaf628a4fb
     m_Address: Assets/KoboldKare/Textures/clownTent_BeamMaterial_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 63ad28a5aaea9e742a8986ee73aef55f
     m_Address: Assets/KoboldKare/Textures/Pawnshop/OilBarrel_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f84b7b58ce4cdb48878935e58649864
     m_Address: Assets/KoboldKare/Textures/DumpsterRoof_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4219d8b56a66b044e8ce969e61e03142
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tinted Glass - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 68b98bb55b520e7409bd8f5da37a7572
     m_Address: Assets/KoboldKare/Textures/Pachinko_Pachinko_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 127279d577f25ac4ea17dae3782e5074
     m_Address: Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Textures/White1px.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd6b46e5079ab6f45a6f3f66c716b87d
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ExposedBulb_None_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 38d3b3f514612d447aa4672376f7d9db
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_ConcretePit_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a846cf160e2d4b54a9dcf375af4ff509
     m_Address: Assets/KoboldKare/Textures/Playerhome/WallMountDecoHorns_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6dea5626b68b2ec4abac3541a797f7b2
     m_Address: Assets/KoboldKare/Textures/Pawnshop/BasementPawnShopDoor_Export_Concrete_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 59f64036b5b465142846f4fa8e73a0e7
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StoreMax5000_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bba0043614c693e40a9c9c92cb075dd1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/aged_oak_wood_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eabd895619019e0439ea4db41b210aa7
     m_Address: Assets/KoboldKare/Textures/City/Postbox_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cea15667194bf046bd8170854251f1f
     m_Address: Assets/KoboldKare/Textures/metal_brushed_rusted_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2ddb6866209ffb14f83653e523718240
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Leather_Tufted_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a8f96b667636cc34bb0be420c1a6a33d
     m_Address: Assets/KoboldKare/Textures/Pawnshop/decal_norefunds.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2408f3760651392479c8bcc43450e2d3
     m_Address: Assets/KoboldKare/Textures/clownTent_TentMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb0d2876be084d847a5993bdcb63654e
     m_Address: Assets/KoboldKare/Textures/Pawnshop/LargeCeilingTruss_TrussMetal_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2388aa7618fc263469a455537d20df37
     m_Address: Assets/KoboldKare/Textures/WorldMap/JumpPad_Old_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6581c4963ae7be843a587f8fcd5a1337
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CardboardBoxLarge_Material_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ea3d0a6324322f44b54eb1d30bcd88a
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Acoustic Ceiling - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce48c4a6606cb4546b6aee9fed9a1ca0
     m_Address: Assets/KoboldKare/Textures/Playerhome/FloorTatamiPad_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 43dbd6a6bfa75084780357faabce685d
     m_Address: Assets/KoboldKare/Textures/Casino/LongRug_Height.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d5c584b67ceac5b4091792287ad880ce
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_IronPitted_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9cd759b6ceba0fe499e758c4c78b8651
     m_Address: Assets/KoboldKare/Textures/white_transparentBorder.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 26def9b68003b6741978c44bb30023de
     m_Address: Assets/KoboldKare/Textures/WorldMap/Woodplank_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78c73db66a8c11242ac2ad054b5e1840
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_FloorScratchesLarge_Specular.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 31763107c39a93a4d943d2bf99937b1f
     m_Address: Assets/KoboldKare/Textures/Playerhome/HungBrazier_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e64da5171e3f6f04f920321c3241708b
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Trashcan_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a4052b17379515e43857bcc0b238c49c
     m_Address: Assets/KoboldKare/Textures/Pawnshop/WallLightBasic_WallLight_Emission.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5ea63127b10032949bc8aa463c7a6d6a
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGateDoor_Emission_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 090af4271d771ba429e44ed622b287ca
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CarBattery_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d4dc44744752bf4380998a6a397aec7
     m_Address: Assets/KoboldKare/Textures/Pawnshop/WallLightBasic_WallLight_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9bd90b773d72ac0478a351f8cc4e74c5
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Gunmetal Combined - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6332ae87d421a1d4091d3f05c2e00aec
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_hay_ground_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3430397a2febb64da9910d0e5a56792
     m_Address: Assets/KoboldKare/Textures/KoboldDispenser_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c9ecd997e463e4844b7ea6943c1fd4b0
     m_Address: Assets/KoboldKare/Textures/SupportBeams_MetalBeam_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33033da73c4579e4ba9ffb9fda58a19c
     m_Address: Assets/KoboldKare/Textures/Dumpster_Material.002_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1306d4b7a5e37f34f9f8ea503b22e20e
     m_Address: Assets/KoboldKare/Textures/City/RepeatingPaintPlane_FabricFancy_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: badb1eb77c0538949a93370431125ec7
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGateDoor_MetalBarsSemirusted_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0e72c3c7bc3d7e443acd8a7bd8693b5a
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Troweled Concrete Roughcast
@@ -1532,280 +1317,240 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74f14fc7d5f900c49a150260dfe30654
     m_Address: Assets/KoboldKare/Textures/WorldMap/Pillar_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2c8a59d7a00e4c446afd9ddbdaa7be18
     m_Address: Assets/KoboldKare/Textures/SupportBeams_MetalBeam_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60bff8e78ca257a4eb7fdbf8e117712e
     m_Address: Assets/KoboldKare/Textures/Casino/LongRug.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db704af755005b8498e38424128d71d4
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ElectricalPanel_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 224b9108a247657448296ce01b585ed7
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzePatina_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 824e1808f2df7ce42b190a14e32e2119
     m_Address: Assets/KoboldKare/Textures/clownTent_BeamMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 239fcb087d0d9ed43b00d56d65a0fe65
     m_Address: Assets/KoboldKare/Textures/statue_low_Thickness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 631f331876a1bb045ae6e0902744ea00
     m_Address: Assets/KoboldKare/Textures/KoboldDispenser_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 792e8618c725c1546bcbe36191a29e8a
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ElectricalPanel_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 14a404288a962d44a970f91cf82141a2
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzePatina_512_roughness.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24c8ed28e7fb42f46981b50199084896
     m_Address: Assets/KoboldKare/Textures/ico_snowflake.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 46d16838f0987e5439a7d88528048522
     m_Address: Assets/KoboldKare/Textures/Pawnshop/OilBarrel_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bab19158c289fd14da99f538f297a0a7
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/concrete_polished_matte_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df109a5824ef1ba49a7d664a9b3d3ad9
     m_Address: Assets/KoboldKare/Textures/dirtrocks_diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6c76b58aef771848b21f886fc92d94c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/concrete_polished_matte_diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8e81aa68835aeac449ca04f06d8507da
     m_Address: Assets/KoboldKare/Textures/City/Postbox_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 81d31188500430e45a5e3a5ee7cc02b3
     m_Address: Assets/KoboldKare/Textures/Grinder2_GrinderFrame_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b42d02b8997671f4fa9a02b13d587c23
     m_Address: Assets/KoboldKare/Textures/Water_Splash.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3cf5ffb8114d16e408d14f6f47d39f9c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grass - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 266b40c826e49924fb0e49815c948a44
     m_Address: Assets/KoboldKare/Textures/Casino/fake_jade.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7ee0bed803c133846aadcdb579eefe9a
     m_Address: Assets/KoboldKare/Textures/gruffForSubstance_gruffMat_Emission.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9824f909490030f498a630eeb0314e39
     m_Address: Assets/KoboldKare/Textures/Pawnshop/RopeCrystal_RopeCrystal_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ba1c2a29b0c2378409f025527094a95b
     m_Address: Assets/KoboldKare/Textures/Casino/CasinoCarpetRound_Height.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e71b7b29e07684e4684a1c7848c7c2c3
     m_Address: Assets/KoboldKare/Textures/TexturesCom_PottingSoil_0.5x0.5_512_normal.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b51cb29db6dcd84db5715e9077374f1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/concrete_polished_matte_mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3e91e292c53e2b449931fd235de66eb
     m_Address: Assets/KoboldKare/Textures/City/TrafficLight_Material.001_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f915ae299310383479e9691be41b26f1
     m_Address: Assets/KoboldKare/Textures/ico_jumppad.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e96c5139eb0967d4aa582d9fdc0e275d
     m_Address: Assets/KoboldKare/Textures/WorldMap/ObeliskA_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f93bd139d1a93e2419f87b592d794e31
     m_Address: Assets/KoboldKare/Textures/WorldMap/ObeliskA_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 276d9e395ae18fe40a9b4988549f2349
     m_Address: Packages/com.unity.visualeffectgraph/Textures/DefaultParticle.tga
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 84bfac4959827d142a936224f495551b
     m_Address: Assets/KoboldKare/Textures/WorldMap/JumpPad_Old_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2ab4e4955845f348819789cd05525d9
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzePatina_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a86c3969c4bd9c040a4b1a42cae87f14
     m_Address: Assets/KoboldKare/Textures/City/StoreProduceSign.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 17b95a69b61d775489a95694178f723f
     m_Address: Assets/KoboldKare/Textures/gruffForSubstance_gruffMat_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eaa7348915e1ff94ebceb666fcf9b556
     m_Address: Assets/KoboldKare/Textures/gruffForSubstance_gruffMat_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b7fb26992d69d9741963c1dd3bc9cb62
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ZanyZtuffLogo_DefaultMaterial_Emission.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd22ca99ee23023459d3cdac7b9179cc
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Trashcan_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 037e31a93e247bf498445e652296916b
     m_Address: Assets/KoboldKare/Textures/IceMachine_DefaultMaterial_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7fb8d2b98e9ff454ab87da9cd455b255
     m_Address: Assets/KoboldKare/Textures/Dumpster_Material.002_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 902cffb9f3a05e5428d84de1c9328b0b
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Zinc Roofing Panels -
@@ -1813,35 +1558,30 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3f2b75c9e8b83c648b9e457e6b8c2799
     m_Address: Assets/KoboldKare/Textures/City/StoreDiscountSign.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 88e598c9f362ef04984bed3e05402bf5
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_OilSpill_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b632acc9b4d20644c87dabb183486d84
     m_Address: Assets/KoboldKare/Textures/Dumpster_Dumpster_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d8d050d9688b2cd4f909b45309602d4d
     m_Address: Assets/KoboldKare/Textures/City/Stopsign_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e111b8d9e8a5a964b99f7c8d5a2da95c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Zinc Roofing Panels -
@@ -1849,140 +1589,120 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 14bfbdd9d5185064f8529282fed739b5
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGateDoor_Emission_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86fd991a94db0f34491503a2c7e5d5e4
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_BronzeClean_512_roughness.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5f1602a5f4d913438e4056598d83c16
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Lamp_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2c73ac4a99f6a2943abd88be85340cf5
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/chain_fence_opacity.tga
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 352e826ab9313be40991a0439812110b
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Trashcan_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e91ea7a8eeff4a4ca1092e7c6c6dd37
     m_Address: Assets/KoboldKare/Textures/WorldMap/Woodplank_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64d10f7ae37f9694281770a3a44cf594
     m_Address: Assets/KoboldKare/Textures/City/TreePlanter_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0303e68a444a45f498b94c439067bbd7
     m_Address: Assets/KoboldKare/Textures/Pawnshop/SupportBeams_MetalBeam_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 814e349ae8691844c9ad4949ba1215b8
     m_Address: Assets/KoboldKare/Textures/kingpin_Kingpin_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 58cb59aa8219c4842b0b04f3dfffcce3
     m_Address: Assets/KoboldKare/Textures/Playerhome/HungBrazier_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9e1a91ba7038cda46814e0129af196f8
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Concrete_Metallic.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fcd6bcea9f811334c9add72304d083f7
     m_Address: Assets/KoboldKare/Textures/ico_boobmilk.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 98484a0bf33588f418d9abcadabfc130
     m_Address: Assets/KoboldKare/Textures/Pawnshop/BasementPawnShopDoor_Export_Concrete_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b561531bc8f472e41b6f247aebbf82c2
     m_Address: Assets/KoboldKare/Textures/WorldMap/Woodplank_MaterialSnow_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 899f971b4878b694db013acbd9ac4b80
     m_Address: Assets/KoboldKare/Textures/City/RepeatingPaintPlane_FabricFancy_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c8b0c2b8d085e644955173ac90ef477
     m_Address: Assets/KoboldKare/Textures/City/Stopsign_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 83bdff2b04bf96b4f9d8a4e5dbae20a8
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stucco White  - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2064383b64d17634695fb0f9d61b3cee
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stucco White  - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32f1e93bd08550648a53410603ffcc6e
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_hay_ground_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 39bf2e4b19b7c1b4ca7e4c38efc9a01f
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Metallic Mesh Wall Panel
@@ -1990,161 +1710,138 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d64ed26b32970a44cb1f1c9dcecac056
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Concrete Raw Soft - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0710056b15bd07a458f732ce3f4fb453
     m_Address: Assets/KoboldKare/Textures/City/StoneFountain_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c8e41a6b74e1cd944ae4261757ddc4d4
     m_Address: Assets/KoboldKare/Textures/ico_bathtubupgrade.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16f6617ba62a6de47a1e9dc8156a8b2b
     m_Address: Assets/KoboldKare/Textures/flask_GlassFlask_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c008867be9be8174995074bdfd2ea6a8
     m_Address: Assets/KoboldKare/Textures/Pawnshop/RopeCrystal_RopeCrystal_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f98997b2dc8cc4448aa68c4d8576e93
     m_Address: Assets/KoboldKare/Textures/ico_press.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e5070c7b5b446394b85f159fc701c0b5
     m_Address: Assets/KoboldKare/Textures/KoboldDispenser_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 568cd09b7166a6341ac880e2a7118d39
     m_Address: Assets/KoboldKare/Textures/flask_GlassFlask_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a902919b21b280c409cdc1a3a83aa68d
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/chain_fence_glossiness.tga
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c8cb89b90c5d9648aa140dd8d572e7e
     m_Address: Assets/KoboldKare/Textures/Pawnshop/PastedCardboardCluster_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 66f7de9b81c8f5b4b8950039e1c6a52a
     m_Address: Assets/KoboldKare/Textures/DecalCasinoElevator.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0acbd4ab821308646968d4d805ca5fe1
     m_Address: Assets/KoboldKare/Textures/DumpsterRoof_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: de91beab25016bd47b70a0269357cda9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Limestone_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5da1ddbe983425489b4054614867863
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_ConcretePit_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df9a64ebf329edc45ba83cc634f26d02
     m_Address: Assets/KoboldKare/Textures/metal_brushed_rusted_MetallicGloss.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3ec03fb840aae7419152f9248f1470a
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CardboardBoxLarge_Material_Glossiness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 570cd10c1060db747b5b9d3ec154eaa6
     m_Address: Assets/KoboldKare/Textures/kuala-lumpur_emission.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: faa5170cd4c28a643b7e505cba061e63
     m_Address: Assets/KoboldKare/Textures/City/Stopsign_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 91830a0c7dbea8d418993fa32cff67f9
     m_Address: Assets/KoboldKare/Textures/clownTent_TentMaterial_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7ee70b0cd66323d4ea09bd22d45a71f7
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parisian Sidewalk - metallic.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93e3ab0ce51532143a50a8235a892b0c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/aged_oak_wood_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf69bc0c1cbd526488a7385634014f59
     m_Address: Assets/KoboldKare/Textures/WorldMap/JumpPad_Old_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34cf841c691279d4585973d7d94806a0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Natural Terrazzo Brickwork
@@ -2152,98 +1849,84 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aec9752c6d508cb48a2b0fb61fe84622
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGate_MetalBarsSemirusted_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c655b3cdf19a0b4f89d4b1d30c8976b
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Concrete_Normal_DirectX.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1b63fb3c3ed01d84a9740109bdaf735f
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CargoContainer_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 65f49e3c4a93c754b886579a093b3fe7
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_OilSpill_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: efedfe3c829342245a8c4e68a69adb93
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grey Tiles  - diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d250754c057c8b14caedcbfcdda4aaf2
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_RubberStreak_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e7ad916cda5ea434cb618813467e7138
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarSegment_MetalBarsSemirusted_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 03d3ed6c85f51ed499d2a6582e50549c
     m_Address: Assets/KoboldKare/Textures/City/StreetLight_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e8507c7cd372de944a67d93d377a07d2
     m_Address: Assets/KoboldKare/Textures/City/TreePlanter_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b9859d7c7a841634aa7d38ae79589039
     m_Address: Assets/KoboldKare/Textures/grass_base.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5463f38c08e6a4645be15275336c86ae
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarsClerkWindow_MetalBarsSemirusted_AO.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3928088ccbd9ecd4da2f70243de190f0
     m_Address: Assets/KoboldKare/Textures/kuala-lumpur-1820944_1920.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce1c2a8c38b5b0c49bf6ee51a84f85cd
     m_Address: Assets/KoboldKare/Textures/Casino/TexturesCom_Metal_IronPitted_512_roughness.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f145c8cb1119f249809355c9f448351
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Natural Terrazzo Brickwork
@@ -2251,42 +1934,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d46d4d9cdc3a2f54f9d329aed12aec00
     m_Address: Assets/KoboldKare/Textures/City/StoneFountain_None_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 277d01ac56f7e19489c75ba2878c8d65
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Limestone_MetallicGloss.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2b769acb5c411e438d48f983e921d37
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Leave - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e78166bcd6d17684eb3144010b3e836c
     m_Address: Assets/KoboldKare/Textures/Pawnshop/OilBarrel_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36b991cc26140d347911bd6551a1e5ec
     m_Address: Assets/KoboldKare/Textures/statue_low_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ad343cc57aa1174e8da41b03ef0cd5d
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Troweled Concrete Roughcast
@@ -2294,280 +1971,240 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2123b0dca81a19543ae8c99d02a5aa3e
     m_Address: Assets/KoboldKare/Textures/WorldMap/Pillar_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 96cce6dc5b26fbb488c9f3f1e2c7b712
     m_Address: Assets/KoboldKare/Textures/TexturesCom_PottingSoil_0.5x0.5_512_albedo.tif
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1239a0ec0bf15c34db086141d6d72e13
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/stylized_hay_ground_flyaways.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36d668ece1ef5df4c8fa1a2b66e70568
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Bark - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a622bfc03516e84493d152d4df90296
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ZanyZtuffLogo_DefaultMaterial_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4fd2fa1d68e84064280e028fdf4cd9ac
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Acoustic Ceiling - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 88620c1daaaa5bc4eb7baeaeb71f0ee2
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CargoContainer_Material_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2acd802d82f31ad42a4920540c8c53a8
     m_Address: Assets/KoboldKare/Textures/FoamWaves_Mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b6de02dcbd381644ae118736d476578
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Lamp_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ab4deb2dec23f554da92dc20c4546337
     m_Address: Assets/KoboldKare/Textures/Pawnshop/WallLightBasic_WallLight_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fdcf4f2d97fbff34ba269e5ab2f3900f
     m_Address: Assets/KoboldKare/Textures/Pawnshop/BasementPawnShopDoor_Export_Concrete_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 81621e4df1bf25f4081b3da123884ecb
     m_Address: Assets/KoboldKare/Textures/kingpin_Kingpin_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b1cb0e5d165b6564b8cc63fe3a7ce4b4
     m_Address: Assets/KoboldKare/Textures/Basket_Material_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 14acbe5d2b3eaff40a105ecb69420d2a
     m_Address: Assets/KoboldKare/Textures/sign_farmupgrade.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fba2726d872bf9940a11cb00f6dfd91b
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Gunmetal Combined - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6ad254ad68bd71c4eb496aded9cb31bb
     m_Address: Assets/KoboldKare/Textures/dirtrocks_height.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 193befbd07f4ae841bae0cdc3d807e65
     m_Address: Assets/KoboldKare/Textures/brainSwapper_BodySwapMachine_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f5bb90cd52f84c245a36e7bf05624934
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StonePedestal_PedestalMat_SpecularSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 769d43eda3bd6064293ac956cfcfa03a
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_FloorScratchesLarge_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7a04d4ed49fbcf04e9b80bd1f7f41592
     m_Address: Assets/KoboldKare/Textures/ico_mail.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e24ef1ea081b034b90f67a2e4e697cf
     m_Address: Assets/KoboldKare/Textures/Pawnshop/LargeCeilingTruss_TrussMetal_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6903c22ecdd880e4ab71fce036fe2242
     m_Address: Assets/KoboldKare/Textures/Pawnshop/CarBattery_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2015715efa9c2004c97fb8d493c3f836
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ZanyZtuffLogo_DefaultMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e148db5e669546f4a9ac2acca0f24f10
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/old_japanese_stone_pavers_MetallicGlossiness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9aa71a6e1a36f2443aa17de50ee5d8a0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Limestone_basecolor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 07c81d6e3c8d6c74f973edb0d790a0af
     m_Address: Assets/KoboldKare/Textures/ico_blender.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 150caf7e483f595439ade3fb40cc4188
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ZanyZtuffLogo_DefaultMaterial_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8265ed9ef3032a34ea16ca06318d7edd
     m_Address: Assets/KoboldKare/Textures/CatererTruck_FoodTruck_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd0b7eae23c82c548ba84b00840c4a15
     m_Address: Assets/KoboldKare/Textures/Pawnshop/Concrete_Base_Color.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9dc34dce0d6dee4479c48e2a75e0ebf1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/old_japanese_stone_pavers_normal.jpg
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 264769deff974a14dbf2e7d4fbf6e60f
     m_Address: Assets/KoboldKare/Textures/City/StoneFountain_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1a4b62ee3aa73a44785d595f767c3b6f
     m_Address: Assets/KoboldKare/Textures/City/RepeatingPaintPlane_FabricFancy_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 88c20deeee1e0a443a6115072c978d21
     m_Address: Assets/KoboldKare/Textures/Pawnshop/RopeCrystal_RopeCrystal_Specular.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc079bfe26adaa840bdec0d7635956a6
     m_Address: Assets/KoboldKare/Textures/Dumpster_Material.002_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74dfc30fe73022c4182bf36cca3380f4
     m_Address: Assets/KoboldKare/Textures/brainSwapper_BodySwapMachine_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aa4ca02f6085769449949592458ca0c8
     m_Address: Assets/KoboldKare/Textures/Pawnshop/ExposedBulb_None_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 12e0012fb8e3dbc42a0e2f2dba280b7b
     m_Address: Assets/KoboldKare/Textures/City/Postbox_None_MaskMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6110922f83de4814990e276a63bf3d3b
     m_Address: Assets/KoboldKare/Textures/clownTent_BeamMaterial_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a482823ff2f7b7949baa3d0f50b9bd85
     m_Address: Assets/KoboldKare/Textures/City/StreetLight_None_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f7b9ac3f481d1bc42b80b963ff6230da
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Troweled Concrete Roughcast
@@ -2575,42 +2212,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f1e4134f7c1720646bcf4fc96056118c
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_RubberStreak_Glossiness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aff3015f09c36604582d54538baf0b99
     m_Address: Assets/KoboldKare/Textures/Pawnshop/StonePedestal_PedestalMat_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a379457ffdc05984caa47423774babb7
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parisian Sidewalk - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 858ab28f69fe4b84b85bd1907d72a71c
     m_Address: Assets/KoboldKare/Textures/City/StoreHomeSign.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 207b438fed113784ba39ce2e0945cb64
     m_Address: Assets/KoboldKare/Textures/grass_height.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 21913e8f9b91f0e4999a33caf2fd0b6c
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Natural Terrazzo Brickwork
@@ -2618,7 +2249,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c8f6539f97591ee41884e71d5bc2e0bc
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Metallic Mesh Wall Panel
@@ -2626,14 +2256,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6051089f663b65c4c88d5ad279ff56db
     m_Address: Assets/KoboldKare/Textures/Playerhome/WallMountDecoHorns_Material_BaseMap.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b519b9f47adbd44ab05b16384b1ae81
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Zinc Roofing Panels -
@@ -2641,175 +2269,150 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 557853af39bffa642b5b218360765d31
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Concrete Raw Soft - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae3688af255e274478857e72ae7c6923
     m_Address: Assets/KoboldKare/Textures/dirtrocks_metallic_gloss.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33b096bfaaeede64984296a599de8d23
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Grey Tiles  - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb12d2cfe4fc9ee4c858263779e005b1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Parisian Sidewalk - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e0a0fcff767b194298a6ec17d44db0c
     m_Address: Assets/KoboldKare/Textures/Pawnshop/TextureSlab_Decal_RubberStreak_Diffuse.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 48ed9deff6a85a14fa653b56a2302697
     m_Address: Assets/KoboldKare/Textures/metal_brushed_rusted_normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 782d70ffe3afb8045accffa1e5a718b3
     m_Address: Assets/KoboldKare/Textures/Casino/CardTable_Material.001_BaseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8eecf7ffc2fa4eb44b10759ca9e0bf34
     m_Address: Assets/KoboldKare/Textures/Pawnshop/MetalBarGate_MetalBarsSemirusted_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6658e1942a844f34eafddc7e486ce98f
     m_Address: Assets/KoboldKare/Textures/lensDirt8.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8f2d2f28446b92646941d0e9f20aaadd
     m_Address: Packages/com.naelstrof.mozzarellatech/mozzarella.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2bbd81b0f2a1509408acc7544391263a
     m_Address: Assets/KoboldKare/Textures/ico_disconnect.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ae7a3b58c16bf7945bf9d83459255997
     m_Address: Assets/KoboldKare/Textures/ico_question.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8d8edba47243df7419aa55ae5d128f2f
     m_Address: Assets/KoboldKare/Textures/saveBGFrame.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da9af63567bee1f419da571819601563
     m_Address: Assets/KoboldKare/Textures/ico_box_open.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 49cb5aa34272b034d8b754c65d9cdbfa
     m_Address: Packages/com.unity.visualeffectgraph/Textures/Sparkle.tga
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 961b1f03e69cf2344a5d9e8dae0fd396
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tempered Steel - baseColor.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1f36aaac21385504c93c7c8901b07fe9
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tempered Steel - mask.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 13b3aa6dc01e2754486ba951120d87f0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Tempered Steel - normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93444af0948f1a04b8f4973481bc6cb8
     m_Address: Assets/KoboldKare/Textures/circle.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e4073af7d9c4fc14dbe462510aa74304
     m_Address: Assets/KoboldKare/Textures/ico_lightning.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 713c240ffe1d8ad4aa65f51779be7d92
     m_Address: Assets/KoboldKare/Textures/WaterBlobShears_output.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6f9beed300de67140a63848bebd2dd1b
     m_Address: Assets/KoboldKare/Textures/masks/SplashNormals_plain_circle.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d37782c56d2a2b449b723b624895593e
     m_Address: Assets/KoboldKare/Textures/masks/SplashNormals_spots.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78c488fd094234149a664bc3c38bdb6d
     m_Address: Assets/KoboldKare/Textures/masks/splash1.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f653f041505bdfc4e950821ca7ec53c1
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
@@ -2817,7 +2420,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 124dd8f3c7944c044846ed338ee95f44
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
@@ -2825,7 +2427,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4aa24a456c7c5f54d8db96770e9f30f0
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Stylized Wood Planks
@@ -2833,28 +2434,24 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9aa749b5fa8427446afe94178893bf4a
     m_Address: Assets/ThirdParty/Models/Kandi/9_diccus_MetallicSmoothness.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8d6a06c2b83d084c8d13fd45e930c95
     m_Address: Assets/ThirdParty/Models/Kandi/9_diccus_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 29bdec6f80636fc4e92e7340a6a07d58
     m_Address: Assets/ThirdParty/Models/Kandi/9_diccus_Normal.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultTextures
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c73286d8ee8cd7d479986657a25f7f14
     m_Address: Assets/ThirdParty/Models/Zarniwoop/Textures/ZarniwoopV6barbiev2_Z_Hair_Normal.png
@@ -3112,6 +2709,372 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c41005c129ba4d66911b75229fd70b45
     m_Address: EmojiOne.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f8d0d3c48ac69c4c86af9716bd76206
+    m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - ambientOcclusion.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5863f7639d0d4c188b10114311d232b
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71055c842cce74a2d9b5d2a360e56757
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72f25edee93ef472b833ef23f29ac4d3
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82e59d70a9eda48dabfe81069bb5dbb5
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 819626c61672e4f1c895854f912acbb8
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c054eef01c6f4d42b1f1f702dc33061
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18125d827ec794af59ae11d599a8e093
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e80df52e3ba2e437e83c44f1fbaa5d4c
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcbe75845a5c04d2fa4b42c2d5551555
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22ce18c8f732f482b8a74338e22d69d0
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a30d8115b7cc7491b97de719ef779317
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5315f6cded574cc1b1f61004d5d59f4
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8dd0ed2213394b99a077c673b759869
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairBPR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a80809291c6a74315909ca0d3f5b2f7b
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairBPR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ddf2e5c1636544f79014ffdd09757c1
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairBPR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35bbfdd61ab0342bb90d9ad808781db2
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairBPR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42366a38066b647c98d9121ab58a18d4
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41f7a157b733c489284ce645eea2022b
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddbc60975eca645d5902559ec7de3af5
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8a35b72dd614409f9008037749116a5
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ed21771e1b9e46fcbf2378cb35e58e6
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9377a8fe478c4fc7ba7e2d417ea25f4
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9fdc34421a2342bca96f50b593f2188
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fd3728f683974fc49e6c1e273431224
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53b526015c44f4ea7b63a61a672e7d33
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9365a4f55f32b4df892bd595763895f1
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f168fdc449814bfa8db1d7c7f8e3747
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1171a89da01ee43d394b3cbb87c20d61
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b3c43f027bfc44f2ae45e45806db3b5
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dad613a011c6946129aa2e3e1f82e3a0
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3ec87aa857814a4880e30eeca8113ff
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2fb1485e335646a3a126afb86b60683
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d054d72b7a7b4041ab55ef1764ecc9f
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f2e02af2593d485fb03ff4af68a8b4c
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 254d7efd4a7924f4dad02af5da546abe
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0a8af1b704284ad6969290f26b19930
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 165b240526f3146359718d004596ec46
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0569ee9d11f464dc083a350d922fad30
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89a9e078a432343c7acbb68116455dfc
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c801d787d78c74bcc9ee1e20ad7a144d
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a813278586af949e99440fcd25ccdc66
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a3e2a9ea6555451f9f7de547db418a1
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b515c27d973bc4e599b2b62752daecc7
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6906aa5b5c2d40d6b3e7200be3af193
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61c67da379d824008b4a2b51deb90a49
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed2eda250616a4e3c88ec06e9640ebf4
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 322264e4f5f3e44a691bb998dbe3080f
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51b9ff00893604993b90e8994a45a291
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45a95e48719c640b79afedcc28383b8e
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTablePBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bc234de34520482989adfc60e0da64f
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTablePBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab01216b5bf2447f8b372399b834fd98
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTablePBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 244793d35598a462891977941c142395
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTablePBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc99a1f6fd29141cab22c872c0251e03
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6cd0f527191a4fc0aa5f1c5efc4d6ad
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3293acfd854c424aac2c1ed5f75eabf
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfd3df1187ee64db0ac4b7dee55f5ac5
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBR_Base_AlbedoTransparency.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b3753e262d1044178acaff814ec2d5d
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBR_Base_Normal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6f77c6eb47794ae587bbd1880dbe6ca
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBR_Base_MetallicSmoothness.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b9cad37360e3400195f3584a4ae3394
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBR_Base_AO.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41bdc50181d9a4025b238fa299fef656
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBR_Base_AlbedoTransparency.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

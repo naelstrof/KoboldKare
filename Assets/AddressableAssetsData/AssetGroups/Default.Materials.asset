@@ -22,42 +22,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 031eaf776340eb847a7cb87aad3ce309
     m_Address: Assets/KoboldKare/Scenes/TerrainBrushVolumeTerrainMatMainMap.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1947e62ffbc09c449a6080158aa1726a
     m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SplatErase.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3821f9133468bfa449f3dbee8d5a1aff
     m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/Splat.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4728c092756adc6498992724834605ef
     m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereErase.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0aedd8bc1c4736945999458791d86fe5
     m_Address: Packages/com.naelstrof.skinnedmeshdecals/ExampleProjectors/SphereSplat.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-    - defaultMaterials
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 49336634658f28c4b908870c156f87cc
     m_Address: Assets/KoboldKare/Materials/HardHat.mat
@@ -800,7 +794,8 @@ MonoBehaviour:
   - m_GUID: bd2b7e50c53eaaa469922a2674d12c25
     m_Address: Assets/KoboldKare/Materials/MapMaterials/stylized_wood.mat
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad8b22f4527527a49851c7c11405bbb7
     m_Address: Assets/KoboldKare/Materials/MapMaterials/plaster_acoustic.mat
@@ -1344,6 +1339,102 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 42f6f10a3b0df014fb211c9d4f16fd3b
     m_Address: Assets/ThirdParty/Possum/Possum PC.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d78a234eb4414e3393abed91c4fd1d7
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressPressPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7eea096072c842eb84e8b800e0e8480
+    m_Address: Assets/ThirdParty/Pochemu/WinePressPBR/WinePressContainerPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e376ffd6514a54cccad4b9034773cec7
+    m_Address: Assets/ThirdParty/Pochemu/MilkingTablePBR/MilkingTablePBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8817a051e802479c96b2ad5e391d06c
+    m_Address: Assets/ThirdParty/Pochemu/KitchenTableRoundPBR/KitchenTablePBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6e6def5e076e4fe8bef4e37b8a4b2ab
+    m_Address: Assets/ThirdParty/Pochemu/KitchentableRound2PBR/KitchenTable2PBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fef9e17edde94c5195e1da252001127
+    m_Address: Assets/ThirdParty/Pochemu/HalfTableRoundPBR/HalfTableRoundPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39abff6c277194953a3e607062a34112
+    m_Address: Assets/ThirdParty/Pochemu/FarmFencePBR/FarmFencePBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43f68747f5080451987ba73c0d17ca51
+    m_Address: Assets/ThirdParty/Pochemu/EggBoxPBR/EggBoxPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07227ed94803f47ee920088423860901
+    m_Address: Assets/ThirdParty/Pochemu/DragonMailboxPBR/DragonMailboxPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fcf505f466124764bda0c7ba495277a
+    m_Address: Assets/ThirdParty/Pochemu/CoverCapPBR/CoverCapPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4e485086f7d2473f958aa29be260a36
+    m_Address: Assets/ThirdParty/Pochemu/CouchPBR/CouchPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c1677ccde47948c9b20cf6e37dea21e
+    m_Address: Assets/ThirdParty/Pochemu/ChairPBR/ChairPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64d6e4f9bf7c84fc2a2aa69c1168e832
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 871c76987a620460b8bcd3566b1987a7
+    m_Address: Assets/ThirdParty/Pochemu/BlenderPBR/BlenderPBRGlassMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78c2976b7f42a4bf6a1df70191d1169f
+    m_Address: Assets/ThirdParty/Pochemu/BedPBR/BedPBRMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2931be8072ab747f8a569888e7493b3f
+    m_Address: Assets/ThirdParty/Pochemu/BarrelPBR/BarrelPBRMat.mat
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

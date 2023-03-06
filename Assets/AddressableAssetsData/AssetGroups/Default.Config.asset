@@ -341,6 +341,96 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 441ebf766d31b40499c5716bb5bde25a
+    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51724514c61f0334798581861999d19e
+    m_Address: Assets/KoboldKare/Prefabs/UI/RoomPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f25dcd618d3acd64795bf8bb32edb6c9
+    m_Address: Assets/KoboldKare/Prefabs/UI/RebindUIPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85a087acdc16a8f468c2b30feabb5b9d
+    m_Address: Assets/KoboldKare/Prefabs/UI/MultiSelectToggle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e0439e99d829dc4aa78d6a91440016b
+    m_Address: Assets/KoboldKare/Prefabs/UI/MapPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33a87f3fa8bf4d74894c6048998373bd
+    m_Address: Assets/KoboldKare/Prefabs/UI/JoinPrivateGame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb6471a7bfdaf28408d79c416db41eae
+    m_Address: Assets/KoboldKare/Prefabs/UI/FailedToLoad.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b77792761ba83b4c8a1fb1ae42eb314
+    m_Address: Assets/KoboldKare/Prefabs/UI/DisconnectPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0db1b2949f8595e4685ff4a5aa255d32
+    m_Address: Assets/KoboldKare/Prefabs/UI/CreateCustomGame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd95002abee3f244489427894ca672b4
+    m_Address: Assets/KoboldKare/Prefabs/UI/ConnectPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7f61b3a2e12de4448fccfd06520c7b0
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TitlePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acb4be3cbc0aef64bb53f08e3f08d4b8
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TextInputPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4164e6c49ea5bf340ad1947507dac1b7
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/SliderPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39647efb3c120fb4eb89fe2aa77dc84d
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/DropDownPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b69e5083b623064dbdd39a660a86ad3
+    m_Address: Packages/com.naelstrof.modding/UI/Mod.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

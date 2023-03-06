@@ -22,26 +22,36 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Seed
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7597a93ae1300a749bd93af03fb91db6
     m_Address: Seed/BananaSeed
     m_ReadOnly: 0
     m_SerializedLabels:
     - Seed
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 27c2ed7cb6f300b4c8052ca5ad5a65d8
     m_Address: Seed/WheatSeed
     m_ReadOnly: 0
     m_SerializedLabels:
     - Seed
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: afe4fb2c12e494c4a8834e3908f14d60
     m_Address: Seed/PineappleSeed
     m_ReadOnly: 0
     m_SerializedLabels:
     - Seed
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b808ba6736e8bd4f97ec4ee2e827b6c
     m_Address: Seed/EggplantSeed
     m_ReadOnly: 0
     m_SerializedLabels:
     - Seed
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

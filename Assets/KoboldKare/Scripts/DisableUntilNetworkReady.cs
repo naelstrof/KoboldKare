@@ -10,7 +10,7 @@ public class DisableUntilNetworkReady : MonoBehaviourPunCallbacks {
     private Selectable selectable;
 
     private void Awake() {
-        selectable = GetComponent<Button>();
+        selectable = GetComponent<Selectable>();
     }
 
     public override void OnEnable() {

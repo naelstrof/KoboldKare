@@ -38,7 +38,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
         }
         if (!PhotonNetwork.IsConnected) {
-            PhotonNetwork.AutomaticallySyncScene = true;
             settings.AppSettings.FixedRegion = region;
             if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
                 settings.AppSettings.AppVersion += "Editor";
@@ -114,7 +113,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
 
-        PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.OfflineMode = false;
         PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
@@ -236,7 +234,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 modArray.Add(modNode);
             }
 
-            rootNode["mapKey"] = (string)selectedMap.unityScene.RuntimeKey;
             rootNode["modList"] = modArray;
             rootNode["config"] = PrefabDatabase.GetJSONConfiguration();
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
@@ -353,7 +350,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
         if (ModManager.HasModsLoaded(desiredMods)) {
             PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
-            yield return LevelLoader.instance.LoadLevel(rootNode["mapKey"]);
         } else {
             string roomName = PhotonNetwork.CurrentRoom.Name;
             PhotonNetwork.Disconnect();

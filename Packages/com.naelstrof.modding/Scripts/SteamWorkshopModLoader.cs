@@ -85,7 +85,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                     continue;
                 }
 
-                if ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
+                if ((status & (int)EItemState.k_EItemStateInstalled) == 0 || (status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
                     Debug.Log($"Downloading {fileIds[i]}...");
                     SteamUGC.DownloadItem(fileIds[i], false);
                 }

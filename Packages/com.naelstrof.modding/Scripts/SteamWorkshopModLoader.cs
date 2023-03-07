@@ -23,10 +23,8 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         public delegate void FinishedDownloadingAction();
         public event FinishedDownloadingAction finished;
         private bool IsDone = false;
-        public FinishedDownloadingHandle() {
-            finished += () => IsDone = true;
-        }
         public void Invoke() {
+            IsDone = true;
             finished?.Invoke();
         }
         bool IEnumerator.MoveNext() {
@@ -70,16 +68,15 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     }
 
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
+        yield return LocalizationSettings.InitializationOperation;
+        yield return new WaitUntil(() => !busy);
+        progressBarAnimator.SetBool("Active", true);
+        progressBar.SetProgress(0f);
+        var handle = downloadingText.GetLocalizedStringAsync();
+        yield return handle;
+        targetText.text = handle.Result;
         try {
-            yield return LocalizationSettings.InitializationOperation;
-            yield return new WaitUntil(() => !busy);
             busy = true;
-            progressBarAnimator.SetBool("Active", true);
-            progressBar.SetProgress(0f);
-            var handle = downloadingText.GetLocalizedStringAsync();
-            yield return handle;
-            targetText.text = handle.Result;
-
             for (int i = 0; i < count; i++) {
                 uint status = SteamUGC.GetItemState(fileIds[i]);
                 if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&

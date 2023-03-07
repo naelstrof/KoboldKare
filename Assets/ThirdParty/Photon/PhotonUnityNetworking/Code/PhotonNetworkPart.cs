@@ -2092,8 +2092,7 @@ namespace Photon.Pun
 
         internal static bool AddressableResourceExists(object key, Type type) {
             foreach (var l in Addressables.ResourceLocators) {
-                IList<IResourceLocation> locs;
-                if (l.Locate(key, type, out locs))
+                if (l.Locate(key, type, out IList<IResourceLocation> locs))
                     return true;
             }
             return false;
@@ -2124,15 +2123,12 @@ namespace Photon.Pun
             }
             else if (sceneId is string)
             {
-                if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
-                {
-                    try {
-                        if (AddressableResourceExists((string)sceneId, typeof(SceneInstance))) {
-                            PhotonNetwork.LoadLevel((string)sceneId);
-                        } else {
-                            PhotonNetwork.LoadLevel("ErrorScene");
-                        }
-                    } catch {
+                if (SceneManagerHelper.ActiveSceneName != (string)sceneId) {
+                    if (AddressableResourceExists((string)sceneId, null)) {
+                        PhotonNetwork.LoadLevel((string)sceneId);
+                        Debug.LogError($"Successfully found and loading... {(string)sceneId}."); 
+                    } else {
+                        Debug.LogError($"Failed to find scene with key {(string)sceneId}, loading blank scene."); 
                         PhotonNetwork.LoadLevel("ErrorScene");
                     }
                 }

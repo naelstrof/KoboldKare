@@ -302,8 +302,10 @@ public class ModManager : MonoBehaviour {
             }
         }
 
+        Debug.Log("Reloading mods after acquiring stubs...");
         var reloadModTask = Reload();
         yield return new WaitUntil(() => reloadModTask.IsCompleted);
+        Debug.Log("Done reloading!");
     }
 
     public static async Task Reload() {

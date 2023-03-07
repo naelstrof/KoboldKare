@@ -29,6 +29,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             return !online;
         }
     }
+
+    private delegate void GenericAction();
+
+    private GenericAction onLeaveRoom;
     public IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
@@ -118,10 +122,17 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.OfflineMode = false;
         PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
-        if (!PhotonNetwork.IsConnected) {
+        if (!PhotonNetwork.IsConnectedAndReady) {
             PhotonNetwork.ConnectUsingSettings();
         }
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady && PhotonNetwork.NetworkClientState == ClientState.JoinedLobby);
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        
+        if (!PhotonNetwork.InLobby) {
+            PhotonNetwork.JoinLobby();
+        }
+        
+        yield return new WaitUntil(()=>PhotonNetwork.NetworkClientState == ClientState.JoinedLobby);
+
         PhotonNetwork.EnableCloseConnection = true;
     }
 
@@ -262,6 +273,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnLeftRoom() {
+        onLeaveRoom?.Invoke();
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
@@ -342,10 +354,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         string data = (string)photonEvent.CustomData;
         Debug.Log($"Received mod handshake from {photonEvent.Sender}! {data}");
         JSONNode rootNode = JSONNode.Parse(data);
-        GameManager.StartCoroutineStatic(CheckModRoutine(rootNode));
-    }
-
-    private IEnumerator CheckModRoutine(JSONNode rootNode) {
         List<ModManager.ModStub> desiredMods = new List<ModManager.ModStub>();
         foreach (var node in rootNode["modList"].AsArray) {
             ulong.TryParse(node.Value["id"], out ulong result);
@@ -356,13 +364,17 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
         } else {
             string roomName = PhotonNetwork.CurrentRoom.Name;
-            PhotonNetwork.Disconnect();
-            yield return new WaitUntil(()=>PhotonNetwork.NetworkClientState == ClientState.Disconnected);
-            yield return new WaitForSecondsRealtime(1f);
-            yield return ModManager.SetLoadedMods(desiredMods);
-            PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
-            yield return EnsureOnlineAndReadyToLoad();
-            PhotonNetwork.JoinRoom(roomName);
+            onLeaveRoom = () => {
+                GameManager.StartCoroutineStatic(FinishLoadMods(desiredMods, roomName, rootNode));
+            };
+            PhotonNetwork.LeaveRoom();
         }
+    }
+
+    private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName, JSONNode rootNode) {
+        yield return ModManager.SetLoadedMods(desiredMods);
+        PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
+        PhotonNetwork.JoinRoom(roomName);
+        onLeaveRoom = () => {};
     }
 }

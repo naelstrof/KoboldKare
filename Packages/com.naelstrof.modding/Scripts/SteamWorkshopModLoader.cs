@@ -18,6 +18,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private Callback<ItemInstalled_t> m_ItemInstalled;
     private Callback<RemoteStoragePublishedFileSubscribed_t> m_RemoteStoragePublishedFileSubscribed;
     private Callback<RemoteStoragePublishedFileUnsubscribed_t> m_RemoteStoragePublishedFileUnsubscribed;
+    private int waitingForResultCount;
 
     public class FinishedDownloadingHandle : IEnumerator {
         public delegate void FinishedDownloadingAction();
@@ -84,14 +85,16 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                     OnInstalledItem(fileIds[i]);
                     continue;
                 }
-
                 if ((status & (int)EItemState.k_EItemStateInstalled) == 0 || (status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
                     Debug.Log($"Downloading {fileIds[i]}...");
+                    waitingForResultCount++;
                     SteamUGC.DownloadItem(fileIds[i], false);
                 }
+            }
 
-                while ((status & (int)EItemState.k_EItemStateNeedsUpdate) != 0 ||
-                       (status & (int)EItemState.k_EItemStateDownloading) != 0) {
+            for (int i = 0; i < count; i++) {
+                uint status = SteamUGC.GetItemState(fileIds[i]);
+                while ((status & (int)EItemState.k_EItemStateDownloading) != 0) {
                     SteamUGC.GetItemDownloadInfo(fileIds[i], out ulong punBytesDownloaded, out ulong punBytesTotal);
                     progressBar.SetProgress((float)punBytesDownloaded / (float)punBytesTotal);
                     targetText.text = handle.Result;
@@ -99,6 +102,14 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                     yield return null;
                 }
             }
+
+            // Wait until everything is downloaded and installed.
+            while (waitingForResultCount > 0) {
+                yield return null;
+            }
+            
+            // wait one extra frame for OnInstalledItem
+            yield return null;
 
             progressBar.SetProgress(1f);
             progressBarAnimator.SetBool("Active", false);
@@ -109,6 +120,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     }
     private void OnDownloadItemResult(DownloadItemResult_t downloadItemResultT) {
         Debug.Log($"Downloaded {downloadItemResultT.m_nPublishedFileId} with result {downloadItemResultT.m_eResult}");
+        waitingForResultCount--;
     }
     private void OnInstalledItem(PublishedFileId_t publishedFile) {
         Debug.Log($"Installed item {publishedFile}.");

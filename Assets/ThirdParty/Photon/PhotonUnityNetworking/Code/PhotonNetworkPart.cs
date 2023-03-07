@@ -2127,7 +2127,7 @@ namespace Photon.Pun
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
                 {
                     try {
-                        if (AddressableResourceExists((string)sceneId, typeof(Scene))) {
+                        if (AddressableResourceExists((string)sceneId, typeof(SceneInstance))) {
                             PhotonNetwork.LoadLevel((string)sceneId);
                         } else {
                             PhotonNetwork.LoadLevel("ErrorScene");

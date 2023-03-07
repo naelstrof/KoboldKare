@@ -121,7 +121,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.ConnectUsingSettings();
         }
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady && PhotonNetwork.NetworkClientState == ClientState.JoinedLobby);
         PhotonNetwork.EnableCloseConnection = true;
     }
 
@@ -193,6 +193,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
         yield return new WaitUntil(() => !LevelLoader.loadingLevel && ModManager.GetFinishedLoading());
+        if (PhotonNetwork.NetworkClientState != ClientState.Joined) {
+            yield break;
+        }
         // If our kobold exists, don't spawn another
         if (PhotonNetwork.LocalPlayer.TagObject != null && (PhotonNetwork.LocalPlayer.TagObject as Kobold) != null) {
             yield break;
@@ -354,7 +357,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         } else {
             string roomName = PhotonNetwork.CurrentRoom.Name;
             PhotonNetwork.Disconnect();
-            yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+            yield return new WaitUntil(()=>PhotonNetwork.NetworkClientState == ClientState.Disconnected);
+            yield return new WaitForSecondsRealtime(1f);
             yield return ModManager.SetLoadedMods(desiredMods);
             PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
             yield return EnsureOnlineAndReadyToLoad();

@@ -10,7 +10,9 @@
 
 
 using NetStack.Serialization;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
 namespace Photon.Pun
@@ -2115,8 +2117,13 @@ namespace Photon.Pun
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
                 {
                     try {
-                        PhotonNetwork.LoadLevel((string)sceneId);
-                    } catch (UnityEngine.AddressableAssets.InvalidKeyException e) {
+                        var location = Addressables.LoadAsset<IResourceLocation>((string)sceneId);
+                        if (location.IsValid()) {
+                            PhotonNetwork.LoadLevel((string)sceneId);
+                        } else {
+                            PhotonNetwork.LoadLevel("ErrorScene");
+                        }
+                    } catch {
                         PhotonNetwork.LoadLevel("ErrorScene");
                     }
                 }

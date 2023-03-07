@@ -93,7 +93,8 @@ public class ModManager : MonoBehaviour {
             }
         }
         if (modFound) {
-            throw new Exception($"Mod already existed with catalog path {info.cataloguePath}, skipping...");
+            Debug.Log($"Already loaded mod with catalog path {info.cataloguePath}, skipping...");
+            return;
         }
         fullModList.Add(info);
     }

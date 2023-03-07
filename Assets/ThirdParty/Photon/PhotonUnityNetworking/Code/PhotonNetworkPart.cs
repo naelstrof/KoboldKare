@@ -14,6 +14,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
 
 namespace Photon.Pun
 {
@@ -2089,6 +2090,15 @@ namespace Photon.Pun
         }
 
 
+        internal static bool AddressableResourceExists(object key, Type type) {
+            foreach (var l in Addressables.ResourceLocators) {
+                IList<IResourceLocation> locs;
+                if (l.Locate(key, type, out locs))
+                    return true;
+            }
+            return false;
+        }
+        
         /// <summary>Internally used to detect the current scene and load it if PhotonNetwork.AutomaticallySyncScene is enabled.</summary>
         internal static void LoadLevelIfSynced()
         {
@@ -2117,8 +2127,7 @@ namespace Photon.Pun
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
                 {
                     try {
-                        var location = Addressables.LoadAsset<IResourceLocation>((string)sceneId);
-                        if (location.IsValid()) {
+                        if (AddressableResourceExists((string)sceneId, typeof(Scene))) {
                             PhotonNetwork.LoadLevel((string)sceneId);
                         } else {
                             PhotonNetwork.LoadLevel("ErrorScene");

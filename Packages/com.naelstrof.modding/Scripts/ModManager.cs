@@ -11,7 +11,6 @@ using Steamworks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.Initialization;
-using UnityEngine.SceneManagement;
 
 public class ModManager : MonoBehaviour {
     private static ModManager instance;
@@ -286,6 +285,9 @@ public class ModManager : MonoBehaviour {
         }
 
         PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
+        for (int i = 0; i < neededMods.Count; i++) {
+            fileIds[i] = neededMods[i].id;
+        }
         yield return SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
         foreach (var modStub in stubs) {
             bool found = false;

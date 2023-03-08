@@ -1311,7 +1311,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: "Invertn\xED vzhled y-osa"
+    m_Localized: "Invertn\xED vzhled osy y"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
@@ -1340,6 +1340,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: Vybrat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Instalace ...
     m_Metadata:
       m_Items: []
   references:

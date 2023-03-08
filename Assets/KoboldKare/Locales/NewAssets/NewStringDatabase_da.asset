@@ -913,7 +913,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314176
     m_Localized: "\xC6g fra butikken er ikke s\xE5 gode. Find en god kobold, f\xE5
-      dem gravide og s\xE6t dem derefter p\xE5 avlsstationen."
+      dem gravide, og s\xE6t dem derefter p\xE5 avlsstationen."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
@@ -922,7 +922,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
-      kv\xE6rnen til at kombinere dem og derefter fodre den til en kobold."
+      kv\xE6rnen til at kombinere dem og derefter fodre den til en Kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1019,7 +1019,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
-    m_Localized: "Spark en spiller med m\xE5lskuespilleren ID. Brug `/listespillere
+    m_Localized: "Spark en spiller med m\xE5lskuespilleren ID. Brug `/list -spillere
       til at finde skuespiller -id'er."
     m_Metadata:
       m_Items: []
@@ -1040,7 +1040,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
+    m_Localized: "Alligevel bare uh .. Hj\xE6lp dig selv antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1057,7 +1057,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "Uh ... har du noget imod at s\xE6tte p\xE5 nogle bukser?"
+    m_Localized: "\xC5h ... har du noget imod at l\xE6gge p\xE5 nogle bukser?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
@@ -1070,7 +1070,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464139
     m_Localized: "Aha ville det ikke v\xE6re s\xE5 sjovt, hvis du stak 4 dildoer
-      ind i en Kobolds mund ... Jeg kommanderer dig til at g\xF8re det."
+      ind i en Kobolds mund ... Jeg befaler dig at g\xF8re det."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1092,7 +1092,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: Lav den perfekte Kobold
+    m_Localized: Lav den perfekte kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
@@ -1115,8 +1115,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
-    m_Localized: "Jeg g\xE6tter p\xE5, at jeg er chef nu! Jeg skulle pr\xF8ve at
-      k\xF8be en Kobold med det nye pneumatiske system."
+    m_Localized: "Jeg antager, at jeg er chef nu! Jeg skulle pr\xF8ve at k\xF8be
+      en Kobold med det nye pneumatiske system."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
@@ -1129,12 +1129,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Velkommen til casinoet her for forretning eller forn\xF8jelse?"
+    m_Localized: "Velkommen til casinoet, her for forretning eller forn\xF8jelse?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
     m_Localized: "Fra din mangel p\xE5 t\xF8j g\xE6tter jeg lidt af begge dele. Du
-      kan afspille panchinko -maskinen for at tjene nogle udsmykninger."
+      kan spille Panchinko -maskinen for at tjene nogle udsmykninger."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1179,7 +1179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464136
-    m_Localized: "Beklager, jeg er alt ude af ting at bygge for dig! Tak for at v\xE6re
+    m_Localized: "Beklager, jeg er ude af ting at bygge for dig! Tak for at v\xE6re
       s\xE5dan en loyal kunde."
     m_Metadata:
       m_Items: []
@@ -1206,7 +1206,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Jeg vil se flere store kobold\xE6g, komme til det!"
+    m_Localized: "Jeg vil se flere store Kobold -\xE6g, komme til det!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1223,8 +1223,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: Jeg har brug for en masse kobolds med gigantiske haner, det er vigtigt
-      for mine planer.
+    m_Localized: "Jeg har brug for en masse kobolds med k\xE6mpe haner, det er vigtigt
+      for mine planer."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1289,11 +1289,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Inverter se y-aksen
+    m_Localized: Invert look y-akse
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Boob-shrink
+    m_Localized: Boob-Shrink
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
@@ -1318,6 +1318,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: "V\xE6lg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Installation ...
     m_Metadata:
       m_Items: []
   references:

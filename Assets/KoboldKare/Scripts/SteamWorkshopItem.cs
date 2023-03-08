@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using SimpleJSON;
 using UnityEngine;
 
@@ -13,15 +12,13 @@ using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Build.DataBuilders;
-using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEditor.AddressableAssets.Settings;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering;
 
-[System.Serializable]
+[Serializable]
 public class SteamWorkshopItem {
 	public static string currentModRoot = "<not set>";
-	[System.Flags]
+	[Flags]
 	public enum SteamWorkshopItemTag {
 		Characters = 1,
 		Maps = 2,
@@ -123,15 +120,6 @@ public class SteamWorkshopItem {
 	public bool Busy() {
 		return building || uploading;
 	}
-	public float GetProgress() {
-		if (uploading) {
-			SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
-			return (float)punBytesProcessed / (float)punBytesTotal;
-		} else {
-			return 0f;
-		}
-	}
-
 	private string modBuildPath => $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/{EditorUserBuildSettings.activeBuildTarget}";
 
 	private string modRoot {
@@ -256,19 +244,6 @@ public class SteamWorkshopItem {
 		}
 		return true;
 	}
-
-	private async Task UpdateProgress() {
-		await Task.Run(() => {
-			while (uploading) {
-				SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
-				EditorUtility.DisplayProgressBar(GetStatus(out MessageType ignoreType), "Uploading...",
-					(float)punBytesProcessed / (float)punBytesTotal);
-				Thread.Sleep(10);
-				SteamAPI.RunCallbacks();
-			}
-		});
-	}
-
 	private void BuildForPlatform(BuildTarget target) {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, target);
 		//foreach (var targetGroup in targetCatalog.AssetGroups) {
@@ -329,44 +304,80 @@ public class SteamWorkshopItem {
 	}
 
 	private void ItemUpdate() {
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item information....", 0f);
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item description...", 0f);
 		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), (PublishedFileId_t)publishedFileId);
 		if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
 			throw new UnityException("Failed to set item description.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item language...", 0f);
 		if (!SteamUGC.SetItemUpdateLanguage(ugcUpdateHandle, language.ToString())) {
 			throw new UnityException("Failed to set item update language.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item title...", 0f);
 		if (!SteamUGC.SetItemTitle(ugcUpdateHandle, title)) {
 			throw new UnityException("Failed to set item title.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item meta data...", 0f);
 		if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize())) {
 			throw new UnityException("Failed to set item metaData.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item tags...", 0f);
 		if (!SteamUGC.SetItemTags(ugcUpdateHandle, GetTags())) {
 			throw new UnityException("Failed to set item tags.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item visibility...", 0f);
 		if (!SteamUGC.SetItemVisibility(ugcUpdateHandle, visibility)) {
 			throw new UnityException("Failed to set item visibility.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item preview...", 0f);
 		if (!SteamUGC.SetItemPreview(ugcUpdateHandle, previewTexturePath)) {
 			throw new UnityException("Failed to set item preview.");
 		}
 
+		EditorUtility.DisplayProgressBar("Uploading...", "Setting item content...", 0f);
 		if (!SteamUGC.SetItemContent(ugcUpdateHandle, modRoot)) {
 			throw new UnityException("Failed to set item content.");
 		}
 
-		var handle = SteamUGC.SubmitItemUpdate(ugcUpdateHandle, string.IsNullOrEmpty(changeNotes) ? null : changeNotes);
 		uploading = true;
-		Task.Run(UpdateProgress);
+		var handle = SteamUGC.SubmitItemUpdate(ugcUpdateHandle, string.IsNullOrEmpty(changeNotes) ? null : changeNotes);
 		onSubmitItemUpdateCallback.Set(handle);
+		bool validStatus = true;
+		while (uploading && validStatus) {
+			var status = SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
+			switch (status) {
+				case EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig:
+					EditorUtility.DisplayProgressBar("Uploading...", "Preparing configuration...",
+						(float)punBytesProcessed / (float)punBytesTotal);
+					break;
+				case EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges:
+					EditorUtility.DisplayProgressBar("Uploading...", "Committing changes...",
+						(float)punBytesProcessed / (float)punBytesTotal);
+					break;
+				case EItemUpdateStatus.k_EItemUpdateStatusPreparingContent:
+					EditorUtility.DisplayProgressBar("Uploading...", "Preparing content...",
+						(float)punBytesProcessed / (float)punBytesTotal);
+					break;
+				case EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile:
+					EditorUtility.DisplayProgressBar("Uploading...", "Uploading preview file...",
+						(float)punBytesProcessed / (float)punBytesTotal);
+					break;
+				case EItemUpdateStatus.k_EItemUpdateStatusUploadingContent:
+					EditorUtility.DisplayProgressBar("Uploading...", "Uploading content...",
+						(float)punBytesProcessed / (float)punBytesTotal);
+					break;
+				default:
+					validStatus = false;
+					break;
+			}
+			Thread.Sleep(10);
+		}
 	}
 
 	private void CreateIfNeeded() {
@@ -415,7 +426,10 @@ public class SteamWorkshopItem {
 	        JSONArray array = rootNode["tags"].AsArray;
 	        target.FindPropertyRelative("tags").intValue = (int)GetTagsFromJsonArray(array);
         }
-
+        var fileData = File.ReadAllBytes(previewTexturePath);
+        var tex = new Texture2D(16, 16);
+        tex.LoadImage(fileData);
+        target.FindPropertyRelative("previewSprite").objectReferenceValue = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2f, tex.height / 2f));
         loadedCatalog = targetCatalog;
 	}
 }

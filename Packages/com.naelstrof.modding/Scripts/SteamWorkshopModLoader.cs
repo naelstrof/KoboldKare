@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -13,12 +15,16 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     [SerializeField] private ProgressBar progressBar;
     [SerializeField] private TMP_Text targetText;
     [SerializeField] private LocalizedString downloadingText;
+    [SerializeField] private LocalizedString installingText;
     private bool busy = false;
     private Callback<DownloadItemResult_t> m_DownloadItemResult;
     private Callback<ItemInstalled_t> m_ItemInstalled;
+    private CallResult<SteamUGCQueryCompleted_t> m_QueryCompleted;
     private Callback<RemoteStoragePublishedFileSubscribed_t> m_RemoteStoragePublishedFileSubscribed;
     private Callback<RemoteStoragePublishedFileUnsubscribed_t> m_RemoteStoragePublishedFileUnsubscribed;
     private int waitingForResultCount;
+    private bool waitingForQuery;
+    private List<SteamUGCDetails_t> queryDetails;
 
     public class FinishedDownloadingHandle : IEnumerator {
         public delegate void FinishedDownloadingAction();
@@ -55,8 +61,10 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         uint populatedCount = SteamUGC.GetSubscribedItems(fileIds, subscribedItemCount);
         m_DownloadItemResult = Callback<DownloadItemResult_t>.Create(OnDownloadItemResult);
         m_ItemInstalled = Callback<ItemInstalled_t>.Create(OnInstalledItem);
+        m_QueryCompleted = CallResult<SteamUGCQueryCompleted_t>.Create(OnQueryCompleted);
         m_RemoteStoragePublishedFileSubscribed = Callback<RemoteStoragePublishedFileSubscribed_t>.Create(OnItemSubscribed);
         m_RemoteStoragePublishedFileUnsubscribed = Callback<RemoteStoragePublishedFileUnsubscribed_t>.Create(OnItemUnsubscribed);
+        queryDetails = new List<SteamUGCDetails_t>();
         StartCoroutine(EnsureAllAreDownloaded(fileIds, populatedCount, null));
     }
 
@@ -71,22 +79,41 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
         yield return LocalizationSettings.InitializationOperation;
         yield return new WaitUntil(() => !busy);
+        var downloadTextHandle = downloadingText.GetLocalizedStringAsync();
+        yield return downloadTextHandle;
+        string downloadText = downloadTextHandle.Result;
+        
+        var installingTextHandle = installingText.GetLocalizedStringAsync();
+        yield return installingTextHandle;
+        string installText = installingTextHandle.Result;
         progressBarAnimator.SetBool("Active", true);
-        progressBar.SetProgress(0f);
-        var handle = downloadingText.GetLocalizedStringAsync();
-        yield return handle;
-        targetText.text = handle.Result;
+        progressBar.gameObject.SetActive(false);
         try {
             busy = true;
+            waitingForQuery = true;
+            var queryHandleT = SteamUGC.CreateQueryUGCDetailsRequest(fileIds, count);
+            m_QueryCompleted.Set(SteamUGC.SendQueryUGCRequest(queryHandleT));
+            yield return new WaitUntil(() => !waitingForQuery);
             for (int i = 0; i < count; i++) {
                 uint status = SteamUGC.GetItemState(fileIds[i]);
                 if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&
                     (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
+                    if (queryDetails.Count == count) {
+                        targetText.text = $"{installText} {queryDetails[i].m_rgchTitle}";
+                    } else {
+                        targetText.text = $"{installText} {fileIds[i]}";
+                    }
                     OnInstalledItem(fileIds[i]);
                     continue;
                 }
                 if ((status & (int)EItemState.k_EItemStateInstalled) == 0 || (status & (int)EItemState.k_EItemStateNeedsUpdate) != 0) {
-                    Debug.Log($"Downloading {fileIds[i]}...");
+                    if (queryDetails.Count == count) {
+                        Debug.Log($"Downloading {fileIds[i]}, `{queryDetails[i].m_rgchTitle}`...");
+                        targetText.text = $"{downloadText} {queryDetails[i].m_rgchTitle}";
+                    } else {
+                        Debug.Log($"Downloading {fileIds[i]}...");
+                        targetText.text = $"{downloadText} {fileIds[i]}";
+                    }
                     waitingForResultCount++;
                     SteamUGC.DownloadItem(fileIds[i], false);
                 }
@@ -95,9 +122,16 @@ public class SteamWorkshopModLoader : MonoBehaviour {
             for (int i = 0; i < count; i++) {
                 uint status = SteamUGC.GetItemState(fileIds[i]);
                 while ((status & (int)EItemState.k_EItemStateDownloading) != 0) {
+                    if (!progressBar.gameObject.activeInHierarchy) {
+                        progressBar.gameObject.SetActive(true);
+                    }
                     SteamUGC.GetItemDownloadInfo(fileIds[i], out ulong punBytesDownloaded, out ulong punBytesTotal);
                     progressBar.SetProgress((float)punBytesDownloaded / (float)punBytesTotal);
-                    targetText.text = handle.Result;
+                    if (queryDetails.Count == count) {
+                        targetText.text = $"{downloadText} {queryDetails[i].m_rgchTitle}";
+                    } else {
+                        targetText.text = $"{downloadText} {fileIds[i]}";
+                    }
                     status = SteamUGC.GetItemState(fileIds[i]);
                     yield return null;
                 }
@@ -111,7 +145,6 @@ public class SteamWorkshopModLoader : MonoBehaviour {
             // wait one extra frame for OnInstalledItem
             yield return null;
 
-            progressBar.SetProgress(1f);
             progressBarAnimator.SetBool("Active", false);
         } finally {
             busy = false;
@@ -129,6 +162,21 @@ public class SteamWorkshopModLoader : MonoBehaviour {
             return;
         }
         ModManager.AddMod(pchFolder);
+    }
+
+    private void OnQueryCompleted(SteamUGCQueryCompleted_t query, bool status) {
+        queryDetails.Clear();
+        if (query.m_eResult != EResult.k_EResultOK) {
+            Debug.LogError($"Query failed with code{query.m_eResult}, skipping");
+            waitingForQuery = false;
+            return;
+        }
+        uint count = query.m_unNumResultsReturned;
+        for (uint i = 0; i < count; i++) {
+            SteamUGC.GetQueryUGCResult(query.m_handle, i, out SteamUGCDetails_t details);
+            queryDetails.Add(details);
+        }
+        waitingForQuery = false;
     }
 
     private void OnInstalledItem(ItemInstalled_t installedItem) {

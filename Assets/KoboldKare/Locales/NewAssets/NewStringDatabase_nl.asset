@@ -936,7 +936,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: Eieren uit de winkel zijn niet zo goed. Zoek een goede Kobold, laat
+    m_Localized: Eieren uit de winkel zijn niet zo goed. Zoek een goede kobold, laat
       ze zwanger worden en zet ze vervolgens bij het broedstation.
     m_Metadata:
       m_Items: []
@@ -955,7 +955,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
-    m_Localized: We moeten onze voedseluitvoer uitbreiden, het Melkstationcontract
+    m_Localized: We moeten onze export van onze voedsel uitbreiden, het Melkstationcontract
       kopen bij het bouwkantoor.
     m_Metadata:
       m_Items: []
@@ -988,11 +988,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Koop de Body Swapper.
+    m_Localized: Koop de body swapper.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Koop de body swapper van de kruip in de grot.
+    m_Localized: Koop de body swapper uit de kruip in de grot.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1012,7 +1012,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: Wat een interessant apparaat hebt u verkregen. Ga en probeer het
+    m_Localized: Wat een interessant apparaat heb je verkregen. Ga en probeer het
       te gebruiken, neem nog een Kobold mee.
     m_Metadata:
       m_Items: []
@@ -1021,8 +1021,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Leer meer over de reality-buigende elasticiteit van Kobolds, Fuck
-      a Kobold met een lul die groter is dan zijn lichaam.
+    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
+      fuck a kobold met een lul groter dan zijn lichaam.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1031,7 +1031,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: Ik wil dat je een van je Kobolds laat leggen, een groot ei legt.
-      Zo groot als je het echt kunt krijgen.
+      Zo groot als je kunt het echt krijgen.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1054,7 +1054,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Welkom in de underground.
+    m_Localized: Welkom in de ondergrondse.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1062,11 +1062,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Je bent zo, echt naakt.
+    m_Localized: Whoa! Je bent zo van, echt naakt.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Hoe dan ook, alleen uh .. help jezelf denk ik.
+    m_Localized: Hoe dan ook, alleen uh .. help uzelf denk ik.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1108,7 +1108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Kattentastrofe
+    m_Localized: Cat-tastrofe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1117,12 +1117,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: Maak de perfecte Kobold
+    m_Localized: Maak de perfecte kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
     m_Localized: "Ik heb besloten dat ik een partner nodig heb, de perfecte Kobold
-      voor me cre\xEBren."
+      voor mij cre\xEBer."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
@@ -1130,9 +1130,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: Ze zijn perfect! Ik ga ... behoorlijk druk zijn ... Ik promoot je
-      tot een functie van een opzichter, je zult kobolds namens mij kopen bij andere
-      Kobold Karetakers, zoek iemand om de benodigde slang te bouwen.
+    m_Localized: Ze zijn perfect! Ik ga het zijn ... behoorlijk druk ... Ik promoot
+      je tot een functie van een opzichter, je zult kobolds namens mij kopen bij
+      andere Kobold Karetakers, zoek iemand om de benodigde slang te bouwen.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1145,7 +1145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: Welkom! Wil je wat zaden kopen? We hebben ook Kobold -eieren!
+    m_Localized: Welkom! Wil je wat zaden kopen? We hebben ook Kobold Eggs!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1153,11 +1153,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: Welkom bij het casino, hier voor zaken of plezier?
+    m_Localized: Welkom in het casino, hier voor zaken of plezier?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: Uit je gebrek aan kleren zal ik een beetje van beide raden. Je kunt
+    m_Localized: Uit je gebrek aan kleren zal ik een beetje van beide raden. U kunt
       de Panchinko -machine spelen om wat versieringen te verdienen.
     m_Metadata:
       m_Items: []
@@ -1179,7 +1179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Hey maatje!
+    m_Localized: "H\xE9 vriend!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1208,8 +1208,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Ik zal hier gewoon staan \u200B\u200Bvoor het geval een andere
-      naakte Kobold wil dat ik ze fetisjmachines bouw."
+    m_Localized: Ik sta hier gewoon voor het geval een andere naakte Kobold wil dat
+      ik ze fetisjmachines bouw.
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1230,7 +1230,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1325,7 +1325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-shrink
+    m_Localized: Dick-kronkelen
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Mod -configuratie
+    m_Localized: MOD -configuratie
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1342,6 +1342,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: Uitkiezen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Installeren ...
     m_Metadata:
       m_Items: []
   references:

@@ -1303,7 +1303,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Invert-Look y-Achse
+    m_Localized: Invertieren Sie y-achse
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
@@ -1332,6 +1332,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: "W\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Installation ...
     m_Metadata:
       m_Items: []
   references:

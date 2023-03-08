@@ -896,13 +896,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: Fornisce il reagente specificato o il prefabbricata. Utilizzare
+    m_Localized: Fornisce il reagente specificato o il prefabbricato. Utilizzare
       /elenco per trovare tutti i nomi propri.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: Equipaggia l'attrezzatura specificata. Utilizzare /elenco per trovare
-      nomi propri.
+    m_Localized: Equipaggia l'apparecchiatura specificata. Utilizzare /elenco per
+      trovare nomi propri.
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
@@ -923,7 +923,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Tempo di hamburger!
+    m_Localized: Burger Time!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
@@ -1011,7 +1011,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: Voglio che tu faccia uno dei tuoi koboldi detti un grande uovo.
+    m_Localized: Voglio che tu faccia uno dei tuoi kobolds depone un grande uovo.
       Big come puoi davvero.
     m_Metadata:
       m_Items: []
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha non sarebbe cos\xEC divertente se avessi bloccato 4 dildo nella
+    m_Localized: "Aha non sarebbe cos\xEC divertente se hai bloccato 4 dildo nella
       bocca di un kobold ... ti comando di farlo."
     m_Metadata:
       m_Items: []
@@ -1141,7 +1141,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464153
     m_Localized: "Dalla tua mancanza di vestiti indoviner\xF2 un po 'di entrambi.
-      Puoi suonare la macchina Panchinko per guadagnare alcuni ornamenti."
+      Puoi giocare alla macchina Panchinko per guadagnare alcuni ornamenti."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1157,8 +1157,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Ci sono roba davanti e anche dietro di me, quindi alzati qui, non
-      c'\xE8 bisogno di essere timido."
+    m_Localized: "Ci sono cose davanti davanti e anche dietro di me, quindi alzati
+      qui, non c'\xE8 bisogno di essere timidi."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1178,7 +1178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
-    m_Localized: Hai bisogno di qualcosa costruito?
+    m_Localized: Hai bisogno di qualcosa di costruito?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464135
@@ -1200,11 +1200,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Juice It Up!
+    m_Localized: Swit It Up!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Voglio molti tipi diversi di kobold, e ci\xF2 significa che hai
+    m_Localized: "Voglio molti tipi diversi di kobold e ci\xF2 significa che hai
       bisogno di pi\xF9 succhi di frutta. Macina pi\xF9 frutta!"
     m_Metadata:
       m_Items: []
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: 'Razza: Big McLargehuge'
+    m_Localized: 'Razza: grande mclargehuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
@@ -1248,12 +1248,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Mandami un sacco di grandi boobi kobolds. Questo non \xE8 per la
-      praticit\xE0, sono solo divertenti da sfoggiare."
+    m_Localized: "Mandami un sacco di grandi boobi kobolds. Questo non \xE8 per praticit\xE0,
+      sono solo divertenti da sfoggiare."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Razza: itty bitty'
+    m_Localized: 'Razza: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
@@ -1283,8 +1283,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
-    m_Localized: "Impossibile caricare il salvataggio! Pu\xF2 essere salvato con
-      una versione diversa di Koboldkare."
+    m_Localized: "Non \xE8 riuscito a caricare il salvataggio! Pu\xF2 essere salvato
+      con una versione diversa di Koboldkare."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
@@ -1325,6 +1325,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: Selezionare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Installazione ...
     m_Metadata:
       m_Items: []
   references:

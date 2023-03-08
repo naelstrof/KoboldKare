@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004675
-    m_Localized: Lydeffekter Volum
+    m_Localized: Lydeffektvolum
     m_Metadata:
       m_Items: []
   - m_Id: 516095004676
@@ -185,7 +185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004685
-    m_Localized: Maksimalt vindu
+    m_Localized: Maxed Window
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
@@ -213,8 +213,8 @@ MonoBehaviour:
   - m_Id: 516095004692
     m_Localized: "\u2022 Under straff for perjury er du over 18 \xE5r.\n\u2022 Nakenhet
       og eksplisitte skildringer av seksuell aktivitet forn\xE6rmer deg ikke.\n\u2022
-      Du erkjenner at du er ansvarlig for at alle personer som ser p\xE5 spillet
-      fra enheten din er over 18 \xE5r."
+      Du erkjenner at du er ansvarlig for \xE5 sikre at alle personer som ser p\xE5
+      spillet fra enheten din er over 18 \xE5r."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
@@ -563,7 +563,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Brystbyngger
+    m_Localized: Nippel vektstenger
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -583,7 +583,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: En magisk tilknytning som er lang, sylindrisk, og har en blusset
+    m_Localized: En magisk tilknytning som er lang, sylindrisk, og har en oppblusset
       spiss. Har noen gode teleskopiske handlinger!
     m_Metadata:
       m_Items: []
@@ -642,7 +642,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
-    m_Localized: Nippelpumper
+    m_Localized: Brystvortepumper
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
@@ -706,7 +706,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Jeg er nymrianth, dragen herre. Jeg befaler deg \xE5 begynne \xE5
+    m_Localized: "Jeg er Nymrianth, dragen herre. Jeg befaler deg \xE5 begynne \xE5
       jobbe som Kobold Karetaker og plante et egg."
     m_Metadata:
       m_Items: []
@@ -760,7 +760,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -779,7 +779,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695175
     m_Localized: "Det er i v\xE5r beste interesse \xE5 ha noen f\xE5 superheavy kobolds,
-      fete noen opp og sende dem til meg."
+      fet noen opp og sende dem til meg."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
@@ -901,7 +901,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Belagt pikk
+    m_Localized: Platert pikk
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
@@ -936,7 +936,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: Lag litt melkebaserte matvarer!
+    m_Localized: Lag noen melkebaserte matvarer!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
@@ -960,7 +960,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i hulene i n\xE6rheten,
-      g\xE5 og unders\xF8k for meg."
+      g\xE5 og unders\xF8ke for meg."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -972,7 +972,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oh ho ho .. velkommen ...
+    m_Localized: Oh Ho Ho .. Velkommen ...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -1075,7 +1075,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Selg Micro Kobold
+    m_Localized: Selg Micro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
@@ -1107,7 +1107,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464147
     m_Localized: "De er perfekte! Jeg kommer til \xE5 v\xE6re ... ganske opptatt
-      ... Jeg promoterer deg til en tilsynsmannsstilling, du vil kj\xF8pe kobolds
+      ... Jeg promoterer deg til en tilsynsmannsstilling, du vil kj\xF8pe Kobolds
       p\xE5 mine vegne fra andre Kobold Karetakers, finne noen til \xE5 bygge det
       n\xF8dvendige slangen."
     m_Metadata:
@@ -1135,7 +1135,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: "Fra mangelen p\xE5 kl\xE6r vil jeg gjette litt p\xE5 begge deler.
+    m_Localized: "Fra din mangel p\xE5 kl\xE6r vil jeg gjette litt p\xE5 begge deler.
       Du kan spille Panchinko -maskinen for \xE5 tjene noen pryd."
     m_Metadata:
       m_Items: []
@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Rase: Magetid!'
+    m_Localized: 'Rase: Tummy Time!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
@@ -1270,7 +1270,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke redusering
+    m_Localized: Bevegelsessyke reduserer
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1320,6 +1320,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 269043733614874624
     m_Localized: Plukke ut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277668489729613824
+    m_Localized: Installere ...
     m_Metadata:
       m_Items: []
   references:

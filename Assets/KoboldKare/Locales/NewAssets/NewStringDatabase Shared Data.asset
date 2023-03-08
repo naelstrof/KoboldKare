@@ -1255,6 +1255,10 @@ MonoBehaviour:
     m_Key: MENU_SELECT
     m_Metadata:
       m_Items: []
+  - m_Id: 277668489729613824
+    m_Key: STEAMWORKS_INSTALLING
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

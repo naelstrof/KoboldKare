@@ -247,7 +247,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     }
     public void SetEyeDir(Vector3 dir) {
         eyeDir = dir;
-        if (possession != null) {
+        if (controlType == ControlType.LocalPlayer) {
             OrbitCamera.SetPlayerIntendedFacingDirection(eyeDir);
         }
     }

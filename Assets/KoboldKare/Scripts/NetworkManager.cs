@@ -174,14 +174,14 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (cause == DisconnectCause.DisconnectByClientLogic || cause == DisconnectCause.None) yield break;
         PopupHandler.instance.ClearAllPopups();
         yield return LevelLoader.instance.LoadLevel("MainMenu");
-        PopupHandler.instance.SpawnPopup("Disconnect", true, cause.ToString());
+        PopupHandler.instance.SpawnPopup("Disconnect", true, default, cause.ToString());
     }
 
     private IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PopupHandler.instance.ClearAllPopups();
         yield return LevelLoader.instance.LoadLevel("MainMenu");
-        PopupHandler.instance.SpawnPopup("Disconnect", true, "Error " + returnCode + ": " + message);
+        PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Error " + returnCode + ": " + message);
     }
 
     public void TriggerDisconnect() {

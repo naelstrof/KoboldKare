@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: hu
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704587
   m_TableData:
   - m_Id: 13688688640
     m_Localized: "J\xE1t\xE9k ind\xEDt\xE1sa"
@@ -911,7 +912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s r\xE1csokkal."
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -1126,7 +1127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1248,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet akarok az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l, ezek
-      nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
+      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1298,7 +1299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: "Itt nincs m\xE1s neked ... egyel\u0151re."
+    m_Localized: "Nincs m\xE1s neked itt ... egyel\u0151re."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
@@ -1314,7 +1315,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "Goly\xF3csillap\xEDt\xF3"
+    m_Localized: "Goly\xF3csukl\xF3"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
@@ -1338,9 +1339,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: "Telep\xEDt\xE9s ..."
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: "Bet\xF6lt\xE9sment\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: "T\xF6rl\xE9s Ment\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: "{0:plural:1 m\xE1sodik|{} m\xE1sodpercek} ezel\u0151tt"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
+  - m_Id: 278016973418733568
+    m_Localized: "{0:plural:1 perc|{} percek} ezel\u0151tt"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
+  - m_Id: 278016973418733569
+    m_Localized: "{0:plural:1 \xF3ra|{} \xF3r\xE1k} ezel\u0151tt"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
+  - m_Id: 278016973422927872
+    m_Localized: "{0:plural:1 nap|{} napok} ezel\u0151tt"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
+  - m_Id: 278016973422927873
+    m_Localized: "{0:plural:1 \xE9v|{} \xE9vek} ezel\u0151tt"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704587
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03

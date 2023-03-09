@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: cs
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704579
   m_TableData:
   - m_Id: 13688688640
     m_Localized: "Hr\xE1t"
@@ -1129,7 +1130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1311,27 +1312,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: "Invertn\xED vzhled osy y"
+    m_Localized: "P\u0159evr\xE1cen\xED osy-Y"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Boob-Shrink
+    m_Localized: "zmen\u0161ova\u010D prsou"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Balls-Shrink
+    m_Localized: "zmen\u0161ova\u010D varlat"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-Shrink
+    m_Localized: "zmen\u0161ova\u010D p\xE9ra"
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
-    m_Localized: Modding
+    m_Localized: "M\xF3dov\xE1n\xED"
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Konfigurace mod
+    m_Localized: "Konfigurace m\xF3d\u016F"
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1343,9 +1344,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Instalace ...
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: "Na\u010D\xEDst ulo\u017Eit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: "Smazat ulo\u017Eit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: "P\u0159ed {0:plural:1 druh\xFD|{} sekundy}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
+  - m_Id: 278016973418733568
+    m_Localized: "P\u0159ed {0:plural:1 minuta|{} minut}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
+  - m_Id: 278016973418733569
+    m_Localized: "P\u0159ed {0:plural:1 hodina|{} hodiny}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
+  - m_Id: 278016973422927872
+    m_Localized: "P\u0159ed {0:plural:1 den|{} dny}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
+  - m_Id: 278016973422927873
+    m_Localized: "P\u0159ed {0:plural:1 rok|{} roky}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704579
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03

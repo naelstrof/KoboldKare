@@ -144,8 +144,8 @@ public class GameManager : MonoBehaviour {
     private void ReloadMapIfInEditor() {
         if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu"  && SceneManager.GetActiveScene().name != "ErrorScene" && !reloadedSceneAlready && PhotonNetwork.OfflineMode) {
             StartCoroutine(ReloadMapRoutine());
-            reloadedSceneAlready = true;
         }
+        reloadedSceneAlready = true;
     }
 
     private IEnumerator ReloadMapRoutine() {

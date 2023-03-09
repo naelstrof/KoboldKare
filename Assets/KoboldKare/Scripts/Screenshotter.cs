@@ -10,15 +10,9 @@ public static class Screenshotter {
     }
     private static IEnumerator ScreenshotRoutine(ScreenshotFinishedAction action, bool resize = true) {
         // Disable UI rendering for a frame;
-        Camera cam = Camera.main;
-        if (cam == null) {
-            action.Invoke(null);
-            yield break;
-        }
-
         GameManager.SetUIVisible(false);
         // We wait for the camera to finish the current render.
-        yield return new WaitForEndOfFrame();
+        yield return null;
         // Then wait one more frame to make sure that the the render doesn't include UI.
         yield return new WaitForEndOfFrame();
 

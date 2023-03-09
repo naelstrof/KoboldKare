@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: ro
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704594
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Joaca
@@ -205,9 +206,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
-      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
-      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -269,7 +268,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: "Dezvolt\u0103"
+    m_Localized: Dezvoltare
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
@@ -694,8 +693,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 v\u0103
-      creasc\u0103 kobold -ul."
+    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 creasc\u0103
+      kobold -ul."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -882,8 +881,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Un penis \xEEn club, cu barbe moi c\u0103rnoase \u0219i mingi joase
-      ag\u0103\u021Bate."
+    m_Localized: "Un penis \xEEn club cu barbe moi c\u0103rnoase \u0219i bile de
+      ag\u0103\u021Bare joas\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -1130,7 +1129,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1345,9 +1344,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Instalare ...
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: "Salvare \xEEnc\u0103rcare"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: "\u0218terge\u021Bi salvare"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: Acum {0:plural:1 al doilea|{} secunde}
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
+  - m_Id: 278016973418733568
+    m_Localized: Acum {0:plural:1 minut|{} minute}
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
+  - m_Id: 278016973418733569
+    m_Localized: Acum {0:plural:1 ora|{} ore}
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
+  - m_Id: 278016973422927872
+    m_Localized: Acum {0:plural:1 zi|{} zile}
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
+  - m_Id: 278016973422927873
+    m_Localized: Acum {0:plural:1 an|{} ani}
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704594
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03

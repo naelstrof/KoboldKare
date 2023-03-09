@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: pl
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704592
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Graj
@@ -568,7 +569,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Brilells sutki
+    m_Localized: "Bril\xF3wki sutkowe"
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -581,8 +582,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Prosty hardhat, aby chroni\u0107 g\u0142ow\u0119 przed spadaj\u0105cymi
-      szcz\u0105tkami."
+    m_Localized: "Prosty hardhat do ochrony g\u0142owy przed spadaj\u0105cymi szcz\u0105tkami."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
@@ -611,7 +611,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kutas Kandi
+    m_Localized: Kutak Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -747,7 +747,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Dostarcz du\u017Cego kutasa Koboldsa."
+    m_Localized: "Dostarcz du\u017Cego penisa Koboldsa."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
@@ -770,7 +770,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Wype\u0142nij kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
+    m_Localized: "Wype\u0142nij Kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
       ju\u017C mogli znie\u015B\u0107, musz\u0119 zobaczy\u0107, jak trwa\u0142y
       jest tw\xF3j rodzaj."
     m_Metadata:
@@ -789,8 +789,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku super\xF3wek
-      Kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
+    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku supersztycznych
+      kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
@@ -951,7 +951,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -1126,7 +1126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1160,7 +1160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie za cen\u0119 ..."
+    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie w cenie ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1276,8 +1276,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Jestem ciekawy, jak dobrze koboldowie radz\u0105 sobie z tarciem
-      powietrznym, wy\u015Blij jedno puchni\u0119cie w niebo."
+    m_Localized: "Jestem ciekawy, jak dobrze Koboldowie radz\u0105 sobie z tarciem
+      powietrznym, wy\u015Blij jedno w niebo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
@@ -1338,9 +1338,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Instalowanie ...
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: "Za\u0142adowa\u0107 bezpiecznie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: "Usu\u0144 zapisz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: '{0:plural:1 drugi|{} sekundy} temu'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
+  - m_Id: 278016973418733568
+    m_Localized: '{0:plural:1 minuta|{} minuty} temu'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
+  - m_Id: 278016973418733569
+    m_Localized: '{0:plural:1 godzina|{} godziny} temu'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
+  - m_Id: 278016973422927872
+    m_Localized: "{0:plural:1 dzie\u0144|{} dni} temu"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
+  - m_Id: 278016973422927873
+    m_Localized: '{0:plural:1 rok|{} lata} temu'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704592
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03

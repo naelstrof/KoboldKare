@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704597
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Jugar
@@ -718,8 +719,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "Va a la ciudad y compra un molinillo, busque el taller de construcci\xF3n
-      tripulado por una oveja. El del sombrero duro."
+    m_Localized: "Ve a la ciudad y compra un molino, busque el taller de construcci\xF3n
+      atendido por una oveja. La del sombrero de construccion."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -1114,7 +1115,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1295,7 +1296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: "S\xE1bado"
+    m_Localized: Shrink
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
@@ -1323,9 +1324,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: "Instalaci\xF3n ..."
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: Cargar guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: Eliminar guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: '{0:plural:1 segundo|{} segundos}'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704597
+  - m_Id: 278016973418733568
+    m_Localized: '{0:plural:1 minuto|{} minutos}'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704597
+  - m_Id: 278016973418733569
+    m_Localized: '{0:plural:1 hora|{} horas}'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704597
+  - m_Id: 278016973422927872
+    m_Localized: "{0:plural:1 d\xEDa|{} d\xEDas}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704597
+  - m_Id: 278016973422927873
+    m_Localized: "{0:plural:1 a\xF1o|{} a\xF1os}"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704597
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704597
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03

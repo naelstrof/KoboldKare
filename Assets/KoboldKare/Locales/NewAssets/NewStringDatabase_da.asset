@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: da
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704580
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Spil
@@ -921,8 +922,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
-      kv\xE6rnen til at kombinere dem og derefter fodre den til en Kobold."
+    m_Localized: Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
+      sliben til at kombinere dem og derefter fodre den til en kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -958,8 +959,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
-      huler, g\xE5 og unders\xF8ge for mig."
+    m_Localized: "Jeg fornemmer en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
+      huler, g\xE5r og unders\xF8ger for mig."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -983,7 +984,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: "M\xE6rkelig videnskab!"
+    m_Localized: Underlig videnskab!
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
@@ -1028,7 +1029,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Velkommen til Underground.
+    m_Localized: Velkommen til undergrundsbanen.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1040,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Alligevel bare uh .. Hj\xE6lp dig selv antager jeg."
+    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1111,7 +1112,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1129,7 +1130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Velkommen til casinoet, her for forretning eller forn\xF8jelse?"
+    m_Localized: "Velkommen til casinoet her for forretning eller gl\xE6de?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1223,8 +1224,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Jeg har brug for en masse kobolds med k\xE6mpe haner, det er vigtigt
-      for mine planer."
+    m_Localized: Jeg har brug for en masse kobolds med gigantiske haner, det er vigtigt
+      for mine planer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1309,7 +1310,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: MOD -konfiguration
+    m_Localized: Mod -konfiguration
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1321,9 +1322,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Installation ...
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: Belastning gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: Slet gem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: For {0:plural:1 anden|{} sekunder} siden
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
+  - m_Id: 278016973418733568
+    m_Localized: For {0:plural:1 minut|{} minutter} siden
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
+  - m_Id: 278016973418733569
+    m_Localized: For {0:plural:1 time|{} timer} siden
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
+  - m_Id: 278016973422927872
+    m_Localized: For {0:plural:1 dag|{} dage} siden
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
+  - m_Id: 278016973422927873
+    m_Localized: "For {0:plural:1 \xE5r|{} flere \xE5r} siden"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704580
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03

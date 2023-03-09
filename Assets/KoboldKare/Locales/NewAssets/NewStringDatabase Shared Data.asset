@@ -1259,6 +1259,46 @@ MonoBehaviour:
     m_Key: STEAMWORKS_INSTALLING
     m_Metadata:
       m_Items: []
+  - m_Id: 278016973389373440
+    m_Key: TIME_UNIT_SECONDS_AGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973418733568
+    m_Key: TIME_UNIT_MINUTES_AGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973418733569
+    m_Key: TIME_UNIT_HOURS_AGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973422927872
+    m_Key: TIME_UNIT_DAYS_AGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973422927873
+    m_Key: TIME_UNIT_YEARS_AGO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Key: MENU_LOAD_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Key: MENU_DELETE_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437602570240
+    m_Key: ARE_YOU_SURE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Key: DELETE_SAVE_CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Key: LOAD_SAVE_CONFIRM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

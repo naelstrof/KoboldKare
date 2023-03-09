@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704582
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Play
@@ -1338,6 +1339,55 @@ MonoBehaviour:
     m_Localized: Installing...
     m_Metadata:
       m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: Load save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: Delete save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: '{0:plural:1 second|{} seconds} ago'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704582
+  - m_Id: 278016973418733568
+    m_Localized: '{0:plural:1 minute|{} minutes} ago'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704582
+  - m_Id: 278016973418733569
+    m_Localized: '{0:plural:1 hour|{} hours} ago'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704582
+  - m_Id: 278016973422927872
+    m_Localized: '{0:plural:1 day|{} days} ago'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704582
+  - m_Id: 278016973422927873
+    m_Localized: '{0:plural:1 year|{} years} ago'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704582
+  - m_Id: 278029437602570240
+    m_Localized: Are you sure?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Deleting a save is permanent!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading the save now will lose your current session.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704582
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03

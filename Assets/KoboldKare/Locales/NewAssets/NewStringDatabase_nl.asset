@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: nl
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704581
   m_TableData:
   - m_Id: 13688688640
     m_Localized: Toneelstuk
@@ -988,7 +989,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Koop de body swapper.
+    m_Localized: Koop de Body Swapper.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
@@ -1136,7 +1137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1153,7 +1154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: Welkom in het casino, hier voor zaken of plezier?
+    m_Localized: Welkom bij het casino, hier voor zaken of plezier?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1230,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1345,9 +1346,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Installeren ...
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: Laad gegevens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: Verwijderen opslaan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: '{0:plural:1 seconde|{} seconden} geleden'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
+  - m_Id: 278016973418733568
+    m_Localized: '{0:plural:1 minuut|{} minuten} geleden'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
+  - m_Id: 278016973418733569
+    m_Localized: '{0:plural:1 uur|{} uren} geleden'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
+  - m_Id: 278016973422927872
+    m_Localized: '{0:plural:1 dag|{} dagen} geleden'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
+  - m_Id: 278016973422927873
+    m_Localized: '{0:plural:1 jaar|{} jaar} geleden'
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704581
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03

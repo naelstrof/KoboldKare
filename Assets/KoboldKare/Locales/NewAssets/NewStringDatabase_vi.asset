@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: vi
   m_SharedData: {fileID: 11400000, guid: 7b0547fe1d039e3448e29797d2fc4463, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 1602997996487704600
   m_TableData:
   - m_Id: 13688688640
     m_Localized: "Ch\u01A1i"
@@ -1176,7 +1177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1414,9 +1415,58 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: "C\xE0i \u0111\u1EB7t ..."
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296896
+    m_Localized: "T\u1EA3i ti\u1EBFt ki\u1EC7m"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277970981017296897
+    m_Localized: "X\xF3a l\u01B0u"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278016973389373440
+    m_Localized: "{0:plural:1 th\u1EE9 hai|{} gi\xE2y} tr\u01B0\u1EDBc"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
+  - m_Id: 278016973418733568
+    m_Localized: "{0:plural:1 ph\xFAt|{} ph\xFAt} tr\u01B0\u1EDBc"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
+  - m_Id: 278016973418733569
+    m_Localized: "{0:plural:1 gi\u1EDD|{} gi\u1EDD} tr\u01B0\u1EDBc"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
+  - m_Id: 278016973422927872
+    m_Localized: "{0:plural:1 ng\xE0y|{} ng\xE0y} tr\u01B0\u1EDBc"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
+  - m_Id: 278016973422927873
+    m_Localized: "{0:plural:1 n\u0103m|{} n\u0103m} tr\u01B0\u1EDBc"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
+  - m_Id: 278029437602570240
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930368
+    m_Localized: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 278029437631930369
+    m_Localized: Loading...
     m_Metadata:
       m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1602997996487704600
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002067dcf6b6db03002027def6b6db03

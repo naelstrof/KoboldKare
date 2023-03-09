@@ -77,6 +77,12 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     }
 
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
+        if (count == 0) {
+            yield return null;
+            finishedHandle?.Invoke();
+            yield break;
+        }
+
         yield return LocalizationSettings.InitializationOperation;
         yield return new WaitUntil(() => !busy);
         var downloadTextHandle = downloadingText.GetLocalizedStringAsync();

@@ -11,7 +11,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
     private Animator animator;
-    private KoboldCharacterController controller;
+
+    private KoboldCharacterController controller => GetComponent<KoboldCharacterController>();
+
     [SerializeField]
     private Rigidbody[] ragdollBodies;
     private Rigidbody body;
@@ -131,11 +133,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
-
-    private void Start() {
-        controller = GetComponent<KoboldCharacterController>();
-    }
-
+    
     private void Awake() {
         animator = GetComponent<CharacterDescriptor>().GetDisplayAnimator();
         group = GetComponentInChildren<LODGroup>();

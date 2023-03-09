@@ -3,9 +3,11 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "PopupHandler", menuName = "Data/PopupHandler", order = 1)]
-public class PopupHandler : SingletonScriptableObject<PopupHandler> {
-    [System.Serializable]
+public class PopupHandler : MonoBehaviour {
+    public static PopupHandler instance;
+    [SerializeField]
+    private CanvasGroup mainCanvasGroup;
+    [Serializable]
     public class PopupInfo {
         public string name;
         public GameObject popupPrefab;
@@ -48,6 +50,10 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
             } else {
                 DestroyImmediate(internalCanvas);
             }
+        }
+
+        if (instance == null) {
+            instance = this;
         }
     }
     public void OnDisable() {
@@ -93,17 +99,16 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
         }
 
         popups.Remove(p.gameObject);
-        Destroy(p.gameObject); 
-        //if (popups.Count <=0) {
-            //GameManager.instance.GetComponentInChildren<EventSystem>().enabled = true;
-            //canvas.GetComponent<EventSystem>().enabled = false;
-        //}
+        Destroy(p.gameObject);
+        if (popups.Count <= 0) {
+            mainCanvasGroup.interactable = true;
+        }
     }
-    public Popup SpawnPopup(string name, bool solo = true, string description = default(string), Sprite icon = null) {
+    public Popup SpawnPopup(string name, bool solo = true, string title = default, string description = default, Sprite icon = null) {
         Popup popup = null;
         foreach(PopupInfo p in popupDatabase) {
             if (p.name == name && canvas != null) {
-                GameObject g = GameObject.Instantiate(p.popupPrefab, canvas.transform);
+                GameObject g = Instantiate(p.popupPrefab, canvas.transform);
                 popup = g.GetComponentInChildren<Popup>();
                 if (popup == null) {
                     Debug.LogError("Popup " + name + " doesn't have a popup component, that's required in order to set things like the text or image of the popup!");
@@ -112,8 +117,11 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
             }
         }
         if (popup != null) {
-            if (description != default(string)) {
+            if (description != default) {
                 popup.description.text = description;
+            }
+            if (title != default) {
+                popup.title.text = title;
             }
             if (icon != null) {
                 popup.icon.sprite = icon;
@@ -127,12 +135,14 @@ public class PopupHandler : SingletonScriptableObject<PopupHandler> {
                 //canvas.GetComponent<EventSystem>().enabled = true;
             }
             if (popup.cancel != null) {
-                popup.cancel.onClick.AddListener(() => { ClearPopup(popup); });
+                popup.cancel.onClick.AddListener(() => { popup.Clear(); });
             }
             if (popup.okay != null) {
-                popup.okay.onClick.AddListener(() => { ClearPopup(popup); });
+                popup.okay.onClick.AddListener(() => { popup.Clear(); });
+                popup.okay.Select();
             }
             popups.Add(popup.gameObject);
+            mainCanvasGroup.interactable = false;
         }
         return popup;
     }

@@ -44,6 +44,7 @@ public static class SaveManager {
                 saveDatas.Add(new SaveData(fileName, File.GetCreationTime(fileName)));
             }
         }
+        saveDatas.Sort((a, b) => b.time.CompareTo(a.time));
     }
     // Give a copy, we don't want anyone manipulating it manually.
     public static List<SaveData> GetSaveDatas() {
@@ -150,6 +151,7 @@ public static class SaveManager {
                 file.Write(jpg, 0, jpg.Length);
             }
             saveDatas.Add(new SaveData(savePath, File.GetCreationTime(savePath)));
+            saveDatas.Sort((a, b) => b.time.CompareTo(a.time));
             action?.Invoke();
         });
     }

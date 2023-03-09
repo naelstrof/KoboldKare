@@ -185,12 +185,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f1fb12aae7763914b83ac69527714860
-    m_Address: Assets/KoboldKare/ScriptableObjects/PopupHandler.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e0c29f704eb625469f31c13379f97b8
     m_Address: Assets/KoboldKare/ScriptableObjects/NetworkManager.asset
     m_ReadOnly: 0

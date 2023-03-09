@@ -61,6 +61,7 @@ MonoBehaviour:
           rid: 9
         m_Sources:
         - rid: 10
+        - rid: 1602997996487704603
         - rid: 11
         - rid: 12
         - rid: 13
@@ -78,7 +79,7 @@ MonoBehaviour:
       type: {class: SmartSettings, ns: UnityEngine.Localization.SmartFormat.Core.Settings,
         asm: Unity.Localization}
       data:
-        m_FormatErrorAction: 2
+        m_FormatErrorAction: 0
         m_ParseErrorAction: 2
         m_CaseSensitivity: 0
         m_ConvertCharacterStringLiterals: 1
@@ -178,6 +179,11 @@ MonoBehaviour:
         - default
         - d
         - 
+    - rid: 1602997996487704603
+      type: {class: PersistentVariablesSource, ns: UnityEngine.Localization.SmartFormat.Extensions,
+        asm: Unity.Localization}
+      data:
+        m_Groups: []
     - rid: 7429542520746147840
       type: {class: PlayerPrefLocaleSelector, ns: UnityEngine.Localization.Settings,
         asm: Unity.Localization}

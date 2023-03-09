@@ -270,7 +270,7 @@ public class ModManager : MonoBehaviour {
 
             foreach (var mod in instance.fullModList) {
                 if (mod.title != neededMods[i].title) continue;
-                neededMods.RemoveAt(i);
+                neededMods.RemoveAt(i--);
                 break;
             }
         }

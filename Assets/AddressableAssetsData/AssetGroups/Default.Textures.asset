@@ -2342,12 +2342,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8d8edba47243df7419aa55ae5d128f2f
-    m_Address: Assets/KoboldKare/Textures/saveBGFrame.png
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da9af63567bee1f419da571819601563
     m_Address: Assets/KoboldKare/Textures/ico_box_open.png
     m_ReadOnly: 0

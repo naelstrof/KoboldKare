@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
 using Steamworks;
+using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 public static class SaveManager {
@@ -97,6 +98,12 @@ public static class SaveManager {
         rootNode["header"] = saveHeader;
         rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
         rootNode["mapName"] = SceneManager.GetActiveScene().name;
+        foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
+            if (map.unityScene.GetName() != SceneManager.GetActiveScene().name) continue;
+            rootNode["mapKey"] = (string)map.unityScene.RuntimeKey;
+            break;
+        }
+
         JSONArray modList = new JSONArray();
         foreach (var mod in ModManager.GetLoadedMods()) {
             JSONNode modNode = JSONNode.Parse("{}");
@@ -258,6 +265,7 @@ public static class SaveManager {
         }
 
         string mapName = "MainMap";
+        string mapKey = default;
         List<ModManager.ModStub> modStubs = new List<ModManager.ModStub>();
         JSONNode rootNode;
         using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
@@ -265,6 +273,9 @@ public static class SaveManager {
             rootNode = JSONNode.Parse(reader.ReadToEnd());
             if (rootNode.HasKey("mapName")) {
                 mapName = rootNode["mapName"];
+            }
+            if (rootNode.HasKey("mapKey")) {
+                mapKey = rootNode["mapKey"];
             }
 
             if (rootNode.HasKey("modList")) {
@@ -278,9 +289,9 @@ public static class SaveManager {
 
         yield return ModManager.SetLoadedMods(modStubs);
         Debug.Log("Successfully set loaded mods");
-
+        
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
-            if ((string)map.unityScene.RuntimeKey == mapName) {
+            if ((string)map.unityScene.RuntimeKey == mapKey || map.unityScene.GetName() == mapName) {
                 Debug.Log("Set selected map");
                 NetworkManager.instance.SetSelectedMap(map);
             }

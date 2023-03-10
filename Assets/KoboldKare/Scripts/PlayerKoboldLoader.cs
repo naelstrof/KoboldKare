@@ -8,7 +8,7 @@ using UnityScriptableSettings;
 public class PlayerKoboldLoader : MonoBehaviour {
     private static readonly string[] settingNames = {"Hue", "Brightness", "Saturation", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
     private Kobold targetKobold;
-    void Start() {
+    void OnEnable() {
         targetKobold = GetComponent<Kobold>();
         foreach(string settingName in settingNames) {
             var option = SettingsManager.GetSetting(settingName);
@@ -26,10 +26,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
         } else {
             throw new UnityException($"Setting Dick is not a SettingInt");
         }
-
         targetKobold.SetGenes(GetPlayerGenes());
     }
-    void OnDestroy() {
+    void OnDisable() {
         foreach(string settingName in settingNames) {
             var option = SettingsManager.GetSetting(settingName);
             if (option is SettingFloat optionFloat) {

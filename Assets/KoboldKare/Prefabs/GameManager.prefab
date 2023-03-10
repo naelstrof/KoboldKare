@@ -5816,7 +5816,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 8, y: -48}
-  m_SizeDelta: {x: 907.41797, y: 80}
+  m_SizeDelta: {x: 798.3045, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &9123617273633938391
 CanvasRenderer:
@@ -7054,9 +7054,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.01, y: 0.02}
-  m_AnchorMax: {x: 0.4, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.4, y: 0.867}
+  m_AnchoredPosition: {x: 0, y: -1}
+  m_SizeDelta: {x: 0, y: -2}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2761196822204280830
 CanvasRenderer:
@@ -8004,7 +8004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.9999695, y: 0}
+  m_AnchoredPosition: {x: 6.999878, y: 0}
   m_SizeDelta: {x: -34, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4026197081050397949
@@ -8133,7 +8133,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2476685587683164170}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -8233,7 +8233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.9999695, y: 0}
+  m_AnchoredPosition: {x: 6.999878, y: 0}
   m_SizeDelta: {x: -34, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5240419163463316947
@@ -8360,7 +8360,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3651455660587724651}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -9931,9 +9931,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3.9999084}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 100}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7206888207467265142
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10914,7 +10914,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 8, y: -136}
-  m_SizeDelta: {x: 907.41797, y: 80}
+  m_SizeDelta: {x: 798.3045, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5939269053936643836
 CanvasRenderer:
@@ -13982,7 +13982,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7927653447097527104}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -17622,7 +17622,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
+  m_fontSize: 24.7
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18386,7 +18386,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4859458327708525262}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -18703,7 +18703,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3747453576802442486}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -19266,8 +19266,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -51.545}
+  m_SizeDelta: {x: 0, y: -103.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4196278361695353381
 CanvasRenderer:
@@ -20012,8 +20012,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8969652298289719374}
   m_HandleRect: {fileID: 3054970696677132905}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22424,7 +22424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.9999695, y: 0}
+  m_AnchoredPosition: {x: 6.999878, y: 0}
   m_SizeDelta: {x: -34, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4013216835308632617
@@ -22551,7 +22551,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7721120700721952834}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -22766,7 +22766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 24.000458, y: 0}
+  m_AnchoredPosition: {x: 24.00064, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7972605013910269298
@@ -24638,7 +24638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 24.000305, y: 0}
+  m_AnchoredPosition: {x: 24.000183, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5897198216909087706
@@ -24765,7 +24765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5113559480646112890}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: set_text
         m_Mode: 0
         m_Arguments:
@@ -35116,6 +35116,7 @@ GameObject:
   - component: {fileID: 7157573590794683408}
   - component: {fileID: 4670938905229452097}
   - component: {fileID: 241050305737190466}
+  - component: {fileID: 1690462897199502684}
   m_Layer: 5
   m_Name: Button - Join Private Game
   m_TagString: Untagged
@@ -35143,7 +35144,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 8, y: -224}
-  m_SizeDelta: {x: 907.41797, y: 80}
+  m_SizeDelta: {x: 798.3045, y: 80}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1310990354347473499
 CanvasRenderer:
@@ -35226,19 +35227,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5479739803612536407}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: f1fb12aae7763914b83ac69527714860, type: 2}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SpawnPopupBasic
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: JoinPrivateGame
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!225 &7157573590794683408
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -35275,6 +35264,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20518daf09687e441b916e6a12ba2a6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1690462897199502684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205998983581157896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a69172ab32243442b8981a602ef4faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1599817422583389466
@@ -36258,6 +36259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StringReference.m_TableReference.m_TableCollectionName
       value: GUID:7b0547fe1d039e3448e29797d2fc4463
+      objectReference: {fileID: 0}
+    - target: {fileID: 7458848262002875495, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
+        type: 3}
+      propertyPath: m_UpdateString.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TMPro.TextMeshProUGUI, Unity.TextMeshPro
       objectReference: {fileID: 0}
     - target: {fileID: 8172602176211314331, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
         type: 3}

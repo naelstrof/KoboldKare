@@ -11,7 +11,7 @@ public class Grabber : MonoBehaviourPun {
     [SerializeField]
     private float springStrength = 200f;
     [SerializeField][Range(0f,100f)]
-    private float dampingStrength = 10f;
+    private float dampingStrength = 30f;
     [SerializeField]
     private Vector3 defaultOffset = Vector3.forward;
 
@@ -67,12 +67,13 @@ public class Grabber : MonoBehaviourPun {
             driverConstraint.springStrength = this.springStrength;
             driverConstraint.body = body;
             driverConstraint.dampingStrength = this.dampingStrength;
-            driverConstraint.connectedAnchor = viewPos+viewRot*offset;
+            driverConstraint.SetWorldAnchor(viewPos+viewRot*offset);
+            driverConstraint.SetWorldAnchor(viewPos+viewRot*offset);
             grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
-                driverConstraint.connectedAnchor = viewPos+viewRot*(weapon.GetWeaponHoldPosition()+offset);
+                driverConstraint.SetWorldAnchor(viewPos+viewRot*(weapon.GetWeaponHoldPosition()+offset));
             }
 
             kobold = grabbable.transform.GetComponentInParent<Kobold>();
@@ -138,9 +139,9 @@ public class Grabber : MonoBehaviourPun {
                 Quaternion fq = Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().forward, viewRot*Vector3.forward)*Quaternion.FromToRotation(weapon.GetWeaponBarrelTransform().up, viewRot*Vector3.up);
                 driverConstraint.forwardVector = fq * body.transform.forward;
                 driverConstraint.upVector = fq * body.transform.up;
-                driverConstraint.connectedAnchor = position+viewRot*(weapon.GetWeaponHoldPosition()+offset);
+                driverConstraint.SetWorldAnchor(position+viewRot*(weapon.GetWeaponHoldPosition()+offset));
             } else {
-                driverConstraint.connectedAnchor = position+viewRot*offset;
+                driverConstraint.SetWorldAnchor(position+viewRot*offset);
             }
 
             if (joint != null) {
@@ -396,7 +397,7 @@ public class Grabber : MonoBehaviourPun {
         }
     }
 
-    public void Update() {
+    public void LateUpdate() {
         Validate();
         foreach (var grab in grabbedObjects) {
             grab.Set(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);

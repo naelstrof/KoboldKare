@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ReloadMapIfInEditor() {
-        if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu"  && SceneManager.GetActiveScene().name != "ErrorScene" && !reloadedSceneAlready && PhotonNetwork.OfflineMode) {
+        if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu"  && SceneManager.GetActiveScene().name != "ErrorScene" && !reloadedSceneAlready) {
             StartCoroutine(ReloadMapRoutine());
         }
         reloadedSceneAlready = true;

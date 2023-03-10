@@ -15,10 +15,10 @@ using UnityEngine.AddressableAssets.Initialization;
 public class ModManager : MonoBehaviour {
     private static ModManager instance;
     private bool ready;
-    private Mutex sharedResource;
     private List<ModInfo> fullModList;
     private const string modLocation = "mods/";
     private const string JSONLocation = "modList.json";
+    private static SemaphoreSlim mutex = new(1);
     public struct ModStub {
         public string title;
         public PublishedFileId_t id;
@@ -145,36 +145,26 @@ public class ModManager : MonoBehaviour {
     }
 
     private async Task LoadMods() {
-        try {
-            sharedResource.WaitOne();
-            foreach (var modPostProcessor in modPostProcessors) {
-                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-                await assets.Task;
-                await modPostProcessor.LoadAllAssets(assets.Result);
-            }
-        } finally {
-            sharedResource.ReleaseMutex();
+        foreach (var modPostProcessor in modPostProcessors) {
+            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
+            await assets.Task;
+            await modPostProcessor.LoadAllAssets(assets.Result);
         }
         ready = true;
         finishedLoading?.Invoke();
     }
 
     private void UnloadMods() {
-        try {
-            sharedResource.WaitOne();
-            foreach (var modPostProcessor in modPostProcessors) {
-                modPostProcessor.UnloadAllAssets();
-            }
+        foreach (var modPostProcessor in modPostProcessors) {
+            modPostProcessor.UnloadAllAssets();
+        }
 
-            foreach (var mod in fullModList) {
-                if (mod.locator == null) {
-                    continue;
-                }
-                Addressables.RemoveResourceLocator(mod.locator);
-                mod.locator = null;
+        foreach (var mod in fullModList) {
+            if (mod.locator == null) {
+                continue;
             }
-        } finally {
-            sharedResource.ReleaseMutex();
+            Addressables.RemoveResourceLocator(mod.locator);
+            mod.locator = null;
         }
     }
 
@@ -194,7 +184,6 @@ public class ModManager : MonoBehaviour {
         };
 
         ready = false;
-        sharedResource = new Mutex();
         instance = this;
         fullModList = new List<ModInfo>();
         foreach(var modPostProcessor in modPostProcessors) {
@@ -208,24 +197,26 @@ public class ModManager : MonoBehaviour {
 
     private async Task ReloadMods() {
         ready = false;
-        UnloadMods();
         try {
-            sharedResource.WaitOne();
+            await mutex.WaitAsync();
+            Debug.Log("start");
+            UnloadMods();
             foreach (var modInfo in fullModList) {
                 if (!modInfo.enabled) {
                     continue;
                 }
 
-                AddressablesRuntimeProperties.ClearCachedPropertyValues(); 
+                AddressablesRuntimeProperties.ClearCachedPropertyValues();
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
                 await loader.Task;
                 modInfo.locator = loader.Result;
             }
+            await LoadMods();
         } finally {
-            sharedResource.ReleaseMutex();
+            mutex.Release();
         }
-        await LoadMods();
+        Debug.Log("end");
     }
 
     public static List<ModStub> GetLoadedMods() {

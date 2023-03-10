@@ -16,7 +16,6 @@ public class PrefabPostProcessor : ModPostProcessor {
     }
 
     public override async Task LoadAllAssets(IList<IResourceLocation> locations) {
-        addedGameObjects.Clear();
         var opHandle = Addressables.LoadAssetsAsync<GameObject>(locations, LoadPrefab);
         await opHandle.Task;
     }

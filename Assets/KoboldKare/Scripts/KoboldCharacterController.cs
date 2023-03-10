@@ -162,7 +162,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     public float crouchHeight = 0.6f;
     [Tooltip("Reference to the player model so we can push it up and down based on when we crouch.")]
     public Transform worldModel;
-    public float airCap = 1f;
+    private float airCap = 0.35f;
     private Vector3 defaultWorldModelPosition = Vector3.zero;
 
     private RaycastHit[] hitArray = new RaycastHit[5];

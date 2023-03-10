@@ -426,11 +426,20 @@ public class SteamWorkshopItem {
 	        JSONArray array = rootNode["tags"].AsArray;
 	        target.FindPropertyRelative("tags").intValue = (int)GetTagsFromJsonArray(array);
         }
-        var fileData = File.ReadAllBytes(previewTexturePath);
+        TryLoadPreview(target);
+        loadedCatalog = targetCatalog;
+        lastMessage = "Successfully loaded mod information from disk.";
+        lastMessageType = MessageType.Info;
+	}
+
+	public void TryLoadPreview(SerializedProperty target) {
+		if (!File.Exists(previewTexturePath)) {
+			return;
+		}
+		var fileData = File.ReadAllBytes(previewTexturePath);
         var tex = new Texture2D(16, 16);
         tex.LoadImage(fileData);
         target.FindPropertyRelative("previewSprite").objectReferenceValue = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2f, tex.height / 2f));
-        loadedCatalog = targetCatalog;
 	}
 }
 

@@ -52,6 +52,11 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 			EditorUtility.SetDirty(this);
 		}
 
+		if (modProp.FindPropertyRelative("previewSprite").objectReferenceValue == null) {
+			mod.TryLoadPreview(modProp);
+			EditorUtility.SetDirty(this);
+		}
+
 		EditorGUILayout.PropertyField(modProp);
 		serializedObject.ApplyModifiedProperties();
 		GUILayout.BeginHorizontal();

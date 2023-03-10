@@ -297,6 +297,8 @@ public class SteamWorkshopItem {
 			BuildForPlatform(BuildTarget.StandaloneWindows64);
 			BuildForPlatform(BuildTarget.StandaloneLinux64);
 			BuildForPlatform(BuildTarget.StandaloneOSX);
+			lastMessage = "Successfully built! Upload when ready.";
+			lastMessageType = MessageType.Info;
 		} finally {
 			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
 			building = false;
@@ -433,6 +435,14 @@ public class SteamWorkshopItem {
 	}
 
 	public void TryLoadPreview(SerializedProperty target) {
+		if (targetCatalog == null || targetCatalog.AssetGroups == null || targetCatalog.AssetGroups.Count == 0) {
+			return;
+		}
+		foreach (var targetGroup in targetCatalog.AssetGroups) {
+			if (targetGroup == null) {
+				return;
+			}
+		}
 		if (!File.Exists(previewTexturePath)) {
 			return;
 		}

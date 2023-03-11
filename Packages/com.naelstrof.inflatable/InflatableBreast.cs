@@ -87,8 +87,13 @@ namespace Naelstrof.Inflatable {
             float flatChestSize = Easing.Easing.Cubic.Out(Mathf.Clamp01(1f - newSize));
             float biggerChestSize = Easing.Easing.Cubic.Out(Mathf.Clamp01(newSize-1f));
             for (int i = 0; i < skinnedMeshRenderers.Count; i++) {
-                skinnedMeshRenderers[i].SetBlendShapeWeight(flatShapeIDs[i], flatChestSize * 100f);
-                skinnedMeshRenderers[i].SetBlendShapeWeight(biggerShapeIDs[i], biggerChestSize * 100f);
+                if (flatShapeIDs[i] != -1) {
+                    skinnedMeshRenderers[i].SetBlendShapeWeight(flatShapeIDs[i], flatChestSize * 100f);
+                }
+
+                if (biggerShapeIDs[i] != -1) {
+                    skinnedMeshRenderers[i].SetBlendShapeWeight(biggerShapeIDs[i], biggerChestSize * 100f);
+                }
             }
             ((JiggleSettingsBlend)targetRig.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
             ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);

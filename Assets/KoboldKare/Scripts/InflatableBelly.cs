@@ -29,13 +29,14 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
         foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers) {
             int id = renderer.sharedMesh.GetBlendShapeIndex(blendShapeStartName);
             if (id == -1) {
-                throw new UnityException("Cannot find blendshape " + blendshapeStartIDs + " on mesh " + renderer.sharedMesh);
+                throw new UnityException($"Cannot find blendshape {blendShapeStartName} on mesh {renderer.sharedMesh}");
             }
 
             blendshapeStartIDs.Add(id);
             int continueID = renderer.sharedMesh.GetBlendShapeIndex(blendShapeContinueName);
             if (continueID == -1) {
-                throw new UnityException("Cannot find blendshape " + blendshapeStartIDs + " on mesh " + renderer.sharedMesh);
+                throw new UnityException(
+                    $"Cannot find blendshape {blendShapeContinueName} on mesh {renderer.sharedMesh}");
             }
             blendshapeContinueIDs.Add(continueID);
         }
@@ -56,8 +57,16 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
             return;
         }
         skinnedMeshRenderers.Add(renderer);
-        blendshapeStartIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(blendShapeStartName));
-        blendshapeContinueIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(blendShapeContinueName));
+        int id = renderer.sharedMesh.GetBlendShapeIndex(blendShapeStartName);
+        if (id == -1) {
+            Debug.LogWarning( $"Cannot find blendshape {blendShapeStartName} on mesh {renderer.sharedMesh}. This may be intended, though it won't recieve belly changes.");
+        }
+        blendshapeStartIDs.Add(id);
+        int continueID = renderer.sharedMesh.GetBlendShapeIndex(blendShapeContinueName);
+        if (continueID == -1) {
+            Debug.LogWarning( $"Cannot find blendshape {blendShapeContinueName} on mesh {renderer.sharedMesh}. This may be intended, though it won't recieve belly changes.");
+        }
+        blendshapeContinueIDs.Add(continueID);
     }
 
     public void RemoveTargetRenderer(SkinnedMeshRenderer renderer) {
@@ -74,8 +83,12 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
         float startWeight = Mathf.Clamp01(newSize);
         for (int i = 0; i < skinnedMeshRenderers.Count; i++) {
             float continueWeight = Mathf.Max(0f,newSize-1f);
-            skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeStartIDs[i], startWeight*100f);
-            skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeContinueIDs[i], continueWeight*100f);
+            if (blendshapeStartIDs[i] != -1) {
+                skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeStartIDs[i], startWeight * 100f);
+            }
+            if (blendshapeContinueIDs[i] != -1) {
+                skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeContinueIDs[i], continueWeight*100f);
+            }
         }
         skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
         ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 2f);

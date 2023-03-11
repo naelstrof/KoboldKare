@@ -120,9 +120,14 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
                     BitBuffer buffer = new BitBuffer(4);
                     buffer.AddKoboldGenes(GetGenes());
                     buffer.AddBool(false);
-                    PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
-                         transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
-                         new object[] { buffer });
+                    if (produce.prefab.GetOptionalDatabase() == GameManager.GetPlayerDatabase()) {
+                        var speciesName = GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos()[GetGenes().species].GetKey();
+                        PhotonNetwork.InstantiateRoomObject(speciesName, transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0, new object[] { buffer });
+                    } else {
+                        PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
+                             transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
+                             new object[] { buffer });
+                    }
                 }
             }
         }
@@ -141,7 +146,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
-            SetGenes(new KoboldGenes().Randomize());
+            SetGenes(new KoboldGenes().Randomize("Kobold"));
             Debug.LogWarning("Plant created without proper instantiation data!", gameObject);
         }
         

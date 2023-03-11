@@ -371,7 +371,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
         PlayAreaEnforcer.AddTrackedObject(photonView);
         if (GetGenes() == null) {
-            SetGenes(new KoboldGenes().Randomize());
+            SetGenes(new KoboldGenes().Randomize(gameObject.name));
         }
     }
     private void OnDestroy() {
@@ -570,7 +570,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         Awake();
         if (info.photonView.InstantiationData == null) {
-            SetGenes(new KoboldGenes().Randomize());
+            SetGenes(new KoboldGenes().Randomize(gameObject.name));
             spawned?.Invoke(this);
             return;
         }
@@ -582,7 +582,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             SetGenes(buffer.ReadKoboldGenes());
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
-            SetGenes(new KoboldGenes().Randomize());
+            SetGenes(new KoboldGenes().Randomize(gameObject.name));
         }
         
         spawned?.Invoke(this);

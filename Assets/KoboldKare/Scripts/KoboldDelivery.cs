@@ -76,13 +76,14 @@ public class KoboldDelivery : UsableMachine {
         }
 
         poof.SendEvent("TriggerPoof");
+        string koboldName = koboldPrefab.photonName;
         KoboldGenes genes =
-            new KoboldGenes().Randomize(0.4f + priceSelector.GetSelected() * priceSelector.GetSelected());
+            new KoboldGenes().Randomize(koboldName, 0.4f + priceSelector.GetSelected() * priceSelector.GetSelected());
         BitBuffer playerSpawnData = new BitBuffer(16);
         playerSpawnData.AddKoboldGenes(genes);
         playerSpawnData.AddBool(false);
         
-        GameObject obj = PhotonNetwork.InstantiateRoomObject(koboldPrefab.photonName, popOutLocation.transform.position,
+        GameObject obj = PhotonNetwork.InstantiateRoomObject(koboldName, popOutLocation.transform.position,
             Quaternion.identity, 0, new object[] { playerSpawnData });
         spawnedKobold?.Invoke(obj.GetComponent<Kobold>());
         source.enabled = true;

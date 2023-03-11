@@ -24,6 +24,8 @@ public class PhotonGameObjectReference {
         }
     }
 
+    public PrefabDatabase GetOptionalDatabase() => optionalDatabase;
+
     public void OnValidate() {
         //if (gameObject != null) {
             //photonName = gameObject.name;

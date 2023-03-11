@@ -47,9 +47,11 @@ public class GameManager : MonoBehaviour {
     private GameObject SaveTab;
 
     [SerializeField] private PrefabDatabase penisDatabase;
+    [SerializeField] private PrefabDatabase playerDatabase;
     private bool reloadedSceneAlready = false;
 
     public static PrefabDatabase GetPenisDatabase() => instance.penisDatabase;
+    public static PrefabDatabase GetPlayerDatabase() => instance.playerDatabase;
 
     public static Coroutine StartCoroutineStatic(IEnumerator routine) {
         if (instance == null) {

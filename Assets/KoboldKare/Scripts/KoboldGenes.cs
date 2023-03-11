@@ -37,6 +37,7 @@ public static class KoboldGenesBitBufferExtension {
         buffer.AddByte(genes.saturation);
         buffer.AddByte(genes.dickEquip);
         buffer.AddByte(genes.grabCount);
+        buffer.AddByte(genes.species);
     }
     public static KoboldGenes ReadKoboldGenes(this BitBuffer buffer) {
         if (!buffer.ReadBool()) {
@@ -56,7 +57,8 @@ public static class KoboldGenesBitBufferExtension {
             brightness = buffer.ReadByte(),
             saturation = buffer.ReadByte(),
             dickEquip = buffer.ReadByte(),
-            grabCount = buffer.ReadByte()
+            grabCount = buffer.ReadByte(),
+            species = buffer.ReadByte()
         };
     }
 }
@@ -77,6 +79,7 @@ public class KoboldGenes {
     public byte saturation = 128;
     public byte dickEquip = byte.MaxValue;
     public byte grabCount = 1;
+    public byte species = 0;
 
     private static double NextGaussian (double mean, double standard_deviation, double min, double max) {
         // While this is technically possible, don't want to churn numbers till the end of the universe to continue...
@@ -105,7 +108,7 @@ public class KoboldGenes {
     public KoboldGenes With(float? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
             float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
-            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null, byte? grabCount = null) {
+            byte? saturation = null, byte? dickEquip = null, float? dickThickness = null, byte? grabCount = null, byte? species = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
             baseSize = baseSize ?? this.baseSize,
@@ -120,7 +123,8 @@ public class KoboldGenes {
             saturation = saturation ?? this.saturation,
             dickEquip = dickEquip ?? this.dickEquip,
             dickThickness = dickThickness ?? this.dickThickness,
-            grabCount = grabCount ?? this.grabCount
+            grabCount = grabCount ?? this.grabCount,
+            species = species ?? this.species
         };
     }
 
@@ -133,8 +137,19 @@ public class KoboldGenes {
         }
         return (byte)penises.IndexOf(selectedPenis);
     }
+    
+    private byte GetPlayerIndex(string name) {
+        var playerDatabase = GameManager.GetPlayerDatabase();
+        var players = playerDatabase.GetValidPrefabReferenceInfos();
+        foreach (var info in players) {
+            if (name.Contains(info.GetKey())) {
+                return (byte)players.IndexOf(info);
+            }
+        }
+        return 0;
+    }
 
-    public KoboldGenes Randomize(float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
+    public KoboldGenes Randomize(string koboldName=null, float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
         // Slight bias for kobolds with dicks, as they have more variety.
         if (Random.Range(0f,1f) > 0.4f) {
             breastSize = (float)NextGaussian(2.5f*meanMultiplier,2.5f*standardDeviationMultiplier,0f, float.MaxValue);
@@ -152,6 +167,10 @@ public class KoboldGenes {
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
+        if (string.IsNullOrEmpty(koboldName)) {
+            koboldName = GameManager.GetPlayerDatabase().GetRandom().GetKey();
+        }
+        species = GetPlayerIndex(koboldName);
         return this;
     }
 
@@ -160,7 +179,7 @@ public class KoboldGenes {
         // This should never happen.
         if (a == null && b == null) {
             Debug.LogError("Tried to mix two null gene pools, how does this happen?");
-            return new KoboldGenes().Randomize(1f);
+            return new KoboldGenes().Randomize("Kobold");
         }
         
         // Single parent? Also shouldn't happen.
@@ -192,7 +211,11 @@ public class KoboldGenes {
         c.maxEnergy = Mathf.Lerp(a.maxEnergy, b.maxEnergy, 0.5f);
         c.dickThickness = Mathf.Lerp(a.dickThickness, b.dickThickness, 0.5f);
         c.grabCount = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(a.grabCount, b.grabCount, 0.5f)),1);
-        
+        // If species don't match, we have a 30% chance to mutate to a new species!
+        if (a.species != b.species && Random.Range(0f, 1f) > 0.7f) {
+            int maxSpecies = Mathf.Max(a.species, b.species);
+            c.species = (byte)((maxSpecies+1)%GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos().Count);
+        }
         return c;
     }
 

@@ -96,7 +96,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
-            yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
         if (PhotonNetwork.InLobby) {
             PhotonNetwork.LeaveLobby();
@@ -267,7 +266,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnCreatedRoom() {
-        if (SceneManager.GetActiveScene().name == "MainMenu") {
+        if (SceneManager.GetActiveScene().name != selectedMap.unityScene.GetName()) {
             LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
         }
     }

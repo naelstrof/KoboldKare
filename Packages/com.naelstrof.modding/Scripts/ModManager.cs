@@ -199,7 +199,6 @@ public class ModManager : MonoBehaviour {
         ready = false;
         try {
             await mutex.WaitAsync();
-            Debug.Log("start");
             UnloadMods();
             foreach (var modInfo in fullModList) {
                 if (!modInfo.enabled) {
@@ -216,7 +215,6 @@ public class ModManager : MonoBehaviour {
         } finally {
             mutex.Release();
         }
-        Debug.Log("end");
     }
 
     public static List<ModStub> GetLoadedMods() {

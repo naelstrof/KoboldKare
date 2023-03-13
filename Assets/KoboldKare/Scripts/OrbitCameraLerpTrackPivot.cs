@@ -10,7 +10,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     protected Ragdoller ragdoller;
     private CharacterControllerAnimator characterControllerAnimator;
     protected SettingFloat fov;
-    private float lerpTrackSpeed = 0.1f;
+    protected float lerpTrackSpeed = 0.1f;
     private Vector3 lastPosition;
     public virtual void Initialize(Animator targetAnimator, HumanBodyBones bone, float lerpTrackSpeed) {
         targetTransform = targetAnimator.GetBoneTransform(bone);
@@ -30,16 +30,11 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         return lastPosition;
     }
 
-    private void LateUpdate() {
+    protected virtual void LateUpdate() {
         Vector3 a = transform.localPosition;
         Vector3 b = transform.parent.InverseTransformPoint(targetTransform.position);
-        Vector3 correction = Vector3.ProjectOnPlane(b - a, transform.parent.InverseTransformDirection(OrbitCamera.GetPlayerIntendedRotation()*Vector3.right));
-        float diff = Vector3.Distance(a, a+correction);
-        Vector3 correctionDiff = (b - a) - correction;
-        // Just snap left/right movement, to prevent motion sickness
-        if (correctionDiff.magnitude > 0.25f) {
-            a += correctionDiff;
-        }
+        Vector3 correction = b - a;
+        float diff = correction.magnitude;
         transform.localPosition = Vector3.MoveTowards(a, a+correction, (0.1f+diff)*Time.deltaTime*lerpTrackSpeed);
     }
 

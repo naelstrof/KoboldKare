@@ -11,8 +11,12 @@ public class OrbitCameraFPSHeadPivot : OrbitCameraLerpTrackPivot {
         eyeOffset = targetTransform.InverseTransformPoint(eyeCenter);
     }
 
-    public override Vector3 GetPivotPosition(Quaternion camRotation) {
-        return base.GetPivotPosition(camRotation) + targetTransform.TransformVector(eyeOffset);
+    protected override void LateUpdate() {
+        Vector3 a = transform.localPosition;
+        Vector3 b = transform.parent.InverseTransformPoint(targetTransform.TransformPoint(eyeOffset));
+        Vector3 correction = b - a;
+        float diff = correction.magnitude;
+        transform.localPosition = Vector3.MoveTowards(a, a+correction, (0.1f+diff)*Time.deltaTime*lerpTrackSpeed);
     }
 
     public override float GetDistanceFromPivot(Quaternion camRotation) {

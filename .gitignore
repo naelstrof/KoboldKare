@@ -7,6 +7,9 @@
 # Don't include this awesome paid editor asset
 [Aa]ssets/AmplifyShaderEditor/
 [Aa]ssets/AmplifyShaderEditor.meta
+[Aa]ssets/UMotionEditor/
+[Aa]ssets/UMotionEditor.meta
+UMotionData/
 
 # Also don't push secrets from my google sheets.
 [Aa]ssets/KoboldKare/Locales/Google Sheets Service.asset

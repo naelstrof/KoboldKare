@@ -42,7 +42,7 @@ public class CameraSwitcher : MonoBehaviour {
             var animator = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator();
             var fpsPivotObj = new GameObject("FPSPivot", typeof(OrbitCameraFPSHeadPivot));
             firstpersonPivot = fpsPivotObj.GetComponent<OrbitCameraFPSHeadPivot>();
-            firstpersonPivot.Initialize(animator, HumanBodyBones.Head, 5f);
+            firstpersonPivot.Initialize(animator, HumanBodyBones.Neck, 5f);
             firstpersonConfiguration = new OrbitCameraBasicConfiguration();
             firstpersonConfiguration.SetPivot(firstpersonPivot.GetComponent<OrbitCameraLerpTrackPivot>());
             firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));

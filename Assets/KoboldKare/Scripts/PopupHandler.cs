@@ -54,9 +54,12 @@ public class PopupHandler : MonoBehaviour {
     }
 
     private void OnDisable() {
-        foreach (GameObject p in popups) {
-            Destroy(p);
+        if (popups != null) {
+            foreach (GameObject p in popups) {
+                Destroy(p);
+            }
         }
+
         if (internalCanvas != null) {
             Destroy(internalCanvas);
         }

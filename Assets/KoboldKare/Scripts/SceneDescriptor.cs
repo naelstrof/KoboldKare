@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityScriptableSettings;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ObjectiveManager))]
@@ -24,8 +26,8 @@ public class SceneDescriptor : OrbitCameraPivotBase {
         instance = this;
         //var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
         //audioListener = obj.GetComponent<AudioListener>();
-        var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(OrbitCamera), typeof(AudioListener));
-        orbitCamera.GetComponent<Camera>().nearClipPlane = 0.1f;
+        var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(UniversalAdditionalCameraData), typeof(OrbitCamera), typeof(AudioListener), typeof(CameraConfigurationListener));
+        
         if (baseCameraConfiguration != null) {
             OrbitCamera.AddConfiguration(baseCameraConfiguration);
         }

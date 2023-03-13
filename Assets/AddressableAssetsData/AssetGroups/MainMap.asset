@@ -47,8 +47,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 92bc42f2d00c56c46a88b3861b71e146
-    m_Address: Assets/KoboldKare/Scenes/MainMap/Global Volume Profile.asset
+  - m_GUID: 9b00e78013b1e064d943a1257a50e309
+    m_Address: Assets/KoboldKare/Scenes/MainMap/MainMapProfile.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -56,7 +56,8 @@ MonoBehaviour:
   - m_GUID: d597d2b91cfae2f4ca787b3e496f3954
     m_Address: Assets/KoboldKare/ScriptableObjects/PlayableMaps/MainMapPreview.png
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - default
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}

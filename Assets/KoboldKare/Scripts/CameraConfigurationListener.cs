@@ -35,7 +35,6 @@ public class CameraConfigurationListener : MonoBehaviour {
         var camData = GetComponent<UniversalAdditionalCameraData>();
         camData.dithering = true;
         camData.renderPostProcessing = true;
-        Debug.Log(camData.renderPostProcessing);
         
         yield return new WaitUntil(() => SettingsManager.GetSetting("AntiAliasing") != null);
         antiAliasing = SettingsManager.GetSetting("AntiAliasing") as SettingInt;
@@ -50,7 +49,7 @@ public class CameraConfigurationListener : MonoBehaviour {
         yield return new WaitUntil(() => SettingsManager.GetSetting("Bloom") != null);
         bloomOption = SettingsManager.GetSetting("Bloom") as SettingInt;
         bloomOption.changed += OnBloomChanged;
-        OnPostExposureChanged(bloomOption.GetValue());
+        OnBloomChanged(bloomOption.GetValue());
         
         yield return new WaitUntil(() => SettingsManager.GetSetting("MotionBlur") != null);
         blurOption = SettingsManager.GetSetting("MotionBlur") as SettingInt;

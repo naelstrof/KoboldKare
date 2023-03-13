@@ -23799,27 +23799,67 @@ MonoBehaviour:
   - name: Connect
     popupPrefab: {fileID: 8139072932483966557, guid: fd95002abee3f244489427894ca672b4,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: fd95002abee3f244489427894ca672b4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: Disconnect
     popupPrefab: {fileID: 8139072932483966557, guid: 4b77792761ba83b4c8a1fb1ae42eb314,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: 4b77792761ba83b4c8a1fb1ae42eb314
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: CreateCustomGame
     popupPrefab: {fileID: 8139072932483966557, guid: 0db1b2949f8595e4685ff4a5aa255d32,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: 0db1b2949f8595e4685ff4a5aa255d32
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: JoinPrivateGame
     popupPrefab: {fileID: 8139072932483966557, guid: 33a87f3fa8bf4d74894c6048998373bd,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: 33a87f3fa8bf4d74894c6048998373bd
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: AlphaPopup
     popupPrefab: {fileID: 7097516722698545566, guid: 5aae5d272202bc242b4b39d4f12fc9b4,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: 5aae5d272202bc242b4b39d4f12fc9b4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: FailedLoad
     popupPrefab: {fileID: 8139072932483966557, guid: eb6471a7bfdaf28408d79c416db41eae,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: eb6471a7bfdaf28408d79c416db41eae
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: SaveSlotInteract
     popupPrefab: {fileID: 8139072932483966557, guid: 6c1f0cb3a13491346ab157f5e0e61f2a,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: 6c1f0cb3a13491346ab157f5e0e61f2a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   - name: ConfirmPopup
     popupPrefab: {fileID: 8139072932483966557, guid: fe98cc461b047ca4eaadc500d4d7ea2e,
       type: 3}
+    popupPrefabReference:
+      m_AssetGUID: fe98cc461b047ca4eaadc500d4d7ea2e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!1 &7586070052874400603
 GameObject:
   m_ObjectHideFlags: 0
@@ -25882,7 +25922,6 @@ MonoBehaviour:
   - {fileID: 4175952421401704699}
   enabledObjectsOffLevel:
   - {fileID: 204055067210610296}
-  - {fileID: 4468076400065107710}
   - {fileID: 4468076400065107710}
 --- !u!225 &1366265427650081050
 CanvasGroup:

@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using System.Collections;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PopupHandler : MonoBehaviour {
     public static PopupHandler instance;
@@ -10,11 +13,12 @@ public class PopupHandler : MonoBehaviour {
     [Serializable]
     public class PopupInfo {
         public string name;
-        public GameObject popupPrefab;
+        public AsyncOperationHandle<GameObject> popupPrefabHandle;
+        public AssetReferenceGameObject popupPrefabReference;
     }
-    public List<PopupInfo> popupDatabase = new List<PopupInfo>();
+    public List<PopupInfo> popupDatabase;
     [NonSerialized]
-    private List<GameObject> popups = new List<GameObject>();
+    private List<GameObject> popups;
     [NonSerialized]
     private GameObject internalCanvas;
     private GameObject canvas {
@@ -28,9 +32,6 @@ public class PopupHandler : MonoBehaviour {
             internalCanvas = new GameObject("PopupCanvas");
             Canvas c = internalCanvas.AddComponent<Canvas>();
             internalCanvas.AddComponent<GraphicRaycaster>();
-            //EventSystem e = internalCanvas.AddComponent<EventSystem>();
-            //e.enabled = false;
-            //internalCanvas.AddComponent<InputSystemUIInputModule>().actionsAsset = GameManager.instance.GetComponentInChildren<InputSystemUIInputModule>().actionsAsset;
             c.renderMode = RenderMode.ScreenSpaceOverlay;
             c.sortingOrder = 2;
             DontDestroyOnLoad(internalCanvas.gameObject);
@@ -40,40 +41,22 @@ public class PopupHandler : MonoBehaviour {
     }
     // Start is called before the first frame update
     private void OnEnable() {
-        foreach(GameObject p in popups) {
-            Destroy(p);
-        }
-        popups.Clear();
-        if (internalCanvas) {
-            if (Application.isPlaying) {
-                Destroy(internalCanvas);
-            } else {
-                DestroyImmediate(internalCanvas);
-            }
-        }
-
         if (instance == null) {
+            popups = new List<GameObject>();
             instance = this;
         }
     }
-    public void OnDisable() {
-        OnDestroy();
-    }
-    public void OnDestroy() {
-        if (!Application.isPlaying) {
-            foreach (GameObject p in popups) {
-                DestroyImmediate(p);
-            }
-            popups.Clear();
-            if (internalCanvas != null) {
-                DestroyImmediate(internalCanvas);
-            }
-            return;
+
+    void Awake() {
+        foreach (var popupInfo in popupDatabase) {
+            popupInfo.popupPrefabHandle = Addressables.LoadAssetAsync<GameObject>(popupInfo.popupPrefabReference);
         }
+    }
+
+    private void OnDisable() {
         foreach (GameObject p in popups) {
             Destroy(p);
         }
-        popups.Clear();
         if (internalCanvas != null) {
             Destroy(internalCanvas);
         }
@@ -83,10 +66,6 @@ public class PopupHandler : MonoBehaviour {
             Destroy(p);
         }
         popups.Clear();
-    }
-
-    public void SpawnPopupBasic(string name) {
-        SpawnPopup(name);
     }
 
     public bool PopupIsActive() {
@@ -108,7 +87,10 @@ public class PopupHandler : MonoBehaviour {
         Popup popup = null;
         foreach(PopupInfo p in popupDatabase) {
             if (p.name == name && canvas != null) {
-                GameObject g = Instantiate(p.popupPrefab, canvas.transform);
+                if (!p.popupPrefabHandle.IsDone) {
+                    p.popupPrefabHandle.WaitForCompletion();
+                }
+                GameObject g = Instantiate(p.popupPrefabHandle.Result, canvas.transform);
                 popup = g.GetComponentInChildren<Popup>();
                 if (popup == null) {
                     Debug.LogError("Popup " + name + " doesn't have a popup component, that's required in order to set things like the text or image of the popup!");

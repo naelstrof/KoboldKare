@@ -425,6 +425,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c1f0cb3a13491346ab157f5e0e61f2a
+    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlotInteract.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe98cc461b047ca4eaadc500d4d7ea2e
+    m_Address: Assets/KoboldKare/Prefabs/UI/ConfirmPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

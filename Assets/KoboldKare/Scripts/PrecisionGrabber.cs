@@ -25,6 +25,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
+    public delegate void GrabAction(GameObject grabbedObject);
+    public event GrabAction grabChanged;
 
     //[SerializeField] private GameEventFloat handVisibilityEvent;
     //[SerializeField] private GameObject freezeUI;
@@ -171,14 +173,13 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             savedQuaternion = body.rotation;
             Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
             bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
-            distance = Vector3.Distance(view.position, hitPosWorld);
             creationTime = Time.time;
-            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
-                .GetComponentInChildren<Animator>();
+            handDisplayAnimator = Instantiate(handDisplayPrefab, owner.transform).GetComponentInChildren<Animator>();
             handDisplayAnimator.gameObject.SetActive(true);
             handDisplayAnimator.SetBool(GrabbingHash, true);
             handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
             photonView = collider.GetComponentInParent<PhotonView>();
+            distance = Vector3.Distance(GetViewPos(), hitPosWorld);
             frozen = false;
             targetKobold = collider.GetComponentInParent<Kobold>();
             if (targetKobold != null) {
@@ -205,8 +206,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             photonView = collider.GetComponentInParent<PhotonView>();
             Vector3 hitPosWorld = collider.transform.TransformPoint(localColliderPosition);
             bodyAnchor = body.transform.InverseTransformPoint(hitPosWorld);
-            handDisplayAnimator = GameObject.Instantiate(handDisplayPrefab, owner.transform)
-                .GetComponentInChildren<Animator>();
+            handDisplayAnimator = Instantiate(handDisplayPrefab, owner.transform).GetComponentInChildren<Animator>();
             handDisplayAnimator.gameObject.SetActive(true);
             handDisplayAnimator.SetBool(GrabbingHash, true);
             handTransform = handDisplayAnimator.GetBoneTransform(HumanBodyBones.RightHand);
@@ -365,9 +365,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             if (!photonView.IsMine) {
                 return view.position;
             }
-            float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
-            Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
-            return viewPos;
+            return OrbitCamera.GetPlayerIntendedPosition();
         }
     }
 
@@ -445,9 +443,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         if (!photonView.IsMine) {
             return view.position;
         }
-        float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
-        Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
-        return viewPos;
+        return OrbitCamera.GetPlayerIntendedPosition();
     }
 
     private bool TryRaycastGrab(float maxDistance, out RaycastHit? previewHit) {
@@ -527,6 +523,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             currentGrab = null;
             return;
         }
+        grabChanged?.Invoke(colliders[colliderNum].gameObject);
         currentGrab.SetVisibility(handVisibility);
         PhotonProfiler.LogReceive(sizeof(int)*2+sizeof(float)*6);
     }
@@ -654,6 +651,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
 
     [PunRPC]
     private void DropRPC() {
+        grabChanged?.Invoke(null);
         currentGrab?.Release();
         currentGrab = null;
     }
@@ -664,6 +662,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             return;
         }
         
+        grabChanged?.Invoke(null);
         currentGrab?.Release();
         currentGrab = null;
     }

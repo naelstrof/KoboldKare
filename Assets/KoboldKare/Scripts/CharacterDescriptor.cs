@@ -191,14 +191,14 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
 
         GameObject circlePoofEffectGameObject = new GameObject("CirclePoof", typeof(VisualEffect));
         circlePoofEffectGameObject.transform.SetParent(displayAnimator.transform);
-        circlePoofEffectGameObject.transform.localPosition = Vector3.zero;
+        circlePoofEffectGameObject.transform.localPosition = Vector3.up*0.1f;
         circlePoofEffectGameObject.transform.localRotation = Quaternion.identity;
         VisualEffect circlePoofEffect = circlePoofEffectGameObject.GetComponent<VisualEffect>();
         circlePoofEffect.visualEffectAsset = circlePoof;
         
         GameObject walkDustEffectGameObject = new GameObject("WalkDust", typeof(VisualEffect));
         walkDustEffectGameObject.transform.SetParent(displayAnimator.transform);
-        walkDustEffectGameObject.transform.localPosition = Vector3.zero;
+        walkDustEffectGameObject.transform.localPosition = Vector3.up*0.1f;
         walkDustEffectGameObject.transform.localRotation = Quaternion.identity;
         VisualEffect walkDustEffect = circlePoofEffectGameObject.GetComponent<VisualEffect>();
         walkDustEffect.visualEffectAsset = walkDust;

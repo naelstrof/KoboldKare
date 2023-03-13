@@ -11,6 +11,7 @@ public class CameraSwitcher : MonoBehaviour {
     private OrbitCameraBasicConfiguration freecamConfiguration;
     private OrbitCameraBasicConfiguration lockedFreecamConfiguration;
     private OrbitCameraLockedOffsetPivot lockedFreecamPivot;
+    private OrbitRagdollPivot basicRagdollPivot;
     private SimpleCameraController freeCamController;
     
     private Ragdoller ragdoller;
@@ -21,6 +22,7 @@ public class CameraSwitcher : MonoBehaviour {
     private bool initialized = false;
     [SerializeField]
     private PlayerPossession possession;
+    private PrecisionGrabber precisionGrabber;
     private KoboldCharacterController controller;
     public enum CameraMode {
         FirstPerson = 0,
@@ -33,6 +35,8 @@ public class CameraSwitcher : MonoBehaviour {
     void OnEnable() {
         controller = GetComponentInParent<KoboldCharacterController>();
         ragdoller = GetComponentInParent<Ragdoller>();
+        precisionGrabber = GetComponentInParent<PrecisionGrabber>();
+        precisionGrabber.grabChanged += OnGrabChanged;
         ragdoller.RagdollEvent += OnRagdollEvent;
         if (firstpersonConfiguration == null) {
             var animator = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator();
@@ -61,7 +65,7 @@ public class CameraSwitcher : MonoBehaviour {
             thirdpersonConfiguration = new OrbitCameraCharacterConfiguration();
             thirdpersonConfiguration.SetPivots(shoulderPivot, buttPivot);
 
-            var basicRagdollPivot = animator.GetBoneTransform(HumanBodyBones.Spine).gameObject.AddComponent<OrbitCameraPivotBasic>();
+            basicRagdollPivot = animator.GetBoneTransform(HumanBodyBones.Spine).gameObject.AddComponent<OrbitRagdollPivot>();
             basicRagdollPivot.SetInfo(new Vector2(0.5f,0.33f), 1f);
             thirdpersonRagdollConfiguration = new OrbitCameraBasicConfiguration();
             thirdpersonRagdollConfiguration.SetPivot(basicRagdollPivot);
@@ -81,6 +85,14 @@ public class CameraSwitcher : MonoBehaviour {
         mode = CameraMode.FirstPerson;
     }
 
+    void OnGrabChanged(GameObject grab) {
+        if (grab == null) {
+            basicRagdollPivot.SetFreeze(false);
+        } else {
+            basicRagdollPivot.SetFreeze(grab.transform.IsChildOf(ragdoller.transform));
+        }
+    }
+
     void OnRagdollEvent(bool ragdolled) {
         if (mode == CameraMode.ThirdPerson) {
             if (ragdolled) {
@@ -98,6 +110,7 @@ public class CameraSwitcher : MonoBehaviour {
     void OnDisable() {
         OrbitCamera.RemoveConfiguration(lastConfig);
         ragdoller.RagdollEvent -= OnRagdollEvent;
+        precisionGrabber.grabChanged -= OnGrabChanged;
     }
 
     void Update() {

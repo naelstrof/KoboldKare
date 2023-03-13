@@ -106,7 +106,7 @@ public class DickDescriptor : MonoBehaviour {
         public bool overpenetrated { get; set; }
     }
     public List<DickSet> dicks = new List<DickSet>();
-    public void Awake() {
+    public void Initialize() {
         foreach (DickSet set in dicks) {
             //set.ball
             set.descriptor = this;
@@ -246,8 +246,8 @@ public class DickDescriptor : MonoBehaviour {
         cumming = false;
     }
     public void AttachTo(Kobold k) {
+        Initialize();
         // Kobolds are kinda loaded asyncronously, so awake most certainly needs to be called.
-        Awake();
         attachedKobold = k;
         var attachedAnimator = k.GetComponent<CharacterDescriptor>().GetDisplayAnimator();
         bool animatorWasEnabled = attachedAnimator.enabled;

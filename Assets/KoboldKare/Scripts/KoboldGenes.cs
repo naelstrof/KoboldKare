@@ -317,7 +317,8 @@ public class KoboldGenes {
            saturation: {saturation}
            dickEquip: {dickEquip}
            grabCount: {grabCount}
-           dickThickness: {dickThickness}";
+           dickThickness: {dickThickness}
+           species: {species}";
     }
 }
 

@@ -1,6 +1,8 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityScriptableSettings;
@@ -76,6 +78,16 @@ public class PlayerKoboldLoader : MonoBehaviour {
             genes = ProcessOption(genes, SettingsManager.GetSetting(setting) as SettingFloat);
         }
         genes = ProcessOption(genes, SettingsManager.GetSetting("Dick") as SettingInt);
+        //genes = genes.With(species: 
+        var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
+        var database = GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos();
+        for(int i=0;i<database.Count;i++) {
+            if (prefabSelect.GetPrefab() == database[i].GetKey()) {
+                genes = genes.With(species: (byte)i);
+                break;
+            }
+        }
+
         return genes;
     }
 

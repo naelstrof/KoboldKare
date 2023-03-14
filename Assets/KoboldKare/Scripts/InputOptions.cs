@@ -1,24 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using KoboldKare;
+﻿using UnityEngine;
 using System.IO;
 using System.Text;
 using SimpleJSON;
 using System;
+using Steamworks;
 using UnityEngine.InputSystem;
 
 public class InputOptions : MonoBehaviour {
     [SerializeField]
-    private UnityEngine.InputSystem.InputActionAsset controls;
+    private InputActionAsset controls;
     private static InputOptions instance;
+
+    private string savePath {
+        get {
+            var path = $"{Application.persistentDataPath}/defaultUser/inputBindings.json";
+            if (SteamManager.Initialized) {
+                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/inputBindings.json";
+            }
+            return path;
+        }
+    }
 
     public static void SaveControls() {
         instance.Save();
     }
 
     private void Save() {
-        string savePath = Application.persistentDataPath + "/inputBindings.json";
         FileStream file = File.Create(savePath);
         //string json = JsonUtility.ToJson(overrides, true);
         JSONNode n = JSON.Parse("{}");
@@ -35,7 +42,9 @@ public class InputOptions : MonoBehaviour {
     }
     private void Load() {
         try {
-            string savePath = Application.persistentDataPath + "/inputBindings.json";
+            if (NeedsUpgrade()) {
+                PerformUpgrade();
+            }
             FileStream file = File.Open(savePath, FileMode.Open);
             byte[] b = new byte[file.Length];
             file.Read(b,0,(int)file.Length);
@@ -59,12 +68,26 @@ public class InputOptions : MonoBehaviour {
             Debug.LogException(e);
         }
     }
+    
+    private bool NeedsUpgrade() {
+        if (!SteamManager.Initialized) {
+            return false;
+        }
+        
+        var oldPath = $"{Application.persistentDataPath}/inputBindings.json";
+        return File.Exists(oldPath);
+    }
 
-    private void Awake() {
-        instance = this;
+    private void PerformUpgrade() {
+        if (!NeedsUpgrade()) {
+            return;
+        }
+        var oldPath = $"{Application.persistentDataPath}/inputBindings.json";
+        File.Move(oldPath, savePath);
     }
 
     private void Start() {
+        instance = this;
         Load();
     }
 }

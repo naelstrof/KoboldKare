@@ -1328,7 +1328,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Installation ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1365,21 +1365,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704584
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: "Es-tu s\xFBr?"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: La suppression d'une sauvegarde est permanente!
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: Le chargement de la sauvegarde maintenant perdra votre session actuelle.
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Le modding n\xE9cessite un syst\xE8me compatible 64 bits! Veuillez
+      mettre \xE0 niveau votre syst\xE8me d'exploitation."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "P\xE9nis activ\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "Personnages jouables activ\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Aucun mods trouv\xE9! Abonnez-vous aux mods dans l'atelier Steam,
+      ou installez-les directement dans {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704584
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704584
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

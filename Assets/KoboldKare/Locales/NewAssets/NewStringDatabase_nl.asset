@@ -989,7 +989,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Koop de Body Swapper.
+    m_Localized: Koop de body swapper.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
@@ -1022,8 +1022,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
-      fuck a kobold met een lul groter dan zijn lichaam.
+    m_Localized: Leer meer over de reality-buigende elasticiteit van Kobolds, Fuck
+      a Kobold met een lul die groter is dan zijn lichaam.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1137,7 +1137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1346,7 +1346,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Installeren ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1383,21 +1383,39 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704581
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Weet je het zeker?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: Het verwijderen van een save is permanent!
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: Door de opslag te laden verliest uw huidige sessie.
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: Modding vereist een 64 -bits compatibel systeem! Upgrade uw besturingssysteem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Ingeschakelde penissen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Ingeschakelde speelbare personages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: Geen mods gevonden! Abonneer je op mods op de Steam Workshop of
+      installeer ze rechtstreeks in {ModManager.Path}.
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704581
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704581
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

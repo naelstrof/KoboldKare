@@ -6,13 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ModInfoDisplay : MonoBehaviour {
-    private ModInfo info;
+    private ModManager.ModStub info;
     [SerializeField]
     private Toggle toggle;
-    [SerializeField]
-    private Button moveUp;
-    [SerializeField]
-    private Button moveDown;
     [SerializeField]
     private TMP_Text modName;
     [SerializeField]
@@ -24,7 +20,7 @@ public class ModInfoDisplay : MonoBehaviour {
     [SerializeField]
     private ModInfoDisplaySpawner modInfoDisplaySpawner;
 
-    public void SetModInfo(ModInfoDisplaySpawner spawner, ModInfo newInfo) {
+    public void SetModInfo(ModInfoDisplaySpawner spawner, ModManager.ModStub newInfo) {
         info = newInfo;
         modName.text = newInfo.title;
         rawImage.texture = newInfo.preview;
@@ -33,33 +29,10 @@ public class ModInfoDisplay : MonoBehaviour {
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(OnToggle);
         toggle.SetIsOnWithoutNotify(newInfo.enabled);
-        steamImage.gameObject.SetActive(newInfo.modSource == ModInfo.ModSource.SteamWorkshop);
-        
-        moveUp.onClick.RemoveAllListeners();
-        moveUp.onClick.AddListener(OnMoveUp);
-        moveDown.onClick.RemoveAllListeners();
-        moveDown.onClick.AddListener(OnMoveDown);
+        steamImage.gameObject.SetActive(newInfo.source == ModManager.ModSource.SteamWorkshop);
     }
 
     private void OnToggle(bool newState) {
-        info.enabled = newState;
-        StartCoroutine(ReloadWait());
-    }
-
-    private void OnMoveUp() {
-        ModManager.IncrementPriority(info);
-        modInfoDisplaySpawner.Refresh();
-        StartCoroutine(ReloadWait());
-    }
-    
-    private void OnMoveDown() {
-        ModManager.DecrementPriority(info);
-        modInfoDisplaySpawner.Refresh();
-        StartCoroutine(ReloadWait());
-    }
-
-    private IEnumerator ReloadWait() {
-        Task t = ModManager.Reload();
-        yield return new WaitUntil(()=>t.IsCompleted);
+        ModManager.SetModActive(info, newState);
     }
 }

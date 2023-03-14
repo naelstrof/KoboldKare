@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private GameObject CreditsTab;
     [SerializeField]
+    private GameObject ModdingTab;
+    [SerializeField]
     private GameObject SaveTab;
 
     [SerializeField] private PrefabDatabase penisDatabase;
@@ -58,6 +60,12 @@ public class GameManager : MonoBehaviour {
             return null;
         }
         return instance.StartCoroutine(routine);
+    }
+    public static void StopCoroutineStatic(Coroutine routine) {
+        if (instance == null) {
+            return;
+        }
+        instance.StopCoroutine(routine);
     }
     
     #if UNITY_EDITOR
@@ -82,9 +90,11 @@ public class GameManager : MonoBehaviour {
             OrbitCamera.SetTracking(true);
             InputOptions.SaveControls();
             UnityScriptableSettings.SettingsManager.Save();
+            PrefabDatabaseDatabase.SavePlayerConfig();
             MultiplayerTab.gameObject.SetActive(false);
             OptionsTab.gameObject.SetActive(false);
             CreditsTab.gameObject.SetActive(false);
+            ModdingTab.gameObject.SetActive(false);
             SaveTab.gameObject.SetActive(false);
             MainViewTab.gameObject.SetActive(true);
         }
@@ -115,6 +125,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Quit() {
+        ModManager.SaveConfig();
 #if UNITY_EDITOR
         // Application.Quit() does not work in the editor so
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
@@ -124,14 +135,10 @@ public class GameManager : MonoBehaviour {
 #endif
     }
 
-    //Awake is always called before any Start functions
-    void Awake() {
-        //Check if instance already exists
+    void Start() {
         if (instance == null) {
-            //if not, set instance to this
             instance = this;
-        } else if (instance != this) { //If instance already exists and it's not this:
-            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+        } else if (instance != this) {
             Destroy(gameObject);
             return;
         }
@@ -141,6 +148,7 @@ public class GameManager : MonoBehaviour {
         // So I do it here-- I guess!
         PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
         DontDestroyOnLoad(gameObject);
+        SaveManager.Init();
     }
 
     private void ReloadMapIfInEditor() {
@@ -157,9 +165,6 @@ public class GameManager : MonoBehaviour {
         Pause(false);
     }
 
-    void Start() {
-        SaveManager.Init();
-    }
     private void UIVisible(bool visible) {
         foreach(Canvas c in GetComponentsInChildren<Canvas>()) {
             c.enabled = visible;

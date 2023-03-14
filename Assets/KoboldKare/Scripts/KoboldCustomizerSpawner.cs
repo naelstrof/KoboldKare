@@ -64,9 +64,9 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
 
 
     void HandlePlayerSpawn(GameObject player) {
-        player.AddComponent<PlayerKoboldLoader>();
         var characterDescriptor = player.GetComponent<CharacterDescriptor>();
         characterDescriptor.finishedLoading += (view) => {
+            player.AddComponent<PlayerKoboldLoader>();
             shoulderPivot.SetInfo(new Vector2(0.666f, 0.666f), 2f);
             shoulderPivot.Initialize(characterDescriptor.GetDisplayAnimator(), HumanBodyBones.Head, 1f);
 

@@ -11,13 +11,22 @@ using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 public static class SaveManager {
-    public const string saveDataLocation = "saves/";
-    public const string saveExtension = ".sav";
-    public const string imageExtension = ".jpg";
-    public const string saveHeader = "KKSAVE";
-    //public const string version = "0";
-    public const int textureSize = 256;
+    private const string saveDataLocation = "saves/";
+    private const string saveExtension = ".sav";
+    private const string imageExtension = ".jpg";
+    private const string saveHeader = "KKSAVE";
     public delegate void SaveCompleteAction();
+
+    private static string saveDataPath {
+        get {
+            var path = $"{Application.persistentDataPath}/defaultUser/{saveDataLocation}/";
+            if (SteamManager.Initialized) {
+                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/{saveDataLocation}/";
+            }
+            return path;
+        }
+    }
+
     public class SaveData {
         public SaveData(string fileName, DateTime time) {
             this.fileName = fileName;
@@ -35,7 +44,9 @@ public static class SaveManager {
     }
     private static List<SaveData> saveDatas = new List<SaveData>();
     public static void Init() {
-        string saveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
+        if (NeedsUpgrade()) {
+            PerformUpgrade();
+        }
         if (!Directory.Exists(saveDataPath)) {
             Directory.CreateDirectory(saveDataPath);
         }
@@ -88,12 +99,10 @@ public static class SaveManager {
     }
 
     public static void Save(string filename, SaveCompleteAction action = null) {
-        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be saved: "+filename);
-        string saveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
-        string savePath = string.Format("{0}{1}{2}", saveDataPath, filename, saveExtension);
         if (!Directory.Exists(saveDataPath)) {
             Directory.CreateDirectory(saveDataPath);
         }
+        string savePath = $"{saveDataPath}{filename}{saveExtension}";
         JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["header"] = saveHeader;
         rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
@@ -150,7 +159,7 @@ public static class SaveManager {
             writer.Write(rootNode.ToString());
         }
         // Save a screenshot of what's going on.
-        string imageSavePath = string.Format("{0}{1}{2}", saveDataPath, filename, imageExtension);
+        string imageSavePath = $"{saveDataPath}{filename}{imageExtension}";
         Screenshotter.GetScreenshot((texture)=>{
             if (texture == null) throw new ArgumentNullException(nameof(texture));
             using(FileStream file = new FileStream(imageSavePath, FileMode.CreateNew, FileAccess.Write)) {
@@ -164,8 +173,7 @@ public static class SaveManager {
     }
 
     public static bool RemoveSave(string fileName){
-        string saveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
-        string imageSavePath = string.Format("{0}{1}", fileName.Substring(0,fileName.Length-4), imageExtension);
+        string imageSavePath = $"{fileName.Substring(0, fileName.Length - 4)}{imageExtension}";
         string savePath = fileName;
         if(!File.Exists(savePath)){
             Debug.LogWarning("Indicated save file doesn't exist! ("+savePath+") Should remove from UI rather than disk. TODO: Callback.");
@@ -282,7 +290,7 @@ public static class SaveManager {
                 JSONArray mods = rootNode["modList"].AsArray;
                 foreach (var modStubNode in mods) {
                     ulong.TryParse(modStubNode.Value["publishedFileId"], out ulong publishedId);
-                    modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId));
+                    modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any));
                 }
             }
         }
@@ -320,6 +328,30 @@ public static class SaveManager {
         }
         GameManager.instance.Pause(false);
     }
+
+    private static bool NeedsUpgrade() {
+        if (!SteamManager.Initialized) {
+            return false;
+        }
+        string oldSaveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
+        return Directory.Exists(oldSaveDataPath);
+    }
+
+    private static void PerformUpgrade() {
+        if (!NeedsUpgrade()) {
+            return;
+        }
+        string oldSaveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
+        if (!Directory.Exists(saveDataPath)) {
+            Directory.CreateDirectory(saveDataPath);
+        }
+        foreach(string fileName in Directory.EnumerateFiles(oldSaveDataPath)) {
+            if (!fileName.EndsWith(saveExtension) && !fileName.EndsWith(imageExtension)) continue;
+            File.Move(fileName, $"{saveDataPath}{Path.GetFileName(fileName)}");
+        }
+        Directory.Delete(oldSaveDataPath);
+    }
+
     public static void Load(string filename) {
         //Debug.Log("[SaveManager] :: Loading in process...");
         GameManager.instance.StartCoroutine(MakeSureMapIsLoadedThenLoadSave(filename));

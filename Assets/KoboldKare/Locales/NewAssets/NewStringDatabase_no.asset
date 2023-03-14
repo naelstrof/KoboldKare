@@ -44,7 +44,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analyse
+    m_Localized: Analytics
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -206,7 +206,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: Loading...
+    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
+      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -438,7 +440,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Flared Equine
+    m_Localized: Blusset heste
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -759,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -1040,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Uansett bare eh .. hjelp deg selv antar jeg.
+    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1112,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1233,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Jeg vil ha mer av den gigantiske typen kobold, de er veldig nyttige
+    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
       for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
@@ -1269,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke reduserende
+    m_Localized: Bevegelsessyke reduserer
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1322,7 +1324,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Installere ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1359,21 +1361,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704591
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Er du sikker?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "\xC5 slette en lagring er permanent!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "Lasting av lagringen n\xE5 mister din n\xE5v\xE6rende \xF8kt."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: Modding krever et 64 -biters kompatibelt system! Oppgrader operativsystemet
+      ditt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Aktivert peniser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Aktivert spillbare tegn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Ingen mods funnet! Abonner p\xE5 mods p\xE5 Steam Workshop, eller
+      installer dem direkte i {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704591
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704591
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

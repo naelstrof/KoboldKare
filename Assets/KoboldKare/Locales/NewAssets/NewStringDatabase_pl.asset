@@ -385,7 +385,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: MORLATRY
+    m_Localized: MORTABLATOR
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -569,7 +569,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: "Bril\xF3wki sutkowe"
+    m_Localized: Brilells sutki
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -582,7 +582,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Prosty hardhat do ochrony g\u0142owy przed spadaj\u0105cymi szcz\u0105tkami."
+    m_Localized: "Prosty hardhat, aby chroni\u0107 g\u0142ow\u0119 przed spadaj\u0105cymi
+      szcz\u0105tkami."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
@@ -611,7 +612,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kutak Kandi
+    m_Localized: Kutas Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -680,9 +681,9 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 83373358009864192
     m_Localized: "Witamy w Koboldkare!\n\nKoboldkare to gra wolna od DRM. Prosimy
-      o bezpieczne dzielenie si\u0119, Koboldkare nie potrzebuje crack, aby zagra\u0107!\n\nDzi\u0119kuj\u0119
-      bardzo za wsparcie gry!\n\nSprawd\u017A Steam, Itch i Patreon, aby uzyska\u0107
-      aktualizacje i notatki \u0142atki.\n"
+      o bezpieczne dzielenie si\u0119, Koboldkare nie potrzebuje p\u0119kni\u0119cia
+      do gry!\n\nDzi\u0119kuj\u0119 bardzo za wsparcie gry!\n\nSprawd\u017A Steam,
+      Itch i Patreon, aby uzyska\u0107 aktualizacje i notatki \u0142atki.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -711,7 +712,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Jajko od Smok Lorda!
+    m_Localized: Jajko od smoka Lorda!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
@@ -789,8 +790,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku supersztycznych
-      kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
+    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku super\xF3wek
+      Kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
@@ -851,7 +852,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: Zejmowany humanoidalny penis
+    m_Localized: "Okr\u0105\u017Cony humanoidalny penis"
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
@@ -951,7 +952,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -979,7 +980,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Kup Swapper Body From the Creep in the Cave.
+    m_Localized: "Kup Swapper Body z pe\u0142zania w jaskini."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1084,7 +1085,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464139
     m_Localized: "Aha nie by\u0142oby tak zabawne, gdyby\u015B w\u0142o\u017Cy\u0142
-      4 dildo w usta Kobolda ... rozkazuj\u0119 ci to zrobi\u0107."
+      4 wibratory w usta Kobolda ... rozkazuj\u0119 ci to zrobi\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1126,7 +1127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1203,7 +1204,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Menu g\u0142\xF3wne dla bezpiecznego dla pracy"
+    m_Localized: "Menu g\u0142\xF3wne bezpieczne dla pracy"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1276,8 +1277,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Jestem ciekawy, jak dobrze Koboldowie radz\u0105 sobie z tarciem
-      powietrznym, wy\u015Blij jedno w niebo."
+    m_Localized: "Jestem ciekawy, jak dobrze koboldowie radz\u0105 sobie z tarciem
+      powietrznym, wy\u015Blij jedno puchni\u0119cie w niebo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
@@ -1338,7 +1339,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Instalowanie ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1375,21 +1376,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704592
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: "Jeste\u015B pewny?"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "Usuwanie zapisu jest trwa\u0142e!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "\u0141adowanie zapisu teraz straci bie\u017C\u0105c\u0105 sesj\u0119."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modowanie wymaga 64 -bitowego systemu kompatybilnego! Uaktualnij
+      sw\xF3j system operacyjny."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "W\u0142\u0105czone penisy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "W\u0142\u0105czone grywalne postacie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Nie znaleziono mod\xF3w! Subskrybuj mode w warsztacie Steam lub
+      zainstaluj je bezpo\u015Brednio w {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704592
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704592
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

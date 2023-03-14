@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,18 +6,26 @@ using UnityEngine;
 public class ModInfoDisplaySpawner : MonoBehaviour {
     [SerializeField]
     private ModInfoDisplay uiPrefab;
+    [SerializeField]
+    private GameObject noModsFound;
     
     private List<ModInfoDisplay> displays;
-    void Start() {
+    void OnEnable() {
         Refresh();
+        ModManager.AddFinishedLoadingListener(Refresh);
     }
 
-    public void Refresh() {
+    private void OnDisable() {
+        ModManager.RemoveFinishedLoadingListener(Refresh);
+    }
+
+    private void Refresh() {
         displays ??= new List<ModInfoDisplay>();
         foreach (var modInfoDisplay in displays) {
             Destroy(modInfoDisplay.gameObject);
         }
         displays.Clear();
+        noModsFound.SetActive(ModManager.GetFullModList().Count == 0);
         foreach (var modInfo in ModManager.GetFullModList()) {
             GameObject obj = Instantiate(uiPrefab.gameObject, transform);
             if (obj.TryGetComponent(out ModInfoDisplay display)) {

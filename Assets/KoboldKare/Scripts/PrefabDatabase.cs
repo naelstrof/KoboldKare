@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -5,11 +6,16 @@ using System.IO;
 using System.Text;
 using PenetrationTech;
 using SimpleJSON;
+using Steamworks;
 using UnityEngine;
+using UnityEngine.Localization.SmartFormat.Utilities;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "New Prefab Database", menuName = "Data/Prefab Database", order = 1)]
 public class PrefabDatabase : ScriptableObject {
-    private List<PrefabReferenceInfo> prefabReferenceInfos;
+    [NonSerialized]
+    private List<PrefabReferenceInfo> prefabReferenceInfos = new List<PrefabReferenceInfo>();
+    [NonSerialized]
     private ReadOnlyCollection<PrefabReferenceInfo> readOnlyPrefabReferenceInfos;
 
     public delegate void PrefabReferencesChangedAction(ReadOnlyCollection<PrefabReferenceInfo> prefabReferenceInfos);
@@ -17,7 +23,28 @@ public class PrefabDatabase : ScriptableObject {
     private event PrefabReferencesChangedAction prefabReferencesChanged;
     private List<PrefabReferenceInfo> validInfos;
     
-    private const string JSONLocation = "modConfiguration.json";
+    private const string JsonLocation = "modConfiguration.json";
+
+    private static string jsonFolder {
+        get {
+            var path = $"{Application.persistentDataPath}/defaultUser/";
+            if (SteamManager.Initialized) {
+                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/";
+            }
+            return path;
+        }
+    }
+
+    private static string jsonLocation {
+        get {
+            var path = $"{jsonFolder}/{JsonLocation}";
+            if (SteamManager.Initialized) {
+                path = $"{jsonFolder}/{JsonLocation}";
+            }
+            return path;
+        }
+    }
+
     [System.Serializable]
     public class PrefabReferenceInfo {
         private bool enabled;
@@ -42,6 +69,9 @@ public class PrefabDatabase : ScriptableObject {
             return prefab;
         }
 
+        public bool GetEnabled() {
+            return enabled;
+        }
         public bool IsValid() {
             return enabled && prefab != null;
         }
@@ -100,30 +130,32 @@ public class PrefabDatabase : ScriptableObject {
     }
 
     private void OnEnable() {
-        prefabReferenceInfos = new List<PrefabReferenceInfo>();
         readOnlyPrefabReferenceInfos = prefabReferenceInfos.AsReadOnly();
-        LoadPlayerConfiguration();
     }
 
     public string SavePlayerConfiguration() {
-        string jsonLocation = $"{Application.persistentDataPath}/{JSONLocation}";
-        JSONNode n = JSON.Parse(GetJSONConfiguration());
+        JSONNode n = JSON.Parse(GetJsonConfiguration());
         var rootNode = new JSONArray();
         foreach (var info in prefabReferenceInfos) {
+            if (info.GetEnabled()) {
+                continue;
+            }
             JSONNode node = JSONNode.Parse("{}");
             info.Save(node);
             rootNode.Add(node);
         }
         n[name] = rootNode;
-        using FileStream fileWrite = File.Create(jsonLocation);
+        using FileStream fileWrite = File.Open(jsonLocation, FileMode.OpenOrCreate);
         string writeString = n.ToString(2);
         fileWrite.Write(Encoding.UTF8.GetBytes(writeString),0,writeString.Length);
         fileWrite.Close();
         return writeString;
     }
 
-    public static string GetJSONConfiguration() {
-        string jsonLocation = $"{Application.persistentDataPath}/{JSONLocation}";
+    public static string GetJsonConfiguration() {
+        if (!Directory.Exists(jsonFolder)) {
+            Directory.CreateDirectory(jsonFolder);
+        }
         if (!File.Exists(jsonLocation)) {
             using FileStream quickWrite = File.Open(jsonLocation, FileMode.CreateNew);
             byte[] write = { (byte)'{', (byte)'}', (byte)'\n' };
@@ -146,12 +178,23 @@ public class PrefabDatabase : ScriptableObject {
         }
     }
     public void LoadPlayerConfiguration() {
-        JSONNode n = JSON.Parse(GetJSONConfiguration());
+        JSONNode n = JSON.Parse(GetJsonConfiguration());
         foreach (var node in n[name]) {
+            bool foundInfo = false;
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
-            info.Load(n);
-            AddPrefab(info);
+            info.Load(node);
+            foreach (var search in prefabReferenceInfos) {
+                if (search.GetKey() != info.GetKey()) continue;
+                search.SetEnabled(info.GetEnabled());
+                foundInfo = true;
+                break;
+            }
+
+            if (!foundInfo) {
+                AddPrefab(info);
+            }
         }
+        prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
 
     public void AddPrefab(PrefabReferenceInfo newInfo) {
@@ -160,6 +203,7 @@ public class PrefabDatabase : ScriptableObject {
                 return;
             }
         }
+
         prefabReferenceInfos.Add(newInfo);
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
@@ -175,11 +219,12 @@ public class PrefabDatabase : ScriptableObject {
     }
 
     public void RemovePrefab(string key) {
-        for(int i=0;i<prefabReferenceInfos.Count;i++) {
-            if (prefabReferenceInfos[i].GetKey() == key) {
-                prefabReferenceInfos.RemoveAt(i);
+        foreach (var t in prefabReferenceInfos) {
+            if (t.GetKey() == key) {
+                t.SetPrefab(null);
             }
         }
+
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
     public ReadOnlyCollection<PrefabReferenceInfo> GetPrefabReferenceInfos() => readOnlyPrefabReferenceInfos;

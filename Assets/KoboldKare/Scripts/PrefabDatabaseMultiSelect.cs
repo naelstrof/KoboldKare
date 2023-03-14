@@ -25,7 +25,7 @@ public class PrefabDatabaseMultiSelect : MultiSelectPanel {
         foreach (var prefab in prefabs) {
             var option = new MultiSelectOption {
                 label = prefab.GetKey(),
-                enabled = prefab.IsValid()
+                enabled = prefab.GetEnabled()
             };
             option.onValueChanged += (newValue) => {
                 prefab.SetEnabled(newValue);

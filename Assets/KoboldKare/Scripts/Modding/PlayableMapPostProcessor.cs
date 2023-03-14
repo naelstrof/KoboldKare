@@ -22,7 +22,7 @@ public class PlayableMapPostProcessor : ModPostProcessor {
 
     private void LoadPlayableMap(PlayableMap playableMap) {
         for (int i = 0; i < addedPlayableMaps.Count; i++) {
-            if (addedPlayableMaps[i].name != playableMap.name) continue;
+            if (addedPlayableMaps[i].unityScene.RuntimeKey != playableMap.unityScene.RuntimeKey) continue;
             PlayableMapDatabase.RemovePlayableMap(playableMap);
             addedPlayableMaps.RemoveAt(i);
             break;

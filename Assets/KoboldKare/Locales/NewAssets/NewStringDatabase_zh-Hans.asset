@@ -1065,12 +1065,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "\u4ED6\u4EEC\u5F88\u5B8C\u7F8E\uFF01\u6211\u5C06\u53D8\u5F97...\u5F88\u5FD9...\u6211\u6B63\u5728\u5411\u60A8\u63D0\u5347\u60A8\u7684\u804C\u4F4D\uFF0C\u60A8\u5C06\u4EE3\u8868\u6211\u4ECE\u5176\u4ED6Kobold
-      Karetakers\u8D2D\u4E70Kobolds\uFF0C\u627E\u5230\u67D0\u4EBA\u6765\u5EFA\u9020\u6240\u9700\u7684\u7BA1\u9053\u3002"
+    m_Localized: "\u4ED6\u4EEC\u5F88\u5B8C\u7F8E\uFF01\u6211\u5C06\u53D8\u5F97...\u5F88\u5FD9...\u6211\u6B63\u5728\u5C06\u60A8\u63A8\u5E7F\u5230\u76D1\u7763\u8005\u7684\u4F4D\u7F6E\uFF0C\u60A8\u5C06\u4EE3\u8868\u5176\u4ED6Kobold
+      Karetakers\u8D2D\u4E70Kobolds\uFF0C\u627E\u5230\u4E00\u4E2A\u4EBA\u6765\u5EFA\u9020\u6240\u9700\u7684\u7BA1\u9053\u3002"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1266,7 +1266,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: "\u5B89\u88C5..."
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1303,21 +1303,38 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704578
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: "\u4F60\u786E\u5B9A\u5417\uFF1F"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "\u5220\u9664\u4FDD\u5B58\u662F\u6C38\u4E45\u7684\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "\u7ACB\u5373\u52A0\u8F7D\u4FDD\u5B58\u5C06\u5931\u53BB\u60A8\u5F53\u524D\u7684\u4F1A\u8BDD\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "\u6539\u88C5\u9700\u8981\u4E00\u4E2A64\u4F4D\u517C\u5BB9\u7684\u7CFB\u7EDF\uFF01\u8BF7\u5347\u7EA7\u60A8\u7684\u64CD\u4F5C\u7CFB\u7EDF\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "\u542F\u7528\u4E86\u9634\u830E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "\u542F\u7528\u53EF\u64AD\u653E\u7684\u5B57\u7B26"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "\u627E\u4E0D\u5230mod\uFF01\u5728Steam\u8F66\u95F4\u4E0A\u8BA2\u9605MOD\uFF0C\u6216\u5C06\u5176\u76F4\u63A5\u5B89\u88C5\u5230{ModManager.Path}\u4E2D\u3002"
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704578
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704578
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

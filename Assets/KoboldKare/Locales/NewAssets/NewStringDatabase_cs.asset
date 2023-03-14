@@ -1344,15 +1344,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Instalace ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: "Na\u010D\xEDst ulo\u017Eit"
+    m_Localized: "Na\u010D\xEDst ulo\u017Eenou pozici"
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: "Smazat ulo\u017Eit"
+    m_Localized: "Smazat ulo\u017Eenou pozici"
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1381,21 +1381,41 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: "Jsi si jist\xFD/\xE1?"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "Odstran\u011Bn\xED ulo\u017Een\xE9 pozice je nevratn\xE9!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "Na\u010Dten\xEDm ulo\u017Een\xE9 pozice ztrat\xEDte postup sou\u010Dasn\xE9
+      hry."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modding vy\u017Eaduje 64bitov\xFD kompatibiln\xED syst\xE9m! Upgradujte
+      pros\xEDm sv\u016Fj opera\u010Dn\xED syst\xE9m."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "Povolen\xE9 penisy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "Povoleno hrateln\xE9 postavy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "\u017D\xE1dn\xE9 mody! P\u0159ihlaste se k odb\u011Bru mod\u016F
+      na parn\xED d\xEDln\u011B nebo je nainstalujte p\u0159\xEDmo do {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704579
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704579
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

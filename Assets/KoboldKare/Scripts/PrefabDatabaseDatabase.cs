@@ -9,13 +9,12 @@ public class PrefabDatabaseDatabase : MonoBehaviour {
     [SerializeField]
     private List<PrefabDatabase> databases;
 
-    private void Awake() {
+    private void Start() {
         if (instance != null) {
             Destroy(this);
+            return;
         }
-
         instance = this;
-        databases = new List<PrefabDatabase>();
         LoadPlayerConfig();
     }
 

@@ -561,7 +561,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Synchronisation verticale
+    m_Localized: VSync
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
@@ -698,7 +698,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Gie\xDFen Sie das Ei und warten Sie, bis ihr Kobold w\xE4chst."
+    m_Localized: "Gie\xDFen Sie das Ei und warten Sie, bis Ihr Kobold w\xE4chst."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -854,7 +854,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
-    m_Localized: Pastete
+    m_Localized: Kuchen
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449728
@@ -1203,7 +1203,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Arbeitsplatzsicheres Hauptmen\xFC"
+    m_Localized: "Jugendfreies Hauptmen\xFC"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1305,19 +1305,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Invertieren Sie y-achse
+    m_Localized: Y-Achse umkehren
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Boob-Shrink
+    m_Localized: Brustverkleinerer
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "B\xE4lle"
+    m_Localized: Hodenverkleinerer
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-Shrink
+    m_Localized: Penisverkleinerer
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1325,70 +1325,89 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: MOD -Konfiguration
+    m_Localized: Mod-Einstellungen
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
-    m_Localized: Wird heruntergeladen...
+    m_Localized: Wird heruntergeladen ...
     m_Metadata:
       m_Items: []
   - m_Id: 269043733614874624
-    m_Localized: "W\xE4hlen"
+    m_Localized: "Ausw\xE4hlen"
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Wird installiert ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Laden speichern
+    m_Localized: Spielstand laden
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: "Speichern l\xF6schen"
+    m_Localized: "Spielstand l\xF6schen"
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
-    m_Localized: Vor {0:plural:1 zweite|{} sekunden}
+    m_Localized: vor {0:plural:1 Sekunde|{} Sekunden}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 278016973418733568
-    m_Localized: Vor {0:plural:1 minute|{} protokoll}
+    m_Localized: Vor {0:plural:1 Minute|{} Minuten}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 278016973418733569
-    m_Localized: Vor {0:plural:1 stunde|{} std.}
+    m_Localized: Vor {0:plural:1 Stunde|{} Stunden}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 278016973422927872
-    m_Localized: Vor {0:plural:1 tag|{} tage}
+    m_Localized: Vor {0:plural:1 Tag|{} Tagen}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 278016973422927873
-    m_Localized: Vor {0:plural:1 jahr|{} jahre}
+    m_Localized: Vor {0:plural:1 Jahr|{} Jahren}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Bist du sicher?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "Gel\xF6schte Spielst\xE4nde k\xF6nnen nicht wiederhergestellt werden!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: Das Laden des Spielstands beendet die aktuelle Sitzung.
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: Modding erfordert ein 64 -Bit -kompatibler System! Bitte aktualisieren
+      Sie Ihr Betriebssystem.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Aktivierte Penisse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Aktivierte spielbare Charaktere
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: Keine Mods gefunden! Abonnieren Sie Mods im Steam Workshop oder
+      installieren Sie sie direkt in {ModManager.Path}.
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704585
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704585
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

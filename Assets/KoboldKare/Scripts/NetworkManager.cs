@@ -249,7 +249,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
 
             rootNode["modList"] = modArray;
-            rootNode["config"] = PrefabDatabase.GetJSONConfiguration();
+            rootNode["config"] = PrefabDatabase.GetJsonConfiguration();
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
             PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }
@@ -356,7 +356,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         List<ModManager.ModStub> desiredMods = new List<ModManager.ModStub>();
         foreach (var node in rootNode["modList"].AsArray) {
             ulong.TryParse(node.Value["id"], out ulong result);
-            desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result));
+            desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any));
         }
 
         if (ModManager.HasModsLoaded(desiredMods)) {

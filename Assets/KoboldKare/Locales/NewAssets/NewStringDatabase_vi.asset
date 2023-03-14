@@ -1177,7 +1177,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1319,7 +1319,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i kobold kh\u1ED5ng l\u1ED3
+    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i Kobold kh\u1ED5ng l\u1ED3
       \u0111\xF3, ch\xFAng th\u1EF1c s\u1EF1 h\u1EEFu \xEDch cho vi\u1EC7c l\xE0m
       s\u1EA1ch tr\u1EA7n nh\xE0."
     m_Metadata:
@@ -1415,7 +1415,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: "C\xE0i \u0111\u1EB7t ..."
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1452,21 +1452,44 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704600
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: "B\u1EA1n c\xF3 ch\u1EAFc kh\xF4ng?"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "X\xF3a m\u1ED9t ti\u1EBFt ki\u1EC7m l\xE0 v\u0129nh vi\u1EC5n!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "T\u1EA3i ti\u1EBFt ki\u1EC7m ngay b\xE2y gi\u1EDD s\u1EBD m\u1EA5t
+      phi\xEAn hi\u1EC7n t\u1EA1i c\u1EE7a b\u1EA1n."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modding y\xEAu c\u1EA7u m\u1ED9t h\u1EC7 th\u1ED1ng t\u01B0\u01A1ng
+      th\xEDch 64 bit! Vui l\xF2ng n\xE2ng c\u1EA5p h\u1EC7 \u0111i\u1EC1u h\xE0nh
+      c\u1EE7a b\u1EA1n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "K\xEDch ho\u1EA1t d\u01B0\u01A1ng v\u1EADt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "C\xE1c k\xFD t\u1EF1 c\xF3 th\u1EC3 ch\u01A1i \u0111\u01B0\u1EE3c
+      b\u1EADt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Kh\xF4ng t\xECm th\u1EA5y mod! \u0110\u0103ng k\xFD MODS tr\xEAn
+      H\u1ED9i th\u1EA3o Steam ho\u1EB7c c\xE0i \u0111\u1EB7t tr\u1EF1c ti\u1EBFp
+      v\xE0o {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704600
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704600
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002067dcf6b6db03002027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002067dcf6b6db03002027def6b6db030220a7e9e02de203

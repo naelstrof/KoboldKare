@@ -40,6 +40,7 @@ public class SteamWorkshopItem {
 	[SerializeField] private ulong publishedFileId = (ulong)PublishedFileId_t.Invalid;
 	[SerializeField] private ERemoteStoragePublishedFileVisibility visibility;
 	[SerializeField] private SteamWorkshopItemTag tags;
+	[SerializeField, Tooltip("The loading priority for the mod, lower numbers have higher priority.")] private float loadPriority;
 	
 	[Header("Mod details")]
 	[SerializeField] private Sprite previewSprite;
@@ -139,6 +140,7 @@ public class SteamWorkshopItem {
         rootNode["language"] = language.ToString();
         rootNode["title"] = title;
         rootNode["visibility"] = visibility.ToString();
+        rootNode["loadPriority"] = loadPriority;
         var arrayNode = new JSONArray();
 	
         foreach(var tag in GetTags()) {
@@ -292,8 +294,6 @@ public class SteamWorkshopItem {
 
 			Save();
 
-			BuildForPlatform(BuildTarget.StandaloneWindows);
-			// Gotta build our platform last, otherwise it gets overridden.
 			BuildForPlatform(BuildTarget.StandaloneWindows64);
 			BuildForPlatform(BuildTarget.StandaloneLinux64);
 			BuildForPlatform(BuildTarget.StandaloneOSX);
@@ -424,6 +424,11 @@ public class SteamWorkshopItem {
         if (rootNode.HasKey("title")) {
 	        target.FindPropertyRelative("title").stringValue = rootNode["title"];
         }
+
+        if (rootNode.HasKey("loadPriority")) {
+	        target.FindPropertyRelative("loadPriority").floatValue = rootNode["loadPriority"];
+        }
+
         if (rootNode.HasKey("tags")) {
 	        JSONArray array = rootNode["tags"].AsArray;
 	        target.FindPropertyRelative("tags").intValue = (int)GetTagsFromJsonArray(array);

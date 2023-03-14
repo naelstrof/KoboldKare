@@ -86,12 +86,13 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     [Header("Special Settings")]
     [SerializeField] private AnimationCurve antiPopCurveIK;
     [SerializeField] private AnimationClip tposeIK;
+    private Coroutine coroutine;
     public Animator GetDisplayAnimator() {
         return displayAnimator;
     }
 
     private void Awake() {
-        GameManager.StartCoroutineStatic(AwakeRoutine());
+        coroutine = GameManager.StartCoroutineStatic(AwakeRoutine());
     }
 
     private IEnumerator AwakeRoutine() {
@@ -99,6 +100,10 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         gameObject.SetActive(false);
         var task = FindAssetsAsync();
         yield return new WaitUntil(()=>task.IsCompleted);
+        // Destroyed before finished loading... Or mods are currently being messed with rapidly.
+        if (!ModManager.GetReady()) {
+            yield break;
+        }
         InitializePreEnable();
         gameObject.SetActive(true);
         InitializePostEnable();
@@ -244,6 +249,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         foreach(var task in tasks) {
             Addressables.Release(task);
         }
+        GameManager.StopCoroutineStatic(coroutine);
     }
     public void SetEyeDir(Vector3 dir) {
         eyeDir = dir;

@@ -206,7 +206,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: Loading...
+    m_Localized: "ACEST JOC \xCENSCRIE PERSONAJE FI\u021AIONALE PARTICIPANTE LA <#FF0000>
+      COMPORTAMENT EXPLICIT SEXUAL <#FFFFFF>\n\nF\u0103c\xE2nd clic pe <#008CFF>
+      PLAY <#FFFFFF>, DECLARA\u021AI C\u0102:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -268,7 +270,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: Dezvoltare
+    m_Localized: "Dezvolt\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
@@ -693,8 +695,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 creasc\u0103
-      kobold -ul."
+    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 v\u0103
+      creasc\u0103 kobold -ul."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -732,7 +734,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332862500866
     m_Localized: "Voi, Kobolds, ave\u021Bi corpuri interesante, \xEEncerca\u021Bi
-      s\u0103 m\u0103ri\u021Bi ni\u0219te fructe \u0219i apoi s\u0103 le hr\u0103ni\u021Bi
+      s\u0103 m\u0103tura\u021Bi ni\u0219te fructe \u0219i apoi s\u0103 le hr\u0103ni\u021Bi
       cu un kobold \u0219i s\u0103 vede\u021Bi ce se \xEEnt\xE2mpl\u0103."
     m_Metadata:
       m_Items: []
@@ -768,7 +770,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Umple\u021Bi un kobold cu cum p\xE2n\u0103 nu mai pot lua, trebuie
+    m_Localized: "Umple\u021Bi un kobold cu sperma p\xE2n\u0103 nu mai pot lua, trebuie
       s\u0103 v\u0103d c\xE2t de durabil\u0103 este genul t\u0103u."
     m_Metadata:
       m_Items: []
@@ -881,8 +883,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Un penis \xEEn club cu barbe moi c\u0103rnoase \u0219i bile de
-      ag\u0103\u021Bare joas\u0103."
+    m_Localized: "Un penis \xEEn club, cu barbe moi c\u0103rnoase \u0219i mingi joase
+      ag\u0103\u021Bate."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -971,7 +973,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Simt o prezen\u021B\u0103 \xEEntunecat\u0103 \xEEn pe\u0219terile
-      din apropiere, merg \u0219i investigheaz\u0103 pentru mine."
+      din apropiere, merg \u0219i cerceteaz\u0103 pentru mine."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1129,7 +1131,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1205,8 +1207,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold dezbr\u0103cat
-      vrea s\u0103 le construiesc ma\u0219ini feti\u0219."
+    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold gol vor s\u0103
+      le construiesc ma\u0219ini feti\u0219."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1295,7 +1297,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: "Nu a reu\u0219it s\u0103 \xEEncarce economisire"
+    m_Localized: "Nu a reu\u0219it s\u0103 se \xEEncarce economisi\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
@@ -1344,7 +1346,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Instalare ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1381,21 +1383,41 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704594
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Esti sigur?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "\u0218tergerea unei salv\u0103ri este permanent\u0103!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "\xCEnc\u0103rcarea salv\u0103rii acum v\u0103 va pierde sesiunea
+      curent\u0103."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modding necesit\u0103 un sistem compatibil pe 64 de bi\u021Bi!
+      V\u0103 rug\u0103m s\u0103 v\u0103 actualiza\u021Bi sistemul de operare."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Penisuri activate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Personaje redabile activate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Nu se g\u0103sesc moduri! Abona\u021Bi -v\u0103 la mod -uri pe
+      atelierul Steam sau instala\u021Bi -le direct \xEEn {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704594
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704594
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

@@ -29,7 +29,7 @@ public class FootstepSoundManager : MonoBehaviour {
             return;
         }
         
-        if (evt.animatorClipInfo.weight < 0.6f) {
+        if (evt.animatorClipInfo.weight < 0.5f) {
             return;
         }
         

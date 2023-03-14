@@ -1119,7 +1119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1193,7 +1193,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Star\xF2 solo qui nel caso in cui qualche altro nudo Kobold vuole
-      che io le costruisca le macchine fetish."
+      che io costruisca le macchine fetish."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1214,7 +1214,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, arrivarci!"
+    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, raggiungerlo!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1254,11 +1254,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Razza: Itty Bitty'
+    m_Localized: 'Razza: itty bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Fammi un sacco di piccoli koldi, le loro dimensioni e i corpi elastici
+    m_Localized: Fammi un sacco di piccoli kold, le loro dimensioni e i corpi elastici
       li rendono davvero buoni e riutilizzabili.
     m_Metadata:
       m_Items: []
@@ -1329,7 +1329,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Installazione ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1366,21 +1366,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704588
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Sei sicuro?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "Eliminare un salvataggio \xE8 permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "Il caricamento del salvataggio ora perder\xE0 la tua sessione corrente."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: La modding richiede un sistema compatibile a 64 bit! Aggiorna il
+      tuo sistema operativo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Peni abilitati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Personaggi giocabili abilitati
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: Nessuna mod trovata! Iscriviti alle mod sul Workshop Steam o installale
+      direttamente in {ModManager.Path}.
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704588
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704588
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

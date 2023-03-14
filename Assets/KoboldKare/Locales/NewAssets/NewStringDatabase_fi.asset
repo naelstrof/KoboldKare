@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Ohita savu, voit vapaasti selata tavaroita.
+    m_Localized: Ohita savu, selaa tavaroita.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
@@ -1113,7 +1113,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1152,7 +1152,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Siell\xE4 ja takana on my\xF6s tavaraa, joten nouse todella t\xE4nne,
+    m_Localized: "Siell\xE4 ja takana on my\xF6s tavaroita, joten nouse todella t\xE4nne,
       ei tarvitse olla ujo."
     m_Metadata:
       m_Items: []
@@ -1192,7 +1192,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Turvallinen ty\xF6-"
+    m_Localized: "Turvalliselle ty\xF6lle p\xE4\xE4valikko"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1218,8 +1218,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Haluan paljon rasvaisia \u200B\u200Bkoboldeja, ne ovat todella
-      hy\xF6dyllisi\xE4 paperipainona ja tyynyin\xE4."
+    m_Localized: "Haluan paljon rasvaa Koboldsia, ne ovat todella hy\xF6dyllisi\xE4
+      paperipainona ja tyynyin\xE4."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Olen kiinnostunut siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
+    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
       kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
     m_Metadata:
       m_Items: []
@@ -1325,7 +1325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Asentaminen ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1362,21 +1362,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704583
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Oletko varma?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "Tallennuksen poistaminen on pysyv\xE4\xE4!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "S\xE4\xE4st\xE4n lataaminen nyt menett\xE4\xE4 nykyisen istunnon."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modding vaatii 64 -bittisen yhteensopivan j\xE4rjestelm\xE4n! P\xE4ivit\xE4
+      k\xE4ytt\xF6j\xE4rjestelm\xE4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "K\xE4yt\xF6ss\xE4 penikset"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Mahdollistanut pelattavat merkit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Ei modit l\xF6ydetty! Tilaa modit Steam -ty\xF6pajassa tai asenna
+      ne suoraan {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704583
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704583
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

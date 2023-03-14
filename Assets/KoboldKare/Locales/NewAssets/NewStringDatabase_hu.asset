@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
-      f\xFCgg\u0151 goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
+      goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -912,7 +912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s r\xE1csokkal."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -935,7 +935,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
-    m_Localized: "Felold\xF3 fej\u0151\xE1llom\xE1s"
+    m_Localized: "Kinyitja a fej\u0151 \xE1llom\xE1s"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
@@ -969,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
+    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1201,8 +1201,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Csak itt \xE1llok, ha m\xE1s meztelen Kobold azt akarja, hogy f\xE9tis
-      g\xE9peket k\xE9sz\xEDtsek."
+    m_Localized: "Csak itt \xE1llok, ha valamilyen m\xE1s meztelen Kobold azt akarja,
+      hogy f\xE9tis g\xE9peket k\xE9sz\xEDtsek."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1249,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
-      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bbet akarok az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l, ezek
+      nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1299,7 +1299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: "Nincs m\xE1s neked itt ... egyel\u0151re."
+    m_Localized: "Itt nincs m\xE1s neked ... egyel\u0151re."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
@@ -1339,7 +1339,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: "Telep\xEDt\xE9s ..."
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1376,21 +1376,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704587
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: biztos vagy ebben?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "A ment\xE9s t\xF6rl\xE9se \xE1lland\xF3!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "A ment\xE9s bet\xF6lt\xE9se most elvesz\xEDti az aktu\xE1lis munkamenetet."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "A m\xF3dos\xEDt\xE1shoz 64 bites kompatibilis rendszer sz\xFCks\xE9ges!
+      K\xE9rj\xFCk, friss\xEDtse az oper\xE1ci\xF3s rendszert."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: "Enged\xE9lyezett p\xE9nisz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "Enged\xE9lyezve a lej\xE1tszhat\xF3 karaktereket"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Nincsenek modok! Iratkozzon fel a modokra a Steam m\u0171helyen,
+      vagy telep\xEDtse k\xF6zvetlen\xFCl a {ModManager.Path} -be."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704587
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704587
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

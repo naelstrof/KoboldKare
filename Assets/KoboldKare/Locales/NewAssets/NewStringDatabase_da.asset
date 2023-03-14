@@ -984,7 +984,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Underlig videnskab!
+    m_Localized: "M\xE6rkelig videnskab!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
@@ -1041,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
+    m_Localized: "Alligevel bare uh .. Hj\xE6lp dig selv antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1093,7 +1093,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: Lav den perfekte kobold
+    m_Localized: Lav den perfekte Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
@@ -1112,7 +1112,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1168,7 +1168,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
-    m_Localized: Tror du, jeg ville se godt ud i en hat?
+    m_Localized: Tror du, at jeg ville se godt ud i en hat?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
@@ -1322,7 +1322,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Installation ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1359,21 +1359,39 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704580
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Er du sikker?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: Sletning af en gemme er permanent!
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "Indl\xE6sning af gemte nu mister din nuv\xE6rende session."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "Modding kr\xE6ver et 64 bit kompatibelt system! Opgrader dit operativsystem."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Aktiverede peniser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: Aktiverede spilbare tegn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: "Ingen mods fundet! Abonner p\xE5 mods p\xE5 Steam Workshop, eller
+      installer dem direkte i {ModManager.Path}."
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704580
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704580
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03002067dcf6b6db03002027def6b6db03012027def6b6db030220a7e9e02de203

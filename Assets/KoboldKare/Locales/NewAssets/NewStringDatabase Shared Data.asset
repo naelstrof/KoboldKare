@@ -1299,6 +1299,22 @@ MonoBehaviour:
     m_Key: LOAD_SAVE_CONFIRM
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Key: MOD_NO_32_SUPPORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Key: ENABLED_PENISES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Key: ENABLED_PLAYABLE_CHARACTERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Key: NO_MODS_FOUND
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

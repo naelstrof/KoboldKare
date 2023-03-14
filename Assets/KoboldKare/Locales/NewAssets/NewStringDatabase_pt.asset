@@ -206,7 +206,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: Loading...
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
+      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -431,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino
+    m_Localized: Equine
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -487,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Tamanho de Kobold
+    m_Localized: Tamanho Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -741,7 +743,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Eu preciso de Kobolds com paus grandes, prepare um e envie -o rapidamente
+    m_Localized: Eu preciso de kobolds com paus grandes, prepare um e envie -o rapidamente
       para mim.
     m_Metadata:
       m_Items: []
@@ -1112,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Loading...
+    m_Localized: Koboldkare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1147,7 +1149,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Vou fazer isso, por um pre\xE7o, \xE9 claro ..."
+    m_Localized: "Eu vou fazer isso, por um pre\xE7o, \xE9 claro ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1322,7 +1324,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Loading...
+    m_Localized: Instalando ...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1359,21 +1361,40 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704593
   - m_Id: 278029437602570240
-    m_Localized: Loading...
+    m_Localized: Tem certeza?
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Loading...
+    m_Localized: "A exclus\xE3o de uma defesa \xE9 permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Loading...
+    m_Localized: "Carregar o salvar agora perder\xE1 sua sess\xE3o atual."
     m_Metadata:
       m_Items: []
+  - m_Id: 279799208752914432
+    m_Localized: "O modding requer um sistema compat\xEDvel com 64 bits! Atualize
+      seu sistema operacional."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360320
+    m_Localized: Penises habilitados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360321
+    m_Localized: "Personagens jog\xE1veis \u200B\u200Bhabilitados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 279836570866360322
+    m_Localized: Nenhum mods encontrado! Inscreva -se nos mods na oficina Steam ou
+      instale -os diretamente em {ModManager.Path}.
+    m_Metadata:
+      m_Items:
+      - rid: 1602997996487704593
   references:
     version: 2
     RefIds:
     - rid: 1602997996487704593
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db03
+        m_Entries: 0020279f8e71db030020e7a08e71db03012067def6b6db03002067def6b6db03012027def6b6db03002027def6b6db03002067dcf6b6db030220a7e9e02de203

@@ -9,6 +9,7 @@ public class FootstepSoundManager : MonoBehaviour {
     [SerializeField]
     private AudioPack footstepPack;
     private Animator animator;
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
 
     public void SetFootstepPack(AudioPack pack) {
         footstepPack = pack;
@@ -19,33 +20,31 @@ public class FootstepSoundManager : MonoBehaviour {
     }
 
     public void DoFootstep(AnimationEvent evt) {
-        bool groundedAnimation = evt.stringParameter == "Grounded";
-        if (groundedAnimation && !animator.GetBool("Grounded")) {
-            return;
-        }
-        if (evt.animatorClipInfo.weight < 0.5f) {
+        bool groundedAnimation = evt.animatorStateInfo.IsName("Base Layer.Movement");
+        if (groundedAnimation && !animator.GetBool(Grounded)) {
             return;
         }
 
+        if (!groundedAnimation && animator.GetBool(Grounded)) {
+            return;
+        }
+        
+        if (evt.animatorClipInfo.weight < 0.6f) {
+            return;
+        }
+        
         Transform f = evt.intParameter == 0 ? animator.GetBoneTransform(HumanBodyBones.LeftFoot) : animator.GetBoneTransform(HumanBodyBones.RightFoot);
         AudioClip clip = footstepPack.GetClip();
-        bool rayHit = false;
-        if (Physics.Raycast(f.position, Vector3.down, out var hit, groundedAnimation? 0.8f: 5f, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {
-            rayHit = true;
-            if (hit.collider != null) {
-                Debug.DrawLine(hit.point, hit.point+hit.normal,Color.blue,10f);
-                TerrainAudio a = hit.collider.GetComponent<TerrainAudio>();
-                PhysicMaterial mat = hit.collider.sharedMaterial;
-                if (a != null) {
-                    mat = a.GetMaterialAtPoint(hit.point);
-                }
-                var group = PhysicsMaterialDatabase.GetPhysicsAudioGroup(mat);
-                if (group != null) {
-                    clip = group.GetImpactClip(PhysicsAudioGroup.SurfaceImpactType.Footstep, 1f);
-                }
+        if (Physics.Raycast(f.position, Vector3.down, out var hit, 1f, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {
+            TerrainAudio a = hit.collider.GetComponent<TerrainAudio>();
+            PhysicMaterial mat = hit.collider.sharedMaterial;
+            if (a != null) {
+                mat = a.GetMaterialAtPoint(hit.point);
             }
-        }
-        if (evt.stringParameter == "Airborne" || rayHit) {
+            var group = PhysicsMaterialDatabase.GetPhysicsAudioGroup(mat);
+            if (group != null) {
+                clip = group.GetImpactClip(PhysicsAudioGroup.SurfaceImpactType.Footstep, 1f);
+            }
             GameManager.instance.SpawnAudioClipInWorld(clip, f.position, 0.8f, GameManager.instance.soundEffectGroup);
         }
     }

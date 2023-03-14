@@ -131,7 +131,7 @@ public class OrbitCamera : MonoBehaviour {
             return;
         }
         instance.orbitCameraConfigurations[index] = newConfig;
-        if (index == instance.orbitCameraConfigurations.Count - 1) {
+        if (index == instance.orbitCameraConfigurations.Count - 1 && newConfig != instance.currentConfiguration) {
             instance.StartCoroutine(instance.TweenTo(newConfig, tweenDuration));
         }
     }

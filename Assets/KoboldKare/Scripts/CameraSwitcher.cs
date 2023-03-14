@@ -99,8 +99,6 @@ public class CameraSwitcher : MonoBehaviour {
                 OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
                 lastConfig = thirdpersonRagdollConfiguration;
             } else {
-                shoulderPivot.SnapInstant();
-                buttPivot.SnapInstant();
                 OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration, 0.4f);
                 lastConfig = thirdpersonConfiguration;
             }
@@ -158,7 +156,6 @@ public class CameraSwitcher : MonoBehaviour {
         freeCamController.enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
-                firstpersonPivot.SnapInstant();
                 OrbitCamera.ReplaceConfiguration(lastConfig, firstpersonConfiguration);
                 lastConfig = firstpersonConfiguration;
                 
@@ -171,8 +168,6 @@ public class CameraSwitcher : MonoBehaviour {
                     OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
                     lastConfig = thirdpersonRagdollConfiguration;
                 } else {
-                    shoulderPivot.SnapInstant();
-                    buttPivot.SnapInstant();
                     OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonConfiguration);
                     lastConfig = thirdpersonConfiguration;
                 }

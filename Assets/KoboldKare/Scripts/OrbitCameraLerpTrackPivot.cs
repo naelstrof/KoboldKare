@@ -41,8 +41,4 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     public override float GetFOV(Quaternion camRotation) {
         return fov.GetValue();
     }
-    public void SnapInstant() {
-        Vector3 b = transform.parent.InverseTransformPoint(targetTransform.position);
-        transform.localPosition = b;
-    }
 }

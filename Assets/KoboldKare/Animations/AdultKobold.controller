@@ -17,7 +17,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.08947332
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.2941177
   m_HasExitTime: 0
@@ -37,38 +37,46 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: eba85111ab26650489dd6d7c551c1b36, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 62da2e944c8dfc14081a7ed181fb919a, type: 2}
     m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Orgasm
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 62da2e944c8dfc14081a7ed181fb919a, type: 2}
+    m_Threshold: 2
     m_Position: {x: 0, y: 1}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 64bcfe0016e543c4a8720b8dd3e56085, type: 2}
-    m_Threshold: 2
+    m_Threshold: 3
     m_Position: {x: 1, y: 0}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 76b34db71a0ab7c469f62e24203c5b42, type: 2}
-    m_Threshold: 3
+    m_Threshold: 4
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
   m_BlendParameter: MoveX
   m_BlendParameterY: MoveY
   m_MinThreshold: 0
-  m_MaxThreshold: 3
+  m_MaxThreshold: 4
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 2
@@ -117,7 +125,7 @@ AnimatorState:
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
@@ -435,7 +443,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.05
+  m_TransitionDuration: 0.03
   m_TransitionOffset: 0
   m_ExitTime: 0.3333333
   m_HasExitTime: 0
@@ -773,7 +781,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RightLegJump
-  m_Speed: 0.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 2414409528791848967}
@@ -809,7 +817,7 @@ AnimatorState:
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
@@ -905,7 +913,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.11172757
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.25
   m_HasExitTime: 0
@@ -1221,7 +1229,7 @@ AnimatorController:
     m_Mask: {fileID: 31900000, guid: 4c603cd858bf98544b78bdb064d5e2ea, type: 2}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
@@ -1233,7 +1241,7 @@ AnimatorController:
     m_Mask: {fileID: 31900000, guid: 4c603cd858bf98544b78bdb064d5e2ea, type: 2}
     m_Motions: []
     m_Behaviours: []
-    m_BlendingMode: 0
+    m_BlendingMode: 1
     m_SyncedLayerIndex: -1
     m_DefaultWeight: 1
     m_IKPass: 0
@@ -1836,7 +1844,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 14783866db845cd4b9c510f2cf010514, type: 2}
     m_Threshold: 0
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
@@ -1844,7 +1852,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 6bb3d05fdba41d14585209daf44b18a8, type: 2}
     m_Threshold: 1
     m_Position: {x: 0, y: 1}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
@@ -1852,7 +1860,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 79084baca4b438f4cb61539d95bd6c0c, type: 2}
     m_Threshold: 2
     m_Position: {x: 1, y: 0}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
     m_Mirror: 0
@@ -1860,9 +1868,17 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: eaa6fd2c8e5bd7440806af0254209a51, type: 2}
     m_Threshold: 3
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1.4
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveX
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 6bb3d05fdba41d14585209daf44b18a8, type: 2}
+    m_Threshold: 4
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Orgasm
     m_Mirror: 0
   m_BlendParameter: MoveX
   m_BlendParameterY: MoveY
@@ -1958,7 +1974,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LeftLegJump
-  m_Speed: 0.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6180814792307135128}
@@ -2124,7 +2140,7 @@ AnimatorState:
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
@@ -2292,7 +2308,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.05
+  m_TransitionDuration: 0.03
   m_TransitionOffset: 0
   m_ExitTime: 0.36170208
   m_HasExitTime: 0
@@ -2475,7 +2491,7 @@ AnimatorState:
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
+  m_WriteDefaultValues: 0
   m_Mirror: 0
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
@@ -2562,7 +2578,7 @@ AnimatorStateMachine:
     m_Position: {x: 210, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4255520830662035255}
-    m_Position: {x: 420, y: -140, z: 0}
+    m_Position: {x: 400, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2675850829892650561}
     m_Position: {x: 680, y: -130, z: 0}
@@ -2578,7 +2594,7 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_EntryPosition: {x: 10, y: 150, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -7333731181357138746}

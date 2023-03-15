@@ -737,12 +737,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 08bd02041406a594ab928d910aeddf96
-    m_Address: Assets/KoboldKare/Materials/NipplePumpGlass.mat
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d970c4dd1ab1c1040a6da2df792c5007
     m_Address: Assets/KoboldKare/Materials/MilkingTableIcon.mat
     m_ReadOnly: 0

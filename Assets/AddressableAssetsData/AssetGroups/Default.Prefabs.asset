@@ -131,12 +131,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - NetworkedPrefab
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 134db3fc1a92e3842b8bd5fc77245d86
-    m_Address: Prefab/NipplePump
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - NetworkedPrefab
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd679e613b97496439b1e547faff665f
     m_Address: Prefab/Plant
     m_ReadOnly: 0

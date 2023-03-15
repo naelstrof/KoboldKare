@@ -69,6 +69,7 @@ public class PopupHandler : MonoBehaviour {
             Destroy(p);
         }
         popups.Clear();
+        mainCanvasGroup.interactable = true;
     }
 
     public bool PopupIsActive() {

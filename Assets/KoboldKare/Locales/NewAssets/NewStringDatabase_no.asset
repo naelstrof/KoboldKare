@@ -44,7 +44,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810371
-    m_Localized: Analytics
+    m_Localized: Analyse
     m_Metadata:
       m_Items: []
   - m_Id: 516090810372
@@ -207,7 +207,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPF\xD8RSEL <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
+      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
       SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
     m_Metadata:
       m_Items: []
@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -961,7 +961,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i hulene i n\xE6rheten,
-      g\xE5 og unders\xF8k for meg."
+      g\xE5 og unders\xF8ke for meg."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
+    m_Localized: Uansett bare eh .. hjelp deg selv antar jeg.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1080,7 +1080,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: "Jeg vil ha en veldig liten kobold som kan passe inn i ... sm\xE5,
+    m_Localized: "Jeg vil ha en virkelig liten kobold som kan passe inn i ... sm\xE5,
       intime sprekker."
     m_Metadata:
       m_Items: []
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
+    m_Localized: "Jeg vil ha mer av den gigantiske typen kobold, de er veldig nyttige
       for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
@@ -1391,6 +1391,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704591
+  - m_Id: 280448613000617984
+    m_Localized: Kunne ikke koble til damp, vil ikke automatisk nedlastningsmodus.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

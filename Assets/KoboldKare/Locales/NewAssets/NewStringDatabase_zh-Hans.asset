@@ -1331,6 +1331,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704578
+  - m_Id: 280448613000617984
+    m_Localized: "\u65E0\u6CD5\u8FDE\u63A5\u5230Steam\uFF0C\u4E0D\u4F1A\u81EA\u52A8\u4E0B\u8F7Dmod\u3002"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

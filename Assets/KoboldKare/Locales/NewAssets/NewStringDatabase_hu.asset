@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
-      goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
+      f\xFCgg\u0151 goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -912,7 +912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s r\xE1csokkal."
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -969,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
+    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Tekercsel\u0151cs\u0151"
+    m_Localized: "Teker\xE1l\xF3 cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1201,8 +1201,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Csak itt \xE1llok, ha valamilyen m\xE1s meztelen Kobold azt akarja,
-      hogy f\xE9tis g\xE9peket k\xE9sz\xEDtsek."
+    m_Localized: "Csak itt \xE1llok, ha m\xE1s meztelen Kobold azt akarja, hogy f\xE9tis
+      g\xE9peket k\xE9sz\xEDtsek."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1219,7 +1219,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Egy tucat nagy, tal\xE1n m\xE9g t\xF6bbet."
+    m_Localized: "Egy tucat nagy, tal\xE1n m\xE9g t\xF6bb."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
@@ -1249,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet akarok az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l, ezek
-      nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
+      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1343,7 +1343,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: "Bet\xF6lt\xE9sment\xE9s"
+    m_Localized: "Bet\xF6lt\xE9s ment\xE9s"
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
@@ -1406,6 +1406,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704587
+  - m_Id: 280448613000617984
+    m_Localized: "Nem siker\xFClt csatlakozni a g\u0151zhez, nem fog automatikusan
+      let\xF6lteni a modokat."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

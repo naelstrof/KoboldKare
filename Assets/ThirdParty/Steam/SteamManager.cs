@@ -27,6 +27,8 @@ public class SteamManager : MonoBehaviour {
 
 	protected bool m_bInitialized = false;
 	public static bool Initialized => Instance != null && Instance.m_bInitialized;
+	public static bool FailedToInitialize => Instance != null && Instance.failedToInitialize;
+	protected bool failedToInitialize;
 	
 	protected SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
 
@@ -83,6 +85,7 @@ public class SteamManager : MonoBehaviour {
 			return;
 		}*/
 
+		failedToInitialize = false;
 		// Initializes the Steamworks API.
 		// If this returns false then this indicates one of the following conditions:
 		// [*] The Steam client isn't running. A running Steam client is required to provide implementations of the various Steamworks interfaces.
@@ -95,6 +98,7 @@ public class SteamManager : MonoBehaviour {
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
 			Debug.LogWarning("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
+			failedToInitialize = true;
 
 			return;
 		}

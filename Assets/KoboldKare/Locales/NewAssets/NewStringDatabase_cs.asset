@@ -1412,6 +1412,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
+  - m_Id: 280448613000617984
+    m_Localized: "Nepoda\u0159ilo se p\u0159ipojit k Steam, nebude modis automatick\xE9
+      download."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

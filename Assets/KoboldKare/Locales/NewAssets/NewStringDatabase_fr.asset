@@ -1395,6 +1395,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704584
+  - m_Id: 280448613000617984
+    m_Localized: "\xC9chec de la connexion \xE0 Steam, ne sera pas des mods de chargement
+      automatique."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

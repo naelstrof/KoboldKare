@@ -1403,6 +1403,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704582
+  - m_Id: 280448613000617984
+    m_Localized: Failed to connect to Steam, won't auto-download mods.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1315,6 +1315,10 @@ MonoBehaviour:
     m_Key: NO_MODS_FOUND
     m_Metadata:
       m_Items: []
+  - m_Id: 280448613000617984
+    m_Key: NO_STEAM_CONNECTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,6 +16,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     [SerializeField] private TMP_Text targetText;
     [SerializeField] private LocalizedString downloadingText;
     [SerializeField] private LocalizedString installingText;
+    [SerializeField] private LocalizedString failedToConnectToSteam;
     private bool busy = false;
     private Callback<DownloadItemResult_t> m_DownloadItemResult;
     private Callback<ItemInstalled_t> m_ItemInstalled;
@@ -92,6 +93,19 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         var installingTextHandle = installingText.GetLocalizedStringAsync();
         yield return installingTextHandle;
         string installText = installingTextHandle.Result;
+        
+        var failedToConnectToSteamHandle = failedToConnectToSteam.GetLocalizedStringAsync();
+        yield return failedToConnectToSteamHandle;
+        string failedToConnectToSteamText = failedToConnectToSteamHandle.Result;
+        if (SteamManager.FailedToInitialize) {
+            targetText.text = failedToConnectToSteamText;
+            progressBar.gameObject.SetActive(false);
+            progressBarAnimator.SetTrigger("Failed");
+            yield return null;
+            finishedHandle?.Invoke();
+            yield break;
+        }
+
         progressBarAnimator.SetBool("Active", true);
         progressBar.gameObject.SetActive(false);
         try {

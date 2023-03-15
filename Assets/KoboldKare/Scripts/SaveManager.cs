@@ -330,9 +330,6 @@ public static class SaveManager {
     }
 
     private static bool NeedsUpgrade() {
-        if (!SteamManager.Initialized) {
-            return false;
-        }
         string oldSaveDataPath = $"{Application.persistentDataPath}/{saveDataLocation}";
         return Directory.Exists(oldSaveDataPath);
     }

@@ -1404,6 +1404,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
+  - m_Id: 280448613000617984
+    m_Localized: Die Verbindung zu Steam fehlgeschlagen, keine automatischen Herunterladen
+      von Mods.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

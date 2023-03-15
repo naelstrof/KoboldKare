@@ -70,10 +70,6 @@ public class InputOptions : MonoBehaviour {
     }
     
     private bool NeedsUpgrade() {
-        if (!SteamManager.Initialized) {
-            return false;
-        }
-        
         var oldPath = $"{Application.persistentDataPath}/inputBindings.json";
         return File.Exists(oldPath);
     }

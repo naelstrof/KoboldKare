@@ -207,8 +207,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
-      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -529,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Quarto esquerdo
+    m_Localized: "Espa\xE7o esquerdo"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -743,7 +743,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Eu preciso de kobolds com paus grandes, prepare um e envie -o rapidamente
+    m_Localized: Eu preciso de Kobolds com paus grandes, prepare um e envie -o rapidamente
       para mim.
     m_Metadata:
       m_Items: []
@@ -780,7 +780,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "\xC9 do nosso interesse ter alguns kobolds superevinos, engorda
+    m_Localized: "\xC9 do nosso interesse ter alguns Kobolds superevinos, engolir
       um pouco e envi\xE1 -los para mim."
     m_Metadata:
       m_Items: []
@@ -1103,7 +1103,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Tubo de coleta
+    m_Localized: Tubo de posicionamento
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1149,7 +1149,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Eu vou fazer isso, por um pre\xE7o, \xE9 claro ..."
+    m_Localized: "Vou fazer isso, por um pre\xE7o, \xE9 claro ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1365,7 +1365,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "A exclus\xE3o de uma defesa \xE9 permanente!"
+    m_Localized: "Excluir um salvamento \xE9 permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
@@ -1391,6 +1391,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704593
+  - m_Id: 280448613000617984
+    m_Localized: "Falha ao conectar-se ao Steam, n\xE3o ser\xE1 o download autom\xE1tico
+      de mods."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

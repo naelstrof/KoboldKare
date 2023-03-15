@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Ohita savu, selaa tavaroita.
+    m_Localized: Ohita savu, voit vapaasti selata tavaroita.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
@@ -1152,7 +1152,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Siell\xE4 ja takana on my\xF6s tavaroita, joten nouse todella t\xE4nne,
+    m_Localized: "Siell\xE4 ja takana on my\xF6s tavaraa, joten nouse todella t\xE4nne,
       ei tarvitse olla ujo."
     m_Metadata:
       m_Items: []
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
+    m_Localized: "Olen kiinnostunut siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
       kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
     m_Metadata:
       m_Items: []
@@ -1392,6 +1392,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 1602997996487704583
+  - m_Id: 280448613000617984
+    m_Localized: "Yhdist\xE4minen Steamiin ei ep\xE4onnistunut, ei automaattisesti
+      lataa modit."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

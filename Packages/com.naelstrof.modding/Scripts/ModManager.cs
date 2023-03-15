@@ -126,6 +126,15 @@ public class ModManager : MonoBehaviour {
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
 
+    private static string jsonFolder {
+        get {
+            var path = $"{Application.persistentDataPath}/defaultUser/";
+            if (SteamManager.Initialized) {
+                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/";
+            }
+            return path;
+        }
+    }
     private static string jsonLocation {
         get {
             var path = $"{Application.persistentDataPath}/defaultUser/{JsonFilename}";
@@ -269,6 +278,10 @@ public class ModManager : MonoBehaviour {
 
     private void LoadConfig() {
         fullModList.Clear();
+        if (!Directory.Exists(jsonFolder)) {
+            Directory.CreateDirectory(jsonFolder);
+        }
+
         if (!File.Exists(jsonLocation)) {
             using FileStream quickWrite = File.Create(jsonLocation);
             byte[] write = { (byte)'{', (byte)'}', (byte)'\n' };

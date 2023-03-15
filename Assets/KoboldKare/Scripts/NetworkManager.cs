@@ -249,7 +249,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
 
             rootNode["modList"] = modArray;
-            rootNode["config"] = PrefabDatabase.GetJsonConfiguration();
+            rootNode["config"] = PrefabDatabase.GetJsonConfiguration().ToString();
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
             PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }

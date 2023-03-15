@@ -160,7 +160,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         grabber = gameObject.AddComponent<Grabber>();
         koboldInventory = gameObject.AddComponent<KoboldInventory>();
         precisionGrabber = gameObject.AddComponent<PrecisionGrabber>();
-        koboldInventory = gameObject.AddComponent<KoboldInventory>();
         moneyHolder = gameObject.AddComponent<MoneyHolder>();
         smoothCharacterPhoton = gameObject.AddComponent<SmoothCharacterPhoton>();
     }

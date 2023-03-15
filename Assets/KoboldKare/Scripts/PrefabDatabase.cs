@@ -134,7 +134,7 @@ public class PrefabDatabase : ScriptableObject {
     }
 
     public string SavePlayerConfiguration() {
-        JSONNode n = JSON.Parse(GetJsonConfiguration());
+        JSONNode n = GetJsonConfiguration();
         var rootNode = new JSONArray();
         foreach (var info in prefabReferenceInfos) {
             if (info.GetEnabled()) {
@@ -144,15 +144,19 @@ public class PrefabDatabase : ScriptableObject {
             info.Save(node);
             rootNode.Add(node);
         }
+
+        if (n.HasKey(name)) {
+            n.Remove(name);
+        }
         n[name] = rootNode;
-        using FileStream fileWrite = File.Open(jsonLocation, FileMode.OpenOrCreate);
+        using FileStream fileWrite = File.Open(jsonLocation, FileMode.Truncate);
         string writeString = n.ToString(2);
         fileWrite.Write(Encoding.UTF8.GetBytes(writeString),0,writeString.Length);
         fileWrite.Close();
         return writeString;
     }
 
-    public static string GetJsonConfiguration() {
+    public static JSONNode GetJsonConfiguration() {
         if (!Directory.Exists(jsonFolder)) {
             Directory.CreateDirectory(jsonFolder);
         }
@@ -166,7 +170,13 @@ public class PrefabDatabase : ScriptableObject {
         byte[] b = new byte[file.Length];
         file.Read(b,0,(int)file.Length);
         file.Close();
-        return Encoding.UTF8.GetString(b);
+        JSONNode n;
+        try {
+            n = JSON.Parse(Encoding.UTF8.GetString(b));
+        } catch {
+            n = JSON.Parse("{}");
+        }
+        return n;
     }
 
     public void LoadPlayerConfiguration(string json) {
@@ -178,7 +188,7 @@ public class PrefabDatabase : ScriptableObject {
         }
     }
     public void LoadPlayerConfiguration() {
-        JSONNode n = JSON.Parse(GetJsonConfiguration());
+        JSONNode n = GetJsonConfiguration();
         foreach (var node in n[name]) {
             bool foundInfo = false;
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);

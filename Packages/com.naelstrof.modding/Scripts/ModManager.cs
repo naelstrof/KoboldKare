@@ -270,7 +270,7 @@ public class ModManager : MonoBehaviour {
     private void LoadConfig() {
         fullModList.Clear();
         if (!File.Exists(jsonLocation)) {
-            using FileStream quickWrite = File.Open(jsonLocation, FileMode.CreateNew);
+            using FileStream quickWrite = File.Create(jsonLocation);
             byte[] write = { (byte)'{', (byte)'}', (byte)'\n' };
             quickWrite.Write(write, 0, write.Length);
             quickWrite.Close();
@@ -309,7 +309,7 @@ public class ModManager : MonoBehaviour {
             nodeArray.Add(node);
         }
         rootNode["modList"] = nodeArray;
-        using FileStream quickWrite = File.Open(jsonLocation, FileMode.OpenOrCreate);
+        using FileStream quickWrite = File.Create(jsonLocation);
         var chars = rootNode.ToString(2);
         quickWrite.Write(Encoding.UTF8.GetBytes(chars),0,chars.Length);
         quickWrite.Close();

@@ -90,6 +90,12 @@ public static class AghButton {
                 b.colors = block;
                 EditorUtility.SetDirty(b);
             }
+
+            foreach (Toggle t in g.GetComponentsInChildren<Toggle>(true)) {
+                Undo.RecordObject(t, "Changed button color");
+                t.colors = block;
+                EditorUtility.SetDirty(t);
+            }
         }
         Undo.CollapseUndoOperations(undoIndex);
     }

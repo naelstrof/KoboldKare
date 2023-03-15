@@ -283,7 +283,7 @@ public class PlayerPossession : MonoBehaviourPun {
         } else {
             OrbitCamera.SetTracking(true);
         }
-        
+
 
         if (!pauseInput) {
             if (grabbing && !switchedMode && !pGrabber.HasGrab()) {
@@ -304,6 +304,7 @@ public class PlayerPossession : MonoBehaviourPun {
             Vector2 mouseDelta = controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
             controller.inputDir = Vector3.zero;
             controller.inputJump = false;
+            OrbitCamera.SetTracking(false);
             return;
         }
         Cursor.visible = false;

@@ -16,7 +16,13 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6257df4b1c70b554e931fcd25a0a0c8c
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 9e5b26f3a223aeb4d84a97ad337e693e
+    m_Address: Lilith
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlayableCharacter
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

@@ -490,37 +490,6 @@ Transform:
   m_Father: {fileID: 6506915555090380210}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4383215961726034279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7792630030512707620}
-  m_Layer: 0
-  m_Name: RightKneeHint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7792630030512707620
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4383215961726034279}
-  m_LocalRotation: {x: -0.03418344, y: 0.0003721431, z: -0.01623572, w: 0.9992836}
-  m_LocalPosition: {x: 0.809, y: -0.069, z: 1.37}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6506915555090380208}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5925469787825420896
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,37 +521,6 @@ Transform:
   m_Father: {fileID: 6506915555090380192}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 7.911, y: 0, z: 0}
---- !u!1 &6090503669900864873
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3638700058887392509}
-  m_Layer: 0
-  m_Name: LeftKneeHint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3638700058887392509
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6090503669900864873}
-  m_LocalRotation: {x: -0.03418344, y: 0.0003721431, z: -0.01623572, w: 0.9992836}
-  m_LocalPosition: {x: -0.683, y: -0.029, z: 1.246}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6506915555090380208}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6843840582481377447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,8 +1248,6 @@ MonoBehaviour:
   colliderOffset: {x: 0, y: 0, z: 0}
   colliderHeight: 1.2
   colliderRadius: 0.2
-  rightKneeHint: {fileID: 7792630030512707620}
-  leftKneeHint: {fileID: 3638700058887392509}
   bodyRenderers:
   - {fileID: 6506915555087688956}
   antiPopCurveIK:

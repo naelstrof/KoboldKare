@@ -5,9 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class FootIK : MonoBehaviour {
     private Animator targetAnimator;
-    public Transform leftKneeHint;
-    public Transform rightKneeHint;
-
     private Transform leftFoot;
     private Transform rightFoot;
     private Transform hips;
@@ -21,19 +18,27 @@ public class FootIK : MonoBehaviour {
         if (!isActiveAndEnabled) {
             return;
         }
-        SetFootTarget(leftFoot, leftKneeHint, hips, targetAnimator, AvatarIKGoal.LeftFoot, AvatarIKHint.LeftKnee);
-        SetFootTarget(rightFoot, rightKneeHint, hips, targetAnimator, AvatarIKGoal.RightFoot, AvatarIKHint.RightKnee);
+        SetFootTarget(leftFoot, hips, targetAnimator, AvatarIKGoal.LeftFoot, AvatarIKHint.LeftKnee);
+        SetFootTarget(rightFoot, hips, targetAnimator, AvatarIKGoal.RightFoot, AvatarIKHint.RightKnee);
     }
-    void SetFootTarget(Transform foot, Transform hintT, Transform hip, Animator a, AvatarIKGoal target, AvatarIKHint hint) {
-        float dist = Vector3.Distance(hip.position, foot.position);
-        if (Physics.Raycast(hip.position, (foot.position - hip.position).normalized, out var hit, dist, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {
+    void SetFootTarget(Transform foot, Transform hip, Animator a, AvatarIKGoal target, AvatarIKHint hint) {
+        var footPosition = foot.position;
+        Vector3 localFoot = hip.position - footPosition;
+        Vector3 rayOrigin = Vector3.Project(localFoot, Vector3.up) + footPosition;
+        float rayDist = Vector3.Project(localFoot, Vector3.up).magnitude;
+        if (Physics.Raycast(rayOrigin, Vector3.down, out var hit, rayDist, GameManager.instance.walkableGroundMask, QueryTriggerInteraction.Ignore)) {
             a.SetIKPositionWeight(target, 1f);
             a.SetIKRotationWeight(target, 1f);
-            a.SetIKHintPositionWeight(hint,1f);
-            
+            a.SetIKHintPositionWeight(hint,0.5f);
             a.SetIKPosition(target, hit.point+hit.normal*0.05f*transform.lossyScale.x);
-            a.SetIKHintPosition(hint, hintT.position);
-            Vector3 hintDir = (hintT.position - hit.point).normalized;
+            Vector3 localHitPoint = (foot.position+a.transform.forward*0.25f) - hip.position;
+            Vector3 planeForward = localHitPoint;
+            Vector3 planeUp = a.transform.up;
+            Vector3.OrthoNormalize(ref planeForward, ref planeUp);
+            Vector3 kneePlane = Vector3.Cross(planeForward, planeUp);
+            Vector3 kneeGuess = Vector3.ProjectOnPlane(localHitPoint + (a.transform.up+a.transform.forward)*a.transform.lossyScale.x*2f, kneePlane)+hip.position;
+            a.SetIKHintPosition(hint, kneeGuess);
+            Vector3 hintDir = (kneeGuess - hit.point).normalized;
             a.SetIKRotation(target, QuaternionExtensions.LookRotationUpPriority(hintDir, hit.normal));
         } else {
             a.SetIKHintPositionWeight(hint,0f);

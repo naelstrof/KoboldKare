@@ -21,10 +21,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Animator playerModel;
     private KoboldCharacterController controller;
     private bool isInAir;
-    [SerializeField]
-    private Transform leftKneeHint;
-    [SerializeField]
-    private Transform rightKneeHint;
     private bool jumped;
     private Vector3 tempDir;
     [SerializeField]
@@ -104,14 +100,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         set = currentStationSet;
         return true;
     }
-    
-    public void SetKneeHints(Transform leftKnee, Transform rightKnee) {
-        leftKneeHint = leftKnee;
-        rightKneeHint = rightKnee;
-        footIK.leftKneeHint = leftKnee;
-        footIK.rightKneeHint = rightKnee;
-    }
-
     public void SetHeadTransform(Transform newHeadTransform) {
         headTransform = newHeadTransform;
     }
@@ -141,8 +129,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         } else {
             footIK = existingFootIK;
         }
-        footIK.leftKneeHint = leftKneeHint;
-        footIK.rightKneeHint = rightKneeHint;
         
         if (!playerModel.TryGetComponent(out HandIK existingHandIK)) {
             playerModel.gameObject.AddComponent<HandIK>();
@@ -177,8 +163,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         controller = GetComponentInParent<KoboldCharacterController>();
         playerModel.gameObject.AddComponent<AnimatorExtender>();
         footIK = playerModel.gameObject.AddComponent<FootIK>();
-        footIK.leftKneeHint = leftKneeHint;
-        footIK.rightKneeHint = rightKneeHint;
         playerModel.gameObject.AddComponent<HandIK>();
         playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
     }

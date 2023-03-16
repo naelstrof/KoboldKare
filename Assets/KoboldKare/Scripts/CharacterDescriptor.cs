@@ -61,8 +61,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     [SerializeField] private float colliderHeight = 1.2f;
     [SerializeField] private float colliderRadius = 0.2f;
     
-    [SerializeField] private Transform rightKneeHint;
-    [SerializeField] private Transform leftKneeHint;
     [SerializeField] private List<SkinnedMeshRenderer> bodyRenderers;
 
     private AudioPack footLand;
@@ -208,7 +206,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         walkDustEffect.visualEffectAsset = walkDust;
         
         characterAnimator.SetPlayerModel(displayAnimator);
-        characterAnimator.SetKneeHints(leftKneeHint, rightKneeHint);
         characterAnimator.SetVisualEffectSources(circlePoofEffect, walkDustEffect);
         characterAnimator.SetDefaultFootstepPack(footstepPack);
         characterAnimator.SetBody(body);
@@ -285,26 +282,40 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         koboldSerializedObject.FindProperty("fatnessInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
         koboldSerializedObject.FindProperty("sizeInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
         koboldSerializedObject.FindProperty("boobsInflater").FindPropertyRelative("bounce").objectReferenceValue = genericBounceCurve;
-        var attachPointArray = koboldSerializedObject.FindProperty("attachPoints");
-        CreateOrSetAttachPoint(Equipment.AttachPoint.Chest, displayAnimator.GetBoneTransform(HumanBodyBones.Chest),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.Head, displayAnimator.GetBoneTransform(HumanBodyBones.Head),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.Neck, displayAnimator.GetBoneTransform(HumanBodyBones.Neck),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftCalf, displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerLeg),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.RightCalf, displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerLeg),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftForearm, displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerArm),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.RightForearm, displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerArm),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.LeftHand, displayAnimator.GetBoneTransform(HumanBodyBones.LeftHand),
-            attachPointArray);
-        CreateOrSetAttachPoint(Equipment.AttachPoint.RightHand, displayAnimator.GetBoneTransform(HumanBodyBones.RightHand),
-            attachPointArray);
-        
+        var displayAnimatorProp = serializedObject.FindProperty("displayAnimator");
+        if (displayAnimatorProp.objectReferenceValue == null) {
+            displayAnimatorProp.objectReferenceValue = GetComponentInChildren<Animator>();
+        }
+
+        if (displayAnimatorProp.objectReferenceValue != null) {
+            displayAnimator = displayAnimatorProp.objectReferenceValue as Animator;
+            var attachPointArray = koboldSerializedObject.FindProperty("attachPoints");
+            CreateOrSetAttachPoint(Equipment.AttachPoint.Chest, displayAnimator.GetBoneTransform(HumanBodyBones.Chest),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.Head, displayAnimator.GetBoneTransform(HumanBodyBones.Head),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.Neck, displayAnimator.GetBoneTransform(HumanBodyBones.Neck),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftCalf,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerLeg),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightCalf,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerLeg),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftForearm,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftLowerArm),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightForearm,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightLowerArm),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftHand,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftHand),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightHand,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightHand),
+                attachPointArray);
+        }
+
         koboldSerializedObject.FindProperty("heartPrefab").FindPropertyRelative("gameObject").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("b47e824ef9dd0654bae5ca33a2d5dd4b"));
         koboldSerializedObject.FindProperty("heartHitMask").intValue = 1 << LayerMask.NameToLayer("UsablePickups");
         koboldSerializedObject.FindProperty("tummyGrumbles").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("67a1644657f256b47ab2a61a75c069d6")); 

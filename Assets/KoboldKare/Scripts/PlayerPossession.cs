@@ -272,13 +272,13 @@ public class PlayerPossession : MonoBehaviourPun {
         }
         Vector2 gyroDelta = new Vector2(-rawRotation.z + rawRotation.y, -rawRotation.x);
         Vector2 mouseDelta = gyroDelta + controls.actions["Look"].ReadValue<Vector2>() + controls.actions["LookJoystick"].ReadValue<Vector2>();
-        if (trackingHip) {
+        bool rotatingProp = rotating && pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue());
+        
+        if (trackingHip && !rotatingProp) {
             characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
         }
 
-        if (rotating && pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue())) {
-            OrbitCamera.SetTracking(false);
-        } else if (rotating) {
+        if (rotating || rotatingProp || trackingHip) {
             OrbitCamera.SetTracking(false);
         } else {
             OrbitCamera.SetTracking(true);

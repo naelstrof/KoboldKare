@@ -6,7 +6,6 @@ using System.Collections;
 using System.Threading.Tasks;
 using NetStack.Serialization;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Vilar.IK;
@@ -314,6 +313,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
             CreateOrSetAttachPoint(Equipment.AttachPoint.RightHand,
                 displayAnimator.GetBoneTransform(HumanBodyBones.RightHand),
                 attachPointArray);
+            koboldSerializedObject.FindProperty("hip").objectReferenceValue = displayAnimator.GetBoneTransform(HumanBodyBones.Hips);
         }
 
         koboldSerializedObject.FindProperty("heartPrefab").FindPropertyRelative("gameObject").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("b47e824ef9dd0654bae5ca33a2d5dd4b"));
@@ -321,6 +321,12 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         koboldSerializedObject.FindProperty("tummyGrumbles").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("67a1644657f256b47ab2a61a75c069d6")); 
         koboldSerializedObject.FindProperty("garglePack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("2098de8eac6d5e0419986616fa2a8f15")); 
         koboldSerializedObject.FindProperty("milkLactator").FindPropertyRelative("milkSplatMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath("3821f9133468bfa449f3dbee8d5a1aff"));
+        
+        if (displayAnimator != null && displayAnimator.runtimeAnimatorController == null) {
+            var defaultAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(AssetDatabase.GUIDToAssetPath("01936098084665e4bb7c834e8c46c5cc"));
+            displayAnimator.runtimeAnimatorController = defaultAnimatorController;
+            displayAnimator.applyRootMotion = false;
+        }
 
         gameObject.layer = LayerMask.NameToLayer("Player");
         serializedObject.ApplyModifiedProperties();

@@ -27,7 +27,7 @@ public class CharacterDescriptorEditor : Editor {
         }
 
         if (characterDescriptor.GetDisplayAnimator() != null && GUILayout.Button("Create Ragdoll")) {
-            throw new NotImplementedException("Haven't implemented ragdoll automation yet. Sorry!!");
+            ((CharacterDescriptor)target).CreateBasicRagdoll();
         }
     }
 }
@@ -52,6 +52,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private Kobold kobold;
     private Vector3 eyeDir;
     private LODGroup lodGroup;
+    private bool hideGizmos;
     
     [Header("Main settings")]
     [SerializeField] private Animator displayAnimator;
@@ -355,24 +356,31 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     }
 
     private void OnDrawGizmosSelected() {
+        if (hideGizmos) {
+            return;
+        }
         DrawWireCapsule(transform.localToWorldMatrix, colliderOffset+Vector3.up * (colliderHeight-colliderRadius*2f) * 0.5f,
             colliderOffset+Vector3.down * (colliderHeight-colliderRadius*2f) * 0.5f, colliderRadius);
     }
     private static void DrawWireCapsule(Matrix4x4 space, Vector3 upper, Vector3 lower, float radius) {
-        using (new Handles.DrawingScope(space)) {
-            var offsetX = new Vector3(radius, 0f, 0f);
-            var offsetZ = new Vector3(0f, 0f, radius);
-            Handles.DrawWireArc(upper, Vector3.back, Vector3.left, 180, radius);
-            Handles.DrawLine(lower + offsetX, upper + offsetX);
-            Handles.DrawLine(lower - offsetX, upper - offsetX);
-            Handles.DrawWireArc(lower, Vector3.back, Vector3.left, -180, radius);
-            Handles.DrawWireArc(upper, Vector3.left, Vector3.back, -180, radius);
-            Handles.DrawLine(lower + offsetZ, upper + offsetZ);
-            Handles.DrawLine(lower - offsetZ, upper - offsetZ);
-            Handles.DrawWireArc(lower, Vector3.left, Vector3.back, 180, radius);
-            Handles.DrawWireDisc(upper, Vector3.up, radius);
-            Handles.DrawWireDisc(lower, Vector3.up, radius);
-        }
+        using var scope = new Handles.DrawingScope(space);
+        var offsetX = new Vector3(radius, 0f, 0f);
+        var offsetZ = new Vector3(0f, 0f, radius);
+        Handles.DrawWireArc(upper, Vector3.back, Vector3.left, 180, radius);
+        Handles.DrawLine(lower + offsetX, upper + offsetX);
+        Handles.DrawLine(lower - offsetX, upper - offsetX);
+        Handles.DrawWireArc(lower, Vector3.back, Vector3.left, -180, radius);
+        Handles.DrawWireArc(upper, Vector3.left, Vector3.back, -180, radius);
+        Handles.DrawLine(lower + offsetZ, upper + offsetZ);
+        Handles.DrawLine(lower - offsetZ, upper - offsetZ);
+        Handles.DrawWireArc(lower, Vector3.left, Vector3.back, 180, radius);
+        Handles.DrawWireDisc(upper, Vector3.up, radius);
+        Handles.DrawWireDisc(lower, Vector3.up, radius);
+    }
+
+    public void CreateBasicRagdoll() {
+        hideGizmos = true;
+        RagdollCreator.CreateRagdollWizard(GetComponent<Ragdoller>(), displayAnimator).exited += () => hideGizmos = false;
     }
 
 #endif

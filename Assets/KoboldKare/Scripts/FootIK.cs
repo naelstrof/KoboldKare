@@ -36,6 +36,7 @@ public class FootIK : MonoBehaviour {
             a.SetIKRotationWeight(target, 1f);
             a.SetIKHintPositionWeight(hint,0.5f);
             a.SetIKPosition(target, hit.point+hit.normal*0.05f*transform.lossyScale.x);
+            //https://github.com/naelstrof/KoboldKare/commit/f18df58c6fe0857f1db78de94fcaf66d6c24d5bd#r104808809
             var hipPosition = hip.position;
             Vector3 hipToFoot = (foot.position - hipPosition).normalized;
             var kneePosition = knee.position;

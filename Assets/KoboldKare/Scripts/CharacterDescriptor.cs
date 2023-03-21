@@ -380,7 +380,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
 
     public void CreateBasicRagdoll() {
         hideGizmos = true;
-        RagdollCreator.CreateRagdollWizard(GetComponent<Ragdoller>(), displayAnimator).exited += () => hideGizmos = false;
+        RagdollCreator.CreateRagdollWizard(displayAnimator).exited += () => hideGizmos = false;
     }
 
 #endif

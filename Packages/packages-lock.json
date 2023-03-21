@@ -84,6 +84,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.naelstrof.ragdoll.creator": {
+      "version": "file:com.naelstrof.ragdoll.creator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.naelstrof.skinnedmeshdecals": {
       "version": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.8",
       "depth": 0,

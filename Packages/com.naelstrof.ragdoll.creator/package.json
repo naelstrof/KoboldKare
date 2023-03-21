@@ -1,0 +1,7 @@
+{
+    "name": "com.naelstrof.ragdoll.creator",
+    "displayName": "Ragdoll Creator",
+    "version": "0.0.1",
+    "unity": "2020.3",
+    "description": "Wizard to assist in creating ragdolls based on Mechanim humanoid constraints."
+}

@@ -58,10 +58,28 @@ public class RagdollCreator : ScriptableWizard {
     public event ExitAction exited;
 
     public static RagdollCreator CreateRagdollWizard(Animator animator) {
-        var creator = DisplayWizard<RagdollCreator>("Create ragdoll", "Finish");
+        var creator = DisplayWizard<RagdollCreator>("Create ragdoll", "Create");
         creator.targetAnimator = animator;
         return creator;
     }
+
+    protected override bool DrawWizardGUI() {
+        bool changed = base.DrawWizardGUI();
+        if (changed) {
+            targetColliders = RagdollColliders.GenerateColliders(targetAnimator, configuration);
+        }
+
+        return changed;
+    }
+
+    private void OnWizardCreate() {
+        Undo.IncrementCurrentGroup();
+        foreach (var collider in targetColliders) {
+            collider.GetOrCreate();
+        }
+        Undo.SetCurrentGroupName("Created ragdoll");
+    }
+
     private void OnEnable() {
         SceneView.duringSceneGui += OnSceneGUI;
     }
@@ -85,6 +103,7 @@ public class RagdollCreator : ScriptableWizard {
         RagdollColliders.PreviewColliders(targetColliders);
     }
 
+    
     private void ForceTPose(Animator animator, Vector3 originalAnimatorPosition) {
         foreach (var skeletonBone in targetAnimator.avatar.humanDescription.skeleton) {
             foreach (HumanBodyBones humanBodyBone in Enum.GetValues(typeof(HumanBodyBones))) {

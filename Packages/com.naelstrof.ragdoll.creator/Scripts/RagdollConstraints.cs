@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEditor;
 
 public static class RagdollConstraints {
-    private static RagdollScrunchStretchPack cachedScrunchStretchPack;
     public struct HumanoidConstraint {
-        public Transform targetTransform;
-        public Transform parentTransform;
+        public Transform GetTargetTransform(Animator targetAnimator) => targetAnimator.transform.Find(targetPath);
+        public Transform GetParentTransform(Animator targetAnimator) => targetAnimator.transform.Find(parentPath);
+        public string targetPath;
+        public string parentPath;
         public Vector3 localForward;
         public Vector3 localUp;
         public Vector3 localRight;
@@ -17,7 +18,11 @@ public static class RagdollConstraints {
     }
     public class HumanoidConstraints : List<HumanoidConstraint> { }
     
-    public static HumanoidConstraints GenerateConstraints(Animator animator) {
+    public static HumanoidConstraints GenerateConstraints(Animator animator, RagdollScrunchStretchPack cachedScrunchStretchPack) {
+        var newGameObject = Object.Instantiate(animator.gameObject);
+        animator = newGameObject.GetComponent<Animator>();
+        
+        cachedScrunchStretchPack.GetNeutralClip().SampleAnimation(animator.gameObject,0f);
         HumanoidConstraints constraints = new HumanoidConstraints();
         var leftHand = animator.GetBoneTransform(HumanBodyBones.LeftHand);
         var rightHand = animator.GetBoneTransform(HumanBodyBones.RightHand);
@@ -46,104 +51,106 @@ public static class RagdollConstraints {
         Vector3 rightUpperArmForward = (rightLowerArm.position - rightUpperArm.position).normalized;
         Vector3 rightUpperArmUp = (neck.position-chest.position).normalized;
         Vector3 rightUpperArmRight = Vector3.Cross(rightUpperArmUp, rightUpperArmForward).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightUpperArm, HumanBodyBones.RightShoulder, rightUpperArmRight, rightUpperArmUp, rightUpperArmForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightUpperArm, HumanBodyBones.RightShoulder, rightUpperArmRight, rightUpperArmUp, rightUpperArmForward));
         
         // Right Lower Arm
         Vector3 rightLowerArmForward = (rightHand.position - rightLowerArm.position).normalized;
         Vector3 rightLowerArmRight = (rightLowerArm.position-rightUpperArm.position).normalized;
         Vector3 rightLowerArmUp = Vector3.Cross(rightLowerArmForward, rightLowerArmRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightLowerArm, HumanBodyBones.RightUpperArm, rightLowerArmRight, rightLowerArmUp, rightLowerArmForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightLowerArm, HumanBodyBones.RightUpperArm, rightLowerArmRight, rightLowerArmUp, rightLowerArmForward));
         
         // Right Hand
         Vector3 rightHandForward = (rightHand.position - rightLowerArm.position).normalized;
         Vector3 rightHandRight = (rightLowerArm.position-rightUpperArm.position).normalized;
         Vector3 rightHandUp = Vector3.Cross(rightHandForward, rightHandRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightHand, HumanBodyBones.RightLowerArm, rightHandRight, rightHandUp, rightHandForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightHand, HumanBodyBones.RightLowerArm, rightHandRight, rightHandUp, rightHandForward));
         
         // Left Upper Arm
         Vector3 leftUpperArmForward = (leftLowerArm.position - leftUpperArm.position).normalized;
         Vector3 leftUpperArmUp = (neck.position-chest.position).normalized;
         Vector3 leftUpperArmRight = Vector3.Cross(leftUpperArmUp, leftUpperArmForward).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftShoulder,
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftShoulder,
             leftUpperArmRight, leftUpperArmUp, leftUpperArmForward));
         
         // Left Lower Arm
         Vector3 leftLowerArmForward = (leftHand.position - leftLowerArm.position).normalized;
         Vector3 leftLowerArmRight = (leftLowerArm.position-leftUpperArm.position).normalized;
         Vector3 leftLowerArmUp = Vector3.Cross(leftLowerArmForward, leftLowerArmRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftUpperArm,
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftUpperArm,
             leftLowerArmRight, leftLowerArmUp, leftLowerArmForward));
         
         // Left Hand
         Vector3 leftHandForward = (leftHand.position - leftLowerArm.position).normalized;
         Vector3 leftHandRight = (leftLowerArm.position-leftUpperArm.position).normalized;
         Vector3 leftHandUp = Vector3.Cross(leftHandForward, leftHandRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftHand, HumanBodyBones.LeftLowerArm, leftHandRight, leftHandUp, leftHandForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftHand, HumanBodyBones.LeftLowerArm, leftHandRight, leftHandUp, leftHandForward));
         
         // Chest
         Vector3 chestForward = (neck.position - chest.position).normalized;
         Vector3 chestRight = (rightUpperArm.position - leftUpperArm.position).normalized;
         Vector3 chestUp = Vector3.Cross(chestForward, chestRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.Chest, HumanBodyBones.Spine, chestRight, chestUp, chestForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.Chest, HumanBodyBones.Spine, chestRight, chestUp, chestForward));
         
         // Spine
         Vector3 spineForward = (chest.position - spine.position).normalized;
         Vector3 spineRight = (rightUpperArm.position - leftUpperArm.position).normalized;
         Vector3 spineUp = Vector3.Cross(spineForward, spineRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.Spine, HumanBodyBones.Hips, spineRight, spineUp, spineForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.Spine, HumanBodyBones.Hips, spineRight, spineUp, spineForward));
         
         // Right Upper Leg
         Vector3 rightUpperLegForward = (rightLowerLeg.position - rightUpperLeg.position).normalized;
         Vector3 rightUpperLegRight = (rightUpperLeg.position - leftUpperLeg.position).normalized;
         Vector3 rightUpperLegUp = Vector3.Cross(rightUpperLegForward, rightUpperLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightUpperLeg, HumanBodyBones.Hips, rightUpperLegRight, rightUpperLegUp, rightUpperLegForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightUpperLeg, HumanBodyBones.Hips, rightUpperLegRight, rightUpperLegUp, rightUpperLegForward));
         
         // Right Lower Leg
         Vector3 rightLowerLegForward = (rightFoot.position - rightLowerLeg.position).normalized;
         Vector3 rightLowerLegRight = (rightUpperLeg.position - rightLowerLeg.position).normalized;
         Vector3 rightLowerLegUp = Vector3.Cross(rightLowerLegForward, rightLowerLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightLowerLeg, HumanBodyBones.RightUpperLeg, rightLowerLegRight, rightLowerLegUp, rightLowerLegForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightLowerLeg, HumanBodyBones.RightUpperLeg, rightLowerLegRight, rightLowerLegUp, rightLowerLegForward));
         
         // Right foot
         Vector3 rightFootForward = (rightLowerLeg.position - rightUpperLeg.position).normalized;
         Vector3 rightFootRight = (rightUpperLeg.position - leftUpperLeg.position).normalized;
         Vector3 rightFootUp = Vector3.Cross(rightLowerLegForward, rightLowerLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.RightFoot, HumanBodyBones.RightLowerLeg, rightFootRight, rightFootUp, rightFootForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.RightFoot, HumanBodyBones.RightLowerLeg, rightFootRight, rightFootUp, rightFootForward));
         
         // Left Upper Leg
         Vector3 leftUpperLegForward = (leftLowerLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftUpperLegRight = (rightUpperLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftUpperLegUp = Vector3.Cross(leftUpperLegForward, leftUpperLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftUpperLeg, HumanBodyBones.Hips, leftUpperLegRight, leftUpperLegUp, leftUpperLegForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftUpperLeg, HumanBodyBones.Hips, leftUpperLegRight, leftUpperLegUp, leftUpperLegForward));
         
         // Left Lower Leg
         Vector3 leftLowerLegForward = (leftFoot.position - leftLowerLeg.position).normalized;
         Vector3 leftLowerLegRight = (leftUpperLeg.position - leftLowerLeg.position).normalized;
         Vector3 leftLowerLegUp = Vector3.Cross(leftLowerLegForward, leftLowerLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftLowerLeg, HumanBodyBones.LeftUpperLeg, leftLowerLegRight, leftLowerLegUp, leftLowerLegForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftLowerLeg, HumanBodyBones.LeftUpperLeg, leftLowerLegRight, leftLowerLegUp, leftLowerLegForward));
         
         // Left foot
         Vector3 leftFootForward = (leftLowerLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftFootRight = (leftUpperLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftFootUp = Vector3.Cross(leftLowerLegForward, leftLowerLegRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.LeftFoot, HumanBodyBones.LeftLowerLeg, leftFootRight, leftFootUp, leftFootForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.LeftFoot, HumanBodyBones.LeftLowerLeg, leftFootRight, leftFootUp, leftFootForward));
         
         // Neck 
         Vector3 neckForward = (head.position - neck.position).normalized;
         Vector3 neckRight = bodyRight.normalized;
         Vector3 neckUp = Vector3.Cross(neckForward, neckRight).normalized;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.Neck, HumanBodyBones.Chest, neckRight, neckUp, neckForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.Neck, HumanBodyBones.Chest, neckRight, neckUp, neckForward));
         
         // Head 
         Vector3 headForward = bodyForward;
         Vector3 headRight = bodyRight;
         Vector3 headUp = bodyUp;
-        constraints.Add(GenerateHumanoidConstraint(animator, HumanBodyBones.Head, HumanBodyBones.Neck, headRight, headUp, headForward));
+        constraints.Add(GenerateHumanoidConstraint(animator, cachedScrunchStretchPack, HumanBodyBones.Head, HumanBodyBones.Neck, headRight, headUp, headForward));
+
+        Object.DestroyImmediate(newGameObject);
 
         return constraints;
     }
 
-    private static HumanoidConstraint GenerateHumanoidConstraint(Animator animator, HumanBodyBones target, HumanBodyBones parent, Vector3 worldJointRight, Vector3 worldJointUp, Vector3 worldJointForward) {
+    private static HumanoidConstraint GenerateHumanoidConstraint(Animator animator, RagdollScrunchStretchPack cachedScrunchStretchPack, HumanBodyBones target, HumanBodyBones parent, Vector3 worldJointRight, Vector3 worldJointUp, Vector3 worldJointForward) {
         var parentBone = animator.GetBoneTransform(parent);
         var targetBone = animator.GetBoneTransform(target);
         Vector3 localRight = parentBone.InverseTransformDirection(worldJointRight);
@@ -151,7 +158,7 @@ public static class RagdollConstraints {
         Vector3 localForward = parentBone.InverseTransformDirection(worldJointForward);
         Vector3.OrthoNormalize(ref localForward, ref localUp, ref localRight);
         
-        GetMinMaxAngle(animator, target, parent, localRight, localUp, localForward, out Vector3 minAngles, out Vector3 maxAngles);
+        GetMinMaxAngle(animator, cachedScrunchStretchPack, target, parent, localRight, localUp, localForward, out Vector3 minAngles, out Vector3 maxAngles);
         
         return new HumanoidConstraint {
             localRight = localRight,
@@ -159,21 +166,21 @@ public static class RagdollConstraints {
             localForward = localForward,
             minAngles = minAngles,
             maxAngles = maxAngles,
-            targetTransform = animator.GetBoneTransform(target),
-            parentTransform = animator.GetBoneTransform(parent),
+            targetPath = AnimationUtility.CalculateTransformPath(targetBone,animator.transform),
+            parentPath = AnimationUtility.CalculateTransformPath(parentBone, animator.transform),
         };
     }
 
-    public static void PreviewConstraints(HumanoidConstraints constraints) {
+    public static void PreviewConstraints(Animator animator, HumanoidConstraints constraints) {
         foreach (var constraint in constraints) {
-            RenderConstraint(constraint);
+            RenderConstraint(animator,constraint);
         }
     }
 
-    private static void RenderConstraint(HumanoidConstraint constraint) {
+    private static void RenderConstraint(Animator animator, HumanoidConstraint constraint) {
         var originalHandleColor = Handles.color;
-        var targetBone = constraint.targetTransform;
-        var parentBone = constraint.parentTransform;
+        var targetBone = constraint.GetTargetTransform(animator);
+        var parentBone = constraint.GetParentTransform(animator);
         Quaternion rotation = parentBone.rotation;
 
         Vector3 right = rotation*constraint.localRight;
@@ -193,11 +200,7 @@ public static class RagdollConstraints {
         Handles.DrawWireArc(targetBone.position, forward, Quaternion.AngleAxis(constraint.minAngles.z,forward)*right, constraint.maxAngles.z-constraint.minAngles.z, 0.025f,8);
         Handles.color = originalHandleColor;
     }
-    private static void GetMinMaxAngle(Animator animator, HumanBodyBones target, HumanBodyBones parent, Vector3 localRight, Vector3 localUp, Vector3 localForward, out Vector3 minAngles, out Vector3 maxAngles) {
-        if (cachedScrunchStretchPack == null) {
-            cachedScrunchStretchPack = AssetDatabase.LoadAssetAtPath<RagdollScrunchStretchPack>( AssetDatabase.GUIDToAssetPath("f918570129faed5418e218f0599df41a"));
-        }
-
+    private static void GetMinMaxAngle(Animator animator, RagdollScrunchStretchPack cachedScrunchStretchPack, HumanBodyBones target, HumanBodyBones parent, Vector3 localRight, Vector3 localUp, Vector3 localForward, out Vector3 minAngles, out Vector3 maxAngles) {
         var startingPosition = animator.transform.position;
         var targetBone = animator.GetBoneTransform(target);
         var parentBone = animator.GetBoneTransform(parent);

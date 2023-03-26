@@ -125,11 +125,11 @@ public static class RagdollConstraints {
 
             float massRatio = parentRigidbody.mass / targetRigidbody.mass;
             // Try to fix ridiculous mass ratios
-            while (massRatio > 5f) {
+            while (massRatio > 4f) {
                 targetRigidbody.mass *= 2f;
                 massRatio = parentRigidbody.mass / targetRigidbody.mass;
             }
-            while (massRatio < 1f/5f) {
+            while (massRatio < 1f/4f) {
                 parentRigidbody.mass *= 2f;
                 massRatio = parentRigidbody.mass / targetRigidbody.mass;
             }
@@ -146,7 +146,7 @@ public static class RagdollConstraints {
             configurableJoint.autoConfigureConnectedAnchor = false;
             configurableJoint.anchor = Vector3.zero;
             configurableJoint.connectedAnchor = parentRigidbodyTransform.InverseTransformPoint(targetTransform.position);
-            configurableJoint.axis = targetTransform.InverseTransformDirection(-worldUpAxis);
+            configurableJoint.axis = -targetTransform.InverseTransformDirection(worldUpAxis);
             configurableJoint.secondaryAxis = targetTransform.InverseTransformDirection(worldRightAxis);
             configurableJoint.xMotion = ConfigurableJointMotion.Locked;
             configurableJoint.yMotion = ConfigurableJointMotion.Locked;
@@ -191,7 +191,7 @@ public static class RagdollConstraints {
             lowZLimit.contactDistance = 15f;
             configurableJoint.angularZLimit = lowZLimit;
             var slerp = configurableJoint.slerpDrive;
-            slerp.positionSpring = 40f*targetRigidbody.mass;
+            slerp.positionSpring = 60f*targetRigidbody.mass;
             slerp.positionDamper = slerp.positionSpring*0.1f;
             configurableJoint.SetTargetRotationLocal(neutralRotation, targetTransform.localRotation);
             configurableJoint.slerpDrive = slerp;
@@ -287,13 +287,13 @@ public static class RagdollConstraints {
         
         // Left Lower Arm
         Vector3 leftLowerArmForward = (leftHand.position - leftLowerArm.position).normalized;
-        Vector3 leftLowerArmRight = (leftLowerArm.position-leftUpperArm.position).normalized;
+        Vector3 leftLowerArmRight = (leftUpperArm.position-leftLowerArm.position).normalized;
         Vector3 leftLowerArmUp = Vector3.Cross(leftLowerArmForward, leftLowerArmRight).normalized;
         constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftLowerArm, leftUpperArm, leftLowerArmRight, leftLowerArmUp, leftLowerArmForward, 2f));
         
         // Left Hand
         Vector3 leftHandForward = (leftHand.position - leftLowerArm.position).normalized;
-        Vector3 leftHandRight = (leftLowerArm.position-leftUpperArm.position).normalized;
+        Vector3 leftHandRight = (leftUpperArm.position-leftLowerArm.position).normalized;
         Vector3 leftHandUp = Vector3.Cross(leftHandForward, leftHandRight).normalized;
         constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftHand, leftLowerArm, leftHandRight, leftHandUp, leftHandForward, 2f));
         
@@ -312,7 +312,7 @@ public static class RagdollConstraints {
         // Right Upper Leg
         Vector3 rightUpperLegForward = (rightLowerLeg.position - rightUpperLeg.position).normalized;
         Vector3 rightUpperLegUp = (rightUpperLeg.position - leftUpperLeg.position).normalized;
-        Vector3 rightUpperLegRight = Vector3.Cross(rightUpperLegForward, rightUpperLegUp).normalized;
+        Vector3 rightUpperLegRight = Vector3.Cross(rightUpperLegUp, rightUpperLegForward).normalized;
         constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, rightUpperLeg, hips, rightUpperLegRight, rightUpperLegUp, rightUpperLegForward, 1f));
         
         // Right Lower Leg
@@ -329,21 +329,21 @@ public static class RagdollConstraints {
         
         // Left Upper Leg
         Vector3 leftUpperLegForward = (leftLowerLeg.position - leftUpperLeg.position).normalized;
-        Vector3 leftUpperLegUp = (rightUpperLeg.position - leftUpperLeg.position).normalized;
-        Vector3 leftUpperLegRight = Vector3.Cross(leftUpperLegForward, leftUpperLegUp).normalized;
+        Vector3 leftUpperLegUp = (leftUpperLeg.position - rightUpperLeg.position).normalized;
+        Vector3 leftUpperLegRight = Vector3.Cross(leftUpperLegUp, leftUpperLegForward).normalized;
         constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftUpperLeg, hips, leftUpperLegRight, leftUpperLegUp, leftUpperLegForward, 2f));
         
         // Left Lower Leg
         Vector3 leftLowerLegForward = (leftFoot.position - leftLowerLeg.position).normalized;
         Vector3 leftLowerLegRight = (leftUpperLeg.position - leftLowerLeg.position).normalized;
-        Vector3 leftLowerLegUp = Vector3.Cross(leftLowerLegForward, leftLowerLegRight).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftLowerLeg, leftUpperLeg, leftLowerLegRight, leftLowerLegUp, leftLowerLegForward,2f));
+        Vector3 leftLowerLegUp = Vector3.Cross(leftLowerLegRight, leftLowerLegForward).normalized;
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftLowerLeg, leftUpperLeg, -leftLowerLegRight, leftLowerLegUp, leftLowerLegForward,2f));
         
         // Left foot
         Vector3 leftFootForward = (leftLowerLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftFootRight = (leftUpperLeg.position - leftUpperLeg.position).normalized;
         Vector3 leftFootUp = Vector3.Cross(leftLowerLegForward, leftLowerLegRight).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftFoot, leftLowerLeg, leftFootRight, leftFootUp, leftFootForward,2f));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftFoot, leftLowerLeg, leftFootRight, -leftFootUp, leftFootForward,2f));
         
         // Neck 
         Vector3 neckForward = (head.position - neck.position).normalized;
@@ -365,9 +365,6 @@ public static class RagdollConstraints {
             int depth = 0;
             Transform end = start.GetChild(0);
             while (depth < maxDepth) {
-                if (end.GetComponent<Collider>() != null) {
-                    break;
-                }
                 depth++;
                 if (end.childCount == 0) {
                     break;
@@ -383,11 +380,6 @@ public static class RagdollConstraints {
             int currentDepth = 0;
             end = start.GetChild(0);
             while (currentDepth <= depth) {
-                if (end.GetComponent<Collider>() != null) {
-                    start = start.parent;
-                    end = end.parent;
-                    break;
-                }
                 Vector3 tailForward = (end.position - start.position).normalized;
                 Vector3 tailRight = -bodyRight;
                 Vector3 tailUp = Vector3.Cross(tailForward, tailRight);

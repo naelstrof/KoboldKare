@@ -23,7 +23,7 @@ MonoBehaviour:
     chestOffset: 0.214
     hipDepth: 0.146
     hipOffset: 0.044
-    upperLegRadius: 0.1
+    upperLegRadius: 0.0657
     lowerLegRadius: 0.0569
     footLength: 0.2
     footOffset: 0.2
@@ -56,4 +56,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    tailRadiusMultiplier: 0.081
+    tailRadiusMultiplier: 0.059
+    tailFlexibility: 35
+    twistFactor: 0.25

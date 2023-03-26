@@ -483,9 +483,6 @@ public static class RagdollColliders {
             int depth = 0;
             Transform end = start.GetChild(0);
             while (depth < maxDepth) {
-                if (end.GetComponent<Collider>() != null) {
-                    break;
-                }
                 depth++;
                 if (end.childCount == 0) {
                     break;
@@ -497,11 +494,6 @@ public static class RagdollColliders {
             int currentDepth = 0;
             end = start.GetChild(0);
             while (currentDepth <= depth) {
-                if (end.GetComponent<Collider>() != null) {
-                    start = start.parent;
-                    end = end.parent;
-                    break;
-                }
                 float tailRadiusSample = configuration.tailRadiusCurve.Evaluate((float)currentDepth / (float)depth) *
                                          configuration.tailRadiusMultiplier;
                 colliders.Add(new RagdollCapsuleCollider(animator, $"tail{currentDepth}", Matrix4x4.identity, start.transform, start.position,

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483a73d327c842340a1e7988ce6d05aa, type: 3}
+  m_Name: KoboldRagdollConfiguration
+  m_EditorClassIdentifier: 
+  configuration:
+    headRadius: 0.079
+    muzzleLength: 0.127
+    muzzleOffset: 0.298
+    upperArmRadius: 0.053
+    lowerArmRadius: 0.0482
+    handLength: 0.21
+    chestDepth: 0.147
+    chestOffset: 0.136
+    hipDepth: 0.169
+    hipOffset: 0.058
+    upperLegRadius: 0.117
+    lowerLegRadius: 0.07
+    footLength: 0.2
+    footOffset: 0.189
+    digitigradeLegs: 1
+    digitigradePushBack: 0.3
+    digitigradePushUp: 0.297
+    tailRoot: {fileID: 0}
+    tailPath: Armature/Hips/Tail
+    tailRadiusCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0.5
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    tailRadiusMultiplier: 0.07
+    tailFlexibility: 10

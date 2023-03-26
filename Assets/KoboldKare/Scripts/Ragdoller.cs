@@ -18,8 +18,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private Rigidbody[] ragdollBodies;
     private Rigidbody body;
     private CollisionDetectionMode oldCollisionMode;
-    //[SerializeField]
-    //private BodyProportionBase bodyProportion;
     public bool ragdolled {get; private set;}
     private int ragdollCount;
     [SerializeField]

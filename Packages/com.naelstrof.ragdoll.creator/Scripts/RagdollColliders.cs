@@ -11,6 +11,7 @@ public static class RagdollColliders {
     }
 
     public class RagdollCollider {
+        protected const float ragdollMassPerCubicMeter = 500f;
         public Transform GetParentBone(Animator animator) {
             return animator.transform.Find(parentPath);
         }
@@ -46,20 +47,51 @@ public static class RagdollColliders {
         public override Collider GetOrCreate(Animator animator) {
             GameObject childObject = null;
             var parent = GetParentBone(animator);
-            if (parent.Find("RagdollCapsuleCollider") == null) {
+            bool needsChild = localTransform != Matrix4x4.identity;
+            bool hasChild = parent.Find(name + "RagdollCapsuleCollider") != null;
+            
+            if (!hasChild && needsChild) {
                 childObject = new GameObject(name+"RagdollCapsuleCollider", typeof(CapsuleCollider));
                 childObject.transform.SetParent(parent);
                 Undo.RegisterCreatedObjectUndo(childObject, "Created a capsule.");
-            } else {
-                childObject = parent.Find(name+"RagdollCapsuleCollider").gameObject;
+                hasChild = true;
+            }
+            if (hasChild && !needsChild) {
+                Undo.DestroyObjectImmediate(parent.Find(name + "RagdollCapsuleCollider").gameObject);
+            }
+            if (needsChild && childObject == null) {
+                childObject = parent.Find(name + "RagdollCapsuleCollider").gameObject;
                 Undo.RegisterCompleteObjectUndo(childObject, "Changing the capsule.");
             }
 
-            Undo.RegisterFullObjectHierarchyUndo(childObject.transform, "Moved child object");
-            childObject.transform.localPosition = localTransform.GetPosition();
-            childObject.transform.localRotation = localTransform.rotation;
-            
-            CapsuleCollider collider = childObject.GetComponent<CapsuleCollider>();
+            if (needsChild && hasChild) {
+                Undo.RegisterFullObjectHierarchyUndo(childObject.transform, "Moved child object");
+                childObject.transform.localPosition = localTransform.GetPosition();
+                childObject.transform.localRotation = localTransform.rotation;
+            }
+
+            var parentRigidbody = parent.GetComponent<Rigidbody>();
+            if (parentRigidbody == null) {
+                parentRigidbody = parent.gameObject.AddComponent<Rigidbody>();
+                Undo.RegisterCreatedObjectUndo(parentRigidbody, "Created rigidbody");
+            }
+            Undo.RecordObject(parentRigidbody, "Adjusted rigidbody");
+            Matrix4x4 localToWorld = (parent.localToWorldMatrix * localTransform);
+            float r = radius * localToWorld.lossyScale.x;
+            float a = height * localToWorld.lossyScale.x;
+            float volume = Mathf.PI * r * r * (4f / 3f * r + a);
+            parentRigidbody.mass = volume * ragdollMassPerCubicMeter;
+
+            CapsuleCollider collider;
+            if (childObject == null) {
+                collider = parent.GetComponent<CapsuleCollider>();
+                if (collider == null) {
+                    collider = parent.gameObject.AddComponent<CapsuleCollider>();
+                }
+            } else {
+                collider = childObject.GetComponent<CapsuleCollider>();
+            }
+
             Undo.RecordObject(collider, "Capsule changes");
             collider.center = center;
             collider.direction = (int)capsuleDirection;
@@ -167,19 +199,51 @@ public static class RagdollColliders {
         public override Collider GetOrCreate(Animator animator) {
             var parent = GetParentBone(animator);
             GameObject childObject = null;
-            if (parent.Find("RagdollBoxCollider") == null) {
+            bool needsChild = localTransform != Matrix4x4.identity;
+            bool hasChild = parent.Find(name + "RagdollBoxCollider") != null;
+            if (!hasChild && needsChild) {
                 childObject = new GameObject(name+"RagdollBoxCollider", typeof(BoxCollider));
                 childObject.transform.SetParent(parent);
                 Undo.RegisterCreatedObjectUndo(childObject, "Created box collider");
-            } else {
-                childObject = parent.Find(name+"RagdollBoxCollider").gameObject;
+                hasChild = true;
+            }
+
+            if (hasChild && !needsChild) {
+                Undo.DestroyObjectImmediate(parent.Find(name + "RagdollBoxCollider").gameObject);
+            }
+
+            if (needsChild && childObject == null) {
+                childObject = parent.Find(name + "RagdollBoxCollider").gameObject;
                 Undo.RegisterCompleteObjectUndo(childObject, "Changed box collider");
             }
-            Undo.RegisterFullObjectHierarchyUndo(childObject, "Moved box collider");
-            childObject.transform.localPosition = localTransform.GetPosition();
-            childObject.transform.localRotation = localTransform.rotation;
-            
-            BoxCollider collider = childObject.GetComponent<BoxCollider>();
+
+            if (needsChild && hasChild) {
+                Undo.RegisterFullObjectHierarchyUndo(childObject, "Moved box collider");
+                childObject.transform.localPosition = localTransform.GetPosition();
+                childObject.transform.localRotation = localTransform.rotation;
+            }
+
+            var parentRigidbody = parent.GetComponent<Rigidbody>();
+            if (parentRigidbody == null) {
+                parentRigidbody = parent.gameObject.AddComponent<Rigidbody>();
+                Undo.RegisterCreatedObjectUndo(parentRigidbody, "Created rigidbody");
+            }
+            Undo.RecordObject(parentRigidbody, "Adjusted rigidbody");
+            Matrix4x4 localToWorld = parent.transform.localToWorldMatrix * localTransform;
+            Vector3 worldSize = localToWorld.MultiplyVector(size);
+            float volume = Mathf.Abs(worldSize.x) * Mathf.Abs(worldSize.y) * Mathf.Abs(worldSize.z);
+            parentRigidbody.mass = volume * ragdollMassPerCubicMeter;
+
+            BoxCollider collider;
+            if (needsChild && hasChild) {
+                collider = childObject.GetComponent<BoxCollider>();
+            } else {
+                collider = parent.GetComponent<BoxCollider>();
+                if (collider == null) {
+                    collider = parent.gameObject.AddComponent<BoxCollider>();
+                }
+            }
+
             Undo.RecordObject(collider, "Changed box collider's info");
             collider.center = center;
             collider.size = size;
@@ -195,7 +259,7 @@ public static class RagdollColliders {
         }
     }
     public static HumanoidRagdollColliders GenerateColliders(Animator animator,
-        RagdollColliderConfiguration colliderConfiguration, RagdollScrunchStretchPack cachedScrunchStretchPack) {
+        RagdollConfiguration configuration, RagdollScrunchStretchPack cachedScrunchStretchPack) {
         var newGameObject = Object.Instantiate(animator.gameObject);
         animator = newGameObject.GetComponent<Animator>();
         cachedScrunchStretchPack.GetNeutralClip().SampleAnimation(animator.gameObject, 0f);
@@ -212,9 +276,9 @@ public static class RagdollColliders {
         var rightHand = animator.GetBoneTransform(HumanBodyBones.RightHand);
 
         colliders.Add(new RagdollCapsuleCollider(animator, "leftUpperArm", Matrix4x4.identity, leftUpperArm, leftUpperArm.position,
-            leftLowerArm.position, colliderConfiguration.upperArmRadius));
+            leftLowerArm.position, configuration.upperArmRadius));
         colliders.Add(new RagdollCapsuleCollider(animator, "leftLowerArm", Matrix4x4.identity, leftLowerArm, leftLowerArm.position,
-            leftHand.position, colliderConfiguration.lowerArmRadius));
+            leftHand.position, configuration.lowerArmRadius));
         // Left hand
         Vector3 leftHandForward = (leftHand.position - leftLowerArm.position).normalized;
         Vector3 leftHandRight = (leftLowerArm.position - leftUpperArm.position).normalized;
@@ -224,18 +288,18 @@ public static class RagdollColliders {
             leftHand.transform.InverseTransformDirection(leftHandForward),
             leftHand.transform.InverseTransformDirection(leftHandUp)));
         colliders.Add(new RagdollBoxCollider(animator, "leftHand", leftHandChild, leftHand, leftHand.position,
-            leftHand.position + leftHandForward * colliderConfiguration.handLength,
-            leftHand.position + leftHandRight * colliderConfiguration.lowerArmRadius * 2f,
-            leftHand.position - leftHandRight * colliderConfiguration.lowerArmRadius * 2f, colliderConfiguration.lowerArmRadius * 2f,
+            leftHand.position + leftHandForward * configuration.handLength,
+            leftHand.position + leftHandRight * configuration.lowerArmRadius * 2f,
+            leftHand.position - leftHandRight * configuration.lowerArmRadius * 2f, configuration.lowerArmRadius * 2f,
             0));
 
         // Right arm
         var rightUpperArm = animator.GetBoneTransform(HumanBodyBones.RightUpperArm);
         var rightLowerArm = animator.GetBoneTransform(HumanBodyBones.RightLowerArm);
         colliders.Add(new RagdollCapsuleCollider(animator, "rightUpperArm", Matrix4x4.identity, rightUpperArm, rightUpperArm.position,
-            rightLowerArm.position, colliderConfiguration.upperArmRadius));
+            rightLowerArm.position, configuration.upperArmRadius));
         colliders.Add(new RagdollCapsuleCollider(animator, "rightLowerArm", Matrix4x4.identity, rightLowerArm, rightLowerArm.position,
-            rightHand.position, colliderConfiguration.lowerArmRadius));
+            rightHand.position, configuration.lowerArmRadius));
 
         // Right hand
         Vector3 rightHandForward = (rightHand.position - rightLowerArm.position).normalized;
@@ -246,9 +310,9 @@ public static class RagdollColliders {
             rightHand.transform.InverseTransformDirection(rightHandForward),
             rightHand.transform.InverseTransformDirection(rightHandUp)));
         colliders.Add(new RagdollBoxCollider(animator, "rightHand", rightHandChild, rightHand, rightHand.position,
-            rightHand.position + rightHandForward * colliderConfiguration.handLength,
-            rightHand.position + rightHandRight * colliderConfiguration.lowerArmRadius * 2f,
-            rightHand.position - rightHandRight * colliderConfiguration.lowerArmRadius * 2f, colliderConfiguration.lowerArmRadius * 2f,
+            rightHand.position + rightHandForward * configuration.handLength,
+            rightHand.position + rightHandRight * configuration.lowerArmRadius * 2f,
+            rightHand.position - rightHandRight * configuration.lowerArmRadius * 2f, configuration.lowerArmRadius * 2f,
             0));
 
         var leftUpperLeg = animator.GetBoneTransform(HumanBodyBones.LeftUpperLeg);
@@ -264,23 +328,23 @@ public static class RagdollColliders {
         Matrix4x4 leftFootChild = Matrix4x4.Rotate(Quaternion.Inverse(leftFoot.rotation) *
                                                    Quaternion.LookRotation(leftFootForward, leftFootUp));
         colliders.Add(new RagdollBoxCollider(animator, "leftFoot", leftFootChild, leftFoot,
-            leftFoot.position + leftFootUp * colliderConfiguration.lowerLegRadius * 0.75f,
-            leftFoot.position - leftFootUp * colliderConfiguration.lowerLegRadius * 0.75f,
-            leftFoot.position + leftFootRight * colliderConfiguration.lowerLegRadius,
-            leftFoot.position - leftFootRight * colliderConfiguration.lowerLegRadius, colliderConfiguration.footLength,
-            colliderConfiguration.footOffset));
+            leftFoot.position + leftFootUp * configuration.lowerLegRadius * 0.75f,
+            leftFoot.position - leftFootUp * configuration.lowerLegRadius * 0.75f,
+            leftFoot.position + leftFootRight * configuration.lowerLegRadius,
+            leftFoot.position - leftFootRight * configuration.lowerLegRadius, configuration.footLength,
+            configuration.footOffset));
 
         // Left leg
         colliders.Add(new RagdollCapsuleCollider(animator, "leftUpperLeg", Matrix4x4.identity, leftUpperLeg, leftUpperLeg.position,
-            leftLowerLeg.position, colliderConfiguration.upperLegRadius));
-        if (!colliderConfiguration.digitigradeLegs) {
+            leftLowerLeg.position, configuration.upperLegRadius));
+        if (!configuration.digitigradeLegs) {
             colliders.Add(new RagdollCapsuleCollider(animator, "leftLowerLeg", Matrix4x4.identity, leftLowerLeg, leftLowerLeg.position,
-                leftFoot.position, colliderConfiguration.lowerLegRadius));
+                leftFoot.position, configuration.lowerLegRadius));
         } else {
             float lowerLegLength = Vector3.Distance(leftLowerLeg.position, leftFoot.position);
             Vector3 leftDigitigradeTarget = leftFoot.position -
-                                            leftFootForward * colliderConfiguration.digitigradePushBack * lowerLegLength +
-                                            leftFootUp * colliderConfiguration.digitigradePushUp * lowerLegLength;
+                                            leftFootForward * configuration.digitigradePushBack * lowerLegLength +
+                                            leftFootUp * configuration.digitigradePushUp * lowerLegLength;
             Vector3 leftUpperDigitgradeRight = (rightFoot.position - leftFoot.position).normalized;
             Vector3 leftUpperDigitgradeUp = (leftLowerLeg.position - leftDigitigradeTarget).normalized;
             Vector3 leftUpperDigitgradeForward = Vector3.Cross(leftUpperDigitgradeRight, leftUpperDigitgradeUp);
@@ -290,7 +354,7 @@ public static class RagdollColliders {
                                                                   Quaternion.LookRotation(leftUpperDigitgradeForward,
                                                                       leftUpperDigitgradeUp));
             colliders.Add(new RagdollCapsuleCollider(animator, "leftLowerLeg", leftUpperDigitgradeChild, leftLowerLeg,
-                leftLowerLeg.position, leftDigitigradeTarget, colliderConfiguration.lowerLegRadius));
+                leftLowerLeg.position, leftDigitigradeTarget, configuration.lowerLegRadius));
             Vector3 leftLowerDigitgradeRight = (rightFoot.position - leftFoot.position).normalized;
             Vector3 leftLowerDigitgradeUp = (leftDigitigradeTarget - leftFoot.position).normalized;
             Vector3 leftLowerDigitgradeForward = Vector3.Cross(leftLowerDigitgradeRight, leftLowerDigitgradeUp);
@@ -300,7 +364,7 @@ public static class RagdollColliders {
                                                                   Quaternion.LookRotation(leftLowerDigitgradeForward,
                                                                       leftLowerDigitgradeUp));
             colliders.Add(new RagdollCapsuleCollider(animator, "leftLowerLegDigitigrade", leftLowerDigitgradeChild, leftLowerLeg,
-                leftDigitigradeTarget, leftFoot.position, colliderConfiguration.lowerLegRadius));
+                leftDigitigradeTarget, leftFoot.position, configuration.lowerLegRadius));
         }
 
         var rightUpperLeg = animator.GetBoneTransform(HumanBodyBones.RightUpperLeg);
@@ -314,23 +378,23 @@ public static class RagdollColliders {
         Matrix4x4 rightFootChild = Matrix4x4.Rotate(Quaternion.Inverse(rightFoot.rotation) *
                                                     Quaternion.LookRotation(rightFootForward, rightFootUp));
         colliders.Add(new RagdollBoxCollider(animator, "rightFoot", rightFootChild, rightFoot,
-            rightFoot.position + rightFootUp * colliderConfiguration.lowerLegRadius * 0.75f,
-            rightFoot.position - rightFootUp * colliderConfiguration.lowerLegRadius * 0.75f,
-            rightFoot.position + rightFootRight * colliderConfiguration.lowerLegRadius,
-            rightFoot.position - rightFootRight * colliderConfiguration.lowerLegRadius, colliderConfiguration.footLength,
-            colliderConfiguration.footOffset));
+            rightFoot.position + rightFootUp * configuration.lowerLegRadius * 0.75f,
+            rightFoot.position - rightFootUp * configuration.lowerLegRadius * 0.75f,
+            rightFoot.position + rightFootRight * configuration.lowerLegRadius,
+            rightFoot.position - rightFootRight * configuration.lowerLegRadius, configuration.footLength,
+            configuration.footOffset));
 
         // Right leg
         colliders.Add(new RagdollCapsuleCollider(animator, "rightUpperLeg", Matrix4x4.identity, rightUpperLeg, rightUpperLeg.position,
-            rightLowerLeg.position, colliderConfiguration.upperLegRadius));
-        if (!colliderConfiguration.digitigradeLegs) {
+            rightLowerLeg.position, configuration.upperLegRadius));
+        if (!configuration.digitigradeLegs) {
             colliders.Add(new RagdollCapsuleCollider(animator, "rightLowerLeg", Matrix4x4.identity, rightLowerLeg,
-                rightLowerLeg.position, rightFoot.position, colliderConfiguration.lowerLegRadius));
+                rightLowerLeg.position, rightFoot.position, configuration.lowerLegRadius));
         } else {
             float lowerLegLength = Vector3.Distance(rightLowerLeg.position, rightFoot.position);
             Vector3 rightDigitigradeTarget = rightFoot.position -
-                                             rightFootForward * colliderConfiguration.digitigradePushBack * lowerLegLength +
-                                             rightFootUp * colliderConfiguration.digitigradePushUp * lowerLegLength;
+                                             rightFootForward * configuration.digitigradePushBack * lowerLegLength +
+                                             rightFootUp * configuration.digitigradePushUp * lowerLegLength;
             Vector3 rightUpperDigitgradeRight = (rightFoot.position - leftFoot.position).normalized;
             Vector3 rightUpperDigitgradeUp = (rightLowerLeg.position - rightDigitigradeTarget).normalized;
             Vector3 rightUpperDigitgradeForward = Vector3.Cross(rightUpperDigitgradeRight, rightUpperDigitgradeUp);
@@ -340,7 +404,7 @@ public static class RagdollColliders {
                                                                    Quaternion.LookRotation(rightUpperDigitgradeForward,
                                                                        rightUpperDigitgradeUp));
             colliders.Add(new RagdollCapsuleCollider(animator, "rightLowerLeg", rightUpperDigitgradeChild, rightLowerLeg,
-                rightLowerLeg.position, rightDigitigradeTarget, colliderConfiguration.lowerLegRadius));
+                rightLowerLeg.position, rightDigitigradeTarget, configuration.lowerLegRadius));
             Vector3 rightLowerDigitgradeRight = (rightFoot.position - leftFoot.position).normalized;
             Vector3 rightLowerDigitgradeUp = (rightDigitigradeTarget - rightFoot.position).normalized;
             Vector3 rightLowerDigitgradeForward = Vector3.Cross(rightLowerDigitgradeRight, rightLowerDigitgradeUp);
@@ -350,7 +414,7 @@ public static class RagdollColliders {
                                                                    Quaternion.LookRotation(rightLowerDigitgradeForward,
                                                                        rightLowerDigitgradeUp));
             colliders.Add(new RagdollCapsuleCollider(animator, "rightLowerLegDigitigrade", rightLowerDigitgradeChild, rightLowerLeg,
-                rightDigitigradeTarget, rightFoot.position, colliderConfiguration.lowerLegRadius));
+                rightDigitigradeTarget, rightFoot.position, configuration.lowerLegRadius));
         }
 
         // Chest
@@ -361,12 +425,12 @@ public static class RagdollColliders {
         Matrix4x4 chestChild =
             Matrix4x4.Rotate(Quaternion.Inverse(chest.rotation) * Quaternion.LookRotation(chestForward, chestUp));
         colliders.Add(new RagdollBoxCollider(animator, "chest", chestChild, chest, chest.position,
-            (leftUpperArm.position + rightUpperArm.position) * 0.5f + chestUp * colliderConfiguration.upperArmRadius * 0.5f,
-            leftUpperArm.position, rightUpperArm.position, colliderConfiguration.chestDepth, colliderConfiguration.chestOffset));
+            (leftUpperArm.position + rightUpperArm.position) * 0.5f + chestUp * configuration.upperArmRadius * 0.5f,
+            leftUpperArm.position, rightUpperArm.position, configuration.chestDepth, configuration.chestOffset));
 
         Vector3 hipVector = (rightUpperLeg.position - leftUpperLeg.position).normalized;
-        Vector3 leftUpperLegAdjust = leftUpperLeg.position - hipVector * colliderConfiguration.upperLegRadius * 0.25f;
-        Vector3 rightUpperLegAdjust = rightUpperLeg.position + hipVector * colliderConfiguration.upperLegRadius * 0.25f;
+        Vector3 leftUpperLegAdjust = leftUpperLeg.position - hipVector * configuration.upperLegRadius * 0.25f;
+        Vector3 rightUpperLegAdjust = rightUpperLeg.position + hipVector * configuration.upperLegRadius * 0.25f;
 
         // Spine
         var spine = animator.GetBoneTransform(HumanBodyBones.Spine);
@@ -378,8 +442,8 @@ public static class RagdollColliders {
             Matrix4x4.Rotate(Quaternion.Inverse(spine.rotation) * Quaternion.LookRotation(spineForward, spineUp));
         colliders.Add(new RagdollBoxCollider(animator, "spine", spineChild, spine, spine.position, chest.position,
             (leftUpperLegAdjust + leftUpperArm.position) * 0.5f, (rightUpperLegAdjust + rightUpperArm.position) * 0.5f,
-            (colliderConfiguration.hipDepth + colliderConfiguration.chestDepth) * 0.5f,
-            (colliderConfiguration.hipOffset + colliderConfiguration.chestOffset) * 0.5f));
+            (configuration.hipDepth + configuration.chestDepth) * 0.5f,
+            (configuration.hipOffset + configuration.chestOffset) * 0.5f));
 
         // Hip
         Vector3 legCenter = (leftUpperLeg.position + rightUpperLeg.position) * 0.5f;
@@ -392,11 +456,11 @@ public static class RagdollColliders {
         Matrix4x4 hipChild =
             Matrix4x4.Rotate(Quaternion.Inverse(hip.rotation) * Quaternion.LookRotation(hipForward, hipUp));
         colliders.Add(new RagdollBoxCollider(animator, "hip", hipChild, hip, fakeHipPosition, spine.position,
-            leftUpperLegAdjust, rightUpperLegAdjust, colliderConfiguration.hipDepth, colliderConfiguration.hipOffset));
+            leftUpperLegAdjust, rightUpperLegAdjust, configuration.hipDepth, configuration.hipOffset));
 
         // Neck
         colliders.Add(new RagdollCapsuleCollider(animator, "neck", Matrix4x4.identity, neck, neck.position, head.position,
-            colliderConfiguration.upperArmRadius));
+            configuration.upperArmRadius));
 
         // Head
         Vector3 headRight = (rightHand.position - leftHand.position).normalized;
@@ -408,14 +472,14 @@ public static class RagdollColliders {
             Matrix4x4.Rotate(Quaternion.Inverse(head.rotation) * Quaternion.LookRotation(headForward, headUp));
 
         colliders.Add(new RagdollBoxCollider(animator, "head", headChild, head, head.position,
-            head.position + headUp * colliderConfiguration.headRadius * 2f,
-            head.position - headRight * colliderConfiguration.headRadius, head.position + headRight * colliderConfiguration.headRadius,
-            colliderConfiguration.muzzleLength * 2f, colliderConfiguration.muzzleOffset));
+            head.position + headUp * configuration.headRadius * 2f,
+            head.position - headRight * configuration.headRadius, head.position + headRight * configuration.headRadius,
+            configuration.muzzleLength * 2f, configuration.muzzleOffset));
 
         // Tail
-        if (colliderConfiguration.tailPath != null) {
+        if (!string.IsNullOrEmpty(configuration.tailPath)) {
             const int maxDepth = 16;
-            Transform start = animator.transform.Find(colliderConfiguration.tailPath);
+            Transform start = animator.transform.Find(configuration.tailPath);
             int depth = 0;
             Transform end = start.GetChild(0);
             while (depth < maxDepth) {
@@ -438,8 +502,8 @@ public static class RagdollColliders {
                     end = end.parent;
                     break;
                 }
-                float tailRadiusSample = colliderConfiguration.tailRadiusCurve.Evaluate((float)currentDepth / (float)depth) *
-                                         colliderConfiguration.tailRadiusMultiplier;
+                float tailRadiusSample = configuration.tailRadiusCurve.Evaluate((float)currentDepth / (float)depth) *
+                                         configuration.tailRadiusMultiplier;
                 colliders.Add(new RagdollCapsuleCollider(animator, $"tail{currentDepth}", Matrix4x4.identity, start.transform, start.position,
                     end.position, tailRadiusSample));
                 currentDepth++;
@@ -451,7 +515,7 @@ public static class RagdollColliders {
                 end = end.GetChild(0);
             }
 
-            float lastSample = colliderConfiguration.tailRadiusCurve.Evaluate(1f) * colliderConfiguration.tailRadiusMultiplier;
+            float lastSample = configuration.tailRadiusCurve.Evaluate(1f) * configuration.tailRadiusMultiplier;
             Vector3 forward = end.position - start.position;
             colliders.Add(new RagdollCapsuleCollider(animator, "tailEnd", Matrix4x4.identity, end.transform, end.position,
                 end.position + forward, lastSample));

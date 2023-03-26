@@ -225,6 +225,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         photonView.ObservedComponents.Clear();
         photonView.FindObservables(true);
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
+        Physics.SyncTransforms();
     }
 
     void InitializePostEnable() {
@@ -380,7 +381,31 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
 
     public void CreateBasicRagdoll() {
         hideGizmos = true;
-        RagdollCreator.CreateRagdollWizard(displayAnimator).exited += () => hideGizmos = false;
+        RagdollCreator.CreateRagdollWizard(displayAnimator).exited += OnCreateBasicRagdoll;
+    }
+    
+    private void OnCreateBasicRagdoll(bool created, Animator animator, RagdollConstraints.HumanoidConstraints constraints, RagdollColliders.HumanoidRagdollColliders colliders) {
+        hideGizmos = false;
+        if (!created) return;
+        var serializedRagdoller = new SerializedObject(GetComponent<Ragdoller>());
+        var ragdollBodiesProp = serializedRagdoller.FindProperty("ragdollBodies");
+        foreach (var coll in colliders) {
+            var ragdollRigidbody = coll.GetOrCreate(animator).GetComponentInParent<Rigidbody>();
+            bool find = false;
+            for (int i = 0; i < ragdollBodiesProp.arraySize; i++) {
+                if (ragdollBodiesProp.GetArrayElementAtIndex(i).objectReferenceValue != ragdollRigidbody) continue;
+                find = true;
+                break;
+            }
+
+            if (find) continue;
+            ragdollBodiesProp.InsertArrayElementAtIndex(0);
+            ragdollBodiesProp.GetArrayElementAtIndex(0).objectReferenceValue = ragdollRigidbody;
+        }
+
+        var hipBody = animator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
+        serializedRagdoller.FindProperty("hipBody").objectReferenceValue = hipBody;
+        serializedRagdoller.ApplyModifiedProperties();
     }
 
 #endif

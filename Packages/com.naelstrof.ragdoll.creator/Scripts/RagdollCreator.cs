@@ -1,19 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEditor;
 
 public class RagdollCreator : ScriptableWizard {
     [SerializeField] private Animator targetAnimator;
-    [SerializeField] private RagdollColliderConfiguration colliderConfiguration;
+    [FormerlySerializedAs("colliderConfiguration")] [SerializeField] private RagdollConfiguration configuration;
     
     private bool generatedConstraints;
     private RagdollConstraints.HumanoidConstraints targetConstraints;
     private RagdollColliders.HumanoidRagdollColliders targetColliders;
     private RagdollScrunchStretchPack cachedScrunchStretchPack;
+    private bool created = false;
 
-    public delegate void ExitAction();
+    public delegate void ExitAction(bool created, Animator animator, RagdollConstraints.HumanoidConstraints constraints, RagdollColliders.HumanoidRagdollColliders colliders);
 
     public event ExitAction exited;
 
@@ -28,35 +30,36 @@ public class RagdollCreator : ScriptableWizard {
         bool changed = base.DrawWizardGUI();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save Configuration...")) {
-            var path = EditorUtility.SaveFilePanel("Save ragdoll collider configuration.", "", "RagdollColliderConfiguration","asset");
+            var path = EditorUtility.SaveFilePanel("Save ragdoll configuration.", "", "RagdollConfiguration","asset");
             if (path.Length != 0) {
                 Uri uriPath = new Uri(path);
                 Uri relativeUri = new Uri(Application.dataPath);
                 string relativePath = relativeUri.MakeRelativeUri(uriPath).ToString();
-                var colliderConfig = ScriptableObject.CreateInstance<RagdollColliderConfigurationObject>();
-                colliderConfiguration.Save(targetAnimator);
-                colliderConfig.configuration = colliderConfiguration;
+                var colliderConfig = CreateInstance<RagdollConfigurationObject>();
+                configuration.Save(targetAnimator);
+                colliderConfig.configuration = configuration;
                 AssetDatabase.CreateAsset(colliderConfig, relativePath);
             }
         }
 
         if (GUILayout.Button("Load Configuration...")) {
-            var path = EditorUtility.OpenFilePanel("Load ragdoll collider configuration.", "", "asset");
+            var path = EditorUtility.OpenFilePanel("Load ragdoll configuration.", "", "asset");
             if (path.Length != 0) {
                 Uri uriPath = new Uri(path);
                 Uri relativeUri = new Uri(Application.dataPath);
                 string relativePath = relativeUri.MakeRelativeUri(uriPath).ToString();
-                var colliderConfig = AssetDatabase.LoadAssetAtPath<RagdollColliderConfigurationObject>(relativePath);
-                colliderConfiguration = colliderConfig.configuration;
-                colliderConfiguration.Load(targetAnimator);
+                var colliderConfig = AssetDatabase.LoadAssetAtPath<RagdollConfigurationObject>(relativePath);
+                configuration = colliderConfig.configuration;
+                configuration.Load(targetAnimator);
                 changed = true;
             }
         }
         GUILayout.EndHorizontal();
 
         if (changed) {
-            colliderConfiguration.Save(targetAnimator);
-            targetColliders = RagdollColliders.GenerateColliders(targetAnimator, colliderConfiguration, cachedScrunchStretchPack);
+            configuration.Save(targetAnimator);
+            targetColliders = RagdollColliders.GenerateColliders(targetAnimator, configuration, cachedScrunchStretchPack);
+            targetConstraints = RagdollConstraints.GenerateConstraints(targetAnimator, configuration, cachedScrunchStretchPack);
         }
 
         return changed;
@@ -67,8 +70,12 @@ public class RagdollCreator : ScriptableWizard {
         foreach (var collider in targetColliders) {
             collider.GetOrCreate(targetAnimator);
         }
+        foreach (var constraint in targetConstraints) {
+            constraint.GetOrCreate(targetAnimator, configuration);
+        }
         Undo.SetCurrentGroupName("Created ragdoll");
         Selection.activeGameObject = targetAnimator.gameObject;
+        created = true;
     }
 
     private void OnEnable() {
@@ -76,7 +83,7 @@ public class RagdollCreator : ScriptableWizard {
     }
  
     private void OnDisable() {
-        exited?.Invoke();
+        exited?.Invoke(created, targetAnimator, targetConstraints, targetColliders);
         SceneView.duringSceneGui -= OnSceneGUI;
     }
 
@@ -86,11 +93,11 @@ public class RagdollCreator : ScriptableWizard {
         }
 
         if (!generatedConstraints) {
-            targetConstraints = RagdollConstraints.GenerateConstraints(targetAnimator, cachedScrunchStretchPack);
-            targetColliders = RagdollColliders.GenerateColliders(targetAnimator, colliderConfiguration, cachedScrunchStretchPack);
+            targetColliders = RagdollColliders.GenerateColliders(targetAnimator, configuration, cachedScrunchStretchPack);
+            targetConstraints = RagdollConstraints.GenerateConstraints(targetAnimator, configuration, cachedScrunchStretchPack);
             generatedConstraints = true;
         }
-        RagdollConstraints.PreviewConstraints(targetAnimator, targetConstraints);
+        RagdollConstraints.PreviewConstraints(targetAnimator, configuration, targetConstraints);
         RagdollColliders.PreviewColliders(targetAnimator, targetColliders);
     }
 

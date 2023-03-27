@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine.UIElements;
 
 public static class RagdollConstraints {
     public class HumanoidConstraint {
@@ -22,11 +18,12 @@ public static class RagdollConstraints {
         protected Vector3 neutralLocalUp;
         protected Vector3 neutralLocalRight;
         protected float massScale = 1f;
+        protected float bendFactor = 1f;
 
         protected HumanoidConstraint() {
         }
 
-        public HumanoidConstraint(Animator animator, RagdollScrunchStretchPack cachedScrunchStretchPack, Transform target, Transform parent, Vector3 worldJointRight, Vector3 worldJointUp, Vector3 worldJointForward, float massScale, Transform parentRigidbody = null) {
+        public HumanoidConstraint(Animator animator, RagdollScrunchStretchPack cachedScrunchStretchPack, Transform target, Transform parent, Vector3 worldJointRight, Vector3 worldJointUp, Vector3 worldJointForward, float massScale, float bendFactor = 1f, Transform parentRigidbody = null) {
             Vector3 localRight = parent.InverseTransformDirection(worldJointRight);
             Vector3 localUp = parent.InverseTransformDirection(worldJointUp);
             Vector3 localForward = parent.InverseTransformDirection(worldJointForward);
@@ -52,6 +49,7 @@ public static class RagdollConstraints {
             fromNeutralToStretch = stretchRotations;
             neutralRotation = localPosedRotation;
             this.massScale = massScale;
+            this.bendFactor = bendFactor;
         }
         public void Render(Animator animator, RagdollConfiguration configuration) {
             var originalHandleColor = Handles.color;
@@ -108,6 +106,11 @@ public static class RagdollConstraints {
                maxAngles.y = Mathf.Max(maxAngle.y, maxAngles.y);
                maxAngles.z = Mathf.Max(maxAngle.z, maxAngles.z);
             }
+
+            minAngles.x *= bendFactor;
+            maxAngles.x *= bendFactor;
+            minAngles.y *= bendFactor;
+            maxAngles.y *= bendFactor;
         }
 
         public ConfigurableJoint GetOrCreate(Animator animator, RagdollConfiguration configuration) {
@@ -121,17 +124,6 @@ public static class RagdollConstraints {
             var targetRigidbody = targetTransform.GetComponent<Rigidbody>();
             if (targetRigidbody == null) {
                 targetRigidbody = targetTransform.gameObject.AddComponent<Rigidbody>();
-            }
-
-            float massRatio = parentRigidbody.mass / targetRigidbody.mass;
-            // Try to fix ridiculous mass ratios
-            while (massRatio > 4f) {
-                targetRigidbody.mass *= 2f;
-                massRatio = parentRigidbody.mass / targetRigidbody.mass;
-            }
-            while (massRatio < 1f/4f) {
-                parentRigidbody.mass *= 2f;
-                massRatio = parentRigidbody.mass / targetRigidbody.mass;
             }
 
             var configurableJoint = targetTransform.GetComponent<ConfigurableJoint>();
@@ -156,22 +148,27 @@ public static class RagdollConstraints {
             configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             var angularLimitSpring = configurableJoint.angularXLimitSpring;
-            angularLimitSpring.spring = 1000f*targetRigidbody.mass;
+            angularLimitSpring.spring = 500f*targetRigidbody.mass;
             angularLimitSpring.damper = angularLimitSpring.spring*0.1f;
             configurableJoint.angularXLimitSpring = angularLimitSpring;
             configurableJoint.angularYZLimitSpring = angularLimitSpring;
-            configurableJoint.enablePreprocessing = false;
 
-            if (Mathf.Abs(minAngles.x - maxAngles.x) < 10f) {
+            minAngles.z *= configuration.twistFactor;
+            maxAngles.z *= configuration.twistFactor;
+
+            if (Mathf.Min(Mathf.Abs(maxAngles.x),Mathf.Abs(minAngles.x)) < 15f) {
                 configurableJoint.angularYMotion = ConfigurableJointMotion.Locked;
+                minAngles.x = maxAngles.x = 0f;
             }
             
-            if (Mathf.Abs(minAngles.y - maxAngles.y) < 10f) {
+            if (Mathf.Abs(maxAngles.y-minAngles.y) < 15f) {
                 configurableJoint.angularXMotion = ConfigurableJointMotion.Locked;
+                minAngles.y = maxAngles.y = 0f;
             }
             
-            if (Mathf.Abs(minAngles.z - maxAngles.z) < 10f) {
+            if (Mathf.Min(Mathf.Abs(maxAngles.z),Mathf.Abs(minAngles.z)) < 15f) {
                 configurableJoint.angularZMotion = ConfigurableJointMotion.Locked;
+                minAngles.z = maxAngles.z = 0f;
             }
 
             var lowXLimit = configurableJoint.lowAngularXLimit;
@@ -183,21 +180,21 @@ public static class RagdollConstraints {
             highXLimit.contactDistance = 15f;
             configurableJoint.highAngularXLimit = highXLimit;
             var lowYLimit = configurableJoint.angularYLimit;
-            lowYLimit.limit = Mathf.Min(Mathf.Abs(minAngles.x), Mathf.Abs(maxAngles.x));
+            lowYLimit.limit = Mathf.Min(Mathf.Abs(maxAngles.x),Mathf.Abs(minAngles.x));
             lowYLimit.contactDistance = 15f;
             configurableJoint.angularYLimit = lowYLimit;
             var lowZLimit = configurableJoint.angularZLimit;
-            lowZLimit.limit = Mathf.Min(Mathf.Abs(minAngles.z), Mathf.Abs(maxAngles.z))*configuration.twistFactor;
+            lowZLimit.limit = Mathf.Min(Mathf.Abs(maxAngles.z),Mathf.Abs(minAngles.z));
             lowZLimit.contactDistance = 15f;
             configurableJoint.angularZLimit = lowZLimit;
             var slerp = configurableJoint.slerpDrive;
-            slerp.positionSpring = 60f*targetRigidbody.mass;
+            slerp.positionSpring = 80f*targetRigidbody.mass;
             slerp.positionDamper = slerp.positionSpring*0.1f;
             configurableJoint.SetTargetRotationLocal(neutralRotation, targetTransform.localRotation);
             configurableJoint.slerpDrive = slerp;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
-            configurableJoint.projectionAngle = 10f;
-            configurableJoint.projectionDistance = 0.2f;
+            configurableJoint.projectionAngle = 15f;
+            configurableJoint.projectionDistance = 0.25f;
             configurableJoint.connectedMassScale = massScale;
             configurableJoint.massScale = 1f;
             configurableJoint.enablePreprocessing = false;
@@ -265,7 +262,7 @@ public static class RagdollConstraints {
         Vector3 rightUpperArmForward = (rightLowerArm.position - rightUpperArm.position).normalized;
         Vector3 rightUpperArmUp = (neck.position-chest.position).normalized;
         Vector3 rightUpperArmRight = Vector3.Cross(rightUpperArmUp, rightUpperArmForward).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, rightUpperArm, animator.GetBoneTransform(HumanBodyBones.RightShoulder), rightUpperArmRight, rightUpperArmUp, rightUpperArmForward, 2f, chest));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, rightUpperArm, animator.GetBoneTransform(HumanBodyBones.RightShoulder), rightUpperArmRight, rightUpperArmUp, rightUpperArmForward, 2f, 1f, chest));
         
         // Right Lower Arm
         Vector3 rightLowerArmForward = (rightHand.position - rightLowerArm.position).normalized;
@@ -283,7 +280,7 @@ public static class RagdollConstraints {
         Vector3 leftUpperArmForward = (leftLowerArm.position - leftUpperArm.position).normalized;
         Vector3 leftUpperArmUp = (neck.position-chest.position).normalized;
         Vector3 leftUpperArmRight = Vector3.Cross(leftUpperArmUp, leftUpperArmForward).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftUpperArm, animator.GetBoneTransform(HumanBodyBones.LeftShoulder), leftUpperArmRight, leftUpperArmUp, leftUpperArmForward, 2f, chest));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, leftUpperArm, animator.GetBoneTransform(HumanBodyBones.LeftShoulder), leftUpperArmRight, leftUpperArmUp, leftUpperArmForward, 2f, 1f, chest));
         
         // Left Lower Arm
         Vector3 leftLowerArmForward = (leftHand.position - leftLowerArm.position).normalized;
@@ -301,13 +298,13 @@ public static class RagdollConstraints {
         Vector3 chestForward = (neck.position - chest.position).normalized;
         Vector3 chestRight = (rightUpperArm.position - leftUpperArm.position).normalized;
         Vector3 chestUp = Vector3.Cross(chestForward, chestRight).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, chest, spine, chestRight, chestUp, chestForward, 1f));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, chest, spine, chestRight, chestUp, chestForward, 1f, configuration.spineBendFactor));
         
         // Spine
         Vector3 spineForward = (chest.position - spine.position).normalized;
         Vector3 spineRight = (rightUpperArm.position - leftUpperArm.position).normalized;
         Vector3 spineUp = Vector3.Cross(spineForward, spineRight).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, spine, hips, spineRight, spineUp, spineForward, 2f));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, spine, hips, spineRight, spineUp, spineForward, 2f, configuration.spineBendFactor));
         
         // Right Upper Leg
         Vector3 rightUpperLegForward = (rightLowerLeg.position - rightUpperLeg.position).normalized;
@@ -349,13 +346,13 @@ public static class RagdollConstraints {
         Vector3 neckForward = (head.position - neck.position).normalized;
         Vector3 neckRight = bodyRight.normalized;
         Vector3 neckUp = Vector3.Cross(neckForward, neckRight).normalized;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, neck, chest, neckRight, neckUp, neckForward,2f));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, neck, chest, neckRight, neckUp, neckForward,2f, configuration.spineBendFactor));
         
         // Head 
         Vector3 headForward = bodyForward;
         Vector3 headRight = bodyRight;
         Vector3 headUp = bodyUp;
-        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, head, neck, headRight, headUp, headForward, 2f));
+        constraints.Add(new HumanoidConstraint(animator, cachedScrunchStretchPack, head, neck, headRight, headUp, headForward, 2f, configuration.spineBendFactor));
         
         
         // Tail
@@ -376,14 +373,14 @@ public static class RagdollConstraints {
             Vector3 startForward = (end.position - start.position).normalized;
             Vector3 startRight = -bodyRight;
             Vector3 startUp = Vector3.Cross(startForward, startRight);
-            constraints.Add(new SimpleHumanoidConstraint(animator, start, hips, startRight, startUp, startForward, configuration.tailFlexibility, 3f));
+            constraints.Add(new SimpleHumanoidConstraint(animator, start, hips, startRight, startUp, startForward, configuration.tailFlexibility, 2f));
             int currentDepth = 0;
             end = start.GetChild(0);
             while (currentDepth <= depth) {
                 Vector3 tailForward = (end.position - start.position).normalized;
                 Vector3 tailRight = -bodyRight;
                 Vector3 tailUp = Vector3.Cross(tailForward, tailRight);
-                constraints.Add(new SimpleHumanoidConstraint(animator, end, start, tailRight, tailUp, tailForward, configuration.tailFlexibility, 2f));
+                constraints.Add(new SimpleHumanoidConstraint(animator, end, start, tailRight, tailUp, tailForward, configuration.tailFlexibility, 1f));
                 currentDepth++;
                 if (end.childCount == 0) {
                     break;
@@ -396,7 +393,7 @@ public static class RagdollConstraints {
             Vector3 tailEndForward = (end.position - start.position).normalized;
             Vector3 tailEndRight = -bodyRight;
             Vector3 tailEndUp = Vector3.Cross(tailEndForward, tailEndRight);
-            constraints.Add(new SimpleHumanoidConstraint(animator, end, start, tailEndRight, tailEndUp, tailEndForward, configuration.tailFlexibility, 2f));
+            constraints.Add(new SimpleHumanoidConstraint(animator, end, start, tailEndRight, tailEndUp, tailEndForward, configuration.tailFlexibility, 1f));
         }
 
         Object.DestroyImmediate(newGameObject);
@@ -478,6 +475,29 @@ public static class RagdollConstraints {
             angleSet.Add(angles);
         }
         return angleSet;
+    }
+
+    public static void MakeRagdollConstraintsReal(Animator animator, RagdollConfiguration configuration, HumanoidConstraints constraints) {
+        bool madeChange = true;
+        while (madeChange) {
+            madeChange = false;
+            foreach (var constraint in constraints) {
+                var joint = constraint.GetOrCreate(animator, configuration);
+                var targetRigidbody = joint.GetComponent<Rigidbody>();
+                var parentRigidbody = joint.connectedBody;
+                float massRatio = parentRigidbody.mass / targetRigidbody.mass;
+                while (massRatio > 4f) {
+                    targetRigidbody.mass *= 2f;
+                    massRatio = parentRigidbody.mass / targetRigidbody.mass;
+                    madeChange = true;
+                }
+                while (massRatio < 1f / 4f) {
+                    parentRigidbody.mass *= 2f;
+                    massRatio = parentRigidbody.mass / targetRigidbody.mass;
+                    madeChange = true;
+                }
+            }
+        }
     }
 }
 

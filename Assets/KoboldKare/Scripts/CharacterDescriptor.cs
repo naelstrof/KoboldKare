@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using ExitGames.Client.Photon.StructWrapping;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine.AddressableAssets;
@@ -171,7 +172,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         }
 
         kobold = GetComponent<Kobold>();
-        body.mass = 10f;
+        body.mass = 20f;
         body.drag = 0f;
         body.angularDrag = 10f;
         body.interpolation = RigidbodyInterpolation.Interpolate;
@@ -389,8 +390,10 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         if (!created) return;
         var serializedRagdoller = new SerializedObject(GetComponent<Ragdoller>());
         var ragdollBodiesProp = serializedRagdoller.FindProperty("ragdollBodies");
+        ragdollBodiesProp.ClearArray();
         foreach (var coll in colliders) {
-            var ragdollRigidbody = coll.GetOrCreate(animator).GetComponentInParent<Rigidbody>();
+            var realCollider = coll.Get(animator);
+            var ragdollRigidbody = realCollider.GetComponentInParent<Rigidbody>();
             bool find = false;
             for (int i = 0; i < ragdollBodiesProp.arraySize; i++) {
                 if (ragdollBodiesProp.GetArrayElementAtIndex(i).objectReferenceValue != ragdollRigidbody) continue;
@@ -398,6 +401,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
                 break;
             }
 
+            realCollider.gameObject.layer = LayerMask.NameToLayer("Hitbox");
             if (find) continue;
             ragdollBodiesProp.InsertArrayElementAtIndex(0);
             ragdollBodiesProp.GetArrayElementAtIndex(0).objectReferenceValue = ragdollRigidbody;

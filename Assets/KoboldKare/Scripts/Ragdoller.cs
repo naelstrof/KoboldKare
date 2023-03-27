@@ -37,16 +37,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         return ragdollBodies;
     }
 
-    private void FixedUpdate() {
-        if (!ragdolled) {
-            return;
-        }
-
-        Vector3 diff = transform.position - hipBody.position;
-        transform.position -= diff * 0.5f;
-        hipBody.transform.position += diff * 0.5f;
-    }
-
     public void SetLocked(bool newLockState) {
         locked = newLockState;
         if (locked && ragdolled) {
@@ -143,6 +133,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 jointAnchors.Add(new SavedJointAnchor(joint));
                 joint.autoConfigureConnectedAnchor = false;
             }
+            ragdollBody.maxDepenetrationVelocity = Physics.defaultMaxDepenetrationVelocity * 0.5f;
         }
 
         rigidbodyNetworkInfos = new List<RigidbodyNetworkInfo>();

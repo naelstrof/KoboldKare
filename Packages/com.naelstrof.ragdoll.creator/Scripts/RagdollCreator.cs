@@ -27,6 +27,14 @@ public class RagdollCreator : ScriptableWizard {
     }
 
     protected override bool DrawWizardGUI() {
+        if (Physics.defaultSolverIterations < 15) {
+            EditorGUILayout.HelpBox( $"Physics default solver iterations is recommended to be between 15 and 20. It's currently set to {Physics.defaultSolverIterations}.", MessageType.Warning);
+        }
+
+        if (Physics.defaultSolverVelocityIterations <= 1) {
+            EditorGUILayout.HelpBox( $"Physics default solver velocity iterations is recommended to be above 1. It's currently set to {Physics.defaultSolverVelocityIterations}.", MessageType.Warning);
+        }
+
         bool changed = base.DrawWizardGUI();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save Configuration...")) {
@@ -67,14 +75,10 @@ public class RagdollCreator : ScriptableWizard {
 
     private void OnWizardCreate() {
         Undo.IncrementCurrentGroup();
-        foreach (var collider in targetColliders) {
-            collider.GetOrCreate(targetAnimator);
-        }
-        foreach (var constraint in targetConstraints) {
-            constraint.GetOrCreate(targetAnimator, configuration);
-        }
-        Undo.SetCurrentGroupName("Created ragdoll");
+        RagdollColliders.MakeCollidersReal(targetAnimator, targetColliders);
+        RagdollConstraints.MakeRagdollConstraintsReal(targetAnimator, configuration, targetConstraints);
         Selection.activeGameObject = targetAnimator.gameObject;
+        Undo.SetCurrentGroupName("Created ragdoll");
         created = true;
     }
 

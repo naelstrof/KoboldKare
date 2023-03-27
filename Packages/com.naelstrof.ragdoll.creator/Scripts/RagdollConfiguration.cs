@@ -52,6 +52,8 @@ public class RagdollConfiguration {
 
     [Header("Constraints")] [Range(0f, 1f)]
     public float twistFactor = 0.25f;
+    [Range(0f, 1f)]
+    public float spineBendFactor = 0.5f;
 
 #if UNITY_EDITOR
     public void Save(Animator animator) {

@@ -120,7 +120,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
             JointDrive drive = configurableJoint.xDrive;
             drive.positionSpring = springForce;
-            drive.positionDamper = 2f;
+            drive.positionDamper = springForce*0.1f;
             configurableJoint.xDrive = drive;
             configurableJoint.yDrive = drive;
             configurableJoint.zDrive = drive;
@@ -129,14 +129,14 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             linearLimit.bounciness = 0f;
             var spring = configurableJoint.linearLimitSpring;
             spring.spring = springForce * 0.1f;
-            spring.damper = 2f;
+            spring.damper = spring.spring*0.1f;
             configurableJoint.linearLimitSpring = spring;
             configurableJoint.linearLimit = linearLimit;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             configurableJoint.massScale = 1f;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
-            configurableJoint.projectionAngle = 10f;
-            configurableJoint.projectionDistance = 0.5f;
+            configurableJoint.projectionAngle = 15f;
+            configurableJoint.projectionDistance = 1f;
             configurableJoint.connectedMassScale = 1f;
             configurableJoint.enablePreprocessing = false;
             configurableJoint.configuredInWorldSpace = true;

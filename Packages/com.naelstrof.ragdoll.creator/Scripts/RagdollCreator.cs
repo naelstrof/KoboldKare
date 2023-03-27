@@ -75,7 +75,7 @@ public class RagdollCreator : ScriptableWizard {
 
     private void OnWizardCreate() {
         Undo.IncrementCurrentGroup();
-        RagdollColliders.MakeCollidersReal(targetAnimator, targetColliders);
+        RagdollColliders.MakeCollidersReal(targetAnimator, configuration, targetColliders);
         RagdollConstraints.MakeRagdollConstraintsReal(targetAnimator, configuration, targetConstraints);
         Selection.activeGameObject = targetAnimator.gameObject;
         Undo.SetCurrentGroupName("Created ragdoll");

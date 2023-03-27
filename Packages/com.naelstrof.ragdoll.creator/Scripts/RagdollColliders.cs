@@ -9,7 +9,7 @@ public static class RagdollColliders {
     }
 
     public class RagdollCollider {
-        protected const float ragdollMassPerCubicMeter = 500f;
+        //protected const float ragdollMassPerCubicMeter = 500f;
         public Transform GetParentBone(Animator animator) {
             return animator.transform.Find(parentPath);
         }
@@ -58,7 +58,7 @@ public static class RagdollColliders {
             }
         }
 
-        public virtual Collider GetOrCreate(Animator animator) {
+        public virtual Collider GetOrCreate(Animator animator, float ragdollMassPerCubicMeter) {
             return null;
         }
         public virtual Collider Get(Animator animator) {
@@ -104,7 +104,7 @@ public static class RagdollColliders {
             return parent.GetComponent<CapsuleCollider>();
         }
 
-        public override Collider GetOrCreate(Animator animator) {
+        public override Collider GetOrCreate(Animator animator, float ragdollMassPerCubicMeter) {
             GameObject childObject = null;
             var parent = GetParentBone(animator);
             bool needsChild = localTransform != Matrix4x4.identity;
@@ -282,7 +282,7 @@ public static class RagdollColliders {
             }
             return parent.GetComponent<BoxCollider>();
         }
-        public override Collider GetOrCreate(Animator animator) {
+        public override Collider GetOrCreate(Animator animator, float ragdollMassPerCubicMeter) {
             var parent = GetParentBone(animator);
             GameObject childObject = null;
             bool needsChild = localTransform != Matrix4x4.identity;
@@ -610,13 +610,13 @@ public static class RagdollColliders {
         }
     }
 
-    public static void MakeCollidersReal(Animator animator, HumanoidRagdollColliders colliders) {
+    public static void MakeCollidersReal(Animator animator, RagdollConfiguration configuration, HumanoidRagdollColliders colliders) {
         foreach (var collider in colliders) {
             var ignoreColliders = collider.GetParentBone(animator).GetComponent<IgnoreCollisions>();
             if (ignoreColliders != null) {
                 Undo.DestroyObjectImmediate(ignoreColliders);
             }
-            collider.GetOrCreate(animator);
+            collider.GetOrCreate(animator, configuration.ragdollMassPerCubicMeter);
         }
 
         foreach (var collider in colliders) {
@@ -627,13 +627,13 @@ public static class RagdollColliders {
                 ignoreColliders = collider.GetParentBone(animator).gameObject.AddComponent<IgnoreCollisions>();
             }
 
-            var currentCollider = collider.GetOrCreate(animator);
+            var currentCollider = collider.GetOrCreate(animator, configuration.ragdollMassPerCubicMeter);
             if (!ignoreColliders.groupA.Contains(currentCollider)) {
                 ignoreColliders.groupA.Add(currentCollider);
             }
 
             foreach (var other in otherColliders) {
-                var otherCollider = other.GetOrCreate(animator);
+                var otherCollider = other.GetOrCreate(animator, configuration.ragdollMassPerCubicMeter);
                 if (!ignoreColliders.groupB.Contains(otherCollider)) {
                     ignoreColliders.groupB.Add(otherCollider);
                 }

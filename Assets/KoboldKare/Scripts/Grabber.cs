@@ -78,7 +78,7 @@ public class Grabber : MonoBehaviourPun {
 
             kobold = grabbable.transform.GetComponentInParent<Kobold>();
             if (kobold != null) {
-                Rigidbody ragdollBody = kobold.GetComponent<Ragdoller>().GetRagdollBodies()[0];
+                Rigidbody ragdollBody = kobold.GetComponent<Ragdoller>().GetHip();
                 joint = AddJoint(ragdollBody, ragdollBody.position);
             }
             RecursiveSetLayer(body.transform, LayerMask.NameToLayer("UsablePickups"), LayerMask.NameToLayer("PlayerNocollide"));

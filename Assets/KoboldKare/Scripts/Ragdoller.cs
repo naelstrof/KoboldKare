@@ -25,6 +25,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private List<JigglePhysics.JiggleRigBuilder> disableRigs;
 
+    private Dictionary<Transform, Matrix4x4> defaultRigTransforms;
+
     private PositionPacket lastPacket;
     private PositionPacket nextPacket;
 
@@ -36,6 +38,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
+
+    public Rigidbody GetHip() => hipBody;
 
     public void SetLocked(bool newLockState) {
         locked = newLockState;
@@ -141,6 +145,32 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }
         lastPacket = nextPacket = new PositionPacket(Time.time, hipBody.transform.position);
+        defaultRigTransforms = new Dictionary<Transform, Matrix4x4>();
+        foreach (var rig in disableRigs) {
+            foreach (var jiggle in rig.jiggleRigs) {
+                SaveRecursive(jiggle.rootTransform);
+            }
+        }
+    }
+
+    private void SaveRecursive(Transform t) {
+        for (int i = 0; i < t.childCount; i++) {
+            SaveRecursive(t.GetChild(i));
+        }
+        if (defaultRigTransforms.ContainsKey(t)) {
+            defaultRigTransforms[t] = Matrix4x4.TRS(t.localPosition, t.localRotation, Vector3.one);
+        } else {
+            defaultRigTransforms.Add(t,Matrix4x4.TRS(t.localPosition, t.localRotation, Vector3.one));
+        }
+    }
+    private void LoadRecursive(Transform t) {
+        for (int i = 0; i < t.childCount; i++) {
+            LoadRecursive(t.GetChild(i));
+        }
+        if (!defaultRigTransforms.ContainsKey(t)) return;
+        Matrix4x4 localTransform = defaultRigTransforms[t];
+        t.localPosition=localTransform.GetPosition();
+        t.localRotation=localTransform.rotation;
     }
 
     [PunRPC]
@@ -281,6 +311,11 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 }
             }
             group.ForceLOD(-1);
+        }
+        foreach (var rig in disableRigs) {
+            foreach (var jiggle in rig.jiggleRigs) {
+                LoadRecursive(jiggle.rootTransform);
+            }
         }
         foreach (var rig in disableRigs) {
             rig.enabled = true;

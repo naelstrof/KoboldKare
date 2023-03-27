@@ -61,7 +61,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private Transform previewHandTransform;
     private Grab currentGrab;
     private List<Grab> frozenGrabs;
-    private const float springForce = 10000f;
+    private const float springForce = 15000f;
     private const float breakForce = 4000f;
     private const float maxGrabDistance = 2.5f;
     private bool previewGrab;

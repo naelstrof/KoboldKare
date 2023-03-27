@@ -148,7 +148,7 @@ public static class RagdollConstraints {
             configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             var angularLimitSpring = configurableJoint.angularXLimitSpring;
-            angularLimitSpring.spring = 500f*targetRigidbody.mass;
+            angularLimitSpring.spring = 800f*targetRigidbody.mass;
             angularLimitSpring.damper = angularLimitSpring.spring*0.1f;
             configurableJoint.angularXLimitSpring = angularLimitSpring;
             configurableJoint.angularYZLimitSpring = angularLimitSpring;

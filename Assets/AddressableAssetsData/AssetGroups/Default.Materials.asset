@@ -1433,6 +1433,30 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56532089e45dbc1479865e115cc8c637
+    m_Address: Assets/KoboldKare/Materials/Built-in/BuiltInLit.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48c26796e9175d14a9b2eccded92bb92
+    m_Address: Assets/KoboldKare/Materials/Built-in/BuiltInTerrain.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59573b088aaea0442bf29e0a0e9d1339
+    m_Address: Assets/KoboldKare/Materials/Built-in/BuiltInSkybox.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36e7f34fd40959a4aad9555986cc3d04
+    m_Address: Assets/KoboldKare/Materials/Built-in/BuiltIn6Sided.mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

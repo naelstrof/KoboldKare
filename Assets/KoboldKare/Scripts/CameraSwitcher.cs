@@ -179,6 +179,7 @@ public class CameraSwitcher : MonoBehaviour {
             case CameraMode.FreeCam:
                 OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
                 lastConfig = freecamConfiguration;
+                freeCamController.transform.position = Vector3.Lerp(freeCamController.transform.position, transform.position, Mathf.Max(Vector3.Distance(freeCamController.transform.position, transform.position)-10f,0f));
                 freeCamController.enabled = true;
                 possession.enabled = false;
                 controller.inputDir = Vector3.zero;

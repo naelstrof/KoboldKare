@@ -24,6 +24,7 @@ public class ModManager : MonoBehaviour {
         public ModInfo(JSONNode node) {
             Load(node);
         }
+        
         public ModInfo(string modPath, ModSource source) {
             enabled = false;
             this.modPath = modPath;
@@ -43,10 +44,10 @@ public class ModManager : MonoBehaviour {
         public Texture2D preview;
 
         public bool IsValid() {
-            return !string.IsNullOrEmpty(cataloguePath) && File.Exists(cataloguePath);
+            return !string.IsNullOrEmpty(catalogPath) && File.Exists(catalogPath);
         }
 
-        public string cataloguePath {
+        public string catalogPath {
             get {
                 string searchDir = $"{modPath}{Path.DirectorySeparatorChar}{ModManager.runningPlatform}";
                 foreach (var file in Directory.EnumerateFiles(searchDir)) {
@@ -258,14 +259,14 @@ public class ModManager : MonoBehaviour {
                     break;
                 }
 
-                if (search.cataloguePath == info.cataloguePath) {
+                if (search.catalogPath == info.catalogPath) {
                     modFound = true;
                     break;
                 }
             }
 
             if (modFound) {
-                Debug.Log($"Already loaded mod with catalog path {info.cataloguePath}, skipping...");
+                Debug.Log($"Already loaded mod with catalog path {info.catalogPath}, skipping...");
                 return;
             }
 
@@ -308,7 +309,12 @@ public class ModManager : MonoBehaviour {
         }
 
         foreach (string directory in Directory.EnumerateDirectories(modCatalogPath)) {
-            AddMod(new ModInfo(directory, ModSource.LocalModFolder));
+            try {
+                AddMod(new ModInfo(directory, ModSource.LocalModFolder));
+            } catch (FileNotFoundException e) {
+                Debug.LogException(e);
+                Debug.LogError($"Failed to load mod {directory}.");
+            }
         }
     }
 
@@ -407,7 +413,7 @@ public class ModManager : MonoBehaviour {
 
                 AddressablesRuntimeProperties.ClearCachedPropertyValues();
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
-                var loader = Addressables.LoadContentCatalogAsync(modInfo.cataloguePath);
+                var loader = Addressables.LoadContentCatalogAsync(modInfo.catalogPath);
                 await loader.Task;
                 modInfo.locator = loader.Result;
             }

@@ -268,6 +268,8 @@ public class SteamWorkshopItem {
 		if (!packedMultiCatalogMode.ExternalCatalogs.Contains(targetCatalog)) {
 			packedMultiCatalogMode.ExternalCatalogs.Add(targetCatalog);
 		}
+		var catalogMemory = packedMultiCatalogMode.ExternalCatalogs;
+		packedMultiCatalogMode.ExternalCatalogs = new List<ExternalCatalogSetup>(new[] { targetCatalog });
 		try {
 			AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilderIndex = 4;
 			building = true;
@@ -301,6 +303,7 @@ public class SteamWorkshopItem {
 			lastMessageType = MessageType.Info;
 		} finally {
 			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
+			packedMultiCatalogMode.ExternalCatalogs = catalogMemory;
 			building = false;
 		}
 	}

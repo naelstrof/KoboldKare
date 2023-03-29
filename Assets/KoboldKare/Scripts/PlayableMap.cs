@@ -42,11 +42,10 @@ public class PlayableMap : ScriptableObject {
 
     private void OnValidate() {
 #if UNITY_EDITOR
-        if (unityScene.editorAsset != null) {
-            var serializedObject = new SerializedObject(this);
-            serializedObject.FindProperty("unityScene").FindPropertyRelative("name").stringValue = unityScene.editorAsset.name;
-            serializedObject.ApplyModifiedProperties();
-        }
+        if (unityScene.editorAsset == null) return;
+        var serializedObject = new SerializedObject(this);
+        serializedObject.FindProperty("unityScene").FindPropertyRelative("name").stringValue = unityScene.editorAsset.name;
+        serializedObject.ApplyModifiedProperties();
 #endif
     }
 }

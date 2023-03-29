@@ -1,17 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;       //Allows us to use Lists. 
-using TMPro;
-using KoboldKare;
-using System;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
-using ExitGames.Client.Photon;
 using UnityEngine.UI;
-using UnityEngine.Localization.Components;
 using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine.Events;
+using UnityEngine.AddressableAssets;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -160,6 +152,18 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator ReloadMapRoutine() {
         Debug.LogWarning("Reloading scene due to mods not being ready yet...");
+        bool found = false;
+        foreach(var playableMap in PlayableMapDatabase.GetPlayableMaps()) {
+            if (SceneManager.GetActiveScene().name != playableMap.unityScene.GetName()) continue;
+            NetworkManager.instance.SetSelectedMap(playableMap);
+            found = true;
+            break;
+        }
+
+        if (!found) {
+            throw new UnityException($"Failed to find a PlayableMap instance for the map {SceneManager.GetActiveScene().name}! Please make one!");
+        }
+
         yield return LevelLoader.instance.LoadLevel(SceneManager.GetActiveScene().name);
         NetworkManager.instance.StartSinglePlayer();
         Pause(false);

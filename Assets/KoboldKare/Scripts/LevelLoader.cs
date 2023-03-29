@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour {
     public static LevelLoader instance;
@@ -26,7 +27,7 @@ public class LevelLoader : MonoBehaviour {
         StopAllCoroutines();
         return StartCoroutine(LoadLevelRoutine(mapName));
     }
-
+    
     private IEnumerator LoadLevelRoutine(string mapName) {
         try {
             GameManager.instance.Pause(false);

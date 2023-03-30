@@ -40,15 +40,19 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
             }
             blendshapeContinueIDs.Add(continueID);
         }
-        foreach (var jiggleZone in skinJiggle.jiggleZones) {
-            if (jiggleZone.target != targetTransform) continue;
-            if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
-                throw new UnityException("Belly jiggle settings must be a JiggleSettingsBlend");
+
+        if (skinJiggle != null) {
+            foreach (var jiggleZone in skinJiggle.jiggleZones) {
+                if (jiggleZone.target != targetTransform) continue;
+                if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
+                    throw new UnityException("Belly jiggle settings must be a JiggleSettingsBlend");
+                }
+
+                skinZone = jiggleZone;
+                skinZoneStartRadius = skinZone.radius;
+                jiggleZone.jiggleSettings = JiggleSettingsBlend.Instantiate(jiggleZone.jiggleSettings);
+                break;
             }
-            skinZone = jiggleZone;
-            skinZoneStartRadius = skinZone.radius;
-            jiggleZone.jiggleSettings = JiggleSettingsBlend.Instantiate(jiggleZone.jiggleSettings);
-            break;
         }
     }
 
@@ -90,7 +94,9 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
                 skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeContinueIDs[i], continueWeight*100f);
             }
         }
-        skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
-        ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 2f);
+        if (skinZone != null) {
+            skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
+            ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 2f);
+        }
     }
 }

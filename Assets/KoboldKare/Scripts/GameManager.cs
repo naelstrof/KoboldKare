@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
@@ -247,18 +248,28 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType){
-        if(btn.buttonType == ButtonMouseOver.ButtonTypes.Default){
-            if(evtType == ButtonMouseOver.EventType.Hover)
+    public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType) {
+        switch (btn.buttonType) {
+            case ButtonMouseOver.ButtonTypes.Default when evtType == ButtonMouseOver.EventType.Hover:
                 SpawnAudioClipInWorld(buttonHoveredMenu, Vector3.zero);
-            else
-                SpawnAudioClipInWorld(buttonClickedMenu, Vector3.zero); 
-        }
-        else if (btn.buttonType == ButtonMouseOver.ButtonTypes.Save){
-            if(evtType == ButtonMouseOver.EventType.Hover)
+                break;
+            case ButtonMouseOver.ButtonTypes.Default:
+                SpawnAudioClipInWorld(buttonClickedMenu, Vector3.zero);
+                break;
+            case ButtonMouseOver.ButtonTypes.Save when evtType == ButtonMouseOver.EventType.Hover:
                 SpawnAudioClipInWorld(buttonHoveredSubmenu, Vector3.zero);
-            else
+                break;
+            case ButtonMouseOver.ButtonTypes.Save:
                 SpawnAudioClipInWorld(buttonClickedSubmenu, Vector3.zero);
+                break;
+            case ButtonMouseOver.ButtonTypes.MainMenu:
+                break;
+            case ButtonMouseOver.ButtonTypes.Option:
+                break;
+            case ButtonMouseOver.ButtonTypes.NoScale:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 }

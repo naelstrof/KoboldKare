@@ -434,6 +434,10 @@ public class ModManager : MonoBehaviour {
     }
 
     public static bool HasModsLoaded(List<ModStub> stubs) {
+        if (stubs.Count != instance.fullModList.Count) {
+            return false;
+        }
+
         foreach (var stub in stubs) {
             bool found = false;
             foreach (var mod in instance.fullModList) {
@@ -442,10 +446,8 @@ public class ModManager : MonoBehaviour {
                 if (!mod.enabled) {
                     return false;
                 }
-
                 break;
             }
-
             if (!found) {
                 return false;
             }
@@ -487,11 +489,10 @@ public class ModManager : MonoBehaviour {
         foreach (var modStub in stubs) {
             bool found = false;
             foreach(var mod in instance.fullModList) {
-                if (mod.title == modStub.title && mod.publishedFileId == modStub.id) {
-                    found = true;
-                    mod.enabled = true;
-                    break;
-                }
+                if (mod.title != modStub.title || mod.publishedFileId != modStub.id) continue;
+                found = true;
+                mod.enabled = true;
+                break;
             }
 
             if (!found) {

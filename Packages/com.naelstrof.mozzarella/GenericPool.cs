@@ -7,6 +7,7 @@ public class GenericPool<T> : MonoBehaviour where T : PooledItem {
     private int poolSize = 10;
     public GameObject prefab;
     private Queue<T> prefabSet;
+    public int GetPoolSize() => poolSize;
     void Awake() {
         prefabSet = new Queue<T>();
         instance = this;

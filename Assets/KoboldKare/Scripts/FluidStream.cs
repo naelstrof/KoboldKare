@@ -70,6 +70,10 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         midairContents = new ReagentContents();
         particles = new List<FluidParticle>();
         waitTime = new WaitForSeconds(0.2f);
+        foreach (var r in GetTargetRenderers()) {
+            r.renderer.enabled = true;
+        }
+
         if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;

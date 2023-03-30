@@ -14,7 +14,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     private Vector3 lastPosition;
     public virtual void Initialize(Animator targetAnimator, HumanBodyBones bone, float lerpTrackSpeed) {
         targetTransform = targetAnimator.GetBoneTransform(bone);
-        transform.SetParent(targetAnimator.transform, false);
+        transform.SetParent(targetAnimator.GetBoneTransform(HumanBodyBones.Hips), false);
         ragdoller = GetComponentInParent<Ragdoller>();
         characterControllerAnimator = GetComponentInParent<CharacterControllerAnimator>();
         transform.position = targetTransform.position;
@@ -36,6 +36,11 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         Vector3 correction = b - a;
         float diff = correction.magnitude;
         transform.localPosition = Vector3.MoveTowards(a, a+correction, (0.1f+diff)*Time.deltaTime*lerpTrackSpeed);
+    }
+
+    public void SnapInstant() {
+        Vector3 b = transform.parent.InverseTransformPoint(targetTransform.position);
+        transform.localPosition = b;
     }
 
     public override float GetFOV(Quaternion camRotation) {

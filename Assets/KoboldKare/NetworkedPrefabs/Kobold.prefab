@@ -1586,7 +1586,7 @@ MonoBehaviour:
       type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         baseBreastTransform: {fileID: 1905648332443602999}
-        breastTransform: {fileID: 6506915555090380244}
+        jiggleBoneBreastTransform: {fileID: 6506915555090380244}
         flatShape: FlatChestLeft
         biggerShape: BiggerBreastLeft
         skinnedMeshRenderers:
@@ -1600,7 +1600,7 @@ MonoBehaviour:
       type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         baseBreastTransform: {fileID: 8437674557913943489}
-        breastTransform: {fileID: 6506915555090380242}
+        jiggleBoneBreastTransform: {fileID: 6506915555090380242}
         flatShape: FlatChestRight
         biggerShape: BiggerBreastRight
         skinnedMeshRenderers:
@@ -3406,7 +3406,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805324229830809373}
   serializedVersion: 2
-  m_Mass: 0.92600554
+  m_Mass: 0.5556033
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -3457,8 +3457,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 463.00275
-    damper: 46.300274
+    spring: 444.48267
+    damper: 44.44827
   m_LowAngularXLimit:
     limit: -10
     bounciness: 0
@@ -3468,8 +3468,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 463.00275
-    damper: 46.300274
+    spring: 444.48267
+    damper: 44.44827
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -3510,12 +3510,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 74.08044
-    positionDamper: 7.408044
+    positionSpring: 44.448265
+    positionDamper: 4.4448266
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -3550,7 +3550,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3559151987657574709}
   serializedVersion: 2
-  m_Mass: 1.539504
+  m_Mass: 0.9237024
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -3601,8 +3601,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 769.752
-    damper: 76.975204
+    spring: 738.9619
+    damper: 73.896194
   m_LowAngularXLimit:
     limit: -10
     bounciness: 0
@@ -3612,8 +3612,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 769.752
-    damper: 76.975204
+    spring: 738.9619
+    damper: 73.896194
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -3654,12 +3654,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 123.160324
-    positionDamper: 12.316032
+    positionSpring: 73.896194
+    positionDamper: 7.3896194
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -3820,7 +3820,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868288}
   serializedVersion: 2
-  m_Mass: 5.206151
+  m_Mass: 3.1236906
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -3857,8 +3857,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 2603.0754
-    damper: 260.30756
+    spring: 2498.9524
+    damper: 249.89525
   m_LowAngularXLimit:
     limit: -19.999992
     bounciness: 0
@@ -3868,8 +3868,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 2603.0754
-    damper: 260.30756
+    spring: 2498.9524
+    damper: 249.89525
   m_AngularYLimit:
     limit: 18.000008
     bounciness: 0
@@ -3911,12 +3911,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 416.49207
-    positionDamper: 41.649208
+    positionSpring: 249.89525
+    positionDamper: 24.989525
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -3939,7 +3939,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868290}
   serializedVersion: 2
-  m_Mass: 2.2507367
+  m_Mass: 1.350442
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -3990,8 +3990,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 1125.3684
-    damper: 112.53684
+    spring: 1080.3536
+    damper: 108.03536
   m_LowAngularXLimit:
     limit: -10
     bounciness: 0
@@ -4001,8 +4001,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 1125.3684
-    damper: 112.53684
+    spring: 1080.3536
+    damper: 108.03536
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -4043,12 +4043,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 180.05893
-    positionDamper: 18.005894
+    positionSpring: 108.03536
+    positionDamper: 10.803536
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4071,7 +4071,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868296}
   serializedVersion: 2
-  m_Mass: 4.6492014
+  m_Mass: 2.7895207
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4108,8 +4108,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 2324.6006
-    damper: 232.46007
+    spring: 2231.6167
+    damper: 223.16167
   m_LowAngularXLimit:
     limit: -0.039733887
     bounciness: 0
@@ -4119,8 +4119,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 2324.6006
-    damper: 232.46007
+    spring: 2231.6167
+    damper: 223.16167
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -4161,12 +4161,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 371.9361
-    positionDamper: 37.19361
+    positionSpring: 223.16165
+    positionDamper: 22.316166
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4189,7 +4189,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868298}
   serializedVersion: 2
-  m_Mass: 1.4535459
+  m_Mass: 0.8721275
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4240,8 +4240,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 726.77295
-    damper: 72.6773
+    spring: 697.70197
+    damper: 69.770195
   m_LowAngularXLimit:
     limit: -19.999985
     bounciness: 0
@@ -4251,8 +4251,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 726.77295
-    damper: 72.6773
+    spring: 697.70197
+    damper: 69.770195
   m_AngularYLimit:
     limit: 18
     bounciness: 0
@@ -4294,12 +4294,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 116.283676
-    positionDamper: 11.628367
+    positionSpring: 69.770195
+    positionDamper: 6.97702
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4351,7 +4351,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868302}
   serializedVersion: 2
-  m_Mass: 4.6491675
+  m_Mass: 2.7895005
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4388,8 +4388,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 2324.5837
-    damper: 232.45837
+    spring: 2231.6003
+    damper: 223.16003
   m_LowAngularXLimit:
     limit: -107.87299
     bounciness: 0
@@ -4399,8 +4399,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 2324.5837
-    damper: 232.45837
+    spring: 2231.6003
+    damper: 223.16003
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -4441,12 +4441,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 371.9334
-    positionDamper: 37.19334
+    positionSpring: 223.16003
+    positionDamper: 22.316004
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4469,7 +4469,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868304}
   serializedVersion: 2
-  m_Mass: 4.803407
+  m_Mass: 2.8820443
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4523,7 +4523,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868310}
   serializedVersion: 2
-  m_Mass: 2.8529518
+  m_Mass: 1.7117711
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4693,8 +4693,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 1426.4758
-    damper: 142.64758
+    spring: 1369.4169
+    damper: 136.9417
   m_LowAngularXLimit:
     limit: -19.998322
     bounciness: 0
@@ -4704,8 +4704,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 1426.4758
-    damper: 142.64758
+    spring: 1369.4169
+    damper: 136.9417
   m_AngularYLimit:
     limit: 15.981995
     bounciness: 0
@@ -4747,12 +4747,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 228.23615
-    positionDamper: 22.823614
+    positionSpring: 136.9417
+    positionDamper: 13.69417
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4788,7 +4788,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868332}
   serializedVersion: 2
-  m_Mass: 10.829793
+  m_Mass: 6.497876
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4839,8 +4839,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 5414.8965
-    damper: 541.4897
+    spring: 5198.301
+    damper: 519.8301
   m_LowAngularXLimit:
     limit: -111.0048
     bounciness: 0
@@ -4850,8 +4850,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 5414.8965
-    damper: 541.4897
+    spring: 5198.301
+    damper: 519.8301
   m_AngularYLimit:
     limit: 54.00003
     bounciness: 0
@@ -4892,12 +4892,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 866.3834
-    positionDamper: 86.63834
+    positionSpring: 519.8301
+    positionDamper: 51.98301
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4920,7 +4920,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868338}
   serializedVersion: 2
-  m_Mass: 10.829773
+  m_Mass: 6.497864
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4971,8 +4971,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 5414.8867
-    damper: 541.4887
+    spring: 5198.291
+    damper: 519.8291
   m_LowAngularXLimit:
     limit: -19.995193
     bounciness: 0
@@ -4982,8 +4982,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 5414.8867
-    damper: 541.4887
+    spring: 5198.291
+    damper: 519.8291
   m_AngularYLimit:
     limit: 54.000015
     bounciness: 0
@@ -5024,12 +5024,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 866.38184
-    positionDamper: 86.63818
+    positionSpring: 519.8291
+    positionDamper: 51.98291
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5052,7 +5052,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868624}
   serializedVersion: 2
-  m_Mass: 1.9527932
+  m_Mass: 1.1716759
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5089,8 +5089,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 976.3966
-    damper: 97.63966
+    spring: 937.34076
+    damper: 93.73408
   m_LowAngularXLimit:
     limit: -39.83934
     bounciness: 0
@@ -5100,8 +5100,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 976.3966
-    damper: 97.63966
+    spring: 937.34076
+    damper: 93.73408
   m_AngularYLimit:
     limit: 71.99701
     bounciness: 0
@@ -5143,12 +5143,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 156.22346
-    positionDamper: 15.622347
+    positionSpring: 93.73407
+    positionDamper: 9.373407
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5171,7 +5171,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868628}
   serializedVersion: 2
-  m_Mass: 1.2371267
+  m_Mass: 0.7422761
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5222,8 +5222,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 618.56335
-    damper: 61.856335
+    spring: 593.82086
+    damper: 59.382088
   m_LowAngularXLimit:
     limit: -151.97914
     bounciness: 0
@@ -5233,8 +5233,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 618.56335
-    damper: 61.856335
+    spring: 593.82086
+    damper: 59.382088
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -5275,12 +5275,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 98.97014
-    positionDamper: 9.897014
+    positionSpring: 59.382088
+    positionDamper: 5.938209
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5303,7 +5303,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868630}
   serializedVersion: 2
-  m_Mass: 1.8396268
+  m_Mass: 1.1037761
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5340,8 +5340,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 919.8134
-    damper: 91.981346
+    spring: 883.0209
+    damper: 88.302086
   m_LowAngularXLimit:
     limit: -40.156494
     bounciness: 0
@@ -5351,8 +5351,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 919.8134
-    damper: 91.981346
+    spring: 883.0209
+    damper: 88.302086
   m_AngularYLimit:
     limit: 71.99701
     bounciness: 0
@@ -5394,12 +5394,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 147.17014
-    positionDamper: 14.717013
+    positionSpring: 88.302086
+    positionDamper: 8.830209
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5422,7 +5422,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868632}
   serializedVersion: 2
-  m_Mass: 1.5086848
+  m_Mass: 0.90521085
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5459,8 +5459,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 754.3424
-    damper: 75.43424
+    spring: 724.1687
+    damper: 72.41687
   m_LowAngularXLimit:
     limit: -44.983368
     bounciness: 0
@@ -5470,8 +5470,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 754.3424
-    damper: 75.43424
+    spring: 724.1687
+    damper: 72.41687
   m_AngularYLimit:
     limit: 47.486923
     bounciness: 0
@@ -5513,12 +5513,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 120.69478
-    positionDamper: 12.069478
+    positionSpring: 72.41687
+    positionDamper: 7.2416873
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5541,7 +5541,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868634}
   serializedVersion: 2
-  m_Mass: 1.237125
+  m_Mass: 0.742275
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5592,8 +5592,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 618.5625
-    damper: 61.85625
+    spring: 593.82
+    damper: 59.382
   m_LowAngularXLimit:
     limit: 0
     bounciness: 0
@@ -5603,8 +5603,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 618.5625
-    damper: 61.85625
+    spring: 593.82
+    damper: 59.382
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -5645,12 +5645,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 98.97
-    positionDamper: 9.897
+    positionSpring: 59.382
+    positionDamper: 5.9382
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5673,7 +5673,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868638}
   serializedVersion: 2
-  m_Mass: 1.4643793
+  m_Mass: 0.8786276
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5710,8 +5710,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 732.18964
-    damper: 73.21896
+    spring: 702.9021
+    damper: 70.290215
   m_LowAngularXLimit:
     limit: -49.98195
     bounciness: 0
@@ -5721,8 +5721,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 732.18964
-    damper: 73.21896
+    spring: 702.9021
+    damper: 70.290215
   m_AngularYLimit:
     limit: 47.486862
     bounciness: 0
@@ -5764,12 +5764,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 117.150345
-    positionDamper: 11.7150345
+    positionSpring: 70.29021
+    positionDamper: 7.029021
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5792,7 +5792,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868712}
   serializedVersion: 2
-  m_Mass: 4.0364976
+  m_Mass: 2.4218986
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5829,8 +5829,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 2018.2488
-    damper: 201.82487
+    spring: 1937.5189
+    damper: 193.75189
   m_LowAngularXLimit:
     limit: -20
     bounciness: 0
@@ -5840,8 +5840,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 2018.2488
-    damper: 201.82487
+    spring: 1937.5189
+    damper: 193.75189
   m_AngularYLimit:
     limit: 18.000008
     bounciness: 0
@@ -5882,12 +5882,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 322.9198
-    positionDamper: 32.29198
+    positionSpring: 193.75189
+    positionDamper: 19.375189
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5910,7 +5910,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868732}
   serializedVersion: 2
-  m_Mass: 1.5843196
+  m_Mass: 0.9505918
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5961,8 +5961,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 792.1598
-    damper: 79.21598
+    spring: 760.4735
+    damper: 76.047356
   m_LowAngularXLimit:
     limit: -67.63146
     bounciness: 0
@@ -5972,8 +5972,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 792.1598
-    damper: 79.21598
+    spring: 760.4735
+    damper: 76.047356
   m_AngularYLimit:
     limit: 61.197563
     bounciness: 0
@@ -6014,12 +6014,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 126.74557
-    positionDamper: 12.674557
+    positionSpring: 76.04735
+    positionDamper: 7.604735
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -6042,7 +6042,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6506915555090868734}
   serializedVersion: 2
-  m_Mass: 1.5843205
+  m_Mass: 0.95059234
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -6093,8 +6093,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 792.1603
-    damper: 79.21603
+    spring: 760.47394
+    damper: 76.04739
   m_LowAngularXLimit:
     limit: -121.0076
     bounciness: 0
@@ -6104,8 +6104,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 792.1603
-    damper: 79.21603
+    spring: 760.47394
+    damper: 76.04739
   m_AngularYLimit:
     limit: 61.166748
     bounciness: 0
@@ -6146,12 +6146,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 126.74564
-    positionDamper: 12.674564
+    positionSpring: 76.04739
+    positionDamper: 7.6047397
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -6174,7 +6174,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6960218248090787940}
   serializedVersion: 2
-  m_Mass: 0.67861295
+  m_Mass: 0.4071678
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -6225,8 +6225,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 339.3065
-    damper: 33.93065
+    spring: 325.73425
+    damper: 32.573425
   m_LowAngularXLimit:
     limit: -10
     bounciness: 0
@@ -6236,8 +6236,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 339.3065
-    damper: 33.93065
+    spring: 325.73425
+    damper: 32.573425
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -6279,12 +6279,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 54.289036
-    positionDamper: 5.4289036
+    positionSpring: 32.573425
+    positionDamper: 3.2573426
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -6319,7 +6319,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7938605716420999646}
   serializedVersion: 2
-  m_Mass: 2.2274888
+  m_Mass: 1.3364933
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -6370,8 +6370,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularXLimitSpring:
-    spring: 1113.7444
-    damper: 111.37444
+    spring: 1069.1946
+    damper: 106.91946
   m_LowAngularXLimit:
     limit: -10
     bounciness: 0
@@ -6381,8 +6381,8 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 15
   m_AngularYZLimitSpring:
-    spring: 1113.7444
-    damper: 111.37444
+    spring: 1069.1946
+    damper: 106.91946
   m_AngularYLimit:
     limit: 0
     bounciness: 0
@@ -6424,12 +6424,12 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 178.1991
-    positionDamper: 17.81991
+    positionSpring: 106.919464
+    positionDamper: 10.691947
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.2
-  m_ProjectionAngle: 10
+  m_ProjectionDistance: 0.25
+  m_ProjectionAngle: 15
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity

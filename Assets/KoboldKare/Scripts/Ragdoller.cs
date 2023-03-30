@@ -272,8 +272,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach (var savedJointAnchor in jointAnchors) {
             savedJointAnchor.Set();
         }
-        // FIXME: For somereason, after kobolds get grabbed and tossed off of a live physics animation-- the body doesn't actually stay kinematic. I'm assuming due to one of the ragdoll events.
-        // Adding this extra set fixes it for somereason, though this is not a proper fix.
         body.isKinematic = true;
         RagdollEvent?.Invoke(true);
         ragdolled = true;
@@ -287,12 +285,14 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         ragdollCount = newRagdollCount;
     }
-    // This was a huuuUUGE pain, but for somereason joints forget their initial orientation if you switch bodies.
-    // I tried a billion different things to try to reset the initial orientation, this was the only thing that worked for me!
     private void StandUp() {
         if (!ragdolled) {
             return;
         }
+        Vector3 diff = transform.position - hipBody.position;
+        transform.position -= diff;
+        hipBody.position += diff;
+        transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
             foreach (var penn in kobold.penetratables) {
                 if (!penn.penetratable.name.Contains("Mouth")) {
@@ -320,10 +320,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach (var rig in disableRigs) {
             rig.enabled = true;
         }
-        Vector3 diff = hipBody.position - body.transform.position;
-        body.transform.position += diff;
-        hipBody.position -= diff;
-        body.transform.position += Vector3.up*0.5f;
         Vector3 facingDir = hipBody.transform.forward.With(y: 0f).normalized;
         body.transform.forward = facingDir;
         body.isKinematic = false;

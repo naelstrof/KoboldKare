@@ -12,7 +12,7 @@ public class GenericPool<T> : MonoBehaviour where T : PooledItem {
         prefabSet = new Queue<T>();
         instance = this;
         for(int i=0;i<poolSize;i++) {
-            T thing = GameObject.Instantiate(prefab).GetComponent<T>();
+            T thing = Instantiate(prefab).GetComponent<T>();
             DontDestroyOnLoad(thing.gameObject);
             thing.resetTrigger += ()=>{prefabSet.Enqueue(thing);};
             thing.Reset();

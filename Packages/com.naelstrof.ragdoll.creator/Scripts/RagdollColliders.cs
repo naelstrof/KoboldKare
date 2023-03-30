@@ -9,7 +9,6 @@ public static class RagdollColliders {
     }
 
     public class RagdollCollider {
-        //protected const float ragdollMassPerCubicMeter = 500f;
         public Transform GetParentBone(Animator animator) {
             return animator.transform.Find(parentPath);
         }

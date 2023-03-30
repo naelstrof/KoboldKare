@@ -203,6 +203,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
+
     void LateUpdate() {
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
@@ -285,13 +286,18 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         ragdollCount = newRagdollCount;
     }
+
+    private void FixPlayerPosition() {
+        Vector3 diff = transform.position - hipBody.position;
+        transform.position -= diff;
+        hipBody.position += diff;
+    }
+
     private void StandUp() {
         if (!ragdolled) {
             return;
         }
-        Vector3 diff = transform.position - hipBody.position;
-        transform.position -= diff;
-        hipBody.position += diff;
+        FixPlayerPosition();
         transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
             foreach (var penn in kobold.penetratables) {

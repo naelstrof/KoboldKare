@@ -24502,9 +24502,18 @@ MonoBehaviour:
   - rid: 8869783460724080641
   - rid: 8869783670453436453
   - rid: 8869783688933801988
+  - rid: 1602998494081056771
   references:
     version: 2
     RefIds:
+    - rid: 1602998494081056771
+      type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: EquipmentStoreItem
+        targetDatabase: {fileID: 11400000, guid: ab49c41711410144b99911cfd0a26001,
+          type: 2}
+        networkedPrefabs: 1
     - rid: 7257832617762881540
       type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
       data:

@@ -78,12 +78,9 @@ public class GameManager : MonoBehaviour {
     public bool isPaused = false;
 
     public void Pause(bool pause) {
+        isPaused = pause;
         PopupHandler.instance.ClearAllPopups();
         if (!pause) {
-            OrbitCamera.SetTracking(true);
-            InputOptions.SaveControls();
-            UnityScriptableSettings.SettingsManager.Save();
-            PrefabDatabaseDatabase.SavePlayerConfig();
             MultiplayerTab.gameObject.SetActive(false);
             OptionsTab.gameObject.SetActive(false);
             CreditsTab.gameObject.SetActive(false);
@@ -91,10 +88,6 @@ public class GameManager : MonoBehaviour {
             SaveTab.gameObject.SetActive(false);
             MainViewTab.gameObject.SetActive(true);
         }
-        if (pause) {
-            OrbitCamera.SetTracking(false);
-        }
-        isPaused = pause;
         if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -103,7 +96,6 @@ public class GameManager : MonoBehaviour {
             Cursor.visible = true;
         }
         mainCanvas.SetActive(isPaused || SceneManager.GetActiveScene().name == "MainMenu");
-
         if (!PhotonNetwork.OfflineMode || SceneManager.GetActiveScene().name == "MainMenu") {
             Time.timeScale = 1.0f;
             return;
@@ -114,6 +106,16 @@ public class GameManager : MonoBehaviour {
         } else {
             Debug.LogError(
                 "[GameManager] selectOnPause is not bound to the resume button! Button was not selected for controller support.");
+        }
+
+        if (pause) {
+            OrbitCamera.SetTracking(false);
+        }
+        if (!pause) {
+            OrbitCamera.SetTracking(true);
+            InputOptions.SaveControls();
+            UnityScriptableSettings.SettingsManager.Save();
+            PrefabDatabaseDatabase.SavePlayerConfig();
         }
     }
 

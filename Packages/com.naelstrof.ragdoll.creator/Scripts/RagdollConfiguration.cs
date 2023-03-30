@@ -8,7 +8,7 @@ using UnityEditor;
 public class RagdollConfiguration {
     [Range(1f, 1000f)]
     [Tooltip("The amount of mass assigned to each rigidbody based on its volume, you should adjust this if your find your ragdolls are too heavy/light.")]
-    public float ragdollMassPerCubicMeter = 300f;
+    public float ragdollMassPerCubicMeter = 400f;
     [Header("Head")] [Range(0.01f, 0.6f)]
     [Tooltip("How big around the head is in meters.")]
     public float headRadius = 0.1f;

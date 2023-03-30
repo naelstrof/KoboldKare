@@ -935,7 +935,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
-    m_Localized: "Kinyitja a fej\u0151 \xE1llom\xE1s"
+    m_Localized: "Felold\xF3 fej\u0151\xE1llom\xE1s"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
@@ -1007,7 +1007,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171-hajl\xEDt\xF3
+    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171 hajl\xEDt\xF3
       rugalmass\xE1g\xE1r\xF3l, baszd meg egy koboldot, amelynek teste nagyobb."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Teker\xE1l\xF3 cs\u0151"
+    m_Localized: "Tekercsel\u0151cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1219,7 +1219,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Egy tucat nagy, tal\xE1n m\xE9g t\xF6bb."
+    m_Localized: "Egy tucat nagy, tal\xE1n m\xE9g t\xF6bbet."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099

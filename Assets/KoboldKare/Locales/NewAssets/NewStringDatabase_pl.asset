@@ -385,7 +385,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: MORLATRY
+    m_Localized: MORTABLATOR
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -569,7 +569,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: "Bril\xF3wki sutkowe"
+    m_Localized: Brilells sutki
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -611,7 +611,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kutak Kandi
+    m_Localized: Kutas Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -711,7 +711,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Jajko od Smok Lorda!
+    m_Localized: Jajko od smoka Lorda!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
@@ -819,7 +819,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 202998194956193792
-    m_Localized: Dostosuj poziom kucaki
+    m_Localized: Dostosuj poziom Crouch
     m_Metadata:
       m_Items: []
   - m_Id: 209952603934085120
@@ -851,7 +851,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: "Okr\u0105\u017Cony humanoidalny penis"
+    m_Localized: Zejmowany humanoidalny penis
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
@@ -971,7 +971,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Wyczuwam ciemn\u0105 obecno\u015B\u0107 w pobliskich jaskiniach,
-      id\u017A dla mnie i sprawdzaj mnie."
+      id\u017A do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -979,7 +979,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "Kup Swapper Body z pe\u0142zania w jaskini."
+    m_Localized: Kup Swapper Body From the Creep in the Cave.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1084,7 +1084,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464139
     m_Localized: "Aha nie by\u0142oby tak zabawne, gdyby\u015B w\u0142o\u017Cy\u0142
-      4 dildo w usta Kobolda ... rozkazuj\u0119 ci to zrobi\u0107."
+      4 wibratory w usta Kobolda ... rozkazuj\u0119 ci to zrobi\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1199,8 +1199,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "B\u0119d\u0119 tu sta\u0107 na wypadek, gdyby jaki\u015B inny nagi
-      Kobold chcia\u0142, \u017Cebym zbudowa\u0142 ich maszyny fetyszowe."
+    m_Localized: "Po prostu b\u0119d\u0119 tutaj, na wypadek, gdyby jaki\u015B inny
+      nagi Kobold chcia\u0142, \u017Cebym zbudowa\u0142 je fetysze."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1249,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobolda, s\u0105
-      naprawd\u0119 przydatne do czyszczenia sufitu."
+    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobold, s\u0105 naprawd\u0119
+      przydatne do czyszczenia sufitu."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1277,8 +1277,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Jestem ciekawy, jak dobrze Koboldowie radz\u0105 sobie z tarciem
-      powietrznym, wy\u015Blij jedno w niebo."
+    m_Localized: "Jestem ciekawy, jak dobrze koboldowie radz\u0105 sobie z tarciem
+      powietrznym, wy\u015Blij jedno puchni\u0119cie w niebo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520

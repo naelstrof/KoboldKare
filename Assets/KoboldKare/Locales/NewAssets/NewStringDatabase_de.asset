@@ -1349,7 +1349,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
-    m_Localized: vor {0:plural:1 Sekunde|{} Sekunden}
+    m_Localized: Vor {0:plural:1 Sekunde|{} Sekunden}
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
@@ -1386,16 +1386,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: Modding erfordert ein 64 -Bit -kompatibler System! Bitte aktualisieren
-      Sie Ihr Betriebssystem.
+    m_Localized: Modding erfordert ein 64-Bit-kompatibles System! Bitte aktualisiere
+      dein Betriebssystem.
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
-    m_Localized: Aktivierte Penisse
+    m_Localized: Penisse aktiviert
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: Aktivierte spielbare Charaktere
+    m_Localized: Spielbare Charaktere aktiviert
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
@@ -1405,8 +1405,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704585
   - m_Id: 280448613000617984
-    m_Localized: Die Verbindung zu Steam fehlgeschlagen, keine automatischen Herunterladen
-      von Mods.
+    m_Localized: Verbindung zu Steam fehlgeschlagen, Mods werden nicht automatisch
+      heruntergeladen.
     m_Metadata:
       m_Items: []
   references:

@@ -752,8 +752,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695169
     m_Localized: "Jeg trenger at du leverer meg en kobold med store pupper, jeg snakker
-      massiv, jeg regner med at du takler dette, og jeg forventer at du ikke vil
-      stille sp\xF8rsm\xE5l."
+      massiv, jeg regner med at du takler dette og forventer at du ikke vil stille
+      sp\xF8rsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Uansett bare eh .. hjelp deg selv antar jeg.
+    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1076,11 +1076,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Selg Micro kobold
+    m_Localized: Selg Micro Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: "Jeg vil ha en virkelig liten kobold som kan passe inn i ... sm\xE5,
+    m_Localized: "Jeg vil ha en veldig liten kobold som kan passe inn i ... sm\xE5,
       intime sprekker."
     m_Metadata:
       m_Items: []
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Jeg vil ha mer av den gigantiske typen kobold, de er veldig nyttige
+    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
       for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke reduserer
+    m_Localized: Bevegelsessyke reduserende
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944

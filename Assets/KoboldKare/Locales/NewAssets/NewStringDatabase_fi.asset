@@ -925,7 +925,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Olen l\xE4hett\xE4nyt sinulle joitain tarvikkeita hampurilaisen
-      valmistamiseksi, yhdist\xE4\xE4ksesi ne ja ruokkivat sen sitten Koboldille."
+      valmistamiseksi, yhdist\xE4m\xE4\xE4n ne ja sy\xF6t\xE4t sen sitten Koboldille."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Ohita savu, voit vapaasti selata tavaroita.
+    m_Localized: Ohita savu, selaa tavaroita.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426

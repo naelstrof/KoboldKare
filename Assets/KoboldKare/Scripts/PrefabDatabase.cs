@@ -189,6 +189,9 @@ public class PrefabDatabase : ScriptableObject {
     }
     public void LoadPlayerConfiguration() {
         JSONNode n = GetJsonConfiguration();
+        if (!n.HasKey(name)) {
+            return;
+        }
         foreach (var node in n[name]) {
             bool foundInfo = false;
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);

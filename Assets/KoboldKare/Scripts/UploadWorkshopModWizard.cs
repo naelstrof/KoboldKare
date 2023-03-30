@@ -93,6 +93,8 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 	    } else {
 		    isValid = true;
 	    }
+
+	    EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 	    
 		serializedObject = new SerializedObject(this);
 	    initializeCount++;
@@ -111,12 +113,17 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 	    }
     }
 
+    private void OnPlayModeStateChanged(PlayModeStateChange change) {
+	    Close();
+    }
+
     private void OnDisable() {
+	    EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 	    if (isValid) {
 		    initializeCount--;
 	    }
 
-	    if (initializeCount==0 && !Application.isPlaying) {
+	    if (initializeCount==0) {
 		    SteamAPI.Shutdown();
 	    }
     }

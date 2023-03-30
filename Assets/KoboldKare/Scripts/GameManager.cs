@@ -113,9 +113,14 @@ public class GameManager : MonoBehaviour {
         }
         if (!pause) {
             OrbitCamera.SetTracking(true);
-            InputOptions.SaveControls();
-            UnityScriptableSettings.SettingsManager.Save();
-            PrefabDatabaseDatabase.SavePlayerConfig();
+            try {
+                InputOptions.SaveControls();
+                UnityScriptableSettings.SettingsManager.Save();
+                PrefabDatabaseDatabase.SavePlayerConfig();
+            } catch (Exception e) {
+                Debug.LogException(e);
+                Debug.LogError("Failed to save config");
+            }
         }
     }
 

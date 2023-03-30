@@ -45,8 +45,8 @@ public class LevelLoader : MonoBehaviour {
             }
         } finally {
             loadingLevel = false;
-            GameManager.instance.Pause(false);
             sceneLoadEnd?.Invoke();
+            GameManager.instance.Pause(false);
         }
     }
 }

@@ -443,6 +443,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab49c41711410144b99911cfd0a26001
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/EquipmentStoreDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

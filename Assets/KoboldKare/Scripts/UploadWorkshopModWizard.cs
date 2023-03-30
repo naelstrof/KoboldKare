@@ -82,6 +82,10 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 
 	[MenuItem("Tools/KoboldKare/Upload Steam Workshop Mod")]
 	private static void CreateWizard() {
+		if (Application.isPlaying) {
+			return;
+		}
+
 		DisplayWizard<UploadWorkshopModWizard>("Upload Mod to Steam Workshop", "Cancel");
 	}
 	private void OnEnable() {

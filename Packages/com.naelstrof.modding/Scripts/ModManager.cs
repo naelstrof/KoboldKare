@@ -30,8 +30,13 @@ public class ModManager : MonoBehaviour {
             this.modPath = modPath;
             modSource = source;
             folderTitle = Path.GetFileName(Path.GetDirectoryName(modPath));
-            LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-            LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            try {
+                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
+                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            } catch (Exception e) {
+                Debug.LogException(e);
+                Debug.LogError($"Failed to load mod at path {modPath}, from source {source}.");
+            }
         }
 
         public bool enabled;
@@ -44,7 +49,7 @@ public class ModManager : MonoBehaviour {
         public Texture2D preview;
 
         public bool IsValid() {
-            return !string.IsNullOrEmpty(catalogPath) && File.Exists(catalogPath);
+            return !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && File.Exists(catalogPath);
         }
 
         public string catalogPath {
@@ -96,8 +101,10 @@ public class ModManager : MonoBehaviour {
         }
 
         public void Refresh() {
-            LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-            LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            if (!string.IsNullOrEmpty(modPath)) {
+                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
+                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            }
         }
 
         public void Load(JSONNode node) {
@@ -114,11 +121,12 @@ public class ModManager : MonoBehaviour {
                 }
                 modPath = pchFolder;
             } else {
-                modPath = $"{Application.persistentDataPath}/mods/{folderTitle}";
+                modPath = string.IsNullOrEmpty(folderTitle) ? "" : $"{Application.persistentDataPath}/mods/{folderTitle}";
             }
-            
-            LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-            LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            if (!string.IsNullOrEmpty(modPath)) {
+                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
+                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            }
         }
     }
     private static ModManager instance;
@@ -298,7 +306,13 @@ public class ModManager : MonoBehaviour {
         if (n.HasKey("modList")) {
             JSONArray array = n["modList"].AsArray;
             foreach (var node in array) {
-                AddMod(new ModInfo(node));
+                if (node.Value.IsNull) {
+                    continue;
+                }
+                var mod = new ModInfo(node);
+                if (mod.IsValid()) {
+                    AddMod(mod);
+                }
             }
         }
     }

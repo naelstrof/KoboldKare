@@ -22,51 +22,61 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aa8095326872d2d4cbee52ca534c4232
     m_Address: Equipment/HardHat
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8fb800402920c5a43871ba27d9851d95
     m_Address: Equipment/HighHeels
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7643c49d85c6c6742a744c261dbadade
     m_Address: Equipment/NippleBarbells
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb82ec0dce5a8b84f8aab9df8ae62633
     m_Address: Equipment/SpikedCollar
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 19da76885230c4240bcaa1095a8ddc66
     m_Address: Equipment/SpikeyBracelets
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: edcb0428e67695545a9e33f82825ed78
     m_Address: Equipment/Tailbag
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4eba2981bb368b47ba825725bd4077f
     m_Address: Equipment/TailCollar
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d99811e241e50f45ac4286a4664156c
     m_Address: Equipment/TopHat
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 863f4964edce0b749adec4b77b838fed
     m_Address: Equipment/ChestPiece
     m_ReadOnly: 0
     m_SerializedLabels:
     - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

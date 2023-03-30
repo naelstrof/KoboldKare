@@ -180,6 +180,10 @@ public class SteamWorkshopItem {
 			if (targetCatalog.AssetGroups.Count <= 0) {
 				return "Target External catalog has no asset groups assigned. Please assign them.";
 			}
+			
+			if (string.IsNullOrEmpty(targetCatalog.CatalogName)) {
+				return "";
+			}
 
 			foreach (var assetGroup in targetCatalog.AssetGroups) {
 				if (assetGroup == null) {
@@ -239,6 +243,11 @@ public class SteamWorkshopItem {
 		if (targetCatalog == null || previewSprite == null || targetCatalog.AssetGroups == null || targetCatalog.AssetGroups.Count == 0) {
 			return false;
 		}
+
+		if (string.IsNullOrEmpty(targetCatalog.CatalogName)) {
+			return false;
+		}
+
 		foreach (var targetGroup in targetCatalog.AssetGroups) {
 			if (targetGroup == null) {
 				return false;

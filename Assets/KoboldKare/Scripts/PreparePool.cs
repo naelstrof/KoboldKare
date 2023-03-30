@@ -37,6 +37,7 @@ public class PreparePool : MonoBehaviour {
 
     public static void AddPrefab(string assetName, GameObject prefab) => instance.InternalAddPrefab(assetName, prefab);
     public static void RemovePrefab(string assetName) => instance.InternalRemovePrefab(assetName);
+    public static bool HasPrefab(string assetName) => instance.dynamicPrefabs.ContainsKey(assetName);
     
     private void InternalAddPrefab(string assetName, GameObject prefab) {
         if (pool.ResourceCache.ContainsKey(prefab.name)) {

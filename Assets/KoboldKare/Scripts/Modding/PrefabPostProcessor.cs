@@ -30,6 +30,12 @@ public class PrefabPostProcessor : ModPostProcessor {
             addedGameObjects.RemoveAt(i);
             break;
         }
+        
+        // If something is a part of multiple groups (Say, an EquipmentStoreItem and a Cosmetic, it'll get double added to the networked prefabs.)
+        // This is to prevent it being added multiple times.
+        if (PreparePool.HasPrefab(obj.name)) {
+            PreparePool.RemovePrefab(obj.name);
+        }
 
         if (networkedPrefabs) {
             PreparePool.AddPrefab(obj.name, obj);

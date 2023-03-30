@@ -182,17 +182,20 @@ public class PrefabDatabase : ScriptableObject {
     public void LoadPlayerConfiguration(string json) {
         JSONNode n = JSON.Parse(json);
         foreach (var node in n[name]) {
+            if (node.Value.IsNull) {
+                continue;
+            }
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
-            info.Load(n);
+            info.Load(node);
             AddPrefab(info);
         }
     }
     public void LoadPlayerConfiguration() {
         JSONNode n = GetJsonConfiguration();
-        if (!n.HasKey(name)) {
-            return;
-        }
         foreach (var node in n[name]) {
+            if (node.Value.IsNull) {
+                continue;
+            }
             bool foundInfo = false;
             PrefabReferenceInfo info = new PrefabReferenceInfo(this, "", null);
             info.Load(node);

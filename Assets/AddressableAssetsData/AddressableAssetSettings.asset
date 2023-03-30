@@ -207,6 +207,7 @@ MonoBehaviour:
     - defaultAudio
     - defaultTextures
     - defaultMaterials
+    - EquipmentStoreItem
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

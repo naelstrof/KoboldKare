@@ -75,7 +75,7 @@ MonoBehaviour:
     m_Address: Prefab/Scanner
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - EquipmentStoreItem
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1900d6ba02d06942a5bf1372da55eec
     m_Address: Prefab/Bomb
@@ -147,13 +147,13 @@ MonoBehaviour:
     m_Address: Prefab/Trough
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - EquipmentStoreItem
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8cd5fd1acfe2d5c4dbc3dba9b3b4e2ca
     m_Address: Prefab/WateringCan
     m_ReadOnly: 0
     m_SerializedLabels:
-    - NetworkedPrefab
+    - EquipmentStoreItem
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5aad232361f1f340b126e83a4b7f50d
     m_Address: Prefab/PachinkoBallDontSave

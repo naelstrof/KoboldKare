@@ -448,7 +448,14 @@ public class ModManager : MonoBehaviour {
     }
 
     public static bool HasModsLoaded(List<ModStub> stubs) {
-        if (stubs.Count != instance.fullModList.Count) {
+        int count = 0;
+        foreach (var mod in instance.fullModList) {
+            if (mod.enabled) {
+                count++;
+            }
+        }
+
+        if (stubs.Count != count) {
             return false;
         }
 

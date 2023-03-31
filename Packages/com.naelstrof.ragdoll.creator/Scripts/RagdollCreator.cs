@@ -35,6 +35,11 @@ public class RagdollCreator : ScriptableWizard {
             EditorGUILayout.HelpBox( $"Physics default solver velocity iterations is recommended to be above 1. It's currently set to {Physics.defaultSolverVelocityIterations}.", MessageType.Warning);
         }
 
+        if (!IsValid(out string errorMessage)) {
+            EditorGUILayout.HelpBox(errorMessage, MessageType.Error);
+            return true;
+        }
+
         bool changed = base.DrawWizardGUI();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Save Configuration...")) {
@@ -74,6 +79,10 @@ public class RagdollCreator : ScriptableWizard {
     }
 
     private void OnWizardCreate() {
+        if (!IsValid(out string ignoreMessage)) {
+            return;
+        }
+
         Undo.IncrementCurrentGroup();
         RagdollColliders.MakeCollidersReal(targetAnimator, configuration, targetColliders);
         RagdollConstraints.MakeRagdollConstraintsReal(targetAnimator, configuration, targetConstraints);
@@ -85,14 +94,53 @@ public class RagdollCreator : ScriptableWizard {
     private void OnEnable() {
         SceneView.duringSceneGui += OnSceneGUI;
     }
- 
+
+    private bool IsValid(out string errorMessage) {
+        if (targetAnimator == null) {
+            errorMessage = "animator is null! This should never happen if the wizard is spawned correctly...";
+            return false;
+        }
+
+        if (!targetAnimator.isHuman) {
+            errorMessage = "Target animator is not humanoid! It must be a humanoid animator specified within the rig tab of the import settings.";
+            return false;
+        }
+
+        List<HumanBodyBones> bonesToCheck = new List<HumanBodyBones>(new [] {
+            HumanBodyBones.Hips,
+            HumanBodyBones.Spine,
+            HumanBodyBones.Chest,
+            HumanBodyBones.Neck,
+            HumanBodyBones.Head,
+            HumanBodyBones.LeftUpperArm,
+            HumanBodyBones.LeftLowerArm,
+            HumanBodyBones.LeftHand,
+            HumanBodyBones.RightUpperArm,
+            HumanBodyBones.RightLowerArm,
+            HumanBodyBones.RightHand,
+            HumanBodyBones.LeftUpperLeg,
+            HumanBodyBones.LeftLowerLeg,
+            HumanBodyBones.LeftFoot,
+            HumanBodyBones.RightUpperLeg,
+            HumanBodyBones.RightLowerLeg,
+            HumanBodyBones.RightFoot,
+        });
+        foreach (var bone in bonesToCheck) {
+            if (targetAnimator.GetBoneTransform(bone) != null) continue;
+            errorMessage = $"{bone} doesn't exist on the avatar, please specify it in the rig configuration.";
+            return false;
+        }
+        errorMessage = "";
+        return true;
+    }
+
     private void OnDisable() {
         exited?.Invoke(created, targetAnimator, targetConstraints, targetColliders);
         SceneView.duringSceneGui -= OnSceneGUI;
     }
 
     private void OnSceneGUI(SceneView view) {
-        if (targetAnimator == null) {
+        if (!IsValid(out string errorMessage)) {
             return;
         }
 

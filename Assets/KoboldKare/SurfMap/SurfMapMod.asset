@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SurfMapMod
   m_EditorClassIdentifier: 
   assetGroups:
-  - {fileID: 11400000, guid: 26ff967386c28c14f837fb346f1333be, type: 2}
+  - {fileID: 11400000, guid: 32641dfdf6c5f5f438bb97b5afe05077, type: 2}
   buildPath: '[UnityEngine.Application.persistentDataPath]/mods/SurfMap/[BuildTarget]'
   runtimeLoadPath: '{ModManager.currentLoadingMod}/[BuildTarget]'
   catalogName: SurfMap

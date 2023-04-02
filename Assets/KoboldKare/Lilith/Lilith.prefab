@@ -734,7 +734,7 @@ MonoBehaviour:
       type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         baseBreastTransform: {fileID: 298443447419433287}
-        breastTransform: {fileID: 2274364765273550806}
+        jiggleBoneBreastTransform: {fileID: 2274364765273550806}
         flatShape: FlatChestLeft
         biggerShape: BiggerBreastLeft
         skinnedMeshRenderers:
@@ -767,7 +767,7 @@ MonoBehaviour:
       type: {class: InflatableBreast, ns: Naelstrof.Inflatable, asm: com.naelstrof.inflatable}
       data:
         baseBreastTransform: {fileID: 8826180650655545568}
-        breastTransform: {fileID: 2274364765833755815}
+        jiggleBoneBreastTransform: {fileID: 2274364765833755815}
         flatShape: FlatChestRight
         biggerShape: BiggerBreastRight
         skinnedMeshRenderers:

@@ -161,9 +161,11 @@ public class GameManager : MonoBehaviour {
     private IEnumerator ReloadMapRoutine() {
         Debug.LogWarning("Reloading scene due to mods not being ready yet...");
         bool found = false;
+        PlayableMap selectedMap = null;
         foreach(var playableMap in PlayableMapDatabase.GetPlayableMaps()) {
             if (SceneManager.GetActiveScene().name != playableMap.unityScene.GetName()) continue;
             NetworkManager.instance.SetSelectedMap(playableMap);
+            selectedMap = playableMap;
             found = true;
             break;
         }
@@ -172,7 +174,7 @@ public class GameManager : MonoBehaviour {
             throw new UnityException($"Failed to find a PlayableMap instance for the map {SceneManager.GetActiveScene().name}! Please make one!");
         }
 
-        yield return LevelLoader.instance.LoadLevel(SceneManager.GetActiveScene().name);
+        yield return LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
         NetworkManager.instance.StartSinglePlayer();
         Pause(false);
     }

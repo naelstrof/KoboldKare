@@ -161,7 +161,8 @@ public class KoboldGenes {
 
         ballSize = (float)NextGaussian(10f*meanMultiplier,5.5f*standardDeviationMultiplier,5f, float.MaxValue);
         dickSize = (float)NextGaussian(10f*meanMultiplier, 5.5f*standardDeviationMultiplier, 5f, float.MaxValue);
-        fatSize = (float)NextGaussian(3f,3f*standardDeviationMultiplier,0f, float.MaxValue);
+        // Since fatness only goes one way (and we have no skinniness factor), we only do half a gaussian curve.
+        fatSize = (float)NextGaussian(0f,3.2f*standardDeviationMultiplier,0f, float.MaxValue);
         dickThickness = (float)NextGaussian(0.5f, 0.12f*standardDeviationMultiplier, 0f, float.MaxValue);
         baseSize = (float)NextGaussian(20f*meanMultiplier, 2.5f*standardDeviationMultiplier, 0f, float.MaxValue);//Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);

@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 8729014945140614807}
   - component: {fileID: 8846398411000261155}
   m_Layer: 11
-  m_Name: Generic.DoggystyleStation 1
+  m_Name: Generic.DoggystyleStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -749,9 +749,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6337334827512487078}
-  m_LocalRotation: {x: -0, y: -0.53742033, z: -0, w: 0.8433145}
-  m_LocalPosition: {x: 1.313, y: 7.898, z: -11.732}
-  m_LocalScale: {x: 1.4285712, y: 1.4285715, z: 1.4285712}
+  m_LocalRotation: {x: -0, y: 0.11975205, z: -0, w: 0.9928039}
+  m_LocalPosition: {x: -175.97404, y: 23.348598, z: 314.8669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6337334826751617585}

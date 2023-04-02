@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructed: 0
   trackedConstructedObjects:
-  - {fileID: 5538996366954922806}
+  - {fileID: 8834900377372941533}
   suckZone: {fileID: 4620444764763333346}
   stream: {fileID: 3608884092755669024}
   container: {fileID: 4620444764763333347}
@@ -604,6 +604,12 @@ PrefabInstance:
 --- !u!4 &8201072212476102247 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 90c06da79842448bc90ebd4e1eeaa43a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8528329799981752716}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8834900377372941533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90c06da79842448bc90ebd4e1eeaa43a,
     type: 3}
   m_PrefabInstance: {fileID: 8528329799981752716}
   m_PrefabAsset: {fileID: 0}

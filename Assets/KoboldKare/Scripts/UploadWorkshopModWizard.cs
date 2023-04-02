@@ -55,6 +55,11 @@ public class UploadWorkshopModWizard : ScriptableWizard {
 		if (modProp.FindPropertyRelative("previewSprite").objectReferenceValue == null) {
 			mod.TryLoadPreview(modProp);
 			EditorUtility.SetDirty(this);
+		} else {
+			if (((Sprite)modProp.FindPropertyRelative("previewSprite").objectReferenceValue).texture.width > 1024 ||
+			    ((Sprite)modProp.FindPropertyRelative("previewSprite").objectReferenceValue).texture.height > 1024) {
+				EditorGUILayout.HelpBox( "The preview sprite is expected to be around 512x512, very large preview images may cause Steam to reject the upload.", MessageType.Warning);
+			}
 		}
 
 		EditorGUILayout.PropertyField(modProp);

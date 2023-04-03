@@ -30,7 +30,7 @@ public class CameraConfigurationListener : MonoBehaviour {
         v.profile = mainProfile;
         
         var cam = GetComponent<Camera>();
-        cam.nearClipPlane = 0.1f;
+        cam.nearClipPlane = 0.05f;
         
         var camData = GetComponent<UniversalAdditionalCameraData>();
         camData.dithering = true;

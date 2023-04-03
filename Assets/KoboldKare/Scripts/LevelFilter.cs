@@ -5,15 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelFilter : MonoBehaviour {
     public string sceneName;
-    public List<GameObject> enabledObjectsOnLevel = new List<GameObject>();
-    public List<GameObject> enabledObjectsOffLevel = new List<GameObject>();
-    private void Awake() {
-        SceneManager.sceneLoaded += OnLevelFinishedLoading;
-    }
-    private void OnDestroy() {
+    public List<GameObject> enabledObjectsOnLevel;
+    public List<GameObject> enabledObjectsOffLevel;
+    private void OnDisable() {
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
     private void OnEnable() {
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
         OnLevelFinishedLoading(SceneManager.GetActiveScene(), LoadSceneMode.Additive);
     }
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {

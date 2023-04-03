@@ -1082,7 +1082,7 @@
                 {
                     "name": "Gamepad",
                     "id": "04e92384-0051-4dcc-a81b-b1221059dcbb",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": "",
@@ -1192,7 +1192,7 @@
                 {
                     "name": "Joystick",
                     "id": "3e606b4b-e03a-4f6b-ac11-3f3f22df4515",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": "",

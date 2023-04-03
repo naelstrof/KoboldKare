@@ -101,6 +101,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
     private static Collider[] colliders = new Collider[32];
+    private Coroutine instantiateRoutine;
     public delegate void CarriedAction(bool carried);
     public delegate void QuaffAction();
 
@@ -378,6 +379,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        if (instantiateRoutine != null) {
+            GameManager.instance.StopCoroutine(instantiateRoutine);
+        }
     }
     [PunRPC]
     public void OnGrabRPC(int koboldID) {
@@ -568,7 +572,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        GameManager.StartCoroutineStatic(WaitUntilReadyThenInstantiate(info));
+        instantiateRoutine = GameManager.StartCoroutineStatic(WaitUntilReadyThenInstantiate(info));
     }
 
     private IEnumerator WaitUntilReadyThenInstantiate(PhotonMessageInfo info) {

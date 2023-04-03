@@ -41,7 +41,7 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
             blendshapeContinueIDs.Add(continueID);
         }
 
-        if (skinJiggle != null) {
+        if (skinJiggle != null && targetTransform != null) {
             foreach (var jiggleZone in skinJiggle.jiggleZones) {
                 if (jiggleZone.target != targetTransform) continue;
                 if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {

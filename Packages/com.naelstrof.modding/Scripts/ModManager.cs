@@ -51,7 +51,21 @@ public class ModManager : MonoBehaviour {
         public bool IsValid() {
             return !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && File.Exists(catalogPath);
         }
-        public string catalogPath => $"{modPath}{Path.DirectorySeparatorChar}{runningPlatform}/info.json";
+        public string catalogPath {
+            get {
+                string searchDir = $"{modPath}{Path.DirectorySeparatorChar}{runningPlatform}";
+                try {
+                    foreach (var file in Directory.EnumerateFiles(searchDir)) {
+                        if (file.EndsWith(".json")) {
+                            return file;
+                        }
+                    }
+                } catch {
+                    return null;
+                }
+                return null;
+            }
+        }
 
         public IResourceLocator locator;
         public ModSource modSource;

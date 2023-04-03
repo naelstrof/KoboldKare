@@ -107,12 +107,6 @@
       },
       "hash": "6e36bec2daf4a77781f5639987d4aab5ed9fe3bf"
     },
-    "com.prenominal.realtimecsg": {
-      "version": "file:RealtimeCSG",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.rlabrecque.steamworks.net": {
       "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",
       "depth": 0,
@@ -312,13 +306,6 @@
         "com.unity.shadergraph": "12.1.10",
         "com.unity.render-pipelines.core": "12.1.10"
       }
-    },
-    "li.lightingtools.lightprobesvolumes": {
-      "version": "https://github.com/naelstrof/LightProbeVolumes.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "b9aca2ed075cd6c4e44f97643a2246d67e6529d4"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

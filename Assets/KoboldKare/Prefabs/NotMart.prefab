@@ -1346,7 +1346,6 @@ GameObject:
   - component: {fileID: 915706546754927527}
   - component: {fileID: 915706546754927526}
   - component: {fileID: 915706546754927524}
-  - component: {fileID: 915706546754927525}
   m_Layer: 10
   m_Name: Light Probe Group
   m_TagString: Untagged
@@ -1488,26 +1487,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.605022, y: 4.768341, z: 13.486786}
   m_Center: {x: -0.3689518, y: 1.2956405, z: 0.020431519}
---- !u!114 &915706546754927525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915706546754927520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7eebf330e67854398f83add3b50749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontalSpacing: 2.5
-  verticalSpacing: 2.5
-  offsetFromFloor: 0.5
-  numberOfLayers: 2
-  fillVolume: 1
-  followFloor: 1
-  discardInsideGeometry: 1
-  drawDebug: 0
 --- !u!1 &915706546918263120
 GameObject:
   m_ObjectHideFlags: 0
@@ -3746,7 +3725,7 @@ MonoBehaviour:
   prefabSpawn:
     gameObject: {fileID: 2189650494590434039, guid: c20c66225b257bc4687f182bbc47645f,
       type: 3}
-    photonName: Ice
+    optionalDatabase: {fileID: 0}
 --- !u!1 &6731710176248377152
 GameObject:
   m_ObjectHideFlags: 0
@@ -5117,8 +5096,7 @@ MonoBehaviour:
   groundRigidbody: {fileID: 0}
   frictionMultiplier: 1
   speedMultiplier: 1
-  footlands:
-  - {fileID: 8300000, guid: 5dbed832a07330c4a925bd3dfd359934, type: 3}
+  footland: {fileID: 0}
   airSpeedMultiplier: 1.2
   inputDir: {x: 0, y: 0, z: 0}
   inputJump: 0
@@ -5143,7 +5121,6 @@ MonoBehaviour:
   collider: {fileID: 915706547747134166}
   crouchHeight: 0.75
   worldModel: {fileID: 8458182485701455157}
-  airCap: 0.6
 --- !u!114 &915706547747134167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5156,14 +5133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e687310e22ae948990b80d21e47ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftKneeHint: {fileID: 1432855880}
-  rightKneeHint: {fileID: 1108759903}
   jumpDust: {fileID: 915706547084140114}
   walkDust: {fileID: 915706546561379041}
   headTransform: {fileID: 1946794658023144966}
   footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
   body: {fileID: 915706547747134164}
-  playerPossession: {fileID: 0}
   crouchedAnimationSpeedMultiplier: 1
   walkingAnimationSpeedMultiplier: 0.1
   standingAnimationSpeedMultiplier: 2

@@ -262,10 +262,13 @@ public class SteamWorkshopItem {
 			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.LoadPath", $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
 		//}
 		ModManager.currentLoadingMod = modBuildPath;
-		targetCatalog.BuildPath =
-			$"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
+		targetCatalog.BuildPath = $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
 		targetCatalog.RuntimeLoadPath = "{ModManager.currentLoadingMod}/[BuildTarget]";
 		AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
+		if (result == null) {
+			throw new UnityException("Something went really wrong!");
+		}
+
 		if (!string.IsNullOrEmpty(result.Error)) {
 			throw new UnityException(result.Error);
 		}
@@ -299,9 +302,11 @@ public class SteamWorkshopItem {
 
 			// Then read-back the render texture to a regular texture2D.
 			Texture2D previewTextureWrite = new Texture2D((int)rect.width, (int)rect.height);
+			RenderTexture oldTex = RenderTexture.active;
 			RenderTexture.active = targetTexture;
 			previewTextureWrite.ReadPixels(new Rect(0, 0, rect.width, rect.height), 0, 0);
 			File.WriteAllBytes(previewTexturePath, previewTextureWrite.EncodeToPNG());
+			RenderTexture.active = oldTex;
 
 			Save();
 
@@ -311,6 +316,8 @@ public class SteamWorkshopItem {
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
 		} finally {
+			lastMessage = "Failed to build! Check the console to see what went wrong!";
+			lastMessageType = MessageType.Error;
 			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
 			packedMultiCatalogMode.ExternalCatalogs = catalogMemory;
 			building = false;

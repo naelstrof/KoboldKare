@@ -100,13 +100,6 @@ MonoBehaviour:
     - Setting
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4c2cc216468f8184296908c25640f6fe
-    m_Address: Assets/KoboldKare/ScriptableObjects/Settings/MotionSicknessReducer.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Setting
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4ba9e300f9cc72647950194676f9c5ff
     m_Address: Assets/KoboldKare/ScriptableObjects/Settings/MotionBlur.asset
     m_ReadOnly: 0

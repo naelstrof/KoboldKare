@@ -315,9 +315,11 @@ public class SteamWorkshopItem {
 			BuildForPlatform(BuildTarget.StandaloneOSX);
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
-		} finally {
-			lastMessage = "Failed to build! Check the console to see what went wrong!";
+		} catch {
+			lastMessage = "Failed to build! Check the console to see what went wrong! You may need to clear your build cache if considerable changes have been made.";
 			lastMessageType = MessageType.Error;
+			throw;
+		} finally {
 			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
 			packedMultiCatalogMode.ExternalCatalogs = catalogMemory;
 			building = false;

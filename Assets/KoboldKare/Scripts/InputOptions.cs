@@ -10,12 +10,31 @@ public class InputOptions : MonoBehaviour {
     [SerializeField]
     private InputActionAsset controls;
     private static InputOptions instance;
+    private static string runningPlatform {
+        get {
+            switch (Application.platform) {
+                case RuntimePlatform.LinuxPlayer:
+                case RuntimePlatform.LinuxServer:
+                case RuntimePlatform.LinuxEditor:
+                    return "StandaloneLinux64";
+                case RuntimePlatform.WindowsPlayer:
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsServer:
+                    return IntPtr.Size == 8 ? "StandaloneWindows64" : "StandaloneWindows";
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                case RuntimePlatform.OSXServer:
+                    return "StandaloneOSX";
+                default: return "Unknown";
+            }
+        }
+    }
 
     private string savePath {
         get {
-            var path = $"{Application.persistentDataPath}/defaultUser/inputBindings.json";
+            var path = $"{Application.persistentDataPath}/defaultUser/inputBindings_{runningPlatform}.json";
             if (SteamManager.Initialized) {
-                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/inputBindings.json";
+                path = $"{Application.persistentDataPath}/{SteamUser.GetSteamID().ToString()}/inputBindings_{runningPlatform}.json";
             }
             return path;
         }

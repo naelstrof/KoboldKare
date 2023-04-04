@@ -172,7 +172,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         }
 
         kobold = GetComponent<Kobold>();
-        kobold.Initialize();
         body.mass = 25f;
         body.drag = 0f;
         body.angularDrag = 10f;

@@ -76,6 +76,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private TMPro.TMP_Text floatingTextPrefab;
     private AudioPack chatYowlPack;
     private ClassicIK classicIK;
+    private KoboldAIPossession koboldAIPossession;
     
     private List<AsyncOperationHandle> tasks;
     public delegate void FinishedLoadingAssetAction(PhotonView view);
@@ -234,6 +235,11 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         precisionGrabber.SetView(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
         grabber.SetView(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
 
+        koboldAIPossession = GetComponentInChildren<KoboldAIPossession>(true);
+        if (koboldAIPossession == null) {
+            koboldAIPossession = gameObject.AddComponent<KoboldAIPossession>();
+        }
+        koboldAIPossession.enabled = controlType == ControlType.AIPlayer;
         
         precisionGrabber.SetIgnoreColliders(displayAnimator.GetBoneTransform(HumanBodyBones.Neck).GetComponentsInChildren<Collider>());
         
@@ -426,7 +432,11 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         if (possession != null) {
             possession.gameObject.SetActive(newControlType == ControlType.LocalPlayer);
         }
-        GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(newControlType == ControlType.AIPlayer);
+
+        if (koboldAIPossession != null) {
+            koboldAIPossession.enabled = newControlType == ControlType.AIPlayer;
+        }
+
         GetComponent<KoboldCharacterController>().inputDir = Vector3.zero;
         GetComponent<KoboldCharacterController>().inputJump = false;
     }

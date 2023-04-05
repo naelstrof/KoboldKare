@@ -10,7 +10,6 @@ public class KoboldAIPossession : MonoBehaviourPun {
     private bool focusing = false;
     private CharacterControllerAnimator characterControllerAnimator;
     private static readonly Collider[] colliders = new Collider[32];
-    [SerializeField]
     private Transform headTransform;
 
     private Ragdoller ragdoller;
@@ -28,7 +27,7 @@ public class KoboldAIPossession : MonoBehaviourPun {
         body = GetComponentInParent<Rigidbody>();
     }
 
-    void Start() {
+    void OnEnable() {
         lookAtMask = GameManager.instance.usableHitMask | LayerMask.GetMask("Player");
         StartCoroutine(Think());
     }
@@ -54,6 +53,8 @@ public class KoboldAIPossession : MonoBehaviourPun {
     }
 
     IEnumerator Think() {
+        yield return new WaitUntil(()=>GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator().GetBoneTransform(HumanBodyBones.Head) != null);
+        headTransform = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator().GetBoneTransform(HumanBodyBones.Head);
         while (true) {
             yield return waitForSeconds;
             if (!photonView.IsMine) {

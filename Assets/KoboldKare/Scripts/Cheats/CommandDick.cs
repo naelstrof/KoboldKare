@@ -18,13 +18,13 @@ public class CommandDick : Command {
             if (dickID != byte.MaxValue && dickID >= infos.Count) {
                 throw new CheatsProcessor.CommandException($"Index is invalid, must be either {byte.MaxValue} or under {infos.Count-1}.");
             }
-            k.SetDickRPC(dickID: dickID);
+            k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
             output.AppendLine("Set dick to " + infos[dickID].GetKey() + ".");
             return;
         }
         for (byte i=0;i<infos.Count;i++) {
             if (infos[i].GetKey() != args[1]) continue;
-            k.SetDickRPC(dickID: i);
+            k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, i);
             output.AppendLine("Set dick to " + args[1] + ".");
             return;
         }

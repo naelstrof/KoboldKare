@@ -247,8 +247,8 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     [PunRPC]
-    public void SetDickRPC(short dickID) {
-        SetGenes(GetGenes().With(dickEquip: (byte)dickID));
+    public void SetDickRPC(byte dickID) {
+        SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
     public override void SetGenes(KoboldGenes newGenes) {

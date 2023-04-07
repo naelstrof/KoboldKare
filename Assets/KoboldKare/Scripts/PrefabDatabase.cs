@@ -192,6 +192,15 @@ public class PrefabDatabase : ScriptableObject {
     }
     public void LoadPlayerConfiguration() {
         JSONNode n = GetJsonConfiguration();
+        foreach (var search in prefabReferenceInfos) {
+            search.SetEnabled(true);
+        }
+        
+        if (!n.HasKey(name)) {
+            prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
+            return;
+        }
+
         foreach (var node in n[name]) {
             if (node.Value.IsNull) {
                 continue;

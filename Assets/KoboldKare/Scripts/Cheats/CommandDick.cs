@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Photon.Pun;
 
 [Serializable]
 public class CommandDick : Command {

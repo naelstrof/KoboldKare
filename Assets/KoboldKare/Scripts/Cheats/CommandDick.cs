@@ -13,7 +13,6 @@ public class CommandDick : Command {
             throw new CheatsProcessor.CommandException("Usage: /dick <index or name>.");
         }
         var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
-        k.photonView.RequestOwnership();
         // Dick setting
         if (byte.TryParse(args[1], out byte dickID)) {
             if (dickID != byte.MaxValue && dickID >= infos.Count) {

@@ -606,8 +606,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         bool isPlayerControlled = node["isPlayerControlled"];
         if (isPlayerControlled) {
             PhotonNetwork.LocalPlayer.TagObject = this;
-            GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(false);
-            GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(true);
+            GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
         }
         SetGenes(loadedGenes);
     }

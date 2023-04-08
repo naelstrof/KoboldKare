@@ -450,7 +450,7 @@ public class ModManager : MonoBehaviour {
         return loadedMods;
     }
 
-    public static bool HasModsLoaded(List<ModStub> stubs) {
+    public static bool HasModsLoaded(IList<ModStub> stubs) {
         int count = 0;
         foreach (var mod in instance.fullModList) {
             if (mod.enabled) {
@@ -480,7 +480,11 @@ public class ModManager : MonoBehaviour {
         return true;
     }
 
-    public static IEnumerator SetLoadedMods(ICollection<ModStub> stubs) {
+    public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {
+        if (HasModsLoaded(stubs)) {
+            yield break;
+        }
+
         Debug.Log("Loading mod stubs...");
         List<ModStub> neededMods = new List<ModStub>(stubs);
         for(int i=0;i<neededMods.Count;i++) {

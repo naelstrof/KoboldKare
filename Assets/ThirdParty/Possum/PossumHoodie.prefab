@@ -2450,7 +2450,6 @@ GameObject:
   - component: {fileID: 1692902337}
   - component: {fileID: 1692902340}
   - component: {fileID: 1692902343}
-  - component: {fileID: 7188042230112193825}
   - component: {fileID: 8652056329498771897}
   m_Layer: 9
   m_Name: PossumHoodie
@@ -2484,7 +2483,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &95644911095823980
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2501,7 +2500,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!54 &1692902341
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2544,14 +2543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45e687310e22ae948990b80d21e47ee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftKneeHint: {fileID: 2410479501192603567}
-  rightKneeHint: {fileID: 3064711460615655284}
   jumpDust: {fileID: 2091785194}
   walkDust: {fileID: 1847928499}
   headTransform: {fileID: 4563264907791512}
   footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
   body: {fileID: 1692902341}
-  playerPossession: {fileID: 0}
   crouchedAnimationSpeedMultiplier: 1
   walkingAnimationSpeedMultiplier: 0.1
   standingAnimationSpeedMultiplier: 2
@@ -2576,8 +2572,7 @@ MonoBehaviour:
   groundRigidbody: {fileID: 0}
   frictionMultiplier: 1
   speedMultiplier: 1
-  footlands:
-  - {fileID: 8300000, guid: 5dbed832a07330c4a925bd3dfd359934, type: 3}
+  footland: {fileID: 0}
   airSpeedMultiplier: 1.2
   inputDir: {x: 0, y: 0, z: 0}
   inputJump: 0
@@ -2602,7 +2597,6 @@ MonoBehaviour:
   collider: {fileID: 1692902338}
   crouchHeight: 0.75
   worldModel: {fileID: 4546014960425002}
-  airCap: 0.6
 --- !u!114 &1692902343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2627,19 +2621,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7188042230112193825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956662810963026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984ed12fa89d9b14d8185f4ad81bcdcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headTransform: {fileID: 4563264907791512}
 --- !u!114 &8652056329498771897
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,10 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
-using System;
 using System.Collections;
 using System.Threading.Tasks;
-using ExitGames.Client.Photon.StructWrapping;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine.AddressableAssets;
@@ -98,12 +97,9 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     private IEnumerator AwakeRoutine() {
         InitializeImmediately();
         gameObject.SetActive(false);
+        yield return new WaitUntil(ModManager.GetReady);
         var task = FindAssetsAsync();
         yield return new WaitUntil(()=>task.IsCompleted);
-        // Destroyed before finished loading... Or mods are currently being messed with rapidly.
-        if (!ModManager.GetReady()) {
-            yield break;
-        }
         InitializePreEnable();
         gameObject.SetActive(true);
         InitializePostEnable();
@@ -148,6 +144,10 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         unfreezeAudioPack = unfreezeAudioPackTask.Result;
         floatingTextPrefab = floatingTextPrefabTask.Result.GetComponent<TMPro.TMP_Text>();
         chatYowlPack = chatYowlPackTask.Result;
+    }
+
+    private void OnDisable() {
+        Debug.Log("Who the heck disabled me", gameObject);
     }
 
     void InitializeImmediately() {

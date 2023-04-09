@@ -33,7 +33,7 @@ public class ModManager : MonoBehaviour {
             try {
                 LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
                 LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
-            } catch (Exception e) {
+            } catch (SystemException e) {
                 Debug.LogException(e);
                 Debug.LogError($"Failed to load mod at path {modPath}, from source {source}.");
             }
@@ -49,7 +49,7 @@ public class ModManager : MonoBehaviour {
         public Texture2D preview;
 
         public bool IsValid() {
-            return !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && File.Exists(catalogPath);
+            return !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && Directory.Exists(modPath) && File.Exists(catalogPath);
         }
         public string catalogPath {
             get {
@@ -306,16 +306,18 @@ public class ModManager : MonoBehaviour {
         file.Close();
         string data = Encoding.UTF8.GetString(b);
         JSONNode n = JSON.Parse(data);
-        if (n.HasKey("modList")) {
-            JSONArray array = n["modList"].AsArray;
-            foreach (var node in array) {
-                if (node.Value.IsNull) {
-                    continue;
-                }
-                var mod = new ModInfo(node);
-                if (mod.IsValid()) {
-                    AddMod(mod);
-                }
+        if (!n.HasKey("modList")) return;
+        JSONArray array = n["modList"].AsArray;
+        if (array.Count == 0) {
+            return;
+        }
+        foreach (var node in array) {
+            if (string.IsNullOrEmpty(node.Key) || node.Value.IsNull) {
+                continue;
+            }
+            var mod = new ModInfo(node);
+            if (mod.IsValid()) {
+                AddMod(mod);
             }
         }
     }

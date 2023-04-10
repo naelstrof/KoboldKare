@@ -373,6 +373,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName, JSONNode rootNode) {
         yield return ModManager.SetLoadedMods(desiredMods);
         PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.JoinRoom(roomName);
         onLeaveRoom = () => {};
     }

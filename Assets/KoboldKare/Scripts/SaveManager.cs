@@ -45,7 +45,12 @@ public static class SaveManager {
     private static List<SaveData> saveDatas = new List<SaveData>();
     public static void Init() {
         if (NeedsUpgrade()) {
-            PerformUpgrade();
+            try {
+                PerformUpgrade();
+            } catch (Exception e) {
+                Debug.LogException(e);
+                Debug.LogError( "Failed to move save files into new upgraded location, did you mess with the persistent data folder?");
+            }
         }
         if (!Directory.Exists(saveDataPath)) {
             Directory.CreateDirectory(saveDataPath);
@@ -342,11 +347,21 @@ public static class SaveManager {
         if (!Directory.Exists(saveDataPath)) {
             Directory.CreateDirectory(saveDataPath);
         }
+
+        bool directoryIsEmpty = true;
         foreach(string fileName in Directory.EnumerateFiles(oldSaveDataPath)) {
-            if (!fileName.EndsWith(saveExtension) && !fileName.EndsWith(imageExtension)) continue;
+            if (!fileName.EndsWith(saveExtension) && !fileName.EndsWith(imageExtension)) {
+                directoryIsEmpty = false;
+                continue;
+            }
             File.Move(fileName, $"{saveDataPath}{Path.GetFileName(fileName)}");
         }
-        Directory.Delete(oldSaveDataPath);
+        foreach(string directory in Directory.EnumerateDirectories(oldSaveDataPath)) {
+            directoryIsEmpty = false;
+        }
+        if (directoryIsEmpty) {
+            Directory.Delete(oldSaveDataPath);
+        }
     }
 
     public static void Load(string filename) {

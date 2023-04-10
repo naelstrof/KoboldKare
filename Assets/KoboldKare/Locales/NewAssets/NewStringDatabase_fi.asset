@@ -925,7 +925,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Olen l\xE4hett\xE4nyt sinulle joitain tarvikkeita hampurilaisen
-      valmistamiseksi, yhdist\xE4m\xE4\xE4n ne ja sy\xF6t\xE4t sen sitten Koboldille."
+      valmistamiseksi, yhdist\xE4\xE4ksesi ne ja ruokkivat sen sitten Koboldille."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1085,7 +1085,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Kissa
+    m_Localized: Kissan-tastrofi
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1192,7 +1192,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Turvalliselle ty\xF6lle p\xE4\xE4valikko"
+    m_Localized: "Turvallinen ty\xF6-"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Olen kiinnostunut siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
+    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
       kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
     m_Metadata:
       m_Items: []

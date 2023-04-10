@@ -1393,7 +1393,7 @@ MonoBehaviour:
       - rid: 1602997996487704597
   - m_Id: 280448613000617984
     m_Localized: "No se pudo conectar a Steam, no se descargar\xE1 autom\xE1ticamente
-      modificaciones."
+      mods."
     m_Metadata:
       m_Items: []
   references:

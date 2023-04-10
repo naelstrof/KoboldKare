@@ -207,8 +207,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
-      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
+      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -743,7 +743,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Eu preciso de kobolds com paus grandes, prepare um e envie -o rapidamente
+    m_Localized: Eu preciso de Kobolds com paus grandes, prepare um e envie -o rapidamente
       para mim.
     m_Metadata:
       m_Items: []
@@ -1365,7 +1365,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "A exclus\xE3o de uma defesa \xE9 permanente!"
+    m_Localized: "Excluir um salvamento \xE9 permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369

@@ -1029,7 +1029,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Velkommen til Underground.
+    m_Localized: Velkommen til undergrundsbanen.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1041,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Alligevel bare uh .. Hj\xE6lp dig selv antager jeg."
+    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1168,7 +1168,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
-    m_Localized: Tror du, jeg ville se godt ud i en hat?
+    m_Localized: Tror du, at jeg ville se godt ud i en hat?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
@@ -1224,8 +1224,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Jeg har brug for en masse kobolds med k\xE6mpe haner, det er vigtigt
-      for mine planer."
+    m_Localized: Jeg har brug for en masse kobolds med gigantiske haner, det er vigtigt
+      for mine planer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1389,7 +1389,7 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704580
   - m_Id: 280448613000617984
-    m_Localized: Kunne ikke oprette forbindelse til damp, ikke automatisk downloadet
+    m_Localized: Kunne ikke oprette forbindelse til damp, vil ikke automatisk downloade
       mods.
     m_Metadata:
       m_Items: []

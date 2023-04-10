@@ -440,7 +440,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Blusset heste
+    m_Localized: Flared Equine
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -752,8 +752,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695169
     m_Localized: "Jeg trenger at du leverer meg en kobold med store pupper, jeg snakker
-      massiv, jeg regner med at du takler dette og forventer at du ikke vil stille
-      sp\xF8rsm\xE5l."
+      massiv, jeg regner med at du takler dette, og jeg forventer at du ikke vil
+      stille sp\xF8rsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -961,7 +961,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i hulene i n\xE6rheten,
-      g\xE5 og unders\xF8ke for meg."
+      g\xE5 og unders\xF8k for meg."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665

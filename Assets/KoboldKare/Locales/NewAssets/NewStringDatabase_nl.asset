@@ -897,7 +897,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: Een knuppenden met zachte vlezige weerhaken en lage hangende ballen.
+    m_Localized: Een knuppenstang met zachte vlezige weerhaken en lage hangende ballen.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -1005,7 +1005,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945669
-    m_Localized: voor een prijs natuurlijk.
+    m_Localized: Voor een prijs natuurlijk.
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
@@ -1022,8 +1022,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Leer meer over de reality-buigende elasticiteit van Kobolds, Fuck
-      a Kobold met een lul die groter is dan zijn lichaam.
+    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
+      fuck a kobold met een lul groter dan zijn lichaam.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1154,7 +1154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: Welkom bij het casino, hier voor zaken of plezier?
+    m_Localized: Welkom in het casino, hier voor zaken of plezier?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1413,7 +1413,7 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704581
   - m_Id: 280448613000617984
-    m_Localized: Kan geen verbinding maken met Steam, zal niet automatische downloadmods.
+    m_Localized: Kan geen verbinding maken met Steam, zal niet automatisch downloaden.
     m_Metadata:
       m_Items: []
   references:

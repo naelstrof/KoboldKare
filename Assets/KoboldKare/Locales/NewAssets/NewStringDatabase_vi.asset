@@ -981,8 +981,8 @@ MonoBehaviour:
   - m_Id: 213469775675314182
     m_Localized: "S\u1EEFa Kobold c\xF3 r\u1EA5t nhi\u1EC1u gi\xE1 tr\u1ECB dinh
       d\u01B0\u1EE1ng, h\xE3y th\u1EED k\u1EBFt h\u1EE3p n\xF3 v\u1EDBi nh\u1EEFng
-      th\u1EE9 kh\xE1c trong m\u1ED9t th\xF9ng \u0111\u1EC3 l\xE0m th\u1EF1c ph\u1EA9m
-      m\u1EDBi."
+      th\u1EE9 kh\xE1c trong m\u1ED9t c\xE1i x\xF4 \u0111\u1EC3 l\xE0m th\u1EF1c
+      ph\u1EA9m m\u1EDBi."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -1043,9 +1043,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "T\xECm hi\u1EC3u th\xEAm v\u1EC1 \u0111\u1ED9 \u0111\xE0n h\u1ED3i
-      u\u1ED1n cong th\u1EF1c t\u1EBF c\u1EE7a Kobold, \u0111\u1EE5 m\u1ED9t kobold
-      v\u1EDBi m\u1ED9t tinh ranh l\u1EDBn h\u01A1n c\u01A1 th\u1EC3 c\u1EE7a n\xF3."
+    m_Localized: "T\xECm hi\u1EC3u th\xEAm v\u1EC1 \u0111\u1ED9 co gi\xE3n u\u1ED1n
+      c\u1EE7a th\u1EF1c t\u1EBF c\u1EE7a Kobold, \u0111\u1EE5 m\u1ED9t kobold v\u1EDBi
+      m\u1ED9t tinh ranh l\u1EDBn h\u01A1n c\u01A1 th\u1EC3 c\u1EE7a n\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1325,7 +1325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Breed: ng\u1EF1c, nh\u1EEFng ng\u01B0\u1EDDi l\u1EDBn!"
+    m_Localized: "Gi\u1ED1ng: ng\u1EF1c, nh\u1EEFng c\xE1i l\u1EDBn!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
@@ -1475,7 +1475,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: "K\xEDch ho\u1EA1t k\xFD t\u1EF1 c\xF3 th\u1EC3 ch\u01A1i"
+    m_Localized: "C\xE1c k\xFD t\u1EF1 c\xF3 th\u1EC3 ch\u01A1i \u0111\u01B0\u1EE3c
+      b\u1EADt"
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322

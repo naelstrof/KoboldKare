@@ -734,7 +734,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332862500866
     m_Localized: "Voi, Kobolds, ave\u021Bi corpuri interesante, \xEEncerca\u021Bi
-      s\u0103 m\u0103ri\u021Bi ni\u0219te fructe \u0219i apoi s\u0103 le hr\u0103ni\u021Bi
+      s\u0103 m\u0103tura\u021Bi ni\u0219te fructe \u0219i apoi s\u0103 le hr\u0103ni\u021Bi
       cu un kobold \u0219i s\u0103 vede\u021Bi ce se \xEEnt\xE2mpl\u0103."
     m_Metadata:
       m_Items: []
@@ -883,8 +883,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Un penis \xEEn club cu barbe moi c\u0103rnoase \u0219i bile de
-      ag\u0103\u021Bare joas\u0103."
+    m_Localized: "Un penis \xEEn club, cu barbe moi c\u0103rnoase \u0219i mingi joase
+      ag\u0103\u021Bate."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -973,7 +973,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Simt o prezen\u021B\u0103 \xEEntunecat\u0103 \xEEn pe\u0219terile
-      din apropiere, merg \u0219i investigheaz\u0103 pentru mine."
+      din apropiere, merg \u0219i cerceteaz\u0103 pentru mine."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1012,8 +1012,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790592
     m_Localized: "Afla\u021Bi mai multe despre elasticitatea \xEEndoielii de realitate
-      a lui Kobolds, dracu\u021Bi-v\u0103 un kobold cu o pula mai mare dec\xE2t corpul
-      ei."
+      a lui Kobolds, dracu\u021Bi-v\u0103 un kobold cu un pula mai mare dec\xE2t
+      corpul ei."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1084,7 +1084,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Cvadruplu umplut
+    m_Localized: Catruplu umplut
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
@@ -1207,8 +1207,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold gol vor s\u0103
-      le construiesc ma\u0219ini feti\u0219."
+    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold dezbr\u0103cat
+      vrea s\u0103 le construiesc ma\u0219ini feti\u0219."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1297,7 +1297,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: "Nu a reu\u0219it s\u0103 \xEEncarce economisire"
+    m_Localized: "Nu a reu\u0219it s\u0103 se \xEEncarce economisi\u021Bi"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464

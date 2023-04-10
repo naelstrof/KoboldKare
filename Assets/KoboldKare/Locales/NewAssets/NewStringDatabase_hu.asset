@@ -1007,7 +1007,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171 hajl\xEDt\xF3
+    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171-hajl\xEDt\xF3
       rugalmass\xE1g\xE1r\xF3l, baszd meg egy koboldot, amelynek teste nagyobb."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Tekercsel\u0151cs\u0151"
+    m_Localized: "Teker\xE1l\xF3 cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1201,8 +1201,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Csak itt \xE1llok, ha m\xE1s meztelen Kobold azt akarja, hogy f\xE9tis
-      g\xE9peket k\xE9sz\xEDtsek."
+    m_Localized: "Csak itt \xE1llok, ha valamilyen m\xE1s meztelen Kobold azt akarja,
+      hogy f\xE9tis g\xE9peket k\xE9sz\xEDtsek."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Fajta: kolb\xE1szfesztiv\xE1l"
+    m_Localized: "Fajta: Kolb\xE1szfesztiv\xE1l"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
@@ -1315,7 +1315,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "Goly\xF3csukl\xF3"
+    m_Localized: "Goly\xF3csillap\xEDt\xF3"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
@@ -1343,7 +1343,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: "Bet\xF6lt\xE9s ment\xE9s"
+    m_Localized: "Bet\xF6lt\xE9sment\xE9s"
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897

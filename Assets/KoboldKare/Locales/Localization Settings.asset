@@ -79,7 +79,7 @@ MonoBehaviour:
       type: {class: SmartSettings, ns: UnityEngine.Localization.SmartFormat.Core.Settings,
         asm: Unity.Localization}
       data:
-        m_FormatErrorAction: 0
+        m_FormatErrorAction: 2
         m_ParseErrorAction: 2
         m_CaseSensitivity: 0
         m_ConvertCharacterStringLiterals: 1

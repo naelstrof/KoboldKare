@@ -75,7 +75,6 @@ public class CameraConfigurationListener : MonoBehaviour {
         fovOption = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
         fovOption.changed += OnFOVChanged;
         OnFOVChanged(fovOption.GetValue());
-        gameObject.layer = LayerMask.NameToLayer("PostProcessing");
     }
 
     private void OnEnable() {

@@ -146,10 +146,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         chatYowlPack = chatYowlPackTask.Result;
     }
 
-    private void OnDisable() {
-        Debug.Log("Who the heck disabled me", gameObject);
-    }
-
     void InitializeImmediately() {
         body = gameObject.AddComponent<Rigidbody>();
         classicIK = displayAnimator.gameObject.AddComponent<ClassicIK>();

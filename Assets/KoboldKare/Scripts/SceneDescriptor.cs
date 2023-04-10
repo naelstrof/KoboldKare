@@ -28,7 +28,7 @@ public class SceneDescriptor : OrbitCameraPivotBase {
         //var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
         //audioListener = obj.GetComponent<AudioListener>();
         var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(UniversalAdditionalCameraData), typeof(OrbitCamera), typeof(AudioListener), typeof(CameraConfigurationListener)) {
-            layer = LayerMask.NameToLayer("PostProcessing")
+            layer = LayerMask.NameToLayer("Default")
         };
 
         if (baseCameraConfiguration != null) {

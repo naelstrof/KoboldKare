@@ -26,7 +26,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         if (!isActiveAndEnabled) {
             return lastPosition;
         }
-        lastPosition = ragdoller.ragdolled || characterControllerAnimator.IsAnimating() ? targetTransform.position : transform.position;
+        lastPosition = transform.position;
         return lastPosition;
     }
 

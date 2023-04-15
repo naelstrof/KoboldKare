@@ -341,7 +341,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.45f);
         } else {
-            handler.SetLookAtWeight(handler.GetWeight(), 0.3f, 0.8f, 1f, 0.45f);
+            handler.SetLookAtWeight(handler.GetWeight(), 0.5f, 0.8f, 1f, 0.45f);
         }
 
         handler.SetLookAtPosition(lookPos);

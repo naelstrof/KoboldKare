@@ -55,8 +55,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private Grabber grabber => GetComponent<Grabber>();
     [SerializeField]
     private Inflatable fatnessInflater;
-    [SerializeField]
-    private Inflatable sizeInflater;
+    public Inflatable sizeInflater;
     [FormerlySerializedAs("boobs")] [SerializeField]
     private Inflatable boobsInflater;
     [SerializeField]

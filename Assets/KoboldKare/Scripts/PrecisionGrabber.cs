@@ -61,7 +61,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private Transform previewHandTransform;
     private Grab currentGrab;
     private List<Grab> frozenGrabs;
-    private const float springForce = 20000f;
+    private const float springForce = 2000f;
     private const float breakForce = 4000f;
     private const float maxGrabDistance = 2.5f;
     private bool previewGrab;
@@ -120,7 +120,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
             JointDrive drive = configurableJoint.xDrive;
             drive.positionSpring = springForce;
-            drive.positionDamper = springForce*0.02f;
+            drive.positionDamper = 1f;
             configurableJoint.xDrive = drive;
             configurableJoint.yDrive = drive;
             configurableJoint.zDrive = drive;
@@ -129,12 +129,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             linearLimit.bounciness = 0f;
             var spring = configurableJoint.linearLimitSpring;
             spring.spring = springForce * 0.1f;
-            spring.damper = spring.spring*0.02f;
+            spring.damper = 1f;
             configurableJoint.linearLimitSpring = spring;
             configurableJoint.linearLimit = linearLimit;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             configurableJoint.massScale = 1f;
-            configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
+            configurableJoint.projectionMode = JointProjectionMode.None;
             configurableJoint.projectionAngle = 15f;
             configurableJoint.projectionDistance = 1f;
             configurableJoint.connectedMassScale = 1f;

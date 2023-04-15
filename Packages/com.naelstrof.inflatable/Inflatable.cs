@@ -12,6 +12,10 @@ namespace Naelstrof.Inflatable {
         //[SerializeField] private AnimationCurve bounceCurve;
         //[SerializeField] private float bounceDuration;
         [SerializeField] private InflatableCurve bounce;
+
+        public delegate void ChangedEvent(float newValue);
+
+        public event ChangedEvent changed;
         
         [SerializeReference, SerializeReferenceButton]
         public List<InflatableListener> listeners = new List<InflatableListener>();
@@ -77,6 +81,7 @@ namespace Naelstrof.Inflatable {
                 foreach (InflatableListener listener in listeners) {
                     listener.OnSizeChanged(currentSize);
                 }
+                changed?.Invoke(currentSize);
                 yield return null;
             }
 
@@ -84,6 +89,7 @@ namespace Naelstrof.Inflatable {
             foreach (InflatableListener listener in listeners) {
                 listener.OnSizeChanged(currentSize);
             }
+            changed?.Invoke(currentSize);
             tweenRunning = false;
         }
         public void AddListener(InflatableListener listener) {

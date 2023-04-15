@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: RagdollColliderConfiguration
   m_EditorClassIdentifier: 
   configuration:
+    ragdollMassPerCubicMeter: 400
     headRadius: 0.082
     muzzleLength: 0.122
-    muzzleOffset: 0.329
+    muzzleOffset: 0.976
     upperArmRadius: 0.0401
     lowerArmRadius: 0.0399
     handLength: 0.225

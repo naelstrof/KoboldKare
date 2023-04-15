@@ -32,6 +32,12 @@ public class CameraSwitcher : MonoBehaviour {
     }
     private CameraMode? mode = null;
 
+    void OnKoboldSizeChange(float newSize) {
+        shoulderPivot.SetInfo(new Vector2(0.33f, 0.33f), 0.6f*newSize);
+        buttPivot.SetInfo(new Vector2(0.33f, 0.1f), 0.8f*newSize);
+        basicRagdollPivot.SetInfo(new Vector2(0.5f,0.33f), 1f*newSize);
+    }
+
     void OnEnable() {
         controller = GetComponentInParent<KoboldCharacterController>();
         ragdoller = GetComponentInParent<Ragdoller>();
@@ -42,7 +48,7 @@ public class CameraSwitcher : MonoBehaviour {
             var animator = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator();
             var fpsPivotObj = new GameObject("FPSPivot", typeof(OrbitCameraFPSHeadPivot));
             firstpersonPivot = fpsPivotObj.GetComponent<OrbitCameraFPSHeadPivot>();
-            firstpersonPivot.Initialize(animator, HumanBodyBones.Neck, 5f);
+            firstpersonPivot.Initialize(animator, HumanBodyBones.Head, 5f);
             firstpersonConfiguration = new OrbitCameraBasicConfiguration();
             firstpersonConfiguration.SetPivot(firstpersonPivot.GetComponent<OrbitCameraLerpTrackPivot>());
             firstpersonConfiguration.SetCullingMask(~LayerMask.GetMask("MirrorReflection"));
@@ -83,6 +89,8 @@ public class CameraSwitcher : MonoBehaviour {
             FPSCanvas.SetActive(true);
         }
         mode = CameraMode.FirstPerson;
+        GetComponentInParent<Kobold>().sizeInflater.changed += OnKoboldSizeChange;
+        OnKoboldSizeChange(GetComponentInParent<Kobold>().sizeInflater.GetSize());
     }
 
     void OnGrabChanged(GameObject grab) {
@@ -111,6 +119,9 @@ public class CameraSwitcher : MonoBehaviour {
         OrbitCamera.RemoveConfiguration(lastConfig);
         ragdoller.RagdollEvent -= OnRagdollEvent;
         precisionGrabber.grabChanged -= OnGrabChanged;
+        if (GetComponentInParent<Kobold>() != null) {
+            GetComponentInParent<Kobold>().sizeInflater.changed -= OnKoboldSizeChange;
+        }
     }
 
     void Update() {

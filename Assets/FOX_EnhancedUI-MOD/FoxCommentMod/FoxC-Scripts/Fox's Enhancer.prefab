@@ -1,0 +1,1438 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5484290272035055722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5484290272035055725}
+  - component: {fileID: 5484290272035055724}
+  - component: {fileID: 1000942068392185145}
+  m_Layer: 0
+  m_Name: Fox's Enhancer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5484290272035055725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484290272035055722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1634417, y: -4.839836, z: -2.0896769}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5484290272035055724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484290272035055722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95990d6574224224c8961f87cc5f5213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSpawner: {fileID: 5484290272035055722}
+  inventoryTabSpawner: {fileID: 1021657067542688199, guid: 8495eb87036ab3247a189a81d20ed4ea,
+    type: 3}
+  questFillerSpawner: {fileID: 8573014027055754739, guid: 0359e745c0822f6489bdaa8f2687e831,
+    type: 3}
+  checkerObjectSpawner: {fileID: 7223861473734815896, guid: 9d6fe22a5ef2ff248852327bb3332f7b,
+    type: 3}
+  fontAsset: {fileID: 11400000, guid: ad3ac2ba3a1829f489ca724ebd15a8da, type: 2}
+  questANIM: {fileID: 9100000, guid: 187e705badb353c4aa3acd268db68d21, type: 2}
+  elements:
+  - _elementName: RightPanel
+    _rect:
+      _edited: 1
+      _position: {x: -37, y: 14}
+      _scale: {x: 192, y: 60}
+      _advanced: 0
+      _anchorMin: {x: 1, y: 0}
+      _anchorMax: {x: 1, y: 0}
+      _pivot: {x: 1, y: 0}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 0}
+      _color: {r: 0, g: 0, b: 0, a: 0}
+      _imageType: 0
+      _pixelMultiplier: 0
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 0
+      _disableWrapping: 0
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 0, g: 0, b: 0, a: 0}
+    _layout:
+      _edited: 1
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 1
+      _lag: {x: 0, y: 1}
+  - _elementName: LeftPanel
+    _rect:
+      _edited: 1
+      _position: {x: 39, y: 15.5}
+      _scale: {x: 931, y: 58}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 0}
+      _anchorMax: {x: 0, y: 0}
+      _pivot: {x: 0, y: 0}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 0}
+      _color: {r: 0, g: 0, b: 0, a: 0}
+      _imageType: 0
+      _pixelMultiplier: 0
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 0
+      _disableWrapping: 0
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 0, g: 0, b: 0, a: 0}
+    _layout:
+      _edited: 1
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 1
+      _lag: {x: 1, y: 1}
+  - _elementName: StatsPanel
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: -10}
+      _scale: {x: 135, y: 93}
+      _advanced: 1
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0, y: 1}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 0}
+      _color: {r: 0, g: 0, b: 0, a: 0}
+      _imageType: 0
+      _pixelMultiplier: 0
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 0, y: -8.9}
+        _scale: {x: 295, y: 83}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 1}
+        _anchorMax: {x: 0, y: 1}
+        _pivot: {x: 0, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 26e5b33aa5b268c4f9b892bd1558ca18, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: -8, y: -10}
+        _scale: {x: 135, y: 90}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 1}
+        _anchorMax: {x: 0, y: 1}
+        _pivot: {x: 0, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 0
+        _sprite: {fileID: 21300000, guid: 26e5b33aa5b268c4f9b892bd1558ca18, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 1
+        _isVertical: 1
+        _layoutSpacing: -1
+        _layoutPadding:
+          m_Left: 10
+          m_Right: 10
+          m_Top: 10
+          m_Bottom: 10
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 0
+      _disableWrapping: 0
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 0, g: 0, b: 0, a: 0}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 1
+      _lag: {x: 0, y: 1}
+  - _elementName: MoneyPanel
+    _rect:
+      _edited: 1
+      _position: {x: 48, y: -17}
+      _scale: {x: 95, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: 94012c4894d0e964bab5a54c319dde74, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 1
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 1
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 0.6117647, g: 1, b: 0.77647066, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: FirstPerson
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: 0}
+      _scale: {x: 28, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: 7c5c11c22ac4d3f4f93101fe6e3febc8, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: ThirdPerson
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: 0}
+      _scale: {x: 28, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: LockedFreeCam
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: 0}
+      _scale: {x: 28, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: FreeCam
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: 0}
+      _scale: {x: 28, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids: []
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: ErectionPanel
+    _rect:
+      _edited: 1
+      _position: {x: 0, y: 0}
+      _scale: {x: 46, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: 7.5, y: 2}
+        _scale: {x: 37, y: 37}
+        _advanced: 0
+        _anchorMin: {x: 1, y: 0}
+        _anchorMax: {x: 1, y: 0}
+        _pivot: {x: 1, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 0
+        _sprite: {fileID: 0}
+        _color: {r: 0, g: 0, b: 0, a: 0}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 3
+      _childRect:
+        _edited: 1
+        _position: {x: -7.5, y: 2}
+        _scale: {x: 37, y: 37}
+        _advanced: 0
+        _anchorMin: {x: 1, y: 0}
+        _anchorMax: {x: 1, y: 0}
+        _pivot: {x: 1, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 0
+        _sprite: {fileID: 0}
+        _color: {r: 0, g: 0, b: 0, a: 0}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: EnergyBar
+    _rect:
+      _edited: 0
+      _position: {x: 0, y: 0}
+      _scale: {x: 46, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 14, y: 14}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 14, y: 14}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 1, g: 0.6745098, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 2
+      _childRect:
+        _edited: 1
+        _position: {x: 4, y: 0}
+        _scale: {x: 24, y: 24}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 423a2fe60b8c0aa49a1ffcd28e211a42, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: BellyBar
+    _rect:
+      _edited: 0
+      _position: {x: 0, y: 0}
+      _scale: {x: 46, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 128, y: 14}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 14, y: 14}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 1, g: 0.6745098, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 2
+      _childRect:
+        _edited: 1
+        _position: {x: 4, y: 0}
+        _scale: {x: 24, y: 24}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 798304fefc3f1f14083e625ec78644c5, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: MetabolizeBar
+    _rect:
+      _edited: 0
+      _position: {x: 0, y: 0}
+      _scale: {x: 46, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 30, y: 14}
+        _advanced: 0
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: 25, y: 0}
+        _scale: {x: 14, y: 14}
+        _advanced: 0
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 1, g: 0.6745098, b: 0, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 2
+      _childRect:
+        _edited: 1
+        _position: {x: 4, y: 0}
+        _scale: {x: 24, y: 25}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 90d09021e0dc6cd419a0d2d968f2bc4a, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 8
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: ErectionPanel
+    _rect:
+      _edited: 0
+      _position: {x: 0, y: 0}
+      _scale: {x: 46, y: 34}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 0
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 1
+      _childRect:
+        _edited: 1
+        _position: {x: 7.5, y: 0}
+        _scale: {x: 37, y: 37}
+        _advanced: 1
+        _anchorMin: {x: 1, y: 0}
+        _anchorMax: {x: 1, y: 0}
+        _pivot: {x: 1, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: a5201eca164c7ed42bea741f4d40e584, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 3
+      _childRect:
+        _edited: 1
+        _position: {x: -7.5, y: 0}
+        _scale: {x: 37, y: 37}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0}
+        _anchorMax: {x: 0, y: 0}
+        _pivot: {x: 0, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 8dca5258ffe79e84295368e3f9fc0580, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 0
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 0, y: 0}
+  - _elementName: ChatPanel
+    _rect:
+      _edited: 1
+      _position: {x: 30, y: 80}
+      _scale: {x: 300, y: 200}
+      _advanced: 1
+      _anchorMin: {x: 0, y: 0}
+      _anchorMax: {x: 0, y: 0}
+      _pivot: {x: 0, y: 0}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 1
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 0
+        _position: {x: 7.5, y: 0}
+        _scale: {x: 37, y: 37}
+        _advanced: 0
+        _anchorMin: {x: 1, y: 0}
+        _anchorMax: {x: 1, y: 0}
+        _pivot: {x: 1, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 3
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 0
+        _position: {x: -7.5, y: 0}
+        _scale: {x: 37, y: 37}
+        _advanced: 0
+        _anchorMin: {x: 0, y: 0}
+        _anchorMax: {x: 0, y: 0}
+        _pivot: {x: 0, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 0.4117647}
+        _imageType: 1
+        _pixelMultiplier: 3
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 1
+      _lag: {x: 1, y: 1}
+  - _elementName: ObjectivePanel
+    _rect:
+      _edited: 1
+      _position: {x: -20, y: 200}
+      _scale: {x: 200, y: 140}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 0}
+      _anchorMax: {x: 0, y: 0}
+      _pivot: {x: 0, y: 0}
+      _parentName: 
+      _parentHierarchy: 0
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 1}
+      _imageType: 1
+      _pixelMultiplier: 7
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 0, y: -70}
+        _scale: {x: 190, y: 125}
+        _advanced: 1
+        _anchorMin: {x: 0.5, y: 1}
+        _anchorMax: {x: 0.5, y: 1}
+        _pivot: {x: 0.5, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: d2974282e1aacdd4d8b11aa2962f881f, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 1
+        _pixelMultiplier: 6
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 1
+      _childRect:
+        _edited: 0
+        _position: {x: -7.5, y: 0}
+        _scale: {x: 37, y: 37}
+        _advanced: 0
+        _anchorMin: {x: 0, y: 0}
+        _anchorMax: {x: 0, y: 0}
+        _pivot: {x: 0, y: 1}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 0}
+        _imageType: 1
+        _pixelMultiplier: 1
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 2
+      _childRect:
+        _edited: 1
+        _position: {x: 0, y: -95}
+        _scale: {x: 190, y: 136}
+        _advanced: 1
+        _anchorMin: {x: 0.5, y: 1}
+        _anchorMax: {x: 0.5, y: 1}
+        _pivot: {x: 0.5, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 0
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 0}
+        _imageType: 1
+        _pixelMultiplier: 1
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    - _childID: 3
+      _childRect:
+        _edited: 0
+        _position: {x: 0, y: -95}
+        _scale: {x: 190, y: 136}
+        _advanced: 0
+        _anchorMin: {x: 0.5, y: 1}
+        _anchorMax: {x: 0.5, y: 1}
+        _pivot: {x: 0.5, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 4a7cc2d9ee709dd4fbea992ad1752301, type: 3}
+        _color: {r: 0, g: 0, b: 0, a: 0}
+        _imageType: 1
+        _pixelMultiplier: 1
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 1
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 1
+    _text:
+      _edited: 0
+      _textID: 0
+      _isBold: 0
+      _fontSize: 26
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 1, y: 1}
+  - _elementName: TitleRoll
+    _rect:
+      _edited: 0
+      _position: {x: 15.7, y: -25.3}
+      _scale: {x: 60, y: 36}
+      _advanced: 0
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: TitleRoll
+      _parentHierarchy: -1
+    _image:
+      _edited: 0
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 0}
+      _imageType: 1
+      _pixelMultiplier: 1
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 444, y: -24.5}
+        _scale: {x: 30, y: 30}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 1}
+        _anchorMax: {x: 0, y: 1}
+        _pivot: {x: 0.5, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 0
+        _sprite: {fileID: 21300000, guid: 6a409ce34f1e2904a9f769e876b102c2, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 1
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 1
+      _textID: 1
+      _isBold: 0
+      _fontSize: 15
+      _disableWrapping: 1
+      _textPos: {x: 102, y: -25.5}
+      _fontColor: {r: 1, g: 1, b: 1, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 1, y: 1}
+  - _elementName: StarPanel
+    _rect:
+      _edited: 1
+      _position: {x: 24, y: -25}
+      _scale: {x: 60, y: 36}
+      _advanced: 1
+      _anchorMin: {x: 0, y: 1}
+      _anchorMax: {x: 0, y: 1}
+      _pivot: {x: 0.5, y: 0.5}
+      _parentName: TitleRoll
+      _parentHierarchy: -1
+    _image:
+      _edited: 1
+      _sprite: {fileID: 21300000, guid: ad3ddad7a01a00646b533324e6dc8df7, type: 3}
+      _color: {r: 1, g: 1, b: 1, a: 0}
+      _imageType: 1
+      _pixelMultiplier: 1
+      _removeImageComponent: 0
+    _kids:
+    - _childID: 0
+      _childRect:
+        _edited: 1
+        _position: {x: 16.6, y: 0}
+        _scale: {x: 30, y: 30}
+        _advanced: 1
+        _anchorMin: {x: 0, y: 0.5}
+        _anchorMax: {x: 0, y: 0.5}
+        _pivot: {x: 0, y: 0.5}
+        _parentName: 
+        _parentHierarchy: 0
+      _childImage:
+        _edited: 1
+        _sprite: {fileID: 21300000, guid: 6a409ce34f1e2904a9f769e876b102c2, type: 3}
+        _color: {r: 1, g: 1, b: 1, a: 1}
+        _imageType: 0
+        _pixelMultiplier: 1
+        _removeImageComponent: 0
+      _childLayout:
+        _edited: 0
+        _isVertical: 0
+        _layoutSpacing: 0
+        _layoutPadding:
+          m_Left: 0
+          m_Right: 0
+          m_Top: 0
+          m_Bottom: 0
+        _remove: 0
+    _text:
+      _edited: 1
+      _textID: 1
+      _isBold: 1
+      _fontSize: 13
+      _disableWrapping: 1
+      _textPos: {x: 0, y: 0}
+      _fontColor: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 1}
+    _layout:
+      _edited: 0
+      _isVertical: 0
+      _layoutSpacing: 3
+      _layoutPadding:
+        m_Left: 0
+        m_Right: 0
+        m_Top: 0
+        m_Bottom: 24
+      _remove: 0
+    _dynamics:
+      _edited: 0
+      _lag: {x: 1, y: 1}
+  keyIcons:
+  - {fileID: 21300000, guid: 53650c13a420e13499d2178e0a0a00c9, type: 3}
+  - {fileID: 21300000, guid: 145ab8f0111cd5e47af934cad22f5231, type: 3}
+  - {fileID: 21300000, guid: 0408a6b7c19a5b64d81f2f138da3aeb4, type: 3}
+  - {fileID: 21300000, guid: 22797c63266b37141bded73b4491e6de, type: 3}
+  - {fileID: 21300000, guid: 5853a2ad4761cb54fb038ea7c769362f, type: 3}
+  - {fileID: 21300000, guid: bc9f25277e0ffdd438c9493b8262fb67, type: 3}
+  - {fileID: 21300000, guid: ba56b24a891835049aa53c1a740f75cb, type: 3}
+  - {fileID: 21300000, guid: 83705ecfff8ff88458b2aba012c6a742, type: 3}
+  - {fileID: 21300000, guid: 13eef18e4d4be78488627c3a4df9a510, type: 3}
+  - {fileID: 21300000, guid: fd90ba9eaf6f4a74f95e8ff0d7b44c8d, type: 3}
+  - {fileID: 21300000, guid: 63326f8e321da76439e96676d7c9e160, type: 3}
+  - {fileID: 21300000, guid: b93d7409ee873cf41af764778da145c5, type: 3}
+  - {fileID: 21300000, guid: 1b9fa41ba5983864686a0dc71433e2a0, type: 3}
+  - {fileID: 21300000, guid: 3d63935e8ec9cd848a3c502d3b105f1c, type: 3}
+  - {fileID: 21300000, guid: a2d0bdcc751fef343926991f7ad93bbc, type: 3}
+  - {fileID: 21300000, guid: f073ecb2b8df1264e97812c881bf9caa, type: 3}
+  - {fileID: 21300000, guid: f4c9de9d37bf82f43977bd43fedf218f, type: 3}
+  - {fileID: 21300000, guid: dcf29e188c5f2154a9373e22ac805298, type: 3}
+  - {fileID: 21300000, guid: bcecd1cca95562b40be4f893112cc02d, type: 3}
+  - {fileID: 21300000, guid: 6e13737016d78a74d804efdd4995bd73, type: 3}
+  - {fileID: 21300000, guid: 8d47edae45bc89940af7e632f00bcce5, type: 3}
+  - {fileID: 21300000, guid: c974886c5fbee734daafb15811704c85, type: 3}
+  - {fileID: 21300000, guid: a5201eca164c7ed42bea741f4d40e584, type: 3}
+  - {fileID: 21300000, guid: 19d10ef6e02df894883efb3119098599, type: 3}
+  - {fileID: 21300000, guid: 8dca5258ffe79e84295368e3f9fc0580, type: 3}
+  - {fileID: 21300000, guid: 8c5ebcb8b8c61144abfcfd1b337c13c7, type: 3}
+  - {fileID: 21300000, guid: 6ddf84e36d2b2fb4a9b0717f0204d9e5, type: 3}
+  hudIcons:
+  - {fileID: 21300000, guid: 039466c2918f7364cb35a36c3eb8c9c4, type: 3}
+  - {fileID: 21300000, guid: fbd5089378cd530488835e78c245078c, type: 3}
+  - {fileID: 21300000, guid: 562ce841fdd84ce45b19ebf58acca78b, type: 3}
+  - {fileID: 21300000, guid: 6a409ce34f1e2904a9f769e876b102c2, type: 3}
+  - {fileID: 21300000, guid: c5b044265660de64f902bcf6ee9c5392, type: 3}
+  - {fileID: 21300000, guid: ad6c998a4c7b2f944a1c513f9561bb92, type: 3}
+  - {fileID: 21300000, guid: 1465a471056e8c74d8975892f0c470e4, type: 3}
+  - {fileID: 21300000, guid: 2f517dd71d95e1545b6b2caaa8dd91fa, type: 3}
+  - {fileID: 21300000, guid: 7c5c11c22ac4d3f4f93101fe6e3febc8, type: 3}
+  - {fileID: 21300000, guid: d53e90a1188c6d047878bbb4f21b3e92, type: 3}
+  - {fileID: 21300000, guid: 08f23e073cc0c564bb97de80f37adaa1, type: 3}
+  - {fileID: 21300000, guid: 8e65bb74a4a37c74c9bb67f6dd807cbe, type: 3}
+  - {fileID: 21300000, guid: 2b021216284e7a64dad24b19c908f262, type: 3}
+  - {fileID: 21300000, guid: 1d1b03cad3e27b14e90183d088a74b87, type: 3}
+  softBlackBox: {fileID: 21300000, guid: 94012c4894d0e964bab5a54c319dde74, type: 3}
+--- !u!65 &1000942068392185145
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5484290272035055722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

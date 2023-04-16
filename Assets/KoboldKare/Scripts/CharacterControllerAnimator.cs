@@ -345,7 +345,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.45f);
         } else {
-            float bodyWeightLerp = Mathf.Lerp(1f, 0.05f, Mathf.Clamp01(-eyeRot.y / 90f));
+            float bodyWeightLerp = Mathf.Lerp(0.5f, 0.05f, Mathf.Clamp01(-eyeRot.y / 90f));
             handler.SetLookAtWeight(handler.GetWeight(), bodyWeightLerp, 1f, 1f, 0.45f);
         }
 

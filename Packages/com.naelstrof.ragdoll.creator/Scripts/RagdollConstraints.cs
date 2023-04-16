@@ -197,8 +197,8 @@ public static class RagdollConstraints {
             lowZLimit.contactDistance = 0f;
             configurableJoint.angularZLimit = lowZLimit;
             var slerp = configurableJoint.slerpDrive;
-            slerp.positionSpring = 30f*targetRigidbody.mass;
-            slerp.positionDamper = slerp.positionSpring*0.1f;
+            slerp.positionSpring = 15f*targetRigidbody.mass;
+            slerp.positionDamper = slerp.positionSpring*0.05f;
             configurableJoint.SetTargetRotationLocal(neutralRotation, targetTransform.localRotation);
             configurableJoint.slerpDrive = slerp;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;

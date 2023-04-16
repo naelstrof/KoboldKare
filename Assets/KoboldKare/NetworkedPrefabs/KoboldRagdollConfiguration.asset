@@ -58,6 +58,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     tailRadiusMultiplier: 0.07
-    tailFlexibility: 10
+    tailFlexibility: 25
     twistFactor: 0.25
     spineBendFactor: 0.5

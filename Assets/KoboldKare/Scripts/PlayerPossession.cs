@@ -291,7 +291,7 @@ public class PlayerPossession : MonoBehaviourPun {
             }
         }
 
-        Quaternion characterRot = Quaternion.Euler(0, OrbitCamera.GetPlayerIntendedRotation().eulerAngles.y, 0);
+        Quaternion characterRot = Quaternion.Euler(0, OrbitCamera.GetPlayerIntendedScreenAim().x, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
         wishDir.y = 0;
         controller.inputDir = wishDir;
@@ -331,7 +331,7 @@ public class PlayerPossession : MonoBehaviourPun {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
-        characterControllerAnimator.SetEyeDir(OrbitCamera.GetPlayerIntendedRotation()*Vector3.forward);
+        characterControllerAnimator.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
     }
     public void OnJump(InputValue value) {
         if (!isActiveAndEnabled) return;

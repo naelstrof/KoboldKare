@@ -3946,7 +3946,7 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -3959,18 +3959,18 @@ ConfigurableJoint:
     spring: 592.64355
     damper: 59.264355
   m_LowAngularXLimit:
-    limit: -10
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 10
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 592.64355
     damper: 59.264355
   m_AngularYLimit:
-    limit: 0
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -4009,8 +4009,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 22.224133
-    positionDamper: 2.2224133
+    positionSpring: 11.112066
+    positionDamper: 0.5556033
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4076,7 +4076,7 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -4089,18 +4089,18 @@ ConfigurableJoint:
     spring: 985.28326
     damper: 98.52833
   m_LowAngularXLimit:
-    limit: -10
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 10
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 985.28326
     damper: 98.52833
   m_AngularYLimit:
-    limit: 0
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -4139,8 +4139,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 36.948124
-    positionDamper: 3.6948125
+    positionSpring: 18.474062
+    positionDamper: 0.92370313
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4402,8 +4402,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 124.94758
-    positionDamper: 12.494758
+    positionSpring: 62.47379
+    positionDamper: 3.1236894
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4457,7 +4457,7 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -4470,18 +4470,18 @@ ConfigurableJoint:
     spring: 1440.472
     damper: 144.04721
   m_LowAngularXLimit:
-    limit: -10
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 10
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 1440.472
     damper: 144.04721
   m_AngularYLimit:
-    limit: 0
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -4520,8 +4520,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 54.0177
-    positionDamper: 5.40177
+    positionSpring: 27.00885
+    positionDamper: 1.3504425
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4638,8 +4638,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 111.58081
-    positionDamper: 11.158081
+    positionSpring: 55.790405
+    positionDamper: 2.7895203
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4771,8 +4771,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 54.663418
-    positionDamper: 5.466342
+    positionSpring: 27.331709
+    positionDamper: 1.3665855
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -4918,8 +4918,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 111.57998
-    positionDamper: 11.157998
+    positionSpring: 55.78999
+    positionDamper: 2.7894995
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5109,8 +5109,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 259.9172
-    positionDamper: 25.99172
+    positionSpring: 129.9586
+    positionDamper: 6.49793
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5241,8 +5241,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 259.9071
-    positionDamper: 25.990711
+    positionSpring: 129.95355
+    positionDamper: 6.497678
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5360,8 +5360,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 46.867023
-    positionDamper: 4.6867023
+    positionSpring: 23.433512
+    positionDamper: 1.1716756
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5492,8 +5492,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 29.691074
-    positionDamper: 2.9691074
+    positionSpring: 14.845537
+    positionDamper: 0.74227685
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5611,8 +5611,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 44.15097
-    positionDamper: 4.415097
+    positionSpring: 22.075485
+    positionDamper: 1.1037743
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5730,8 +5730,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 36.208458
-    positionDamper: 3.6208458
+    positionSpring: 18.104229
+    positionDamper: 0.90521145
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5862,8 +5862,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 29.691027
-    positionDamper: 2.9691026
+    positionSpring: 14.845513
+    positionDamper: 0.74227566
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -5981,8 +5981,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 35.145195
-    positionDamper: 3.5145195
+    positionSpring: 17.572598
+    positionDamper: 0.87862986
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -6099,8 +6099,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 96.87592
-    positionDamper: 9.6875925
+    positionSpring: 48.43796
+    positionDamper: 2.4218981
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -6231,8 +6231,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 38.023693
-    positionDamper: 3.8023694
+    positionSpring: 19.011847
+    positionDamper: 0.95059234
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -6363,8 +6363,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 38.023712
-    positionDamper: 3.8023713
+    positionSpring: 19.011856
+    positionDamper: 0.9505928
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -6424,7 +6424,7 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -6437,18 +6437,18 @@ ConfigurableJoint:
     spring: 434.31226
     damper: 43.431225
   m_LowAngularXLimit:
-    limit: -10
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 10
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 434.31226
     damper: 43.431225
   m_AngularYLimit:
-    limit: 0
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -6488,8 +6488,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 16.286709
-    positionDamper: 1.6286709
+    positionSpring: 8.143354
+    positionDamper: 0.40716773
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25
@@ -6561,7 +6561,7 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
+  m_AngularYMotion: 1
   m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
@@ -6574,18 +6574,18 @@ ConfigurableJoint:
     spring: 1425.5942
     damper: 142.55943
   m_LowAngularXLimit:
-    limit: -10
+    limit: -25
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 10
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 1425.5942
     damper: 142.55943
   m_AngularYLimit:
-    limit: 0
+    limit: 25
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -6625,8 +6625,8 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 53.459785
-    positionDamper: 5.3459787
+    positionSpring: 26.729893
+    positionDamper: 1.3364947
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.25

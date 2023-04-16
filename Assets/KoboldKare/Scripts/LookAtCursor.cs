@@ -18,6 +18,8 @@ public class LookAtCursor : MonoBehaviour {
         Vector3 headPos = animator.GetBoneTransform(HumanBodyBones.Head).position;
         Vector3 lookPoint = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distanceFromCamera),
             Camera.MonoOrStereoscopicEye.Mono);
-        characterAnimator.SetEyeDir((lookPoint - headPos).normalized);
+        Quaternion rot = Quaternion.LookRotation((lookPoint - headPos).normalized, Vector3.up);
+        var rotEuler = rot.eulerAngles;
+        characterAnimator.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
     }
 }

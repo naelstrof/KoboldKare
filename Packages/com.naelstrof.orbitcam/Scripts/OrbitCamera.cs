@@ -97,7 +97,7 @@ public class OrbitCamera : MonoBehaviour {
                 _aim.x = Mathf.Repeat(_aim.x+180f, 360f)-180f;
             }
             if (currentCameraData.clampPitch) {
-                _aim.y = Mathf.Clamp(_aim.y, -89f, 89f);
+                _aim.y = Mathf.Clamp(_aim.y, -110f, 110f);
             }
         }
     }

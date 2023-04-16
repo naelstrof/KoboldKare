@@ -330,7 +330,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 Vector3 wantedPosition1 = center - axis * distance / 2f;
                 //Vector3 wantedPosition2 = center + axis * distance / 2f;
                 float ratio = Mathf.Clamp((body.mass / owner.body.mass), 0.75f, 1.25f);
-                Vector3 force = (wantedPosition1 - GetViewPos()) * (springForce * 0.15f);
+                Vector3 force = (wantedPosition1 - GetViewPos()) * (springForce * 0.5f);
                 owner.body.AddForce(force * ratio);
                 //body.AddForce(-force * (1f / ratio));
             }

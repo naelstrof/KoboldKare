@@ -38,7 +38,9 @@ public class KoboldAIPossession : MonoBehaviourPun {
         }
         
         if (ragdoller != null && ragdoller.ragdolled) {
-            characterControllerAnimator.SetEyeDir(headTransform.forward);
+            Quaternion rot = Quaternion.LookRotation(headTransform.forward, Vector3.up);
+            var rotEuler = rot.eulerAngles;
+            characterControllerAnimator.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
             return;
         }
         
@@ -49,7 +51,9 @@ public class KoboldAIPossession : MonoBehaviourPun {
 
         Vector3 wantedDir = focusing ? Vector3.Lerp((focus.position - headTransform.position).normalized,body.transform.forward,0.6f) : body.transform.forward;
         lerpDir = Vector3.RotateTowards(lerpDir, wantedDir, Time.deltaTime * 30f, 0f);
-        characterControllerAnimator.SetEyeDir(lerpDir);
+        Quaternion rotB = Quaternion.LookRotation(lerpDir, Vector3.up);
+        var rotEulerB = rotB.eulerAngles;
+        characterControllerAnimator.SetEyeRot(new Vector2(rotEulerB.y, -rotEulerB.x));
     }
 
     IEnumerator Think() {

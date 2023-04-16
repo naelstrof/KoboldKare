@@ -86,10 +86,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
-    public void SetEyeDir(Vector3 newEyeDir) {
-        Quaternion rot = Quaternion.LookRotation(newEyeDir);
-        Vector3 euler = rot.eulerAngles;
-        eyeRot = new Vector2(euler.y, -euler.x);
+    //public void SetEyeDir(Vector3 newEyeDir) {
+        //Quaternion rot = Quaternion.LookRotation(newEyeDir);
+        //Vector3 euler = rot.eulerAngles;
+        //eyeRot = new Vector2(euler.y, -euler.x);
+    //}
+
+    public void SetEyeRot(Vector2 newEyeRot) {
+        eyeRot = newEyeRot;
     }
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
@@ -335,13 +339,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         //Vector3 lookPos = controller.transform.position + controller.transform.forward;
         Vector3 lookPos = headTransform.position + eyeDir;
 
-        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 0.7f : 0.4f, Time.deltaTime));
+        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.45f);
         } else {
-            handler.SetLookAtWeight(handler.GetWeight(), 0.5f, 0.8f, 1f, 0.45f);
+            float bodyWeightLerp = Mathf.Lerp(1f, 0.05f, Mathf.Clamp01(-eyeRot.y / 90f));
+            handler.SetLookAtWeight(handler.GetWeight(), bodyWeightLerp, 1f, 1f, 0.45f);
         }
 
         handler.SetLookAtPosition(lookPos);

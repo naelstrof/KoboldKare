@@ -440,7 +440,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Flared Equine
+    m_Localized: Blusset heste
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -961,7 +961,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i hulene i n\xE6rheten,
-      g\xE5 og unders\xF8k for meg."
+      g\xE5 og unders\xF8ke for meg."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Selg Micro Kobold
+    m_Localized: Selg Micro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke reduserende
+    m_Localized: Bevegelsessyke reduserer
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944

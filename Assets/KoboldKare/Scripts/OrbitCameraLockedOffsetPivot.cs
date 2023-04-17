@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OrbitCameraLockedOffsetPivot : OrbitCameraPivotBasic {
     private Vector3 offset;
-    private Quaternion rotOffset;
+    private Quaternion rotOffset = Quaternion.identity;
     
     public void Lock(Vector3 position, Quaternion rotation) {
         offset = Quaternion.Inverse(OrbitCamera.GetPlayerIntendedRotation())*(position-transform.position);

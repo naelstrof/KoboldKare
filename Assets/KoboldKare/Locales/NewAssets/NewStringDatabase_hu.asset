@@ -969,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
+    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Teker\xE1l\xF3 cs\u0151"
+    m_Localized: "Tekercsel\u0151cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Fajta: Kolb\xE1szfesztiv\xE1l"
+    m_Localized: "Fajta: kolb\xE1szfesztiv\xE1l"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
@@ -1254,7 +1254,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Fajta: Cicik, nagyok!'
+    m_Localized: 'Fajta: cicik, nagyok!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
@@ -1267,7 +1267,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "K\xE9sz\xEDtsen nekem sok apr\xF3 koboldot, m\xE9ret\xFCk \xE9s
+    m_Localized: "K\xE9sz\xEDtsen nekem sok apr\xF3 koboldsot, m\xE9ret\xFCk \xE9s
       elasztikus test\xFCk nagyon j\xF3, \xFAjrafelhaszn\xE1lhat\xF3 \xF3vszerr\xE9
       teszik \u0151ket."
     m_Metadata:
@@ -1315,7 +1315,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "Goly\xF3csillap\xEDt\xF3"
+    m_Localized: "Goly\xF3csukl\xF3"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033

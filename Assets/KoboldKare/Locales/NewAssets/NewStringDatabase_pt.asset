@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equine
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -1365,7 +1365,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "Excluir um salvamento \xE9 permanente!"
+    m_Localized: "A exclus\xE3o de uma defesa \xE9 permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
@@ -1392,8 +1392,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704593
   - m_Id: 280448613000617984
-    m_Localized: "Falha ao conectar-se ao Steam, n\xE3o ser\xE1 o download autom\xE1tico
-      de mods."
+    m_Localized: "Falha ao conectar-se ao Steam, n\xE3o vai download automaticamente
+      mods."
     m_Metadata:
       m_Items: []
   references:

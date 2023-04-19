@@ -157,8 +157,8 @@ public static class RagdollConstraints {
             configurableJoint.angularZMotion = ConfigurableJointMotion.Limited;
             configurableJoint.rotationDriveMode = RotationDriveMode.Slerp;
             var angularLimitSpring = configurableJoint.angularXLimitSpring;
-            angularLimitSpring.spring = 800f*targetRigidbody.mass;
-            angularLimitSpring.damper = angularLimitSpring.spring*0.1f;
+            angularLimitSpring.spring = 500f*targetRigidbody.mass;
+            angularLimitSpring.damper = angularLimitSpring.spring*0.03f;
             configurableJoint.angularXLimitSpring = angularLimitSpring;
             configurableJoint.angularYZLimitSpring = angularLimitSpring;
 
@@ -198,12 +198,12 @@ public static class RagdollConstraints {
             configurableJoint.angularZLimit = lowZLimit;
             var slerp = configurableJoint.slerpDrive;
             slerp.positionSpring = 15f*targetRigidbody.mass;
-            slerp.positionDamper = slerp.positionSpring*0.05f;
+            slerp.positionDamper = slerp.positionSpring*0.03f;
             configurableJoint.SetTargetRotationLocal(neutralRotation, targetTransform.localRotation);
             configurableJoint.slerpDrive = slerp;
             configurableJoint.projectionMode = JointProjectionMode.PositionAndRotation;
-            configurableJoint.projectionAngle = 15f;
-            configurableJoint.projectionDistance = 0.25f;
+            configurableJoint.projectionAngle = 5f;
+            configurableJoint.projectionDistance = 0.1f;
             configurableJoint.connectedMassScale = massScale;
             configurableJoint.massScale = 1f;
             configurableJoint.enablePreprocessing = false;

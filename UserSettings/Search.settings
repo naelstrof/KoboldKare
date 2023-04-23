@@ -7,9 +7,12 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.B655092D" = "st:dick"
+	"last_search.B655092D" = "st:"
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
+	"last_search.DA94955A" = "main menu"
+	"OpenInspectorPreview.DA94955A" = "0"
+	"currentGroup.DA94955A" = "all"
 }
 providers = {
 	at = {

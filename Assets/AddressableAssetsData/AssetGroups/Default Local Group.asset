@@ -16,7 +16,16 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: d53522b88d79eeb43b0cf963a8a95714
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 01ea86322e98d0745af21944aa36ac06
+    m_Address: Assets/Rena/Rena_head_color.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d4dacd31cb15cdb41b78e426ac72053e
+    m_Address: Assets/Rena/RenaPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlayableCharacter
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

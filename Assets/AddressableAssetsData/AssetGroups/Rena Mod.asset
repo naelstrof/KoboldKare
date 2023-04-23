@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Rena Mod
+  m_EditorClassIdentifier: 
+  m_GroupName: New Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ad55b547a10a946408a43135eda24887
+  m_SerializeEntries:
+  - m_GUID: d4dacd31cb15cdb41b78e426ac72053e
+    m_Address: Assets/Rena/RenaPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PlayableCharacter
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5de18da97a65f6b4b95d2003394860aa, type: 2}
+    - {fileID: 11400000, guid: 5a470f12e0041984d88d405149d5cbbf, type: 2}

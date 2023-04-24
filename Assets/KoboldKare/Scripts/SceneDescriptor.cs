@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(OcclusionArea))]
 [RequireComponent(typeof(MusicManager))]
 [RequireComponent(typeof(DayNightCycle))]
-[RequireComponent(typeof(CloudSpawner))]
+[RequireComponent(typeof(CloudPool))]
 public class SceneDescriptor : OrbitCameraPivotBase {
     private static SceneDescriptor instance;
     

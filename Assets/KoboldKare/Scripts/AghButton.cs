@@ -39,7 +39,7 @@ public static class AghButton {
         return 1;
     }
 
-    [MenuItem("Tools/KoboldKare/Text RTL Fixer")]
+    //[MenuItem("Tools/KoboldKare/Text RTL Fixer")]
     public static void RTLFixer() {
         int fixes = 0;
         Undo.IncrementCurrentGroup();
@@ -72,7 +72,7 @@ public static class AghButton {
         Debug.Log($"Fixed {fixes} text mesh pros, none found left!");
     }
 
-    [MenuItem("Tools/KoboldKare/HomogenizeButtons")]
+    //[MenuItem("Tools/KoboldKare/HomogenizeButtons")]
     public static void HomogenizeButtons() {
         ColorBlock block = new ColorBlock();
         block.normalColor = Color.white;
@@ -99,7 +99,7 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
-    [MenuItem("Tools/KoboldKare/Disable all GPU Instanced Materials")]
+    //[MenuItem("Tools/KoboldKare/Disable all GPU Instanced Materials")]
     public static void FindGPUInstancedMaterial() {
         Undo.IncrementCurrentGroup();
         Undo.SetCurrentGroupName("Changed project gpu instancing");
@@ -116,7 +116,7 @@ public static class AghButton {
         }
         Undo.CollapseUndoOperations(undoIndex);
     }
-    [MenuItem("Tools/KoboldKare/Find Specular Workflow Materials")]
+    //[MenuItem("Tools/KoboldKare/Find Specular Workflow Materials")]
     public static void FindSpecularWorkflowMaterials() {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
@@ -128,7 +128,7 @@ public static class AghButton {
             }
         }
     }
-    [MenuItem("Tools/KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
+    //[MenuItem("Tools/KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
     public static void FindSpecularOffMaterials() {
         string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
@@ -175,7 +175,7 @@ public static class AghButton {
 
         Debug.Log("No found errornous materials.");
     }
-    [MenuItem("Tools/KoboldKare/Find Spacialized Audio")]
+    //[MenuItem("Tools/KoboldKare/Find Spacialized Audio")]
     public static void FindSpacializedAudio() {
         int count = 0;
         foreach(GameObject g in Selection.gameObjects) {

@@ -19,6 +19,18 @@ public class RagdollCreator : ScriptableWizard {
 
     public event ExitAction exited;
 
+    [MenuItem("Tools/Naelstrof/Ragdoll Creator")]
+    public static void CreateRagdollStandalone() {
+        if (Selection.activeGameObject == null) {
+            throw new UnityException("Select an animator before running this tool.");
+        }
+        var animator = Selection.activeGameObject.GetComponentInChildren<Animator>();
+        if (animator == null) {
+            throw new UnityException("No animator found on active selected object.");
+        }
+        CreateRagdollWizard(animator);
+    }
+
     public static RagdollCreator CreateRagdollWizard(Animator animator) {
         var creator = DisplayWizard<RagdollCreator>("Create ragdoll", "Create");
         creator.cachedScrunchStretchPack = AssetDatabase.LoadAssetAtPath<RagdollScrunchStretchPack>( AssetDatabase.GUIDToAssetPath("f918570129faed5418e218f0599df41a"));

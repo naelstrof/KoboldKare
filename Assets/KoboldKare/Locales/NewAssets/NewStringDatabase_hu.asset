@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
-      f\xFCgg\u0151 goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
+      goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -969,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
+    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1007,7 +1007,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171-hajl\xEDt\xF3
+    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171 hajl\xEDt\xF3
       rugalmass\xE1g\xE1r\xF3l, baszd meg egy koboldot, amelynek teste nagyobb."
     m_Metadata:
       m_Items: []
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1201,8 +1201,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Csak itt \xE1llok, ha valamilyen m\xE1s meztelen Kobold azt akarja,
-      hogy f\xE9tis g\xE9peket k\xE9sz\xEDtsek."
+    m_Localized: "Csak itt \xE1llok, ha m\xE1s meztelen Kobold azt akarja, hogy f\xE9tis
+      g\xE9peket k\xE9sz\xEDtsek."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, ezek nagyon hasznosak pap\xEDr
+    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, nagyon hasznosak pap\xEDr
       s\xFAlyk\xE9nt \xE9s p\xE1rnak\xE9nt."
     m_Metadata:
       m_Items: []
@@ -1254,7 +1254,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Fajta: cicik, nagyok!'
+    m_Localized: 'Fajta: Cicik, nagyok!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
@@ -1267,7 +1267,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "K\xE9sz\xEDtsen nekem sok apr\xF3 koboldsot, m\xE9ret\xFCk \xE9s
+    m_Localized: "K\xE9sz\xEDtsen nekem sok apr\xF3 koboldot, m\xE9ret\xFCk \xE9s
       elasztikus test\xFCk nagyon j\xF3, \xFAjrafelhaszn\xE1lhat\xF3 \xF3vszerr\xE9
       teszik \u0151ket."
     m_Metadata:
@@ -1409,6 +1409,10 @@ MonoBehaviour:
   - m_Id: 280448613000617984
     m_Localized: "Nem siker\xFClt csatlakozni a g\u0151zhez, nem fog automatikusan
       let\xF6lteni a modokat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Koppintson a
     m_Metadata:
       m_Items: []
   references:

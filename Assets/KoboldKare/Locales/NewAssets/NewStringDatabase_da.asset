@@ -959,8 +959,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Jeg fornemmer en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
-      huler, g\xE5r og unders\xF8ger for mig."
+    m_Localized: "Jeg f\xF8ler en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
+      huler, g\xE5 og unders\xF8ge for mig."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1029,7 +1029,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Velkommen til Underground.
+    m_Localized: Velkommen til undergrundsbanen.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
@@ -1058,7 +1058,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "\xC5h ... har du noget imod at l\xE6gge p\xE5 nogle bukser?"
+    m_Localized: "\xD8h ... har du noget imod at s\xE6tte p\xE5 nogle bukser?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
@@ -1130,7 +1130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Velkommen til casinoet her for forretning eller gl\xE6de?"
+    m_Localized: "Velkommen til casinoet, her for forretning eller forn\xF8jelse?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1152,7 +1152,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ikke n\xF8dvendigt at v\xE6re genert."
+      op her, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1224,8 +1224,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Jeg har brug for en masse kobolds med k\xE6mpe haner, det er vigtigt
-      for mine planer."
+    m_Localized: Jeg har brug for en masse kobolds med gigantiske haner, det er vigtigt
+      for mine planer.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1389,8 +1389,12 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704580
   - m_Id: 280448613000617984
-    m_Localized: Kunne ikke oprette forbindelse til damp, vil ikke automatisk downloade
+    m_Localized: Kunne ikke oprette forbindelse til damp, ikke automatisk downloadet
       mods.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: "Tryk p\xE5"
     m_Metadata:
       m_Items: []
   references:

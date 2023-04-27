@@ -897,7 +897,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: Een knuppenstang met zachte vlezige weerhaken en lage hangende ballen.
+    m_Localized: Een knuppenden met zachte vlezige weerhaken en lage hangende ballen.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -989,7 +989,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Koop de Body Swapper.
+    m_Localized: Koop de body swapper.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
@@ -1005,7 +1005,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945669
-    m_Localized: Voor een prijs natuurlijk.
+    m_Localized: voor een prijs natuurlijk.
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
@@ -1022,8 +1022,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
-      fuck a kobold met een lul groter dan zijn lichaam.
+    m_Localized: Leer meer over de reality-buigende elasticiteit van Kobolds, Fuck
+      a Kobold met een lul die groter is dan zijn lichaam.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1091,7 +1091,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Viervoudige gevulde
+    m_Localized: Viervoudig gevuld
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
@@ -1122,8 +1122,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
-    m_Localized: "Ik heb besloten dat ik een partner nodig heb, de perfecte kobold
-      voor me cre\xEBren."
+    m_Localized: "Ik heb besloten dat ik een partner nodig heb, de perfecte Kobold
+      voor mij cre\xEBer."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
@@ -1154,7 +1154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: Welkom in het casino, hier voor zaken of plezier?
+    m_Localized: Welkom bij het casino, hier voor zaken of plezier?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1413,7 +1413,11 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704581
   - m_Id: 280448613000617984
-    m_Localized: Kan geen verbinding maken met Steam, zal niet automatische downloadmods.
+    m_Localized: Kan geen verbinding maken met Steam, zal niet automatisch downloaden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Kraan
     m_Metadata:
       m_Items: []
   references:

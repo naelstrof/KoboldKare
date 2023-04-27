@@ -1296,7 +1296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: "S\xE1bado"
+    m_Localized: Shrink
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
@@ -1394,6 +1394,10 @@ MonoBehaviour:
   - m_Id: 280448613000617984
     m_Localized: "No se pudo conectar a Steam, no se descargar\xE1 autom\xE1ticamente
       mods."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Grifo
     m_Metadata:
       m_Items: []
   references:

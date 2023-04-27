@@ -1048,7 +1048,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Comunque solo UH .. Aiutati, immagino.
+    m_Localized: Comunque solo uh .. aiuta te stesso immagino.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1119,7 +1119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1214,7 +1214,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, arrivarci!"
+    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, raggiungerlo!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1254,7 +1254,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Razza: itty bitty'
+    m_Localized: 'Razza: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
@@ -1397,8 +1397,12 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704588
   - m_Id: 280448613000617984
-    m_Localized: Impossibile connettersi a Steam, non si non gradano automaticamente
+    m_Localized: Impossibile connettersi a vapore, non si non gradano automaticamente
       le mod.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Rubinetto
     m_Metadata:
       m_Items: []
   references:

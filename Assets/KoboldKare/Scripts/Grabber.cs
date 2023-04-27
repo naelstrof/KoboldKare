@@ -354,8 +354,12 @@ public class Grabber : MonoBehaviourPun {
         return viewPos;
     }
 
-    public void TryGrab() {
-        if (grabbedObjects.Count >= maxGrabCount) {
+    public void TryGrab(bool multiGrabMode) {
+        int maxGrabCountLocal = maxGrabCount;
+        if (!multiGrabMode) {
+            maxGrabCountLocal = 1;
+        }
+        if (grabbedObjects.Count >= maxGrabCountLocal) {
             return;
         }
 
@@ -391,7 +395,7 @@ public class Grabber : MonoBehaviourPun {
                 grabbedObjects.Add(info);
                 RemoveGivebackKobold(info.kobold);
             }
-            if (grabbedObjects.Count >= maxGrabCount) {
+            if (grabbedObjects.Count >= maxGrabCountLocal) {
                 return;
             }
         }

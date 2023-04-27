@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
+    m_Localized: Uansett bare eh .. hjelp deg selv antar jeg.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1114,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
+    m_Localized: "Jeg vil ha mer av den gigantiske typen kobold, de er veldig nyttige
       for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke reduserer
+    m_Localized: Bevegelsessyke reduserende
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1393,6 +1393,10 @@ MonoBehaviour:
       - rid: 1602997996487704591
   - m_Id: 280448613000617984
     m_Localized: Kunne ikke koble til damp, vil ikke automatisk nedlastningsmodus.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Trykk
     m_Metadata:
       m_Items: []
   references:

@@ -1319,6 +1319,10 @@ MonoBehaviour:
     m_Key: NO_STEAM_CONNECTION
     m_Metadata:
       m_Items: []
+  - m_Id: 295755658549579776
+    m_Key: BUTTON_TAP
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

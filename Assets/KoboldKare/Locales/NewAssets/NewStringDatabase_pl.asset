@@ -385,7 +385,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: MORLATRY
+    m_Localized: MORTABLATOR
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -587,8 +587,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Magiczne przywi\u0105zane z w\u0119z\u0142em, pier\u015Bcie\u0144
-      przy\u015Brodkowy i kilka wyboistych grzbiet\xF3w."
+    m_Localized: "Magiczne przywi\u0105zane z w\u0119z\u0142em, pier\u015Bcieniem
+      przy\u015Brodkowym i kilka wyboistych grzbiet\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
@@ -748,7 +748,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Dostarcz du\u017Cego kutasa Koboldsa."
+    m_Localized: "Dostarcz du\u017Cego penisa Koboldsa."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
@@ -771,7 +771,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Wype\u0142nij Kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
+    m_Localized: "Wype\u0142nij kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
       ju\u017C mogli znie\u015B\u0107, musz\u0119 zobaczy\u0107, jak trwa\u0142y
       jest tw\xF3j rodzaj."
     m_Metadata:
@@ -952,7 +952,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -972,7 +972,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Wyczuwam ciemn\u0105 obecno\u015B\u0107 w pobliskich jaskiniach,
-      id\u017A dla mnie i sprawdzaj mnie."
+      id\u017A do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Kup Swapper Body From the Creep in the Cave.
+    m_Localized: "Kup Swapper Body z pe\u0142zania w jaskini."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1161,7 +1161,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie w cenie ..."
+    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie za cen\u0119 ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1204,7 +1204,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Menu g\u0142\xF3wne dla bezpiecznego dla pracy"
+    m_Localized: "Menu g\u0142\xF3wne bezpieczne dla pracy"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1409,6 +1409,10 @@ MonoBehaviour:
   - m_Id: 280448613000617984
     m_Localized: "Nie uda\u0142o si\u0119 po\u0142\u0105czy\u0107 z Steam, nie automatycznie
       pobieraj\u0105 mods."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: "Uzyskiwa\u0107"
     m_Metadata:
       m_Items: []
   references:

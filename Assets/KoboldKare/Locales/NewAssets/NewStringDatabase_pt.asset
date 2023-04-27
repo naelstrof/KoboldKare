@@ -207,8 +207,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR <#008CFF> JOGAR
-      <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino
+    m_Localized: Equine
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -453,7 +453,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199010
-    m_Localized: Em fora
+    m_Localized: Fora
     m_Metadata:
       m_Items: []
   - m_Id: 516099199011
@@ -489,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Tamanho Kobold
+    m_Localized: Tamanho de Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -529,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Espa\xE7o esquerdo"
+    m_Localized: Quarto esquerdo
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -743,7 +743,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Eu preciso de Kobolds com paus grandes, prepare um e envie -o rapidamente
+    m_Localized: Eu preciso de kobolds com paus grandes, prepare um e envie -o rapidamente
       para mim.
     m_Metadata:
       m_Items: []
@@ -780,7 +780,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "\xC9 do nosso interesse ter alguns Kobolds superevinos, engolir
+    m_Localized: "\xC9 do nosso interesse ter alguns kobolds superevinos, engorda
       um pouco e envi\xE1 -los para mim."
     m_Metadata:
       m_Items: []
@@ -1114,7 +1114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
@@ -1394,6 +1394,10 @@ MonoBehaviour:
   - m_Id: 280448613000617984
     m_Localized: "Falha ao conectar-se ao Steam, n\xE3o vai download automaticamente
       mods."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 295755658549579776
+    m_Localized: Tocar
     m_Metadata:
       m_Items: []
   references:

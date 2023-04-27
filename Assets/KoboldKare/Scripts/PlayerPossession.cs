@@ -13,7 +13,8 @@ using Cursor = UnityEngine.Cursor;
 
 public class PlayerPossession : MonoBehaviourPun {
     public PlayerInput controls;
-    public float coyoteTime = 0.2f;
+    public float coyoteTime = 0.2f; 
+    public int defaultMultiGrabSwitchFrames = 15;
     public User user;
     public CanvasGroup chatGroup;
     public CommandTextDisplay chatDisplay;
@@ -48,8 +49,11 @@ public class PlayerPossession : MonoBehaviourPun {
     private bool rotating;
     private bool grabbing;
     private bool trackingHip;
+    private int multiGrabSwitchTimer;
+    public bool multiGrabMode = true;
     private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
+
     
     [SerializeField]
     private List<GameObject> activateUI;
@@ -61,7 +65,10 @@ public class PlayerPossession : MonoBehaviourPun {
     
     [SerializeField]
     private List<GameObject> shiftGrabUI;
-    
+
+    [SerializeField]
+    private List<GameObject> multiGrabSwitchUi;
+
     void OnThrowChange(bool newThrowStatus) {
         foreach (var throwElement in throwUI) {
             if (throwElement.activeInHierarchy != newThrowStatus) {
@@ -284,10 +291,13 @@ public class PlayerPossession : MonoBehaviourPun {
             OrbitCamera.SetTracking(true);
         }
 
+        if (multiGrabSwitchTimer > 0) {
+            multiGrabSwitchTimer -= 1;
+        }
 
         if (!pauseInput) {
             if (grabbing && !switchedMode && !pGrabber.HasGrab()) {
-                grabber.TryGrab();
+                grabber.TryGrab(multiGrabMode);
             }
         }
 
@@ -331,6 +341,14 @@ public class PlayerPossession : MonoBehaviourPun {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
+        if (kobold.GetGenes().grabCount > 1 && !multiGrabSwitchUi[0].activeInHierarchy)
+        {
+            multiGrabSwitchUi[0].SetActive(true);
+        }
+        if (kobold.GetGenes().grabCount == 1 && multiGrabSwitchUi[0].activeInHierarchy)
+        {
+            multiGrabSwitchUi[0].SetActive(false);
+        }
         characterControllerAnimator.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
     }
     public void OnJump(InputValue value) {
@@ -348,6 +366,14 @@ public class PlayerPossession : MonoBehaviourPun {
         pGrabber.SetPreviewState(shift);
         if (!shift) {
             StartCoroutine(PauseInputForSeconds(0.5f));
+            if (multiGrabSwitchTimer > 0 && multiGrabSwitchUi[0].activeInHierarchy) {
+                multiGrabMode = !multiGrabMode;
+                multiGrabSwitchUi[1].SetActive(multiGrabMode);
+                multiGrabSwitchUi[2].SetActive(!multiGrabMode);
+            }
+        }
+        else {
+            multiGrabSwitchTimer = defaultMultiGrabSwitchFrames;
         }
     }
 

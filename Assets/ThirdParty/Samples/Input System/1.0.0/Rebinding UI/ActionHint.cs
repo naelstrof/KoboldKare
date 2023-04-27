@@ -8,7 +8,7 @@ using KoboldKare;
 
 public class ActionHint : MonoBehaviour {
     public InputActionReference action;
-    public TMPro.TextMeshProUGUI text;
+    public TMPro.TMP_Text text;
     public Image image;
     private bool switching = false;
     private enum State {

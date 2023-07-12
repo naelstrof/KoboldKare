@@ -141,23 +141,21 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 lods[0].renderers = renderers.ToArray();
                 group.SetLODs(lods);
             }
-            if (s.gameObject.name == "Body") {
-                if (physics != null) {
-                    physics.targetSkins.Add(smrCopies[s]);
-                }
-                foreach (var inflatable in kobold.GetAllInflatableListeners()) {
-                    if (inflatable is InflatableBreast breast) {
-                        breast.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                    }
-                    if (inflatable is InflatableBlendShape blendshape) {
-                        blendshape.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                    }
-                    if (inflatable is InflatableBelly belly) {
-                        belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
-                    }
-                }
-                proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+            if (physics != null) {
+                physics.targetSkins.Add(smrCopies[s]);
             }
+            foreach (var inflatable in kobold.GetAllInflatableListeners()) {
+                if (inflatable is InflatableBreast breast) {
+                    breast.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                }
+                if (inflatable is InflatableBlendShape blendshape) {
+                    blendshape.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                }
+                if (inflatable is InflatableBelly belly) {
+                    belly.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
+                }
+            }
+            proceduralDeformation.AddTargetRenderer(g.GetComponent<SkinnedMeshRenderer>());
             foreach(Material m in g.GetComponent<SkinnedMeshRenderer>().materials) {
                 m.SetFloat(Head, 1f);
             }

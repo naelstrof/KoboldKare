@@ -62,6 +62,9 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     [SerializeField] private float colliderRadius = 0.2f;
     
     [SerializeField] private List<SkinnedMeshRenderer> bodyRenderers;
+    
+    [Tooltip("How high off the ground the character collider floats.")]
+    [SerializeField] private float stepHeight = 1.2f;
 
     private AudioPack footLand;
     private AudioPack footstepPack;
@@ -183,6 +186,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         characterCollider.height = colliderHeight;
         characterCollider.radius = colliderRadius;
         characterCollider.material = spaceLubeMaterial;
+        characterController.stepHeight = stepHeight;
         
         characterController.footland = footLand;
         characterController.worldModel = displayAnimator.transform;

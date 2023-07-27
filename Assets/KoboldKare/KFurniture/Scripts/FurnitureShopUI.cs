@@ -35,6 +35,8 @@ public class FurnitureShopUI : MonoBehaviour
     private List<PhotonGameObjectReference> photonList = new List<PhotonGameObjectReference>();
     [SerializeField]
     private Sprite defaultSprite;
+    [SerializeField]
+    private Transform positionToSpawnCategories;
     private List<string> catNames;
     // Start is called before the first frame update
     void Start()
@@ -48,7 +50,7 @@ public class FurnitureShopUI : MonoBehaviour
         }
     private void buy()
     {
-        //Debug.Log("Bought!");
+        
         if(selected != null) { 
             Transform koboldTransform = kobold.hip.transform;
             if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
@@ -76,24 +78,32 @@ public class FurnitureShopUI : MonoBehaviour
             Cursor.visible = true;
             if(!isSetup)
             {   await furnitureDatabase.Setup();
-                Debug.Log("Finished");
+                
                 GameObject temp;
-                GameObject catTemp;
+                
                 Transform catPanelTransform;
                 catNames=new List<string>();
                 foreach(string name in furnitureDatabase.GetCategoryNames())
                 {catNames.Add(name);}
                 int i = 0;
+                
+                GameObject previous=null;
                         foreach(string catName in catNames){
                             int j=0;
-                            catTemp=Instantiate(categoryLabel);
-                            catPanelTransform=catTemp.transform.Find("Panel").transform;
+                            GameObject catTemp;
+                            catTemp=Instantiate(categoryLabel,positionToSpawnCategories.position,Quaternion.identity);
+                            if(previous != null)
+                                catTemp.transform.SetParent(previous.GetComponent<CategoryLabel>().nextGet);
+                                else
+                                catTemp.transform.SetParent(contentTransform);
                             catTemp.GetComponent<TMP_Text>().text=catName;
-                            catTemp.transform.SetParent(contentTransform);
-                                GameObject catPanel=catTemp.transform.Find("Panel").gameObject;
+                            catPanelTransform=catTemp.transform.GetChild(0);
+                            previous=catTemp;
+                            positionToSpawnCategories=catTemp.GetComponent<CategoryLabel>().nextGet.transform;
+                                GameObject catPanel=catTemp.transform.GetChild(0).gameObject;
                                 catTemp.GetComponent<Button>().onClick.AddListener( ()=>
                                             {
-                                            catPanel.SetActive(!catPanel.activeSelf);
+                                            catTemp.GetComponent<CategoryLabel>().Toggle();
                                             LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform.gameObject.GetComponent<RectTransform>());
                                             } 
                                 );
@@ -111,7 +121,7 @@ public class FurnitureShopUI : MonoBehaviour
                             
                             i++;
                             j=0;
-
+                        catTemp.GetComponent<CategoryLabel>().Setup();
                         }
                 i = 0;
                 foreach(Furniture furn in furnitureDatabase.GetList())
@@ -124,7 +134,9 @@ public class FurnitureShopUI : MonoBehaviour
                     i++;
                 }
                 LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform.gameObject.GetComponent<RectTransform>());
+                
                 isSetup=true;
+                
             }
         
     }

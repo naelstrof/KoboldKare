@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &688801848098217465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9029209892340059363}
+  - component: {fileID: 6343341079817887254}
+  m_Layer: 11
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9029209892340059363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688801848098217465}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0000006812, y: 1.05, z: -0.00000012772}
+  m_LocalScale: {x: 2.5984764, y: 0.054848507, z: 2.5984764}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 309925929456543964}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &6343341079817887254
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688801848098217465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2039067425263952043
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,9 +59,13 @@ GameObject:
   - component: {fileID: 2123350480145719303}
   - component: {fileID: 8219623196315935346}
   - component: {fileID: 1326571668406890846}
-  - component: {fileID: 7159731666477720928}
-  - component: {fileID: 2715384557700393228}
-  - component: {fileID: 3330647655721848505}
+  - component: {fileID: 6572689937781869199}
+  - component: {fileID: 3711671860616167305}
+  - component: {fileID: 810570340636190151}
+  - component: {fileID: 7657214808049464444}
+  - component: {fileID: 5073681319290630585}
+  - component: {fileID: 2251539680819737008}
+  - component: {fileID: 1537305504368373848}
   m_Layer: 11
   m_Name: KitchenTableRound
   m_TagString: Untagged
@@ -39,6 +89,7 @@ Transform:
   - {fileID: 3397471031053607889}
   - {fileID: 4787919482067617177}
   - {fileID: 5001747532107937161}
+  - {fileID: 9029209892340059363}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,46 +160,97 @@ MonoBehaviour:
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 4787919482067617177}
   rb: {fileID: 0}
---- !u!65 &7159731666477720928
+--- !u!65 &6572689937781869199
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039067425263952043}
-  m_Material: {fileID: 13400000, guid: 31d69dae40750484580ed4bcc0b5c269, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9999999, y: 0.99999994, z: 0.9999999}
-  m_Center: {x: -0.00000047683713, y: 0.000000014901161, z: 0.00000001490116}
---- !u!65 &2715384557700393228
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: -0.4884361, y: 0.51, z: 1.0018957}
+--- !u!65 &3711671860616167305
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039067425263952043}
-  m_Material: {fileID: 13400000, guid: 31d69dae40750484580ed4bcc0b5c269, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9999999, y: 0.99999994, z: 0.9999999}
-  m_Center: {x: 0.1, y: 0.000000014901161, z: 0.00000001490116}
---- !u!64 &3330647655721848505
-MeshCollider:
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: 0.47, y: 0.51, z: 0.98}
+--- !u!65 &810570340636190151
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039067425263952043}
-  m_Material: {fileID: 13400000, guid: 31d69dae40750484580ed4bcc0b5c269, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -6755732279761278134, guid: 2a314c6e0b014f34b8842ec2e6a01164, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: 1.09, y: 0.51, z: 0.21}
+--- !u!65 &7657214808049464444
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039067425263952043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: -1.06, y: 0.51, z: 0.24}
+--- !u!65 &5073681319290630585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039067425263952043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: -0.83, y: 0.51, z: -0.7}
+--- !u!65 &2251539680819737008
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039067425263952043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: 0, y: 0.51, z: -1.08}
+--- !u!65 &1537305504368373848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039067425263952043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1863704, y: 1, z: 0.15984923}
+  m_Center: {x: 0.85, y: 0.51, z: -0.65}
 --- !u!1 &4615421399208513263
 GameObject:
   m_ObjectHideFlags: 0

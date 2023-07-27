@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 847ddbc107c84624f9f774069dcbedaa, type: 2}
   - {fileID: 11400000, guid: bb825dddc767c5440a254c78ba4fcc67, type: 2}
   - {fileID: 11400000, guid: f0dbfd87c301dbe4cacd1adc8b0f34c6, type: 2}
+  - {fileID: 11400000, guid: deab4be719df1d741a585a5f6c821be9, type: 2}
   furnitureToLoad:
   - {fileID: 11400000, guid: c3fa7d44eb98f34428bc37db4821d839, type: 2}
   shouldLoadAdressable: 1

@@ -24,16 +24,14 @@ public class FurnitureDatabase : ScriptableObject
     private string AdressableFurnitureLabel;
 
     public async Task  Setup(){
-        Debug.Log("SettingUp");
         categories=new Dictionary<string,List<Furniture>>();
         furniture=new List<Furniture>();
         foreach(FurnitureCategory cat in categoriesToLoad)
-        {   Debug.Log("Adding "+cat.catName);
+        {   
             AddCategory(cat);
         }
 
         foreach(Furniture fur in furnitureToLoad){
-            Debug.Log("Adding "+fur.name);
             AddFurniture(fur);
         }
 
@@ -42,10 +40,9 @@ public class FurnitureDatabase : ScriptableObject
         }
     }
     public async Task LoadAdressables()
-    {           Debug.Log("Running");
+    {           
                 await LoadCategories();
                 await LoadFurniture();
-    
     }
     private async Task LoadCategories(){
             var gottenCategories = await Addressables.LoadResourceLocationsAsync(AdressableCategoryLabel, typeof(FurnitureCategory)).Task;
@@ -58,7 +55,7 @@ public class FurnitureDatabase : ScriptableObject
             var loadedCategories = await Task.WhenAll(tasks);
 
             foreach (FurnitureCategory category in loadedCategories)
-            {   Debug.Log("Adding "+ category.catName);
+            {  
             AddCategory(category);
             }
 
@@ -74,7 +71,7 @@ public class FurnitureDatabase : ScriptableObject
         var loadedFurniture = await Task.WhenAll(tasks);
 
         foreach (Furniture fur in loadedFurniture)
-        {   Debug.Log("Adding "+ fur.name);
+        { 
         AddFurniture(fur);
         }
     }
@@ -118,7 +115,7 @@ public class FurnitureDatabase : ScriptableObject
     {
         foreach (var furn in furniture)
         {
-            //Debug.Log("Comparing " + name + "with " + furn.name + " ");
+            
             if (furn.name == name)
             {
                 return furn;
@@ -138,20 +135,6 @@ public class FurnitureDatabase : ScriptableObject
     {
         return furniture;
     }
-    /*public  void AddFurniture(Furniture newFurniture)
-    {
-        furniture.Add(newFurniture);
-        furniture.Sort((a, b) => String.Compare(a.name, b.name, StringComparison.InvariantCulture));
-    }*/
-    public  void RemoveFurniture(Furniture newFurniture)
-    {
-        furniture.Remove(newFurniture);
-        furniture.Sort((a, b) => String.Compare(a.name, b.name, StringComparison.InvariantCulture));
-    }
 
-    public  short GetID(Furniture furn)
-    {
-        return (short)furniture.IndexOf(furn);
-    }
     
 }

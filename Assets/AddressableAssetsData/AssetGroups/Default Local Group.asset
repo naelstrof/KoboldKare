@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6d0230f09c34a674a8e038584c8a0970
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ff66b58bae56a2348a0bc17ceab769fa
+    m_Address: Assets/KoboldKare/KFurniture/Anim/Downward Thrust.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

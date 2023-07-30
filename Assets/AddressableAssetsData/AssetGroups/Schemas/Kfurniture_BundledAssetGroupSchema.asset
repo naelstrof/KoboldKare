@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
-  m_Name: Kfurniture_BundledAssetGroupSchema
+  m_Name: KFurniture_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: eb3c511b0107edd499a7165fa81a2e0d, type: 2}
   m_InternalBundleIdMode: 1

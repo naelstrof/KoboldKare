@@ -211,11 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0c37e84ce787b40bc80e08411f25e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  categoryHeight: 24
-  itemHeight: 24
   next: {fileID: 144301813087243182}
   panel: {fileID: 3007110053011993471}
-  padding: 5
+  hasChild: 0
 --- !u!1 &3007110053011993471
 GameObject:
   m_ObjectHideFlags: 0

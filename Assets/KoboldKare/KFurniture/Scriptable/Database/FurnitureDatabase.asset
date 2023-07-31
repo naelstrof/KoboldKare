@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b709d59b14aba4140a3f93a83fe926a7, type: 2}
   furnitureToLoad:
   - {fileID: 11400000, guid: c3fa7d44eb98f34428bc37db4821d839, type: 2}
+  - {fileID: 11400000, guid: be757d61c4aba1a4daa8ec0cc39f4d4e, type: 2}
   shouldLoadAdressable: 1
   AdressableCategoryLabel: FurnitureCategory
   AdressableFurnitureLabel: Furniture

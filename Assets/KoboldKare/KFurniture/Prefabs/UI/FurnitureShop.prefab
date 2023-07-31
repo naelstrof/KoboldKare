@@ -1019,9 +1019,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9f30d1aaf1eeb4cac2ca16a3c4d741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  categoryHeight: 50
+  itemHeight: 40
+  padding: 5
+  CanvasScalerResolutionHeight: 600
   buyButton: {fileID: 1684274098735949647}
   exitButton: {fileID: 5289649301968477693}
   contentTransform: {fileID: 2178895898231993093}
+  loosePanelPrefab: {fileID: 6070350364702582838, guid: 7cad3a3aa408a53478e118515b840e57,
+    type: 3}
   categoryLabel: {fileID: 341385241061064952, guid: 4e3500a926f4c7849aac0d013fc1f0a1,
     type: 3}
   itemLabel: {fileID: 7020709047393336206, guid: e1efe17b20df20e49b06d6dd06aac1d7,

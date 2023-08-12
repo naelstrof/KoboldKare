@@ -67,12 +67,14 @@ public class HandheldShop : GenericWeapon, IValuedGood, IGrabbable
         
         if(shop.HasInstance())
         {
+            GameObject tempObject = player.transform.GetComponentInChildren<CameraSwitcher>().FPSCanvas;
+            shop.GetInstance().transform.SetParent(tempObject.transform);
             shop.GetInstance().SetActive(true);
             shop.GetInstance().GetComponent<FurnitureShopUI>().SetUser(player);
         }
         else
         {    
-            GameObject tempObject = GameObject.Find("Canvas - FPSView");
+            GameObject tempObject = player.transform.GetComponentInChildren<CameraSwitcher>().FPSCanvas;
             
             shop.SetInstance(Instantiate(shop.GetPrefab(),tempObject.transform));
             shop.GetInstance().SetActive(true);

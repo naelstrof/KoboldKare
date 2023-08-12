@@ -73,7 +73,7 @@ public class FurnitureShopUI : MonoBehaviour
             if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
             {
                 kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.price);
-                PhotonNetwork.InstantiateRoomObject(selected.prefab.photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
+                GameObject temp =PhotonNetwork.InstantiateRoomObject(selected.prefab.photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
             }
         
         }
@@ -213,10 +213,10 @@ public class FurnitureShopUI : MonoBehaviour
     }
 
     private void CalculateSize(){
-            scale=Screen.height/CanvasScalerResolutionHeight;
-            categoryHeightAdjusted=categoryHeight*scale;
-            itemHeightAdjusted=itemHeight*scale;
-            paddingAdjusted=paddingAdjusted*scale;
+            scale=(float)Screen.height/CanvasScalerResolutionHeight;
+            categoryHeightAdjusted=(float)categoryHeight*scale;
+            itemHeightAdjusted=(float)itemHeight*scale;
+            paddingAdjusted=(float)paddingAdjusted*scale;
     }
    
 }

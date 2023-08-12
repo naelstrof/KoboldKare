@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using NetStack.Serialization;
+using SimpleJSON;
 
-public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
+public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable, IPunObservable, IPunInstantiateMagicCallback
 {
     [SerializeField]
     private Transform center;
     [SerializeField]
     private Rigidbody rb;
+
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
     { rb.isKinematic=true;
@@ -27,9 +30,11 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
     {
         return !rb.isKinematic;
     }
+    
     public void Unfreeze()
     {
         rb.isKinematic=false;
+
     }
 
     [PunRPC]
@@ -52,12 +57,51 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
     void Start()
     {   if(rb==null)
         rb = GetComponent<Rigidbody>();
-
+        //rb.isKinematic=true;
+        
     }
+
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            bool frozen=rb.isKinematic;
+            stream.SendNext(frozen);
+            
+        } else {
+            bool frozen = (bool)stream.ReceiveNext();
+            rb.isKinematic=frozen;
+            
+        }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        
+        if (info.photonView.InstantiationData == null) {
+            return;
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is bool) {
+            rb.isKinematic=(bool)info.photonView.InstantiationData[0];
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is not BitBuffer) {
+            throw new UnityException("Unexpected spawn data for container");
+        }
+    }
+
+    public void Save(JSONNode node) {
+        
+        JSONNode rootNode = JSONNode.Parse("{}");
+        rootNode["frozen"] = rb.isKinematic.ToString();
+        node["state"] = rootNode;
+    }
+
+    public void Load(JSONNode node) {
+        
+            JSONNode rootNode = node["state"];
+            rb.isKinematic=rootNode["frozen"];
     }
 }

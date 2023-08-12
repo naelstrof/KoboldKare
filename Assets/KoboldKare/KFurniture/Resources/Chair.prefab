@@ -211,6 +211,8 @@ GameObject:
   - component: {fileID: 1825768430870448637}
   - component: {fileID: 3470099772266829065}
   - component: {fileID: 504035276789461119}
+  - component: {fileID: -2872472581732960622}
+  - component: {fileID: -2409903388543957439}
   m_Layer: 11
   m_Name: Chair
   m_TagString: Untagged
@@ -269,9 +271,12 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3470099772266829065}
+  - {fileID: -2872472581732960622}
+  - {fileID: -2409903388543957439}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -290,7 +295,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 7210798877728473653}
   weaponHoldOffset: {x: 0, y: -1, z: 1}
   center: {fileID: 6456385938249239407}
-  rb: {fileID: 0}
+  rb: {fileID: 2988658280905542533}
 --- !u!114 &504035276789461119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +309,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 10
+--- !u!114 &-2872472581732960622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143858890350565404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &-2409903388543957439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143858890350565404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5317040185849088490
 GameObject:
   m_ObjectHideFlags: 0

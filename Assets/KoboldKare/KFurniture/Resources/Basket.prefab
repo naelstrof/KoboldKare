@@ -51,6 +51,8 @@ GameObject:
   - component: {fileID: 4896366819248200729}
   - component: {fileID: 2731717774367991361}
   - component: {fileID: 6383032463237344980}
+  - component: {fileID: 6985443282580693155}
+  - component: {fileID: -8241609813955996188}
   m_Layer: 11
   m_Name: Basket
   m_TagString: Untagged
@@ -206,9 +208,12 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2731717774367991361}
+  - {fileID: 6985443282580693155}
+  - {fileID: -8241609813955996188}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -243,7 +248,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 7122576234665701878}
   weaponHoldOffset: {x: 0, y: -2, z: 2}
   center: {fileID: 6060480514812552506}
-  rb: {fileID: 0}
+  rb: {fileID: 4896366819248200729}
 --- !u!114 &6383032463237344980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +262,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 20
+--- !u!114 &6985443282580693155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269396952146111138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &-8241609813955996188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269396952146111138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &6642542252428538965
 GameObject:
   m_ObjectHideFlags: 0

@@ -728,10 +728,10 @@ RectTransform:
   m_Father: {fileID: 5287183259829441947}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 1297}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1972459297479219671
 GameObject:
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9f30d1aaf1eeb4cac2ca16a3c4d741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  categoryHeight: 50
-  itemHeight: 40
+  categoryHeight: 35
+  itemHeight: 25
   padding: 5
   CanvasScalerResolutionHeight: 600
   buyButton: {fileID: 1684274098735949647}
@@ -2656,8 +2656,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3870502801981924656}
   m_HandleRect: {fileID: 4784503069961918090}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.22920586
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

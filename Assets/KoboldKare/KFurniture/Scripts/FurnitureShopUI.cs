@@ -26,7 +26,7 @@ public class FurnitureShopUI : MonoBehaviour
     [SerializeField] 
      private Button exitButton;
     [SerializeField]
-    private Transform contentTransform;
+    private RectTransform contentTransform;
     [SerializeField]
     private GameObject loosePanelPrefab;
     private GameObject loosePanel;
@@ -55,6 +55,7 @@ public class FurnitureShopUI : MonoBehaviour
     private List<string> catNames;
     private GameObject first;
     private int lastResolution;
+    private int contentHeight;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,7 +95,8 @@ public class FurnitureShopUI : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             if(!isSetup)
-            {   await furnitureDatabase.Setup();
+            {   
+                await furnitureDatabase.Setup();
                 first=null;
                 GameObject temp;
                 CalculateSize();
@@ -124,8 +126,9 @@ public class FurnitureShopUI : MonoBehaviour
                                 GameObject catPanel=catTemp.transform.GetChild(0).gameObject;
                                 catTemp.GetComponent<Button>().onClick.AddListener( ()=>
                                             {
-                                            catTemp.GetComponent<CategoryLabel>().Toggle();
-                                            LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform.gameObject.GetComponent<RectTransform>());
+                                            //catTemp.GetComponent<CategoryLabel>().Toggle();
+                                            ChangeContentHeight((int)catTemp.GetComponent<CategoryLabel>().ToggleGetHeightChange());
+                                            LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                                             } 
                                 );
                             
@@ -164,8 +167,9 @@ public class FurnitureShopUI : MonoBehaviour
 
                 
                 first.GetComponent<CategoryLabel>().SetupSize(categoryHeightAdjusted,itemHeightAdjusted,paddingAdjusted,scale);
+                ResetContentHeight();
                 isSetup=true;
-                LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform.gameObject.GetComponent<RectTransform>());
+                LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                 
                 
             }else{
@@ -175,6 +179,7 @@ public class FurnitureShopUI : MonoBehaviour
                     foreach(RectTransform transf in loosePanel.transform){
                         transf.sizeDelta=new Vector2(200,itemHeightAdjusted);
                     }
+                    ResetContentHeight();
                     lastResolution=Screen.height;
 
                 }
@@ -216,7 +221,24 @@ public class FurnitureShopUI : MonoBehaviour
             scale=(float)Screen.height/CanvasScalerResolutionHeight;
             categoryHeightAdjusted=(float)categoryHeight*scale;
             itemHeightAdjusted=(float)itemHeight*scale;
-            paddingAdjusted=(float)paddingAdjusted*scale;
+            paddingAdjusted=(float)padding*scale;
+            
+    }
+    private void ResetContentHeight(){
+        Debug.Log("Scale: "+scale);
+        contentHeight=(int)(//first.GetComponent<RectTransform>().sizeDelta.y+
+                            (((categoryHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetKeyCount())+
+                            ((itemHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetFurnitureCount()))/scale);
+        contentTransform.sizeDelta=new Vector2(contentTransform.sizeDelta.x,contentHeight);
+        Debug.Log("catHeight "+(categoryHeightAdjusted+paddingAdjusted)+" "+furnitureDatabase.GetKeyCount()+"Times is "+(categoryHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetKeyCount());
+        Debug.Log("iHeight"+(itemHeightAdjusted+paddingAdjusted)+" "+furnitureDatabase.GetFurnitureCount()+"times is "+((itemHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetFurnitureCount()));
+        Debug.Log("New Height: "+contentHeight);
+    }
+    private void ChangeContentHeight(int change){
+        Debug.Log("Changed by "+change);
+        contentHeight=(int)(contentHeight+(change/scale));
+        contentTransform.sizeDelta=new Vector2(contentTransform.sizeDelta.x,contentHeight);
+        Debug.Log("New Height: "+contentHeight);
     }
    
 }

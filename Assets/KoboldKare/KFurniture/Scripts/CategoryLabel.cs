@@ -16,8 +16,8 @@ public class CategoryLabel : MonoBehaviour
     private float paddingAdjusted;
     private float nextPositionY;
     public bool hasChild=false;
-    public void ShowHide(bool show){
-        if(show){
+    public void ShowHide(){
+        if(showing){
             panel.SetActive(true);
             next.anchoredPosition=new Vector2(0,-CalculateHeight());
             showing=!showing;
@@ -30,8 +30,18 @@ public class CategoryLabel : MonoBehaviour
 
     }
     public void Toggle(){
-        ShowHide(showing);
+        ShowHide();
     }
+    public float ToggleGetHeightChange(){
+        ShowHide();
+        if(showing){
+            return -(CalculateHeight()+(paddingAdjusted));
+        }
+        else{
+            return (CalculateHeight()+(paddingAdjusted));
+        }
+    }
+
     private float CalculateHeight(){
         return itemHeightAdjusted*panel.transform.childCount+paddingAdjusted;
 

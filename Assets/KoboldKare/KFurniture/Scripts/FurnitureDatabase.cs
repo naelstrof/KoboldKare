@@ -122,7 +122,9 @@ public class FurnitureDatabase : ScriptableObject
             }
         }
         return null;
+        
     }
+    
     public Furniture  GetFurniture(string category, int id){
         return categories[category][id];
     }
@@ -130,6 +132,12 @@ public class FurnitureDatabase : ScriptableObject
     {
         //Debug.Log("Getting from db" + id);
         return furniture[id];
+    }
+    public int GetKeyCount(){
+        return categories.Count;
+    }
+    public int GetFurnitureCount(){
+        return furniture.Count;
     }
     public  List<Furniture> GetList()
     {

@@ -61,11 +61,9 @@ public class FurnitureShopUI : MonoBehaviour
     {
         buyButton.onClick.AddListener(() => { buy(); });
         exitButton.onClick.AddListener(() => { gameObject.SetActive(false); });
-        
-            
-           
+    }
 
-        }
+
     private void buy()
     {
         
@@ -99,7 +97,6 @@ public class FurnitureShopUI : MonoBehaviour
                 await furnitureDatabase.Setup();
                 first=null;
                 GameObject temp;
-                CalculateSize();
                 lastResolution=Screen.height;
                 Transform catPanelTransform;
                 catNames=new List<string>();
@@ -112,34 +109,26 @@ public class FurnitureShopUI : MonoBehaviour
                             
                             int j=0;
                             GameObject catTemp;
-                            catTemp=Instantiate(categoryLabel,positionToSpawnCategories.position,Quaternion.identity);
-                            if(previous != null)
-                                {   previous.GetComponent<CategoryLabel>().hasChild=true;
-                                    catTemp.transform.SetParent(previous.GetComponent<CategoryLabel>().nextGet);}
-                                else
-                                {catTemp.transform.SetParent(positionToSpawnCategories);
-                                first=catTemp;}
-                            catTemp.GetComponent<TMP_Text>().text=catName;
-                            catPanelTransform=catTemp.transform.GetChild(0);
-                            previous=catTemp;
-                            positionToSpawnCategories=catTemp.GetComponent<CategoryLabel>().nextGet.transform;
-                                GameObject catPanel=catTemp.transform.GetChild(0).gameObject;
-                                catTemp.GetComponent<Button>().onClick.AddListener( ()=>
+                            catTemp=Instantiate(categoryLabel);
+                            catTemp.transform.SetParent(contentTransform,false);
+                            catTemp.GetComponent<CategoryLabel>().GetName().GetComponent<TMP_Text>().text=catName;
+                            catPanelTransform=catTemp.transform;
+                                catTemp.GetComponent<CategoryLabel>().GetName().GetComponent<Button>().onClick.AddListener( ()=>
                                             {
-                                            //catTemp.GetComponent<CategoryLabel>().Toggle();
-                                            ChangeContentHeight((int)catTemp.GetComponent<CategoryLabel>().ToggleGetHeightChange());
+
+                                            catTemp.GetComponent<CategoryLabel>().Toggle();
                                             LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                                             } 
                                 );
-                            
                             foreach(Furniture furn in furnitureDatabase.GetCategory(catName))
                             {   
                                 int copyi = i;
                                 int copyj = j;
                                 temp = Instantiate(itemLabel);
-                                temp.GetComponent<TMP_Text>().text = furn.name;
+                                temp.GetComponent<TMP_Text>().text = "  "+furn.name;
                                 temp.GetComponent<Button>().onClick.AddListener( ()=>{SetInfo(copyi,copyj);} );
-                                temp.transform.SetParent(catPanelTransform);
+                                temp.transform.SetParent(catPanelTransform,false);
+                                temp.SetActive(false);
                                 j++;
                             }
                             
@@ -148,17 +137,16 @@ public class FurnitureShopUI : MonoBehaviour
                         
                         }
                 i = 0;
-                if(previous !=null){
-                    loosePanel=Instantiate(loosePanelPrefab);
-                loosePanel.transform.SetParent(previous.GetComponent<CategoryLabel>().nextGet);
-                loosePanel.GetComponent<RectTransform>().anchoredPosition=new Vector2(0,0);}
+                
+                loosePanel=Instantiate(loosePanelPrefab);
+                loosePanel.transform.SetParent(contentTransform,false);
+                loosePanel.GetComponent<RectTransform>().anchoredPosition=new Vector2(0,0);
                 foreach(Furniture furn in furnitureDatabase.GetList())
                 {   
                     int copy = i;
                     temp = Instantiate(itemLabel);
-                    temp.transform.SetParent(loosePanel.transform);
-                    temp.GetComponent<RectTransform>().sizeDelta=new Vector2(200,itemHeightAdjusted);
-                    temp.GetComponent<RectTransform>().anchoredPosition=new Vector2(0,-(paddingAdjusted+itemHeightAdjusted)*(i));
+                    temp.transform.SetParent(loosePanel.transform,false);
+
                     temp.GetComponent<TMP_Text>().text = furn.name;
                     temp.GetComponent<Button>().onClick.AddListener( ()=>{SetInfo(copy);} );
                     
@@ -166,23 +154,11 @@ public class FurnitureShopUI : MonoBehaviour
                 }
 
                 
-                first.GetComponent<CategoryLabel>().SetupSize(categoryHeightAdjusted,itemHeightAdjusted,paddingAdjusted,scale);
-                ResetContentHeight();
+
                 isSetup=true;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                 
                 
-            }else{
-                if(lastResolution!=Screen.height){
-                    CalculateSize();
-                    first.GetComponent<CategoryLabel>().SetupSize(categoryHeightAdjusted,itemHeightAdjusted,paddingAdjusted,scale);
-                    foreach(RectTransform transf in loosePanel.transform){
-                        transf.sizeDelta=new Vector2(200,itemHeightAdjusted);
-                    }
-                    ResetContentHeight();
-                    lastResolution=Screen.height;
-
-                }
             }
         
     }
@@ -217,28 +193,5 @@ public class FurnitureShopUI : MonoBehaviour
         selected = temp;
     }
 
-    private void CalculateSize(){
-            scale=(float)Screen.height/CanvasScalerResolutionHeight;
-            categoryHeightAdjusted=(float)categoryHeight*scale;
-            itemHeightAdjusted=(float)itemHeight*scale;
-            paddingAdjusted=(float)padding*scale;
-            
-    }
-    private void ResetContentHeight(){
-        Debug.Log("Scale: "+scale);
-        contentHeight=(int)(//first.GetComponent<RectTransform>().sizeDelta.y+
-                            (((categoryHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetKeyCount())+
-                            ((itemHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetFurnitureCount()))/scale);
-        contentTransform.sizeDelta=new Vector2(contentTransform.sizeDelta.x,contentHeight);
-        Debug.Log("catHeight "+(categoryHeightAdjusted+paddingAdjusted)+" "+furnitureDatabase.GetKeyCount()+"Times is "+(categoryHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetKeyCount());
-        Debug.Log("iHeight"+(itemHeightAdjusted+paddingAdjusted)+" "+furnitureDatabase.GetFurnitureCount()+"times is "+((itemHeightAdjusted+paddingAdjusted)*furnitureDatabase.GetFurnitureCount()));
-        Debug.Log("New Height: "+contentHeight);
-    }
-    private void ChangeContentHeight(int change){
-        Debug.Log("Changed by "+change);
-        contentHeight=(int)(contentHeight+(change/scale));
-        contentTransform.sizeDelta=new Vector2(contentTransform.sizeDelta.x,contentHeight);
-        Debug.Log("New Height: "+contentHeight);
-    }
    
 }

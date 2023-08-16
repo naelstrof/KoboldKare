@@ -57,6 +57,7 @@ namespace Naelstrof.Mozzarella {
         private Transform followTransform;
         private Vector3 localForward = Vector3.forward;
         private int lastFrame;
+        private List<bool> validHitCallbacks;
 
         public void SetFollowPenetrator(Penetrator target) {
             followPenetrator = target;
@@ -81,8 +82,11 @@ namespace Naelstrof.Mozzarella {
         private void Awake() {
             widthCurve = new AnimationCurve();
             particles = new List<Particle>();
+            validHitCallbacks = new List<bool>();
+            
             for (int i = 0; i < particleCount; i++) {
                 particles.Add(new Particle());
+                validHitCallbacks.Add(true);
             }
             particlePoints = new NativeArray<Vector3>(particles.Count, Allocator.Persistent);
             keys = new Keyframe[16];
@@ -110,6 +114,10 @@ namespace Naelstrof.Mozzarella {
         public override void Reset() {
             gameObject.SetActive(false);
             lineRenderer.positionCount = 0;
+            for (int i = 0; i < validHitCallbacks.Count; i++) {
+                validHitCallbacks[i] = true;
+            }
+
             id = 0;
             followPenetrator = null;
             followTransform = null;
@@ -171,6 +179,10 @@ namespace Naelstrof.Mozzarella {
         private void DoCollisions() {
             int skip = 5;
             for (int i = id-1; i > skip; i-=skip) {
+                if (!validHitCallbacks[i]) {
+                    continue;
+                }
+
                 Vector3 diff = particles[i - skip].position - particles[i].position;
                 Vector3 dir = diff.normalized;
                 float dist = diff.magnitude;
@@ -178,16 +190,17 @@ namespace Naelstrof.Mozzarella {
                 if (dist > 5f) {
                     continue;
                 }
-
-                int hitcount = Physics.RaycastNonAlloc(particles[i].position, dir, hits, dist, decalHitMask, QueryTriggerInteraction.Ignore);
-                for (int j = 0; j < hitcount; j++) {
+                
+                int hitCount = Physics.RaycastNonAlloc(particles[i].position, dir, hits, dist, decalHitMask, QueryTriggerInteraction.Ignore);
+                for (int j = 0; j < hitCount; j++) {
+                    validHitCallbacks[i] = false;
                     HitCallback(hits[j], particles[i].position-dir*0.1f, dir, dist+0.1f, ((float)i/(float)particles.Count));
                 }
             }
         }
 
         private void HitCallback(RaycastHit hit, Vector3 startPos, Vector3 dir, float length, float progression) {
-            hitCallback?.Invoke(hit, startPos, dir, length, volumeCurve.Evaluate(progression)*volumeMultiplier);
+            hitCallback?.Invoke(hit, startPos, dir, length, volumeCurve.Evaluate(progression) * volumeMultiplier);
         }
 
         private void Update() {

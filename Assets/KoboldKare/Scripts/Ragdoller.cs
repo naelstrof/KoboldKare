@@ -148,7 +148,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         defaultRigTransforms = new Dictionary<Transform, Matrix4x4>();
         foreach (var rig in disableRigs) {
             foreach (var jiggle in rig.jiggleRigs) {
-                SaveRecursive(jiggle.rootTransform);
+                SaveRecursive(jiggle.GetRootTransform());
             }
         }
     }
@@ -320,7 +320,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         foreach (var rig in disableRigs) {
             foreach (var jiggle in rig.jiggleRigs) {
-                LoadRecursive(jiggle.rootTransform);
+                LoadRecursive(jiggle.GetRootTransform());
             }
         }
         foreach (var rig in disableRigs) {

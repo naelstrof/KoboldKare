@@ -2090,9 +2090,11 @@ MonoBehaviour:
   - rootTransform: {fileID: 1905648332443602999}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
+    colliders: []
   - rootTransform: {fileID: 8437674557913943489}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
+    colliders: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!114 &7646633552433837299
@@ -2166,6 +2168,7 @@ MonoBehaviour:
   colliderRadius: 0.2
   bodyRenderers:
   - {fileID: 6506915555087688956}
+  stepHeight: 1.2
   antiPopCurveIK:
     serializedVersion: 2
     m_Curve:
@@ -4989,6 +4992,7 @@ MonoBehaviour:
     - {fileID: 4785133800876446766}
     - {fileID: 5475234908087700108}
     - {fileID: 3833433579623373891}
+    colliders: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!1 &6506915555090868332 stripped

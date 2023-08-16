@@ -28,7 +28,7 @@ public class EggSpawner : MonoBehaviour {
         for(int i=0;i<penetrators.Count;i++) {
             var coupler = penetrators[i];
             if (coupler.pushAmount < coupler.penetrator.GetWorldLength()) {
-                CatmullSpline path = coupler.penetrable.GetSplinePath();
+                CatmullSpline path = coupler.penetrable.GetPath();
                 Vector3 position = path.GetPositionFromT(0f);
                 Vector3 tangent = path.GetVelocityFromT(0f).normalized;
                 coupler.pushAmount += Time.deltaTime*0.4f;
@@ -42,7 +42,7 @@ public class EggSpawner : MonoBehaviour {
     }
     public Penetrator SpawnEgg(float eggVolume) {
         //Penetrator d = GameObject.Instantiate(penetratorPrefab).GetComponentInChildren<Penetrator>();
-        CatmullSpline path = targetPenetrable.GetSplinePath();
+        CatmullSpline path = targetPenetrable.GetPath();
         Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up)).GetComponentInChildren<Penetrator>();
         if (d == null) {
             return null;

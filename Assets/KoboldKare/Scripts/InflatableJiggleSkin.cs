@@ -16,7 +16,7 @@ public class InflatableJiggleSkin : InflatableListener {
     public override void OnEnable() {
         base.OnEnable();
         foreach (var jiggleRig in targetJiggleSkin.jiggleZones) {
-            if (jiggleRig.target == targetTransform) {
+            if (jiggleRig.GetTargetBone() == targetTransform) {
                 targetZone = jiggleRig;
             }
         }

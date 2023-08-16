@@ -118,7 +118,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             yield break;
         }
 
-        CatmullSpline path = targetPenetrable.GetSplinePath();
+        CatmullSpline path = targetPenetrable.GetPath();
         KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponent<Kobold>().GetGenes(),k.bellyContainer.GetGenes());
         BitBuffer spawnData = new BitBuffer(16);
         spawnData.AddKoboldGenes(mixedGenes);
@@ -143,7 +143,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         d.Penetrate(targetPenetrable);
         float pushAmount = 0f;
         while (pushAmount < d.GetWorldLength()) {
-            CatmullSpline p = targetPenetrable.GetSplinePath();
+            CatmullSpline p = targetPenetrable.GetPath();
             Vector3 position = p.GetPositionFromT(0f);
             Vector3 tangent = p.GetVelocityFromT(0f).normalized;
             pushAmount += Time.deltaTime*0.15f;

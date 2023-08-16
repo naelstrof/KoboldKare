@@ -36,7 +36,7 @@ public class KoboldJawOpenListener : SimpleBlendshapeListener {
     public override void OnDrawGizmosSelected(Penetrable p) {
         base.OnDrawGizmosSelected(p);
         #if UNITY_EDITOR
-            CatmullSpline path = p.GetSplinePath();
+            CatmullSpline path = p.GetPath();
             Vector3 position = path.GetPositionFromT(t);
             Vector3 tangent = path.GetVelocityFromT(t).normalized;
             Vector3 normal = path.GetBinormalFromT(t).normalized;

@@ -129,7 +129,7 @@ namespace Naelstrof.Mozzarella {
         private void FixedUpdate() {
             if (followPenetrator != null) {
                 float dist = followPenetrator.GetWorldLength();
-                var path = followPenetrator.GetSplinePath();
+                var path = followPenetrator.GetPath();
                 transform.position = path.GetPositionFromDistance(dist);
                 transform.rotation = Quaternion.LookRotation(path.GetVelocityFromDistance(dist), Vector3.up);
             }

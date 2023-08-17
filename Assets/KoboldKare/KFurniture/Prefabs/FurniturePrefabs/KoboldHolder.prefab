@@ -545,6 +545,7 @@ MonoBehaviour:
   weaponHoldOffset: {x: 0, y: -0.5, z: 2}
   center: {fileID: 896898738654723918}
   rb: {fileID: 3627841550919000979}
+  needsConsistentViewId: 1
 --- !u!65 &8955797323427830274
 BoxCollider:
   m_ObjectHideFlags: 0

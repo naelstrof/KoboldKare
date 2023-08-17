@@ -339,6 +339,7 @@ MonoBehaviour:
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 843911434714538958}
   rb: {fileID: 8640935287680945499}
+  needsConsistentViewId: 1
 --- !u!54 &8640935287680945499
 Rigidbody:
   m_ObjectHideFlags: 0

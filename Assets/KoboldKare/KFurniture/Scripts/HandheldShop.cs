@@ -17,8 +17,9 @@ public class HandheldShop : GenericWeapon, IValuedGood, IGrabbable
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
     { 
-        
+        if (photonView.IsMine) {
         ShowShopMenu(playerViewID); }
+    }
 
         public bool ShouldSave()
     {
@@ -63,6 +64,7 @@ public class HandheldShop : GenericWeapon, IValuedGood, IGrabbable
     }
     private void ShowShopMenu(int playerViewID)
     {    
+        
         Kobold player =PhotonNetwork.GetPhotonView(playerViewID).GetComponentInParent<Kobold>();
         
         if(shop.HasInstance())

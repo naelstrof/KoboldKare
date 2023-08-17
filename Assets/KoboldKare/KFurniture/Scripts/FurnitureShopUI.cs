@@ -7,18 +7,7 @@ using Photon.Pun;
 using UnityEngine.EventSystems;
 
 public class FurnitureShopUI : MonoBehaviour
-{   [SerializeField]
-    private int categoryHeight;
-    [SerializeField]
-    private int itemHeight;
-    [SerializeField]
-    private int padding;
-    private float paddingAdjusted;
-    private float categoryHeightAdjusted;
-    private float itemHeightAdjusted;
-    [SerializeField]
-    private int CanvasScalerResolutionHeight;
-    private float scale;
+{
 
     [SerializeField] 
     private Button buyButton;
@@ -50,12 +39,7 @@ public class FurnitureShopUI : MonoBehaviour
     private List<PhotonGameObjectReference> photonList = new List<PhotonGameObjectReference>();
     [SerializeField]
     private Sprite defaultSprite;
-    [SerializeField]
-    private Transform positionToSpawnCategories;
     private List<string> catNames;
-    private GameObject first;
-    private int lastResolution;
-    private int contentHeight;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,9 +79,7 @@ public class FurnitureShopUI : MonoBehaviour
             if(!isSetup)
             {   
                 await furnitureDatabase.Setup();
-                first=null;
                 GameObject temp;
-                lastResolution=Screen.height;
                 Transform catPanelTransform;
                 catNames=new List<string>();
                 foreach(string name in furnitureDatabase.GetCategoryNames())

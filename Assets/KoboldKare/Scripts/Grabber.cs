@@ -242,12 +242,9 @@ public class Grabber : MonoBehaviourPun {
 
     private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
         while (giveBackKobold.kobold.photonView.IsMine) {
-            if (giveBackKobold.kobold.GetComponent<Ragdoller>().ragdolled) {
-                yield return new WaitForSeconds(5f);
-            } else {
-                yield return new WaitForSeconds(0.25f);
-            }
-
+            yield return new WaitUntil(() => !giveBackKobold.kobold.GetComponent<Ragdoller>().ragdolled || !giveBackKobold.kobold.photonView.IsMine);
+            yield return new WaitForSeconds(0.25f);
+            
             if (giveBackKobold.kobold.photonView.IsMine) {
                 foreach (Player p in PhotonNetwork.PlayerList) {
                     if (giveBackKobold.kobold.photonView.IsMine && (Kobold)p.TagObject == giveBackKobold.kobold) {
@@ -260,7 +257,7 @@ public class Grabber : MonoBehaviourPun {
         giveBackKobolds.Remove(giveBackKobold);
     }
 
-    public void AddGivebackKobold(Kobold other) {
+    private void AddGivebackKobold(Kobold other) {
         foreach (Player p in PhotonNetwork.PlayerList) {
             if ((Kobold)p.TagObject == other) {
                 GiveBackKobold giveBackKobold = new GiveBackKobold(){kobold = other};

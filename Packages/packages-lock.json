@@ -43,11 +43,11 @@
       }
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v3.7.1",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.4",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "cd88f9cf56dea2dd9130b180e239aaa019a1a5fe"
+      "hash": "319a198c5419a35347ec7799fe3a18f295f25939"
     },
     "com.naelstrof.modding": {
       "version": "file:com.naelstrof.modding",
@@ -70,13 +70,13 @@
       "dependencies": {}
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v6.1.5",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.5",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.textus-games.serialized-reference-ui": "1.0.0"
       },
-      "hash": "c0286b073750ce9e29e7c45266db88d39e74fa7e"
+      "hash": "9d5412fc9ed7ab06fa8c68c4ee9863649b6ee87f"
     },
     "com.naelstrof.photon.profiler": {
       "version": "file:com.naelstrof.photon.profiler",
@@ -177,7 +177,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.18",
+      "version": "3.0.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -193,7 +193,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.5.0",
+      "version": "1.5.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -278,7 +278,7 @@
       }
     },
     "com.unity.timeline": {
-      "version": "1.6.4",
+      "version": "1.6.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {

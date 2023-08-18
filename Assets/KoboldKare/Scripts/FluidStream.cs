@@ -56,11 +56,13 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
     private AudioSource audioSource;
     private AudioSource waterHitSource;
     private bool particleCoroutineRunning;
+    private CatmullSpline path;
 
     [SerializeField]
     private Rigidbody body;
 
     private void Awake() {
+        path = new CatmullSpline();
         photonView = GetComponentInParent<PhotonView>(true);
     }
 
@@ -312,6 +314,19 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
+    }
+
+    public override CatmullSpline GetPath() {
+        path ??= new CatmullSpline();
+        if (path.GetWeights().Count == 0) {
+            points = new List<Vector3>();
+            points.Add(rootBone.position);
+            if (points.Count <= 1) {
+                points.Add(rootBone.position + rootBone.TransformDirection(localRootForward));
+            }
+            path.SetWeightsFromPoints(points);
+        }
+        return path;
     }
 
     public void Save(JSONNode node) {

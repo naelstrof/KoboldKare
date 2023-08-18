@@ -43,7 +43,7 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
 
         if (skinJiggle != null && targetTransform != null) {
             foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                if (jiggleZone.target != targetTransform) continue;
+                if (jiggleZone.GetTargetBone() != targetTransform) continue;
                 if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                     throw new UnityException("Belly jiggle settings must be a JiggleSettingsBlend");
                 }

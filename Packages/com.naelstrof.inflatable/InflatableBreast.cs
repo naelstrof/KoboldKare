@@ -48,7 +48,7 @@ namespace Naelstrof.Inflatable {
             startScale = baseBreastTransform.localScale;
             if (rigBuilder != null && jiggleBoneBreastTransform != null) {
                 foreach (var jiggleRig in rigBuilder.jiggleRigs) {
-                    if (!jiggleBoneBreastTransform.IsChildOf(jiggleRig.rootTransform)) continue;
+                    if (!jiggleBoneBreastTransform.IsChildOf(jiggleRig.GetRootTransform())) continue;
                     if (jiggleRig.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
@@ -61,7 +61,7 @@ namespace Naelstrof.Inflatable {
 
             if (skinZone != null && jiggleBoneBreastTransform != null) {
                 foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                    if (jiggleZone.target != jiggleBoneBreastTransform) continue;
+                    if (jiggleZone.GetTargetBone() != jiggleBoneBreastTransform) continue;
                     if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }

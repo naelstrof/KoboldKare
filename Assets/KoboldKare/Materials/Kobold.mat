@@ -304,6 +304,7 @@ Material:
     - _NormalMapSpace: 0
     - _NormalScale: 1
     - _OcclusionStrength: 1
+    - _PENETRATION_DEFORMATION: 0
     - _PENETRATION_DEFORMATION_DETAIL: 1
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15

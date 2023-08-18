@@ -12,7 +12,7 @@ public class PassiveAudioPenetrable : PenetrableListener {
 
     protected override void OnPenetrationDepthChange(float newDepth) {
         if (newDepth > 0f && Time.time > nextTime) {
-            AudioClip clip = GameManager.instance.SpawnAudioClipInWorld(playPack, pen.GetSplinePath().GetPositionFromT(GetT(pen)));
+            AudioClip clip = GameManager.instance.SpawnAudioClipInWorld(playPack, pen.GetPath().GetPositionFromT(GetT(pen)));
             nextTime = Time.time + clip.length+Random.Range(0,delayVariance);
         }
     }

@@ -13,6 +13,7 @@ public class CheatsProcessor : MonoBehaviour {
     private bool cheatsEnabled = false;
     [SerializeField, SerializeReference, SerializeReferenceButton]
     private List<Command> commands;
+    private const int maxLength = 10000;
 
     private StringBuilder commandOutput;
 
@@ -22,6 +23,10 @@ public class CheatsProcessor : MonoBehaviour {
 
     public static void AppendText(string text) {
         instance.commandOutput.Append(text);
+        if (instance.commandOutput.Length > maxLength) {
+            instance.commandOutput.Remove(0, Mathf.Max(instance.commandOutput.Length - maxLength,0));
+        }
+
         instance.outputChanged?.Invoke(instance.commandOutput.ToString());
     }
 
@@ -87,6 +92,9 @@ public class CheatsProcessor : MonoBehaviour {
             instance.ProcessCommand(kobold, args);
         } catch (CommandException exception) {
             instance.commandOutput.Append($"<#ff4f00>{exception.Message}</color>\n");
+            if (instance.commandOutput.Length > maxLength) {
+                instance.commandOutput.Remove(0, Mathf.Max(instance.commandOutput.Length - maxLength,0));
+            }
             instance.outputChanged?.Invoke(instance.commandOutput.ToString());
         }
     }

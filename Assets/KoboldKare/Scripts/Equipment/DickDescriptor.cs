@@ -73,8 +73,8 @@ public class DickDescriptor : MonoBehaviour {
             attachedKobold.AddStimulation(Mathf.Abs(movementAmount));
             lastDepthDist = depthDist;
             ClipListener clipListener = (ClipListener)penetrableMem.listeners.Find((o) => o is ClipListener);
-            dickSet.inside = depthDist != 0f && (depthDist < penetrableMem.GetSplinePath().arcLength || (clipListener != null && !clipListener.GetAllowForAllTheWayThrough()));
-            dickSet.overpenetrated = depthDist >= penetrableMem.GetSplinePath().arcLength;
+            dickSet.inside = depthDist != 0f && (depthDist < penetrableMem.GetPath().arcLength || (clipListener != null && !clipListener.GetAllowForAllTheWayThrough()));
+            dickSet.overpenetrated = depthDist >= penetrableMem.GetPath().arcLength;
         }
     }
 
@@ -228,8 +228,8 @@ public class DickDescriptor : MonoBehaviour {
                 }
                 continue;
             }
-            Vector3 holePos = pennedHole.GetSplinePath().GetPositionFromT(0f);
-            Vector3 holeTangent = pennedHole.GetSplinePath().GetVelocityFromT(0f);
+            Vector3 holePos = pennedHole.GetPath().GetPositionFromT(0f);
+            Vector3 holeTangent = pennedHole.GetPath().GetVelocityFromT(0f);
             PaintDecal.RenderDecalInSphere(holePos, set.dick.transform.lossyScale.x * 0.25f,
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);

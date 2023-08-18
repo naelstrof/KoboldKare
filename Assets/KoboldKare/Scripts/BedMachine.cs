@@ -71,7 +71,6 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
             }
             stillSleeping = false;
             foreach (var station in GetAnimationStations()) {
-                Debug.Log(station.info.user);
                 if (station.info.user == k) {
                     stillSleeping = true;
                 }

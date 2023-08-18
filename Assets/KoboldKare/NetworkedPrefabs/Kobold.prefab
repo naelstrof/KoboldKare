@@ -662,7 +662,6 @@ MonoBehaviour:
   - {fileID: 6506915555090380232}
   - {fileID: 6705071045580581135}
   - {fileID: 6110215587851341107}
-  splineTension: 0.85
   listeners:
   - rid: 0
   - rid: 1
@@ -673,6 +672,7 @@ MonoBehaviour:
   - rid: 8920608544167297028
   - rid: 8920608544167297029
   - rid: 8920608544167297030
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -1396,7 +1396,6 @@ MonoBehaviour:
   - {fileID: 6506915555090380232}
   - {fileID: 6362529374609880686}
   - {fileID: 7431995225434785503}
-  splineTension: 0.788
   listeners:
   - rid: 0
   - rid: 1
@@ -1407,6 +1406,7 @@ MonoBehaviour:
   - rid: 8920608544167297031
   - rid: 8920608544167297032
   - rid: 8920608544167297033
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -1718,12 +1718,12 @@ MonoBehaviour:
   - {fileID: 615628336786005644}
   - {fileID: 8632167451197018564}
   - {fileID: 1606155469873694204}
-  splineTension: 0.8
   listeners:
   - rid: 0
   - rid: 1
   - rid: 2
   - rid: 5882124739971907585
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:

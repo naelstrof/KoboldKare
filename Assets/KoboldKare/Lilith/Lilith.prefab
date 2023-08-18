@@ -141,7 +141,6 @@ MonoBehaviour:
   - {fileID: 6072806224816537904}
   - {fileID: 2250249793511135589}
   - {fileID: 8818876795878351904}
-  splineTension: 0.5
   listeners:
   - rid: 7257832986391347200
   - rid: 7257832986391347201
@@ -152,6 +151,7 @@ MonoBehaviour:
   - rid: 7257832997841534979
   - rid: 7257832997841534982
   - rid: 7257832997841534983
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -793,6 +793,7 @@ MonoBehaviour:
   colliderRadius: 0.14
   bodyRenderers:
   - {fileID: 662475372023914797}
+  stepHeight: 1.2
   antiPopCurveIK:
     serializedVersion: 2
     m_Curve:
@@ -836,15 +837,19 @@ MonoBehaviour:
   - rootTransform: {fileID: 298443447419433287}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
+    colliders: []
   - rootTransform: {fileID: 8826180650655545568}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
+    colliders: []
   - rootTransform: {fileID: 6003408550922939534}
     jiggleSettings: {fileID: 11400000, guid: a00426223a79c234faa07d21ab542066, type: 2}
     ignoredTransforms: []
+    colliders: []
   - rootTransform: {fileID: 1441783653916224599}
     jiggleSettings: {fileID: 11400000, guid: a00426223a79c234faa07d21ab542066, type: 2}
     ignoredTransforms: []
+    colliders: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!114 &2274364766123311955
@@ -1050,7 +1055,6 @@ MonoBehaviour:
   - {fileID: 2250249793511135589}
   - {fileID: 6072806224816537904}
   - {fileID: 624112700736163710}
-  splineTension: 0.5
   listeners:
   - rid: 7257832986391347200
   - rid: 7257832986391347201
@@ -1061,6 +1065,7 @@ MonoBehaviour:
   - rid: 7257832997841534978
   - rid: 7257832997841534979
   - rid: 7257832997841534982
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -1353,12 +1358,12 @@ MonoBehaviour:
   - {fileID: 147579534700294704}
   - {fileID: 5853875313183180259}
   - {fileID: 8653493361714772449}
-  splineTension: 0.5
   listeners:
   - rid: 7257832997841534976
   - rid: 7257832997841534977
   - rid: 7257832997841534980
   - rid: 7257832997841534981
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -5282,6 +5287,7 @@ MonoBehaviour:
     - {fileID: 4469894206491919603}
     - {fileID: 3136888890613449859}
     - {fileID: 6288284867022154375}
+    colliders: []
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!4 &8160835484459574988 stripped

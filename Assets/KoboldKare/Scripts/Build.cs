@@ -106,7 +106,7 @@ public class Build {
     }
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER");
-        string date = DateTime.Now.ToString("MM/dd/yyyy");
+        string date = DateTime.Now.ToString("MM.dd.yyyy");
         string gitcommit = Environment.GetEnvironmentVariable("GIT_COMMIT")?.Substring(0,8); 
         if (!String.IsNullOrEmpty(version) && !String.IsNullOrEmpty(gitcommit)) {
             PlayerSettings.bundleVersion = $"{date}_{gitcommit}";

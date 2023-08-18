@@ -113,6 +113,8 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
             }
 
     private void GrabId(int wantedId){
+        if(photonView.ViewID==wantedId)
+            return;
         PhotonView tempView=PhotonView.Find(wantedId);
         if(tempView!=null){
             int replaceId=wantedId;
@@ -122,7 +124,7 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
             tempView.ViewID=0;
             tempView.ViewID=replaceId;
             }
-            photonView.ViewID=0;
-            photonView.ViewID=wantedId;
+        photonView.ViewID=0;
+        photonView.ViewID=wantedId;
     }
 }

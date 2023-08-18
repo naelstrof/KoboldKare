@@ -16,4 +16,4 @@ MonoBehaviour:
   furniture:
   - {fileID: 11400000, guid: fff708e737c85f44eb7de0fb05c32a3d, type: 2}
   - {fileID: 11400000, guid: ca1ab81788a3f104fb60216cbce7ece2, type: 2}
-  - {fileID: 11400000, guid: c3fa7d44eb98f34428bc37db4821d839, type: 2}
+  - {fileID: 11400000, guid: 73f23f45ca804d94ea1b531b4868b7ac, type: 2}

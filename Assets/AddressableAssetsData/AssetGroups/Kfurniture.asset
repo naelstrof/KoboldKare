@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 7871bc45e2231e14e87515f5255a781c
   m_SerializeEntries:
   - m_GUID: a9b99032172cf49429d97125f109f5d9
-    m_Address: Assets/KoboldKare/KFurniture/HHShop.prefab
+    m_Address: HHShop
     m_ReadOnly: 0
     m_SerializedLabels:
     - NetworkedPrefab
@@ -85,6 +85,18 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3cc751b4b571d8e4ea9a985acd1257a9
     m_Address: Carpet
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57192e8659418934788a2eed4ce5afb9
+    m_Address: RedCouch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f7ed86b5cb801f4f993ecb0e54fe1cc
+    m_Address: RedCouchAnimated
     m_ReadOnly: 0
     m_SerializedLabels:
     - NetworkedPrefab

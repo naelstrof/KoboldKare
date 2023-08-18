@@ -2,7 +2,7 @@
   "dependencies": {
     "com.github.siccity.serializablecallback": "https://github.com/Siccity/SerializableCallback.git",
     "com.github.siccity.xnode": "https://github.com/siccity/xNode.git",
-    "com.naelstrof.jigglephysics": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.4",
+    "com.naelstrof.jigglephysics": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.5",
     "com.naelstrof.mozzarellatech": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",
     "com.naelstrof.penetrationtech": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.5",
     "com.naelstrof.skinnedmeshdecals": "https://github.com/naelstrof/SkinnedMeshDecals.git#v6.7.8",

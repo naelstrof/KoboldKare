@@ -43,11 +43,11 @@
       }
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.4",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.5",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "319a198c5419a35347ec7799fe3a18f295f25939"
+      "hash": "20346f781ab3a2867810293ca8d04e05c49c6c0e"
     },
     "com.naelstrof.modding": {
       "version": "file:com.naelstrof.modding",
@@ -70,13 +70,13 @@
       "dependencies": {}
     },
     "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.5",
+      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.6",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.textus-games.serialized-reference-ui": "1.0.0"
       },
-      "hash": "9d5412fc9ed7ab06fa8c68c4ee9863649b6ee87f"
+      "hash": "74cbbd4b91724821083a23105ed8bc7360109fe8"
     },
     "com.naelstrof.photon.profiler": {
       "version": "file:com.naelstrof.photon.profiler",

@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localRootForward: {x: 0, y: 1, z: 0}
-  localRootUp: {x: -0, y: -0, z: -1}
+  localRootUp: {x: 0, y: 0, z: -1}
   localRootRight: {x: 1, y: 0, z: 0}
   rootBone: {fileID: 1176204079772800515}
   targetRenderers:

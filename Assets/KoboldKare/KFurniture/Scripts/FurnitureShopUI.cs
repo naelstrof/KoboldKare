@@ -141,6 +141,14 @@ public class FurnitureShopUI : MonoBehaviour
                 LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                 
                 
+            }else{
+                RectTransform rt=GetComponent<RectTransform>();
+                rt.localEulerAngles = Vector3.zero;
+                rt.localPosition=Vector3.zero;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
+                rt.localScale=Vector3.one;
+                
             }
         
     }

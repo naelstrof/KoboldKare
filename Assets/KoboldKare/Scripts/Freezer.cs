@@ -7,9 +7,9 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 
-public class Unfreezer : GenericWeapon, IValuedGood, IGrabbable
+public class Freezer: GenericWeapon, IValuedGood, IGrabbable
 {
-    public bool firing = false;
+public bool firing = false;
     [SerializeField]
     private Transform center;
     public GameObject scanBeam;
@@ -27,7 +27,7 @@ public class Unfreezer : GenericWeapon, IValuedGood, IGrabbable
         RaycastHit hit;
         Physics.Raycast(laserEmitterLocation.position - laserEmitterLocation.forward * 0.25f, laserEmitterLocation.forward, out hit, 10f, 
                         GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
-        hit.collider.GetComponentInParent<MovableFurniture>()?.Unfreeze();
+        hit.collider.GetComponentInParent<MovableFurniture>()?.Freeze();
 
     }
     [PunRPC]

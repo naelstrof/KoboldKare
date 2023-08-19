@@ -16,7 +16,7 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
 
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
-    { rb.isKinematic=true;
+    { Freeze();
     }
 
     public bool ShouldSave()
@@ -32,7 +32,9 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     {
         return !rb.isKinematic;
     }
-    
+    public void Freeze(){
+        rb.isKinematic=true;
+    }
     public void Unfreeze()
     {
         rb.isKinematic=false;

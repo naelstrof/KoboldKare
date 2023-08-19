@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e51f9904e4d43c4caf6570e29e7fb35, type: 3}
   m_Name: Freezer
   m_EditorClassIdentifier: 
-  shopName: 
-  description: 
-  price: 0
+  shopName: Freezer
+  description: Freeze furniture in place
+  price: 100
   useSprite: {fileID: 0}
   prefab:
-    gameObject: {fileID: 0}
+    gameObject: {fileID: 7220656866325353609, guid: a1c205adff4802640941c0100098af03,
+      type: 3}
     optionalDatabase: {fileID: 0}

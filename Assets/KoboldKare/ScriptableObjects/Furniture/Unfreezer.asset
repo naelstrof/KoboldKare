@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Unfreezer
   m_EditorClassIdentifier: 
   shopName: Unfreezer
-  description: Unfreeze Objects
+  description: Unfreeze furniture
   price: 100
   useSprite: {fileID: 0}
   prefab:

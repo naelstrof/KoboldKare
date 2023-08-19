@@ -101,6 +101,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - NetworkedPrefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1c205adff4802640941c0100098af03
+    m_Address: Freezer
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

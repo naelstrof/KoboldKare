@@ -67,7 +67,6 @@ GameObject:
   - component: {fileID: 2251539680819737008}
   - component: {fileID: 1537305504368373848}
   - component: {fileID: -4758019570330510510}
-  - component: {fileID: -6491279030418095342}
   m_Layer: 11
   m_Name: KitchenTableRound
   m_TagString: Untagged
@@ -144,7 +143,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1326571668406890846}
   - {fileID: -4758019570330510510}
-  - {fileID: -6491279030418095342}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -272,22 +271,6 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &-6491279030418095342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039067425263952043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &4968558813101853492
 GameObject:
   m_ObjectHideFlags: 0

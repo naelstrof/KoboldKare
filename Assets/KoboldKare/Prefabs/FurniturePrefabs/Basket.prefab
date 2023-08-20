@@ -51,7 +51,6 @@ GameObject:
   - component: {fileID: 4896366819248200729}
   - component: {fileID: 2731717774367991361}
   - component: {fileID: 6383032463237344980}
-  - component: {fileID: 6985443282580693155}
   - component: {fileID: -8241609813955996188}
   m_Layer: 11
   m_Name: Basket
@@ -212,7 +211,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2731717774367991361}
-  - {fileID: 6985443282580693155}
   - {fileID: -8241609813955996188}
   sceneViewId: 0
   InstantiationId: 0
@@ -263,22 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 20
---- !u!114 &6985443282580693155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6269396952146111138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &-8241609813955996188
 MonoBehaviour:
   m_ObjectHideFlags: 0

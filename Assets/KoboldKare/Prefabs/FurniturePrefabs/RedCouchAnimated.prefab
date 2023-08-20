@@ -256,7 +256,6 @@ GameObject:
   - component: {fileID: 2040424093783777847}
   - component: {fileID: 4276615824776926086}
   - component: {fileID: 7846441687819769794}
-  - component: {fileID: 2637482197551775111}
   - component: {fileID: 5369888686962466564}
   m_Layer: 11
   m_Name: RedCouchAnimated
@@ -349,28 +348,12 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2040424093783777847}
-  - {fileID: 2637482197551775111}
+  - {fileID: 0}
   - {fileID: 5369888686962466564}
   - {fileID: 5383685068815239048}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2637482197551775111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819820622350556516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &5369888686962466564
 MonoBehaviour:
   m_ObjectHideFlags: 0

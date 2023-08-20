@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 8955797323427830274}
   - component: {fileID: 6630156763977515173}
   - component: {fileID: 629057915722727761}
-  - component: {fileID: -7976026690499609635}
+  - component: {fileID: 2167118667787043312}
   m_Layer: 11
   m_Name: KoboldHolder
   m_TagString: Untagged
@@ -864,6 +864,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6865824295046353543}
+  - {fileID: 2167118667787043312}
   - {fileID: 3627841549631810291}
   sceneViewId: 0
   InstantiationId: 0
@@ -935,7 +936,7 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
---- !u!114 &-7976026690499609635
+--- !u!114 &2167118667787043312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

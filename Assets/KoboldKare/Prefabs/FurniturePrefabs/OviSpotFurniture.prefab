@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5877686335447916893}
   - component: {fileID: 1687111735359174860}
   - component: {fileID: 921503833207721845}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 4260273263787411927}
   - component: {fileID: 6347162789758306716}
   - component: {fileID: 3309600034201211720}
-  - component: {fileID: -9122559724891874145}
+  - component: {fileID: 7019022263922743386}
   m_Layer: 11
   m_Name: OviSpotFurniture
   m_TagString: Untagged
@@ -535,6 +535,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 921503832853096396}
   - {fileID: 6347162789758306716}
+  - {fileID: 7019022263922743386}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -602,7 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 75
---- !u!114 &-9122559724891874145
+--- !u!114 &7019022263922743386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -623,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6168865365458148530}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +658,7 @@ GameObject:
   - component: {fileID: 3951903763876991181}
   - component: {fileID: 4886957975655582738}
   - component: {fileID: 921503834005035808}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8013516251688006404}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

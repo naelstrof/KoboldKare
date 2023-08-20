@@ -64,9 +64,8 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     }
     // Start is called before the first frame update
     void Start()
-    {   if(rb==null)
-        rb = GetComponent<Rigidbody>();
-        //rb.isKinematic=true;
+    { 
+
         
     }
 
@@ -108,23 +107,18 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
         }
     }
 
-    public void Save(JSONNode node) {
-        
-        JSONNode rootNode = JSONNode.Parse("{}");
-        rootNode["frozen"] = isFrozen;
+    public void Save(JSONNode node) {  
+        node["frozen"] = isFrozen;
         if(needsConsistentViewId)
-        {rootNode["id"] = photonView.ViewID;}
-        node["state"] = rootNode;
+        {node["id"] = photonView.ViewID;}
     }
 
     public void Load(JSONNode node) {
-        
-            JSONNode rootNode = node["state"];
-            isFrozen=rootNode["frozen"];
+            isFrozen=node["frozen"];
                 if(isFrozen)Freeze();
                 else Unfreeze();
             if(needsConsistentViewId)
-            GrabId(rootNode["id"]);
+            {GrabId(node["id"]);}
             }
 
     private void GrabId(int wantedId){

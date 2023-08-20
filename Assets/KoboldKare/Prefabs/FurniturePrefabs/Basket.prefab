@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4896366819248200729}
   - component: {fileID: 2731717774367991361}
   - component: {fileID: 6383032463237344980}
-  - component: {fileID: -8135269297742850540}
+  - component: {fileID: 1698474630070461412}
   m_Layer: 11
   m_Name: Basket
   m_TagString: Untagged
@@ -66,8 +66,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6269396952146111138}
-  m_LocalRotation: {x: 0.70710695, y: 0.0000012814999, z: 0.0000013113022, w: -0.7071067}
-  m_LocalPosition: {x: 5.3240004, y: 0.000027023612, z: 5.9341645}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.81111753, y: 0.81111765, z: 0.8111176}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -75,7 +75,7 @@ Transform:
   - {fileID: 7122576234665701878}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -360}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &7774713199322644413
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -211,6 +211,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2731717774367991361}
+  - {fileID: 1698474630070461412}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 20
---- !u!114 &-8135269297742850540
+--- !u!114 &1698474630070461412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

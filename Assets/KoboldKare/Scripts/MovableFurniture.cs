@@ -116,12 +116,6 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
             rb.isKinematic=rootNode["frozen"];
             if(needsConsistentViewId)
             GrabId(rootNode["id"]);
-
-            float rx = node["rotation.x"];
-            float ry = node["rotation.y"];
-            float rz = node["rotation.z"];
-            float rw = node["rotation.w"];
-            GetComponent<Transform>().rotation = new Quaternion(rx, ry, rz, rw);
             }
 
     private void GrabId(int wantedId){

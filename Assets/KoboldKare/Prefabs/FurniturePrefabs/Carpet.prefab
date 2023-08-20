@@ -863,7 +863,7 @@ GameObject:
   - component: {fileID: 6842396082588596137}
   - component: {fileID: 6136267163660263390}
   - component: {fileID: 5956900242465106412}
-  - component: {fileID: 8907691377850623562}
+  - component: {fileID: 4471987576770369361}
   m_Layer: 11
   m_Name: Carpet
   m_TagString: Untagged
@@ -941,8 +941,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6121145082487971327}
-  - {fileID: 8907691377850623562}
-  - {fileID: 0}
   - {fileID: 8375563729439851586}
   sceneViewId: 0
   InstantiationId: 0
@@ -963,7 +961,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!114 &8907691377850623562
+--- !u!114 &4471987576770369361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -972,13 +970,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4411878342665906872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8484044047297029198
 GameObject:
   m_ObjectHideFlags: 0

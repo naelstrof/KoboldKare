@@ -13,6 +13,7 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     private Rigidbody rb;
     [SerializeField]
     private bool needsConsistentViewId;
+    private bool isFrozen=false;
 
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
@@ -30,14 +31,18 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
 
     public bool CanGrab(Kobold kobold)
     {
-        return !rb.isKinematic;
+        return !isFrozen;
     }
     public void Freeze(){
-        rb.isKinematic=true;
+        
+        rb.constraints = RigidbodyConstraints.FreezePositionX |RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | 
+                                RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY |RigidbodyConstraints.FreezeRotationZ;
+        isFrozen=true;
     }
     public void Unfreeze()
     {
-        rb.isKinematic=false;
+        rb.constraints=RigidbodyConstraints.None;
+        isFrozen=false;
 
     }
 
@@ -73,13 +78,20 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            bool frozen=rb.isKinematic;
+            bool frozen=isFrozen;
             stream.SendNext(frozen);
             
         } else {
             bool frozen = (bool)stream.ReceiveNext();
-            rb.isKinematic=frozen;
-            
+            if(frozen!=isFrozen)
+            {
+                if(frozen){
+                    Freeze();
+                }
+                else{
+                    Unfreeze();
+                }
+            }
         }
     }
 
@@ -99,21 +111,18 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     public void Save(JSONNode node) {
         
         JSONNode rootNode = JSONNode.Parse("{}");
-        rootNode["frozen"] = rb.isKinematic.ToString();
+        rootNode["frozen"] = isFrozen;
         if(needsConsistentViewId)
-        rootNode["id"] = photonView.ViewID;
-        var rotation = GetComponent<Transform>().rotation;
-        node["rotation.x"] = rotation.x;
-        node["rotation.y"] = rotation.y;
-        node["rotation.z"] = rotation.z;
-        node["rotation.w"] = rotation.w;
+        {rootNode["id"] = photonView.ViewID;}
         node["state"] = rootNode;
     }
 
     public void Load(JSONNode node) {
         
             JSONNode rootNode = node["state"];
-            rb.isKinematic=rootNode["frozen"];
+            isFrozen=rootNode["frozen"];
+                if(isFrozen)Freeze();
+                else Unfreeze();
             if(needsConsistentViewId)
             GrabId(rootNode["id"]);
             }

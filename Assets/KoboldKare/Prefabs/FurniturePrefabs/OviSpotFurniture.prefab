@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 4260273263787411927}
   - component: {fileID: 6347162789758306716}
   - component: {fileID: 3309600034201211720}
-  - component: {fileID: 3868679179692682396}
+  - component: {fileID: -9122559724891874145}
   m_Layer: 11
   m_Name: OviSpotFurniture
   m_TagString: Untagged
@@ -535,8 +535,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 921503832853096396}
   - {fileID: 6347162789758306716}
-  - {fileID: 3868679179692682396}
-  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -604,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worth: 75
---- !u!114 &3868679179692682396
+--- !u!114 &-9122559724891874145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -613,13 +611,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8075196192482060172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8220886904038268970
 GameObject:
   m_ObjectHideFlags: 0

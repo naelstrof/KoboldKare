@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 2040424093783777847}
   - component: {fileID: 4276615824776926086}
   - component: {fileID: 7846441687819769794}
-  - component: {fileID: 5369888686962466564}
+  - component: {fileID: -4906445944666612653}
   m_Layer: 11
   m_Name: RedCouchAnimated
   m_TagString: Untagged
@@ -348,13 +348,11 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2040424093783777847}
-  - {fileID: 0}
-  - {fileID: 5369888686962466564}
   - {fileID: 5383685068815239048}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5369888686962466564
+--- !u!114 &-4906445944666612653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -363,13 +361,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1819820622350556516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &2407580955542970488
 GameObject:
   m_ObjectHideFlags: 0

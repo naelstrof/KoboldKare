@@ -220,38 +220,47 @@ public static class SaveManager {
         }
 
         JSONArray array = rootNode["objects"].AsArray;
-        for(int i=0;i<array.Count;i++) {
+        for (int i = 0; i < array.Count; i++) {
             JSONNode objectNode = array[i];
             int viewID = objectNode["viewID"];
             string prefabName = objectNode["name"];
             PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-            if(((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)){
-                if (view != null) { // Not allowed to have a conflicting ViewID, deleting the old one, as we're unsure it is the correct prefab type.
-                    PhotonNetwork.Destroy(view.gameObject);
-                }
-                GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
-                view = obj.GetComponent<PhotonView>();
-                view.ViewID = viewID;
-                // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
-                if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
-                    descriptor.finishedLoading += (v) => {
-                        try {
-                            foreach (Component observable in v.ObservedComponents) {
-                                if (observable is ISavable savable) {
-                                    savable.Load(objectNode);
-                                }
-                            }
-                        } catch (Exception e) {
-                            Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
-                            Debug.LogException(e);
-                            // Try our best to load the save... anyway
-                        }
-                    };
-                    continue;
-                }
+            if (!((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)) continue;
+            if (view != null) {
+                // Not allowed to have a conflicting ViewID, deleting the old one, as we're unsure it is the correct prefab type.
+                view.ViewID = 0;
+                PhotonNetwork.Destroy(view.gameObject);
             }
+
+            GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+            view = obj.GetComponent<PhotonView>();
+            view.ViewID = 0;
+            view.ViewID = viewID;
+            // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
+            if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
+                descriptor.finishedLoading += (v) => {
+                    try {
+                        foreach (Component observable in v.ObservedComponents) {
+                            if (observable is ISavable savable) {
+                                savable.Load(objectNode);
+                            }
+                        }
+                    } catch (Exception e) {
+                        Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
+                        Debug.LogException(e);
+                        // Try our best to load the save... anyway
+                    }
+                };
+            }
+        }
+
+        for (int i = 0; i < array.Count; i++) {
+            JSONNode objectNode = array[i];
+            int viewID = objectNode["viewID"];
+            string prefabName = objectNode["name"];
+            PhotonView view = PhotonNetwork.GetPhotonView(viewID);
             if (view == null) {
-                foreach(PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
+                foreach (PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
                     if (deepCheck.ViewID != viewID) continue;
                     view = deepCheck;
                     break;

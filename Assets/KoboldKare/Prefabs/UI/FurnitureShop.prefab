@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3427d51b7812d354ba2cbc38e4dd4d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastEvent: 0
+  lastEvent: 1
   buttonType: 0
 --- !u!114 &1028381227410527344
 MonoBehaviour:
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
+  action: {fileID: -5404092702102619964, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
 --- !u!1 &1382131919139066571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,10 +1024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea9f30d1aaf1eeb4cac2ca16a3c4d741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  categoryHeight: 35
-  itemHeight: 25
-  padding: 5
-  CanvasScalerResolutionHeight: 600
   buyButton: {fileID: 1684274098735949647}
   exitButton: {fileID: 5289649301968477693}
   contentTransform: {fileID: 2178895898231993093}
@@ -1043,7 +1039,6 @@ MonoBehaviour:
   priceField: {fileID: 907475933939591586}
   imageField: {fileID: 341814226594617354}
   defaultSprite: {fileID: 21300000, guid: e063c52d29e94a849b5a707a2a372857, type: 3}
-  positionToSpawnCategories: {fileID: 0}
 --- !u!1 &3034821863463340693
 GameObject:
   m_ObjectHideFlags: 0

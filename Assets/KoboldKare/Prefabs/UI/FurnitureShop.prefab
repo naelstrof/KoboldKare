@@ -214,10 +214,9 @@ GameObject:
   - component: {fileID: 3525812043835622330}
   - component: {fileID: 4792857068246701}
   - component: {fileID: 4519000320332341926}
-  - component: {fileID: 5289649301968477693}
   - component: {fileID: 2716293573965675679}
+  - component: {fileID: 5289649301968477693}
   - component: {fileID: 2333838380297687776}
-  - component: {fileID: 8098530109012531758}
   m_Layer: 5
   m_Name: Button - Back
   m_TagString: Untagged
@@ -285,6 +284,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2716293573965675679
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117952435471248592}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &5289649301968477693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,18 +352,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!225 &2716293573965675679
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117952435471248592}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &2333838380297687776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,19 +366,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastEvent: 1
   buttonType: 0
---- !u!114 &8098530109012531758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117952435471248592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
 --- !u!1 &1307913004256029372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,6 +1025,9 @@ MonoBehaviour:
   priceField: {fileID: 907475933939591586}
   imageField: {fileID: 341814226594617354}
   defaultSprite: {fileID: 21300000, guid: e063c52d29e94a849b5a707a2a372857, type: 3}
+  actionsToClose:
+  - {fileID: 3749223953104337775, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
+  - {fileID: 7212306176372978217, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
 --- !u!1 &3034821863463340693
 GameObject:
   m_ObjectHideFlags: 0

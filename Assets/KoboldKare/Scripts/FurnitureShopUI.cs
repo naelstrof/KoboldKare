@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class FurnitureShopUI : MonoBehaviour
 {
@@ -40,12 +41,28 @@ public class FurnitureShopUI : MonoBehaviour
     [SerializeField]
     private Sprite defaultSprite;
     private List<string> catNames;
+    [SerializeField]
+    private InputActionReference[] actionsToClose;
     // Start is called before the first frame update
     void Start()
     {
+        
 
     }
-    
+    private void AddKeys(){
+        foreach(InputActionReference iar in actionsToClose){
+        iar.action.performed +=Hide;
+    }
+    }
+
+    private void RemoveKeys(){
+            foreach(InputActionReference iar in actionsToClose){
+            iar.action.performed -=Hide;
+    }
+    }
+    void Hide(InputAction.CallbackContext ctx){
+        Hide();
+    }
     public void Hide(){
             gameObject.SetActive(false);
     } 
@@ -141,14 +158,16 @@ public class FurnitureShopUI : MonoBehaviour
                 isSetup=true;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                 
-                
+                AddKeys();
             }else{
+                
                 RectTransform rt=GetComponent<RectTransform>();
                 rt.localEulerAngles = Vector3.zero;
                 rt.localPosition=Vector3.zero;
                 rt.offsetMin = Vector2.zero;
                 rt.offsetMax = Vector2.zero;
                 rt.localScale=Vector3.one;
+                AddKeys();
                 
             }
         
@@ -156,6 +175,7 @@ public class FurnitureShopUI : MonoBehaviour
      void OnDisable()
     {   Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        RemoveKeys();
     }
     void SetInfo(string name)
     {   

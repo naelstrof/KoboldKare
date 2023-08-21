@@ -226,8 +226,12 @@ public static class SaveManager {
             string prefabName = objectNode["name"];
             PhotonView view = PhotonNetwork.GetPhotonView(viewID);
             if(((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)){
+                if (view != null) { // Not allowed to have a conflicting ViewID, deleting the old one, as we're unsure it is the correct prefab type.
+                    PhotonNetwork.Destroy(view.gameObject);
+                }
                 GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
                 view = obj.GetComponent<PhotonView>();
+                view.ViewID = viewID;
                 // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
                 if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
                     descriptor.finishedLoading += (v) => {

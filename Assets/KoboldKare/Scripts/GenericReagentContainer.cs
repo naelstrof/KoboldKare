@@ -177,11 +177,11 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
-        OnChange.Invoke(GetContents(), injectType);
+        OnChange?.Invoke(GetContents(), injectType);
         if (!emptied && isEmpty) {
             SetGenes(null);
             //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
-            OnEmpty.Invoke(GetContents(), injectType);
+            OnEmpty?.Invoke(GetContents(), injectType);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;

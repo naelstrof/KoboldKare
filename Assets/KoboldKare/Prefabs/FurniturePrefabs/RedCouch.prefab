@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 5828845331192289042}
   - component: {fileID: 529605861230629718}
   - component: {fileID: 8499307560480521453}
+  - component: {fileID: 6739849396798678352}
   m_Layer: 11
   m_Name: RedCouch
   m_TagString: Untagged
@@ -352,8 +353,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 8406902234563677659}
   weaponHoldOffset: {x: 0, y: -0.5, z: 0.75}
   center: {fileID: 8406902234563677659}
-  rb: {fileID: 5828845331192289042}
-  needsConsistentViewId: 0
+  freezable: {fileID: 6739849396798678352}
 --- !u!54 &5828845331192289042
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -389,8 +389,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 8641469226146391715}
   - {fileID: 8499307560480521453}
+  - {fileID: 6739849396798678352}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -406,3 +406,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6739849396798678352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8285758736554727920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5828845331192289042}

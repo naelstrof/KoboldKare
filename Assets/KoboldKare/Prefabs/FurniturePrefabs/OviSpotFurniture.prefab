@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 6347162789758306716}
   - component: {fileID: 3309600034201211720}
   - component: {fileID: 7019022263922743386}
+  - component: {fileID: 6715937309145432258}
   m_Layer: 11
   m_Name: OviSpotFurniture
   m_TagString: Untagged
@@ -534,8 +535,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 921503832853096396}
-  - {fileID: 6347162789758306716}
   - {fileID: 7019022263922743386}
+  - {fileID: 6715937309145432258}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -588,8 +589,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 8013516251688006404}
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 6168865365458148530}
-  rb: {fileID: 4260273263787411927}
-  needsConsistentViewId: 1
+  freezable: {fileID: 6715937309145432258}
 --- !u!114 &3309600034201211720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,6 +615,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6715937309145432258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8075196192482060172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 4260273263787411927}
 --- !u!1 &8220886904038268970
 GameObject:
   m_ObjectHideFlags: 0

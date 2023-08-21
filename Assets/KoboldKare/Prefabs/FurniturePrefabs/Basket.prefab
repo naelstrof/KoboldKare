@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 2731717774367991361}
   - component: {fileID: 6383032463237344980}
   - component: {fileID: 1698474630070461412}
+  - component: {fileID: 4107653347282661622}
   m_Layer: 11
   m_Name: Basket
   m_TagString: Untagged
@@ -210,8 +211,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2731717774367991361}
   - {fileID: 1698474630070461412}
+  - {fileID: 4107653347282661622}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -246,8 +247,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 7122576234665701878}
   weaponHoldOffset: {x: 0, y: -2, z: 2}
   center: {fileID: 6060480514812552506}
-  rb: {fileID: 4896366819248200729}
-  needsConsistentViewId: 0
+  freezable: {fileID: 4107653347282661622}
 --- !u!114 &6383032463237344980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +273,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4107653347282661622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6269396952146111138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 4896366819248200729}
 --- !u!1 &6642542252428538965
 GameObject:
   m_ObjectHideFlags: 0

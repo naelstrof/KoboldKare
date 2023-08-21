@@ -27,7 +27,7 @@ public bool firing = false;
         RaycastHit hit;
         Physics.Raycast(laserEmitterLocation.position - laserEmitterLocation.forward * 0.25f, laserEmitterLocation.forward, out hit, 10f, 
                         GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
-        hit.collider.GetComponentInParent<MovableFurniture>()?.Freeze();
+        hit.collider.GetComponentInParent<Freezable>()?.Freeze();
 
     }
     [PunRPC]

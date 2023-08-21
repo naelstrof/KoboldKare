@@ -864,6 +864,7 @@ GameObject:
   - component: {fileID: 6136267163660263390}
   - component: {fileID: 5956900242465106412}
   - component: {fileID: 4471987576770369361}
+  - component: {fileID: -5356261566945426093}
   m_Layer: 11
   m_Name: Carpet
   m_TagString: Untagged
@@ -906,8 +907,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 2966335544073228655}
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 4850411784842569689}
-  rb: {fileID: 5956900242465106412}
-  needsConsistentViewId: 1
+  freezable: {fileID: -5356261566945426093}
 --- !u!114 &6842396082588596137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,8 +940,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6121145082487971327}
   - {fileID: 4471987576770369361}
+  - {fileID: -5356261566945426093}
   - {fileID: 8375563729439851586}
   sceneViewId: 0
   InstantiationId: 0
@@ -974,6 +974,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5356261566945426093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411878342665906872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5956900242465106412}
 --- !u!1 &8484044047297029198
 GameObject:
   m_ObjectHideFlags: 0

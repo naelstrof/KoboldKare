@@ -574,6 +574,7 @@ GameObject:
   - component: {fileID: 4193084085369115623}
   - component: {fileID: 8640935287680945499}
   - component: {fileID: -1133681040497145446}
+  - component: {fileID: 7959944213754734852}
   m_Layer: 11
   m_Name: SunChair
   m_TagString: Untagged
@@ -620,8 +621,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4193084085369115623}
   - {fileID: -1133681040497145446}
+  - {fileID: 7959944213754734852}
   - {fileID: 4960996506736110035}
   sceneViewId: 0
   InstantiationId: 0
@@ -654,8 +655,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 1748796982048428297}
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 843911434714538958}
-  rb: {fileID: 8640935287680945499}
-  needsConsistentViewId: 1
+  freezable: {fileID: 7959944213754734852}
 --- !u!54 &8640935287680945499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -684,6 +684,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7959944213754734852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5715664402268477189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8640935287680945499}
 --- !u!1 &5975856626737840618
 GameObject:
   m_ObjectHideFlags: 0

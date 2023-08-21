@@ -27,7 +27,7 @@ public class Unfreezer : GenericWeapon, IValuedGood, IGrabbable
         RaycastHit hit;
         Physics.Raycast(laserEmitterLocation.position - laserEmitterLocation.forward * 0.25f, laserEmitterLocation.forward, out hit, 10f, 
                         GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
-        hit.collider.GetComponentInParent<MovableFurniture>()?.Unfreeze();
+        hit.collider.GetComponentInParent<Freezable>()?.Unfreeze();
 
     }
     [PunRPC]

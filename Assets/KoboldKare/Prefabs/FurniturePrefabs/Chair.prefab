@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 3470099772266829065}
   - component: {fileID: 504035276789461119}
   - component: {fileID: 4240120490814379545}
+  - component: {fileID: -5813941856775116743}
   m_Layer: 11
   m_Name: Chair
   m_TagString: Untagged
@@ -273,8 +274,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 3470099772266829065}
   - {fileID: 4240120490814379545}
+  - {fileID: -5813941856775116743}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -293,8 +294,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 7210798877728473653}
   weaponHoldOffset: {x: 0, y: -1, z: 1}
   center: {fileID: 6456385938249239407}
-  rb: {fileID: 2988658280905542533}
-  needsConsistentViewId: 0
+  freezable: {fileID: -5813941856775116743}
 --- !u!114 &504035276789461119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +320,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5813941856775116743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143858890350565404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2988658280905542533}
 --- !u!1 &5317040185849088490
 GameObject:
   m_ObjectHideFlags: 0

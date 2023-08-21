@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 2251539680819737008}
   - component: {fileID: 1537305504368373848}
   - component: {fileID: -4032948763796286936}
+  - component: {fileID: -8574346949217294607}
   m_Layer: 11
   m_Name: KitchenTableRound
   m_TagString: Untagged
@@ -141,8 +142,8 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1326571668406890846}
   - {fileID: -4032948763796286936}
+  - {fileID: -8574346949217294607}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -161,8 +162,7 @@ MonoBehaviour:
   weaponBarrelTransform: {fileID: 5001747532107937161}
   weaponHoldOffset: {x: 0, y: -1, z: 2}
   center: {fileID: 5001747532107937161}
-  rb: {fileID: 2115412622256232037}
-  needsConsistentViewId: 0
+  freezable: {fileID: -8574346949217294607}
 --- !u!65 &6572689937781869199
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -266,6 +266,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b29fbdda1620fa47982e9b15067bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8574346949217294607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039067425263952043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc41f2f96b9e14941bd930e8b4d7bb71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2115412622256232037}
 --- !u!1 &4968558813101853492
 GameObject:
   m_ObjectHideFlags: 0

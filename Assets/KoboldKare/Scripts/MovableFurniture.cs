@@ -11,10 +11,7 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
     private Transform center;
     [SerializeField]
     private Rigidbody rb;
-    [SerializeField]
-    private bool needsConsistentViewId;
     private bool isFrozen=false;
-
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
     { Freeze();
@@ -109,31 +106,14 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable, ISavable
 
     public void Save(JSONNode node) {  
         node["frozen"] = isFrozen;
-        if(needsConsistentViewId)
-        {node["id"] = photonView.ViewID;}
+
     }
 
     public void Load(JSONNode node) {
             isFrozen=node["frozen"];
                 if(isFrozen)Freeze();
                 else Unfreeze();
-            if(needsConsistentViewId)
-            {GrabId(node["id"]);}
+
             }
 
-    private void GrabId(int wantedId){
-        if(photonView.ViewID==wantedId)
-            return;
-        PhotonView tempView=PhotonView.Find(wantedId);
-        if(tempView!=null){
-            int replaceId=wantedId;
-            while(PhotonView.Find(replaceId)!=null){
-                replaceId=replaceId+5;
-            }
-            tempView.ViewID=0;
-            tempView.ViewID=replaceId;
-            }
-        photonView.ViewID=0;
-        photonView.ViewID=wantedId;
-    }
 }

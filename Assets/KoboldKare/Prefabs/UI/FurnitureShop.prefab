@@ -329,9 +329,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerPossession, Assembly-CSharp
-        m_MethodName: ToggleEquipmentUI
+      - m_Target: {fileID: 3607635627934897217}
+        m_TargetAssemblyTypeName: FurnitureShopUI, Assembly-CSharp
+        m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

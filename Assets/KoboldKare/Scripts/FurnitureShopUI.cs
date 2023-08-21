@@ -43,12 +43,13 @@ public class FurnitureShopUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buyButton.onClick.AddListener(() => { buy(); });
-        exitButton.onClick.AddListener(() => { gameObject.SetActive(false); });
+
     }
-
-
-    private void buy()
+    
+    public void Hide(){
+            gameObject.SetActive(false);
+    } 
+    public void Buy()
     {
         
         if(selected != null) { 

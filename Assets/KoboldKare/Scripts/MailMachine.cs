@@ -105,6 +105,10 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     [PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
         PhotonProfiler.LogReceive(sizeof(int));
+         if(suckingIDs.Contains(viewID)){
+            yield break;
+        }
+        suckingIDs.Add(viewID);
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {

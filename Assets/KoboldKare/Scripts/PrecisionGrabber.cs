@@ -556,6 +556,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [PunRPC]
     private void FreezeRPC(int grabViewID, int colliderNum, Vector3 localColliderPosition, Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation) {
         PhotonView grabView = PhotonNetwork.GetPhotonView(grabViewID);
+        if(grabView.GetComponentInChildren<Freezable>()!=null){grabView.GetComponentInChildren<Freezable>().Freeze(); return;}
         Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
         frozenGrabs.Add(new Grab(kobold, previewHandAnimator.gameObject, colliders[colliderNum], localColliderPosition, localHitNormal,
             worldAnchor, rotation, affRotation, unfreezeSound));
@@ -590,6 +591,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     [PunRPC]
     private void UnfreezeRPC(int viewID, int rigidbodyID) {
         PhotonView checkView = PhotonNetwork.GetPhotonView(viewID);
+        
         Rigidbody[] bodies = checkView.GetComponentsInChildren<Rigidbody>();
         for(int i=0;i<frozenGrabs.Count;i++) {
             Grab frozenGrab = frozenGrabs[i];
@@ -629,6 +631,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
         
         PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
+        if(otherView.GetComponentInChildren<Freezable>()!=null){otherView.GetComponentInChildren<Freezable>().Unfreeze();return true;}
         if (foundGrabs) {
             Rigidbody[] bodies = otherView.GetComponentsInChildren<Rigidbody>();
             for (int i = 0; i < bodies.Length; i++) {

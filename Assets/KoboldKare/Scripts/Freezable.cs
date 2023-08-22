@@ -17,11 +17,20 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
 
     
     // Start is called before the first frame update
+    [PunRPC]
+    public void FreezeRPC(){
+        Freeze();
+    }
     public void Freeze(){
         
         rb.constraints = RigidbodyConstraints.FreezePositionX |RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | 
                                 RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY |RigidbodyConstraints.FreezeRotationZ;
         frozen=true;
+    }
+
+    [PunRPC]
+    public void UnfreezeRPC(){
+        Unfreeze();
     }
     public void Unfreeze()
     {

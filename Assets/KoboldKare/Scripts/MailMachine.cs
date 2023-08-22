@@ -139,6 +139,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
 
         totalWorth = Mathf.Min(totalWorth, 1953125f);
         PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{totalWorth});
+        suckingIDs.Remove(viewID);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

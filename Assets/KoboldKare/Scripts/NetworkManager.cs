@@ -348,6 +348,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public void OnEvent(EventData photonEvent) {
         if (photonEvent.Code == CustomInstantiationEvent) {
             object[] objectData = (object[])photonEvent.CustomData;
+            var existingView = PhotonNetwork.GetPhotonView((int)objectData[1]);
+            if (existingView != null) {
+                existingView.ViewID = 0;
+                Destroy(existingView.gameObject);
+            }
+
             GameObject obj = PhotonNetwork.PrefabPool.Instantiate((string)objectData[0], Vector3.zero, Quaternion.identity);
             var photonView = obj.GetComponent<PhotonView>();
             photonView.ViewID = (int)objectData[1];

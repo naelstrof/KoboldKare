@@ -18,6 +18,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private PlayableMap selectedMap;
     public PrefabSelectSingleSetting selectedPlayerPrefab;
     public ServerSettings settings;
+    
+    public static byte CustomInstantiationEvent = (byte)'C';
 
     public bool online {
         get {
@@ -344,6 +346,15 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnEvent(EventData photonEvent) {
+        if (photonEvent.Code == CustomInstantiationEvent) {
+            object[] objectData = (object[])photonEvent.CustomData;
+            GameObject obj = PhotonNetwork.PrefabPool.Instantiate((string)objectData[0], Vector3.zero, Quaternion.identity);
+            var photonView = obj.GetComponent<PhotonView>();
+            photonView.ViewID = (int)objectData[1];
+            obj.SetActive(true);
+            return;
+        }
+
         if (photonEvent.Code != 'M') {
             return;
         }

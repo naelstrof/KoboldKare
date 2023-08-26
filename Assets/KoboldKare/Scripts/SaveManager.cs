@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
@@ -228,30 +230,17 @@ public static class SaveManager {
             if (!((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)) continue;
             if (view != null) {
                 // Not allowed to have a conflicting ViewID, deleting the old one, as we're unsure it is the correct prefab type.
-                view.ViewID = 0;
                 PhotonNetwork.Destroy(view.gameObject);
+                view.ViewID = 0;
             }
 
-            GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+            PhotonNetwork.RaiseEvent(NetworkManager.CustomInstantiationEvent, new object[] { prefabName, viewID },
+                new RaiseEventOptions { Receivers = ReceiverGroup.Others, CachingOption = EventCaching.AddToRoomCache },
+                new SendOptions { Reliability = true });
+            GameObject obj = PhotonNetwork.PrefabPool.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
             view = obj.GetComponent<PhotonView>();
-            view.ViewID = 0;
             view.ViewID = viewID;
-            // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
-            if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
-                descriptor.finishedLoading += (v) => {
-                    try {
-                        foreach (Component observable in v.ObservedComponents) {
-                            if (observable is ISavable savable) {
-                                savable.Load(objectNode);
-                            }
-                        }
-                    } catch (Exception e) {
-                        Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
-                        Debug.LogException(e);
-                        // Try our best to load the save... anyway
-                    }
-                };
-            }
+            obj.SetActive(true);
         }
 
         for (int i = 0; i < array.Count; i++) {
@@ -271,9 +260,26 @@ public static class SaveManager {
                 continue;
             }
             try {
-                foreach(Component observable in view.ObservedComponents) {
-                    if (observable is ISavable savable) {
-                        savable.Load(objectNode);
+                // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
+                if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
+                    descriptor.finishedLoading += (v) => {
+                        try {
+                            foreach (Component observable in v.ObservedComponents) {
+                                if (observable is ISavable savable) {
+                                    savable.Load(objectNode);
+                                }
+                            }
+                        } catch (Exception e) {
+                            Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
+                            Debug.LogException(e);
+                            // Try our best to load the save... anyway
+                        }
+                    };
+                } else {
+                    foreach (Component observable in view.ObservedComponents) {
+                        if (observable is ISavable savable) {
+                            savable.Load(objectNode);
+                        }
                     }
                 }
             } catch (Exception e) {

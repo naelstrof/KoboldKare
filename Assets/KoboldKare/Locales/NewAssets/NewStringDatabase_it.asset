@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 1602997996487704588
   m_TableData:
   - m_Id: 13688688640
-    m_Localized: Giocare a
+    m_Localized: Gioca
     m_Metadata:
       m_Items: []
   - m_Id: 516057255936
@@ -437,7 +437,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino acampanado
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -961,7 +961,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u043F\u0435\u043B\u0435\u043E\u043B\u043E\u0433\u044F!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1077,7 +1077,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha non sarebbe cos\xEC divertente se hai bloccato 4 dildo nella
+    m_Localized: "Aha non sarebbe cos\xEC divertente se avessi bloccato 4 dildo nella
       bocca di un kobold ... ti comando di farlo."
     m_Metadata:
       m_Items: []
@@ -1193,7 +1193,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Star\xF2 solo qui nel caso in cui qualche altro nudo Kobold vuole
-      che io costruisca le macchine fetish."
+      che io le costruisca le macchine fetish."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1214,7 +1214,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, raggiungerlo!"
+    m_Localized: "Voglio vedere uova pi\xF9 grandi kobold, arrivarci!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1397,12 +1397,21 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704588
   - m_Id: 280448613000617984
-    m_Localized: Impossibile connettersi a vapore, non si non gradano automaticamente
+    m_Localized: Impossibile connettersi a Steam, non si non gradano automaticamente
       le mod.
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Rubinetto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "Il caricamento MOD non \xE8 riuscito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "C'\xE8 stata un'eccezione che ha caricato una mod, questo potrebbe
+      rompere il gioco. Si prega di ricontrollare le mod."
     m_Metadata:
       m_Items: []
   references:

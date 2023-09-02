@@ -957,7 +957,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelking!
+    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043E\u0433\u043E!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Ohita savu, voit vapaasti selata tavaroita.
+    m_Localized: Ohita savu, selaa tavaroita.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
@@ -1072,7 +1072,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464139
     m_Localized: "Aha Eik\xF6 se olisi niin hauskaa, jos jumit 4 dildoa Koboldin
-      suuhun ... K\xE4sittelen sinua tekem\xE4\xE4n sen."
+      suuhun ... K\xE4sittelen sinua tekem\xE4\xE4n niin."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1192,7 +1192,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Turvallinen ty\xF6-"
+    m_Localized: "Turvalliselle ty\xF6lle p\xE4\xE4valikko"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1227,7 +1227,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Tarvitsen paljon Koboldsia j\xE4ttil\xE4isill\xE4 kukkeilla, se
+    m_Localized: "Tarvitsen paljon Koboldsia j\xE4ttil\xE4isill\xE4 kukoilla, se
       on elint\xE4rke\xE4\xE4 suunnitelmilleni."
     m_Metadata:
       m_Items: []
@@ -1264,7 +1264,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
+    m_Localized: "Olen kiinnostunut siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
       kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
     m_Metadata:
       m_Items: []
@@ -1383,7 +1383,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: Mahdollistettu pelattavat merkit
+    m_Localized: Mahdollistanut pelattavat merkit
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
@@ -1393,11 +1393,21 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704583
   - m_Id: 280448613000617984
-    m_Localized: "Yhdist\xE4minen Steamiin ei onnistunut automaattisesti lataa modit."
+    m_Localized: "Yhdist\xE4minen Steamiin ei ep\xE4onnistunut, ei automaattisesti
+      lataa modit."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Napauttaa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "MOD -lastaus ep\xE4onnistui!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Modin lataaminen oli poikkeus, t\xE4m\xE4 voi rikkoa pelin. Tarkista
+      modit."
     m_Metadata:
       m_Items: []
   references:

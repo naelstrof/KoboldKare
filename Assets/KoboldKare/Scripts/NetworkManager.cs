@@ -274,7 +274,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnLeftRoom() {
-        onLeaveRoom?.Invoke();
+        if (onLeaveRoom != null) {
+            onLeaveRoom.Invoke();
+        } else {
+            GameManager.StartCoroutineStatic(LoadPlayerConfigMods());
+        }
+
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
@@ -386,12 +391,15 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PhotonNetwork.LeaveRoom();
         }
     }
-
+    private IEnumerator LoadPlayerConfigMods() {
+        yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
+        PrefabDatabaseDatabase.LoadPlayerConfig();
+    }
     private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName, JSONNode rootNode) {
         yield return ModManager.SetLoadedMods(desiredMods);
         PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.JoinRoom(roomName);
-        onLeaveRoom = () => {};
+        onLeaveRoom = null;
     }
 }

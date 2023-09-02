@@ -12,6 +12,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.ResourceManagement;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ModManager : MonoBehaviour {
     public enum ModSource {
@@ -90,7 +92,6 @@ public class ModManager : MonoBehaviour {
                 loadPriority = rootNode["loadPriority"];
             }
         }
-
         private void LoadPreview(string previewPngPath) {
             preview = new Texture2D(16, 16);
             preview.LoadImage(File.ReadAllBytes(previewPngPath));
@@ -126,17 +127,32 @@ public class ModManager : MonoBehaviour {
             } else {
                 modPath = string.IsNullOrEmpty(folderTitle) ? "" : $"{Application.persistentDataPath}/mods/{folderTitle}";
             }
-            if (!string.IsNullOrEmpty(modPath)) {
-                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
-            }
+
+            if (string.IsNullOrEmpty(modPath)) return;
+            LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
+            LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
         }
     }
     private static ModManager instance;
     private bool ready;
+    private Exception lastException;
     private List<ModInfo> fullModList;
+    private List<ModStub> playerConfig;
+    public static List<ModStub> GetPlayerConfig() => instance.playerConfig;
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
+
+    private delegate bool ModConditional(ModInfo info);
+    private static List<ModStub> ConvertToStubs(ICollection<ModInfo> infos, ModConditional conditional = null) {
+        List<ModStub> modStubs = new List<ModStub>();
+        foreach (var mod in infos) {
+            if (conditional == null || conditional.Invoke(mod)) {
+                modStubs.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.description, mod.enabled,
+                    mod.preview));
+            }
+        }
+        return modStubs;
+    }
 
     private static string jsonFolder {
         get {
@@ -173,6 +189,12 @@ public class ModManager : MonoBehaviour {
             this.id = id;
             this.preview = preview;
         }
+        public void Save(JSONNode node) {
+            node["enabled"] = enabled;
+            node["folderTitle"] = title;
+            node["publishedFileId"] = id.ToString();
+            node["loadedFromSteam"] = source == ModSource.SteamWorkshop;
+        }
     }
 
     public static string currentLoadingMod = "<currentLoadingMod>";
@@ -208,12 +230,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static ReadOnlyCollection<ModStub> GetFullModList() {
-        List<ModStub> stubs = new List<ModStub>();
-        foreach (var info in instance.fullModList) {
-            if (!info.IsValid()) continue;
-            stubs.Add(new ModStub(info.title, info.publishedFileId, info.modSource, info.description, info.enabled, info.preview));
-        }
-        return stubs.AsReadOnly();
+        return ConvertToStubs(instance.fullModList, (info) => info.IsValid()).AsReadOnly();
     }
 
     public static async void SetModActive(ModStub stub, bool active) {
@@ -228,6 +245,7 @@ public class ModManager : MonoBehaviour {
             Mutex.Release();
         }
         await instance.ReloadMods();
+        instance.playerConfig = ConvertToStubs(instance.fullModList);
     }
 
     public static void AddFinishedLoadingListener(ModReadyAction action) {
@@ -312,14 +330,13 @@ public class ModManager : MonoBehaviour {
             return;
         }
         foreach (var node in array) {
-            if (string.IsNullOrEmpty(node.Key) || node.Value.IsNull) {
-                continue;
-            }
             var mod = new ModInfo(node);
             if (mod.IsValid()) {
                 AddMod(mod);
             }
         }
+
+        playerConfig = ConvertToStubs(instance.fullModList);
     }
     private void ScanForNewMods() {
         string modCatalogPath = $"{Application.persistentDataPath}/{modLocation}";
@@ -331,6 +348,7 @@ public class ModManager : MonoBehaviour {
             try {
                 AddMod(new ModInfo(directory, ModSource.LocalModFolder));
             } catch (FileNotFoundException e) {
+                lastException = e;
                 Debug.LogException(e);
                 Debug.LogError($"Failed to load mod {directory}.");
             }
@@ -340,7 +358,7 @@ public class ModManager : MonoBehaviour {
     public static void SaveConfig() {
         JSONNode rootNode = JSONNode.Parse("{}");
         JSONNode nodeArray = new JSONArray();
-        foreach(var mod in instance.fullModList) {
+        foreach(var mod in instance.playerConfig) {
             if (!mod.enabled) continue;
             JSONNode node = JSONNode.Parse("{}");
             mod.Save(node);
@@ -354,13 +372,20 @@ public class ModManager : MonoBehaviour {
     }
 
     private async Task LoadMods() {
-        foreach (var modPostProcessor in modPostProcessors) {
-            var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-            await assets.Task;
-            await modPostProcessor.LoadAllAssets(assets.Result);
+        try {
+            foreach (var modPostProcessor in modPostProcessors) {
+                List<object> keys = new List<object>();
+                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
+                await assets.Task;
+                await modPostProcessor.LoadAllAssets(assets.Result);
+            }
+        } catch (Exception e) {
+            lastException = e;
+            throw;
+        } finally {
+            ready = true;
+            finishedLoading?.Invoke();
         }
-        ready = true;
-        finishedLoading?.Invoke();
     }
 
     private void UnloadMods() {
@@ -379,12 +404,26 @@ public class ModManager : MonoBehaviour {
 
     public static bool GetReady() => instance.ready;
 
+    public static bool TryGetLastException(out Exception e) {
+        if (instance.lastException != null) {
+            e = instance.lastException;
+            return true;
+        }
+        e = null;
+        return false;
+    }
+
+    private void HandleException(AsyncOperationHandle handle, Exception e) {
+        lastException = e;
+    }
+
     private async void Start() {
         if (instance != null && instance != this) {
             Destroy(this);
             return;
         }
-        
+
+        ResourceManager.ExceptionHandler += HandleException;
         Addressables.InternalIdTransformFunc += location => {
             if (location.InternalId.Contains("<currentLoadingMod>")) {
                 return location.InternalId.Replace("<currentLoadingMod>", currentLoadingMod);
@@ -402,6 +441,7 @@ public class ModManager : MonoBehaviour {
         LoadConfig();
         ScanForNewMods();
         await ReloadMods();
+        instance.playerConfig = ConvertToStubs(instance.fullModList);
     }
 
     public static bool IsValid() {
@@ -418,6 +458,7 @@ public class ModManager : MonoBehaviour {
     }
 
     private async Task ReloadMods() {
+        lastException = null;
         if (!IsValid()) {
             throw new UnityException("32 bit Windows does NOT support mods! Please upgrade your operating system!");
         }
@@ -434,22 +475,26 @@ public class ModManager : MonoBehaviour {
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.catalogPath);
                 await loader.Task;
-                modInfo.locator = loader.Result;
+                if (!loader.IsDone || !loader.IsValid()) {
+                    modInfo.enabled = false;
+                } else {
+                    modInfo.locator = loader.Result;
+                }
             }
-            await LoadMods();
+        } catch (Exception e) {
+            lastException = e;
+            throw;
         } finally {
-            Mutex.Release();
+            try {
+                await LoadMods();
+            } finally {
+                Mutex.Release();
+            }
         }
     }
 
     public static List<ModStub> GetLoadedMods() {
-        List<ModStub> loadedMods = new List<ModStub>();
-        foreach (var mod in instance.fullModList) {
-            if (mod.enabled) {
-                loadedMods.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.description, mod.enabled, mod.preview));
-            }
-        }
-        return loadedMods;
+        return ConvertToStubs(instance.fullModList, (info) => info.enabled);
     }
 
     public static bool HasModsLoaded(IList<ModStub> stubs) {
@@ -480,6 +525,11 @@ public class ModManager : MonoBehaviour {
         }
 
         return true;
+    }
+
+    public enum LoadModType {
+        PlayerConfig,
+        ServerConfig,
     }
 
     public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {

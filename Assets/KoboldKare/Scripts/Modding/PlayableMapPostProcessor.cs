@@ -21,6 +21,10 @@ public class PlayableMapPostProcessor : ModPostProcessor {
     }
 
     private void LoadPlayableMap(PlayableMap playableMap) {
+        // This can happen if multiple maps try to load in a row.
+        if (playableMap == null) {
+            return;
+        }
         for (int i = 0; i < addedPlayableMaps.Count; i++) {
             if (addedPlayableMaps[i].unityScene.RuntimeKey != playableMap.unityScene.RuntimeKey) continue;
             PlayableMapDatabase.RemovePlayableMap(playableMap);

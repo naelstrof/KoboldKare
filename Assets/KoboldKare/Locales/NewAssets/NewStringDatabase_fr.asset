@@ -1404,6 +1404,15 @@ MonoBehaviour:
     m_Localized: Robinet
     m_Metadata:
       m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "Le chargement du mod a \xE9chou\xE9!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Il y avait une exception charg\xE9e d'un mod, cela pourrait briser
+      le jeu. Veuillez v\xE9rifier vos mods."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1323,6 +1323,14 @@ MonoBehaviour:
     m_Key: BUTTON_TAP
     m_Metadata:
       m_Items: []
+  - m_Id: 342423402432045056
+    m_Key: MOD_LOADING_FAILED_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Key: MOD_LOADING_FAILED_DESCRIPTION
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

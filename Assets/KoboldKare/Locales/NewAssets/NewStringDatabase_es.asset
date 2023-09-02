@@ -178,7 +178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004683
-    m_Localized: Exclusivo
+    m_Localized: Pantalla Completa Exclusiva
     m_Metadata:
       m_Items: []
   - m_Id: 516095004684
@@ -190,7 +190,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004686
-    m_Localized: En la ventana
+    m_Localized: Ventana
     m_Metadata:
       m_Items: []
   - m_Id: 516095004687
@@ -214,8 +214,8 @@ MonoBehaviour:
   - m_Id: 516095004692
     m_Localized: "\u2022 BAJO PENA DE PERJURIO, QUE ERES MAYOR DE 18 A\xD1OS.\r\n\u2022
       La desnudez y representaciones expl\xEDcitas de la actividad sexual no ofenden
-      a USTED.\r\n\u2022 Se reconoce que usted es responsable de asegurar que TODAS
-      LAS PERSONAS QUE VEAN EL JUEGO desde su dispositivo son mayores de 18 a\xF1os."
+      a USTED.\r\n\u2022 Reconoces que eres responsable, de asegurar que TODAS LAS
+      PERSONAS QUE VEAN EL JUEGO desde su dispositivo son mayores de 18 a\xF1os."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
@@ -228,11 +228,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004695
-    m_Localized: Movimiento
+    m_Localized: Moverse
     m_Metadata:
       m_Items: []
   - m_Id: 516095004696
-    m_Localized: Salto
+    m_Localized: Saltar
     m_Metadata:
       m_Items: []
   - m_Id: 516095004697
@@ -276,7 +276,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004707
-    m_Localized: Cambiar modo de agarre
+    m_Localized: Cambiar a modo de agarre
     m_Metadata:
       m_Items: []
   - m_Id: 516095004708
@@ -420,11 +420,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199002
-    m_Localized: Pene
+    m_Localized: Polla
     m_Metadata:
       m_Items: []
   - m_Id: 516099199003
-    m_Localized: "Tama\xF1o del pene"
+    m_Localized: "Tama\xF1o de la Polla"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
@@ -432,7 +432,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino acampanado
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -440,7 +440,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Equino acampanado
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -452,7 +452,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199010
-    m_Localized: En fuera
+    m_Localized: Dentro Fuera
     m_Metadata:
       m_Items: []
   - m_Id: 516099199011
@@ -460,7 +460,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: "\xDAnete al juego privado"
+    m_Localized: Unirse a un juego privado
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
@@ -544,7 +544,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: "Tama\xF1o de bolas"
+    m_Localized: "Tama\xF1o de los cojones"
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -556,11 +556,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: Vsync
+    m_Localized: "\u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u0430
+      \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u0456\u0437\u0430\u0446\u0456\u044F"
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Framerate objetivo
+    m_Localized: Objetivo de framerate
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
@@ -618,7 +619,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
-    m_Localized: "Tac\xF3n alto"
+    m_Localized: "Tac\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
@@ -650,11 +651,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: "Erecci\xF3n"
+    m_Localized: Subir Ereccion
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
-    m_Localized: "Desinflar erecci\xF3n"
+    m_Localized: Bajar Ereccion
     m_Metadata:
       m_Items: []
   - m_Id: 81276700606386176
@@ -693,7 +694,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: Riegue el huevo y espere a que su Kobold crezca.
+    m_Localized: Riega el huevo y espera a que tu Kobold Crezca.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -710,8 +711,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Soy Nymrianth, el Se\xF1or del Drag\xF3n. Te ordeno que comience
-      a trabajar como Kobold Karetaker y plantar un huevo."
+    m_Localized: "Soy Nymrianth, el Se\xF1or del Drag\xF3n. Te ordeno que comiences
+      a trabajar como Kuidador de Kobold y que plantes un huevo."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
@@ -1386,18 +1387,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
-    m_Localized: "\xA1No se han encontrado modificaciones! Suscr\xEDbase a modificaciones
-      en el taller de vapor, o inst\xE1lelos directamente en {ModManager.Path}."
+    m_Localized: "\xA1No se han encontrado modificaciones! Suscr\xEDbete a modificaciones
+      en la workshop de steam, o inst\xE1lalos directamente en {ModManager.Path}."
     m_Metadata:
       m_Items:
       - rid: 1602997996487704597
   - m_Id: 280448613000617984
     m_Localized: "No se pudo conectar a Steam, no se descargar\xE1 autom\xE1ticamente
-      mods."
+      modificaciones."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Grifo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "\xA1Fall\xF3 la carga de mod!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Hubo una excepci\xF3n cargando un mod, esto puede romper el juego.
+      Por favor revise sus modificaciones."
     m_Metadata:
       m_Items: []
   references:

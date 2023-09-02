@@ -207,7 +207,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 516095004691
     m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
       JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equine
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -489,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Tamanho de Kobold
+    m_Localized: Tamanho Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -726,8 +726,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Voc\xEAs Kobolds t\xEAm corpos interessantes, tentam triturar um
-      pouco de frutas e depois aliment\xE1 -lo com um kobold e veja o que acontece."
+    m_Localized: "Voc\xEAs Kobolds t\xEAm corpos interessantes, tentam moer algumas
+      frutas e depois aliment\xE1 -las a um kobold e ver o que acontece."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
@@ -956,7 +956,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u0435centeL!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1103,7 +1103,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Tubo de coleta
+    m_Localized: Tubo de posicionamento
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1149,7 +1149,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Vou fazer isso, por um pre\xE7o, \xE9 claro ..."
+    m_Localized: "Eu vou fazer isso, por um pre\xE7o, \xE9 claro ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1213,7 +1213,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: "Ra\xE7a: hora da barriga!"
+    m_Localized: "Ra\xE7a: Tempo de barriga!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
@@ -1398,6 +1398,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Tocar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: O carregamento de mod falhou!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Houve uma exce\xE7\xE3o carregando um mod, isso pode quebrar o
+      jogo. Por favor, verifique seus mods."
     m_Metadata:
       m_Items: []
   references:

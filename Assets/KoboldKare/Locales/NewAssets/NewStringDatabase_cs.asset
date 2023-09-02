@@ -802,7 +802,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Velk\xFD McLargehuge"
+    m_Localized: "Ohromn\xFD McMegaObrovsk\xFD"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
@@ -1041,15 +1041,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Ahoj Bud.
+    m_Localized: "Ahoj k\xE1mo"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: "V\xEDtejte v podzem\xED."
+    m_Localized: "V\xEDtej v podzem\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: "Ignorujte kou\u0159, nev\xE1hejte proch\xE1zet zbo\u017E\xED."
+    m_Localized: "Toho kou\u0159e si nev\u0161\xEDmej a nev\xE1hej proj\xEDt v\u0161echno
+      zbo\u017E\xED."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
@@ -1172,12 +1173,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Tam jsou v\u011Bci venku a tak\xE9 za mnou, tak\u017Ee opravdu
-      vsta\u0148te tady, nemus\xED b\xFDt plach\xFD."
+    m_Localized: "V\u011Bci jsou tady v\u0161ud\u011B okolo m\u011B, jen sta\u010D\xED
+      vst\xE1t a po\u0159\xE1dn\u011B to bez ostychu proj\xEDt."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "Hej k\xE1mo!"
+    m_Localized: \
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
@@ -1185,7 +1186,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: "Ahoj! Pot\u0159ebuje\u0161 dne s n\u011B\u010D\xEDm pomoc?"
+    m_Localized: "Ahoj, nepot\u0159ebuje\u0161 dnes s n\u011Bc\xEDm pomoc?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
@@ -1268,7 +1269,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Plemeno: Itty Bitty'
+    m_Localized: "Plemeno: Pidi\u017Ev\xEDk"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
@@ -1394,8 +1395,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "Modding vy\u017Eaduje 64bitov\xFD kompatibiln\xED syst\xE9m! Upgradujte
-      pros\xEDm sv\u016Fj opera\u010Dn\xED syst\xE9m."
+    m_Localized: "Modov\xE1n\xED vy\u017Eaduje syst\xE9m kompatibiln\xED s 64bity!
+      Upgradujte pros\xEDm sv\u016Fj opera\u010Dn\xED syst\xE9m."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
@@ -1407,18 +1408,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
-    m_Localized: "\u017D\xE1dn\xE9 mody! P\u0159ihlaste se k odb\u011Bru mod\u016F
-      na parn\xED d\xEDln\u011B nebo je nainstalujte p\u0159\xEDmo do {ModManager.Path}."
+    m_Localized: "Nejsou nainstalov\xE1ny \u017E\xE1dn\xE9 mody! P\u0159ihla\u0161te
+      se k odb\u011Bru mod\u016F na Steam Workshopu nebo je nainstalujte p\u0159\xEDmo
+      do {ModManager.Path}."
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 280448613000617984
-    m_Localized: "Nepoda\u0159ilo se p\u0159ipojit k Steam, nebude mody automatick\xE9ho
-      stahov\xE1n\xED."
+    m_Localized: "Nepoda\u0159ilo se p\u0159ipojit k \xFA\u010Dtu Steam, mody nebudou
+      automaticky sta\u017Eeny."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: "Klepn\u011Bte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "Na\u010D\xEDt\xE1n\xED mod selhalo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Do\u0161lo k v\xFDjimce na\u010D\xEDt\xE1n\xED mod, to m\u016F\u017Ee
+      rozb\xEDt hru. Zkontrolujte pros\xEDm sv\xE9 mody."
     m_Metadata:
       m_Items: []
   references:

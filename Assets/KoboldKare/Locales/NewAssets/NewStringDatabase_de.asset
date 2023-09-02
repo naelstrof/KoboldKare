@@ -878,7 +878,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Stachliger Penis
+    m_Localized: "\u0160pi\u010Dat\xFD penis"
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
@@ -1399,8 +1399,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
-    m_Localized: Keine Mods gefunden! Abonnieren Sie Mods im Steam Workshop oder
-      installieren Sie sie direkt in {ModManager.Path}.
+    m_Localized: Keine Mods gefunden! Abonniere Mods im Steam Workshop oder installiere
+      sie direkt in {ModManager.Path}.
     m_Metadata:
       m_Items:
       - rid: 1602997996487704585
@@ -1410,7 +1410,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
-    m_Localized: Klopfen
+    m_Localized: Antippen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: Antippen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: Antippen
     m_Metadata:
       m_Items: []
   references:

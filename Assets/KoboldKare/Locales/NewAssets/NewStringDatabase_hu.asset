@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
-      goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
+      f\xFCgg\u0151 goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -912,7 +912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s r\xE1csokkal."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -965,7 +965,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043B\u043E!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1231,12 +1231,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, nagyon hasznosak pap\xEDr
+    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, ezek nagyon hasznosak pap\xEDr
       s\xFAlyk\xE9nt \xE9s p\xE1rnak\xE9nt."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Fajta: kolb\xE1szfesztiv\xE1l"
+    m_Localized: "Fajta: Kolb\xE1szfesztiv\xE1l"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
@@ -1249,12 +1249,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
-      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bbet akarok az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l, ezek
+      nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Fajta: Cicik, nagyok!'
+    m_Localized: 'Fajta: cicik, nagyok!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
@@ -1299,7 +1299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: "Itt nincs m\xE1s neked ... egyel\u0151re."
+    m_Localized: "Nincs m\xE1s neked itt ... egyel\u0151re."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
@@ -1413,6 +1413,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Koppintson a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "A mod bet\xF6lt\xE9se sikertelen!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Volt egy kiv\xE9tel egy mod bet\xF6lt\xE9se, ez megszak\xEDthatja
+      a j\xE1t\xE9kot. K\xE9rj\xFCk, ellen\u0151rizze dupl\xE1n a modokat."
     m_Metadata:
       m_Items: []
   references:

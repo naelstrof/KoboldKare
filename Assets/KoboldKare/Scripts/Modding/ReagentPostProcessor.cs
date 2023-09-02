@@ -20,6 +20,10 @@ public class ReagentPostProcessor : ModPostProcessor {
     }
 
     private void LoadReagent(ScriptableReagent reagent) {
+        if (reagent == null) {
+            return;
+        }
+
         addedReagents.Add(reagent);
         ReagentDatabase.AddReagent(reagent);
     }

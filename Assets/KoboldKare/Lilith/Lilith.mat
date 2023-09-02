@@ -139,6 +139,7 @@ Material:
     - _Head: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _PENETRATION_DEFORMATION: 0
     - _PENETRATION_DEFORMATION_DETAIL: 0
     - _Parallax: 0.005
     - _QueueControl: 0

@@ -21,6 +21,10 @@ public class SettingPostProcessor : ModPostProcessor {
     }
 
     private void LoadSetting(Setting setting) {
+        if (setting == null) {
+            return;
+        }
+
         for (int i = 0; i < addedSettings.Count; i++) {
             if (addedSettings[i].name != setting.name) continue;
             SettingsManager.RemoveSetting(addedSettings[i]);

@@ -980,7 +980,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u043F\u0435\u043B\u0435\u043E\u043Bikel!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1184,7 +1184,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: Ziet er vandaag goed uit, helpt bij het dragen van iets?
+    m_Localized: Ziet er vandaag goed uit, heb je hulp nodig bij het dragen van iets?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Breed: Itty Bitty'
+    m_Localized: 'Ras: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
@@ -1418,6 +1418,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Kraan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: Mod Loading is mislukt!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: Er was een uitzondering die een mod laadde, dit kan het spel breken.
+      Controleer uw mods dubbel.
     m_Metadata:
       m_Items: []
   references:

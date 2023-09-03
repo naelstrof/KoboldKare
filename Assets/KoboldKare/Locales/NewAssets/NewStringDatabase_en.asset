@@ -972,7 +972,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u043F\u0435\u043B\u0435\u043E\u043B\u043E\u0433\u0456\u044F!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1409,6 +1409,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Tap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: Mod loading failed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: There was an exception loading a mod, this may break the game. Please
+      double check your mods.
     m_Metadata:
       m_Items: []
   references:

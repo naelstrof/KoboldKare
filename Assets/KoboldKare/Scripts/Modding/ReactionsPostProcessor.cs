@@ -19,6 +19,9 @@ public class ReactionsPostProcessor : ModPostProcessor {
     }
 
     private void LoadReaction(ScriptableReagentReaction reaction) {
+        if (reaction == null) {
+            return;
+        }
         ReagentDatabase.AddReagentReaction(reaction);
         addedReactions.Add(reaction);
     }

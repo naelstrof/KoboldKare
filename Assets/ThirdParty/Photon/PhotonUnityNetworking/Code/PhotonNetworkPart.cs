@@ -2126,7 +2126,7 @@ namespace Photon.Pun
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId) {
                     if (AddressableResourceExists((string)sceneId, null)) {
                         PhotonNetwork.LoadLevel((string)sceneId);
-                        Debug.LogError($"Successfully found and loading... {(string)sceneId}."); 
+                        Debug.Log($"Successfully found and loading... {(string)sceneId}."); 
                     } else {
                         Debug.LogError($"Failed to find scene with key {(string)sceneId}, loading blank scene."); 
                         PhotonNetwork.LoadLevel("ErrorScene");

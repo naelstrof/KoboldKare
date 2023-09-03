@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Silicone
   m_Shader: {fileID: 4800000, guid: bc0a95306787ee14c8cba6b6697de1e1, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _PENETRATION_DEFORMATION_ON
   m_InvalidKeywords:
   - _DISPLACEMENT_LOCK_TILING_SCALE
   - _EMISSION

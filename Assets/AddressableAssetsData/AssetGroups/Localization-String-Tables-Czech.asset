@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Localization-String-Tables-Bulgarian (bg)
+  m_Name: Localization-String-Tables-Czech
   m_EditorClassIdentifier: 
-  m_GroupName: Localization-String-Tables-Bulgarian (bg)
+  m_GroupName: Localization-String-Tables-Czech
   m_Data:
     m_SerializedData: []
-  m_GUID: 364320b9900d271429c87c00f0c9c811
-  m_SerializeEntries: []
+  m_GUID: 6c89df3bb9bb30b449d58e1bed77f174
+  m_SerializeEntries:
+  - m_GUID: 0b8d071362992184e89295688ed9a805
+    m_Address: StringDatabase_cs
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-cs
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 14b0791294e6c2e4fbeeeff1fd79f06c, type: 2}
-    - {fileID: 11400000, guid: e744470608059ef44927cf6d64f43b6d, type: 2}
+    - {fileID: 11400000, guid: caac36f32999d8a4fb0121b77234f12c, type: 2}
+    - {fileID: 11400000, guid: f5c11c26de4ec4c4b9328513c41a2f95, type: 2}

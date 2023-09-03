@@ -270,7 +270,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004705
-    m_Localized: Dezvoltare
+    m_Localized: "Dezvolt\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004706
@@ -968,7 +968,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u043F\u0435\u043B\u0435\u043E\u043B\u043E\u044Fc!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -985,7 +985,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oh ho ho .. bun venit ...
+    m_Localized: "Oh Ho Ho .. Bine a\u021Bi venit ..."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -1421,6 +1421,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: "Atinge\u021Bi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: "\xCEnc\u0103rcarea modului a e\u0219uat!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "A existat o excep\u021Bie \xEEnc\u0103rcarea unui mod, acest lucru
+      poate rupe jocul. V\u0103 rug\u0103m s\u0103 verifica\u021Bi dublu modurile."
     m_Metadata:
       m_Items: []
   references:

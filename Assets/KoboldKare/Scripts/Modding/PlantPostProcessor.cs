@@ -20,6 +20,9 @@ public class PlantPostProcessor : ModPostProcessor {
     }
 
     private void LoadPlant(ScriptablePlant plant) {
+        if (plant == null) {
+            return;
+        }
         addedPlants.Add(plant);
         PlantDatabase.AddPlant(plant);
     }

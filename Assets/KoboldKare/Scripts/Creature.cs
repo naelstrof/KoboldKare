@@ -24,7 +24,6 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
 
     [SerializeField] private AudioPack gibSound;
     private void OnValidate() {
-
         spawnOnDeath.OnValidate();
     }
     public bool CanGrab(Kobold kobold) {
@@ -56,13 +55,13 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
             distanceTravelled = Mathf.SmoothDamp(distanceTravelled, networkedDistanceTravelled, ref distanceTravelledVel, 1f);
         } else {
             distanceTravelled += Time.deltaTime*speed;
-            if (distanceTravelled > targetPath.GetSpline().arcLength) {
-                distanceTravelled -= targetPath.GetSpline().arcLength;
+            if (distanceTravelled > targetPath.GetPath().arcLength) {
+                distanceTravelled -= targetPath.GetPath().arcLength;
             }
         }
 
-        transform.position = targetPath.GetSpline().GetPositionFromDistance(distanceTravelled);
-        transform.forward = targetPath.GetSpline().GetVelocityFromDistance(distanceTravelled).normalized;
+        transform.position = targetPath.GetPath().GetPositionFromDistance(distanceTravelled);
+        transform.forward = targetPath.GetPath().GetVelocityFromDistance(distanceTravelled).normalized;
     }
 
 

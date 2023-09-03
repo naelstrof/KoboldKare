@@ -20,6 +20,9 @@ public class EquipmentPostProcessor : ModPostProcessor {
     }
 
     private void LoadEquipment(Equipment equipment) {
+        if (equipment == null) {
+            return;
+        }
         addedEquipments.Add(equipment);
         EquipmentDatabase.AddEquipment(equipment);
     }

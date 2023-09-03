@@ -24603,6 +24603,7 @@ GameObject:
   - component: {fileID: 3811495069492804945}
   - component: {fileID: 6988465286745515353}
   - component: {fileID: 2003149808394843466}
+  - component: {fileID: 9185425679682655073}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -25437,6 +25438,36 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - name: FailedModLoads
+    popupPrefabReference:
+      m_AssetGUID: 6d5aa2af26398144db1ca9d743d9c17e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+--- !u!114 &9185425679682655073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561188790633409797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4932db4c47c97479a695146cd267ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  failedToLoadModsDescription:
+    m_TableReference:
+      m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+    m_TableEntryReference:
+      m_KeyId: 342423402461405184
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7586070052874400603
 GameObject:
   m_ObjectHideFlags: 0

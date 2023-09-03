@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
@@ -15,6 +17,7 @@ public static class SaveManager {
     private const string saveExtension = ".sav";
     private const string imageExtension = ".jpg";
     private const string saveHeader = "KKSAVE";
+    private static bool loading = false;
     public delegate void SaveCompleteAction();
 
     private static string saveDataPath {
@@ -198,91 +201,106 @@ public static class SaveManager {
             }
         }
     }
-    private static void LoadImmediate(string filename) {
-        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be loaded: "+filename);
-        // Don't load saves while online.
-        if (NetworkManager.instance.online) {
-            return;
-        }
-        CleanUpImmediate();
-        JSONNode rootNode;
-        using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
-            using StreamReader reader = new StreamReader(file);
-            rootNode = JSONNode.Parse(reader.ReadToEnd());
-        }
-        if (rootNode["header"] != saveHeader) {
-            throw new UnityException($"Not a save file: {filename}");
-        }
-        string fileVersion = rootNode["version"];
-            
-        if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
-            Debug.Log("Load save file with a different version, it might not load correctly...");
-        }
 
-        JSONArray array = rootNode["objects"].AsArray;
-        for (int i = 0; i < array.Count; i++) {
-            JSONNode objectNode = array[i];
-            int viewID = objectNode["viewID"];
-            string prefabName = objectNode["name"];
-            PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-            if (!((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)) continue;
-            if (view != null) {
-                // Not allowed to have a conflicting ViewID, deleting the old one, as we're unsure it is the correct prefab type.
-                view.ViewID = 0;
-                PhotonNetwork.Destroy(view.gameObject);
+    private static IEnumerator LoadRoutine(string filename) {
+        loading = true;
+        try {
+            CleanUpImmediate();
+            // Gotta wait for photon to finally tick, no way to listen for that of course.
+            yield return new WaitForSeconds(1f);
+            JSONNode rootNode;
+            using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
+                using StreamReader reader = new StreamReader(file);
+                rootNode = JSONNode.Parse(reader.ReadToEnd());
             }
 
-            GameObject obj = PhotonNetwork.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
-            view = obj.GetComponent<PhotonView>();
-            view.ViewID = 0;
-            view.ViewID = viewID;
-            // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
-            if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
-                descriptor.finishedLoading += (v) => {
-                    try {
-                        foreach (Component observable in v.ObservedComponents) {
+            if (rootNode["header"] != saveHeader) {
+                throw new UnityException($"Not a save file: {filename}");
+            }
+
+            string fileVersion = rootNode["version"];
+
+            if (fileVersion != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
+                Debug.Log("Load save file with a different version, it might not load correctly...");
+            }
+
+            JSONArray array = rootNode["objects"].AsArray;
+            for (int i = 0; i < array.Count; i++) {
+                JSONNode objectNode = array[i];
+                int viewID = objectNode["viewID"];
+                string prefabName = objectNode["name"];
+                PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+                if (!((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(prefabName)) continue;
+                PhotonNetwork.RaiseEvent(NetworkManager.CustomInstantiationEvent, new object[] { prefabName, viewID },
+                    new RaiseEventOptions
+                        { Receivers = ReceiverGroup.Others, CachingOption = EventCaching.AddToRoomCache },
+                    new SendOptions { Reliability = true });
+                GameObject obj = PhotonNetwork.PrefabPool.Instantiate(prefabName, Vector3.zero, Quaternion.identity);
+                view = obj.GetComponent<PhotonView>();
+                view.ViewID = viewID;
+                obj.SetActive(true);
+            }
+
+            for (int i = 0; i < array.Count; i++) {
+                JSONNode objectNode = array[i];
+                int viewID = objectNode["viewID"];
+                string prefabName = objectNode["name"];
+                PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+                if (view == null) {
+                    foreach (PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
+                        if (deepCheck.ViewID != viewID) continue;
+                        view = deepCheck;
+                        break;
+                    }
+                }
+
+                if (view == null) {
+                    Debug.LogError($"Failed to find view id {viewID} with name {prefabName}...Skipping");
+                    continue;
+                }
+
+                try {
+                    // Characters are special, they don't load immediately and so we just tell them to load when they're comfy.
+                    if (view.TryGetComponent(out CharacterDescriptor descriptor)) {
+                        descriptor.finishedLoading += (v) => {
+                            try {
+                                foreach (Component observable in v.ObservedComponents) {
+                                    if (observable is ISavable savable) {
+                                        savable.Load(objectNode);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
+                                Debug.LogException(e);
+                                // Try our best to load the save... anyway
+                            }
+                        };
+                    } else {
+                        foreach (Component observable in view.ObservedComponents) {
                             if (observable is ISavable savable) {
                                 savable.Load(objectNode);
                             }
                         }
-                    } catch (Exception e) {
-                        Debug.LogError($"Failed to load observable on photonView {v.ViewID}, {prefabName}", v);
-                        Debug.LogException(e);
-                        // Try our best to load the save... anyway
                     }
-                };
+                } catch (Exception e) {
+                    Debug.LogError($"Failed to load observable on photonView {viewID}, {prefabName}", view);
+                    Debug.LogException(e);
+                    // Try our best to load the save... anyway
+                    //throw;
+                }
             }
+        } finally {
+            loading = false;
         }
+    }
 
-        for (int i = 0; i < array.Count; i++) {
-            JSONNode objectNode = array[i];
-            int viewID = objectNode["viewID"];
-            string prefabName = objectNode["name"];
-            PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-            if (view == null) {
-                foreach (PhotonView deepCheck in Object.FindObjectsOfType<PhotonView>(true)) {
-                    if (deepCheck.ViewID != viewID) continue;
-                    view = deepCheck;
-                    break;
-                }
-            }
-            if (view == null) {
-                Debug.LogError($"Failed to find view id {viewID} with name {prefabName}...Skipping");
-                continue;
-            }
-            try {
-                foreach(Component observable in view.ObservedComponents) {
-                    if (observable is ISavable savable) {
-                        savable.Load(objectNode);
-                    }
-                }
-            } catch (Exception e) {
-                Debug.LogError($"Failed to load observable on photonView {viewID}, {prefabName}", view);
-                Debug.LogException(e);
-                // Try our best to load the save... anyway
-                //throw;
-            }
+    private static void LoadImmediate(string filename) {
+        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be loaded: "+filename);
+        // Don't load saves while online.
+        if (NetworkManager.instance.online || loading) {
+            return;
         }
+        GameManager.StartCoroutineStatic(LoadRoutine(filename));
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
         if (!IsLoadable(filename, out string lastError)) {
@@ -308,7 +326,11 @@ public static class SaveManager {
                 JSONArray mods = rootNode["modList"].AsArray;
                 foreach (var modStubNode in mods) {
                     ulong.TryParse(modStubNode.Value["publishedFileId"], out ulong publishedId);
-                    modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any));
+                    if (modStubNode.Value.HasKey("folderTitle")) {
+                        modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any, modStubNode.Value["folderTitle"]));
+                    } else {
+                        modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any, modStubNode.Value["title"]));
+                    }
                 }
             }
         }

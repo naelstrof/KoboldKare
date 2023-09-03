@@ -752,8 +752,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695169
     m_Localized: "Jeg trenger at du leverer meg en kobold med store pupper, jeg snakker
-      massiv, jeg regner med at du takler dette, og jeg forventer at du ikke vil
-      stille sp\xF8rsm\xE5l."
+      massiv, jeg regner med at du takler dette og forventer at du ikke vil stille
+      sp\xF8rsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
@@ -761,7 +761,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Fyll en kobold med cum til de ikke kan ta lenger, jeg m\xE5 se
+    m_Localized: "Fyll en kobold med kum til de ikke kan ta lenger, jeg m\xE5 se
       hvor holdbart ditt slag egentlig er."
     m_Metadata:
       m_Items: []
@@ -956,7 +956,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: "\u0421\u0435\u043B\u043E\u043B\u043E\u0433\u044F!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1042,7 +1042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Uansett bare eh .. hjelp deg selv antar jeg.
+    m_Localized: "Uansett bare \xE5h .. hjelp deg selv antar jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1076,11 +1076,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Selg Micro kobold
+    m_Localized: Selg Micro Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: "Jeg vil ha en veldig liten kobold som kan passe inn i ... sm\xE5,
+    m_Localized: "Jeg vil ha en virkelig liten kobold som kan passe inn i ... sm\xE5,
       intime sprekker."
     m_Metadata:
       m_Items: []
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Jeg vil ha mer av den gigantiske typen kobold, de er veldig nyttige
+    m_Localized: "Jeg vil ha mer av den gigantiske typen Kobold, de er veldig nyttige
       for \xE5 rengj\xF8re taket."
     m_Metadata:
       m_Items: []
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Bevegelsessyke reduserende
+    m_Localized: Bevegelsessyke reduserer
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1397,6 +1397,15 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 295755658549579776
     m_Localized: Trykk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402432045056
+    m_Localized: Mod Loading mislyktes!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342423402461405184
+    m_Localized: "Det var et unntak som lastet en mod, dette kan \xF8delegge spillet.
+      Vennligst dobbeltsjekk modene dine."
     m_Metadata:
       m_Items: []
   references:

@@ -326,7 +326,11 @@ public static class SaveManager {
                 JSONArray mods = rootNode["modList"].AsArray;
                 foreach (var modStubNode in mods) {
                     ulong.TryParse(modStubNode.Value["publishedFileId"], out ulong publishedId);
-                    modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any));
+                    if (modStubNode.Value.HasKey("folderTitle")) {
+                        modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any, modStubNode.Value["folderTitle"]));
+                    } else {
+                        modStubs.Add(new ModManager.ModStub(modStubNode.Value["title"], (PublishedFileId_t)publishedId, ModManager.ModSource.Any, modStubNode.Value["title"]));
+                    }
                 }
             }
         }

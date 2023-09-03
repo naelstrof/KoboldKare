@@ -29,15 +29,15 @@ public class ModManager : MonoBehaviour {
         
         public ModInfo(string modPath, ModSource source) {
             enabled = false;
-            this.modPath = modPath;
+            SetModPath(modPath);
             modSource = source;
             folderTitle = Path.GetFileName(Path.GetDirectoryName(modPath));
             try {
-                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+                LoadMetaData($"{this.modPath}info.json");
+                LoadPreview($"{this.modPath}preview.png");
             } catch (SystemException e) {
                 Debug.LogException(e);
-                Debug.LogError($"Failed to load mod at path {modPath}, from source {source}.");
+                Debug.LogError($"Failed to load mod at path {this.modPath}, from source {source}.");
             }
         }
 
@@ -46,7 +46,19 @@ public class ModManager : MonoBehaviour {
         public string folderTitle;
         public PublishedFileId_t publishedFileId;
         public string description;
-        public string modPath;
+        public string modPath { private set; get; }
+        public void SetModPath(string newPath) {
+            string fullPath = newPath;
+            if (!fullPath.EndsWith(Path.DirectorySeparatorChar) && !fullPath.EndsWith(Path.AltDirectorySeparatorChar)) {
+                if (fullPath.Contains(Path.AltDirectorySeparatorChar)) {
+                    fullPath += Path.AltDirectorySeparatorChar;
+                } else {
+                    fullPath += Path.DirectorySeparatorChar;
+                }
+            }
+            modPath = fullPath;
+        }
+
         public float loadPriority;
         public Texture2D preview;
 
@@ -55,7 +67,7 @@ public class ModManager : MonoBehaviour {
         }
         public string catalogPath {
             get {
-                string searchDir = $"{modPath}{Path.DirectorySeparatorChar}{runningPlatform}";
+                string searchDir = $"{modPath}{runningPlatform}";
                 try {
                     foreach (var file in Directory.EnumerateFiles(searchDir)) {
                         if (file.EndsWith(".json")) {
@@ -91,6 +103,7 @@ public class ModManager : MonoBehaviour {
             if (rootNode.HasKey("loadPriority")) {
                 loadPriority = rootNode["loadPriority"];
             }
+            folderTitle = new DirectoryInfo(modPath).Name;
         }
         private void LoadPreview(string previewPngPath) {
             preview = new Texture2D(16, 16);
@@ -106,8 +119,8 @@ public class ModManager : MonoBehaviour {
 
         public void Refresh() {
             if (!string.IsNullOrEmpty(modPath)) {
-                LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-                LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+                LoadMetaData($"{modPath}info.json");
+                LoadPreview($"{modPath}preview.png");
             }
         }
 
@@ -123,14 +136,14 @@ public class ModManager : MonoBehaviour {
                 if (!hasData) {
                     return;
                 }
-                modPath = pchFolder;
+                SetModPath(pchFolder);
             } else {
-                modPath = string.IsNullOrEmpty(folderTitle) ? "" : $"{Application.persistentDataPath}/mods/{folderTitle}";
+                SetModPath(string.IsNullOrEmpty(folderTitle) ? "" : $"{Application.persistentDataPath}/mods/{folderTitle}/");
             }
 
             if (string.IsNullOrEmpty(modPath)) return;
-            LoadMetaData($"{modPath}{Path.DirectorySeparatorChar}info.json");
-            LoadPreview($"{modPath}{Path.DirectorySeparatorChar}preview.png");
+            LoadMetaData($"{modPath}info.json");
+            LoadPreview($"{modPath}preview.png");
         }
     }
     private static ModManager instance;
@@ -147,7 +160,7 @@ public class ModManager : MonoBehaviour {
         List<ModStub> modStubs = new List<ModStub>();
         foreach (var mod in infos) {
             if (conditional == null || conditional.Invoke(mod)) {
-                modStubs.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.description, mod.enabled,
+                modStubs.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.folderTitle, mod.description, mod.enabled,
                     mod.preview));
             }
         }
@@ -178,20 +191,23 @@ public class ModManager : MonoBehaviour {
         public bool enabled;
         public Texture2D preview;
         public string title;
+        public string folderTitle;
         public string description;
         public ModSource source;
         public PublishedFileId_t id;
-        public ModStub(string title, PublishedFileId_t id, ModSource source, string description = "",  bool enabled = true, Texture2D preview = null)  {
+        public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, string description = "",  bool enabled = true, Texture2D preview = null)  {
             this.description = description;
             this.source = source;
             this.enabled = enabled;
             this.title = title;
+            this.folderTitle = folderTitle;
             this.id = id;
             this.preview = preview;
         }
         public void Save(JSONNode node) {
             node["enabled"] = enabled;
-            node["folderTitle"] = title;
+            node["folderTitle"] = folderTitle;
+            node["title"] = title;
             node["publishedFileId"] = id.ToString();
             node["loadedFromSteam"] = source == ModSource.SteamWorkshop;
         }
@@ -245,7 +261,7 @@ public class ModManager : MonoBehaviour {
             Mutex.Release();
         }
         await instance.ReloadMods();
-        instance.playerConfig = ConvertToStubs(instance.fullModList);
+        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
     public static void AddFinishedLoadingListener(ModReadyAction action) {
@@ -283,7 +299,7 @@ public class ModManager : MonoBehaviour {
                     search.publishedFileId == info.publishedFileId) {
                     modFound = true;
                     // Possible that we only had a mod stub, so we update the path just in case.
-                    search.modPath = info.modPath;
+                    search.SetModPath(info.modPath);
                     search.Refresh();
                     break;
                 }
@@ -336,7 +352,7 @@ public class ModManager : MonoBehaviour {
             }
         }
 
-        playerConfig = ConvertToStubs(instance.fullModList);
+        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
     private void ScanForNewMods() {
         string modCatalogPath = $"{Application.persistentDataPath}/{modLocation}";
@@ -441,7 +457,7 @@ public class ModManager : MonoBehaviour {
         LoadConfig();
         ScanForNewMods();
         await ReloadMods();
-        instance.playerConfig = ConvertToStubs(instance.fullModList);
+        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
     public static bool IsValid() {

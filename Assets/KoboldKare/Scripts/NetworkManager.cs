@@ -246,6 +246,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             foreach (var mod in ModManager.GetLoadedMods()) {
                 JSONNode modNode = JSONNode.Parse("{}");
                 modNode["title"] = mod.title;
+                modNode["folderTitle"] = mod.folderTitle;
                 modNode["id"] = mod.id.ToString();
                 modArray.Add(modNode);
             }
@@ -378,7 +379,11 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         List<ModManager.ModStub> desiredMods = new List<ModManager.ModStub>();
         foreach (var node in rootNode["modList"].AsArray) {
             ulong.TryParse(node.Value["id"], out ulong result);
-            desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any));
+            if (node.Value.HasKey("folderTitle")) {
+                desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any, node.Value["folderTitle"]));
+            } else {
+                desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any, node.Value["title"]));
+            }
         }
 
         if (ModManager.HasModsLoaded(desiredMods)) {
@@ -392,6 +397,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
     }
     private IEnumerator LoadPlayerConfigMods() {
+        Debug.Log("Reloading player's original mod config due to leaving server.");
         yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
         PrefabDatabaseDatabase.LoadPlayerConfig();
     }

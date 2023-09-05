@@ -66,7 +66,7 @@ public class PrefabSelectSingleSetting : SettingDropdown {
             return;
         }
 
-        selectedPrefab = newOptions[Mathf.Clamp(value, 0, newOptions.Count)];
+        selectedPrefab = newOptions[Mathf.Clamp(value, 0, newOptions.Count-1)];
         base.SetValue(value);
     }
 

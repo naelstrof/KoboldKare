@@ -911,7 +911,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: Un cazzo a coste con piastre morbide e barbi.
+    m_Localized: Un cazzo a costine con piastre morbide e barbi.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -961,7 +961,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u043F\u0435\u043B\u0435\u043E\u043B\u043E\u0433\u044F!"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1193,7 +1193,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464137
     m_Localized: "Star\xF2 solo qui nel caso in cui qualche altro nudo Kobold vuole
-      che io le costruisca le macchine fetish."
+      che io costruisca le macchine fetish."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1218,7 +1218,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Razza: Tummy Time!'
+    m_Localized: 'Razza: tempo di pancia!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
@@ -1397,7 +1397,7 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704588
   - m_Id: 280448613000617984
-    m_Localized: Impossibile connettersi a Steam, non si non gradano automaticamente
+    m_Localized: Impossibile connettersi a vapore, non si non gradano automaticamente
       le mod.
     m_Metadata:
       m_Items: []

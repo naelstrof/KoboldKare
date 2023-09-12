@@ -922,8 +922,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
-      kv\xE6rnen til at kombinere dem og derefter fodre den til en Kobold."
+    m_Localized: Jeg har sendt dig nogle forsyninger for at lave en burger, bruge
+      sliben til at kombinere dem og derefter fodre den til en kobold.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -955,7 +955,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043B\u043E\u0433 \u044F til!"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1058,7 +1058,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "\xD8h ... har du noget imod at s\xE6tte p\xE5 nogle bukser?"
+    m_Localized: "\xC5h ... har du noget imod at l\xE6gge p\xE5 nogle bukser?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
@@ -1152,7 +1152,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Der er ting ud foran derovre og bag mig ogs\xE5, s\xE5 rejses virkelig
-      op her, ikke n\xF8dvendigt at v\xE6re genert."
+      op her, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130

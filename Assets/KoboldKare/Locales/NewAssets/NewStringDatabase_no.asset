@@ -206,9 +206,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "DETTE SPILLET skildrer FIKTIONELLE KARAKTER SOM DELTAR I <#FF0000>
-      SEKSUELL EKSPLISITT OPPLYSNING <#FFFFFF>\n\nVED \xC5 KLIKKE P\xC5 <#008CFF>
-      SPILL <#FFFFFF> OPPR\xC6RER DU AT:"
+    m_Localized: '#NAME?'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -440,7 +438,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Blusset heste
+    m_Localized: Flared Equine
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -752,8 +750,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695169
     m_Localized: "Jeg trenger at du leverer meg en kobold med store pupper, jeg snakker
-      massiv, jeg regner med at du takler dette og forventer at du ikke vil stille
-      sp\xF8rsm\xE5l."
+      massiv, jeg regner med at du takler dette, og jeg forventer at du ikke vil
+      stille sp\xF8rsm\xE5l."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
@@ -956,7 +954,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u0435\u043B\u043E\u043B\u043E\u0433\u044F!"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1076,11 +1074,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Selg Micro Kobold
+    m_Localized: Selg Micro kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: "Jeg vil ha en virkelig liten kobold som kan passe inn i ... sm\xE5,
+    m_Localized: "Jeg vil ha en veldig liten kobold som kan passe inn i ... sm\xE5,
       intime sprekker."
     m_Metadata:
       m_Items: []

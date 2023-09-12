@@ -385,7 +385,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198992
-    m_Localized: MORLATRY
+    m_Localized: MORTABLATOR
     m_Metadata:
       m_Items: []
   - m_Id: 516099198993
@@ -582,7 +582,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Prosty hardhat do ochrony g\u0142owy przed spadaj\u0105cymi szcz\u0105tkami."
+    m_Localized: "Prosty hardhat, aby chroni\u0107 g\u0142ow\u0119 przed spadaj\u0105cymi
+      szcz\u0105tkami."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
@@ -789,8 +790,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku supersztycznych
-      kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
+    m_Localized: "W naszym najlepszym interesie jest posiadanie kilku super\xF3wek
+      Kobold\xF3w, ugotowanie niekt\xF3rych i wys\u0142anie ich do mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
@@ -951,7 +952,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -966,12 +967,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043B\u043E\u0433wi\u0105!"
+    m_Localized: Splunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Wyczuwam ciemn\u0105 obecno\u015B\u0107 w pobliskich jaskiniach,
-      id\u017A do mnie."
+      id\u017A dla mnie i sprawdzaj mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1160,7 +1161,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie za cen\u0119 ..."
+    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie w cenie ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1198,8 +1199,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "B\u0119d\u0119 tu sta\u0107 na wypadek, gdyby jaki\u015B inny nagi
-      Kobold chcia\u0142, \u017Cebym zbudowa\u0142 ich maszyny fetyszowe."
+    m_Localized: "Po prostu b\u0119d\u0119 tutaj, na wypadek, gdyby jaki\u015B inny
+      nagi Kobold chcia\u0142, \u017Cebym zbudowa\u0142 je fetysze."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1248,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobolda, s\u0105
-      naprawd\u0119 przydatne do czyszczenia sufitu."
+    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobold, s\u0105 naprawd\u0119
+      przydatne do czyszczenia sufitu."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1276,8 +1277,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Jestem ciekawy, jak dobrze Koboldowie radz\u0105 sobie z tarciem
-      powietrznym, wy\u015Blij jedno w niebo."
+    m_Localized: "Jestem ciekawy, jak dobrze koboldowie radz\u0105 sobie z tarciem
+      powietrznym, wy\u015Blij jedno puchni\u0119cie w niebo."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520

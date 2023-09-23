@@ -957,7 +957,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043E\u0433\u043E!"
+    m_Localized: Spelking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1383,7 +1383,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: Mahdollistanut pelattavat merkit
+    m_Localized: Mahdollistettu pelattavat merkit
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322

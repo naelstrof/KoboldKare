@@ -39,12 +39,7 @@ public class PrefabSelectSingleSetting : SettingDropdown {
         bool found = false;
         for (int i = 0; i < prefabs.Count; i++) {
             var prefab = prefabs[i];
-            if (!prefab.IsValid()) {
-                continue;
-            }
-
             if (selectedPrefab != prefab.GetKey()) continue;
-            
             selectedValue = i;
             found = true;
         }
@@ -58,15 +53,20 @@ public class PrefabSelectSingleSetting : SettingDropdown {
 
     public override void SetValue(int value) {
         var prefabs = database.GetPrefabReferenceInfos();
-        for (int i = 0; i < prefabs.Count; i++) {
-            var prefab = prefabs[i];
+        List<string> newOptions = new List<string>();
+        foreach (var prefab in prefabs) {
             if (!prefab.IsValid()) {
                 continue;
             }
-            if (value == i) {
-                selectedPrefab = prefab.GetKey();
-            }
+            newOptions.Add(prefab.GetKey());
         }
+
+        if (newOptions.Count == 0) {
+            base.SetValue(value);
+            return;
+        }
+
+        selectedPrefab = newOptions[Mathf.Clamp(value, 0, newOptions.Count-1)];
         base.SetValue(value);
     }
 

@@ -372,6 +372,10 @@ public class ModManager : MonoBehaviour {
     }
 
     public static void SaveConfig() {
+        if (instance.playerConfig == null) {
+            return;
+        }
+
         JSONNode rootNode = JSONNode.Parse("{}");
         JSONNode nodeArray = new JSONArray();
         foreach(var mod in instance.playerConfig) {

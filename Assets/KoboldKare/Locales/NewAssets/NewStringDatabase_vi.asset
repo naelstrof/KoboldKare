@@ -822,7 +822,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: "Mclargehuge l\u1EDBn"
+    m_Localized: Big McLargehuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
@@ -997,7 +997,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: '!'
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1043,9 +1043,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "T\xECm hi\u1EC3u th\xEAm v\u1EC1 \u0111\u1ED9 co gi\xE3n u\u1ED1n
-      c\u1EE7a th\u1EF1c t\u1EBF c\u1EE7a Kobold, \u0111\u1EE5 m\u1ED9t kobold v\u1EDBi
-      m\u1ED9t tinh ranh l\u1EDBn h\u01A1n c\u01A1 th\u1EC3 c\u1EE7a n\xF3."
+    m_Localized: "T\xECm hi\u1EC3u th\xEAm v\u1EC1 \u0111\u1ED9 \u0111\xE0n h\u1ED3i
+      u\u1ED1n cong th\u1EF1c t\u1EBF c\u1EE7a Kobold, \u0111\u1EE5 m\u1ED9t kobold
+      v\u1EDBi m\u1ED9t tinh ranh l\u1EDBn h\u01A1n c\u01A1 th\u1EC3 c\u1EE7a n\xF3."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1319,13 +1319,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i Kobold kh\u1ED5ng l\u1ED3
+    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u lo\u1EA1i kobold kh\u1ED5ng l\u1ED3
       \u0111\xF3, ch\xFAng th\u1EF1c s\u1EF1 h\u1EEFu \xEDch cho vi\u1EC7c l\xE0m
       s\u1EA1ch tr\u1EA7n nh\xE0."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: "Gi\u1ED1ng: ng\u1EF1c, nh\u1EEFng c\xE1i l\u1EDBn!"
+    m_Localized: "Breed: ng\u1EF1c, nh\u1EEFng ng\u01B0\u1EDDi l\u1EDBn!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
@@ -1475,7 +1475,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: "K\xEDch ho\u1EA1t k\xFD t\u1EF1 c\xF3 th\u1EC3 ch\u01A1i"
+    m_Localized: "C\xE1c k\xFD t\u1EF1 c\xF3 th\u1EC3 ch\u01A1i \u0111\u01B0\u1EE3c
+      b\u1EADt"
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322

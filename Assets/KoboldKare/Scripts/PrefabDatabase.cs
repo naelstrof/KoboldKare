@@ -230,6 +230,7 @@ public class PrefabDatabase : ScriptableObject {
         }
 
         prefabReferenceInfos.Add(newInfo);
+        prefabReferenceInfos.Sort((a, b) => String.Compare(a.GetKey(), b.GetKey(), StringComparison.InvariantCulture));
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
 
@@ -241,6 +242,8 @@ public class PrefabDatabase : ScriptableObject {
             }
         }
         AddPrefab(new PrefabReferenceInfo(this, newKey, prefabReference)); 
+        prefabReferenceInfos.Sort((a, b) => String.Compare(a.GetKey(), b.GetKey(), StringComparison.InvariantCulture));
+        prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
 
     public void RemovePrefab(string key) {
@@ -249,7 +252,7 @@ public class PrefabDatabase : ScriptableObject {
                 t.SetPrefab(null);
             }
         }
-
+        prefabReferenceInfos.Sort((a, b) => String.Compare(a.GetKey(), b.GetKey(), StringComparison.InvariantCulture));
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
     public ReadOnlyCollection<PrefabReferenceInfo> GetPrefabReferenceInfos() => readOnlyPrefabReferenceInfos;

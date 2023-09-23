@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
-      f\xFCgg\u0151 goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
+      goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -912,7 +912,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s r\xE1csokkal."
+    m_Localized: "Egy bord\xE1zott fasz, puha lemezekkel \xE9s barbokkal."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -965,11 +965,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u0421\u0435\u043B\u0435\u043E\u043B\u043E!"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
+    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1007,7 +1007,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171 hajl\xEDt\xF3
+    m_Localized: "Tudjon meg t\xF6bbet a Kobolds val\xF3s\xE1gh\u0171-hajl\xEDt\xF3
       rugalmass\xE1g\xE1r\xF3l, baszd meg egy koboldot, amelynek teste nagyobb."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Tekercsel\u0151cs\u0151"
+    m_Localized: "Teker\xE1l\xF3 cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Fajta: Kolb\xE1szfesztiv\xE1l"
+    m_Localized: "Fajta: kolb\xE1szfesztiv\xE1l"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
@@ -1249,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet akarok az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l, ezek
-      nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bbet szeretn\xE9k az \xF3ri\xE1si t\xEDpus\xFA koboldb\xF3l,
+      ezek nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1299,7 +1299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: "Nincs m\xE1s neked itt ... egyel\u0151re."
+    m_Localized: "Itt nincs m\xE1s neked ... egyel\u0151re."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728

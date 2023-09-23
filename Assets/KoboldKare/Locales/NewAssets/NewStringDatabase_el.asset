@@ -1137,7 +1137,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: "\u03A3\u03A5\u039D\u0394\u03A5\u0391\u03A3\u039C\u0395\u039D\u039F!"
+    m_Localized: Spelunking!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
@@ -1314,8 +1314,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: "\u03A0\u03BF\u03C5\u03BB\u03AE\u03C3\u03C4\u03B5 \u03C4\u03BF Micro
-      Kobold"
+    m_Localized: "\u03A0\u03BF\u03C5\u03BB\u03AE\u03C3\u03C4\u03B5 Micro Kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
@@ -1532,8 +1531,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "\u03A6\u03C5\u03BB\u03AE: \u03A6\u03B5\u03C3\u03C4\u03B9\u03B2\u03AC\u03BB
-      \u03BB\u03BF\u03C5\u03BA\u03AC\u03BD\u03B9\u03BA\u03C9\u03BD"
+    m_Localized: 'Breed: Fest Sausage'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103

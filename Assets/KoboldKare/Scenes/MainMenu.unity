@@ -1929,11 +1929,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8040330175790417838, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
-      propertyPath: enabledObjectsOnLevel.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8040330175790417838, guid: 364d21a5e4c0c464784d42f01767a083,
-        type: 3}
       propertyPath: enabledObjectsOnLevel.Array.data[5]
       value: 
       objectReference: {fileID: 0}

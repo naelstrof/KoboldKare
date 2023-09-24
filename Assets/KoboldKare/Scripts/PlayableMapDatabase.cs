@@ -22,10 +22,12 @@ public class PlayableMapDatabase : MonoBehaviour {
 
     public static void AddPlayableMap(PlayableMap playableMap) {
         instance.playableMaps.Add(playableMap);
+        instance.playableMaps.Sort((a,b)=>String.Compare(a.unityScene.GetName(), b.unityScene.GetName(), StringComparison.InvariantCulture));
     }
 
     public static void RemovePlayableMap(PlayableMap playableMap) {
         instance.playableMaps.Remove(playableMap);
+        instance.playableMaps.Sort((a,b)=>String.Compare(a.unityScene.GetName(), b.unityScene.GetName(), StringComparison.InvariantCulture));
     }
 
     public static ReadOnlyCollection<PlayableMap> GetPlayableMaps() {

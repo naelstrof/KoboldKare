@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour {
             try {
                 InputOptions.SaveControls();
                 UnityScriptableSettings.SettingsManager.Save();
-                PrefabDatabaseDatabase.SavePlayerConfig();
             } catch (Exception e) {
                 Debug.LogException(e);
                 Debug.LogError("Failed to save config");

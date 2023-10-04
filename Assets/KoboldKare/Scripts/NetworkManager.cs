@@ -94,7 +94,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             PhotonNetwork.GameVersion += "Editor";
         }
         PhotonNetwork.AutomaticallySyncScene = true;
-        PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
             PhotonNetwork.LeaveRoom();
@@ -121,7 +120,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.OfflineMode = false;
-        PrefabDatabaseDatabase.SavePlayerConfig();
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (!PhotonNetwork.IsConnectedAndReady) {
             PhotonNetwork.ConnectUsingSettings();
@@ -252,7 +250,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
 
             rootNode["modList"] = modArray;
-            rootNode["config"] = PrefabDatabase.GetJsonConfiguration().ToString();
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
             PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }
@@ -386,12 +383,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
         }
 
-        if (ModManager.HasModsLoaded(desiredMods)) {
-            PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
-        } else {
+        if (!ModManager.HasModsLoaded(desiredMods)) {
             string roomName = PhotonNetwork.CurrentRoom.Name;
             onLeaveRoom = () => {
-                GameManager.StartCoroutineStatic(FinishLoadMods(desiredMods, roomName, rootNode));
+                GameManager.StartCoroutineStatic(FinishLoadMods(desiredMods, roomName));
             };
             PhotonNetwork.LeaveRoom();
         }
@@ -399,11 +394,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private IEnumerator LoadPlayerConfigMods() {
         Debug.Log("Reloading player's original mod config due to leaving server.");
         yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
-        PrefabDatabaseDatabase.LoadPlayerConfig();
     }
-    private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName, JSONNode rootNode) {
+    
+    private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName) {
         yield return ModManager.SetLoadedMods(desiredMods);
-        PrefabDatabaseDatabase.LoadPlayerConfig(rootNode["config"]);
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.JoinRoom(roomName);
         onLeaveRoom = null;

@@ -63,7 +63,7 @@ public class ModManager : MonoBehaviour {
         public Texture2D preview;
 
         public bool IsValid() {
-            return !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && Directory.Exists(modPath) && File.Exists(catalogPath);
+            return folderTitle != "SurfMap" && publishedFileId != (PublishedFileId_t)2934088282 && !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && Directory.Exists(modPath) && File.Exists(catalogPath);
         }
         public string catalogPath {
             get {
@@ -289,6 +289,10 @@ public class ModManager : MonoBehaviour {
         }
     }
     private async void AddMod(ModInfo info) {
+        if (info.publishedFileId == (PublishedFileId_t)2934088282) {
+            Debug.Log("Skipping surfmap, as its now included in the base game...");
+            return;
+        }
         await Mutex.WaitAsync();
         try {
             bool modFound = false;

@@ -15,24 +15,5 @@ public class PrefabDatabaseDatabase : MonoBehaviour {
             return;
         }
         instance = this;
-        LoadPlayerConfig();
-    }
-
-    public static void SavePlayerConfig() {
-        foreach(var database in instance.databases) {
-            database.SavePlayerConfiguration();
-        }
-    }
-
-    public static void LoadPlayerConfig() {
-        foreach(var database in instance.databases) {
-            database.LoadPlayerConfiguration();
-        }
-    }
-
-    public static void LoadPlayerConfig(string json) {
-        foreach(var database in instance.databases) {
-            database.LoadPlayerConfiguration(json);
-        }
     }
 }

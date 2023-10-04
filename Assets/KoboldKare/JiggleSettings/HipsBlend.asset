@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HipsBlend
   m_EditorClassIdentifier: 
   blendSettings:
-  - {fileID: 11400000, guid: df3c2fd03b074b74c96b9b46a4e0090e, type: 2}
-  - {fileID: 11400000, guid: 7ebe4ff9b8b12a9489fd272d267c067c, type: 2}
+  - {fileID: 11400000, guid: 0e2cb600d38202641a1d3db74913f7c1, type: 2}
+  - {fileID: 11400000, guid: 835e23b13ade58e439dd26b97276e0c9, type: 2}
+  - {fileID: 11400000, guid: c7512a6e862e8254082f8c215cbca303, type: 2}
   normalizedBlend: 0

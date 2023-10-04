@@ -149,6 +149,12 @@ public class KoboldGenes {
         return 0;
     }
 
+    private string GetPlayerName(byte id){
+        var playerDatabase = GameManager.GetPlayerDatabase();
+        var players = playerDatabase.GetValidPrefabReferenceInfos();
+        return players[id].GetKey();
+    }
+
     public KoboldGenes Randomize(string koboldName=null, float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
         // Slight bias for kobolds with dicks, as they have more variety.
         if (Random.Range(0f,1f) > 0.4f) {
@@ -282,6 +288,7 @@ public class KoboldGenes {
         rootNode["dickEquip"] = (int)dickEquip;
         rootNode["grabCount"] = (int)grabCount;
         rootNode["dickThickness"] = dickThickness;
+        rootNode["species"] = GetPlayerName(species);
         node[key] = rootNode;
     }
 
@@ -300,6 +307,7 @@ public class KoboldGenes {
         saturation = (byte)rootNode["saturation"].AsInt;
         dickEquip = (byte)rootNode["dickEquip"].AsInt;
         grabCount = (byte)rootNode["grabCount"].AsInt;
+        species = (byte)GetPlayerIndex(rootNode["species"]);
         dickThickness = rootNode["dickThickness"];
     }
 

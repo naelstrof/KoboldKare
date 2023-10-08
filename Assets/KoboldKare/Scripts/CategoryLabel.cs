@@ -8,12 +8,8 @@ public class CategoryLabel : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject name;
+    private GameObject nameLabel;
     private bool showing=true;
-    private float categoryHeightAdjusted;
-    private float itemHeightAdjusted;
-    private float paddingAdjusted;
-    private float nextPositionY;
     public void ShowHide(){
         if(showing){
             bool firstChild=true;
@@ -45,7 +41,7 @@ public class CategoryLabel : MonoBehaviour
     }
 
     public GameObject GetName(){
-        return name;
+        return nameLabel;
     }
 
 

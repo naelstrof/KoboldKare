@@ -98,9 +98,9 @@ public class FurnitureShopUI : MonoBehaviourPun
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            if(!isSetup)
+            if(!isSetup)   //Using existing UI if it possible, if you sell the kobold that had it last youll probably need to re-initialize it, Maybe find some non-kobold object to attach itself to on disable to reduce this?
             {   
-                await furnitureDatabase.Setup();
+                await furnitureDatabase.Setup(); //Should probably be done during scene loading
                 GameObject temp;
                 Transform catPanelTransform;
                 catNames=new List<string>();
@@ -129,7 +129,7 @@ public class FurnitureShopUI : MonoBehaviourPun
                                 int copyi = i;
                                 int copyj = j;
                                 temp = Instantiate(itemLabel);
-                                temp.GetComponent<TMP_Text>().text = "  "+furn.name;
+                                temp.GetComponent<TMP_Text>().text = "  "+furn.name; //Pivots of labels need to be directly under eachother for auto navigation to work so i use this for indentation
                                 temp.GetComponent<Button>().onClick.AddListener( ()=>{SetInfo(copyi,copyj);} );
                                 temp.transform.SetParent(catPanelTransform,false);
                                 temp.SetActive(false);
@@ -166,7 +166,7 @@ public class FurnitureShopUI : MonoBehaviourPun
             }else{
                 
                 RectTransform rt=GetComponent<RectTransform>();
-                rt.localEulerAngles = Vector3.zero;
+                rt.localEulerAngles = Vector3.zero;     //UI would get rotated/moved/rescaled when moving from kobold to kobold, idk why, this resets it
                 rt.localPosition=Vector3.zero;
                 rt.offsetMin = Vector2.zero;
                 rt.offsetMax = Vector2.zero;

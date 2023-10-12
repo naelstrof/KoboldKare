@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ShopCategoryLabel : MonoBehaviour
 {
     [SerializeField]
-    private GameObject nameLabel;
-    private bool showing=true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private TMP_Text nameText;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [SerializeField]
+    private GameObject Children;
+
+     public void Toggle(){
+        Children.SetActive(!Children.activeSelf);
+    }
+    public TMP_Text GetNameText(){
+        return nameText;
     }
 }

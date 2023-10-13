@@ -21,22 +21,24 @@ public class ShopDatabase : ScriptableObject
 
     public List<ShopCategory> subCategories;
     public List<ShopItem> items;
-    private ShopCategory root
-    ;
+    private ShopCategory root;
 
     public async Task  Setup(){
-            
+            root=new ShopCategory();
             subCategories=new List<ShopCategory>();
             items =new List<ShopItem>();
-            foreach(ShopCategory category in categoriesToLoad){
-                subCategories.Add(category);
-            }
-            foreach(ShopItem item in itemsToLoad){
-                items.Add(item);
-            }
-        if(shouldLoadAdressable){
-           await LoadAdressables();
-        }
+            root.subCategories=subCategories;
+            root.items=items;
+            LoadItems(itemsToLoad);
+        //     foreach(ShopCategory category in categoriesToLoad){
+        //         subCategories.Add(category);
+        //     }
+        //     foreach(ShopItem item in itemsToLoad){
+        //         items.Add(item);
+        //     }
+        // if(shouldLoadAdressable){
+        //    await LoadAdressables();
+        // }
         }
             public async Task LoadAdressables()
     {           
@@ -59,6 +61,36 @@ public class ShopDatabase : ScriptableObject
             MergeToList(subCategories,category);
             }
     }
+
+    private void LoadItems(List<ShopItem> items){
+        foreach(ShopItem item in items){
+            var currentCategory=root;
+            foreach(string pathPiece in GetPath(item)){
+                currentCategory=GetOrMakeSubCategory(currentCategory,pathPiece);
+            }
+            AddToCategory(currentCategory,item);
+        }
+
+    }
+    private ShopCategory GetOrMakeSubCategory(ShopCategory parent,string name){
+        foreach(ShopCategory category in parent.subCategories){
+            if(category.categoryName==name){
+                return category;
+            }
+        }
+        ShopCategory temp=MakeNewCategory(name);
+        parent.subCategories.Add(temp);
+        return temp;
+    }
+    private string[] GetPath(ShopItem item){
+        return item.path.Split('/');
+    }
+    private void AddToCategory(ShopCategory category, ShopItem item){
+        category.items.Add(item);
+    }
+
+
+
     void MergeToList(List<ShopCategory> main,ShopCategory toAdd){
         bool needToCreate=true;
         foreach(ShopCategory mainCategory in main){

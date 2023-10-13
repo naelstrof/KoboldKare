@@ -2706,7 +2706,7 @@ MonoBehaviour:
   descriptionField: {fileID: 2028481935096095838}
   priceField: {fileID: 5878887015022912008}
   imageField: {fileID: 6462768956857865120}
-  defaultSprite: {fileID: 21300000, guid: 27712d2f9bbe5b64baceb5004c158549, type: 3}
+  defaultSprite: {fileID: 21300000, guid: e063c52d29e94a849b5a707a2a372857, type: 3}
   actionsToClose:
   - {fileID: 3749223953104337775, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   - {fileID: 7212306176372978217, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}

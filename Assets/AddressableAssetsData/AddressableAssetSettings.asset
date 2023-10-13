@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 6d0230f09c34a674a8e038584c8a0970
   m_CachedHash:
     serializedVersion: 2
-    Hash: 93e9ce6fcc1b55d4a82fae756eb934eb
+    Hash: cc0fff3e17148a0b0c4545170232224b
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -212,6 +212,9 @@ MonoBehaviour:
     - defaultTextures
     - defaultMaterials
     - EquipmentStoreItem
+    - FurnitureCategory
+    - FurnitureItem
+    - FurnitureItemPack
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: aa43d791ed6729c45a222b81d18f4c6f, type: 2}

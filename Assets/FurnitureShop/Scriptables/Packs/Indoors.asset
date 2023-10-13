@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82bc0183a948e94a918d7ea659b3fd9, type: 3}
+  m_Name: Indoors
+  m_EditorClassIdentifier: 
+  path: Indoors
+  items:
+  - {fileID: 11400000, guid: 6219a848c2869fc40ab6c8a20a7ed888, type: 2}
+  - {fileID: 11400000, guid: 690c927712da35b40a1e2e709173f9f5, type: 2}
+  - {fileID: 11400000, guid: bed4cc17ca8632d4baab2ff68c0ede28, type: 2}

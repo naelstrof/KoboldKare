@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60388e860ea25334f832063b35dc4aac, type: 3}
   m_Name: Furniture Database
   m_EditorClassIdentifier: 
-  categoriesToLoad:
-  - {fileID: 11400000, guid: 20b24c2adfba25b4b916174a30aeed1d, type: 2}
-  - {fileID: 11400000, guid: 12395a2264b074e45b91a5c344f044ac, type: 2}
+  ItemPacksToLoad:
+  - {fileID: 11400000, guid: b6694517bee04b4448c1eede3d0c8c25, type: 2}
+  - {fileID: 11400000, guid: f8600e06518471c489d67f750a60aae5, type: 2}
+  - {fileID: 11400000, guid: 3ab78403a5b33a144b8de4e3dd633fda, type: 2}
   itemsToLoad: []
   shouldLoadAdressable: 1
-  adressableCategoryTag: FurnitureCategory
+  adressableItemPackTag: FurnitureItemPack
   adressableItemTag: FurnitureItem
   subCategories:
-  - {fileID: 11400000, guid: 20b24c2adfba25b4b916174a30aeed1d, type: 2}
-  - {fileID: 11400000, guid: 12395a2264b074e45b91a5c344f044ac, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   items: []

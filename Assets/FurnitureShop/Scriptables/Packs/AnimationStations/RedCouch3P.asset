@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c75f4b0133362049ab404c567a20abb, type: 3}
-  m_Name: Sitting Space
+  m_Name: RedCouch3P
   m_EditorClassIdentifier: 
-  itemName: Sitting Space
-  description: Sit yo ass
-  price: 15
-  useSprite: {fileID: 21300000, guid: 63abf72f568e4f843910a427b8a4e26b, type: 3}
+  path: 
+  itemName: RedCouch3P
+  description: Couch for 3 people
+  price: 100
+  useSprite: {fileID: 0}
   prefab:
-    gameObject: {fileID: 4561163656131886168, guid: cd65459436573d84980a7bdc1158f49f,
+    gameObject: {fileID: 1819820622350556516, guid: 9f7ed86b5cb801f4f993ecb0e54fe1cc,
       type: 3}
     optionalDatabase: {fileID: 0}

@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c75f4b0133362049ab404c567a20abb, type: 3}
-  m_Name: Holder
+  m_Name: HandheldShop
   m_EditorClassIdentifier: 
-  itemName: 
-  description: 
-  price: 0
+  path: 
+  itemName: HandheldShop
+  description: It fits in your hands
+  price: 30
   useSprite: {fileID: 0}
   prefab:
-    gameObject: {fileID: 0}
+    gameObject: {fileID: 2874464859638968742, guid: 1b2a925cd31a10746895c31b65f727f5,
+      type: 3}
     optionalDatabase: {fileID: 0}

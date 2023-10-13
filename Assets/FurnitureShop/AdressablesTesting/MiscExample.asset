@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b389685d150f70f4cad6322cd4614583, type: 3}
-  m_Name: NewShopHolder
+  m_Script: {fileID: 11500000, guid: c82bc0183a948e94a918d7ea659b3fd9, type: 3}
+  m_Name: MiscExample
   m_EditorClassIdentifier: 
-  shopMenuPrefab: {fileID: 8778250334659380886, guid: 9a96cd3ef1d77314194d15c86cdc990d,
-    type: 3}
+  path: Misc
+  items:
+  - {fileID: 11400000, guid: 8a05955a448ecbf40a0b475974d487af, type: 2}
+  - {fileID: 11400000, guid: 29819cd6042843549987adfc7c5c9b7a, type: 2}

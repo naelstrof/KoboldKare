@@ -337,7 +337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 5905144046852987654}
-  Children: {fileID: 654156808257370032}
+  name: {fileID: 1047761511512455999}
+  children: {fileID: 654156808257370032}
 --- !u!114 &213025607501706565
 MonoBehaviour:
   m_ObjectHideFlags: 0

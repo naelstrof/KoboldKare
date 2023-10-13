@@ -9,10 +9,21 @@ public class ShopCategoryLabel : MonoBehaviour
     private TMP_Text nameText;
 
     [SerializeField]
-    private GameObject Children;
+    private GameObject name;
+    [SerializeField]
+    private GameObject children;
 
+    public GameObject GetChildren(){
+        return children;
+    }
+    public GameObject GetName(){
+        return name;
+    }
      public void Toggle(){
-        Children.SetActive(!Children.activeSelf);
+        children.SetActive(!children.activeSelf);
+    }
+    public void SetName(string name){
+        nameText.text=name;
     }
     public TMP_Text GetNameText(){
         return nameText;

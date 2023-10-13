@@ -18,15 +18,14 @@ public class ShopDatabase : ScriptableObject
     private string adressableCategoryTag;
     [SerializeField]
     private string adressableItemTag;
-    //private DatabaseRoot database;
 
-    //private class DatabaseRoot{
     public List<ShopCategory> subCategories;
     public List<ShopItem> items;
-    //}
+    private ShopCategory root
+    ;
 
     public async Task  Setup(){
-            //database=new DatabaseRoot();
+            
             subCategories=new List<ShopCategory>();
             items =new List<ShopItem>();
             foreach(ShopCategory category in categoriesToLoad){
@@ -35,29 +34,79 @@ public class ShopDatabase : ScriptableObject
             foreach(ShopItem item in itemsToLoad){
                 items.Add(item);
             }
-
+        if(shouldLoadAdressable){
+           await LoadAdressables();
         }
+        }
+            public async Task LoadAdressables()
+    {           
+                await LoadCategories();
+                //await LoadFurniture();
+    }
+     private async Task LoadCategories(){
+            var gottenCategories = await Addressables.LoadResourceLocationsAsync(adressableCategoryTag, typeof(ShopCategory)).Task;
+            List<Task<ShopCategory>> tasks = new List<Task<ShopCategory>>();
+            foreach (var gottenCategory in gottenCategories)
+            {
+            tasks.Add(Addressables.LoadAssetAsync<ShopCategory>(gottenCategory).Task);
+            }
 
+            var loadedCategories = await Task.WhenAll(tasks);
+
+            foreach (ShopCategory category in loadedCategories)
+            {  
+                Debug.Log("adding "+category.categoryName);
+            MergeToList(subCategories,category);
+            }
+    }
+    void MergeToList(List<ShopCategory> main,ShopCategory toAdd){
+        bool needToCreate=true;
+        foreach(ShopCategory mainCategory in main){
+            Debug.Log("comparing "+mainCategory.categoryName+" to "+toAdd.categoryName+ " is "+(mainCategory.categoryName==toAdd.categoryName).ToString());
+            if (mainCategory.categoryName==toAdd.categoryName){
+                needToCreate=false;
+                Merge(mainCategory,toAdd);
+                break;
+            }
+        }
+        
+        if(needToCreate){
+            Debug.Log("making list"+toAdd.categoryName);
+            ShopCategory temp=MakeNewCategory(toAdd.categoryName);
+            main.Add(temp);
+            Merge(temp,toAdd);
+            }
+    }
 
     void Merge (ShopCategory main,ShopCategory toAdd){
+        Debug.Log("Merging"+main.categoryName+" and "+toAdd.categoryName);
         foreach(ShopCategory added in toAdd.subCategories){
+            bool needToCreate=true;
                 foreach(ShopCategory mainCategory in main.subCategories){
-                    bool needToCreate=true;
                     if(added.categoryName==mainCategory.categoryName)
                         {
-                            Merge(mainCategory,added);
-                            needToCreate=false;
+                        Merge(mainCategory,added);
+                        needToCreate=false;
                         }
-                    if(needToCreate){
-                        main.subCategories.Add(toAdd);
-                    
-                        }
+                    }
+            if(needToCreate){
+                Debug.Log("making category"+added.categoryName);
+                ShopCategory temp=MakeNewCategory(added.categoryName);
+                main.subCategories.Add(temp);
+                Merge(temp,added);
                 }
-        }
+            }
         foreach(ShopItem itemToAdd in toAdd.items){
             main.items.Add(itemToAdd);
-        }
+            }
         }
 
-    
+    private ShopCategory MakeNewCategory(string name){
+        Debug.Log("making "+name);
+        ShopCategory newCategory=new ShopCategory();
+        newCategory.categoryName=name;
+        newCategory.subCategories=new List<ShopCategory>();
+        newCategory.items=new List<ShopItem>();
+        return newCategory;
+    }
 }

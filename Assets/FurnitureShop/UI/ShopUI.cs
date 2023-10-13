@@ -117,16 +117,16 @@ public class ShopUI : MonoBehaviourPun
                             catTemp=Instantiate(categoryLabel).transform;
                             catTemp.SetParent(parent.transform,false);
                             catTemp.GetComponent<ShopCategoryLabel>().GetNameText().text=category.categoryName;
-                            catTemp.GetChild(0).GetComponent<Button>().onClick.AddListener( ()=>
+                            catTemp.GetComponent<ShopCategoryLabel>().GetName().GetComponent<Button>().onClick.AddListener( ()=>
                                             {
                                             catTemp.GetComponent<ShopCategoryLabel>().Toggle();
                                             LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
                                             } 
                                 );
                             foreach(ShopCategory childCategory in category.subCategories){
-                                SetupCategory(catTemp.GetChild(1),childCategory);
+                                SetupCategory(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,childCategory);
                             }
-                            SetupItems(catTemp.GetChild(1),category.items);
+                            SetupItems(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,category.items);
     }
     private void SetupItems(Transform parent, List<ShopItem> items){
             foreach(ShopItem childItem in items){

@@ -147,7 +147,6 @@ namespace Photon.Pun
             float rotw = node["rotation.w"];
             this.m_NetworkRotation = new Quaternion(rotx, roty, rotz, rotw);
             this.m_Body.rotation = this.m_NetworkRotation;
-            this.m_Body.transform.rotation = this.m_NetworkRotation;
             if (this.m_SynchronizeVelocity) {
                 float velx = node["velocity.x"];
                 float vely = node["velocity.y"];

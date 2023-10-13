@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8964259104278286834}
   - component: {fileID: 7951730771478488177}
   m_Layer: 11
-  m_Name: CarpetStation (1)
+  m_Name: CarpetStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

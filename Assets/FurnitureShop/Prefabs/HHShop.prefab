@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6685826739288197535}
   - component: {fileID: -4265872069069233320}
   m_Layer: 11
-  m_Name: HHShop2
+  m_Name: HHShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: FurnitureShop
+  m_EditorClassIdentifier: 
+  m_GroupName: Furniture
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2e11834d98c174f49bd12cdf0afb3d32
+  m_SerializeEntries:
+  - m_GUID: 1b2a925cd31a10746895c31b65f727f5
+    m_Address: Assets/FurnitureShop/Prefabs/HHShop2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cad04c30428eed14798aba1e029901f3
+    m_Address: Assets/FurnitureShop/AdressablesTesting/OviSpot.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FurnitureItem
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0ae6327c7c05efd43811a41ee384e235
+    m_Address: Assets/FurnitureShop/AdressablesTesting/Misc.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - FurnitureItemPack
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86847a0d2f8a226409b5256e8c88bfb7
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/KoboldHolder.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd65459436573d84980a7bdc1158f49f
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/SittingSpace.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f7ed86b5cb801f4f993ecb0e54fe1cc
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/RedCouchAnimated.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6000aae9462ab2648bdfeda555452590
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/SunChair.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1c205adff4802640941c0100098af03
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Freezer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f803bda6823046c4289d8e9dc991b67a
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Seller.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4a8bd27f32ab9249b19e2d3b60c63ab
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Unfreezer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91b109b45d3769e4b94fe9899839078d
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Chair.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d804bb31dd0cb604ab31e3c5720a3e11
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/KitchenTableRound.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57192e8659418934788a2eed4ce5afb9
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/RedCouch.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7205708505cdf74479b5f2cb896a5202
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Basket.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78119fe123978e2428f17ccd93cf0bf6
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Jar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c443e72942ee9d419bcde0de6dfc7db
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/OviSpotFurniture.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3cc751b4b571d8e4ea9a985acd1257a9
+    m_Address: Assets/KoboldKare/Prefabs/FurniturePrefabs/Carpet.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - NetworkedPrefab
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 5779f59a200305e46951d9cdbb172ed4, type: 2}
+    - {fileID: 11400000, guid: f7c56eb6c0575b94f9d8f80cddffd856, type: 2}

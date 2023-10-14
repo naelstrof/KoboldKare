@@ -18,6 +18,6 @@ MonoBehaviour:
   price: 55
   useSprite: {fileID: 0}
   prefab:
-    gameObject: {fileID: 1645749545899028160, guid: 1e8eb64b7a6a01a478e4d1a30896fed8,
+    gameObject: {fileID: 4411878342665906872, guid: 3cc751b4b571d8e4ea9a985acd1257a9,
       type: 3}
     optionalDatabase: {fileID: 0}

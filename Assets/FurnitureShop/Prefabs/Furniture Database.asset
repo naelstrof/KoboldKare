@@ -20,10 +20,5 @@ MonoBehaviour:
   shouldLoadAdressable: 1
   adressableItemPackTag: FurnitureItemPack
   adressableItemTag: FurnitureItem
-  subCategories:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  subCategories: []
   items: []

@@ -880,8 +880,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos r\xE1csokkal \xE9s alacsony f\xFCgg\u0151
-      goly\xF3kkal."
+    m_Localized: "Klubos p\xE9nisz, puha h\xFAsos g\xF6mb\xF6kkel \xE9s alacsony
+      f\xFCgg\u0151 goly\xF3kkal."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
@@ -969,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "S\xF6t\xE9t jelenl\xE9tet \xE9rz\xE9kelek a k\xF6zeli barlangokban,
+    m_Localized: "\xC9rzem a s\xF6t\xE9t jelenl\xE9tet a k\xF6zeli barlangokban,
       menj \xE9s vizsg\xE1lok meg nekem."
     m_Metadata:
       m_Items: []
@@ -1116,7 +1116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Teker\xE1l\xF3 cs\u0151"
+    m_Localized: "Tekercsel\u0151cs\u0151"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, ezek nagyon hasznosak pap\xEDr
+    m_Localized: "Nagyon sok k\xF6v\xE9r koboldot akarok, nagyon hasznosak pap\xEDr
       s\xFAlyk\xE9nt \xE9s p\xE1rnak\xE9nt."
     m_Metadata:
       m_Items: []
@@ -1254,7 +1254,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Fajta: cicik, nagyok!'
+    m_Localized: 'Fajta: Cicik, nagyok!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107

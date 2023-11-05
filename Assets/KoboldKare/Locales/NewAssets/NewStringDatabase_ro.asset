@@ -641,7 +641,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Calitatea Goop
+    m_Localized: Calitatea goopului
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
@@ -693,8 +693,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 creasc\u0103
-      kobold -ul."
+    m_Localized: "Ud\u0103\u021Bi oul \u0219i a\u0219tepta\u021Bi s\u0103 v\u0103
+      creasc\u0103 kobold -ul."
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -768,7 +768,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Umple\u021Bi un kobold cu sperma p\xE2n\u0103 nu mai pot lua, trebuie
+    m_Localized: "Umple\u021Bi un kobold cu cum p\xE2n\u0103 nu mai pot lua, trebuie
       s\u0103 v\u0103d c\xE2t de durabil\u0103 este genul t\u0103u."
     m_Metadata:
       m_Items: []
@@ -1082,7 +1082,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Cvadruplu umplut
+    m_Localized: Catruplu umplut
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
@@ -1109,7 +1109,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: "Face\u021Bi Kobold -ul perfect"
+    m_Localized: "Face\u021Bi kobold -ul perfect"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
@@ -1205,8 +1205,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold dezbr\u0103cat
-      vrea s\u0103 le construiesc ma\u0219ini feti\u0219."
+    m_Localized: "Voi sta aici, \xEEn cazul \xEEn care un alt kobold gol vor s\u0103
+      le construiesc ma\u0219ini feti\u0219."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512

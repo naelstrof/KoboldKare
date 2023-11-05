@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equine
+    m_Localized: Equino
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -527,7 +527,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: "Espa\xE7o esquerdo"
+    m_Localized: Quarto esquerdo
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -1147,7 +1147,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Eu vou fazer isso, por um pre\xE7o, \xE9 claro ..."
+    m_Localized: "Vou fazer isso, por um pre\xE7o, \xE9 claro ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1211,7 +1211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: "Ra\xE7a: Tempo de barriga!"
+    m_Localized: "Ra\xE7a: hora da barriga!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101

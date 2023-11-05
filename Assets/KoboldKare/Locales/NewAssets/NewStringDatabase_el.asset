@@ -1160,7 +1160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: "\u03A9\u03C7 \u03A7\u03BF \u03A7\u03BF .. \u039A\u03B1\u03BB\u03CE\u03C2
+    m_Localized: "\u03A9\u03C7 \u03A7\u03CC \u03A7\u03BF .. \u039A\u03B1\u03BB\u03CE\u03C2
       \u03AE\u03BB\u03B8\u03B1\u03C4\u03B5 ..."
     m_Metadata:
       m_Items: []
@@ -1531,7 +1531,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: 'Breed: Fest Sausage'
+    m_Localized: "\u03A6\u03C5\u03BB\u03AE: \u03A6\u03B5\u03C3\u03C4\u03B9\u03B2\u03AC\u03BB
+      \u03BB\u03BF\u03C5\u03BA\u03AC\u03BD\u03B9\u03BA\u03C9\u03BD"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103

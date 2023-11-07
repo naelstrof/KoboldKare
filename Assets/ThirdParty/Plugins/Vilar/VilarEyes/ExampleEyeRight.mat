@@ -10,9 +10,7 @@ Material:
   m_Name: ExampleEyeRight
   m_Shader: {fileID: 4800000, guid: 5e1d12dd9f331b94da153b99f92b9e11, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -82,8 +80,21 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _Backward: 0
     - _BumpPower: 0.477
     - _BumpScale: 1
@@ -101,6 +112,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1
+    - _Head: 0
     - _IrisBlend: 0.065
     - _IrisBlend1: 0.097
     - _IrisSize: 0.343
@@ -118,6 +130,8 @@ Material:
     - _Parallax: 0.02
     - _PupilDialationFrequency: 0.352
     - _PupilDialationFrequency1: 0.352
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _Smooth: 0
     - _SmoothnessTextureChannel: 0
     - _Specular: 0
@@ -134,6 +148,7 @@ Material:
     - _Blood1: {r: 0.47058815, g: 0.37370238, b: 0.37370238, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HueBrightnessContrastSaturation: {r: 0, g: 0.5, b: 0.5, a: 0.5}
     - _IrisRing: {r: 0.1102941, g: 0.1102941, b: 0.1102941, a: 0.434}
     - _IrisRing1: {r: 0, g: 0, b: 0, a: 0.491}
     - _Scelera: {r: 0.6838235, g: 0.6644046, b: 0.6134299, a: 1}

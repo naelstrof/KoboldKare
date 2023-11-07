@@ -1,4 +1,4 @@
-Shader "TextMeshPro/Distance Field" {
+﻿Shader "TextMeshPro/Distance Field" {
 
 Properties {
 	_FaceTex			("Face Texture", 2D) = "white" {}
@@ -114,9 +114,9 @@ SubShader {
 		#pragma target 3.0
 		#pragma vertex VertShader
 		#pragma fragment PixShader
-		#pragma shader_feature __ BEVEL_ON
-		#pragma shader_feature __ UNDERLAY_ON UNDERLAY_INNER
-		#pragma shader_feature __ GLOW_ON
+		#pragma shader_feature_local __ BEVEL_ON
+		#pragma shader_feature_local __ UNDERLAY_ON UNDERLAY_INNER
+		#pragma shader_feature_local __ GLOW_ON
 
 		#pragma multi_compile __ UNITY_UI_CLIP_RECT
 		#pragma multi_compile __ UNITY_UI_ALPHACLIP

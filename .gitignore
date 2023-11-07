@@ -11,6 +11,9 @@
 [Aa]ssets/UMotionEditor.meta
 UMotionData/
 
+[Aa]ssets/ShaderControl/
+[Aa]ssets/ShaderControl.meta
+
 # Also don't push secrets from my google sheets.
 [Aa]ssets/KoboldKare/Locales/Google Sheets Service.asset
 [Aa]ssets/KoboldKare/Locales/Google Sheets Service.asset.meta
@@ -54,6 +57,8 @@ Logs/shadercompiler-AssetImportWorker0.log
 #*Lightmap-*.exr.meta
 *.blend1
 *.blend1.meta
+*.shader_backup
+*.shader_backup.meta
 #*ReflectionProbe*.exr
 #*ReflectionProbe*.exr.meta
 #*OcclusionCullingData.asset

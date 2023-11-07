@@ -10,10 +10,7 @@ Material:
   m_Name: Bomb
   m_Shader: {fileID: 4800000, guid: c74e1808ddaac6745ac169265a87048e, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _METALLICSPECGLOSSMAP
-  - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

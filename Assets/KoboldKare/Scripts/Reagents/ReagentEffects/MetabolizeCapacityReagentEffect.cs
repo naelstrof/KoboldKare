@@ -6,7 +6,8 @@ public class MetabolizeCapacityReagentEffect : ModifyingReagentEffect
 {
     public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy)
     {
-        genes = genes.With(metabolizeCapacitySize: genes.metabolizeCapacitySize + usedAmount * Multiplier);
+        float CurrentUsedAmount = Mathf.Max(k.metabolizedContents.volume, 20f);
+        genes = genes.With(metabolizeCapacitySize: Mathf.Max(genes.metabolizeCapacitySize + usedAmount * Multiplier, CurrentUsedAmount));
     }
 }
 

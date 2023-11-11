@@ -6,6 +6,6 @@ public class GrabCountReagentEffect : ModifyingReagentEffect
 {
     public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy)
     {
-        genes = genes.With(grabCount: (byte)Mathf.Clamp(genes.grabCount + (byte)(Mathf.CeilToInt(usedAmount * Multiplier)), 1, 255));
+        genes = genes.With(grabCount: (byte)Mathf.Clamp(Mathf.CeilToInt(genes.grabCount + usedAmount * Multiplier), 1, 255));
     }
 }

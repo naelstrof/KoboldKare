@@ -26,6 +26,10 @@ public class FloaterReagentEffect : ReagentEffect
     public override void OnValidate()
     {
         base.OnValidate();
+        if (Duration <= 1)
+        {
+            Duration = 5;
+        }
         floaterInfoPrefab.OnValidate();
     }
 }

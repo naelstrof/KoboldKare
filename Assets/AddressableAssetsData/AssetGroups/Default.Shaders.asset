@@ -41,12 +41,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1415f2a892abc2149addb08105206ad7
-    m_Address: Assets/KoboldKare/Shaders/PachinkoShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b5df53a807ec78c44b18a18cd6a7b509
     m_Address: Assets/KoboldKare/Shaders/Foliage.shader
     m_ReadOnly: 0

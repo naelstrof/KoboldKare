@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c75f4b0133362049ab404c567a20abb, type: 3}
   m_Name: Holder
   m_EditorClassIdentifier: 
-  path: Animation Stations
+  path: 
   itemName: Kobold Holder
   description: Holds your kobolds
   price: 5

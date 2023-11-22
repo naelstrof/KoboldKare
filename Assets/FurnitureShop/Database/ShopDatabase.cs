@@ -31,10 +31,10 @@ public class ShopDatabase : ScriptableObject
             root.subCategories=subCategories;
             root.items=items;
             foreach(ShopItemPack itemPack in ItemPacksToLoad){
-                LoadItemPack(itemPack);
+                LoadItemPack(itemPack,root);
             }
             foreach(ShopItem item in itemsToLoad){
-                LoadItem(item);
+                LoadItem(item,root);
             }
 
             if(shouldLoadAdressable){
@@ -54,7 +54,7 @@ public class ShopDatabase : ScriptableObject
 
             foreach (ShopItemPack pack in loadedPacks)
             {  
-                LoadItemPack(pack);
+                LoadItemPack(pack,root);
             }
             }
         private async Task LoadItems(){
@@ -69,7 +69,7 @@ public class ShopDatabase : ScriptableObject
 
             foreach (ShopItem item in loadedItems)
             {  
-                LoadItem(item);
+                LoadItem(item,root);
             }
             }
     //         public async Task LoadAdressables()
@@ -94,21 +94,27 @@ public class ShopDatabase : ScriptableObject
     //         }
     // }
 
-    private void LoadItem(ShopItem item){
-            var currentCategory=root;
+    private void LoadItem(ShopItem item,ShopCategory startingCategory){
+            var currentCategory=startingCategory;
             foreach(string pathPiece in GetPath(item)){
                 currentCategory=GetOrMakeSubCategory(currentCategory,pathPiece);
             }
-            AddToCategory(currentCategory,item);
+            AddToCategory(item,currentCategory);
     }
-    private void LoadItemPack(ShopItemPack itemPack){
-            var currentCategory=root;
+
+    private void LoadItemPack(ShopItemPack itemPack,ShopCategory startingCategory){
+            var currentCategory=startingCategory;
             foreach(string pathPiece in GetPath(itemPack)){
                 currentCategory=GetOrMakeSubCategory(currentCategory,pathPiece);
             }
-            AddToCategory(currentCategory,itemPack);
+            foreach(ShopItem item in itemPack.items){
+                LoadItem(item,currentCategory);
+            }
+            // AddToCategory(itemPack,currentCategory);
     }
+
     private ShopCategory GetOrMakeSubCategory(ShopCategory parent,string name){
+        if(name.Length<1){return parent;}
         foreach(ShopCategory category in parent.subCategories){
             if(category.categoryName==name){
                 return category;
@@ -118,17 +124,18 @@ public class ShopDatabase : ScriptableObject
         parent.subCategories.Add(temp);
         return temp;
     }
+
     private string[] GetPath(ShopItem item){
         return item.path.Split('/'); // '/' to make it look like url, maybe '\\' to make it look like file path? 
     }
     private string[] GetPath(ShopItemPack item){
     return item.path.Split('/');
     }
-    private void AddToCategory(ShopCategory category, ShopItem item){
+    private void AddToCategory(ShopItem item,ShopCategory category){
         category.items.Add(item);
     }
 
-    private void AddToCategory(ShopCategory category, ShopItemPack items){
+    private void AddToCategory(ShopItemPack items,ShopCategory category){
         foreach(ShopItem item in items.items)
             category.items.Add(item);
     }

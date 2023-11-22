@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c75f4b0133362049ab404c567a20abb, type: 3}
   m_Name: Sitting Space
   m_EditorClassIdentifier: 
-  path: Animation Stations/Testing/Actual testing/Maybe more testing/Crazy testing/How
-    long can this go one
+  path: Another Category/Testing Category/Stuff
   itemName: Sitting Space
   description: Place to sit down
   price: 15

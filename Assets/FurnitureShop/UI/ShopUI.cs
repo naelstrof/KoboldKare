@@ -31,6 +31,8 @@ public class ShopUI : MonoBehaviourPun
     private Sprite defaultSprite;
 
     private Kobold kobold;
+    private ShopKeeper shopKeeper;
+    private bool usingShop;
 
     [SerializeField]
     private InputActionReference[] actionsToClose;
@@ -54,17 +56,34 @@ public class ShopUI : MonoBehaviourPun
 
     public void Buy(){     
         if(selected != null) { 
-            Transform koboldTransform = kobold.hip.transform;
-            if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
-            {
+            if(!usingShop)
+            {    Transform koboldTransform = kobold.hip.transform;
+                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
+                {
                 kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.price);
                 kobold.photonView.RPC("Spawn", RpcTarget.All,selected.prefab.photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
+                }
+            }
+            else{
+                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
+                {
+                     kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.price);
+                     shopKeeper.photonView.RPC("Spawn", RpcTarget.All,selected.prefab.photonName);
+                }
+
+
             }
         
         }
     }
     public void SetUser(Kobold user){
         kobold= user;
+        usingShop=false;
+    }
+    public void SetUser(Kobold user,ShopKeeper shop){
+        kobold=user;
+        shopKeeper=shop;
+        usingShop=true;
     }
 
     async void OnEnable()

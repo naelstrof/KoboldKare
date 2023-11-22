@@ -23,11 +23,7 @@ Material:
   m_Name: CrystalA
   m_Shader: {fileID: 4800000, guid: 9518223a6f4890b49bd34b6ba19ab433, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _METALLICSPECGLOSSMAP
-  - _NORMALMAP
-  - _OCCLUSIONMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

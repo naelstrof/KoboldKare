@@ -10,8 +10,7 @@ Material:
   m_Name: TerrainBrushVolumeTerrainMatMainMap
   m_Shader: {fileID: 4800000, guid: 26b46a3fa6c15d04c9ccdc878b96c6a5, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
+  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

@@ -138,7 +138,6 @@ PlayerSettings:
     Others: 1
   bundleVersion: 1_2022_1
   preloadedAssets:
-  - {fileID: 11400000, guid: a9ace073e7f44b647894afdacacd488d, type: 2}
   - {fileID: 11400000, guid: 0fba2679222f6944ab7e908389d82c8d, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -346,16 +345,16 @@ PlayerSettings:
     m_Automatic: 1
   - m_BuildTarget: LinuxStandaloneSupport
     m_APIs: 1500000011000000
-    m_Automatic: 0
+    m_Automatic: 1
   - m_BuildTarget: WindowsStandaloneSupport
     m_APIs: 0200000015000000
-    m_Automatic: 0
+    m_Automatic: 1
   - m_BuildTarget: 
     m_APIs: 
     m_Automatic: 1
   - m_BuildTarget: MacStandaloneSupport
     m_APIs: 1000000011000000
-    m_Automatic: 0
+    m_Automatic: 1
   m_BuildTargetVRSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 0

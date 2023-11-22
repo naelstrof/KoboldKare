@@ -41,18 +41,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: def7000896e247349bf958c5d2a9a6f2
-    m_Address: Assets/KoboldKare/Shaders/StatueShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1415f2a892abc2149addb08105206ad7
-    m_Address: Assets/KoboldKare/Shaders/PachinkoShader.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b5df53a807ec78c44b18a18cd6a7b509
     m_Address: Assets/KoboldKare/Shaders/Foliage.shader
     m_ReadOnly: 0
@@ -67,12 +55,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e20287be7b43564d985873f3e0d2e79
     m_Address: Assets/KoboldKare/Textures/Fog/FogScroller.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99d74aa18adfe114b8db023429c25ed2
-    m_Address: Assets/KoboldKare/Shaders/NipplePiercingShader.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

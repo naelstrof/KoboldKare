@@ -10,9 +10,7 @@ Material:
   m_Name: LimestonyRock
   m_Shader: {fileID: 4800000, guid: 9518223a6f4890b49bd34b6ba19ab433, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _TERRAINBLEND_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

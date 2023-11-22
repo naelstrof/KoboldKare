@@ -195,27 +195,27 @@ Shader "ChastityCatastrophe/WaterStream"
 			#define REQUIRE_OPAQUE_TEXTURE 1
 
 
-			#pragma multi_compile _ _SCREEN_SPACE_OCCLUSION
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
-			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS _ADDITIONAL_OFF
-			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
-			#pragma multi_compile _ _SHADOWS_SOFT
-			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+#pragma multi_compile __ _SCREEN_SPACE_OCCLUSION
+#pragma multi_compile __ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+#pragma multi_compile __ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS _ADDITIONAL_OFF
+#pragma multi_compile __ _ADDITIONAL_LIGHT_SHADOWS
+#pragma multi_compile __ _SHADOWS_SOFT
+#pragma multi_compile __ _MIXED_LIGHTING_SUBTRACTIVE
 			
-			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
-			#pragma multi_compile _ SHADOWS_SHADOWMASK
+// Disabled by Shader Control: #pragma multi_compile __ LIGHTMAP_SHADOW_MIXING
+#pragma multi_compile __ SHADOWS_SHADOWMASK
 
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-			#pragma multi_compile _ LIGHTMAP_ON
-			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
+// Disabled by Shader Control: #pragma multi_compile __ DIRLIGHTMAP_COMBINED
+// Disabled by Shader Control: #pragma multi_compile __ LIGHTMAP_ON
+#pragma multi_compile __ DYNAMICLIGHTMAP_ON
 
-			#pragma multi_compile _ _REFLECTION_PROBE_BLENDING
-			#pragma multi_compile _ _REFLECTION_PROBE_BOX_PROJECTION
-			#pragma multi_compile _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
-			#pragma multi_compile _ _LIGHT_LAYERS
+#pragma multi_compile __ _REFLECTION_PROBE_BLENDING
+#pragma multi_compile __ _REFLECTION_PROBE_BOX_PROJECTION
+#pragma multi_compile __ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+#pragma multi_compile __ _LIGHT_LAYERS
 			
-			#pragma multi_compile _ _LIGHT_COOKIES
-			#pragma multi_compile _ _CLUSTERED_RENDERING
+#pragma multi_compile __ _LIGHT_COOKIES
+#pragma multi_compile __ _CLUSTERED_RENDERING
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -1096,7 +1096,7 @@ Shader "ChastityCatastrophe/WaterStream"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#pragma shader_feature _ EDITOR_VISUALIZATION
+#pragma shader_feature __ EDITOR_VISUALIZATION
 
 			#define SHADERPASS SHADERPASS_META
 
@@ -2104,21 +2104,21 @@ Shader "ChastityCatastrophe/WaterStream"
 			#define REQUIRE_OPAQUE_TEXTURE 1
 
 			
-			#pragma multi_compile _ LIGHTMAP_ON
-			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
-			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
-			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+// Disabled by Shader Control: #pragma multi_compile __ LIGHTMAP_ON
+#pragma multi_compile __ DYNAMICLIGHTMAP_ON
+// Disabled by Shader Control: #pragma multi_compile __ DIRLIGHTMAP_COMBINED
+#pragma multi_compile __ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 			
-			#pragma multi_compile _ _REFLECTION_PROBE_BLENDING
-			#pragma multi_compile _ _REFLECTION_PROBE_BOX_PROJECTION
+#pragma multi_compile __ _REFLECTION_PROBE_BLENDING
+#pragma multi_compile __ _REFLECTION_PROBE_BOX_PROJECTION
 
-			#pragma multi_compile _ _SHADOWS_SOFT
-			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
-			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
-			#pragma multi_compile _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
-			#pragma multi_compile _ _GBUFFER_NORMALS_OCT
-			#pragma multi_compile _ _LIGHT_LAYERS
-			#pragma multi_compile _ _RENDER_PASS_ENABLED
+#pragma multi_compile __ _SHADOWS_SOFT
+// Disabled by Shader Control: #pragma multi_compile __ LIGHTMAP_SHADOW_MIXING
+#pragma multi_compile __ _MIXED_LIGHTING_SUBTRACTIVE
+#pragma multi_compile __ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+#pragma multi_compile __ _GBUFFER_NORMALS_OCT
+#pragma multi_compile __ _LIGHT_LAYERS
+#pragma multi_compile __ _RENDER_PASS_ENABLED
 
 			#pragma vertex vert
 			#pragma fragment frag

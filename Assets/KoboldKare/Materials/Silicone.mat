@@ -11,18 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: bc0a95306787ee14c8cba6b6697de1e1, type: 3}
   m_ValidKeywords:
   - _PENETRATION_DEFORMATION_ON
-  m_InvalidKeywords:
-  - _DISPLACEMENT_LOCK_TILING_SCALE
-  - _EMISSION
-  - _MASKMAP
-  - _MATERIAL_FEATURE_SUBSURFACE_SCATTERING
-  - _MATERIAL_FEATURE_TRANSMISSION
-  - _METALLICGLOSSMAP
-  - _NORMALMAP
-  - _NORMALMAP_TANGENT_SPACE
-  - _THICKNESSMAP
-  - _VERTEX_DISPLACEMENT
-  - _VERTEX_DISPLACEMENT_LOCK_OBJECT_SCALE
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

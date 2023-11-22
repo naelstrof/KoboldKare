@@ -59,13 +59,6 @@ MonoBehaviour:
     - Setting
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1316983b7ec041b45b10e952f3298237
-    m_Address: Assets/KoboldKare/ScriptableObjects/Settings/QualitySetting.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Setting
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 95eaa8b7f817151478392ea09909329f
     m_Address: Assets/KoboldKare/ScriptableObjects/Settings/PlayablePrefabSelect.asset
     m_ReadOnly: 0

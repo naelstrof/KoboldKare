@@ -20,16 +20,17 @@ public class ShopDatabase : ScriptableObject
     private string adressableItemTag;
 
     private ShopCategory root;
-    public List<ShopCategory> subCategories;
-    public List<ShopItem> items;
     
+    public List<ShopCategory> GetRootCategories()
+    {
+        return root.GetSubcategories();
+    }
+    public List<ShopItem> GetRootItems(){
+        return root.GetItems();
+    }
 
     public async Task  Setup(){
-            root=new ShopCategory();
-            subCategories=new List<ShopCategory>();
-            items =new List<ShopItem>();
-            root.subCategories=subCategories;
-            root.items=items;
+            root=new ShopCategory("root");
             foreach(ShopItemPack itemPack in ItemPacksToLoad){
                 LoadItemPack(itemPack,root);
             }
@@ -42,12 +43,13 @@ public class ShopDatabase : ScriptableObject
                 await LoadItems();
             }
         }
+
         private async Task LoadItemPacks(){
             var gottenPacks = await Addressables.LoadResourceLocationsAsync(adressableItemPackTag, typeof(ShopItemPack)).Task;
             List<Task<ShopItemPack>> tasks = new List<Task<ShopItemPack>>();
             foreach (var gottenPack in gottenPacks)
             {
-            tasks.Add(Addressables.LoadAssetAsync<ShopItemPack>(gottenPack).Task);
+                tasks.Add(Addressables.LoadAssetAsync<ShopItemPack>(gottenPack).Task);
             }
 
             var loadedPacks = await Task.WhenAll(tasks);
@@ -62,7 +64,7 @@ public class ShopDatabase : ScriptableObject
             List<Task<ShopItem>> tasks = new List<Task<ShopItem>>();
             foreach (var gottenItem in gottenItems)
             {
-            tasks.Add(Addressables.LoadAssetAsync<ShopItem>(gottenItem).Task);
+                tasks.Add(Addressables.LoadAssetAsync<ShopItem>(gottenItem).Task);
             }
 
             var loadedItems = await Task.WhenAll(tasks);
@@ -72,31 +74,11 @@ public class ShopDatabase : ScriptableObject
                 LoadItem(item,root);
             }
             }
-    //         public async Task LoadAdressables()
-    // {           
-    //             await LoadCategories();
-    //             //await LoadFurniture();
-    // }
-    //  private async Task LoadCategories(){
-    //         var gottenCategories = await Addressables.LoadResourceLocationsAsync(adressableCategoryTag, typeof(ShopCategory)).Task;
-    //         List<Task<ShopCategory>> tasks = new List<Task<ShopCategory>>();
-    //         foreach (var gottenCategory in gottenCategories)
-    //         {
-    //         tasks.Add(Addressables.LoadAssetAsync<ShopCategory>(gottenCategory).Task);
-    //         }
 
-    //         var loadedCategories = await Task.WhenAll(tasks);
-
-    //         foreach (ShopCategory category in loadedCategories)
-    //         {  
-    //             Debug.Log("adding "+category.categoryName);
-    //         MergeToList(subCategories,category);
-    //         }
-    // }
 
     private void LoadItem(ShopItem item,ShopCategory startingCategory){
             var currentCategory=startingCategory;
-            foreach(string pathPiece in GetPath(item)){
+            foreach(string pathPiece in item.GetPath()){
                 currentCategory=GetOrMakeSubCategory(currentCategory,pathPiece);
             }
             AddToCategory(item,currentCategory);
@@ -104,47 +86,28 @@ public class ShopDatabase : ScriptableObject
 
     private void LoadItemPack(ShopItemPack itemPack,ShopCategory startingCategory){
             var currentCategory=startingCategory;
-            foreach(string pathPiece in GetPath(itemPack)){
+            foreach(string pathPiece in itemPack.GetPath()){
                 currentCategory=GetOrMakeSubCategory(currentCategory,pathPiece);
             }
-            foreach(ShopItem item in itemPack.items){
+            foreach(ShopItem item in itemPack.GetItems()){
                 LoadItem(item,currentCategory);
             }
-            // AddToCategory(itemPack,currentCategory);
     }
 
     private ShopCategory GetOrMakeSubCategory(ShopCategory parent,string name){
         if(name.Length<1){return parent;}
-        foreach(ShopCategory category in parent.subCategories){
-            if(category.categoryName==name){
+        foreach(ShopCategory category in parent.GetSubcategories()){
+            if(category.GetName()==name){
                 return category;
             }
         }
-        ShopCategory temp=MakeNewCategory(name);
-        parent.subCategories.Add(temp);
+        ShopCategory temp=new ShopCategory(name);
+        parent.GetSubcategories().Add(temp);
         return temp;
     }
 
-    private string[] GetPath(ShopItem item){
-        return item.path.Split('/'); // '/' to make it look like url, maybe '\\' to make it look like file path? 
-    }
-    private string[] GetPath(ShopItemPack item){
-    return item.path.Split('/');
-    }
     private void AddToCategory(ShopItem item,ShopCategory category){
-        category.items.Add(item);
+        category.GetItems().Add(item);
     }
 
-    private void AddToCategory(ShopItemPack items,ShopCategory category){
-        foreach(ShopItem item in items.items)
-            category.items.Add(item);
-    }
-
-    private ShopCategory MakeNewCategory(string name){
-        ShopCategory newCategory=new ShopCategory();
-        newCategory.categoryName=name;
-        newCategory.subCategories=new List<ShopCategory>();
-        newCategory.items=new List<ShopItem>();
-        return newCategory;
-    }
 }

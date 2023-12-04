@@ -58,17 +58,17 @@ public class ShopUI : MonoBehaviourPun
         if(selected != null) { 
             if(!usingShop)
             {    Transform koboldTransform = kobold.hip.transform;
-                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
+                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.GetPrice()))
                 {
-                kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.price);
-                kobold.photonView.RPC("Spawn", RpcTarget.All,selected.prefab.photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
+                kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.GetPrice());
+                kobold.photonView.RPC("Spawn", RpcTarget.All,selected.GetPrefab().photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
                 }
             }
             else{
-                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.price))
+                if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.GetPrice()))
                 {
-                     kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.price);
-                     shopKeeper.photonView.RPC("Spawn", RpcTarget.All,selected.prefab.photonName);
+                     kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.GetPrice());
+                     shopKeeper.photonView.RPC("Spawn", RpcTarget.All,selected.GetPrefab().photonName);
                 }
 
 
@@ -91,13 +91,13 @@ public class ShopUI : MonoBehaviourPun
             
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-                if(!isSetup)   //Using existing UI if it possible, if you sell the kobold that had it last youll probably need to re-initialize it, Maybe find some non-kobold object to attach itself to on disable to reduce this?
+                if(!isSetup)   //Using existing UI if it possible, if you sell the kobold that had it last it will get destroyed with it and youll need to re-initialize it, Maybe find some non-kobold object to attach itself to on disable to reduce this?
             {   
                 await shopDatabase.Setup(); //Should probably be done during scene loading
-                foreach(ShopCategory category in shopDatabase.subCategories){
+                foreach(ShopCategory category in shopDatabase.GetRootCategories()){
                     SetupCategory(contentTransform,category);
                 }
-                SetupItems(contentTransform,shopDatabase.items);
+                SetupItems(contentTransform,shopDatabase.GetRootItems());
                 AddKeys();
                 isSetup=true;
             }else{
@@ -118,12 +118,12 @@ public class ShopUI : MonoBehaviourPun
         RemoveKeys();
     }
     private void SetInfo(ShopItem temp){
-        nameField.text = temp.name;
-        descriptionField.text = temp.description;
-        priceField.text = temp.price.ToString();
-        if(temp.useSprite!=null)
+        nameField.text = temp.GetName();
+        descriptionField.text = temp.GetDescription();
+        priceField.text = temp.GetPrice().ToString();
+        if(temp.GetSprite()!=null)
         {
-            imageField.sprite=temp.useSprite;
+            imageField.sprite=temp.GetSprite();
         }
         else{
             imageField.sprite=defaultSprite;
@@ -132,30 +132,28 @@ public class ShopUI : MonoBehaviourPun
     }
     
     private void SetupCategory(Transform parent,ShopCategory category){
-                            Transform catTemp;
-                            catTemp=Instantiate(categoryLabel).transform;
-                            catTemp.SetParent(parent.transform,false);
-                            catTemp.GetComponent<ShopCategoryLabel>().GetNameText().text=category.categoryName;
-                            catTemp.GetComponent<ShopCategoryLabel>().GetName().GetComponent<Button>().onClick.AddListener( ()=>
-                                            {
-                                            catTemp.GetComponent<ShopCategoryLabel>().Toggle();
-                                            LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
-                                            } 
-                                );
-                            foreach(ShopCategory childCategory in category.subCategories){
-                                SetupCategory(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,childCategory);
-                            }
-                            SetupItems(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,category.items);
+            Transform catTemp;
+            catTemp=Instantiate(categoryLabel).transform;
+            catTemp.SetParent(parent.transform,false);
+            catTemp.GetComponent<ShopCategoryLabel>().GetNameText().text=category.GetName();
+            catTemp.GetComponent<ShopCategoryLabel>().GetName().GetComponent<Button>().onClick.AddListener( ()=>{
+                    catTemp.GetComponent<ShopCategoryLabel>().Toggle();
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
+                    } );
+            foreach(ShopCategory childCategory in category.GetSubcategories()){
+                SetupCategory(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,childCategory);
+            }
+            SetupItems(catTemp.GetComponent<ShopCategoryLabel>().GetChildren().transform,category.GetItems());
     }
     private void SetupItems(Transform parent, List<ShopItem> items){
             foreach(ShopItem childItem in items){
             GameObject itemTemp;
             itemTemp=Instantiate(itemLabel);
             itemTemp.transform.SetParent(parent,false);
-            itemTemp.GetComponent<TMP_Text>().text=childItem.itemName;
+            itemTemp.GetComponent<TMP_Text>().text=childItem.GetName();
             itemTemp.GetComponent<Button>().onClick.AddListener( ()=>{
                 SetInfo(childItem);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
+                //LayoutRebuilder.ForceRebuildLayoutImmediate(contentTransform);
             } );
             }
     }

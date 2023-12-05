@@ -2743,6 +2743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4636553771288404269}
   - component: {fileID: 7834797191377840037}
+  - component: {fileID: 4764451045049337528}
   - component: {fileID: 2858980679757146397}
   - component: {fileID: 8966638466756483811}
   - component: {fileID: 5821434026136705168}
@@ -2784,6 +2785,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.6016865, z: 1}
   m_Center: {x: 0, y: 0.8050833, z: 0}
+--- !u!54 &4764451045049337528
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912148321519033627}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &2858980679757146397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2835,7 +2852,7 @@ MonoBehaviour:
   shop: {fileID: 11400000, guid: 9265524d6d50f5348ae9358b4aa93dde, type: 2}
   animator: {fileID: 8800122226047789669}
   spawnPoint: {fileID: 4250905020258290175}
-  talkAnimation: 
+  talkAnimation: Talk
 --- !u!1 &9196989844201138334
 GameObject:
   m_ObjectHideFlags: 0

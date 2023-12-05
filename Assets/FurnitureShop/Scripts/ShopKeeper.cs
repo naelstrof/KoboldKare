@@ -13,14 +13,16 @@ public class ShopKeeper : GenericUsable, IPunObservable ,ISavable
     private Animator animator;
     [SerializeField]
     private GameObject spawnPoint;
+    [SerializeField]
+    private string talkAnimation;
 
     public override void LocalUse(Kobold k) {
-        animator.SetTrigger("Talk");
+        animator.SetTrigger(talkAnimation);
         ShowShopMenu(k);
     }
     public override void Use() { 
         base.Use();
-        animator.SetTrigger("Talk");
+        animator.SetTrigger(talkAnimation);
     }
     private void ShowShopMenu(Kobold player)
     {    

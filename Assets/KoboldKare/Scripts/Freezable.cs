@@ -8,6 +8,9 @@ using Photon.Pun;
 public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstantiateMagicCallback
 {   [SerializeField]
     private Rigidbody rb;
+    [SerializeField]
+    private UsableMachine machineToManage;  //Optional disabling of machines when not frozen
+
     private bool frozen=false;
     public bool IsFrozen
     {
@@ -25,6 +28,8 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
         
         rb.constraints = RigidbodyConstraints.FreezePositionX |RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | 
                                 RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY |RigidbodyConstraints.FreezeRotationZ;
+        if(machineToManage!=null)
+            machineToManage.SetConstructed(true);
         frozen=true;
     }
 
@@ -35,6 +40,8 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
     public void Unfreeze()
     {
         rb.constraints=RigidbodyConstraints.None;
+        if(machineToManage!=null)
+            machineToManage.SetConstructed(false);
         frozen=false;
 
     }

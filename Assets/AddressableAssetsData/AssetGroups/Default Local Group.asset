@@ -22,24 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1b2a925cd31a10746895c31b65f727f5
-    m_Address: Assets/FurnitureShop/Prefabs/HHShop2.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - NetworkedPrefab
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cad04c30428eed14798aba1e029901f3
-    m_Address: Assets/FurnitureShop/AdressablesTesting/OviSpot.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - FurnitureItem
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0ae6327c7c05efd43811a41ee384e235
-    m_Address: Assets/FurnitureShop/AdressablesTesting/Misc.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - FurnitureItemPack
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

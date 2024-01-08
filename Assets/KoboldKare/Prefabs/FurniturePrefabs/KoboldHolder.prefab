@@ -961,6 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3627841550919000979}
+  machineToManage: {fileID: 0}
 --- !u!1 &4578504890574637872
 GameObject:
   m_ObjectHideFlags: 0

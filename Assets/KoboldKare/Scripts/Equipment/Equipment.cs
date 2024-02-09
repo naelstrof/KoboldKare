@@ -39,12 +39,6 @@ public class Equipment : ScriptableObject {
         RightHand,
         LeftForearm,
         RightForearm,
-        LeftArm,
-        LeftLeg,
-        LeftFeet,
-        RightArm,
-        RightLeg,
-        RightFeet,
     }
     
     [System.Serializable]

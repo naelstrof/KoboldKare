@@ -326,6 +326,24 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
             CreateOrSetAttachPoint(Equipment.AttachPoint.RightHand,
                 displayAnimator.GetBoneTransform(HumanBodyBones.RightHand),
                 attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftArm,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftUpperArm),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightArm,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightUpperArm),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftLeg,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftUpperLeg),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightLeg,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightUpperLeg),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.LeftFeet,
+                displayAnimator.GetBoneTransform(HumanBodyBones.LeftFoot),
+                attachPointArray);
+            CreateOrSetAttachPoint(Equipment.AttachPoint.RightFeet,
+                displayAnimator.GetBoneTransform(HumanBodyBones.RightFoot),
+                attachPointArray);
             koboldSerializedObject.FindProperty("hip").objectReferenceValue = displayAnimator.GetBoneTransform(HumanBodyBones.Hips);
         }
 

@@ -8,12 +8,79 @@ using UnityEngine;
 public class EquipmentSkinnedMesh : Equipment {
     [SerializeField]
     private GameObject prefabContainingSkinnedMeshRenderers;
+
+    private class BlendShapeCopier : MonoBehaviour
+    {
+        public SkinnedMeshRenderer source;
+        private List<SkinnedMeshRenderer> targets = new List<SkinnedMeshRenderer>();
+
+        void Update()
+        {
+            FindTargets();
+
+            for (int i = targets.Count - 1; i >= 0; i--)
+            {
+                if (targets[i] != null)
+                {
+                    CopyBlendShapes(targets[i]);
+                }
+                else
+                {
+                    targets.RemoveAt(i);
+                }
+            }
+        }
+
+        void FindTargets()
+        {
+            SkinnedMeshRenderer target;
+            if (transform.TryGetComponent(out target))
+            {
+
+                if (!targets.Contains(target))
+                {
+                    targets.Add(target);
+                }
+            }
+        }
+
+        void CopyBlendShapes(SkinnedMeshRenderer target)
+        {
+            int blendShapeCount = source.sharedMesh.blendShapeCount;
+
+            for (int i = 0; i < blendShapeCount; i++)
+            {
+                string blendShapeName = source.sharedMesh.GetBlendShapeName(i);
+                int sourceBlendShapeIndex = source.sharedMesh.GetBlendShapeIndex(blendShapeName);
+                int targetBlendShapeIndex = target.sharedMesh.GetBlendShapeIndex(blendShapeName);
+
+                if (sourceBlendShapeIndex != -1 && targetBlendShapeIndex != -1)
+                {
+                    float weight = source.GetBlendShapeWeight(sourceBlendShapeIndex);
+
+
+                    if (weight != 0f)
+                    {
+                        weight += 5f;
+                    }
+
+                    target.SetBlendShapeWeight(targetBlendShapeIndex, weight);
+                }
+            }
+        }
+    }
+
     public override GameObject[] OnEquip(Kobold k, GameObject groundPrefab) {
         base.OnEquip(k, groundPrefab);
         SkinnedMeshRenderer targetSkinnedMesh = k.koboldBodyRenderers[0] as SkinnedMeshRenderer;
         GameObject instance = Instantiate(prefabContainingSkinnedMeshRenderers, k.transform);
         JiggleSkin jiggleSkin = k.GetComponent<JiggleSkin>();
         instance.name = name;
+
+
+        BlendShapeCopier copier = instance.AddComponent<BlendShapeCopier>();
+        copier.source = targetSkinnedMesh;
+
         foreach(var skinnedMesh in instance.GetComponentsInChildren<SkinnedMeshRenderer>()) {
             Transform[] newBoneList = new Transform[targetSkinnedMesh.bones.Length];
             for (int i = 0; i < targetSkinnedMesh.bones.Length; i++) {
@@ -38,6 +105,7 @@ public class EquipmentSkinnedMesh : Equipment {
                 jiggleSkin.targetSkins.Add(skinnedMesh);
             }
         }
+
         return new[] { instance };
     }
 
@@ -66,3 +134,4 @@ public class EquipmentSkinnedMesh : Equipment {
         return base.OnUnequip(k, dropOnGround);
     }
 }
+

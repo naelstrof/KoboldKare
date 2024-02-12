@@ -41,9 +41,9 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     [PunRPC]
-    public void PickupEquipmentRPC(byte equipmentID, int groundPrefabID) {
+    public void PickupEquipmentRPC(string equipmentName, int groundPrefabID) {
         PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
-        Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
+        Equipment equip = EquipmentDatabase.GetEquipment(equipmentName);
         PickupEquipment(equip, view == null ? null : view.gameObject);
         PhotonProfiler.LogReceive(sizeof(short)+sizeof(int));
     }
@@ -103,7 +103,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
             BitBuffer bitBuffer = new BitBuffer(4);
             bitBuffer.AddByte((byte)equipment.Count);
             foreach(Equipment e in equipment) {
-                bitBuffer.AddByte(EquipmentDatabase.GetID(e));
+                bitBuffer.AddString(e.name);
             }
             stream.SendNext(bitBuffer);
         } else {
@@ -111,7 +111,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
             byte equipmentCount = data.ReadByte();
             staticIncomingEquipment.Clear();
             for(int i=0;i<equipmentCount;i++) {
-                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadByte()));
+                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadString()));
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
             PhotonProfiler.LogReceive(data.Length);
@@ -122,8 +122,8 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         JSONArray equipments = new JSONArray();
         Debug.Log(equipment.Count);
         foreach(Equipment e in equipment) {
-            Debug.Log(EquipmentDatabase.GetID(e));
-            equipments.Add(EquipmentDatabase.GetID(e));
+            Debug.Log(e.name);
+            equipments.Add(e.name);
         }
         node["equipments"] = equipments;
     }
@@ -132,7 +132,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
         for(int i=0;i<equipments.Count;i++) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((byte)equipments[i].AsInt));
+            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(equipments[i].Value));
         }
         ReplaceEquipmentWith(staticIncomingEquipment);
     }

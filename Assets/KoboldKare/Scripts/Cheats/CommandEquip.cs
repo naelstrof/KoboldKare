@@ -28,7 +28,7 @@ public class CommandEquip : Command {
         if (tryEquipment != null) {
             output.Append($"Equipped {tryEquipment.name}.");
             kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All,
-                EquipmentDatabase.GetID(tryEquipment), -1);
+                tryEquipment.name, -1);
             return;
         }
 

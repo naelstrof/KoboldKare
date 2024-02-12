@@ -1231,7 +1231,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga er naartoe!
+    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Ras: Itty Bitty'
+    m_Localized: 'Breed: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401

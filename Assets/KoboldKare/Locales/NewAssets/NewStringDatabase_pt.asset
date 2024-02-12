@@ -206,7 +206,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: '#NAME?'
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
+      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -431,7 +433,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
-    m_Localized: Equino
+    m_Localized: Equine
     m_Metadata:
       m_Items: []
   - m_Id: 516099199006
@@ -487,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Tamanho de Kobold
+    m_Localized: Tamanho Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -527,7 +529,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Quarto esquerdo
+    m_Localized: "Espa\xE7o esquerdo"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -778,7 +780,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "\xC9 do nosso interesse ter alguns kobolds superevinos, engorda
+    m_Localized: "\xC9 do nosso interesse ter alguns Kobolds superevinos, engolir
       um pouco e envi\xE1 -los para mim."
     m_Metadata:
       m_Items: []
@@ -1211,7 +1213,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: "Ra\xE7a: hora da barriga!"
+    m_Localized: "Ra\xE7a: Tempo de barriga!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
@@ -1390,8 +1392,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704593
   - m_Id: 280448613000617984
-    m_Localized: "Falha ao conectar-se ao Steam, n\xE3o ser\xE1 o download autom\xE1tico
-      de mods."
+    m_Localized: "Falha ao conectar-se ao Steam, n\xE3o vai download automaticamente
+      mods."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776

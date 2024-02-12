@@ -587,8 +587,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Magiczne przywi\u0105zane z w\u0119z\u0142em, pier\u015Bcieniem
-      przy\u015Brodkowym i kilka wyboistych grzbiet\xF3w."
+    m_Localized: "Magiczne przywi\u0105zane z w\u0119z\u0142em, pier\u015Bcie\u0144
+      przy\u015Brodkowy i kilka wyboistych grzbiet\xF3w."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
@@ -612,7 +612,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kutas Kandi
+    m_Localized: Kutak Kandi
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -712,7 +712,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169603
-    m_Localized: Jajko od smoka Lorda!
+    m_Localized: Jajko od Smok Lorda!
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
@@ -748,7 +748,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Dostarcz du\u017Cego penisa Koboldsa."
+    m_Localized: "Dostarcz du\u017Cego kutasa Koboldsa."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
@@ -771,7 +771,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Wype\u0142nij kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
+    m_Localized: "Wype\u0142nij Kobolda sperm\u0105, dop\xF3ki nie b\u0119d\u0105
       ju\u017C mogli znie\u015B\u0107, musz\u0119 zobaczy\u0107, jak trwa\u0142y
       jest tw\xF3j rodzaj."
     m_Metadata:
@@ -820,7 +820,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 202998194956193792
-    m_Localized: Dostosuj poziom Crouch
+    m_Localized: Dostosuj poziom kucaki
     m_Metadata:
       m_Items: []
   - m_Id: 209952603934085120
@@ -852,7 +852,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: Zejmowany humanoidalny penis
+    m_Localized: "Okr\u0105\u017Cony humanoidalny penis"
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
@@ -906,7 +906,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: "Wyposa\u017Ca okre\u015Blony sprz\u0119t. U\u017Cyj /list, aby
+    m_Localized: "Wyposa\u017Ca okre\u015Blony sprz\u0119t. U\u017Cyj /lista, aby
       znale\u017A\u0107 nazwy w\u0142a\u015Bciwe."
     m_Metadata:
       m_Items: []
@@ -952,7 +952,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314182
     m_Localized: "Kobold Milk ma du\u017C\u0105 warto\u015B\u0107 od\u017Cywcz\u0105,
-      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby zrobi\u0107
+      spr\xF3buj po\u0142\u0105czy\u0107 je z innymi rzeczami w wiadrze, aby wytwarza\u0107
       nowe potrawy."
     m_Metadata:
       m_Items: []
@@ -972,7 +972,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Wyczuwam ciemn\u0105 obecno\u015B\u0107 w pobliskich jaskiniach,
-      id\u017A do mnie."
+      id\u017A dla mnie i sprawdzaj mnie."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -980,7 +980,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Kup Swapper Body From the Creep in the Cave.
+    m_Localized: "Kup Swapper Body z pe\u0142zania w jaskini."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
@@ -1161,7 +1161,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie w cenie ..."
+    m_Localized: "Zrobi\u0119 to, oczywi\u015Bcie za cen\u0119 ..."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
@@ -1199,8 +1199,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Po prostu b\u0119d\u0119 tutaj, na wypadek, gdyby jaki\u015B inny
-      nagi Kobold chcia\u0142, \u017Cebym zbudowa\u0142 je fetysze."
+    m_Localized: "B\u0119d\u0119 tu sta\u0107 na wypadek, gdyby jaki\u015B inny nagi
+      Kobold chcia\u0142, \u017Cebym zbudowa\u0142 ich maszyny fetyszowe."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
@@ -1249,8 +1249,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobold, s\u0105 naprawd\u0119
-      przydatne do czyszczenia sufitu."
+    m_Localized: "Chc\u0119 wi\u0119cej tego gigantycznego typu Kobolda, s\u0105
+      naprawd\u0119 przydatne do czyszczenia sufitu."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1420,8 +1420,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "By\u0142 wyj\u0105tek \u0142aduj\u0105cy mod, mo\u017Ce to przerwa\u0107
-      gr\u0119. Sprawd\u017A dwukrotnie mody."
+    m_Localized: "By\u0142 wyj\u0105tek \u0142aduj\u0105cy MOD, mo\u017Ce to przerwa\u0107
+      gr\u0119. Prosz\u0119 dok\u0142adnie sprawdzi\u0107 swoje mody."
     m_Metadata:
       m_Items: []
   references:

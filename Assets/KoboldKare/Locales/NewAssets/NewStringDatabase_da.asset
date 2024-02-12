@@ -1041,7 +1041,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Alligevel bare \xE5h .. Hj\xE6lp dig selv, antager jeg."
+    m_Localized: "Alligevel bare uh .. Hj\xE6lp dig selv antager jeg."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1093,7 +1093,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: Lav den perfekte Kobold
+    m_Localized: Lav den perfekte kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
@@ -1130,7 +1130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Velkommen til casinoet, her for forretning eller forn\xF8jelse?"
+    m_Localized: "Velkommen til casinoet her for forretning eller gl\xE6de?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1389,7 +1389,7 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704580
   - m_Id: 280448613000617984
-    m_Localized: Kunne ikke oprette forbindelse til damp, vil ikke automatisk downloade
+    m_Localized: Kunne ikke oprette forbindelse til damp, ikke automatisk downloadet
       mods.
     m_Metadata:
       m_Items: []

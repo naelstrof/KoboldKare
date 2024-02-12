@@ -41,7 +41,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     [PunRPC]
-    public void PickupEquipmentRPC(byte equipmentID, int groundPrefabID) {
+    public void PickupEquipmentRPC(short equipmentID, int groundPrefabID) {
         PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
         Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
         PickupEquipment(equip, view == null ? null : view.gameObject);
@@ -101,17 +101,17 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             BitBuffer bitBuffer = new BitBuffer(4);
-            bitBuffer.AddByte((byte)equipment.Count);
+            bitBuffer.AddShort((short)equipment.Count);
             foreach(Equipment e in equipment) {
-                bitBuffer.AddByte(EquipmentDatabase.GetID(e));
+                bitBuffer.AddShort(EquipmentDatabase.GetID(e));
             }
             stream.SendNext(bitBuffer);
         } else {
             BitBuffer data = (BitBuffer)stream.ReceiveNext();
-            byte equipmentCount = data.ReadByte();
+            short equipmentCount = data.ReadShort();
             staticIncomingEquipment.Clear();
             for(int i=0;i<equipmentCount;i++) {
-                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadByte()));
+                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadShort()));
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
             PhotonProfiler.LogReceive(data.Length);
@@ -132,8 +132,9 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
         for(int i=0;i<equipments.Count;i++) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((byte)equipments[i].AsInt));
+            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)equipments[i].AsInt));
         }
         ReplaceEquipmentWith(staticIncomingEquipment);
     }
 }
+

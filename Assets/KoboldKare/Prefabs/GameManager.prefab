@@ -153,7 +153,8 @@ MonoBehaviour:
     Zdeb\r\nWolf_Lover69\r\nWolfen Crystal\r\nWOLFIE98\r\nWollffett\r\nWorldDragon\r\nwrathykins\r\nXancell\r\nXaziana
     Tenebris\r\nXenhoa\r\nXeno_Enderman\r\nXenokruz\r\nXey\r\nXlion315 da\r\nXyllryt\r\nYashaYuki\r\nYastine
     Apple\r\nYeet\r\nYoshi_ Salcedo\r\nYttreia\r\nZ0TAV\r\nZach harvy\r\nZags Hamus\r\nzahnelia\r\nzardbooster\r\nZedDracodile\r\nZelnar\r\nzendrate\r\nZeoRydan\r\nZeromancer\r\nZixon01\r\nZiyaDaOtter420\r\nZiz\r\nZoralth\r\n\u041A\u0440\u043E\u0432\u043E\u0437\u0430\u0440\r\n\u5B50\u73E9
-    \u8A31\r\n\u8C1B\u542C"
+    \u8A31\r\n\u8C1B\u542C\n\u041C\u0435\u0445\u0430\u043D\u0438\u043A \u0438\u0437
+    \u0410\u0440\u043C\u0438\u0438"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aef09d2f361f66b4ea034096e44f9e05, type: 2}
   m_sharedMaterial: {fileID: 7453147263721129256, guid: aef09d2f361f66b4ea034096e44f9e05,
@@ -23554,7 +23555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 24.00116, y: 0}
+  m_AnchoredPosition: {x: 24.00122, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7972605013910269298
@@ -25299,7 +25300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 23.999268, y: 0}
+  m_AnchoredPosition: {x: 23.999329, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5897198216909087706

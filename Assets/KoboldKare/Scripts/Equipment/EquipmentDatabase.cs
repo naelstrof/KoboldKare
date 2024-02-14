@@ -27,10 +27,6 @@ public class EquipmentDatabase : MonoBehaviour {
 
     private EquipmentSorter equipmentSorter;
 
-    // Limit for the number of unique equipment
-    private const int MaxUniqueEquipment = 32767;
-
-    // Initialize equipments list in the constructor
     public EquipmentDatabase() {
         equipments = new List<Equipment>();
     }
@@ -45,18 +41,16 @@ public class EquipmentDatabase : MonoBehaviour {
             }
         }
 
-        // Initialize equipmentSorter in Awake
         equipmentSorter = new EquipmentSorter();
     }
 
     public static void AddEquipment(Equipment newEquipment) {
-        if (Instance.equipments.Count >= MaxUniqueEquipment) {
+        if (Instance.equipments.Count >= short.MaxValue) {
             throw new UnityException("Too many equipment! Only 32767 unique equipment allowed...");
         }
 
         for (int i = 0; i < Instance.equipments.Count; i++) {
             var reagent = Instance.equipments[i];
-            // Replace strategy
             if (reagent.name == newEquipment.name) {
                 Instance.equipments[i] = newEquipment;
                 Instance.equipments.Sort(Instance.equipmentSorter);

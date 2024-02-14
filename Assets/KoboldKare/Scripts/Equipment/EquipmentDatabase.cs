@@ -6,64 +6,94 @@ using UnityEngine;
 
 public class EquipmentDatabase : MonoBehaviour {
     private static EquipmentDatabase instance;
-    public void Awake() {
-        if (instance != null) {
-            Destroy(this);
-        } else {
-            instance = this;
-        }
-        
-        equipmentSorter = new EquipmentSorter();
-        
-        if (equipments.Count >= 256) {
-            throw new UnityException("Too many equipment! Only 256 unique equipment allowed...");
+    public static EquipmentDatabase Instance {
+        get {
+            if (instance == null) {
+                instance = (EquipmentDatabase)FindObjectOfType(typeof(EquipmentDatabase));
+                if (instance == null) {
+                    GameObject go = new GameObject("EquipmentDatabase");
+                    instance = go.AddComponent<EquipmentDatabase>();
+                }
+            }
+            return instance;
         }
     }
+
     private class EquipmentSorter : IComparer<Equipment> {
         public int Compare(Equipment x, Equipment y) {
             return String.Compare(x.name, y.name, StringComparison.InvariantCulture);
         }
     }
+
     private EquipmentSorter equipmentSorter;
+
+    public EquipmentDatabase() {
+        equipments = new List<Equipment>();
+    }
+
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        } else {
+            if (this != instance) {
+                Destroy(this.gameObject);
+            }
+        }
+
+        equipmentSorter = new EquipmentSorter();
+    }
+
     public static void AddEquipment(Equipment newEquipment) {
-        for (int i = 0; i < instance.equipments.Count; i++) {
-            var reagent = instance.equipments[i];
-            // Replace strategy
+        if (Instance.equipments.Count >= short.MaxValue) {
+            throw new UnityException("Too many equipment! Only 32767 unique equipment allowed...");
+        }
+
+        for (int i = 0; i < Instance.equipments.Count; i++) {
+            var reagent = Instance.equipments[i];
             if (reagent.name == newEquipment.name) {
-                instance.equipments[i] = newEquipment;
-                instance.equipments.Sort(instance.equipmentSorter);
+                Instance.equipments[i] = newEquipment;
+                Instance.equipments.Sort(Instance.equipmentSorter);
                 return;
             }
         }
 
-        instance.equipments.Add(newEquipment);
-        instance.equipments.Sort(instance.equipmentSorter);
+        Instance.equipments.Add(newEquipment);
+        Instance.equipments.Sort(Instance.equipmentSorter);
     }
-    
+
     public static void RemoveEquipment(Equipment equipment) {
-        if (instance.equipments.Contains(equipment)) {
-            instance.equipments.Remove(equipment);
+        if (Instance.equipments.Contains(equipment)) {
+            Instance.equipments.Remove(equipment);
         }
     }
-    
+
     public static Equipment GetEquipment(string name) {
-        foreach (var equipment in instance.equipments) {
+        foreach (var equipment in Instance.equipments) {
             if (equipment.name == name) {
                 return equipment;
             }
         }
         throw new UnityException("Failed to find equipment with name " + name);
     }
-    public static Equipment GetEquipment(byte id) {
-        if (id >= instance.equipments.Count) {
-            Debug.LogError($"Failed to find equipment with id {id}, replaced it with first available equipment.");
-            return instance.equipments[0];
+
+    public static Equipment GetEquipment(short id) {
+        if (id >= Instance.equipments.Count) {
+            Debug.LogError($"Failed to find equipment with id {id}, replaced it with the first available equipment.");
+            return Instance.equipments[0];
         }
-        return instance.equipments[id];
+        return Instance.equipments[id];
     }
-    public static byte GetID(Equipment equipment) {
-        return (byte)instance.equipments.IndexOf(equipment);
+
+    public static short GetID(Equipment equipment) {
+        return (short)Instance.equipments.IndexOf(equipment);
     }
-    public static List<Equipment> GetEquipments() => instance.equipments;
+
+    public static List<Equipment> GetEquipments() => Instance.equipments;
+
     public List<Equipment> equipments;
 }
+
+
+
+

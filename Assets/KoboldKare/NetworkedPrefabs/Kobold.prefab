@@ -1943,6 +1943,18 @@ MonoBehaviour:
     targetTransform: {fileID: 6506915555090380282}
   - attachPoint: 12
     targetTransform: {fileID: 6506915555090380276}
+  - attachPoint: 13
+    targetTransform: {fileID: 6506915555090380252}
+  - attachPoint: 16
+    targetTransform: {fileID: 6506915555090380254}
+  - attachPoint: 14
+    targetTransform: {fileID: 6506915555090379858}
+  - attachPoint: 17
+    targetTransform: {fileID: 6506915555090379852}
+  - attachPoint: 15
+    targetTransform: {fileID: 6506915555090380286}
+  - attachPoint: 18
+    targetTransform: {fileID: 6506915555090380280}
   body: {fileID: 0}
   bellyInflater:
     bounce: {fileID: 11400000, guid: 8bb8ec1eabdcb7043a4605858f604a8a, type: 2}

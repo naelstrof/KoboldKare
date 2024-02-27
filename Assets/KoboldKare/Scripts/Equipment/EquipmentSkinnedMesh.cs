@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JigglePhysics;
 using Naelstrof.Inflatable;
 using UnityEngine;
@@ -7,7 +9,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New SkinnedMeshEquipment", menuName = "Equipment/SkinnedMesh Equipment", order = 1)]
 public class EquipmentSkinnedMesh : Equipment {
     [SerializeField] private GameObject prefabContainingSkinnedMeshRenderers;
+    [SerializeField] private SkinnedMeshTweak[] blendShapesToTweak;
     private List<SkinnedMeshRenderer> targets;
+    
 
     private class BlendShapeCopier : MonoBehaviour {
         public SkinnedMeshRenderer source;
@@ -43,6 +47,18 @@ public class EquipmentSkinnedMesh : Equipment {
         GameObject instance = Instantiate(prefabContainingSkinnedMeshRenderers, k.transform);
         JiggleSkin jiggleSkin = k.GetComponent<JiggleSkin>();
         instance.name = name;
+        // Tweak - change blend shapes on equip
+        foreach (SkinnedMeshTweak blend in blendShapesToTweak)
+        {
+            foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+            {
+                Mesh m = mesh.sharedMesh;
+                int index = m.GetBlendShapeIndex(blend.blendShapeName);
+                if(index == -1) continue;
+                blend.originalShapeValue = mesh.GetBlendShapeWeight(index);
+                mesh.SetBlendShapeWeight(index, blend.shapeValue);
+            }
+        }
         BlendShapeCopier copier = instance.AddComponent<BlendShapeCopier>();
         copier.source = targetSkinnedMesh;
         foreach (var skinnedMesh in instance.GetComponentsInChildren<SkinnedMeshRenderer>()) {
@@ -103,7 +119,29 @@ public class EquipmentSkinnedMesh : Equipment {
 
             k.koboldBodyRenderers.Remove(skinnedMesh);
         }
+        // Tweak - reset blend shapes on unequip
+        foreach (SkinnedMeshTweak blend in blendShapesToTweak)
+        {
+            foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+            {
+                Mesh m = mesh.sharedMesh;
+                int index = m.GetBlendShapeIndex(blend.blendShapeName);
+                if(index == -1) continue;
+                mesh.SetBlendShapeWeight(index, blend.originalShapeValue);
+            }
+        }
         Destroy(search.gameObject);
         return base.OnUnequip(k, dropOnGround);
     }
+}
+
+[System.Serializable]
+public class SkinnedMeshTweak
+{
+    [SerializeField]
+    public string blendShapeName;
+    [SerializeField] [Range(0.0f, 100.0f)]
+    public float shapeValue;
+    [NonSerialized] 
+    public float originalShapeValue = 0;  // Store values here on equip, just in case the value isn't 0 when equipped
 }

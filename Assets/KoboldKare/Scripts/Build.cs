@@ -37,11 +37,8 @@ public class Build {
 
     static void BuildLinux() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
-        var settings = AssetDatabase.LoadAssetAtPath<AddressableAssetSettings>(AssetDatabase.GUIDToAssetPath("bae434cba05d81d4b9cb5c181a2fbf2c"));
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneLinux64);
-        if (settings.BuildAddressablesWithPlayerBuild == AddressableAssetSettings.PlayerBuildOption.DoNotBuildWithPlayer) {
-            AddressableAssetSettings.BuildPlayerContent();
-        }
+        AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -60,10 +57,7 @@ public class Build {
             "x64ARM64" // Possible values: "x64" "ARM64" "x64ARM64"
         );
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneOSX);
-        var settings = AssetDatabase.LoadAssetAtPath<AddressableAssetSettings>(AssetDatabase.GUIDToAssetPath("bae434cba05d81d4b9cb5c181a2fbf2c"));
-        if (settings.BuildAddressablesWithPlayerBuild == AddressableAssetSettings.PlayerBuildOption.DoNotBuildWithPlayer) {
-            AddressableAssetSettings.BuildPlayerContent();
-        }
+        AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.app";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -76,10 +70,7 @@ public class Build {
     static void BuildWindows() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows64);
-        var settings = AssetDatabase.LoadAssetAtPath<AddressableAssetSettings>(AssetDatabase.GUIDToAssetPath("bae434cba05d81d4b9cb5c181a2fbf2c"));
-        if (settings.BuildAddressablesWithPlayerBuild == AddressableAssetSettings.PlayerBuildOption.DoNotBuildWithPlayer) {
-            AddressableAssetSettings.BuildPlayerContent();
-        }
+        AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -92,10 +83,7 @@ public class Build {
     static void BuildWindows32() {
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows);
-        var settings = AssetDatabase.LoadAssetAtPath<AddressableAssetSettings>(AssetDatabase.GUIDToAssetPath("bae434cba05d81d4b9cb5c181a2fbf2c"));
-        if (settings.BuildAddressablesWithPlayerBuild != AddressableAssetSettings.PlayerBuildOption.BuildWithPlayer) {
-            AddressableAssetSettings.BuildPlayerContent();
-        }
+        AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");

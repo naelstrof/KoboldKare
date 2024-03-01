@@ -48,15 +48,18 @@ public class EquipmentSkinnedMesh : Equipment {
         JiggleSkin jiggleSkin = k.GetComponent<JiggleSkin>();
         instance.name = name;
         // Tweak - change blend shapes on equip
-        foreach (SkinnedMeshTweak blend in blendShapesToTweak)
+        if (blendShapesToTweak != null)
         {
-            foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+            foreach (SkinnedMeshTweak blend in blendShapesToTweak)
             {
-                Mesh m = mesh.sharedMesh;
-                int index = m.GetBlendShapeIndex(blend.blendShapeName);
-                if(index == -1) continue;
-                blend.originalShapeValue = mesh.GetBlendShapeWeight(index);
-                mesh.SetBlendShapeWeight(index, blend.shapeValue);
+                foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+                {
+                    Mesh m = mesh.sharedMesh;
+                    int index = m.GetBlendShapeIndex(blend.blendShapeName);
+                    if(index == -1) continue;
+                    blend.originalShapeValue = mesh.GetBlendShapeWeight(index);
+                    mesh.SetBlendShapeWeight(index, blend.shapeValue);
+                }
             }
         }
         BlendShapeCopier copier = instance.AddComponent<BlendShapeCopier>();
@@ -120,16 +123,19 @@ public class EquipmentSkinnedMesh : Equipment {
             k.koboldBodyRenderers.Remove(skinnedMesh);
         }
         // Tweak - reset blend shapes on unequip
-        foreach (SkinnedMeshTweak blend in blendShapesToTweak)
+        if (blendShapesToTweak != null)
         {
-            foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+            foreach (SkinnedMeshTweak blend in blendShapesToTweak)
             {
-                Mesh m = mesh.sharedMesh;
-                int index = m.GetBlendShapeIndex(blend.blendShapeName);
-                if(index == -1) continue;
-                mesh.SetBlendShapeWeight(index, blend.originalShapeValue);
+                foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+                {
+                    Mesh m = mesh.sharedMesh;
+                    int index = m.GetBlendShapeIndex(blend.blendShapeName);
+                    if(index == -1) continue;
+                    mesh.SetBlendShapeWeight(index, blend.originalShapeValue);
+                }
             }
-        }
+        }    
         Destroy(search.gameObject);
         return base.OnUnequip(k, dropOnGround);
     }

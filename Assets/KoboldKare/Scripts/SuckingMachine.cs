@@ -6,7 +6,7 @@ using UnityEngine;
 public class SuckingMachine : UsableMachine {
     [SerializeField]
     private SphereCollider suckZone;
-    
+    public List<int> suckingIDs=new List<int>();
     private HashSet<Rigidbody> trackedRigidbodies;
     private bool sucking;
     private WaitForFixedUpdate waitForFixedUpdate;
@@ -32,6 +32,7 @@ public class SuckingMachine : UsableMachine {
             yield break;
         }
         PhotonNetwork.Destroy(view.gameObject);
+        suckingIDs.Remove(viewID);
     }
 
     protected virtual bool ShouldStopTracking(Rigidbody body) {

@@ -614,4 +614,10 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         KoboldGenes genes = GetGenes();
         return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
+    [PunRPC]
+    public void Spawn(string photonName,Vector3 position,Quaternion rotation){
+        if (PhotonNetwork.IsMasterClient) {
+        PhotonNetwork.InstantiateRoomObject(photonName,position,rotation);
+        }
+    }
 }

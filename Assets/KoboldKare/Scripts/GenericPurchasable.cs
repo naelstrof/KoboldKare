@@ -78,9 +78,12 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
                 var obj = new GameObject("DisplayPart", typeof(MeshRenderer), typeof(MeshFilter));
                 obj.transform.SetParent(newDisplay.transform);
                 obj.transform.localPosition = targetPrefab.transform.InverseTransformPoint(r.transform.position);
-                obj.transform.localRotation =
-                    Quaternion.Inverse(targetPrefab.transform.rotation) * r.transform.rotation;
-                obj.transform.localScale = targetSkinnedMeshRenderer.rootBone.lossyScale;
+                obj.transform.localRotation = Quaternion.Inverse(targetPrefab.transform.rotation) * r.transform.rotation;
+                if (targetSkinnedMeshRenderer.rootBone == null) {
+                    obj.transform.localScale = targetSkinnedMeshRenderer.transform.lossyScale;
+                } else {
+                    obj.transform.localScale = targetSkinnedMeshRenderer.rootBone.lossyScale;
+                }
                 var meshRenderer = obj.GetComponent<MeshRenderer>();
                 List<Material> newMaterials = new List<Material>();
                 foreach (var mat in targetSkinnedMeshRenderer.sharedMaterials) {
@@ -145,6 +148,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     public virtual void OnDestroy() {
     }
     public virtual void OnRestock(object nothing) {
+        SwapTo(spawn.photonName);
         if (!display.activeInHierarchy) {
             display.SetActive(true);
             floater.gameObject.SetActive(true);

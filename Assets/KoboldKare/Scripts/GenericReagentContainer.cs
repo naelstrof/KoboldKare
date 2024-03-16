@@ -79,13 +79,14 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         OnChange ??= new ReagentContainerChangedEvent();
         OnFilled ??= new ReagentContainerChangedEvent();
         OnEmpty ??= new ReagentContainerChangedEvent();
-    }
-    public void Start() {
         if (startingReagents != null) {
             foreach (var reagent in startingReagents) {
                 AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
             }
         }
+    }
+    public void Start() {
+        
         filled = isFull;
         emptied = isEmpty;
     }

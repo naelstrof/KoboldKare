@@ -61,14 +61,14 @@ public class ShopUI : MonoBehaviourPun
                 if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.GetPrice()))
                 {
                 kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.GetPrice());
-                kobold.photonView.RPC("Spawn", RpcTarget.All,selected.GetPrefab().photonName, koboldTransform.position + koboldTransform.forward+Vector3.up, Quaternion.identity);
+                PhotonNetwork.InstantiateRoomObject(selected.GetPrefab().photonName, koboldTransform.position + koboldTransform.forward, Quaternion.identity);
                 }
             }
             else{
                 if(kobold.GetComponent<MoneyHolder>().HasMoney(selected.GetPrice()))
                 {
                      kobold.GetComponent<MoneyHolder>().ChargeMoney(selected.GetPrice());
-                     shopKeeper.photonView.RPC("Spawn", RpcTarget.All,selected.GetPrefab().photonName);
+                     PhotonNetwork.InstantiateRoomObject(selected.GetPrefab().photonName, shopKeeper.GetSpawnPosition(), Quaternion.identity);
                 }
 
 

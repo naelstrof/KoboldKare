@@ -45,13 +45,12 @@ public class ShopKeeper : GenericUsable, IPunObservable ,ISavable
         }
 
     }
-     [PunRPC]
-    public void Spawn(string photonName){
-        if (PhotonNetwork.IsMasterClient) {
-        PhotonNetwork.InstantiateRoomObject(photonName,spawnPoint.transform.position,Quaternion.identity);
-        }
+    public Vector3 GetSpawnPosition()
+    {
+        return spawnPoint.transform.position;
     }
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             Vector3 spawnPosition=spawnPoint.transform.position;
             stream.SendNext(spawnPoint);

@@ -56,6 +56,10 @@ public class ElectricBlender : SuckingMachine {
         if (!constructed) {
             yield break;
         }
+        if(suckingIDs.Contains(viewID)){
+            yield break;
+        }
+        suckingIDs.Add(viewID);
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         poof.SendEvent("TriggerPoof");
         source.enabled = true;

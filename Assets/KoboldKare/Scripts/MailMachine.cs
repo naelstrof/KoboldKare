@@ -105,6 +105,10 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     [PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
         PhotonProfiler.LogReceive(sizeof(int));
+         if(suckingIDs.Contains(viewID)){
+            yield break;
+        }
+        suckingIDs.Add(viewID);
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
@@ -135,6 +139,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
 
         totalWorth = Mathf.Min(totalWorth, 1953125f);
         PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{totalWorth});
+        suckingIDs.Remove(viewID);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

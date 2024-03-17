@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
+using UnityEngine.Events;
 
 public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
 {
@@ -30,14 +30,14 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
 
     [PunRPC]
     public void OnGrabRPC(int koboldID)
-    {
-        //animator.SetBool("Open", true);
+    { 
+        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity)
     {
-        //animator.SetBool("Open", false);
+        PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
 
     public Transform GrabTransform()

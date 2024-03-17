@@ -46,31 +46,19 @@ public class Seller : GenericWeapon, IValuedGood, IGrabbable
         RaycastHit hit;
         Physics.Raycast(laserEmitterLocation.position - laserEmitterLocation.forward * 0.25f, laserEmitterLocation.forward, out hit, 10f, 
                         GameManager.instance.waterSprayHitMask, QueryTriggerInteraction.Ignore);
-
-            
-            if(hit.collider.gameObject.GetComponent<MovableFurniture>()!=null
-                && hit.collider.gameObject.GetComponent<InherentWorth>()!=null  )
-                    {
-                        
+        if(hit.collider.gameObject.GetComponent<Freezable>()!=null )
+                    { 
                     PhotonView view = hit.collider.gameObject.GetComponent<PhotonView>();
                     soldGameEvent.Raise(view);
                     poof.SendEvent("TriggerPoof");
-                    float worth=hit.collider.gameObject.GetComponent<InherentWorth>().GetWorth();
+                    float worth;
+                    if(hit.collider.gameObject.GetComponent<InherentWorth>()!=null)
+                        worth=hit.collider.gameObject.GetComponent<InherentWorth>().GetWorth();
+                            else
+                        worth=10f;
                     PhotonNetwork.Destroy(view.gameObject);
                     Kobold player =PhotonNetwork.GetPhotonView(playerViewID).GetComponentInParent<Kobold>();
                     player.GetComponent<MoneyHolder>().AddMoney(worth);
-                    }
-                    else if(hit.collider.transform.parent?.GetComponent<MovableFurniture>()!=null
-                    && hit.collider.transform.parent?.GetComponent<InherentWorth>()!=null)
-                    {
-                    PhotonView view = hit.collider.transform.parent.GetComponent<PhotonView>();
-                    soldGameEvent.Raise(view);
-                    poof.SendEvent("TriggerPoof");
-                    float worth=hit.collider.transform.parent.GetComponent<InherentWorth>().GetWorth();
-                    PhotonNetwork.Destroy(view.gameObject);
-                    Kobold player =PhotonNetwork.GetPhotonView(playerViewID).GetComponentInParent<Kobold>();
-                    player.GetComponent<MoneyHolder>().AddMoney(worth);
-                    
                     }
 
 

@@ -1331,6 +1331,18 @@ MonoBehaviour:
     m_Key: MOD_LOADING_FAILED_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 431191052404559872
+    m_Key: BODYPARTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431191495226593280
+    m_Key: MINBREASTSIZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 431191897967857664
+    m_Key: MAXBREASTSIZE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

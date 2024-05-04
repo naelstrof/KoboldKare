@@ -5,6 +5,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityScriptableSettings;
 using Random = UnityEngine.Random;
 
 public static class KoboldGenesBitBufferExtension {
@@ -170,12 +171,17 @@ public class KoboldGenes {
     }
 
     public KoboldGenes Randomize(string koboldName=null, float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
-        // Slight bias for kobolds with dicks, as they have more variety.
-        if (Random.Range(0f,1f) > 0.4f) {
-            breastSize = (float)NextGaussian(2.5f*meanMultiplier,2.5f*standardDeviationMultiplier,0f, float.MaxValue);
+	    SettingFloat minBreastOpt = SettingsManager.GetSetting("MinBreastSize") as SettingFloat;
+	    minBreastOpt.GetValue();
+	    SettingFloat maxBreastOpt = SettingsManager.GetSetting("MinBreastSize") as SettingFloat;
+	    maxBreastOpt.GetValue();
+
+		// Slight bias for kobolds with dicks, as they have more variety.
+		if (Random.Range(0f,1f) > 0.4f) {
+            breastSize = (float)NextGaussian(2.5f*meanMultiplier,2.5f*standardDeviationMultiplier, minBreastOpt.GetValue(), maxBreastOpt.GetValue());
             dickEquip = GetRandomDick();
         } else {
-            breastSize = (float)NextGaussian(15f*meanMultiplier,5.5f*standardDeviationMultiplier,0f, float.MaxValue);
+            breastSize = (float)NextGaussian(15f*meanMultiplier,5.5f*standardDeviationMultiplier, minBreastOpt.GetValue(), maxBreastOpt.GetValue());
             dickEquip = byte.MaxValue;
         }
 

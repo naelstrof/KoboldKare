@@ -22,6 +22,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0324f60178c32754a9d0883334a9e046
+    m_Address: Assets/KoboldKare/ScriptableObjects/Settings/BodyPartPreferences.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2290886b8cf453c4791e57ff29d19ad3
+    m_Address: Assets/KoboldKare/ScriptableObjects/Settings/MaxBreastSize.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5a424247ac156a4c977f0dc4ab76b03
+    m_Address: Assets/KoboldKare/ScriptableObjects/Settings/MinBreastSize.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:

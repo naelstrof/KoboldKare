@@ -23,6 +23,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
         public bool canLayEgg = true;
+        public bool isSelfPenetrableOnRagdoll = false;
     }
 
     public delegate void EnergyChangedAction(float value, float maxValue);

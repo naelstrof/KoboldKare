@@ -228,9 +228,14 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
         foreach (var dickSet in kobold.activeDicks) {
             foreach (var penn in kobold.penetratables) {
-                if (!penn.penetratable.name.Contains("Mouth")) {
+                // Legacy. Mouths are always un-ignored on ragdoll then re-added later.
+                if (penn.penetratable.name.Contains("Mouth"))
+                {
+                    dickSet.dick.RemoveIgnorePenetrable(penn.penetratable);
                     continue;
                 }
+                // Bool system. (Un)Ignores penetrables based on a bool inside kobold.cs
+                if (!penn.isSelfPenetrableOnRagdoll) { continue; }
 
                 dickSet.dick.RemoveIgnorePenetrable(penn.penetratable);
             }
@@ -301,9 +306,14 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
             foreach (var penn in kobold.penetratables) {
-                if (!penn.penetratable.name.Contains("Mouth")) {
+                // Legacy. Mouths are always un-ignored on ragdoll then re-added later.
+                if (penn.penetratable.name.Contains("Mouth"))
+                {
+                    dickSet.dick.AddIgnorePenetrable(penn.penetratable);
                     continue;
                 }
+                // Bool system. (Un)Ignores penetrables based on a bool inside kobold.cs
+                if (!penn.isSelfPenetrableOnRagdoll) { continue; }
 
                 dickSet.dick.AddIgnorePenetrable(penn.penetratable);
             }

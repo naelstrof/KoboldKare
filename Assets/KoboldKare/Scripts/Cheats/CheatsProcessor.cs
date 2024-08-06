@@ -50,9 +50,24 @@ public class CheatsProcessor : MonoBehaviour {
         return instance.commands.AsReadOnly();
     }
 
+    private void EnsureCommand<T>() where T: Command, new()
+    {
+        foreach(var command in commands)
+        {
+            if(command != null && command.GetType() == typeof(T))
+            {
+                return;
+            }
+        }
+
+        commands.Add(new T());
+    }
+
     void Awake() {
         instance = this;
         commandOutput = new StringBuilder();
+
+        EnsureCommand<CommandSculpt>();
     }
 
     public class CommandException : System.Exception {

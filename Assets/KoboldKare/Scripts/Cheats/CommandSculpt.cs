@@ -18,7 +18,7 @@ public class CommandSculpt : Command
 
         if (args.Length != 4)
         {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height} {modifier}");
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,hue,brightness,saturation} {modifier}");
         }
 
         Kobold target = null;
@@ -56,7 +56,7 @@ public class CommandSculpt : Command
         }
         else
         {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height} {modifier}");
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,hue,brightness,saturation} {modifier}");
         }
 
         if(target == null)
@@ -72,6 +72,22 @@ public class CommandSculpt : Command
         target.photonView.RequestOwnership();
 
         var genes = target.GetGenes();
+
+        static byte SafeModify(byte value, float modifier)
+        {
+            var iValue = (int)value;
+
+            var outValue = iValue + modifier;
+
+            if (outValue < 0) {
+                return 0;
+            }
+            else if (outValue > 255) {
+                return 255;
+            }
+
+            return (byte)outValue;
+        }
 
         switch(args[2].ToLowerInvariant())
         {
@@ -96,6 +112,24 @@ public class CommandSculpt : Command
             case "height":
 
                 target.SetGenes(genes.With(baseSize: genes.baseSize + modifier));
+
+                break;
+
+            case "hue":
+
+                target.SetGenes(genes.With(hue: SafeModify(genes.hue, modifier)));
+
+                break;
+
+            case "brightness":
+
+                target.SetGenes(genes.With(brightness: SafeModify(genes.brightness, modifier)));
+
+                break;
+
+            case "saturation":
+
+                target.SetGenes(genes.With(saturation: SafeModify(genes.saturation, modifier)));
 
                 break;
 

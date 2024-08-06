@@ -50,24 +50,18 @@ public class CheatsProcessor : MonoBehaviour {
         return instance.commands.AsReadOnly();
     }
 
-    private void EnsureCommand<T>() where T: Command, new()
-    {
-        foreach(var command in commands)
-        {
-            if(command != null && command.GetType() == typeof(T))
-            {
-                return;
-            }
-        }
-
-        commands.Add(new T());
-    }
-
     void Awake() {
-        instance = this;
+        //Check if instance already exists
+        if (instance == null) {
+            //if not, set instance to this
+            instance = this;
+        } else if (instance != this) {
+            //If instance already exists and it's not this:
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+            return;
+        }
         commandOutput = new StringBuilder();
-
-        EnsureCommand<CommandSculpt>();
     }
 
     public class CommandException : System.Exception {

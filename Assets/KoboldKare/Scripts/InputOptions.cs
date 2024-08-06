@@ -102,7 +102,17 @@ public class InputOptions : MonoBehaviour {
     }
 
     private void Start() {
-        instance = this;
+        //Check if instance already exists
+        if (instance == null) {
+            //if not, set instance to this
+            instance = this;
+        } else if (instance != this) {
+            //If instance already exists and it's not this:
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+            return;
+        }
+
         Load();
     }
 }

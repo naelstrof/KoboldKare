@@ -43,8 +43,8 @@ public class CommandSculpt : Command
             }
 
             foreach (Player player in PhotonNetwork.PlayerList) {
-                if ((Kobold)player.TagObject == target && (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject || !PhotonNetwork.IsMasterClient)) {
-                    throw new CheatsProcessor.CommandException("Not allowed to modify players.");
+                if ((Kobold)player.TagObject == target && ((Kobold)PhotonNetwork.MasterClient.TagObject != k)) {
+                    throw new CheatsProcessor.CommandException("Not the owner, not allowed to modify players.");
                 }
             }
         } else {

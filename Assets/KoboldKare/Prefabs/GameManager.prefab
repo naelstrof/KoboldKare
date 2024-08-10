@@ -24301,11 +24301,24 @@ MonoBehaviour:
   - rid: 1602997817464061954
   - rid: 1602997817464061955
   - rid: 991488056044552193
+  - rid: 991488175422570496
   references:
     version: 2
     RefIds:
     - rid: 991488056044552193
       type: {class: CommandSculpt, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 991488175422570496
+      type: {class: CommandEquipSet, ns: , asm: Assembly-CSharp}
       data:
         description:
           m_TableReference:

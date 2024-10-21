@@ -491,7 +491,7 @@ public class PlayerPossession : MonoBehaviourPun {
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             if (inputRagdolled) {
-                kobold.GetRagdoller().PopRagdoll();
+                photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             }
 
             back.action.started += OnBack;
@@ -574,7 +574,7 @@ public class PlayerPossession : MonoBehaviourPun {
     // This fixes a bug where OnRagdoll isn't called when the application isn't in focus.
     void OnApplicationFocus(bool hasFocus) {
         if (hasFocus && inputRagdolled) {
-            kobold.GetRagdoller().PopRagdoll();
+            photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         }
     }

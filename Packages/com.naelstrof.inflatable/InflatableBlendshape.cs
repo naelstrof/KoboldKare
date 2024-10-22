@@ -42,7 +42,9 @@ namespace Naelstrof.Inflatable {
 
         public override void OnSizeChanged(float newSize) {
             for (int i = 0; i < skinnedMeshRenderers.Count; i++) {
-                skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeIDs[i], clamped?Mathf.Clamp01(newSize)*100f : newSize*100f);
+                if (blendshapeIDs[i] != -1) {
+                    skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeIDs[i], clamped?Mathf.Clamp01(newSize)*100f : newSize*100f);
+                }
             }
         }
     }

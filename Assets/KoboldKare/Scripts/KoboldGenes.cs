@@ -224,14 +224,14 @@ public class KoboldGenes {
         c.brightness = (byte)Mathf.RoundToInt(Mathf.Lerp(a.brightness / 255f, b.brightness / 255f, 0.5f)*255f);
         c.saturation = (byte)Mathf.RoundToInt(Mathf.Lerp(a.saturation / 255f, b.saturation / 255f, 0.5f)*255f);
         c.bellySize = Mathf.Lerp(a.bellySize, b.bellySize, 0.5f);
-        c.metabolizeCapacitySize = Mathf.Lerp(a.metabolizeCapacitySize, b.metabolizeCapacitySize, 0.5f);
+        c.metabolizeCapacitySize = Mathf.Lerp(a.metabolizeCapacitySize, b.metabolizeCapacitySize, a.metabolizeCapacitySize>b.metabolizeCapacitySize ? 0.2f : 0.8f);
         c.dickSize = Mathf.Lerp(a.dickSize, b.dickSize, 0.5f);
         c.ballSize = Mathf.Lerp(a.ballSize, b.ballSize, 0.5f);
         c.fatSize = Mathf.Lerp(a.fatSize, b.fatSize, 0.5f);
         c.baseSize = Mathf.Lerp(a.baseSize, b.baseSize, 0.5f);
-        c.maxEnergy = Mathf.Lerp(a.maxEnergy, b.maxEnergy, 0.5f);
+        c.maxEnergy = Mathf.Lerp(a.maxEnergy, b.maxEnergy, a.maxEnergy>b.maxEnergy ? 0.2f : 0.8f );
         c.dickThickness = Mathf.Lerp(a.dickThickness, b.dickThickness, 0.5f);
-        c.grabCount = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(a.grabCount, b.grabCount, 0.5f)),1);
+        c.grabCount = (byte)Mathf.Max(Mathf.RoundToInt(Mathf.Lerp(a.grabCount, b.grabCount, a.grabCount>b.grabCount? 0.2f: 0.8f )),1);
         // If species don't match, we have a 30% chance to mutate to a new species!
         if (a.species != b.species && Random.Range(0f, 1f) > 0.7f) {
             int maxSpecies = Mathf.Max(a.species, b.species);

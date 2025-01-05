@@ -110,7 +110,7 @@ public class CommandSculpt : Command
                 outValue = modifier;
             }
 
-            return Mathf.Clamp(outValue, 0.1f, Mathf.Infinity);
+            return Mathf.Max(outValue, 0.1f);
         }
 
         switch(part.ToLowerInvariant()) {
@@ -187,11 +187,9 @@ public class CommandSculpt : Command
                 break;
 
             case "impregnate":
-
                 {
                     ReagentContents alloc = new ReagentContents();
                     alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(Mathf.Abs(modifier)));
-
                     target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
 

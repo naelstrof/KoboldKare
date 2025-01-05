@@ -11,19 +11,46 @@ public class CommandSculpt : Command
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
         base.Execute(output, k, args);
 
+        static void Usage() {
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
+        }
+
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
 
-        if (args.Length != 4) {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,hue,brightness,saturation} {modifier}");
+        if (args.Length != 4 && args.Length != 5) {
+            Usage();
+        }
+
+        var targetType = args[1];
+        var part = args[2];
+        bool set = false;
+        var modifier = 0.0f;
+
+        if (args[3].ToLowerInvariant() == "set") {
+            if(args.Length != 5) {
+                Usage();
+            }
+
+            set = true;
+
+            if (float.TryParse(args[4], System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out modifier) == false) {
+                throw new CheatsProcessor.CommandException($"Invalid modifier: {args[4]}");
+            }
+        } else if(args.Length != 4) {
+            Usage();
+        } else {
+            if (float.TryParse(args[3], System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out modifier) == false) {
+                throw new CheatsProcessor.CommandException($"Invalid modifier: {args[3]}");
+            }
         }
 
         Kobold target = null;
 
-        if (args[1] == "self") {
+        if (targetType == "self") {
             target = k;
-        } else if (args[1] == "target") {
+        } else if (targetType == "target") {
             Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
             Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
 
@@ -48,25 +75,23 @@ public class CommandSculpt : Command
                 }
             }
         } else {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,hue,brightness,saturation} {modifier}");
+            Usage();
         }
 
-        if(target == null) {
+        if (target == null) {
             throw new CheatsProcessor.CommandException("No valid target.");
-        }
-
-        if (float.TryParse(args[3], out var modifier) == false) {
-            throw new CheatsProcessor.CommandException($"Invalid modifier value: {modifier}");
         }
 
         target.photonView.RequestOwnership();
 
         var genes = target.GetGenes();
 
-        static byte SafeModify(byte value, float modifier) {
-            var iValue = (int)value;
+        byte SafeModify(byte value, float modifier) {
+            var outValue = (int)(value + modifier);
 
-            var outValue = iValue + modifier;
+            if(set) {
+                outValue = (int)modifier;
+            }
 
             if (outValue < 0) {
                 return 0;
@@ -78,28 +103,68 @@ public class CommandSculpt : Command
             return (byte)outValue;
         }
 
-        switch(args[2].ToLowerInvariant()) {
+        float ApplyFloat(float baseValue) {
+            var outValue = baseValue + modifier;
+
+            if(set) {
+                outValue = modifier;
+            }
+
+            return Mathf.Max(outValue, 0.1f);
+        }
+
+        switch(part.ToLowerInvariant()) {
             case "dick":
 
-                target.SetGenes(genes.With(dickSize: genes.dickSize + modifier));
+                target.SetGenes(genes.With(dickSize: ApplyFloat(genes.dickSize)));
 
                 break;
 
             case "balls":
 
-                target.SetGenes(genes.With(ballSize: genes.ballSize + modifier));
+                target.SetGenes(genes.With(ballSize: ApplyFloat(genes.ballSize)));
 
                 break;
 
             case "boobs":
 
-                target.SetGenes(genes.With(breastSize: genes.breastSize + modifier));
+                target.SetGenes(genes.With(breastSize: ApplyFloat(genes.breastSize)));
 
                 break;
 
             case "height":
 
-                target.SetGenes(genes.With(baseSize: genes.baseSize + modifier));
+                target.SetGenes(genes.With(baseSize: ApplyFloat(genes.baseSize)));
+
+                break;
+
+            case "fat":
+
+                target.SetGenes(genes.With(fatSize: ApplyFloat(genes.fatSize)));
+
+                break;
+
+            case "bellycapacity":
+
+                target.SetGenes(genes.With(bellySize: ApplyFloat(genes.bellySize)));
+
+                break;
+
+            case "foodcapacity":
+
+                target.SetGenes(genes.With(metabolizeCapacitySize: ApplyFloat(genes.metabolizeCapacitySize)));
+
+                break;
+
+            case "energy":
+
+                target.SetGenes(genes.With(maxEnergy: ApplyFloat(genes.maxEnergy)));
+
+                break;
+
+            case "dickthickness":
+
+                target.SetGenes(genes.With(dickThickness: ApplyFloat(genes.dickThickness)));
 
                 break;
 
@@ -118,6 +183,15 @@ public class CommandSculpt : Command
             case "saturation":
 
                 target.SetGenes(genes.With(saturation: SafeModify(genes.saturation, modifier)));
+
+                break;
+
+            case "impregnate":
+                {
+                    ReagentContents alloc = new ReagentContents();
+                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(Mathf.Abs(modifier)));
+                    target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
+                }
 
                 break;
 

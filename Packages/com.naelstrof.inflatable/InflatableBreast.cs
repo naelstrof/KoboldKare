@@ -38,12 +38,24 @@ namespace Naelstrof.Inflatable {
         private JiggleRigBuilder.JiggleRig targetRig;
         private static readonly int BreastSize = Animator.StringToHash("BreastSize");
 
+        private void AddBlendShape(SkinnedMeshRenderer renderer, bool adding) {
+            var flatIndex = renderer.sharedMesh.GetBlendShapeIndex(flatShape);
+            var biggerIndex = renderer.sharedMesh.GetBlendShapeIndex(biggerShape);
+            if (flatIndex == -1 || biggerIndex == -1 || (adding && skinnedMeshRenderers.Contains(renderer))) {
+                return;
+            }
+            if(adding) {
+                skinnedMeshRenderers.Add(renderer);
+            }
+            flatShapeIDs.Add(flatIndex);
+            biggerShapeIDs.Add(biggerIndex);
+        }
+
         public override void OnEnable() {
             flatShapeIDs = new List<int>();
             biggerShapeIDs = new List<int>();
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers) {
-                flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
-                biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
+                AddBlendShape(renderer, false);
             }
             startScale = baseBreastTransform.localScale;
             if (rigBuilder != null && jiggleBoneBreastTransform != null) {
@@ -75,13 +87,15 @@ namespace Naelstrof.Inflatable {
         }
 
         public void AddTargetRenderer(SkinnedMeshRenderer renderer) {
-            skinnedMeshRenderers.Add(renderer);
-            flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
-            biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
+            if(skinnedMeshRenderers.Contains(renderer)) return;
+            AddBlendShape(renderer, true);
         }
 
         public void RemoveTargetRenderer(SkinnedMeshRenderer renderer) {
             int index = skinnedMeshRenderers.IndexOf(renderer);
+            if(index == -1) {
+                return;
+            }
             skinnedMeshRenderers.RemoveAt(index);
             flatShapeIDs.RemoveAt(index);
             biggerShapeIDs.RemoveAt(index);

@@ -16,10 +16,22 @@ namespace Naelstrof.Inflatable {
         [SerializeField]
         private bool clamped;
         private List<int> blendshapeIDs;
+
+        private void AddBlendShape(SkinnedMeshRenderer renderer, bool adding) {
+            var index = renderer.sharedMesh.GetBlendShapeIndex(blendShapeName);
+            if(index == -1 || (adding && skinnedMeshRenderers.Contains(renderer))) {
+                return;
+            }
+            if(adding) {
+                skinnedMeshRenderers.Add(renderer);
+            }
+            blendshapeIDs.Add(index);
+        }
+
         public override void OnEnable() {
             blendshapeIDs = new List<int>();
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers) {
-                blendshapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(blendShapeName));
+                AddBlendShape(renderer, false);
             }
         }
 
@@ -27,8 +39,7 @@ namespace Naelstrof.Inflatable {
             if (skinnedMeshRenderers.Contains(renderer)) {
                 return;
             }
-            skinnedMeshRenderers.Add(renderer);
-            blendshapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(blendShapeName));
+            AddBlendShape(renderer, true);
         }
 
         public void RemoveTargetRenderer(SkinnedMeshRenderer renderer) {

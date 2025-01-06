@@ -24,12 +24,12 @@ public class CommandGive : Command {
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
         var koboldTransform = kobold.hip.transform;
         if (pool != null && pool.ResourceCache.ContainsKey(args[1])) {
-            PhotonNetwork.InstantiateRoomObject(args[1], koboldTransform.position + koboldTransform.forward, Quaternion.identity);
+            PhotonNetwork.Instantiate(args[1], koboldTransform.position + koboldTransform.forward, Quaternion.identity);
             output.Append($"Spawned {args[1]}.\n");
             return;
         }
         if (ReagentDatabase.GetReagent(args[1]) != null) {
-            GameObject obj = PhotonNetwork.InstantiateRoomObject(bucket.photonName, koboldTransform.position + koboldTransform.forward, Quaternion.identity);
+            GameObject obj = PhotonNetwork.Instantiate(bucket.photonName, koboldTransform.position + koboldTransform.forward, Quaternion.identity);
             ReagentContents contents = new ReagentContents();
             if (args.Length > 2 && float.TryParse(args[2], out float value)) {
                 contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(value));

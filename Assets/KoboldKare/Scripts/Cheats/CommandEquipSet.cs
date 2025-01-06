@@ -31,29 +31,31 @@ public class CommandEquipSet : Command
 
         var sets = new Dictionary<string, List<string>>();
 
-        try {
-            using FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read);
-            using StreamReader reader = new StreamReader(file);
+        if (File.Exists(path)) {
+            try {
+                using FileStream file = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using StreamReader reader = new StreamReader(file);
 
-            JSONNode rootNode = JSONNode.Parse(reader.ReadToEnd());
+                JSONNode rootNode = JSONNode.Parse(reader.ReadToEnd());
 
-            foreach (var key in rootNode.Keys) {
-                var value = rootNode[key];
+                foreach (var key in rootNode.Keys) {
+                    var value = rootNode[key];
 
-                if (value != null && value is JSONArray array) {
-                    var content = new List<string>();
+                    if (value != null && value is JSONArray array) {
+                        var content = new List<string>();
 
-                    foreach (var v in value.Values) {
-                        if (v is JSONString str) {
-                            content.Add(str.Value);
+                        foreach (var v in value.Values) {
+                            if (v is JSONString str) {
+                                content.Add(str.Value);
+                            }
                         }
-                    }
 
-                    sets.Add(key, content);
+                        sets.Add(key, content);
+                    }
                 }
+            } catch (System.Exception e) {
+                throw new CheatsProcessor.CommandException($"Failed to read equipset.json for reason: {e.Message}");
             }
-        } catch (System.Exception e) {
-            throw new CheatsProcessor.CommandException($"Failed to write equipset json for reason: {e.Message}");
         }
 
         bool Add(string equipset, List<string> equipNames) {
@@ -93,10 +95,10 @@ public class CommandEquipSet : Command
 
                 JSONNode rootNode = JSONNode.Parse("{}");
 
-                foreach(var pair in sets) {
+                foreach (var pair in sets) {
                     var value = new JSONArray();
 
-                    foreach(var p in pair.Value) {
+                    foreach (var p in pair.Value) {
                         value.Add(new JSONString(p));
                     }
 
@@ -104,7 +106,9 @@ public class CommandEquipSet : Command
                 }
 
                 writer.Write(rootNode.ToString());
-            } catch (System.Exception) {}
+            } catch (System.Exception e) {
+                throw new CheatsProcessor.CommandException($"Failed to write equipset.json for reason: {e.Message}");
+            }
         }
 
         if (args.Length == 2 && args[1] == "list") {

@@ -36,6 +36,7 @@ public class Build {
     }
 
     static void BuildLinux() {
+        PlayerSettings.SplashScreen.show = false;
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneLinux64);
         AddressableAssetSettings.BuildPlayerContent();
@@ -49,6 +50,7 @@ public class Build {
     }
 
     static void BuildMac() {
+        PlayerSettings.SplashScreen.show = false;
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SetPlatformSettings(
             "Standalone",
@@ -68,6 +70,7 @@ public class Build {
     }
 
     static void BuildWindows() {
+        PlayerSettings.SplashScreen.show = false;
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows64);
         AddressableAssetSettings.BuildPlayerContent();
@@ -81,6 +84,7 @@ public class Build {
     }
 
     static void BuildWindows32() {
+        PlayerSettings.SplashScreen.show = false;
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows);
         AddressableAssetSettings.BuildPlayerContent();

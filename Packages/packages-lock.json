@@ -28,10 +28,11 @@
       "dependencies": {}
     },
     "com.naelstrof.extensions": {
-      "version": "file:com.naelstrof.extensions",
+      "version": "https://github.com/naelstrof/com.naelstrof.extensions.git#v0.0.2",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "36cbdb2cf2ced30bcb0cce07ec2284986b199c0b"
     },
     "com.naelstrof.inflatable": {
       "version": "file:com.naelstrof.inflatable",
@@ -43,11 +44,11 @@
       }
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.5",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.2.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "20346f781ab3a2867810293ca8d04e05c49c6c0e"
+      "hash": "072aec55ee021957841e74cd1293916f5847b25b"
     },
     "com.naelstrof.modding": {
       "version": "file:com.naelstrof.modding",
@@ -171,13 +172,13 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.timeline": "1.5.2",
-        "com.autodesk.fbx": "4.1.2"
+        "com.autodesk.fbx": "4.1.2",
+        "com.unity.timeline": "1.5.2"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
+      "version": "3.0.34",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -282,9 +283,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

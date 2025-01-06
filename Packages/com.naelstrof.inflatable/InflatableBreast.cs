@@ -73,7 +73,7 @@ namespace Naelstrof.Inflatable {
 
             if (skinZone != null && jiggleBoneBreastTransform != null) {
                 foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                    if (jiggleZone.GetTargetBone() != jiggleBoneBreastTransform) continue;
+                    if (jiggleZone.GetRootTransform() != jiggleBoneBreastTransform) continue;
                     if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
@@ -115,11 +115,11 @@ namespace Naelstrof.Inflatable {
             }
 
             if (rigBuilder != null) {
-                ((JiggleSettingsBlend)targetRig.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
+                ((JiggleSettingsBlend)targetRig.jiggleSettings).SetNormalizedBlend(Mathf.Clamp01(newSize / 3f));
             }
 
             if (skinZone != null) {
-                ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
+                ((JiggleSettingsBlend)skinZone.jiggleSettings).SetNormalizedBlend(Mathf.Clamp01(newSize / 3f));
                 skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
             }
 

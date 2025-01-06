@@ -48,6 +48,7 @@ public class SceneDescriptor : OrbitCameraPivotBase, IPunObservable {
         var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(UniversalAdditionalCameraData), typeof(OrbitCamera), typeof(AudioListener), typeof(CameraConfigurationListener)) {
             layer = LayerMask.NameToLayer("Default")
         };
+        orbitCamera.tag = "MainCamera";
 
         if (baseCameraConfiguration != null) {
             OrbitCamera.AddConfiguration(baseCameraConfiguration);

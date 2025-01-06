@@ -55,6 +55,6 @@ public class BonerInflatable : InflatableListener {
             targetRenderers[i].SetBlendShapeWeight(limpBlendshapeIDs[i], limpTriggerAmount * 100f);
             targetRenderers[i].SetBlendShapeWeight(flaccidBlendshapeIDs[i], flaccidTriggerAmount * 100f);
         }
-        targetBlend.normalizedBlend = Mathf.Clamp01(Mathf.SmoothStep(0f,1f,size));
+        targetBlend.SetNormalizedBlend(Mathf.Clamp01(Mathf.SmoothStep(0f,1f,size)));
     }
 }

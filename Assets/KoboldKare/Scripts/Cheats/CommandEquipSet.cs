@@ -53,8 +53,7 @@ public class CommandEquipSet : Command
                 }
             }
         } catch (System.Exception e) {
-            output.AppendLine($"Failed to write equipset json for reason: {e.Message}");
-            return;
+            throw new CheatsProcessor.CommandException($"Failed to write equipset json for reason: {e.Message}");
         }
 
         bool Add(string equipset, List<string> equipNames) {

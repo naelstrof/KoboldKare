@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityScriptableSettings;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ObjectiveManager))]
@@ -14,7 +10,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(MusicManager))]
 [RequireComponent(typeof(DayNightCycle))]
 [RequireComponent(typeof(CloudPool))]
-public class SceneDescriptor : OrbitCameraPivotBase {
+public class SceneDescriptor : OrbitCameraPivotBase, IPunObservable {
     private static SceneDescriptor instance;
     
     [SerializeField] private Transform[] spawnLocations;
@@ -22,6 +18,18 @@ public class SceneDescriptor : OrbitCameraPivotBase {
     [SerializeField, SerializeReference, SerializeReferenceButton] private OrbitCameraConfiguration baseCameraConfiguration;
     private AudioListener audioListener;
     private OrbitCamera orbitCamera;
+    private bool cheatsEnabled;
+    public static void SetCheatsEnabled(bool cheatsEnabled) {
+        instance.cheatsEnabled = cheatsEnabled;
+    }
+
+    public static bool GetCheatsEnabled() {
+        if (instance == null) {
+            Debug.LogError("No scene descriptor found, couldn't enable cheats...");
+            return false;
+        }
+        return instance.cheatsEnabled || Application.isEditor;
+    }
 
     private void Awake() {
         //Check if instance already exists
@@ -63,5 +71,13 @@ public class SceneDescriptor : OrbitCameraPivotBase {
     }
     public static bool CanGrabFly() {
         return instance == null || instance.canGrabFly;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            stream.SendNext(cheatsEnabled);
+        } else {
+            cheatsEnabled = (bool)stream.ReceiveNext();
+        }
     }
 }

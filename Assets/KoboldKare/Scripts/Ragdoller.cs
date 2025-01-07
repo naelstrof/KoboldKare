@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -35,6 +36,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private LODGroup group;
     
     private bool locked;
+    private bool shouldFinishTeleport = false;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
@@ -208,6 +210,17 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
+
+        if (shouldFinishTeleport) {
+            foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
+                jiggleRigBuilder.FinishTeleport();
+            }
+            foreach (var skin in GetComponentsInChildren<JiggleSkin>()) {
+                skin.FinishTeleport();
+            }
+
+            shouldFinishTeleport = false;
+        }
         if (photonView.IsMine) {
             return;
         }
@@ -302,6 +315,12 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         if (!ragdolled) {
             return;
         }
+        foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
+            jiggleRigBuilder.PrepareTeleport();
+        }
+        foreach (var skin in GetComponentsInChildren<JiggleSkin>()) {
+            skin.PrepareTeleport();
+        }
         FixPlayerPosition();
         transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
@@ -366,6 +385,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;
+        shouldFinishTeleport = true;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

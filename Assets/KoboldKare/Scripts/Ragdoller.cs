@@ -215,10 +215,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
                 jiggleRigBuilder.FinishTeleport();
             }
-            foreach (var skin in GetComponentsInChildren<JiggleSkin>()) {
-                skin.FinishTeleport();
-            }
-
             shouldFinishTeleport = false;
         }
         if (photonView.IsMine) {
@@ -317,9 +313,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         }
         foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
             jiggleRigBuilder.PrepareTeleport();
-        }
-        foreach (var skin in GetComponentsInChildren<JiggleSkin>()) {
-            skin.PrepareTeleport();
         }
         FixPlayerPosition();
         transform.position += Vector3.up*0.5f;

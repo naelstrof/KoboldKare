@@ -43,7 +43,7 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
 
         if (skinJiggle != null && targetTransform != null) {
             foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                if (jiggleZone.GetRootTransform() != targetTransform) continue;
+                if (jiggleZone.GetTargetBone() != targetTransform) continue;
                 if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                     throw new UnityException("Belly jiggle settings must be a JiggleSettingsBlend");
                 }
@@ -96,7 +96,7 @@ public class InflatableBelly : Naelstrof.Inflatable.InflatableListener {
         }
         if (skinZone != null) {
             skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
-            ((JiggleSettingsBlend)skinZone.jiggleSettings).SetNormalizedBlend(Mathf.Clamp01(newSize / 2f));
+            ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 2f);
         }
     }
 }

@@ -260,12 +260,8 @@ public class DickDescriptor : MonoBehaviour {
             set.dickContainer.transform.localPosition = -set.attachPosition;
             set.dickContainer.transform.localRotation = Quaternion.identity;
             foreach (var penset in k.penetratables) {
-                //if (penset.penetratable.name.Contains("Mouth")) {
-                    //continue;
-                //}
                 set.dick.AddIgnorePenetrable(penset.penetratable);
             }
-
 
             if (set.shouldDisableVagina) {
                 foreach(var hole in attachedKobold.penetratables) {

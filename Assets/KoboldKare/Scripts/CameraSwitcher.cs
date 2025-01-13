@@ -28,7 +28,6 @@ public class CameraSwitcher : MonoBehaviour {
         FirstPerson = 0,
         ThirdPerson,
         FreeCam,
-        FreeCamLocked,
     }
     private CameraMode? mode = null;
 
@@ -125,7 +124,7 @@ public class CameraSwitcher : MonoBehaviour {
     }
 
     void Update() {
-        uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * (30f * ((int)mode+0.5f)), Time.deltaTime*2f);
+        uiSlider.transform.localPosition = Vector3.Lerp(uiSlider.transform.localPosition, -Vector3.right * (36f * ((int)mode+0.5f)), Time.deltaTime*2f);
     }
 
     public void OnSwitchCamera() {
@@ -133,7 +132,7 @@ public class CameraSwitcher : MonoBehaviour {
             return;
         }
 
-        int index = ((int)mode.Value + 1) % 4;
+        int index = ((int)mode.Value + 1) % 3;
         SwitchCamera((CameraMode)index);
     }
 
@@ -145,9 +144,6 @@ public class CameraSwitcher : MonoBehaviour {
     }
     public void OnFreeCamera() {
         SwitchCamera(CameraMode.FreeCam);
-    }
-    public void OnLockedCamera() {
-        SwitchCamera(CameraMode.FreeCamLocked);
     }
 
     public void SwitchCamera(CameraMode cameraMode) {
@@ -201,15 +197,6 @@ public class CameraSwitcher : MonoBehaviour {
                 controller.inputJump = false;
                 if (FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(false);
-                }
-                break;
-            case CameraMode.FreeCamLocked:
-                OrbitCamera.ReplaceConfiguration(lastConfig, lockedFreecamConfiguration);
-                lastConfig = lockedFreecamConfiguration;
-                freeCamController.enabled = false;
-                possession.enabled = true;
-                if (!FPSCanvas.activeInHierarchy) {
-                    FPSCanvas.SetActive(true);
                 }
                 break;
         }

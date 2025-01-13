@@ -172,12 +172,20 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         }
         
         foreach (JiggleRigBuilder builder in GetComponentsInChildren<JiggleRigBuilder>()) {
+            foreach (var jiggleRig in builder.jiggleRigs) {
+                // reverse-compatiblity for old mods, force animated to true, costs a little performance, oh well!
+                jiggleRig.animated = true;
+            }
             if (builder.GetComponent<JiggleRigRendererLOD>() == null) {
                 var lod = builder.gameObject.AddComponent<JiggleRigRendererLOD>();
                 lod.SetRenderers(bodyRenderers.ToArray());
             }
         }
         foreach (JiggleSkin skin in GetComponentsInChildren<JiggleSkin>()) {
+            foreach (var jiggleZone in skin.jiggleZones) {
+                // reverse-compatiblity for old mods, force animated to true, costs a little performance, oh well!
+                jiggleZone.animated = true;
+            }
             if (skin.GetComponent<JiggleRigRendererLOD>() == null) {
                 var lod = skin.gameObject.AddComponent<JiggleRigRendererLOD>();
                 lod.SetRenderers(bodyRenderers.ToArray());

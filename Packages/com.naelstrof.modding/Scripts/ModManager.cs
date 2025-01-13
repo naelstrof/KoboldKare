@@ -33,11 +33,11 @@ public class ModManager : MonoBehaviour {
             modSource = source;
             folderTitle = Path.GetFileName(Path.GetDirectoryName(modPath));
             try {
-                LoadMetaData($"{this.modPath}info.json");
-                LoadPreview($"{this.modPath}preview.png");
-            } catch (SystemException e) {
-                Debug.LogException(e);
+                LoadMetaData(infoPath);
+                LoadPreview(previewPath);
+            } catch {
                 Debug.LogError($"Failed to load mod at path {this.modPath}, from source {source}.");
+                throw;
             }
         }
 
@@ -68,16 +68,39 @@ public class ModManager : MonoBehaviour {
         public string catalogPath {
             get {
                 string searchDir = $"{modPath}{runningPlatform}";
-                try {
                     foreach (var file in Directory.EnumerateFiles(searchDir)) {
                         if (file.EndsWith(".json")) {
                             return file;
                         }
                     }
-                } catch {
-                    return null;
+                throw new FileNotFoundException($"No catalog found for {modPath}... A json should be located in {modPath}{runningPlatform}...");
+            }
+        }
+        public string previewPath {
+            get {
+                string searchDir = $"{modPath}";
+                if (!searchDir.EndsWith(Path.DirectorySeparatorChar) && !searchDir.EndsWith(Path.AltDirectorySeparatorChar)) {
+                    if (searchDir.Contains(Path.AltDirectorySeparatorChar)) {
+                        searchDir += Path.AltDirectorySeparatorChar;
+                    } else {
+                        searchDir += Path.DirectorySeparatorChar;
+                    }
                 }
-                return null;
+                return searchDir + "preview.png";
+            }
+        }
+        
+        public string infoPath {
+            get {
+                string searchDir = $"{modPath}";
+                if (!searchDir.EndsWith(Path.DirectorySeparatorChar) && !searchDir.EndsWith(Path.AltDirectorySeparatorChar)) {
+                    if (searchDir.Contains(Path.AltDirectorySeparatorChar)) {
+                        searchDir += Path.AltDirectorySeparatorChar;
+                    } else {
+                        searchDir += Path.DirectorySeparatorChar;
+                    }
+                }
+                return searchDir + "info.json";
             }
         }
 
@@ -119,8 +142,8 @@ public class ModManager : MonoBehaviour {
 
         public void Refresh() {
             if (!string.IsNullOrEmpty(modPath)) {
-                LoadMetaData($"{modPath}info.json");
-                LoadPreview($"{modPath}preview.png");
+                LoadMetaData(infoPath);
+                LoadPreview(previewPath);
             }
         }
 
@@ -142,8 +165,8 @@ public class ModManager : MonoBehaviour {
             }
 
             if (string.IsNullOrEmpty(modPath)) return;
-            LoadMetaData($"{modPath}info.json");
-            LoadPreview($"{modPath}preview.png");
+            LoadMetaData(infoPath);
+            LoadPreview(previewPath);
         }
     }
     private static ModManager instance;
@@ -273,7 +296,14 @@ public class ModManager : MonoBehaviour {
     }
 
     public static void AddMod(string modPath) {
-        instance.AddMod(new ModInfo(modPath, ModSource.SteamWorkshop));
+        try {
+            var mod = new ModInfo(modPath, ModSource.SteamWorkshop);
+            instance.AddMod(mod);
+        } catch (Exception e) {
+            instance.lastException = e;
+            Debug.LogException(e);
+            Debug.LogError($"Failed to load mod {modPath}.");
+        }
     }
 
     public static async void RemoveMod(string modPath) {
@@ -350,9 +380,15 @@ public class ModManager : MonoBehaviour {
             return;
         }
         foreach (var node in array) {
-            var mod = new ModInfo(node);
-            if (mod.IsValid()) {
-                AddMod(mod);
+            try {
+                var mod = new ModInfo(node);
+                if (mod.IsValid()) {
+                    AddMod(mod);
+                }
+            } catch (Exception e) {
+                instance.lastException = e;
+                Debug.LogException(e);
+                Debug.LogError($"Failed to load mod {node}.");
             }
         }
 
@@ -366,8 +402,9 @@ public class ModManager : MonoBehaviour {
 
         foreach (string directory in Directory.EnumerateDirectories(modCatalogPath)) {
             try {
-                AddMod(new ModInfo(directory, ModSource.LocalModFolder));
-            } catch (FileNotFoundException e) {
+                var mod = new ModInfo(directory, ModSource.LocalModFolder);
+                AddMod(mod);
+            } catch (Exception e) {
                 lastException = e;
                 Debug.LogException(e);
                 Debug.LogError($"Failed to load mod {directory}.");
@@ -431,6 +468,7 @@ public class ModManager : MonoBehaviour {
     public static bool TryGetLastException(out Exception e) {
         if (instance.lastException != null) {
             e = instance.lastException;
+            instance.lastException = null;
             return true;
         }
         e = null;
@@ -482,7 +520,6 @@ public class ModManager : MonoBehaviour {
     }
 
     private async Task ReloadMods() {
-        lastException = null;
         if (!IsValid()) {
             throw new UnityException("32 bit Windows does NOT support mods! Please upgrade your operating system!");
         }

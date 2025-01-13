@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 
@@ -34,11 +35,11 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static void SetCheatsEnabled(bool cheatsEnabled) {
-        SceneDescriptor.SetCheatsEnabled(cheatsEnabled);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "cheats", cheatsEnabled } });
     }
 
     public static bool GetCheatsEnabled() {
-        return SceneDescriptor.GetCheatsEnabled();
+        return (Application.isEditor && PhotonNetwork.IsMasterClient) || (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("cheats") && (bool)PhotonNetwork.CurrentRoom.CustomProperties["cheats"]);
     }
 
     public static ReadOnlyCollection<Command> GetCommands() {

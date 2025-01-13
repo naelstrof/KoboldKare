@@ -186,15 +186,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LockedCamera",
-                    "type": "Button",
-                    "id": "d7fe616d-00f7-40e6-a446-4ad06fd35f49",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SwitchCamera",
                     "type": "Button",
                     "id": "3e03661a-ac84-473e-8440-67a0916e2a21",
@@ -681,28 +672,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "FreeCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e1dc5583-2715-4a29-83ce-88e705b775c4",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LockedCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f433e636-e778-4398-8c99-5f450b37fcc0",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LockedCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

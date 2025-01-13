@@ -185,6 +185,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
             if (builder.GetComponent<JiggleRigRendererLOD>() == null) {
                 var lod = builder.gameObject.AddComponent<JiggleRigRendererLOD>();
                 lod.SetRenderers(bodyRenderers.ToArray());
+                lod.SetDistance(25f);
             }
         }
         foreach (JiggleSkin skin in GetComponentsInChildren<JiggleSkin>()) {
@@ -195,6 +196,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
             if (skin.GetComponent<JiggleRigRendererLOD>() == null) {
                 var lod = skin.gameObject.AddComponent<JiggleRigRendererLOD>();
                 lod.SetRenderers(bodyRenderers.ToArray());
+                lod.SetDistance(25f);
             }
         }
 

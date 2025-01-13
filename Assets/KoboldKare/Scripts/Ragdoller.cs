@@ -215,6 +215,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
                 jiggleRigBuilder.FinishTeleport();
             }
+            foreach (var jiggleSkin in GetComponentsInChildren<JiggleSkin>()) {
+                jiggleSkin.FinishTeleport();
+            }
             shouldFinishTeleport = false;
         }
         if (photonView.IsMine) {
@@ -313,9 +316,14 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
             jiggleRigBuilder.PrepareTeleport();
         }
+        foreach (var jiggleSkin in GetComponentsInChildren<JiggleSkin>()) {
+            jiggleSkin.PrepareTeleport();
+        }
         FixPlayerPosition();
         transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
+            dickSet.dick.Penetrate(null);
+            dickSet.dick.SetTargetHole(null);
             foreach (var penn in kobold.penetratables) {
                 // Legacy. Mouths are always un-ignored on ragdoll then re-added later.
                 if (penn.penetratable.name.Contains("Mouth")) {
@@ -325,15 +333,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                 // Bool system. (Un)Ignores penetrables based on a bool inside kobold.cs
                 if (!penn.isSelfPenetrableOnRagdoll) { continue; }
                 dickSet.dick.AddIgnorePenetrable(penn.penetratable);
-            }
-        }
-        foreach (var dickSet in kobold.activeDicks) {
-            if (!dickSet.dick.TryGetPenetrable(out var penetrable)) continue;
-            foreach (var penn in kobold.penetratables) {
-                if (penn.penetratable != penetrable) continue;
-                dickSet.dick.Penetrate(null);
-                dickSet.dick.SetTargetHole(null);
-                break;
             }
         }
         if (group != null) {

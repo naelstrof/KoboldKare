@@ -24,7 +24,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private Rigidbody hipBody;
     [SerializeField]
-    private List<JigglePhysics.JiggleRigBuilder> disableRigs;
+    private List<JiggleRigBuilder> disableRigs;
+
+    public List<JiggleRigBuilder> GetDisableRigs() => disableRigs;
 
     private Dictionary<Transform, Matrix4x4> defaultRigTransforms;
 

@@ -397,7 +397,20 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     
     private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName) {
-        yield return ModManager.SetLoadedMods(desiredMods);
+        IEnumerator setter = ModManager.SetLoadedMods(desiredMods);
+        var next = true;
+        while (next) {
+            try {
+                next = setter.MoveNext();
+            }
+            catch (UnityException ex) {
+                instance.OnJoinRoomFailed(0, ex.Message);
+                break;
+            }
+            if (next) {
+                yield return setter.Current;
+            }
+        }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.JoinRoom(roomName);
         onLeaveRoom = null;

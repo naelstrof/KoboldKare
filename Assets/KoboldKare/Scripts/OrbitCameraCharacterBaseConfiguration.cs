@@ -50,8 +50,12 @@ public class OrbitCameraCharacterBaseConfiguration : OrbitCameraConfiguration {
         float downUpSoftReveresed = 1f - Easing.InSine(Mathf.Clamp01(forward.y));
 
 
-        (standPivot as OrbitCameraPivotBasic)?.SetInfo(new Vector2(Mathf.Lerp(standOffToSideTarget, 0.5f, downUpSoft), 0.5f), Mathf.Lerp(0.7f,1.2f,downUpSoft), 65f);
-
+        var standPivotBasic = (standPivot as OrbitCameraPivotBasic);
+        if (standPivotBasic != null) {
+            standPivotBasic.SetScreenOffset(new Vector2(Mathf.Lerp(standOffToSideTarget, 0.5f, downUpSoft), 0.5f));
+            standPivotBasic.SetDesiredDistanceFromPivot(Mathf.Lerp(0.7f, 1.2f, downUpSoft));
+            standPivotBasic.SetBaseFOV(65f);
+        }
 
         OrbitCameraData buttCamera = crouchPivot.GetData(cam);
         OrbitCameraData shoulderCamera = standPivot.GetData(cam);

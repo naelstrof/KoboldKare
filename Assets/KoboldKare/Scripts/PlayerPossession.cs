@@ -25,6 +25,12 @@ public class PlayerPossession : MonoBehaviourPun {
     private PrecisionGrabber pGrabber;
     public GameObject dickErectionHidable;
     private Grabber grabber;
+    
+    private bool movementEnabled = true;
+
+    public void SetMovementEnabled(bool newMovementEnabled) {
+        movementEnabled = newMovementEnabled;
+    }
 
     public bool inputRagdolled;
     private Kobold cachedKobold;
@@ -304,7 +310,11 @@ public class PlayerPossession : MonoBehaviourPun {
         Quaternion characterRot = Quaternion.Euler(0, OrbitCamera.GetPlayerIntendedScreenAim().x, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
         wishDir.y = 0;
-        controller.inputDir = wishDir;
+        if (movementEnabled) {
+            controller.inputDir = wishDir;
+        } else {
+            controller.inputDir = Vector3.zero;
+        }
     }
 
     // Update is called once per frame
@@ -352,7 +362,7 @@ public class PlayerPossession : MonoBehaviourPun {
         characterControllerAnimator.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
     }
     public void OnJump(InputValue value) {
-        if (!isActiveAndEnabled) return;
+        if (!isActiveAndEnabled || !movementEnabled) return;
         controller.inputJump = value.Get<float>() > 0f;
         if (!photonView.IsMine) {
             photonView.RequestOwnership();
@@ -381,7 +391,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controller.inputWalking = value.Get<float>() > 0f;
     }
     public void OnCrouch(InputValue value) {
-        if (!isActiveAndEnabled) return;
+        if (!isActiveAndEnabled || !movementEnabled) return;
         //controller.inputCrouched = value.Get<float>();
         controller.SetInputCrouched(value.Get<float>());
     }

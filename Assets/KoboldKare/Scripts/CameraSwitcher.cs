@@ -233,7 +233,7 @@ public class CameraSwitcher : MonoBehaviour {
 
         initialized = true;
         mode = cameraMode;
-        possession.enabled = true;
+        possession.SetMovementEnabled(true);
         freeCamController.enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
@@ -267,7 +267,7 @@ public class CameraSwitcher : MonoBehaviour {
                 OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
                 lastConfig = freecamConfiguration;
                 freeCamController.enabled = true;
-                possession.enabled = false;
+                possession.SetMovementEnabled(false);
                 controller.inputDir = Vector3.zero;
                 controller.inputJump = false;
                 if (FPSCanvas.activeInHierarchy) {

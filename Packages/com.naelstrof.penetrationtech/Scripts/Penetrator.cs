@@ -257,7 +257,9 @@ namespace PenetrationTech {
         }
         
         public void AddIgnorePenetrable(Penetrable p) {
-            ignorePenetrables.Add(p);
+            if (!ignorePenetrables.Contains(p)) {
+                ignorePenetrables.Add(p);
+            }
         }
         public void RemoveIgnorePenetrable(Penetrable p) {
             ignorePenetrables.Remove(p);

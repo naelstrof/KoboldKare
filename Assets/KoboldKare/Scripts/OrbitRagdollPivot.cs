@@ -9,7 +9,9 @@ public class OrbitRagdollPivot : OrbitCameraPivotBasic {
         freeze = newFreeze;
         freezePosition = transform.position;
     }
-    public override Vector3 GetPivotPosition(Quaternion camRotation) {
-        return freeze ? freezePosition : base.GetPivotPosition(camRotation);
+    public override OrbitCameraData GetData(Camera cam) {
+        var data = base.GetData(cam);
+        data.position = freeze ? freezePosition : data.position;
+        return data;
     }
 }

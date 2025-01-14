@@ -19,7 +19,12 @@ public class SceneDescriptor : OrbitCameraPivotBase {
     private AudioListener audioListener;
     private OrbitCamera orbitCamera;
 
-    private void Awake() {
+    public override OrbitCameraData GetData(Camera cam) {
+        return baseCameraConfiguration?.GetData(cam) ?? new OrbitCameraData(){};
+    }
+
+    protected override void Awake() {
+        base.Awake();
         //Check if instance already exists
         if (instance == null) {
             //if not, set instance to this
@@ -31,6 +36,14 @@ public class SceneDescriptor : OrbitCameraPivotBase {
             return;
         }
 
+        if (baseCameraConfiguration != null) {
+            OrbitCamera.AddConfiguration(baseCameraConfiguration);
+        } else {
+            var newConfig = new OrbitCameraBasicConfiguration();
+            newConfig.SetPivot(this);
+            OrbitCamera.AddConfiguration(newConfig);
+        }
+        
         //var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
         //audioListener = obj.GetComponent<AudioListener>();
         var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(UniversalAdditionalCameraData), typeof(OrbitCamera), typeof(AudioListener), typeof(CameraConfigurationListener)) {
@@ -38,9 +51,6 @@ public class SceneDescriptor : OrbitCameraPivotBase {
         };
         orbitCamera.tag = "MainCamera";
 
-        if (baseCameraConfiguration != null) {
-            OrbitCamera.AddConfiguration(baseCameraConfiguration);
-        }
     }
 
     public static void GetSpawnLocationAndRotation(out Vector3 position, out Quaternion rotation) {

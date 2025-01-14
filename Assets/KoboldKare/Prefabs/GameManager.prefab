@@ -31121,17 +31121,6 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
-  - control: {fileID: -96581472205894575, guid: b80237a58ac8c22458251d7c9dcacf88,
-      type: 3}
-    controlName:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
-      m_TableEntryReference:
-        m_KeyId: 516103393283
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 1
-      m_LocalVariables: []
   - control: {fileID: -1545320746805174815, guid: b80237a58ac8c22458251d7c9dcacf88,
       type: 3}
     controlName:

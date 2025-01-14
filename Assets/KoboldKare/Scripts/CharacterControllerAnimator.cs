@@ -101,6 +101,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         eyeRot = newEyeRot;
     }
 
+    public void SetFacingDirection(Vector3 direction) {
+        facingRot = Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
+    }
+
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
             set = null;

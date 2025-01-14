@@ -21,5 +21,6 @@ public class LookAtCursor : MonoBehaviour {
         Quaternion rot = Quaternion.LookRotation((lookPoint - headPos).normalized, Vector3.up);
         var rotEuler = rot.eulerAngles;
         characterAnimator.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
+        characterAnimator.SetFacingDirection((lookPoint - transform.position).normalized);
     }
 }

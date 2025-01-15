@@ -20,6 +20,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public ServerSettings settings;
     
     public static byte CustomInstantiationEvent = (byte)'C';
+    public static byte CustomCheatEvent = (byte)'H';
 
     public bool online {
         get {
@@ -367,7 +368,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             return;
         }
 
-        if (photonEvent.Code == 'C') {
+        if (photonEvent.Code == CustomCheatEvent) {
             cheatsEnabled = (bool)photonEvent.CustomData;
             return;
         }

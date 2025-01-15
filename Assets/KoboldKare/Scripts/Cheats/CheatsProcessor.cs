@@ -40,7 +40,7 @@ public class CheatsProcessor : MonoBehaviour {
             CachingOption = EventCaching.AddToRoomCache,
             Receivers = ReceiverGroup.All,
         };
-        PhotonNetwork.RaiseEvent((byte)'C', cheatsEnabled, raiseEventOptions, new SendOptions() { Reliability = true });
+        PhotonNetwork.RaiseEvent(NetworkManager.CustomCheatEvent, cheatsEnabled, raiseEventOptions, new SendOptions() { Reliability = true });
     }
 
     public static bool GetCheatsEnabled() {

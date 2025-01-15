@@ -24701,6 +24701,12 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - name: InappropriateName
+    popupPrefabReference:
+      m_AssetGUID: 63027153d18a9ab42b58703ebfde3901
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!114 &9185425679682655073
 MonoBehaviour:
   m_ObjectHideFlags: 0

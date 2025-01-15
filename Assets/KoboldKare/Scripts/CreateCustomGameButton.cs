@@ -22,6 +22,12 @@ public class CreateCustomGameButton : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             yield break;
         }
+
+        if (PhotonRoomListSpawner.GetBlackListed(handle.Result.roomName)) {
+            GetComponent<Button>().interactable = true;
+            PopupHandler.instance.SpawnPopup("InappropriateName");
+            yield break;
+        }
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap);
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
         PhotonNetwork.CreateRoom(handle.Result.roomName, new RoomOptions { MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom, CleanupCacheOnLeave = false});

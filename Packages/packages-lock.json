@@ -120,6 +120,12 @@
       },
       "hash": "6e36bec2daf4a77781f5639987d4aab5ed9fe3bf"
     },
+    "com.naelstrof.word-filter": {
+      "version": "file:com.naelstrof.word-filter",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.rlabrecque.steamworks.net": {
       "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",
       "depth": 0,

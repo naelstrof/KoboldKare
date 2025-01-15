@@ -6,7 +6,10 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Collections;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using SimpleJSON;
 
 public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
     public GameObject roomPrefab;
@@ -48,12 +51,18 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         });
     }
 
+    public static bool GetBlackListed(string name) {
+        return WordFilter.WordFilter.GetBlacklisted(name, new[] {
+            "cub", "cllb", "c|_|b", "cl_lb", "kid", "kub", "young", "baby", "cubby"
+        });
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior
-        //Debug.Log("[PhotonRoomListSpawner] :: Got room list update from master server");
-        //ClearRoomList();
-        //Build UI from current room list
         foreach (RoomInfo info in roomList) {
+            if (GetBlackListed(info.Name)) {
+                continue;
+            }
             bool skip = false;
             for (int i = 0; i < roomPrefabs.Count; i++) {
                 if (roomPrefabs[i].transform.Find("Name").GetComponent<TextMeshProUGUI>().text == info.Name) {

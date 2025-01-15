@@ -50,6 +50,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
             clampPitch = true,
             clampYaw = false,
             distance = 0f,
+            screenPoint = Vector2.one*0.5f,
             rotation = rot,
             position = GetPivotPosition(rot)
         };

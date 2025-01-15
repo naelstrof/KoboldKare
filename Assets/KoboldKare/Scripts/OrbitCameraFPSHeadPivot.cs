@@ -21,7 +21,7 @@ public class OrbitCameraFPSHeadPivot : OrbitCameraLerpTrackPivot {
 
     public override OrbitCameraData GetData(Camera cam) {
         var data = base.GetData(cam);
-        data.distance = -0.05f;
+        data.distance = 0.05f;
         return data;
     }
 }

@@ -348,6 +348,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public void OnOwnershipTransferFailed(PhotonView targetView, Player senderOfFailedRequest) {
     }
 
+    private bool cheatsEnabled = false;
+    public bool GetCheatsEnabled() => cheatsEnabled;
+
     public void OnEvent(EventData photonEvent) {
         if (photonEvent.Code == CustomInstantiationEvent) {
             object[] objectData = (object[])photonEvent.CustomData;
@@ -361,6 +364,11 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             var photonView = obj.GetComponent<PhotonView>();
             photonView.ViewID = (int)objectData[1];
             obj.SetActive(true);
+            return;
+        }
+
+        if (photonEvent.Code == 'C') {
+            cheatsEnabled = (bool)photonEvent.CustomData;
             return;
         }
 

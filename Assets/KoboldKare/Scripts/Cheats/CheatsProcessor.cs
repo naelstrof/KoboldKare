@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class CheatsProcessor : MonoBehaviour {
@@ -35,11 +36,15 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static void SetCheatsEnabled(bool cheatsEnabled) {
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "cheats", cheatsEnabled } });
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() {
+            CachingOption = EventCaching.AddToRoomCache,
+            Receivers = ReceiverGroup.All,
+        };
+        PhotonNetwork.RaiseEvent((byte)'C', cheatsEnabled, raiseEventOptions, new SendOptions() { Reliability = true });
     }
 
     public static bool GetCheatsEnabled() {
-        return (Application.isEditor && PhotonNetwork.IsMasterClient) || (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("cheats") && (bool)PhotonNetwork.CurrentRoom.CustomProperties["cheats"]);
+        return (Application.isEditor && PhotonNetwork.IsMasterClient) || NetworkManager.instance.GetCheatsEnabled();
     }
 
     public static ReadOnlyCollection<Command> GetCommands() {

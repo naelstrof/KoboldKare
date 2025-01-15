@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class CreateCustomGameButton : MonoBehaviour {
@@ -25,6 +27,15 @@ public class CreateCustomGameButton : MonoBehaviour {
 
         if (PhotonRoomListSpawner.GetBlackListed(handle.Result.roomName)) {
             GetComponent<Button>().interactable = true;
+            if (!Analytics.playerOptedOut) {
+                UriBuilder builder = new UriBuilder("http://koboldkare.com/analytics.php");
+                builder.Query += $"query={handle.Result.roomName}";
+                var req = UnityWebRequest.Get(builder.ToString());
+                var asyncreq = req.SendWebRequest();
+                asyncreq.completed += (a) => {
+                    Debug.Log(req.result);
+                };
+            }
             PopupHandler.instance.SpawnPopup("InappropriateName");
             yield break;
         }

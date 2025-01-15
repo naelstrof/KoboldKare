@@ -289,20 +289,34 @@ public static class WordFilter {
     static bool CheckTrigram(StringInfo info, int index, char character, string bannedWord) {
         if (info.LengthInTextElements > index + 2) {
             var trigramCheck = character + info.SubstringByTextElements(index + 1, 2);
-            if (!bannedWord.Contains(trigramCheck)) {
+            bool entirelyComposedOfInvalidLetters = true;
+            foreach (var c in trigramCheck) {
+                if (bannedWord.Contains(c)) continue;
+                entirelyComposedOfInvalidLetters = false;
+                break;
+            }
+            if (!entirelyComposedOfInvalidLetters && !bannedWord.Contains(trigramCheck)) {
                 if (trigrams.Contains(trigramCheck)) {
                     return true;
                 }
             }
         }
+
         if (index - 2 >= 0 && info.LengthInTextElements >= 3) {
             var trigramCheck = info.SubstringByTextElements(index - 2, 2) + character;
-            if (!bannedWord.Contains(trigramCheck)) {
+            bool entirelyComposedOfInvalidLetters = true;
+            foreach (var c in trigramCheck) {
+                if (bannedWord.Contains(c)) continue;
+                entirelyComposedOfInvalidLetters = false;
+                break;
+            }
+            if (!entirelyComposedOfInvalidLetters && !bannedWord.Contains(trigramCheck)) {
                 if (trigrams.Contains(trigramCheck)) {
                     return true;
                 }
             }
         }
+
         return false;
     }
     static bool CheckHomoglyph(char character, string textElement) {

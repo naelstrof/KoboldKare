@@ -51,16 +51,16 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         });
     }
 
-    public static bool GetBlackListed(string name) {
+    public static bool GetBlackListed(string name, out string filtered) {
         return WordFilter.WordFilter.GetBlacklisted(name, new[] {
             "cub", "cllb", "c|_|b", "cl_lb", "kid", "kub", "young", "baby", "cubby"
-        });
+        }, out filtered);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         base.OnRoomListUpdate(roomList); // Perform default expected behavior
         foreach (RoomInfo info in roomList) {
-            if (GetBlackListed(info.Name)) {
+            if (GetBlackListed(info.Name, out _)) {
                 continue;
             }
             bool skip = false;

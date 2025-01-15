@@ -329,7 +329,7 @@ public static class WordFilter {
         return character == textElement[0];
     }
 
-    public static bool GetBlacklisted(string stringToCheck, string[] blacklist) {
+    public static bool GetBlacklisted(string stringToCheck, string[] blacklist, out string filtered) {
         StringInfo info = new StringInfo(stringToCheck.ToLower());
         foreach (var word in blacklist) {
             int state = 0;
@@ -342,10 +342,13 @@ public static class WordFilter {
                     state++;
                 }
                 if (state == word.Length) {
+                    filtered = word;
                     return true;
                 }
             }
         }
+
+        filtered = "";
         return false;
     }
 }

@@ -274,10 +274,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
             facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
         } else {
-            if (controller.inputDir != Vector3.zero) {
+            if (controller.inputDir != Vector3.zero && !controller.inputWalking) {
                 facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
             }
-            if (inputShouldFaceEye) {
+            if (inputShouldFaceEye && !controller.inputWalking) {
                 facingRot = eyeRot.x;
             }
         }
@@ -365,8 +365,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.4f);
         } else {
-            float bodyWeightLerp = Mathf.Lerp(0.1f, 0f, Mathf.Abs(eyeRot.y / 45f));
-            float headWeightLerp = Mathf.Lerp(1f, 0.2f, Mathf.Abs(eyeRot.y / 90f));
+            float bodyWeightLerp = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
+            float headWeightLerp = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
             handler.SetLookAtWeight(handler.GetWeight(), bodyWeightLerp*lookModifier, headWeightLerp*lookModifier, 1f*lookModifier, 0.4f);
         }
 

@@ -109,6 +109,7 @@ public class CameraSwitcher : MonoBehaviour {
             
             animatingThirdpersonConfiguration.SetPivot(headAnimatingPivot);
             ((OrbitCameraConfigurationSlide)animatingThirdpersonConfiguration).SetOtherPivot(buttAnimatingPivot);
+            animatingThirdpersonConfiguration.SetCullingMask( ~LayerMask.GetMask("LocalPlayer"));
             
             var freeCamObj = new GameObject("FreeCamPivot");
             freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform);

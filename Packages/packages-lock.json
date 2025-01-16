@@ -72,7 +72,7 @@
       }
     },
     "com.naelstrof.orbitcam": {
-      "version": "https://github.com/naelstrof/com.naelstrof.orbitcam.git#v1.0.1",
+      "version": "https://github.com/naelstrof/com.naelstrof.orbitcam.git#v1.0.2",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -81,7 +81,7 @@
         "com.naelstrof.unityscriptablesettings": "2.4.5",
         "com.unity.inputsystem": "1.7.0"
       },
-      "hash": "231eeec3735562444407de13b7c67e596fe07e29"
+      "hash": "598555e1fb4c4e5cad3406fb9733a7507d9a5f4f"
     },
     "com.naelstrof.penetrationtech": {
       "version": "file:com.naelstrof.penetrationtech",

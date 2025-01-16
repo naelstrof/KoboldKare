@@ -445,6 +445,9 @@ public class PlayerPossession : MonoBehaviourPun {
     }
     
     public void OnCrouchAdjustInput(InputAction.CallbackContext ctx) {
+        if (!movementEnabled) {
+            return;
+        }
         if (ctx.control.device is Mouse) {
             float delta = ctx.ReadValue<float>();
             if (!pGrabber.TryAdjustDistance(0f)) {

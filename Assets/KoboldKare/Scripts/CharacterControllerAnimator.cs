@@ -33,6 +33,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private AudioPack footstepPack;
     
     public bool inputShouldFaceEye = false;
+    public bool inputShouldIgnoreLookDirChange = false;
+    private float lookModifierMemory = 0.5f;
+    private float chestLookMemory = 0.5f;
+    private float headLookMemory = 0.5f;
 
     public delegate void AnimationStateChangeAction(bool animating);
 
@@ -358,19 +362,26 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         //Vector3 lookPos = controller.transform.position + controller.transform.forward;
         Vector3 lookPos = headTransform.position + eyeDir;
 
-        float lookModifier = 1f-Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+        if (!inputShouldIgnoreLookDirChange) {
+            lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+        }
+
         handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
         if (animating) {
             currentStation.SetLookAtPosition(lookPos);
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.4f);
         } else {
-            float bodyWeightLerp = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
-            float headWeightLerp = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
-            handler.SetLookAtWeight(handler.GetWeight(), bodyWeightLerp*lookModifier, headWeightLerp*lookModifier, 1f*lookModifier, 0.4f);
+            if (!inputShouldIgnoreLookDirChange) {
+                chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
+                headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
+            }
+            handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
         }
 
-        handler.SetLookAtPosition(lookPos);
+        if (!inputShouldIgnoreLookDirChange) {
+            handler.SetLookAtPosition(lookPos);
+        }
     }
 
     [PunRPC]

@@ -237,6 +237,7 @@ public class CameraSwitcher : MonoBehaviour {
         freeCamController.enabled = false;
         switch (mode) {
             case CameraMode.FirstPerson:
+                koboldAnimator.inputShouldIgnoreLookDirChange = false;
                 OrbitCamera.ReplaceConfiguration(lastConfig, firstpersonConfiguration);
                 lastConfig = firstpersonConfiguration;
                 koboldAnimator.inputShouldFaceEye = true;
@@ -246,6 +247,7 @@ public class CameraSwitcher : MonoBehaviour {
                 break;
             case CameraMode.ThirdPerson:
                 koboldAnimator.inputShouldFaceEye = false;
+                koboldAnimator.inputShouldIgnoreLookDirChange = false;
                 if (ragdoller.ragdolled) {
                     OrbitCamera.ReplaceConfiguration(lastConfig, thirdpersonRagdollConfiguration);
                     lastConfig = thirdpersonRagdollConfiguration;
@@ -262,6 +264,7 @@ public class CameraSwitcher : MonoBehaviour {
                 break;
             case CameraMode.FreeCam:
                 koboldAnimator.inputShouldFaceEye = false;
+                koboldAnimator.inputShouldIgnoreLookDirChange = true;
                 var data = OrbitCamera.GetCurrentCameraData();
                 freeCamController.SetCameraPosition(data.position+data.rotation*Vector3.back*data.distance);
                 OrbitCamera.ReplaceConfiguration(lastConfig, freecamConfiguration);
@@ -270,6 +273,7 @@ public class CameraSwitcher : MonoBehaviour {
                 possession.SetMovementEnabled(false);
                 controller.inputDir = Vector3.zero;
                 controller.inputJump = false;
+                
                 if (FPSCanvas.activeInHierarchy) {
                     FPSCanvas.SetActive(false);
                 }

@@ -92,9 +92,12 @@ public class SimpleCameraController : OrbitCameraPivotBase {
         // Speed up movement when shift key held
         if (controls.actions["Walk"].ReadValue<float>()>0.5f) {
             translation /= 10.0f;
+        } else {
+            // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
+            boost += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
+            boost = Mathf.Clamp(boost, 0.1f, 6f);
         }
-        // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
-        boost += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
+
         //boost += Input.mouseScrollDelta.y * 0.2f;
         translation *= Mathf.Pow(2.0f, boost);
 

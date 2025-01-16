@@ -15,7 +15,7 @@ public class SceneDescriptor : OrbitCameraPivotBase {
     
     [SerializeField] private Transform[] spawnLocations;
     [SerializeField] private bool canGrabFly = true;
-    [SerializeField, SerializeReference, SerializeReferenceButton] private OrbitCameraConfiguration baseCameraConfiguration;
+    [SerializeField, SerializeReference, SerializeReferenceButton, HideInInspector] private OrbitCameraConfiguration baseCameraConfiguration;
     private AudioListener audioListener;
     private OrbitCamera orbitCamera;
 
@@ -35,17 +35,12 @@ public class SceneDescriptor : OrbitCameraPivotBase {
             Destroy(gameObject);
             return;
         }
-
-        if (baseCameraConfiguration != null) {
-            OrbitCamera.AddConfiguration(baseCameraConfiguration);
-        } else {
-            var newConfig = new OrbitCameraBasicConfiguration();
-            newConfig.SetPivot(this);
-            OrbitCamera.AddConfiguration(newConfig);
-        }
         
-        //var obj = new GameObject("AutoAudioListener", typeof(AudioListenerAutoPlacement), typeof(AudioListener));
-        //audioListener = obj.GetComponent<AudioListener>();
+        var configuration = new OrbitCameraBasicConfiguration();
+        var pivot = new GameObject("OrbitCameraPivot", typeof(OrbitCameraPivotBase));
+        configuration.SetPivot(pivot.GetComponent<OrbitCameraPivotBase>());
+        OrbitCamera.AddConfiguration(configuration);
+        
         var orbitCamera = new GameObject("OrbitCamera", typeof(Camera), typeof(UniversalAdditionalCameraData), typeof(OrbitCamera), typeof(AudioListener), typeof(CameraConfigurationListener)) {
             layer = LayerMask.NameToLayer("Default")
         };

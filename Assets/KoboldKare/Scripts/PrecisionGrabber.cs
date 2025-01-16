@@ -374,6 +374,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         ignoreColliders = colliders;
     }
 
+    public Collider[] GetIgnoreColliders() => ignoreColliders;
+
     private class RaycastHitDistanceComparer : IComparer {
         public int Compare(object x, object y) {
             RaycastHit a = (RaycastHit)x;

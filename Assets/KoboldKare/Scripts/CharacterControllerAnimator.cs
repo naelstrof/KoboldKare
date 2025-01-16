@@ -364,18 +364,27 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
 
         if (!inputShouldIgnoreLookDirChange) {
             lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+            chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
+            headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
         }
 
         handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
         if (animating) {
-            currentStation.SetLookAtPosition(lookPos);
-            currentStation.SetHipOffset(hipVector);
-            handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.4f);
-        } else {
             if (!inputShouldIgnoreLookDirChange) {
-                chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
-                headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
+                var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+                var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
+                var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
+                var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
+                Vector3 hipToHead = head.position - hips.position;
+                Vector3 leftHandToRightHand = right.position - left.position;
+                Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
+                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
             }
+            currentStation.SetLookAtPosition(lookPos);
+            currentStation.SetLookAtWeight(lookModifierMemory*0.5f);
+            currentStation.SetHipOffset(hipVector);
+            handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
+        } else {
             handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
         }
 

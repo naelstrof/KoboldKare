@@ -12,6 +12,7 @@ public class OrbitCameraCharacterHitmanConfiguration : OrbitCameraConfiguration 
     
     private Kobold character;
     private KoboldCharacterController controller;
+    private CharacterControllerAnimator koboldAnimator; 
 
     private OrbitCameraData? lastData;
 
@@ -23,6 +24,7 @@ public class OrbitCameraCharacterHitmanConfiguration : OrbitCameraConfiguration 
         this.buttPivotCenter = buttPivotCenter;
         this.character = character;
         controller = character.GetComponent<KoboldCharacterController>();
+        koboldAnimator = character.GetComponentInChildren<CharacterControllerAnimator>();
     }
 
     public override OrbitCameraData GetData(Camera cam) {

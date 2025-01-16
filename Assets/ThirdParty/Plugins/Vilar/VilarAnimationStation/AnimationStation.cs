@@ -285,6 +285,7 @@ namespace Vilar.AnimationStation {
 		private Vector3 lastScale;
 		private float modifiedProgress;
 		private Vector3 lookAtPosition;
+		private float lookAtWeight;
 
 		public GameObject previewCharacter;
 		private GameObject previewCharacterInstance;
@@ -517,10 +518,14 @@ namespace Vilar.AnimationStation {
 			lookAtPosition = worldPoint;
 		}
 
+		public void SetLookAtWeight(float weight) {
+			lookAtWeight = weight;
+		}
+
 		private Quaternion LookAtRotation(Quaternion currentHeadRotation) {
 			Vector3 blendedHeadPos = Vector3.Lerp(loops[Mathf.FloorToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HEAD], loops[Mathf.CeilToInt(modifiedProgress)].computedTargetPositions[(int)IKTargetSet.parts.HEAD], Mathf.Repeat(modifiedProgress , 1f));
 			Vector3 lookdir = lookAtPosition - blendedHeadPos;
-			return Quaternion.Lerp(Quaternion.FromToRotation(currentHeadRotation*Vector3.forward, lookdir.normalized) * currentHeadRotation, currentHeadRotation, 0.5f);
+			return Quaternion.Lerp(currentHeadRotation,Quaternion.FromToRotation(currentHeadRotation*Vector3.forward, lookdir.normalized) * currentHeadRotation, lookAtWeight);
 		}
 
 		public Quaternion ComputeTargetRotation(int index) {

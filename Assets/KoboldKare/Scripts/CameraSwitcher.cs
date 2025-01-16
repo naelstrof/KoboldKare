@@ -234,12 +234,14 @@ public class CameraSwitcher : MonoBehaviour {
         if (koboldAnimator.IsAnimating() && !isAnimating) {
             if (mode == CameraMode.ThirdPerson) {
                 OrbitCamera.ReplaceConfiguration(thirdpersonConfiguration, animatingThirdpersonConfiguration);
+                lastConfig = animatingThirdpersonConfiguration;
             }
             isAnimating = true;
         }
         if (!koboldAnimator.IsAnimating() && isAnimating) {
             if (mode == CameraMode.ThirdPerson) {
                 OrbitCamera.ReplaceConfiguration( animatingThirdpersonConfiguration, thirdpersonConfiguration);
+                lastConfig = thirdpersonConfiguration;
             }
             isAnimating = false;
         }

@@ -286,7 +286,8 @@ public static class WordFilter {
 };
     
 #endregion
-    private static bool CheckTrigram(StringInfo info, int index, char character, string bannedWord) {
+    private static bool CheckTrigram(StringInfo info, int index, string bannedWord) {
+        var character = info.SubstringByTextElements(index, 1);
         if (info.LengthInTextElements > index + 2) {
             var trigramCheck = character + info.SubstringByTextElements(index + 1, 2);
             bool entirelyComposedOfInvalidLetters = true;
@@ -356,8 +357,12 @@ public static class WordFilter {
                 var index = enumerator.ElementIndex;
                 var element = enumerator.GetTextElement();
                 var character = word[state];
-                if (CheckHomoglyph(character, element) && !CheckTrigram(info, index, character, word)) {
+                if (CheckHomoglyph(character, element) && !CheckTrigram(info, index, word)) {
                     state++;
+                } else if (CheckTrigram(info, index, word)) {
+                    if (state > 0) {
+                        state--;
+                    }
                 }
                 if (state == word.Length) {
                     filtered = word;

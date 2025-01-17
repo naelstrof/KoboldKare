@@ -53,7 +53,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
     public static bool GetBlackListed(string name, out string filtered) {
         return WordFilter.WordFilter.GetBlackListed(name, new[] {
-            "cub", "kid", "kub", "young", "baby", "cubby", "lilboi", "lilboy", "lilgirl", "lilgurl", "lilone"
+            "cub", "kid", "kub", "young", "baby", "cubby", "lilboi", "lilboy", "lilgirl", "lilone"
         }, out filtered, true);
     }
 

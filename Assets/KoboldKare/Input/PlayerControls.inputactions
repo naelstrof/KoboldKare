@@ -265,6 +265,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CameraOrbit",
+                    "type": "Button",
+                    "id": "afdaef1b-7eb9-41fc-aeaf-a79660be0e59",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -947,6 +956,28 @@
                     "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
                     "groups": "",
                     "action": "LookJoystick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "187144a3-4342-4bbb-81f1-08a4dcdb8d35",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraOrbit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac0aa6ee-6951-4b8e-869c-7220952876c7",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraOrbit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

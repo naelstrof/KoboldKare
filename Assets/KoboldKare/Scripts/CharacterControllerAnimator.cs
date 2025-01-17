@@ -34,6 +34,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     
     public bool inputShouldFaceEye = false;
     public bool inputShouldIgnoreLookDirChange = false;
+    public bool legacyControls = false;
     private float lookModifierMemory = 0.5f;
     private float chestLookMemory = 0.5f;
     private float headLookMemory = 0.5f;
@@ -277,12 +278,19 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (!photonView.IsMine) {
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
             facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
-        } else {
+        } else if (!legacyControls) {
             if (controller.inputDir != Vector3.zero && !controller.inputWalking) {
                 facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
             }
-            if (inputShouldFaceEye && !controller.inputWalking) {
+            else if (inputShouldFaceEye && !controller.inputWalking) {
                 facingRot = eyeRot.x;
+            }
+        } else {
+            if (!controller.inputCameraOrbiting) {
+                facingRot = eyeRot.x;
+            }
+            else if (controller.inputDir != Vector3.zero) {
+                facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
             }
         }
         hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);

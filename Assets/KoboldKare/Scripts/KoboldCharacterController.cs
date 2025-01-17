@@ -121,6 +121,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     [HideInInspector]
     public bool inputWalking = false;
 
+    [HideInInspector]
+    public bool inputCameraOrbiting = false;
+
     [Tooltip("Gravity applied per second to the character, generally to make the gravity feel less floaty.")]
     public Vector3 gravityMod = new Vector3(0, -0f, 0);
     [Tooltip("Fixed impulse for how high the character jumps.")]

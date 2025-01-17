@@ -526,6 +526,10 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
 
+    public void OnCameraOrbit(InputValue value) {
+        controller.inputCameraOrbiting = value.Get<float>() > 0f;
+    }
+
     IEnumerator MaintainFocus() {
         yield return new WaitForSecondsRealtime(0.1f);
         while (chatGroup.interactable && isActiveAndEnabled) {

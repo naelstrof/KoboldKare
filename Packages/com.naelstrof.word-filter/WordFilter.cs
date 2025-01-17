@@ -286,7 +286,7 @@ public static class WordFilter {
 };
     
 #endregion
-    static bool CheckTrigram(StringInfo info, int index, char character, string bannedWord) {
+    private static bool CheckTrigram(StringInfo info, int index, char character, string bannedWord) {
         if (info.LengthInTextElements > index + 2) {
             var trigramCheck = character + info.SubstringByTextElements(index + 1, 2);
             bool entirelyComposedOfInvalidLetters = true;
@@ -295,7 +295,7 @@ public static class WordFilter {
                 entirelyComposedOfInvalidLetters = false;
                 break;
             }
-            if (!entirelyComposedOfInvalidLetters && !bannedWord.Contains(trigramCheck)) {
+            if (!entirelyComposedOfInvalidLetters) {
                 if (trigrams.Contains(trigramCheck)) {
                     return true;
                 }
@@ -310,15 +310,30 @@ public static class WordFilter {
                 entirelyComposedOfInvalidLetters = false;
                 break;
             }
-            if (!entirelyComposedOfInvalidLetters && !bannedWord.Contains(trigramCheck)) {
+            if (!entirelyComposedOfInvalidLetters) {
                 if (trigrams.Contains(trigramCheck)) {
                     return true;
                 }
             }
         }
-
+    
+        if (index - 1 >= 0 && info.LengthInTextElements > index+1) {
+            var trigramCheck = info.SubstringByTextElements(index - 1, 1) + character + info.SubstringByTextElements(index + 1, 1);
+            bool entirelyComposedOfInvalidLetters = true;
+            foreach (var c in trigramCheck) {
+                if (bannedWord.Contains(c)) continue;
+                entirelyComposedOfInvalidLetters = false;
+                break;
+            }
+            if (!entirelyComposedOfInvalidLetters) {
+                if (trigrams.Contains(trigramCheck)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
+    
     static bool CheckHomoglyph(char character, string textElement) {
         if (character == textElement[0]) {
             return true;
@@ -329,11 +344,14 @@ public static class WordFilter {
         return character == textElement[0];
     }
 
-    public static bool GetBlacklisted(string stringToCheck, string[] blacklist, out string filtered) {
-        StringInfo info = new StringInfo(stringToCheck.ToLower());
+    public static bool GetBlackListed(string name, string[] blacklist, out string filtered, bool stripRichText = false) {
+        if (stripRichText) {
+            name = name.StripRichText();
+        }
+        StringInfo info = new StringInfo(name);
         foreach (var word in blacklist) {
             int state = 0;
-            var enumerator = StringInfo.GetTextElementEnumerator(stringToCheck.ToLower());
+            var enumerator = StringInfo.GetTextElementEnumerator(name);
             while (enumerator.MoveNext()) {
                 var index = enumerator.ElementIndex;
                 var element = enumerator.GetTextElement();
@@ -347,7 +365,6 @@ public static class WordFilter {
                 }
             }
         }
-
         filtered = "";
         return false;
     }

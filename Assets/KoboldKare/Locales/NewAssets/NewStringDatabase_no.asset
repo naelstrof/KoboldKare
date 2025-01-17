@@ -82,7 +82,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: "\xC5pne siden for personvern"
+    m_Localized: "\xC5pne siden for datavern"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
@@ -252,7 +252,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: Ta tak i skyv og trekk
+    m_Localized: Grip skyv og trekk
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
@@ -344,7 +344,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
-    m_Localized: Ustabilt reagens
+    m_Localized: Ustabil reagens
     m_Metadata:
       m_Items: []
   - m_Id: 516099198984
@@ -603,7 +603,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
-    m_Localized: Kandi's Dick
+    m_Localized: Kandi sin Dick
     m_Metadata:
       m_Items: []
   - m_Id: 40936863676551168
@@ -779,7 +779,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Det er i v\xE5r beste interesse \xE5 ha noen supertunge kobolder,
+    m_Localized: "Det er i v\xE5r beste interesse \xE5 ha noen f\xE5 supertunge kobolder,
       fete opp noen og sende dem til meg."
     m_Metadata:
       m_Items: []
@@ -1014,7 +1014,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790596
     m_Localized: "Bruk en oppbl\xE5singsmaskin for \xE5 lage en kobold stor og rund.
-      Jeg tror det kunne v\xE6rt g\xF8y \xE5 se dem rulle rundt eller noe."
+      Jeg tror det kunne v\xE6rt morsomt \xE5 se dem rulle rundt eller noe."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1401,12 +1401,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Det var et unntak ved \xE5 laste en mod, dette kan \xF8delegge
+    m_Localized: "Det var et unntak ved \xE5 laste inn en mod, dette kan \xF8delegge
       spillet. Vennligst dobbeltsjekk modsene dine."
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
     m_Localized: Navnet du skrev inn er ikke passende, skriv inn noe annet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Skjul heads up-skjerm
     m_Metadata:
       m_Items: []
   references:

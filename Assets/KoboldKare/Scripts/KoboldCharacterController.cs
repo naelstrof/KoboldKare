@@ -130,7 +130,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     [Tooltip("The speed at which acceleration is no longer applied when the player is crouch-moving.")]
     public float crouchSpeed = 4f;
     [Tooltip("Speed multiplier for when inputWalking is true.")]
-    public float walkSpeedMultiplier = 0.4f;
+    public float walkSpeedMultiplier = 0.5f;
     [Tooltip("How quickly the player reaches max speed while walking.")]
     public float accel = 7f;
     [Tooltip("How quickly the player reaches max speed while crouch-walking.")]

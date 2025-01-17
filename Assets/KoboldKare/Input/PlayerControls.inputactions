@@ -265,6 +265,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HideHUD",
+                    "type": "Button",
+                    "id": "fe664bc5-2990-4e51-9e8a-d6223ad3bee2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -947,6 +956,28 @@
                     "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
                     "groups": "",
                     "action": "LookJoystick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1b4410c-6b1f-42c6-bb12-dd1434b0e9b2",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideHUD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8d114b3-ec6d-4197-9933-4b8c988fe774",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideHUD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

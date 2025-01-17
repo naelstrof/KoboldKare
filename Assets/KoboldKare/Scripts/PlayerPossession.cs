@@ -404,6 +404,7 @@ public class PlayerPossession : MonoBehaviourPun {
         user.Use();
     }
     public void OnGrabInput(InputAction.CallbackContext ctx) {
+        characterControllerAnimator.inputGrabbing = true;
         grabbing = true;
         if (switchedMode) {
             pGrabber.TryGrab();
@@ -422,6 +423,7 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void OnGrabCancelled(InputAction.CallbackContext ctx) {
+        characterControllerAnimator.inputGrabbing = false;
         grabbing = false;
         grabber.TryDrop();
         pGrabber.TryDrop();
@@ -465,10 +467,12 @@ public class PlayerPossession : MonoBehaviourPun {
     void OnActivateGrabInput(InputAction.CallbackContext ctx) {
         grabber.TryActivate();
         pGrabber.TryFreeze();
+        characterControllerAnimator.inputActivate = true;
         StartCoroutine(PauseInputForSeconds(0.5f));
     }
     void OnActivateGrabCancelled(InputAction.CallbackContext ctx) {
         grabber.TryStopActivate();
+        characterControllerAnimator.inputActivate = false;
     }
     void OnUnfreezeInput(InputAction.CallbackContext ctx) {
         pGrabber.TryUnfreeze();

@@ -95,6 +95,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
+
+    public bool inputActivate;
+    public bool inputGrabbing;
+    
     //public void SetEyeDir(Vector3 newEyeDir) {
         //Quaternion rot = Quaternion.LookRotation(newEyeDir);
         //Vector3 euler = rot.eulerAngles;
@@ -108,6 +112,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     public void SetFacingDirection(Vector3 direction) {
         facingRot = Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
     }
+
+    public Vector3 GetFacingDirection() => Quaternion.AngleAxis(facingRot, Vector3.up)*Vector3.forward;
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
@@ -278,10 +284,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
             facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
         } else {
-            if (controller.inputDir != Vector3.zero && !controller.inputWalking) {
+            if (controller.inputDir != Vector3.zero && !controller.inputWalking && !inputActivate && !inputGrabbing) {
                 facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
             }
-            if (inputShouldFaceEye && !controller.inputWalking) {
+            if ((inputShouldFaceEye || inputActivate || inputGrabbing) && !controller.inputWalking) {
                 facingRot = eyeRot.x;
             }
         }
@@ -435,7 +441,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     void FixedUpdate() {
         Quaternion characterRot = Quaternion.Euler(0, facingRot, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 20f;
+        float deflectionForgivenessDegrees = 12f;
         var forward = body.transform.forward;
         Vector3 cross = Vector3.Cross(forward, fdir);
         float angleDiff = Mathf.Max(Vector3.Angle(forward, fdir) - deflectionForgivenessDegrees, 0f);

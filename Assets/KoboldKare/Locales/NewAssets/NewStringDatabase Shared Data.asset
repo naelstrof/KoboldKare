@@ -1335,6 +1335,10 @@ MonoBehaviour:
     m_Key: ERROR_INAPPROPRIATE_NAME
     m_Metadata:
       m_Items: []
+  - m_Id: 524703093826330624
+    m_Key: CONTROLS_HIDE_HUD
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

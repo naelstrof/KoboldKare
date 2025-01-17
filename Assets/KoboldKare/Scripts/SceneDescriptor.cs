@@ -37,7 +37,7 @@ public class SceneDescriptor : OrbitCameraPivotBase {
         }
         
         var configuration = new OrbitCameraBasicConfiguration();
-        var pivot = new GameObject("OrbitCameraPivot", typeof(OrbitCameraPivotBase));
+        var pivot = new GameObject("OrbitCameraPivot", typeof(OrbitCameraPivotBasic));
         configuration.SetPivot(pivot.GetComponent<OrbitCameraPivotBase>());
         OrbitCamera.AddConfiguration(configuration);
         

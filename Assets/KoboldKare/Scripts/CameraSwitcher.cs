@@ -12,12 +12,15 @@ public class CameraSwitcher : MonoBehaviour {
     private OrbitCameraBasicConfiguration freecamConfiguration;
     private OrbitCameraBasicConfiguration lockedFreecamConfiguration;
     //private OrbitCameraLockedOffsetPivot lockedFreecamPivot;
-    private OrbitRagdollPivot basicRagdollPivot;
+    //private OrbitRagdollPivot basicRagdollPivot;
     private SimpleCameraController freeCamController;
     
     private OrbitCameraPivotBasic headPivot;
     private OrbitCameraPivotBasic crouchPivot;
     private OrbitCameraPivotBasic buttPivot;
+    
+    private OrbitCameraPivotBasic headOogle;
+    private OrbitCameraPivotBasic buttOogle;
 
     private OrbitCameraPivotBasic headAnimatingPivot;
     private OrbitCameraPivotBasic buttAnimatingPivot;
@@ -46,22 +49,26 @@ public class CameraSwitcher : MonoBehaviour {
         FreeCam,
     }
     private CameraMode? mode = null;
+    private const float thirdPersonCameraDistance = 1.5f;
 
     void OnKoboldSizeChange(float newSize) {
-        crouchPivot.SetDesiredDistanceFromPivot(1.75f * newSize);
-        headPivot.SetDesiredDistanceFromPivot(1.75f * newSize);
-        headAnimatingPivot.SetDesiredDistanceFromPivot(1.75f * newSize);
-        buttAnimatingPivot.SetDesiredDistanceFromPivot(1.75f * newSize);
-        buttPivot.SetDesiredDistanceFromPivot(1f * newSize);
-        basicRagdollPivot.SetDesiredDistanceFromPivot(1.75f*newSize);
+        crouchPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
+        headPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
+        headAnimatingPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
+        buttAnimatingPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
+        buttPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance*0.5f * newSize);
+        
+        headOogle.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
+        buttOogle.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
     }
     private void OnFOVChanged(float fov) {
         crouchPivot.SetBaseFOV(fov-5f);
         headPivot.SetBaseFOV(fov);
-        buttPivot.SetBaseFOV(fov+5);
+        buttPivot.SetBaseFOV(fov+3);
         headAnimatingPivot.SetBaseFOV(fov);
         buttAnimatingPivot.SetBaseFOV(fov);
-        basicRagdollPivot.SetBaseFOV(fov);
+        headOogle.SetBaseFOV(fov);
+        buttOogle.SetBaseFOV(fov);
     }
 
     void OnEnable() {
@@ -79,7 +86,6 @@ public class CameraSwitcher : MonoBehaviour {
         koboldAnimator = GetComponentInParent<CharacterControllerAnimator>();
         ragdoller = GetComponentInParent<Ragdoller>();
         precisionGrabber = GetComponentInParent<PrecisionGrabber>();
-        precisionGrabber.grabChanged += OnGrabChanged;
         ragdoller.RagdollEvent += OnRagdollEvent;
         if (firstpersonConfiguration == null) {
             firstpersonConfiguration = CreateFPSConfig(kobold, fov);
@@ -96,7 +102,7 @@ public class CameraSwitcher : MonoBehaviour {
             headPivotObj.transform.localPosition = Vector3.zero;
             headAnimatingPivot = headPivotObj.GetComponent<OrbitCameraPivotBasic>();
             headAnimatingPivot.SetScreenOffset(new Vector2(0.5f, 0.55f));
-            headAnimatingPivot.SetDesiredDistanceFromPivot(1.75f);
+            headAnimatingPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
             headAnimatingPivot.SetBaseFOV(fov);
             
             GameObject buttPivotObj = new GameObject("ButtPivotAnimating", typeof(OrbitCameraPivotBasic));
@@ -104,7 +110,7 @@ public class CameraSwitcher : MonoBehaviour {
             buttPivotObj.transform.localPosition = Vector3.zero;
             buttAnimatingPivot = buttPivotObj.GetComponent<OrbitCameraPivotBasic>();
             buttAnimatingPivot.SetScreenOffset(new Vector2(0.5f, 0.45f));
-            buttAnimatingPivot.SetDesiredDistanceFromPivot(1.75f);
+            buttAnimatingPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
             buttAnimatingPivot.SetBaseFOV(fov);
             
             animatingThirdpersonConfiguration.SetPivot(headAnimatingPivot);
@@ -122,19 +128,8 @@ public class CameraSwitcher : MonoBehaviour {
             freecamConfiguration.SetPivot(freeCamController);
             freecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
 
-            basicRagdollPivot = animator.GetBoneTransform(HumanBodyBones.Spine).gameObject.AddComponent<OrbitRagdollPivot>();
-            basicRagdollPivot.SetScreenOffset(new Vector2(0.5f, 0.33f));
-            basicRagdollPivot.SetDesiredDistanceFromPivot(1.75f);
-            basicRagdollPivot.SetBaseFOV(fov);
-            
-            thirdpersonRagdollConfiguration = new OrbitCameraBasicConfiguration();
-            thirdpersonRagdollConfiguration.SetPivot(basicRagdollPivot);
-            thirdpersonRagdollConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
-            
-            //lockedFreecamPivot = animator.GetBoneTransform(HumanBodyBones.Chest).gameObject.AddComponent<OrbitCameraLockedOffsetPivot>();
-            //lockedFreecamConfiguration = new OrbitCameraBasicConfiguration();
-            //lockedFreecamConfiguration.SetPivot(lockedFreecamPivot);
-            //lockedFreecamConfiguration.SetCullingMask(~LayerMask.GetMask("LocalPlayer"));
+            thirdpersonRagdollConfiguration = animatingThirdpersonConfiguration;
+
         }
         initialized = false;
         OrbitCamera.AddConfiguration(firstpersonConfiguration);
@@ -163,45 +158,54 @@ public class CameraSwitcher : MonoBehaviour {
     private OrbitCameraCharacterHitmanConfiguration CreateShoulderConfig(Kobold character, float fov) {
         var animator = character.GetComponentInChildren<CharacterControllerAnimator>()?.GetPlayerModel() ?? character.GetComponentInChildren<Animator>();
         
-        //Vector3 headLocalPos = character.transform.InverseTransformPoint(animator.GetBoneTransform(HumanBodyBones.Head).position);
+        Vector3 headLocalPos = character.transform.InverseTransformPoint(animator.GetBoneTransform(HumanBodyBones.Head).position);
         
         GameObject headPivotObj = new GameObject("HeadPivot", typeof(OrbitCameraPivotBasic));
-        headPivotObj.transform.SetParent(animator.GetBoneTransform(HumanBodyBones.Head));
-        headPivotObj.transform.localPosition = Vector3.zero;
-        //headPivotObj.transform.localPosition = headLocalPos.With(x: 0f, z: 0f);
+        headPivotObj.transform.SetParent(character.transform.transform);
+        //headPivotObj.transform.localPosition = Vector3.zero;
+        headPivotObj.transform.localPosition = headLocalPos.With(x: 0f, z: 0f);
         headPivot = headPivotObj.GetComponent<OrbitCameraPivotBasic>();
-        headPivot.SetScreenOffset(new Vector2(0.32f, 0.55f));
-        headPivot.SetDesiredDistanceFromPivot(1.75f);
+        headPivot.SetScreenOffset(new Vector2(0.35f, 0.55f));
+        headPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
         headPivot.SetBaseFOV(fov);
         
         GameObject crouchPivotObj = new GameObject("CrouchPivot", typeof(OrbitCameraPivotBasic));
-        crouchPivotObj.transform.SetParent(animator.GetBoneTransform(HumanBodyBones.Head));
-        crouchPivotObj.transform.localPosition = Vector3.zero;
-        //crouchPivotObj.transform.localPosition = (headLocalPos).With(x: 0f, z: 0f);
+        crouchPivotObj.transform.SetParent(character.transform);
+        //crouchPivotObj.transform.localPosition = Vector3.zero;
+        crouchPivotObj.transform.localPosition = (headLocalPos).With(x: 0f, z: 0f);
         crouchPivot = crouchPivotObj.GetComponent<OrbitCameraPivotBasic>();
-        crouchPivot.SetScreenOffset(new Vector2(0.32f, 0.5f));
-        crouchPivot.SetDesiredDistanceFromPivot(1.75f);
+        crouchPivot.SetScreenOffset(new Vector2(0.35f, 0.5f));
+        crouchPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
         crouchPivot.SetBaseFOV(fov-5f);
         
         GameObject buttPivotObj = new GameObject("ButtPivot", typeof(OrbitCameraPivotBasic));
         buttPivotObj.transform.SetParent(animator.GetBoneTransform(HumanBodyBones.Hips));
         buttPivotObj.transform.localPosition = Vector3.zero;
         buttPivot = buttPivotObj.GetComponent<OrbitCameraPivotBasic>();
-        buttPivot.SetScreenOffset(new Vector2(0.5f, 0.32f));
+        buttPivot.SetScreenOffset(new Vector2(0.5f, 0.38f));
         buttPivot.SetDesiredDistanceFromPivot(1f);
-        buttPivot.SetBaseFOV(fov+5f);
+        buttPivot.SetBaseFOV(fov+3f);
+        
+        GameObject buttOoglePivotObj = new GameObject("ButtOoglePivot", typeof(OrbitCameraPivotBasic));
+        buttOoglePivotObj.transform.SetParent(animator.GetBoneTransform(HumanBodyBones.Hips));
+        buttOoglePivotObj.transform.localPosition = Vector3.zero;
+        buttOogle = buttOoglePivotObj.GetComponent<OrbitCameraPivotBasic>();
+        buttOogle.SetScreenOffset(new Vector2(0.5f, 0.65f));
+        buttOogle.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
+        buttOogle.SetBaseFOV(fov);
+        
+        GameObject headOoglePivotObj = new GameObject("HeadOoglePivot", typeof(OrbitCameraPivotBasic));
+        headOoglePivotObj.transform.SetParent(character.transform.transform);
+        //headPivotObj.transform.localPosition = Vector3.zero;
+        headOoglePivotObj.transform.localPosition = headLocalPos.With(x: 0f, z: 0f);
+        headOogle = headOoglePivotObj.GetComponent<OrbitCameraPivotBasic>();
+        headOogle.SetScreenOffset(new Vector2(0.5f, 0.50f));
+        headOogle.SetDesiredDistanceFromPivot(thirdPersonCameraDistance);
+        headOogle.SetBaseFOV(fov);
         
         var config = new OrbitCameraCharacterHitmanConfiguration();
-        config.SetPivots(character, headPivot, crouchPivot, buttPivot);
+        config.SetPivots(character, headPivot, crouchPivot, buttPivot, buttOogle, headOogle);
         return config;
-    }
-
-    void OnGrabChanged(GameObject grab) {
-        if (grab == null) {
-            basicRagdollPivot.SetFreeze(false);
-        } else {
-            basicRagdollPivot.SetFreeze(grab.transform.IsChildOf(ragdoller.transform));
-        }
     }
 
     void OnRagdollEvent(bool ragdolled) {
@@ -223,7 +227,6 @@ public class CameraSwitcher : MonoBehaviour {
         }
         OrbitCamera.RemoveConfiguration(lastConfig);
         ragdoller.RagdollEvent -= OnRagdollEvent;
-        precisionGrabber.grabChanged -= OnGrabChanged;
         if (GetComponentInParent<Kobold>() != null) {
             GetComponentInParent<Kobold>().sizeInflater.changed -= OnKoboldSizeChange;
         }
@@ -254,6 +257,20 @@ public class CameraSwitcher : MonoBehaviour {
 
         int index = ((int)mode.Value + 1) % 3;
         SwitchCamera((CameraMode)index);
+    }
+
+    public void OnHideHUD() {
+        if (!FPSCanvas.activeInHierarchy) {
+            FPSCanvas.SetActive(true);
+        } else {
+            FPSCanvas.SetActive(false);
+        }
+    }
+
+    public void OnPause() {
+        if (!FPSCanvas.activeInHierarchy) {
+            FPSCanvas.SetActive(true);
+        }
     }
 
     public void OnFirstPerson() {
@@ -292,9 +309,6 @@ public class CameraSwitcher : MonoBehaviour {
                 OrbitCamera.ReplaceConfiguration(lastConfig, firstpersonConfiguration);
                 lastConfig = firstpersonConfiguration;
                 koboldAnimator.inputShouldFaceEye = true;
-                if (!FPSCanvas.activeInHierarchy) {
-                    FPSCanvas.SetActive(true);
-                }
                 break;
             case CameraMode.ThirdPerson:
                 collidersMemory = precisionGrabber.GetIgnoreColliders();
@@ -311,10 +325,6 @@ public class CameraSwitcher : MonoBehaviour {
                     //buttPivot.SnapInstant();
                     OrbitCamera.ReplaceConfiguration(lastConfig, isAnimating ? animatingThirdpersonConfiguration : thirdpersonConfiguration);
                     lastConfig = isAnimating ? animatingThirdpersonConfiguration : thirdpersonConfiguration;
-                }
-
-                if (!FPSCanvas.activeInHierarchy) {
-                    FPSCanvas.SetActive(true);
                 }
                 break;
             case CameraMode.FreeCam:
@@ -333,10 +343,6 @@ public class CameraSwitcher : MonoBehaviour {
                 possession.SetMovementEnabled(false);
                 controller.inputDir = Vector3.zero;
                 controller.inputJump = false;
-                
-                if (FPSCanvas.activeInHierarchy) {
-                    FPSCanvas.SetActive(false);
-                }
                 break;
         }
 

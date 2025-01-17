@@ -31182,6 +31182,17 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
+  - control: {fileID: 615795531489931056, guid: b80237a58ac8c22458251d7c9dcacf88,
+      type: 3}
+    controlName:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+      m_TableEntryReference:
+        m_KeyId: 524703093826330624
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 1
+      m_LocalVariables: []
   rebindPrefab: {fileID: 6680292650503350822, guid: f25dcd618d3acd64795bf8bb32edb6c9,
     type: 3}
   rebindUI: {fileID: 7215547118494086251}

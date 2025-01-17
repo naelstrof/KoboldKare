@@ -325,7 +325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198978
-    m_Localized: Batido
+    m_Localized: Batido de leite
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
@@ -759,7 +759,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Cumflate kobolds!
+    m_Localized: Kobolds cumflate!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
@@ -1056,7 +1056,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: "Basta selecionar algo na parede e n\xF3s construiremos para voc\xEA."
+    m_Localized: "Basta selecionar algo na parede e n\xF3s constru\xEDmos para voc\xEA."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
@@ -1090,8 +1090,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
-    m_Localized: "Use explosivos para explodir os destro\xE7os da fazenda para que
-      voc\xEA tenha mais espa\xE7o."
+    m_Localized: "Use explosivos para explodir os destro\xE7os da fazenda para ter
+      mais espa\xE7o."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
@@ -1412,6 +1412,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: "O nome que voc\xEA digitou n\xE3o \xE9 apropriado. Digite algo
       diferente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Ocultar display de alerta
     m_Metadata:
       m_Items: []
   references:

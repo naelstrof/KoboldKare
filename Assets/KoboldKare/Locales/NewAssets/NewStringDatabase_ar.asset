@@ -1649,6 +1649,10 @@ MonoBehaviour:
       \u0625\u062F\u062E\u0627\u0644 \u0627\u0633\u0645 \u0645\u062E\u062A\u0644\u0641."
     m_Metadata:
       m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "\u0625\u062E\u0641\u0627\u0621 \u0639\u0631\u0636 \u0627\u0644\u0631\u0624\u0648\u0633"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

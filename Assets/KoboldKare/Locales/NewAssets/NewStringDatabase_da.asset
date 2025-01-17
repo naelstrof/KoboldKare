@@ -1196,8 +1196,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Jeg vil have en masse forskellige typer kobold, og det betyder,
-      at du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
+    m_Localized: "Jeg vil have mange forskellige typer kobold, og det betyder, at
+      du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1408,6 +1408,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: Det navn, du indtastede, er ikke passende. Indtast venligst noget
       andet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Skjul heads up display
     m_Metadata:
       m_Items: []
   references:

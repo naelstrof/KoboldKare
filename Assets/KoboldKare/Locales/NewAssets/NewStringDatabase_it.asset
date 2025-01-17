@@ -929,7 +929,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: Ti ho inviato alcune scorte per preparare un hamburger, usa il macinino
-      per unirli e poi darlo a un coboldo.
+      per unirli e poi darlo da mangiare a un coboldo.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1043,7 +1043,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Sei davvero nudo.
+    m_Localized: Ehi! Sei davvero nudo.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
@@ -1220,7 +1220,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: Voglio un sacco di coboldi grassi, sono utilissimi come fermacarte
+    m_Localized: Voglio un sacco di coboldi grassi, sono davvero utili come fermacarte
       e cuscini.
     m_Metadata:
       m_Items: []
@@ -1229,8 +1229,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Ho bisogno di un sacco di coboldi con cazzi giganti, \xE8 vitale
-      per i miei piani."
+    m_Localized: "Ho bisogno di tanti coboldi con cazzi giganti, \xE8 vitale per
+      i miei piani."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1414,6 +1414,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: "Il nome che hai inserito non \xE8 appropriato, inserisci qualcosa
       di diverso."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Nascondi il display heads-up
     m_Metadata:
       m_Items: []
   references:

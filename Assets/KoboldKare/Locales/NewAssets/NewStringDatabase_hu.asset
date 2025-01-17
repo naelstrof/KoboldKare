@@ -947,8 +947,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "A Kobold tejnek sok t\xE1p\xE9rt\xE9ke van, pr\xF3b\xE1lja meg
-      m\xE1sokkal kombin\xE1lni egy v\xF6d\xF6rben, hogy \xFAj \xE9teleket k\xE9sz\xEDtsen."
+    m_Localized: "A Kobold tejnek nagy a t\xE1p\xE9rt\xE9ke, pr\xF3b\xE1lja meg m\xE1sokkal
+      kombin\xE1lni egy v\xF6d\xF6rben, hogy \xFAj \xE9teleket k\xE9sz\xEDtsen."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -1054,7 +1054,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Egy\xE9bk\xE9nt hol tartod a p\xE9nzed..."
+    m_Localized: "Am\xFAgy hol tartod a p\xE9nzed..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
@@ -1132,8 +1132,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "\xDCdv\xF6z\xF6lj\xFCk! Vet\u0151magot keresel? Nek\xFCnk is van
-      kobold toj\xE1sunk!"
+    m_Localized: "\xDCdv\xF6z\xF6lj\xFCk! Vet\u0151magot szeretne v\xE1s\xE1rolni?
+      Nek\xFCnk is van kobold toj\xE1sunk!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1247,8 +1247,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "T\xF6bbet szeretn\xE9k ebb\u0151l az \xF3ri\xE1si t\xEDpus\xFA
-      koboldb\xF3l, nagyon hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
+    m_Localized: "T\xF6bb ilyen \xF3ri\xE1s t\xEDpus\xFA koboldot szeretn\xE9k, nagyon
+      hasznosak a mennyezet tiszt\xEDt\xE1s\xE1hoz."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1425,6 +1425,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: "A megadott n\xE9v nem megfelel\u0151, k\xE9rj\xFCk, adjon meg valami
       m\xE1st."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Figyelemfelkelt\u0151 kijelz\u0151 elrejt\xE9se"
     m_Metadata:
       m_Items: []
   references:

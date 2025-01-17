@@ -981,7 +981,8 @@ MonoBehaviour:
   - m_Id: 213469775675314182
     m_Localized: "S\u1EEFa Kobold c\xF3 r\u1EA5t nhi\u1EC1u gi\xE1 tr\u1ECB dinh
       d\u01B0\u1EE1ng, h\xE3y th\u1EED k\u1EBFt h\u1EE3p n\xF3 v\u1EDBi nh\u1EEFng
-      th\u1EE9 kh\xE1c trong x\xF4 \u0111\u1EC3 l\xE0m m\xF3n \u0103n m\u1EDBi."
+      th\u1EE9 kh\xE1c trong x\xF4 \u0111\u1EC3 ch\u1EBF bi\u1EBFn m\xF3n \u0103n
+      m\u1EDBi."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
@@ -1092,8 +1093,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "D\xF9 sao th\xEC ch\u1EC9 c\u1EA7n uh.. t\u1EF1 gi\xFAp m\xECnh
-      \u0111i, t\xF4i \u0111o\xE1n v\u1EADy."
+    m_Localized: "D\xF9 sao th\xEC, uh.. t\u1EF1 gi\xFAp m\xECnh \u0111i, t\xF4i
+      \u0111o\xE1n v\u1EADy."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
@@ -1219,7 +1220,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "\u0110\u1EB1ng tr\u01B0\u1EDBc \u0111\u1EB1ng kia c\xF3 \u0111\u1ED3,
-      \u0111\u1EB1ng sau c\u0169ng c\xF3 \u0111\u1ED3 n\xEAn c\u1EE9 v\xE0o \u0111\xE2y
+      ph\xEDa sau c\u0169ng c\xF3 \u0111\u1ED3 n\xEAn c\u1EE9 v\xE0o \u0111\xE2y
       \u0111i, kh\xF4ng c\u1EA7n ng\u1EA1i ng\xF9ng \u0111\xE2u."
     m_Metadata:
       m_Items: []
@@ -1301,8 +1302,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783215620103
     m_Localized: "T\xF4i c\u1EA7n r\u1EA5t nhi\u1EC1u kobold v\u1EDBi nh\u1EEFng
-      con g\xE0 tr\u1ED1ng kh\u1ED5ng l\u1ED3, n\xF3 r\u1EA5t quan tr\u1ECDng cho
-      k\u1EBF ho\u1EA1ch c\u1EE7a t\xF4i."
+      con g\xE0 tr\u1ED1ng kh\u1ED5ng l\u1ED3, n\xF3 r\u1EA5t quan tr\u1ECDng \u0111\u1ED1i
+      v\u1EDBi k\u1EBF ho\u1EA1ch c\u1EE7a t\xF4i."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
@@ -1498,6 +1499,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: "T\xEAn b\u1EA1n nh\u1EADp kh\xF4ng ph\xF9 h\u1EE3p, vui l\xF2ng
       nh\u1EADp t\xEAn kh\xE1c."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "\u1EA8n m\xE0n h\xECnh c\u1EA3nh b\xE1o"
     m_Metadata:
       m_Items: []
   references:

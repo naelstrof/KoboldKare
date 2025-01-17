@@ -1427,6 +1427,10 @@ MonoBehaviour:
       Sie einen anderen Namen ein.
     m_Metadata:
       m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Heads-up-Display ausblenden
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

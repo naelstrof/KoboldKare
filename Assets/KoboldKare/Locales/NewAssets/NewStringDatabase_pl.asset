@@ -1060,7 +1060,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Gdzie w og\xF3le trzymasz pieni\u0105dze..."
+    m_Localized: "Gdzie ty w og\xF3le trzymasz swoje pieni\u0105dze..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
@@ -1150,8 +1150,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: "Z twojego braku ubra\u0144 zgaduj\u0119 po trochu jedno i drugie.
-      Mo\u017Cesz zagra\u0107 na maszynie Panchinko, aby zdoby\u0107 ozdoby."
+    m_Localized: "Z braku ciuch\xF3w wnioskuj\u0119, \u017Ce jedno i drugie. Mo\u017Cesz
+      zagra\u0107 na maszynie Panchinko, aby zdoby\u0107 ozdoby."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1432,6 +1432,10 @@ MonoBehaviour:
   - m_Id: 523772124214665216
     m_Localized: "Wprowadzona nazwa nie jest odpowiednia. Prosz\u0119 wpisa\u0107
       inn\u0105."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Ukryj wy\u015Bwietlacz przezierny"
     m_Metadata:
       m_Items: []
   references:

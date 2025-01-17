@@ -911,12 +911,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: Muni muna!
+    m_Localized: Muna muna!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
     m_Localized: "Kaupasta saatavat munat eiv\xE4t ole yht\xE4 hyvi\xE4. Etsi hyv\xE4
-      kobold, tee ne raskaaksi ja aseta ne sitten kasvatusasemalle."
+      kobold, tee ne raskaaksi ja aseta ne kasvatusasemalle."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
@@ -974,7 +974,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oi hoh, tervetuloa...
+    m_Localized: Oi hoho... tervetuloa...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -1009,7 +1009,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Haluan, ett\xE4 saat yhden koboldistasi munimaan ison munan. Niin
-      iso kuin sen oikeasti saa."
+      iso kuin vain saat."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1245,7 +1245,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783215620107
     m_Localized: "L\xE4het\xE4 minulle paljon isoja boobie-koboldeja. T\xE4m\xE4
-      ei ole k\xE4yt\xE4nn\xF6llist\xE4, niit\xE4 on vain hauskaa heilutella."
+      ei ole k\xE4yt\xE4nn\xF6llinen, vaan niit\xE4 on vain hauska heilutella."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1411,7 +1411,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
-    m_Localized: Antamasi nimi ei ole sopiva. Anna jotain muuta.
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Piilota heads up -n\xE4ytt\xF6"
     m_Metadata:
       m_Items: []
   references:

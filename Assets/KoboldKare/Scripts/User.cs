@@ -20,17 +20,27 @@ public class User : MonoBehaviourPun {
             return internalKobold;
         }
     }
+
     public SpriteEvent OnEnterUsable;
     public UnityEvent OnExitUsable;
     public UnityEvent OnUse;
     public Sprite unknownUsableSprite;
     private HashSet<Tuple<GenericUsable,GameObject>> possibleUsables = new HashSet<Tuple<GenericUsable,GameObject>>();
     private GenericUsable closestUsable = null;
+    private CapsuleCollider capsuleCollider;
+
+    private void Awake() {
+        capsuleCollider = GetComponent<CapsuleCollider>();
+    }
 
     public void LateUpdate() {
-        if (!photonView.IsMine) return;
+        var ownedKobold = kobold;
+        if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
-        transform.position = transform.parent.position + OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward;
+        
+        var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.forward * (capsuleCollider.height*0.5f);
+        float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
+        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - ownedKobold.GetGenes().baseSize*0.2f, 0f));
     }
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
@@ -51,6 +61,7 @@ public class User : MonoBehaviourPun {
         }
     }
     void FixedUpdate() {
+        capsuleCollider.height = kobold.GetGenes().baseSize * 0.20f;
         SortGrabbables();
         possibleUsables.Clear();
     }

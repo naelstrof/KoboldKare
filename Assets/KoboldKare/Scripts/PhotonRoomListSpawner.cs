@@ -4,12 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
 using System.Collections;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using SimpleJSON;
 
 public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
     public GameObject roomPrefab;
@@ -53,7 +48,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
     public static bool GetBlackListed(string name, out string filtered) {
         return WordFilter.WordFilter.GetBlackListed(name, new[] {
-            "cub", "kid", "kub", "young", "baby", "cubby", "lilboi", "lilboy", "lilgirl", "lilone"
+            "cub", "kid", "kub", "young", "baby", "cubby", "lilboi", "lilboy", "lilgirl", "lilone", "ageplay",
         }, out filtered, true);
     }
 

@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: bc0a95306787ee14c8cba6b6697de1e1, type: 3}
   m_ValidKeywords:
   - _PENETRATION_DEFORMATION_DETAIL_ON
-  - _PENETRATION_DEFORMATION_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

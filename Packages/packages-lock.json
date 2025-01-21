@@ -21,6 +21,13 @@
       "dependencies": {},
       "hash": "286b9a167a539efdedd6c3d131b049edd0019d41"
     },
+    "com.mackysoft.serializereference-extensions": {
+      "version": "https://github.com/mackysoft/Unity-SerializeReferenceExtensions.git?path=Assets/MackySoft/MackySoft.SerializeReferenceExtensions",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f938fc5d9a9ef46a1669289450d38e17cb39567c"
+    },
     "com.naelstrof.easing": {
       "version": "file:com.naelstrof.easing",
       "depth": 0,
@@ -28,10 +35,11 @@
       "dependencies": {}
     },
     "com.naelstrof.extensions": {
-      "version": "file:com.naelstrof.extensions",
+      "version": "https://github.com/naelstrof/com.naelstrof.extensions.git#v0.0.2",
       "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+      "source": "git",
+      "dependencies": {},
+      "hash": "36cbdb2cf2ced30bcb0cce07ec2284986b199c0b"
     },
     "com.naelstrof.inflatable": {
       "version": "file:com.naelstrof.inflatable",
@@ -43,11 +51,11 @@
       }
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v6.1.5",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.2.8",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "20346f781ab3a2867810293ca8d04e05c49c6c0e"
+      "hash": "c92006802c4271b098160d3eee96df849e39b0c2"
     },
     "com.naelstrof.modding": {
       "version": "file:com.naelstrof.modding",
@@ -64,19 +72,24 @@
       }
     },
     "com.naelstrof.orbitcam": {
-      "version": "file:com.naelstrof.orbitcam",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "com.naelstrof.penetrationtech": {
-      "version": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.6",
+      "version": "https://github.com/naelstrof/com.naelstrof.orbitcam.git#v1.0.2",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.textus-games.serialized-reference-ui": "1.0.0"
+        "com.mackysoft.serializereference-extensions": "1.3.0",
+        "com.naelstrof.extensions": "0.0.1",
+        "com.naelstrof.unityscriptablesettings": "2.4.5",
+        "com.unity.inputsystem": "1.7.0"
       },
-      "hash": "74cbbd4b91724821083a23105ed8bc7360109fe8"
+      "hash": "598555e1fb4c4e5cad3406fb9733a7507d9a5f4f"
+    },
+    "com.naelstrof.penetrationtech": {
+      "version": "file:com.naelstrof.penetrationtech",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.textus-games.serialized-reference-ui": "1.0.0"
+      }
     },
     "com.naelstrof.photon.profiler": {
       "version": "file:com.naelstrof.photon.profiler",
@@ -106,6 +119,12 @@
         "com.unity.textmeshpro": "3.0.6"
       },
       "hash": "6e36bec2daf4a77781f5639987d4aab5ed9fe3bf"
+    },
+    "com.naelstrof.word-filter": {
+      "version": "file:com.naelstrof.word-filter",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.rlabrecque.steamworks.net": {
       "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",
@@ -171,13 +190,13 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.timeline": "1.5.2",
-        "com.autodesk.fbx": "4.1.2"
+        "com.autodesk.fbx": "4.1.2",
+        "com.unity.timeline": "1.5.2"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.24",
+      "version": "3.0.34",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -193,8 +212,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.5.1",
-      "depth": 0,
+      "version": "1.7.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0"
@@ -282,9 +301,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

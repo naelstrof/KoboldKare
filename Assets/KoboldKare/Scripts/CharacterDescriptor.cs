@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using System.Collections;
 using System.Threading.Tasks;
+using JigglePhysics;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine.AddressableAssets;
@@ -168,6 +169,35 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         if (lodGroup == null) {
             lodGroup = gameObject.AddComponent<LODGroup>();
             lodGroup.SetLODs(new[] { new LOD(0.01f, bodyRenderers.ToArray()) });
+        }
+        
+        foreach (JiggleRigBuilder builder in GetComponentsInChildren<JiggleRigBuilder>()) {
+            foreach (var jiggleRig in builder.jiggleRigs) {
+                // reverse-compatiblity for old mods, force animated to true, costs a little performance, oh well!
+                jiggleRig.animated = true;
+            }
+
+            // skip tails and other things that have ragdoll properties for LODDING.
+            var ragdoller = GetComponent<Ragdoller>();
+            if (ragdoller != null && ragdoller.GetDisableRigs().Contains(builder)) {
+                continue;
+            }
+            if (builder.GetComponent<JiggleRigRendererLOD>() == null) {
+                var lod = builder.gameObject.AddComponent<JiggleRigRendererLOD>();
+                lod.SetRenderers(bodyRenderers.ToArray());
+                lod.SetDistance(25f);
+            }
+        }
+        foreach (JiggleSkin skin in GetComponentsInChildren<JiggleSkin>()) {
+            foreach (var jiggleZone in skin.jiggleZones) {
+                // reverse-compatiblity for old mods, force animated to true, costs a little performance, oh well!
+                jiggleZone.animated = true;
+            }
+            if (skin.GetComponent<JiggleRigRendererLOD>() == null) {
+                var lod = skin.gameObject.AddComponent<JiggleRigRendererLOD>();
+                lod.SetRenderers(bodyRenderers.ToArray());
+                lod.SetDistance(25f);
+            }
         }
 
         kobold = GetComponent<Kobold>();

@@ -58,6 +58,12 @@ public class SimpleCameraController : OrbitCameraPivotBase {
     public void SetControls(PlayerInput controls) {
         this.controls = controls;
     }
+
+    protected override void Awake() {
+        base.Awake();
+        fov = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
+    }
+
     private void OnEnable() {
         m_TargetCameraState.SetFromTransform(transform);
         m_InterpolatingCameraState.SetFromTransform(transform);
@@ -66,7 +72,6 @@ public class SimpleCameraController : OrbitCameraPivotBase {
     private void Start() {
         m_TargetCameraState.SetFromTransform(transform);
         m_InterpolatingCameraState.SetFromTransform(transform);
-        fov = SettingsManager.GetSetting("CameraFOV") as SettingFloat;
     }
 
     Vector3 GetInputTranslationDirection() {
@@ -87,9 +92,12 @@ public class SimpleCameraController : OrbitCameraPivotBase {
         // Speed up movement when shift key held
         if (controls.actions["Walk"].ReadValue<float>()>0.5f) {
             translation /= 10.0f;
+        } else {
+            // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
+            boost += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
+            boost = Mathf.Clamp(boost, 0.1f, 6f);
         }
-        // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
-        boost += controls.actions["Grab Push and Pull"].ReadValue<float>() * 0.002f;
+
         //boost += Input.mouseScrollDelta.y * 0.2f;
         translation *= Mathf.Pow(2.0f, boost);
 
@@ -103,11 +111,21 @@ public class SimpleCameraController : OrbitCameraPivotBase {
         m_InterpolatingCameraState.UpdateTransform(transform);
     }
 
-    public override float GetDistanceFromPivot(Quaternion camRotation) {
-        return 0f;
+    public void SetCameraPosition(Vector3 position) {
+        transform.position = position;
+        m_TargetCameraState.SetFromTransform(transform);
+        m_InterpolatingCameraState.SetFromTransform(transform);
     }
 
-    public override float GetFOV(Quaternion camRotation) {
-        return fov.GetValue();
+    public override OrbitCameraData GetData(Camera cam) {
+        return new OrbitCameraData() {
+            distance = 0f,
+            fov = fov.GetValue(),
+            clampPitch = true,
+            clampYaw = false,
+            position = transform.position,
+            rotation = cam.transform.rotation,
+            screenPoint = Vector2.one * 0.5f,
+        };
     }
 }

@@ -19,7 +19,9 @@ public class OrbitCameraFPSHeadPivot : OrbitCameraLerpTrackPivot {
         transform.localPosition = Vector3.MoveTowards(a, a+correction, (0.1f+diff)*Time.deltaTime*lerpTrackSpeed);
     }
 
-    public override float GetDistanceFromPivot(Quaternion camRotation) {
-        return -0.05f;
+    public override OrbitCameraData GetData(Camera cam) {
+        var data = base.GetData(cam);
+        data.distance = 0.05f;
+        return data;
     }
 }

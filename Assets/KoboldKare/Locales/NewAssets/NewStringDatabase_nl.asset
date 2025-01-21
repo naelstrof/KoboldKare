@@ -816,12 +816,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Grote McLargehuge
+    m_Localized: Grote McLargeEnorm
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: Maak een kobold zo lang dat ze over een huis kunnen kijken, geheim
-      recept ...
+    m_Localized: Maak een Kobold zo groot dat ze over een huis kunnen kijken, geheim
+      recept...
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -893,15 +893,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Spikey lul
+    m_Localized: Spikey Dick
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: Een knuppenstang met zachte vlezige weerhaken en lage hangende ballen.
+    m_Localized: Een geknuppelde penis met zachte, vlezige weerhaken en laaghangende
+      ballen.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
-    m_Localized: 'Schakelt serverbrede cheats in of uit.
+    m_Localized: 'Schakelt cheats op de hele server in of uit.
 
 '
     m_Metadata:
@@ -911,21 +912,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651586
-    m_Localized: Geeft alle reagentia, prefabs en apparatuur weer.
+    m_Localized: Geeft een overzicht van alle reagentia, prefabs en apparatuur.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: Geeft het gespecificeerde reagens of prefab. Gebruik /lijst om alle
-      eigennamen te vinden.
+    m_Localized: Geeft het opgegeven reagens of prefab. Gebruik /list om alle eigennamen
+      te vinden.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: Rust de opgegeven apparatuur uit. Gebruik /lijst om eigennamen te
-      vinden.
+    m_Localized: Rust de gespecificeerde uitrusting uit. Gebruik /list om eigennamen
+      te vinden.
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Vergulde lul
+    m_Localized: Vergulde Dick
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
@@ -933,22 +934,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: Een ei leggen!
+    m_Localized: Leg een ei!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: Eieren uit de winkel zijn niet zo goed. Zoek een goede kobold, laat
-      ze zwanger worden en zet ze vervolgens bij het broedstation.
+    m_Localized: Eieren uit de winkel zijn niet zo lekker. Zoek een goede kobold,
+      maak ze drachtig en zet ze vervolgens bij het kweekstation.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Burger Time!
+    m_Localized: Hamburger tijd!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Ik heb je wat benodigdheden gestuurd om een \u200B\u200Bhamburger
-      te maken, de molen te gebruiken om ze te combineren en vervolgens aan een kobold
-      te voeren."
+    m_Localized: "Ik heb je wat benodigdheden gestuurd om een \u200B\u200Bburger
+      te maken, gebruik de molen om ze te combineren en voer het dan aan een kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -956,8 +956,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
-    m_Localized: We moeten onze export van onze voedsel uitbreiden, het Melkstationcontract
-      kopen bij het bouwkantoor.
+    m_Localized: We moeten onze voedselexport uitbreiden en het melkstationcontract
+      bij het bouwkantoor kopen.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
@@ -965,39 +965,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: Kobold Milk heeft veel voedingswaarde, probeer het te combineren
+    m_Localized: Kobold-melk heeft veel voedingswaarde, probeer het te combineren
       met andere dingen in een emmer om nieuw voedsel te maken.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
-    m_Localized: Sap Kobolds
+    m_Localized: Maak Kobolds sap
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: Ik wil dat je wat experimenten uitvoert; Voer uw kobolds aubergine,
-      meloen of ananassap. Dit zou ervoor moeten zorgen dat delen van hun lichaam
-      groeien.
+    m_Localized: Ik wil dat je wat experimenten uitvoert; voer je kobolds aubergine-,
+      meloen- of ananassap. Dit zou ervoor moeten zorgen dat delen van hun lichaam
+      gaan groeien.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelunking!
+    m_Localized: Spelletjes doen!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: Ik voel een donkere aanwezigheid in de nabijgelegen grotten, ga
-      voor mij onderzoeken.
+      op onderzoek uit.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Koop de Body Swapper.
+    m_Localized: Koop de body swapper.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Koop de body swapper uit de kruip in de grot.
+    m_Localized: Koop de body swapper van de engerd in de grot.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oh ho ho .. welkom ...
+    m_Localized: Oh ho ho.. welkom...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -1005,25 +1005,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945669
-    m_Localized: Voor een prijs natuurlijk.
+    m_Localized: voor een prijs uiteraard.
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Gekke wetenschap!
+    m_Localized: Vreemde wetenschap!
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: Wat een interessant apparaat heb je verkregen. Ga en probeer het
-      te gebruiken, neem nog een Kobold mee.
+    m_Localized: "Wat een interessant apparaat heb je gekregen. Ga het proberen en
+      neem een \u200B\u200Bandere kobold mee."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: Cumming door!
+    m_Localized: Klaarkomen door!
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Meer informatie over de reality-buigende elasticiteit van Kobolds,
-      fuck a kobold met een lul groter dan zijn lichaam.
+    m_Localized: Leer meer over de realiteitsverbuigende elasticiteit van kobolds,
+      neuk een kobold met een lul die groter is dan zijn lichaam.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1031,8 +1031,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: Ik wil dat je een van je Kobolds laat leggen, een groot ei legt.
-      Zo groot als je kunt het echt krijgen.
+    m_Localized: Ik wil dat je een van je kobolds een groot ei laat leggen. Zo groot
+      als je het echt kunt krijgen.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1040,63 +1040,62 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "Gebruik een inflater -machine om een \u200B\u200BKobold -groot
-      en rond te maken. Ik denk dat het leuk kan zijn om ze rond te zien rollen of
-      zoiets."
+    m_Localized: "Gebruik een opblaasmachine om een \u200B\u200Bkobold groot en rond
+      te maken. Ik denk dat het leuk kan zijn om ze rond te zien rollen of zoiets."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
-    m_Localized: Schop een speler met de doelacteur -ID. Gebruik `/lijstspelers 'om
-      acteur -ID's te vinden.
+    m_Localized: Schop een speler met de doelacteur-ID. Gebruik `/list spelers` om
+      acteur-ID's te vinden.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hey Bud.
+    m_Localized: "H\xE9 maatje."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Welkom in de ondergrondse.
+    m_Localized: Welkom in de metro.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Negeer de rook, voel je vrij om door de waren te bladeren.
+    m_Localized: Negeer de rook, blader gerust door de waren.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Whoa! Je bent zo van, echt naakt.
+    m_Localized: Wauw! Je bent echt naakt.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: Hoe dan ook, alleen uh .. help uzelf denk ik.
+    m_Localized: Hoe dan ook, help jezelf, denk ik.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: Waar houd je je geld toch aan ...
+    m_Localized: Waar bewaar jij je geld eigenlijk...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: Hallo! Je bent daar van die boerderij, toch? Wil je upgraden?
+    m_Localized: Hallo! Jij komt toch van die boerderij daar? Wilt u upgraden?
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: Selecteer gewoon iets op de muur en we zullen het voor u construeren.
+    m_Localized: Selecteer gewoon iets aan de muur en wij construeren het voor u.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "Uh ... vind je het erg om een \u200B\u200Bbroek aan te trekken?"
+    m_Localized: "Uh... Vind je het erg om een \u200B\u200Bbroek aan te trekken?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
-    m_Localized: Lul lengte
+    m_Localized: Dick Lengte
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Viervoudige gevulde
+    m_Localized: Viervoudig gevuld
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: Aha zou het niet zo grappig zijn als je 4 dildo's in de mond van
-      een Kobold stak ... ik beveel je om dat te doen.
+    m_Localized: Aha, zou het niet zo grappig zijn als je vier dildo's in de mond
+      van een kobold zou steken... Ik beveel je dat te doen.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
@@ -1104,17 +1103,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: Ik wil graag een echt kleine kobold die past in ... kleine, intieme
-      spleten.
+    m_Localized: Ik zou graag een heel kleine kobold willen die in... kleine, intieme
+      spleten past.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Cat-tastrofe
+    m_Localized: Kat-tastrofe
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
     m_Localized: Gebruik explosieven om het puin op de boerderij op te blazen, zodat
-      u meer ruimte kunt hebben.
+      je meer ruimte krijgt.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
@@ -1122,44 +1121,44 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
-    m_Localized: "Ik heb besloten dat ik een partner nodig heb, de perfecte kobold
-      voor me cre\xEBren."
+    m_Localized: "Ik heb besloten dat ik een partner nodig heb, cre\xEBer de perfecte
+      kobold voor mij."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Legpijp
+    m_Localized: Pijp leggen
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: Ze zijn perfect! Ik ga het zijn ... behoorlijk druk ... Ik promoot
-      je tot een functie van een opzichter, je zult kobolds namens mij kopen bij
-      andere Kobold Karetakers, zoek iemand om de benodigde slang te bouwen.
+    m_Localized: Ze zijn perfect! Ik ga het... nogal druk hebben... Ik promoveer
+      je tot een positie als opzichter, jij koopt namens mij kobolds van andere Kobold
+      Karetakers, zoek iemand om de benodigde buizen te bouwen.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
-    m_Localized: Koboldkare
+    m_Localized: KoboldKare
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
-    m_Localized: Ik denk dat ik nu de baas ben! Ik zou moeten proberen een Kobold
+    m_Localized: Ik denk dat ik nu de baas ben! Ik zou moeten proberen een kobold
       te kopen met het nieuwe pneumatische systeem.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: Welkom! Wil je wat zaden kopen? We hebben ook Kobold Eggs!
+    m_Localized: Welkom! Wil je wat zaden kopen? We hebben ook kobold-eieren!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
-    m_Localized: Hulp nodig bij het vinden van iets?
+    m_Localized: Hulp nodig om iets te vinden?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: Welkom in het casino, hier voor zaken of plezier?
+    m_Localized: Welkom bij het casino, hier voor zaken of plezier?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: Uit je gebrek aan kleren zal ik een beetje van beide raden. U kunt
-      de Panchinko -machine spelen om wat versieringen te verdienen.
+    m_Localized: Gezien je gebrek aan kleding vermoed ik een beetje van beide. Je
+      kunt de panchinko-machine spelen om wat versieringen te verdienen.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1167,62 +1166,62 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885794521088
-    m_Localized: Dus ... je hebt iets nieuws van mij nodig ...
+    m_Localized: Dus... je hebt iets nieuws van mij nodig...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: Ik zal het doen, voor een prijs natuurlijk ...
+    m_Localized: Ik doe het, tegen een prijs uiteraard...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Er staan \u200B\u200Bdaar ook dingen vooraan en achter me, dus
-      ga hier echt op, het is niet nodig om verlegen te zijn."
+    m_Localized: Er zijn dingen daar vooraan en ook achter mij, dus kom hier echt
+      naar binnen, je hoeft niet verlegen te zijn.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: "H\xE9 vriend!"
+    m_Localized: "H\xE9 maatje!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: Ziet er vandaag goed uit, helpt bij het dragen van iets?
+    m_Localized: Ziet er goed uit vandaag. Heb je hulp nodig bij het dragen van iets?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: Hoi! Hulp nodig vandaag?
+    m_Localized: Hoi! Heb je vandaag hulp nodig?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
-    m_Localized: Denk je dat ik er goed uit zou zien in een hoed?
+    m_Localized: Denk je dat ik er goed uit zou zien met een hoed?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
-    m_Localized: Iets gebouwd nodig?
+    m_Localized: Moet er iets gebouwd worden?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464135
-    m_Localized: Er is mijn favoriete klant!
+    m_Localized: Daar is mijn favoriete klant!
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464136
-    m_Localized: Sorry, ik heb helemaal geen dingen meer om voor je te bouwen! Bedankt
-      dat je zo'n loyale klant bent.
+    m_Localized: Sorry, ik heb geen dingen meer om voor je te bouwen! Bedankt dat
+      je zo'n trouwe klant bent.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Ik zal hier gewoon staan \u200B\u200Bvoor het geval een andere
-      naakte Kobold wil dat ik ze fetisjmachines bouw."
+    m_Localized: "Ik blijf hier staan \u200B\u200Bvoor het geval een andere naakte
+      kobold wil dat ik die fetisjmachines bouw."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: Safe-for-work hoofdmenu
+    m_Localized: Hoofdmenu Veilig voor werk
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Sap It Up!
+    m_Localized: Maak er sap van!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: Ik wil veel verschillende soorten Kobold, en dat betekent dat je
+    m_Localized: Ik wil veel verschillende soorten kobold, en dat betekent dat je
       meer vruchtensappen nodig hebt. Maal meer fruit!
     m_Metadata:
       m_Items: []
@@ -1231,130 +1230,130 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: Ik wil meer grote Kobold -eieren zien, ga erbij!
+    m_Localized: Ik wil meer grote kobold-eieren zien, ga aan de slag!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Ras: buiktijd!'
+    m_Localized: 'Ras: Buiktijd!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: Ik wil veel dikke kobolds, ze zijn echt nuttig als papiergewichten
+    m_Localized: Ik wil heel veel dikke kobolds, ze zijn erg handig als presse-papiers
       en kussens.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: 'Ras: worstfeest'
+    m_Localized: 'Ras: Worst Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: Ik heb veel Kobolds nodig met gigantische pikken, het is van vitaal
-      belang voor mijn plannen.
+    m_Localized: Ik heb veel kobolds nodig met gigantische lullen, het is essentieel
+      voor mijn plannen.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: 'Ras: grote McLargehuge'
+    m_Localized: 'Ras: Big McLargeHuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: Ik wil meer van dat gigantische type Kobold, ze zijn echt nuttig
+    m_Localized: Ik wil meer van dat gigantische soort kobold, ze zijn erg handig
       voor het schoonmaken van het plafond.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Ras: tieten, grote!'
+    m_Localized: 'Ras: Tieten, grote!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: Stuur me veel Big Boobie Kobolds. Deze is niet voor bruikbaarheid,
-      ze zijn gewoon leuk om te scheuren.
+    m_Localized: Stuur me een heleboel grote boobie-kobolds. Deze is niet uit praktisch
+      oogpunt, ze zijn gewoon leuk om te schudden.
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Breed: Itty Bitty'
+    m_Localized: 'Ras: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: Maak me veel kleine kobolds, hun grootte en rekbare lichamen maken
-      ze echt goede, herbruikbare condooms.
+    m_Localized: Maak voor mij een heleboel kleine kobolds, hun formaat en rekbare
+      lichamen maken het echt goede, herbruikbare condooms.
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
-    m_Localized: Kobold Space Program
+    m_Localized: Kobold Space-programma
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Ik ben benieuwd hoe goed Kobolds het doen met luchtwrijving, stuur
-      er een in de lucht.
+    m_Localized: Ik ben benieuwd hoe goed Kobolds omgaan met luchtwrijving, stuur
+      er een de lucht in.
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
-    m_Localized: Credits
+    m_Localized: Kredieten
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Reductor voor bewegingsziekte
+    m_Localized: Vermindering van reisziekte
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: Kan opslaan niet laden
+    m_Localized: Kan het opslaan niet laden
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
-    m_Localized: Kon de opslag niet laden! Het kan worden opgeslagen met een andere
-      versie van Koboldkare.
+    m_Localized: Kan het opgeslagen bestand niet laden! Het kan worden opgeslagen
+      met een andere versie van KoboldKare.
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: Er is hier niets anders voor je ... voor nu.
+    m_Localized: Er is hier niets anders voor jou... voorlopig.
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
-    m_Localized: Er is hier niets anders voor je.
+    m_Localized: Er is hier niets anders voor jou.
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Omkeer look y-as
+    m_Localized: Kijk Y-as omkeren
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Boob-shrink
+    m_Localized: Borst-krimpen
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Ballen-kronkelen
+    m_Localized: Ballen-krimpen
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-kronkelen
+    m_Localized: Dick-krimpen
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
-    m_Localized: Modder
+    m_Localized: Modden
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: MOD -configuratie
+    m_Localized: Mod-configuratie
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
-    m_Localized: Downloaden ...
+    m_Localized: Downloaden...
     m_Metadata:
       m_Items: []
   - m_Id: 269043733614874624
-    m_Localized: Uitkiezen
+    m_Localized: Selecteer
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Installeren ...
+    m_Localized: Installeren...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Laad gegevens
+    m_Localized: Laad opslaan
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: Verwijderen opslaan
+    m_Localized: Opslaan verwijderen
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1387,15 +1386,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: Het verwijderen van een save is permanent!
+    m_Localized: Het verwijderen van een opgeslagen bestand is definitief!
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Door de opslag te laden verliest uw huidige sessie.
+    m_Localized: Als u de opgeslagen gegevens nu laadt, gaat uw huidige sessie verloren.
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: Modding vereist een 64 -bits compatibel systeem! Upgrade uw besturingssysteem.
+    m_Localized: Modding vereist een 64-bits compatibel systeem! Upgrade uw besturingssysteem.
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
@@ -1403,7 +1402,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: Ingeschakelde speelbare personages
+    m_Localized: Speelbare personages ingeschakeld
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
@@ -1413,7 +1412,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704581
   - m_Id: 280448613000617984
-    m_Localized: Kan geen verbinding maken met Steam, zal niet automatische downloadmods.
+    m_Localized: Kan geen verbinding maken met Steam. Mods worden niet automatisch
+      gedownload.
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
@@ -1421,12 +1421,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: Mod Loading is mislukt!
+    m_Localized: Mod laden mislukt!
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: Er was een uitzondering die een mod laadde, dit kan het spel breken.
-      Controleer uw mods dubbel.
+    m_Localized: Er is een uitzondering opgetreden bij het laden van een mod. Hierdoor
+      kan het spel kapot gaan. Controleer alstublieft uw mods.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: De door u ingevoerde naam is niet van toepassing. Voer alstublieft
+      iets anders in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Head-up-display verbergen
     m_Metadata:
       m_Items: []
   references:

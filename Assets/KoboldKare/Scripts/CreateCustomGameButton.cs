@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class CreateCustomGameButton : MonoBehaviour {
@@ -21,6 +23,34 @@ public class CreateCustomGameButton : MonoBehaviour {
         if (handle.Cancelled) {
             GetComponent<Button>().interactable = true;
             yield break;
+        }
+
+        if (PhotonRoomListSpawner.GetBlackListed(handle.Result.roomName, out var filtered)) {
+            GetComponent<Button>().interactable = true;
+            if (!Analytics.playerOptedOut) {
+                UriBuilder builder = new UriBuilder("http://koboldkare.com/analytics.php");
+                builder.Query += $"query={Uri.EscapeDataString(handle.Result.roomName)}";
+                builder.Query += $"&filtered={Uri.EscapeDataString(filtered)}";
+                var req = UnityWebRequest.Get(builder.ToString());
+                var asyncreq = req.SendWebRequest();
+                asyncreq.completed += (a) => {
+                    Debug.Log(req.result);
+                };
+            }
+            PopupHandler.instance.SpawnPopup("InappropriateName");
+            yield break;
+        } else {
+            if (!Analytics.playerOptedOut) {
+                UriBuilder builder = new UriBuilder("http://koboldkare.com/analytics.php");
+                builder.Query += $"query={Uri.EscapeDataString(handle.Result.roomName)}";
+                builder.Query += $"&filtered={Uri.EscapeDataString(filtered)}";
+                Debug.Log(builder.ToString());
+                var req = UnityWebRequest.Get(builder.ToString());
+                var asyncreq = req.SendWebRequest();
+                asyncreq.completed += (a) => {
+                    Debug.Log(req.result);
+                };
+            }
         }
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap);
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());

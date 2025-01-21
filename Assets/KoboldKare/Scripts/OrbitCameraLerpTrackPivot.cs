@@ -22,7 +22,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         this.lerpTrackSpeed = lerpTrackSpeed;
     }
 
-    public override Vector3 GetPivotPosition(Quaternion camRotation) {
+    private Vector3 GetPivotPosition(Quaternion camRotation) {
         if (!isActiveAndEnabled) {
             return lastPosition;
         }
@@ -43,7 +43,16 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
         transform.localPosition = b;
     }
 
-    public override float GetFOV(Quaternion camRotation) {
-        return fov.GetValue();
+    public override OrbitCameraData GetData(Camera cam) {
+        var rot = cam.transform.rotation;
+        return new OrbitCameraData() {
+            fov = fov.GetValue(),
+            clampPitch = true,
+            clampYaw = false,
+            distance = 0f,
+            screenPoint = Vector2.one*0.5f,
+            rotation = rot,
+            position = GetPivotPosition(rot)
+        };
     }
 }

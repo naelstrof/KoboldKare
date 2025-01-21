@@ -1337,7 +1337,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
-    m_Localized: "Stahov\xE1n\xED ..."
+    m_Localized: "Stahov\xE1n\xED..."
     m_Metadata:
       m_Items: []
   - m_Id: 269043733614874624
@@ -1345,7 +1345,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Instalace ...
+    m_Localized: Instalace...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1400,11 +1400,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
-    m_Localized: "Povolen\xE9 penisy"
+    m_Localized: Penisy povoleny
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: "Povoleno hrateln\xE9 postavy"
+    m_Localized: "Hrateln\xE9 postavy povoleny"
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
@@ -1424,12 +1424,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "Na\u010D\xEDt\xE1n\xED mod selhalo!"
+    m_Localized: "Na\u010D\xEDt\xE1n\xED m\xF3d\u016F selhalo."
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Do\u0161lo k v\xFDjimce na\u010D\xEDt\xE1n\xED mod, to m\u016F\u017Ee
-      rozb\xEDt hru. Zkontrolujte pros\xEDm sv\xE9 mody."
+    m_Localized: "P\u0159i na\u010D\xEDt\xE1n\xED modu do\u0161lo k v\xFDjimce, kter\xE1
+      m\u016F\u017Ee hru p\u0159eru\u0161it. Zkontrolujte pros\xEDm sv\xE9 mody."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: "Zadan\xE9 jm\xE9no nen\xED vhodn\xE9, zadejte pros\xEDm n\u011Bco
+      jin\xE9ho."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Skr\xFDt head up display"
     m_Metadata:
       m_Items: []
   references:

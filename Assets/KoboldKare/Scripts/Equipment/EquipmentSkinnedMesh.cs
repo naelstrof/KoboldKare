@@ -43,16 +43,14 @@ public class EquipmentSkinnedMesh : Equipment {
 
     public override GameObject[] OnEquip(Kobold k, GameObject groundPrefab) {
         base.OnEquip(k, groundPrefab);
-        SkinnedMeshRenderer targetSkinnedMesh = k.koboldBodyRenderers[0] as SkinnedMeshRenderer;
+        SkinnedMeshRenderer targetSkinnedMesh = k.GetKoboldBodyRenderers()[0] as SkinnedMeshRenderer;
         GameObject instance = Instantiate(prefabContainingSkinnedMeshRenderers, k.transform);
         JiggleSkin jiggleSkin = k.GetComponent<JiggleSkin>();
         instance.name = name;
         // Tweak - change blend shapes on equip
-        if (blendShapesToTweak != null)
-        {
-            foreach (SkinnedMeshTweak blend in blendShapesToTweak)
-            {
-                foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+        if (blendShapesToTweak != null) {
+            foreach (SkinnedMeshTweak blend in blendShapesToTweak) {
+                foreach (SkinnedMeshRenderer mesh in k.GetKoboldBodyRenderers())
                 {
                     Mesh m = mesh.sharedMesh;
                     int index = m.GetBlendShapeIndex(blend.blendShapeName);
@@ -72,7 +70,7 @@ public class EquipmentSkinnedMesh : Equipment {
 
             skinnedMesh.bones = newBoneList;
             skinnedMesh.rootBone = targetSkinnedMesh.rootBone;
-            k.koboldBodyRenderers.Add(skinnedMesh);
+            k.AddKoboldBodyRenderer(skinnedMesh);
             foreach (var inflater in k.GetAllInflatableListeners()) {
                 if (inflater is InflatableBreast inflatableBreast) {
                     inflatableBreast.AddTargetRenderer(skinnedMesh);
@@ -120,14 +118,14 @@ public class EquipmentSkinnedMesh : Equipment {
                 }
             }
 
-            k.koboldBodyRenderers.Remove(skinnedMesh);
+            k.RemoveKoboldBodyRenderer(skinnedMesh);
         }
         // Tweak - reset blend shapes on unequip
         if (blendShapesToTweak != null)
         {
             foreach (SkinnedMeshTweak blend in blendShapesToTweak)
             {
-                foreach (SkinnedMeshRenderer mesh in k.koboldBodyRenderers)
+                foreach (SkinnedMeshRenderer mesh in k.GetKoboldBodyRenderers())
                 {
                     Mesh m = mesh.sharedMesh;
                     int index = m.GetBlendShapeIndex(blend.blendShapeName);

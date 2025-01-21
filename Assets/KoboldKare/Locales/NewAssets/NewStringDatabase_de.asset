@@ -1414,11 +1414,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: Antippen
+    m_Localized: Das Laden des Mods ist fehlgeschlagen!
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: Antippen
+    m_Localized: "Beim Laden des Mods gab es eine Ausnahme, wodurch das Spiel nicht
+      richtig funktionieren k\xF6nnte. Bitte \xFCberpr\xFCfe deine Mods."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: Der von Ihnen eingegebene Name ist nicht angemessen. Bitte geben
+      Sie einen anderen Namen ein.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Heads-up-Display ausblenden
     m_Metadata:
       m_Items: []
   references:

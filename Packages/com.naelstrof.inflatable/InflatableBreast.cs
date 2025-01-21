@@ -38,12 +38,24 @@ namespace Naelstrof.Inflatable {
         private JiggleRigBuilder.JiggleRig targetRig;
         private static readonly int BreastSize = Animator.StringToHash("BreastSize");
 
+        private void AddBlendShape(SkinnedMeshRenderer renderer, bool adding) {
+            var flatIndex = renderer.sharedMesh.GetBlendShapeIndex(flatShape);
+            var biggerIndex = renderer.sharedMesh.GetBlendShapeIndex(biggerShape);
+            if (flatIndex == -1 || biggerIndex == -1 || (adding && skinnedMeshRenderers.Contains(renderer))) {
+                return;
+            }
+            if(adding) {
+                skinnedMeshRenderers.Add(renderer);
+            }
+            flatShapeIDs.Add(flatIndex);
+            biggerShapeIDs.Add(biggerIndex);
+        }
+
         public override void OnEnable() {
             flatShapeIDs = new List<int>();
             biggerShapeIDs = new List<int>();
             foreach (SkinnedMeshRenderer renderer in skinnedMeshRenderers) {
-                flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
-                biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
+                AddBlendShape(renderer, false);
             }
             startScale = baseBreastTransform.localScale;
             if (rigBuilder != null && jiggleBoneBreastTransform != null) {
@@ -61,7 +73,7 @@ namespace Naelstrof.Inflatable {
 
             if (skinZone != null && jiggleBoneBreastTransform != null) {
                 foreach (var jiggleZone in skinJiggle.jiggleZones) {
-                    if (jiggleZone.GetTargetBone() != jiggleBoneBreastTransform) continue;
+                    if (jiggleZone.GetRootTransform() != jiggleBoneBreastTransform) continue;
                     if (jiggleZone.jiggleSettings is not JiggleSettingsBlend) {
                         throw new UnityException("Breast jiggle settings must be a JiggleSettingsBlend");
                     }
@@ -75,13 +87,15 @@ namespace Naelstrof.Inflatable {
         }
 
         public void AddTargetRenderer(SkinnedMeshRenderer renderer) {
-            skinnedMeshRenderers.Add(renderer);
-            flatShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(flatShape));
-            biggerShapeIDs.Add(renderer.sharedMesh.GetBlendShapeIndex(biggerShape));
+            if(skinnedMeshRenderers.Contains(renderer)) return;
+            AddBlendShape(renderer, true);
         }
 
         public void RemoveTargetRenderer(SkinnedMeshRenderer renderer) {
             int index = skinnedMeshRenderers.IndexOf(renderer);
+            if(index == -1) {
+                return;
+            }
             skinnedMeshRenderers.RemoveAt(index);
             flatShapeIDs.RemoveAt(index);
             biggerShapeIDs.RemoveAt(index);
@@ -101,11 +115,11 @@ namespace Naelstrof.Inflatable {
             }
 
             if (rigBuilder != null) {
-                ((JiggleSettingsBlend)targetRig.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
+                ((JiggleSettingsBlend)targetRig.jiggleSettings).SetNormalizedBlend(Mathf.Clamp01(newSize / 3f));
             }
 
             if (skinZone != null) {
-                ((JiggleSettingsBlend)skinZone.jiggleSettings).normalizedBlend = Mathf.Clamp01(newSize / 3f);
+                ((JiggleSettingsBlend)skinZone.jiggleSettings).SetNormalizedBlend(Mathf.Clamp01(newSize / 3f));
                 skinZone.radius = skinZoneStartRadius + newSize*skinZoneStartRadius;
             }
 

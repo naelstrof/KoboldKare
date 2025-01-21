@@ -1296,19 +1296,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: "Axis Y invers\xE9"
+    m_Localized: Inverser l'axe Y
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Boob-shrink
+    m_Localized: "R\xE9tr\xE9cissement des seins"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Boules
+    m_Localized: "Boules-r\xE9tr\xE9cissement"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-shrink
+    m_Localized: "Dick-r\xE9tr\xE9cir"
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1316,7 +1316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Configuration du mod
+    m_Localized: Configuration des modules
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1328,11 +1328,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Installation ...
+    m_Localized: Installation...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Chargement de la sauvegarde
+    m_Localized: Sauvegarder la charge
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
@@ -1369,15 +1369,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: La suppression d'une sauvegarde est permanente!
+    m_Localized: "La suppression d'une sauvegarde est d\xE9finitive\_!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: Le chargement de la sauvegarde maintenant perdra votre session actuelle.
+    m_Localized: "Charger la sauvegarde maintenant entra\xEEnera la perte de votre
+      session actuelle."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "Le modding n\xE9cessite un syst\xE8me compatible 64 bits! Veuillez
+    m_Localized: "Le Modding n\xE9cessite un syst\xE8me compatible 64 bits\_! Veuillez
       mettre \xE0 niveau votre syst\xE8me d'exploitation."
     m_Metadata:
       m_Items: []
@@ -1396,8 +1397,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704584
   - m_Id: 280448613000617984
-    m_Localized: "\xC9chec de la connexion \xE0 Steam, ne sera pas des mods de chargement
-      automatique."
+    m_Localized: "\xC9chec de la connexion \xE0 Steam, les mods ne seront pas t\xE9l\xE9charg\xE9s
+      automatiquement."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
@@ -1405,12 +1406,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "Le chargement du mod a \xE9chou\xE9!"
+    m_Localized: "Le chargement du module a \xE9chou\xE9\_!"
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Il y avait une exception charg\xE9e d'un mod, cela pourrait briser
-      le jeu. Veuillez v\xE9rifier vos mods."
+    m_Localized: "Il y a eu une exception lors du chargement d'un mod, cela peut
+      interrompre le jeu. Veuillez v\xE9rifier vos mods."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: "Le nom que vous avez saisi n'est pas appropri\xE9, veuillez saisir
+      un nom diff\xE9rent."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Masquer l'affichage t\xEAte haute"
     m_Metadata:
       m_Items: []
   references:

@@ -120,7 +120,6 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
 
     public void Save(JSONNode node) {
         JSONArray equipments = new JSONArray();
-        Debug.Log(equipment.Count);
         foreach(Equipment e in equipment) {
             Debug.Log(EquipmentDatabase.GetID(e));
             equipments.Add(EquipmentDatabase.GetID(e));

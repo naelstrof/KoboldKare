@@ -31,12 +31,21 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private Transform headTransform;
     [SerializeField]
     private AudioPack footstepPack;
-
+    
+    public bool inputShouldFaceEye = false;
+    public bool inputShouldIgnoreLookDirChange = false;
+    private float lookModifierMemory = 0.5f;
+    private float chestLookMemory = 0.5f;
+    private float headLookMemory = 0.5f;
 
     public delegate void AnimationStateChangeAction(bool animating);
 
     public AnimationStateChangeAction animationStateChanged;
 
+    private float facingRot;
+    private float networkedFacingRot;
+    private float networkedFacingRotDiff;
+    
     private Vector2 eyeRot;
     private float speedLerp;
     private Vector2 networkedEyeRot;
@@ -86,6 +95,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     private static readonly int Jump = Animator.StringToHash("Jump");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int CrouchAmount = Animator.StringToHash("CrouchAmount");
+
+    public bool inputActivate;
+    public bool inputGrabbing;
+    
     //public void SetEyeDir(Vector3 newEyeDir) {
         //Quaternion rot = Quaternion.LookRotation(newEyeDir);
         //Vector3 euler = rot.eulerAngles;
@@ -95,6 +108,12 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     public void SetEyeRot(Vector2 newEyeRot) {
         eyeRot = newEyeRot;
     }
+
+    public void SetFacingDirection(Vector3 direction) {
+        facingRot = Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
+    }
+
+    public Vector3 GetFacingDirection() => Quaternion.AngleAxis(facingRot, Vector3.up)*Vector3.forward;
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
@@ -147,6 +166,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         footstepSoundManager.SetFootstepPack(footstepPack);
 
     }
+
+    public Animator GetPlayerModel() => playerModel;
 
     public void SetDefaultFootstepPack(AudioPack newFootstepPack) {
         footstepPack = newFootstepPack;
@@ -261,6 +282,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     void Update() {
         if (!photonView.IsMine) {
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
+            facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
+        } else {
+            if (controller.inputDir != Vector3.zero && !controller.inputWalking && !inputActivate && !inputGrabbing) {
+                facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
+            }
+            if ((inputShouldFaceEye || inputActivate || inputGrabbing) && !controller.inputWalking) {
+                facingRot = eyeRot.x;
+            }
         }
         hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);
         if (kobold != null) {
@@ -339,17 +368,35 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         //Vector3 lookPos = controller.transform.position + controller.transform.forward;
         Vector3 lookPos = headTransform.position + eyeDir;
 
-        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
-        if (animating) {
-            currentStation.SetLookAtPosition(lookPos);
-            currentStation.SetHipOffset(hipVector);
-            handler.SetLookAtWeight(handler.GetWeight(), 0f, 0.8f, 1f, 0.45f);
-        } else {
-            float bodyWeightLerp = Mathf.Lerp(0.5f, 0.05f, Mathf.Clamp01(-eyeRot.y / 90f));
-            handler.SetLookAtWeight(handler.GetWeight(), bodyWeightLerp, 1f, 1f, 0.45f);
+        if (!inputShouldIgnoreLookDirChange) {
+            lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+            chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
+            headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
         }
 
-        handler.SetLookAtPosition(lookPos);
+        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
+        if (animating) {
+            if (!inputShouldIgnoreLookDirChange) {
+                var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+                var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
+                var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
+                var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
+                Vector3 hipToHead = head.position - hips.position;
+                Vector3 leftHandToRightHand = right.position - left.position;
+                Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
+                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
+            }
+            currentStation.SetLookAtPosition(lookPos);
+            currentStation.SetLookAtWeight(lookModifierMemory*0.5f);
+            currentStation.SetHipOffset(hipVector);
+            handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
+        } else {
+            handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
+        }
+
+        if (!inputShouldIgnoreLookDirChange) {
+            handler.SetLookAtPosition(lookPos);
+        }
     }
 
     [PunRPC]
@@ -392,13 +439,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     void FixedUpdate() {
-        Quaternion characterRot = Quaternion.Euler(0, eyeRot.x, 0);
+        Quaternion characterRot = Quaternion.Euler(0, facingRot, 0);
         Vector3 fdir = characterRot * Vector3.forward;
-        float deflectionForgivenessDegrees = 20f;
+        float deflectionForgivenessDegrees = 12f;
         var forward = body.transform.forward;
         Vector3 cross = Vector3.Cross(forward, fdir);
         float angleDiff = Mathf.Max(Vector3.Angle(forward, fdir) - deflectionForgivenessDegrees, 0f);
-        body.AddTorque(cross*(angleDiff*3f), ForceMode.Acceleration);
+        body.AddTorque(cross * (angleDiff * 3f), ForceMode.Acceleration);
     }
 
     // Animations are something that cannot have packets dropped, so we sync via RPC
@@ -406,6 +453,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         if (stream.IsWriting) {
             stream.SendNext(eyeRot);
             stream.SendNext(hipVector);
+            stream.SendNext(facingRot);
         } else {
             networkedEyeRot = (Vector2)stream.ReceiveNext();
             if (networkedEyeRot.x > eyeRot.x+360f*0.5f) {
@@ -416,7 +464,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             }
             networkedAngle = Vector2.Distance(networkedEyeRot, eyeRot);
             desiredHipVector = (Vector2)stream.ReceiveNext();
-            PhotonProfiler.LogReceive(sizeof(float)*4);
+            networkedFacingRot = (float)stream.ReceiveNext();
+            networkedFacingRotDiff = Mathf.Abs(networkedFacingRot-facingRot);
+            PhotonProfiler.LogReceive(sizeof(float)*5);
         }
     }
     public void Save(JSONNode node) {

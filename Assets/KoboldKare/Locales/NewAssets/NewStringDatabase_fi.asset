@@ -794,12 +794,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Iso mclargehuge
+    m_Localized: Iso McLargeHuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Tee Kobold niin pitk\xE4, ett\xE4 he voivat katsoa talon yli, salainen
-      resepti ..."
+    m_Localized: "Tee Koboldista niin korkea, ett\xE4 ne voivat katsoa talon yli,
+      salainen resepti..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -875,12 +875,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Clubbed Penis, jossa on pehme\xE4t lihaiset barbit ja matalat roikkuvat
-      pallot."
+    m_Localized: "Penis, jossa on pehme\xE4t, mehev\xE4t v\xE4k\xE4set ja matalat
+      roikkuvat pallot."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
-    m_Localized: "Ota k\xE4ytt\xF6\xF6n tai poistaa k\xE4yt\xF6st\xE4 palvelimen
+    m_Localized: "Ottaa k\xE4ytt\xF6\xF6n tai poistaa k\xE4yt\xF6st\xE4 palvelimen
       laajuiset huijaukset.\n"
     m_Metadata:
       m_Items: []
@@ -889,52 +889,52 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651586
-    m_Localized: Luettelo kaikki reagenssit, esivalmisteet ja laitteet.
+    m_Localized: Luetteloi kaikki reagenssit, esivalmisteet ja laitteet.
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: "Antaa m\xE4\xE4ritellyn reagenssin tai esivalmisteen. K\xE4yt\xE4
-      /luettelo l\xF6yt\xE4\xE4 kaikki oikeat nimet."
+    m_Localized: "Antaa m\xE4\xE4ritellyn reagenssin tai esivalmistetun. K\xE4yt\xE4
+      /list l\xF6yt\xE4\xE4ksesi kaikki oikeat nimet."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
-    m_Localized: "Varustetaan m\xE4\xE4ritetty laite. K\xE4yt\xE4 /luettelo l\xF6yt\xE4\xE4ksesi
+    m_Localized: "Varustaa m\xE4\xE4ritellyt laitteet. K\xE4yt\xE4 /list l\xF6yt\xE4\xE4ksesi
       oikeat nimet."
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Maalattu munaa
+    m_Localized: Pinnoitettu Dick
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: "Unutettu munaa pehmeill\xE4 levyill\xE4 ja barbeilla."
+    m_Localized: "Uurrettu muna, jossa pehme\xE4t levyt ja v\xE4k\xE4set."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
-    m_Localized: "M\xE4\xE4r\xE4!"
+    m_Localized: Muna muna!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314176
-    m_Localized: "Kaupan munat eiv\xE4t ole yht\xE4 hyvi\xE4. L\xF6yd\xE4 hyv\xE4
-      Kobold, saat heid\xE4t raskaaksi ja aseta ne sitten jalostusasemalle."
+    m_Localized: "Kaupasta saatavat munat eiv\xE4t ole yht\xE4 hyvi\xE4. Etsi hyv\xE4
+      kobold, tee ne raskaaksi ja aseta ne kasvatusasemalle."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
-    m_Localized: Hampurilainen aika!
+    m_Localized: Burgerin aika!
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Olen l\xE4hett\xE4nyt sinulle joitain tarvikkeita hampurilaisen
-      valmistamiseksi, yhdist\xE4\xE4ksesi ne ja ruokkivat sen sitten Koboldille."
+    m_Localized: "Olen l\xE4hett\xE4nyt sinulle tarvikkeita hampurilaisen tekemiseen,
+      yhdist\xE4 ne myllyll\xE4 ja sy\xF6t\xE4 se sitten koboldille."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
-    m_Localized: Avaa lypsyasema
+    m_Localized: Avaa Lypsyasema
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
-    m_Localized: "Meid\xE4n on laajennettava elintarvikkeiden vienti\xE4mme, ostettava
-      maitoaseman sopimus rakennustoimistosta."
+    m_Localized: "Meid\xE4n on laajennettava elintarvikevienti\xE4mme, ostettava
+      maitoasemasopimus rakennustoimistosta."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
@@ -942,65 +942,65 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "Kobold -maitolla on paljon ravitsemusarvoa, yrit\xE4 yhdist\xE4\xE4
-      se muihin \xE4mp\xE4riin liittyviin asioihin uusien ruokien valmistamiseksi."
+    m_Localized: "Kobold-maidolla on paljon ravintoarvoa, kokeile yhdist\xE4\xE4
+      se muiden asioiden kanssa \xE4mp\xE4riin saadaksesi uusia ruokia."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
-    m_Localized: Mehu kobolds
+    m_Localized: Tee mehuksi Kobolds
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "Tarvitsen sinun suorittamaan joitain kokeita; Sy\xF6t\xE4 Kobolds
-      -munakoiso-, meloni- tai ananasmehua. T\xE4m\xE4n pit\xE4isi aiheuttaa heid\xE4n
-      ruumiinsa osia."
+    m_Localized: "Tarvitsen sinun suorittavan joitain kokeita; ruoki koboldillesi
+      munakoisoa, melonia tai ananasmehua. T\xE4m\xE4n pit\xE4isi saada heid\xE4n
+      ruumiinsa osia kasvamaan."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Spelking!
+    m_Localized: Puhuminen!
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
-    m_Localized: "Tunnen pime\xE4n l\xE4sn\xE4olon l\xE4hell\xE4 olevissa luolissa,
-      menen tutkimaan minua."
+    m_Localized: "Tunnen pime\xE4n l\xE4sn\xE4olon l\xE4heisiss\xE4 luolissa, mene
+      ja tutki puolestani."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Osta kehonvaihto.
+    m_Localized: Osta korinvaihtokone.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: "Osta kehonvaihto luolan hiipim\xE4st\xE4."
+    m_Localized: Osta vartalonvaihtolaite luolasta.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Voi ho ho .. Tervetuloa ...
+    m_Localized: Oi hoho... tervetuloa...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
-    m_Localized: "Minulla on salaisuus kuolemattomuuteen t\xE4\xE4ll\xE4"
+    m_Localized: "Minulla on kuolemattomuuden salaisuus t\xE4\xE4ll\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945669
-    m_Localized: tietysti hinnalla.
+    m_Localized: hintaan tietysti.
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: Outoa tiede!
+    m_Localized: "Outoa tiedett\xE4!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Mik\xE4 mielenkiintoinen laite olet hankkinut. Mene kokeilemaan
-      sit\xE4, tuo toinen Kobold mukanasi."
+    m_Localized: "Mielenkiintoisen laitteen olet hankkinut. Mene ja kokeile k\xE4ytt\xE4\xE4
+      sit\xE4, ota toinen kobold mukaan."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
-    m_Localized: "Cumming l\xE4pi!"
+    m_Localized: "Mukana l\xE4pi!"
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: "Lis\xE4tietoja Koboldsin todellisuutta taipuvasta joustavuudesta,
-      vittu kobold, jonka munaa on suurempi kuin sen vartalo."
+    m_Localized: "Opi lis\xE4\xE4 koboldien todellisuutta taivuttavasta joustavuudesta,
+      nai koboldia, jonka muna on suurempi kuin sen runko."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1008,8 +1008,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Haluan sinun tekev\xE4n yhden koboldistasi munan suuren munan.
-      Niin iso kuin voit saada sen todella."
+    m_Localized: "Haluan, ett\xE4 saat yhden koboldistasi munimaan ison munan. Niin
+      iso kuin vain saat."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1017,99 +1017,100 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "K\xE4yt\xE4 tulehduksen konetta tehd\xE4ksesi Koboldin iso ja py\xF6re\xE4.
-      Mielest\xE4ni voi olla hauskaa n\xE4hd\xE4 heid\xE4n rullaa tai jotain."
+    m_Localized: "K\xE4yt\xE4 t\xE4ytt\xF6konetta tehd\xE4ksesi koboldista iso ja
+      py\xF6re\xE4. Minusta voisi olla hauskaa n\xE4hd\xE4 heid\xE4n py\xF6riv\xE4n
+      tai jotain."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
-    m_Localized: "Potkaise pelaaja kohden\xE4yttelij\xE4n tunnuksella. K\xE4yt\xE4
-      `/List Players` -n\xE4yttelij\xF6iden tunnuksia."
+    m_Localized: "Potkaise pelaajaa kohden\xE4yttelij\xE4n tunnuksella. K\xE4yt\xE4
+      `/list playerit' l\xF6yt\xE4\xE4ksesi n\xE4yttelij\xE4tunnukset."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Hei silmu.
+    m_Localized: Hei kaveri.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: Tervetuloa metroon.
+    m_Localized: Tervetuloa maan alle.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: Ohita savu, selaa tavaroita.
+    m_Localized: Ohita savu, voit selata tuotteita.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: Voi! Olet kuin todella alasti.
+    m_Localized: Vau! Olet kuin, todella alasti.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: "Joka tapauksessa vain uh .. auta itse\xE4si luulen."
+    m_Localized: "Joka tapauksessa vain uh... auta itse\xE4si kai."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Miss\xE4 pid\xE4t rahaa joka tapauksessa ..."
+    m_Localized: "Miss\xE4 muuten pid\xE4t rahasi..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: "Hei! Oletko siit\xE4 maatilasta, eik\xF6? Haluatko p\xE4ivitt\xE4\xE4?"
+    m_Localized: "Hei! Oletko kotoisin tuolta maatilalta? Haluatko p\xE4ivitt\xE4\xE4?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: "Valitse vain jotain sein\xE4lt\xE4 ja rakennamme sen sinulle."
+    m_Localized: "Valitse vain jotain sein\xE4lt\xE4, niin rakennamme sen puolestasi."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: Uh ... mieluummin laittaa housuja?
+    m_Localized: "\xD6h... haluatko laittaa housut jalkaan?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
-    m_Localized: Munan pituus
+    m_Localized: Dickin pituus
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: Nelinkertainen
+    m_Localized: "Nelj\xE4nkertainen t\xE4ytetty"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha Eik\xF6 se olisi niin hauskaa, jos jumit 4 dildoa Koboldin
-      suuhun ... K\xE4sittelen sinua tekem\xE4\xE4n niin."
+    m_Localized: "Ahaa, eik\xF6 olisikin niin hauskaa, jos ty\xF6nt\xE4isit 4 dildoa
+      koboldin suuhun... Min\xE4 k\xE4sken sinua tekem\xE4\xE4n sen."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Myy mikrokobold
+    m_Localized: "Myyd\xE4\xE4n Micro Kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: Haluaisin todella pienen Koboldin, joka mahtuu ... pieniin, intiimeihin
+    m_Localized: Haluaisin todella pienen koboldin, joka mahtuu... pieniin, intiimeihin
       rakoihin.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Kissa
+    m_Localized: Kissa-tastrofi
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
-    m_Localized: "K\xE4yt\xE4 r\xE4j\xE4hteit\xE4 r\xE4j\xE4ytt\xE4\xE4ksesi roskia
-      tilalla, jotta sinulla voi olla enemm\xE4n tilaa."
+    m_Localized: "K\xE4yt\xE4 r\xE4j\xE4hteit\xE4 tilan roskat r\xE4j\xE4ytt\xE4miseen,
+      jotta sinulla on enemm\xE4n tilaa."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
-    m_Localized: "Tehd\xE4 t\xE4ydellinen Kobold"
+    m_Localized: "Tee t\xE4ydellinen kobold"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
-    m_Localized: "Olen p\xE4\xE4tt\xE4nyt, ett\xE4 tarvitsen konsortion, luo minulle
-      t\xE4ydellinen Kobold."
+    m_Localized: "Olen p\xE4\xE4tt\xE4nyt, ett\xE4 tarvitsen puolison, luo minulle
+      t\xE4ydellinen kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: Makaava putki
+    m_Localized: Putken asennus
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "Ne ovat t\xE4ydellisi\xE4! Aion olla ... melko kiireinen ... mainostan
-      sinua valvojan asentoon, ostat Koboldsin puolestani muilta Kobold Karetakersilta,
-      l\xF6yt\xE4\xE4 joku rakentaa tarvittavat letkut."
+    m_Localized: "Ne ovat t\xE4ydellisi\xE4! Aion olla... melko kiireinen... Ylenn\xE4n
+      sinut valvojan virkaan, ostat puolestani koboldeja muilta Kobold Karetakereilta,
+      etsi joku rakentamaan tarvittavat letkut."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1117,42 +1118,41 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
-    m_Localized: "Luulen, ett\xE4 olen nyt pomo! Minun pit\xE4isi yritt\xE4\xE4 ostaa
-      Kobold uuden pneumaattisen j\xE4rjestelm\xE4n kanssa."
+    m_Localized: "Taidan olla nyt pomo! Pit\xE4isi yritt\xE4\xE4 ostaa kobold uudella
+      pneumaattisella j\xE4rjestelm\xE4ll\xE4."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "Tervetuloa! Haluatko ostaa siemeni\xE4? Meill\xE4 on my\xF6s Kobold
-      -munia!"
+    m_Localized: "Tervetuloa! Haluatko ostaa siemeni\xE4? Meill\xE4 on my\xF6s kobold-munia!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
-    m_Localized: "Tarvitsetko apua jotain l\xF6yt\xE4misess\xE4?"
+    m_Localized: "Tarvitsetko apua l\xF6yt\xE4\xE4ksesi jotain?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Tervetuloa kasinoon t\xE4\xE4ll\xE4 yrityksi\xE4 varten vai ilo?"
+    m_Localized: "Tervetuloa kasinolle, t\xE4\xE4ll\xE4 liike- tai huvimatkalla?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: "Vaatteiden puutteesta arvaa v\xE4h\xE4n molemmista. Voit pelata
-      Panchinko -konetta ansaitaksesi koristeita."
+    m_Localized: Vaatteiden puutteesi perusteella veikkaan molempia. Voit pelata
+      panchinko-konetta ansaitaksesi koristeita.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
-    m_Localized: "\xC4l\xE4 ole muukalainen."
+    m_Localized: "\xC4l\xE4 ole vieras."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885794521088
-    m_Localized: Joten ... tarvitset minulta jotain uutta ...
+    m_Localized: Joten... tarvitset jotain uutta minulta...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464128
-    m_Localized: Teen sen tietysti hintaan ...
+    m_Localized: Teen sen tietysti hinnalla...
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Siell\xE4 ja takana on my\xF6s tavaraa, joten nouse todella t\xE4nne,
+    m_Localized: "Siell\xE4 on tavaraa edess\xE4ni ja takanani, joten nouse t\xE4nne,
       ei tarvitse olla ujo."
     m_Metadata:
       m_Items: []
@@ -1161,8 +1161,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: "N\xE4ytt\xE4\xE4 hyv\xE4lt\xE4 t\xE4n\xE4\xE4n, tarvitsetko apua
-      jotain?"
+    m_Localized: "N\xE4yt\xE4tk\xF6 hyv\xE4lt\xE4 t\xE4n\xE4\xE4n, tarvitsetko apua
+      mink\xE4 tahansa kantamisessa?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
@@ -1170,7 +1170,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
-    m_Localized: "Luuletko, ett\xE4 n\xE4yt\xE4n hyv\xE4lt\xE4 hatussa?"
+    m_Localized: "Luuletko, ett\xE4 n\xE4ytt\xE4isin hyv\xE4lt\xE4 hatussa?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
@@ -1178,162 +1178,162 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464135
-    m_Localized: "Siell\xE4 on suosikkini asiakas!"
+    m_Localized: "Siell\xE4 on suosikkiasiakkaani!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464136
-    m_Localized: "Anteeksi, olen kaikki poissa asioista, jotka rakennetaan sinulle!
-      Kiitos, ett\xE4 olit niin uskollinen asiakas."
+    m_Localized: "Anteeksi, minulla ei ole en\xE4\xE4 mit\xE4\xE4n rakennettavaa
+      sinulle! Kiitos, ett\xE4 olet niin uskollinen asiakas."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Seison vain t\xE4\xE4ll\xE4, jos jokin muu alasti Kobold haluaa
-      minun rakentavan heille fetissikoneet."
+    m_Localized: "Seison t\xE4\xE4ll\xE4 silt\xE4 varalta, ett\xE4 joku muu alasti
+      kobold haluaa minun rakentavan heille fetissikoneita."
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Turvalliselle ty\xF6lle p\xE4\xE4valikko"
+    m_Localized: "Turvallinen ty\xF6lle -p\xE4\xE4valikko"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: Mehu se!
+    m_Localized: Tee mehu!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Haluan paljon erityyppisi\xE4 Koboldia, ja se tarkoittaa, ett\xE4
-      tarvitset enemm\xE4n hedelm\xE4mehuja. Jauhaa enemm\xE4n hedelmi\xE4!"
+    m_Localized: "Haluan paljon erilaisia \u200B\u200Bkoboldia, ja se tarkoittaa,
+      ett\xE4 tarvitset enemm\xE4n hedelm\xE4mehuja. Jauha lis\xE4\xE4 hedelmi\xE4!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
-    m_Localized: "Kymmenkunta isoa, ehk\xE4 enemm\xE4n."
+    m_Localized: "Kymmeni\xE4 isoja, ehk\xE4 enemm\xE4nkin."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Haluan n\xE4hd\xE4 enemm\xE4n suuria Kobold -munia, p\xE4\xE4st\xE4
-      siihen!"
+    m_Localized: "Haluan n\xE4hd\xE4 lis\xE4\xE4 isoja kobold-munia, hanki se!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Rotu: Vatsan aika!'
+    m_Localized: 'Rotu: Tummy Time!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "Haluan paljon rasvaa Koboldsia, ne ovat todella hy\xF6dyllisi\xE4
-      paperipainona ja tyynyin\xE4."
+    m_Localized: "Haluan paljon rasvaisia \u200B\u200Bkoboldeja, ne ovat todella
+      hy\xF6dyllisi\xE4 paperipainoina ja tyynyin\xE4."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: 'Rotu: Makkarafestivaali'
+    m_Localized: 'Rotu: Sausage Fest'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
-    m_Localized: "Tarvitsen paljon Koboldsia j\xE4ttil\xE4isill\xE4 kukkeilla, se
-      on elint\xE4rke\xE4\xE4 suunnitelmilleni."
+    m_Localized: "Tarvitsen paljon koboldeja j\xE4ttil\xE4iskukoilla, se on elint\xE4rke\xE4\xE4
+      suunnitelmilleni."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: 'Rotu: Big McLargehuge'
+    m_Localized: 'Rotu: Big McLargeHuge'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Haluan enemm\xE4n siit\xE4 j\xE4ttil\xE4istyypist\xE4 Koboldia,
-      ne ovat todella hy\xF6dyllisi\xE4 katon puhdistamisessa."
+    m_Localized: "Haluan lis\xE4\xE4 tuota j\xE4ttil\xE4istyyppist\xE4 koboldia,
+      ne ovat todella hy\xF6dyllisi\xE4 katon puhdistamiseen."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
-    m_Localized: 'Rotu: tissit, suuret!'
+    m_Localized: 'Rotu: Tissit, isot!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "L\xE4het\xE4 minulle paljon suuria boobie Koboldsia. T\xE4m\xE4
-      ei ole k\xE4yt\xE4nn\xF6llisyytt\xE4, he ovat vain hauskoja roikkua."
+    m_Localized: "L\xE4het\xE4 minulle paljon isoja boobie-koboldeja. T\xE4m\xE4
+      ei ole k\xE4yt\xE4nn\xF6llinen, vaan niit\xE4 on vain hauska heilutella."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
-    m_Localized: 'Rotu: itty bitty'
+    m_Localized: 'Rotu: Itty Bitty'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814401
-    m_Localized: "Tee minusta paljon pieni\xE4 koboleja, niiden koko ja joustavat
-      rungot tekev\xE4t niist\xE4 todella hyvi\xE4, uudelleenk\xE4ytett\xE4vi\xE4
-      kondomia."
+    m_Localized: "Tee minulle paljon pieni\xE4 koboldeja, niiden koko ja joustava
+      runko tekev\xE4t niist\xE4 todella hyvi\xE4, uudelleenk\xE4ytett\xE4vi\xE4
+      kondomeja."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
-    m_Localized: Kobold Space -ohjelma
+    m_Localized: Kobold-avaruusohjelma
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Olen utelias siit\xE4, kuinka hyvin Kobolds tekee ilman kitkan
-      kanssa, l\xE4het\xE4n yhden taivaalle taivaalle."
+    m_Localized: "Olen utelias, kuinka hyvin Koboldit p\xE4rj\xE4\xE4v\xE4t ilman
+      kitkan kanssa, l\xE4hett\xE4v\xE4t yhden hurjalle taivaalle."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
-    m_Localized: Hyvitykset
+    m_Localized: Krediitit
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: "Liikuntataudin v\xE4hent\xE4j\xE4"
+    m_Localized: "Liikepahoinvoinnin v\xE4hent\xE4j\xE4"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: "S\xE4\xE4st\xE4minen ep\xE4onnistui"
+    m_Localized: "Tallennuksen lataaminen ep\xE4onnistui"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
-    m_Localized: Tallenna ei voinut ladata! Se voidaan tallentaa eri versiolla Koboldkarista.
+    m_Localized: Tallennusta ei voitu ladata! Se voidaan tallentaa toisella KoboldKaren
+      versiolla.
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: "T\xE4\xE4ll\xE4 ei ole mit\xE4\xE4n muuta ... toistaiseksi."
+    m_Localized: "T\xE4\xE4ll\xE4 ei ole sinulle mit\xE4\xE4n muuta...toistaiseksi."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
-    m_Localized: "T\xE4\xE4ll\xE4 ei ole mit\xE4\xE4n muuta."
+    m_Localized: "T\xE4\xE4ll\xE4 ei ole sinulle mit\xE4\xE4n muuta."
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: "K\xE4\xE4nn\xE4yte y-akseli"
+    m_Localized: "K\xE4\xE4nteinen look Y-akseli"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: "Ry\xF6st\xF6"
+    m_Localized: Tissikutistuva
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Pallot
+    m_Localized: Pallot-kutistuvat
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Muna
+    m_Localized: Dick-kutistuva
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
-    m_Localized: Modifiointi
+    m_Localized: Modaus
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Mod -kokoonpano
+    m_Localized: Modin asetukset
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
-    m_Localized: Lataaminen ...
+    m_Localized: Ladataan...
     m_Metadata:
       m_Items: []
   - m_Id: 269043733614874624
-    m_Localized: Valita
+    m_Localized: Valitse
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Asentaminen ...
+    m_Localized: Asennetaan...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Lataus
+    m_Localized: Lataa tallennus
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: Poista Tallenna
+    m_Localized: Poista tallennus
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1370,20 +1370,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "S\xE4\xE4st\xE4n lataaminen nyt menett\xE4\xE4 nykyisen istunnon."
+    m_Localized: "Tallennuksen lataaminen nyt menett\xE4\xE4 nykyisen istunnon."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "Modding vaatii 64 -bittisen yhteensopivan j\xE4rjestelm\xE4n! P\xE4ivit\xE4
-      k\xE4ytt\xF6j\xE4rjestelm\xE4."
+    m_Localized: "Modaus vaatii 64 bitin yhteensopivan j\xE4rjestelm\xE4n! P\xE4ivit\xE4
+      k\xE4ytt\xF6j\xE4rjestelm\xE4si."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
-    m_Localized: "K\xE4yt\xF6ss\xE4 penikset"
+    m_Localized: Aktivoidut penis
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
-    m_Localized: Mahdollistanut pelattavat merkit
+    m_Localized: "K\xE4yt\xF6ss\xE4 pelattavat hahmot"
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360322
@@ -1393,21 +1393,29 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704583
   - m_Id: 280448613000617984
-    m_Localized: "Yhdist\xE4minen Steamiin ei ep\xE4onnistunut, ei automaattisesti
-      lataa modit."
+    m_Localized: "Yhteyden muodostaminen Steamiin ep\xE4onnistui, modeja ei ladata
+      automaattisesti."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
-    m_Localized: Napauttaa
+    m_Localized: Napauta
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "MOD -lastaus ep\xE4onnistui!"
+    m_Localized: "Modin lataus ep\xE4onnistui!"
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Modin lataaminen oli poikkeus, t\xE4m\xE4 voi rikkoa pelin. Tarkista
-      modit."
+    m_Localized: "Modin lataamisessa tapahtui poikkeus, t\xE4m\xE4 voi rikkoa pelin.
+      Tarkista modeemi uudelleen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Piilota heads up -n\xE4ytt\xF6"
     m_Metadata:
       m_Items: []
   references:

@@ -58,9 +58,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
                 continue;
             }
             foreach (SkinnedMeshRenderer r in g.GetComponentsInChildren<SkinnedMeshRenderer>()) {
-                if (kobold.koboldBodyRenderers.Contains(r)) {
-                    kobold.koboldBodyRenderers.Remove(r);
-                }
+                kobold.RemoveKoboldBodyRenderer(r);
 
                 if (physics != null) {
                     if (physics.targetSkins.Contains(r)) {
@@ -127,7 +125,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
             g.layer = LayerMask.NameToLayer("MirrorReflection");
             g.transform.parent = s.transform.parent;
             smrCopies[s] = g.GetComponent<SkinnedMeshRenderer>();
-            kobold.koboldBodyRenderers.Add(smrCopies[s]);
+            kobold.AddKoboldBodyRenderer(smrCopies[s]);
             if (group != null) {
                 var lods = group.GetLODs();
                 var renderers = new List<Renderer>(lods[0].renderers);

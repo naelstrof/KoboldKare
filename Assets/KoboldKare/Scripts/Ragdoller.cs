@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -23,7 +24,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     [SerializeField]
     private Rigidbody hipBody;
     [SerializeField]
-    private List<JigglePhysics.JiggleRigBuilder> disableRigs;
+    private List<JiggleRigBuilder> disableRigs;
+
+    public List<JiggleRigBuilder> GetDisableRigs() => disableRigs;
 
     private Dictionary<Transform, Matrix4x4> defaultRigTransforms;
 
@@ -35,6 +38,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     private LODGroup group;
     
     private bool locked;
+    private bool shouldFinishTeleport = false;
     public Rigidbody[] GetRagdollBodies() {
         return ragdollBodies;
     }
@@ -208,6 +212,16 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
+
+        if (shouldFinishTeleport) {
+            foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
+                jiggleRigBuilder.FinishTeleport();
+            }
+            foreach (var jiggleSkin in GetComponentsInChildren<JiggleSkin>()) {
+                jiggleSkin.FinishTeleport();
+            }
+            shouldFinishTeleport = false;
+        }
         if (photonView.IsMine) {
             return;
         }
@@ -228,11 +242,13 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
         foreach (var dickSet in kobold.activeDicks) {
             foreach (var penn in kobold.penetratables) {
-                if (!penn.penetratable.name.Contains("Mouth")) {
-                    continue;
+                // Bool system. (Un)Ignores penetrables based on a bool inside kobold.cs
+                if (!penn.isSelfPenetrableOnRagdoll) {
+                    dickSet.dick.AddIgnorePenetrable(penn.penetratable);
                 }
-
-                dickSet.dick.RemoveIgnorePenetrable(penn.penetratable);
+                else {
+                    dickSet.dick.RemoveIgnorePenetrable(penn.penetratable);
+                }
             }
         }
 
@@ -244,7 +260,6 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
                     }
                 }
             }
-
             group.ForceLOD(0);
         }
 
@@ -297,14 +312,20 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         if (!ragdolled) {
             return;
         }
+        foreach (var jiggleRigBuilder in GetComponentsInChildren<JiggleRigBuilder>()) {
+            jiggleRigBuilder.PrepareTeleport();
+        }
+        foreach (var jiggleSkin in GetComponentsInChildren<JiggleSkin>()) {
+            jiggleSkin.PrepareTeleport();
+        }
         FixPlayerPosition();
         transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
+            dickSet.dick.Penetrate(null);
+            dickSet.dick.SetTargetHole(null);
             foreach (var penn in kobold.penetratables) {
-                if (!penn.penetratable.name.Contains("Mouth")) {
-                    continue;
-                }
-
+                // Bool system. (Un)Ignores penetrables based on a bool inside kobold.cs
+                if (!penn.isSelfPenetrableOnRagdoll) { continue; }
                 dickSet.dick.AddIgnorePenetrable(penn.penetratable);
             }
         }
@@ -348,6 +369,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         controller.enabled = true;
         RagdollEvent?.Invoke(false);
         ragdolled = false;
+        shouldFinishTeleport = true;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

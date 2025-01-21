@@ -1908,14 +1908,17 @@ MonoBehaviour:
     ragdollAttachBody: {fileID: 0}
     isFemaleExclusiveAnatomy: 1
     canLayEgg: 1
+    isSelfPenetrableOnRagdoll: 0
   - penetratable: {fileID: 4863948698846290488}
     ragdollAttachBody: {fileID: 0}
     isFemaleExclusiveAnatomy: 0
     canLayEgg: 1
+    isSelfPenetrableOnRagdoll: 0
   - penetratable: {fileID: 6801546507248158888}
     ragdollAttachBody: {fileID: 0}
     isFemaleExclusiveAnatomy: 0
     canLayEgg: 0
+    isSelfPenetrableOnRagdoll: 0
   attachPoints:
   - attachPoint: 0
     targetTransform: {fileID: 4363336214978915131}
@@ -2097,16 +2100,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d76f24409a39604ca3986f91ce6d28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interpolate: 1
+  jiggleUpdateMode: 0
+  <blend>k__BackingField: 1
   jiggleRigs:
   - rootTransform: {fileID: 1905648332443602999}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
     colliders: []
+    animated: 0
   - rootTransform: {fileID: 8437674557913943489}
     jiggleSettings: {fileID: 11400000, guid: 42393e11ffa8d25499a61fbdc44a669d, type: 2}
     ignoredTransforms: []
     colliders: []
+    animated: 0
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!114 &7646633552433837299
@@ -2121,28 +2127,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63eef503a567ef4eaf3898b5732b105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interpolate: 1
+  jiggleUpdateMode: 0
   jiggleZones:
-  - target: {fileID: 6506915555090380244}
-    radius: 0.15
+  - rootTransform: {fileID: 6506915555090380244}
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
-  - target: {fileID: 6506915555090380242}
+    ignoredTransforms: []
+    colliders: []
+    animated: 0
     radius: 0.15
+    target: {fileID: 6506915555090380244}
+  - rootTransform: {fileID: 6506915555090380242}
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
-  - target: {fileID: 5449752281887230005}
-    radius: 0.33
+    ignoredTransforms: []
+    colliders: []
+    animated: 0
+    radius: 0.15
+    target: {fileID: 6506915555090380242}
+  - rootTransform: {fileID: 5449752281887230005}
     jiggleSettings: {fileID: 11400000, guid: 5817d588dcee20246982f2f72dee4ae0, type: 2}
-  - target: {fileID: 6506915555090379858}
-    radius: 0.21
+    ignoredTransforms: []
+    colliders: []
+    animated: 0
+    radius: 0.33
+    target: {fileID: 5449752281887230005}
+  - rootTransform: {fileID: 6506915555090379858}
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
-  - target: {fileID: 6506915555090379852}
+    ignoredTransforms: []
+    colliders: []
+    animated: 0
     radius: 0.21
+    target: {fileID: 6506915555090379858}
+  - rootTransform: {fileID: 6506915555090379852}
     jiggleSettings: {fileID: 11400000, guid: c4cab74b007296d43b66a134160bc69d, type: 2}
+    ignoredTransforms: []
+    colliders: []
+    animated: 0
+    radius: 0.21
+    target: {fileID: 6506915555090379852}
   targetSkins:
   - {fileID: 6506915555087688956}
   - {fileID: 2780399689652382999}
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
+  <blend>k__BackingField: 1
 --- !u!114 &6898602022436028164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4994,7 +5021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d76f24409a39604ca3986f91ce6d28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interpolate: 1
+  jiggleUpdateMode: 0
+  <blend>k__BackingField: 1
   jiggleRigs:
   - rootTransform: {fileID: 6506915555090380194}
     jiggleSettings: {fileID: 11400000, guid: dbdf3dbab824a8c448cb0f4cead4c467, type: 2}
@@ -5005,6 +5033,7 @@ MonoBehaviour:
     - {fileID: 5475234908087700108}
     - {fileID: 3833433579623373891}
     colliders: []
+    animated: 1
   wind: {x: 0, y: 0, z: 0}
   debugDraw: 0
 --- !u!1 &6506915555090868332 stripped

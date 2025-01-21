@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JigglePhysics;
 using UnityEngine;
-using UnityEngine.Events;
-using KoboldKare;
 using Photon.Pun;
 using PenetrationTech;
-using System.IO;
 using Naelstrof.Inflatable;
-using Naelstrof.Mozzarella;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using SimpleJSON;
-using SkinnedMeshDecals;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -23,6 +19,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         public Rigidbody ragdollAttachBody;
         public bool isFemaleExclusiveAnatomy = false;
         public bool canLayEgg = true;
+        public bool isSelfPenetrableOnRagdoll = false;
     }
 
     public delegate void EnergyChangedAction(float value, float maxValue);
@@ -76,7 +73,33 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     public List<DickDescriptor.DickSet> activeDicks = new List<DickDescriptor.DickSet>();
     private AudioSource gargleSource;
     private AudioSource tummyGrumbleSource;
-    public List<Renderer> koboldBodyRenderers;
+    
+    [SerializeField]
+    private List<Renderer> koboldBodyRenderers;
+
+    public void AddKoboldBodyRenderer(Renderer renderer) {
+        if (koboldBodyRenderers.Contains(renderer)) {
+            return;
+        }
+        koboldBodyRenderers.Add(renderer);
+        var array = koboldBodyRenderers.ToArray();
+        foreach (JiggleRigRendererLOD lod in GetComponentsInChildren<JiggleRigRendererLOD>()) {
+            lod.SetRenderers(array);
+        }
+    }
+    
+    public void RemoveKoboldBodyRenderer(Renderer renderer) {
+        if (!koboldBodyRenderers.Contains(renderer)) {
+            return;
+        }
+        koboldBodyRenderers.Remove(renderer);
+        var array = koboldBodyRenderers.ToArray();
+        foreach (JiggleRigRendererLOD lod in GetComponentsInChildren<JiggleRigRendererLOD>()) {
+            lod.SetRenderers(array);
+        }
+    }
+
+    public List<Renderer> GetKoboldBodyRenderers() => koboldBodyRenderers;
     //private float internalSex = 0f;
     
     [SerializeField]

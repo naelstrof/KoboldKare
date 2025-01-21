@@ -17,6 +17,7 @@ public class ReagentDatabase : MonoBehaviour {
     public void Awake() {
         if (instance != null) {
             Destroy(this);
+            return;
         } else {
             instance = this;
         }

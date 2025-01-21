@@ -63,7 +63,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     private List<Grab> frozenGrabs;
     private const float springForce = 2000f;
     private const float breakForce = 4000f;
-    private const float maxGrabDistance = 2.5f;
+    private const float maxGrabDistance = 3.5f;
     private bool previewGrab;
     private List<Grab> removeIds;
     private bool handVisibility;
@@ -362,16 +362,19 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
         private Vector3 GetViewPos() {
-            if (!photonView.IsMine) {
+            bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == owner;
+            if (!owner.photonView.IsMine || !isPlayerControlled) {
                 return view.position;
             }
-            return OrbitCamera.GetPlayerIntendedPosition();
+            return OrbitCamera.GetCamera().transform.position;
         }
     }
 
     public void SetIgnoreColliders(Collider[] colliders) {
         ignoreColliders = colliders;
     }
+
+    public Collider[] GetIgnoreColliders() => ignoreColliders;
 
     private class RaycastHitDistanceComparer : IComparer {
         public int Compare(object x, object y) {
@@ -440,14 +443,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private Vector3 GetViewPos() {
-        if (!photonView.IsMine) {
+        bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == kobold;
+        if (!photonView.IsMine || !isPlayerControlled) {
             return view.position;
         }
-        return OrbitCamera.GetPlayerIntendedPosition();
+        return OrbitCamera.GetCamera().transform.position;
     }
 
     private bool TryRaycastGrab(float maxDistance, out RaycastHit? previewHit) {
-        int numHits = Physics.RaycastNonAlloc(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward, hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
+        int numHits = Physics.RaycastNonAlloc(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation() * Vector3.forward , hits, maxDistance, GameManager.instance.precisionGrabMask, QueryTriggerInteraction.Ignore);
         if (numHits == 0) {
             previewHit = null;
             return false;
@@ -477,7 +481,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private void DoPreview() {
-        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance, out RaycastHit? previewHit)) {
+        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance*kobold.GetGenes().baseSize*0.1f, out RaycastHit? previewHit)) {
             RaycastHit hit = previewHit.Value;
             previewHandTransform.rotation = Quaternion.LookRotation(-hit.normal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f));
             previewHandTransform.position = hit.point + previewHandTransform.rotation*Vector3.down*0.1f;
@@ -532,7 +536,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         if (currentGrab != null || !photonView.IsMine) {
             return;
         }
-        if (!TryRaycastGrab(maxGrabDistance, out RaycastHit? hitTest)) {
+        if (!TryRaycastGrab(maxGrabDistance*kobold.GetGenes().baseSize*0.1f, out RaycastHit? hitTest)) {
             return;
         }
 

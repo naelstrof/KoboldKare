@@ -1331,6 +1331,14 @@ MonoBehaviour:
     m_Key: MOD_LOADING_FAILED_DESCRIPTION
     m_Metadata:
       m_Items: []
+  - m_Id: 523772124214665216
+    m_Key: ERROR_INAPPROPRIATE_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Key: CONTROLS_HIDE_HUD
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

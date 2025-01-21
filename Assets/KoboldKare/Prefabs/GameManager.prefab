@@ -7687,7 +7687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.01, y: 0.02}
   m_AnchorMax: {x: 0.4, y: 0.867}
-  m_AnchoredPosition: {x: 0, y: -0.99993896}
+  m_AnchoredPosition: {x: 0, y: -1}
   m_SizeDelta: {x: 0, y: -2}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2761196822204280830
@@ -10614,7 +10614,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.4
+  m_fontSize: 36.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20503,7 +20503,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.99999994, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20720,6 +20720,7 @@ GameObject:
   - component: {fileID: 3678451729825484452}
   - component: {fileID: 8221124727034379020}
   - component: {fileID: 4922299506463888708}
+  - component: {fileID: 8961180480632202130}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -20744,8 +20745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000091552734, y: 0.00075758697}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 0.00075758697}
+  m_SizeDelta: {x: 0, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8221124727034379020
 MonoBehaviour:
@@ -20767,10 +20768,10 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 300, y: 300}
+  m_CellSize: {x: 190, y: 190}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
-  m_ConstraintCount: 2
+  m_ConstraintCount: 3
 --- !u!114 &4922299506463888708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20788,6 +20789,20 @@ MonoBehaviour:
   mapPreview: {fileID: 7590391854291479209}
   mapTitleText: {fileID: 3883141596709858168}
   mapDescriptionText: {fileID: 2606796275564752374}
+--- !u!114 &8961180480632202130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708399743842751651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &6711818296448558793
 GameObject:
   m_ObjectHideFlags: 0
@@ -22798,7 +22813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 24.003418, y: 0}
+  m_AnchoredPosition: {x: 24.003662, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3753642555959241819
@@ -23555,7 +23570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 24.00122, y: 0}
+  m_AnchoredPosition: {x: 24.001648, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7972605013910269298
@@ -24300,9 +24315,35 @@ MonoBehaviour:
   - rid: 8920608816464920578
   - rid: 1602997817464061954
   - rid: 1602997817464061955
+  - rid: 991488056044552193
+  - rid: 991488175422570496
   references:
     version: 2
     RefIds:
+    - rid: 991488056044552193
+      type: {class: CommandSculpt, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 991488175422570496
+      type: {class: CommandEquipSet, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
     - rid: 1602997817464061954
       type: {class: CommandCum, ns: , asm: Assembly-CSharp}
       data:
@@ -24657,6 +24698,12 @@ MonoBehaviour:
   - name: FailedModLoads
     popupPrefabReference:
       m_AssetGUID: 6d5aa2af26398144db1ca9d743d9c17e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - name: InappropriateName
+    popupPrefabReference:
+      m_AssetGUID: 63027153d18a9ab42b58703ebfde3901
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
@@ -25300,7 +25347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 23.999329, y: 0}
+  m_AnchoredPosition: {x: 23.999695, y: 0}
   m_SizeDelta: {x: -48, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5897198216909087706
@@ -30366,7 +30413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15.999756, y: 0}
+  m_AnchoredPosition: {x: 15.999512, y: 0}
   m_SizeDelta: {x: -32, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8040330177303624210
@@ -31080,17 +31127,6 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
-  - control: {fileID: -96581472205894575, guid: b80237a58ac8c22458251d7c9dcacf88,
-      type: 3}
-    controlName:
-      m_TableReference:
-        m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
-      m_TableEntryReference:
-        m_KeyId: 516103393283
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 1
-      m_LocalVariables: []
   - control: {fileID: -1545320746805174815, guid: b80237a58ac8c22458251d7c9dcacf88,
       type: 3}
     controlName:
@@ -31142,6 +31178,17 @@ MonoBehaviour:
         m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
       m_TableEntryReference:
         m_KeyId: 81558602722627584
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 1
+      m_LocalVariables: []
+  - control: {fileID: 615795531489931056, guid: b80237a58ac8c22458251d7c9dcacf88,
+      type: 3}
+    controlName:
+      m_TableReference:
+        m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463
+      m_TableEntryReference:
+        m_KeyId: 524703093826330624
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 1

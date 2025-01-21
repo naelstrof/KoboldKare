@@ -26,6 +26,10 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
         dropdown.AddOptions(returnedRegions);
         dropdown.onValueChanged.RemoveListener(ChooseRegion);
         dropdown.onValueChanged.AddListener(ChooseRegion);
+        if (string.IsNullOrEmpty(PhotonNetwork.CloudRegion)) {
+            Debug.Log("Unknown region, forcing connection to us");
+            NetworkManager.instance.JoinLobby("us");
+        }
     }
 
     public override void OnConnectedToMaster(){

@@ -24,7 +24,7 @@ MonoBehaviour:
   group: {fileID: 11400000, guid: 525c4fe63b8a78246b988e367600049d, type: 2}
   defaultValue: 65
   min: 45
-  max: 160
+  max: 120
   references:
     version: 2
     RefIds: []

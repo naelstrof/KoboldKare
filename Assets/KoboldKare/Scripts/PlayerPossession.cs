@@ -25,6 +25,12 @@ public class PlayerPossession : MonoBehaviourPun {
     private PrecisionGrabber pGrabber;
     public GameObject dickErectionHidable;
     private Grabber grabber;
+    
+    private bool movementEnabled = true;
+
+    public void SetMovementEnabled(bool newMovementEnabled) {
+        movementEnabled = newMovementEnabled;
+    }
 
     public bool inputRagdolled;
     private Kobold cachedKobold;
@@ -304,7 +310,11 @@ public class PlayerPossession : MonoBehaviourPun {
         Quaternion characterRot = Quaternion.Euler(0, OrbitCamera.GetPlayerIntendedScreenAim().x, 0);
         Vector3 wishDir = characterRot*Vector3.forward*move.z + characterRot*Vector3.right*move.x;
         wishDir.y = 0;
-        controller.inputDir = wishDir;
+        if (movementEnabled) {
+            controller.inputDir = wishDir;
+        } else {
+            controller.inputDir = Vector3.zero;
+        }
     }
 
     // Update is called once per frame
@@ -352,7 +362,7 @@ public class PlayerPossession : MonoBehaviourPun {
         characterControllerAnimator.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
     }
     public void OnJump(InputValue value) {
-        if (!isActiveAndEnabled) return;
+        if (!isActiveAndEnabled || !movementEnabled) return;
         controller.inputJump = value.Get<float>() > 0f;
         if (!photonView.IsMine) {
             photonView.RequestOwnership();
@@ -381,7 +391,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controller.inputWalking = value.Get<float>() > 0f;
     }
     public void OnCrouch(InputValue value) {
-        if (!isActiveAndEnabled) return;
+        if (!isActiveAndEnabled || !movementEnabled) return;
         //controller.inputCrouched = value.Get<float>();
         controller.SetInputCrouched(value.Get<float>());
     }
@@ -394,6 +404,7 @@ public class PlayerPossession : MonoBehaviourPun {
         user.Use();
     }
     public void OnGrabInput(InputAction.CallbackContext ctx) {
+        characterControllerAnimator.inputGrabbing = true;
         grabbing = true;
         if (switchedMode) {
             pGrabber.TryGrab();
@@ -412,6 +423,7 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     public void OnGrabCancelled(InputAction.CallbackContext ctx) {
+        characterControllerAnimator.inputGrabbing = false;
         grabbing = false;
         grabber.TryDrop();
         pGrabber.TryDrop();
@@ -435,6 +447,9 @@ public class PlayerPossession : MonoBehaviourPun {
     }
     
     public void OnCrouchAdjustInput(InputAction.CallbackContext ctx) {
+        if (!movementEnabled) {
+            return;
+        }
         if (ctx.control.device is Mouse) {
             float delta = ctx.ReadValue<float>();
             if (!pGrabber.TryAdjustDistance(0f)) {
@@ -452,10 +467,12 @@ public class PlayerPossession : MonoBehaviourPun {
     void OnActivateGrabInput(InputAction.CallbackContext ctx) {
         grabber.TryActivate();
         pGrabber.TryFreeze();
+        characterControllerAnimator.inputActivate = true;
         StartCoroutine(PauseInputForSeconds(0.5f));
     }
     void OnActivateGrabCancelled(InputAction.CallbackContext ctx) {
         grabber.TryStopActivate();
+        characterControllerAnimator.inputActivate = false;
     }
     void OnUnfreezeInput(InputAction.CallbackContext ctx) {
         pGrabber.TryUnfreeze();
@@ -491,7 +508,7 @@ public class PlayerPossession : MonoBehaviourPun {
             chatGroup.interactable = true;
             chatGroup.alpha = 1f;
             if (inputRagdolled) {
-                kobold.GetRagdoller().PopRagdoll();
+                photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             }
 
             back.action.started += OnBack;
@@ -574,7 +591,7 @@ public class PlayerPossession : MonoBehaviourPun {
     // This fixes a bug where OnRagdoll isn't called when the application isn't in focus.
     void OnApplicationFocus(bool hasFocus) {
         if (hasFocus && inputRagdolled) {
-            kobold.GetRagdoller().PopRagdoll();
+            photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         }
     }

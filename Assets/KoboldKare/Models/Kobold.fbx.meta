@@ -1288,12 +1288,12 @@ ModelImporter:
     - name: HandIndex1.L
       parentName: Hand.L
       position: {x: -0.01701353, y: 0.12915201, z: -0.03505136}
-      rotation: {x: 0.0014908181, y: -0.044404626, z: 0.010442261, w: 0.99895793}
+      rotation: {x: 0.0014908182, y: -0.04440463, z: 0.010442262, w: 0.998958}
       scale: {x: 1, y: 1, z: 1.0000001}
     - name: HandIndex2.L
       parentName: HandIndex1.L
       position: {x: 0.00000008987263, y: 0.045589183, z: 0.0000000037252903}
-      rotation: {x: 0.0050340467, y: -0.030655418, z: 0.040886678, w: 0.9986807}
+      rotation: {x: 0.0050340467, y: -0.03065542, z: 0.040886678, w: 0.9986808}
       scale: {x: 1, y: 1, z: 1}
     - name: HandIndex3.L
       parentName: HandIndex2.L
@@ -1353,7 +1353,7 @@ ModelImporter:
     - name: HandThumb2.L
       parentName: HandThumb1.L
       position: {x: -0.00000004377216, y: 0.07144958, z: 0.000000033760443}
-      rotation: {x: -0.021700492, y: 0.72008866, z: 0.01849143, w: 0.69329625}
+      rotation: {x: -0.02170049, y: 0.7200886, z: 0.018491428, w: 0.6932962}
       scale: {x: 0.9999999, y: 1, z: 1}
     - name: HandThumb3.L
       parentName: HandThumb2.L
@@ -1413,7 +1413,7 @@ ModelImporter:
     - name: HandPinky1.R
       parentName: Hand.R
       position: {x: -0.011042125, y: 0.10359288, z: 0.05795234}
-      rotation: {x: 0.010355092, y: -0.15627642, z: -0.010035916, w: 0.9876081}
+      rotation: {x: 0.010355092, y: -0.15627643, z: -0.010035916, w: 0.98760813}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
     - name: HandPinky2.R
       parentName: HandPinky1.R
@@ -1526,16 +1526,6 @@ ModelImporter:
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
       scale: {x: 1, y: 1, z: 1}
     - name: BodyLod1
-      parentName: Kobold(Clone)
-      position: {x: 0.000015220537, y: 0.0002961019, z: 0.00017359167}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-      scale: {x: 1, y: 1, z: 1}
-    - name: NippleBarbells
-      parentName: Kobold(Clone)
-      position: {x: 0.000015220537, y: 0.0002961019, z: 0.00017359167}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-      scale: {x: 1, y: 1, z: 1}
-    - name: NipplePumps
       parentName: Kobold(Clone)
       position: {x: 0.000015220537, y: 0.0002961019, z: 0.00017359167}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}

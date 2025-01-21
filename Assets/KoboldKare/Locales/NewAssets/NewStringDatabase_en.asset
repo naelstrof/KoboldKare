@@ -1420,6 +1420,15 @@ MonoBehaviour:
       double check your mods.
     m_Metadata:
       m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: The name you entered is not appropriate, please enter something
+      different.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: Hide heads up display
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

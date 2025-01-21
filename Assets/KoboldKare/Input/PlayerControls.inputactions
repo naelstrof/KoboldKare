@@ -186,15 +186,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LockedCamera",
-                    "type": "Button",
-                    "id": "d7fe616d-00f7-40e6-a446-4ad06fd35f49",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "SwitchCamera",
                     "type": "Button",
                     "id": "3e03661a-ac84-473e-8440-67a0916e2a21",
@@ -270,6 +261,15 @@
                     "name": "GyroEnable",
                     "type": "Button",
                     "id": "a0e1daf4-0f59-49b5-878f-be5463f6e2e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HideHUD",
+                    "type": "Button",
+                    "id": "fe664bc5-2990-4e51-9e8a-d6223ad3bee2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -686,28 +686,6 @@
                 },
                 {
                     "name": "",
-                    "id": "e1dc5583-2715-4a29-83ce-88e705b775c4",
-                    "path": "<Keyboard>/4",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LockedCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f433e636-e778-4398-8c99-5f450b37fcc0",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LockedCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "62c00373-8bbb-459b-9b9d-63bcffbb215f",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -978,6 +956,28 @@
                     "processors": "StickDeadzone,ScaleVector2(x=40,y=40)",
                     "groups": "",
                     "action": "LookJoystick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1b4410c-6b1f-42c6-bb12-dd1434b0e9b2",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideHUD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b8d114b3-ec6d-4197-9933-4b8c988fe774",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideHUD",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

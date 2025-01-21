@@ -5,6 +5,7 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using Photon.Realtime;
 using SimpleJSON;
 using Random = UnityEngine.Random;
 
@@ -41,13 +42,27 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         StartCoroutine(SpawnOccasionallyRoutine());
     }
 
-    public virtual void Start() {
+    private void Awake() {
         waitUntilCanSpawn = new WaitUntil(CanSpawn);
+    }
+
+    public virtual void Start() {
         if (possibleSpawns.Count <= 0) {
             Debug.LogWarning("Spawner without anything to spawn...", gameObject);
         }
         if (spawnOnLoad) {
             Spawn();
+        }
+    }
+
+    private double lastAttempt;
+    private void Update() {
+        if (Time.timeAsDouble > lastAttempt) {
+            // Attempt to give it back to the master!! Not sure how this happens, apparently a disconnect randomly assigns owners..
+            if (!Equals(photonView.Owner, PhotonNetwork.MasterClient) && Equals(photonView.Owner, PhotonNetwork.LocalPlayer)) {
+                photonView.TransferOwnership(PhotonNetwork.MasterClient);
+            }
+            lastAttempt = Time.timeAsDouble+10f;
         }
     }
 
@@ -105,4 +120,5 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
     }
+
 }

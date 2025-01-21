@@ -1293,19 +1293,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Invertir el eje Y
+    m_Localized: Invertir mirada del eje Y
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: "S\xE1bado"
+    m_Localized: Reductor de senos
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Shrink
+    m_Localized: bolas-encogimiento
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Polla
+    m_Localized: psiquiatra de pollas
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1313,11 +1313,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: "Configuraci\xF3n de mod"
+    m_Localized: "Configuraci\xF3n de modificaci\xF3n"
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
-    m_Localized: Descarga ...
+    m_Localized: Descargando...
     m_Metadata:
       m_Items: []
   - m_Id: 269043733614874624
@@ -1325,7 +1325,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: "Instalaci\xF3n ..."
+    m_Localized: Instalando...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: Eliminar guardar
+    m_Localized: eliminar guardar
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1366,20 +1366,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "\xA1Eliminar un salvamento es permanente!"
+    m_Localized: "\xA1Eliminar un guardado es permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "Cargar el Guardar ahora perder\xE1 su sesi\xF3n actual."
+    m_Localized: "Al cargar el archivo guardado ahora, se perder\xE1 la sesi\xF3n
+      actual."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "\xA1Modding requiere un sistema compatible de 64 bits! Actualice
-      su sistema operativo."
+    m_Localized: "\xA1La modificaci\xF3n requiere un sistema compatible con 64 bits!
+      Actualice su sistema operativo."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
-    m_Localized: Penes habilitados
+    m_Localized: penes habilitados
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
@@ -1393,8 +1394,7 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704597
   - m_Id: 280448613000617984
-    m_Localized: "No se pudo conectar a Steam, no se descargar\xE1 autom\xE1ticamente
-      modificaciones."
+    m_Localized: "No se pudo conectar a Steam, no se descargan mods autom\xE1ticamente."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776
@@ -1402,12 +1402,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "\xA1Fall\xF3 la carga de mod!"
+    m_Localized: "\xA1Fall\xF3 la carga del mod!"
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Hubo una excepci\xF3n cargando un mod, esto puede romper el juego.
-      Por favor revise sus modificaciones."
+    m_Localized: "Hubo una excepci\xF3n al cargar un mod, esto puede interrumpir
+      el juego. Por favor revisa tus modificaciones."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 523772124214665216
+    m_Localized: El nombre que ingresaste no es apropiado, ingresa algo diferente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 524703093826330624
+    m_Localized: "Ocultar visualizaci\xF3n frontal"
     m_Metadata:
       m_Items: []
   references:

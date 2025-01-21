@@ -107,8 +107,8 @@ MonoBehaviour:
     targetRotations:
     - {x: 0.28825274, y: -0.0028211637, z: -0.0014693289, w: 0.95759225}
     - {x: -0.09442994, y: 0.0000014262894, z: -0.0000040661394, w: 0.995582}
-    - {x: -0.33873227, y: 0.6218972, z: 0.48137453, w: 0.5165669}
-    - {x: -0.49009144, y: -0.58994395, z: -0.27202007, w: 0.5812092}
+    - {x: -0.81610566, y: 0.2008467, z: 0.01912179, w: 0.54159445}
+    - {x: -0.7636927, y: -0.0706116, z: 0.21863925, w: 0.6033296}
     - {x: 0.9729757, y: -0.18304008, z: 0.026146177, w: 0.13904424}
     - {x: 0.9721631, y: -0.000008958653, z: -0.000016690063, w: 0.23449835}
     - {x: 0, y: 3.3509195e-11, z: 0, w: 1.0000222}
@@ -140,16 +140,16 @@ MonoBehaviour:
     computedTargetRotations:
     - {x: 0.20278682, y: 0.6751241, z: -0.20486414, w: 0.6791159}
     - {x: -0.06677503, y: 0.7039828, z: 0.06676908, w: 0.7039829}
-    - {x: 0.100862436, y: 0.80501586, z: 0.57990324, w: -0.07447859}
-    - {x: -0.5388945, y: -0.006177667, z: 0.15419894, w: 0.82813036}
+    - {x: -0.56355363, y: 0.52498484, z: 0.5905942, w: 0.24094585}
+    - {x: -0.38541204, y: 0.3766878, z: 0.69461304, w: 0.476549}
     - {x: 0.7064869, y: -0.031110106, z: -0.6695085, w: 0.22774798}
     - {x: 0.6874124, y: 0.1658088, z: -0.6874339, w: 0.16582197}
     - {x: 0, y: 0.70712143, z: 0, w: 0.7071236}
     - {x: 0, y: 0.70710576, z: 0, w: 0.7071079}
     - {x: 0, y: 0.7071186, z: 0, w: 0.7071207}
     - {x: 0, y: 0.7071243, z: 0, w: 0.70712644}
-  editSelection: 2
-  animProgress: 76.86833
+  editSelection: 0
+  animProgress: 49.52392
   previewCharacter: {fileID: 8345595452543881516, guid: 8e773d795453a8e4f897558e6f610e4d,
     type: 3}
   linkedStations:
@@ -769,7 +769,7 @@ BoxCollider:
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &4377856060180391589
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -786,7 +786,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3473630937541108734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,7 +831,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3473630937541108734}
-  - {fileID: 8973783026042791390}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -854,7 +854,7 @@ MonoBehaviour:
   targetRenderers:
   - renderer: {fileID: 6534487358309324372}
     mask: -1
-  virtualSquashAndStretch: 0.81142676
+  virtualSquashAndStretch: 1
   girthUnwrapShader: {fileID: 4800000, guid: 14e0a43a18459694a816fde3a7abd01a, type: 3}
   penetratedHole: {fileID: 0}
   penetrationMarginOfError: 1

@@ -809,10 +809,10 @@ MonoBehaviour:
   points:
   - {fileID: 608484954}
   - {fileID: 1212790585}
+  splineTension: 0.5
   listeners:
   - rid: 0
   - rid: 1
-  actualHoleStartT: 0
   references:
     version: 2
     RefIds:

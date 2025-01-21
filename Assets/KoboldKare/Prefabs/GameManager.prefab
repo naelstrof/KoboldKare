@@ -23974,6 +23974,9 @@ MonoBehaviour:
   - rid: 8869783670453436453
   - rid: 8869783688933801988
   - rid: 1602998494081056771
+  - rid: 5224254151283703808
+  - rid: 5224254151283703809
+  - rid: 5224254151283703810
   references:
     version: 2
     RefIds:
@@ -23985,6 +23988,27 @@ MonoBehaviour:
         targetDatabase: {fileID: 11400000, guid: ab49c41711410144b99911cfd0a26001,
           type: 2}
         networkedPrefabs: 1
+    - rid: 5224254151283703808
+      type: {class: ShopPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Shop
+        shopDatabaseDatabase: {fileID: 11400000, guid: 854ab91a791e156409267f2adb898de4,
+          type: 2}
+    - rid: 5224254151283703809
+      type: {class: ShopPackPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: ShopPack
+        shopDatabaseDatabase: {fileID: 11400000, guid: 854ab91a791e156409267f2adb898de4,
+          type: 2}
+    - rid: 5224254151283703810
+      type: {class: ShopItemPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: ShopItem
+        shopDatabaseDatabase: {fileID: 11400000, guid: 854ab91a791e156409267f2adb898de4,
+          type: 2}
     - rid: 7257832617762881540
       type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
       data:

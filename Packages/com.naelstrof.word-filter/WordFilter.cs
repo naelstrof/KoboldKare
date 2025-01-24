@@ -290,6 +290,7 @@ public static class WordFilter {
         var character = info.SubstringByTextElements(index, 1);
         if (info.LengthInTextElements > index + 2) {
             var trigramCheck = character + info.SubstringByTextElements(index + 1, 2);
+            trigramCheck = trigramCheck.ToLower();
             bool entirelyComposedOfInvalidLetters = true;
             foreach (var c in trigramCheck) {
                 if (bannedWord.Contains(c)) continue;
@@ -305,6 +306,7 @@ public static class WordFilter {
 
         if (index - 2 >= 0 && info.LengthInTextElements >= 3) {
             var trigramCheck = info.SubstringByTextElements(index - 2, 2) + character;
+            trigramCheck = trigramCheck.ToLower();
             bool entirelyComposedOfInvalidLetters = true;
             foreach (var c in trigramCheck) {
                 if (bannedWord.Contains(c)) continue;
@@ -320,6 +322,7 @@ public static class WordFilter {
     
         if (index - 1 >= 0 && info.LengthInTextElements > index+1) {
             var trigramCheck = info.SubstringByTextElements(index - 1, 1) + character + info.SubstringByTextElements(index + 1, 1);
+            trigramCheck = trigramCheck.ToLower();
             bool entirelyComposedOfInvalidLetters = true;
             foreach (var c in trigramCheck) {
                 if (bannedWord.Contains(c)) continue;

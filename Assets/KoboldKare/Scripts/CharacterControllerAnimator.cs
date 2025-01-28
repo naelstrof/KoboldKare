@@ -385,9 +385,10 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
                 Vector3 leftHandToRightHand = right.position - left.position;
                 Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
                 lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
+                currentStation.SetLookAtPosition(lookPos);
             }
-            currentStation.SetLookAtPosition(lookPos);
-            currentStation.SetLookAtWeight(lookModifierMemory*0.5f);
+            
+            currentStation.SetLookAtWeight(lookModifierMemory * 0.5f);
             currentStation.SetHipOffset(hipVector);
             handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
         } else {

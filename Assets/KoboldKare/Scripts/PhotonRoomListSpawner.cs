@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,14 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     public GameObject roomPrefab;
     public GameObject hideOnRoomsFound;
     private List<GameObject> roomPrefabs = new List<GameObject>();
+    
+    private static string[] blacklist;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Init() {
+        blacklist = null;
+    }
+    
     public override void OnConnectedToMaster(){
         base.OnConnectedToMaster();
         Debug.Log("PhotonRoomListSpawner :: Connected to master");
@@ -47,9 +56,9 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     }
 
     public static bool GetBlackListed(string name, out string filtered) {
-        return WordFilter.WordFilter.GetBlackListed(name, new[] {
-            "cub", "kid", "kub", "young", "baby", "cubby", "lilboi", "lilboy", "lilgirl", "lilone", "ageplay",
-        }, out filtered, true);
+        blacklist ??= WordFilter.NaughtyList.GetNaughtyList(GameManager.GetBlacklist());
+        var blacklisted = WordFilter.WordFilter.GetBlackListed(name, blacklist, out filtered, true);
+        return blacklisted;
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {

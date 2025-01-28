@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; margin-top: 80px; margin-bottom: 50px; flex-shrink: 0; margin-left: 5px; margin-right: 5px;">
+        <ui:Label text="Words are filtered via tokenization, don&apos;t use homoglyphs or add extraneous characters like spaces. Words are separated by new lines." display-tooltip-when-elided="true" style="white-space: normal; flex-grow: 0;" />
+        <ui:TextField picking-mode="Ignore" label="Filtered words" text="example&#10;blah&#10;nopunc&#10;nospaces&#10;englishonlysorry" multiline="true" style="flex-grow: 1; margin-bottom: 5px;" />
+    </ui:VisualElement>
+</ui:UXML>

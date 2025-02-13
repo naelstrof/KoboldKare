@@ -39,9 +39,8 @@ public class NaughtyListWizard : ScriptableWizard {
                 return;
             }
             using FileStream file = File.Open(filePath, FileMode.Open);
-            using var decompressor = new GZipStream(file, CompressionMode.Decompress);
-            using var streamReader = new StreamReader(decompressor);
-            SetEditText(streamReader.ReadToEnd());
+            using var streamReader = new StreamReader(file);
+            SetEditText(Encoding.UTF8.GetString(Convert.FromBase64String(streamReader.ReadToEnd())));
         } catch (SystemException e) {
             EditorUtility.DisplayDialog("Error", e.Message, "OK");
             throw;
@@ -55,9 +54,10 @@ public class NaughtyListWizard : ScriptableWizard {
                 return;
             }
             using FileStream file = File.Open(filePath, FileMode.Create);
-            using var compressor = new GZipStream(file, CompressionMode.Compress);
-            using var streamWriter = new StreamWriter(compressor);
-            streamWriter.Write(GetEditText());
+            using var fileWriter = new StreamWriter(file);
+            fileWriter.Write(Convert.ToBase64String(Encoding.UTF8.GetBytes(GetEditText())));
+            fileWriter.Flush();
+            
             AssetDatabase.Refresh();
         } catch (SystemException e) {
             EditorUtility.DisplayDialog("Error", e.Message, "OK");

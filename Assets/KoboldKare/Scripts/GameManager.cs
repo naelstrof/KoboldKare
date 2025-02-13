@@ -40,12 +40,6 @@ public class GameManager : MonoBehaviour {
     private GameObject ModdingTab;
     [SerializeField]
     private GameObject SaveTab;
-    [SerializeField]
-    private TextAsset blacklist;
-
-    public static TextAsset GetBlacklist() {
-        return instance.blacklist;
-    }
 
     [SerializeField] private PrefabDatabase penisDatabase;
     [SerializeField] private PrefabDatabase playerDatabase;

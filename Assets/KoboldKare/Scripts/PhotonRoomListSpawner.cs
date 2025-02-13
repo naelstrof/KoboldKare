@@ -56,7 +56,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     }
 
     public static bool GetBlackListed(string name, out string filtered) {
-        blacklist ??= WordFilter.NaughtyList.GetNaughtyList(GameManager.GetBlacklist());
+        blacklist ??= WordFilter.NaughtyList.GetNaughtyList("Y3ViCmtpZAprdWIKeW91bmcKYmFieQpjdWJieQpsaWxib2kKbGlsZ2lybApsaWxvbmUKYWdlcGxheQpwZWRvCm5pZ2dlcgp0cmFubnkKZGlrZQpyZXRhcmQKamFpbGJhaXQKbmlnZ2EKbmVncm8KcGFlZG8Kc2hlbWFsZQpzcGljCnNwaWNrCnpvb3BoaWxpYQpsb2xp");
         var blacklisted = WordFilter.WordFilter.GetBlackListed(name, blacklist, out filtered, true);
         return blacklisted;
     }

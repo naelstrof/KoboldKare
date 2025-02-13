@@ -37,7 +37,7 @@ public class Build {
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneLinux64);
-        AddressableAssetSettings.BuildPlayerContent();
+        //AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -59,7 +59,7 @@ public class Build {
             "x64ARM64" // Possible values: "x64" "ARM64" "x64ARM64"
         );
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneOSX);
-        AddressableAssetSettings.BuildPlayerContent();
+        //AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.app";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -75,7 +75,7 @@ public class Build {
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows64);
-        AddressableAssetSettings.BuildPlayerContent();
+        //AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");
@@ -91,7 +91,7 @@ public class Build {
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
         EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows);
-        AddressableAssetSettings.BuildPlayerContent();
+        //AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");

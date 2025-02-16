@@ -58,11 +58,11 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
     private double lastAttempt;
     private void Update() {
         if (Time.timeAsDouble > lastAttempt) {
+            lastAttempt = Time.timeAsDouble+10f;
             // Attempt to give it back to the master!! Not sure how this happens, apparently a disconnect randomly assigns owners..
-            if (!Equals(photonView.Owner, PhotonNetwork.MasterClient) && Equals(photonView.Owner, PhotonNetwork.LocalPlayer)) {
+            if (photonView != null && !Equals(photonView.Owner, PhotonNetwork.MasterClient) && Equals(photonView.Owner, PhotonNetwork.LocalPlayer)) {
                 photonView.TransferOwnership(PhotonNetwork.MasterClient);
             }
-            lastAttempt = Time.timeAsDouble+10f;
         }
     }
 

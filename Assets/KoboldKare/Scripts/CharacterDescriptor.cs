@@ -9,6 +9,7 @@ using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 using Vilar.IK;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -87,6 +88,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     public event FinishedLoadingAssetAction finishedLoading;
     
     [Header("Special Settings")]
+    public List<Equipment> equipOnSpawn = new List<Equipment>();
     [SerializeField] private AnimationCurve antiPopCurveIK;
     [SerializeField] private AnimationClip tposeIK;
     private Coroutine coroutine;
@@ -258,6 +260,25 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
         Physics.SyncTransforms();
     }
+    
+    void EquipOnSpawn()
+    {
+        bool inMenu = SceneManager.GetActiveScene().name.Equals("MainMenu");
+        foreach (Equipment equip in equipOnSpawn)
+        {
+            Equipment newEquip;
+            try {
+                newEquip = EquipmentDatabase.GetEquipment(equip.name);
+            } catch (UnityException exception) {
+                Debug.LogError("One or more on-spawn equipments assigned to kobold " + gameObject.name + " are invalid");
+                return;
+            }
+            if(!inMenu)
+                kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(newEquip), -1);
+            else
+                koboldInventory.PickupEquipment(newEquip, new GameObject());
+        }
+    }
 
     void InitializePostEnable() {
         characterAnimator.SetHeadTransform(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
@@ -276,6 +297,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
         classicIK.Initialize();
         kobold.SetGenes(kobold.GetGenes());
+        if(equipOnSpawn is { Count: > 0 })
+            EquipOnSpawn();
     }
 
     private void OnDestroy() {

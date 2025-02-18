@@ -10,6 +10,8 @@
 [Aa]ssets/UMotionEditor/
 [Aa]ssets/UMotionEditor.meta
 UMotionData/
+.idea/
+.vscode/
 
 [Aa]ssets/ShaderControl/
 [Aa]ssets/ShaderControl.meta

@@ -19,65 +19,73 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
     }
 
     
-    // Start is called before the first frame update
     [PunRPC]
-    public void FreezeRPC(){
+    public void FreezeRPC() 
+    {
         Freeze();
     }
-    public void Freeze(){
-        
-        rb.constraints = RigidbodyConstraints.FreezePositionX |RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | 
-                                RigidbodyConstraints.FreezeRotationX |RigidbodyConstraints.FreezeRotationY |RigidbodyConstraints.FreezeRotationZ;
+
+    public void Freeze() 
+    {
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         if(machineToManage!=null)
             machineToManage.SetConstructed(true);
         frozen=true;
     }
 
     [PunRPC]
-    public void UnfreezeRPC(){
+    public void UnfreezeRPC() 
+    {
         Unfreeze();
     }
-    public void Unfreeze()
+
+    public void Unfreeze() 
     {
         rb.constraints=RigidbodyConstraints.None;
         if(machineToManage!=null)
             machineToManage.SetConstructed(false);
         frozen=false;
-
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
+        if (stream.IsWriting) 
+        {
             bool frozenTemp=frozen;
             stream.SendNext(frozenTemp);
-            
-        } else {
+        } else 
+        {
             bool frozenTemp = (bool)stream.ReceiveNext();
             if(frozenTemp!=frozen)
             {
-                if(frozenTemp){
+                if(frozenTemp)
+                {
                     Freeze();
                 }
-                else{
+                else
+                {
                     Unfreeze();
                 }
             }
         }
     }
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        
-        if (info.photonView.InstantiationData == null) {
+    public void OnPhotonInstantiate(PhotonMessageInfo info) 
+    {
+        if (info.photonView.InstantiationData == null) 
+        {
             return;
         }
-        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is bool) {
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is bool) 
+        {
             bool frozen = (bool)info.photonView.InstantiationData[0];
             if(frozen!=IsFrozen)
             {
-                if(frozen){
+                if(frozen)
+                {
                     Freeze();
                 }
-                else{
+                else
+                {
                     Unfreeze();
                 }
             }
@@ -90,14 +98,16 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
     {
         return true;
     }
-    public void Save(JSONNode node) {  
+    public void Save(JSONNode node) 
+    {  
         node["frozen"] = IsFrozen;
 
     }
 
-    public void Load(JSONNode node) {
+    public void Load(JSONNode node) 
+    {
         bool frozenTemp=node["frozen"];
         if(frozenTemp)Freeze();
         else Unfreeze();
-        }
+    }
 }

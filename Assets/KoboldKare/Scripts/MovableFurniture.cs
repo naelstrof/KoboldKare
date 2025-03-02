@@ -10,16 +10,19 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
     private Transform center;
     [SerializeField]
     private Freezable freezable;
-    
+    [SerializeField]
+    private float worth;
+
     [PunRPC]
     protected override void OnFireRPC(int playerViewID)
-    { freezable.Freeze();
+    { 
+        freezable.Freeze();
     }
 
     
     public float GetWorth()
     {
-        return 15f;
+        return worth;
     }
 
     public bool CanGrab(Kobold kobold)
@@ -44,19 +47,5 @@ public class MovableFurniture : GenericWeapon, IValuedGood, IGrabbable
     {
         return center;
     }
-    // Start is called before the first frame update
-    void Start()
-    { 
-
-        
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
 
 }

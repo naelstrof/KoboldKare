@@ -4,7 +4,7 @@
     "com.github.siccity.xnode": "https://github.com/siccity/xNode.git",
     "com.mackysoft.serializereference-extensions": "https://github.com/mackysoft/Unity-SerializeReferenceExtensions.git?path=Assets/MackySoft/MackySoft.SerializeReferenceExtensions",
     "com.naelstrof.extensions": "https://github.com/naelstrof/com.naelstrof.extensions.git#v0.0.2",
-    "com.naelstrof.jigglephysics": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.2.8",
+    "com.naelstrof.jigglephysics": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.2.9",
     "com.naelstrof.mozzarellatech": "https://github.com/naelstrof/UnityMozzarellaTech.git#upm",
     "com.naelstrof.orbitcam": "https://github.com/naelstrof/com.naelstrof.orbitcam.git#v1.0.2",
     "com.naelstrof.penetrationtech": "https://github.com/naelstrof/UnityPenetrationTech.git#v7.0.6",

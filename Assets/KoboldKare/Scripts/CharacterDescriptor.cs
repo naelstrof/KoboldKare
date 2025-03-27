@@ -263,10 +263,6 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     
     void EquipOnSpawn()
     {
-        bool inMenu = SceneManager.GetActiveScene().name.Equals("MainMenu");
-        if(!inMenu && photonView && !photonView.IsMine) // Prevents joining players from forcing their equipment on others
-            return;
-                
         foreach (Equipment equip in equipOnSpawn)
         {
             Equipment newEquip;
@@ -281,10 +277,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
                 Debug.LogError("One or more on-spawn equipments assigned to this kobold are invalid. Please double check its character descriptor");
                 continue;
             }
-            if(!inMenu)
-                kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(newEquip), -1);
-            else
-                koboldInventory.PickupEquipment(newEquip, new GameObject());
+            koboldInventory.PickupEquipment(newEquip, null);
         }
     }
 

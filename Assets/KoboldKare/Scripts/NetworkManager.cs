@@ -374,6 +374,11 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             return;
         }
 
+        if (photonEvent.Code == 203) {
+            TriggerDisconnect();
+            return;
+        }
+
         if (photonEvent.Code != 'M') {
             return;
         }

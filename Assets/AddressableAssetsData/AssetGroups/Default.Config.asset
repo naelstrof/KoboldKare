@@ -17,18 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 5a0bb144bc85f4e42bce33ae8579966d
   m_SerializeEntries:
-  - m_GUID: 3f5b5dff67a942289a9defa416b206f3
-    m_Address: TextSettings
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f952c082cb03451daed3ee968ac6c63e
-    m_Address: Default Style Sheet.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ccba35f9efc9e5740af2e3b0f78fa2e9
     m_Address: PhotonServerSettings
     m_ReadOnly: 0

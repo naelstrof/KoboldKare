@@ -51,11 +51,11 @@
       }
     },
     "com.naelstrof.jigglephysics": {
-      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.2.8",
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#v10.3.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c92006802c4271b098160d3eee96df849e39b0c2"
+      "hash": "b97445e56b54148893c4517babc246f6f30742d7"
     },
     "com.naelstrof.modding": {
       "version": "file:com.naelstrof.modding",
@@ -289,12 +289,13 @@
       }
     },
     "com.unity.textmeshpro": {
-      "version": "file:com.unity.textmeshpro",
+      "version": "3.0.9",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
-      }
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
       "version": "1.6.5",

@@ -47,12 +47,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dd89cf5b9246416f84610a006f916af7
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF Overlay.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e20287be7b43564d985873f3e0d2e79
     m_Address: Assets/KoboldKare/Textures/Fog/FogScroller.shader
     m_ReadOnly: 0
@@ -163,18 +157,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9360c483d0aebd74f89a07886916938c
     m_Address: Assets/KoboldKare/Shaders/MappedDecalable.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF.shader
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
-    m_Address: Assets/ThirdParty/TextMesh Pro/Resources_moved/Shaders/TMP_SDF-Mobile.shader
     m_ReadOnly: 0
     m_SerializedLabels:
     - default

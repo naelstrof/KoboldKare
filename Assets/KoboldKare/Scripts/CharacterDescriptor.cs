@@ -9,6 +9,7 @@ using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 using Vilar.IK;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -87,6 +88,7 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     public event FinishedLoadingAssetAction finishedLoading;
     
     [Header("Special Settings")]
+    public List<Equipment> equipOnSpawn = new List<Equipment>();
     [SerializeField] private AnimationCurve antiPopCurveIK;
     [SerializeField] private AnimationClip tposeIK;
     private Coroutine coroutine;
@@ -258,6 +260,26 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
         Physics.SyncTransforms();
     }
+    
+    void EquipOnSpawn()
+    {
+        foreach (Equipment equip in equipOnSpawn)
+        {
+            Equipment newEquip;
+            if (equip == null)
+            {
+                Debug.LogError("A null equipment piece was assigned to this kobold. Please double check its character descriptor");
+                continue;
+            }
+            try {
+                newEquip = EquipmentDatabase.GetEquipment(equip.name);
+            } catch (UnityException exception) {
+                Debug.LogError("One or more on-spawn equipments assigned to this kobold are invalid. Please double check its character descriptor");
+                continue;
+            }
+            koboldInventory.PickupEquipment(newEquip, null);
+        }
+    }
 
     void InitializePostEnable() {
         characterAnimator.SetHeadTransform(displayAnimator.GetBoneTransform(HumanBodyBones.Head));
@@ -276,6 +298,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         thirdPersonMeshDisplay.SetDissolveTargets(bodyRenderers.ToArray());
         classicIK.Initialize();
         kobold.SetGenes(kobold.GetGenes());
+        if(equipOnSpawn is { Count: > 0 })
+            EquipOnSpawn();
     }
 
     private void OnDestroy() {

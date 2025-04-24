@@ -2701,12 +2701,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c41005c129ba4d66911b75229fd70b45
-    m_Address: EmojiOne.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f8d0d3c48ac69c4c86af9716bd76206
     m_Address: Assets/KoboldKare/Textures/SubstanceTextures/Rocks - ambientOcclusion.png
     m_ReadOnly: 0

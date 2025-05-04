@@ -90,7 +90,7 @@ public class Freezable : MonoBehaviourPun,ISavable, IPunObservable, IPunInstanti
                 }
             }
         }
-        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is not BitBuffer) {
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is not bool) {
             throw new UnityException("Unexpected spawn data for container");
         }
     }

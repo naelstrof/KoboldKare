@@ -562,7 +562,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         PhotonView grabView = PhotonNetwork.GetPhotonView(grabViewID);
         if(grabView.GetComponentInChildren<Freezable>()!=null)
             {
-                grabView.RPC("FreezeRPC", RpcTarget.All); 
+                grabView.RPC(nameof(Freezable.FreezeRPC), RpcTarget.All); 
                 return;
             }
         Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
@@ -640,7 +640,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         PhotonView otherView = hit.collider.GetComponentInParent<PhotonView>();
         if(otherView.GetComponentInChildren<Freezable>()!=null)
             {
-                otherView.RPC("UnfreezeRPC", RpcTarget.All); 
+                otherView.RPC(nameof(Freezable.UnfreezeRPC), RpcTarget.All); 
                 return true;
             }
         if (foundGrabs) {

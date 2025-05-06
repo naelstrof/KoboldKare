@@ -33,6 +33,7 @@ public class BucketWeapon : GenericWeapon {
     private WaitForSeconds waitForSeconds;
     [SerializeField] private int projectileCount = 1;
     [SerializeField] private float projectileVolume = 10f;
+    [SerializeField] private float projectileSpeed = 10f;
 
     private GameObject currentDisplay;
 
@@ -107,7 +108,7 @@ public class BucketWeapon : GenericWeapon {
             return;
         }
         for (int i = 0; i < projectileCount; i++) {
-            Vector3 velocity = GetWeaponBarrelTransform().forward * 10f;
+            Vector3 velocity = GetWeaponBarrelTransform().forward * projectileSpeed;
             if (playerFired != null) {
                 velocity += playerFired.body.velocity * 0.5f;
             }

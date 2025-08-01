@@ -269,7 +269,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     [PunRPC]
-    public void SetDickRPC(byte dickID) {
+    public void SetDickRPC(ushort dickID) {
         SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
@@ -278,20 +278,20 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             return;
         }
         // Set dick
-        if (newGenes.dickEquip == byte.MaxValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+        if (newGenes.dickEquip == ushort.MinValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
             if (dickObject != null) {
                 dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
                 Destroy(dickObject);
             }
         }
-        
-        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != byte.MaxValue) {
+
+        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != ushort.MinValue) {
             var dickDatabase = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
             PrefabDatabase.PrefabReferenceInfo selectedDick;
             if (newGenes.dickEquip <= dickDatabase.Count) {
-                selectedDick = dickDatabase[newGenes.dickEquip];
+                selectedDick = dickDatabase[newGenes.dickEquip - 1];
             } else {
-                Debug.LogWarning($"Couldn't find dick with id {newGenes.dickEquip}, replacing with default dick.");
+                Debug.LogWarning($"Couldn't find dick with id {newGenes.dickEquip - 1}, replacing with default dick.");
                 selectedDick = dickDatabase[0];
             }
 

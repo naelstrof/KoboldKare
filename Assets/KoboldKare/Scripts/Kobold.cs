@@ -291,7 +291,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             if (newGenes.dickEquip <= dickDatabase.Count) {
                 selectedDick = dickDatabase[newGenes.dickEquip - 1];
             } else {
-                Debug.LogWarning($"Couldn't find dick with id {newGenes.dickEquip - 1}, replacing with default dick.");
+                Debug.LogWarning($"Couldn't find dick with id {newGenes.dickEquip}, replacing with default dick.");
                 selectedDick = dickDatabase[0];
             }
 

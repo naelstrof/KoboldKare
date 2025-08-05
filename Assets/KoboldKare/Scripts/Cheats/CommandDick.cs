@@ -25,12 +25,12 @@ public class CommandDick : Command {
         }
     }
 
-    public void SetDick(Kobold k, ushort dickID, StringBuilder output, string chatMessage) {
+    private void SetDick(Kobold k, ushort dickID, StringBuilder output, string chatMessage) {
         k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
         output.AppendLine(chatMessage);
     }
 
-    public void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, ushort dickID) {
+    private void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, ushort dickID) {
         if (dickID != ushort.MinValue) {
             if (dickID >= infos.Count) {
                 throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {ushort.MinValue} or under {infos.Count - 1}.");
@@ -42,7 +42,7 @@ public class CommandDick : Command {
         }
     }
 
-    public void SetDickByName(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, string[] args) {
+    private void SetDickByName(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, string[] args) {
         for (ushort i = 0; i < infos.Count; i++) {
             if (infos[i].GetKey() != args[1]) continue;
             i++;

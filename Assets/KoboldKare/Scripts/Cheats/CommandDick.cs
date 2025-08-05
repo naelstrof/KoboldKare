@@ -19,8 +19,7 @@ public class CommandDick : Command {
         // Dick setting
         if (ushort.TryParse(args[1], out ushort dickID)) {
             SetDickByID(output, k, infos, dickID);
-        }
-        else {
+        } else {
             SetDickByName(output, k, infos, args);
         }
     }
@@ -36,8 +35,7 @@ public class CommandDick : Command {
                 throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {ushort.MinValue} or under {infos.Count - 1}.");
             }
             SetDick(k, dickID, output, "Set dick to " + infos[dickID - 1].GetKey() + ".");
-        }
-        else {
+        } else {
             SetDick(k, dickID, output, "Set dick to None.");
         }
     }

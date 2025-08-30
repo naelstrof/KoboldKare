@@ -48,9 +48,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
                 var validInfos = database.GetValidPrefabReferenceInfos();
                 var info = database.GetInfoByName("HumanoidDick");
                 if (info == null) {
-                    genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)0;
+                    genes.dickEquip = (setting.GetValue() == 0f) ? ushort.MinValue : (ushort)1;
                 } else {
-                    genes.dickEquip = (setting.GetValue() == 0f) ? byte.MaxValue : (byte)validInfos.IndexOf(info);
+                    genes.dickEquip = (setting.GetValue() == 0f) ? ushort.MinValue : (ushort)(validInfos.IndexOf(info) + 1);
                 }
 
                 break;

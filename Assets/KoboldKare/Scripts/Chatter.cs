@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class Chatter : MonoBehaviourPun {
@@ -43,19 +44,29 @@ public class Chatter : MonoBehaviourPun {
     }
     
     [PunRPC]
-    public void RPCSendChat(string message) {
+    public void RPCSendChat(string message, PhotonMessageInfo info) {
+        Player player = GetPlayer();
+        if (info.Sender != player) {
+            Debug.LogWarning($"Call to method {nameof(RPCSendChat)} on player {player} originated from {info.Sender}. This may have been malicious.");
+            return;
+        }
+
         //GameManager.instance.SpawnAudioClipInWorld(yowls[UnityEngine.Random.Range(0,yowls.Length)], transform.position);
         GameManager.instance.SpawnAudioClipInWorld(yowls, transform.position);
         if (displayMessageRoutine != null) {
             StopCoroutine(displayMessageRoutine);
         }
+        
+        CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
+        CheatsProcessor.ProcessCommand(kobold, message);
+        displayMessageRoutine = StartCoroutine(DisplayMessage(message, minTextTimeout));
+    }
 
+    private Player GetPlayer() {
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject != GetComponent<Kobold>()) continue;
-            CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
-            CheatsProcessor.ProcessCommand(kobold, message);
-            displayMessageRoutine = StartCoroutine(DisplayMessage(message,minTextTimeout));
-            break;
+            return player;
         }
+        return null;
     }
 }

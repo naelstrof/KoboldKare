@@ -48,11 +48,26 @@ public class ReagentDatabase : MonoBehaviour {
         if (!ModManager.GetReady()) {
             return instance.defaultReagent;
         }
-        
+
+        if (id >= instance.reagents.Count) {
+#if UNITY_EDITOR
+            Debug.LogError("Tried to access invalid reagent ID: " + id);
+#endif
+            return instance.defaultReagent;
+        }
         return instance.reagents[id];
     }
     public static byte GetID(ScriptableReagent reagent) {
-        return (byte)instance.reagents.IndexOf(reagent);
+        var index = instance.reagents.IndexOf(reagent);
+        if (index == -1) {
+            var count = instance.reagents.Count;
+            for(int i=0;i<count;i++) {
+                if (instance.reagents[i].name == reagent.name) {
+                    return (byte)i;
+                }
+            }
+        }
+        return (byte)index;
     }
 
     public static void AddReagent(ScriptableReagent newReagent) {

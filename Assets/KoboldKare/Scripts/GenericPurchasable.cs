@@ -44,7 +44,9 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         source.maxDistance = 25f;
         source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-        SwapTo(spawn.photonName);
+        if (spawn != null && !string.IsNullOrEmpty(spawn.photonName)) {
+            SwapTo(spawn.photonName);
+        }
     }
     public override Sprite GetSprite(Kobold k) {
         return displaySprite;

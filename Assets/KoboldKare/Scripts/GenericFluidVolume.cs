@@ -19,32 +19,54 @@ public class GenericFluidVolume : MonoBehaviourPun {
     public List<BoxCollider> fluidHitboxes = new List<BoxCollider>();
     public GenericReagentContainer volumeContainer;
     public HashSet<PhotonView> dippedObjects;
-    public UnityEvent drainStart;
-    public UnityEvent drainEnd;
+    
+    
+    [SerializeField, HideInInspector]
+    private UnityEvent drainStart;
+    [SerializeField, HideInInspector]
+    private UnityEvent drainEnd;
+    
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> drainStartResponses = new List<GameEventResponse>();
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> drainEndResponses = new List<GameEventResponse>();
 
     public IEnumerator DrainProcess() {
         while (volumeContainer.volume > 0f) {
             volumeContainer.Spill(fillRate * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
         }
-        drainEnd.Invoke();
+        foreach(var response in drainEndResponses) {
+            response?.Invoke(this);
+        }
     }
 
     public void TriggerDrain() {
-        drainStart.Invoke();
+        foreach(var response in drainStartResponses) {
+            response?.Invoke(this);
+        }
         StartCoroutine(DrainProcess());
     }
 
     private void Awake() {
         dippedObjects = new HashSet<PhotonView>();
+        GameEventSanitizer.SanitizeRuntime(drainStart, drainStartResponses, this);
+        GameEventSanitizer.SanitizeRuntime(drainEnd, drainEndResponses, this);
+    }
+
+    private void OnValidate() {
+        GameEventSanitizer.SanitizeEditor(nameof(drainStart), nameof(drainStartResponses), this);
+        GameEventSanitizer.SanitizeEditor(nameof(drainEnd), nameof(drainEndResponses), this);
     }
 
     public void Start() {
-        volumeContainer.OnChange.AddListener(OnReagentContainerChanged);
+        volumeContainer.OnChange += OnReagentContainerChanged;
         OnReagentContainerChanged(volumeContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
     }
     public void OnDestroy() {
-        volumeContainer.OnChange.RemoveListener(OnReagentContainerChanged);
+        if (volumeContainer != null) {
+            volumeContainer.OnChange -= OnReagentContainerChanged;
+        }
     }
     public void Update() {
         dippedObjects.RemoveWhere(o=>o == null);

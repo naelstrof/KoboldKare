@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Events;
 
-
-[System.Serializable]
-public class KoboldEvent : UnityEvent<Kobold> {}
 public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
     [System.Serializable]
     public class RendererMaterialPair {

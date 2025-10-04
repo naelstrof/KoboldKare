@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,10 +16,14 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
         photonView.ObservedComponents.Add(container);
-        container.OnChange.AddListener(OnReagentContentsChanged);
+        container.OnChange += OnReagentContentsChanged;
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
+    }
+
+    private void OnDestroy() {
+        container.OnChange -= OnReagentContentsChanged;
     }
 
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {

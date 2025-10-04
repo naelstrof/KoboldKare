@@ -28,9 +28,9 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
         photonView.ObservedComponents.Add(container);
-        container.OnChange.AddListener(OnReagentContentsChanged);
-        
+        container.OnChange += OnReagentContentsChanged;
     }
+    
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         stream.OnFire(container);
     }

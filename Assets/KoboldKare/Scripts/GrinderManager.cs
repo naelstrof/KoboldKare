@@ -106,7 +106,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
-        container.OnChange.AddListener(OnReagentsChanged);
+        container.OnChange += OnReagentsChanged;
     }
 
     private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {

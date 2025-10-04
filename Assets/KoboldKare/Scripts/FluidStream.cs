@@ -256,8 +256,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
                 ReagentContents spill = container.Spill(Time.deltaTime * 4f);
                 // Add it back if we don't own the object we're spilling from.
                 if (!photonView.IsMine) {
-                    container.GetContents().AddMix(spill);
-                    container.OnChange?.Invoke(container.GetContents(), GenericReagentContainer.InjectType.Metabolize);
+                    container.AddMix(spill, GenericReagentContainer.InjectType.Metabolize);
                 }
                 midairContents.AddMix(spill);
                 startClip = 0f;

@@ -4,17 +4,32 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class DelayTrigger : MonoBehaviour {
-    public UnityEvent onTrigger;
+    [SerializeField, HideInInspector]
+    private UnityEvent onTrigger;
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> onTriggerResponses = new List<GameEventResponse>();
+    
+    
     public float waitTime = 1f;
     public float waitVariance = 1f;
     private float timer = 0f;
+    private void Awake() {
+        GameEventSanitizer.SanitizeRuntime(onTrigger, onTriggerResponses, this);
+    }
+
+    private void OnValidate() {
+        GameEventSanitizer.SanitizeEditor(nameof(onTrigger), nameof(onTriggerResponses), this);
+    }
+
     void Start() {
-        waitTime += UnityEngine.Random.Range(-waitVariance, waitVariance);
+        waitTime += Random.Range(-waitVariance, waitVariance);
     }
     void FixedUpdate() {
         timer += Time.fixedDeltaTime;
         if ( timer > waitTime ) {
-            onTrigger.Invoke();
+            foreach (GameEventResponse response in onTriggerResponses) {
+                response?.Invoke(this);
+            }
             Destroy(this);
         }
     }

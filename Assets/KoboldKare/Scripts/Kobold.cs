@@ -393,7 +393,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         body = GetComponent<Rigidbody>();
         lastPumpTime = Time.timeSinceLevelLoad;
         DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
-        bellyContainer.OnChange.AddListener(OnBellyContentsChanged);
+        bellyContainer.OnChange += OnBellyContentsChanged;
         PlayAreaEnforcer.AddTrackedObject(photonView);
         if (GetGenes() == null) {
             SetGenes(new KoboldGenes().Randomize(gameObject.name));
@@ -401,7 +401,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
     private void OnDestroy() {
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
-        bellyContainer.OnChange.RemoveListener(OnBellyContentsChanged);
+        bellyContainer.OnChange -= OnBellyContentsChanged;
         PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     [PunRPC]

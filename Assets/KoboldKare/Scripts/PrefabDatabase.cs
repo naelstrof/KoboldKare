@@ -55,7 +55,13 @@ public class PrefabDatabase : ScriptableObject {
         }
     }
 
-    public PrefabReferenceInfo GetRandom() {
+    public bool TryGetRandom(out PrefabReferenceInfo info) {
+#if UNITY_EDITOR
+        if (!ModManager.GetReady()) {
+            info = null;
+            return false;
+        }
+#endif
         float count = 0f;
         foreach(var prefab in prefabReferenceInfos) {
             if (prefab.IsValid()) {
@@ -68,20 +74,13 @@ public class PrefabDatabase : ScriptableObject {
             if (!prefab.IsValid()) continue;
             current++;
             if (current >= selection) {
-                return prefab;
+                info = prefab;
+                return true;
             }
         }
 
-        #if UNITY_EDITOR
-        // Return an empty object to avoid errors in scene play mode.
-        if (!ModManager.GetReady()) {
-            GameObject temp = new GameObject("fake prefab");
-            Destroy(temp,1f);
-            temp.SetActive(false);
-            return new PrefabReferenceInfo(this, "fake", temp);
-        }
-#endif
-        return null;
+        info = null;
+        return false;
     }
 
     public void AddPrefabReferencesChangedListener(PrefabReferencesChangedAction action) {

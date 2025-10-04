@@ -32,11 +32,13 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     public static event PlantSpawnEventAction planted;
 
     void Start() {
-        container.OnFilled.AddListener(OnFilled);
+        container.OnFilled += OnFilled;
     }
 
     void OnDestroy() {
-        container.OnFilled.RemoveListener(OnFilled);
+        if (container) {
+            container.OnFilled -= OnFilled;
+        }
     }
 
     IEnumerator GrowRoutine() {

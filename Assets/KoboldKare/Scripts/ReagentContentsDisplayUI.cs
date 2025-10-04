@@ -34,7 +34,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         targetKobold = GetComponentInParent<Kobold>();
         switch (targetContents) {
             case TargetReagentContents.Belly:
-                targetKobold.bellyContainer.OnChange.AddListener(OnReagentContentsChangedOther);
+                targetKobold.bellyContainer.OnChange += OnReagentContentsChangedOther;
                 OnReagentContentsChanged(targetKobold.bellyContainer.GetContents());
                 break;
             case TargetReagentContents.Metabolized:

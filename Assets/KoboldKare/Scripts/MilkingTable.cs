@@ -22,7 +22,7 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         readOnlyStations = stations.AsReadOnly();
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
-        container.OnChange.AddListener(OnReagentContainerChangedEvent);
+        container.OnChange += OnReagentContainerChangedEvent;
         photonView.ObservedComponents.Add(container);
     }
     private void OnReagentContainerChangedEvent(ReagentContents contents, GenericReagentContainer.InjectType injectType) {

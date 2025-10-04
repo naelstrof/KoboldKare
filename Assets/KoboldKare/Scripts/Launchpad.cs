@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,12 @@ public class Launchpad : UsableMachine {
         return false;
     }
 
-    public UnityEvent OnFire;
+    [SerializeField]
+    private UnityEvent OnFire;
+    
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> onFireResponses = new List<GameEventResponse>();
+    
     [HideInInspector]
     public Vector3 playerGravityMod = new Vector3(0f, -4f, 0f);
     private float fireDelay = 1f;
@@ -39,6 +45,11 @@ public class Launchpad : UsableMachine {
 
     private void Awake() {
         waitForFixedUpdate = new WaitForFixedUpdate();
+        GameEventSanitizer.SanitizeRuntime(OnFire, onFireResponses, this);
+    }
+
+    private void OnValidate() {
+        GameEventSanitizer.SanitizeEditor(nameof(OnFire), nameof(onFireResponses), this);
     }
 
     private IEnumerator HighQualityCollision(Rigidbody body) {
@@ -95,7 +106,9 @@ public class Launchpad : UsableMachine {
             r.velocity = initialVelocity;
         }
         if (lastFireTime + fireDelay < Time.time) {
-            OnFire.Invoke();
+            foreach (var response in onFireResponses) {
+                response?.Invoke(this);
+            }
             lastFireTime = Time.time;
         }
     }

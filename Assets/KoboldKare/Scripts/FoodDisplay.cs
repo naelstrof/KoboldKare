@@ -13,12 +13,12 @@ public class FoodDisplay : MonoBehaviour {
     private void OnEnable() {
         container = GetComponentInParent<GenericReagentContainer>();
         sizeInflater.OnEnable();
-        container.OnChange.AddListener(OnReagentsChanged);
+        container.OnChange += OnReagentsChanged;
         OnReagentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
     }
 
     private void OnDisable() {
-        container.OnChange.RemoveListener(OnReagentsChanged);
+        container.OnChange += OnReagentsChanged;
     }
 
     void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {

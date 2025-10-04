@@ -20,11 +20,29 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
     public GameObject nothingFoundDisplay;
     public GameObject scannerUIPrefab;
     public Transform laserEmitterLocation;
-    public UnityEvent OnSuccess;
-    public UnityEvent OnFailure;
+    
+    [SerializeField]
+    private UnityEvent OnSuccess;
+    [SerializeField]
+    private UnityEvent OnFailure;
+    
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> onSuccessResponses = new List<GameEventResponse>();
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> onFailureResponses = new List<GameEventResponse>();
+    
     public float scanDelay = 0.09f;
     private static RaycastHit[] hits = new RaycastHit[32];
     private static RaycastHitComparer comparer = new RaycastHitComparer();
+
+    private void Awake() {
+        GameEventSanitizer.SanitizeRuntime(OnSuccess, onSuccessResponses, this);
+        GameEventSanitizer.SanitizeRuntime(OnFailure, onFailureResponses, this);
+    }
+    private void OnValidate() {
+        GameEventSanitizer.SanitizeEditor(nameof(OnSuccess), nameof(onSuccessResponses), this);
+        GameEventSanitizer.SanitizeEditor(nameof(OnFailure), nameof(onFailureResponses), this);
+    }
 
     private class RaycastHitComparer : IComparer<RaycastHit> {
         public int Compare(RaycastHit x, RaycastHit y) {
@@ -39,12 +57,18 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
         yield return new WaitForSeconds(scanDelay);
         scanBeam.SetActive(false);
         if (reagents.volume <= 0f) {
-            OnFailure.Invoke();
+            foreach (var resp in onFailureResponses) {
+                resp?.Invoke(this);
+            }
             nothingFoundDisplay.SetActive(true);
         } else {
             nothingFoundDisplay.SetActive(false);
         }
-        OnSuccess.Invoke();
+
+        foreach (var resp in onSuccessResponses) {
+            resp?.Invoke(this);
+        }
+        
         float maxVolume = reagents.volume;
         foreach(var reagent in ReagentDatabase.GetReagents()) {
             float rvolume = reagents.GetVolumeOf(reagent);

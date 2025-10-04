@@ -41,14 +41,18 @@ public class GenericDoor : GenericUsable, IPunObservable, ISavable {
     protected virtual void Open(){
         animator.SetBool("Open", true);
         audioSource.Stop();
-        audioSource.PlayOneShot(openSFX);
+        if (openSFX) {
+            audioSource.PlayOneShot(openSFX);
+        }
         if(activeWhenOpen != null) activeWhenOpen.SendEvent("Fire");
         if(soundWhileOpen != null) soundWhileOpen.Play();
     }
     protected virtual void Close(){
         animator.SetBool("Open", false);
         audioSource.Stop();
-        audioSource.PlayOneShot(closeSFX);
+        if (closeSFX) {
+            audioSource.PlayOneShot(closeSFX);
+        }
         if(activeWhenOpen != null) activeWhenOpen.Stop();
         if(soundWhileOpen != null) soundWhileOpen.Stop();
     }

@@ -24,11 +24,18 @@ public class Pachinko : GenericUsable {
         private PrefabDatabase.PrefabReferenceInfo prefabReference;
         private VisualEffect spawnVFXInstance;
         public void Spawn() {
-            prefabReference = prizeSpawn.GetRandom();
+            if (!prizeSpawn.TryGetRandom(out var info)) {
+                return;
+            }
+            prefabReference = info;
             if (display != null) {
                 Destroy(display);
             }
-            display = GenericPurchasable.GenerateDisplay(prefabReference.GetPrefab(), displayShader, location);
+            
+            if (prefabReference != null && prefabReference.GetPrefab() != null) {
+                display = GenericPurchasable.GenerateDisplay(prefabReference.GetPrefab(), displayShader, location);
+            }
+
             //ScriptablePurchasable.DisableAllButGraphics(gobj);
             if (spawnVFXInstance == null) {
                 spawnVFXInstance = Instantiate(spawnVFX, location);

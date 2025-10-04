@@ -12,13 +12,15 @@ public class PlantTutorial : MonoBehaviour {
     void Start() {
         plant = GetComponent<Plant>();
         container = GetComponent<GenericReagentContainer>();
-        container.OnFilled.AddListener(OnFilled);
+        container.OnFilled += OnFilled;
         plant.switched += OnSwitched;
     }
     void OnDestroy() {
-        if (plant != null) {
+        if (plant) {
             plant.switched -= OnSwitched;
-            container.OnFilled.RemoveListener(OnFilled);
+        }
+        if (container) {
+            container.OnFilled -= OnFilled;
         }
     }
     void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {

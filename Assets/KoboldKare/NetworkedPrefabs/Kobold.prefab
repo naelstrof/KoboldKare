@@ -2208,6 +2208,7 @@ MonoBehaviour:
   bodyRenderers:
   - {fileID: 6506915555087688956}
   stepHeight: 1.2
+  equipOnSpawn: []
   antiPopCurveIK:
     serializedVersion: 2
     m_Curve:

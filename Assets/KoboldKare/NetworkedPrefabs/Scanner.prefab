@@ -101,37 +101,28 @@ MonoBehaviour:
   laserEmitterLocation: {fileID: 684337438569656546}
   OnSuccess:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9126312317091049311}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: c48d03e8805874e449e108f02b452a37,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnFailure:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 9126312317091049311}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: f3f684858781dbe41b9659969de683d2,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  onSuccessResponses:
+  - rid: 998295076665819139
+  onFailureResponses:
+  - rid: 998295076665819137
   scanDelay: 0.08
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295076665819137
+      type: {class: GameEventResponsePlayOneShot, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 9126312317091049311}
+        clip: {fileID: 8300000, guid: f3f684858781dbe41b9659969de683d2, type: 3}
+    - rid: 998295076665819139
+      type: {class: GameEventResponsePlayOneShot, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 9126312317091049311}
+        clip: {fileID: 8300000, guid: c48d03e8805874e449e108f02b452a37, type: 3}
 --- !u!54 &7877201617650488777
 Rigidbody:
   m_ObjectHideFlags: 0

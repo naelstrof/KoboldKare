@@ -46,7 +46,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
 
         fruitInflater.OnEnable();
 
-        container.OnChange.AddListener(OnReagentContentsChanged);
+        container.OnChange += OnReagentContentsChanged;
         container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
         OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
         photonView.ObservedComponents.Add(container);

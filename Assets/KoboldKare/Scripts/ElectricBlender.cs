@@ -19,7 +19,7 @@ public class ElectricBlender : SuckingMachine {
 
     protected override void Awake() {
         base.Awake();
-        container.OnChange.AddListener(OnFluidChanged);
+        container.OnChange += OnFluidChanged;
         if (source == null) {
             source = gameObject.AddComponent<AudioSource>();
             source.playOnAwake = false;
@@ -34,7 +34,7 @@ public class ElectricBlender : SuckingMachine {
 
     private void OnDestroy() {
         if (container != null) {
-            container.OnChange.RemoveListener(OnFluidChanged);
+            container.OnChange += OnFluidChanged;
         }
     }
 

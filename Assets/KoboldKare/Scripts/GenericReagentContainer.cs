@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using System.IO;
 using NetStack.Serialization;
@@ -47,8 +48,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         {  true,   true,   true }, // Metabolize
         {  true,   true,   true }, // Vacuum
     };
-    [System.Serializable]
-    public class ReagentContainerChangedEvent : UnityEvent<ReagentContents, InjectType> {}
+    public delegate void ReagentContainerChangedEvent(ReagentContents c, InjectType t);
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
@@ -64,7 +64,9 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
 
     public Color GetColor() => GetContents().GetColor();
     public ContainerType type;
-    public ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;
+    
+    public event ReagentContainerChangedEvent OnChange, OnFilled, OnEmpty;
+    
     public bool isFull => Mathf.Approximately(GetContents().volume, GetContents().GetMaxVolume());
     public bool isEmpty => Mathf.Approximately(GetContents().volume,0f);
     public bool IsCleaningAgent() => GetContents().IsCleaningAgent();
@@ -76,9 +78,6 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     private bool emptied = false;
     protected override void Awake() {
         base.Awake();
-        OnChange ??= new ReagentContainerChangedEvent();
-        OnFilled ??= new ReagentContainerChangedEvent();
-        OnEmpty ??= new ReagentContainerChangedEvent();
         if (startingReagents != null) {
             foreach (var reagent in startingReagents) {
                 AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
@@ -173,7 +172,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
             //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
-            OnFilled.Invoke(GetContents(), injectType);
+            OnFilled?.Invoke(GetContents(), injectType);
             containerFilled?.Invoke(this);
         }
         //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);

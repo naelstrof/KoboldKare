@@ -15,11 +15,13 @@ public class SphereFluidDisplay : MonoBehaviour {
     void Start() {
         vel = Vector3.zero;
         pos = Vector3.up;
-        container.OnChange.AddListener(OnChanged);
+        container.OnChange += OnChanged;
         OnChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
     }
     void OnDestroy() {
-        container.OnChange.RemoveListener(OnChanged);
+        if (container) {
+            container.OnChange -= OnChanged;
+        }
     }
     void FixedUpdate() {
         Vector3 normal = body.velocity - Physics.gravity;

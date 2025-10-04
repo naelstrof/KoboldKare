@@ -1,13 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using TMPro;
 using UnityEditor;
 using UnityEditor.PackageManager;
 
 public static class AghButton {
+    [MenuItem("Tools/KoboldKare/Unhide GameObjects")]
+    public static void UnhideGameObjects() {
+        foreach (GameObject g in Object.FindObjectsOfType<GameObject>(true)) {
+            g.hideFlags &= (HideFlags)(~0x3);
+        }
+    }
+    
     [MenuItem("Tools/KoboldKare/FindInvalidTransforms")]
     public static void FindInvalidTransform() {
         foreach (GameObject g in Object.FindObjectsOfType<GameObject>(true)) {

@@ -194,23 +194,19 @@ MonoBehaviour:
   - {fileID: 3868895527762200179}
   localTarget: {x: 1.8315881, y: -0.09601499, z: 0.0000052452087}
   flightTime: 11
-  playerFlightTime: 9.26
   OnFire:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3093569331750097556}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  onFireResponses:
+  - rid: 998295076338663437
   playerGravityMod: {x: 0, y: -4, z: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295076338663437
+      type: {class: GameEventResponsePlayAudioSource, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 3093569331750097556}
 --- !u!82 &3093569331750097556
 AudioSource:
   m_ObjectHideFlags: 0

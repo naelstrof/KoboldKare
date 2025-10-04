@@ -239,6 +239,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5609934524133607417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +278,7 @@ MonoBehaviour:
   bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
   projectileCount: 1
   projectileVolume: 10
+  projectileSpeed: 10
 --- !u!114 &3974528431164441439
 MonoBehaviour:
   m_ObjectHideFlags: 0

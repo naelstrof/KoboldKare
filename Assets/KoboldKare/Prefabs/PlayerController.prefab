@@ -3689,6 +3689,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: -1
@@ -3736,6 +3737,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7751406803473495939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3751,19 +3753,18 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 99221d5c5e229a64db8b3cabbf12a2bc, type: 2}
   Response:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8335217903052416090}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Sleep
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  responses:
+  - rid: 998295076665819143
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295076665819143
+      type: {class: GameEventResponseAnimatorTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        targets:
+        - animator: {fileID: 8335217903052416090}
+          triggerName: Sleep
 --- !u!114 &510265642325180185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8645,6 +8646,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2748703828832391595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12004,51 +12006,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212b0be72f4399a40a8f931740eccc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnEnterUsable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2131815694556196501}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 7306320487976115688}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: set_sprite
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnExitUsable:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2131815694556196501}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnUse:
-    m_PersistentCalls:
-      m_Calls: []
+  panel: {fileID: 2131815694556196501}
+  useImage: {fileID: 7306320487976115688}
   unknownUsableSprite: {fileID: 21300000, guid: ae7a3b58c16bf7945bf9d83459255997,
     type: 3}
 --- !u!1 &6812936466331540840
@@ -14487,7 +14446,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: caa478b7447a859438a1a9dfc9f9dd91, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ae7a3b58c16bf7945bf9d83459255997, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

@@ -131,8 +131,7 @@ public class KoboldGenes {
     private ushort GetRandomDick() {
         var penisDatabase = GameManager.GetPenisDatabase();
         var penises = penisDatabase.GetValidPrefabReferenceInfos();
-        var selectedPenis = penisDatabase.GetRandom();
-        if (selectedPenis == null) {
+        if (!penisDatabase.TryGetRandom(out var selectedPenis)) {
             throw new UnityException("Failed to get a penis, penis database is probably empty.");
         }
         return (ushort)penises.IndexOf(selectedPenis);
@@ -188,8 +187,8 @@ public class KoboldGenes {
         hue = (byte)Random.Range(0, 255);
         brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
-        if (string.IsNullOrEmpty(koboldName)) {
-            koboldName = GameManager.GetPlayerDatabase().GetRandom().GetKey();
+        if (string.IsNullOrEmpty(koboldName) && GameManager.GetPlayerDatabase().TryGetRandom(out var info)) {
+            koboldName = info.GetKey();
         }
         species = GetPlayerIndex(koboldName);
         return this;

@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using Photon.Pun;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
+using UnityEngine.UI;
 
-[System.Serializable]
-public class SpriteEvent : UnityEvent<Sprite> {}
+public delegate void SpriteEvent(Sprite sprite);
 
 public class User : MonoBehaviourPun {
     private Kobold internalKobold;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private Image useImage;
     public Kobold kobold {
         get {
             if (internalKobold == null) {
@@ -21,9 +21,6 @@ public class User : MonoBehaviourPun {
         }
     }
 
-    public SpriteEvent OnEnterUsable;
-    public UnityEvent OnExitUsable;
-    public UnityEvent OnUse;
     public Sprite unknownUsableSprite;
     private HashSet<Tuple<GenericUsable,GameObject>> possibleUsables = new HashSet<Tuple<GenericUsable,GameObject>>();
     private GenericUsable closestUsable = null;
@@ -82,21 +79,27 @@ public class User : MonoBehaviourPun {
         }
         closestUsable = closest;
         if (closestUsable != null) {
+            if (!panel.activeInHierarchy) {
+                panel.SetActive(true);
+            }
+
             if (closestUsable.GetSprite(kobold) == null) {
-                OnEnterUsable.Invoke(unknownUsableSprite);
+                useImage.sprite = unknownUsableSprite;
             } else {
-                OnEnterUsable.Invoke(closestUsable.GetSprite(kobold));
+                useImage.sprite = closestUsable.GetSprite(kobold);
             }
         } else {
             closestUsable = null;
-            OnExitUsable.Invoke();
+            useImage.sprite = unknownUsableSprite;
+            if (panel.activeInHierarchy) {
+                panel.SetActive(false);
+            }
         }
     }
     public void Use() {
         if (closestUsable != null) {
             //closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
             closestUsable.LocalUse(kobold);
-            OnUse.Invoke();
         }
     }
 }

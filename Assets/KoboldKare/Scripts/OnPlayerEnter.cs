@@ -8,12 +8,25 @@ public class OnPlayerEnter : MonoBehaviour {
     public bool entered = false;
     public float delay = 1f;
     [Serializable]
-    public class Condition : SerializableCallback<bool> { }
-    [Serializable]
     public class ConditionEventPair {
         [SerializeField]
-        public List<Condition> conditions;
-        public UnityEvent even;
+        private UnityEvent even;
+        [SerializeField, SubclassSelector, SerializeReference]
+        private List<GameEventResponse> responses = new List<GameEventResponse>();
+        public void OnValidate(MonoBehaviour context, string startPath) {
+            GameEventSanitizer.SanitizeEditor(startPath+"."+nameof(even), startPath+"."+nameof(responses), context);
+        }
+        
+        public void OnAwake(MonoBehaviour context) {
+            GameEventSanitizer.SanitizeRuntime(even, responses, context);
+        }
+
+        public bool TryInvoke(MonoBehaviour sender) {
+            foreach(var resp in responses) {
+                resp?.Invoke(sender);
+            }
+            return true;
+        }
     }
 
     [SerializeField]
@@ -23,32 +36,42 @@ public class OnPlayerEnter : MonoBehaviour {
 
     private LayerMask playerLayers;
 
+    private void OnValidate() {
+        if (onEnterEvents != null) {
+            int count = 0;
+            foreach (var condition in onEnterEvents) {
+                condition.OnValidate(this, "onEnterEvents.Array.data["+(count++)+"]");
+            }
+        }
+
+        if (onExitEvents != null) {
+            int count = 0;
+            foreach (var condition in onExitEvents) {
+                condition.OnValidate(this, "onExitEvents.Array.data["+(count++)+"]");
+            }
+        }
+    }
+
     private void Awake() {
         playerLayers = LayerMask.GetMask("Player", "LocalPlayer", "MirrorReflection", "Hitbox");
+        foreach (var condition in onEnterEvents) {
+            condition.OnAwake(this);
+        }
+        foreach (var condition in onExitEvents) {
+            condition.OnAwake(this);
+        }
     }
 
     IEnumerator OnEnterDelay() {
         yield return new WaitForSeconds(delay);
         foreach (ConditionEventPair pair in onEnterEvents) {
-            bool run = true;
-            foreach(var cond in pair.conditions) {
-                run &= cond.Invoke();
-            }
-            if (run) {
-                pair.even.Invoke();
-            }
+            pair.TryInvoke(this);
         }
     }
     IEnumerator OnExitDelay() {
         yield return new WaitForSeconds(delay);
         foreach (ConditionEventPair pair in onExitEvents) {
-            bool run = true;
-            foreach(var cond in pair.conditions) {
-                run &= cond.Invoke();
-            }
-            if (run) {
-                pair.even.Invoke();
-            }
+            pair.TryInvoke(this);
         }
     }
 

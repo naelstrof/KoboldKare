@@ -23,6 +23,9 @@ public class AmbienceAudio : MonoBehaviour {
         }
         if (shouldEnable && !targetSource.enabled) {
             targetSource.enabled = shouldEnable;
+            if (!targetSource.isPlaying) {
+                targetSource.Play();
+            }
             targetSource.timeSamples = samples;
         } else {
             targetSource.enabled = shouldEnable;

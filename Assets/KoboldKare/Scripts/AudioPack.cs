@@ -13,9 +13,8 @@ public class AudioPack : ScriptableObject {
     private AudioMixerGroup group;
     [SerializeField]
     private float pitchRange = 0.2f;
-    //public AudioClip GetRandomClip() {
-        //return clips[Random.Range(0, clips.Length)];
-    //}
+    
+    private static AnimationCurve audioFalloff = new() {keys=new Keyframe[] { new (0f, 1f, 0, -3.1f), new (1f, 0f, 0f, 0f) } };
     public AudioClip GetClip() {
         return clips[Random.Range(0, clips.Length)];
     }
@@ -24,10 +23,10 @@ public class AudioPack : ScriptableObject {
         return volume;
     }
 
-    public void Play(AudioSource source) {
+    public void Play(AudioSource source, float vol = 1f) {
         source.outputAudioMixerGroup = group;
         source.clip = clips[Random.Range(0, clips.Length)];
-        source.volume = volume;
+        source.volume = volume*vol;
         source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.Play();
     }
@@ -35,5 +34,19 @@ public class AudioPack : ScriptableObject {
         source.outputAudioMixerGroup = group;
         source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.PlayOneShot(clips[Random.Range(0, clips.Length)], volume);
+    }
+    public static AudioSource PlayClipAtPoint(AudioPack pack, Vector3 position, float volume = 1f) {
+        GameObject obj = new GameObject("OneOffSoundEffect", typeof(AudioSource));
+        obj.transform.position = position;
+        AudioSource source = obj.GetComponent<AudioSource>();
+        source.spatialBlend = 1f;
+        source.minDistance = 1f;
+        source.maxDistance = 25f;
+
+        source.rolloffMode = AudioRolloffMode.Custom;
+        source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, audioFalloff);
+        pack.Play(source, volume);
+        Destroy(obj, source.clip.length + 0.1f);
+        return source;
     }
 }

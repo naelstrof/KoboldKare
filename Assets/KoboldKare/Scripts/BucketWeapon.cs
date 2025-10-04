@@ -48,7 +48,7 @@ public class BucketWeapon : GenericWeapon {
             audioSource.loop = false;
         }
 
-        container.OnChange.AddListener(OnReagentsChanged);
+        container.OnChange += OnReagentsChanged;
         audioSource.enabled = false;
         waitForSeconds = new WaitForSeconds(5f);
         defaultBucketDisplay.SetActive(true);
@@ -56,7 +56,9 @@ public class BucketWeapon : GenericWeapon {
     }
 
     private void OnDestroy() {
-        container.OnChange.RemoveListener(OnReagentsChanged);
+        if (container != null) {
+            container.OnChange -= OnReagentsChanged;
+        }
     }
 
     void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {

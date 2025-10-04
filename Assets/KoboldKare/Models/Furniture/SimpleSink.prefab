@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.00765}
   m_LocalScale: {x: 0.0079051005, y: 0.0031922772, z: 0.007425}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6430942914292956076}
   m_Father: {fileID: 221744111621393953}
@@ -57,22 +58,20 @@ MonoBehaviour:
   volumeContainer: {fileID: 3734774504628693165}
   drainStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6454311658256070656}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   drainEnd:
     m_PersistentCalls:
       m_Calls: []
+  drainStartResponses:
+  - rid: 998295076338663435
+  drainEndResponses: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295076338663435
+      type: {class: GameEventResponsePlayAudioSource, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 6454311658256070656}
 --- !u!65 &6011265152277242806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -209,6 +208,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.12, y: 0.6021772, z: 10.44}
   m_LocalScale: {x: 1.4285712, y: 1.4285715, z: 1.4285712}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8106738981329728381}
   - {fileID: 221744111621393953}
@@ -245,6 +245,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1579706102615051458}
   m_RootOrder: 0
@@ -268,6 +269,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -353,6 +355,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9084962475653603170}
   m_RootOrder: 0
@@ -376,6 +379,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -439,6 +443,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9084962475653603170}
   m_Father: {fileID: 1579706102615051458}
@@ -463,6 +468,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -522,15 +528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingMaxVolume: 20
   type: 0
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
   startingReagents: []
 --- !u!82 &6454311658256070656
 AudioSource:

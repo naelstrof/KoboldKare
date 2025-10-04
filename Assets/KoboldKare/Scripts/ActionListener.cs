@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -5,8 +7,15 @@ using UnityEngine.InputSystem;
 public class ActionListener : MonoBehaviour {
     [SerializeField]
     private InputActionReference action;
-    [SerializeField]
-    private UnityEvent onPerformed;
+    
+    [SerializeField, HideInInspector] private UnityEvent onPerformed;
+    
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> onPerformedResponses = new List<GameEventResponse>();
+
+    void Awake() {
+        GameEventSanitizer.SanitizeRuntime(onPerformed, onPerformedResponses, this);
+    }
     private void OnEnable() {
         action.action.performed += OnPerformed;
     }
@@ -16,6 +25,12 @@ public class ActionListener : MonoBehaviour {
     }
 
     void OnPerformed(InputAction.CallbackContext ctx) {
-        onPerformed?.Invoke();
+        foreach(var gameEventResponse in onPerformedResponses) {
+            gameEventResponse?.Invoke(this);
+        }
+    }
+
+    private void OnValidate() {
+        GameEventSanitizer.SanitizeEditor(nameof(onPerformed), nameof(onPerformedResponses), this);
     }
 }

@@ -119,7 +119,11 @@ public static class GameEventSanitizer {
             Debug.Log("Successfully sanitized event listeners to GameEventResponses on " + owner.name, owner);
         };
     }
+#else
+    public static void SanitizeEditor(string eventName, string responseListName, MonoBehaviour owner) {
+    }
 #endif
+
 
     private static bool TryConvertListener(string methodName, Object target, MonoBehaviour owner, out GameEventResponse response) {
         switch ((methodName, target)) {

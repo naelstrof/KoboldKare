@@ -41,7 +41,7 @@ namespace Naelstrof.Inflatable {
         private void AddBlendShape(SkinnedMeshRenderer renderer, bool adding) {
             var flatIndex = renderer.sharedMesh.GetBlendShapeIndex(flatShape);
             var biggerIndex = renderer.sharedMesh.GetBlendShapeIndex(biggerShape);
-            if (flatIndex == -1 || biggerIndex == -1 || (adding && skinnedMeshRenderers.Contains(renderer))) {
+            if ((adding && skinnedMeshRenderers.Contains(renderer))) {
                 return;
             }
             if(adding) {
@@ -105,6 +105,12 @@ namespace Naelstrof.Inflatable {
             float flatChestSize = Easing.Easing.Cubic.Out(Mathf.Clamp01(1f - newSize));
             float biggerChestSize = Easing.Easing.Cubic.Out(Mathf.Clamp01(newSize-1f));
             for (int i = 0; i < skinnedMeshRenderers.Count; i++) {
+                if (!skinnedMeshRenderers[i]) {
+                    skinnedMeshRenderers.RemoveAt(i);
+                    flatShapeIDs.RemoveAt(i);
+                    biggerShapeIDs.RemoveAt(i);
+                    continue;
+                }
                 if (flatShapeIDs[i] != -1) {
                     skinnedMeshRenderers[i].SetBlendShapeWeight(flatShapeIDs[i], flatChestSize * 100f);
                 }

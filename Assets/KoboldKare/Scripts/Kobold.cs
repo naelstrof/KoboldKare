@@ -78,6 +78,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     private List<Renderer> koboldBodyRenderers;
 
     public void AddKoboldBodyRenderer(Renderer renderer) {
+        if (!renderer) {
+            return;
+        }
         if (koboldBodyRenderers.Contains(renderer)) {
             return;
         }
@@ -86,6 +89,20 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         foreach (JiggleRigRendererLOD lod in GetComponentsInChildren<JiggleRigRendererLOD>()) {
             lod.SetRenderers(array);
         }
+        foreach (var inflater in GetAllInflatableListeners()) {
+            if (inflater is InflatableBreast inflatableBreast) {
+                inflatableBreast.AddTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
+
+            if (inflater is InflatableBelly belly) {
+                belly.AddTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
+
+            if (inflater is InflatableBlendShape inflatableBlendShape) {
+                inflatableBlendShape.AddTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
+        }
+
     }
     
     public void RemoveKoboldBodyRenderer(Renderer renderer) {
@@ -93,9 +110,27 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             return;
         }
         koboldBodyRenderers.Remove(renderer);
+        for (int i = 0; i < koboldBodyRenderers.Count; i++) {
+            if (!koboldBodyRenderers[i]) {
+                koboldBodyRenderers.RemoveAt(i);
+            }
+        }
         var array = koboldBodyRenderers.ToArray();
         foreach (JiggleRigRendererLOD lod in GetComponentsInChildren<JiggleRigRendererLOD>()) {
             lod.SetRenderers(array);
+        }
+        foreach (var inflater in GetAllInflatableListeners()) {
+            if (inflater is InflatableBreast inflatableBreast) {
+                inflatableBreast.RemoveTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
+
+            if (inflater is InflatableBelly belly) {
+                belly.RemoveTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
+
+            if (inflater is InflatableBlendShape inflatableBlendShape) {
+                inflatableBlendShape.RemoveTargetRenderer((SkinnedMeshRenderer)renderer);
+            }
         }
     }
 

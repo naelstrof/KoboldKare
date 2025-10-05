@@ -66,7 +66,7 @@ public class EquipmentInventory {
                 e.OnUnequip(kobold, dropOnGround);
                 if (equipment[i].gameObjects != null) {
                     foreach (GameObject g in equipment[i].gameObjects) {
-                        GameObject.Destroy(g);
+                        Object.Destroy(g);
                     }
                 }
                 equipment.RemoveAt(i);

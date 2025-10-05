@@ -128,7 +128,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
 
     }
 
-    private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos;
+    private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos = new();
     
     private void Awake() {
         animator = GetComponent<CharacterDescriptor>().GetDisplayAnimator();
@@ -144,7 +144,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             ragdollBody.maxDepenetrationVelocity = Physics.defaultMaxDepenetrationVelocity * 0.5f;
         }
 
-        rigidbodyNetworkInfos = new List<RigidbodyNetworkInfo>();
+        rigidbodyNetworkInfos.Clear();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             rigidbodyNetworkInfos.Add(new RigidbodyNetworkInfo(ragdollBody));
         }

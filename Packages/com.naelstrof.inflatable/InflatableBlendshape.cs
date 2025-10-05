@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using JigglePhysics;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
-using Naelstrof.Easing;
 
 namespace Naelstrof.Inflatable {
     [System.Serializable]
@@ -19,7 +14,7 @@ namespace Naelstrof.Inflatable {
 
         private void AddBlendShape(SkinnedMeshRenderer renderer, bool adding) {
             var index = renderer.sharedMesh.GetBlendShapeIndex(blendShapeName);
-            if(index == -1 || (adding && skinnedMeshRenderers.Contains(renderer))) {
+            if((adding && skinnedMeshRenderers.Contains(renderer))) {
                 return;
             }
             if(adding) {
@@ -36,6 +31,9 @@ namespace Naelstrof.Inflatable {
         }
 
         public void AddTargetRenderer(SkinnedMeshRenderer renderer) {
+            if (!renderer) {
+                return;
+            }
             if (skinnedMeshRenderers.Contains(renderer)) {
                 return;
             }
@@ -53,6 +51,12 @@ namespace Naelstrof.Inflatable {
 
         public override void OnSizeChanged(float newSize) {
             for (int i = 0; i < skinnedMeshRenderers.Count; i++) {
+                var renderer = skinnedMeshRenderers[i];
+                if (!renderer) {
+                    skinnedMeshRenderers.RemoveAt(i);
+                    blendshapeIDs.RemoveAt(i);
+                    continue;
+                }
                 if (blendshapeIDs[i] != -1) {
                     skinnedMeshRenderers[i].SetBlendShapeWeight(blendshapeIDs[i], clamped?Mathf.Clamp01(newSize)*100f : newSize*100f);
                 }

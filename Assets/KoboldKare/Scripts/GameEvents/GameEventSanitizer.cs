@@ -175,7 +175,6 @@ public static class GameEventSanitizer {
         return false;
     }
     public static void SanitizeRuntime(UnityEvent e, List<GameEventResponse> responses, MonoBehaviour owner) {
-        responses.Clear();
         for(int i=0;i<e.GetPersistentEventCount();i++) {
             var methodName = e.GetPersistentMethodName(i);
             var target = e.GetPersistentTarget(i);

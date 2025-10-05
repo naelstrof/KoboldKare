@@ -5,7 +5,7 @@ using Photon.Pun;
 
 [Serializable]
 public class CommandDick : Command {
-    private const short unEquipID = 0;
+    public const short unEquipID = 0;
 
     public override string GetArg0() => "/dick";
 

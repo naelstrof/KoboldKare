@@ -118,3 +118,4 @@ UMotionData/
 *.blend1.meta
 *.shader_backup
 *.shader_backup.meta
+/UserSettings

@@ -269,7 +269,7 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
     }
 
     [PunRPC]
-    public void SetDickRPC(ushort dickID) {
+    public void SetDickRPC(short dickID) {
         SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
@@ -281,14 +281,14 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         // Removing the dick is now 0 instead of 255.
         // Dick IDs start at 1, but internally will remain starting at 0.
         // i.e. Getting the first dick from the dick database will be dickDatabase[dickID - 1].
-        if (newGenes.dickEquip == ushort.MinValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+        if (newGenes.dickEquip == short.MinValue || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
             if (dickObject != null) {
                 dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
                 Destroy(dickObject);
             }
         }
 
-        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != ushort.MinValue) {
+        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != short.MinValue) {
             var dickDatabase = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
             PrefabDatabase.PrefabReferenceInfo selectedDick;
             if (newGenes.dickEquip <= dickDatabase.Count) {

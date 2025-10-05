@@ -17,22 +17,22 @@ public class CommandDick : Command {
         }
         var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
         // Dick setting
-        if (ushort.TryParse(args[1], out ushort dickID)) {
+        if (short.TryParse(args[1], out short dickID)) {
             SetDickByID(output, k, infos, dickID);
         } else {
             SetDickByName(output, k, infos, args);
         }
     }
 
-    private void SetDick(Kobold k, ushort dickID, StringBuilder output, string chatMessage) {
+    private void SetDick(Kobold k, short dickID, StringBuilder output, string chatMessage) {
         k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
         output.AppendLine(chatMessage);
     }
 
-    private void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, ushort dickID) {
-        if (dickID != ushort.MinValue) {
+    private void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, short dickID) {
+        if (dickID != short.MinValue) {
             if (dickID >= infos.Count) {
-                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {ushort.MinValue} or under {infos.Count - 1}.");
+                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {short.MinValue} or under {infos.Count - 1}.");
             }
             SetDick(k, dickID, output, "Set dick to " + infos[dickID - 1].GetKey() + ".");
         } else {
@@ -41,7 +41,7 @@ public class CommandDick : Command {
     }
 
     private void SetDickByName(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, string[] args) {
-        for (ushort i = 0; i < infos.Count; i++) {
+        for (short i = 0; i < infos.Count; i++) {
             if (infos[i].GetKey() != args[1]) continue;
             i++;
             SetDick(k, i, output, "Set dick to " + args[1] + ".");

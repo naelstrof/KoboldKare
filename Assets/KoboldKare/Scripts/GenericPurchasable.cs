@@ -162,7 +162,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         k.GetComponent<MoneyHolder>().ChargeMoney(price);
     }
     public override bool CanUse(Kobold k) {
-        return display.activeInHierarchy && (k == null || k.GetComponent<MoneyHolder>().HasMoney(price));
+        return (display != null && display.activeInHierarchy) && (k == null || k.GetComponent<MoneyHolder>().HasMoney(price));
     }
     [PunRPC]
     public override void Use() {

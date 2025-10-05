@@ -11,6 +11,8 @@ public class ButtonUsable : GenericUsable
     [SerializeField, SubclassSelector, SerializeReference]
     private List<GameEventResponse> onUseResponses = new List<GameEventResponse>();
 
+    [SerializeField] private Sprite buttonSprite;
+
     private void Awake() {
         GameEventSanitizer.SanitizeRuntime(onUse, onUseResponses, this);
     }
@@ -25,5 +27,9 @@ public class ButtonUsable : GenericUsable
         foreach(var gameEventResponse in onUseResponses) {
             gameEventResponse?.Invoke(this);
         }
+    }
+
+    public override Sprite GetSprite(Kobold k) {
+        return buttonSprite;
     }
 }

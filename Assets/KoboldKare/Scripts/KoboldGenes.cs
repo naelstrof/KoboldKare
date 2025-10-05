@@ -77,7 +77,7 @@ public class KoboldGenes {
     public byte hue;
     public byte brightness = 128;
     public byte saturation = 128;
-    public short dickEquip = short.MinValue;
+    public short dickEquip = CommandDick.unEquipID;
     public byte grabCount = 1;
     public byte species = 0;
 
@@ -175,7 +175,7 @@ public class KoboldGenes {
             dickEquip = GetRandomDick();
         } else {
             breastSize = (float)NextGaussian(15f*meanMultiplier,5.5f*standardDeviationMultiplier,0f, float.MaxValue);
-            dickEquip = short.MinValue;
+            dickEquip = CommandDick.unEquipID;
         }
 
         ballSize = (float)NextGaussian(10f*meanMultiplier,5.5f*standardDeviationMultiplier,5f, float.MaxValue);

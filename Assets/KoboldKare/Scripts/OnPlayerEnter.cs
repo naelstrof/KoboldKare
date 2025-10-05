@@ -9,7 +9,7 @@ public class OnPlayerEnter : MonoBehaviour {
     public float delay = 1f;
     [Serializable]
     public class ConditionEventPair {
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private UnityEvent even;
         [SerializeField, SubclassSelector, SerializeReference]
         private List<GameEventResponse> responses = new List<GameEventResponse>();

@@ -27,6 +27,16 @@ public static class GameEventSanitizer {
                     targets = new [] { g }
                 };
                 return true;
+            case ("Play", Animator a):
+                response = new GameEventResponseAnimatorPlay() {
+                    targets = new [] {
+                        new GameEventResponseAnimatorPlay.AnimatorPlayTarget() {
+                            animator = a,
+                            animationName = stringParam.stringValue
+                        }
+                    }
+                };
+                return true;
             case ("PlayOneShot", AudioSource source):
                 response = new GameEventResponseAudioSourcePlayOneShot() {
                     clip = (AudioClip)objectParam.objectReferenceValue,

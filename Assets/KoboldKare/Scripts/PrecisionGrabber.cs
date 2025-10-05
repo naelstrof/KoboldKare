@@ -566,6 +566,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         frozenGrabs[^1].SetVisibility(handVisibility);
         
         GameObject freezeVFXGameObject = new GameObject("FreezeVFX", typeof(VisualEffect));
+        freezeVFXGameObject.transform.position = worldAnchor;
         VisualEffect freezeVFXComponent = freezeVFXGameObject.GetComponent<VisualEffect>();
         freezeVFXComponent.visualEffectAsset = freezeVFX;
         freezeVFXComponent.Play();

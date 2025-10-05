@@ -5,6 +5,8 @@ using Photon.Pun;
 
 [Serializable]
 public class CommandDick : Command {
+    private const short unEquipID = 0;
+
     public override string GetArg0() => "/dick";
 
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
@@ -30,9 +32,9 @@ public class CommandDick : Command {
     }
 
     private void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, short dickID) {
-        if (dickID != short.MinValue) {
-            if (dickID >= infos.Count) {
-                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {short.MinValue} or under {infos.Count - 1}.");
+        if (dickID != unEquipID) {
+            if (dickID < unEquipID || dickID >= infos.Count) {
+                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {unEquipID} or under {infos.Count - 1}.");
             }
             SetDick(k, dickID, output, "Set dick to " + infos[dickID - 1].GetKey() + ".");
         } else {

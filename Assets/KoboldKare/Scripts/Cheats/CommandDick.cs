@@ -33,8 +33,8 @@ public class CommandDick : Command {
 
     private void SetDickByID(StringBuilder output, Kobold k, List<PrefabDatabase.PrefabReferenceInfo> infos, short dickID) {
         if (dickID != unEquipID) {
-            if (dickID < unEquipID || dickID >= infos.Count) {
-                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {unEquipID} or under {infos.Count - 1}.");
+            if (dickID < unEquipID || dickID > infos.Count) {
+                throw new CheatsProcessor.CommandException($"Dick ID is invalid, must be either {unEquipID} or maximum {infos.Count}.");
             }
             SetDick(k, dickID, output, "Set dick to " + infos[dickID - 1].GetKey() + ".");
         } else {

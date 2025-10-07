@@ -123,17 +123,17 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                         targetText.text = $"{installText} {fileIds[i]}";
                     }
                     OnInstalledItem(fileIds[i]);
-                    continue;
-                }
-                if ((status & (int)EItemState.k_EItemStateDownloading) != 0) {
-                    if (queryDetails.Count == count) {
-                        Debug.Log($"Downloading {fileIds[i]}, `{queryDetails[i].m_rgchTitle}`...");
-                        targetText.text = $"{downloadText} {queryDetails[i].m_rgchTitle}";
-                    } else {
-                        Debug.Log($"Downloading {fileIds[i]}...");
-                        targetText.text = $"{downloadText} {fileIds[i]}";
+                } else {
+                    if ((status & (int)EItemState.k_EItemStateDownloading) == 0 && (status & (int)EItemState.k_EItemStateDownloadPending) == 0) {
+                        if (queryDetails.Count == count) {
+                            Debug.Log($"Downloading {fileIds[i]}, `{queryDetails[i].m_rgchTitle}`...");
+                            targetText.text = $"{downloadText} {queryDetails[i].m_rgchTitle}";
+                        } else {
+                            Debug.Log($"Downloading {fileIds[i]}...");
+                            targetText.text = $"{downloadText} {fileIds[i]}";
+                        }
+                        SteamUGC.DownloadItem(fileIds[i], false);
                     }
-                    SteamUGC.DownloadItem(fileIds[i], false);
                 }
             }
 

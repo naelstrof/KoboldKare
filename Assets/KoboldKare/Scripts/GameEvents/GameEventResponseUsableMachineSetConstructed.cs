@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public class GameEventResponseConstructedSet : GameEventResponse
+public class GameEventResponseUsableMachineSetConstructed : GameEventResponse
 {
-    [Serializable] public class ConstructedSetTarget
-    {
+    [Serializable]
+    public struct ConstructedSetTarget {
         [SerializeField] public UsableMachine targetMachine;
         [SerializeField] public bool beConstructed;
     }

@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public class GameEventResponseAnimatorIntChange : GameEventResponse
+public class GameEventResponseAnimatorSetInteger : GameEventResponse
 {
     [Serializable]
-    private class AnimatorIntTarget
+    private struct AnimatorIntTarget
     {
         [SerializeField] public Animator animator;
         [SerializeField] public string intName;

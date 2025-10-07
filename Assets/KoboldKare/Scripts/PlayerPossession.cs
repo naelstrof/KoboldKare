@@ -9,6 +9,7 @@ using Steamworks;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
 
 public class PlayerPossession : MonoBehaviourPun {
@@ -113,7 +114,7 @@ public class PlayerPossession : MonoBehaviourPun {
             return;
         }
         GameManager.instance.Pause(!GameManager.instance.isPaused);
-        if (GameManager.instance.isPaused) {
+        if (GameManager.instance.isPaused || SceneManager.GetActiveScene().name == "MainMenu") {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         } else {

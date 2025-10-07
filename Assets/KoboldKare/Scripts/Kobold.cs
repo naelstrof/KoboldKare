@@ -84,10 +84,19 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         if (koboldBodyRenderers.Contains(renderer)) {
             return;
         }
+        
         koboldBodyRenderers.Add(renderer);
+        for (int i = koboldBodyRenderers.Count-1; i >= 0; i--) {
+            if (!koboldBodyRenderers[i]) {
+                koboldBodyRenderers.RemoveAt(i);
+            }
+        }
+        
         var array = koboldBodyRenderers.ToArray();
         foreach (JiggleRigRendererLOD lod in GetComponentsInChildren<JiggleRigRendererLOD>()) {
-            lod.SetRenderers(array);
+            if (lod) {
+                lod.SetRenderers(array);
+            }
         }
         foreach (var inflater in GetAllInflatableListeners()) {
             if (inflater is InflatableBreast inflatableBreast) {

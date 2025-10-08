@@ -206,16 +206,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004691
-    m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICCIONAIS PARTICIPANDO DE <#FF0000>
-      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR em <#008CFF>
-      JOGAR <#FFFFFF> VOC\xCA EST\xC1 DECLARANDO QUE:"
+    m_Localized: "ESTE JOGO RETRATA PERSONAGENS FICT\xCDCIOS PARTICIPANDO DE <#FF0000>
+      COMPORTAMENTO SEXUALMENTE EXPL\xCDCITO <#FFFFFF>\n\nAO CLICAR EM <#008CFF>
+      JOGAR <#FFFFFF>, VOC\xCA EST\xC1 DECLARANDO QUE:"
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
     m_Localized: "\u2022 SOB PENA DE PERJ\xDARIO, VOC\xCA TEM MAIS DE 18 ANOS.\n\u2022
-      NUDEZ E DESCRI\xC7\xD5ES EXPL\xCDCITAS DE ATIVIDADE SEXUAL N\xC3O OFENDEM VOC\xCA.\n\u2022
+      NUDEZ E REPRESENTA\xC7\xD5ES EXPL\xCDCITAS DE ATIVIDADE SEXUAL N\xC3O O OFENDEM.\n\u2022
       VOC\xCA RECONHECE QUE \xC9 RESPONS\xC1VEL POR GARANTIR QUE TODAS AS PESSOAS
-      QUE V\xCAEM O JOGO NO SEU DISPOSITIVO T\xCAM MAIS DE 18 ANOS."
+      QUE VISUALIZAM O JOGO A PARTIR DO SEU DISPOSITIVO TENHAM MAIS DE 18 ANOS."
     m_Metadata:
       m_Items: []
   - m_Id: 516095004693
@@ -223,7 +223,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004694
-    m_Localized: "Bem-vindo ao KoboldKare!\n\nEsta \xE9 uma constru\xE7\xE3o de desenvolvedor
+    m_Localized: "Bem-vindo ao KoboldKare!\n\nEsta \xE9 uma vers\xE3o de desenvolvedor
       e est\xE1 completamente inacabada, n\xE3o espere muito!\n\nMuito obrigado por
       apoiar o jogo!"
     m_Metadata:
@@ -325,11 +325,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198978
-    m_Localized: Batido de leite
+    m_Localized: Milkshake
     m_Metadata:
       m_Items: []
   - m_Id: 516099198979
-    m_Localized: Suco de Berinjela
+    m_Localized: Suco de berinjela
     m_Metadata:
       m_Items: []
   - m_Id: 516099198980
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198982
-    m_Localized: Soro de crescimento incompleto
+    m_Localized: Soro de Crescimento Incompleto
     m_Metadata:
       m_Items: []
   - m_Id: 516099198983
@@ -389,7 +389,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198994
-    m_Localized: Crie um jogo privado
+    m_Localized: Criar jogo privado
     m_Metadata:
       m_Items: []
   - m_Id: 516099198995
@@ -401,7 +401,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099198997
-    m_Localized: Parte superior inferior
+    m_Localized: De cima para baixo
     m_Metadata:
       m_Items: []
   - m_Id: 516099198998
@@ -429,7 +429,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199004
-    m_Localized: Tamanho do peito
+    m_Localized: Tamanho dos seios
     m_Metadata:
       m_Items: []
   - m_Id: 516099199005
@@ -441,7 +441,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199007
-    m_Localized: Equino Queimado
+    m_Localized: Equino Flared
     m_Metadata:
       m_Items: []
   - m_Id: 516099199008
@@ -453,7 +453,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199010
-    m_Localized: Dentro fora
+    m_Localized: Dentro e fora
     m_Metadata:
       m_Items: []
   - m_Id: 516099199011
@@ -461,7 +461,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199012
-    m_Localized: Junte-se ao jogo privado
+    m_Localized: Entrar em jogo privado
     m_Metadata:
       m_Items: []
   - m_Id: 516099199013
@@ -485,11 +485,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199018
-    m_Localized: "M\xE1ximo de jogadores"
+    m_Localized: "Jogadores M\xE1ximos"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
-    m_Localized: Tamanho Kobold
+    m_Localized: Tamanho do Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 516099199020
@@ -505,15 +505,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516103393282
-    m_Localized: "C\xE2mera gr\xE1tis"
+    m_Localized: "C\xE2mera livre"
     m_Metadata:
       m_Items: []
   - m_Id: 516103393283
-    m_Localized: "C\xE2mera gr\xE1tis pegajosa"
+    m_Localized: "C\xE2mera livre pegajosa"
     m_Metadata:
       m_Items: []
   - m_Id: 23047808012288
-    m_Localized: Navegador de servidor
+    m_Localized: Navegador do servidor
     m_Metadata:
       m_Items: []
   - m_Id: 23047841566720
@@ -525,11 +525,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27145391362049
-    m_Localized: "Encontrando sala aleat\xF3ria"
+    m_Localized: "Encontrando uma sala aleat\xF3ria"
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062528
-    m_Localized: Quarto esquerdo
+    m_Localized: Sala da esquerda
     m_Metadata:
       m_Items: []
   - m_Id: 30052023062529
@@ -557,15 +557,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20598708876398592
-    m_Localized: VSync
+    m_Localized: "Sincroniza\xE7\xE3o vertical"
     m_Metadata:
       m_Items: []
   - m_Id: 20598708914147328
-    m_Localized: Taxa de quadros desejada
+    m_Localized: Taxa de quadros alvo
     m_Metadata:
       m_Items: []
   - m_Id: 35594366247030784
-    m_Localized: Halteres para mamilos
+    m_Localized: Barras de mamilo
     m_Metadata:
       m_Items: []
   - m_Id: 35653807596163072
@@ -577,22 +577,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "Um capacete simples para proteger a cabe\xE7a da queda de detritos."
+    m_Localized: "Um capacete simples para proteger a cabe\xE7a de detritos que caem."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Um acess\xF3rio m\xE1gico com um n\xF3, anel medial e algumas cristas
-      acidentadas."
+    m_Localized: "Um acess\xF3rio m\xE1gico com um n\xF3, anel medial e algumas sali\xEAncias
+      irregulares."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844290
-    m_Localized: "Um acess\xF3rio m\xE1gico que \xE9 longo, cil\xEDndrico e tem uma
-      ponta alargada. Tem uma \xF3tima a\xE7\xE3o telesc\xF3pica!"
+    m_Localized: "Um acess\xF3rio m\xE1gico, longo, cil\xEDndrico e com ponta alargada.
+      Possui um \xF3timo mecanismo telesc\xF3pico!"
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: "Barras de metal simples, seguras para o corpo e hipoal\xE9rgicas.
-      (Sim, eles v\xE3o para seus mamilos.)"
+    m_Localized: "Barras de metal simples, seguras para o corpo e hipoalerg\xEAnicas.
+      (Sim, elas v\xE3o nos mamilos.)"
     m_Metadata:
       m_Items: []
   - m_Id: 38140087290613760
@@ -600,8 +600,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Um acess\xF3rio m\xE1gico que \xE9 longo e fino at\xE9 certo ponto.
-      Suas bolas s\xE3o internalizadas!"
+    m_Localized: "Um acess\xF3rio m\xE1gico longo e fino, com bolas internalizadas!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
@@ -613,7 +612,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41031671581560832
-    m_Localized: Colarinho pontiagudo
+    m_Localized: gola pontiaguda
     m_Metadata:
       m_Items: []
   - m_Id: 41057468396654592
@@ -621,7 +620,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43625416088932352
-    m_Localized: Novo salvamento
+    m_Localized: Novo Salvar
     m_Metadata:
       m_Items: []
   - m_Id: 43643722850160640
@@ -641,7 +640,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 58074778722422784
-    m_Localized: Qualidade de gosma
+    m_Localized: Qualidade Goop
     m_Metadata:
       m_Items: []
   - m_Id: 73168528301674496
@@ -649,7 +648,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 80801858861977600
-    m_Localized: "Ere\xE7\xE3o"
+    m_Localized: "Ere\xE7\xE3o para cima"
     m_Metadata:
       m_Items: []
   - m_Id: 80801858895532032
@@ -661,7 +660,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 81558602722627584
-    m_Localized: Bate-papo de texto
+    m_Localized: Bate-papo por texto
     m_Metadata:
       m_Items: []
   - m_Id: 82622016043667456
@@ -675,8 +674,8 @@ MonoBehaviour:
   - m_Id: 83373358009864192
     m_Localized: "Bem-vindo ao KoboldKare!\n\nKoboldKare \xE9 um jogo sem DRM. Por
       favor, compartilhe com seguran\xE7a, KoboldKare N\xC3O precisa de crack para
-      jogar!\n\nMuito obrigado por apoiar o jogo!\n\nVerifique Steam, Itch e Patreon
-      para atualiza\xE7\xF5es e notas de patch.\n"
+      jogar!\n\nMuito obrigado por apoiar o jogo!\n\nConfira o Steam, o Itch e o
+      Patreon para atualiza\xE7\xF5es e notas de patch.\n\n"
     m_Metadata:
       m_Items: []
   - m_Id: 130814575387398144
@@ -692,7 +691,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169600
-    m_Localized: Regue o ovo e espere o seu kobold crescer.
+    m_Localized: Regue o ovo e espere seu kobold crescer.
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169601
@@ -700,7 +699,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Bom trabalho, agora envie-me o novo kobold e eu recompensarei voc\xEA
+    m_Localized: "Bom trabalho, agora envie-me o novo kobold e eu o recompensarei
       por seus esfor\xE7os."
     m_Metadata:
       m_Items: []
@@ -709,17 +708,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169604
-    m_Localized: "Eu sou Nymrianth, o Senhor Drag\xE3o. Eu ordeno que voc\xEA comece
-      a trabalhar como Kobold Kataker e plante um ovo."
+    m_Localized: "Eu sou Nymrianth, o Senhor Drag\xE3o. Ordeno que voc\xEA comece
+      a trabalhar como Kobold Karetaker e plante um ovo."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332828946432
-    m_Localized: Atualize sua fazenda!
+    m_Localized: Melhore sua fazenda!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500864
-    m_Localized: "V\xE1 at\xE9 a cidade e compre um moedor, procure a oficina de
-      constru\xE7\xE3o administrada por uma ovelha. Aquele de capacete."
+    m_Localized: "V\xE1 at\xE9 a cidade e compre uma trituradora, procure a oficina
+      de constru\xE7\xE3o operada por uma ovelha. Aquela do capacete."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
@@ -727,8 +726,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
-    m_Localized: "Voc\xEAs, kobolds, t\xEAm corpos interessantes, tente moer algumas
-      frutas e depois aliment\xE1-las para um kobold e ver o que acontece."
+    m_Localized: "Voc\xEAs, kobolds, t\xEAm corpos interessantes. Tente moer algumas
+      frutas e depois d\xE1-las a um kobold e veja o que acontece."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500867
@@ -744,27 +743,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Preciso de kobolds com paus grandes, prepare um e mande para mim
+    m_Localized: Preciso de kobolds com paus grandes, prepare um e envie para mim
       rapidamente.
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
-    m_Localized: Tetas, grandes!
+    m_Localized: Peitos, grandes!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695169
     m_Localized: "Preciso que voc\xEA me entregue um kobold com peitos grandes, estou
-      falando enorme, espero que voc\xEA lide com isso e espero que n\xE3o fa\xE7a
+      falando de peitos enormes, espero que voc\xEA cuide disso e n\xE3o fa\xE7a
       perguntas."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695170
-    m_Localized: Kobolds cumflate!
+    m_Localized: Kobolds Cumflate!
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695171
-    m_Localized: "Encha um kobold com esperma at\xE9 que eles n\xE3o aguentem mais,
-      preciso ver o qu\xE3o dur\xE1vel sua esp\xE9cie realmente \xE9."
+    m_Localized: "Encha um kobold com esperma at\xE9 que ele n\xE3o aguente mais.
+      Preciso ver o qu\xE3o dur\xE1veis \u200B\u200Bos da sua esp\xE9cie realmente
+      s\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695172
@@ -773,16 +773,16 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695173
     m_Localized: "Vamos fazer outro teste de resist\xEAncia, penetrar um kobold com
-      um pau mais longo que seu corpo."
+      um pau maior que seu corpo."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695174
-    m_Localized: Hora da barriga!
+    m_Localized: "Hora de ficar de bru\xE7os!"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "\xC9 do nosso interesse ter alguns kobolds superpesados, engordar
-      alguns e envi\xE1-los para mim."
+    m_Localized: "\xC9 do nosso interesse ter alguns kobolds superpesados, engord\xE1-los
+      e envi\xE1-los para mim."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695176
@@ -794,12 +794,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Big McLargeEnorme
+    m_Localized: Grande McGrandeEnorme
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
-    m_Localized: "Fa\xE7a um Kobold t\xE3o alto que ele possa olhar uma casa, receita
-      secreta..."
+    m_Localized: "Fa\xE7a um Kobold t\xE3o alto que ele possa olhar por cima de uma
+      casa, receita secreta..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -807,7 +807,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 202987527876431872
-    m_Localized: Controle de quadril
+    m_Localized: Controle do quadril
     m_Metadata:
       m_Items: []
   - m_Id: 202998194956193792
@@ -843,7 +843,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210151247308181504
-    m_Localized: "P\xEAnis human\xF3ide circunscrito"
+    m_Localized: "P\xEAnis Humanoide Circunscrito"
     m_Metadata:
       m_Items: []
   - m_Id: 210156174176735232
@@ -851,7 +851,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449728
-    m_Localized: Gemada
+    m_Localized: gemada
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449729
@@ -863,23 +863,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210162028410097664
-    m_Localized: Ovo Mexido
+    m_Localized: Ovos mexidos
     m_Metadata:
       m_Items: []
   - m_Id: 210162028410097665
-    m_Localized: Jantar de ovo
+    m_Localized: Jantar de Ovos
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: Pau Espigado
+    m_Localized: Dick Espinhoso
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
-    m_Localized: "Um p\xEAnis achatado com farpas carnudas e macias e bolas baixas."
+    m_Localized: "Um p\xEAnis em forma de clava com farpas macias e carnudas e test\xEDculos
+      pendurados."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651584
-    m_Localized: 'Ativa ou desativa cheats em todo o servidor.
+    m_Localized: 'Habilita ou desabilita cheats em todo o servidor.
 
 '
     m_Metadata:
@@ -893,8 +894,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
-    m_Localized: "Fornece o reagente ou pr\xE9-fabricado especificado. Use /list
-      para encontrar todos os nomes pr\xF3prios."
+    m_Localized: "Fornece o reagente ou prefabricado especificado. Use /list para
+      encontrar todos os nomes pr\xF3prios."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651588
@@ -903,11 +904,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Pau Banhado
+    m_Localized: Dick banhado
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
-    m_Localized: Um pau com nervuras com placas macias e farpas.
+    m_Localized: Um pau com nervuras, placas macias e farpas.
     m_Metadata:
       m_Items: []
   - m_Id: 213469775633371136
@@ -916,7 +917,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314176
     m_Localized: "Os ovos da loja n\xE3o s\xE3o t\xE3o bons. Encontre um bom kobold,
-      engravide-o e coloque-o no criadouro."
+      engravide-o e coloque-o na esta\xE7\xE3o de reprodu\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314177
@@ -924,8 +925,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Enviei a voc\xEA alguns suprimentos para fazer um hamb\xFArguer,
-      use o moedor para combin\xE1-los e depois d\xEA para um kobold."
+    m_Localized: "Enviei alguns suprimentos para voc\xEA fazer um hamb\xFArguer,
+      use o moedor para mistur\xE1-los e depois d\xEA para um kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -933,8 +934,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314180
-    m_Localized: "Precisamos ampliar nossas exporta\xE7\xF5es de alimentos, adquirir
-      o contrato da esta\xE7\xE3o de leite no escrit\xF3rio de constru\xE7\xE3o."
+    m_Localized: "Precisamos expandir nossas exporta\xE7\xF5es de alimentos, comprar
+      o contrato do posto de leite no escrit\xF3rio de constru\xE7\xE3o."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
@@ -942,39 +943,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
-    m_Localized: "O leite Kobold tem muito valor nutricional, experimente combin\xE1-lo
+    m_Localized: "O leite Kobold tem muito valor nutricional, tente combin\xE1-lo
       com outras coisas em um balde para fazer novos alimentos."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
-    m_Localized: "D\xEA suco aos Kobolds"
+    m_Localized: Suco Kobolds
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
-    m_Localized: "Preciso que voc\xEA fa\xE7a alguns experimentos; alimente seus
+    m_Localized: "Preciso que voc\xEA fa\xE7a alguns experimentos: alimente seus
       kobolds com suco de berinjela, mel\xE3o ou abacaxi. Isso deve fazer com que
-      partes de seus corpos cres\xE7am."
+      partes do corpo deles cres\xE7am."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810347585536
-    m_Localized: Espeleologia!
+    m_Localized: "Explora\xE7\xE3o de cavernas!"
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Estou sentindo uma presen\xE7a sombria nas cavernas pr\xF3ximas,
-      v\xE1 e investigue para mim."
+      v\xE1 investigar para mim."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
-    m_Localized: Compre o trocador de corpo.
+    m_Localized: Compre o trocador de carroceria.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945666
-    m_Localized: Compre o trocador de corpo do canalha da caverna.
+    m_Localized: Compre o trocador de corpos do monstro na caverna.
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oh, oh, oh.. bem-vindo...
+    m_Localized: Oh ho ho... bem-vindo...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -986,12 +987,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853120
-    m_Localized: "Ci\xEAncia Estranha!"
+    m_Localized: "Ci\xEAncia estranha!"
     m_Metadata:
       m_Items: []
   - m_Id: 213569843006853121
-    m_Localized: "Que dispositivo interessante voc\xEA obteve. V\xE1 e tente us\xE1-lo,
-      traga outro kobold com voc\xEA."
+    m_Localized: "Que dispositivo interessante voc\xEA adquiriu! V\xE1 e tente us\xE1-lo,
+      leve outro kobold com voc\xEA."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567786430464
@@ -999,8 +1000,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790592
-    m_Localized: Aprenda mais sobre a elasticidade que distorce a realidade dos kobolds,
-      foda um kobold com um pau maior que seu corpo.
+    m_Localized: Aprenda mais sobre a elasticidade dos kobolds que distorce a realidade,
+      foda-se um kobold com um pau maior que seu corpo.
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
@@ -1008,8 +1009,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: "Quero que voc\xEA fa\xE7a um de seus kobolds botar um ovo grande.
-      T\xE3o grande quanto voc\xEA pode realmente conseguir."
+    m_Localized: "Quero que voc\xEA fa\xE7a um dos seus kobolds botar um ovo grande.
+      O maior que voc\xEA conseguir."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1017,50 +1018,50 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790596
-    m_Localized: "Use uma m\xE1quina de inflar para fazer um kobold grande e redondo.
-      Eu acho que seria divertido v\xEA-los rolar ou algo assim."
+    m_Localized: "Use uma m\xE1quina de inflar para deixar um kobold grande e redondo.
+      Acho que seria divertido v\xEA-los rolando ou algo assim."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
-    m_Localized: Expulsar um jogador com o ID do ator alvo. Use `/list players` para
+    m_Localized: Expulse um jogador com o ID do ator alvo. Use `/list players` para
       encontrar os IDs dos atores.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223010832384
-    m_Localized: Ei, amigo.
+    m_Localized: "Ol\xE1, amigo."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775424
-    m_Localized: "Bem-vindo ao subterr\xE2neo."
+    m_Localized: Bem-vindo ao underground.
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775425
-    m_Localized: "Ignore a fuma\xE7a, fique \xE0 vontade para navegar pelos produtos."
+    m_Localized: "Ignore a fuma\xE7a e sinta-se \xE0 vontade para dar uma olhada
+      nas mercadorias."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775426
-    m_Localized: "Uau! Voc\xEA est\xE1 tipo, realmente nu."
+    m_Localized: "Uau! Voc\xEA est\xE1 tipo, realmente pelado."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775427
-    m_Localized: De qualquer forma, apenas uh.. sirva-se, eu acho.
+    m_Localized: "De qualquer forma, \xE9 s\xF3... fique \xE0 vontade, eu acho."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: "Onde voc\xEA est\xE1 guardando seu dinheiro, afinal..."
+    m_Localized: "Afinal, onde voc\xEA guarda seu dinheiro..."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
-    m_Localized: "Ol\xE1! Voc\xEA \xE9 daquela fazenda ali, certo? Quer fazer um
-      upgrade?"
+    m_Localized: "Ol\xE1! Voc\xEA \xE9 daquela fazenda ali, certo? Quer melhorar?"
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: "Basta selecionar algo na parede e n\xF3s constru\xEDmos para voc\xEA."
+    m_Localized: "Basta selecionar algo na parede e n\xF3s construiremos para voc\xEA."
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775431
-    m_Localized: "Uh... voc\xEA se importa de colocar uma cal\xE7a?"
+    m_Localized: "Hum... voc\xEA se importaria de vestir umas cal\xE7as?"
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
@@ -1072,12 +1073,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
-    m_Localized: "Aha, n\xE3o seria t\xE3o engra\xE7ado se voc\xEA enfiasse 4 consolos
+    m_Localized: "Ah, n\xE3o seria engra\xE7ado se voc\xEA colocasse 4 vibradores
       na boca de um kobold... Eu ordeno que voc\xEA fa\xE7a isso."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464140
-    m_Localized: Vendo Micro Kobold
+    m_Localized: Vender Micro Kobold
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
@@ -1090,8 +1091,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
-    m_Localized: "Use explosivos para explodir os destro\xE7os da fazenda para ter
-      mais espa\xE7o."
+    m_Localized: "Use explosivos para explodir os destro\xE7os na fazenda e ter mais
+      espa\xE7o."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464144
@@ -1099,18 +1100,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464145
-    m_Localized: Decidi que preciso de um consorte, crie o kobold perfeito para mim.
+    m_Localized: Decidi que preciso de um consorte para criar o kobold perfeito para
+      mim.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464146
-    m_Localized: "Coloca\xE7\xE3o de tubo"
+    m_Localized: "Coloca\xE7\xE3o de tubos"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464147
-    m_Localized: "Eles s\xE3o perfeitos! Estarei... bastante ocupado... Estou promovendo
-      voc\xEA a uma posi\xE7\xE3o de Supervisor, voc\xEA comprar\xE1 kobolds em meu
-      nome de outros Kobold Karetakers, encontrar\xE1 algu\xE9m para construir os
-      tubos necess\xE1rios."
+    m_Localized: "Eles s\xE3o perfeitos! Vou estar... bastante ocupado... Estou promovendo
+      voc\xEA para o cargo de Supervisor. Voc\xEA comprar\xE1 kobolds de outros Kobolds
+      Karetakers em meu nome. Encontre algu\xE9m para construir os tubos necess\xE1rios."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1118,13 +1119,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464149
-    m_Localized: "Acho que sou o chefe agora! Eu deveria tentar comprar um kobold
-      com o novo sistema pneum\xE1tico."
+    m_Localized: "Acho que agora sou o chefe! Vou tentar comprar um kobold com o
+      novo sistema pneum\xE1tico."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464150
-    m_Localized: "Bem-vindo! Quer comprar algumas sementes? Tamb\xE9m temos ovos
-      kobold!"
+    m_Localized: "Bem-vindo! Quer comprar sementes? Temos ovos de kobold tamb\xE9m!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464151
@@ -1132,12 +1132,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Bem-vindo ao cassino, aqui a neg\xF3cios ou lazer?"
+    m_Localized: "Bem-vindo ao cassino, estamos aqui a neg\xF3cios ou a lazer?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
-    m_Localized: "Pela sua falta de roupas, vou adivinhar um pouco dos dois. Voc\xEA
-      pode jogar na m\xE1quina panchinko para ganhar alguns adornos."
+    m_Localized: "Pela sua falta de roupa, imagino um pouco dos dois. Voc\xEA pode
+      jogar na m\xE1quina de panchinko para ganhar alguns enfeites."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464154
@@ -1153,20 +1153,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Tem coisas l\xE1 na frente e atr\xE1s de mim tamb\xE9m, ent\xE3o
-      venha aqui mesmo, n\xE3o precisa ser t\xEDmido."
+    m_Localized: "Tem coisas ali na minha frente e atr\xE1s de mim tamb\xE9m, ent\xE3o
+      suba aqui, n\xE3o precisa ser t\xEDmido."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
-    m_Localized: Ei, amigo!
+    m_Localized: "Ol\xE1, amigo!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464131
-    m_Localized: Parece bem hoje, precisa de ajuda para carregar alguma coisa?
+    m_Localized: "Est\xE1 com uma \xF3tima apar\xEAncia hoje, precisa de ajuda para
+      carregar alguma coisa?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464132
-    m_Localized: Oi! Precisa de ajuda hoje?
+    m_Localized: "Ol\xE1! Precisa de ajuda hoje?"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464133
@@ -1174,20 +1175,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464134
-    m_Localized: "Precisa de algo constru\xEDdo?"
+    m_Localized: Precisa construir algo?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464135
-    m_Localized: "A\xED est\xE1 meu cliente favorito!"
+    m_Localized: "Esse \xE9 meu cliente favorito!"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464136
-    m_Localized: "Desculpe, estou sem coisas para construir para voc\xEA! Obrigado
+    m_Localized: "Desculpe, n\xE3o tenho mais nada para criar para voc\xEA! Obrigado
       por ser um cliente t\xE3o fiel."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464137
-    m_Localized: "Ficarei aqui para o caso de algum outro kobold nu querer que eu
+    m_Localized: "Vou ficar aqui parado, caso algum outro kobold nu queira que eu
       construa m\xE1quinas de fetiche para eles."
     m_Metadata:
       m_Items: []
@@ -1196,12 +1197,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "D\xEA um suco!"
+    m_Localized: "D\xEA um g\xE1s!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Quero muitos tipos diferentes de kobold, e isso significa que voc\xEA
-      precisa de mais sucos de frutas. Moa mais frutas!"
+    m_Localized: "Eu quero muitos tipos diferentes de kobold, e isso significa que
+      voc\xEA precisa de mais sucos de frutas. Moa mais frutas!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1209,7 +1210,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Quero ver mais ovos kobold grandes, vamos l\xE1!"
+    m_Localized: "Quero ver mais ovos grandes de kobold, vamos l\xE1!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1222,7 +1223,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
-    m_Localized: "Ra\xE7a: Festa da Salsicha"
+    m_Localized: "Ra\xE7a: Festival da Salsicha"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620103
@@ -1231,12 +1232,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: "Ra\xE7a: Big McLargeEnorme"
+    m_Localized: "Ra\xE7a: Big McLargeHuge"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Quero mais daquele tipo de kobold gigante, s\xE3o muito \xFAteis
-      para limpar o teto."
+    m_Localized: "Quero mais desse tipo gigante de kobold, eles s\xE3o realmente
+      \xFAteis para limpar o teto."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1244,8 +1245,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Envie-me muitos kobolds grandes. Este n\xE3o \xE9 por praticidade,
-      eles s\xE3o apenas divertidos de balan\xE7ar."
+    m_Localized: "Mandem-me muitos kobolds com peitos grandes. Este n\xE3o \xE9 para
+      ser pr\xE1tico, eles s\xE3o s\xF3 divertidos de balan\xE7ar."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1254,8 +1255,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783219814401
     m_Localized: "Fa\xE7a-me muitos kobolds pequenos, seu tamanho e corpos el\xE1sticos
-      os tornam preservativos reutiliz\xE1veis \u200B\u200B\u200B\u200Brealmente
-      bons."
+      os tornam preservativos realmente bons e reutiliz\xE1veis."
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546688
@@ -1263,8 +1263,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: "Estou curioso para saber como os Kobolds se saem bem com a fric\xE7\xE3o
-      do ar, mandando um deles para o c\xE9u."
+    m_Localized: "Estou curioso para saber o qu\xE3o bem os Kobolds lidam com o atrito
+      do ar, lan\xE7ando um deles para o c\xE9u."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
@@ -1272,16 +1272,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: "Redutor de enj\xF4o"
+    m_Localized: Redutor de enjoo
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: Falha ao carregar salvar
+    m_Localized: Falha ao carregar o arquivo salvo
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
-    m_Localized: "N\xE3o foi poss\xEDvel carregar o salvamento! Pode ser guardado
-      com uma vers\xE3o diferente do KoboldKare."
+    m_Localized: "N\xE3o foi poss\xEDvel carregar o jogo salvo! Ele pode ter sido
+      salvo com uma vers\xE3o diferente do KoboldKare."
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
@@ -1293,19 +1293,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: "Eixo Y de apar\xEAncia invertida"
+    m_Localized: "Inverter apar\xEAncia do eixo Y"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Encolhedor de peitos
+    m_Localized: Encolher seios
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: Encolher bolas
+    m_Localized: Bolas-encolhem
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Psiquiatra
+    m_Localized: Dick-shrink
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1313,7 +1313,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: "Configura\xE7\xE3o de mods"
+    m_Localized: "Configura\xE7\xE3o do Mod"
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: Excluir salvamento
+    m_Localized: Excluir salvar
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1370,12 +1370,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "Carregar o salvamento agora perder\xE1 sua sess\xE3o atual."
+    m_Localized: "Carregar o arquivo salvo agora far\xE1 com que voc\xEA perca sua
+      sess\xE3o atual."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "Modding requer um sistema compat\xEDvel com 64 bits! Atualize seu
-      sistema operacional."
+    m_Localized: "A modifica\xE7\xE3o requer um sistema compat\xEDvel com 64 bits!
+      Atualize seu sistema operacional."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
@@ -1401,21 +1402,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: Falha no carregamento do mod!
+    m_Localized: O carregamento do mod falhou!
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Houve uma exce\xE7\xE3o ao carregar um mod, isso pode quebrar o
-      jogo. Por favor, verifique seus mods."
+    m_Localized: "Houve uma exce\xE7\xE3o ao carregar um mod, o que pode causar problemas
+      no jogo. Por favor, verifique seus mods."
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
-    m_Localized: "O nome que voc\xEA digitou n\xE3o \xE9 apropriado. Digite algo
+    m_Localized: "O nome que voc\xEA digitou n\xE3o \xE9 apropriado, digite algo
       diferente."
     m_Metadata:
       m_Items: []
   - m_Id: 524703093826330624
-    m_Localized: Ocultar display de alerta
+    m_Localized: "Ocultar exibi\xE7\xE3o de alertas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Habilitar todos os mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: Desabilitar todos os mods
     m_Metadata:
       m_Items: []
   references:

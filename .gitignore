@@ -119,3 +119,5 @@ UMotionData/
 *.shader_backup
 *.shader_backup.meta
 /UserSettings
+Assets/KoboldKare/Locales/NewAssets/Google Sheets Service.asset
+Assets/KoboldKare/Locales/NewAssets/Google Sheets Service.asset.meta

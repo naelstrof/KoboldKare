@@ -14,6 +14,7 @@ using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class ModManager : MonoBehaviour {
     public enum ModSource {
@@ -42,6 +43,7 @@ public class ModManager : MonoBehaviour {
         }
 
         public bool enabled;
+        public bool causedException = false;
         public string title;
         public string folderTitle;
         public PublishedFileId_t publishedFileId;
@@ -183,8 +185,7 @@ public class ModManager : MonoBehaviour {
         List<ModStub> modStubs = new List<ModStub>();
         foreach (var mod in infos) {
             if (conditional == null || conditional.Invoke(mod)) {
-                modStubs.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.folderTitle, mod.description, mod.enabled,
-                    mod.preview));
+                modStubs.Add(new ModStub(mod.title, mod.publishedFileId, mod.modSource, mod.folderTitle, mod.causedException, mod.description, mod.enabled, mod.preview));
             }
         }
         return modStubs;
@@ -212,13 +213,14 @@ public class ModManager : MonoBehaviour {
     private static readonly SemaphoreSlim Mutex = new(1);
     public struct ModStub {
         public bool enabled;
+        public bool causedException;
         public Texture2D preview;
         public string title;
         public string folderTitle;
         public string description;
         public ModSource source;
         public PublishedFileId_t id;
-        public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, string description = "",  bool enabled = true, Texture2D preview = null)  {
+        public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null)  {
             this.description = description;
             this.source = source;
             this.enabled = enabled;
@@ -226,6 +228,7 @@ public class ModManager : MonoBehaviour {
             this.folderTitle = folderTitle;
             this.id = id;
             this.preview = preview;
+            this.causedException = causedException;
         }
         public void Save(JSONNode node) {
             node["enabled"] = enabled;
@@ -386,6 +389,7 @@ public class ModManager : MonoBehaviour {
                     AddMod(mod);
                 }
             } catch (Exception e) {
+                Debug.Log(e);
                 instance.lastException = e;
                 Debug.LogException(e);
                 Debug.LogError($"Failed to load mod {node}.");
@@ -432,13 +436,30 @@ public class ModManager : MonoBehaviour {
         quickWrite.Close();
     }
 
+    private ModInfo currentInspectedMod = null;
+    private async Task InspectMods() {
+        foreach (var modInfo in instance.fullModList) {
+            if (!modInfo.enabled || modInfo.locator == null) {
+                continue;
+            }
+            currentInspectedMod = modInfo;
+            var locator = modInfo.locator;
+            var keys = locator.Keys;
+            var handle = Addressables.LoadAssetsAsync<UnityEngine.Object>(keys, Addressables.Release, Addressables.MergeMode.UseFirst);
+            await handle.Task;
+            Addressables.Release(handle);
+        }
+        currentInspectedMod = null;
+    }
+
     private async Task LoadMods() {
+        await InspectMods();
         try {
             foreach (var modPostProcessor in modPostProcessors) {
-                List<object> keys = new List<object>();
                 var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
                 await assets.Task;
                 await modPostProcessor.LoadAllAssets(assets.Result);
+                Addressables.Release(assets);
             }
         } catch (Exception e) {
             lastException = e;
@@ -476,6 +497,9 @@ public class ModManager : MonoBehaviour {
     }
 
     private void HandleException(AsyncOperationHandle handle, Exception e) {
+        if (currentInspectedMod != null) {
+            currentInspectedMod.causedException = true;
+        }
         lastException = e;
     }
 
@@ -519,6 +543,12 @@ public class ModManager : MonoBehaviour {
         return true;
     }
 
+    private struct ModLoaderPairs {
+        public AsyncOperationHandle handle;
+        public ModInfo modInfo;
+    }
+    
+    
     private async Task ReloadMods() {
         if (!IsValid()) {
             throw new UnityException("32 bit Windows does NOT support mods! Please upgrade your operating system!");
@@ -536,10 +566,11 @@ public class ModManager : MonoBehaviour {
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
                 var loader = Addressables.LoadContentCatalogAsync(modInfo.catalogPath);
                 await loader.Task;
-                if (!loader.IsDone || !loader.IsValid()) {
+                if (!loader.IsDone || !loader.IsValid() || loader.Status == AsyncOperationStatus.Failed || loader.OperationException != null) {
+                    modInfo.causedException = true;
                     modInfo.enabled = false;
                 } else {
-                    modInfo.locator = loader.Result;
+                    modInfo.locator = (IResourceLocator)loader.Result;
                 }
             }
         } catch (Exception e) {
@@ -556,6 +587,19 @@ public class ModManager : MonoBehaviour {
 
     public static List<ModStub> GetLoadedMods() {
         return ConvertToStubs(instance.fullModList, (info) => info.enabled);
+    }
+
+    public static async void AllModsSetActive(bool active) {
+        await Mutex.WaitAsync();
+        try {
+            foreach (var mod in instance.fullModList) {
+                mod.enabled = active;
+            }
+        } finally {
+            Mutex.Release();
+        }
+        await instance.ReloadMods();
+        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
     public static bool HasModsLoaded(IList<ModStub> stubs) {

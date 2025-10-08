@@ -924,8 +924,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314178
-    m_Localized: "Olen l\xE4hett\xE4nyt sinulle tarvikkeita hampurilaisen tekemiseen,
-      yhdist\xE4 ne myllyll\xE4 ja sy\xF6t\xE4 se sitten koboldille."
+    m_Localized: "Olen l\xE4hett\xE4nyt sinulle tarvikkeita, jotta voit valmistaa
+      hampurilaisen, yhdist\xE4\xE4 ne myllyll\xE4 ja sy\xF6tt\xE4\xE4 sen sitten
+      koboldille."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -974,7 +975,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945667
-    m_Localized: Oi hoho... tervetuloa...
+    m_Localized: Oi hoh, tervetuloa...
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945668
@@ -1009,7 +1010,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790594
     m_Localized: "Haluan, ett\xE4 saat yhden koboldistasi munimaan ison munan. Niin
-      iso kuin vain saat."
+      iso kuin sen oikeasti saa."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790595
@@ -1131,7 +1132,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464152
-    m_Localized: "Tervetuloa kasinolle, t\xE4\xE4ll\xE4 liike- tai huvimatkalla?"
+    m_Localized: Tervetuloa kasinolle, liike- tai huvimatkalla?
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464153
@@ -1245,7 +1246,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783215620107
     m_Localized: "L\xE4het\xE4 minulle paljon isoja boobie-koboldeja. T\xE4m\xE4
-      ei ole k\xE4yt\xE4nn\xF6llinen, vaan niit\xE4 on vain hauska heilutella."
+      ei ole k\xE4yt\xE4nn\xF6llist\xE4, niit\xE4 on vain hauskaa heilutella."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1411,11 +1412,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
-    m_Localized: 
+    m_Localized: Antamasi nimi ei ole sopiva. Anna jotain muuta.
     m_Metadata:
       m_Items: []
   - m_Id: 524703093826330624
     m_Localized: "Piilota heads up -n\xE4ytt\xF6"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: "Ota kaikki modit k\xE4ytt\xF6\xF6n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: "Poista kaikki modit k\xE4yt\xF6st\xE4"
     m_Metadata:
       m_Items: []
   references:

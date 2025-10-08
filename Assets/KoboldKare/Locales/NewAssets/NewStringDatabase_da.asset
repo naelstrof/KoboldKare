@@ -1052,7 +1052,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: "V\xE6lg blot noget p\xE5 v\xE6ggen, s\xE5 konstruerer vi det til
+    m_Localized: "Bare v\xE6lg noget p\xE5 v\xE6ggen, s\xE5 konstruerer vi det til
       dig."
     m_Metadata:
       m_Items: []
@@ -1149,8 +1149,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464129
-    m_Localized: "Der er ting foran derovre og bag mig ogs\xE5, s\xE5 kom virkelig
-      op herinde, ingen grund til at v\xE6re genert."
+    m_Localized: "Der er ting ude foran og bag mig ogs\xE5, s\xE5 kom virkelig op
+      herinde, ingen grund til at v\xE6re genert."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1178,7 +1178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464136
-    m_Localized: "Beklager, jeg mangler noget at bygge til dig! Tak fordi du er s\xE5dan
+    m_Localized: "Beklager, jeg mangler alt at bygge til dig! Tak fordi du er s\xE5dan
       en loyal kunde."
     m_Metadata:
       m_Items: []
@@ -1196,8 +1196,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Jeg vil have mange forskellige typer kobold, og det betyder, at
-      du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
+    m_Localized: "Jeg vil have en masse forskellige typer kobold, og det betyder,
+      at du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1263,7 +1263,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
-    m_Localized: Kreditter
+    m_Localized: Credits
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
@@ -1271,7 +1271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
-    m_Localized: "Save kunne ikke indl\xE6ses"
+    m_Localized: "Kunne ikke indl\xE6se gem"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103609790464
@@ -1300,7 +1300,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Dick-shrink
+    m_Localized: Pik-shrink
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1412,6 +1412,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 524703093826330624
     m_Localized: Skjul heads up display
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Aktiver alle mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: Deaktiver alle mods
     m_Metadata:
       m_Items: []
   references:

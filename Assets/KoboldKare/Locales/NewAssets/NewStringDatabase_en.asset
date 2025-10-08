@@ -1429,6 +1429,14 @@ MonoBehaviour:
     m_Localized: Hide heads up display
     m_Metadata:
       m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Enable all mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: Disable all mods
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

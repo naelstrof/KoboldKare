@@ -5,6 +5,8 @@ using Object = UnityEngine.Object;
 using TMPro;
 using UnityEditor;
 using UnityEditor.PackageManager;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public static class AghButton {
     [MenuItem("Tools/KoboldKare/Unhide GameObjects")]
@@ -13,7 +15,64 @@ public static class AghButton {
             g.hideFlags &= (HideFlags)(~0x3);
         }
     }
-    
+
+    [MenuItem("Tools/KoboldKare/Prefabify Button")]
+    public static void PrefabifyButton() {
+        var prefabGUID = "f7a9775ff8c444f3c964c30b914805d0";
+        var path = AssetDatabase.GUIDToAssetPath(prefabGUID);
+        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        
+        foreach (GameObject g in Selection.gameObjects) {
+            foreach (Button b in g.GetComponentsInChildren<Button>(true)) {
+                GameObject newButtonObj = (GameObject)PrefabUtility.InstantiatePrefab(prefab, b.transform.parent);
+                newButtonObj.transform.position = b.transform.position;
+                newButtonObj.transform.rotation = b.transform.rotation;
+                newButtonObj.transform.localScale = b.transform.localScale;
+                newButtonObj.name = b.gameObject.name;
+                Undo.RegisterCreatedObjectUndo(newButtonObj, "Created prefab button");
+                var newButton = newButtonObj.GetComponent<Button>();
+                newButton.onClick = b.onClick;
+
+                foreach (var comp in b.gameObject.GetComponents<Component>()) {
+                    if (comp is RectTransform || comp is Image || comp is Button || comp is TMP_Text || comp is LocalizeStringEvent || comp is TextRTLFixer || comp is ButtonMouseOver) {
+                        continue;
+                    }
+                    UnityEditorInternal.ComponentUtility.CopyComponent(comp);
+                    UnityEditorInternal.ComponentUtility.PasteComponentAsNew(newButtonObj);
+                }
+                
+                var text = b.GetComponentInChildren<TMP_Text>();
+                var otherText = newButtonObj.GetComponentInChildren<TMP_Text>();
+                otherText.text = text.text;
+                otherText.fontSize = text.fontSize;
+                otherText.alignment = text.alignment;
+                otherText.color = text.color;
+                otherText.font = text.font;
+                otherText.enableWordWrapping = text.enableWordWrapping;
+                otherText.raycastTarget = text.raycastTarget;
+                otherText.fontStyle = text.fontStyle;
+                otherText.characterSpacing = text.characterSpacing;
+                otherText.lineSpacing = text.lineSpacing;
+                otherText.enableAutoSizing = text.enableAutoSizing;
+                var localizeStringEvent = b.GetComponentInChildren<LocalizeStringEvent>();
+                var otherLocalizeStringEvent = newButtonObj.GetComponentInChildren<LocalizeStringEvent>();
+                if (localizeStringEvent) {
+                    otherLocalizeStringEvent.StringReference = localizeStringEvent.StringReference;
+                } else {
+                    otherLocalizeStringEvent.StringReference = null;
+                }
+
+                var iconGameObj = b.transform.Find("Icon");
+                if (iconGameObj != null) {
+                    var icon = iconGameObj.GetComponent<Image>();
+                    var otherIcon = newButtonObj.transform.Find("Icon").GetComponent<Image>();
+                    otherIcon.sprite = icon.sprite;
+                    otherIcon.color = icon.color;
+                }
+            }
+        }
+    }
+
     [MenuItem("Tools/KoboldKare/FindInvalidTransforms")]
     public static void FindInvalidTransform() {
         foreach (GameObject g in Object.FindObjectsOfType<GameObject>(true)) {

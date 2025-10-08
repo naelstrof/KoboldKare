@@ -1293,19 +1293,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Invertir mirada del eje Y
+    m_Localized: Invertir mirada eje Y
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Reductor de senos
+    m_Localized: "Reducci\xF3n de senos"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: bolas-encogimiento
+    m_Localized: Bolas-encogibles
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: psiquiatra de pollas
+    m_Localized: Psiquiatra de penes
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1313,7 +1313,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: "Configuraci\xF3n de modificaci\xF3n"
+    m_Localized: "Configuraci\xF3n del mod"
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1333,7 +1333,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: eliminar guardar
+    m_Localized: Eliminar guardar
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1366,21 +1366,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "\xA1Eliminar un guardado es permanente!"
+    m_Localized: "\xA1Borrar una partida guardada es permanente!"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "Al cargar el archivo guardado ahora, se perder\xE1 la sesi\xF3n
-      actual."
+    m_Localized: "Si carga el guardado ahora perder\xE1 su sesi\xF3n actual."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "\xA1La modificaci\xF3n requiere un sistema compatible con 64 bits!
-      Actualice su sistema operativo."
+    m_Localized: "\xA1Para modificar, se requiere un sistema operativo de 64 bits!
+      Actualiza tu sistema operativo."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
-    m_Localized: penes habilitados
+    m_Localized: Penes habilitados
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360321
@@ -1402,20 +1401,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "\xA1Fall\xF3 la carga del mod!"
+    m_Localized: "\xA1Error al cargar el mod!"
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Hubo una excepci\xF3n al cargar un mod, esto puede interrumpir
-      el juego. Por favor revisa tus modificaciones."
+    m_Localized: "Se produjo una excepci\xF3n al cargar un mod; esto podr\xEDa interrumpir
+      el juego. Por favor, revisa tus mods."
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
-    m_Localized: El nombre que ingresaste no es apropiado, ingresa algo diferente.
+    m_Localized: El nombre ingresado no es apropiado, ingrese algo diferente.
     m_Metadata:
       m_Items: []
   - m_Id: 524703093826330624
-    m_Localized: "Ocultar visualizaci\xF3n frontal"
+    m_Localized: "Ocultar la pantalla de visualizaci\xF3n frontal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Habilitar todos los mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: Deshabilitar todos los mods
     m_Metadata:
       m_Items: []
   references:

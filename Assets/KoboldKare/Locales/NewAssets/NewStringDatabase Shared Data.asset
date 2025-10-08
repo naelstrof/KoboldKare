@@ -1339,6 +1339,14 @@ MonoBehaviour:
     m_Key: CONTROLS_HIDE_HUD
     m_Metadata:
       m_Items: []
+  - m_Id: 620055354093412352
+    m_Key: MENU_ENABLE_ALL_MODS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Key: MENU_DISABLE_ALL_MODS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

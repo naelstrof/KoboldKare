@@ -13,6 +13,7 @@ public class ModLoadingErrorPopup : MonoBehaviour {
     }
     private void CheckIfModLoadSucceeded() {
         if (ModManager.TryGetLastException(out Exception e)) {
+            Debug.Log($"GOT EXCEPTION {e}");
             PopupHandler.instance.SpawnPopup("FailedModLoads");
         }
     }

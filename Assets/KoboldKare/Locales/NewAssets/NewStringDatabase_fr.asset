@@ -1296,7 +1296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Inverser l'axe Y
+    m_Localized: Inverser l'axe Y de la vue
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
@@ -1304,11 +1304,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "Boules-r\xE9tr\xE9cissement"
+    m_Localized: "Boules r\xE9tractables"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: "Dick-r\xE9tr\xE9cir"
+    m_Localized: "R\xE9tr\xE9cissement de la bite"
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1316,7 +1316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Configuration des modules
+    m_Localized: Configuration du module
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1332,7 +1332,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Sauvegarder la charge
+    m_Localized: Charger sauvegarder
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
@@ -1369,17 +1369,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "La suppression d'une sauvegarde est d\xE9finitive\_!"
+    m_Localized: "La suppression d'une sauvegarde est d\xE9finitive !"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "Charger la sauvegarde maintenant entra\xEEnera la perte de votre
-      session actuelle."
+    m_Localized: "Le chargement de la sauvegarde maintenant entra\xEEnera la perte
+      de votre session actuelle."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
-    m_Localized: "Le Modding n\xE9cessite un syst\xE8me compatible 64 bits\_! Veuillez
-      mettre \xE0 niveau votre syst\xE8me d'exploitation."
+    m_Localized: "Le modding n\xE9cessite un syst\xE8me compatible 64 bits\_! Veuillez
+      mettre \xE0 jour votre syst\xE8me d'exploitation."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
@@ -1406,21 +1406,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 342423402432045056
-    m_Localized: "Le chargement du module a \xE9chou\xE9\_!"
+    m_Localized: "Le chargement du mod a \xE9chou\xE9\_!"
     m_Metadata:
       m_Items: []
   - m_Id: 342423402461405184
-    m_Localized: "Il y a eu une exception lors du chargement d'un mod, cela peut
-      interrompre le jeu. Veuillez v\xE9rifier vos mods."
+    m_Localized: "Une exception s'est produite lors du chargement d'un mod, cela
+      peut casser le jeu. Veuillez v\xE9rifier vos mods."
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
     m_Localized: "Le nom que vous avez saisi n'est pas appropri\xE9, veuillez saisir
-      un nom diff\xE9rent."
+      quelque chose de diff\xE9rent."
     m_Metadata:
       m_Items: []
   - m_Id: 524703093826330624
     m_Localized: "Masquer l'affichage t\xEAte haute"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Activer tous les mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: "D\xE9sactiver tous les mods"
     m_Metadata:
       m_Items: []
   references:

@@ -35,4 +35,23 @@ public class ModInfoDisplaySpawner : MonoBehaviour {
             }
         }
     }
+
+    private bool active = true;
+    private void Update() {
+        if (!ModManager.GetReady() && active) {
+            active = false;
+            foreach (var display in displays) {
+                foreach(var interactable in display.GetComponentsInChildren<Selectable>()) {
+                    interactable.interactable = false;
+                }
+            }
+        } else if (ModManager.GetReady() && !active) {
+            active = true;
+            foreach (var display in displays) {
+                foreach(var interactable in display.GetComponentsInChildren<Selectable>()) {
+                    interactable.interactable = true;
+                }
+            }
+        }
+    }
 }

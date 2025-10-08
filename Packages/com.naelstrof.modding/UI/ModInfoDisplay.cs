@@ -19,6 +19,12 @@ public class ModInfoDisplay : MonoBehaviour {
     private RawImage rawImage;
     [SerializeField]
     private ModInfoDisplaySpawner modInfoDisplaySpawner;
+    [SerializeField]
+    private Image failedToLoad;
+    [SerializeField]
+    private Color normalColor;
+    [SerializeField]
+    private Color failedToLoadColor;
 
     public void SetModInfo(ModInfoDisplaySpawner spawner, ModManager.ModStub newInfo) {
         info = newInfo;
@@ -30,6 +36,17 @@ public class ModInfoDisplay : MonoBehaviour {
         toggle.onValueChanged.AddListener(OnToggle);
         toggle.SetIsOnWithoutNotify(newInfo.enabled);
         steamImage.gameObject.SetActive(newInfo.source == ModManager.ModSource.SteamWorkshop);
+        if (newInfo.causedException) {
+            modName.color = Color.yellow;
+            modDescription.color = Color.yellow;
+            GetComponent<Image>().color = failedToLoadColor;
+            failedToLoad.gameObject.SetActive(true);
+        } else {
+            modName.color = Color.white;
+            modDescription.color = Color.white;
+            GetComponent<Image>().color = normalColor;
+            failedToLoad.gameObject.SetActive(false);
+        }
     }
 
     private void OnToggle(bool newState) {

@@ -1357,27 +1357,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
-    m_Localized: "P\u0159ed {0:plural:1 druh\xFD|{} sekundy}"
+    m_Localized: "P\u0159ed {0:plural:1 vte\u0159inou|{} vte\u0159inama}"
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 278016973418733568
-    m_Localized: "P\u0159ed {0:plural:1 minuta|{} minut}"
+    m_Localized: "P\u0159ed {0:plural:1 minutou|{} minutama}"
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 278016973418733569
-    m_Localized: "P\u0159ed {0:plural:1 hodina|{} hodiny}"
+    m_Localized: "P\u0159ed {0:plural:1 hodinou|{} hodinama}"
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 278016973422927872
-    m_Localized: "P\u0159ed {0:plural:1 den|{} dny}"
+    m_Localized: "P\u0159ed {0:plural:1 dnem|{} dny}"
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
   - m_Id: 278016973422927873
-    m_Localized: "P\u0159ed {0:plural:1 rok|{} roky}"
+    m_Localized: "P\u0159ed {0:plural:1 rokem|{} roky}"
     m_Metadata:
       m_Items:
       - rid: 1602997996487704579
@@ -1439,6 +1439,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 524703093826330624
     m_Localized: "Skr\xFDt head up display"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: "Povolit v\u0161echny mody"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: "Zak\xE1zat v\u0161echny mody"
     m_Metadata:
       m_Items: []
   references:

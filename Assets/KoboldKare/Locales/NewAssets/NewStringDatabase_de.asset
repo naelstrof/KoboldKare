@@ -878,7 +878,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211626638807977984
-    m_Localized: "\u0160pi\u010Dat\xFD penis"
+    m_Localized: Stacheliger Penis
     m_Metadata:
       m_Items: []
   - m_Id: 211626638837338112
@@ -1423,12 +1423,20 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 523772124214665216
-    m_Localized: Der von Ihnen eingegebene Name ist nicht angemessen. Bitte geben
-      Sie einen anderen Namen ein.
+    m_Localized: "Der von dir eingegebene Name ist unangemessen. Bitte w\xE4hle einen
+      anderen Namen."
     m_Metadata:
       m_Items: []
   - m_Id: 524703093826330624
     m_Localized: Heads-up-Display ausblenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354093412352
+    m_Localized: Alle Mods aktivieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 620055354097606656
+    m_Localized: Alle Mods deaktivieren
     m_Metadata:
       m_Items: []
   references:

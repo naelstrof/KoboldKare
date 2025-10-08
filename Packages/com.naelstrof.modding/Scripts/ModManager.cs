@@ -439,7 +439,11 @@ public class ModManager : MonoBehaviour {
     private ModInfo currentInspectedMod = null;
     private async Task InspectMods() {
         foreach (var modInfo in instance.fullModList) {
-            if (!modInfo.enabled || modInfo.locator == null) {
+            if (!modInfo.enabled) {
+                if (modInfo.locator != null) {
+                    Addressables.RemoveResourceLocator(modInfo.locator);
+                    modInfo.locator = null;
+                }
                 continue;
             }
             currentInspectedMod = modInfo;
@@ -448,6 +452,11 @@ public class ModManager : MonoBehaviour {
             var handle = Addressables.LoadAssetsAsync<UnityEngine.Object>(keys, Addressables.Release, Addressables.MergeMode.UseFirst);
             await handle.Task;
             Addressables.Release(handle);
+            if (modInfo.causedException) {
+                modInfo.enabled = false;
+                Addressables.RemoveResourceLocator(modInfo.locator);
+                modInfo.locator = null;
+            }
         }
         currentInspectedMod = null;
     }

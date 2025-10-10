@@ -21,6 +21,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     
     public static byte CustomInstantiationEvent = (byte)'C';
     public static byte CustomCheatEvent = (byte)'H';
+    public static byte CustomChatEvent = (byte)'A';
 
     public bool online {
         get {
@@ -230,7 +231,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
         PopupHandler.instance.ClearAllPopups();
-        GameManager.instance.Pause(false);
+        Pauser.SetPaused(false);
         //if (popup != null) {
         //popup.Hide();
         //}
@@ -366,6 +367,25 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             var photonView = obj.GetComponent<PhotonView>();
             photonView.ViewID = (int)objectData[1];
             obj.SetActive(true);
+            return;
+        }
+
+        if (photonEvent.Code == CustomChatEvent) {
+            if (photonEvent.Sender < 0 || photonEvent.Sender >= PhotonNetwork.PlayerList.Length) {
+                Debug.LogError("Got a chat event from an invalid player!");
+                return;
+            }
+            var player = PhotonNetwork.PlayerList[photonEvent.Sender];
+            var chatKobold = (Kobold)player.TagObject;
+            var message = (string)photonEvent.CustomData;
+            CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
+            if (chatKobold != null) {
+                var chatter = chatKobold.GetComponent<Chatter>();
+                chatter.DisplayMessage((string)photonEvent.CustomData, 1f);
+                if (Equals(player, PhotonNetwork.LocalPlayer)) {
+                    CheatsProcessor.ProcessCommand(chatKobold, message);
+                }
+            }
             return;
         }
 

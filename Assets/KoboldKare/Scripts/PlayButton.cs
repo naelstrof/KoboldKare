@@ -1,13 +1,21 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayButton : MonoBehaviour {
-    private void Start() {
+    private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClick);
+        SceneManager.activeSceneChanged += OnSceneChange;
     }
+    private void OnDestroy() {
+        SceneManager.activeSceneChanged -= OnSceneChange;
+    }
+
+    private void OnSceneChange(Scene arg0, Scene arg1) {
+        gameObject.SetActive(!LevelLoader.InLevel());
+    }
+
 
     void OnClick() {
         GameManager.StartCoroutineStatic(LoadSinglePlayer());

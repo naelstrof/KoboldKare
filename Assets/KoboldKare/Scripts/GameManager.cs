@@ -28,18 +28,6 @@ public class GameManager : MonoBehaviour {
     public GameObject selectOnPause;
     public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
     public LoadingListener loadListener;
-    [SerializeField]
-    private GameObject MultiplayerTab;
-    [SerializeField]
-    private GameObject OptionsTab;
-    [SerializeField]
-    private GameObject MainViewTab;
-    [SerializeField]
-    private GameObject CreditsTab;
-    [SerializeField]
-    private GameObject ModdingTab;
-    [SerializeField]
-    private GameObject SaveTab;
 
     [SerializeField] private PrefabDatabase penisDatabase;
     [SerializeField] private PrefabDatabase playerDatabase;
@@ -73,55 +61,6 @@ public class GameManager : MonoBehaviour {
             Debug.LogError("Spawned a GameManager on the fly due to misconfigured scene. This is not intentional, and breaks hard references to required libraries. You should place a GameManager prefab into the scene.");
         }
     #endif
-
-    [HideInInspector]
-    public bool isPaused = false;
-
-    public void Pause(bool pause) {
-        isPaused = pause;
-        PopupHandler.instance.ClearAllPopups();
-        if (!pause) {
-            MultiplayerTab.gameObject.SetActive(false);
-            OptionsTab.gameObject.SetActive(false);
-            CreditsTab.gameObject.SetActive(false);
-            ModdingTab.gameObject.SetActive(false);
-            SaveTab.gameObject.SetActive(false);
-            MainViewTab.gameObject.SetActive(true);
-        }
-        if (!isPaused && SceneManager.GetActiveScene().name != "MainMenu") {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        } else {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        mainCanvas.SetActive(isPaused || SceneManager.GetActiveScene().name == "MainMenu");
-        if (!PhotonNetwork.OfflineMode || SceneManager.GetActiveScene().name == "MainMenu") {
-            Time.timeScale = 1.0f;
-            return;
-        }
-        Time.timeScale = isPaused ? 0.0f : 1.0f;
-        if (selectOnPause != null) {
-            selectOnPause.GetComponent<Selectable>().Select();
-        } else {
-            Debug.LogError(
-                "[GameManager] selectOnPause is not bound to the resume button! Button was not selected for controller support.");
-        }
-
-        if (pause) {
-            OrbitCamera.SetTracking(false);
-        }
-        if (!pause) {
-            OrbitCamera.SetTracking(true);
-            try {
-                InputOptions.SaveControls();
-                UnityScriptableSettings.SettingsManager.Save();
-            } catch (Exception e) {
-                Debug.LogException(e);
-                Debug.LogError("Failed to save config");
-            }
-        }
-    }
 
     public void Quit() {
         ModManager.SaveConfig();
@@ -175,7 +114,6 @@ public class GameManager : MonoBehaviour {
 
         yield return LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
         NetworkManager.instance.StartSinglePlayer();
-        Pause(false);
     }
 
     private void UIVisible(bool visible) {
@@ -257,24 +195,12 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType) {
-        switch (btn.buttonType) {
-            case ButtonMouseOver.ButtonTypes.Default when evtType == ButtonMouseOver.EventType.Hover:
+        switch (evtType) {
+            case ButtonMouseOver.EventType.Hover:
                 SpawnAudioClipInWorld(buttonHoveredMenu, Vector3.zero);
                 break;
-            case ButtonMouseOver.ButtonTypes.Default:
+            case ButtonMouseOver.EventType.Click:
                 SpawnAudioClipInWorld(buttonClickedMenu, Vector3.zero);
-                break;
-            case ButtonMouseOver.ButtonTypes.Save when evtType == ButtonMouseOver.EventType.Hover:
-                SpawnAudioClipInWorld(buttonHoveredSubmenu, Vector3.zero);
-                break;
-            case ButtonMouseOver.ButtonTypes.Save:
-                SpawnAudioClipInWorld(buttonClickedSubmenu, Vector3.zero);
-                break;
-            case ButtonMouseOver.ButtonTypes.MainMenu:
-                break;
-            case ButtonMouseOver.ButtonTypes.Option:
-                break;
-            case ButtonMouseOver.ButtonTypes.NoScale:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

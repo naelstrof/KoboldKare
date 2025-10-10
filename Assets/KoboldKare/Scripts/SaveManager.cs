@@ -347,8 +347,7 @@ public static class SaveManager {
 
         //Ensure we show the player that the game is loading while we load
         if(SceneManager.GetActiveScene().name != mapName){
-            GameManager.instance.Pause(false);
-            GameManager.instance.loadListener.Show();
+            Pauser.SetPaused(false);
             Debug.Log("loading map...");
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
@@ -357,16 +356,11 @@ public static class SaveManager {
             Debug.Log("Loaded immediately!");
             LoadImmediate(filename);
         } catch {
-            GameManager.instance.loadListener.Hide();
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw;
         }
-
-        //Once loading is finished, hide loading screen
-        if(SceneManager.GetActiveScene().name != "MainMenu"){
-            GameManager.instance.loadListener.Hide();
-        }
-        GameManager.instance.Pause(false);
+        
+        Pauser.SetPaused(false);
     }
 
     private static bool NeedsUpgrade() {

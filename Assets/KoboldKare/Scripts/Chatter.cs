@@ -14,7 +14,6 @@ public class Chatter : MonoBehaviourPun {
     [SerializeField]
     private AudioPack yowls;
 
-    private Kobold kobold;
     private Coroutine displayMessageRoutine;
 
     public void SetTextOutput(TMPro.TMP_Text newChatText) {
@@ -25,11 +24,16 @@ public class Chatter : MonoBehaviourPun {
         yowls = newPack;
     }
 
-    private void Start() {
-        kobold = GetComponent<Kobold>();
+    public void DisplayMessage(string message, float duration) {
+        if (displayMessageRoutine != null) {
+            StopCoroutine(displayMessageRoutine);
+            displayMessageRoutine = null;
+        }
+        displayMessageRoutine = StartCoroutine(DisplayMessageRoutine(message, Mathf.Max(duration, minTextTimeout)));
     }
 
-    IEnumerator DisplayMessage(string message, float duration) {
+    IEnumerator DisplayMessageRoutine(string message, float duration) {
+        GameManager.instance.SpawnAudioClipInWorld(yowls, transform.position);
         chatText.text = message;
         chatText.alpha = 1f;
         duration += message.Length * textSpeedPerCharacter; // Add additional seconds per character
@@ -41,27 +45,9 @@ public class Chatter : MonoBehaviourPun {
             yield return null;
         }
         chatText.alpha = 0f;
+        displayMessageRoutine = null;
     }
     
-    [PunRPC]
-    public void RPCSendChat(string message, PhotonMessageInfo info) {
-        Player player = GetPlayer();
-        if (info.Sender != player) {
-            Debug.LogWarning($"Call to method {nameof(RPCSendChat)} on player {player} originated from {info.Sender}. This may have been malicious.");
-            return;
-        }
-
-        //GameManager.instance.SpawnAudioClipInWorld(yowls[UnityEngine.Random.Range(0,yowls.Length)], transform.position);
-        GameManager.instance.SpawnAudioClipInWorld(yowls, transform.position);
-        if (displayMessageRoutine != null) {
-            StopCoroutine(displayMessageRoutine);
-        }
-        
-        CheatsProcessor.AppendText($"{player.NickName}: {message}\n");
-        CheatsProcessor.ProcessCommand(kobold, message);
-        displayMessageRoutine = StartCoroutine(DisplayMessage(message, minTextTimeout));
-    }
-
     private Player GetPlayer() {
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject != GetComponent<Kobold>()) continue;

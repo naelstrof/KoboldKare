@@ -17,10 +17,6 @@ public class PlayerPossession : MonoBehaviourPun {
     public float coyoteTime = 0.2f; 
     public int defaultMultiGrabSwitchFrames = 15;
     public User user;
-    public CanvasGroup chatGroup;
-    public CommandTextDisplay chatDisplay;
-    public ScrollRect chatScrollView;
-    public TMPro.TMP_InputField chatInput;
     public GameObject diePrefab;
     public InputActionReference back;
     private PrecisionGrabber pGrabber;
@@ -28,6 +24,20 @@ public class PlayerPossession : MonoBehaviourPun {
     private Grabber grabber;
     
     private bool movementEnabled = true;
+    private static PlayerPossession playerInstance;
+
+    public static bool TryGetPlayerInstance(out PlayerPossession playerInstance) {
+        playerInstance = PlayerPossession.playerInstance;
+        return playerInstance != null;
+    }
+
+    public void SetControlsActive(bool active) {
+        if (!active) {
+            controls.DeactivateInput();
+        } else {
+            controls.ActivateInput();
+        }
+    }
 
     public void SetMovementEnabled(bool newMovementEnabled) {
         movementEnabled = newMovementEnabled;
@@ -50,7 +60,6 @@ public class PlayerPossession : MonoBehaviourPun {
     public GameEventVector3 playerDieEvent;
     public List<GameObject> localGameObjects = new List<GameObject>();
     public GameObject grabPrompt;
-    public GameObject equipmentUI;
     private bool switchedMode;
     private bool pauseInput;
     private bool rotating;
@@ -58,7 +67,6 @@ public class PlayerPossession : MonoBehaviourPun {
     private bool trackingHip;
     private int multiGrabSwitchTimer;
     public bool multiGrabMode = true;
-    private InputSystemUIInputModule inputModule;
     public UnityScriptableSettings.SettingFloat mouseSensitivity;
 
     
@@ -104,30 +112,9 @@ public class PlayerPossession : MonoBehaviourPun {
             }
         }
     }
-    public void OnPause() {
-        if (!isActiveAndEnabled) {
-            return;
-        }
-
-        if (GetEquipmentUI()) {
-            SetEquipmentUI(false);
-            return;
-        }
-        GameManager.instance.Pause(!GameManager.instance.isPaused);
-        if (GameManager.instance.isPaused || SceneManager.GetActiveScene().name == "MainMenu") {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        } else {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
     private void OnTextDeselect(string t) {
     }
 
-    private void OnCancelTextSubmit(InputAction.CallbackContext ctx) {
-        OnTextSubmit("");
-    }
 
     private void Awake() {
         controller = GetComponentInParent<KoboldCharacterController>();
@@ -144,34 +131,8 @@ public class PlayerPossession : MonoBehaviourPun {
         grabber.throwUIChanged += OnThrowChange;
         body = controller.GetComponent<Rigidbody>();
         animator = controller.GetComponentInChildren<Animator>();
-        inputModule = FindObjectOfType<InputSystemUIInputModule>();
     }
 
-    private void OnTextSubmit(string t) {
-        chatInput.text="";
-        chatGroup.interactable = false;
-        chatInput.enabled = false;
-        chatGroup.alpha = 0f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        if (isActiveAndEnabled) {
-            controls.ActivateInput();
-        }
-
-        chatInput.onSubmit.RemoveListener(OnTextSubmit);
-        chatInput.onDeselect.RemoveListener(OnTextDeselect);
-        chatScrollView.normalizedPosition = new Vector2(0, 0);
-        back.action.started -= OnBack;
-        chatDisplay.ForceVisible(false);
-        if (!string.IsNullOrEmpty(t)) {
-            kobold.photonView.RPC(nameof(Chatter.RPCSendChat), RpcTarget.All, t);
-        }
-        inputModule.cancel.action.performed -= OnCancelTextSubmit;
-        StopCoroutine(nameof(MaintainFocus));
-        if (SteamManager.Initialized) {
-            SteamUtils.DismissFloatingGamepadTextInput();
-        }
-    }
     private void Start() {
         controls = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -179,6 +140,7 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     private void OnEnable() {
+        playerInstance = this;
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(true);
         }
@@ -219,7 +181,10 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     private void OnDisable() {
-        OnTextSubmit("");
+        if (playerInstance == this) {
+            playerInstance = null;
+        }
+
         foreach(GameObject localGameObject in localGameObjects) {
             localGameObject.SetActive(false);
         }
@@ -329,7 +294,7 @@ public class PlayerPossession : MonoBehaviourPun {
             return;
         }
         Cursor.visible = false;
-        if (isActiveAndEnabled && !GameManager.instance.isPaused) {
+        if (isActiveAndEnabled && !Pauser.GetPaused()) {
             PlayerProcessing();
             bool shouldCancelAnimation = false;
             //shouldCancelAnimation = (shouldCancelAnimation | controls.actions["Rotate"].ReadValue<float>() > 0.5f);
@@ -423,6 +388,12 @@ public class PlayerPossession : MonoBehaviourPun {
         trackingHip = false;
     }
 
+    public void OnChat(InputAction.CallbackContext ctx) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Chat);
+        }
+    }
+
     public void OnGrabCancelled(InputAction.CallbackContext ctx) {
         characterControllerAnimator.inputGrabbing = false;
         grabbing = false;
@@ -498,54 +469,11 @@ public class PlayerPossession : MonoBehaviourPun {
         OnTextDeselect("");
     }
     public void OnChatInput(InputAction.CallbackContext context) {
-        if (GameManager.instance.isPaused) {
+        if (Pauser.GetPaused()) {
             return;
         }
-        if (!chatGroup.interactable) {
-            StartCoroutine(nameof(MaintainFocus));
-
-            chatInput.enabled = true;
-            chatDisplay.ForceVisible(true);
-            chatGroup.interactable = true;
-            chatGroup.alpha = 1f;
-            if (inputRagdolled) {
-                photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
-            }
-
-            back.action.started += OnBack;
-            StopCoroutine(nameof(WaitAndThenSubscribe));
-            StartCoroutine(nameof(WaitAndThenSubscribe));
-            
-            controls.DeactivateInput();
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            inputModule.cancel.action.performed += OnCancelTextSubmit;
-            if (SteamManager.Initialized) {
-                RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
-                SteamUtils.ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode.k_EFloatingGamepadTextInputModeModeSingleLine, (int)rectTransform.position.x, (int)rectTransform.position.y, (int)rectTransform.sizeDelta.x, (int)rectTransform.sizeDelta.y);
-            }
-            chatInput.Select();
-            chatInput.onDeselect.AddListener(OnTextDeselect);
-        } else {
-            OnTextSubmit(chatInput.text);
-        }
     }
 
-    IEnumerator MaintainFocus() {
-        yield return new WaitForSecondsRealtime(0.1f);
-        while (chatGroup.interactable && isActiveAndEnabled) {
-            yield return new WaitForSecondsRealtime(0.1f);
-            if (EventSystem.current.currentSelectedGameObject != chatInput.gameObject) {
-                EventSystem.current.SetSelectedGameObject(chatInput.gameObject);
-            }
-            chatInput.ActivateInputField();
-        }
-    }
-
-    IEnumerator WaitAndThenSubscribe() {
-        yield return new WaitForSecondsRealtime(0.1f);
-        chatInput.onSubmit.AddListener(OnTextSubmit);
-    }
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {
             photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
@@ -555,33 +483,16 @@ public class PlayerPossession : MonoBehaviourPun {
             inputRagdolled = true;
         }
     }
-
-    public void SetEquipmentUI(bool enable) {
-        if (!isActiveAndEnabled) {
-            return;
-        }
-
-        if (!enable) {
-            equipmentUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        } else {
-            equipmentUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-    }
-
-    public bool GetEquipmentUI() {
-        return equipmentUI.activeInHierarchy;
-    }
-
     public void ToggleEquipmentUI() {
         if (!isActiveAndEnabled) {
             return;
         }
 
-        SetEquipmentUI(!GetEquipmentUI());
+        if (MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.Equipment) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        } else {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
+        }
     }
 
     public void OnViewStats( InputValue value ) {

@@ -11,6 +11,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     public GameObject roomPrefab;
     public GameObject hideOnRoomsFound;
     private List<GameObject> roomPrefabs = new List<GameObject>();
+    [SerializeField] private NetworkManager networkManager;
     
     private static string[] blacklist;
 
@@ -39,6 +40,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
     public override void OnEnable() {
         base.OnEnable();
+        networkManager.JoinLobby("");
         StartCoroutine(RefreshRoomRoutine());
     }
 

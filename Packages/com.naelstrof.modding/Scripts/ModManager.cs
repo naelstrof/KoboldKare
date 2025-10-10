@@ -354,6 +354,10 @@ public class ModManager : MonoBehaviour {
 
             fullModList.Add(info);
             fullModList.Sort((a, b) => a.loadPriority.CompareTo(b.loadPriority));
+        } catch (Exception e) {
+            lastException = e;
+            info.causedException = true;
+            info.enabled = false;
         } finally {
             Mutex.Release();
         }

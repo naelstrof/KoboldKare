@@ -10,13 +10,26 @@ public class ActionButtonListener : MonoBehaviour {
     [SerializeField]
     private InputActionReference action;
 
+    [SerializeField, SerializeReference, SubclassSelector] private List<GameEventResponse> onButtonPress;
+
     private Button button;
+
+    public static bool HasAction() => actionStack.Count > 0;
 
     private void Awake() {
         button = GetComponent<Button>();
+        button.onClick.AddListener(OnClick);
+    }
+
+    private void OnClick() {
+        if (onButtonPress == null) return;
+        foreach(var response in onButtonPress) {
+            response?.Invoke(this);
+        }
     }
 
     private void OnEnable() {
+        action.action.Enable();
         action.action.performed += OnPerformed;
         actionStack.Add(this);
     }

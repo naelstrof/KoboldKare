@@ -18,6 +18,10 @@ public class CheatsProcessor : MonoBehaviour {
 
     private event OutputChangedAction outputChanged;
 
+    public static string GetOutput() {
+        return instance.commandOutput.ToString();
+    }
+
     public static void AppendText(string text) {
         instance.commandOutput.Append(text);
         if (instance.commandOutput.Length > maxLength) {

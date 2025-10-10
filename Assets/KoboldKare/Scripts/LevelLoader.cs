@@ -27,10 +27,14 @@ public class LevelLoader : MonoBehaviour {
         StopAllCoroutines();
         return StartCoroutine(LoadLevelRoutine(mapName));
     }
+
+    public static bool InLevel() {
+        return SceneManager.GetActiveScene().name != "MainMenu";
+    }
     
     private IEnumerator LoadLevelRoutine(string mapName) {
         try {
-            GameManager.instance.Pause(false);
+            Pauser.SetPaused(false);
             sceneLoadStart?.Invoke();
             loadingLevel = true;
             yield return new WaitForSecondsRealtime(1f);
@@ -46,7 +50,7 @@ public class LevelLoader : MonoBehaviour {
         } finally {
             loadingLevel = false;
             sceneLoadEnd?.Invoke();
-            GameManager.instance.Pause(false);
+            Pauser.SetPaused(false);
         }
     }
 }

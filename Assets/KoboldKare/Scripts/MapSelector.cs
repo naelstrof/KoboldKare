@@ -9,8 +9,6 @@ public class MapSelector : MonoBehaviour {
     private static MapSelector instance;
     [SerializeField] private List<GameObject> otherViews;
     [SerializeField] private GameObject mapSelectView;
-    [SerializeField] private Button backButton;
-    [SerializeField] private Button confirmButton;
     
     [SerializeField] private TMP_InputField nameField;
     [SerializeField] private Slider playerCountSlider;
@@ -19,6 +17,8 @@ public class MapSelector : MonoBehaviour {
     [SerializeField] private GameObject[] multiplayerUI;
     private List<bool> otherViewMemory;
     private bool busy;
+    private MapSelectHandle currentHandle;
+    private bool currentMultiplayer;
 
     public struct MapSelectResults {
         public bool multiplayer;
@@ -56,53 +56,37 @@ public class MapSelector : MonoBehaviour {
     }
 
     public static MapSelectHandle PromptForMapSelect(bool multiplayer) {
-        MapSelectHandle newHandle = new MapSelectHandle();
-        GameManager.StartCoroutineStatic(instance.SelectMapRoutine(newHandle, multiplayer));
-        return newHandle;
+        if (instance.currentHandle != null) {
+            instance.currentHandle.Invoke(true, default);
+            instance.currentHandle = null;
+        }
+        instance.currentHandle = new MapSelectHandle();
+        instance.currentMultiplayer = multiplayer;
+        foreach(var obj in instance.multiplayerUI) {
+            obj.SetActive(instance.currentMultiplayer);
+        }
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MapSelect);
+        return instance.currentHandle;
     }
 
-    private void SetVisibility(bool visible, bool multiplayer = false) {
-        if (visible) {
-            otherViewMemory.Clear();
-            foreach (var view in otherViews) {
-                otherViewMemory.Add(view.activeSelf);
-                view.SetActive(false);
-            }
-        } else {
-            for (int i=0;i<otherViews.Count;i++) {
-                otherViews[i].SetActive(otherViewMemory[i]);
-            }
-        }
-        mapSelectView.SetActive(visible);
-        foreach(var obj in multiplayerUI) {
-            obj.SetActive(visible && multiplayer);
+    public void Cancel() {
+        if (instance.currentHandle != null) {
+            instance.currentHandle.Invoke(true, default);
+            instance.currentHandle = null;
         }
     }
 
-    private IEnumerator SelectMapRoutine(MapSelectHandle handle, bool multiplayer) {
-        yield return new WaitUntil(() => !busy);
-        busy = true;
-        try {
-            SetVisibility(true, multiplayer);
-            backButton.onClick.RemoveAllListeners();
-            backButton.onClick.AddListener(() => {
-                SetVisibility(false);
-                handle.Invoke(true, default);
+    public void Confirm() {
+        if (instance.currentHandle != null) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+            instance.currentHandle.Invoke(false, new MapSelectResults() {
+                playableMap = mapSelectUI.GetSelectedMap(),
+                multiplayer = instance.currentMultiplayer,
+                playerCount = Mathf.RoundToInt(playerCountSlider.value),
+                privateRoom = privateRoom.isOn,
+                roomName = nameField.text
             });
-            confirmButton.onClick.RemoveAllListeners();
-            confirmButton.onClick.AddListener(() => {
-                SetVisibility(false);
-                handle.Invoke(false, new MapSelectResults() {
-                    playableMap = mapSelectUI.GetSelectedMap(),
-                    multiplayer = multiplayer,
-                    playerCount = Mathf.RoundToInt(playerCountSlider.value),
-                    privateRoom = privateRoom.isOn,
-                    roomName = nameField.text
-                });
-            });
-            yield return new WaitUntil(() => handle.IsDone);
-        } finally {
-            busy = false;
+            instance.currentHandle = null;
         }
     }
 }

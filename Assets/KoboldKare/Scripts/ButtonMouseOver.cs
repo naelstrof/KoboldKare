@@ -8,28 +8,32 @@ using UnityEngine.UI;
 public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, ISubmitHandler, IPointerClickHandler {
     private Vector3 defaultLocalScale;
     private Button internalAttachedButton;
-    private Button attachedButton {
-        get {
-            if (internalAttachedButton == null) {
-                internalAttachedButton = GetComponent<Button>();
-            }
-            return internalAttachedButton;
-        }
-    }
+    
+    [SerializeField, SubclassSelector, SerializeReference]
+    private List<GameEventResponse> OnButtonPress = new List<GameEventResponse>();
+    
     private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
-    public enum ButtonTypes{Default, MainMenu, Option, Save, NoScale}
     public enum EventType{ Hover, Click };
-    public EventType lastEvent;
-    public ButtonTypes buttonType;
+    
+    private EventType lastEvent = EventType.Hover;
+    private Button attachedButton;
+
+    void Awake() {
+        attachedButton = GetComponent<Button>();
+        attachedButton.onClick.AddListener(() => {
+            if (OnButtonPress != null) {
+                foreach(var response in OnButtonPress) {
+                    response?.Invoke(this);
+                }
+            }
+        });
+    }
 
     private void Start() {
         defaultLocalScale = transform.localScale;
     }
     public IEnumerator ScaleBack(float scaleDuration) {
-        if (buttonType == ButtonTypes.NoScale) {
-            yield break;
-        }
         float startTime = Time.unscaledTime;
         while (isActiveAndEnabled && attachedButton.interactable && (startTime + scaleDuration) > Time.unscaledTime ) {
             transform.localScale = Vector3.Lerp(transform.localScale, defaultLocalScale, (Time.unscaledTime-startTime)/scaleDuration);
@@ -38,9 +42,6 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
         transform.localScale = defaultLocalScale;
     }
     public IEnumerator ScaleUp(float scaleDuration) {
-        if (buttonType == ButtonTypes.NoScale) {
-            yield break;
-        }
         float startTime = Time.unscaledTime;
         while (isActiveAndEnabled && attachedButton.interactable && (startTime + scaleDuration) > Time.unscaledTime ) {
             transform.localScale = Vector3.Lerp(transform.localScale, defaultLocalScale*1.1f, (Time.unscaledTime-startTime)/scaleDuration);

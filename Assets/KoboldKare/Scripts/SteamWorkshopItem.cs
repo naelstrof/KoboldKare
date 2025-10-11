@@ -13,6 +13,7 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Build;
 using UnityEditor.AddressableAssets.Build.DataBuilders;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine.Rendering;
 
 [Serializable]
@@ -262,8 +263,12 @@ public class SteamWorkshopItem {
 			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.LoadPath", $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
 		//}
 		ModManager.currentLoadingMod = modBuildPath;
-		targetCatalog.BuildPath = $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]";
-		targetCatalog.RuntimeLoadPath = "{ModManager.currentLoadingMod}/[BuildTarget]";
+		var settings = AddressableAssetSettingsDefaultObject.Settings;
+		var profileId = settings.activeProfileId;
+		settings.profileSettings.SetValue(profileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]");
+		settings.profileSettings.SetValue(profileId, "Mod.LoadPath", "{ModManager.currentLoadingMod}/[BuildTarget]");
+		targetCatalog.BuildPath.SetVariableByName(settings, "Mod.BuildPath");
+		targetCatalog.RuntimeLoadPath.SetVariableByName(settings, "Mod.LoadPath");
 		AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
 		if (result == null) {
 			throw new UnityException("Something went really wrong!");
@@ -272,6 +277,7 @@ public class SteamWorkshopItem {
 		if (!string.IsNullOrEmpty(result.Error)) {
 			throw new UnityException(result.Error);
 		}
+		
 	}
 
 	public void Build() {
@@ -309,6 +315,16 @@ public class SteamWorkshopItem {
 			RenderTexture.active = oldTex;
 
 			Save();
+
+			foreach (var group in targetCatalog.AssetGroups) {
+				var settings = AddressableAssetSettingsDefaultObject.Settings;
+				var profileId = settings.activeProfileId;
+				settings.profileSettings.SetValue(profileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]");
+				settings.profileSettings.SetValue(profileId, "Mod.LoadPath", "{ModManager.currentLoadingMod}/[BuildTarget]");
+				var groupSchema = group.GetSchema<BundledAssetGroupSchema>();
+				groupSchema.BuildPath.SetVariableByName(settings, "Mod.BuildPath");
+				groupSchema.LoadPath.SetVariableByName(settings, "Mod.LoadPath");
+			}
 
 			BuildForPlatform(BuildTarget.StandaloneWindows64);
 			BuildForPlatform(BuildTarget.StandaloneLinux64);

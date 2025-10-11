@@ -687,39 +687,30 @@ MonoBehaviour:
   entered: 0
   delay: 0.1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 915706546195946430}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990286
   onExitEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 915706546195946430}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990274
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990274
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 915706546195946430}
+        enabled: 0
+    - rid: 998295243223990286
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 915706546195946430}
+        enabled: 1
 --- !u!135 &8811475657113570720
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4085,23 +4076,18 @@ MonoBehaviour:
   entered: 0
   delay: 1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: MusicManager, Assembly-CSharp
-          m_MethodName: Interrupt
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990275
   onExitEvents: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990275
+      type: {class: GameEventResponseMusicInterrupt, ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!1001 &1835086504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5137,10 +5123,14 @@ MonoBehaviour:
   walkDust: {fileID: 915706546561379041}
   headTransform: {fileID: 1946794658023144966}
   footstepPack: {fileID: 11400000, guid: 23b69436bc3d7a944a598da4b1206fc9, type: 2}
+  inputShouldFaceEye: 0
+  inputShouldIgnoreLookDirChange: 0
   body: {fileID: 915706547747134164}
   crouchedAnimationSpeedMultiplier: 1
   walkingAnimationSpeedMultiplier: 0.1
   standingAnimationSpeedMultiplier: 2
+  inputActivate: 0
+  inputGrabbing: 0
 --- !u!114 &915706547747134169
 MonoBehaviour:
   m_ObjectHideFlags: 0

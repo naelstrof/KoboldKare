@@ -696,58 +696,35 @@ MonoBehaviour:
   entered: 0
   delay: 0.1
   onEnterEvents:
-  - conditions:
-    - _target: {fileID: 7545583189193060659}
-      _methodName: get_activeInHierarchy
-      _args: []
-      _dynamic: 0
-      _typeName: OnPlayerEnter+Condition, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      dirty: 0
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583189193060659}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7545583188779069231}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - conditions: []
-    even:
+        m_Calls: []
+    responses:
+    - rid: 998295243223990289
+    - rid: 998295243223990288
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: Interrupt
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990278
   onExitEvents: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990278
+      type: {class: GameEventResponseMusicInterrupt, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 998295243223990288
+      type: {class: GameEventResponseGameObjectSetActive, ns: , asm: Assembly-CSharp}
+      data:
+        targets:
+        - {fileID: 7545583189193060659}
+        active: 0
+    - rid: 998295243223990289
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583188779069231}
+        enabled: 1
 --- !u!1 &7545583188890006577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,7 +1421,7 @@ MonoBehaviour:
   koboldPrefab:
     gameObject: {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae,
       type: 3}
-    photonName: Kobold
+    optionalDatabase: {fileID: 0}
   targetAnimator: {fileID: 4169733227684653573}
   floater: {fileID: 4478169984585851355}
   popPack: {fileID: 11400000, guid: d035a4d1ac446f4469be99a8da0d16ff, type: 2}
@@ -1521,6 +1498,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1593,7 +1571,7 @@ MonoBehaviour:
   m_ReverseArrangement: 0
 --- !u!95 &7545583189116086398
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1610,7 +1588,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7545583189156030641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1796,39 +1775,30 @@ MonoBehaviour:
   entered: 0
   delay: 0.1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583189160210941}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990291
   onExitEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583189160210941}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990280
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990280
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583189160210941}
+        enabled: 0
+    - rid: 998295243223990291
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583189160210941}
+        enabled: 1
 --- !u!135 &7545583189160210943
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2866,8 +2836,7 @@ MonoBehaviour:
   entered: 0
   delay: 1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
@@ -2882,9 +2851,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    responses: []
   onExitEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
@@ -2899,6 +2868,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+    responses: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &7545583189986294360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,39 +3031,30 @@ MonoBehaviour:
   entered: 0
   delay: 0.1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583189986294363}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990293
   onExitEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583189986294363}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990282
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990282
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583189986294363}
+        enabled: 0
+    - rid: 998295243223990293
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583189986294363}
+        enabled: 1
 --- !u!1 &7545583190025213702
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,39 +3573,30 @@ MonoBehaviour:
   entered: 0
   delay: 0.1
   onEnterEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583190225373617}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990295
   onExitEvents:
-  - conditions: []
-    even:
+  - even:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7545583190225373617}
-          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-          m_MethodName: set_enabled
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    responses:
+    - rid: 998295243223990284
+  references:
+    version: 2
+    RefIds:
+    - rid: 998295243223990284
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583190225373617}
+        enabled: 0
+    - rid: 998295243223990295
+      type: {class: GameEventResponseAudioSourceEnable, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7545583190225373617}
+        enabled: 1
 --- !u!135 &7545583190225373619
 SphereCollider:
   m_ObjectHideFlags: 0

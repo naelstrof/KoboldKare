@@ -371,11 +371,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
 
         if (photonEvent.Code == CustomChatEvent) {
-            if (photonEvent.Sender < 0 || photonEvent.Sender >= PhotonNetwork.PlayerList.Length) {
-                Debug.LogError("Got a chat event from an invalid player!");
-                return;
-            }
-            var player = PhotonNetwork.PlayerList[photonEvent.Sender];
+            var player = PhotonNetwork.CurrentRoom.GetPlayer(photonEvent.Sender, true);
             var chatKobold = (Kobold)player.TagObject;
             var message = (string)photonEvent.CustomData;
             CheatsProcessor.AppendText($"{player.NickName}: {message}\n");

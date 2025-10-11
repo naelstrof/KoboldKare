@@ -25,9 +25,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private NetworkManager networkManager;
     public AnimationCurve volumeCurve;
-    public GameObject selectOnPause;
-    public AudioClip buttonHoveredMenu, buttonHoveredSubmenu, buttonClickedMenu, buttonClickedSubmenu;
-    public LoadingListener loadListener;
+    public AudioPack buttonHovered, buttonClicked;
 
     [SerializeField] private PrefabDatabase penisDatabase;
     [SerializeField] private PrefabDatabase playerDatabase;
@@ -195,12 +193,21 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType) {
+        if (!ModManager.GetReady()) {
+            return;
+        }
+        var camera = Camera.main;
+        if (!camera) {
+            return;
+        }
         switch (evtType) {
             case ButtonMouseOver.EventType.Hover:
-                SpawnAudioClipInWorld(buttonHoveredMenu, Vector3.zero);
+                var sourceb = AudioPack.PlayClipAtPoint(buttonHovered, camera.transform.position);
+                sourceb.spatialBlend = 0f;
                 break;
             case ButtonMouseOver.EventType.Click:
-                SpawnAudioClipInWorld(buttonClickedMenu, Vector3.zero);
+                var sourcea = AudioPack.PlayClipAtPoint(buttonClicked, camera.transform.position);
+                sourcea.spatialBlend = 0f;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

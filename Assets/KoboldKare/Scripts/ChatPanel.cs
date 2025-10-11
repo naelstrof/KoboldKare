@@ -1,3 +1,4 @@
+using System.Collections;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -14,8 +15,6 @@ public class ChatPanel : MonoBehaviour {
     private PlayerPossession playerControls;
     
     void OnEnable() {
-        chatInput.enabled = true;
-
         if (PlayerPossession.TryGetPlayerInstance(out playerControls)) {
             playerControls.SetControlsActive(false);
         }
@@ -28,10 +27,15 @@ public class ChatPanel : MonoBehaviour {
                 (int)rectTransform.sizeDelta.y);
         }
 
-        chatInput.Select();
-        chatInput.onSubmit.AddListener(OnTextSubmit);
         chatDisplay.text = CheatsProcessor.GetOutput();
         CheatsProcessor.AddOutputChangedListener(OnChatChanged);
+        StartCoroutine(WaitThenSubscribe());
+    }
+
+    IEnumerator WaitThenSubscribe() {
+        yield return new WaitForSecondsRealtime(0.1f);
+        chatInput.Select();
+        chatInput.onSubmit.AddListener(OnTextSubmit);
     }
 
     private void OnChatChanged(string newOutput) {
@@ -58,7 +62,6 @@ public class ChatPanel : MonoBehaviour {
 
     private void OnTextSubmit(string t) {
         chatInput.text="";
-        chatInput.enabled = false;
         chatScrollView.normalizedPosition = new Vector2(0, 0);
         if (!string.IsNullOrEmpty(t)) {
             RaiseEventOptions options = new RaiseEventOptions() {
@@ -67,6 +70,6 @@ public class ChatPanel : MonoBehaviour {
             };
             PhotonNetwork.RaiseEvent(NetworkManager.CustomChatEvent, t, options, SendOptions.SendReliable);
         }
-        gameObject.SetActive(false);
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
 }

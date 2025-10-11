@@ -388,7 +388,7 @@ public class PlayerPossession : MonoBehaviourPun {
         trackingHip = false;
     }
 
-    public void OnChat(InputAction.CallbackContext ctx) {
+    public void OnChat() {
         if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Chat);
         }

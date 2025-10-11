@@ -31,8 +31,6 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
     private List<GameObject> spawnedUI = new List<GameObject>();
     void Awake() {
-        inventory = GetComponentInParent<KoboldInventory>();
-        inventory.equipmentChanged += UpdateDisplay;
         foreach(var slot in slots) {
             EventTrigger et = slot.targetImage.gameObject.AddComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -43,10 +41,15 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
 
     private void OnEnable() {
+        if (PhotonNetwork.LocalPlayer.TagObject is not Kobold kobold) {
+            return;
+        }
+        inventory = kobold.GetComponent<KoboldInventory>();
+        inventory.equipmentChanged += UpdateDisplay;
         UpdateDisplay(inventory.GetAllEquipment());
     }
 
-    private void OnDestroy() {
+    private void OnDisable() {
         if (inventory != null) {
             inventory.equipmentChanged -= UpdateDisplay;
         }

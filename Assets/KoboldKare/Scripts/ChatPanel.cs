@@ -5,12 +5,14 @@ using Photon.Realtime;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ChatPanel : MonoBehaviour {
     [SerializeField] private ScrollRect chatScrollView;
     [SerializeField] private TMPro.TMP_Text chatDisplay;
     [SerializeField] private TMPro.TMP_InputField chatInput;
+    [SerializeField] private InputActionReference closeChatAction;
 
     private PlayerPossession playerControls;
     
@@ -30,6 +32,12 @@ public class ChatPanel : MonoBehaviour {
         chatDisplay.text = CheatsProcessor.GetOutput();
         CheatsProcessor.AddOutputChangedListener(OnChatChanged);
         StartCoroutine(WaitThenSubscribe());
+        closeChatAction.action.Enable();
+        closeChatAction.action.performed += OnCloseChat;
+    }
+
+    private void OnCloseChat(InputAction.CallbackContext obj) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
 
     IEnumerator WaitThenSubscribe() {
@@ -58,6 +66,7 @@ public class ChatPanel : MonoBehaviour {
         if (SteamManager.Initialized) {
             SteamUtils.DismissFloatingGamepadTextInput();
         }
+        closeChatAction.action.performed -= OnCloseChat;
     }
 
     private void OnTextSubmit(string t) {

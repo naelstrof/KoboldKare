@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
 using Photon.Pun;
+using UnityEngine.InputSystem;
 
 public class EquipmentUIDisplay : MonoBehaviour {
     [SerializeField] private Transform targetDisplay;
@@ -20,6 +21,8 @@ public class EquipmentUIDisplay : MonoBehaviour {
     private KoboldInventory inventory;
     [SerializeField] private GameObject inventoryUIPrefab;
     [SerializeField] private List<EquipmentSlotDisplay> slots = new List<EquipmentSlotDisplay>();
+    [SerializeField] private InputActionReference cancel;
+    [SerializeField] private InputActionReference otherCancel;
     [Serializable]
     public class EquipmentSlotDisplay {
         public Image targetImage;
@@ -47,12 +50,27 @@ public class EquipmentUIDisplay : MonoBehaviour {
         inventory = kobold.GetComponent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;
         UpdateDisplay(inventory.GetAllEquipment());
+        cancel.action.Enable();
+        cancel.action.performed += OnCancel;
+        otherCancel.action.Enable();
+        otherCancel.action.performed += OnCancel;
+    }
+
+    private IEnumerator WaitThenDisable() {
+        yield return null;
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+    }
+
+    private void OnCancel(InputAction.CallbackContext obj) {
+        StartCoroutine(WaitThenDisable());
     }
 
     private void OnDisable() {
         if (inventory != null) {
             inventory.equipmentChanged -= UpdateDisplay;
         }
+        cancel.action.performed -= OnCancel;
+        otherCancel.action.performed -= OnCancel;
     }
     public void DisplayDetail(Equipment e) {
         if (e == null) {
@@ -85,7 +103,6 @@ public class EquipmentUIDisplay : MonoBehaviour {
                 }
             }
             GameObject ui = GameObject.Instantiate(inventoryUIPrefab, targetDisplay);
-
 
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();

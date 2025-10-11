@@ -76,6 +76,10 @@ public class MapSelector : MonoBehaviour {
         }
     }
 
+    public static void StaticConfirm() {
+        instance.Confirm();
+    }
+
     public void Confirm() {
         if (instance.currentHandle != null) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);

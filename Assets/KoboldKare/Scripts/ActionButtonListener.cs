@@ -40,6 +40,8 @@ public class ActionButtonListener : MonoBehaviour {
     }
 
     void OnPerformed(InputAction.CallbackContext ctx) {
+        if (actionStack.Count == 0) return;
+        
         if (actionStack[^1] != this) {
             return;
         }

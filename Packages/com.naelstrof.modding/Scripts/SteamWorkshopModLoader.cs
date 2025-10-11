@@ -51,7 +51,24 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     }
 
     private IEnumerator Start() {
-        yield return new WaitUntil(() => SteamManager.Initialized);
+        for (int i = 0; i < 5; i++) {
+            if (SteamManager.FailedToInitialize) {
+                Debug.LogError("User isn't logged into Steam, cannot use workshop!");
+                busy = false;
+                yield break;
+            }
+            if (SteamManager.Initialized) {
+                break;
+            }
+            yield return new WaitForSecondsRealtime(1f);
+        }
+
+        if (!SteamManager.Initialized) {
+            Debug.LogError("User isn't logged into Steam, cannot use workshop!");
+            busy = false;
+            yield break;
+        }
+        
         if (!SteamUser.BLoggedOn()) {
             Debug.LogError("User isn't logged into Steam, cannot use workshop!");
             busy = false;

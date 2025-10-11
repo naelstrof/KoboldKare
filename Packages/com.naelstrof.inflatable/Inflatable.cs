@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using UnityEngine;
 
 namespace Naelstrof.Inflatable {
@@ -44,7 +45,7 @@ namespace Naelstrof.Inflatable {
                 throw new UnityException("Inflatable wasn't initialized ");
             }
 
-            if (tweener.isActiveAndEnabled) {
+            if (tweener && tweener.isActiveAndEnabled) {
                 if (SetSize(newSize, out IEnumerator tween)) {
                     tweener.StartCoroutine(tween);
                 }

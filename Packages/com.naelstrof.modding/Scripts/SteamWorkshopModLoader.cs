@@ -17,7 +17,8 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     [SerializeField] private LocalizedString downloadingText;
     [SerializeField] private LocalizedString installingText;
     [SerializeField] private LocalizedString failedToConnectToSteam;
-    private bool busy = false;
+    private bool busy = true;
+    private bool downloading = false;
     private Callback<DownloadItemResult_t> m_DownloadItemResult;
     private Callback<ItemInstalled_t> m_ItemInstalled;
     private CallResult<SteamUGCQueryCompleted_t> m_QueryCompleted;
@@ -53,6 +54,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         yield return new WaitUntil(() => SteamManager.Initialized);
         if (!SteamUser.BLoggedOn()) {
             Debug.LogError("User isn't logged into Steam, cannot use workshop!");
+            busy = false;
             yield break;
         }
         
@@ -84,7 +86,9 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         }
 
         yield return LocalizationSettings.InitializationOperation;
-        yield return new WaitUntil(() => !busy);
+        yield return new WaitUntil(() => !downloading);
+        downloading = true;
+        busy = true;
         var downloadTextHandle = downloadingText.GetLocalizedStringAsync();
         yield return downloadTextHandle;
         string downloadText = downloadTextHandle.Result;
@@ -108,7 +112,6 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         progressBarAnimator.SetBool("Active", true);
         progressBar.gameObject.SetActive(false);
         try {
-            busy = true;
             waitingForQuery = true;
             var queryHandleT = SteamUGC.CreateQueryUGCDetailsRequest(fileIds, count);
             m_QueryCompleted.Set(SteamUGC.SendQueryUGCRequest(queryHandleT));
@@ -142,8 +145,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                 anyDownloading = false;
                 for (int i = 0; i < count; i++) {
                     uint status = SteamUGC.GetItemState(fileIds[i]);
-                    while ((status & (int)EItemState.k_EItemStateDownloading) != 0 ||
-                           (status & (int)EItemState.k_EItemStateInstalled) == 0) {
+                    while ((status & (int)EItemState.k_EItemStateDownloading) != 0) {
                         if (!progressBar.gameObject.activeInHierarchy) {
                             progressBar.gameObject.SetActive(true);
                         }
@@ -174,12 +176,21 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                     yield return null;
                 }
 
+                for (int i = 0; i < count; i++) {
+                    uint status = SteamUGC.GetItemState(fileIds[i]);
+                    if ((status & (int)EItemState.k_EItemStateDownloadPending) != 0 || (status & (int)EItemState.k_EItemStateInstalled) == 0) {
+                        anyDownloading = true;
+                    }
+                    yield return null;
+                }
+
                 // wait one extra frame for OnInstalledItem
                 yield return null;
             }
 
             progressBarAnimator.SetBool("Active", false);
         } finally {
+            downloading = false;
             busy = false;
         }
         finishedHandle?.Invoke();

@@ -10,14 +10,21 @@ public class ModInfoDisplaySpawner : MonoBehaviour {
     [SerializeField]
     private GameObject noModsFound;
     
-    private List<ModInfoDisplay> displays;
+    private List<ModInfoDisplay> displays = new();
     void OnEnable() {
-        Refresh();
+        StartCoroutine(WaitThenRefresh());
+        ModManager.AddModListChangeListener(Refresh);
         ModManager.AddFinishedLoadingListener(Refresh);
     }
 
     private void OnDisable() {
+        ModManager.RemoveModListChangeListener(Refresh);
         ModManager.RemoveFinishedLoadingListener(Refresh);
+    }
+    
+    private IEnumerator WaitThenRefresh() {
+        yield return new WaitUntil(ModManager.GetReady);
+        Refresh();
     }
 
     private void Refresh() {
@@ -26,8 +33,9 @@ public class ModInfoDisplaySpawner : MonoBehaviour {
             Destroy(modInfoDisplay.gameObject);
         }
         displays.Clear();
-        noModsFound.SetActive(ModManager.GetFullModList().Count == 0);
-        foreach (var modInfo in ModManager.GetFullModList()) {
+        var list = ModManager.GetFullModList();
+        noModsFound.SetActive(list.Count == 0);
+        foreach (var modInfo in list) {
             GameObject obj = Instantiate(uiPrefab.gameObject, transform);
             if (obj.TryGetComponent(out ModInfoDisplay display)) {
                 display.SetModInfo(this,modInfo);

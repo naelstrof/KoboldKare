@@ -15,6 +15,7 @@ using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
+using Object = UnityEngine.Object;
 
 public class ModManager : MonoBehaviour {
     public enum ModSource {
@@ -65,19 +66,28 @@ public class ModManager : MonoBehaviour {
         public Texture2D preview;
 
         public bool IsValid() {
+            if (!TryGetCatalogPath(out var catalogPath)) {
+                return false;
+            }
             return folderTitle != "SurfMap" && publishedFileId != (PublishedFileId_t)2934088282 && !string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(catalogPath) && Directory.Exists(modPath) && File.Exists(catalogPath);
         }
-        public string catalogPath {
-            get {
-                string searchDir = $"{modPath}{runningPlatform}";
-                    foreach (var file in Directory.EnumerateFiles(searchDir)) {
-                        if (file.EndsWith(".json")) {
-                            return file;
-                        }
-                    }
-                throw new FileNotFoundException($"No catalog found for {modPath}... A json should be located in {modPath}{runningPlatform}...");
+
+        public bool TryGetCatalogPath(out string path) {
+            string searchDir = $"{modPath}{runningPlatform}";
+            if (!Directory.Exists(searchDir)) {
+                path = "";
+                return false;
             }
+            foreach (var file in Directory.EnumerateFiles(searchDir)) {
+                if (file.EndsWith(".json")) {
+                    path = file;
+                    return true;
+                }
+            }
+            path = "";
+            return false;
         }
+        
         public string previewPath {
             get {
                 string searchDir = $"{modPath}";
@@ -262,20 +272,22 @@ public class ModManager : MonoBehaviour {
 
     public delegate void ModReadyAction();
     private event ModReadyAction finishedLoading;
+    private event ModReadyAction modListChanged;
     
     [SerializeReference,SerializeReferenceButton]
     private List<ModPostProcessor> modPostProcessors;
 
 
     public static bool GetFinishedLoading() {
-        return instance.ready;
+        bool isLocked = Mutex.CurrentCount == 0;
+        return instance.ready && !isLocked;
     }
 
     public static ReadOnlyCollection<ModStub> GetFullModList() {
         return ConvertToStubs(instance.fullModList, (info) => info.IsValid()).AsReadOnly();
     }
 
-    public static async void SetModActive(ModStub stub, bool active) {
+    public static async Task SetModActive(ModStub stub, bool active) {
         await Mutex.WaitAsync();
         try {
             foreach (var mod in instance.fullModList) {
@@ -296,6 +308,14 @@ public class ModManager : MonoBehaviour {
 
     public static void RemoveFinishedLoadingListener(ModReadyAction action) {
         instance.finishedLoading -= action;
+    }
+    
+    public static void AddModListChangeListener(ModReadyAction action) {
+        instance.modListChanged += action;
+    }
+
+    public static void RemoveModListChangeListener(ModReadyAction action) {
+        instance.modListChanged -= action;
     }
 
     public static void AddMod(string modPath) {
@@ -319,9 +339,10 @@ public class ModManager : MonoBehaviour {
             }
         } finally {
             Mutex.Release();
+            instance.modListChanged?.Invoke();
         }
     }
-    private async void AddMod(ModInfo info) {
+    private async Task AddMod(ModInfo info) {
         if (info.publishedFileId == (PublishedFileId_t)2934088282) {
             Debug.Log("Skipping surfmap, as its now included in the base game...");
             return;
@@ -341,14 +362,32 @@ public class ModManager : MonoBehaviour {
                     break;
                 }
 
-                if (search.catalogPath == info.catalogPath) {
+                if (!search.TryGetCatalogPath(out var catalogPathSearch)) {
+                    if (!search.causedException) {
+                        Debug.LogError($"{search.title} [{search.publishedFileId}] is missing a build folder for {runningPlatform}, can't load!");
+                    }
+                    search.causedException = true;
+                    search.enabled = false;
+                    continue;
+                }
+
+                if (!info.TryGetCatalogPath(out var catalogPathInfo)) {
+                    if (!info.causedException) {
+                        Debug.LogError($"{info.title} [{info.publishedFileId}] is missing a build folder for {runningPlatform}, can't load!");
+                    }
+                    info.causedException = true;
+                    info.enabled = false;
+                    continue;
+                }
+
+                if (catalogPathSearch == catalogPathInfo) {
                     modFound = true;
                     break;
                 }
             }
 
             if (modFound) {
-                Debug.Log($"Already loaded mod with catalog path {info.catalogPath}, skipping...");
+                Debug.Log($"Already have mod {info.title} [{info.publishedFileId}], skipping...");
                 return;
             }
 
@@ -360,6 +399,7 @@ public class ModManager : MonoBehaviour {
             info.enabled = false;
         } finally {
             Mutex.Release();
+            modListChanged?.Invoke();
         }
     }
 
@@ -401,6 +441,7 @@ public class ModManager : MonoBehaviour {
         }
 
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
+        modListChanged?.Invoke();
     }
     private void ScanForNewMods() {
         string modCatalogPath = $"{Application.persistentDataPath}/{modLocation}";
@@ -453,7 +494,7 @@ public class ModManager : MonoBehaviour {
             currentInspectedMod = modInfo;
             var locator = modInfo.locator;
             var keys = locator.Keys;
-            var handle = Addressables.LoadAssetsAsync<UnityEngine.Object>(keys, Addressables.Release, Addressables.MergeMode.UseFirst);
+            var handle = Addressables.LoadAssetsAsync<Object>(keys, OnInspect, Addressables.MergeMode.UseFirst);
             await handle.Task;
             Addressables.Release(handle);
             if (modInfo.causedException) {
@@ -463,6 +504,9 @@ public class ModManager : MonoBehaviour {
             }
         }
         currentInspectedMod = null;
+    }
+
+    private void OnInspect(Object obj) {
     }
 
     private async Task LoadMods() {
@@ -497,7 +541,7 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-    public static bool GetReady() => instance.ready;
+    public static bool GetReady() => GetFinishedLoading();
 
     public static bool TryGetLastException(out Exception e) {
         if (instance.lastException != null) {
@@ -516,7 +560,7 @@ public class ModManager : MonoBehaviour {
         lastException = e;
     }
 
-    private async void Start() {
+    private void Start() {
         if (instance != null && instance != this) {
             Destroy(this);
             return;
@@ -537,6 +581,10 @@ public class ModManager : MonoBehaviour {
             modPostProcessor.Awake();
         }
 
+        OnStart();
+    }
+
+    private async Task OnStart() {
         LoadConfig();
         ScanForNewMods();
         await ReloadMods();
@@ -566,6 +614,11 @@ public class ModManager : MonoBehaviour {
         if (!IsValid()) {
             throw new UnityException("32 bit Windows does NOT support mods! Please upgrade your operating system!");
         }
+
+        while (SteamWorkshopModLoader.IsBusy) {
+            await Task.Delay(1000);
+        }
+        
         await Mutex.WaitAsync();
         ready = false;
         try {
@@ -577,7 +630,12 @@ public class ModManager : MonoBehaviour {
 
                 AddressablesRuntimeProperties.ClearCachedPropertyValues();
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
-                var loader = Addressables.LoadContentCatalogAsync(modInfo.catalogPath);
+                if (!modInfo.TryGetCatalogPath(out var catalogPath)) {
+                    modInfo.enabled = false;
+                    modInfo.causedException = true;
+                    continue;
+                }
+                var loader = Addressables.LoadContentCatalogAsync(catalogPath);
                 await loader.Task;
                 if (!loader.IsDone || !loader.IsValid() || loader.Status == AsyncOperationStatus.Failed || loader.OperationException != null) {
                     modInfo.causedException = true;
@@ -602,7 +660,7 @@ public class ModManager : MonoBehaviour {
         return ConvertToStubs(instance.fullModList, (info) => info.enabled);
     }
 
-    public static async void AllModsSetActive(bool active) {
+    public static async Task AllModsSetActive(bool active) {
         await Mutex.WaitAsync();
         try {
             foreach (var mod in instance.fullModList) {

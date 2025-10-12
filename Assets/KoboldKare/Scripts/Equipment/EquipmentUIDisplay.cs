@@ -44,8 +44,13 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
 
     private void OnEnable() {
+        // Try really hard to find the player
         if (PhotonNetwork.LocalPlayer.TagObject is not Kobold kobold) {
-            return;
+            if (PlayerPossession.TryGetPlayerInstance(out var koboldPossession)) {
+                kobold = koboldPossession.kobold;
+            } else {
+                return;
+            }
         }
         inventory = kobold.GetComponent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;

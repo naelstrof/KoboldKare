@@ -197,8 +197,16 @@ public class GameManager : MonoBehaviour {
         }
         var camera = Camera.main;
         if (!camera) {
+            camera = Camera.current;
+        }
+        if (!camera) {
             return;
         }
+
+        if (!buttonHovered || !buttonClicked) {
+            return;
+        }
+        
         switch (evtType) {
             case ButtonMouseOver.EventType.Hover:
                 var sourceb = AudioPack.PlayClipAtPoint(buttonHovered, camera.transform.position);

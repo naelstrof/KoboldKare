@@ -15,6 +15,11 @@ public class AudioPack : ScriptableObject {
     private float pitchRange = 0.2f;
     
     private static AnimationCurve audioFalloff = new() {keys=new Keyframe[] { new (0f, 1f, 0, -3.1f), new (1f, 0f, 0f, 0f) } };
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void Init() {
+        audioFalloff = new() {keys=new Keyframe[] { new (0f, 1f, 0, -3.1f), new (1f, 0f, 0f, 0f) } };
+    }
     public AudioClip GetClip() {
         return clips[Random.Range(0, clips.Length)];
     }
@@ -36,9 +41,15 @@ public class AudioPack : ScriptableObject {
         source.PlayOneShot(clips[Random.Range(0, clips.Length)], volume);
     }
     public static AudioSource PlayClipAtPoint(AudioPack pack, Vector3 position, float volume = 1f) {
-        GameObject obj = new GameObject("OneOffSoundEffect", typeof(AudioSource));
-        obj.transform.position = position;
-        AudioSource source = obj.GetComponent<AudioSource>();
+        GameObject obj = new GameObject("OneOffSoundEffect", typeof(AudioSource)) {
+            transform = {
+                position = position
+            }
+        };
+        if (!obj.TryGetComponent(out AudioSource source)) {
+            throw new UnityException("No AudioSource component found on oneoff");
+        }
+        
         source.spatialBlend = 1f;
         source.minDistance = 1f;
         source.maxDistance = 25f;

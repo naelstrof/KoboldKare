@@ -71,6 +71,7 @@ public class MainMenu : MonoBehaviour {
         Equipment,
         Chat,
         Modding,
+        JoiningServer,
     }
     
     private MainMenuMode currentMode = MainMenuMode.None;
@@ -99,6 +100,7 @@ public class MainMenu : MonoBehaviour {
             case MainMenuMode.Equipment: EquipmentTab.SetActive(true); break;
             case MainMenuMode.Chat: ChatTab.SetActive(true); break;
             case MainMenuMode.Modding: ModdingTab.SetActive(true); break;
+            case MainMenuMode.JoiningServer: loadingMenu.SetActive(true); break;
         }
 
         if (mode != MainMenuMode.None) {

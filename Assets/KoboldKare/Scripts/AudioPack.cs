@@ -28,12 +28,14 @@ public class AudioPack : ScriptableObject {
         return volume;
     }
 
-    public void Play(AudioSource source, float vol = 1f) {
+    public AudioClip Play(AudioSource source, float vol = 1f) {
         source.outputAudioMixerGroup = group;
-        source.clip = clips[Random.Range(0, clips.Length)];
+        var clip = clips[Random.Range(0, clips.Length)];
+        source.clip = clip;
         source.volume = volume*vol;
         source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.Play();
+        return clip;
     }
     public void PlayOneShot(AudioSource source) {
         source.outputAudioMixerGroup = group;
@@ -55,9 +57,15 @@ public class AudioPack : ScriptableObject {
         source.maxDistance = 25f;
 
         source.rolloffMode = AudioRolloffMode.Custom;
-        source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, audioFalloff);
-        pack.Play(source, volume);
-        Destroy(obj, source.clip.length + 0.1f);
+        if (audioFalloff != null) {
+            source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, audioFalloff);
+        }
+        var clip = pack.Play(source, volume);
+        if (clip) {
+            Destroy(obj, clip.length + 0.1f);
+        } else {
+            Destroy(obj, 1f);
+        }
         return source;
     }
 }

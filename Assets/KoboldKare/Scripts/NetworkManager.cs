@@ -223,11 +223,13 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         GameObject player = PhotonNetwork.Instantiate(selectedPlayerPrefab.GetPrefab(), pos, Quaternion.identity, 0, new object[]{playerData});
         player.GetComponentInChildren<CharacterDescriptor>(true).SetEyeDir(rot*Vector3.forward);
         PopupHandler.instance.ClearAllPopups();
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
     public void SpawnControllablePlayer() {
         GameManager.instance.StartCoroutine(SpawnControllablePlayerRoutine());
     }
     void IMatchmakingCallbacks.OnJoinedRoom() {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.JoiningServer);
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
         SpawnControllablePlayer();
         PopupHandler.instance.ClearAllPopups();
@@ -428,6 +430,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     
     private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.JoiningServer);
         IEnumerator setter = ModManager.SetLoadedMods(desiredMods);
         var next = true;
         while (next) {
@@ -436,7 +439,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
             catch (UnityException ex) {
                 instance.OnJoinRoomFailed(0, ex.Message);
-                break;
+                yield break;
             }
             if (next) {
                 yield return setter.Current;

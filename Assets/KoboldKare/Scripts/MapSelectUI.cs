@@ -40,8 +40,10 @@ public class MapSelectUI : MonoBehaviour {
     }
     private void OnDisable() {
         ModManager.RemoveFinishedLoadingListener(Regenerate);
-        foreach (var obj in panels) {
-            Destroy(obj);
+        if (panels != null) {
+            foreach (var obj in panels) {
+                Destroy(obj);
+            }
         }
     }
 

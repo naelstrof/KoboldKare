@@ -137,12 +137,12 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                 uint status = SteamUGC.GetItemState(fileIds[i]);
                 if ((status & (int)EItemState.k_EItemStateInstalled) != 0 &&
                     (status & (int)EItemState.k_EItemStateNeedsUpdate) == 0) {
+                    OnInstalledItem(fileIds[i]);
                     if (queryDetails.Count == count) {
                         targetText.text = $"{installText} {queryDetails[i].m_rgchTitle}";
                     } else {
                         targetText.text = $"{installText} {fileIds[i]}";
                     }
-                    OnInstalledItem(fileIds[i]);
                 } else {
                     if ((status & (int)EItemState.k_EItemStateDownloading) == 0 && (status & (int)EItemState.k_EItemStateDownloadPending) == 0) {
                         if (queryDetails.Count == count) {
@@ -162,6 +162,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                 anyDownloading = false;
                 for (int i = 0; i < count; i++) {
                     uint status = SteamUGC.GetItemState(fileIds[i]);
+                    bool actuallyDownloading = false;
                     while ((status & (int)EItemState.k_EItemStateDownloading) != 0) {
                         if (!progressBar.gameObject.activeInHierarchy) {
                             progressBar.gameObject.SetActive(true);
@@ -177,6 +178,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
 
                         status = SteamUGC.GetItemState(fileIds[i]);
                         anyDownloading = true;
+                        actuallyDownloading = true;
                         yield return null;
                     }
 
@@ -185,11 +187,14 @@ public class SteamWorkshopModLoader : MonoBehaviour {
                         progressBar.gameObject.SetActive(false);
                     }
 
-                    if (queryDetails.Count == count) {
-                        targetText.text = $"{installText} {queryDetails[i].m_rgchTitle}";
-                    } else {
-                        targetText.text = $"{installText} {fileIds[i]}";
+                    if (actuallyDownloading) {
+                        if (queryDetails.Count == count) {
+                            targetText.text = $"{installText} {queryDetails[i].m_rgchTitle}";
+                        } else {
+                            targetText.text = $"{installText} {fileIds[i]}";
+                        }
                     }
+
                     yield return null;
                 }
 

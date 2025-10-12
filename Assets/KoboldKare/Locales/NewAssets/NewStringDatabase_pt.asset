@@ -1197,7 +1197,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "D\xEA um g\xE1s!"
+    m_Localized: Aumente o suco!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
@@ -1425,6 +1425,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: Desabilitar todos os mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: Selecione o mapa
     m_Metadata:
       m_Items: []
   references:

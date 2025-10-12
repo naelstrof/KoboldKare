@@ -1439,6 +1439,10 @@ MonoBehaviour:
     m_Localized: Alle Mods deaktivieren
     m_Metadata:
       m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "Karte ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

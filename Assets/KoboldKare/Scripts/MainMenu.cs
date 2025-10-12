@@ -77,6 +77,9 @@ public class MainMenu : MonoBehaviour {
     public static MainMenuMode GetCurrentMode() => instance.currentMode;
 
     public void ShowMenu(MainMenuMode mode) {
+        if (currentMode == mode) {
+            return;
+        }
         MultiplayerTab.SetActive(false);
         OptionsTab.SetActive(false);
         MainViewTab.SetActive(false);

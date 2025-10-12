@@ -82,11 +82,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810380
-    m_Localized: "\xC5pne siden for personvern"
+    m_Localized: "\xC5pne siden for datavern"
     m_Metadata:
       m_Items: []
   - m_Id: 516090810381
-    m_Localized: Tilbakestill til standard
+    m_Localized: Tilbakestill til standardinnstillinger
     m_Metadata:
       m_Items: []
   - m_Id: 516090810382
@@ -252,7 +252,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516095004701
-    m_Localized: Ta tak i skyv og trekk
+    m_Localized: Grip skyv og trekk
     m_Metadata:
       m_Items: []
   - m_Id: 516095004702
@@ -742,8 +742,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
-    m_Localized: Jeg trenger kobolder med store pikk, forberede en og send den til
-      meg raskt.
+    m_Localized: "Jeg trenger kobolder med store pikk, klargj\xF8r en og send den
+      til meg raskt."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695168
@@ -779,7 +779,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695175
-    m_Localized: "Det er i v\xE5r beste interesse \xE5 ha noen supertunge kobolder,
+    m_Localized: "Det er i v\xE5r beste interesse \xE5 ha noen f\xE5 supertunge kobolder,
       fete opp noen og sende dem til meg."
     m_Metadata:
       m_Items: []
@@ -1014,7 +1014,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213767567815790596
     m_Localized: "Bruk en oppbl\xE5singsmaskin for \xE5 lage en kobold stor og rund.
-      Jeg tror det kunne v\xE6rt g\xF8y \xE5 se dem rulle rundt eller noe."
+      Jeg tror det kunne v\xE6rt morsomt \xE5 se dem rulle rundt eller noe."
     m_Metadata:
       m_Items: []
   - m_Id: 214255575602089984
@@ -1419,6 +1419,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: Deaktiver alle mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: Velg Kart
     m_Metadata:
       m_Items: []
   references:

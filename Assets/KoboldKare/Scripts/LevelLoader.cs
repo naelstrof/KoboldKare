@@ -29,7 +29,7 @@ public class LevelLoader : MonoBehaviour {
     }
 
     public static bool InLevel() {
-        return SceneManager.GetActiveScene().name != "MainMenu";
+        return SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "ErrorScene";
     }
     
     private IEnumerator LoadLevelRoutine(string mapName) {

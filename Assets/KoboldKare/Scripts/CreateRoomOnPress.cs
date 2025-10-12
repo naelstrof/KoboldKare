@@ -46,6 +46,7 @@ public class CreateRoomOnPress : MonoBehaviour {
         PhotonNetwork.JoinRoom(roomName);
         yield return new WaitUntil(() => PhotonNetwork.InRoom && SceneManager.GetActiveScene().name == "MainMap");
         PopupHandler.instance.ClearPopup(p);
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
     }
     public void JoinRoom() {
         GameManager.instance.StartCoroutine(JoinRoomRoutine(roomNameField.text));

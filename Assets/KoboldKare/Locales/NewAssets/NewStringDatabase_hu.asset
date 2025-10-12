@@ -897,7 +897,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 211654220131651586
     m_Localized: "Felsorolja az \xF6sszes reagenst, el\u0151regy\xE1rtott term\xE9ket
-      \xE9s berendez\xE9st."
+      \xE9s felszerel\xE9st."
     m_Metadata:
       m_Items: []
   - m_Id: 211654220131651587
@@ -1440,6 +1440,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: "Tiltsa le az \xF6sszes modot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "V\xE1lassza a T\xE9rk\xE9p lehet\u0151s\xE9get"
     m_Metadata:
       m_Items: []
   references:

@@ -587,7 +587,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Magiczny dodatek z w\u0119z\u0142em, k\xF3\u0142kiem po\u015Brodku
+    m_Localized: "Magiczny dodatek z w\u0119z\u0142em, pier\u015Bcieniem po\u015Brodku
       i wypustkami."
     m_Metadata:
       m_Items: []
@@ -1209,7 +1209,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Menu g\u0142\xF3wne Safe-for-Work"
+    m_Localized: "Menu g\u0142\xF3wne Safe-for-work"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1444,6 +1444,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: "Wy\u0142\u0105cz wszystkie mody"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "Wybierz map\u0119"
     m_Metadata:
       m_Items: []
   references:

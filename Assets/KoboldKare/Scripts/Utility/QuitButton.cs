@@ -1,10 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuitButton : MonoBehaviour{
-    public void QuitToMenu(){
-        GameManager.instance.QuitToMenu();
-    }
+public class QuitButton : MonoBehaviour {
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClick);
     }

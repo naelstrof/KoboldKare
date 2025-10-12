@@ -130,7 +130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516090810392
-    m_Localized: "Reflec\u021Bii de spa\u021Biu pe ecran"
+    m_Localized: Ecran Space Reflections
     m_Metadata:
       m_Items: []
   - m_Id: 516095004672
@@ -487,7 +487,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 516099199018
-    m_Localized: "Max juc\u0103tori"
+    m_Localized: "Juc\u0103tori maxim"
     m_Metadata:
       m_Items: []
   - m_Id: 516099199019
@@ -547,7 +547,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2228727000387585
-    m_Localized: Dimensiunea bilelor
+    m_Localized: Dimensiunea mingilor
     m_Metadata:
       m_Items: []
   - m_Id: 6613591493496832
@@ -579,8 +579,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844288
-    m_Localized: "O casc\u0103 simpl\u0103 pentru a proteja capul de resturile care
-      cad."
+    m_Localized: "O casc\u0103 simpl\u0103 pentru a proteja capul de c\u0103derea
+      resturilor."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
@@ -725,11 +725,11 @@ MonoBehaviour:
   - m_Id: 198589332862500864
     m_Localized: "Cobor\xE2\u021Bi \xEEn ora\u0219 \u0219i cump\u0103ra\u021Bi o
       r\xE2\u0219ni\u021B\u0103, c\u0103uta\u021Bi atelierul de construc\u021Bii
-      \xEEn care se afl\u0103 o oaie. Cel din casc\u0103."
+      cu o oaie. Cel din casc\u0103."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
-    m_Localized: "Hr\u0103ni\u021Bi cu suc de fructe kobolds"
+    m_Localized: "Hr\u0103ni\u021Bi kobolds cu suc de fructe"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
@@ -747,7 +747,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500869
-    m_Localized: "Livra\u021Bi kobold-uri mari."
+    m_Localized: "Livra\u021Bi kobold dick mari."
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500870
@@ -933,7 +933,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "\u021Ai-am trimis ni\u0219te rechizite pentru a face un burger,
-      folose\u0219te r\xE2\u0219ni\u021Ba pentru a le combina \u0219i apoi hr\u0103ne\u0219te-l
+      a folosi r\xE2\u0219ni\u021Ba pentru a le combina \u0219i apoi a-l hr\u0103ni
       unui kobold."
     m_Metadata:
       m_Items: []
@@ -1264,8 +1264,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620107
-    m_Localized: "Trimite-mi o mul\u021Bime de boobie kobolds. Acesta nu este pentru
-      caracter practic, sunt doar distractive de agitat."
+    m_Localized: "Trimite-mi o mul\u021Bime de boobie kobolds. Acesta nu este practic,
+      sunt doar distractive de agitat."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1446,6 +1446,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: "Dezactiveaz\u0103 toate modurile"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "Selecta\u021Bi Hart\u0103"
     m_Metadata:
       m_Items: []
   references:

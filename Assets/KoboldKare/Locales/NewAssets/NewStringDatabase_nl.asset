@@ -946,7 +946,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Ik heb je wat spullen gestuurd om een \u200B\u200Bhamburger te
-      maken, deze in de molen te malen en deze vervolgens aan een kobold te voeren."
+      maken, deze in de vleesmolen te vermalen en deze vervolgens aan een kobold
+      te voeren."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -968,7 +969,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314183
-    m_Localized: Sap op Kobolds
+    m_Localized: Maak Kobolds sappiger
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314184
@@ -1305,7 +1306,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: Er is hier niets anders voor je... voorlopig.
+    m_Localized: Er is hier voorlopig niets anders voor je.
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
@@ -1445,6 +1446,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: Schakel alle mods uit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: Selecteer kaart
     m_Metadata:
       m_Items: []
   references:

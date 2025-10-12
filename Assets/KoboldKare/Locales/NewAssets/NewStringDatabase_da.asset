@@ -1052,7 +1052,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775430
-    m_Localized: "Bare v\xE6lg noget p\xE5 v\xE6ggen, s\xE5 konstruerer vi det til
+    m_Localized: "V\xE6lg blot noget p\xE5 v\xE6ggen, s\xE5 konstruerer vi det til
       dig."
     m_Metadata:
       m_Items: []
@@ -1061,7 +1061,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214891307416997888
-    m_Localized: "Pik l\xE6ngde"
+    m_Localized: "Pik L\xE6ngde"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
@@ -1196,8 +1196,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Jeg vil have en masse forskellige typer kobold, og det betyder,
-      at du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
+    m_Localized: "Jeg vil have mange forskellige typer kobold, og det betyder, at
+      du har brug for flere frugtjuice. Kv\xE6rn mere frugt!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1263,7 +1263,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
-    m_Localized: Credits
+    m_Localized: Kreditter
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
@@ -1420,6 +1420,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 620055354097606656
     m_Localized: Deaktiver alle mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "V\xE6lg Kort"
     m_Metadata:
       m_Items: []
   references:

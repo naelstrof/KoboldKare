@@ -1449,6 +1449,10 @@ MonoBehaviour:
     m_Localized: "Zak\xE1zat v\u0161echny mody"
     m_Metadata:
       m_Items: []
+  - m_Id: 621523673371713536
+    m_Localized: "Vyberte mo\u017Enost Mapa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

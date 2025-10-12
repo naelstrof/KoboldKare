@@ -240,6 +240,25 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //localPlayerInstance = GameObject.Instantiate(saveLibrary.GetPrefab(ScriptableSaveLibrary.SaveID.Kobold), Vector3.zero, Quaternion.identity);
         //localPlayerInstance.GetComponent<ISavable>().SpawnOverNetwork();
     }
+
+    IEnumerator TemporarilySendEverything() {
+        List<PhotonView> views = new List<PhotonView>();
+        foreach (var view in PhotonNetwork.PhotonViewCollection) {
+            if (view.IsMine && view.Synchronization == ViewSynchronization.UnreliableOnChange) {
+                views.Add(view);
+            }
+        }
+
+        foreach (var view in views) {
+            view.Synchronization = ViewSynchronization.Unreliable;
+        }
+
+        yield return new WaitForSecondsRealtime(0.5f);
+        
+        foreach (var view in views) {
+            view.Synchronization = ViewSynchronization.UnreliableOnChange;
+        }
+    }
     public void OnPlayerEnteredRoom(Player other) {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
         if (PhotonNetwork.IsMasterClient) {// Raise a handshake event to the joining player.
@@ -252,11 +271,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 modNode["id"] = mod.id.ToString();
                 modArray.Add(modNode);
             }
-
             rootNode["modList"] = modArray;
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
             PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
         }
+
+        GameManager.StartCoroutineStatic(TemporarilySendEverything());
     }
 
     public void OnPlayerLeftRoom(Player other) {

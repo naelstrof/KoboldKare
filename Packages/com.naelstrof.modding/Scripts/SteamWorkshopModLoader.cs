@@ -55,6 +55,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
             if (SteamManager.FailedToInitialize) {
                 Debug.LogError("User isn't logged into Steam, cannot use workshop!");
                 busy = false;
+                downloading = false;
                 yield break;
             }
             if (SteamManager.Initialized) {
@@ -66,12 +67,14 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         if (!SteamManager.Initialized) {
             Debug.LogError("User isn't logged into Steam, cannot use workshop!");
             busy = false;
+            downloading = false;
             yield break;
         }
         
         if (!SteamUser.BLoggedOn()) {
             Debug.LogError("User isn't logged into Steam, cannot use workshop!");
             busy = false;
+            downloading = false;
             yield break;
         }
         
@@ -98,14 +101,14 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private IEnumerator EnsureAllAreDownloaded(PublishedFileId_t[] fileIds, uint count, FinishedDownloadingHandle finishedHandle) {
         if (count == 0) {
             yield return null;
+            busy = false;
+            downloading = false;
             finishedHandle?.Invoke();
             yield break;
         }
 
         yield return LocalizationSettings.InitializationOperation;
         yield return new WaitUntil(() => !downloading);
-        downloading = true;
-        busy = true;
         var downloadTextHandle = downloadingText.GetLocalizedStringAsync();
         yield return downloadTextHandle;
         string downloadText = downloadTextHandle.Result;
@@ -129,6 +132,8 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         progressBarAnimator.SetBool("Active", true);
         progressBar.gameObject.SetActive(false);
         try {
+            busy = true;
+            downloading = true;
             waitingForQuery = true;
             var queryHandleT = SteamUGC.CreateQueryUGCDetailsRequest(fileIds, count);
             m_QueryCompleted.Set(SteamUGC.SendQueryUGCRequest(queryHandleT));

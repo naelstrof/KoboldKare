@@ -353,9 +353,7 @@ public static class SaveManager {
             Debug.Log("loading map...");
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         yield return new WaitForSecondsRealtime(0.25f);
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         try {
             Debug.Log("Loaded immediately!");
             LoadImmediate(filename);

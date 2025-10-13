@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         instance = this;
+        backButton.action.Enable();
         backButton.action.performed += OnBackButton;
     }
 

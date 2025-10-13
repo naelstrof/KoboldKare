@@ -299,7 +299,7 @@ public class ModManager : MonoBehaviour {
         } finally{
             Mutex.Release();
         }
-        await instance.ReloadMods();
+        await instance.ReloadMods(true);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
@@ -606,7 +606,7 @@ public class ModManager : MonoBehaviour {
     private async Task OnStart() {
         LoadConfig();
         ScanForNewMods();
-        await ReloadMods(true);
+        await ReloadMods(false);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class Pauser : MonoBehaviour {
     private static Pauser instance;
-    private static bool forcePaused = false;
     private static bool paused = false;
     [SerializeField]
     private InputActionReference pauseButton;
@@ -23,7 +22,7 @@ public class Pauser : MonoBehaviour {
         }
     }
 
-    public static bool GetPaused() => paused || forcePaused;
+    public static bool GetPaused() => paused;
 
     public static void SetPaused(bool newPause) {
         if (paused != newPause) {
@@ -36,17 +35,8 @@ public class Pauser : MonoBehaviour {
         pauseButton.action.performed -= OnPauseButtonPressed;
     }
 
-    public static void ForcePause(bool newPaused) {
-        if (forcePaused == newPaused && paused == newPaused) return;
-        
-        forcePaused = newPaused;
-        paused = forcePaused;
-        OnPauseStateChanged(paused);
-        pauseChanged?.Invoke(paused);
-    }
-
     private static void TogglePause() {
-        if (!LevelLoader.InLevel() || forcePaused) {
+        if (!LevelLoader.InLevel()) {
             return;
         }
         paused = !paused;

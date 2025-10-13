@@ -303,7 +303,9 @@ public static class SaveManager {
         GameManager.StartCoroutineStatic(LoadRoutine(filename));
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         if (!IsLoadable(filename, out string lastError)) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw new UnityException(lastError);
         }
@@ -351,15 +353,19 @@ public static class SaveManager {
             Debug.Log("loading map...");
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         yield return new WaitForSecondsRealtime(0.25f);
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         try {
             Debug.Log("Loaded immediately!");
             LoadImmediate(filename);
         } catch {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw;
         }
         
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         Pauser.SetPaused(false);
     }
 

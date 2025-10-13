@@ -35,13 +35,13 @@ public class Build {
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.SplashScreen.showUnityLogo = false;
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", GetIsDevBuild() ? "true" : "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneLinux64);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare";
         Debug.Log($"#### BUILDING TO {output}####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneLinux64, GetBuildOptions());
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         EditorApplication.Exit(ResultToExitCode(report.summary.result));
@@ -51,7 +51,7 @@ public class Build {
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.SplashScreen.showUnityLogo = false;
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", GetIsDevBuild() ? "true" : "false");
         EditorUserBuildSettings.SetPlatformSettings(
             "Standalone",
             "OSXUniversal",
@@ -63,7 +63,7 @@ public class Build {
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.app";
         Debug.Log($"#### BUILDING TO {output}####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneOSX, GetBuildOptions());
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         EditorApplication.Exit(ResultToExitCode(report.summary.result));
@@ -73,13 +73,13 @@ public class Build {
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.SplashScreen.showUnityLogo = false;
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", GetIsDevBuild() ? "true" : "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows64);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows64, GetBuildOptions());
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         EditorApplication.Exit(ResultToExitCode(report.summary.result));
@@ -89,17 +89,27 @@ public class Build {
         PlayerSettings.SplashScreen.show = false;
         PlayerSettings.SplashScreen.showUnityLogo = false;
         PlayerSettings.SplashScreen.logos = Array.Empty<PlayerSettings.SplashScreenLogo>();
-        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", "false");
+        EditorUserBuildSettings.SetPlatformSettings("Standalone", "CopyPDBFiles", GetIsDevBuild() ? "true" : "false");
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone,BuildTarget.StandaloneWindows);
         AddressableAssetSettings.BuildPlayerContent();
         GetBuildVersion();
         string output = $"{outputDirectory}KoboldKare.exe";
         Debug.Log($"#### BUILDING TO {output}####");
-        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, BuildOptions.None);
+        var report = BuildPipeline.BuildPlayer(scenes, output, BuildTarget.StandaloneWindows, GetBuildOptions());
         Debug.Log("#### BUILD DONE ####");
         Debug.Log(report.summary);
         EditorApplication.Exit(ResultToExitCode(report.summary.result));
     }
+    private static BuildOptions GetBuildOptions() {
+        return GetIsDevBuild() ? BuildOptions.Development : BuildOptions.None;
+    }
+
+    private static bool GetIsDevBuild() {
+        var development_build_env = Environment.GetEnvironmentVariable("DEVELOPMENT_BUILD");
+        bool dev_build = development_build_env != null && development_build_env != "False" && development_build_env != "false";
+        return dev_build;
+    }
+    
     private static void GetBuildVersion() {
         string version = Environment.GetEnvironmentVariable("BUILD_NUMBER");
         string date = DateTime.Now.ToString("MM.dd.yyyy");

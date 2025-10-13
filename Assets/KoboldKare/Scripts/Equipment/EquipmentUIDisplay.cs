@@ -88,7 +88,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
         detailDescription.StringReference = e.localizedDescription;
         detailTitle.StringReference = e.localizedName;
     }
-    public void UpdateDisplay(List<Equipment> equipment) {
+    private void UpdateDisplay(List<Equipment> equipment) {
         foreach(GameObject g in spawnedUI) {
             Destroy(g);
         }
@@ -107,8 +107,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
                     slot.targetImage.color = Color.white;
                 }
             }
-            GameObject ui = GameObject.Instantiate(inventoryUIPrefab, targetDisplay);
-
+            GameObject ui = UnityEngine.Object.Instantiate(inventoryUIPrefab, targetDisplay);
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();
             DropButton.interactable = e.canManuallyUnequip;

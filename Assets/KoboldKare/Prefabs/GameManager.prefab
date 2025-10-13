@@ -13877,7 +13877,7 @@ GameObject:
   - component: {fileID: 1615534298972960211}
   - component: {fileID: 205458493244328573}
   - component: {fileID: 8319430772867542309}
-  - component: {fileID: 7194004716240779913}
+  - component: {fileID: 5491972279993928955}
   m_Layer: 5
   m_Name: View - EquipmentPanel
   m_TagString: Untagged
@@ -13946,7 +13946,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7194004716240779913
+--- !u!114 &5491972279993928955
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13966,7 +13966,7 @@ MonoBehaviour:
       m_KeyId: 38140087290613760
       m_Key: 
     m_FallbackState: 0
-    m_WaitForCompletion: 1
+    m_WaitForCompletion: 0
     m_LocalVariables: []
   detailDescription: {fileID: 316933465809047491}
   detailTitle: {fileID: 6496260976434118851}
@@ -36429,7 +36429,7 @@ PrefabInstance:
     - target: {fileID: 3894235088089730198, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -15.000046
+      value: -15.000061
       objectReference: {fileID: 0}
     - target: {fileID: 5841191852869422646, guid: 39647efb3c120fb4eb89fe2aa77dc84d,
         type: 3}

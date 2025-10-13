@@ -5922,7 +5922,7 @@ MonoBehaviour:
   noSavesText: {fileID: 5564848003320760646}
   saveCheckmark: {fileID: 9167156215472715895}
   failCross: {fileID: 8997903164608174717}
-  createNewSaveButton: {fileID: 0}
+  createNewSaveButton: {fileID: 2399287554139121766}
 --- !u!225 &955193177355488344
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -34913,6 +34913,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7a9775ff8c444f3c964c30b914805d0, type: 3}
+--- !u!114 &2399287554139121766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8075032082737742638, guid: f7a9775ff8c444f3c964c30b914805d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5862487924285451080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399287554139121786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2399287554139121786 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8075032082737742642, guid: f7a9775ff8c444f3c964c30b914805d0,

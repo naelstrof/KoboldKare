@@ -107,6 +107,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
                     slot.targetImage.color = Color.white;
                 }
             }
+            Debug.LogError($"{inventoryUIPrefab}:{targetDisplay}");
             GameObject ui = UnityEngine.Object.Instantiate(inventoryUIPrefab, targetDisplay);
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();

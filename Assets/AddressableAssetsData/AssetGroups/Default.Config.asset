@@ -17,356 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 5a0bb144bc85f4e42bce33ae8579966d
   m_SerializeEntries:
-  - m_GUID: ccba35f9efc9e5740af2e3b0f78fa2e9
-    m_Address: PhotonServerSettings
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 31d69dae40750484580ed4bcc0b5c269
-    m_Address: Assets/KoboldKare/Scripts/Physics/Wood.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: efd1f3995e4a5bf4d8d9c8ce1d941afb
-    m_Address: Assets/KoboldKare/Scripts/Physics/SpaceLube.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 112cd1621af56bb4dbb1dfa227ec70bc
-    m_Address: Assets/KoboldKare/Scripts/Physics/Snow.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e8f3c954912e2a845b1c879d5b94db31
-    m_Address: Assets/KoboldKare/Scripts/Physics/Sloshy.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d033189925fd3204b97770c866bfa8a1
-    m_Address: Assets/KoboldKare/Scripts/Physics/Silicone.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1613d85c4add01a4f9534ce9e3fb8367
-    m_Address: Assets/KoboldKare/Scripts/Physics/Sand.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3a6034b7919249640915befa2195166d
-    m_Address: Assets/KoboldKare/Scripts/Physics/Rock.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: aed15ac3b782c8c4a8403ba6c6039f0e
-    m_Address: Assets/KoboldKare/Scripts/Physics/Ragdoll.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99a8b73e39e83c3439d1655fb9b4b9aa
-    m_Address: Assets/KoboldKare/Scripts/Physics/Plastic.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ee851eefe73d48946a1a99d7acb40d03
-    m_Address: Assets/KoboldKare/Scripts/Physics/Paper.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fc700de5cf42bc640b07a31efd03087f
-    m_Address: Assets/KoboldKare/Scripts/Physics/Metal.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 94ef3183aff10ed48ad074d65c95ff1f
-    m_Address: Assets/KoboldKare/Scripts/Physics/Melon.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7e63f7aeb39378d43af52f2a90cd30e1
-    m_Address: Assets/KoboldKare/Scripts/Physics/Leather.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f270ac034e826a049a4ff86e913ff904
-    m_Address: Assets/KoboldKare/Scripts/Physics/Hay.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b877dc03bdc3d7248b101df62d05a87c
-    m_Address: Assets/KoboldKare/Scripts/Physics/Grass.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 262fed4f1dfbcaf49a775eea20574399
-    m_Address: Assets/KoboldKare/Scripts/Physics/Glass.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80268556b65529c4ea3bcf42a211c6f0
-    m_Address: Assets/KoboldKare/Scripts/Physics/Fluid.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 16a303d7eaab3bd4195ccce6fac4d794
-    m_Address: Assets/KoboldKare/Scripts/Physics/Flesh.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2750c8ff1429dc34b803a7b46788dec5
-    m_Address: Assets/KoboldKare/Scripts/Physics/Egg.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e1b4785b02dfb9246958debe9f6bf5de
-    m_Address: Assets/KoboldKare/Scripts/Physics/Dirt.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 76bcb468adce6734aabb05568c6bd455
-    m_Address: Assets/KoboldKare/Scripts/Physics/Concrete.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2fd9d85c73456ce44abf01332d5af513
-    m_Address: Assets/KoboldKare/Scripts/Physics/Carpet.physicMaterial
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c837b5ea2b9474f4f86bbc853a6c84bc
-    m_Address: Assets/KoboldKare/Scripts/GameEvents/SoldGameObject.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99221d5c5e229a64db8b3cabbf12a2bc
-    m_Address: Assets/KoboldKare/Scripts/GameEvents/SleepStart.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 305e944eb7950264d8b36c509133b906
-    m_Address: Assets/KoboldKare/Scripts/GameEvents/Midnight.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2e0c29f704eb625469f31c13379f97b8
-    m_Address: Assets/KoboldKare/ScriptableObjects/NetworkManager.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5d0854a9f7e34a459088c8b800da38a
-    m_Address: Assets/KoboldKare/ScriptableObjects/Money.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f4e12737025c85843b7957b67dd8ffa2
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/SeedDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 35066fb21452d9c4fb642d6e941f2847
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/PlayablePlayerDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ef3ef0fc5568133479b54ca67dcc9528
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/PenisDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6c0278f4f98a5d94097949d1e279a3c3
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/GeneralDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5a715bf0bdf8de74d8efe8ebe2672a01
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/FruitDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5953f84f337c12345b9e451e6f832759
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/CosmeticDatabase.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6a4fa921ca70fd343bd459a1a903eb6b
-    m_Address: Assets/KoboldKare/ScriptableObjects/GrabCount.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 908f641d307e2c44c9074884f5de23fb
-    m_Address: Assets/KoboldKare/ScriptableObjects/FluidFlipbook.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8bb8ec1eabdcb7043a4605858f604a8a
-    m_Address: Assets/KoboldKare/ScriptableObjects/BounceCurves/SlowerBounce.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e18312d1b399ef44cbae03acd0a32afb
-    m_Address: Assets/KoboldKare/ScriptableObjects/BounceCurves/GenericBounce.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dbdf3dbab824a8c448cb0f4cead4c467
-    m_Address: Assets/KoboldKare/JiggleSettings/Tail.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 835e23b13ade58e439dd26b97276e0c9
-    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyMedium.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0e2cb600d38202641a1d3db74913f7c1
-    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyFlat.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c7512a6e862e8254082f8c215cbca303
-    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyFat.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c4cab74b007296d43b66a134160bc69d
-    m_Address: Assets/KoboldKare/JiggleSettings/SoftBlend.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fb21567a7e481bb42bd8ca365ea6ab23
-    m_Address: Assets/KoboldKare/JiggleSettings/SmallBreasts.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 229a0edf82cc7e544bf2122ec0e896f8
-    m_Address: Assets/KoboldKare/JiggleSettings/LargeBreasts.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 03dffc499c279c345909a88f85f62462
     m_Address: Assets/KoboldKare/JiggleSettings/DickErect.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 42393e11ffa8d25499a61fbdc44a669d
-    m_Address: Assets/KoboldKare/JiggleSettings/BreastsBlend.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6368cd96a6814e54481b282a280e6028
-    m_Address: Assets/KoboldKare/JiggleSettings/Breasts.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5817d588dcee20246982f2f72dee4ae0
-    m_Address: Assets/KoboldKare/JiggleSettings/BellyBlend.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 90ba18ecbd21b7d4582834fa9be4aa61
-    m_Address: Assets/KoboldKare/Input/PlaystationDualShock.json
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b80237a58ac8c22458251d7c9dcacf88
-    m_Address: Assets/KoboldKare/Input/PlayerControls.inputactions
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 441ebf766d31b40499c5716bb5bde25a
-    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlot.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 51724514c61f0334798581861999d19e
-    m_Address: Assets/KoboldKare/Prefabs/UI/RoomPanel.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f25dcd618d3acd64795bf8bb32edb6c9
-    m_Address: Assets/KoboldKare/Prefabs/UI/RebindUIPrefab.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 85a087acdc16a8f468c2b30feabb5b9d
-    m_Address: Assets/KoboldKare/Prefabs/UI/MultiSelectToggle.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1e0439e99d829dc4aa78d6a91440016b
-    m_Address: Assets/KoboldKare/Prefabs/UI/MapPanel.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 33a87f3fa8bf4d74894c6048998373bd
-    m_Address: Assets/KoboldKare/Prefabs/UI/JoinPrivateGame.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: eb6471a7bfdaf28408d79c416db41eae
-    m_Address: Assets/KoboldKare/Prefabs/UI/FailedToLoad.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4b77792761ba83b4c8a1fb1ae42eb314
-    m_Address: Assets/KoboldKare/Prefabs/UI/DisconnectPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -377,32 +29,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fd95002abee3f244489427894ca672b4
-    m_Address: Assets/KoboldKare/Prefabs/UI/ConnectPopup.prefab
+  - m_GUID: 0e2cb600d38202641a1d3db74913f7c1
+    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyFlat.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b7f61b3a2e12de4448fccfd06520c7b0
-    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TitlePrefab.prefab
+  - m_GUID: 112cd1621af56bb4dbb1dfa227ec70bc
+    m_Address: Assets/KoboldKare/Scripts/Physics/Snow.physicMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: acb4be3cbc0aef64bb53f08e3f08d4b8
-    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TextInputPrefab.prefab
+  - m_GUID: 1613d85c4add01a4f9534ce9e3fb8367
+    m_Address: Assets/KoboldKare/Scripts/Physics/Sand.physicMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4164e6c49ea5bf340ad1947507dac1b7
-    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/SliderPrefab.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 39647efb3c120fb4eb89fe2aa77dc84d
-    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/DropDownPrefab.prefab
+  - m_GUID: 16a303d7eaab3bd4195ccce6fac4d794
+    m_Address: Assets/KoboldKare/Scripts/Physics/Flesh.physicMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -413,26 +59,122 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6c1f0cb3a13491346ab157f5e0e61f2a
-    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlotInteract.prefab
+  - m_GUID: 1e0439e99d829dc4aa78d6a91440016b
+    m_Address: Assets/KoboldKare/Prefabs/UI/MapPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fe98cc461b047ca4eaadc500d4d7ea2e
-    m_Address: Assets/KoboldKare/Prefabs/UI/ConfirmPopup.prefab
+  - m_GUID: 229a0edf82cc7e544bf2122ec0e896f8
+    m_Address: Assets/KoboldKare/JiggleSettings/LargeBreasts.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 92bc42f2d00c56c46a88b3861b71e146
-    m_Address: Assets/KoboldKare/ScriptableObjects/Main Camera Profile.asset
+  - m_GUID: 262fed4f1dfbcaf49a775eea20574399
+    m_Address: Assets/KoboldKare/Scripts/Physics/Glass.physicMaterial
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ab49c41711410144b99911cfd0a26001
-    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/EquipmentStoreDatabase.asset
+  - m_GUID: 2750c8ff1429dc34b803a7b46788dec5
+    m_Address: Assets/KoboldKare/Scripts/Physics/Egg.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e0c29f704eb625469f31c13379f97b8
+    m_Address: Assets/KoboldKare/ScriptableObjects/NetworkManager.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fd9d85c73456ce44abf01332d5af513
+    m_Address: Assets/KoboldKare/Scripts/Physics/Carpet.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 305e944eb7950264d8b36c509133b906
+    m_Address: Assets/KoboldKare/Scripts/GameEvents/Midnight.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31d69dae40750484580ed4bcc0b5c269
+    m_Address: Assets/KoboldKare/Scripts/Physics/Wood.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33a87f3fa8bf4d74894c6048998373bd
+    m_Address: Assets/KoboldKare/Prefabs/UI/JoinPrivateGame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35066fb21452d9c4fb642d6e941f2847
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/PlayablePlayerDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39647efb3c120fb4eb89fe2aa77dc84d
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/DropDownPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a6034b7919249640915befa2195166d
+    m_Address: Assets/KoboldKare/Scripts/Physics/Rock.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4164e6c49ea5bf340ad1947507dac1b7
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/SliderPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42393e11ffa8d25499a61fbdc44a669d
+    m_Address: Assets/KoboldKare/JiggleSettings/BreastsBlend.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 441ebf766d31b40499c5716bb5bde25a
+    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b77792761ba83b4c8a1fb1ae42eb314
+    m_Address: Assets/KoboldKare/Prefabs/UI/DisconnectPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51724514c61f0334798581861999d19e
+    m_Address: Assets/KoboldKare/Prefabs/UI/RoomPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5817d588dcee20246982f2f72dee4ae0
+    m_Address: Assets/KoboldKare/JiggleSettings/BellyBlend.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5953f84f337c12345b9e451e6f832759
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/CosmeticDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a715bf0bdf8de74d8efe8ebe2672a01
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/FruitDatabase.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -443,8 +185,272 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6368cd96a6814e54481b282a280e6028
+    m_Address: Assets/KoboldKare/JiggleSettings/Breasts.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a4fa921ca70fd343bd459a1a903eb6b
+    m_Address: Assets/KoboldKare/ScriptableObjects/GrabCount.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c0278f4f98a5d94097949d1e279a3c3
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/GeneralDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c1f0cb3a13491346ab157f5e0e61f2a
+    m_Address: Assets/KoboldKare/Prefabs/UI/SaveSlotInteract.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6d5aa2af26398144db1ca9d743d9c17e
     m_Address: Assets/KoboldKare/Prefabs/UI/FailedToLoadMods.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76bcb468adce6734aabb05568c6bd455
+    m_Address: Assets/KoboldKare/Scripts/Physics/Concrete.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e63f7aeb39378d43af52f2a90cd30e1
+    m_Address: Assets/KoboldKare/Scripts/Physics/Leather.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80268556b65529c4ea3bcf42a211c6f0
+    m_Address: Assets/KoboldKare/Scripts/Physics/Fluid.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 835e23b13ade58e439dd26b97276e0c9
+    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyMedium.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85a087acdc16a8f468c2b30feabb5b9d
+    m_Address: Assets/KoboldKare/Prefabs/UI/MultiSelectToggle.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bb8ec1eabdcb7043a4605858f604a8a
+    m_Address: Assets/KoboldKare/ScriptableObjects/BounceCurves/SlowerBounce.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 908f641d307e2c44c9074884f5de23fb
+    m_Address: Assets/KoboldKare/ScriptableObjects/FluidFlipbook.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90ba18ecbd21b7d4582834fa9be4aa61
+    m_Address: Assets/KoboldKare/Input/PlaystationDualShock.json
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92bc42f2d00c56c46a88b3861b71e146
+    m_Address: Assets/KoboldKare/ScriptableObjects/Main Camera Profile.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94ef3183aff10ed48ad074d65c95ff1f
+    m_Address: Assets/KoboldKare/Scripts/Physics/Melon.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99221d5c5e229a64db8b3cabbf12a2bc
+    m_Address: Assets/KoboldKare/Scripts/GameEvents/SleepStart.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99a8b73e39e83c3439d1655fb9b4b9aa
+    m_Address: Assets/KoboldKare/Scripts/Physics/Plastic.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5d777badcde1324f976e75baf1aaa14
+    m_Address: Assets/KoboldKare/Prefabs/UI/EquipmentItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab49c41711410144b99911cfd0a26001
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/EquipmentStoreDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acb4be3cbc0aef64bb53f08e3f08d4b8
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TextInputPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aed15ac3b782c8c4a8403ba6c6039f0e
+    m_Address: Assets/KoboldKare/Scripts/Physics/Ragdoll.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7f61b3a2e12de4448fccfd06520c7b0
+    m_Address: Assets/ThirdParty/UnityScriptableSettings/Prefabs/TitlePrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b80237a58ac8c22458251d7c9dcacf88
+    m_Address: Assets/KoboldKare/Input/PlayerControls.inputactions
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b877dc03bdc3d7248b101df62d05a87c
+    m_Address: Assets/KoboldKare/Scripts/Physics/Grass.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4cab74b007296d43b66a134160bc69d
+    m_Address: Assets/KoboldKare/JiggleSettings/SoftBlend.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5d0854a9f7e34a459088c8b800da38a
+    m_Address: Assets/KoboldKare/ScriptableObjects/Money.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7512a6e862e8254082f8c215cbca303
+    m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyFat.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c837b5ea2b9474f4f86bbc853a6c84bc
+    m_Address: Assets/KoboldKare/Scripts/GameEvents/SoldGameObject.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ccba35f9efc9e5740af2e3b0f78fa2e9
+    m_Address: PhotonServerSettings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d033189925fd3204b97770c866bfa8a1
+    m_Address: Assets/KoboldKare/Scripts/Physics/Silicone.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbdf3dbab824a8c448cb0f4cead4c467
+    m_Address: Assets/KoboldKare/JiggleSettings/Tail.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e18312d1b399ef44cbae03acd0a32afb
+    m_Address: Assets/KoboldKare/ScriptableObjects/BounceCurves/GenericBounce.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1b4785b02dfb9246958debe9f6bf5de
+    m_Address: Assets/KoboldKare/Scripts/Physics/Dirt.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8f3c954912e2a845b1c879d5b94db31
+    m_Address: Assets/KoboldKare/Scripts/Physics/Sloshy.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb6471a7bfdaf28408d79c416db41eae
+    m_Address: Assets/KoboldKare/Prefabs/UI/FailedToLoad.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee851eefe73d48946a1a99d7acb40d03
+    m_Address: Assets/KoboldKare/Scripts/Physics/Paper.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef3ef0fc5568133479b54ca67dcc9528
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/PenisDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efd1f3995e4a5bf4d8d9c8ce1d941afb
+    m_Address: Assets/KoboldKare/Scripts/Physics/SpaceLube.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f25dcd618d3acd64795bf8bb32edb6c9
+    m_Address: Assets/KoboldKare/Prefabs/UI/RebindUIPrefab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f270ac034e826a049a4ff86e913ff904
+    m_Address: Assets/KoboldKare/Scripts/Physics/Hay.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4e12737025c85843b7957b67dd8ffa2
+    m_Address: Assets/KoboldKare/ScriptableObjects/Modding/SeedDatabase.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb21567a7e481bb42bd8ca365ea6ab23
+    m_Address: Assets/KoboldKare/JiggleSettings/SmallBreasts.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc700de5cf42bc640b07a31efd03087f
+    m_Address: Assets/KoboldKare/Scripts/Physics/Metal.physicMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd95002abee3f244489427894ca672b4
+    m_Address: Assets/KoboldKare/Prefabs/UI/ConnectPopup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe98cc461b047ca4eaadc500d4d7ea2e
+    m_Address: Assets/KoboldKare/Prefabs/UI/ConfirmPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
@@ -453,5 +459,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: bae434cba05d81d4b9cb5c181a2fbf2c, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: cbd9afb6aa80db04cb0e5dc18bb7c82e, type: 2}
     - {fileID: 11400000, guid: 489e0740cae4da24a86db6deff62deca, type: 2}
+    - {fileID: 11400000, guid: cbd9afb6aa80db04cb0e5dc18bb7c82e, type: 2}

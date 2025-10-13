@@ -183,6 +183,7 @@ public class ModManager : MonoBehaviour {
     }
     private static ModManager instance;
     private bool ready;
+    private bool failedToLoadMods = false;
     private Exception lastException;
     private List<ModInfo> fullModList;
     private List<ModStub> playerConfig;
@@ -496,21 +497,24 @@ public class ModManager : MonoBehaviour {
             var keys = locator.Keys;
             var handle = Addressables.LoadAssetsAsync<Object>(keys, OnInspect, Addressables.MergeMode.UseFirst);
             await handle.Task;
-            Addressables.Release(handle);
             if (modInfo.causedException) {
+                failedToLoadMods = true;
                 modInfo.enabled = false;
                 Addressables.RemoveResourceLocator(modInfo.locator);
                 modInfo.locator = null;
             }
+            Addressables.Release(handle);
         }
         currentInspectedMod = null;
     }
 
     private void OnInspect(Object obj) {
+        
     }
 
     private async Task LoadMods() {
         await InspectMods();
+        Resources.UnloadUnusedAssets();
         try {
             foreach (var modPostProcessor in modPostProcessors) {
                 var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
@@ -519,6 +523,7 @@ public class ModManager : MonoBehaviour {
                 Addressables.Release(assets);
             }
         } catch (Exception e) {
+            failedToLoadMods = true;
             lastException = e;
             throw;
         } finally {
@@ -539,10 +544,15 @@ public class ModManager : MonoBehaviour {
             Addressables.RemoveResourceLocator(mod.locator);
             mod.locator = null;
         }
+        
+        Resources.UnloadUnusedAssets();
     }
 
     public static bool GetReady() => GetFinishedLoading();
 
+    public static bool GetFailedToLoadMods() {
+        return instance.failedToLoadMods;
+    }
     public static bool TryGetLastException(out Exception e) {
         if (instance.lastException != null) {
             e = instance.lastException;
@@ -611,7 +621,9 @@ public class ModManager : MonoBehaviour {
     
     
     private async Task ReloadMods() {
+        failedToLoadMods = false;
         if (!IsValid()) {
+            failedToLoadMods = true;
             throw new UnityException("32 bit Windows does NOT support mods! Please upgrade your operating system!");
         }
 
@@ -645,6 +657,7 @@ public class ModManager : MonoBehaviour {
                 }
             }
         } catch (Exception e) {
+            failedToLoadMods = true;
             lastException = e;
             throw;
         } finally {

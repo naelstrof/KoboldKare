@@ -466,6 +466,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        if (ModManager.GetFailedToLoadMods()) {
+            instance.OnJoinRoomFailed(0, "Failed to load mods.");
+            yield break;
+        }
         PhotonNetwork.JoinRoom(roomName);
         onLeaveRoom = null;
     }

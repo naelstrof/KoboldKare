@@ -1453,6 +1453,10 @@ MonoBehaviour:
     m_Localized: "Vyberte mo\u017Enost Mapa"
     m_Metadata:
       m_Items: []
+  - m_Id: 622463950838030336
+    m_Localized: "Odt\xEDn oble\u010Den\xED"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

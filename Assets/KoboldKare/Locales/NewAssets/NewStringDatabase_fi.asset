@@ -1430,6 +1430,10 @@ MonoBehaviour:
     m_Localized: Valitse Kartta
     m_Metadata:
       m_Items: []
+  - m_Id: 622463950838030336
+    m_Localized: "Vaatteiden s\xE4vy"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

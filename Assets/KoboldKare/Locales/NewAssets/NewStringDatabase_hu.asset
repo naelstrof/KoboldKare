@@ -1446,6 +1446,10 @@ MonoBehaviour:
     m_Localized: "V\xE1lassza a T\xE9rk\xE9p lehet\u0151s\xE9get"
     m_Metadata:
       m_Items: []
+  - m_Id: 622463950838030336
+    m_Localized: "Ruh\xE1k \xE1rnyalata"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

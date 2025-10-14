@@ -209,10 +209,10 @@ MonoBehaviour:
     m_Localized: 'DIESES SPIEL ZEIGT FIKTIONALE CHARAKTERE IN <#FF0000>SEXUELL EXPLIZITEN
       HANDLUNGEN.<#FFFFFF>
 
-      
 
-      Wenn du auf <#008CFF>SPIELEN<#FFFFFF>
-      klickst, gibst du Folgendes an:'
+
+      Wenn du auf <#008CFF>SPIELEN<#FFFFFF> klickst,
+      gibst du Folgendes an:'
     m_Metadata:
       m_Items: []
   - m_Id: 516095004692
@@ -1441,6 +1441,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 621523673371713536
     m_Localized: "Karte ausw\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 622463950838030336
+    m_Localized: Kleidungsfarbton
     m_Metadata:
       m_Items: []
   references:

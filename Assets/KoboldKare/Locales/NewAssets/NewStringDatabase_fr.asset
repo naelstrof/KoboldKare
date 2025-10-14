@@ -1435,6 +1435,10 @@ MonoBehaviour:
     m_Localized: "S\xE9lectionner la carte"
     m_Metadata:
       m_Items: []
+  - m_Id: 622463950838030336
+    m_Localized: "Teinte des v\xEAtements"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

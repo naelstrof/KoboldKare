@@ -1,15 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using UnityEngine.InputSystem;
 using Photon.Pun;
-using Steamworks;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.SceneManagement;
 using Cursor = UnityEngine.Cursor;
 
 public class PlayerPossession : MonoBehaviourPun {
@@ -164,7 +158,6 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["HipControl"].performed += OnActivateHipInput;
         controls.actions["HipControl"].canceled += OnCanceledHipInput;
         controls.actions["ResetHip"].performed += OnResetHipInput;
-        controls.actions["Chat"].performed += OnChatInput;
         if (grabber != null) {
             grabber.activateUIChanged -= OnActivateChange;
             grabber.throwUIChanged -= OnThrowChange;
@@ -203,7 +196,6 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.actions["HipControl"].performed -= OnActivateHipInput;
         controls.actions["HipControl"].canceled -= OnCanceledHipInput;
         controls.actions["ResetHip"].performed -= OnResetHipInput;
-        controls.actions["Chat"].performed -= OnChatInput;
         
         if (grabber != null) {
             grabber.activateUIChanged -= OnActivateChange;
@@ -458,22 +450,8 @@ public class PlayerPossession : MonoBehaviourPun {
             PhotonNetwork.Destroy(kobold.gameObject);
         }
     }
-
-    public void OnResetCamera() {
-        //cameras[1].transform.localPosition = Vector3.zero;
-        //cameras[1].transform.localRotation = Quaternion.identity;
-    }
     public void OnLook(InputValue value) {
     }
-    public void OnBack(InputAction.CallbackContext context) {
-        OnTextDeselect("");
-    }
-    public void OnChatInput(InputAction.CallbackContext context) {
-        if (Pauser.GetPaused()) {
-            return;
-        }
-    }
-
     public void OnRagdoll( InputValue value ) {
         if (value.Get<float>() <= 0.5f) {
             photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
@@ -487,12 +465,7 @@ public class PlayerPossession : MonoBehaviourPun {
         if (!isActiveAndEnabled) {
             return;
         }
-
-        if (MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.Equipment) {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-        } else {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
-        }
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
     }
 
     public void OnViewStats( InputValue value ) {

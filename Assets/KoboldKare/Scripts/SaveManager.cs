@@ -205,6 +205,8 @@ public static class SaveManager {
     private static IEnumerator LoadRoutine(string filename) {
         loading = true;
         try {
+            // Must wait for Photon to spawn the initial player.
+            yield return new WaitForSeconds(1f);
             CleanUpImmediate();
             // Gotta wait for photon to finally tick, no way to listen for that of course.
             yield return new WaitForSeconds(1f);

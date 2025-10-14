@@ -62,12 +62,14 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
 
     private IEnumerator WaitThenDisable() {
-        yield return null;
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        yield return new WaitForEndOfFrame();
+        if (MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.Equipment) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext obj) {
-        StartCoroutine(WaitThenDisable());
+        GameManager.StartCoroutineStatic(WaitThenDisable());
     }
 
     private void OnDisable() {

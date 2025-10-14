@@ -82,6 +82,7 @@ public class MainMenu : MonoBehaviour {
     public static MainMenuMode GetCurrentMode() => instance.currentMode;
 
     public void ShowMenu(MainMenuMode mode) {
+        Debug.Log("Switching to menu mode " + mode);
         MultiplayerTab.SetActive(false);
         OptionsTab.SetActive(false);
         MainViewTab.SetActive(false);

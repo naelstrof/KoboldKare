@@ -33,6 +33,7 @@ public static class KoboldGenesBitBufferExtension {
         buffer.AddUShort(metabolizeCapacitySizeQ);
         buffer.AddUShort(dickThicknessQ);
         buffer.AddByte(genes.hue);
+        buffer.AddByte(genes.clothingHue);
         buffer.AddByte(genes.brightness);
         buffer.AddByte(genes.saturation);
         buffer.AddShort(genes.dickEquip);
@@ -54,6 +55,7 @@ public static class KoboldGenesBitBufferExtension {
             metabolizeCapacitySize = HalfPrecision.Dequantize(buffer.ReadUShort()),
             dickThickness = HalfPrecision.Dequantize(buffer.ReadUShort()),
             hue = buffer.ReadByte(),
+            clothingHue = buffer.ReadByte(),
             brightness = buffer.ReadByte(),
             saturation = buffer.ReadByte(),
             dickEquip = buffer.ReadShort(),
@@ -75,6 +77,7 @@ public class KoboldGenes {
     public float metabolizeCapacitySize = 20f;
     public float dickThickness;
     public byte hue;
+    public byte clothingHue;
     public byte brightness = 128;
     public byte saturation = 128;
     public short dickEquip = CommandDick.unEquipID;
@@ -107,7 +110,7 @@ public class KoboldGenes {
 
     public KoboldGenes With(float? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
-            float? metabolizeCapacitySize = null, byte? hue = null, byte? brightness = null,
+            float? metabolizeCapacitySize = null, byte? hue = null, byte? clothingHue = null, byte? brightness = null,
             byte? saturation = null, short? dickEquip = null, float? dickThickness = null, byte? grabCount = null, byte? species = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
@@ -119,6 +122,7 @@ public class KoboldGenes {
             bellySize = bellySize ?? this.bellySize,
             metabolizeCapacitySize = metabolizeCapacitySize ?? this.metabolizeCapacitySize,
             hue = hue ?? this.hue,
+            clothingHue = clothingHue ?? this.clothingHue,
             brightness = brightness ?? this.brightness,
             saturation = saturation ?? this.saturation,
             dickEquip = dickEquip ?? this.dickEquip,
@@ -185,6 +189,7 @@ public class KoboldGenes {
         dickThickness = (float)NextGaussian(0.5f, 0.12f*standardDeviationMultiplier, 0f, float.MaxValue);
         baseSize = (float)NextGaussian(20f*meanMultiplier, 2.5f*standardDeviationMultiplier, 0f, float.MaxValue);//Random.Range(14f, 24f)*multiplier;
         hue = (byte)Random.Range(0, 255);
+        clothingHue = hue;  // Let's not randomize this as the results might be weird more often than not
         brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         if (string.IsNullOrEmpty(koboldName) && GameManager.GetPlayerDatabase().TryGetRandom(out var info)) {
@@ -220,6 +225,7 @@ public class KoboldGenes {
         float hueAngA = a.hue / 255f;
         float hueAngB = b.hue / 255f;
         c.hue = (byte)Mathf.RoundToInt(FloatExtensions.CircularLerp(hueAngA, hueAngB, 0.5f) * 255f);
+        c.clothingHue = c.hue;
         c.brightness = (byte)Mathf.RoundToInt(Mathf.Lerp(a.brightness / 255f, b.brightness / 255f, 0.5f)*255f);
         c.saturation = (byte)Mathf.RoundToInt(Mathf.Lerp(a.saturation / 255f, b.saturation / 255f, 0.5f)*255f);
         c.bellySize = Mathf.Lerp(a.bellySize, b.bellySize, 0.5f);
@@ -296,6 +302,7 @@ public class KoboldGenes {
         rootNode["bellySize"] = bellySize;
         rootNode["metabolizeCapacitySize"] = metabolizeCapacitySize;
         rootNode["hue"] = (int)hue;
+        rootNode["clothingHue"] = (int)clothingHue;  // FIXME default value should be hue if clothingHue does not exist
         rootNode["brightness"] = (int)brightness;
         rootNode["saturation"] = (int)saturation;
         rootNode["dickEquip"] = dickEquip==short.MaxValue?"None":GetDickName(dickEquip);
@@ -316,6 +323,7 @@ public class KoboldGenes {
         bellySize = rootNode["bellySize"];
         metabolizeCapacitySize = rootNode["metabolizeCapacitySize"];
         hue = (byte)rootNode["hue"].AsInt;
+        clothingHue = (byte)rootNode["clothingHue"].AsInt;
         brightness = (byte)rootNode["brightness"].AsInt;
         saturation = (byte)rootNode["saturation"].AsInt;
         dickEquip = rootNode["dickEquip"]=="None"? short.MaxValue: (short)GetDickIndex(rootNode["dickEquip"]);
@@ -335,6 +343,7 @@ public class KoboldGenes {
            bellySize: {bellySize}
            metabolizeCapacitySize: {metabolizeCapacitySize}
            hue: {hue}
+           clothingHue: {clothingHue}
            brightness: {brightness}
            saturation: {saturation}
            dickEquip: {dickEquip}

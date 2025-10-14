@@ -41,21 +41,7 @@ MonoBehaviour:
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_UIInfos: {fileID: 3}
-  m_ParameterInfo:
-  - name: Strip Point Count
-    path: Strip Point Count
-    tooltip: 
-    sheetType: m_Uint
-    realType: UInt32
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.UInt32, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1024
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
+  m_ParameterInfo: []
   m_ImportDependencies: []
   m_GraphVersion: 9
   m_ResourceVersion: 1
@@ -123,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
-  m_Parent: {fileID: 2}
+  m_Parent: {fileID: 0}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1

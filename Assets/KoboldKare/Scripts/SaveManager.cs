@@ -205,6 +205,8 @@ public static class SaveManager {
     private static IEnumerator LoadRoutine(string filename) {
         loading = true;
         try {
+            // Must wait for Photon to spawn the initial player.
+            yield return new WaitForSeconds(1f);
             CleanUpImmediate();
             // Gotta wait for photon to finally tick, no way to listen for that of course.
             yield return new WaitForSeconds(1f);
@@ -303,7 +305,9 @@ public static class SaveManager {
         GameManager.StartCoroutineStatic(LoadRoutine(filename));
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         if (!IsLoadable(filename, out string lastError)) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw new UnityException(lastError);
         }
@@ -356,10 +360,12 @@ public static class SaveManager {
             Debug.Log("Loaded immediately!");
             LoadImmediate(filename);
         } catch {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
             PopupHandler.instance.SpawnPopup("FailedLoad");
             throw;
         }
         
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         Pauser.SetPaused(false);
     }
 

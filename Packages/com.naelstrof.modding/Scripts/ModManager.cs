@@ -299,7 +299,7 @@ public class ModManager : MonoBehaviour {
         } finally{
             Mutex.Release();
         }
-        await instance.ReloadMods();
+        await instance.ReloadMods(true);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
@@ -495,7 +495,13 @@ public class ModManager : MonoBehaviour {
             currentInspectedMod = modInfo;
             var locator = modInfo.locator;
             var keys = locator.Keys;
-            var handle = Addressables.LoadAssetsAsync<Object>(keys, OnInspect, Addressables.MergeMode.UseFirst);
+            List<object> filteredKeys = new List<object>();
+            foreach (var key in keys) {
+                if (key is String keyString && !keyString.EndsWith("bundle")) {
+                    filteredKeys.Add(key);
+                }
+            }
+            var handle = Addressables.LoadAssetsAsync<Object>(filteredKeys, OnInspect, Addressables.MergeMode.None);
             await handle.Task;
             if (modInfo.causedException) {
                 failedToLoadMods = true;
@@ -512,9 +518,12 @@ public class ModManager : MonoBehaviour {
         
     }
 
-    private async Task LoadMods() {
-        await InspectMods();
-        Resources.UnloadUnusedAssets();
+    private async Task LoadMods(bool shouldInspect) {
+        if (shouldInspect) {
+            await InspectMods();
+            Resources.UnloadUnusedAssets();
+        }
+
         try {
             foreach (var modPostProcessor in modPostProcessors) {
                 var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
@@ -597,7 +606,7 @@ public class ModManager : MonoBehaviour {
     private async Task OnStart() {
         LoadConfig();
         ScanForNewMods();
-        await ReloadMods();
+        await ReloadMods(false);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
@@ -620,7 +629,7 @@ public class ModManager : MonoBehaviour {
     }
     
     
-    private async Task ReloadMods() {
+    private async Task ReloadMods(bool shouldInspect) {
         failedToLoadMods = false;
         if (!IsValid()) {
             failedToLoadMods = true;
@@ -662,7 +671,7 @@ public class ModManager : MonoBehaviour {
             throw;
         } finally {
             try {
-                await LoadMods();
+                await LoadMods(shouldInspect);
             } finally {
                 Mutex.Release();
             }
@@ -682,7 +691,7 @@ public class ModManager : MonoBehaviour {
         } finally {
             Mutex.Release();
         }
-        await instance.ReloadMods();
+        await instance.ReloadMods(true);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
@@ -770,7 +779,7 @@ public class ModManager : MonoBehaviour {
         }
 
         Debug.Log("Reloading mods after acquiring stubs...");
-        var reloadModTask = instance.ReloadMods();
+        var reloadModTask = instance.ReloadMods(false);
         yield return new WaitUntil(() => reloadModTask.IsCompleted);
         Debug.Log("Done reloading!");
     }

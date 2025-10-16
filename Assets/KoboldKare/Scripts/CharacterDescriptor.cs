@@ -504,6 +504,11 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     }
 
     public void SetPlayerControlled(ControlType newControlType) {
+        // Don't allow multiple players to be set to LocalPlayer
+        if (newControlType == ControlType.LocalPlayer && PlayerPossession.TryGetPlayerInstance(out var player)) {
+            newControlType = ControlType.AIPlayer;
+        }
+        
         controlType = newControlType;
         if (possession != null) {
             possession.gameObject.SetActive(newControlType == ControlType.LocalPlayer);

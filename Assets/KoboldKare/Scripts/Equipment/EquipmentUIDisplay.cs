@@ -62,12 +62,14 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
 
     private IEnumerator WaitThenDisable() {
-        yield return null;
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        yield return new WaitForEndOfFrame();
+        if (MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.Equipment) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext obj) {
-        StartCoroutine(WaitThenDisable());
+        GameManager.StartCoroutineStatic(WaitThenDisable());
     }
 
     private void OnDisable() {
@@ -92,6 +94,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
         foreach(GameObject g in spawnedUI) {
             Destroy(g);
         }
+        spawnedUI.Clear();
         foreach (var slot in slots) {
             slot.containerImage.color = Color.white;
             slot.targetImage.sprite = slot.defaultSprite;
@@ -107,7 +110,6 @@ public class EquipmentUIDisplay : MonoBehaviour {
                     slot.targetImage.color = Color.white;
                 }
             }
-            Debug.LogError($"{inventoryUIPrefab}:{targetDisplay}");
             GameObject ui = UnityEngine.Object.Instantiate(inventoryUIPrefab, targetDisplay);
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();

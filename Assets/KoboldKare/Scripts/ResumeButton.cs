@@ -7,6 +7,7 @@ public class ResumeButton : MonoBehaviour {
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClick);
         SceneManager.activeSceneChanged += OnSceneChange;
+        gameObject.SetActive(LevelLoader.InLevel());
     }
     private void OnDestroy() {
         SceneManager.activeSceneChanged -= OnSceneChange;
@@ -18,5 +19,6 @@ public class ResumeButton : MonoBehaviour {
     
     void OnClick() {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        Pauser.SetPaused(false);
     }
 }

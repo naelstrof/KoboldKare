@@ -798,7 +798,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Big McLargeEnorme
+    m_Localized: Big McLargeHuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
@@ -1053,7 +1053,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775428
-    m_Localized: Ma dove tieni i tuoi soldi...
+    m_Localized: Comunque, dove tieni i tuoi soldi...
     m_Metadata:
       m_Items: []
   - m_Id: 214537223052775429
@@ -1236,7 +1236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620104
-    m_Localized: 'Razza: Big McLargeHuge'
+    m_Localized: 'Razza: Grande McLargeEnorme'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
@@ -1432,6 +1432,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 621523673371713536
     m_Localized: Seleziona la mappa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 623266765225402368
+    m_Localized: "Tonalit\xE0 dell'abbigliamento"
     m_Metadata:
       m_Items: []
   references:

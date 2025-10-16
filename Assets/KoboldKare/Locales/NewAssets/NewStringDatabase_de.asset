@@ -1443,6 +1443,10 @@ MonoBehaviour:
     m_Localized: "Karte ausw\xE4hlen"
     m_Metadata:
       m_Items: []
+  - m_Id: 623266765225402368
+    m_Localized: Kleidungsfarbe
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

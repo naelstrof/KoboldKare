@@ -1450,7 +1450,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 621523673371713536
-    m_Localized: "Vyberte mo\u017Enost Mapa"
+    m_Localized: Vyberte mapu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 623266765225402368
+    m_Localized: "Odst\xEDn oble\u010Den\xED"
     m_Metadata:
       m_Items: []
   references:

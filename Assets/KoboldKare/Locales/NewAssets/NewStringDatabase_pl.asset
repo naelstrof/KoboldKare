@@ -1450,10 +1450,6 @@ MonoBehaviour:
     m_Localized: "Wybierz map\u0119"
     m_Metadata:
       m_Items: []
-  - m_Id: 622463950838030336
-    m_Localized: "Odcie\u0144 ubra\u0144"
-    m_Metadata:
-      m_Items: []
   references:
     version: 2
     RefIds:

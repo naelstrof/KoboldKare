@@ -1434,10 +1434,6 @@ MonoBehaviour:
     m_Localized: Seleziona la mappa
     m_Metadata:
       m_Items: []
-  - m_Id: 622463950838030336
-    m_Localized: "Tonalit\xE0 abiti"
-    m_Metadata:
-      m_Items: []
   references:
     version: 2
     RefIds:

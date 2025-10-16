@@ -1351,10 +1351,6 @@ MonoBehaviour:
     m_Key: MENU_SELECT_MAP
     m_Metadata:
       m_Items: []
-  - m_Id: 622463950838030336
-    m_Key: SETTING_CLOTHING_HUE
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -607,6 +607,13 @@ public class ModManager : MonoBehaviour {
         LoadConfig();
         ScanForNewMods();
         await ReloadMods(false);
+        StringBuilder builder = new StringBuilder();
+        builder.Append("Mods Installed: {\n");
+        foreach (var mod in GetLoadedMods()) {
+            builder.Append($"[title:{mod.title}, folderTitle:{mod.folderTitle}, id:{mod.id}, source:{mod.source}, enabled:{mod.enabled}, causedException:{mod.causedException}],\n");
+        }
+        builder.Append("}\n");
+        Debug.Log(builder.ToString());
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 

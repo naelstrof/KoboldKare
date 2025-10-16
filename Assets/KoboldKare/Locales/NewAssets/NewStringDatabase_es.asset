@@ -1429,6 +1429,10 @@ MonoBehaviour:
     m_Localized: Seleccionar mapa
     m_Metadata:
       m_Items: []
+  - m_Id: 623266765225402368
+    m_Localized: Tono de ropa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

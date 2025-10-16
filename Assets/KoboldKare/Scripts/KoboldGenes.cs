@@ -323,7 +323,13 @@ public class KoboldGenes {
         bellySize = rootNode["bellySize"];
         metabolizeCapacitySize = rootNode["metabolizeCapacitySize"];
         hue = (byte)rootNode["hue"].AsInt;
-        clothingHue = (byte)rootNode["clothingHue"].AsInt;
+        if (!rootNode.HasKey("clothingHue"))
+        {
+            clothingHue = hue;  // Fallback to hue
+        } else
+        {
+            clothingHue = (byte)rootNode["clothingHue"].AsInt;
+        }
         brightness = (byte)rootNode["brightness"].AsInt;
         saturation = (byte)rootNode["saturation"].AsInt;
         dickEquip = rootNode["dickEquip"]=="None"? short.MaxValue: (short)GetDickIndex(rootNode["dickEquip"]);

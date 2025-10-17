@@ -97,6 +97,13 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         brainSwapSound.Play(brainSwapSoundSource);
         PhotonView aView = PhotonNetwork.GetPhotonView(aViewID);
         PhotonView bView = PhotonNetwork.GetPhotonView(bViewID);
+        if (aView != null) {
+            aView.GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.AIPlayer);
+        }
+
+        if (bView != null) {
+            bView.GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.AIPlayer);
+        }
         Player[] playerList = PhotonNetwork.PlayerList;
         Player aPlayer = null;
         Player bPlayer = null;
@@ -110,9 +117,8 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         }
 
         if (aView != null) {
-            if (aPlayer == PhotonNetwork.LocalPlayer) {
-                aView.GetComponent<CharacterDescriptor>()
-                    .SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
+            if (Equals(aPlayer, PhotonNetwork.LocalPlayer)) {
+                aView.GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
             } else {
                 aView.GetComponent<CharacterDescriptor>().SetPlayerControlled(bPlayer == null ? CharacterDescriptor.ControlType.AIPlayer : CharacterDescriptor.ControlType.NetworkedPlayer);
             }
@@ -129,9 +135,8 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         }
 
         if (bView != null) {
-            if (bPlayer == PhotonNetwork.LocalPlayer) {
-                bView.GetComponent<CharacterDescriptor>()
-                    .SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
+            if (Equals(bPlayer, PhotonNetwork.LocalPlayer)) {
+                bView.GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
             } else {
                 bView.GetComponent<CharacterDescriptor>().SetPlayerControlled(aPlayer == null ? CharacterDescriptor.ControlType.AIPlayer : CharacterDescriptor.ControlType.NetworkedPlayer);
             }

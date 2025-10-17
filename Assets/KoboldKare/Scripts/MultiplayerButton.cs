@@ -13,6 +13,7 @@ public class MultiplayerButton : MonoBehaviour {
     }
 
     private void OnSceneChange(Scene arg0, Scene arg1) {
+        Debug.Log("LevelLoader.InLevel() is " + LevelLoader.InLevel());
         gameObject.SetActive(!LevelLoader.InLevel());
     }
 

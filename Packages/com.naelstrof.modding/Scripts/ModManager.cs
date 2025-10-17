@@ -190,6 +190,9 @@ public class ModManager : MonoBehaviour {
     public static List<ModStub> GetPlayerConfig() => instance.playerConfig;
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
+    private bool changed = false;
+
+    public static bool GetChanged() => instance.changed;
 
     private delegate bool ModConditional(ModInfo info);
     private static List<ModStub> ConvertToStubs(ICollection<ModInfo> infos, ModConditional conditional = null) {
@@ -293,6 +296,7 @@ public class ModManager : MonoBehaviour {
         try {
             foreach (var mod in instance.fullModList) {
                 if (mod.title != stub.title || mod.publishedFileId != stub.id || mod.modSource != stub.source) continue;
+                instance.changed = true;
                 mod.enabled = active;
                 break;
             }
@@ -443,6 +447,7 @@ public class ModManager : MonoBehaviour {
 
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         modListChanged?.Invoke();
+        instance.changed = false;
     }
     private void ScanForNewMods() {
         string modCatalogPath = $"{Application.persistentDataPath}/{modLocation}";
@@ -480,6 +485,7 @@ public class ModManager : MonoBehaviour {
         var chars = rootNode.ToString(2);
         quickWrite.Write(Encoding.UTF8.GetBytes(chars),0,chars.Length);
         quickWrite.Close();
+        instance.changed = false;
     }
 
     private ModInfo currentInspectedMod = null;
@@ -506,6 +512,7 @@ public class ModManager : MonoBehaviour {
             if (modInfo.causedException) {
                 failedToLoadMods = true;
                 modInfo.enabled = false;
+                instance.changed = true;
                 Addressables.RemoveResourceLocator(modInfo.locator);
                 modInfo.locator = null;
             }
@@ -660,6 +667,7 @@ public class ModManager : MonoBehaviour {
                 currentLoadingMod = $"{modInfo.modPath}{Path.DirectorySeparatorChar}";
                 if (!modInfo.TryGetCatalogPath(out var catalogPath)) {
                     modInfo.enabled = false;
+                    instance.changed = true;
                     modInfo.causedException = true;
                     continue;
                 }
@@ -668,6 +676,7 @@ public class ModManager : MonoBehaviour {
                 if (!loader.IsDone || !loader.IsValid() || loader.Status == AsyncOperationStatus.Failed || loader.OperationException != null) {
                     modInfo.causedException = true;
                     modInfo.enabled = false;
+                    instance.changed = true;
                 } else {
                     modInfo.locator = (IResourceLocator)loader.Result;
                 }
@@ -694,6 +703,7 @@ public class ModManager : MonoBehaviour {
         try {
             foreach (var mod in instance.fullModList) {
                 mod.enabled = active;
+                instance.changed = true;
             }
         } finally {
             Mutex.Release();
@@ -765,6 +775,7 @@ public class ModManager : MonoBehaviour {
         foreach (var mod in instance.fullModList) {
             mod.enabled = false;
         }
+        instance.changed = true;
 
         PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
         for (int i = 0; i < neededMods.Count; i++) {

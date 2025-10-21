@@ -17,7 +17,9 @@ namespace Naelstrof.Inflatable {
             startScale = targetTransform.localScale;
         }
         public override void OnSizeChanged(float newSize) {
-            targetTransform.localScale = startScale*Mathf.Max(newSize,0.05f);
+            if (targetTransform) {
+                targetTransform.localScale = startScale * Mathf.Max(newSize, 0.05f);
+            }
         }
     }
 }

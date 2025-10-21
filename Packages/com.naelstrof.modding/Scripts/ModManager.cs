@@ -748,6 +748,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {
+        yield return new WaitUntil(GetReady);
         if (HasModsLoaded(stubs)) {
             yield break;
         }

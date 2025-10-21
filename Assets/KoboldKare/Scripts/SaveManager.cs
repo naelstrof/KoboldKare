@@ -205,11 +205,12 @@ public static class SaveManager {
     private static IEnumerator LoadRoutine(string filename) {
         loading = true;
         try {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
             // Must wait for Photon to spawn the initial player.
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(()=>PlayerPossession.TryGetPlayerInstance(out var player));
             CleanUpImmediate();
             // Gotta wait for photon to finally tick, no way to listen for that of course.
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSecondsRealtime(2f);
             JSONNode rootNode;
             using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read)) {
                 using StreamReader reader = new StreamReader(file);
@@ -292,17 +293,9 @@ public static class SaveManager {
                 }
             }
         } finally {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
             loading = false;
         }
-    }
-
-    private static void LoadImmediate(string filename) {
-        //Debug.Log("[SaveManager] :: <Init Stage> File attempting to be loaded: "+filename);
-        // Don't load saves while online.
-        if (NetworkManager.instance.online || loading) {
-            return;
-        }
-        GameManager.StartCoroutineStatic(LoadRoutine(filename));
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
@@ -355,15 +348,7 @@ public static class SaveManager {
             Debug.Log("loading map...");
             yield return NetworkManager.instance.SinglePlayerRoutine();
         }
-        yield return new WaitForSecondsRealtime(0.25f);
-        try {
-            Debug.Log("Loaded immediately!");
-            LoadImmediate(filename);
-        } catch {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-            PopupHandler.instance.SpawnPopup("FailedLoad");
-            throw;
-        }
+        yield return LoadRoutine(filename);
         
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         Pauser.SetPaused(false);

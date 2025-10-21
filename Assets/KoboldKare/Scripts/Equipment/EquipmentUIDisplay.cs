@@ -55,6 +55,11 @@ public class EquipmentUIDisplay : MonoBehaviour {
         inventory = kobold.GetComponent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;
         UpdateDisplay(inventory.GetAllEquipment());
+        StartCoroutine(WaitThenSubscribe());
+    }
+
+    private IEnumerator WaitThenSubscribe() {
+        yield return null;
         cancel.action.Enable();
         cancel.action.performed += OnCancel;
         otherCancel.action.Enable();
@@ -62,7 +67,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
     }
 
     private IEnumerator WaitThenDisable() {
-        yield return new WaitForEndOfFrame();
+        yield return null;
         if (MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.Equipment) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         }
@@ -110,7 +115,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
                     slot.targetImage.color = Color.white;
                 }
             }
-            GameObject ui = UnityEngine.Object.Instantiate(inventoryUIPrefab, targetDisplay);
+            GameObject ui = Instantiate(inventoryUIPrefab, targetDisplay);
             ui.transform.Find("Label").GetComponent<LocalizeStringEvent>().StringReference = e.localizedName;
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();
             DropButton.interactable = e.canManuallyUnequip;

@@ -29585,6 +29585,7 @@ MonoBehaviour:
   chatInput: {fileID: 39647666583283817}
   closeChatAction: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88,
     type: 3}
+  closeButton: {fileID: 7555874347765834201}
 --- !u!1 &8488938100150550443
 GameObject:
   m_ObjectHideFlags: 0

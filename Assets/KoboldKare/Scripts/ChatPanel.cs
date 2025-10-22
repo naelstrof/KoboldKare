@@ -13,6 +13,7 @@ public class ChatPanel : MonoBehaviour {
     [SerializeField] private TMPro.TMP_Text chatDisplay;
     [SerializeField] private TMPro.TMP_InputField chatInput;
     [SerializeField] private InputActionReference closeChatAction;
+    [SerializeField] private Button closeButton;
 
     private PlayerPossession playerControls;
     
@@ -32,16 +33,19 @@ public class ChatPanel : MonoBehaviour {
         chatDisplay.text = CheatsProcessor.GetOutput();
         CheatsProcessor.AddOutputChangedListener(OnChatChanged);
         StartCoroutine(WaitThenSubscribe());
-        closeChatAction.action.Enable();
-        closeChatAction.action.performed += OnCloseChat;
     }
 
     private void OnCloseChat(InputAction.CallbackContext obj) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
 
+    private bool subscribed = false;
     IEnumerator WaitThenSubscribe() {
         yield return new WaitForSecondsRealtime(0.1f);
+        closeButton.interactable = true;
+        closeChatAction.action.Enable();
+        closeChatAction.action.performed += OnCloseChat;
+        subscribed = true;
         chatInput.Select();
         chatInput.onSubmit.AddListener(OnTextSubmit);
     }
@@ -58,15 +62,21 @@ public class ChatPanel : MonoBehaviour {
     }
 
     private void OnDisable() {
+        closeButton.interactable = false;
         if (playerControls != null) {
             playerControls.SetControlsActive(true);
         }
-        chatInput.onSubmit.RemoveListener(OnTextSubmit);
         CheatsProcessor.RemoveOutputChangedListener(OnChatChanged);
         if (SteamManager.Initialized) {
             SteamUtils.DismissFloatingGamepadTextInput();
         }
-        closeChatAction.action.performed -= OnCloseChat;
+
+        if (subscribed) {
+            chatInput.onSubmit.RemoveListener(OnTextSubmit);
+            closeChatAction.action.performed -= OnCloseChat;
+        } else {
+            StopAllCoroutines();
+        }
     }
 
     private void OnTextSubmit(string t) {

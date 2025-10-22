@@ -36,6 +36,18 @@ public class KoboldKareModdingProfileEditor : Editor {
             helpBox.MarkDirtyRepaint();
         };
         visualElement.Add(buildButton);
+        if (!serializedObject.isEditingMultipleObjects) {
+            var showBuildFolderButton = new Button {
+                name = "Show Build Folder",
+                text = "Show Build Folder",
+            };
+            showBuildFolderButton.clicked += () => {
+                KoboldKareModdingProfile modProfile = (KoboldKareModdingProfile)target;
+                EditorUtility.RevealInFinder(modProfile.GetBuildFolder());
+            };
+            visualElement.Add(showBuildFolderButton);
+        }
+
         return visualElement;
     }
 }
@@ -45,6 +57,9 @@ public class KoboldKareModdingProfile : ScriptableObject {
     [SerializeField] private SteamWorkshopItem workshopItem;
     public void Build() {
         workshopItem.Build();
+    }
+    public string GetBuildFolder() {
+        return workshopItem.GetModBuildPath(EditorUserBuildSettings.activeBuildTarget);
     }
     public string GetStatus(out MessageType messageType) {
         return workshopItem.GetStatus(out messageType);

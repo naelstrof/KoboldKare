@@ -1,23 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityScriptableSettings;
 
 public class SettingPostProcessor : ModPostProcessor {
     private List<Setting> addedSettings;
+    AsyncOperationHandle opHandle;
 
     public override void Awake() {
         base.Awake();
         addedSettings = new List<Setting>();
     }
 
-    public override async Task LoadAllAssets(IList<IResourceLocation> locations) {
+    public override async Task LoadAllAssets() {
         addedSettings.Clear();
-        var opHandle = Addressables.LoadAssetsAsync<Setting>(locations, LoadSetting);
+        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
+        await assetsHandle.Task;
+        opHandle = Addressables.LoadAssetsAsync<Setting>(assetsHandle.Result, LoadSetting);
         await opHandle.Task;
+        Addressables.Release(assetsHandle);
     }
 
     private void LoadSetting(Setting setting) {
@@ -35,9 +37,15 @@ public class SettingPostProcessor : ModPostProcessor {
         addedSettings.Add(setting);
     }
 
-    public override void UnloadAllAssets() {
+    public override Task UnloadAllAssets() {
         foreach (var setting in addedSettings) {
             SettingsManager.RemoveSetting(setting);
         }
+
+        if (opHandle.IsValid()) {
+            Addressables.Release(opHandle);
+        }
+
+        return Task.CompletedTask;
     }
 }

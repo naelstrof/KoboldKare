@@ -272,7 +272,7 @@ public class SteamWorkshopModLoader : MonoBehaviour {
         }
         bool hasData = SteamUGC.GetItemInstallInfo(unsubscribedItem.m_nPublishedFileId, out ulong punSizeOnDisk, out string pchFolder, 1024, out uint punTimeStamp);
         if (hasData) {
-            ModManager.RemoveMod(pchFolder);
+            _ = ModManager.RemoveMod(pchFolder);
         }
     }
 }

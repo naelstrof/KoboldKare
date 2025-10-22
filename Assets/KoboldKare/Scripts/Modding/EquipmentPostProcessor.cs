@@ -1,17 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class EquipmentPostProcessor : ModPostProcessor {
     private List<Equipment> addedEquipments;
-    public override async Task LoadAllAssets(IList<IResourceLocation> locations)  {
+    private AsyncOperationHandle opHandle;
+    public override async Task LoadAllAssets()  {
         addedEquipments.Clear();
-        var opHandle = Addressables.LoadAssetsAsync<Equipment>(locations, LoadEquipment);
+        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
+        await assetsHandle.Task;
+        opHandle = Addressables.LoadAssetsAsync<Equipment>(assetsHandle.Result, LoadEquipment);
         await opHandle.Task;
+        Addressables.Release(assetsHandle);
     }
 
     public override void Awake() {
@@ -27,9 +28,14 @@ public class EquipmentPostProcessor : ModPostProcessor {
         EquipmentDatabase.AddEquipment(equipment);
     }
 
-    public override void UnloadAllAssets() {
+    public override Task UnloadAllAssets() {
         foreach (var equipment in addedEquipments) {
             EquipmentDatabase.RemoveEquipment(equipment);
         }
+
+        if (opHandle.IsValid()) {
+            Addressables.Release(opHandle);
+        }
+        return Task.CompletedTask;
     }
 }

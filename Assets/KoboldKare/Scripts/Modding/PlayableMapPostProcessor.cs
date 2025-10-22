@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
-using UnityScriptableSettings;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PlayableMapPostProcessor : ModPostProcessor {
+    AsyncOperationHandle opHandle;
     private List<PlayableMap> addedPlayableMaps;
 
     public override void Awake() {
@@ -14,10 +13,13 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         addedPlayableMaps = new List<PlayableMap>();
     }
 
-    public override async Task LoadAllAssets(IList<IResourceLocation> locations) {
+    public override async Task LoadAllAssets() {
         addedPlayableMaps.Clear();
-        var opHandle = Addressables.LoadAssetsAsync<PlayableMap>(locations, LoadPlayableMap);
+        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
+        await assetsHandle.Task;
+        opHandle = Addressables.LoadAssetsAsync<PlayableMap>(assetsHandle.Result, LoadPlayableMap);
         await opHandle.Task;
+        Addressables.Release(assetsHandle);
     }
 
     private void LoadPlayableMap(PlayableMap playableMap) {
@@ -35,9 +37,14 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         addedPlayableMaps.Add(playableMap);
     }
 
-    public override void UnloadAllAssets() {
+    public override Task UnloadAllAssets() {
         foreach (var playableMap in addedPlayableMaps) {
             PlayableMapDatabase.RemovePlayableMap(playableMap);
         }
+        
+        if (opHandle.IsValid()) {
+            Addressables.Release(opHandle);
+        }
+        return Task.CompletedTask;
     }
 }

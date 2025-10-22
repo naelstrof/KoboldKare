@@ -1,17 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class PlantPostProcessor : ModPostProcessor {
     private List<ScriptablePlant> addedPlants;
-    public override async Task LoadAllAssets(IList<IResourceLocation> locations)  {
+    private AsyncOperationHandle opHandle;
+    public override async Task LoadAllAssets()  {
         addedPlants.Clear();
-        var opHandle = Addressables.LoadAssetsAsync<ScriptablePlant>(locations, LoadPlant);
+        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
+        await assetsHandle.Task;
+        opHandle = Addressables.LoadAssetsAsync<ScriptablePlant>(assetsHandle.Result, LoadPlant);
         await opHandle.Task;
+        Addressables.Release(assetsHandle);
     }
 
     public override void Awake() {
@@ -20,16 +21,22 @@ public class PlantPostProcessor : ModPostProcessor {
     }
 
     private void LoadPlant(ScriptablePlant plant) {
-        if (plant == null) {
+        if (!plant) {
             return;
         }
         addedPlants.Add(plant);
         PlantDatabase.AddPlant(plant);
     }
 
-    public override void UnloadAllAssets() {
+    public override Task UnloadAllAssets() {
         foreach (var plant in addedPlants) {
             PlantDatabase.RemovePlant(plant);
         }
+
+        if (opHandle.IsValid()) {
+            Addressables.Release(opHandle);
+        }
+
+        return Task.CompletedTask;
     }
 }

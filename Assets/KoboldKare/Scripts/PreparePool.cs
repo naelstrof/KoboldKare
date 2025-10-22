@@ -13,7 +13,7 @@ public class PreparePool : MonoBehaviour {
 
     private void Awake() {
         if (instance != null && instance != this) {
-            Destroy(this);
+            Destroy(gameObject);
         } else {
             instance = this;
         }
@@ -45,8 +45,8 @@ public class PreparePool : MonoBehaviour {
     }
 
     private void InternalRemovePrefab(string assetName) {
-        if (!dynamicPrefabs.ContainsKey(assetName)) return;
-        pool.ResourceCache.Remove(dynamicPrefabs[assetName].name);
+        if (!dynamicPrefabs.TryGetValue(assetName, out var prefab)) return;
+        pool.ResourceCache.Remove(prefab.name);
         dynamicPrefabs.Remove(assetName);
     }
 

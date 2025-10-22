@@ -14,14 +14,13 @@ using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 using Object = UnityEngine.Object;
 
 public class ModManager : MonoBehaviour {
     public enum ModSource {
         LocalModFolder,
         SteamWorkshop,
-        Unknown,
+        Any,
     }
 
     private struct ModInfoData {
@@ -43,6 +42,7 @@ public class ModManager : MonoBehaviour {
             ModInfoData modInfoData = new ModInfoData {
                 directoryInfo = directoryInfo,
                 source = source,
+                assets = JSONNode.Parse("{}")
             };
 
             using FileStream file = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read);
@@ -66,6 +66,10 @@ public class ModManager : MonoBehaviour {
 
             if (rootNode.HasKey("loadPriority")) {
                 modInfoData.loadPriority = rootNode["loadPriority"];
+            }
+
+            if (rootNode.HasKey("bundle")) {
+                modInfoData.assets = rootNode["bundle"];
             }
 
             if (rootNode.HasKey("version")) {
@@ -96,7 +100,7 @@ public class ModManager : MonoBehaviour {
         public string title;
         public DirectoryInfo directoryInfo;
         public string version;
-        public List<string> characters;
+        public JSONNode assets;
         public PublishedFileId_t publishedFileId;
         public string description;
         public float loadPriority;
@@ -126,9 +130,10 @@ public class ModManager : MonoBehaviour {
     }
 
     private class ModAssetBundle : Mod {
+        public AssetBundle bundle;
         public ModAssetBundle(ModInfoData info) : base(info) {
         }
-        private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/mod.bundle";
+        private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
         public override bool IsValid() {
             FileInfo bundleFileInfo = new FileInfo(bundleLocation);
             if (!bundleFileInfo.Exists) {
@@ -136,18 +141,13 @@ public class ModManager : MonoBehaviour {
             }
             return base.IsValid();
         }
-
+        
         public override async Task TryLoad() {
-            var handle = AssetBundle.LoadFromFileAsync(bundleLocation);
-            while (!handle.isDone) {
-                await Task.Delay(100);
-            }
-            var bundle = handle.assetBundle;
-            foreach (var assetName in info.characters) {
-            }
+            bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
         }
         public override Task TryUnload() {
-            throw new NotImplementedException();
+            bundle = null;
+            return Task.CompletedTask;
         }
     }
 
@@ -191,18 +191,7 @@ public class ModManager : MonoBehaviour {
             return Task.CompletedTask;
         }
 
-        public async Task<bool> Verify() {
-            if (!IsValid()) {
-                return false;
-            }
-            if (locator == null) {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryGetCatalogPath(out string path) {
+        private bool TryGetCatalogPath(out string path) {
             string searchDir = $"{info.directoryInfo.FullName}/{runningPlatform}";
             if (!Directory.Exists(searchDir)) {
                 path = "";
@@ -231,7 +220,9 @@ public class ModManager : MonoBehaviour {
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
     private bool changed = false;
-
+    [SerializeReference,SerializeReferenceButton]
+    private List<ModPostProcessor> modPostProcessors;
+    
     public static bool GetChanged() => instance.changed;
 
     private delegate bool ModConditional(Mod info);
@@ -307,7 +298,7 @@ public class ModManager : MonoBehaviour {
             if (node.HasKey("loadedFromSteam")) {
                 source = node["loadedFromSteam"] == true ? ModSource.SteamWorkshop : ModSource.LocalModFolder;
             } else {
-                source = ModSource.Unknown;
+                source = ModSource.Any;
             }
         }
         public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null)  {
@@ -367,7 +358,7 @@ public class ModManager : MonoBehaviour {
         await Mutex.WaitAsync();
         try {
             foreach (var mod in instance.fullModList) {
-                if (mod.info.title != stub.title || mod.info.publishedFileId != stub.id || mod.info.source != stub.source) continue;
+                if (!mod.GetRepresentedByStub(stub)) continue;
                 instance.changed = true;
                 mod.enabled = active;
                 break;
@@ -404,10 +395,10 @@ public class ModManager : MonoBehaviour {
 
             switch (modInfoData.version) {
                 case "v0.0.0":
-                    instance.AddMod(new ModAddressable(modInfoData));
+                    _ = instance.AddMod(new ModAddressable(modInfoData));
                     break;
                 case "v0.0.1":
-                    instance.AddMod(new ModTHING(modInfoData));
+                    _ = instance.AddMod(new ModAssetBundle(modInfoData));
                     break;
                 default:
                     Debug.LogError($"Failed to load mod {modPath}, unknown version {modInfoData.version}.");
@@ -487,7 +478,6 @@ public class ModManager : MonoBehaviour {
     }
 
     private void LoadConfig() {
-        fullModList.Clear();
         if (!Directory.Exists(jsonFolder)) {
             Directory.CreateDirectory(jsonFolder);
         }
@@ -548,7 +538,7 @@ public class ModManager : MonoBehaviour {
                             break;
                         }
                         case "v0.0.1": {
-                            await AddMod(new ModTHING(data));
+                            await AddMod(new ModAssetBundle(data));
                             break;
                         }
                     }
@@ -599,10 +589,6 @@ public class ModManager : MonoBehaviour {
         currentInspectedMod = null;
     }
 
-    private void OnInspect(Object obj) {
-        
-    }
-
     private async Task LoadMods(bool shouldInspect) {
         if (shouldInspect) {
             await InspectAddressableMods();
@@ -610,12 +596,22 @@ public class ModManager : MonoBehaviour {
         }
 
         try {
+            List<Task> tasks = new List<Task>();
             foreach (var modPostProcessor in modPostProcessors) {
-                var assets = Addressables.LoadResourceLocationsAsync(modPostProcessor.GetSearchLabel().RuntimeKey);
-                await assets.Task;
-                await modPostProcessor.LoadAllAssets(assets.Result);
-                Addressables.Release(assets);
+                tasks.Add(modPostProcessor.LoadAllAssets());
             }
+            await Task.WhenAll(tasks.ToArray());
+            tasks.Clear();
+            // Load asset bundles
+            foreach(var mod in fullModList) {
+                if (!mod.enabled || mod is not ModAssetBundle modAssetBundle) {
+                    continue;
+                }
+                foreach (var modPostProcessor in modPostProcessors) {
+                    tasks.Add(modPostProcessor.HandleAssetBundles(modAssetBundle.info.assets, modAssetBundle.bundle));
+                }
+            }
+            await Task.WhenAll(tasks.ToArray());
         } catch (Exception e) {
             failedToLoadMods = true;
             lastException = e;
@@ -626,14 +622,28 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-    private void UnloadMods() {
+    private async Task UnloadMods() {
+        List<Task> tasks = new List<Task>();
         foreach (var modPostProcessor in modPostProcessors) {
-            modPostProcessor.UnloadAllAssets();
+            try {
+                tasks.Add(modPostProcessor.UnloadAllAssets());
+            } catch (Exception e) {
+                lastException = e;
+                Debug.LogException(e);
+                Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
+            }
         }
 
         foreach (var mod in fullModList) {
-            mod.TryUnload();
+            try {
+                tasks.Add(mod.TryUnload());
+            } catch (Exception e) {
+                lastException = e;
+                Debug.LogException(e);
+                Debug.LogError($"Failed to unload assets for {mod.info.title} [{mod.info.publishedFileId}].");
+            }
         }
+        await Task.WhenAll(tasks.ToArray());
         
         Resources.UnloadUnusedAssets();
     }
@@ -692,13 +702,13 @@ public class ModManager : MonoBehaviour {
         LoadConfig();
         await ReloadMods(false);
         StringBuilder builder = new StringBuilder();
+        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         builder.Append("Mods Installed: {\n");
         foreach (var mod in GetLoadedMods()) {
             builder.Append($"[title:{mod.title}, folderTitle:{mod.folderTitle}, id:{mod.id}, source:{mod.source}, enabled:{mod.enabled}, causedException:{mod.causedException}],\n");
         }
         builder.Append("}\n");
         Debug.Log(builder.ToString());
-        instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
     
     private async Task ReloadMods(bool shouldInspect) {
@@ -706,13 +716,21 @@ public class ModManager : MonoBehaviour {
         await Mutex.WaitAsync();
         ready = false;
         try {
-            UnloadMods();
+            await UnloadMods();
+            var tasks = new List<Task>();
             foreach (var modInfo in fullModList) {
                 if (!modInfo.enabled) {
                     continue;
                 }
 
+                if (modInfo is ModAddressable modAddressable) {
+                    // Slow, but must be done in serial
+                    await modAddressable.TryLoad();
+                } else {
+                    tasks.Add(modInfo.TryLoad());
+                }
             }
+            await Task.WhenAll(tasks.ToArray());
         } catch (Exception e) {
             failedToLoadMods = true;
             lastException = e;

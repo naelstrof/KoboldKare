@@ -50,6 +50,6 @@ public class ModInfoDisplay : MonoBehaviour {
     }
 
     private void OnToggle(bool newState) {
-        ModManager.SetModActive(info, newState);
+        _ = ModManager.SetModActive(info, newState);
     }
 }

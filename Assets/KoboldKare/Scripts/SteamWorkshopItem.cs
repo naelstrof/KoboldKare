@@ -145,7 +145,7 @@ public class SteamWorkshopItem {
 			arrayNode.Add(tag);
 		}
         rootNode["tags"] = arrayNode;
-        
+
         var charactersArrayNode = new JSONArray();
         HashSet<string> characterAssetNames = new HashSet<string>();
         foreach(var character in playableCharacters) {
@@ -154,7 +154,10 @@ public class SteamWorkshopItem {
         foreach(var characterAssetName in characterAssetNames) {
 	        charactersArrayNode.Add(characterAssetName);
 		}
-        rootNode["characters"] = charactersArrayNode;
+
+        var bundle = JSONNode.Parse("{}");
+        bundle["PlayableCharacter"] = charactersArrayNode;
+        rootNode["bundle"] = bundle;
         
         return rootNode.ToString();
 	}
@@ -245,7 +248,7 @@ public class SteamWorkshopItem {
 			Directory.CreateDirectory(modBuildPath);
 		}
 		AssetBundleBuild build = new AssetBundleBuild {
-			assetBundleName = GetFileNameSafeTitle(),
+			assetBundleName = "bundle",
 			assetNames = assets,
 		};
 		AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, new[] { build }, BuildAssetBundleOptions.None, target);

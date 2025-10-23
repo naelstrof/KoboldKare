@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -23,18 +24,21 @@ public class PlayableMapPostProcessor : ModPostProcessor {
     }
 
     private void LoadPlayableMap(PlayableMap playableMap) {
-        // This can happen if multiple maps try to load in a row.
-        if (playableMap == null) {
-            return;
-        }
-        for (int i = 0; i < addedPlayableMaps.Count; i++) {
-            if (addedPlayableMaps[i].unityScene.RuntimeKey != playableMap.unityScene.RuntimeKey) continue;
-            PlayableMapDatabase.RemovePlayableMap(playableMap);
-            addedPlayableMaps.RemoveAt(i);
-            break;
-        }
         PlayableMapDatabase.AddPlayableMap(playableMap);
         addedPlayableMaps.Add(playableMap);
+    }
+
+    public override async Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {
+        var node = mod.info.assets;
+        if (node.HasKey("Scene")) {
+            PlayableMap playableMap = ScriptableObject.CreateInstance<PlayableMap>();
+            var icon = await mod.bundle.LoadAssetAsync<Object>(node["SceneIcon"]).AsSingleAssetTask();
+            string sceneTitle = node.HasKey("SceneTitle") ? node["SceneTitle"] : "Unknown Map";
+            string sceneDescription = node.HasKey("SceneDescription") ? node["SceneDescription"] : "No description provided.";
+            playableMap.SetFromBundle(mod.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon as Sprite, sceneDescription);
+            PlayableMapDatabase.AddPlayableMap(playableMap);
+            addedPlayableMaps.Add(playableMap);
+        }
     }
 
     public override Task UnloadAllAssets() {

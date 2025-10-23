@@ -23,6 +23,7 @@ public class LevelLoader : MonoBehaviour {
             return;
         }
     }
+    
     public Coroutine LoadLevel(string mapName) {
         StopAllCoroutines();
         return StartCoroutine(LoadLevelRoutine(mapName));

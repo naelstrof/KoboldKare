@@ -23,7 +23,7 @@ public class ModManager : MonoBehaviour {
         Any,
     }
 
-    private struct ModInfoData {
+    public struct ModInfoData {
         public static bool TryGetModInfoData(string jsonPath, ModSource source, out ModInfoData data) {
             FileInfo fileInfo = new FileInfo(jsonPath);
             if (!fileInfo.Exists) {
@@ -108,7 +108,7 @@ public class ModManager : MonoBehaviour {
         public ModSource source;
     }
 
-    private abstract class Mod {
+    public abstract class Mod {
         public ModInfoData info;
         public bool enabled;
         public bool causedException = false;
@@ -129,11 +129,15 @@ public class ModManager : MonoBehaviour {
         public abstract Task TryUnload();
     }
 
-    private class ModAssetBundle : Mod {
+    public class ModAssetBundle : Mod {
         public AssetBundle bundle;
         public ModAssetBundle(ModInfoData info) : base(info) {
         }
         private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
+
+        public string GetSceneBundleLocation() {
+            return $"{info.directoryInfo.FullName}/{runningPlatform}/scene";
+        }
         public override bool IsValid() {
             FileInfo bundleFileInfo = new FileInfo(bundleLocation);
             if (!bundleFileInfo.Exists) {
@@ -145,13 +149,13 @@ public class ModManager : MonoBehaviour {
         public override async Task TryLoad() {
             bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
         }
-        public override Task TryUnload() {
+        public override async Task TryUnload() {
+            await bundle.UnloadAsync(true).AsTask();
             bundle = null;
-            return Task.CompletedTask;
         }
     }
 
-    private class ModAddressable : Mod {
+    public class ModAddressable : Mod {
         public ModAddressable(ModInfoData info) : base(info) {
         }
         public override bool IsValid() {
@@ -608,7 +612,7 @@ public class ModManager : MonoBehaviour {
                     continue;
                 }
                 foreach (var modPostProcessor in modPostProcessors) {
-                    tasks.Add(modPostProcessor.HandleAssetBundles(modAssetBundle.info.assets, modAssetBundle.bundle));
+                    tasks.Add(modPostProcessor.HandleAssetBundleMod(modAssetBundle));
                 }
             }
             await Task.WhenAll(tasks.ToArray());

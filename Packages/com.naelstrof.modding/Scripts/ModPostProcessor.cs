@@ -18,7 +18,7 @@ public class ModPostProcessor {
     public virtual Task UnloadAllAssets() {
         return Task.CompletedTask;
     }
-    public virtual Task HandleAssetBundles(JSONNode rootNode, AssetBundle assetBundle) {
+    public virtual Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {
         return Task.CompletedTask;
     }
 }

@@ -1,15 +1,10 @@
 {
-    "name": "PhotonUnityNetworking",
+    "name": "Naelstrof.PhotonShared",
     "rootNamespace": "",
     "references": [
-        "PhotonRealtime",
-        "SimpleJSON",
-        "KoboldKare.ISavable",
-        "NetStack",
-        "Unity.Addressables",
-        "Unity.ResourceManager",
-        "naelstrof.Modding",
-        "Naelstrof.PhotonShared"
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:a8e7ca2a8a3f2c24a8209471262d578b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

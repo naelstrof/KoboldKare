@@ -20,7 +20,7 @@ public class MapPreviewSelectPanel : MonoBehaviour, IPointerEnterHandler, ISelec
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(OnClick);
         }
-        previewDisplay.sprite = playableMap.preview;
+        previewDisplay.sprite = playableMap.GetPreview();
     }
     
     void OnClick() {

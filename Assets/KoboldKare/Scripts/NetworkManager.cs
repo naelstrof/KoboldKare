@@ -291,8 +291,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     public void OnCreatedRoom() {
         cheatsEnabled = false;
-        if (SceneManager.GetActiveScene().name != selectedMap.unityScene.GetName()) {
-            LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
+        if (!selectedMap.GetRepresentedByKey(SceneManager.GetActiveScene().name)) {
+            LevelLoader.instance.LoadLevel(selectedMap.GetKey());
         }
     }
 

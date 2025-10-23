@@ -5,7 +5,7 @@ using System;
 using UnityEditor;
 using UnityEditor.UIElements;
 
-[CustomEditor(typeof(KoboldKareModdingProfile))]
+[CustomEditor(typeof(KoboldKareModdingProfile), true)]
 public class KoboldKareModdingProfileEditor : Editor {
     public override VisualElement CreateInspectorGUI() {
         var visualElement = new VisualElement();
@@ -22,13 +22,13 @@ public class KoboldKareModdingProfileEditor : Editor {
             var helpboxText = "";
             MessageType biggestMessageType = MessageType.None;
             foreach (var curTarget in targets) {
-                KoboldKareModdingProfile targetProfile = (KoboldKareModdingProfile)curTarget;
+                KoboldKareModdingProfile targetProfileObjects = (KoboldKareModdingProfile)curTarget;
                 try {
-                    targetProfile.Build();
+                    targetProfileObjects.Build();
                 } catch (Exception e) {
                     Debug.LogException(e);
                 }
-                helpboxText += $"{targetProfile.name}: {targetProfile.GetStatus(out var messageType)}\n";
+                helpboxText += $"{targetProfileObjects.name}: {targetProfileObjects.GetStatus(out var messageType)}\n";
                 biggestMessageType = (MessageType)Mathf.Max((int)biggestMessageType, (int)messageType);
             }
             helpBox.text = helpboxText;
@@ -42,8 +42,8 @@ public class KoboldKareModdingProfileEditor : Editor {
                 text = "Show Build Folder",
             };
             showBuildFolderButton.clicked += () => {
-                KoboldKareModdingProfile modProfile = (KoboldKareModdingProfile)target;
-                EditorUtility.RevealInFinder(modProfile.GetBuildFolder());
+                KoboldKareModdingProfile modProfileObjects = (KoboldKareModdingProfile)target;
+                EditorUtility.RevealInFinder(modProfileObjects.GetBuildFolder());
             };
             visualElement.Add(showBuildFolderButton);
         }
@@ -52,17 +52,22 @@ public class KoboldKareModdingProfileEditor : Editor {
     }
 }
 
-[CreateAssetMenu(menuName = "KoboldKare/Modding/KoboldKare Modding Profile", fileName = "New KoboldKare Modding Profile")]
-public class KoboldKareModdingProfile : ScriptableObject {
-    [SerializeField] private SteamWorkshopItem workshopItem;
-    public void Build() {
-        workshopItem.Build();
-    }
+public abstract class KoboldKareModdingProfile : ScriptableObject {
+    [SerializeField] protected SteamWorkshopItem workshopItem;
+    public abstract void Build();
     public string GetBuildFolder() {
         return workshopItem.GetModBuildPath(EditorUserBuildSettings.activeBuildTarget);
     }
     public string GetStatus(out MessageType messageType) {
         return workshopItem.GetStatus(out messageType);
+    }
+}
+
+[CreateAssetMenu(menuName = "KoboldKare/Modding/Objects", fileName = "New KoboldKare Modding Profile Objects")]
+public class KoboldKareModdingProfileObjects : KoboldKareModdingProfile {
+    [SerializeField] private SteamWorkshopItem.ModObjects modObjects;
+    public override void Build() {
+        workshopItem.Build(modObjects);
     }
 }
 

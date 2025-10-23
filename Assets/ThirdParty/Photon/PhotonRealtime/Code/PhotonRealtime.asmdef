@@ -1,6 +1,16 @@
 {
     "name": "PhotonRealtime",
-    "references": [],
+    "rootNamespace": "",
+    "references": [
+        "GUID:a8e7ca2a8a3f2c24a8209471262d578b"
+    ],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

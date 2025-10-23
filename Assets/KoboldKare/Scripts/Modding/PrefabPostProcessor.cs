@@ -61,15 +61,16 @@ public class PrefabPostProcessor : ModPostProcessor {
         addedGameObjects.Add(obj);
     }
 
-    public override async Task HandleAssetBundles(JSONNode rootNode, AssetBundle assetBundle) {
+    public override async Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {
         var key = searchLabel.labelString;
         List<Task> tasks = new List<Task>();
+        var rootNode = mod.info.assets;
         if (rootNode.HasKey(key)) {
             var array = rootNode[key].AsArray;
             foreach (var node in array) {
                 if (!node.Value.IsString) continue;
                 var assetName = node.Value;
-                var handle = assetBundle.LoadAssetAsync<GameObject>(assetName);
+                var handle = mod.bundle.LoadAssetAsync<GameObject>(assetName);
                 handle.completed += (a) => {
                     LoadPrefab(handle.asset as GameObject);
                 };

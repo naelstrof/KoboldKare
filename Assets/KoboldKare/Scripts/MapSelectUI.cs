@@ -57,9 +57,9 @@ public class MapSelectUI : MonoBehaviour {
         if (map == selectedMap) {
             MapSelector.StaticConfirm();
         }
-        mapTitleText.text = map.title;
-        mapDescriptionText.text = map.description;
-        mapPreview.sprite = map.preview;
+        mapTitleText.text = map.GetTitle();
+        mapDescriptionText.text = map.GetDescription();
+        mapPreview.sprite = map.GetPreview();
         selectedMap = map;
     }
 }

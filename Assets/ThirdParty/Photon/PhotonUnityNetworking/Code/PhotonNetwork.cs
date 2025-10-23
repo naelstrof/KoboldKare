@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Photon.Pun
 {
@@ -3110,10 +3111,12 @@ namespace Photon.Pun
                 SetLevelInPropsIfSynced(levelName);
             }
 
-            PhotonNetwork.IsMessageQueueRunning = false;
-            loadingLevelAndPausedNetwork = true;
-            //_AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
-            _AsyncLevelLoadingOperation = Addressables.LoadSceneAsync(levelName, LoadSceneMode.Single);
+
+            if (PlayableMapDatabase.TryGetPlayableMap(levelName, out var map)) {
+                PhotonNetwork.IsMessageQueueRunning = false;
+                loadingLevelAndPausedNetwork = true;
+                _AsyncLevelLoadingOperation = map.LoadAsync();
+            }
         }
 
         /// <summary>

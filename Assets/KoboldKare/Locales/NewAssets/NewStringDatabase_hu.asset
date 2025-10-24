@@ -1014,7 +1014,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: "Sz\xFCks\xE9g\xFCnk lesz egy nagyobb f\xE9szekre."
+    m_Localized: "Nagyobb f\xE9szekre lesz sz\xFCks\xE9g\xFCnk."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
@@ -1390,7 +1390,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 279799208752914432
     m_Localized: "A moddol\xE1shoz 64 bites kompatibilis rendszer sz\xFCks\xE9ges!
-      K\xE9rj\xFCk, friss\xEDtse az oper\xE1ci\xF3s rendszer\xE9t."
+      K\xE9rj\xFCk, friss\xEDtse oper\xE1ci\xF3s rendszer\xE9t."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320

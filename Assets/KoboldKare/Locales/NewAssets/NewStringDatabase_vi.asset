@@ -1164,7 +1164,7 @@ MonoBehaviour:
   - m_Id: 215233885836464147
     m_Localized: "Ch\xFAng ho\xE0n h\u1EA3o! T\xF4i s\u1EAFp... kh\xE1 b\u1EADn...
       T\xF4i s\u1EBD th\u0103ng ch\u1EE9c cho anh l\xEAn v\u1ECB tr\xED Gi\xE1m s\xE1t,
-      anh s\u1EBD thay t\xF4i mua kobold t\u1EEB nh\u1EEFng Kobold Karetakers kh\xE1c,
+      anh s\u1EBD mua kobold thay t\xF4i t\u1EEB nh\u1EEFng Kobold Karetakers kh\xE1c,
       t\xECm ng\u01B0\u1EDDi ch\u1EBF t\u1EA1o \u1ED1ng d\u1EABn c\u1EA7n thi\u1EBFt."
     m_Metadata:
       m_Items: []
@@ -1286,9 +1286,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
-    m_Localized: "T\xF4i mu\u1ED1n c\xF3 th\u1EADt nhi\u1EC1u kobold b\xE9o, ch\xFAng
-      th\u1EF1c s\u1EF1 h\u1EEFu \xEDch \u0111\u1EC3 l\xE0m v\u1EADt ch\u1EB7n gi\u1EA5y
-      v\xE0 g\u1ED1i."
+    m_Localized: "T\xF4i mu\u1ED1n nhi\u1EC1u kobold b\xE9o, ch\xFAng th\u1EF1c s\u1EF1
+      h\u1EEFu \xEDch \u0111\u1EC3 l\xE0m v\u1EADt ch\u1EB7n gi\u1EA5y v\xE0 g\u1ED1i."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620102
@@ -1317,7 +1316,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783215620107
     m_Localized: "G\u1EEDi cho t\xF4i th\u1EADt nhi\u1EC1u Kobold ng\u1EF1c b\u1EF1.
-      Con n\xE0y kh\xF4ng ph\u1EA3i \u0111\u1EC3 l\xE0m c\u1EA3nh \u0111\xE2u, ch\u1EC9
+      Con n\xE0y kh\xF4ng ph\u1EA3i \u0111\u1EC3 th\u1EF1c h\xE0nh \u0111\xE2u, ch\u1EC9
       l\xE0 \u0111\u1EC3 l\u1EAFc cho vui th\xF4i."
     m_Metadata:
       m_Items: []

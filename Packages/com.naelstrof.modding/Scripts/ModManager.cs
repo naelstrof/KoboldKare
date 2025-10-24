@@ -178,6 +178,11 @@ public class ModManager : MonoBehaviour {
             if (!IsValid()) {
                 return;
             }
+
+            if (locator != null) {
+                return;
+            }
+
             AddressablesRuntimeProperties.ClearCachedPropertyValues();
             currentLoadingMod = $"{info.directoryInfo.FullName}{Path.DirectorySeparatorChar}";
             if (!TryGetCatalogPath(out var catalogPath)) {
@@ -185,15 +190,18 @@ public class ModManager : MonoBehaviour {
                 causedException = true;
                 instance.changed = true;
             }
+
             var loader = Addressables.LoadContentCatalogAsync(catalogPath);
             await loader.Task;
-            if (!loader.IsDone || !loader.IsValid() || loader.Status == AsyncOperationStatus.Failed || loader.OperationException != null) {
+            if (!loader.IsDone || !loader.IsValid() || loader.Status == AsyncOperationStatus.Failed ||
+                loader.OperationException != null) {
                 enabled = false;
                 causedException = true;
                 instance.changed = true;
             } else {
                 locator = loader.Result;
             }
+
             Addressables.Release(loader);
         }
 
@@ -202,6 +210,7 @@ public class ModManager : MonoBehaviour {
                 return Task.CompletedTask;
             }
             Addressables.RemoveResourceLocator(locator);
+            locator = null;
             return Task.CompletedTask;
         }
 
@@ -616,8 +625,8 @@ public class ModManager : MonoBehaviour {
 
     private async Task LoadAllAssets(bool shouldInspect, bool includeEarly) {
         if (shouldInspect) {
-            await InspectAddressableMods();
-            Resources.UnloadUnusedAssets();
+            //await InspectAddressableMods();
+            //Resources.UnloadUnusedAssets();
         }
 
         try {
@@ -733,6 +742,21 @@ public class ModManager : MonoBehaviour {
         }
         stub = default;
         return false;
+    }
+
+    public static async Task EnableCatalogueForMod(ModStub stub) {
+        foreach (var mod in instance.fullModList) {
+            if (mod.GetRepresentedByStub(stub)) {
+                await mod.TryLoad();
+            }
+        }
+    }
+    public static async Task DisableCatalogueForMod(ModStub stub) {
+        foreach (var mod in instance.fullModList) {
+            if (mod.GetRepresentedByStub(stub)) {
+                await mod.TryUnload();
+            }
+        }
     }
 
     public static async Task LoadModNow(ModStub stub) {

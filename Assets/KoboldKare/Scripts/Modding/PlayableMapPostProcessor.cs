@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class PlayableMapPostProcessor : ModPostProcessor {
     private List<PlayableMap> addedPlayableMaps;
@@ -39,31 +40,65 @@ public class PlayableMapPostProcessor : ModPostProcessor {
             RenderTexture.ReleaseTemporary(rt);
         }
     }
+    
+    private struct PlayableMapLoadInfo {
+        public IResourceLocation location;
+        public ModManager.ModStub? stub;
+    }
+    
+    private PlayableMap DeepCopyPlayableMap(PlayableMap src) {
+        var playableMapCopy = Object.Instantiate(src);
+        Sprite newSprite = DeepCopySprite(src.GetPreview());
+        playableMapCopy.SetPreview(newSprite);
+        return playableMapCopy;
+    }
     public override async Task LoadAllAssets() {
         addedPlayableMaps.Clear();
         var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
         await assetsHandle.Task;
+        List<PlayableMapLoadInfo> playableMaps = new List<PlayableMapLoadInfo>();
+        
+        // Only allow one map to be loaded at a time...
         foreach (var resource in assetsHandle.Result) {
-            var opHandle = Addressables.LoadAssetAsync<PlayableMap>(resource);
+            if (ModManager.TryUnloadModThatProvidesAssetNow(resource, out var stub)) {
+                playableMaps.Add(new PlayableMapLoadInfo() {
+                    location = resource,
+                    stub = stub
+                });
+            } else {
+                playableMaps.Add(new PlayableMapLoadInfo() {
+                    location = resource,
+                    stub = null
+                });
+            }
+        }
+        Addressables.Release(assetsHandle);
+
+        foreach (var loadInfo in playableMaps) {
+            if (loadInfo.stub == null) {
+                var builtInMapHandle = Addressables.LoadAssetAsync<PlayableMap>(loadInfo.location);
+                PlayableMap builtInMap = await builtInMapHandle.Task;
+                var copy = DeepCopyPlayableMap(builtInMap);
+                copy.stub = null;
+                PlayableMapDatabase.AddPlayableMap(copy);
+                addedPlayableMaps.Add(copy);
+                Addressables.Release(builtInMapHandle);
+                continue;
+            }
+
+            var opHandle = Addressables.LoadAssetAsync<PlayableMap>(loadInfo.location);
             PlayableMap map = await opHandle.Task;
             if (!map) {
                 Addressables.Release(opHandle);
                 continue;
             }
-            var playableMapCopy = Object.Instantiate(map);
 
-            Sprite newSprite = DeepCopySprite(map.GetPreview());
-            playableMapCopy.SetPreview(newSprite);
-            
-            if (ModManager.TryUnloadModThatProvidesAssetNow(resource, out var stub)) {
-                Debug.Log(playableMapCopy.name + " is provided by mod " + stub.title + ", assigning stub.");
-                playableMapCopy.stub = stub;
-            }
+            var playableMapCopy = DeepCopyPlayableMap(map);
+            playableMapCopy.stub = loadInfo.stub;
             PlayableMapDatabase.AddPlayableMap(playableMapCopy);
             addedPlayableMaps.Add(playableMapCopy);
             Addressables.Release(opHandle);
         }
-        Addressables.Release(assetsHandle);
     }
 
     public override async Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {

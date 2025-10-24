@@ -925,7 +925,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "L\xE4hetin sinulle tarvikkeita hampurilaisen tekemiseen. K\xE4yt\xE4
-      jauhinta sekoittaaksesi ne ja sy\xF6tt\xE4\xE4ksesi ne sitten koboldille."
+      jauhinta niiden sekoittamiseen ja sy\xF6t\xE4 ne sitten koboldille."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -938,7 +938,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Tee maitopohjaisia \u200B\u200Bruokia!"
+    m_Localized: "Tee jotain maitopohjaisia \u200B\u200Bruokia!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
@@ -962,7 +962,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Aistin pime\xE4n l\xE4sn\xE4olon l\xE4heisiss\xE4 luolissa, mene
-      tutkimaan niit\xE4."
+      tutkimaan asiaa."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Rotu: Vatsaan meno!'
+    m_Localized: 'Rotu: Vatsalle meno!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101

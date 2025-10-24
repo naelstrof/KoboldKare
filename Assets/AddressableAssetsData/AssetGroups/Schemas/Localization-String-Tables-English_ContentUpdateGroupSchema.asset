@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
-  m_Name: Localization-String-Tables-Czech_ContentUpdateGroupSchema
+  m_Name: Localization-String-Tables-English_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 37a7685362aeb8f4eaa303f3d7a5614d, type: 2}
+  m_Group: {fileID: 11400000, guid: eb741327efef1f5cc870b83596b136fd, type: 2}
   m_StaticContent: 0

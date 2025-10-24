@@ -904,7 +904,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Pau banhado
+    m_Localized: Dick banhado
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
@@ -1197,7 +1197,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "D\xEA um g\xE1s!"
+    m_Localized: Aumente o suco!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
@@ -1432,7 +1432,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 623266765225402368
-    m_Localized: Matiz da roupa
+    m_Localized: Tonalidade da roupa
     m_Metadata:
       m_Items: []
   references:

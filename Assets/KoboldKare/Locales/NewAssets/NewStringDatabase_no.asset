@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: Enkle, kroppssikre, hypoallergeniske metallstenger. (Ja, de skal
+    m_Localized: Enkle, kroppssikre og hypoallergeniske metallstenger. (Ja, de skal
       i brystvortene dine.)
     m_Metadata:
       m_Items: []
@@ -1293,7 +1293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Brystkrymping
+    m_Localized: Krymping av bryster
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032

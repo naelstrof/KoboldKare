@@ -1102,8 +1102,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464141
-    m_Localized: Ik wil een hele kleine kobold die in... kleine, intieme spleten
-      past.
+    m_Localized: Ik zou graag een hele kleine kobold willen die in... kleine, intieme
+      spleten past.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
@@ -1131,7 +1131,7 @@ MonoBehaviour:
   - m_Id: 215233885836464147
     m_Localized: Ze zijn perfect! Ik ga het... heel druk krijgen... Ik promoveer
       je tot een functie als Overseer, je gaat namens mij kobolds kopen bij andere
-      Kobold Karetakers en iemand zoeken die de benodigde buizen kan maken.
+      Kobold Karetakers en iemand vinden die de benodigde buizen kan maken.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1292,7 +1292,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Reisziekteverminderaar
+    m_Localized: Vermindert reisziekte
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944

@@ -587,7 +587,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
-    m_Localized: "Magiczny dodatek z w\u0119z\u0142em, k\xF3\u0142kiem po\u015Brodku
+    m_Localized: "Magiczny dodatek z w\u0119z\u0142em, pier\u015Bcieniem po\u015Brodku
       i wypustkami."
     m_Metadata:
       m_Items: []
@@ -1100,7 +1100,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464142
-    m_Localized: Kot-strofa
+    m_Localized: Kotostrofa
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464143
@@ -1170,7 +1170,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 215233885836464129
     m_Localized: "Jest tam te\u017C mn\xF3stwo rzeczy z przodu i za mn\u0105, wi\u0119c
-      wchod\u017Acie tu, nie ma si\u0119 czego wstydzi\u0107."
+      wchod\u017Acie tam, nie ma potrzeby si\u0119 wstydzi\u0107."
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464130
@@ -1209,7 +1209,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: "Menu g\u0142\xF3wne Safe-for-Work"
+    m_Localized: "Menu g\u0142\xF3wne Safe-for-work"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096

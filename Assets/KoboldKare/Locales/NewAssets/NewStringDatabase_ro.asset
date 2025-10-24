@@ -704,7 +704,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Bun\u0103 treab\u0103, acum trimite-mi noul kobold \u0219i te voi
+    m_Localized: "Bun\u0103 treab\u0103, acum trimite-mi noul Kobold \u0219i te voi
       r\u0103spl\u0103ti pentru eforturile tale."
     m_Metadata:
       m_Items: []
@@ -857,7 +857,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449728
-    m_Localized: "Lipoi de ou\u0103"
+    m_Localized: "Lichior de ou\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449729
@@ -1216,7 +1216,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, iar asta \xEEnseamn\u0103
+    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, ceea ce \xEEnseamn\u0103
       c\u0103 ai nevoie de mai multe sucuri de fructe. M\u0103cin\u0103 mai multe
       fructe!"
     m_Metadata:
@@ -1410,7 +1410,8 @@ MonoBehaviour:
       m_Items:
       - rid: 1602997996487704594
   - m_Id: 280448613000617984
-    m_Localized: "Conectarea la Steam a e\u0219uat, nu descarc\u0103 automat modurile."
+    m_Localized: "Conectarea la Steam a e\u0219uat, modurile nu se descarc\u0103
+      automat."
     m_Metadata:
       m_Items: []
   - m_Id: 295755658549579776

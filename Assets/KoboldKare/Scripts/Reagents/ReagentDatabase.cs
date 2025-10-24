@@ -104,7 +104,7 @@ public class ReagentDatabase : MonoBehaviour {
     }
 
     public static void AddReagentReaction(ScriptableReagentReaction newReaction) {
-        for (int i = 0; i < instance.reagents.Count; i++) {
+        for (int i = 0; i < instance.reactions.Count; i++) {
             var reaction = instance.reactions[i];
             if (reaction.name != newReaction.name) continue;
             instance.reactions[i] = newReaction;

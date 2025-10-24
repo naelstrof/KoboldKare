@@ -127,6 +127,9 @@ public class PlayableMap : ScriptableObject {
         } else {
             var bundle = AssetBundle.LoadFromFile(bundlePath);
             var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);
+            if (handle == null) {
+                return new BoxedSceneLoad();
+            }
             handle.completed += operation => {
                 bundle.Unload(false);
             };

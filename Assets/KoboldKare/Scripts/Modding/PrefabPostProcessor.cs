@@ -74,7 +74,7 @@ public class PrefabPostProcessor : ModPostProcessor {
                 handle.completed += (a) => {
                     LoadPrefab(handle.asset as GameObject);
                 };
-                tasks.Add(handle.AsSingleAssetTask());
+                tasks.Add(handle.AsSingleAssetTask<GameObject>());
             }
         }
         await Task.WhenAll(tasks);

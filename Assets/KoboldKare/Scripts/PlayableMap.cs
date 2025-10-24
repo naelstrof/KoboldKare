@@ -82,14 +82,14 @@ public class PlayableMap : ScriptableObject {
 
 
     public bool GetRepresentedByKey(string key) {
-        if (unityScene.RuntimeKeyIsValid()) {
+        if (string.IsNullOrEmpty(bundleAssetName)) {
             return key == (string)unityScene.RuntimeKey;
         } else {
             return key == GetSceneName();
         }
     }
     public string GetSceneName() {
-        if (unityScene.RuntimeKeyIsValid()) {
+        if (string.IsNullOrEmpty(bundleAssetName)) {
             return unityScene.GetName();
         } else {
             return Path.GetFileNameWithoutExtension(bundleAssetName);
@@ -97,7 +97,7 @@ public class PlayableMap : ScriptableObject {
     }
 
     public string GetKey() {
-        if (unityScene.RuntimeKeyIsValid()) {
+        if (string.IsNullOrEmpty(bundleAssetName)) {
             return (string)unityScene.RuntimeKey;
         } else {
             return GetSceneName();
@@ -118,7 +118,7 @@ public class PlayableMap : ScriptableObject {
     }
 
     public BoxedSceneLoad LoadAsync() {
-        if (unityScene.RuntimeKeyIsValid()) {
+        if (string.IsNullOrEmpty(bundleAssetName)) {
             if (stub != null) {
                 return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub.Value, unityScene.RuntimeKey));
             } else {

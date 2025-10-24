@@ -35,13 +35,13 @@ public static class AssetBundleRequestExtension {
         req.completed += Completed;
         return tcs.Task;
     }
-    public static Task<UnityEngine.Object> AsSingleAssetTask(this AssetBundleRequest req) {
+    public static Task<T> AsSingleAssetTask<T>(this AssetBundleRequest req) where T : UnityEngine.Object {
         if (req == null) throw new ArgumentNullException(nameof(req));
-        if (req.isDone) return Task.FromResult(req.asset);
-        var tcs = new TaskCompletionSource<UnityEngine.Object>(TaskCreationOptions.RunContinuationsAsynchronously);
+        if (req.isDone) return Task.FromResult((T)req.asset);
+        var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
         void Completed(AsyncOperation op) {
             try {
-                tcs.TrySetResult(((AssetBundleRequest)op).asset);
+                tcs.TrySetResult((T)((AssetBundleRequest)op).asset);
             } catch (Exception ex) {
                 tcs.TrySetException(ex);
             } finally {

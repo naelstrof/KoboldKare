@@ -105,12 +105,13 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         var node = mod.info.assets;
         if (node.HasKey("Scene")) {
             PlayableMap playableMap = ScriptableObject.CreateInstance<PlayableMap>();
-            var icon = await mod.bundle.LoadAssetAsync<Object>(node["SceneIcon"]).AsSingleAssetTask();
+            var icon = await mod.bundle.LoadAssetAsync<Sprite>(node["SceneIcon"]).AsSingleAssetTask<Sprite>();
             string sceneTitle = node.HasKey("SceneTitle") ? node["SceneTitle"] : "Unknown Map";
             string sceneDescription = node.HasKey("SceneDescription") ? node["SceneDescription"] : "No description provided.";
-            playableMap.SetFromBundle(mod.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon as Sprite, sceneDescription);
-            PlayableMapDatabase.AddPlayableMap(playableMap);
-            addedPlayableMaps.Add(playableMap);
+            playableMap.SetFromBundle(mod.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon, sceneDescription);
+            var copy = DeepCopyPlayableMap(playableMap);
+            PlayableMapDatabase.AddPlayableMap(copy);
+            addedPlayableMaps.Add(copy);
         }
     }
 

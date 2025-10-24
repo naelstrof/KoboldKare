@@ -241,6 +241,10 @@ namespace Photon.Pun
         public static float LevelLoadingProgress
         {
             get {
+                if (_AsyncLevelLoadingOperation == null) {
+                    _levelLoadingProgress = 1f;
+                    return _levelLoadingProgress;
+                }
                 _levelLoadingProgress = _AsyncLevelLoadingOperation.Progress;
                 return _levelLoadingProgress;
             }
@@ -2170,7 +2174,7 @@ namespace Photon.Pun
 
 
             // if the new levelId does not match the current room-property, we can cancel existing loading (as we start a new one)
-            if (!_AsyncLevelLoadingOperation.IsDone)
+            if (_AsyncLevelLoadingOperation is { IsDone: false })
             {
                 Debug.LogWarning("PUN cancels an ongoing async level load, as another scene should be loaded. Next scene to load: " + levelId);
             }

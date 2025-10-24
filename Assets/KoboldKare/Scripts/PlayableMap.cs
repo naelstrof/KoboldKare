@@ -1,6 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -40,7 +45,17 @@ public class PlayableMap : ScriptableObject {
     
     [SerializeField] private string bundlePath;
     [SerializeField] private string bundleAssetName;
+
+    [NonSerialized]
+    public ModManager.ModStub? stub;
     
+    [NonSerialized]
+    private List<AsyncOperationHandle> loadedHandles;
+
+    public void SetPreview(Sprite preview) {
+        this.preview = preview;
+    }
+
     public void SetFromBundle(string path, string assetName, string title, Sprite preview, string description) {
         bundlePath = path;
         bundleAssetName = assetName;
@@ -52,17 +67,29 @@ public class PlayableMap : ScriptableObject {
     public string GetTitle() => title;
     public Sprite GetPreview() => preview;
     public string GetDescription() => description;
-    
-    
+
+    private void Awake() {
+        loadedHandles = new List<AsyncOperationHandle>();
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnSceneUnloaded(Scene arg0) {
+        foreach(var handle in loadedHandles) {
+            Addressables.Release(handle);
+        }
+        loadedHandles.Clear();
+    }
+
+
     public bool GetRepresentedByKey(string key) {
-        if (unityScene.IsValid()) {
+        if (unityScene.RuntimeKeyIsValid()) {
             return key == (string)unityScene.RuntimeKey;
         } else {
             return key == GetSceneName();
         }
     }
     public string GetSceneName() {
-        if (unityScene.IsValid()) {
+        if (unityScene.RuntimeKeyIsValid()) {
             return unityScene.GetName();
         } else {
             return Path.GetFileNameWithoutExtension(bundleAssetName);
@@ -70,16 +97,33 @@ public class PlayableMap : ScriptableObject {
     }
 
     public string GetKey() {
-        if (unityScene.IsValid()) {
+        if (unityScene.RuntimeKeyIsValid()) {
             return (string)unityScene.RuntimeKey;
         } else {
             return GetSceneName();
         }
     }
 
+    private async Task LoadBundleScene(string bundlePath, string sceneName) {
+        var bundle = await AssetBundle.LoadFromFileAsync(bundlePath).AsTask();
+        await SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single).AsTask();
+        bundle.Unload(false);
+    }
+    
+    private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
+        await ModManager.LoadModNow(stub);
+        var handle = Addressables.LoadSceneAsync(unityScene.RuntimeKey);
+        await handle.Task;
+        loadedHandles.Add(handle);
+    }
+
     public BoxedSceneLoad LoadAsync() {
-        if (unityScene.IsValid()) {
-            return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync(unityScene.RuntimeKey, LoadSceneMode.Single));
+        if (unityScene.RuntimeKeyIsValid()) {
+            if (stub != null) {
+                return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub.Value, unityScene.RuntimeKey));
+            } else {
+                return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync(unityScene.RuntimeKey));
+            }
         } else {
             var bundle = AssetBundle.LoadFromFile(bundlePath);
             var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);

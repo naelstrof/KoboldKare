@@ -3111,12 +3111,9 @@ namespace Photon.Pun
                 SetLevelInPropsIfSynced(levelName);
             }
 
-
-            if (PlayableMapDatabase.TryGetPlayableMap(levelName, out var map)) {
-                PhotonNetwork.IsMessageQueueRunning = false;
-                loadingLevelAndPausedNetwork = true;
-                _AsyncLevelLoadingOperation = map.LoadAsync();
-            }
+            PhotonNetwork.IsMessageQueueRunning = false;
+            loadingLevelAndPausedNetwork = true;
+            _AsyncLevelLoadingOperation = MapLoadingInterop.RequestMapLoad(levelName);
         }
 
         /// <summary>

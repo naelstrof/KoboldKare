@@ -22768,6 +22768,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9752f706d88fa4f429ba00e1d3b5dc86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  earlyModPostProcessors:
+  - rid: 998295526335578113
   modPostProcessors:
   - rid: 7257832617762881540
   - rid: 7257832617762881542
@@ -22779,13 +22781,22 @@ MonoBehaviour:
   - rid: 7257832884800847877
   - rid: 7257832916695908353
   - rid: 8869783460724080641
-  - rid: 8869783670453436453
-  - rid: 8869783688933801988
-  - rid: 1602998494081056771
+  - rid: 998295526335578114
+  - rid: 998295526335578115
   references:
     version: 2
     RefIds:
-    - rid: 1602998494081056771
+    - rid: 998295526335578113
+      type: {class: PlayableMapPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: PlayableMap
+    - rid: 998295526335578114
+      type: {class: EquipmentPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: Equipment
+    - rid: 998295526335578115
       type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
       data:
         searchLabel:
@@ -22861,16 +22872,6 @@ MonoBehaviour:
       data:
         searchLabel:
           m_LabelString: Setting
-    - rid: 8869783670453436453
-      type: {class: PlayableMapPostProcessor, ns: , asm: Assembly-CSharp}
-      data:
-        searchLabel:
-          m_LabelString: PlayableMap
-    - rid: 8869783688933801988
-      type: {class: EquipmentPostProcessor, ns: , asm: Assembly-CSharp}
-      data:
-        searchLabel:
-          m_LabelString: Equipment
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0

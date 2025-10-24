@@ -14,6 +14,7 @@ using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 using Object = UnityEngine.Object;
 
 public class ModManager : MonoBehaviour {
@@ -127,6 +128,7 @@ public class ModManager : MonoBehaviour {
 
         public abstract Task TryLoad();
         public abstract Task TryUnload();
+        public abstract bool Provides(IResourceLocation location);
     }
 
     public class ModAssetBundle : Mod {
@@ -136,7 +138,7 @@ public class ModManager : MonoBehaviour {
         private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
 
         public string GetSceneBundleLocation() {
-            return $"{info.directoryInfo.FullName}/{runningPlatform}/scene";
+            return $"{info.directoryInfo.FullName}/{runningPlatform}/scenebundle";
         }
         public override bool IsValid() {
             FileInfo bundleFileInfo = new FileInfo(bundleLocation);
@@ -150,8 +152,15 @@ public class ModManager : MonoBehaviour {
             bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
         }
         public override async Task TryUnload() {
+            if (!bundle) {
+                return;
+            }
             await bundle.UnloadAsync(true).AsTask();
             bundle = null;
+        }
+
+        public override bool Provides(IResourceLocation location) {
+            return false;
         }
     }
 
@@ -185,6 +194,7 @@ public class ModManager : MonoBehaviour {
             } else {
                 locator = loader.Result;
             }
+            Addressables.Release(loader);
         }
 
         public override Task TryUnload() {
@@ -193,6 +203,13 @@ public class ModManager : MonoBehaviour {
             }
             Addressables.RemoveResourceLocator(locator);
             return Task.CompletedTask;
+        }
+
+        public override bool Provides(IResourceLocation location) {
+            if (locator == null) {
+                return false;
+            }
+            return locator.Locate(location.PrimaryKey, typeof(Object), out var locations) && locations.Contains(location);
         }
 
         private bool TryGetCatalogPath(out string path) {
@@ -224,6 +241,10 @@ public class ModManager : MonoBehaviour {
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
     private bool changed = false;
+    
+    [SerializeReference,SerializeReferenceButton]
+    private List<ModPostProcessor> earlyModPostProcessors;
+    
     [SerializeReference,SerializeReferenceButton]
     private List<ModPostProcessor> modPostProcessors;
     
@@ -593,7 +614,7 @@ public class ModManager : MonoBehaviour {
         currentInspectedMod = null;
     }
 
-    private async Task LoadMods(bool shouldInspect) {
+    private async Task LoadAllAssets(bool shouldInspect, bool includeEarly) {
         if (shouldInspect) {
             await InspectAddressableMods();
             Resources.UnloadUnusedAssets();
@@ -601,6 +622,12 @@ public class ModManager : MonoBehaviour {
 
         try {
             List<Task> tasks = new List<Task>();
+            if (includeEarly) {
+                foreach (var modPostProcessor in earlyModPostProcessors) {
+                    tasks.Add(modPostProcessor.LoadAllAssets());
+                }
+            }
+
             foreach (var modPostProcessor in modPostProcessors) {
                 tasks.Add(modPostProcessor.LoadAllAssets());
             }
@@ -611,6 +638,12 @@ public class ModManager : MonoBehaviour {
                 if (!mod.enabled || mod is not ModAssetBundle modAssetBundle) {
                     continue;
                 }
+                if (includeEarly) {
+                    foreach (var modPostProcessor in earlyModPostProcessors) {
+                        tasks.Add(modPostProcessor.HandleAssetBundleMod(modAssetBundle));
+                    }
+                }
+
                 foreach (var modPostProcessor in modPostProcessors) {
                     tasks.Add(modPostProcessor.HandleAssetBundleMod(modAssetBundle));
                 }
@@ -626,8 +659,19 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-    private async Task UnloadMods() {
+    private async Task UnloadAllAssets(bool includeEarly) {
         List<Task> tasks = new List<Task>();
+        if (includeEarly) {
+            foreach (var modPostProcessor in earlyModPostProcessors) {
+                try {
+                    tasks.Add(modPostProcessor.UnloadAllAssets());
+                } catch (Exception e) {
+                    lastException = e;
+                    Debug.LogException(e);
+                    Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
+                }
+            }
+        }
         foreach (var modPostProcessor in modPostProcessors) {
             try {
                 tasks.Add(modPostProcessor.UnloadAllAssets());
@@ -637,7 +681,12 @@ public class ModManager : MonoBehaviour {
                 Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
             }
         }
+        await Task.WhenAll(tasks.ToArray());
+    }
 
+    private async Task UnloadMods() {
+        List<Task> tasks = new List<Task>();
+        tasks.Add(UnloadAllAssets(true));
         foreach (var mod in fullModList) {
             try {
                 tasks.Add(mod.TryUnload());
@@ -674,6 +723,29 @@ public class ModManager : MonoBehaviour {
         lastException = e;
     }
 
+    public static bool TryUnloadModThatProvidesAssetNow(IResourceLocation location, out ModStub stub) {
+        foreach (var mod in instance.fullModList) {
+            if (mod.Provides(location)) {
+                mod.TryUnload();
+                stub = new ModStub(mod.info.title, mod.info.publishedFileId, mod.info.source, mod.info.directoryInfo.Name, mod.causedException, mod.info.description, mod.enabled, mod.info.preview);
+                return true;
+            }
+        }
+        stub = default;
+        return false;
+    }
+
+    public static async Task LoadModNow(ModStub stub) {
+        await instance.UnloadAllAssets(false);
+        foreach (var mod in instance.fullModList) {
+            if (mod.GetRepresentedByStub(stub)) {
+                await mod.TryLoad();
+                break;
+            }
+        }
+        await instance.LoadAllAssets(false, false);
+    }
+
     private void Start() {
         if (instance != null && instance != this) {
             Destroy(this);
@@ -691,6 +763,9 @@ public class ModManager : MonoBehaviour {
         ready = false;
         instance = this;
         fullModList = new List<Mod>();
+        foreach(var modPostProcessor in earlyModPostProcessors) {
+            modPostProcessor.Awake();
+        }
         foreach(var modPostProcessor in modPostProcessors) {
             modPostProcessor.Awake();
         }
@@ -741,7 +816,7 @@ public class ModManager : MonoBehaviour {
             throw;
         } finally {
             try {
-                await LoadMods(shouldInspect);
+                await LoadAllAssets(shouldInspect, true);
             } finally {
                 Mutex.Release();
             }

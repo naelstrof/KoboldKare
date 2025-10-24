@@ -225,7 +225,7 @@ namespace Photon.Pun
 
 
         // for asynchronous network synched loading.
-        private static AsyncOperationHandle<SceneInstance> _AsyncLevelLoadingOperation;
+        private static BoxedSceneLoad _AsyncLevelLoadingOperation;
 
         private static float _levelLoadingProgress = 0f;
 
@@ -240,17 +240,12 @@ namespace Photon.Pun
         /// <value>The level loading progress. Ranges from 0 to 1.</value>
         public static float LevelLoadingProgress
         {
-            get
-            {
-                if (_AsyncLevelLoadingOperation.IsValid())
-                {
-                    _levelLoadingProgress = _AsyncLevelLoadingOperation.PercentComplete;
-                }
-                else if (_levelLoadingProgress > 0f)
-                {
+            get {
+                if (_AsyncLevelLoadingOperation == null) {
                     _levelLoadingProgress = 1f;
+                    return _levelLoadingProgress;
                 }
-
+                _levelLoadingProgress = _AsyncLevelLoadingOperation.Progress;
                 return _levelLoadingProgress;
             }
         }
@@ -264,9 +259,7 @@ namespace Photon.Pun
         private static void LeftRoomCleanup()
         {
             // Clean up if we were loading asynchronously.
-            if (_AsyncLevelLoadingOperation.IsValid()) {
-                _AsyncLevelLoadingOperation = default;
-            }
+            _AsyncLevelLoadingOperation = new BoxedSceneLoad();
 
 
             bool wasInRoom = NetworkingClient.CurrentRoom != null;
@@ -2181,15 +2174,12 @@ namespace Photon.Pun
 
 
             // if the new levelId does not match the current room-property, we can cancel existing loading (as we start a new one)
-            if (_AsyncLevelLoadingOperation.IsValid())
+            if (_AsyncLevelLoadingOperation is { IsDone: false })
             {
-                if (!_AsyncLevelLoadingOperation.IsDone)
-                {
-                    Debug.LogWarning("PUN cancels an ongoing async level load, as another scene should be loaded. Next scene to load: " + levelId);
-                }
-
-                _AsyncLevelLoadingOperation = default;
+                Debug.LogWarning("PUN cancels an ongoing async level load, as another scene should be loaded. Next scene to load: " + levelId);
             }
+
+            _AsyncLevelLoadingOperation = new BoxedSceneLoad();
 
 
             // current level is not yet in props, or different, so this client has to set it

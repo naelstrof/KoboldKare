@@ -7,7 +7,9 @@
         "KoboldKare.ISavable",
         "NetStack",
         "Unity.Addressables",
-        "Unity.ResourceManager"
+        "Unity.ResourceManager",
+        "naelstrof.Modding",
+        "Naelstrof.PhotonShared"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

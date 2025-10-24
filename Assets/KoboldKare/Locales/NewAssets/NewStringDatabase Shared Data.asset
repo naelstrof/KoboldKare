@@ -1355,6 +1355,42 @@ MonoBehaviour:
     m_Key: SETTING_CLOTHING_HUE
     m_Metadata:
       m_Items: []
+  - m_Id: 626166151202807808
+    m_Key: MENU_MOD_LOADING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Key: MENU_MOD_INITIALIZING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Key: MENU_MOD_WAITING_FOR_DOWNLOADS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Key: MENU_MOD_SCANNING_FOR_MODS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Key: MENU_MOD_UNLOADING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Key: MENU_MOD_LOADING_MODS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Key: MENU_MOD_IMPORTING_ASSETS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Key: MENU_MOD_CHECKING_FOR_ERRORS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Key: MENU_MOD_READY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

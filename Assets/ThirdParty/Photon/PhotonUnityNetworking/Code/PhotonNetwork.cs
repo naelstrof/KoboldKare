@@ -9,6 +9,7 @@
 // ----------------------------------------------------------------------------
 
 
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Photon.Pun
 {
@@ -3112,8 +3113,7 @@ namespace Photon.Pun
 
             PhotonNetwork.IsMessageQueueRunning = false;
             loadingLevelAndPausedNetwork = true;
-            //_AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
-            _AsyncLevelLoadingOperation = Addressables.LoadSceneAsync(levelName, LoadSceneMode.Single);
+            _AsyncLevelLoadingOperation = MapLoadingInterop.RequestMapLoad(levelName);
         }
 
         /// <summary>

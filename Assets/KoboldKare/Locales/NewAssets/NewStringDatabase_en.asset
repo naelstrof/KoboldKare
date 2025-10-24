@@ -1445,6 +1445,42 @@ MonoBehaviour:
     m_Localized: Clothing Hue
     m_Metadata:
       m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: Please wait, mods are loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Initializing mod system.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Waiting for downloads...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Scanning for new mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Unmounting mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Mounting mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importing assets from mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Checking mods for errors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Ready!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

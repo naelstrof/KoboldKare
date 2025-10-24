@@ -580,7 +580,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38135240696844288
     m_Localized: "O casc\u0103 de protec\u021Bie simpl\u0103 pentru a proteja capul
-      de resturi care cad."
+      de c\u0103derea resturilor."
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844289
@@ -704,7 +704,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 197833684470169602
-    m_Localized: "Bun\u0103 treab\u0103, acum trimite-mi noul kobold \u0219i te voi
+    m_Localized: "Bun\u0103 treab\u0103, acum trimite-mi noul Kobold \u0219i te voi
       r\u0103spl\u0103ti pentru eforturile tale."
     m_Metadata:
       m_Items: []
@@ -728,7 +728,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500865
-    m_Localized: "Hr\u0103ne\u0219te-i pe kobolzi cu suc de fructe"
+    m_Localized: "Hr\u0103ne\u0219te kobolzii cu suc de fructe"
     m_Metadata:
       m_Items: []
   - m_Id: 198589332862500866
@@ -857,7 +857,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449728
-    m_Localized: "Lipoi de ou\u0103"
+    m_Localized: "Lichior de ou\u0103"
     m_Metadata:
       m_Items: []
   - m_Id: 210159659429449729
@@ -921,7 +921,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314176
     m_Localized: "Ou\u0103le din magazin nu sunt la fel de bune. G\u0103se\u0219te
-      o kobold bun\u0103, las\u0103-o \xEEns\u0103rcinat\u0103 \u0219i apoi pune-o
+      o kobold\u0103 bun\u0103, las-o \xEEns\u0103rcinat\u0103 \u0219i apoi pune-o
       la punctul de reproducere."
     m_Metadata:
       m_Items: []
@@ -931,8 +931,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "\u021Ai-am trimis ni\u0219te ingrediente ca s\u0103 faci un burger,
-      s\u0103 le combini cu ma\u0219ina de tocat \u0219i apoi s\u0103-l dai unui
-      kobold."
+      folose\u0219te r\xE2\u0219ni\u021Ba ca s\u0103 le combini \u0219i apoi s\u0103-l
+      dai unui kobold."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1216,7 +1216,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, iar asta \xEEnseamn\u0103
+    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, ceea ce \xEEnseamn\u0103
       c\u0103 ai nevoie de mai multe sucuri de fructe. M\u0103cin\u0103 mai multe
       fructe!"
     m_Metadata:
@@ -1253,8 +1253,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620105
-    m_Localized: "Vreau mai multe kobolde gigantice, sunt foarte utile pentru cur\u0103\u021Barea
-      tavanului."
+    m_Localized: "Vreau mai multe kobolde gigantice din acela, sunt foarte utile
+      pentru cur\u0103\u021Barea tavanului."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620106
@@ -1450,6 +1450,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Nuan\u021B\u0103 de \xEEmbr\u0103c\u0103minte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "V\u0103 rug\u0103m s\u0103 a\u0219tepta\u021Bi, modurile se \xEEncarc\u0103..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "Se ini\u021Bializeaz\u0103 sistemul de mod."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "Se a\u0219teapt\u0103 desc\u0103rc\u0103rile..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Scanare pentru noi moduri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Demontarea modurilor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: "Modific\u0103ri de montare"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importarea resurselor din moduri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Verificarea modurilor pentru erori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Gata!
     m_Metadata:
       m_Items: []
   references:

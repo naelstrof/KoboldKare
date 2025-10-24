@@ -116,8 +116,8 @@ public static class SaveManager {
         rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
         rootNode["mapName"] = SceneManager.GetActiveScene().name;
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
-            if (map.unityScene.GetName() != SceneManager.GetActiveScene().name) continue;
-            rootNode["mapKey"] = (string)map.unityScene.RuntimeKey;
+            if (map.GetSceneName() != SceneManager.GetActiveScene().name) continue;
+            rootNode["mapKey"] = map.GetKey();
             break;
         }
 
@@ -336,7 +336,7 @@ public static class SaveManager {
         Debug.Log("Successfully set loaded mods");
         
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
-            if ((string)map.unityScene.RuntimeKey == mapKey || map.unityScene.GetName() == mapName) {
+            if (map.GetRepresentedByKey(mapKey) || map.GetRepresentedByKey(mapName)) {
                 Debug.Log("Set selected map");
                 NetworkManager.instance.SetSelectedMap(map);
             }

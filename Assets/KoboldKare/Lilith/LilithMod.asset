@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c974f217d050af7df953bbb02470e1bd, type: 3}
+  m_Name: LilithMod
+  m_EditorClassIdentifier: 
+  workshopItem:
+    publishedFileId: 0
+    visibility: 0
+    tags: 0
+    loadPriority: 0
+    previewSprite: {fileID: 21300000, guid: 1395a0606d090434d8110aa2bdc07433, type: 3}
+    language: 0
+    title: Lilith
+    description: 
+    changeNotes: 
+  modObjects:
+    playableCharacters:
+    - {fileID: 2274364766123311957, guid: 9e5b26f3a223aeb4d84a97ad337e693e, type: 3}
+    cosmeticItems: []
+    fruits: []
+    equipmentStoreItems: []
+    dicks: []
+    seeds: []
+    plants: []
+    reagents: []
+    reagentReactions: []
+    equipment: []

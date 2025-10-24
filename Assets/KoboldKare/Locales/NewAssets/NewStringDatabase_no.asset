@@ -590,7 +590,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38135240696844291
-    m_Localized: Enkle, kroppssikre, hypoallergeniske metallstenger. (Ja, de skal
+    m_Localized: Enkle, kroppssikre og hypoallergeniske metallstenger. (Ja, de skal
       i brystvortene dine.)
     m_Metadata:
       m_Items: []
@@ -1293,7 +1293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Brystkrymping
+    m_Localized: Krymping av bryster
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
@@ -1428,6 +1428,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Kl\xE6rfarge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: Vent litt, moddene lastes inn...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Initialiserer mod-systemet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "Venter p\xE5 nedlastinger ..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Skanner etter nye modifikasjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Avmontering av modifikasjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Monteringsmodifikasjoner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importere ressurser fra mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Sjekker modifikasjoner for feil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Ferdig!
     m_Metadata:
       m_Items: []
   references:

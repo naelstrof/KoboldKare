@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SimpleJSON;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using System.Threading;
-using System.Threading.Tasks;
 using Steamworks;
 using UnityEditor;
-using UnityEditor.AddressableAssets;
-using UnityEditor.AddressableAssets.Build;
-using UnityEditor.AddressableAssets.Build.DataBuilders;
-using UnityEditor.AddressableAssets.Settings;
-using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine.Rendering;
 
 [Serializable]
@@ -33,9 +28,6 @@ public class SteamWorkshopItem {
 		italian, japanese, koreana, norwegian, polish, portuguese, brazilian, romanian, russian, spanish, latam, swedish,
 		thai, turkish, ukrainian, vietnamese,
 	}
-
-
-	[SerializeField] private ExternalCatalogSetup targetCatalog;
 	
 	[Header("Mod meta data")]
 	[SerializeField] private ulong publishedFileId = (ulong)PublishedFileId_t.Invalid;
@@ -50,12 +42,148 @@ public class SteamWorkshopItem {
 	[SerializeField,TextArea] private string description;
 	[SerializeField,TextArea] private string changeNotes;
 
+	[Serializable]
+	public abstract class ModContent {
+		public abstract AssetBundleBuild[] GetBuilds();
+
+		public void BuildForTarget(BuildTarget target, string modBuildPath) {
+			if (!Directory.Exists(modBuildPath)) {
+				Directory.CreateDirectory(modBuildPath);
+			}
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, GetBuilds(), BuildAssetBundleOptions.None, target);
+			if (manifest) {
+				foreach(var bundleName in manifest.GetAllAssetBundles()) {
+					Debug.Log($"Successfully created AssetBundle {bundleName} at {modBuildPath}/{bundleName}");
+				}
+			} else {
+				throw new UnityException("Build failed, see console for details.");
+			}
+		}
+		public abstract void Serialize(JSONNode node);
+	}
+
+	[Serializable]
+	public class ModObjects : ModContent {
+		public GameObject[] playableCharacters;
+		public GameObject[] cosmeticItems;
+		public GameObject[] fruits;
+		public GameObject[] equipmentStoreItems;
+		public GameObject[] dicks;
+		public GameObject[] seeds;
+		public ScriptablePlant[] plants;
+		public ScriptableReagent[] reagents;
+		public ScriptableReagentReaction[] reagentReactions;
+		public Equipment[] equipment;
+
+		protected virtual string[] GetAssets() {
+			HashSet<string> assetNames = new HashSet<string>();
+			foreach(var asset in playableCharacters) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in cosmeticItems) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in fruits) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in equipmentStoreItems) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in dicks) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in plants) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in reagents) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in reagentReactions) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in equipment) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			return assetNames.ToArray();
+		}
+
+		private JSONArray GetAssetNames(ICollection<UnityEngine.Object> assets) {
+			var arrayNode = new JSONArray();
+			HashSet<string> assetNames = new HashSet<string>();
+			foreach(var asset in assets) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var assetName in assetNames) {
+				arrayNode.Add(assetName);
+			}
+
+			return arrayNode;
+		}
+		
+		public override void Serialize(JSONNode rootNode) {
+			rootNode["PlayableCharacter"] = GetAssetNames(playableCharacters);
+			rootNode["Fruit"] = GetAssetNames(fruits);
+			rootNode["Penis"] = GetAssetNames(dicks);
+			rootNode["Reaction"] = GetAssetNames(reagentReactions);
+			rootNode["Reagent"] = GetAssetNames(reagents);
+			rootNode["Plant"] = GetAssetNames(plants);
+			rootNode["Seed"] = GetAssetNames(seeds);
+			rootNode["Cosmetic"] = GetAssetNames(cosmeticItems);
+			rootNode["Equipment"] = GetAssetNames(equipment);
+			rootNode["EquipmentStoreItem"] = GetAssetNames(equipmentStoreItems);
+		}
+
+		public override AssetBundleBuild[] GetBuilds() {
+			AssetBundleBuild build = new AssetBundleBuild {
+				assetBundleName = "bundle",
+				assetNames = GetAssets(),
+			};
+			return new[] { build };
+		}
+	}
+	
+	[Serializable]
+	public class ModScene : ModObjects {
+		public SceneAsset scene;
+		public Sprite sceneIcon;
+		public string sceneTitle;
+		public string sceneDescription;
+		public override AssetBundleBuild[] GetBuilds() {
+			AssetBundleBuild sceneBuild = new AssetBundleBuild {
+				assetBundleName = "sceneBundle",
+				assetNames = new[] { AssetDatabase.GetAssetPath(scene) },
+			};
+			var otherBuilds = base.GetBuilds();
+			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild };
+			return allBuilds.ToArray();
+		}
+		
+		protected override string[] GetAssets() {
+			HashSet<string> assets = new HashSet<string>(base.GetAssets()) { AssetDatabase.GetAssetPath(sceneIcon) };
+			return assets.ToArray();
+		}
+
+		public override void Serialize(JSONNode node) {
+			base.Serialize(node);
+			node["Scene"] = AssetDatabase.GetAssetPath(scene);
+			node["SceneTitle"] = sceneTitle;
+			node["SceneDescription"] = sceneDescription;
+			node["SceneIcon"] = AssetDatabase.GetAssetPath(sceneIcon);
+		}
+	}
+
+	private string GetFileNameSafeTitle() {
+		var newTitle = title;
+		foreach (var c in Path.GetInvalidFileNameChars()) {
+			newTitle = newTitle.Replace(c, '_');
+		}
+		return newTitle;
+	}
+	
 	private UGCUpdateHandle_t ugcUpdateHandle;
 	private bool uploading = false;
-	private bool building = false;
 	private string lastMessage = "";
 	private MessageType lastMessageType;
-	private ExternalCatalogSetup loadedCatalog;
 	
 	private List<string> GetTags() {
 		List<string> newTags = new List<string>();
@@ -85,7 +213,7 @@ public class SteamWorkshopItem {
 		}
 		if (result.m_bUserNeedsToAcceptWorkshopLegalAgreement) {
 			lastMessageType = MessageType.Warning;
-			lastMessage = "Apparently you need to accept the workshop legal agreement, you should be able to do that by visiting the URL provided below."; 
+			lastMessage = "Apparently you need to accept the workshop legal agreement, you should be able to do that by visiting `https://steamcommunity.com/workshop/workshoplegalagreement/`."; 
 		}
 		publishedFileId = (ulong)result.m_nPublishedFileId;
 		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
@@ -94,11 +222,9 @@ public class SteamWorkshopItem {
 			throw new UnityException(lastMessage);
 		}
 
-		Save();
-		// Gotta tell inspectors to reload in order to see the new ID.
-		loadedCatalog = null;
+		CreateModJSON(jsonSavePath, uploadContent);
 		
-		ItemUpdate();
+		ItemUpdate(uploadContent);
 	}
 	private CallResult<SubmitItemUpdateResult_t> onSubmitItemUpdateCallback;
 
@@ -120,21 +246,18 @@ public class SteamWorkshopItem {
 	}
 
 	public bool Busy() {
-		return building || uploading;
+		return uploading;
 	}
-	private string modBuildPath => $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/{EditorUserBuildSettings.activeBuildTarget}";
 
-	private string modRoot {
-		get {
-			DirectoryInfo fullPath = Directory.GetParent(modBuildPath);
-			return fullPath.FullName;
-		}
+	public string GetModBuildPath(BuildTarget target) {
+		return $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}{Path.DirectorySeparatorChar}{target}";
 	}
+	private string modRoot => $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}";
 
 	private string jsonSavePath => $"{modRoot}{Path.DirectorySeparatorChar}info.json";
 	private string previewTexturePath => $"{modRoot}{Path.DirectorySeparatorChar}preview.png";
 
-	private string Serialize() {
+	private string Serialize(ModContent content) {
 		JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["publishedFileId"] = publishedFileId.ToString();
         rootNode["description"] = description;
@@ -142,58 +265,49 @@ public class SteamWorkshopItem {
         rootNode["title"] = title;
         rootNode["visibility"] = visibility.ToString();
         rootNode["loadPriority"] = loadPriority;
+        rootNode["version"] = "v0.0.1";
         var arrayNode = new JSONArray();
 	
         foreach(var tag in GetTags()) {
-			arrayNode.Add(tag.ToString());
+			arrayNode.Add(tag);
 		}
         rootNode["tags"] = arrayNode;
+
+        var bundle = JSONNode.Parse("{}");
+        content.Serialize(bundle);
+        rootNode["bundle"] = bundle;
+
         return rootNode.ToString();
 	}
 
-	private static bool SupportsBuildPlatform(BuildTarget target) {
-		var moduleManager = System.Type.GetType("UnityEditor.Modules.ModuleManager,UnityEditor.dll");
-		var isPlatformSupportLoaded = moduleManager.GetMethod("IsPlatformSupportLoaded", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-		var getTargetStringFromBuildTarget = moduleManager.GetMethod("GetTargetStringFromBuildTarget", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-		return (bool)isPlatformSupportLoaded.Invoke(null,new object[] {(string)getTargetStringFromBuildTarget.Invoke(null, new object[] {target})});
-	}
-
-	private void Save() {
-        using FileStream file = new FileStream(jsonSavePath, FileMode.OpenOrCreate, FileAccess.Write);
+	private void CreateModJSON(string filePath, ModContent content) {
+        using FileStream file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
         using StreamWriter writer = new StreamWriter(file);
-        writer.Write(Serialize());
+        writer.Write(Serialize(content));
 	}
 
 	public bool ShouldTryLoad() {
-		return targetCatalog != null && new DirectoryInfo(modRoot).Exists && File.Exists(jsonSavePath) && loadedCatalog != targetCatalog;
+		return new DirectoryInfo(modRoot).Exists && File.Exists(jsonSavePath);
 	}
 
 	public string GetStatus(out MessageType messageType) {
 		if (!IsValid()) {
 			messageType = MessageType.Error;
-			if (targetCatalog == null) {
-				return "Please specify an associated External Catalog Setup asset to continue.";
-			}
-			if (previewSprite == null) {
+			if (!previewSprite) {
 				return "Please specify the preview texture, this is required, sorry!";
 			}
-
-			if (targetCatalog.AssetGroups.Count <= 0) {
-				return "Target External catalog has no asset groups assigned. Please assign them.";
-			}
-			
-			if (string.IsNullOrEmpty(targetCatalog.CatalogName)) {
-				return "";
+			if (previewSprite.rect.width > 1024 || previewSprite.rect.height > 1024) {
+				return "The preview texture is expected to be around 512x512, very large preview images may cause Steam to reject the upload.";
 			}
 
-			foreach (var assetGroup in targetCatalog.AssetGroups) {
-				if (assetGroup == null) {
-					return "One of the asset groups in the external catalog is null! Please fix it.";
-				}
+			if (string.IsNullOrEmpty(title)) {
+				return "You must specify a title of the mod.";
 			}
-			return "For somereason this mod is invalid! The GetStatus() function must have not been updated after IsValid was changed.";
+
+			return "For some reason this mod is invalid! The GetStatus() function must have not been updated after IsValid was changed.";
 		}
-		if (!SupportsBuildPlatform(BuildTarget.StandaloneLinux64) || !SupportsBuildPlatform(BuildTarget.StandaloneWindows64) || !SupportsBuildPlatform(BuildTarget.StandaloneWindows) || !SupportsBuildPlatform(BuildTarget.StandaloneOSX)) {
+		
+		if (!SupportsBuildPlatform(BuildTarget.StandaloneLinux64) || !SupportsBuildPlatform(BuildTarget.StandaloneWindows64) || !SupportsBuildPlatform(BuildTarget.StandaloneOSX)) {
 			messageType = MessageType.Error;
 			return "Missing build support for one of the following platforms: Windows, Linux, OSX. Please use Unity Hub to install build support modules.";
 		}
@@ -201,11 +315,6 @@ public class SteamWorkshopItem {
 		if (!IsBuilt()) {
 			messageType = MessageType.Warning;
 			return $"Mod not found at build directory: {modRoot}.\nMod must be built before upload... This can take a very long time on the first run! (several hours)\nIt will be faster on subsequent runs (a few minutes).";
-		}
-
-		if (building) {
-			messageType = MessageType.Info;
-			return "Building for all platforms...";
 		}
 
 		if (uploading) {
@@ -232,65 +341,48 @@ public class SteamWorkshopItem {
 		return $"Looking good, ready to upload!\nBuild is located at {modRoot}.\nMake sure to hit Build if you made changes.";
 	}
 
-	public void Upload() {
+	public void Upload(ModContent content) {
 		if (!IsBuilt()) {
-			Build();
+			Build(content);
 		}
 
-		CreateIfNeeded();
+		CreateIfNeeded(content);
 	}
 
 	public bool IsValid() {
-		if (targetCatalog == null || previewSprite == null || targetCatalog.AssetGroups == null || targetCatalog.AssetGroups.Count == 0) {
+		if (!previewSprite) {
 			return false;
 		}
 
-		if (string.IsNullOrEmpty(targetCatalog.CatalogName)) {
+		if (string.IsNullOrEmpty(title)) {
 			return false;
-		}
-
-		foreach (var targetGroup in targetCatalog.AssetGroups) {
-			if (targetGroup == null) {
-				return false;
-			}
-		}
-		return true;
-	}
-	private void BuildForPlatform(BuildTarget target) {
-		EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, target);
-		//foreach (var targetGroup in targetCatalog.AssetGroups) {
-			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
-			//targetGroup.Settings.profileSettings.SetValue( targetGroup.Settings.activeProfileId, "Mod.LoadPath", $"{Application.persistentDataPath}/mods/{targetCatalog.CatalogName}/[BuildTarget]" );
-		//}
-		ModManager.currentLoadingMod = modBuildPath;
-		var settings = AddressableAssetSettingsDefaultObject.Settings;
-		var profileId = settings.activeProfileId;
-		settings.profileSettings.SetValue(profileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]");
-		settings.profileSettings.SetValue(profileId, "Mod.LoadPath", "{ModManager.currentLoadingMod}/[BuildTarget]");
-		targetCatalog.BuildPath.SetVariableByName(settings, "Mod.BuildPath");
-		targetCatalog.RuntimeLoadPath.SetVariableByName(settings, "Mod.LoadPath");
-		AddressableAssetSettings.BuildPlayerContent(out AddressablesPlayerBuildResult result);
-		if (result == null) {
-			throw new UnityException("Something went really wrong!");
-		}
-
-		if (!string.IsNullOrEmpty(result.Error)) {
-			throw new UnityException(result.Error);
 		}
 		
+		return true;
 	}
-
-	public void Build() {
-		var buildTargetMemory = EditorUserBuildSettings.activeBuildTarget;
-		var packedMultiCatalogMode = AssetDatabase.LoadAssetAtPath<BuildScriptPackedMultiCatalogMode>(AssetDatabase.GUIDToAssetPath("541ccd6f1620abf489a055f1a3f1466c"));
-		if (!packedMultiCatalogMode.ExternalCatalogs.Contains(targetCatalog)) {
-			packedMultiCatalogMode.ExternalCatalogs.Add(targetCatalog);
+	private static bool SupportsBuildPlatform(BuildTarget target) {
+		var moduleManager = Type.GetType("UnityEditor.Modules.ModuleManager,UnityEditor.dll");
+		if (moduleManager == null) {
+			Debug.LogError("Failed to get ModuleManager type, assuming platform is supported.");
+			return true;
 		}
-		var catalogMemory = packedMultiCatalogMode.ExternalCatalogs;
-		packedMultiCatalogMode.ExternalCatalogs = new List<ExternalCatalogSetup>(new[] { targetCatalog });
+		var isPlatformSupportLoaded = moduleManager.GetMethod("IsPlatformSupportLoaded", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+		var getTargetStringFromBuildTarget = moduleManager.GetMethod("GetTargetStringFromBuildTarget", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+		if (isPlatformSupportLoaded == null) {
+			Debug.LogError("Failed to get IsPlatformSupportLoaded func, assuming platform is supported.");
+			return true;
+		}
+		if (getTargetStringFromBuildTarget == null) {
+			Debug.LogError("Failed to get GetTargetStringFromBuildTarget func, assuming platform is supported.");
+			return true;
+		}
+		return (bool)isPlatformSupportLoaded.Invoke(null,new object[] {(string)getTargetStringFromBuildTarget.Invoke(null, new object[] {target})});
+	}
+	public void Build(ModContent modContent) {
 		try {
-			AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilderIndex = 4;
-			building = true;
+			if (!IsValid()) {
+				throw new Exception("Mod is not valid.");
+			}
 			currentModRoot = modRoot;
 			var directoryInfo = new DirectoryInfo(modRoot);
 			if (directoryInfo.Exists) {
@@ -314,35 +406,21 @@ public class SteamWorkshopItem {
 			File.WriteAllBytes(previewTexturePath, previewTextureWrite.EncodeToPNG());
 			RenderTexture.active = oldTex;
 
-			Save();
+			CreateModJSON(jsonSavePath, modContent);
 
-			foreach (var group in targetCatalog.AssetGroups) {
-				var settings = AddressableAssetSettingsDefaultObject.Settings;
-				var profileId = settings.activeProfileId;
-				settings.profileSettings.SetValue(profileId, "Mod.BuildPath", $"[UnityEngine.Application.persistentDataPath]/mods/{targetCatalog.CatalogName}/[BuildTarget]");
-				settings.profileSettings.SetValue(profileId, "Mod.LoadPath", "{ModManager.currentLoadingMod}/[BuildTarget]");
-				var groupSchema = group.GetSchema<BundledAssetGroupSchema>();
-				groupSchema.BuildPath.SetVariableByName(settings, "Mod.BuildPath");
-				groupSchema.LoadPath.SetVariableByName(settings, "Mod.LoadPath");
-			}
-
-			BuildForPlatform(BuildTarget.StandaloneWindows64);
-			BuildForPlatform(BuildTarget.StandaloneLinux64);
-			BuildForPlatform(BuildTarget.StandaloneOSX);
+			modContent.BuildForTarget(BuildTarget.StandaloneWindows64, GetModBuildPath(BuildTarget.StandaloneWindows64));
+			modContent.BuildForTarget(BuildTarget.StandaloneLinux64, GetModBuildPath(BuildTarget.StandaloneLinux64));
+			modContent.BuildForTarget(BuildTarget.StandaloneOSX, GetModBuildPath(BuildTarget.StandaloneOSX));
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
 		} catch {
 			lastMessage = "Failed to build! Check the console to see what went wrong! You may need to clear your build cache if considerable changes have been made.";
 			lastMessageType = MessageType.Error;
 			throw;
-		} finally {
-			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, buildTargetMemory);
-			packedMultiCatalogMode.ExternalCatalogs = catalogMemory;
-			building = false;
 		}
 	}
 
-	private void ItemUpdate() {
+	private void ItemUpdate(ModContent content) {
 		EditorUtility.DisplayProgressBar("Uploading...", "Setting item description...", 0f);
 		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), (PublishedFileId_t)publishedFileId);
 		if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
@@ -360,7 +438,7 @@ public class SteamWorkshopItem {
 		}
 
 		EditorUtility.DisplayProgressBar("Uploading...", "Setting item meta data...", 0f);
-		if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize())) {
+		if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
 			throw new UnityException("Failed to set item metaData.");
 		}
 
@@ -419,7 +497,9 @@ public class SteamWorkshopItem {
 		}
 	}
 
-	private void CreateIfNeeded() {
+	private ModContent uploadContent;
+	private void CreateIfNeeded(ModContent content) {
+		uploadContent = content;
 	    onCreateItemCallback = new CallResult<CreateItemResult_t>(OnCreateItem);
 	    onSubmitItemUpdateCallback = new CallResult<SubmitItemUpdateResult_t>(OnSubmitItemUpdateCallback);
 		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
@@ -427,14 +507,14 @@ public class SteamWorkshopItem {
 			var call = SteamUGC.CreateItem(SteamUtils.GetAppID(), EWorkshopFileType.k_EWorkshopFileTypeCommunity);
 			onCreateItemCallback.Set(call);
 		} else {
-			ItemUpdate();
+			ItemUpdate(content);
 		}
 	}
 
 	public void Load(SerializedProperty target) {
 		using FileStream file = new FileStream(jsonSavePath, FileMode.Open, FileAccess.Read);
-        using StreamReader reader = new StreamReader(file);
-        var rootNode = JSONNode.Parse(reader.ReadToEnd());
+		using StreamReader reader = new StreamReader(file);
+		var rootNode = JSONNode.Parse(reader.ReadToEnd());
         if (rootNode.HasKey("publishedFileId")) {
 	        if (!ulong.TryParse(rootNode["publishedFileId"], out ulong output)) {
 		        throw new UnityException( $"Failed to parse publishedFileID in file {jsonSavePath} as ulong... Invalid mod info format or corruption?");
@@ -471,20 +551,11 @@ public class SteamWorkshopItem {
 	        target.FindPropertyRelative("tags").intValue = (int)GetTagsFromJsonArray(array);
         }
         TryLoadPreview(target);
-        loadedCatalog = targetCatalog;
         lastMessage = "Successfully loaded mod information from disk.";
         lastMessageType = MessageType.Info;
 	}
 
 	public void TryLoadPreview(SerializedProperty target) {
-		if (targetCatalog == null || targetCatalog.AssetGroups == null || targetCatalog.AssetGroups.Count == 0) {
-			return;
-		}
-		foreach (var targetGroup in targetCatalog.AssetGroups) {
-			if (targetGroup == null) {
-				return;
-			}
-		}
 		if (!File.Exists(previewTexturePath)) {
 			return;
 		}

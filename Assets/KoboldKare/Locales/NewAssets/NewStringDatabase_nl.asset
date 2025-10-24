@@ -946,7 +946,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213469775675314178
     m_Localized: "Ik heb je wat spullen gestuurd om een \u200B\u200Bhamburger te
-      maken, deze in de molen te malen en deze vervolgens aan een kobold te voeren."
+      maken, deze in de vleesmolen te vermalen en deze vervolgens aan een kobold
+      te voeren."
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314179
@@ -1029,7 +1030,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
-    m_Localized: Ik wil dat je een van je kobolds een groot ei laat leggen. Zo groot
+    m_Localized: Ik wil dat je een van je kobolden een groot ei laat leggen. Zo groot
       als je het maar kunt krijgen.
     m_Metadata:
       m_Items: []
@@ -1131,7 +1132,7 @@ MonoBehaviour:
   - m_Id: 215233885836464147
     m_Localized: Ze zijn perfect! Ik ga het... heel druk krijgen... Ik promoveer
       je tot een functie als Overseer, je gaat namens mij kobolds kopen bij andere
-      Kobold Karetakers en iemand zoeken die de benodigde buizen kan maken.
+      Kobold Karetakers en iemand vinden die de benodigde buizen kan maken.
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464148
@@ -1292,7 +1293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Reisziekteverminderaar
+    m_Localized: Vermindert reisziekte
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1305,7 +1306,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216333655481044992
-    m_Localized: Er is hier niets anders voor je... voorlopig.
+    m_Localized: Er is hier voorlopig niets anders voor je.
     m_Metadata:
       m_Items: []
   - m_Id: 216333655518793728
@@ -1453,6 +1454,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: Kledingkleur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: Even geduld, de mods laden...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Mod-systeem initialiseren.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Wachten op downloads...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Scannen naar nieuwe mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Mods ontkoppelen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Montage mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Activa importeren vanuit mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Mods controleren op fouten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Klaar!
     m_Metadata:
       m_Items: []
   references:

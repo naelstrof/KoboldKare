@@ -1433,6 +1433,42 @@ MonoBehaviour:
     m_Localized: Tono de ropa
     m_Metadata:
       m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "Por favor espere, los mods se est\xE1n cargando..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Inicializando el sistema mod.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Esperando descargas...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Buscando nuevos mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Desmontar mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Modificaciones de montaje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importar activos desde mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "Comprobaci\xF3n de errores en los mods"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: "\xA1Listo!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

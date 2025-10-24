@@ -12,7 +12,7 @@
     "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#20.1.0",
     "com.textus-games.serialized-reference-ui": "https://github.com/TextusGames/UnitySerializedReferenceUI.git",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.addressables": "https://github.com/juniordiscart/com.unity.addressables.git#1.25.0_multi-catalog",
+    "com.unity.addressables": "1.28.0",
     "com.unity.analytics": "3.6.12",
     "com.unity.formats.fbx": "4.1.3",
     "com.unity.ide.rider": "3.0.38",

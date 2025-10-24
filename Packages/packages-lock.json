@@ -139,19 +139,19 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "https://github.com/juniordiscart/com.unity.addressables.git#1.25.0_multi-catalog",
+      "version": "1.28.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.22.4",
+        "com.unity.test-framework": "1.1.33",
         "com.unity.modules.assetbundle": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.unitywebrequestassetbundle": "1.0.0",
-        "com.unity.test-framework": "1.1.33"
+        "com.unity.scriptablebuildpipeline": "1.23.1",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
-      "hash": "971507bac0885929e981bad240f1a6c42fe1e434"
+      "url": "https://packages.unity.com"
     },
     "com.unity.analytics": {
       "version": "3.6.12",
@@ -260,7 +260,7 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.22.4",
+      "version": "1.23.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {

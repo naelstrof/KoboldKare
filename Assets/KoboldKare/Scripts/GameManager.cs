@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour {
         bool found = false;
         PlayableMap selectedMap = null;
         foreach(var playableMap in PlayableMapDatabase.GetPlayableMaps()) {
-            if (SceneManager.GetActiveScene().name != playableMap.unityScene.GetName()) continue;
+            if (SceneManager.GetActiveScene().name != playableMap.GetSceneName()) continue;
             NetworkManager.instance.SetSelectedMap(playableMap);
             selectedMap = playableMap;
             found = true;
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
             throw new UnityException($"Failed to find a PlayableMap instance for the map {SceneManager.GetActiveScene().name}! Please make one!");
         }
 
-        yield return LevelLoader.instance.LoadLevel((string)selectedMap.unityScene.RuntimeKey);
+        yield return LevelLoader.instance.LoadLevel(selectedMap.GetKey());
         NetworkManager.instance.StartSinglePlayer();
     }
 

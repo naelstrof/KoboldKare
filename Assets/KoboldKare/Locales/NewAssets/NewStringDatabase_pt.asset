@@ -600,7 +600,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38744048708145152
-    m_Localized: "Um acess\xF3rio m\xE1gico longo e fino, com bolas internalizadas!"
+    m_Localized: "Um acess\xF3rio m\xE1gico que \xE9 longo e fino at\xE9 formar uma
+      ponta. Suas bolas s\xE3o internalizadas!"
     m_Metadata:
       m_Items: []
   - m_Id: 39595891181015040
@@ -904,7 +905,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 211765989932060672
-    m_Localized: Pau banhado
+    m_Localized: Dick banhado
     m_Metadata:
       m_Items: []
   - m_Id: 211765989965615104
@@ -1197,7 +1198,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "D\xEA um g\xE1s!"
+    m_Localized: Aumente o suco!
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
@@ -1432,7 +1433,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 623266765225402368
-    m_Localized: Matiz da roupa
+    m_Localized: Tonalidade da roupa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "Por favor aguarde, os mods est\xE3o carregando..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Inicializando o sistema mod.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Aguardando downloads...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Procurando por novos mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Desmontando mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Mods de montagem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importando ativos de mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Verificando mods em busca de erros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Preparar!
     m_Metadata:
       m_Items: []
   references:

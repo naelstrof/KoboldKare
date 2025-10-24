@@ -139,6 +139,7 @@ public class ModManager : MonoBehaviour {
             return info.publishedFileId != (PublishedFileId_t)2934088282 && !causedException;
         }
 
+        public abstract bool GetLoaded();
         public abstract Task TryLoad();
         public abstract Task TryUnload();
         public abstract bool Provides(IResourceLocation location);
@@ -146,6 +147,7 @@ public class ModManager : MonoBehaviour {
 
     public class ModAssetBundle : Mod {
         public AssetBundle bundle;
+        private bool loaded = false;
         public ModAssetBundle(ModInfoData info) : base(info) {
         }
         private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
@@ -160,15 +162,21 @@ public class ModManager : MonoBehaviour {
             }
             return base.IsValid();
         }
-        
+
+        public override bool GetLoaded() {
+            return loaded;
+        }
+
         public override async Task TryLoad() {
             bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
+            loaded = true;
         }
         public override async Task TryUnload() {
             if (!bundle) {
                 return;
             }
             await bundle.UnloadAsync(true).AsTask();
+            loaded = false;
             bundle = null;
         }
 
@@ -178,6 +186,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public class ModAddressable : Mod {
+        private bool loaded = false;
         public ModAddressable(ModInfoData info) : base(info) {
         }
         public override bool IsValid() {
@@ -185,6 +194,10 @@ public class ModManager : MonoBehaviour {
                 return false;
             }
             return base.IsValid();
+        }
+
+        public override bool GetLoaded() {
+            return loaded;
         }
 
         public override async Task TryLoad() {
@@ -216,6 +229,7 @@ public class ModManager : MonoBehaviour {
             }
 
             Addressables.Release(loader);
+            loaded = true;
         }
 
         public override Task TryUnload() {
@@ -224,6 +238,7 @@ public class ModManager : MonoBehaviour {
             }
             Addressables.RemoveResourceLocator(locator);
             locator = null;
+            loaded = false;
             return Task.CompletedTask;
         }
 
@@ -870,7 +885,7 @@ public class ModManager : MonoBehaviour {
     }
 
     public static List<ModStub> GetLoadedMods() {
-        return ConvertToStubs(instance.fullModList, (info) => info.enabled);
+        return ConvertToStubs(instance.fullModList, (info) => info.enabled && info.GetLoaded());
     }
 
     public static async Task AllModsSetActive(bool active) {

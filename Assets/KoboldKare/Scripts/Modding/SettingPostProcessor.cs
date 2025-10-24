@@ -23,7 +23,7 @@ public class SettingPostProcessor : ModPostProcessor {
     }
 
     private void LoadSetting(Setting setting) {
-        if (setting == null) {
+        if (!setting) {
             return;
         }
 

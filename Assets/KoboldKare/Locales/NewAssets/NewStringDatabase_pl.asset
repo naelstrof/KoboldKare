@@ -1217,9 +1217,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Chc\u0119 wielu r\xF3\u017Cnych rodzaj\xF3w kobold\xF3w, a to oznacza,
-      \u017Ce \u200B\u200Bpotrzebujesz wi\u0119cej sok\xF3w owocowych. Zmiel wi\u0119cej
-      owoc\xF3w!"
+    m_Localized: "Chc\u0119 mie\u0107 wiele r\xF3\u017Cnych rodzaj\xF3w kobold\xF3w,
+      a to oznacza, \u017Ce \u200B\u200Bpotrzebujesz wi\u0119cej sok\xF3w owocowych.
+      Zmiel wi\u0119cej owoc\xF3w!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620098
@@ -1452,6 +1452,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Odcie\u0144 odzie\u017Cy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "Prosz\u0119 czeka\u0107, mody si\u0119 \u0142aduj\u0105..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "Inicjalizacja systemu mod\xF3w."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Oczekiwanie na pobranie...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: "Skanowanie w poszukiwaniu nowych mod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: "Odmontowywanie mod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: "Monta\u017C mod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: "Importowanie zasob\xF3w z mod\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "Sprawdzanie mod\xF3w pod k\u0105tem b\u0142\u0119d\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Gotowy!
     m_Metadata:
       m_Items: []
   references:

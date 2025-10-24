@@ -1296,7 +1296,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 248938687950692352
-    m_Localized: Inverser l'axe Y du regard
+    m_Localized: Inverser l'axe Y de la vue
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
@@ -1437,6 +1437,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Teinte des v\xEAtements"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: Veuillez patienter, les mods sont en cours de chargement...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "Initialisation du syst\xE8me de mod."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "En attente de t\xE9l\xE9chargements..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Recherche de nouveaux mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: "D\xE9montage des mods"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Montage des mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: "Importer des ressources \xE0 partir de mods"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "V\xE9rification des mods pour les erreurs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: "Pr\xEAt!"
     m_Metadata:
       m_Items: []
   references:

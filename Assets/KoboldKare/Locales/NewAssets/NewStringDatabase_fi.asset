@@ -938,7 +938,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314181
-    m_Localized: "Tee jotain maitopohjaisia \u200B\u200Bruokia!"
+    m_Localized: "Tee maitopohjaisia \u200B\u200Bruokia!"
     m_Metadata:
       m_Items: []
   - m_Id: 213469775675314182
@@ -1068,7 +1068,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464138
-    m_Localized: "Nelinkertaisesti t\xE4ytetty"
+    m_Localized: "Nelinkertainen t\xE4ytetty"
     m_Metadata:
       m_Items: []
   - m_Id: 215233885836464139
@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
-    m_Localized: 'Rotu: Vatsalle meno!'
+    m_Localized: 'Rotu: Vatsaan meno!'
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620101
@@ -1431,6 +1431,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Vaatteiden s\xE4vy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: Odota hetki, modeja ladataan...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "Mod-j\xE4rjestelm\xE4n alustaminen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Odotetaan latauksia...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Uusien modien etsiminen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Modien irrottaminen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Asennusmodit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Resurssien tuominen modeista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Modien tarkistaminen virheiden varalta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Valmis!
     m_Metadata:
       m_Items: []
   references:

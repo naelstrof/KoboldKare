@@ -62,6 +62,12 @@ public class SteamWorkshopModLoader : MonoBehaviour {
     private IEnumerator Start() {
         for (int i = 0; i < 5; i++) {
             if (SteamManager.FailedToInitialize) {
+                var failedToConnectToSteamHandle = failedToConnectToSteam.GetLocalizedStringAsync();
+                yield return failedToConnectToSteamHandle;
+                string failedToConnectToSteamText = failedToConnectToSteamHandle.Result;
+                progressBar.gameObject.SetActive(false);
+                progressBarAnimator.SetTrigger("Failed");
+                targetText.text = failedToConnectToSteamText;
                 Debug.LogError("User isn't logged into Steam, cannot use workshop!");
                 busy = false;
                 downloading = false;

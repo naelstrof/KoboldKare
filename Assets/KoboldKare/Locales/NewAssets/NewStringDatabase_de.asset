@@ -1447,6 +1447,42 @@ MonoBehaviour:
     m_Localized: Kleidungsfarbe
     m_Metadata:
       m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "Bitte warten, Mods werden geladen \u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Mod-System wird initialisiert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: Warte auf Downloads ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Suche nach neuen Mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: "Mods aush\xE4ngen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Montagemods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Importieren von Assets aus Mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "Mods auf Fehler pr\xFCfen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Bereit!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

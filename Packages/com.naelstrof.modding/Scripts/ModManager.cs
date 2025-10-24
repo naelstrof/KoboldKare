@@ -24,6 +24,19 @@ public class ModManager : MonoBehaviour {
         Any,
     }
 
+    private ModStatus status = ModStatus.Initializing;
+
+    public enum ModStatus {
+        Initializing,
+        WaitingForDownloads,
+        ScanningForMods,
+        UnloadingMods,
+        LoadingMods,
+        LoadingAssets,
+        InspectingForErrors,
+        Ready,
+    }
+
     public struct ModInfoData {
         public static bool TryGetModInfoData(string jsonPath, ModSource source, out ModInfoData data) {
             FileInfo fileInfo = new FileInfo(jsonPath);
@@ -502,6 +515,7 @@ public class ModManager : MonoBehaviour {
             fullModList.Add(mod);
             fullModList.Sort((a, b) => a.info.loadPriority.CompareTo(b.info.loadPriority));
         } catch (Exception e) {
+            Debug.LogException(e);
             lastException = e;
             mod.causedException = true;
             mod.enabled = false;
@@ -541,7 +555,6 @@ public class ModManager : MonoBehaviour {
                     mod.enabled = modStub.enabled;
                 }
             } catch (Exception e) {
-                Debug.Log(e);
                 instance.lastException = e;
                 Debug.LogException(e);
                 Debug.LogError($"Failed to load mod {node}.");
@@ -553,6 +566,7 @@ public class ModManager : MonoBehaviour {
         instance.changed = false;
     }
     private async Task ScanForNewMods() {
+        status = ModStatus.ScanningForMods;
         string modCatalogPath = $"{Application.persistentDataPath}/{modLocation}";
         if (!Directory.Exists(modCatalogPath)) {
             Directory.CreateDirectory(modCatalogPath);
@@ -608,6 +622,7 @@ public class ModManager : MonoBehaviour {
 
     private ModAddressable currentInspectedMod = null;
     private async Task InspectAddressableMods() {
+        status = ModStatus.InspectingForErrors;
         foreach (var mod in instance.fullModList) {
             if (mod is not ModAddressable modAddressable) {
                 continue;
@@ -629,19 +644,18 @@ public class ModManager : MonoBehaviour {
             //Resources.UnloadUnusedAssets();
         }
 
+        status = ModStatus.LoadingAssets;
         try {
-            List<Task> tasks = new List<Task>();
             if (includeEarly) {
                 foreach (var modPostProcessor in earlyModPostProcessors) {
-                    tasks.Add(modPostProcessor.LoadAllAssets());
+                    await modPostProcessor.LoadAllAssets();
                 }
             }
 
             foreach (var modPostProcessor in modPostProcessors) {
-                tasks.Add(modPostProcessor.LoadAllAssets());
+                await modPostProcessor.LoadAllAssets();
             }
-            await Task.WhenAll(tasks.ToArray());
-            tasks.Clear();
+            List<Task> tasks = new List<Task>();
             // Load asset bundles
             foreach(var mod in fullModList) {
                 if (!mod.enabled || mod is not ModAssetBundle modAssetBundle) {
@@ -659,11 +673,12 @@ public class ModManager : MonoBehaviour {
             }
             await Task.WhenAll(tasks.ToArray());
         } catch (Exception e) {
+            Debug.LogException(e);
             failedToLoadMods = true;
             lastException = e;
-            throw;
         } finally {
             ready = true;
+            status = ModStatus.Ready;
             finishedLoading?.Invoke();
         }
     }
@@ -694,6 +709,7 @@ public class ModManager : MonoBehaviour {
     }
 
     private async Task UnloadMods() {
+        status = ModStatus.UnloadingMods;
         List<Task> tasks = new List<Task>();
         tasks.Add(UnloadAllAssets(true));
         foreach (var mod in fullModList) {
@@ -711,6 +727,9 @@ public class ModManager : MonoBehaviour {
     }
 
     public static bool GetReady() => GetFinishedLoading();
+    public static ModStatus GetStatus() {
+        return instance.status;
+    }
 
     public static bool GetFailedToLoadMods() {
         return instance.failedToLoadMods;
@@ -775,7 +794,7 @@ public class ModManager : MonoBehaviour {
             Destroy(this);
             return;
         }
-
+        status = ModStatus.Initializing;
         ResourceManager.ExceptionHandler += HandleException;
         Addressables.InternalIdTransformFunc += location => {
             if (location.InternalId.Contains("<currentLoadingMod>")) {
@@ -799,6 +818,7 @@ public class ModManager : MonoBehaviour {
 
     private async Task OnStart() {
         await ScanForNewMods();
+        status = ModStatus.WaitingForDownloads;
         while (SteamWorkshopModLoader.IsBusy) {
             await Task.Delay(1000);
         }
@@ -820,6 +840,7 @@ public class ModManager : MonoBehaviour {
         ready = false;
         try {
             await UnloadMods();
+            status = ModStatus.LoadingMods;
             var tasks = new List<Task>();
             foreach (var modInfo in fullModList) {
                 if (!modInfo.enabled) {
@@ -835,6 +856,7 @@ public class ModManager : MonoBehaviour {
             }
             await Task.WhenAll(tasks.ToArray());
         } catch (Exception e) {
+            Debug.LogException(e);
             failedToLoadMods = true;
             lastException = e;
             throw;

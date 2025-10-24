@@ -1779,6 +1779,49 @@ MonoBehaviour:
     m_Localized: "\u041D\u044E\u0430\u043D\u0441 \u043D\u0430 \u0434\u0440\u0435\u0445\u0438\u0442\u0435"
     m_Metadata:
       m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "\u041C\u043E\u043B\u044F, \u0438\u0437\u0447\u0430\u043A\u0430\u0439\u0442\u0435,
+      \u043C\u043E\u0434\u043E\u0432\u0435\u0442\u0435 \u0441\u0435 \u0437\u0430\u0440\u0435\u0436\u0434\u0430\u0442..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "\u0418\u043D\u0438\u0446\u0438\u0430\u043B\u0438\u0437\u0438\u0440\u0430\u043D\u0435
+      \u043D\u0430 \u043C\u043E\u0434 \u0441\u0438\u0441\u0442\u0435\u043C\u0430\u0442\u0430."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "\u0427\u0430\u043A\u0430 \u0441\u0435 \u0438\u0437\u0442\u0435\u0433\u043B\u044F\u043D\u0438\u044F..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: "\u0421\u043A\u0430\u043D\u0438\u0440\u0430\u043D\u0435 \u0437\u0430
+      \u043D\u043E\u0432\u0438 \u043C\u043E\u0434\u043E\u0432\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: "\u0414\u0435\u043C\u043E\u043D\u0442\u0438\u0440\u0430\u043D\u0435
+      \u043D\u0430 \u043C\u043E\u0434\u043E\u0432\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: "\u041C\u043E\u043D\u0442\u0438\u0440\u0430\u043D\u0435 \u043D\u0430
+      \u043C\u043E\u0434\u043E\u0432\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: "\u0418\u043C\u043F\u043E\u0440\u0442\u0438\u0440\u0430\u043D\u0435
+      \u043D\u0430 \u0440\u0435\u0441\u0443\u0440\u0441\u0438 \u043E\u0442 \u043C\u043E\u0434\u043E\u0432\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043D\u0430 \u043C\u043E\u0434\u043E\u0432\u0435\u0442\u0435
+      \u0437\u0430 \u0433\u0440\u0435\u0448\u043A\u0438"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: "\u0413\u043E\u0442\u043E\u0432\u0438!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

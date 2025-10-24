@@ -82,16 +82,16 @@ public class PrefabPostProcessor : ModPostProcessor {
 
     public override Task UnloadAllAssets() {
         foreach (var obj in addedGameObjects) {
-            if (!obj) {
-            }
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
             targetDatabase.RemovePrefab(obj.name);
         }
+
         if (opHandle.IsValid()) {
             Addressables.Release(opHandle);
         }
+
         return Task.CompletedTask;
     }
 }

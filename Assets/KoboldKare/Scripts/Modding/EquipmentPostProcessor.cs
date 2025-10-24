@@ -36,6 +36,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
         if (opHandle.IsValid()) {
             Addressables.Release(opHandle);
         }
+
         return Task.CompletedTask;
     }
 }

@@ -41,6 +41,7 @@ public class SettingPostProcessor : ModPostProcessor {
         foreach (var setting in addedSettings) {
             SettingsManager.RemoveSetting(setting);
         }
+        addedSettings.Clear();
 
         if (opHandle.IsValid()) {
             Addressables.Release(opHandle);

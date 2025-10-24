@@ -1014,7 +1014,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790593
-    m_Localized: "Nagyobb f\xE9szekre lesz sz\xFCks\xE9g\xFCnk."
+    m_Localized: "Sz\xFCks\xE9g\xFCnk lesz egy nagyobb f\xE9szekre."
     m_Metadata:
       m_Items: []
   - m_Id: 213767567815790594
@@ -1390,7 +1390,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 279799208752914432
     m_Localized: "A moddol\xE1shoz 64 bites kompatibilis rendszer sz\xFCks\xE9ges!
-      K\xE9rj\xFCk, friss\xEDtse oper\xE1ci\xF3s rendszer\xE9t."
+      K\xE9rj\xFCk, friss\xEDtse az oper\xE1ci\xF3s rendszer\xE9t."
     m_Metadata:
       m_Items: []
   - m_Id: 279836570866360320
@@ -1448,6 +1448,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "Ruh\xE1zat sz\xEDn\xE1rnyalat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "K\xE9rlek v\xE1rj, a modok t\xF6lt\u0151dnek..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: "Mod rendszer inicializ\xE1l\xE1sa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "Let\xF6lt\xE9sekre v\xE1runk..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: "\xDAj modok keres\xE9se"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: "Modok lecsatol\xE1sa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: "Szerel\xE9si m\xF3dok"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: "Eszk\xF6z\xF6k import\xE1l\xE1sa modokb\xF3l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: "Modok ellen\u0151rz\xE9se hib\xE1k szempontj\xE1b\xF3l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: "K\xE9sz!"
     m_Metadata:
       m_Items: []
   references:

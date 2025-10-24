@@ -959,7 +959,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 213551810376945664
     m_Localized: "Jeg fornemmer en m\xF8rk tilstedev\xE6relse i de n\xE6rliggende
-      huler, g\xE5 ud og unders\xF8g for mig."
+      huler, g\xE5 og unders\xF8g for mig."
     m_Metadata:
       m_Items: []
   - m_Id: 213551810376945665
@@ -1190,7 +1190,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 215247205985472512
-    m_Localized: Sikkert for arbejde Hovedmenu
+    m_Localized: Sikkert til arbejde Hovedmenu
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
@@ -1207,7 +1207,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620099
-    m_Localized: "Jeg vil se flere store kobold\xE6g, kom endelig i gang!"
+    m_Localized: "Jeg vil se flere store kobold\xE6g, kom i gang!"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620100
@@ -1429,6 +1429,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 623266765225402368
     m_Localized: "T\xF8jfarve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151202807808
+    m_Localized: "Vent venligst, mods indl\xE6ses..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390720
+    m_Localized: Initialiserer mod-system.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390721
+    m_Localized: "Venter p\xE5 downloads..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390722
+    m_Localized: Scanner efter nye mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390723
+    m_Localized: Afmontering af mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390724
+    m_Localized: Monteringsmods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390725
+    m_Localized: Import af aktiver fra mods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390726
+    m_Localized: Tjekker mods for fejl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626166151215390727
+    m_Localized: Parat!
     m_Metadata:
       m_Items: []
   references:

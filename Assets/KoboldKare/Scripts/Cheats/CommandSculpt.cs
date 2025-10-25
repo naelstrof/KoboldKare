@@ -12,7 +12,7 @@ public class CommandSculpt : Command
         base.Execute(output, k, args);
 
         static void Usage() {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
         }
 
         if (!CheatsProcessor.GetCheatsEnabled()) {
@@ -171,6 +171,12 @@ public class CommandSculpt : Command
             case "hue":
 
                 target.SetGenes(genes.With(hue: SafeModify(genes.hue, modifier)));
+
+                break;
+
+            case "clothinghue":
+
+                target.SetGenes(genes.With(clothingHue: SafeModify(genes.clothingHue, modifier)));
 
                 break;
 

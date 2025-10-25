@@ -11,6 +11,13 @@ public class KoboldKareModdingProfileScene : KoboldKareModdingProfile {
     public override void Build() {
         workshopItem.Build(modScene);
     }
+
+    public override void Upload() {
+        workshopItem.Upload(modScene, true);
+    }
+    public override void UploadContentOnly() {
+        workshopItem.Upload(modScene, false);
+    }
 }
 
 #endif

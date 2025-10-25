@@ -20,6 +20,10 @@ public class PreparePool : MonoBehaviour {
     }
 
     void Start () {
+        if (instance != this) {
+            return;
+        }
+
         if (PhotonNetwork.PrefabPool is DefaultPool checkPool) {
             pool = checkPool;
         } else {

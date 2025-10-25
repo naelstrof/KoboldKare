@@ -7,6 +7,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 using System.Threading;
+using System.Threading.Tasks;
 using Steamworks;
 using UnityEditor;
 using UnityEngine.Rendering;
@@ -41,6 +42,22 @@ public class SteamWorkshopItem {
 	[SerializeField] private string title;
 	[SerializeField,TextArea] private string description;
 	[SerializeField,TextArea] private string changeNotes;
+	
+	[NonSerialized] private static SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
+	[AOT.MonoPInvokeCallback(typeof(SteamAPIWarningMessageHook_t))]
+	private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
+		Debug.LogWarning(pchDebugText);
+	}
+
+
+	public void ShowSteamWorkshopItem() {
+		if ((PublishedFileId_t)publishedFileId == PublishedFileId_t.Invalid) {
+			Debug.LogError("Cannot show workshop item, publishedFileId is invalid.");
+			return;
+		}
+		Application.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" + publishedFileId);
+	}
+	
 
 	[Serializable]
 	public abstract class ModContent {
@@ -209,29 +226,32 @@ public class SteamWorkshopItem {
 		if (bIOFailure || result.m_eResult != EResult.k_EResultOK) {
 			lastMessageType = MessageType.Error;
 			lastMessage = $"Failed to upload workshop item, error code: {result}, Check https://partner.steamgames.com/doc/api/ISteamUGC#CreateItemResult_t for more information.";
+			Debug.LogError(lastMessage);
 			throw new UnityException(lastMessage);
 		}
 		if (result.m_bUserNeedsToAcceptWorkshopLegalAgreement) {
 			lastMessageType = MessageType.Warning;
 			lastMessage = "Apparently you need to accept the workshop legal agreement, you should be able to do that by visiting `https://steamcommunity.com/workshop/workshoplegalagreement/`."; 
+			Debug.LogError(lastMessage);
 		}
 		publishedFileId = (ulong)result.m_nPublishedFileId;
 		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
 			lastMessageType = MessageType.Error;
 			lastMessage = "Failed to upload, couldn't get a published file ID!";
+			Debug.LogError(lastMessage);
 			throw new UnityException(lastMessage);
 		}
 
 		CreateModJSON(jsonSavePath, uploadContent);
 		
-		ItemUpdate(uploadContent);
+		_ = ItemUpdate(uploadContent, includeMetadata);
 	}
 	private CallResult<SubmitItemUpdateResult_t> onSubmitItemUpdateCallback;
 
 	private void OnSubmitItemUpdateCallback(SubmitItemUpdateResult_t result, bool bIOFailure) {
 		if (result.m_eResult == EResult.k_EResultOK) {
 			lastMessageType = MessageType.Info;
-			lastMessage = "Upload success! Check the URL to see your post";
+			lastMessage = "Upload success!";
 		} else {
 			lastMessageType = MessageType.Error;
 			lastMessage = $"Upload failed with error {result.m_eResult}. Check https://partner.steamgames.com/doc/api/ISteamUGC#SubmitItemUpdateResult_t for more information.";
@@ -341,12 +361,13 @@ public class SteamWorkshopItem {
 		return $"Looking good, ready to upload!\nBuild is located at {modRoot}.\nMake sure to hit Build if you made changes.";
 	}
 
-	public void Upload(ModContent content) {
+	public void Upload(ModContent content, bool includeMetadata) {
 		if (!IsBuilt()) {
-			Build(content);
+			throw new UnityException("Mod must be built before upload.");
 		}
 
-		CreateIfNeeded(content);
+		CreateIfNeeded(content, includeMetadata);
+		
 	}
 
 	public bool IsValid() {
@@ -420,44 +441,43 @@ public class SteamWorkshopItem {
 		}
 	}
 
-	private void ItemUpdate(ModContent content) {
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item description...", 0f);
+	private async Task ItemUpdate(ModContent content, bool uploadMetadata) {
+		if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Creating upload handle...", 0f)) {
+			EditorUtility.ClearProgressBar();
+			StopSteamService();
+			return;
+		}
 		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), (PublishedFileId_t)publishedFileId);
-		if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
-			throw new UnityException("Failed to set item description.");
+		if (uploadMetadata) {
+			if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
+				throw new UnityException("Failed to set item description.");
+			}
+
+			if (!SteamUGC.SetItemUpdateLanguage(ugcUpdateHandle, language.ToString())) {
+				throw new UnityException("Failed to set item update language.");
+			}
+
+			if (!SteamUGC.SetItemTitle(ugcUpdateHandle, title)) {
+				throw new UnityException("Failed to set item title.");
+			}
+
+			if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
+				throw new UnityException("Failed to set item metaData.");
+			}
+
+			if (!SteamUGC.SetItemTags(ugcUpdateHandle, GetTags())) {
+				throw new UnityException("Failed to set item tags.");
+			}
+
+			if (!SteamUGC.SetItemVisibility(ugcUpdateHandle, visibility)) {
+				throw new UnityException("Failed to set item visibility.");
+			}
+
+			if (!SteamUGC.SetItemPreview(ugcUpdateHandle, previewTexturePath)) {
+				throw new UnityException("Failed to set item preview.");
+			}
 		}
 
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item language...", 0f);
-		if (!SteamUGC.SetItemUpdateLanguage(ugcUpdateHandle, language.ToString())) {
-			throw new UnityException("Failed to set item update language.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item title...", 0f);
-		if (!SteamUGC.SetItemTitle(ugcUpdateHandle, title)) {
-			throw new UnityException("Failed to set item title.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item meta data...", 0f);
-		if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
-			throw new UnityException("Failed to set item metaData.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item tags...", 0f);
-		if (!SteamUGC.SetItemTags(ugcUpdateHandle, GetTags())) {
-			throw new UnityException("Failed to set item tags.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item visibility...", 0f);
-		if (!SteamUGC.SetItemVisibility(ugcUpdateHandle, visibility)) {
-			throw new UnityException("Failed to set item visibility.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item preview...", 0f);
-		if (!SteamUGC.SetItemPreview(ugcUpdateHandle, previewTexturePath)) {
-			throw new UnityException("Failed to set item preview.");
-		}
-
-		EditorUtility.DisplayProgressBar("Uploading...", "Setting item content...", 0f);
 		if (!SteamUGC.SetItemContent(ugcUpdateHandle, modRoot)) {
 			throw new UnityException("Failed to set item content.");
 		}
@@ -470,44 +490,132 @@ public class SteamWorkshopItem {
 			var status = SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
 			switch (status) {
 				case EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig:
-					EditorUtility.DisplayProgressBar("Uploading...", "Preparing configuration...",
-						(float)punBytesProcessed / (float)punBytesTotal);
+					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing configuration...", (float)punBytesProcessed / (float)punBytesTotal)) {
+						EditorUtility.ClearProgressBar();
+						StopSteamService();
+						return;
+					}
 					break;
 				case EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges:
-					EditorUtility.DisplayProgressBar("Uploading...", "Committing changes...",
-						(float)punBytesProcessed / (float)punBytesTotal);
+					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Committing changes...", (float)punBytesProcessed / (float)punBytesTotal)) {
+						EditorUtility.ClearProgressBar();
+						StopSteamService();
+						return;
+					}
 					break;
 				case EItemUpdateStatus.k_EItemUpdateStatusPreparingContent:
-					EditorUtility.DisplayProgressBar("Uploading...", "Preparing content...",
-						(float)punBytesProcessed / (float)punBytesTotal);
+					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing content...", (float)punBytesProcessed / (float)punBytesTotal)) {
+						EditorUtility.ClearProgressBar();
+						StopSteamService();
+						return;
+					}
 					break;
 				case EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile:
-					EditorUtility.DisplayProgressBar("Uploading...", "Uploading preview file...",
-						(float)punBytesProcessed / (float)punBytesTotal);
+					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading preview file...", (float)punBytesProcessed / (float)punBytesTotal)) {
+						EditorUtility.ClearProgressBar();
+						StopSteamService();
+						return;
+					}
 					break;
 				case EItemUpdateStatus.k_EItemUpdateStatusUploadingContent:
-					EditorUtility.DisplayProgressBar("Uploading...", "Uploading content...",
-						(float)punBytesProcessed / (float)punBytesTotal);
+					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading content...", (float)punBytesProcessed / (float)punBytesTotal)) {
+						EditorUtility.ClearProgressBar();
+						StopSteamService();
+						return;
+					}
 					break;
 				default:
 					validStatus = false;
 					break;
 			}
-			Thread.Sleep(10);
+			await Task.Delay(100);
+		}
+		StopSteamService();
+	}
+
+	private static int SteamReferenceCount;
+	private static CancellationTokenSource steamRunningTokenSource = null;
+
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+	private static void Init() {
+		if (SteamReferenceCount > 0) {
+			steamRunningTokenSource.Cancel();
+			steamRunningTokenSource = null;
+			Debug.Log("Steam API stopped.");
+			m_SteamAPIWarningMessageHook = null;
+			SteamClient.SetWarningMessageHook(null);
+			SteamAPI.Shutdown();
+		}
+		SteamReferenceCount = 0;
+		steamRunningTokenSource = null;
+	}
+	private static void StartSteamService() {
+		if (SteamReferenceCount == 0 && steamRunningTokenSource == null) {
+			if (!SteamAPI.Init()) {
+				throw new UnityException("Unable to initialize Steam API. Is Steam running?");
+			}
+			if (m_SteamAPIWarningMessageHook == null) {
+				m_SteamAPIWarningMessageHook = SteamAPIDebugTextHook;
+				SteamClient.SetWarningMessageHook(m_SteamAPIWarningMessageHook);
+			}
+			Debug.Log("Steam API initialized.");
+			SteamReferenceCount++;
+			steamRunningTokenSource = new CancellationTokenSource();
+			_ = SteamRunUpdates(steamRunningTokenSource.Token);
+		} else {
+			SteamReferenceCount++;
 		}
 	}
 
+	private static void StopSteamService() {
+		if (SteamReferenceCount<=0) {
+			return;
+		}
+		SteamReferenceCount--;
+		if (SteamReferenceCount == 0) {
+			steamRunningTokenSource.Cancel();
+			steamRunningTokenSource = null;
+			Debug.Log("Steam API stopped.");
+			m_SteamAPIWarningMessageHook = null;
+			SteamClient.SetWarningMessageHook(null);
+			SteamAPI.Shutdown();
+		}
+	}
+
+	private static async Task SteamRunUpdates(CancellationToken cancellationToken) {
+		try {
+			while (!cancellationToken.IsCancellationRequested) {
+				SteamAPI.RunCallbacks();
+				await Task.Delay(200, cancellationToken);
+			}
+		} catch (OperationCanceledException) { } catch (Exception e) {
+			Debug.LogException(e);
+			throw;
+		}
+	}
+	
+	
+
 	private ModContent uploadContent;
-	private void CreateIfNeeded(ModContent content) {
+	private bool includeMetadata;
+	private void CreateIfNeeded(ModContent content, bool includeMetadata) {
+		this.includeMetadata = includeMetadata;
+		StartSteamService();
 		uploadContent = content;
 	    onCreateItemCallback = new CallResult<CreateItemResult_t>(OnCreateItem);
 	    onSubmitItemUpdateCallback = new CallResult<SubmitItemUpdateResult_t>(OnSubmitItemUpdateCallback);
+	    if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Creating new workshop item..", 0f)) {
+		    EditorUtility.ClearProgressBar();
+		    return;
+	    }
 		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
-			EditorUtility.DisplayProgressBar("Uploading...", "Creating new workshop item..", 0f);
 			var call = SteamUGC.CreateItem(SteamUtils.GetAppID(), EWorkshopFileType.k_EWorkshopFileTypeCommunity);
 			onCreateItemCallback.Set(call);
+			EditorUtility.ClearProgressBar();
 		} else {
-			ItemUpdate(content);
+			EditorUtility.ClearProgressBar();
+			CreateModJSON(jsonSavePath, uploadContent);
+			_ = ItemUpdate(uploadContent, includeMetadata);
 		}
 	}
 

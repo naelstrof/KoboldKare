@@ -31,7 +31,7 @@ public class SteamWorkshopItem {
 	}
 	
 	[Header("Mod meta data")]
-	[SerializeField] private ulong publishedFileId = (ulong)PublishedFileId_t.Invalid;
+	[SerializeField] private string publishedFileId = PublishedFileId_t.Invalid.ToString();
 	[SerializeField] private ERemoteStoragePublishedFileVisibility visibility;
 	[SerializeField] private SteamWorkshopItemTag tags;
 	[SerializeField, Tooltip("The loading priority for the mod, lower numbers have higher priority.")] private float loadPriority;
@@ -48,14 +48,26 @@ public class SteamWorkshopItem {
 	private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
 		Debug.LogWarning(pchDebugText);
 	}
+	
+	private bool TryGetPublishedFileId(out PublishedFileId_t fileId) {
+		if (ulong.TryParse(publishedFileId, out ulong output)) {
+			fileId = (PublishedFileId_t)output;
+			if (fileId == PublishedFileId_t.Invalid) {
+				return false;
+			}
+			return true;
+		}
+		fileId = PublishedFileId_t.Invalid;
+		return false;
+	}
 
 
 	public void ShowSteamWorkshopItem() {
-		if ((PublishedFileId_t)publishedFileId == PublishedFileId_t.Invalid) {
+		if (TryGetPublishedFileId(out var id)) {
+			Application.OpenURL($"https://steamcommunity.com/sharedfiles/filedetails/?id={id}");
+		} else {
 			Debug.LogError("Cannot show workshop item, publishedFileId is invalid.");
-			return;
 		}
-		Application.OpenURL("https://steamcommunity.com/sharedfiles/filedetails/?id=" + publishedFileId);
 	}
 	
 
@@ -234,8 +246,9 @@ public class SteamWorkshopItem {
 			lastMessage = "Apparently you need to accept the workshop legal agreement, you should be able to do that by visiting `https://steamcommunity.com/workshop/workshoplegalagreement/`."; 
 			Debug.LogError(lastMessage);
 		}
-		publishedFileId = (ulong)result.m_nPublishedFileId;
-		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
+		publishedFileId = result.m_nPublishedFileId.ToString();
+		
+		if (result.m_nPublishedFileId == PublishedFileId_t.Invalid) {
 			lastMessageType = MessageType.Error;
 			lastMessage = "Failed to upload, couldn't get a published file ID!";
 			Debug.LogError(lastMessage);
@@ -279,7 +292,7 @@ public class SteamWorkshopItem {
 
 	private string Serialize(ModContent content) {
 		JSONNode rootNode = JSONNode.Parse("{}");
-        rootNode["publishedFileId"] = publishedFileId.ToString();
+        rootNode["publishedFileId"] = publishedFileId;
         rootNode["description"] = description;
         rootNode["language"] = language.ToString();
         rootNode["title"] = title;
@@ -347,7 +360,7 @@ public class SteamWorkshopItem {
 			return lastMessage;
 		}
 
-		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
+		if (!TryGetPublishedFileId(out var id)) {
 			messageType = MessageType.Warning;
 			return $"Publish id {publishedFileId} is invalid, this will create a new file on the workshop on upload!";
 		}
@@ -447,7 +460,11 @@ public class SteamWorkshopItem {
 			StopSteamService();
 			return;
 		}
-		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), (PublishedFileId_t)publishedFileId);
+
+		if (!TryGetPublishedFileId(out var id)) {
+			throw new UnityException("Failed to parse published file ID for update, is it correct?");
+		}
+		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), id);
 		if (uploadMetadata) {
 			if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
 				throw new UnityException("Failed to set item description.");
@@ -608,7 +625,7 @@ public class SteamWorkshopItem {
 		    EditorUtility.ClearProgressBar();
 		    return;
 	    }
-		if (publishedFileId == (ulong)PublishedFileId_t.Invalid) {
+		if (!TryGetPublishedFileId(out var id)) {
 			var call = SteamUGC.CreateItem(SteamUtils.GetAppID(), EWorkshopFileType.k_EWorkshopFileTypeCommunity);
 			onCreateItemCallback.Set(call);
 			EditorUtility.ClearProgressBar();

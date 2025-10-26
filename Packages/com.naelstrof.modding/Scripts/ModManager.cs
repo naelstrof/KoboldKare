@@ -61,7 +61,16 @@ public class ModManager : MonoBehaviour {
 
             using FileStream file = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read);
             using StreamReader reader = new StreamReader(file);
-            var rootNode = JSONNode.Parse(reader.ReadToEnd());
+            JSONNode rootNode;
+            try {
+                rootNode = JSONNode.Parse(reader.ReadToEnd());
+            } catch (Exception e) {
+                Debug.LogError($"Failed to parse mod info json {jsonPath}.");
+                Debug.LogException(e);
+                data = default;
+                return false;
+            }
+
             if (rootNode.HasKey("publishedFileId")) {
                 if (ulong.TryParse(rootNode["publishedFileId"], out ulong output)) {
                     modInfoData.publishedFileId = (PublishedFileId_t)output;

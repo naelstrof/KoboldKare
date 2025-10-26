@@ -262,8 +262,6 @@ public class SteamWorkshopItem {
 		}
 
 		try {
-			CreateModJSON(jsonSavePath, uploadContent);
-
 			_ = ItemUpdate(uploadContent, includeMetadata);
 		} catch (Exception e) {
 			Debug.LogException(e);
@@ -465,98 +463,117 @@ public class SteamWorkshopItem {
 	}
 
 	private async Task ItemUpdate(ModContent content, bool uploadMetadata) {
-		if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Creating upload handle...", 0f)) {
+		try {
+			CreateModJSON(jsonSavePath, content);
+			if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Creating upload handle...", 0f)) {
+				EditorUtility.ClearProgressBar();
+				StopSteamService();
+				return;
+			}
+
+			if (!TryGetPublishedFileId(out var id)) {
+				throw new UnityException("Failed to parse published file ID for update, is it correct?");
+			}
+
+			ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), id);
+			if (uploadMetadata) {
+				if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
+					throw new UnityException("Failed to set item description.");
+				}
+
+				if (!SteamUGC.SetItemUpdateLanguage(ugcUpdateHandle, language.ToString())) {
+					throw new UnityException("Failed to set item update language.");
+				}
+
+				if (!SteamUGC.SetItemTitle(ugcUpdateHandle, title)) {
+					throw new UnityException("Failed to set item title.");
+				}
+
+				if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
+					throw new UnityException("Failed to set item metaData.");
+				}
+
+				if (!SteamUGC.SetItemTags(ugcUpdateHandle, GetTags())) {
+					throw new UnityException("Failed to set item tags.");
+				}
+
+				if (!SteamUGC.SetItemVisibility(ugcUpdateHandle, visibility)) {
+					throw new UnityException("Failed to set item visibility.");
+				}
+
+				if (!SteamUGC.SetItemPreview(ugcUpdateHandle, previewTexturePath)) {
+					throw new UnityException("Failed to set item preview.");
+				}
+			}
+
+			if (!SteamUGC.SetItemContent(ugcUpdateHandle, modRoot)) {
+				throw new UnityException("Failed to set item content.");
+			}
+
+			var handle =
+				SteamUGC.SubmitItemUpdate(ugcUpdateHandle, string.IsNullOrEmpty(changeNotes) ? null : changeNotes);
+			onSubmitItemUpdateCallback.Set(handle);
+			bool validStatus = true;
+			while (validStatus && SteamReferenceCount > 0) {
+				var status = SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed,
+					out ulong punBytesTotal);
+				switch (status) {
+					case EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig:
+						if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing configuration...",
+							    (float)punBytesProcessed / (float)punBytesTotal)) {
+							EditorUtility.ClearProgressBar();
+							StopSteamService();
+							return;
+						}
+
+						break;
+					case EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges:
+						if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Committing changes...",
+							    (float)punBytesProcessed / (float)punBytesTotal)) {
+							EditorUtility.ClearProgressBar();
+							StopSteamService();
+							return;
+						}
+
+						break;
+					case EItemUpdateStatus.k_EItemUpdateStatusPreparingContent:
+						if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing content...",
+							    (float)punBytesProcessed / (float)punBytesTotal)) {
+							EditorUtility.ClearProgressBar();
+							StopSteamService();
+							return;
+						}
+
+						break;
+					case EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile:
+						if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading preview file...",
+							    (float)punBytesProcessed / (float)punBytesTotal)) {
+							EditorUtility.ClearProgressBar();
+							StopSteamService();
+							return;
+						}
+
+						break;
+					case EItemUpdateStatus.k_EItemUpdateStatusUploadingContent:
+						if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading content...",
+							    (float)punBytesProcessed / (float)punBytesTotal)) {
+							EditorUtility.ClearProgressBar();
+							StopSteamService();
+							return;
+						}
+
+						break;
+					default:
+						validStatus = false;
+						break;
+				}
+
+				await Task.Delay(100);
+			}
+		} finally {
 			EditorUtility.ClearProgressBar();
 			StopSteamService();
-			return;
 		}
-
-		if (!TryGetPublishedFileId(out var id)) {
-			throw new UnityException("Failed to parse published file ID for update, is it correct?");
-		}
-		ugcUpdateHandle = SteamUGC.StartItemUpdate(SteamUtils.GetAppID(), id);
-		if (uploadMetadata) {
-			if (!SteamUGC.SetItemDescription(ugcUpdateHandle, description)) {
-				throw new UnityException("Failed to set item description.");
-			}
-
-			if (!SteamUGC.SetItemUpdateLanguage(ugcUpdateHandle, language.ToString())) {
-				throw new UnityException("Failed to set item update language.");
-			}
-
-			if (!SteamUGC.SetItemTitle(ugcUpdateHandle, title)) {
-				throw new UnityException("Failed to set item title.");
-			}
-
-			if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
-				throw new UnityException("Failed to set item metaData.");
-			}
-
-			if (!SteamUGC.SetItemTags(ugcUpdateHandle, GetTags())) {
-				throw new UnityException("Failed to set item tags.");
-			}
-
-			if (!SteamUGC.SetItemVisibility(ugcUpdateHandle, visibility)) {
-				throw new UnityException("Failed to set item visibility.");
-			}
-
-			if (!SteamUGC.SetItemPreview(ugcUpdateHandle, previewTexturePath)) {
-				throw new UnityException("Failed to set item preview.");
-			}
-		}
-
-		if (!SteamUGC.SetItemContent(ugcUpdateHandle, modRoot)) {
-			throw new UnityException("Failed to set item content.");
-		}
-
-		var handle = SteamUGC.SubmitItemUpdate(ugcUpdateHandle, string.IsNullOrEmpty(changeNotes) ? null : changeNotes);
-		onSubmitItemUpdateCallback.Set(handle);
-		bool validStatus = true;
-		while (validStatus) {
-			var status = SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
-			switch (status) {
-				case EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig:
-					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing configuration...", (float)punBytesProcessed / (float)punBytesTotal)) {
-						EditorUtility.ClearProgressBar();
-						StopSteamService();
-						return;
-					}
-					break;
-				case EItemUpdateStatus.k_EItemUpdateStatusCommittingChanges:
-					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Committing changes...", (float)punBytesProcessed / (float)punBytesTotal)) {
-						EditorUtility.ClearProgressBar();
-						StopSteamService();
-						return;
-					}
-					break;
-				case EItemUpdateStatus.k_EItemUpdateStatusPreparingContent:
-					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Preparing content...", (float)punBytesProcessed / (float)punBytesTotal)) {
-						EditorUtility.ClearProgressBar();
-						StopSteamService();
-						return;
-					}
-					break;
-				case EItemUpdateStatus.k_EItemUpdateStatusUploadingPreviewFile:
-					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading preview file...", (float)punBytesProcessed / (float)punBytesTotal)) {
-						EditorUtility.ClearProgressBar();
-						StopSteamService();
-						return;
-					}
-					break;
-				case EItemUpdateStatus.k_EItemUpdateStatusUploadingContent:
-					if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Uploading content...", (float)punBytesProcessed / (float)punBytesTotal)) {
-						EditorUtility.ClearProgressBar();
-						StopSteamService();
-						return;
-					}
-					break;
-				default:
-					validStatus = false;
-					break;
-			}
-			await Task.Delay(100);
-		}
-		StopSteamService();
 	}
 
 	private static int SteamReferenceCount;

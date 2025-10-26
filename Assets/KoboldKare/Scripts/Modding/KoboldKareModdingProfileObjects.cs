@@ -7,6 +7,20 @@ using UnityEditor.UIElements;
 
 [CustomEditor(typeof(KoboldKareModdingProfile), true)]
 public class KoboldKareModdingProfileEditor : Editor {
+    private HelpBox helpBox;
+    void StatusChangedAction(SteamWorkshopItem self, MessageType messageType, string message) {
+        helpBox.text = message;
+        helpBox.messageType = (HelpBoxMessageType)messageType;
+        helpBox.MarkDirtyRepaint();
+    }
+
+    private void OnDisable() {
+        if (helpBox != null) {
+            KoboldKareModdingProfile targetProfileObjects = (KoboldKareModdingProfile)target;
+            targetProfileObjects.AddStatusChangedListener(StatusChangedAction);
+        }
+    }
+
     public override VisualElement CreateInspectorGUI() {
         var visualElement = new VisualElement();
         InspectorElement.FillDefaultInspector(visualElement, serializedObject, this);
@@ -15,13 +29,13 @@ public class KoboldKareModdingProfileEditor : Editor {
             text = "Build",
             tooltip = "Builds the mod content into the build folder."
         };
-        var helpBox = new HelpBox();
+        helpBox ??= new HelpBox();
         helpBox.text = "Press one of the buttons below to get started!";
         helpBox.messageType = HelpBoxMessageType.None;
+        KoboldKareModdingProfile targetProfileObjects = (KoboldKareModdingProfile)target;
+        targetProfileObjects.AddStatusChangedListener(StatusChangedAction);
         visualElement.Add(helpBox);
         buildButton.clicked += () => {
-            var helpboxText = "";
-            MessageType biggestMessageType = MessageType.None;
             foreach (var curTarget in targets) {
                 KoboldKareModdingProfile targetProfileObjects = (KoboldKareModdingProfile)curTarget;
                 try {
@@ -29,12 +43,7 @@ public class KoboldKareModdingProfileEditor : Editor {
                 } catch (Exception e) {
                     Debug.LogException(e);
                 }
-                helpboxText += $"{targetProfileObjects.name}: {targetProfileObjects.GetStatus(out var messageType)}\n";
-                biggestMessageType = (MessageType)Mathf.Max((int)biggestMessageType, (int)messageType);
             }
-            helpBox.text = helpboxText;
-            helpBox.messageType = (HelpBoxMessageType)biggestMessageType;
-            helpBox.MarkDirtyRepaint();
         };
         visualElement.Add(buildButton);
         if (!serializedObject.isEditingMultipleObjects) {
@@ -52,7 +61,6 @@ public class KoboldKareModdingProfileEditor : Editor {
                 name = "Upload Content Only",
                 text = "Upload Content Only",
                 tooltip = "Uploads only the mod content, not the metadata (name, description, etc). Useful if you've edited the mod in Steam Workshop directly."
-                
             };
             uploadContentOnly.clicked += () => {
                 KoboldKareModdingProfile modProfileObjects = (KoboldKareModdingProfile)target;
@@ -98,6 +106,15 @@ public class KoboldKareModdingProfileEditor : Editor {
 
 public abstract class KoboldKareModdingProfile : ScriptableObject {
     [SerializeField] protected SteamWorkshopItem workshopItem;
+
+    public void AddStatusChangedListener(SteamWorkshopItem.StatusChangedAction statusChangedAction) {
+        workshopItem.statusChanged += statusChangedAction;
+    }
+    
+    public void RemoveStatusChangedListener(SteamWorkshopItem.StatusChangedAction statusChangedAction) {
+        workshopItem.statusChanged -= statusChangedAction;
+    }
+    
     public abstract void Build();
 
     public abstract void Upload();

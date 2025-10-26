@@ -29,6 +29,10 @@ public class SteamWorkshopItem {
 		italian, japanese, koreana, norwegian, polish, portuguese, brazilian, romanian, russian, spanish, latam, swedish,
 		thai, turkish, ukrainian, vietnamese,
 	}
+
+	public delegate void StatusChangedAction(SteamWorkshopItem item, MessageType type, string message);
+	
+	public event StatusChangedAction statusChanged;
 	
 	[Header("Mod meta data")]
 	[SerializeField] private string publishedFileId = PublishedFileId_t.Invalid.ToString();
@@ -210,7 +214,6 @@ public class SteamWorkshopItem {
 	}
 	
 	private UGCUpdateHandle_t ugcUpdateHandle;
-	private bool uploading = false;
 	private string lastMessage = "";
 	private MessageType lastMessageType;
 	
@@ -238,12 +241,14 @@ public class SteamWorkshopItem {
 		if (bIOFailure || result.m_eResult != EResult.k_EResultOK) {
 			lastMessageType = MessageType.Error;
 			lastMessage = $"Failed to upload workshop item, error code: {result}, Check https://partner.steamgames.com/doc/api/ISteamUGC#CreateItemResult_t for more information.";
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
 			Debug.LogError(lastMessage);
 			throw new UnityException(lastMessage);
 		}
 		if (result.m_bUserNeedsToAcceptWorkshopLegalAgreement) {
 			lastMessageType = MessageType.Warning;
 			lastMessage = "Apparently you need to accept the workshop legal agreement, you should be able to do that by visiting `https://steamcommunity.com/workshop/workshoplegalagreement/`."; 
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
 			Debug.LogError(lastMessage);
 		}
 		publishedFileId = result.m_nPublishedFileId.ToString();
@@ -251,13 +256,19 @@ public class SteamWorkshopItem {
 		if (result.m_nPublishedFileId == PublishedFileId_t.Invalid) {
 			lastMessageType = MessageType.Error;
 			lastMessage = "Failed to upload, couldn't get a published file ID!";
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
 			Debug.LogError(lastMessage);
 			throw new UnityException(lastMessage);
 		}
 
-		CreateModJSON(jsonSavePath, uploadContent);
-		
-		_ = ItemUpdate(uploadContent, includeMetadata);
+		try {
+			CreateModJSON(jsonSavePath, uploadContent);
+
+			_ = ItemUpdate(uploadContent, includeMetadata);
+		} catch (Exception e) {
+			Debug.LogException(e);
+			throw;
+		}
 	}
 	private CallResult<SubmitItemUpdateResult_t> onSubmitItemUpdateCallback;
 
@@ -265,21 +276,20 @@ public class SteamWorkshopItem {
 		if (result.m_eResult == EResult.k_EResultOK) {
 			lastMessageType = MessageType.Info;
 			lastMessage = "Upload success!";
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
+			Debug.Log(lastMessage);
 		} else {
 			lastMessageType = MessageType.Error;
 			lastMessage = $"Upload failed with error {result.m_eResult}. Check https://partner.steamgames.com/doc/api/ISteamUGC#SubmitItemUpdateResult_t for more information.";
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
+			Debug.LogError(lastMessage);
 		}
 
-		uploading = false;
 		EditorUtility.ClearProgressBar();
 	}
 
 	public bool IsBuilt() {
 		return IsValid() && Directory.Exists(modRoot);
-	}
-
-	public bool Busy() {
-		return uploading;
 	}
 
 	public string GetModBuildPath(BuildTarget target) {
@@ -348,11 +358,6 @@ public class SteamWorkshopItem {
 		if (!IsBuilt()) {
 			messageType = MessageType.Warning;
 			return $"Mod not found at build directory: {modRoot}.\nMod must be built before upload... This can take a very long time on the first run! (several hours)\nIt will be faster on subsequent runs (a few minutes).";
-		}
-
-		if (uploading) {
-			messageType = MessageType.Info;
-			return "Uploading...";
 		}
 
 		if (!string.IsNullOrEmpty(lastMessage)) {
@@ -447,9 +452,14 @@ public class SteamWorkshopItem {
 			modContent.BuildForTarget(BuildTarget.StandaloneOSX, GetModBuildPath(BuildTarget.StandaloneOSX));
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
-		} catch {
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
+			Debug.Log(lastMessage);
+		} catch (Exception e) {
 			lastMessage = "Failed to build! Check the console to see what went wrong! You may need to clear your build cache if considerable changes have been made.";
 			lastMessageType = MessageType.Error;
+			statusChanged?.Invoke(this, lastMessageType, lastMessage);
+			Debug.LogException(e);
+			Debug.LogError(lastMessage);
 			throw;
 		}
 	}
@@ -499,11 +509,10 @@ public class SteamWorkshopItem {
 			throw new UnityException("Failed to set item content.");
 		}
 
-		uploading = true;
 		var handle = SteamUGC.SubmitItemUpdate(ugcUpdateHandle, string.IsNullOrEmpty(changeNotes) ? null : changeNotes);
 		onSubmitItemUpdateCallback.Set(handle);
 		bool validStatus = true;
-		while (uploading && validStatus) {
+		while (validStatus) {
 			var status = SteamUGC.GetItemUpdateProgress(ugcUpdateHandle, out ulong punBytesProcessed, out ulong punBytesTotal);
 			switch (status) {
 				case EItemUpdateStatus.k_EItemUpdateStatusPreparingConfig:
@@ -644,7 +653,7 @@ public class SteamWorkshopItem {
 	        if (!ulong.TryParse(rootNode["publishedFileId"], out ulong output)) {
 		        throw new UnityException( $"Failed to parse publishedFileID in file {jsonSavePath} as ulong... Invalid mod info format or corruption?");
 	        }
-	        target.FindPropertyRelative("publishedFileId").longValue = (long)output;
+	        target.FindPropertyRelative("publishedFileId").stringValue = (string)rootNode["publishedFileId"];
         }
 
         if (rootNode.HasKey("description")) {
@@ -678,6 +687,7 @@ public class SteamWorkshopItem {
         TryLoadPreview(target);
         lastMessage = "Successfully loaded mod information from disk.";
         lastMessageType = MessageType.Info;
+        statusChanged?.Invoke(this, lastMessageType, lastMessage);
 	}
 
 	public void TryLoadPreview(SerializedProperty target) {

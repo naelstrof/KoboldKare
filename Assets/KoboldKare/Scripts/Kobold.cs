@@ -367,13 +367,21 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
         bellyContainer.maxVolume = newGenes.bellySize;
         metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
         Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
+        Vector4 chbcs = new Vector4(newGenes.clothingHue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
         // Set color
         foreach (Renderer r in koboldBodyRenderers) {
             if (r == null) {
                 continue;
             }
             foreach (Material m in r.materials) {
-                m.SetVector(BrightnessContrastSaturation, hbcs);
+                // If it's an equipment, it will have the EquipmentComponent
+                if (r.gameObject.GetComponent<EquipmentSkinnedMesh.EquipmentComponent>() != null)
+                {
+                    m.SetVector(BrightnessContrastSaturation, chbcs);
+                } else
+                {
+                    m.SetVector(BrightnessContrastSaturation, hbcs);
+                }
             }
             foreach (var dickSet in activeDicks) {
                 foreach (var rendererMask in dickSet.dick.GetTargetRenderers()) {

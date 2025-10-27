@@ -49,8 +49,12 @@ public class PlayableMap : ScriptableObject {
     [NonSerialized]
     public ModManager.ModStub? stub;
     
+    private struct ModStubAddressableHandlePair {
+        public ModManager.ModStub stub;
+        public AsyncOperationHandle handle;
+    }
     [NonSerialized]
-    private List<AsyncOperationHandle> loadedHandles;
+    private List<ModStubAddressableHandlePair> loadedHandles;
 
     public void SetPreview(Sprite preview) {
         this.preview = preview;
@@ -69,13 +73,14 @@ public class PlayableMap : ScriptableObject {
     public string GetDescription() => description;
 
     private void Awake() {
-        loadedHandles = new List<AsyncOperationHandle>();
+        loadedHandles = new();
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     private void OnSceneUnloaded(Scene arg0) {
         foreach(var handle in loadedHandles) {
-            Addressables.Release(handle);
+            Addressables.Release(handle.handle);
+            _ = ModManager.SetModLoaded(handle.stub, false);
         }
         loadedHandles.Clear();
     }
@@ -111,10 +116,13 @@ public class PlayableMap : ScriptableObject {
     }
     
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
-        await ModManager.LoadModNow(stub);
+        await ModManager.SetModLoaded(stub,true);
         var handle = Addressables.LoadSceneAsync(unityScene.RuntimeKey);
         await handle.Task;
-        loadedHandles.Add(handle);
+        loadedHandles.Add(new ModStubAddressableHandlePair() {
+            handle = handle,
+            stub = stub
+        });
     }
 
     public BoxedSceneLoad LoadAsync() {

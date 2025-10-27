@@ -1,29 +1,67 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ReagentPostProcessor : ModPostProcessor {
-    AsyncOperationHandle opHandle;
-    
-    public override async Task LoadAllAssets()  {
-        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
-        await assetsHandle.Task;
-        opHandle = Addressables.LoadAssetsAsync<ScriptableReagent>(assetsHandle.Result, LoadReagent);
-        await opHandle.Task;
-        Addressables.Release(assetsHandle);
+    private struct ModStubReagentPair {
+        public ModManager.ModStub stub;
+        public ScriptableReagent obj;
     }
+    
+    private List<ModStubReagentPair> addedReagents;
+    
+    private List<ModStubAddressableHandlePair> opHandles;
+
+    private ModManager.ModStub currentStub;
+    
+    public override void Awake() {
+        base.Awake();
+        addedReagents = new ();
+        opHandles = new();
+    }
+    public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
+        if (locator.Locate(searchLabel.RuntimeKey, typeof(ScriptableReagent), out var locations)) {
+            currentStub = new ModManager.ModStub(data);
+            var opHandle = Addressables.LoadAssetsAsync<ScriptableReagent>(locations, LoadReagent);
+            await opHandle.Task;
+            opHandles.Add(new ModStubAddressableHandlePair() {
+                stub = currentStub,
+                handle = opHandle
+            });
+        }
+    }
+    
     private void LoadReagent(ScriptableReagent reagent) {
         if (!reagent) {
             return;
         }
+        addedReagents.Add(new ModStubReagentPair() {
+            stub = currentStub,
+            obj = reagent
+        });
         ReagentDatabase.AddReagent(reagent);
     }
 
-    public override Task UnloadAllAssets() {
-        ReagentDatabase.ClearAllReagents();
-        if (opHandle.IsValid()) {
-            Addressables.Release(opHandle);
+    public override Task UnloadAssets(ModManager.ModInfoData data) {
+        for (int i=0;i<addedReagents.Count;i++) {
+            if(addedReagents[i].stub.GetRepresentedBy(data)) {
+                ReagentDatabase.RemoveReagent(addedReagents[i].obj);
+                addedReagents.RemoveAt(i);
+                i--;
+            }
         }
-        return Task.CompletedTask;
+        for (int i=0;i<opHandles.Count;i++) {
+            if(opHandles[i].stub.GetRepresentedBy(data)) {
+                if (opHandles[i].handle.IsValid()) {
+                    Addressables.Release(opHandles[i].handle);
+                }
+                opHandles.RemoveAt(i);
+                i--;
+            }
+        }
+        return base.UnloadAssets(data);
     }
+
 }

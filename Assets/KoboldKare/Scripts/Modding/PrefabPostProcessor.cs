@@ -4,25 +4,27 @@ using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PrefabPostProcessor : ModPostProcessor {
-    AsyncOperationHandle opHandle;
     [SerializeField] private PrefabDatabase targetDatabase;
     [SerializeField] private bool networkedPrefabs;
-    private List<GameObject> addedGameObjects;
+    private struct ModStubGameObjectPair {
+        public ModManager.ModStub stub;
+        public GameObject obj;
+    }
+    
+    private List<ModStubGameObjectPair> addedGameObjects;
+    
+    private List<ModStubAddressableHandlePair> opHandles;
+
+    private ModManager.ModStub currentStub;
 
     public override void Awake() {
         base.Awake();
-        addedGameObjects = new List<GameObject>();
-    }
-
-    public override async Task LoadAllAssets() {
-        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
-        await assetsHandle.Task;
-        opHandle = Addressables.LoadAssetsAsync<GameObject>(assetsHandle.Result, LoadPrefab);
-        await opHandle.Task;
-        Addressables.Release(assetsHandle);
+        addedGameObjects = new ();
+        opHandles = new();
     }
     
     private void LoadPrefab(GameObject obj) {
@@ -30,16 +32,8 @@ public class PrefabPostProcessor : ModPostProcessor {
             return;
         }
 
-        addedGameObjects ??= new List<GameObject>();
-
         for (int i = 0; i < addedGameObjects.Count; i++) {
-            if (addedGameObjects[i] == null) {
-                addedGameObjects.RemoveAt(i--);
-            }
-        }
-
-        for (int i = 0; i < addedGameObjects.Count; i++) {
-            if (addedGameObjects[i].name != obj.name) continue;
+            if (addedGameObjects[i].obj.name != obj.name) continue;
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
@@ -58,19 +52,22 @@ public class PrefabPostProcessor : ModPostProcessor {
             PreparePool.AddPrefab(obj.name, obj);
         }
         targetDatabase.AddPrefab(obj.name, obj);
-        addedGameObjects.Add(obj);
+        addedGameObjects.Add(new ModStubGameObjectPair() {
+            stub = currentStub,
+            obj = obj
+        });
     }
 
-    public override async Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {
+    public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
         var key = searchLabel.labelString;
         List<Task> tasks = new List<Task>();
-        var rootNode = mod.info.assets;
+        var rootNode = data.assets;
         if (rootNode.HasKey(key)) {
             var array = rootNode[key].AsArray;
             foreach (var node in array) {
                 if (!node.Value.IsString) continue;
                 var assetName = node.Value;
-                var handle = mod.bundle.LoadAssetAsync<GameObject>(assetName);
+                var handle = assetBundle.LoadAssetAsync<GameObject>(assetName);
                 handle.completed += (a) => {
                     LoadPrefab(handle.asset as GameObject);
                 };
@@ -80,18 +77,39 @@ public class PrefabPostProcessor : ModPostProcessor {
         await Task.WhenAll(tasks);
     }
 
-    public override Task UnloadAllAssets() {
-        foreach (var obj in addedGameObjects) {
+    public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
+        if (locator.Locate(searchLabel.RuntimeKey, typeof(GameObject), out var locations)) {
+            currentStub = new ModManager.ModStub(data);
+            var opHandle = Addressables.LoadAssetsAsync<GameObject>(locations, LoadPrefab);
+            await opHandle.Task;
+            opHandles.Add(new ModStubAddressableHandlePair() {
+                stub = currentStub,
+                handle = opHandle
+            });
+        }
+    }
+
+    public override Task UnloadAssets(ModManager.ModInfoData data) {
+        for (int i=0;i<addedGameObjects.Count;i++) {
+            if (!addedGameObjects[i].stub.GetRepresentedBy(data)) continue;
+            var obj = addedGameObjects[i].obj;
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
             targetDatabase.RemovePrefab(obj.name);
+            addedGameObjects.RemoveAt(i);
+            i--;
         }
-
-        if (opHandle.IsValid()) {
-            Addressables.Release(opHandle);
+        
+        for (int i=0;i<opHandles.Count;i++) {
+            if(opHandles[i].stub.GetRepresentedBy(data)) {
+                if (opHandles[i].handle.IsValid()) {
+                    Addressables.Release(opHandles[i].handle);
+                }
+                opHandles.RemoveAt(i);
+                i--;
+            }
         }
-
-        return Task.CompletedTask;
+        return base.UnloadAssets(data);
     }
 }

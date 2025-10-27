@@ -86,15 +86,6 @@ public class ReagentDatabase : MonoBehaviour {
         instance.reagentDictionary.Add(newReagent.name, newReagent);
         instance.reagents.Sort(instance.reagentSorter);
     }
-
-    public static void ClearAllReagents() {
-        instance.reagents.Clear();
-        instance.reagentDictionary.Clear();
-    }
-    
-    public static void ClearAllReactions() {
-        instance.reactions.Clear();
-    }
     
     public static void RemoveReagent(ScriptableReagent reagent) {
         if (instance.reagents.Contains(reagent)) {

@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class PlayableMapPostProcessor : ModPostProcessor {
-    private List<PlayableMap> addedPlayableMaps;
+    private struct ModStubPlayableMapPair {
+        public ModManager.ModStub stub;
+        public PlayableMap playableMap;
+    }
+    private List<ModStubPlayableMapPair> addedPlayableMaps;
 
     public override void Awake() {
         base.Awake();
-        addedPlayableMaps = new List<PlayableMap>();
+        addedPlayableMaps = new ();
     }
 
     private Sprite DeepCopySprite(Sprite src) {
@@ -47,52 +52,54 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         playableMapCopy.SetPreview(newSprite);
         return playableMapCopy;
     }
-    public override async Task LoadAllAssets() {
-        addedPlayableMaps.Clear();
-        var assetsHandle = Addressables.LoadResourceLocationsAsync(searchLabel.RuntimeKey);
-        await assetsHandle.Task;
-
-        foreach (var resource in assetsHandle.Result) {
-            var handle = Addressables.LoadAssetAsync<PlayableMap>(resource);
-            PlayableMap map = await handle.Task;
-            if (!map) {
+    public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
+        if (locator.Locate(searchLabel.RuntimeKey, typeof(GameObject), out var locations)) {
+            foreach (var resource in locations) {
+                var handle = Addressables.LoadAssetAsync<PlayableMap>(resource);
+                PlayableMap map = await handle.Task;
+                if (!map) {
+                    Addressables.Release(handle);
+                    continue;
+                }
+                var copy = DeepCopyPlayableMap(map);
                 Addressables.Release(handle);
-                continue;
-            }
-            var copy = DeepCopyPlayableMap(map);
-            Addressables.Release(handle);
-            
-            if (!ModManager.TryUnloadModThatProvidesAssetNow(resource, out var stub)) {
-                copy.stub = null;
+                copy.stub = new ModManager.ModStub(data);
                 PlayableMapDatabase.AddPlayableMap(copy);
-                addedPlayableMaps.Add(copy);
-                continue;
+                addedPlayableMaps.Add(new ModStubPlayableMapPair() {
+                    playableMap = copy,
+                    stub = new ModManager.ModStub(data)
+                });
             }
-            copy.stub = stub;
-            PlayableMapDatabase.AddPlayableMap(copy);
-            addedPlayableMaps.Add(copy);
         }
     }
+    
 
-    public override async Task HandleAssetBundleMod(ModManager.ModAssetBundle mod) {
-        var node = mod.info.assets;
+    public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle bundle) {
+        var node = data.assets;
         if (node.HasKey("Scene")) {
             PlayableMap playableMap = ScriptableObject.CreateInstance<PlayableMap>();
-            var icon = await mod.bundle.LoadAssetAsync<Sprite>(node["SceneIcon"]).AsSingleAssetTask<Sprite>();
+            var request = bundle.LoadAssetAsync<Sprite>(node["SceneIcon"]);
+            var icon = await request.AsSingleAssetTask<Sprite>();
             string sceneTitle = node.HasKey("SceneTitle") ? node["SceneTitle"] : "Unknown Map";
             string sceneDescription = node.HasKey("SceneDescription") ? node["SceneDescription"] : "No description provided.";
-            playableMap.SetFromBundle(mod.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon, sceneDescription);
+            playableMap.SetFromBundle(data.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon, sceneDescription);
             var copy = DeepCopyPlayableMap(playableMap);
             PlayableMapDatabase.AddPlayableMap(copy);
-            addedPlayableMaps.Add(copy);
+            addedPlayableMaps.Add(new ModStubPlayableMapPair() {
+                playableMap = copy,
+                stub = new ModManager.ModStub(data)
+            });
         }
     }
 
-    public override Task UnloadAllAssets() {
-        foreach (var playableMap in addedPlayableMaps) {
-            PlayableMapDatabase.RemovePlayableMap(playableMap);
+    public override Task UnloadAssets(ModManager.ModInfoData data) {
+        for (int i=0;i<addedPlayableMaps.Count;i++) {
+            if(addedPlayableMaps[i].stub.GetRepresentedBy(data)) {
+                PlayableMapDatabase.RemovePlayableMap(addedPlayableMaps[i].playableMap);
+                addedPlayableMaps.RemoveAt(i);
+                i--;
+            }
         }
-        addedPlayableMaps.Clear();
-        return Task.CompletedTask;
+        return base.UnloadAssets(data);
     }
 }

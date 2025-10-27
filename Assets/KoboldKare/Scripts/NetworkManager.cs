@@ -436,7 +436,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
         }
 
-        if (!ModManager.HasModsLoaded(desiredMods)) {
+        if (!ModManager.HasExactModConfigurationLoaded(desiredMods)) {
             string roomName = PhotonNetwork.CurrentRoom.Name;
             onLeaveRoom = () => {
                 GameManager.StartCoroutineStatic(FinishLoadMods(desiredMods, roomName));

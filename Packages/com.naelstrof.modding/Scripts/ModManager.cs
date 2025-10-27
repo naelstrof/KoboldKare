@@ -38,6 +38,9 @@ public class ModManager : MonoBehaviour {
     }
 
     public struct ModInfoData {
+        public string GetSceneBundleLocation() {
+            return $"{directoryInfo.FullName}/{runningPlatform}/scenebundle";
+        }
         public static bool TryGetModInfoData(string jsonPath, ModSource source, out ModInfoData data) {
             FileInfo fileInfo = new FileInfo(jsonPath);
             if (!fileInfo.Exists) {
@@ -161,9 +164,6 @@ public class ModManager : MonoBehaviour {
         }
         private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
 
-        public string GetSceneBundleLocation() {
-            return $"{info.directoryInfo.FullName}/{runningPlatform}/scenebundle";
-        }
         public override bool IsValid() {
             FileInfo bundleFileInfo = new FileInfo(bundleLocation);
             if (!bundleFileInfo.Exists) {
@@ -177,20 +177,29 @@ public class ModManager : MonoBehaviour {
         }
 
         public override async Task TryLoad() {
-            bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
+            try {
+                bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
+            } catch (Exception e) {
+                Debug.LogError($"Failed to load bundle for {info.title} [{info.publishedFileId}].");
+                Debug.LogException(e);
+            }
             loaded = true;
         }
         public override async Task TryUnload() {
             if (!bundle) {
                 return;
             }
-            await bundle.UnloadAsync(true).AsTask();
+            await bundle.UnloadAsync(false).AsTask();
             loaded = false;
             bundle = null;
         }
 
         public override bool Provides(IResourceLocation location) {
             return false;
+        }
+
+        public AssetBundle GetBundle() {
+            return bundle;
         }
     }
 
@@ -274,6 +283,7 @@ public class ModManager : MonoBehaviour {
             return false;
         }
 
+        public IResourceLocator GetLocator() => locator;
         private IResourceLocator locator;
     }
     
@@ -372,6 +382,20 @@ public class ModManager : MonoBehaviour {
                 source = ModSource.Any;
             }
         }
+
+        public ModStub(ModInfoData data) {
+            this.description = data.description;
+            this.source = data.source;
+            this.enabled = true;
+            this.title = data.title;
+            this.folderTitle = data.directoryInfo.Name;
+            this.id = data.publishedFileId;
+            this.preview = data.preview;
+            this.causedException = false;
+        }
+        public readonly bool GetRepresentedBy(ModInfoData data) {
+            return data.publishedFileId == id && data.title == title;
+        }
         public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null)  {
             this.description = description;
             this.source = source;
@@ -431,14 +455,83 @@ public class ModManager : MonoBehaviour {
             foreach (var mod in instance.fullModList) {
                 if (!mod.GetRepresentedByStub(stub)) continue;
                 instance.changed = true;
+                if (!mod.enabled && active) {
+                    instance.ready = false;
+                    instance.status = ModStatus.LoadingAssets;
+                    try {
+                        await mod.TryLoad();
+                        foreach (var modPostProcessor in instance.earlyModPostProcessors) {
+                            if (mod is ModAddressable modAddressable) {
+                                await modPostProcessor.HandleAddressableMod(mod.info, modAddressable.GetLocator());
+                            } else if (mod is ModAssetBundle modBundle) {
+                                await modPostProcessor.HandleAssetBundleMod(mod.info, modBundle.GetBundle());
+                            }
+                        }
+
+                        foreach (var modPostProcessor in instance.modPostProcessors) {
+                            if (mod is ModAddressable modAddressable) {
+                                await modPostProcessor.HandleAddressableMod(mod.info, modAddressable.GetLocator());
+                            } else if (mod is ModAssetBundle modBundle) {
+                                await modPostProcessor.HandleAssetBundleMod(mod.info, modBundle.GetBundle());
+                            }
+                        }
+
+                        await Task.Delay(1000);
+                        await mod.TryUnload();
+                    } finally {
+                        instance.status = ModStatus.Ready;
+                        instance.ready = true;
+                    }
+                } else if (mod.enabled && !active) {
+                    try {
+                        instance.ready = false;
+                        instance.status = ModStatus.UnloadingMods;
+                        foreach (var modPostProcessor in instance.earlyModPostProcessors) {
+                            await modPostProcessor.UnloadAssets(mod.info);
+                        }
+
+                        foreach (var modPostProcessor in instance.modPostProcessors) {
+                            await modPostProcessor.UnloadAssets(mod.info);
+                        }
+                    } finally {
+                        instance.ready = true;
+                        instance.status = ModStatus.Ready;
+                    }
+                }
                 mod.enabled = active;
                 break;
             }
         } finally{
             Mutex.Release();
         }
-        await instance.ReloadMods(true);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
+    }
+    
+    public static async Task SetModLoaded(ModStub stub, bool loaded) {
+        await Mutex.WaitAsync();
+        try {
+            foreach (var mod in instance.fullModList) {
+                if (!mod.GetRepresentedByStub(stub)) continue;
+                if (!mod.GetLoaded() && loaded) {
+                    await mod.TryLoad();
+                    foreach(var modPostProcessor in instance.earlyModPostProcessors) {
+                        if (mod is ModAddressable modAddressable) {
+                            await modPostProcessor.HandleAddressableMod(mod.info, modAddressable.GetLocator());
+                        } else if (mod is ModAssetBundle modBundle) {
+                            await modPostProcessor.HandleAssetBundleMod(mod.info, modBundle.GetBundle());
+                        }
+                    }
+                } else if (mod.GetLoaded() && !loaded) {
+                    foreach(var modPostProcessor in instance.earlyModPostProcessors) {
+                        await modPostProcessor.UnloadAssets(mod.info);
+                    }
+                    await mod.TryUnload();
+                }
+                break;
+            }
+        } finally{
+            Mutex.Release();
+        }
     }
 
     public static void AddFinishedLoadingListener(ModReadyAction action) {
@@ -662,7 +755,7 @@ public class ModManager : MonoBehaviour {
         currentInspectedMod = null;
     }
 
-    private async Task LoadAllAssets(bool shouldInspect, bool includeEarly) {
+    private async Task LoadAllAssets(bool shouldInspect) {
         if (shouldInspect) {
             //await InspectAddressableMods();
             //Resources.UnloadUnusedAssets();
@@ -670,32 +763,35 @@ public class ModManager : MonoBehaviour {
 
         status = ModStatus.LoadingAssets;
         try {
-            if (includeEarly) {
-                foreach (var modPostProcessor in earlyModPostProcessors) {
-                    await modPostProcessor.LoadAllAssets();
-                }
-            }
-
-            foreach (var modPostProcessor in modPostProcessors) {
-                await modPostProcessor.LoadAllAssets();
-            }
-            List<Task> tasks = new List<Task>();
-            // Load asset bundles
             foreach(var mod in fullModList) {
-                if (!mod.enabled || mod is not ModAssetBundle modAssetBundle) {
+                if (!mod.enabled) {
                     continue;
                 }
-                if (includeEarly) {
-                    foreach (var modPostProcessor in earlyModPostProcessors) {
-                        tasks.Add(modPostProcessor.HandleAssetBundleMod(modAssetBundle));
+                Debug.Log($"Loading mod {mod.info.title}");
+                await mod.TryLoad();
+                List<Task> tasks = new List<Task>();
+                foreach (var modPostProcessor in earlyModPostProcessors) {
+                    if (mod is ModAddressable modAddressable) {
+                        tasks.Add(modPostProcessor.HandleAddressableMod(mod.info, modAddressable.GetLocator()));
+                    } else if (mod is ModAssetBundle modAssetBundle) {
+                        tasks.Add(modPostProcessor.HandleAssetBundleMod(mod.info, modAssetBundle.GetBundle()));
                     }
                 }
-
+                Debug.Log($"waiting for maps {mod.info.title}");
+                await Task.WhenAll(tasks.ToArray());
+                tasks.Clear();
                 foreach (var modPostProcessor in modPostProcessors) {
-                    tasks.Add(modPostProcessor.HandleAssetBundleMod(modAssetBundle));
+                    if (mod is ModAddressable modAddressable) {
+                        tasks.Add(modPostProcessor.HandleAddressableMod(mod.info, modAddressable.GetLocator()));
+                    } else if (mod is ModAssetBundle modAssetBundle) {
+                        tasks.Add(modPostProcessor.HandleAssetBundleMod(mod.info, modAssetBundle.GetBundle()));
+                    }
                 }
+                Debug.Log($"waiting for objects {mod.info.title}");
+                await Task.WhenAll(tasks.ToArray());
+                Debug.Log($"done! unloading {mod.info.title}");
+                await mod.TryUnload();
             }
-            await Task.WhenAll(tasks.ToArray());
         } catch (Exception e) {
             Debug.LogException(e);
             failedToLoadMods = true;
@@ -707,12 +803,21 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-    private async Task UnloadAllAssets(bool includeEarly) {
+    private async Task UnloadAllAssets() {
         List<Task> tasks = new List<Task>();
-        if (includeEarly) {
+        foreach (var mod in fullModList) {
             foreach (var modPostProcessor in earlyModPostProcessors) {
                 try {
-                    tasks.Add(modPostProcessor.UnloadAllAssets());
+                    tasks.Add(modPostProcessor.UnloadAssets(mod.info));
+                } catch (Exception e) {
+                    lastException = e;
+                    Debug.LogException(e);
+                    Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
+                }
+            }
+            foreach (var modPostProcessor in modPostProcessors) {
+                try {
+                    tasks.Add(modPostProcessor.UnloadAssets(mod.info));
                 } catch (Exception e) {
                     lastException = e;
                     Debug.LogException(e);
@@ -720,36 +825,9 @@ public class ModManager : MonoBehaviour {
                 }
             }
         }
-        foreach (var modPostProcessor in modPostProcessors) {
-            try {
-                tasks.Add(modPostProcessor.UnloadAllAssets());
-            } catch (Exception e) {
-                lastException = e;
-                Debug.LogException(e);
-                Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
-            }
-        }
+
         await Task.WhenAll(tasks.ToArray());
     }
-
-    private async Task UnloadMods() {
-        status = ModStatus.UnloadingMods;
-        List<Task> tasks = new List<Task>();
-        tasks.Add(UnloadAllAssets(true));
-        foreach (var mod in fullModList) {
-            try {
-                tasks.Add(mod.TryUnload());
-            } catch (Exception e) {
-                lastException = e;
-                Debug.LogException(e);
-                Debug.LogError($"Failed to unload assets for {mod.info.title} [{mod.info.publishedFileId}].");
-            }
-        }
-        await Task.WhenAll(tasks.ToArray());
-        
-        Resources.UnloadUnusedAssets();
-    }
-
     public static bool GetReady() => GetFinishedLoading();
     public static ModStatus GetStatus() {
         return instance.status;
@@ -773,44 +851,6 @@ public class ModManager : MonoBehaviour {
             currentInspectedMod.causedException = true;
         }
         lastException = e;
-    }
-
-    public static bool TryUnloadModThatProvidesAssetNow(IResourceLocation location, out ModStub stub) {
-        foreach (var mod in instance.fullModList) {
-            if (mod.Provides(location)) {
-                mod.TryUnload();
-                stub = new ModStub(mod.info.title, mod.info.publishedFileId, mod.info.source, mod.info.directoryInfo.Name, mod.causedException, mod.info.description, mod.enabled, mod.info.preview);
-                return true;
-            }
-        }
-        stub = default;
-        return false;
-    }
-
-    public static async Task EnableCatalogueForMod(ModStub stub) {
-        foreach (var mod in instance.fullModList) {
-            if (mod.GetRepresentedByStub(stub)) {
-                await mod.TryLoad();
-            }
-        }
-    }
-    public static async Task DisableCatalogueForMod(ModStub stub) {
-        foreach (var mod in instance.fullModList) {
-            if (mod.GetRepresentedByStub(stub)) {
-                await mod.TryUnload();
-            }
-        }
-    }
-
-    public static async Task LoadModNow(ModStub stub) {
-        await instance.UnloadAllAssets(false);
-        foreach (var mod in instance.fullModList) {
-            if (mod.GetRepresentedByStub(stub)) {
-                await mod.TryLoad();
-                break;
-            }
-        }
-        await instance.LoadAllAssets(false, false);
     }
 
     private void Start() {
@@ -847,7 +887,7 @@ public class ModManager : MonoBehaviour {
             await Task.Delay(1000);
         }
         LoadConfig();
-        await ReloadMods(false);
+        await LoadAllAssets(false);
         StringBuilder builder = new StringBuilder();
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         builder.Append("Mods Installed: {\n");
@@ -858,41 +898,6 @@ public class ModManager : MonoBehaviour {
         Debug.Log(builder.ToString());
     }
     
-    private async Task ReloadMods(bool shouldInspect) {
-        failedToLoadMods = false;
-        await Mutex.WaitAsync();
-        ready = false;
-        try {
-            await UnloadMods();
-            status = ModStatus.LoadingMods;
-            var tasks = new List<Task>();
-            foreach (var modInfo in fullModList) {
-                if (!modInfo.enabled) {
-                    continue;
-                }
-
-                if (modInfo is ModAddressable modAddressable) {
-                    // Slow, but must be done in serial
-                    await modAddressable.TryLoad();
-                } else {
-                    tasks.Add(modInfo.TryLoad());
-                }
-            }
-            await Task.WhenAll(tasks.ToArray());
-        } catch (Exception e) {
-            Debug.LogException(e);
-            failedToLoadMods = true;
-            lastException = e;
-            throw;
-        } finally {
-            try {
-                await LoadAllAssets(shouldInspect, true);
-            } finally {
-                Mutex.Release();
-            }
-        }
-    }
-
     public static List<ModStub> GetLoadedMods() {
         return ConvertToStubs(instance.fullModList, (info) => info.enabled && info.GetLoaded());
     }
@@ -907,11 +912,11 @@ public class ModManager : MonoBehaviour {
         } finally {
             Mutex.Release();
         }
-        await instance.ReloadMods(true);
+        await instance.LoadAllAssets(false);
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
-    public static bool HasModsLoaded(IList<ModStub> stubs) {
+    public static bool HasExactModConfigurationLoaded(IList<ModStub> stubs) {
         int count = 0;
         foreach (var mod in instance.fullModList) {
             if (mod.enabled) {
@@ -943,10 +948,13 @@ public class ModManager : MonoBehaviour {
 
     public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {
         yield return new WaitUntil(GetReady);
-        if (HasModsLoaded(stubs)) {
+        if (HasExactModConfigurationLoaded(stubs)) {
             yield break;
         }
 
+        var unloadAllMods = instance.UnloadAllAssets();
+        yield return new WaitUntil(() => unloadAllMods.IsCompleted);
+        
         Debug.Log("Loading mod stubs...");
         List<ModStub> neededMods = new List<ModStub>(stubs);
         for(int i=0;i<neededMods.Count;i++) {
@@ -992,7 +1000,7 @@ public class ModManager : MonoBehaviour {
         }
 
         Debug.Log("Reloading mods after acquiring stubs...");
-        var reloadModTask = instance.ReloadMods(false);
+        var reloadModTask = instance.LoadAllAssets(false);
         yield return new WaitUntil(() => reloadModTask.IsCompleted);
         Debug.Log("Done reloading!");
     }

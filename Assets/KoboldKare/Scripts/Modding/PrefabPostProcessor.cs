@@ -69,7 +69,7 @@ public class PrefabPostProcessor : ModPostProcessor {
                 var assetName = node.Value;
                 var handle = assetBundle.LoadAssetAsync<GameObject>(assetName);
                 handle.completed += (a) => {
-                    LoadPrefab(handle.asset as GameObject);
+                    LoadPrefab(((AssetBundleRequest)a).asset as GameObject);
                 };
                 tasks.Add(handle.AsSingleAssetTask<GameObject>());
             }

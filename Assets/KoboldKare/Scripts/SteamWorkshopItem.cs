@@ -47,6 +47,8 @@ public class SteamWorkshopItem {
 	[SerializeField,TextArea] private string description;
 	[SerializeField,TextArea] private string changeNotes;
 	
+	[SerializeField, HideInInspector] private string guid;
+	
 	[NonSerialized] private static SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
 	[AOT.MonoPInvokeCallback(typeof(SteamAPIWarningMessageHook_t))]
 	private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
@@ -73,17 +75,25 @@ public class SteamWorkshopItem {
 			Debug.LogError("Cannot show workshop item, publishedFileId is invalid.");
 		}
 	}
+
+	private string GetGUID() {
+		if (string.IsNullOrEmpty(guid)) {
+			guid = System.Guid.NewGuid().ToString();
+		}
+
+		return guid;
+	}
 	
 
 	[Serializable]
 	public abstract class ModContent {
-		public abstract AssetBundleBuild[] GetBuilds();
+		public abstract AssetBundleBuild[] GetBuilds(string uniqueString);
 
-		public void BuildForTarget(BuildTarget target, string modBuildPath) {
+		public void BuildForTarget(BuildTarget target, string modBuildPath, string uniqueString) {
 			if (!Directory.Exists(modBuildPath)) {
 				Directory.CreateDirectory(modBuildPath);
 			}
-			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, GetBuilds(), BuildAssetBundleOptions.None, target);
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, GetBuilds(uniqueString), BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension, target);
 			if (manifest) {
 				foreach(var bundleName in manifest.GetAllAssetBundles()) {
 					Debug.Log($"Successfully created AssetBundle {bundleName} at {modBuildPath}/{bundleName}");
@@ -92,7 +102,7 @@ public class SteamWorkshopItem {
 				throw new UnityException("Build failed, see console for details.");
 			}
 		}
-		public abstract void Serialize(JSONNode node);
+		public abstract void Serialize(JSONNode node, string uniqueString);
 	}
 
 	[Serializable]
@@ -139,12 +149,44 @@ public class SteamWorkshopItem {
 			}
 			return assetNames.ToArray();
 		}
+		
+		protected virtual string[] GetAssetAddressableNames(string uniqueString) {
+			HashSet<string> addressableNames = new HashSet<string>();
+			foreach(var asset in playableCharacters) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in cosmeticItems) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in fruits) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in equipmentStoreItems) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in dicks) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in plants) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in reagents) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in reagentReactions) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			foreach(var asset in equipment) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
+			return addressableNames.ToArray();
+		}
 
-		private JSONArray GetAssetNames(ICollection<UnityEngine.Object> assets) {
+		private JSONArray GetAssetNames(ICollection<UnityEngine.Object> assets, string uniqueString) {
 			var arrayNode = new JSONArray();
 			HashSet<string> assetNames = new HashSet<string>();
 			foreach(var asset in assets) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var assetName in assetNames) {
 				arrayNode.Add(assetName);
@@ -153,23 +195,24 @@ public class SteamWorkshopItem {
 			return arrayNode;
 		}
 		
-		public override void Serialize(JSONNode rootNode) {
-			rootNode["PlayableCharacter"] = GetAssetNames(playableCharacters);
-			rootNode["Fruit"] = GetAssetNames(fruits);
-			rootNode["Penis"] = GetAssetNames(dicks);
-			rootNode["Reaction"] = GetAssetNames(reagentReactions);
-			rootNode["Reagent"] = GetAssetNames(reagents);
-			rootNode["Plant"] = GetAssetNames(plants);
-			rootNode["Seed"] = GetAssetNames(seeds);
-			rootNode["Cosmetic"] = GetAssetNames(cosmeticItems);
-			rootNode["Equipment"] = GetAssetNames(equipment);
-			rootNode["EquipmentStoreItem"] = GetAssetNames(equipmentStoreItems);
+		public override void Serialize(JSONNode rootNode, string uniqueString) {
+			rootNode["PlayableCharacter"] = GetAssetNames(playableCharacters, uniqueString);
+			rootNode["Fruit"] = GetAssetNames(fruits, uniqueString);
+			rootNode["Penis"] = GetAssetNames(dicks, uniqueString);
+			rootNode["Reaction"] = GetAssetNames(reagentReactions, uniqueString);
+			rootNode["Reagent"] = GetAssetNames(reagents, uniqueString);
+			rootNode["Plant"] = GetAssetNames(plants, uniqueString);
+			rootNode["Seed"] = GetAssetNames(seeds, uniqueString);
+			rootNode["Cosmetic"] = GetAssetNames(cosmeticItems, uniqueString);
+			rootNode["Equipment"] = GetAssetNames(equipment, uniqueString);
+			rootNode["EquipmentStoreItem"] = GetAssetNames(equipmentStoreItems, uniqueString);
 		}
 
-		public override AssetBundleBuild[] GetBuilds() {
+		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
 			AssetBundleBuild build = new AssetBundleBuild {
 				assetBundleName = "bundle",
 				assetNames = GetAssets(),
+				addressableNames = GetAssetAddressableNames(uniqueString),
 			};
 			return new[] { build };
 		}
@@ -181,12 +224,12 @@ public class SteamWorkshopItem {
 		public Sprite sceneIcon;
 		public string sceneTitle;
 		public string sceneDescription;
-		public override AssetBundleBuild[] GetBuilds() {
+		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
 			AssetBundleBuild sceneBuild = new AssetBundleBuild {
 				assetBundleName = "sceneBundle",
 				assetNames = new[] { AssetDatabase.GetAssetPath(scene) },
 			};
-			var otherBuilds = base.GetBuilds();
+			var otherBuilds = base.GetBuilds(uniqueString);
 			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild };
 			return allBuilds.ToArray();
 		}
@@ -196,9 +239,9 @@ public class SteamWorkshopItem {
 			return assets.ToArray();
 		}
 
-		public override void Serialize(JSONNode node) {
-			base.Serialize(node);
-			node["Scene"] = AssetDatabase.GetAssetPath(scene);
+		public override void Serialize(JSONNode node, string uniqueString) {
+			base.Serialize(node, uniqueString);
+			node["Scene"] = $"{AssetDatabase.GetAssetPath(scene)}_{uniqueString}";
 			node["SceneTitle"] = sceneTitle;
 			node["SceneDescription"] = sceneDescription;
 			node["SceneIcon"] = AssetDatabase.GetAssetPath(sceneIcon);
@@ -298,7 +341,7 @@ public class SteamWorkshopItem {
 	private string jsonSavePath => $"{modRoot}{Path.DirectorySeparatorChar}info.json";
 	private string previewTexturePath => $"{modRoot}{Path.DirectorySeparatorChar}preview.png";
 
-	private string Serialize(ModContent content) {
+	private string Serialize(ModContent content, string uniqueString) {
 		JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["publishedFileId"] = publishedFileId;
         rootNode["description"] = description;
@@ -315,16 +358,16 @@ public class SteamWorkshopItem {
         rootNode["tags"] = arrayNode;
 
         var bundle = JSONNode.Parse("{}");
-        content.Serialize(bundle);
+        content.Serialize(bundle, uniqueString);
         rootNode["bundle"] = bundle;
 
         return rootNode.ToString();
 	}
 
-	private void CreateModJSON(string filePath, ModContent content) {
+	private void CreateModJSON(string filePath, ModContent content, string uniqueString) {
         using FileStream file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
         using StreamWriter writer = new StreamWriter(file);
-        writer.Write(Serialize(content));
+        writer.Write(Serialize(content,uniqueString));
 	}
 
 	public bool ShouldTryLoad() {
@@ -443,11 +486,11 @@ public class SteamWorkshopItem {
 			File.WriteAllBytes(previewTexturePath, previewTextureWrite.EncodeToPNG());
 			RenderTexture.active = oldTex;
 
-			CreateModJSON(jsonSavePath, modContent);
+			CreateModJSON(jsonSavePath, modContent, GetGUID());
 
-			modContent.BuildForTarget(BuildTarget.StandaloneWindows64, GetModBuildPath(BuildTarget.StandaloneWindows64));
-			modContent.BuildForTarget(BuildTarget.StandaloneLinux64, GetModBuildPath(BuildTarget.StandaloneLinux64));
-			modContent.BuildForTarget(BuildTarget.StandaloneOSX, GetModBuildPath(BuildTarget.StandaloneOSX));
+			modContent.BuildForTarget(BuildTarget.StandaloneWindows64, GetModBuildPath(BuildTarget.StandaloneWindows64), GetGUID());
+			modContent.BuildForTarget(BuildTarget.StandaloneLinux64, GetModBuildPath(BuildTarget.StandaloneLinux64), GetGUID());
+			modContent.BuildForTarget(BuildTarget.StandaloneOSX, GetModBuildPath(BuildTarget.StandaloneOSX), GetGUID());
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
 			statusChanged?.Invoke(this, lastMessageType, lastMessage);
@@ -464,7 +507,7 @@ public class SteamWorkshopItem {
 
 	private async Task ItemUpdate(ModContent content, bool uploadMetadata) {
 		try {
-			CreateModJSON(jsonSavePath, content);
+			CreateModJSON(jsonSavePath, content, GetGUID());
 			if (EditorUtility.DisplayCancelableProgressBar("Uploading...", "Creating upload handle...", 0f)) {
 				EditorUtility.ClearProgressBar();
 				StopSteamService();
@@ -489,7 +532,7 @@ public class SteamWorkshopItem {
 					throw new UnityException("Failed to set item title.");
 				}
 
-				if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content))) {
+				if (!SteamUGC.SetItemMetadata(ugcUpdateHandle, Serialize(content, GetGUID()))) {
 					throw new UnityException("Failed to set item metaData.");
 				}
 
@@ -657,7 +700,7 @@ public class SteamWorkshopItem {
 			EditorUtility.ClearProgressBar();
 		} else {
 			EditorUtility.ClearProgressBar();
-			CreateModJSON(jsonSavePath, uploadContent);
+			CreateModJSON(jsonSavePath, uploadContent, GetGUID());
 			_ = ItemUpdate(uploadContent, includeMetadata);
 		}
 	}
@@ -715,6 +758,12 @@ public class SteamWorkshopItem {
         var tex = new Texture2D(16, 16);
         tex.LoadImage(fileData);
         target.FindPropertyRelative("previewSprite").objectReferenceValue = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2f, tex.height / 2f));
+	}
+
+	public void OnValidate() {
+		if (string.IsNullOrEmpty(guid)) {
+			guid = Guid.NewGuid().ToString();
+		}
 	}
 }
 

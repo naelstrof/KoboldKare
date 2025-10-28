@@ -39,13 +39,13 @@ public static class AssetBundleRequestExtension {
         if (req == null) throw new ArgumentNullException(nameof(req));
         if (req.isDone) return Task.FromResult((T)req.asset);
         var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
-        void Completed(AsyncOperation op) {
+        void Completed(AsyncOperation asyncOperation) {
             try {
-                tcs.TrySetResult((T)((AssetBundleRequest)op).asset);
+                tcs.TrySetResult((T)((AssetBundleRequest)asyncOperation).asset);
             } catch (Exception ex) {
                 tcs.TrySetException(ex);
             } finally {
-                req.completed -= Completed;
+                ((AssetBundleRequest)asyncOperation).completed -= Completed;
             }
         }
         req.completed += Completed;

@@ -129,6 +129,10 @@ public abstract class KoboldKareModdingProfile : ScriptableObject {
     public string GetStatus(out MessageType messageType) {
         return workshopItem.GetStatus(out messageType);
     }
+
+    private void OnValidate() {
+        workshopItem.OnValidate();
+    }
 }
 
 [CreateAssetMenu(menuName = "KoboldKare/Modding/Objects", fileName = "New KoboldKare Modding Profile Objects")]

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class PlayableMapPostProcessor : ModPostProcessor {
@@ -12,10 +13,18 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         public PlayableMap playableMap;
     }
     private List<ModStubPlayableMapPair> addedPlayableMaps;
+    
+    AsyncOperationHandle inherentAssetsHandle;
 
-    public override void Awake() {
-        base.Awake();
+    public override async Task Awake() {
+        await base.Awake();
         addedPlayableMaps = new ();
+        inherentAssetsHandle = Addressables.LoadAssetsAsync<PlayableMap>(searchLabel.RuntimeKey, LoadInherentPlayableMap);
+        await inherentAssetsHandle.Task;
+    }
+    
+    private void LoadInherentPlayableMap(PlayableMap playableMap) {
+        PlayableMapDatabase.AddPlayableMap(playableMap);
     }
 
     private Sprite DeepCopySprite(Sprite src) {

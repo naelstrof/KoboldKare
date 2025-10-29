@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PlantPostProcessor : ModPostProcessor {
     private struct ModStubPlantPair {
@@ -14,6 +15,8 @@ public class PlantPostProcessor : ModPostProcessor {
     private List<ModStubAddressableHandlePair> opHandles;
 
     private ModManager.ModStub currentStub;
+    
+    private AsyncOperationHandle inherentAssetsHandle;
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
         if (locator.Locate(searchLabel.RuntimeKey, typeof(ScriptablePlant), out var locations)) {
             currentStub = new ModManager.ModStub(data);
@@ -26,10 +29,23 @@ public class PlantPostProcessor : ModPostProcessor {
         }
     }
 
-    public override void Awake() {
-        base.Awake();
+    public override async Task Awake() {
+        await base.Awake();
         addedPlants = new ();
         opHandles = new();
+        inherentAssetsHandle = Addressables.LoadAssetsAsync<ScriptablePlant>(searchLabel.RuntimeKey, LoadInherentPlant);
+        await inherentAssetsHandle.Task;
+    }
+    
+    private void LoadInherentPlant(ScriptablePlant plant) {
+        if (!plant) {
+            return;
+        }
+        addedPlants.Add(new ModStubPlantPair() {
+            stub = currentStub,
+            plant = plant
+        });
+        PlantDatabase.AddPlant(plant);
     }
 
     private void LoadPlant(ScriptablePlant plant) {

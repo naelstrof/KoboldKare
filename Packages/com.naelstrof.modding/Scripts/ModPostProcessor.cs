@@ -16,7 +16,8 @@ public class ModPostProcessor {
     }
     [SerializeField]
     protected AssetLabelReference searchLabel;
-    public virtual void Awake() {
+    public virtual Task Awake() {
+        return Task.CompletedTask;
     }
 
     public virtual Task UnloadAssets(ModManager.ModInfoData data) {

@@ -16,10 +16,14 @@ public class ReagentPostProcessor : ModPostProcessor {
 
     private ModManager.ModStub currentStub;
     
-    public override void Awake() {
-        base.Awake();
+    private AsyncOperationHandle inherentAssetsHandle;
+    
+    public override async Task Awake() {
+        await base.Awake();
         addedReagents = new ();
         opHandles = new();
+        inherentAssetsHandle = Addressables.LoadAssetsAsync<ScriptableReagent>(searchLabel.RuntimeKey, LoadReagentInherent);
+        await inherentAssetsHandle.Task;
     }
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
         if (locator.Locate(searchLabel.RuntimeKey, typeof(ScriptableReagent), out var locations)) {
@@ -31,6 +35,10 @@ public class ReagentPostProcessor : ModPostProcessor {
                 handle = opHandle
             });
         }
+    }
+    
+    private void LoadReagentInherent(ScriptableReagent reagent) {
+        ReagentDatabase.AddReagent(reagent);
     }
     
     private void LoadReagent(ScriptableReagent reagent) {

@@ -39,7 +39,7 @@ public class ModManager : MonoBehaviour {
 
     public struct ModInfoData {
         public string GetSceneBundleLocation() {
-            return $"{directoryInfo.FullName}/{runningPlatform}/scenebundle";
+            return $"{directoryInfo.FullName}/{runningPlatform}/{assets["SceneBundleName"].ToString().Trim('"')}";
         }
         public static bool TryGetModInfoData(string jsonPath, ModSource source, out ModInfoData data) {
             FileInfo fileInfo = new FileInfo(jsonPath);
@@ -166,11 +166,12 @@ public class ModManager : MonoBehaviour {
         private bool assetsLoaded = false;
         public ModAssetBundle(ModInfoData info) : base(info) {
         }
-        private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/bundle";
+        private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/{info.assets["BundleName"].ToString().Trim('"')}";
 
         public override bool IsValid() {
             FileInfo bundleFileInfo = new FileInfo(bundleLocation);
             if (!bundleFileInfo.Exists) {
+                Debug.LogError($"AssetBundle {bundleFileInfo.FullName} does not exist.");
                 return false;
             }
             return base.IsValid();

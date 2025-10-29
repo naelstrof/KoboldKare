@@ -20,11 +20,25 @@ public class PrefabPostProcessor : ModPostProcessor {
     private List<ModStubAddressableHandlePair> opHandles;
 
     private ModManager.ModStub currentStub;
+    
+    private AsyncOperationHandle inherentAssetsHandle;
 
-    public override void Awake() {
-        base.Awake();
+    public override async Task Awake() {
+        await base.Awake();
         addedGameObjects = new ();
         opHandles = new();
+        inherentAssetsHandle = Addressables.LoadAssetsAsync<GameObject>(searchLabel.RuntimeKey, LoadInherentPrefab);
+        await inherentAssetsHandle.Task;
+    }
+    
+    private void LoadInherentPrefab(GameObject obj) {
+        if (PreparePool.HasPrefab(obj.name)) {
+            return;
+        }
+        if (networkedPrefabs) {
+            PreparePool.AddPrefab(obj.name, obj);
+        }
+        targetDatabase.AddPrefab(obj.name, obj);
     }
     
     private void LoadPrefab(GameObject obj) {

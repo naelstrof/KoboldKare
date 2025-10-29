@@ -15,6 +15,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
     private List<ModStubAddressableHandlePair> opHandles;
 
     private ModManager.ModStub currentStub;
+    private AsyncOperationHandle inherentAssetsHandle;
     
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
         if (locator.Locate(searchLabel.RuntimeKey, typeof(Equipment), out var locations)) {
@@ -28,10 +29,15 @@ public class EquipmentPostProcessor : ModPostProcessor {
         }
     }
 
-    public override void Awake() {
-        base.Awake();
+    public override async Task Awake() {
+        await base.Awake();
         addedEquipments = new ();
         opHandles = new();
+        inherentAssetsHandle = Addressables.LoadAssetsAsync<Equipment>(searchLabel.RuntimeKey, LoadInherentEquipment);
+        await inherentAssetsHandle.Task;
+    }
+    private void LoadInherentEquipment(Equipment equipment) {
+        EquipmentDatabase.AddEquipment(equipment);
     }
 
     private void LoadEquipment(Equipment equipment) {

@@ -93,7 +93,7 @@ public class SteamWorkshopItem {
 			if (!Directory.Exists(modBuildPath)) {
 				Directory.CreateDirectory(modBuildPath);
 			}
-			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, GetBuilds(uniqueString), BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension, target);
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles( modBuildPath, GetBuilds(uniqueString), BuildAssetBundleOptions.DisableLoadAssetByFileName | BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension , target);
 			if (manifest) {
 				foreach(var bundleName in manifest.GetAllAssetBundles()) {
 					Debug.Log($"Successfully created AssetBundle {bundleName} at {modBuildPath}/{bundleName}");
@@ -196,6 +196,7 @@ public class SteamWorkshopItem {
 		}
 		
 		public override void Serialize(JSONNode rootNode, string uniqueString) {
+			rootNode["BundleName"] = $"bundle_{uniqueString}";
 			rootNode["PlayableCharacter"] = GetAssetNames(playableCharacters, uniqueString);
 			rootNode["Fruit"] = GetAssetNames(fruits, uniqueString);
 			rootNode["Penis"] = GetAssetNames(dicks, uniqueString);
@@ -210,7 +211,7 @@ public class SteamWorkshopItem {
 
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
 			AssetBundleBuild build = new AssetBundleBuild {
-				assetBundleName = "bundle",
+				assetBundleName = $"bundle_{uniqueString}",
 				assetNames = GetAssets(),
 				addressableNames = GetAssetAddressableNames(uniqueString),
 			};
@@ -226,7 +227,7 @@ public class SteamWorkshopItem {
 		public string sceneDescription;
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
 			AssetBundleBuild sceneBuild = new AssetBundleBuild {
-				assetBundleName = "sceneBundle",
+				assetBundleName = $"sceneBundle_{uniqueString}",
 				assetNames = new[] { AssetDatabase.GetAssetPath(scene) },
 			};
 			var otherBuilds = base.GetBuilds(uniqueString);
@@ -241,6 +242,7 @@ public class SteamWorkshopItem {
 
 		public override void Serialize(JSONNode node, string uniqueString) {
 			base.Serialize(node, uniqueString);
+			node["SceneBundleName"] = $"sceneBundle_{uniqueString}";
 			node["Scene"] = $"{AssetDatabase.GetAssetPath(scene)}_{uniqueString}";
 			node["SceneTitle"] = sceneTitle;
 			node["SceneDescription"] = sceneDescription;

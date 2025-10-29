@@ -80,7 +80,7 @@ public class PlayableMap : ScriptableObject {
     private void OnSceneUnloaded(Scene arg0) {
         foreach(var handle in loadedHandles) {
             Addressables.Release(handle.handle);
-            _ = ModManager.SetModLoaded(handle.stub, false);
+            _ = ModManager.SetModAssetsAvailable(handle.stub, false);
         }
         loadedHandles.Clear();
     }
@@ -116,7 +116,7 @@ public class PlayableMap : ScriptableObject {
     }
     
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
-        await ModManager.SetModLoaded(stub,true);
+        await ModManager.SetModAssetsAvailable(stub,true);
         var handle = Addressables.LoadSceneAsync(unityScene.RuntimeKey);
         await handle.Task;
         loadedHandles.Add(new ModStubAddressableHandlePair() {

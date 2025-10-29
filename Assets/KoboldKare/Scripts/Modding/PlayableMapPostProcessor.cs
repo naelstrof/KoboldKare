@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
@@ -66,6 +67,17 @@ public class PlayableMapPostProcessor : ModPostProcessor {
             foreach (var resource in locations) {
                 var handle = Addressables.LoadAssetAsync<PlayableMap>(resource);
                 PlayableMap map = await handle.Task;
+                bool checkFound = false;
+                foreach (var check in addedPlayableMaps) {
+                    if (check.stub.GetRepresentedBy(data)) {
+                        checkFound = true;
+                        break;
+                    }
+                }
+                if (checkFound) {
+                    continue;
+                }
+                
                 if (!map) {
                     Addressables.Release(handle);
                     continue;
@@ -79,6 +91,8 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                     stub = new ModManager.ModStub(data)
                 });
             }
+
+            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
     
@@ -99,16 +113,5 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                 stub = new ModManager.ModStub(data)
             });
         }
-    }
-
-    public override Task UnloadAssets(ModManager.ModInfoData data) {
-        for (int i=0;i<addedPlayableMaps.Count;i++) {
-            if(addedPlayableMaps[i].stub.GetRepresentedBy(data)) {
-                PlayableMapDatabase.RemovePlayableMap(addedPlayableMaps[i].playableMap);
-                addedPlayableMaps.RemoveAt(i);
-                i--;
-            }
-        }
-        return base.UnloadAssets(data);
     }
 }

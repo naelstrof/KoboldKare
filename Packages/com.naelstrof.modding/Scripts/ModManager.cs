@@ -148,7 +148,8 @@ public class ModManager : MonoBehaviour {
         }
 
         public virtual bool IsValid() {
-            return info.publishedFileId != (PublishedFileId_t)2934088282;
+            return true;
+            //return info.publishedFileId != (PublishedFileId_t)2934088282;
         }
 
         public abstract bool GetLoaded();
@@ -202,7 +203,7 @@ public class ModManager : MonoBehaviour {
             if (!bundle) {
                 return;
             }
-            await bundle.UnloadAsync(false).AsTask();
+            await bundle.UnloadAsync(true).AsTask();
             loaded = false;
             bundle = null;
         }
@@ -578,14 +579,20 @@ public class ModManager : MonoBehaviour {
     public static async Task SetModActive(ModStub stub, bool active) {
         await Mutex.WaitAsync();
         try {
+            bool found = false;
             foreach (var mod in instance.fullModList) {
                 if (!mod.GetRepresentedByStub(stub)) continue;
                 instance.changed = true;
                 instance.ready = false;
                 instance.status = ModStatus.LoadingAssets;
-                await mod.SetLoaded(active);
+                found = true;
+                await mod.SetAssetsAvailable(active);
                 mod.enabled = active;
                 break;
+            }
+
+            if (!found) {
+                Debug.LogError($"Failed to find mod {stub.title} [{stub.id}], this is really weird.");
             }
         } finally{
             Mutex.Release();
@@ -597,7 +604,7 @@ public class ModManager : MonoBehaviour {
         }
     }
     
-    public static async Task SetModLoaded(ModStub stub, bool loaded) {
+    public static async Task SetModAssetsAvailable(ModStub stub, bool loaded) {
         await Mutex.WaitAsync();
         try {
             foreach (var mod in instance.fullModList) {

@@ -138,6 +138,7 @@ public class ModManager : MonoBehaviour {
         public ModInfoData info;
         public bool enabled;
         public bool causedException = false;
+        protected readonly SemaphoreSlim modMutex = new(1);
 
         protected Mod(ModInfoData info) {
             this.info = info;
@@ -230,6 +231,7 @@ public class ModManager : MonoBehaviour {
         }
 
         public override async Task SetAssetsAvailable(bool active) {
+            await modMutex.WaitAsync();
             try {
                 instance.status = ModStatus.LoadingAssets;
                 if (!assetsLoaded && active) {
@@ -262,6 +264,7 @@ public class ModManager : MonoBehaviour {
             } finally {
                 instance.status = ModStatus.Ready;
                 instance.ready = true;
+                modMutex.Release();
             }
         }
 
@@ -343,6 +346,7 @@ public class ModManager : MonoBehaviour {
         }
 
         public override async Task SetAssetsAvailable(bool active) {
+            await modMutex.WaitAsync();
             try {
                 if (!loadedAssets && active) {
                     var cancelTokenSource = new CancellationTokenSource();
@@ -381,6 +385,7 @@ public class ModManager : MonoBehaviour {
                 _ = TryUnload();
                 throw;
             } finally {
+                modMutex.Release();
                 instance.status = ModStatus.Ready;
                 instance.ready = true;
             }
@@ -617,10 +622,16 @@ public class ModManager : MonoBehaviour {
     public static async Task SetModAssetsAvailable(ModStub stub, bool loaded) {
         await Mutex.WaitAsync();
         try {
+            bool found = false;
             foreach (var mod in instance.fullModList) {
                 if (!mod.GetRepresentedByStub(stub)) continue;
+                found = true;
                 await mod.SetAssetsAvailable(loaded);
                 break;
+            }
+
+            if (!found) {
+                Debug.LogError($"Failed to set assets for mod {stub.title} [{stub.id}], this is really weird.");
             }
         } finally{
             Mutex.Release();
@@ -919,7 +930,7 @@ public class ModManager : MonoBehaviour {
         StringBuilder builder = new StringBuilder();
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         builder.Append("Mods Installed: {\n");
-        foreach (var mod in GetModsWithLoadedAssets()) {
+        foreach (var mod in GetFullModList()) {
             builder.Append($"[title:{mod.title}, folderTitle:{mod.folderTitle}, id:{mod.id}, source:{mod.source}, enabled:{mod.enabled}, causedException:{mod.causedException}],\n");
         }
         builder.Append("}\n");

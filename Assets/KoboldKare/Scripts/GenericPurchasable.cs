@@ -28,7 +28,10 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     private AudioPack purchaseSoundPack;
     private bool inStock {
         get {
-            return display.activeInHierarchy;
+            if (display) {
+                return display.activeInHierarchy;
+            }
+            return false;
         }
     }
     private GameObject display;

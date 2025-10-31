@@ -92,6 +92,7 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                     stub = new ModManager.ModStub(data)
                 });
             }
+            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
     
@@ -106,11 +107,13 @@ public class PlayableMapPostProcessor : ModPostProcessor {
             string sceneDescription = node.HasKey("SceneDescription") ? node["SceneDescription"] : "No description provided.";
             playableMap.SetFromBundle(data.GetSceneBundleLocation(), node["Scene"], sceneTitle, icon, sceneDescription);
             var copy = DeepCopyPlayableMap(playableMap);
+            copy.stub = new ModManager.ModStub(data);
             PlayableMapDatabase.AddPlayableMap(copy);
             addedPlayableMaps.Add(new ModStubPlayableMapPair() {
                 playableMap = copy,
                 stub = new ModManager.ModStub(data)
             });
+            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
 }

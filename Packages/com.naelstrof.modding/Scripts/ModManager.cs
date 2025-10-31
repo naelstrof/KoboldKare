@@ -826,7 +826,7 @@ public class ModManager : MonoBehaviour {
         instance.changed = false;
     }
 
-    private async Task LoadAllAssets() {
+    private async Task SyncEnabledStatusWithLoaded() {
         status = ModStatus.LoadingAssets;
         try {
             foreach(var mod in fullModList) {
@@ -851,31 +851,6 @@ public class ModManager : MonoBehaviour {
         }
     }
 
-    private async Task UnloadAllAssets() {
-        List<Task> tasks = new List<Task>();
-        foreach (var mod in fullModList) {
-            foreach (var modPostProcessor in earlyModPostProcessors) {
-                try {
-                    tasks.Add(modPostProcessor.UnloadAssets(mod.info));
-                } catch (Exception e) {
-                    lastException = e;
-                    Debug.LogException(e);
-                    Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
-                }
-            }
-            foreach (var modPostProcessor in modPostProcessors) {
-                try {
-                    tasks.Add(modPostProcessor.UnloadAssets(mod.info));
-                } catch (Exception e) {
-                    lastException = e;
-                    Debug.LogException(e);
-                    Debug.LogError($"Failed to unload assets for {modPostProcessor.GetType().Name}.");
-                }
-            }
-        }
-
-        await Task.WhenAll(tasks.ToArray());
-    }
     public static bool GetReady() => GetFinishedLoading();
     public static ModStatus GetStatus() {
         return instance.status;
@@ -934,7 +909,7 @@ public class ModManager : MonoBehaviour {
             await Task.Delay(1000);
         }
         LoadConfig();
-        await LoadAllAssets();
+        await SyncEnabledStatusWithLoaded();
         StringBuilder builder = new StringBuilder();
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         builder.Append("Mods Installed: {\n");
@@ -959,7 +934,7 @@ public class ModManager : MonoBehaviour {
         } finally {
             Mutex.Release();
         }
-        await instance.LoadAllAssets();
+        await instance.SyncEnabledStatusWithLoaded();
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
     }
 
@@ -1044,7 +1019,7 @@ public class ModManager : MonoBehaviour {
         }
 
         Debug.Log("Reloading mods after acquiring stubs...");
-        var reloadModTask = instance.LoadAllAssets();
+        var reloadModTask = instance.SyncEnabledStatusWithLoaded();
         yield return new WaitUntil(() => reloadModTask.IsCompleted);
         Debug.Log("Done reloading!");
     }

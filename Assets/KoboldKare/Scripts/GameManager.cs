@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour {
         ObjectiveManager.GetCurrentObjective()?.Unregister();
         yield return LevelLoader.instance.LoadLevel("MainMenu");
         PhotonNetwork.OfflineMode = false;
+        yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
     }
 
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {

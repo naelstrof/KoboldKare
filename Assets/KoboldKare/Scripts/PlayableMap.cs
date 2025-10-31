@@ -55,6 +55,13 @@ public class PlayableMap : ScriptableObject {
     }
     [NonSerialized]
     private List<ModStubAddressableHandlePair> loadedHandles;
+    
+    private struct ModStubBundleHandlePair {
+        public ModManager.ModStub stub;
+        public AssetBundle bundle;
+    }
+    [NonSerialized]
+    private List<ModStubBundleHandlePair> loadedBundles;
 
     public void SetPreview(Sprite preview) {
         this.preview = preview;
@@ -74,6 +81,7 @@ public class PlayableMap : ScriptableObject {
 
     private void Awake() {
         loadedHandles = new();
+        loadedBundles = new();
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
@@ -83,6 +91,11 @@ public class PlayableMap : ScriptableObject {
             _ = ModManager.SetModAssetsAvailable(handle.stub, false);
         }
         loadedHandles.Clear();
+        foreach(var bundle in loadedBundles) {
+            bundle.bundle.Unload(true);
+            _ = ModManager.SetModAssetsAvailable(bundle.stub, false);
+        }
+        loadedBundles.Clear();
     }
 
 
@@ -109,18 +122,27 @@ public class PlayableMap : ScriptableObject {
         }
     }
 
-    private async Task LoadBundleScene(string bundlePath, string sceneName) {
-        var bundle = await AssetBundle.LoadFromFileAsync(bundlePath).AsTask();
-        await SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single).AsTask();
-        bundle.Unload(false);
-    }
-    
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
         await ModManager.SetModAssetsAvailable(stub,true);
-        var handle = Addressables.LoadSceneAsync(unityScene.RuntimeKey);
+        var handle = Addressables.LoadSceneAsync(key);
         await handle.Task;
         loadedHandles.Add(new ModStubAddressableHandlePair() {
             handle = handle,
+            stub = stub
+        });
+    }
+
+    private async Task LoadBundleSceneFromStub(ModManager.ModStub stub) {
+        await ModManager.SetModAssetsAvailable(stub, true);
+        var bundle = AssetBundle.LoadFromFile(bundlePath);
+        var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);
+        if (handle == null) {
+            Debug.LogError("Failed to load bundled scene: " + GetSceneName());
+            return;
+        }
+        await handle.AsTask();
+        loadedBundles.Add(new ModStubBundleHandlePair() {
+            bundle = bundle,
             stub = stub
         });
     }
@@ -133,15 +155,12 @@ public class PlayableMap : ScriptableObject {
                 return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync(unityScene.RuntimeKey));
             }
         } else {
-            var bundle = AssetBundle.LoadFromFile(bundlePath);
-            var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);
-            if (handle == null) {
+            if (stub != null) {
+                return BoxedSceneLoad.FromTask(LoadBundleSceneFromStub(stub.Value));
+            } else {
+                Debug.LogError("Failed to load bundled scene, there was no mod associated??: " + GetSceneName());
                 return new BoxedSceneLoad();
             }
-            handle.completed += operation => {
-                bundle.Unload(false);
-            };
-            return BoxedSceneLoad.FromUnity(handle);
         }
     }
 

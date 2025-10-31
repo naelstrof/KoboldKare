@@ -2082,15 +2082,6 @@ namespace Photon.Pun
             return false;
         }
 
-
-        internal static bool AddressableResourceExists(object key, Type type) {
-            foreach (var l in Addressables.ResourceLocators) {
-                if (l.Locate(key, type, out IList<IResourceLocation> locs))
-                    return true;
-            }
-            return false;
-        }
-        
         /// <summary>Internally used to detect the current scene and load it if PhotonNetwork.AutomaticallySyncScene is enabled.</summary>
         internal static void LoadLevelIfSynced()
         {
@@ -2107,23 +2098,14 @@ namespace Photon.Pun
 
             // if loaded level is not the one defined by master in props, load that level
             object sceneId = PhotonNetwork.CurrentRoom.CustomProperties[CurrentSceneProperty];
-            if (sceneId is int)
-            {
+            if (sceneId is int) {
                 if (SceneManagerHelper.ActiveSceneBuildIndex != (int)sceneId)
                 {
                     PhotonNetwork.LoadLevel((int)sceneId);
                 }
-            }
-            else if (sceneId is string)
-            {
+            } else if (sceneId is string) {
                 if (SceneManagerHelper.ActiveSceneName != (string)sceneId) {
-                    if (AddressableResourceExists((string)sceneId, null)) {
-                        PhotonNetwork.LoadLevel((string)sceneId);
-                        Debug.Log($"Successfully found and loading... {(string)sceneId}."); 
-                    } else {
-                        Debug.LogError($"Failed to find scene with key {(string)sceneId}, loading blank scene."); 
-                        PhotonNetwork.LoadLevel("ErrorScene");
-                    }
+                    PhotonNetwork.LoadLevel((string)sceneId);
                 }
             }
         }

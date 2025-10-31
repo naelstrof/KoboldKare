@@ -152,7 +152,7 @@ public class ModManager : MonoBehaviour {
             //return info.publishedFileId != (PublishedFileId_t)2934088282;
         }
 
-        public abstract bool GetLoaded();
+        public abstract bool GetAssetsLoaded();
         protected abstract Task TryLoad();
         protected abstract Task TryUnload();
 
@@ -178,8 +178,8 @@ public class ModManager : MonoBehaviour {
             return base.IsValid();
         }
 
-        public override bool GetLoaded() {
-            return loaded;
+        public override bool GetAssetsLoaded() {
+            return assetsLoaded;
         }
 
         protected override async Task TryLoad() {
@@ -286,8 +286,8 @@ public class ModManager : MonoBehaviour {
             return base.IsValid();
         }
 
-        public override bool GetLoaded() {
-            return loaded;
+        public override bool GetAssetsLoaded() {
+            return loadedAssets;
         }
 
         protected override async Task TryLoad() {
@@ -919,15 +919,15 @@ public class ModManager : MonoBehaviour {
         StringBuilder builder = new StringBuilder();
         instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
         builder.Append("Mods Installed: {\n");
-        foreach (var mod in GetLoadedMods()) {
+        foreach (var mod in GetModsWithLoadedAssets()) {
             builder.Append($"[title:{mod.title}, folderTitle:{mod.folderTitle}, id:{mod.id}, source:{mod.source}, enabled:{mod.enabled}, causedException:{mod.causedException}],\n");
         }
         builder.Append("}\n");
         Debug.Log(builder.ToString());
     }
     
-    public static List<ModStub> GetLoadedMods() {
-        return ConvertToStubs(instance.fullModList, (info) => info.enabled && info.GetLoaded());
+    public static List<ModStub> GetModsWithLoadedAssets() {
+        return ConvertToStubs(instance.fullModList, (info) => info.enabled && info.GetAssetsLoaded());
     }
 
     public static async Task AllModsSetActive(bool active) {

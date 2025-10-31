@@ -122,7 +122,7 @@ public static class SaveManager {
         }
 
         JSONArray modList = new JSONArray();
-        foreach (var mod in ModManager.GetLoadedMods()) {
+        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");
             modNode["title"] = mod.title;
             modNode["publishedFileId"] = mod.id.ToString();

@@ -264,7 +264,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.IsMasterClient) {// Raise a handshake event to the joining player.
             JSONNode rootNode = JSONNode.Parse("{}");
             JSONArray modArray = new JSONArray();
-            foreach (var mod in ModManager.GetLoadedMods()) {
+            foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
                 JSONNode modNode = JSONNode.Parse("{}");
                 modNode["title"] = mod.title;
                 modNode["folderTitle"] = mod.folderTitle;

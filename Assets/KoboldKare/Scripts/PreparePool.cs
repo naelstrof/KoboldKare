@@ -8,7 +8,7 @@ public class PreparePool : MonoBehaviour {
     [FormerlySerializedAs("Prefabs")] [SerializeField]
     private List<GameObject> builtInPrefabs;
     
-    private Dictionary<string,GameObject> dynamicPrefabs;
+    private Dictionary<string,GameObject> dynamicPrefabs = new Dictionary<string, GameObject>();
     private DefaultPool pool;
 
     private void Awake() {
@@ -29,7 +29,6 @@ public class PreparePool : MonoBehaviour {
         } else {
             throw new UnityException("Unexpected Photon pool type.");
         }
-        dynamicPrefabs = new Dictionary<string,GameObject>();
 
         foreach (GameObject prefab in builtInPrefabs) {
             pool.ResourceCache.Add(prefab.name, prefab);

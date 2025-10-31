@@ -9,29 +9,16 @@ public class PreparePool : MonoBehaviour {
     private List<GameObject> builtInPrefabs;
     
     private Dictionary<string,GameObject> dynamicPrefabs = new Dictionary<string, GameObject>();
-    private DefaultPool pool;
+    private DefaultPool pool => (DefaultPool)PhotonNetwork.PrefabPool;
 
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(gameObject);
         } else {
             instance = this;
-        }
-    }
-
-    void Start () {
-        if (instance != this) {
-            return;
-        }
-
-        if (PhotonNetwork.PrefabPool is DefaultPool checkPool) {
-            pool = checkPool;
-        } else {
-            throw new UnityException("Unexpected Photon pool type.");
-        }
-
-        foreach (GameObject prefab in builtInPrefabs) {
-            pool.ResourceCache.Add(prefab.name, prefab);
+            foreach (GameObject prefab in builtInPrefabs) {
+                pool.ResourceCache.Add(prefab.name, prefab);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PrefabPostProcessor : ModPostProcessor {
     [SerializeField] private bool networkedPrefabs;
     private struct ModStubGameObjectPair {
         public ModManager.ModStub stub;
+        public string objName;
         public GameObject obj;
     }
     
@@ -47,7 +49,7 @@ public class PrefabPostProcessor : ModPostProcessor {
         }
 
         for (int i = 0; i < addedGameObjects.Count; i++) {
-            if (addedGameObjects[i].obj.name != obj.name) continue;
+            if (addedGameObjects[i].objName != obj.name) continue;
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.name);
             }
@@ -68,7 +70,8 @@ public class PrefabPostProcessor : ModPostProcessor {
         targetDatabase.AddPrefab(obj.name, obj);
         addedGameObjects.Add(new ModStubGameObjectPair() {
             stub = currentStub,
-            obj = obj
+            obj = obj,
+            objName = obj.name
         });
     }
 
@@ -106,11 +109,11 @@ public class PrefabPostProcessor : ModPostProcessor {
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedGameObjects.Count;i++) {
             if (!addedGameObjects[i].stub.GetRepresentedBy(data)) continue;
-            var obj = addedGameObjects[i].obj;
+            var obj = addedGameObjects[i];
             if (networkedPrefabs) {
-                PreparePool.RemovePrefab(obj.name);
+                PreparePool.RemovePrefab(obj.objName);
             }
-            targetDatabase.RemovePrefab(obj.name);
+            targetDatabase.RemovePrefab(obj.objName);
             addedGameObjects.RemoveAt(i);
             i--;
         }

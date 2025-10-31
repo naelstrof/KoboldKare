@@ -343,16 +343,20 @@ public class ModManager : MonoBehaviour {
         }
 
         public override async Task SetAssetsAvailable(bool active) {
+            cancelTokenSource = new CancellationTokenSource();
             try {
                 if (!loadedAssets && active) {
                     await SetLoaded(true);
                     foreach (var modPostProcessor in instance.earlyModPostProcessors) {
+                        cancelTokenSource.Token.ThrowIfCancellationRequested();
                         await modPostProcessor.HandleAddressableMod(info, locator);
                     }
 
                     foreach (var modPostProcessor in instance.modPostProcessors) {
+                        cancelTokenSource.Token.ThrowIfCancellationRequested();
                         await modPostProcessor.HandleAddressableMod(info, locator);
                     }
+                    await SetLoaded(false);
                 } else if (loadedAssets && !active) {
                     foreach (var modPostProcessor in instance.earlyModPostProcessors) {
                         await modPostProcessor.UnloadAssets(info);
@@ -361,7 +365,6 @@ public class ModManager : MonoBehaviour {
                     foreach (var modPostProcessor in instance.modPostProcessors) {
                         await modPostProcessor.UnloadAssets(info);
                     }
-                    await SetLoaded(false);
                 }
                 loadedAssets = active;
             } catch (Exception e) {
@@ -370,10 +373,12 @@ public class ModManager : MonoBehaviour {
                 instance.lastException = e;
                 causedException = true;
                 instance.changed = true;
+                _ = TryUnload();
                 throw;
             } finally {
                 instance.status = ModStatus.Ready;
                 instance.ready = true;
+                cancelTokenSource = null;
             }
         }
 
@@ -381,6 +386,7 @@ public class ModManager : MonoBehaviour {
             if (locator == null) {
                 return Task.CompletedTask;
             }
+
             Addressables.RemoveResourceLocator(locator);
             locator = null;
             loaded = false;
@@ -826,15 +832,12 @@ public class ModManager : MonoBehaviour {
             foreach(var mod in fullModList) {
                 if (!mod.enabled) {
                     await mod.SetAssetsAvailable(false);
-                    continue;
                 }
-                await mod.SetLoaded(true);
             }
             foreach(var mod in fullModList) {
-                if (!mod.enabled) {
-                    continue;
+                if (mod.enabled) {
+                    await mod.SetAssetsAvailable(true);
                 }
-                await mod.SetAssetsAvailable(true);
             }
         } catch (Exception e) {
             Debug.LogException(e);
@@ -891,7 +894,9 @@ public class ModManager : MonoBehaviour {
         return false;
     }
 
+    private static CancellationTokenSource cancelTokenSource;
     private void HandleException(AsyncOperationHandle handle, Exception e) {
+        cancelTokenSource?.Cancel();
         lastException = e;
     }
 

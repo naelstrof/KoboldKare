@@ -50,7 +50,7 @@ public class PreparePool : MonoBehaviour {
 
     private void InternalRemovePrefab(string assetName) {
         if (!dynamicPrefabs.TryGetValue(assetName, out var prefab)) return;
-        pool.ResourceCache.Remove(prefab.name);
+        pool.ResourceCache.Remove(assetName);
         dynamicPrefabs.Remove(assetName);
     }
 

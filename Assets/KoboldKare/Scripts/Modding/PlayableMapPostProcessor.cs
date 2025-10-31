@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ExitGames.Client.Photon.StructWrapping;
 using UnityEngine;
@@ -91,8 +92,6 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                     stub = new ModManager.ModStub(data)
                 });
             }
-
-            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
     

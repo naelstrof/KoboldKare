@@ -64,7 +64,7 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         return playableMapCopy;
     }
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
-        if (locator.Locate(searchLabel.RuntimeKey, typeof(GameObject), out var locations)) {
+        if (locator.Locate(searchLabel.RuntimeKey, typeof(PlayableMap), out var locations)) {
             foreach (var resource in locations) {
                 var handle = Addressables.LoadAssetAsync<PlayableMap>(resource);
                 PlayableMap map = await handle.Task;
@@ -92,7 +92,7 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                     stub = new ModManager.ModStub(data)
                 });
             }
-            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
+            _ = ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
     
@@ -113,7 +113,7 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                 playableMap = copy,
                 stub = new ModManager.ModStub(data)
             });
-            await ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
+            _ = ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
 }

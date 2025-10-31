@@ -343,20 +343,26 @@ public class ModManager : MonoBehaviour {
         }
 
         public override async Task SetAssetsAvailable(bool active) {
-            cancelTokenSource = new CancellationTokenSource();
             try {
                 if (!loadedAssets && active) {
-                    await SetLoaded(true);
-                    foreach (var modPostProcessor in instance.earlyModPostProcessors) {
-                        cancelTokenSource.Token.ThrowIfCancellationRequested();
-                        await modPostProcessor.HandleAddressableMod(info, locator);
-                    }
+                    var cancelTokenSource = new CancellationTokenSource();
+                    cancelTokenSources.Add(cancelTokenSource);
+                    try {
+                        await SetLoaded(true);
+                        foreach (var modPostProcessor in instance.earlyModPostProcessors) {
+                            cancelTokenSource.Token.ThrowIfCancellationRequested();
+                            await modPostProcessor.HandleAddressableMod(info, locator);
+                        }
 
-                    foreach (var modPostProcessor in instance.modPostProcessors) {
-                        cancelTokenSource.Token.ThrowIfCancellationRequested();
-                        await modPostProcessor.HandleAddressableMod(info, locator);
+                        foreach (var modPostProcessor in instance.modPostProcessors) {
+                            cancelTokenSource.Token.ThrowIfCancellationRequested();
+                            await modPostProcessor.HandleAddressableMod(info, locator);
+                        }
+
+                        await SetLoaded(false);
+                    } finally {
+                        cancelTokenSources.Remove(cancelTokenSource);
                     }
-                    await SetLoaded(false);
                 } else if (loadedAssets && !active) {
                     foreach (var modPostProcessor in instance.earlyModPostProcessors) {
                         await modPostProcessor.UnloadAssets(info);
@@ -378,7 +384,6 @@ public class ModManager : MonoBehaviour {
             } finally {
                 instance.status = ModStatus.Ready;
                 instance.ready = true;
-                cancelTokenSource = null;
             }
         }
 
@@ -869,9 +874,11 @@ public class ModManager : MonoBehaviour {
         return false;
     }
 
-    private static CancellationTokenSource cancelTokenSource;
+    private static List<CancellationTokenSource> cancelTokenSources = new();
     private void HandleException(AsyncOperationHandle handle, Exception e) {
-        cancelTokenSource?.Cancel();
+        for (int i=0;i<cancelTokenSources.Count;i++) {
+            cancelTokenSources[i]?.Cancel();
+        }
         lastException = e;
     }
 

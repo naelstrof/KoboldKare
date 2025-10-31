@@ -330,6 +330,12 @@ public static class SaveManager {
                     }
                 }
             }
+            
+            // Backwards compatibility for old saves where Lilith and surf map were not mods.
+            if (rootNode.HasKey("version") && int.TryParse(rootNode["version"], out int versionNum) && versionNum <= 66) {
+                modStubs.Add(new ModManager.ModStub("Lilith Kobold", new PublishedFileId_t(2931099929), ModManager.ModSource.Any, "Lilith"));
+                modStubs.Add(new ModManager.ModStub("Surf Map Example", new PublishedFileId_t(2934088282), ModManager.ModSource.Any, "SurfMap"));
+            }
         }
 
         yield return ModManager.SetLoadedMods(modStubs);

@@ -1060,8 +1060,9 @@ namespace Photon.Pun
             monoRPCMethodsCache.Clear();
 
             // set up the NetworkingClient, protocol, etc
+            PrefabPool = new DefaultPool();
             OfflineMode = false;
-            ConnectionProtocol protocol = PhotonNetwork.PhotonServerSettings.AppSettings.Protocol;
+            ConnectionProtocol protocol = PhotonServerSettings.AppSettings.Protocol;
             NetworkingClient = new LoadBalancingClient(protocol);
             NetworkingClient.LoadBalancingPeer.QuickResendAttempts = 2;
             NetworkingClient.LoadBalancingPeer.SentCountAllowance = 9;
@@ -1081,7 +1082,6 @@ namespace Photon.Pun
 
 
             Application.runInBackground = PhotonServerSettings.RunInBackground;
-            PrefabPool = new DefaultPool();
 
             // RPC shortcut lookup creation (from list of RPCs, which is updated by Editor scripts)
             rpcShortcuts = new Dictionary<string, int>(PhotonNetwork.PhotonServerSettings.RpcList.Count);
@@ -3186,7 +3186,7 @@ namespace Photon.Pun
 
 
             // try to load the resource / asset (ServerSettings a.k.a. PhotonServerSettings)
-            photonServerSettings = Addressables.LoadAssetAsync<ServerSettings>(PhotonNetwork.ServerSettingsFileName).WaitForCompletion();
+            photonServerSettings = Addressables.LoadAssetAsync<ServerSettings>(ServerSettingsFileName).WaitForCompletion();
             
             if (photonServerSettings != null)
             {

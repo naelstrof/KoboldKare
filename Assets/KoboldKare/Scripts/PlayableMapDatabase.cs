@@ -30,7 +30,7 @@ public class PlayableMapDatabase : MonoBehaviour {
             return playableMap.LoadAsync();
         }
         Debug.LogError("Could not find map: " + mapName);
-        return new BoxedSceneLoad();
+        return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync("ErrorScene"));
     }
 
     public static void AddPlayableMap(PlayableMap playableMap) {

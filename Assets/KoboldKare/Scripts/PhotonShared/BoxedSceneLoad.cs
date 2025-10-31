@@ -21,7 +21,7 @@ public class BoxedSceneLoad {
             return source switch {
                 Source.Unity => unityOp?.isDone ?? true,
                 Source.Addressables => addrHandle.IsDone,
-                Source.Task => task?.Status == TaskStatus.RanToCompletion,
+                Source.Task => (task?.Status ?? TaskStatus.RanToCompletion) == TaskStatus.RanToCompletion,
                 _ => true
             };
         }

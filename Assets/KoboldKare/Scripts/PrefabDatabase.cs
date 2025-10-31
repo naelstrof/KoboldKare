@@ -119,13 +119,13 @@ public class PrefabDatabase : ScriptableObject {
     }
 
     public void RemovePrefab(string key) {
-        foreach (var t in prefabReferenceInfos) {
-            if (t.GetKey() == key) {
-                t.SetPrefab(null);
+        for(int i=0;i<prefabReferenceInfos.Count;i++) {
+            if (prefabReferenceInfos[i].GetKey() == key) {
+                prefabReferenceInfos.RemoveAt(i);
+                prefabReferenceInfos.Sort((a, b) => String.Compare(a.GetKey(), b.GetKey(), StringComparison.InvariantCulture));
+                prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
             }
         }
-        prefabReferenceInfos.Sort((a, b) => String.Compare(a.GetKey(), b.GetKey(), StringComparison.InvariantCulture));
-        prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }
     public ReadOnlyCollection<PrefabReferenceInfo> GetPrefabReferenceInfos() => readOnlyPrefabReferenceInfos;
 

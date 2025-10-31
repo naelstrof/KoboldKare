@@ -358,7 +358,6 @@ public class ModManager : MonoBehaviour {
                             cancelTokenSource.Token.ThrowIfCancellationRequested();
                             await modPostProcessor.HandleAddressableMod(info, locator);
                         }
-
                         await SetLoaded(false);
                     } finally {
                         cancelTokenSources.Remove(cancelTokenSource);
@@ -587,7 +586,7 @@ public class ModManager : MonoBehaviour {
         return ConvertToStubs(instance.fullModList, (info) => info.IsValid()).AsReadOnly();
     }
 
-    public static async Task SetModActive(ModStub stub, bool active) {
+    public static async Task SetModEnabled(ModStub stub, bool active) {
         await Mutex.WaitAsync();
         try {
             bool found = false;

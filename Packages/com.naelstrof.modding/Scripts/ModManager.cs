@@ -362,7 +362,6 @@ public class ModManager : MonoBehaviour {
                             cancelTokenSource.Token.ThrowIfCancellationRequested();
                             await modPostProcessor.HandleAddressableMod(info, locator);
                         }
-                        await SetLoaded(false);
                     } finally {
                         cancelTokenSources.Remove(cancelTokenSource);
                     }
@@ -374,6 +373,7 @@ public class ModManager : MonoBehaviour {
                     foreach (var modPostProcessor in instance.modPostProcessors) {
                         await modPostProcessor.UnloadAssets(info);
                     }
+                    await SetLoaded(false);
                 }
                 loadedAssets = active;
             } catch (Exception e) {

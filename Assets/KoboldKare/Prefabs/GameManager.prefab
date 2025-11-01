@@ -17367,7 +17367,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.6
+  m_fontSize: 30.8
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24306,70 +24306,60 @@ MonoBehaviour:
       m_AssetGUID: fd95002abee3f244489427894ca672b4
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: Disconnect
     popupPrefabReference:
       m_AssetGUID: 4b77792761ba83b4c8a1fb1ae42eb314
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: CreateCustomGame
     popupPrefabReference:
       m_AssetGUID: 0db1b2949f8595e4685ff4a5aa255d32
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: JoinPrivateGame
     popupPrefabReference:
       m_AssetGUID: 33a87f3fa8bf4d74894c6048998373bd
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: AlphaPopup
     popupPrefabReference:
       m_AssetGUID: 5aae5d272202bc242b4b39d4f12fc9b4
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: FailedLoad
     popupPrefabReference:
       m_AssetGUID: eb6471a7bfdaf28408d79c416db41eae
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: SaveSlotInteract
     popupPrefabReference:
       m_AssetGUID: 6c1f0cb3a13491346ab157f5e0e61f2a
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: ConfirmPopup
     popupPrefabReference:
       m_AssetGUID: fe98cc461b047ca4eaadc500d4d7ea2e
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: FailedModLoads
     popupPrefabReference:
       m_AssetGUID: 6d5aa2af26398144db1ca9d743d9c17e
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - name: InappropriateName
     popupPrefabReference:
       m_AssetGUID: 63027153d18a9ab42b58703ebfde3901
       m_SubObjectName: 
       m_SubObjectType: 
-      m_SubObjectGUID: 
       m_EditorAssetChanged: 0
 --- !u!114 &9185425679682655073
 MonoBehaviour:
@@ -24407,7 +24397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e242dcf08ae4f21b4c501cca051ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backButton: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88,
+  backButton: {fileID: 7127249530326107942, guid: b80237a58ac8c22458251d7c9dcacf88,
     type: 3}
   MultiplayerTab: {fileID: 2131986133470987616}
   OptionsTab: {fileID: 8040330177615201350}

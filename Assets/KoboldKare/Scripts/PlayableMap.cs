@@ -123,6 +123,7 @@ public class PlayableMap : ScriptableObject {
     }
 
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
+        await PlayableMapPostProcessor.UnloadAllMaps();
         await ModManager.SetModAssetsAvailable(stub,true);
         var handle = Addressables.LoadSceneAsync(key);
         await handle.Task;
@@ -133,6 +134,7 @@ public class PlayableMap : ScriptableObject {
     }
 
     private async Task LoadBundleSceneFromStub(ModManager.ModStub stub) {
+        await PlayableMapPostProcessor.UnloadAllMaps();
         await ModManager.SetModAssetsAvailable(stub, true);
         var bundle = AssetBundle.LoadFromFile(bundlePath);
         var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);

@@ -986,58 +986,72 @@ public class ModManager : MonoBehaviour {
     }
 
     public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {
-        yield return new WaitUntil(GetReady);
-        if (HasExactModConfigurationLoaded(stubs)) {
-            yield break;
-        }
+        try {
+            instance.status = ModStatus.Initializing;
+            yield return new WaitUntil(GetReady);
+            if (HasExactModConfigurationLoaded(stubs)) {
+                instance.status = ModStatus.Ready;
+                yield break;
+            }
 
-        Debug.Log("Loading mod stubs...");
-        List<ModStub> neededMods = new List<ModStub>(stubs);
-        for(int i=0;i<neededMods.Count;i++) {
-            if (neededMods[i].id != PublishedFileId_t.Invalid) {
-                continue;
+            instance.status = ModStatus.LoadingMods;
+            Debug.Log("Loading mod stubs...");
+            List<ModStub> neededMods = new List<ModStub>(stubs);
+            for (int i = 0; i < neededMods.Count; i++) {
+                if (neededMods[i].id != PublishedFileId_t.Invalid) {
+                    continue;
+                }
+
+                foreach (var mod in instance.fullModList) {
+                    if (mod.info.title != neededMods[i].title) continue;
+                    neededMods.RemoveAt(i--);
+                    break;
+                }
+            }
+
+            // Now we have a list of needed mods
+            foreach (var modStub in neededMods) {
+                if (modStub.id == PublishedFileId_t.Invalid) {
+                    throw new UnityException(
+                        $"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! Tell the mod creator to upload it to Steam, or you need to manually install it.");
+                }
             }
 
             foreach (var mod in instance.fullModList) {
-                if (mod.info.title != neededMods[i].title) continue;
-                neededMods.RemoveAt(i--);
-                break;
-            }
-        }
-        // Now we have a list of needed mods
-        foreach (var modStub in neededMods) {
-            if (modStub.id == PublishedFileId_t.Invalid) {
-                throw new UnityException($"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! Tell the mod creator to upload it to Steam, or you need to manually install it.");
-            }
-        }
-
-        foreach (var mod in instance.fullModList) {
-            mod.enabled = false;
-        }
-        instance.changed = true;
-
-        PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
-        for (int i = 0; i < neededMods.Count; i++) {
-            fileIds[i] = neededMods[i].id;
-        }
-        yield return SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
-        foreach (var modStub in stubs) {
-            bool found = false;
-            foreach(var mod in instance.fullModList) {
-                if (mod.info.title != modStub.title || mod.info.publishedFileId != modStub.id) continue;
-                found = true;
-                mod.enabled = true;
-                break;
+                mod.enabled = false;
             }
 
-            if (!found) {
-                throw new UnityException($"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! It must have failed to download from the steam workshop, try logging into Steam!");
-            }
-        }
+            instance.changed = true;
 
-        Debug.Log("Reloading mods after acquiring stubs...");
-        var reloadModTask = instance.SyncEnabledStatusWithLoaded();
-        yield return new WaitUntil(() => reloadModTask.IsCompleted);
-        Debug.Log("Done reloading!");
+            PublishedFileId_t[] fileIds = new PublishedFileId_t[neededMods.Count];
+            for (int i = 0; i < neededMods.Count; i++) {
+                fileIds[i] = neededMods[i].id;
+            }
+
+            instance.status = ModStatus.WaitingForDownloads;
+            yield return SteamWorkshopModLoader.TryDownloadAllMods(fileIds);
+            foreach (var modStub in stubs) {
+                bool found = false;
+                foreach (var mod in instance.fullModList) {
+                    if (mod.info.title != modStub.title || mod.info.publishedFileId != modStub.id) continue;
+                    found = true;
+                    mod.enabled = true;
+                    break;
+                }
+
+                if (!found) {
+                    throw new UnityException(
+                        $"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! It must have failed to download from the steam workshop, try logging into Steam!");
+                }
+            }
+
+            Debug.Log("Reloading mods after acquiring stubs...");
+            instance.status = ModStatus.LoadingAssets;
+            var reloadModTask = instance.SyncEnabledStatusWithLoaded();
+            yield return new WaitUntil(() => reloadModTask.IsCompleted);
+            Debug.Log("Done reloading!");
+        } finally {
+            instance.status = ModStatus.Ready;
+        }
     }
 }

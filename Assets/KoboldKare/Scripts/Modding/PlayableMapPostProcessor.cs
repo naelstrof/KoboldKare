@@ -14,13 +14,19 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         public ModManager.ModStub stub;
         public PlayableMap playableMap;
     }
-    private List<ModStubPlayableMapPair> addedPlayableMaps;
+
+    private static List<ModStubPlayableMapPair> addedPlayableMaps = new();
+
+    public static async Task UnloadAllMaps() {
+        foreach (var pair in addedPlayableMaps) {
+            await ModManager.SetModAssetsAvailable(pair.stub, false);
+        }
+    }
     
     AsyncOperationHandle inherentAssetsHandle;
 
     public override async Task Awake() {
         await base.Awake();
-        addedPlayableMaps = new ();
         inherentAssetsHandle = Addressables.LoadAssetsAsync<PlayableMap>(searchLabel.RuntimeKey, LoadInherentPlayableMap);
         await inherentAssetsHandle.Task;
     }
@@ -92,7 +98,6 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                     stub = new ModManager.ModStub(data)
                 });
             }
-            _ = ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
     
@@ -113,7 +118,6 @@ public class PlayableMapPostProcessor : ModPostProcessor {
                 playableMap = copy,
                 stub = new ModManager.ModStub(data)
             });
-            _ = ModManager.SetModAssetsAvailable(new ModManager.ModStub(data), false);
         }
     }
 }

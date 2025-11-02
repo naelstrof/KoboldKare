@@ -36,7 +36,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     private delegate void GenericAction();
 
-    private GenericAction onLeaveRoom;
     public IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
@@ -80,43 +79,58 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false });
     }
-    public void JoinMatch(RoomInfo roomInfo) {
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
-        if (roomInfo.CustomProperties.ContainsKey("modList")) {
-            if (roomInfo.CustomProperties["modList"] is not string) {
-                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-                return;
+
+    private bool TryParseMods(Hashtable hashtable, out List<ModManager.ModStub> stubs) {
+        if (hashtable.ContainsKey("modList")) {
+            if (hashtable["modList"] is not string) {
+                stubs = new();
+                return false;
             }
-            string modList = (string)roomInfo.CustomProperties["modList"];
+
+            string modList = (string)hashtable["modList"];
             JSONNode modArray = JSONNode.Parse(modList);
             List<ModManager.ModStub> modsToLoad = new List<ModManager.ModStub>();
             foreach (var pair in modArray) {
                 var node = pair.Value;
                 if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
-                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-                    MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-                    return;
+                    stubs = new();
+                    return false;
                 }
+
                 if (!ulong.TryParse(node["id"], out ulong parsedID)) {
                     continue;
                 }
-                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID, ModManager.ModSource.Any, node["folderTitle"]));
+
+                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID,
+                    ModManager.ModSource.Any, node["folderTitle"]));
             }
-            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomInfo.Name, modsToLoad));
+            stubs = modsToLoad;
+            return true;
+        }
+
+        stubs = new();
+        return false;
+    } 
+    public void JoinMatch(RoomInfo roomInfo) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+        if (TryParseMods(roomInfo.CustomProperties, out var stubs)) {
+            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomInfo.Name, stubs));
         } else {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+            PopupHandler.instance.ClearAllPopups();
             PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-            return;
+            Debug.LogError("Incompatible mod list format on server. Server might be booting still?");
         }
     }
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
         if (ModManager.GetFailedToLoadMods()) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+            PopupHandler.instance.ClearAllPopups();
             PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Failed to download mods set by the server.");
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
             yield break;
         }
         PhotonNetwork.JoinRoom(roomName);
@@ -306,12 +320,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnLeftRoom() {
-        if (onLeaveRoom != null) {
-            onLeaveRoom.Invoke();
-        } else {
-            GameManager.StartCoroutineStatic(LoadPlayerConfigMods());
-        }
-
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
@@ -362,41 +370,16 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     IEnumerator HandleModListChange(Hashtable propertiesThatChanged) {
-        if (propertiesThatChanged.ContainsKey("modList")) {
-            if (propertiesThatChanged["modList"] is not string) {
-                PhotonNetwork.Disconnect();
-                yield return LevelLoader.instance.LoadLevel("MainMenu");
-                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+        if (TryParseMods(propertiesThatChanged, out var stubs)) {
+            if (ModManager.HasExactModConfigurationLoaded(stubs)) {
+                Debug.Log("Got new mods from server, but we have the exact same configuration loaded already! Woo!");
                 yield break;
             }
-            string modList = (string)propertiesThatChanged["modList"];
-            JSONNode modArray = JSONNode.Parse(modList);
-            List<ModManager.ModStub> modsToLoad = new List<ModManager.ModStub>();
-            foreach (var pair in modArray) {
-                var node = pair.Value;
-                if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
-                    PhotonNetwork.Disconnect();
-                    yield return LevelLoader.instance.LoadLevel("MainMenu");
-                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-                    MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-                    yield break;
-                }
-                if (!ulong.TryParse(node["id"], out ulong parsedID)) {
-                    continue;
-                }
-                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID, ModManager.ModSource.Any, node["folderTitle"]));
-            }
-
-            if (ModManager.HasExactModConfigurationLoaded(modsToLoad)) {
-                yield break;
-            }
-            
-            // Reconnect after loading mods.
+            Debug.Log("Got new mods from server, attempting to reload...");
             var roomName = PhotonNetwork.CurrentRoom.Name;
-            PhotonNetwork.Disconnect();
+            PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("MainMenu");
-            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, modsToLoad));
+            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
         }
     }
 

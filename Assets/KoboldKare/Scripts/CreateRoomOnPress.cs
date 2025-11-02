@@ -41,12 +41,15 @@ public class CreateRoomOnPress : MonoBehaviour {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());
     }
     public IEnumerator JoinRoomRoutine(string roomName) {
+        if (string.IsNullOrEmpty(roomName)) {
+            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Please enter a room name.");
+            yield break;
+        }
         Popup p = PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRoom(roomName);
-        yield return new WaitUntil(() => PhotonNetwork.InRoom && SceneManager.GetActiveScene().name == "MainMap");
+        yield return new WaitUntil(() => PhotonNetwork.InRoom);
         PopupHandler.instance.ClearPopup(p);
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
     }
     public void JoinRoom() {
         GameManager.instance.StartCoroutine(JoinRoomRoutine(roomNameField.text));

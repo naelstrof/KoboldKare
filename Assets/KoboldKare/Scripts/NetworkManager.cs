@@ -84,7 +84,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         if (roomInfo.CustomProperties.ContainsKey("modList")) {
             if (roomInfo.CustomProperties["modList"] is not string) {
-                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
                 return;
             }
@@ -94,7 +94,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             foreach (var pair in modArray) {
                 var node = pair.Value;
                 if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
-                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
                     MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
                     return;
                 }
@@ -105,12 +105,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             }
             GameManager.instance.StartCoroutine(JoinMatchRoutine(roomInfo.Name, modsToLoad));
         } else {
-            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
             return;
         }
     }
-    public IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
+    private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
@@ -121,7 +121,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         PhotonNetwork.JoinRoom(roomName);
     }
-    public IEnumerator EnsureOfflineAndReadyToLoad() {
+    private IEnumerator EnsureOfflineAndReadyToLoad() {
         if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
             settings.AppSettings.AppVersion += "Editor";
         }
@@ -257,59 +257,19 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         player.GetComponentInChildren<CharacterDescriptor>(true).SetEyeDir(rot*Vector3.forward);
         PopupHandler.instance.ClearAllPopups();
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+        Pauser.SetPaused(false);
     }
     public void SpawnControllablePlayer() {
         GameManager.instance.StartCoroutine(SpawnControllablePlayerRoutine());
     }
     void IMatchmakingCallbacks.OnJoinedRoom() {
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.JoiningServer);
         Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+        GameManager.StartCoroutineStatic(HandleModListChange(PhotonNetwork.CurrentRoom.CustomProperties));
         SpawnControllablePlayer();
-        PopupHandler.instance.ClearAllPopups();
-        Pauser.SetPaused(false);
-        //if (popup != null) {
-        //popup.Hide();
-        //}
-        //localPlayerInstance = GameObject.Instantiate(saveLibrary.GetPrefab(ScriptableSaveLibrary.SaveID.Kobold), Vector3.zero, Quaternion.identity);
-        //localPlayerInstance.GetComponent<ISavable>().SpawnOverNetwork();
     }
-
-    IEnumerator TemporarilySendEverything() {
-        List<PhotonView> views = new List<PhotonView>();
-        foreach (var view in PhotonNetwork.PhotonViewCollection) {
-            if (view.IsMine && view.Synchronization == ViewSynchronization.UnreliableOnChange) {
-                views.Add(view);
-            }
-        }
-
-        foreach (var view in views) {
-            view.Synchronization = ViewSynchronization.Unreliable;
-        }
-
-        yield return new WaitForSecondsRealtime(0.5f);
-        
-        foreach (var view in views) {
-            view.Synchronization = ViewSynchronization.UnreliableOnChange;
-        }
-    }
+    
     public void OnPlayerEnteredRoom(Player other) {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
-        if (PhotonNetwork.IsMasterClient) {// Raise a handshake event to the joining player.
-            JSONNode rootNode = JSONNode.Parse("{}");
-            JSONArray modArray = new JSONArray();
-            foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
-                JSONNode modNode = JSONNode.Parse("{}");
-                modNode["title"] = mod.title;
-                modNode["folderTitle"] = mod.folderTitle;
-                modNode["id"] = mod.id.ToString();
-                modArray.Add(modNode);
-            }
-            rootNode["modList"] = modArray;
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { CachingOption = EventCaching.DoNotCache, TargetActors = new []{other.ActorNumber}};
-            PhotonNetwork.RaiseEvent((byte)'M', rootNode.ToString(), raiseEventOptions, SendOptions.SendReliable);
-        }
-
-        GameManager.StartCoroutineStatic(TemporarilySendEverything());
     }
 
     public void OnPlayerLeftRoom(Player other) {
@@ -398,6 +358,46 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
 
     public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged) {
+        GameManager.StartCoroutineStatic(HandleModListChange(propertiesThatChanged));
+    }
+
+    IEnumerator HandleModListChange(Hashtable propertiesThatChanged) {
+        if (propertiesThatChanged.ContainsKey("modList")) {
+            if (propertiesThatChanged["modList"] is not string) {
+                PhotonNetwork.Disconnect();
+                yield return LevelLoader.instance.LoadLevel("MainMenu");
+                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                yield break;
+            }
+            string modList = (string)propertiesThatChanged["modList"];
+            JSONNode modArray = JSONNode.Parse(modList);
+            List<ModManager.ModStub> modsToLoad = new List<ModManager.ModStub>();
+            foreach (var pair in modArray) {
+                var node = pair.Value;
+                if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
+                    PhotonNetwork.Disconnect();
+                    yield return LevelLoader.instance.LoadLevel("MainMenu");
+                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
+                    MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                    yield break;
+                }
+                if (!ulong.TryParse(node["id"], out ulong parsedID)) {
+                    continue;
+                }
+                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID, ModManager.ModSource.Any, node["folderTitle"]));
+            }
+
+            if (ModManager.HasExactModConfigurationLoaded(modsToLoad)) {
+                yield break;
+            }
+            
+            // Reconnect after loading mods.
+            var roomName = PhotonNetwork.CurrentRoom.Name;
+            PhotonNetwork.Disconnect();
+            yield return LevelLoader.instance.LoadLevel("MainMenu");
+            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, modsToLoad));
+        }
     }
 
     public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps) {

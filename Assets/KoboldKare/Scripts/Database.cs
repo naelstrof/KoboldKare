@@ -1,99 +1,126 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
-public class Database<T> where T : UnityEngine.Object {
+public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
+    protected static Database<T> instance;
+
+    public struct ObjectStubPair {
+        public T obj;
+        public ModManager.ModStub? stub;
+        public bool GetRepresentedByStub(ModManager.ModStub? b) {
+            if (b == null && stub == null) {
+                return true;
+            }
+            if (b == null || stub == null) {
+                return false;
+            }
+            return stub.Value.GetRepresentedBy(b.Value);
+        }
+    }
+    private static int CompareObjectStubPair(ObjectStubPair x, ObjectStubPair y) {
+        if (x.stub == null && y.stub == null) return 0;
+        if (x.stub == null) return -1;
+        if (y.stub == null) return 1;
+        if (x.stub.Value.loadPriority == y.stub.Value.loadPriority) {
+            return String.Compare(x.stub.Value.title, y.stub.Value.title, StringComparison.InvariantCulture);
+        }
+        return x.stub.Value.loadPriority.CompareTo(y.stub.Value.loadPriority);
+    }
+    
     private class StringSorter : IComparer<string> {
         public int Compare(string x, string y) {
             return String.Compare(x, y, StringComparison.InvariantCulture);
         }
     }
-    private SortedList<string, DatabaseValue<T>> values;
-
-    protected abstract class DatabaseValue<A> where A : UnityEngine.Object {
-        public abstract Task<A> GetValueAsync(out bool hasHandle, out AsyncOperationHandle<A> handle);
+    
+    
+    protected internal SortedDictionary<string, List<ObjectStubPair>> assets = new(new StringSorter());
+    public void Awake() {
+        if (instance && instance != this) {
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
     }
-    private static Task<A> ConvertToTask<A>(AssetBundleRequest request) where A : UnityEngine.Object {
-        var tcs = new TaskCompletionSource<A>(TaskCreationOptions.RunContinuationsAsynchronously);
-        request.completed += _ => {
-            if (request.asset is A t) {
-                tcs.SetResult(t);
-            } else if (!request.asset) {
-                tcs.SetException(new Exception("AssetBundleRequest returned null."));
+    public static bool TryGetAsset(string name, out T match) {
+        if (instance.assets.TryGetValue(name, out var list)) {
+            match = list[^1].obj;
+            return true;
+        }
+
+        if (instance.assets.Count > 0) {
+            match = instance.assets.ElementAt(0).Value[^1].obj;
+        } else {
+            match = null;
+        }
+        return false;
+    }
+    
+    public static bool TryGetAsset(short id, out T match) {
+        if (id < 0 || id >= instance.assets.Count) {
+            if (instance.assets.Count > 0) {
+                match = instance.assets.ElementAt(0).Value[^1].obj;
             } else {
-                tcs.SetException(new InvalidCastException($"Asset is {request.asset.GetType()}, cannot cast to {typeof(T)}."));
+                match = null;
             }
-        };
-        return tcs.Task;
-    }
-    
-    protected class DatabaseAddressableValue<A> : DatabaseValue<A> where A : UnityEngine.Object {
-        private IResourceLocation location;
-        public DatabaseAddressableValue(IResourceLocation location) {
-            this.location = location;
+            return false;
         }
-        public override Task<A> GetValueAsync(out bool hasHandle, out AsyncOperationHandle<A> handle) {
-            handle = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<A>(location);
-            hasHandle = true;
-            return handle.Task;
-        }
-    }
-    
-    protected class DatabaseAssetBundleValue<A> : DatabaseValue<A> where A : UnityEngine.Object {
-        private AssetBundle bundle;
-        private string assetName;
-        public DatabaseAssetBundleValue(AssetBundle bundle, string assetName) {
-            this.bundle = bundle;
-            this.assetName = assetName;
-        }
-        public override Task<A> GetValueAsync(out bool hasHandle, out AsyncOperationHandle<A> handle) {
-            handle = default;
-            hasHandle = false;
-            return ConvertToTask<A>(bundle.LoadAssetAsync<A>(assetName));
-        }
+        match = instance.assets.ElementAt(id).Value[^1].obj;
+        return true;
     }
 
-    protected Task<T> GetValueAsync(int id, out bool hasHandle, out AsyncOperationHandle<T> handle) {
-        if (id < 0 || id >= values.Count) {
-            Debug.LogError($"ID {id} is out of range for database of type {typeof(T)}.");
-            if (values.Count > 0) {
-                return values.Values[0].GetValueAsync(out hasHandle, out handle);
+    public static void AddAsset(T newAsset, ModManager.ModStub? stub) {
+        var key = newAsset.name;
+        if (!instance.assets.ContainsKey(key)) {
+            instance.assets.Add(key, new List<ObjectStubPair>());
+        }
+        var list = instance.assets[key];
+        list.Add(new ObjectStubPair() {
+            obj = newAsset,
+            stub = stub
+        });
+        list.Sort(CompareObjectStubPair);
+    }
+    
+    public static void RemoveAsset(T newAsset, ModManager.ModStub? stub) {
+        var key = newAsset.name;
+        if (!instance.assets.TryGetValue(key, out var list)) {
+            return;
+        }
+        for (int i = 0; i < list.Count; i++) {
+            if (list[i].GetRepresentedByStub(stub)) {
+                list.RemoveAt(i);
+                i--;
             }
-            throw new Exception("Don't have any values in the database.");
         }
-        return values.Values[id].GetValueAsync(out hasHandle, out handle);
+        if (list.Count == 0) {
+            instance.assets.Remove(key);
+        }
+        list.Sort(CompareObjectStubPair);
     }
 
-    protected void GetKeys(List<string> keys) {
-        keys.Clear();
-        keys.AddRange(values.Keys);
-    }
-
-    protected Task<T> GetValueAsync(string key, out bool hasHandle, out AsyncOperationHandle<T> handle, out int id) {
-        if (!values.ContainsKey(key)) {
-            throw new KeyNotFoundException($"Key {key} not found in database of type {typeof(T)}.");
+    public static short GetID(T obj) {
+        var key = obj.name;
+        if (!instance.assets.ContainsKey(key)) {
+            return 0;
         }
 
-        if (values.TryGetValue(key, out var value)) {
-            id = values.IndexOfKey(key);
-            value.GetValueAsync(out hasHandle, out handle);
+        int i = 0;
+        foreach (var pair in instance.assets) {
+            if (pair.Key == obj.name) {
+                return (short)i;
+            }
+            i++;
         }
-
-        Debug.LogError($"Key {key} is not in database of type {typeof(T)}.");
-        if (values.Count > 0) {
-            id = 0;
-            return values.Values[0].GetValueAsync(out hasHandle, out handle);
+        return 0;
+    }
+    public static List<T> GetAssets() {
+        List<T> assets = new();
+        foreach (var pair in instance.assets) {
+            assets.Add(pair.Value[^1].obj);
         }
-        throw new Exception("Don't have any values in the database.");
-    }
-    
-    public void AddAddressable(string key, IResourceLocation location) {
-        values[key] = new DatabaseAddressableValue<T>(location);
-    }
-    public void AddAssetBundle(string key, AssetBundle bundle) {
-        values[key] = new DatabaseAssetBundleValue<T>(bundle, key);
+        return assets;
     }
 }

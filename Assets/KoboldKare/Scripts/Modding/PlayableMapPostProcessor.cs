@@ -105,6 +105,16 @@ public class PlayableMapPostProcessor : ModPostProcessor {
     public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle bundle) {
         var node = data.assets;
         if (node.HasKey("Scene")) {
+            bool checkFound = false;
+            foreach (var check in addedPlayableMaps) {
+                if (check.stub.GetRepresentedBy(data)) {
+                    checkFound = true;
+                    break;
+                }
+            }
+            if (checkFound) {
+                return;
+            }
             PlayableMap playableMap = ScriptableObject.CreateInstance<PlayableMap>();
             var request = bundle.LoadAssetAsync<Sprite>(node["SceneIcon"]);
             var icon = await request.AsSingleAssetTask<Sprite>();

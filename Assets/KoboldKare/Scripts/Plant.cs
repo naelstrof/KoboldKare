@@ -75,13 +75,15 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
 
     [PunRPC]
     void SwitchToRPC(short newPlantID) {
-        ScriptablePlant checkPlant = PlantDatabase.GetPlant(newPlantID);
-        //Debug.Log("Switching from " + plant + " to " + checkPlant);
-        if (checkPlant == plant) {
-            return;
+        if (PlantDatabase.TryGetAsset(newPlantID, out var checkPlant)) {
+            if (checkPlant == plant) {
+                return;
+            }
+            SwitchTo(checkPlant);
+            PhotonProfiler.LogReceive(sizeof(short));
+        } else {
+            Debug.LogError("Failed to find plant to switch to.");
         }
-        SwitchTo(checkPlant);
-        PhotonProfiler.LogReceive(sizeof(short));
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
@@ -145,7 +147,11 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             // Could be shared by other OnPhotonInstantiates.
             buffer.SetReadPosition(0);
             SetGenes(buffer.ReadKoboldGenes());
-            SwitchTo(PlantDatabase.GetPlant(buffer.ReadShort()));
+            if (PlantDatabase.TryGetAsset(buffer.ReadShort(), out var newPlant)) {
+                SwitchTo(newPlant);
+            } else {
+                Debug.LogError("Tried to instantiate Plant with invalid plant ID!");
+            }
             PhotonProfiler.LogReceive(buffer.Length);
         } else {
             SetGenes(new KoboldGenes().Randomize("Kobold"));
@@ -195,7 +201,11 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     }
 
     public void Load(JSONNode node) {
-        SwitchTo(PlantDatabase.GetPlant((short)node["plantID"].AsInt));
+        if (PlantDatabase.TryGetAsset((short)node["plantID"].AsInt, out var match)) {
+            SwitchTo(match);
+        } else {
+            Debug.LogError("Failed to find plant with ID " + (short)node["plantID"].AsInt + " while loading plant.");
+        }
         float x = node.GetValueOrDefault("position.x", 0f);
         float y = node.GetValueOrDefault("position.y", 0f);
         float z = node.GetValueOrDefault("position.z", 0f);

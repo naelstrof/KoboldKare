@@ -91,12 +91,12 @@ public class ReagentContents : IEnumerable<Reagent> {
             contents[id].volume = Mathf.Max(0f,contents[id].volume+addVolume);
         } else {
             contents.Add(id, new Reagent() {id=id,volume=addVolume});
-            if (worldContainer != null) {
+            if (worldContainer) {
                 //ReagentDatabase.GetReagent(id).onExist.Invoke(worldContainer);
             }
         }
-        if (worldContainer != null) {
-            ReagentDatabase.DoReactions(worldContainer, id);
+        if (worldContainer) {
+            ReactionsDatabase.DoReactions(worldContainer, id);
         }
         if (volume > maxVolume) {
             Spill(volume-maxVolume);
@@ -138,7 +138,11 @@ public class ReagentContents : IEnumerable<Reagent> {
             return metabolizeContents;
         }
         foreach(var pair in contents) {
-            float metabolizationHalfLife = ReagentDatabase.GetReagent(pair.Key).GetMetabolizationHalfLife();
+            float metabolizationHalfLife = 0f;
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
+                metabolizationHalfLife = reagent.GetMetabolizationHalfLife();
+            }
+
             float metaHalfLife = metabolizationHalfLife == 0 ? pair.Value.volume : pair.Value.volume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
             // halflife on a tiny value suuucks, just kill it if the value gets small enough so we don't spam incredibly tiny updates.
             if (pair.Value.volume <= metabolizationVolumeEpsilon) {
@@ -162,13 +166,13 @@ public class ReagentContents : IEnumerable<Reagent> {
         return 0f;
     }
     public float GetVolumeOf(ScriptableReagent reagent) {
-        byte id = ReagentDatabase.GetID(reagent);
+        byte id = (byte)ReagentDatabase.GetID(reagent);
         return GetVolumeOf(id);
     }
     public bool IsCleaningAgent() {
         float totalCleanerVolume = 0f;
         foreach(var pair in contents) {
-            if (ReagentDatabase.GetReagent(pair.Key).IsCleaningAgent()) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent) && reagent.IsCleaningAgent()) {
                 totalCleanerVolume += pair.Value.volume;
             }
         }
@@ -179,7 +183,9 @@ public class ReagentContents : IEnumerable<Reagent> {
     public float GetCalories() {
         float totalCalories = 0f;
         foreach(var pair in contents) {
-            totalCalories += pair.Value.volume * ReagentDatabase.GetReagent(pair.Key).GetCalories();
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var calorieCheck)) {
+                totalCalories += pair.Value.volume * calorieCheck.GetCalories();
+            }
         }
         return totalCalories;
     }
@@ -194,14 +200,19 @@ public class ReagentContents : IEnumerable<Reagent> {
             if (pair.Value.volume <= 0f) {
                 continue;
             }
-            totalColor += ReagentDatabase.GetReagent(pair.Key).GetColor()*((pair.Value.volume)/v);
+
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var colorReagent)) {
+                totalColor += colorReagent.GetColor() * ((pair.Value.volume) / v);
+            }
         }
         return totalColor;
     }
     public float GetValue() {
         float totalValue = 0f;
         foreach(var pair in contents) {
-            totalValue += ReagentDatabase.GetReagent(pair.Key).GetValue()*pair.Value.volume;
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
+                totalValue += reagent.GetValue() * pair.Value.volume;
+            }
         }
         return totalValue;
     }
@@ -215,7 +226,12 @@ public class ReagentContents : IEnumerable<Reagent> {
                 continue;
             }
 
-            reagentPair["name"] = ReagentDatabase.GetReagent(pair.Key).name;
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
+                reagentPair["name"] = reagent.name;
+            } else {
+                reagentPair["name"] = "Water";
+            }
+
             reagentPair["volume"] = pair.Value.volume;
             reagents.Add(reagentPair);
         }
@@ -230,7 +246,9 @@ public class ReagentContents : IEnumerable<Reagent> {
         for(int i=0;i<reagents.Count;i++) {
             string name = reagents[i]["name"];
             float vol = reagents[i]["volume"];
-            OverrideReagent(ReagentDatabase.GetID(ReagentDatabase.GetReagent(name)), vol);
+            if (ReagentDatabase.TryGetAsset(name, out var reagent)) {
+                OverrideReagent((byte)ReagentDatabase.GetID(reagent), vol);
+            }
         }
     }
 

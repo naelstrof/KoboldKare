@@ -37,7 +37,7 @@ public class ScriptableReagent : ScriptableObject {
     public ReagentConsumptionEvent GetConsumptionEvent() => consumptionEvent;
     public Reagent GetReagent( float volume ) {
         return new Reagent() {
-            id = ReagentDatabase.GetID(this),
+            id = (byte)ReagentDatabase.GetID(this),
             volume = volume,
         };
     }

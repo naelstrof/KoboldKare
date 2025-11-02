@@ -72,9 +72,7 @@ public class CommandEquipSet : Command
                 if (list.Contains(equipName)) {
                     output.AppendLine($"Equip set {equipset} already has {equipName}!");
                 } else {
-                    try {
-                        EquipmentDatabase.GetEquipment(equipName);
-                    } catch (UnityException) {
+                    if (!EquipmentDatabase.TryGetAsset(equipName, out var tryEquipment)) {
                         output.AppendLine($"Equipment {equipName} not found!");
                         return false;
                     }
@@ -172,15 +170,12 @@ public class CommandEquipSet : Command
                             continue;
                         }
 
-                        try {
-                            var tryEquipment = EquipmentDatabase.GetEquipment(piece);
-
+                        if (EquipmentDatabase.TryGetAsset(piece, out var tryEquipment)) {
                             kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All,
                                 EquipmentDatabase.GetID(tryEquipment), -1);
 
                             output.AppendLine($"Equipped {piece}");
-                        }
-                        catch (UnityException e) {
+                        } else {
                             output.AppendLine($"Equipment {piece} not equipped because it was not found");
                         }
                     }

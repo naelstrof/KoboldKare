@@ -35,7 +35,7 @@ public class CommandList : Command {
         }
         if (args.Length == 1 || args[1] == "reagents") {
             output.Append("Reagents = {");
-            foreach (var reagent in ReagentDatabase.GetReagents()) {
+            foreach (var reagent in ReagentDatabase.GetAssets()) {
                 output.Append($"{reagent.name},\n");
             }
             output.Append("}\n");
@@ -43,7 +43,7 @@ public class CommandList : Command {
         }
         if (args.Length == 1 || args[1] == "equipment") {
             output.Append("Equipment = {");
-            foreach (var equipment in EquipmentDatabase.GetEquipments()) {
+            foreach (var equipment in EquipmentDatabase.GetAssets()) {
                 output.Append($"{equipment.name},\n");
             }
             output.Append("}\n");

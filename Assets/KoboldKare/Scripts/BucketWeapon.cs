@@ -66,27 +66,29 @@ public class BucketWeapon : GenericWeapon {
         float bestVolume = 0f;
         byte bestID = 0;
         foreach (var reagent in contents) {
-            if (ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab() == null) {
+            if (!ReagentDatabase.TryGetAsset(reagent.id, out var match) || !match.GetDisplayPrefab()) {
                 continue;
             }
             if (reagent.volume < 5f) {
                 continue;
             }
             if (reagent.volume > bestVolume) {
-                bestDisplay = ReagentDatabase.GetReagent(reagent.id).GetDisplayPrefab();
+                bestDisplay = match.GetDisplayPrefab();
                 bestVolume = reagent.volume;
                 bestID = reagent.id;
             }
         }
 
-        if ((bestDisplay == null && currentDisplay != null) || (currentDisplay != null && bestDisplay != null && !currentDisplay.name.Contains(bestDisplay.name))) {
+        if ((!bestDisplay && currentDisplay) || (currentDisplay && bestDisplay && !currentDisplay.name.Contains(bestDisplay.name))) {
             Destroy(currentDisplay);
             currentDisplay = null;
             defaultBucketDisplay.SetActive(true);
         }
 
-        if (bestDisplay != null && currentDisplay == null) {
-            foodCreated?.Invoke(this, ReagentDatabase.GetReagent(bestID));
+        if (bestDisplay && !currentDisplay) {
+            if (ReagentDatabase.TryGetAsset(bestID, out var match)) {
+                foodCreated?.Invoke(this, match);
+            }
             currentDisplay = Instantiate(bestDisplay, transform);
             defaultBucketDisplay.SetActive(false);
         }

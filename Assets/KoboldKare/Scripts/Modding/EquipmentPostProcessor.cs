@@ -57,7 +57,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
         await inherentAssetsHandle.Task;
     }
     private void LoadInherentEquipment(Equipment equipment) {
-        EquipmentDatabase.AddEquipment(equipment, currentStub);
+        EquipmentDatabase.AddAsset(equipment, currentStub);
     }
 
     private void LoadEquipment(Equipment equipment) {
@@ -68,13 +68,13 @@ public class EquipmentPostProcessor : ModPostProcessor {
             stub = currentStub,
             equipment = equipment
         });
-        EquipmentDatabase.AddEquipment(equipment, currentStub);
+        EquipmentDatabase.AddAsset(equipment, currentStub);
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedEquipments.Count;i++) {
             if(addedEquipments[i].stub.GetRepresentedBy(data)) {
-                EquipmentDatabase.RemoveEquipment(addedEquipments[i].equipment, currentStub);
+                EquipmentDatabase.RemoveAsset(addedEquipments[i].equipment, currentStub);
                 addedEquipments.RemoveAt(i);
                 i--;
             }

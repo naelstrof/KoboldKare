@@ -1,14 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text;
-using PenetrationTech;
 using SimpleJSON;
-using Steamworks;
 using UnityEngine;
-using UnityEngine.Localization.SmartFormat.Utilities;
 using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "New Prefab Database", menuName = "Data/Prefab Database", order = 1)]
@@ -27,17 +21,15 @@ public class PrefabDatabase : ScriptableObject {
     private event PrefabReferencesChangedAction prefabReferencesChanged;
     private List<PrefabReferenceInfo> validInfos;
 
-    [System.Serializable]
+    [Serializable]
     public class PrefabReferenceInfo {
         private string key;
         private GameObject prefab;
-        private readonly PrefabDatabase parentDatabase;
         private ModManager.ModStub? stub;
-        public PrefabReferenceInfo(PrefabDatabase database, string primaryKey, GameObject newPrefab, ModManager.ModStub? stub) {
+        public PrefabReferenceInfo(string primaryKey, GameObject newPrefab, ModManager.ModStub? stub) {
             key = primaryKey;
             this.stub = stub;
             prefab = newPrefab;
-            parentDatabase = database;
         }
 
         public string GetKey() {
@@ -118,7 +110,7 @@ public class PrefabDatabase : ScriptableObject {
             prefabReferenceInfos.Add(newKey, new List<PrefabReferenceInfo>());
         }
         var list = prefabReferenceInfos[newKey];
-        list.Add(new PrefabReferenceInfo(this, newKey, prefabReference, stub));
+        list.Add(new PrefabReferenceInfo(newKey, prefabReference, stub));
         list.Sort(ComparePrefabReferenceInfo);
         prefabReferencesChanged?.Invoke(GetPrefabReferenceInfos());
     }

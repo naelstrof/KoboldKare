@@ -67,7 +67,7 @@ public class PlantPostProcessor : ModPostProcessor {
             stub = currentStub,
             plant = plant
         });
-        PlantDatabase.AddPlant(plant, currentStub);
+        PlantDatabase.AddAsset(plant, currentStub);
     }
 
     private void LoadPlant(ScriptablePlant plant) {
@@ -78,12 +78,12 @@ public class PlantPostProcessor : ModPostProcessor {
             stub = currentStub,
             plant = plant
         });
-        PlantDatabase.AddPlant(plant, currentStub);
+        PlantDatabase.AddAsset(plant, currentStub);
     }
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedPlants.Count;i++) {
             if(addedPlants[i].stub.GetRepresentedBy(data)) {
-                PlantDatabase.RemovePlant(addedPlants[i].plant, addedPlants[i].stub);
+                PlantDatabase.RemoveAsset(addedPlants[i].plant, addedPlants[i].stub);
                 addedPlants.RemoveAt(i);
                 i--;
             }

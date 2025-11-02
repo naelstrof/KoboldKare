@@ -39,12 +39,17 @@ public class BombUsable : GenericUsable, IDamagable {
             // Mix the water with the potassium...
             // It should sizzle and blow up.
             ReagentContents water = new ReagentContents();
-            water.AddMix(ReagentDatabase.GetReagent("Water").GetReagent(20f));
+            if (ReagentDatabase.TryGetAsset("Water", out var waterReagent)) {
+                water.AddMix(waterReagent.GetReagent(20f));
+            }
+
             BitBuffer bufferOne = new BitBuffer(4);
             bufferOne.AddReagentContents(water);
             
             ReagentContents potassium = new ReagentContents();
-            potassium.AddMix(ReagentDatabase.GetReagent("Potassium").GetReagent(20f));
+            if (ReagentDatabase.TryGetAsset("Potassium", out var potassiumReagent)) {
+                potassium.AddMix(potassiumReagent.GetReagent(20f));
+            }
             BitBuffer bufferTwo = new BitBuffer(4);
             bufferTwo.AddReagentContents(potassium);
             

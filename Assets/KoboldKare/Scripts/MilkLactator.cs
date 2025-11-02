@@ -38,7 +38,10 @@ public class MilkLactator {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     mozzarella.SetFollowTransform(t);
                     ReagentContents alloc = new ReagentContents();
-                    alloc.AddMix(ReagentDatabase.GetReagent("Milk").GetReagent(kobold.GetGenes().breastSize/(pulses*nipples.Count)));
+                    if (ReagentDatabase.TryGetAsset("Milk", out var milk)) {
+                        alloc.AddMix(milk.GetReagent(kobold.GetGenes().breastSize / (pulses * nipples.Count)));
+                    }
+
                     mozzarella.SetVolumeMultiplier(alloc.volume);
                     mozzarella.SetLocalForward(Vector3.up);
                     Color color = alloc.GetColor();

@@ -55,7 +55,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         List<AnimationStation> stations = new List<AnimationStation>();
         stations.Add(station);
         readOnlyStations = stations.AsReadOnly();
-        egg = ReagentDatabase.GetReagent("Egg");
+        ReagentDatabase.TryGetAsset("Egg", out var egg);
     }
 
     void Update(){
@@ -128,8 +128,10 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
 
         ReagentContents eggContents = new ReagentContents();
-        eggContents.AddMix(ReagentDatabase.GetReagent("ScrambledEgg").GetReagent(eggVolume));
-        
+        if (ReagentDatabase.TryGetAsset("ScrambledEgg", out var scrambled)) {
+            eggContents.AddMix(scrambled.GetReagent(eggVolume));
+        }
+
         BitBuffer buffer = new BitBuffer(4);
         buffer.AddReagentContents(eggContents);
         PhotonView eggView = d.gameObject.GetPhotonView();

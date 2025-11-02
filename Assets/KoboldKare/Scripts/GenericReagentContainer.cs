@@ -109,7 +109,9 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         if (!IsMixable(type, injectType) || !photonView.IsMine) {
             return false;
         }
-        GetContents().AddMix(ReagentDatabase.GetID(incomingReagent), volume, this);
+
+        GetContents().AddMix((byte)ReagentDatabase.GetID(incomingReagent), volume, this);
+
         OnReagentContentsChanged(injectType);
         return true;
     }
@@ -167,7 +169,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     public ReagentContents Peek() => new(GetContents());
     public ReagentContents Metabolize(float deltaTime) => GetContents().Metabolize(deltaTime);
     public void OverrideReagent(Reagent r) => GetContents().OverrideReagent(r.id, r.volume);
-    public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent(ReagentDatabase.GetID(r), volume);
+    public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent((byte)ReagentDatabase.GetID(r), volume);
     public void OnReagentContentsChanged(InjectType injectType) {
         //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
@@ -212,7 +214,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     public override string ToString()
     {
         string blah = "[";
-        foreach(var reagent in ReagentDatabase.GetReagents()) {
+        foreach(var reagent in ReagentDatabase.GetAssets()) {
             if (GetContents().GetVolumeOf(reagent) != 0f) {
                 blah += reagent.name + ": " + GetContents().GetVolumeOf(reagent) + ", ";
             }

@@ -43,9 +43,12 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
     [PunRPC]
     public void PickupEquipmentRPC(short equipmentID, int groundPrefabID) {
         PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
-        Equipment equip = EquipmentDatabase.GetEquipment(equipmentID);
-        PickupEquipment(equip, view == null ? null : view.gameObject);
-        PhotonProfiler.LogReceive(sizeof(short)+sizeof(int));
+        if (EquipmentDatabase.TryGetAsset(equipmentID, out var equip)) {
+            PickupEquipment(equip, view == null ? null : view.gameObject);
+            PhotonProfiler.LogReceive(sizeof(short) + sizeof(int));
+        } else {
+            Debug.LogError("Tried to pick up equipment with invalid ID: " + equipmentID);
+        }
     }
 
     public void PickupEquipment(Equipment thing, GameObject groundPrefab) {
@@ -111,7 +114,9 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
             short equipmentCount = data.ReadShort();
             staticIncomingEquipment.Clear();
             for(int i=0;i<equipmentCount;i++) {
-                staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment(data.ReadShort()));
+                if (EquipmentDatabase.TryGetAsset(data.ReadShort(), out var equipped)) {
+                    staticIncomingEquipment.Add(equipped);
+                }
             }
             ReplaceEquipmentWith(staticIncomingEquipment);
             PhotonProfiler.LogReceive(data.Length);
@@ -131,7 +136,11 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
         for(int i=0;i<equipments.Count;i++) {
-            staticIncomingEquipment.Add(EquipmentDatabase.GetEquipment((short)equipments[i].AsInt));
+            if (EquipmentDatabase.TryGetAsset((short)equipments[i].AsInt, out var match)) {
+                staticIncomingEquipment.Add(match);
+            } else {
+                Debug.LogError("Failed to find equipment with ID " + (short)equipments[i].AsInt + " while loading kobold inventory.");
+            }
         }
         ReplaceEquipmentWith(staticIncomingEquipment);
     }

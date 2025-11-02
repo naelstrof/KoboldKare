@@ -265,15 +265,12 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
     {
         foreach (Equipment equip in equipOnSpawn)
         {
-            Equipment newEquip;
             if (equip == null)
             {
                 Debug.LogError("A null equipment piece was assigned to this kobold. Please double check its character descriptor");
                 continue;
             }
-            try {
-                newEquip = EquipmentDatabase.GetEquipment(equip.name);
-            } catch (UnityException exception) {
+            if (!EquipmentDatabase.TryGetAsset(equip.name, out var newEquip)) {
                 Debug.LogError("One or more on-spawn equipments assigned to this kobold are invalid. Please double check its character descriptor");
                 continue;
             }

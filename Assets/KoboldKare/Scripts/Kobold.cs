@@ -227,7 +227,9 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
                 if (fruitView != null && fruitView.name.Contains(heartPrefab.photonName)) {
                     BitBuffer reagentBuffer = new BitBuffer(16);
                     ReagentContents loveContents = new ReagentContents();
-                    loveContents.AddMix(ReagentDatabase.GetReagent("Love").GetReagent(10f));
+                    if (ReagentDatabase.TryGetAsset("Love", out var loveReagent)) {
+                        loveContents.AddMix(loveReagent.GetReagent(10f));
+                    }
                     reagentBuffer.AddReagentContents(loveContents);
                     fruitView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, reagentBuffer,
                         photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
@@ -562,10 +564,12 @@ public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMag
             newEnergy = Mathf.MoveTowards(newEnergy, 1.1f, passiveEnergyGeneration);
         }
         foreach (var pair in contents) {
-            ScriptableReagent reagent = ReagentDatabase.GetReagent(pair.id);
-            float processedAmount = pair.volume;
-            reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents, ref addbackReagents, ref genes, ref newEnergy);
-            pair.volume -= processedAmount;
+            if (ReagentDatabase.TryGetAsset(pair.id, out var reagent)) {
+                float processedAmount = pair.volume;
+                reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents,
+                    ref addbackReagents, ref genes, ref newEnergy);
+                pair.volume -= processedAmount;
+            }
         }
         bellyContainer.AddMix(contents, GenericReagentContainer.InjectType.Inject); 
         bellyContainer.AddMix(addbackReagents, GenericReagentContainer.InjectType.Inject);

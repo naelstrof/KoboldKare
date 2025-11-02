@@ -58,7 +58,7 @@ public class ReactionsPostProcessor : ModPostProcessor {
     }
     
     private void LoadReactionInherent(ScriptableReagentReaction reaction) {
-        ReagentDatabase.AddReagentReaction(reaction, null);
+        ReactionsDatabase.AddAsset(reaction, null);
     }
 
     private void LoadReaction(ScriptableReagentReaction reaction) {
@@ -69,13 +69,13 @@ public class ReactionsPostProcessor : ModPostProcessor {
             stub = currentStub,
             obj = reaction
         });
-        ReagentDatabase.AddReagentReaction(reaction, currentStub);
+        ReactionsDatabase.AddAsset(reaction, currentStub);
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedReactions.Count;i++) {
             if (!addedReactions[i].stub.GetRepresentedBy(data)) continue;
-            ReagentDatabase.RemoveReagentReaction(addedReactions[i].obj, addedReactions[i].stub);
+            ReactionsDatabase.RemoveAsset(addedReactions[i].obj, addedReactions[i].stub);
             addedReactions.RemoveAt(i);
             i--;
             foreach (var inherentObj in inherentAssetsHandle.Result) {

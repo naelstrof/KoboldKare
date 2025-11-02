@@ -28,18 +28,18 @@ public class CommandGive : Command {
             output.Append($"Spawned {args[1]}.\n");
             return;
         }
-        if (ReagentDatabase.GetReagent(args[1]) != null) {
+        if (ReagentDatabase.TryGetAsset(args[1], out var check)) {
             GameObject obj = PhotonNetwork.Instantiate(bucket.photonName, koboldTransform.position + koboldTransform.forward, Quaternion.identity);
             ReagentContents contents = new ReagentContents();
             if (args.Length > 2 && float.TryParse(args[2], out float value)) {
-                contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(value));
+                contents.AddMix(check.GetReagent(value));
                 BitBuffer buffer = new BitBuffer(4);
                 buffer.AddReagentContents(contents);
                 obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, buffer, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                 output.Append($"Spawned bucket filled with {value} {args[1]}.\n");
                 return;
             }
-            contents.AddMix(ReagentDatabase.GetReagent(args[1]).GetReagent(20f));
+            contents.AddMix(check.GetReagent(20f));
             BitBuffer otherBuffer = new BitBuffer(4);
             otherBuffer.AddReagentContents(contents);
             obj.GetPhotonView().RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, otherBuffer, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);

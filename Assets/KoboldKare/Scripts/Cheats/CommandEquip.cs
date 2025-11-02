@@ -18,11 +18,8 @@ public class CommandEquip : Command {
             throw new CheatsProcessor.CommandException("/equip requires at least one argument. Use `/list equipment` to find what you can equip.");
         }
 
-        Equipment tryEquipment;
-        try {
-            tryEquipment = EquipmentDatabase.GetEquipment(args[1]);
-        } catch (UnityException exception) {
-            throw new CheatsProcessor.CommandException(exception.Message);
+        if (!EquipmentDatabase.TryGetAsset(args[1], out var tryEquipment)) {
+            throw new CheatsProcessor.CommandException($"Equipment with name {args[1]} not found.");
         }
 
         if (tryEquipment != null) {

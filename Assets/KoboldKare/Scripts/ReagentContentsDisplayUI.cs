@@ -64,7 +64,11 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             Image targetImage = new GameObject("colorBlock", typeof(Image)).GetComponent<Image>();
             targetImage.sprite = imageSprite;
             targetImage.transform.SetParent(transform, false);
-            targetImage.color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
+            if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+                targetImage.color = reagentAsset.GetColor();
+            } else {
+                targetImage.color = Color.white;
+            }
             targetImage.type = Image.Type.Sliced;
             targetImage.fillCenter = true;
             targetImage.pixelsPerUnitMultiplier = 2f;
@@ -83,7 +87,11 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         if (isActiveAndEnabled) {
             StopAllCoroutines();
             for (int i = 0; i < reagents.Count; i++) {
-                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
+                if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+                    images[i].GetComponent<Image>().color = reagentAsset.GetColor();
+                } else {
+                    images[i].GetComponent<Image>().color = Color.white;
+                }
                 StartCoroutine(TweenWidth(images[i], Mathf.Min(reagents[i].volume * volumeToPixels,3000f)));
             }
 
@@ -91,7 +99,12 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             StartCoroutine(TweenWidth(background, Mathf.Min(contents.GetMaxVolume() * volumeToPixels, 3000f)));
         } else {
             for (int i = 0; i < reagents.Count; i++) {
-                images[i].GetComponent<Image>().color = ReagentDatabase.GetReagent(reagents[i].id).GetColor();
+                if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+                    images[i].GetComponent<Image>().color = reagentAsset.GetColor();
+                } else {
+                    images[i].GetComponent<Image>().color = Color.white;
+                }
+
                 images[i].sizeDelta = new Vector2(reagents[i].volume * volumeToPixels, images[i].sizeDelta.y);
             }
 

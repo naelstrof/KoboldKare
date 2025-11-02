@@ -49,7 +49,10 @@ public class EggSpawner : MonoBehaviour {
         }
 
         Rigidbody body = d.GetComponentInChildren<Rigidbody>();
-        d.GetComponent<GenericReagentContainer>().OverrideReagent(ReagentDatabase.GetReagent("ScrambledEgg"), eggVolume);
+        if (ReagentDatabase.TryGetAsset("ScrambledEgg", out var scrambledEggReagent)) {
+            d.GetComponent<GenericReagentContainer>().OverrideReagent(scrambledEggReagent, eggVolume);
+        }
+
         //d.GetComponent<GenericInflatable>().TriggerTween();
         body.isKinematic = true;
         // Manually control penetration parameters

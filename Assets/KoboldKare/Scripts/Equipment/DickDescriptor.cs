@@ -197,7 +197,9 @@ public class DickDescriptor : MonoBehaviour {
 
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
+                    if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
+                        alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
+                    }
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     Color color = alloc.GetColor();
                     mozzarella.SetLineColor(color);
@@ -236,7 +238,10 @@ public class DickDescriptor : MonoBehaviour {
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
             if (attachedKobold.photonView.IsMine) {
                 ReagentContents alloc = new ReagentContents();
-                alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(attachedKobold.GetGenes().ballSize/pulses));
+                if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
+                    alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
+                }
+
                 BitBuffer reagentBuffer = new BitBuffer(4);
                 reagentBuffer.AddReagentContents(alloc);
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, reagentBuffer,

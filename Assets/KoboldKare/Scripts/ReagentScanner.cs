@@ -70,7 +70,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
         }
         
         float maxVolume = reagents.volume;
-        foreach(var reagent in ReagentDatabase.GetReagents()) {
+        foreach(var reagent in ReagentDatabase.GetAssets()) {
             float rvolume = reagents.GetVolumeOf(reagent);
             if (rvolume <= 0.05f) {
                 continue;

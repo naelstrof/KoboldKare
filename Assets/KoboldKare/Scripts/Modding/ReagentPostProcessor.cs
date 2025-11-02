@@ -59,7 +59,7 @@ public class ReagentPostProcessor : ModPostProcessor {
     }
     
     private void LoadReagentInherent(ScriptableReagent reagent) {
-        ReagentDatabase.AddReagent(reagent, null);
+        ReagentDatabase.AddAsset(reagent, null);
     }
     
     private void LoadReagent(ScriptableReagent reagent) {
@@ -70,13 +70,13 @@ public class ReagentPostProcessor : ModPostProcessor {
             stub = currentStub,
             obj = reagent
         });
-        ReagentDatabase.AddReagent(reagent, currentStub);
+        ReagentDatabase.AddAsset(reagent, currentStub);
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedReagents.Count;i++) {
             if(addedReagents[i].stub.GetRepresentedBy(data)) {
-                ReagentDatabase.RemoveReagent(addedReagents[i].obj, currentStub);
+                ReagentDatabase.RemoveAsset(addedReagents[i].obj, currentStub);
                 addedReagents.RemoveAt(i);
                 i--;
             }

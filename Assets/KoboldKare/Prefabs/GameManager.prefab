@@ -23478,6 +23478,7 @@ GameObject:
   - component: {fileID: 9185425679682655073}
   - component: {fileID: 10635944395992719}
   - component: {fileID: 8914700998504743750}
+  - component: {fileID: 3548380771726421691}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -23834,8 +23835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537ed01512d9bac4c920127736303673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reagents: []
-  reactions: []
 --- !u!114 &1347546203939439728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23848,7 +23847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ade0a4a11185146ab42e90641dad56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipments: []
 --- !u!114 &1690795527870271038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23861,7 +23859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9064ce04b8f171941a73af1dc6175f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plants: []
 --- !u!114 &8536427713948840408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23874,7 +23871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ac55988a08b8c4784e49236f27cb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  builtInPrefabs: []
 --- !u!114 &1878465994047708710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24419,6 +24415,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abeea6bce037410489950a490bd05ef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3548380771726421691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7561188790633409797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5752d554a64f28574b4ea145fbcc5411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7586070052874400603

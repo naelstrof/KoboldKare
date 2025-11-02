@@ -189,7 +189,10 @@ public class CommandSculpt : Command
             case "impregnate":
                 {
                     ReagentContents alloc = new ReagentContents();
-                    alloc.AddMix(ReagentDatabase.GetReagent("Cum").GetReagent(Mathf.Abs(modifier)));
+                    if (ReagentDatabase.TryGetAsset("Cum", out var cumReagent)) {
+                        alloc.AddMix(cumReagent.GetReagent(Mathf.Abs(modifier)));
+                    }
+
                     target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
 

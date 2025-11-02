@@ -38,7 +38,7 @@ public class ScriptableReagentReaction : ScriptableObject {
             container.OverrideReagent(reactant.reactant, reactantVolume-minReactantVolumeRatio*reactant.coefficient);
         }
         foreach(var product in products) {
-            container.GetContents().AddMix(ReagentDatabase.GetID(product.reactant), minReactantVolumeRatio * product.coefficient, container);
+            container.GetContents().AddMix((byte)ReagentDatabase.GetID(product.reactant), minReactantVolumeRatio * product.coefficient, container);
         }
 
         foreach (var reaction in reactions) {

@@ -211,8 +211,8 @@ public class ModManager : MonoBehaviour {
 
         public override async Task SetLoaded(bool active) {
             try {
-                instance.status = ModStatus.LoadingMods;
                 if (!loaded && active) {
+                    instance.status = ModStatus.LoadingMods;
                     await TryLoad();
                 } else if (loaded && !active) {
                     await TryUnload();
@@ -233,9 +233,9 @@ public class ModManager : MonoBehaviour {
         public override async Task SetAssetsAvailable(bool active) {
             await modMutex.WaitAsync();
             try {
-                instance.status = ModStatus.LoadingAssets;
                 if (!assetsLoaded && active) {
                     await SetLoaded(true);
+                    instance.status = ModStatus.LoadingAssets;
                     foreach (var modPostProcessor in instance.earlyModPostProcessors) {
                         await modPostProcessor.HandleAssetBundleMod(info, bundle);
                     }
@@ -353,6 +353,7 @@ public class ModManager : MonoBehaviour {
                     cancelTokenSources.Add(cancelTokenSource);
                     try {
                         await SetLoaded(true);
+                        instance.status = ModStatus.LoadingAssets;
                         foreach (var modPostProcessor in instance.earlyModPostProcessors) {
                             cancelTokenSource.Token.ThrowIfCancellationRequested();
                             await modPostProcessor.HandleAddressableMod(info, locator);
@@ -366,6 +367,7 @@ public class ModManager : MonoBehaviour {
                         cancelTokenSources.Remove(cancelTokenSource);
                     }
                 } else if (loadedAssets && !active) {
+                    instance.status = ModStatus.LoadingAssets;
                     foreach (var modPostProcessor in instance.earlyModPostProcessors) {
                         await modPostProcessor.UnloadAssets(info);
                     }
@@ -488,6 +490,7 @@ public class ModManager : MonoBehaviour {
         public string description;
         public ModSource source;
         public PublishedFileId_t id;
+        public float loadPriority;
 
         public ModStub(JSONNode node) {
             if (node.HasKey("enabled")) {
@@ -523,6 +526,7 @@ public class ModManager : MonoBehaviour {
             } else {
                 source = ModSource.Any;
             }
+            loadPriority = 0f;
         }
 
         public ModStub(ModInfoData data) {
@@ -534,11 +538,15 @@ public class ModManager : MonoBehaviour {
             this.id = data.publishedFileId;
             this.preview = data.preview;
             this.causedException = false;
+            this.loadPriority = data.loadPriority;
         }
         public readonly bool GetRepresentedBy(ModInfoData data) {
             return data.publishedFileId == id && data.title == title;
         }
-        public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null)  {
+        public readonly bool GetRepresentedBy(ModStub stub) {
+            return stub.id == id && stub.title == title;
+        }
+        public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null, float loadPriority = 0f)  {
             this.description = description;
             this.source = source;
             this.enabled = enabled;
@@ -547,6 +555,7 @@ public class ModManager : MonoBehaviour {
             this.id = id;
             this.preview = preview;
             this.causedException = causedException;
+            this.loadPriority = loadPriority;
         }
         public void Save(JSONNode node) {
             node["enabled"] = enabled;
@@ -734,7 +743,7 @@ public class ModManager : MonoBehaviour {
                 return;
             }
             fullModList.Add(mod);
-            fullModList.Sort((a, b) => a.info.loadPriority.CompareTo(b.info.loadPriority));
+            fullModList.Sort(SortMods);
         } catch (Exception e) {
             Debug.LogException(e);
             lastException = e;
@@ -744,6 +753,14 @@ public class ModManager : MonoBehaviour {
             Mutex.Release();
             modListChanged?.Invoke();
         }
+    }
+
+    private int SortMods(Mod a, Mod b) {
+        if (a.info.loadPriority == b.info.loadPriority) {
+            return String.Compare(a.info.title, b.info.title, StringComparison.InvariantCulture);
+        }
+
+        return a.info.loadPriority.CompareTo(b.info.loadPriority);
     }
 
     private void LoadConfig() {

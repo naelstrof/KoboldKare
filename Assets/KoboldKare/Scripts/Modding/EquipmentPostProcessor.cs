@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -17,7 +16,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
     private List<ModStubAddressableHandlePair> opHandles;
 
     private ModManager.ModStub currentStub;
-    private AsyncOperationHandle inherentAssetsHandle;
+    private AsyncOperationHandle<IList<Equipment>> inherentAssetsHandle;
     
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
         if (locator.Locate(searchLabel.RuntimeKey, typeof(Equipment), out var locations)) {
@@ -30,6 +29,25 @@ public class EquipmentPostProcessor : ModPostProcessor {
             });
         }
     }
+    public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
+        var key = searchLabel.labelString;
+        List<Task> tasks = new List<Task>();
+        var rootNode = data.assets;
+        if (rootNode.HasKey(key)) {
+            currentStub = new ModManager.ModStub(data);
+            var array = rootNode[key].AsArray;
+            foreach (var node in array) {
+                if (!node.Value.IsString) continue;
+                var assetName = node.Value;
+                var handle = assetBundle.LoadAssetAsync<Equipment>(assetName);
+                handle.completed += (a) => {
+                    LoadEquipment(((AssetBundleRequest)a).asset as Equipment);
+                };
+                tasks.Add(handle.AsSingleAssetTask<Equipment>());
+            }
+        }
+        await Task.WhenAll(tasks);
+    }
 
     public override async Task Awake() {
         await base.Awake();
@@ -39,7 +57,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
         await inherentAssetsHandle.Task;
     }
     private void LoadInherentEquipment(Equipment equipment) {
-        EquipmentDatabase.AddEquipment(equipment);
+        EquipmentDatabase.AddEquipment(equipment, currentStub);
     }
 
     private void LoadEquipment(Equipment equipment) {
@@ -50,15 +68,21 @@ public class EquipmentPostProcessor : ModPostProcessor {
             stub = currentStub,
             equipment = equipment
         });
-        EquipmentDatabase.AddEquipment(equipment);
+        EquipmentDatabase.AddEquipment(equipment, currentStub);
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedEquipments.Count;i++) {
             if(addedEquipments[i].stub.GetRepresentedBy(data)) {
-                EquipmentDatabase.RemoveEquipment(addedEquipments[i].equipment);
+                EquipmentDatabase.RemoveEquipment(addedEquipments[i].equipment, currentStub);
                 addedEquipments.RemoveAt(i);
                 i--;
+            }
+            foreach (var inherentObj in inherentAssetsHandle.Result) {
+                if (addedEquipments[i].equipment.name != inherentObj.name) {
+                    continue;
+                }
+                LoadInherentEquipment(inherentObj);
             }
         }
         for (int i=0;i<opHandles.Count;i++) {

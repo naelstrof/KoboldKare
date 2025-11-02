@@ -6,30 +6,35 @@ using UnityEngine;
 
 public class EquipmentDatabase : MonoBehaviour {
     private static EquipmentDatabase instance;
-    public static EquipmentDatabase Instance {
+    private static EquipmentDatabase Instance {
         get {
             if (instance == null) {
                 instance = (EquipmentDatabase)FindObjectOfType(typeof(EquipmentDatabase));
-                if (instance == null) {
-                    GameObject go = new GameObject("EquipmentDatabase");
-                    instance = go.AddComponent<EquipmentDatabase>();
-                }
             }
             return instance;
         }
     }
-
-    private class EquipmentSorter : IComparer<Equipment> {
-        public int Compare(Equipment x, Equipment y) {
-            return String.Compare(x.name, y.name, StringComparison.InvariantCulture);
+    private class EquipmentSorter : IComparer<string> {
+        public int Compare(string x, string y) {
+            return String.Compare(x, y, StringComparison.InvariantCulture);
         }
     }
 
-    private EquipmentSorter equipmentSorter;
-
-    public EquipmentDatabase() {
-        equipments = new List<Equipment>();
+    private struct EquipmentStubPair {
+        public ModManager.ModStub? stub;
+        public Equipment equipment;
+        public bool GetRepresentedByStub(ModManager.ModStub? b) {
+            if (b == null && stub == null) {
+                return true;
+            }
+            if (b == null || stub == null) {
+                return false;
+            }
+            return stub.Value.GetRepresentedBy(b.Value);
+        }
     }
+    
+    private SortedDictionary<string,List<EquipmentStubPair>> equipments = new(new EquipmentSorter());
 
     void Awake() {
         if (instance == null) {
@@ -40,39 +45,55 @@ public class EquipmentDatabase : MonoBehaviour {
                 Destroy(this.gameObject);
             }
         }
-
-        equipmentSorter = new EquipmentSorter();
     }
 
-    public static void AddEquipment(Equipment newEquipment) {
+    public static void AddEquipment(Equipment newEquipment, ModManager.ModStub? stub) {
         if (Instance.equipments.Count >= short.MaxValue) {
             throw new UnityException("Too many equipment! Only 32767 unique equipment allowed...");
         }
-
-        for (int i = 0; i < Instance.equipments.Count; i++) {
-            var reagent = Instance.equipments[i];
-            if (reagent.name == newEquipment.name) {
-                Instance.equipments[i] = newEquipment;
-                Instance.equipments.Sort(Instance.equipmentSorter);
-                return;
-            }
+        
+        if (!Instance.equipments.ContainsKey(newEquipment.name)) {
+            Instance.equipments.Add(newEquipment.name, new List<EquipmentStubPair>());
         }
-
-        Instance.equipments.Add(newEquipment);
-        Instance.equipments.Sort(Instance.equipmentSorter);
+        var list = Instance.equipments[newEquipment.name];
+        list.Add(new EquipmentStubPair() {
+            stub = stub,
+            equipment = newEquipment
+        });
+        list.Sort(CompareEquipmentStubPair);
     }
 
-    public static void RemoveEquipment(Equipment equipment) {
-        if (Instance.equipments.Contains(equipment)) {
-            Instance.equipments.Remove(equipment);
+    private static int CompareEquipmentStubPair(EquipmentStubPair x, EquipmentStubPair y) {
+        if (x.stub == null && y.stub == null) return 0;
+        if (x.stub == null) return -1;
+        if (y.stub == null) return 1;
+        if (x.stub.Value.loadPriority == y.stub.Value.loadPriority) {
+            return String.Compare(x.stub.Value.title, y.stub.Value.title, StringComparison.InvariantCulture);
+        }
+
+        return x.stub.Value.loadPriority.CompareTo(y.stub.Value.loadPriority);
+    }
+
+    public static void RemoveEquipment(Equipment equipment, ModManager.ModStub? stub) {
+        if (!Instance.equipments.TryGetValue(equipment.name, out var list)) {
+            return;
+        } else {
+            for (int i = 0; i < list.Count; i++) {
+                if (list[i].GetRepresentedByStub(stub)) {
+                    list.RemoveAt(i);
+                    i--;
+                }
+            }
+            if (list.Count == 0) {
+                Instance.equipments.Remove(equipment.name);
+            }
+            list.Sort(CompareEquipmentStubPair);
         }
     }
 
     public static Equipment GetEquipment(string name) {
-        foreach (var equipment in Instance.equipments) {
-            if (equipment.name == name) {
-                return equipment;
-            }
+        if (Instance.equipments.TryGetValue(name, out var list)) {
+            return list[^1].equipment;
         }
         throw new UnityException("Failed to find equipment with name " + name);
     }
@@ -80,18 +101,31 @@ public class EquipmentDatabase : MonoBehaviour {
     public static Equipment GetEquipment(short id) {
         if (id >= Instance.equipments.Count) {
             Debug.LogError($"Failed to find equipment with id {id}, replaced it with the first available equipment.");
-            return Instance.equipments[0];
+            return Instance.equipments.ElementAt(0).Value[^1].equipment;
         }
-        return Instance.equipments[id];
+        var list = Instance.equipments.ElementAt(id).Value;
+        return list[^1].equipment;
     }
 
     public static short GetID(Equipment equipment) {
-        return (short)Instance.equipments.IndexOf(equipment);
+        for(int i=0;i<Instance.equipments.Count;i++) {
+            if (Instance.equipments.ElementAt(i).Key == equipment.name) {
+                return (short)i;
+            }
+        }
+        Debug.LogError($"Failed to find equipment id for {equipment.name}, replaced it with the first available equipment.");
+        return 0;
     }
 
-    public static List<Equipment> GetEquipments() => Instance.equipments;
+    public static List<Equipment> GetEquipments() {
+        List<Equipment> equipments = new();
+        for(int i=0;i<Instance.equipments.Count;i++) {
+            var list = Instance.equipments.ElementAt(i).Value;
+            equipments.Add(list[^1].equipment);
+        }
+        return equipments;
+    }
 
-    public List<Equipment> equipments;
 }
 
 

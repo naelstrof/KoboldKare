@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -17,7 +17,7 @@ public class ReactionsPostProcessor : ModPostProcessor {
 
     private ModManager.ModStub currentStub;
     
-    private AsyncOperationHandle inherentAssetsHandle;
+    private AsyncOperationHandle<IList<ScriptableReagentReaction>> inherentAssetsHandle;
     public override async Task Awake() {
         await base.Awake();
         addedReactions = new ();
@@ -37,8 +37,28 @@ public class ReactionsPostProcessor : ModPostProcessor {
         }
     }
     
+    public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
+        var key = searchLabel.labelString;
+        List<Task> tasks = new List<Task>();
+        var rootNode = data.assets;
+        if (rootNode.HasKey(key)) {
+            currentStub = new ModManager.ModStub(data);
+            var array = rootNode[key].AsArray;
+            foreach (var node in array) {
+                if (!node.Value.IsString) continue;
+                var assetName = node.Value;
+                var handle = assetBundle.LoadAssetAsync<ScriptableReagentReaction>(assetName);
+                handle.completed += (a) => {
+                    LoadReaction(((AssetBundleRequest)a).asset as ScriptableReagentReaction);
+                };
+                tasks.Add(handle.AsSingleAssetTask<ScriptableReagentReaction>());
+            }
+        }
+        await Task.WhenAll(tasks);
+    }
+    
     private void LoadReactionInherent(ScriptableReagentReaction reaction) {
-        ReagentDatabase.AddReagentReaction(reaction);
+        ReagentDatabase.AddReagentReaction(reaction, null);
     }
 
     private void LoadReaction(ScriptableReagentReaction reaction) {
@@ -49,15 +69,21 @@ public class ReactionsPostProcessor : ModPostProcessor {
             stub = currentStub,
             obj = reaction
         });
-        ReagentDatabase.AddReagentReaction(reaction);
+        ReagentDatabase.AddReagentReaction(reaction, currentStub);
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedReactions.Count;i++) {
             if (!addedReactions[i].stub.GetRepresentedBy(data)) continue;
-            ReagentDatabase.RemoveReagentReaction(addedReactions[i].obj);
+            ReagentDatabase.RemoveReagentReaction(addedReactions[i].obj, addedReactions[i].stub);
             addedReactions.RemoveAt(i);
             i--;
+            foreach (var inherentObj in inherentAssetsHandle.Result) {
+                if (addedReactions[i].obj.name != inherentObj.name) {
+                    continue;
+                }
+                LoadReactionInherent(inherentObj);
+            }
         }
         for (int i=0;i<opHandles.Count;i++) {
             if(opHandles[i].stub.GetRepresentedBy(data)) {

@@ -23,7 +23,7 @@ public class PrefabPostProcessor : ModPostProcessor {
 
     private ModManager.ModStub currentStub;
     
-    private AsyncOperationHandle inherentAssetsHandle;
+    private AsyncOperationHandle<IList<GameObject>> inherentAssetsHandle;
 
     public override async Task Awake() {
         await base.Awake();
@@ -38,36 +38,19 @@ public class PrefabPostProcessor : ModPostProcessor {
             return;
         }
         if (networkedPrefabs) {
-            PreparePool.AddPrefab(obj.name, obj);
+            PreparePool.AddPrefab(obj.name, obj, null);
         }
-        targetDatabase.AddPrefab(obj.name, obj);
+        targetDatabase.AddPrefab(obj.name, obj, null);
     }
     
     private void LoadPrefab(GameObject obj) {
         if (obj == null) {
             return;
         }
-
-        for (int i = 0; i < addedGameObjects.Count; i++) {
-            if (addedGameObjects[i].objName != obj.name) continue;
-            if (networkedPrefabs) {
-                PreparePool.RemovePrefab(obj.name);
-            }
-            targetDatabase.RemovePrefab(obj.name);
-            addedGameObjects.RemoveAt(i);
-            break;
-        }
-        
-        // If something is a part of multiple groups (Say, an EquipmentStoreItem and a Cosmetic, it'll get double added to the networked prefabs.)
-        // This is to prevent it being added multiple times.
-        if (PreparePool.HasPrefab(obj.name)) {
-            PreparePool.RemovePrefab(obj.name);
-        }
-
         if (networkedPrefabs) {
-            PreparePool.AddPrefab(obj.name, obj);
+            PreparePool.AddPrefab(obj.name, obj, currentStub);
         }
-        targetDatabase.AddPrefab(obj.name, obj);
+        targetDatabase.AddPrefab(obj.name, obj, currentStub);
         addedGameObjects.Add(new ModStubGameObjectPair() {
             stub = currentStub,
             obj = obj,
@@ -80,6 +63,7 @@ public class PrefabPostProcessor : ModPostProcessor {
         List<Task> tasks = new List<Task>();
         var rootNode = data.assets;
         if (rootNode.HasKey(key)) {
+            currentStub = new ModManager.ModStub(data);
             var array = rootNode[key].AsArray;
             foreach (var node in array) {
                 if (!node.Value.IsString) continue;
@@ -111,9 +95,9 @@ public class PrefabPostProcessor : ModPostProcessor {
             if (!addedGameObjects[i].stub.GetRepresentedBy(data)) continue;
             var obj = addedGameObjects[i];
             if (networkedPrefabs) {
-                PreparePool.RemovePrefab(obj.objName);
+                PreparePool.RemovePrefab(obj.objName, obj.stub);
             }
-            targetDatabase.RemovePrefab(obj.objName);
+            targetDatabase.RemovePrefab(obj.objName, obj.stub);
             addedGameObjects.RemoveAt(i);
             i--;
         }

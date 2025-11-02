@@ -80,12 +80,45 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false });
     }
-    public void JoinMatch(string roomName) {
-        GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName));
+    public void JoinMatch(RoomInfo roomInfo) {
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+        if (roomInfo.CustomProperties.ContainsKey("modList")) {
+            if (roomInfo.CustomProperties["modList"] is not string) {
+                PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+                return;
+            }
+            string modList = (string)roomInfo.CustomProperties["modList"];
+            JSONNode modArray = JSONNode.Parse(modList);
+            List<ModManager.ModStub> modsToLoad = new List<ModManager.ModStub>();
+            foreach (var pair in modArray) {
+                var node = pair.Value;
+                if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
+                    PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+                    MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+                    return;
+                }
+                if (!ulong.TryParse(node["id"], out ulong parsedID)) {
+                    continue;
+                }
+                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID, ModManager.ModSource.Any, node["folderTitle"]));
+            }
+            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomInfo.Name, modsToLoad));
+        } else {
+            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+            return;
+        }
     }
-    public IEnumerator JoinMatchRoutine(string roomName) {
+    public IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
+        yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
+        if (ModManager.GetFailedToLoadMods()) {
+            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Failed to download mods set by the server.");
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+            yield break;
+        }
         PhotonNetwork.JoinRoom(roomName);
     }
     public IEnumerator EnsureOfflineAndReadyToLoad() {
@@ -294,6 +327,22 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (!selectedMap.GetRepresentedByKey(SceneManager.GetActiveScene().name)) {
             LevelLoader.instance.LoadLevel(selectedMap.GetKey());
         }
+        GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
+    }
+
+    private IEnumerator WaitForLevelToLoadThenSetModOptions() {
+        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitUntil(() => LevelLoader.InLevel() && !LevelLoader.loadingLevel);
+        JSONArray modArray = new JSONArray();
+        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["folderTitle"] = mod.folderTitle;
+            modNode["id"] = mod.id.ToString();
+            modArray.Add(modNode);
+        }
+        var modOptions = new Hashtable();
+        modOptions["mods"] = modArray.ToString();
+        PhotonNetwork.CurrentRoom.SetCustomProperties(modOptions);
     }
 
     public void OnLeftRoom() {
@@ -414,63 +463,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
         if (photonEvent.Code == 203) {
             TriggerDisconnect();
-            return;
-        }
-
-        if (photonEvent.Code != 'M') {
-            return;
-        }
-
-        //if (photonEvent.Sender != 0) return; // Only accept this event from a server.
-        
-        string data = (string)photonEvent.CustomData;
-        Debug.Log($"Received mod handshake from {photonEvent.Sender}! {data}");
-        JSONNode rootNode = JSONNode.Parse(data);
-        List<ModManager.ModStub> desiredMods = new List<ModManager.ModStub>();
-        foreach (var node in rootNode["modList"].AsArray) {
-            ulong.TryParse(node.Value["id"], out ulong result);
-            if (node.Value.HasKey("folderTitle")) {
-                desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any, node.Value["folderTitle"]));
-            } else {
-                desiredMods.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)result, ModManager.ModSource.Any, node.Value["title"]));
-            }
-        }
-
-        if (!ModManager.HasExactModConfigurationLoaded(desiredMods)) {
-            string roomName = PhotonNetwork.CurrentRoom.Name;
-            onLeaveRoom = () => {
-                GameManager.StartCoroutineStatic(FinishLoadMods(desiredMods, roomName));
-            };
-            PhotonNetwork.LeaveRoom();
         }
     }
     private IEnumerator LoadPlayerConfigMods() {
         Debug.Log("Reloading player's original mod config due to leaving server.");
         yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
-    }
-    
-    private IEnumerator FinishLoadMods(List<ModManager.ModStub> desiredMods, string roomName) {
-        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.JoiningServer);
-        IEnumerator setter = ModManager.SetLoadedMods(desiredMods);
-        var next = true;
-        while (next) {
-            try {
-                next = setter.MoveNext();
-            }
-            catch (UnityException ex) {
-                instance.OnJoinRoomFailed(0, ex.Message);
-                yield break;
-            }
-            if (next) {
-                yield return setter.Current;
-            }
-        }
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
-        if (ModManager.GetFailedToLoadMods()) {
-            instance.OnJoinRoomFailed(0, "Failed to load mods.");
-            yield break;
-        }
-        PhotonNetwork.JoinRoom(roomName);
-        onLeaveRoom = null;
     }
 }

@@ -53,7 +53,7 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
         room.GetComponent<Button>().onClick.RemoveAllListeners();
         room.GetComponent<Button>().onClick.AddListener(() => {
-            NetworkManager.instance.JoinMatch(info.Name);
+            NetworkManager.instance.JoinMatch(info);
         });
     }
 

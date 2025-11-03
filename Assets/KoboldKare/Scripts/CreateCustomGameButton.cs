@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateCustomGameButton : MonoBehaviour {
     private void Start() {
@@ -54,7 +56,19 @@ public class CreateCustomGameButton : MonoBehaviour {
         }
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap);
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-        PhotonNetwork.CreateRoom(handle.Result.roomName, new RoomOptions { MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom, CleanupCacheOnLeave = false});
+        yield return LevelLoader.instance.LoadLevel(NetworkManager.instance.GetSelectedMap().GetKey());
+        JSONArray modArray = new JSONArray();
+        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = mod.title;
+            modNode["folderTitle"] = mod.folderTitle;
+            modNode["id"] = mod.id.ToString();
+            modArray.Add(modNode);
+        }
+        var modOptions = new Hashtable {
+            ["modList"] = modArray.ToString()
+        };
+        PhotonNetwork.CreateRoom(handle.Result.roomName, new RoomOptions { MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
         GetComponent<Button>().interactable = true;
     }
 }

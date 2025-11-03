@@ -17367,7 +17367,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.8
+  m_fontSize: 29.8
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -35648,6 +35648,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Button - Quick Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075032082737742642, guid: f7a9775ff8c444f3c964c30b914805d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}

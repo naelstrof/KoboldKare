@@ -76,7 +76,19 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public IEnumerator CreatePublicRoomRoutine() {
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false });
+        yield return LevelLoader.instance.LoadLevel(GetSelectedMap().GetKey());
+        JSONArray modArray = new JSONArray();
+        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = mod.title;
+            modNode["folderTitle"] = mod.folderTitle;
+            modNode["id"] = mod.id.ToString();
+            modArray.Add(modNode);
+        }
+        var modOptions = new Hashtable {
+            ["modList"] = modArray.ToString()
+        };
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
     }
 
     private bool TryParseMods(Hashtable hashtable, out List<ModManager.ModStub> stubs) {

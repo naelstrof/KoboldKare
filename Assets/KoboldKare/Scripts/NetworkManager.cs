@@ -126,6 +126,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         try {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
             yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
         } finally {
             if (ModManager.GetFailedToLoadMods()) {
@@ -384,6 +385,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 var roomName = PhotonNetwork.CurrentRoom.Name;
                 PhotonNetwork.LeaveRoom();
                 yield return LevelLoader.instance.LoadLevel("MainMenu");
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
                 GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
             }
         }

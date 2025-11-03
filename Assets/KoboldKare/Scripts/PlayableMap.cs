@@ -101,7 +101,7 @@ public class PlayableMap : ScriptableObject {
 
     public bool GetRepresentedByKey(string key) {
         if (string.IsNullOrEmpty(bundleAssetName)) {
-            return key == (string)unityScene.RuntimeKey;
+            return key == (string)unityScene.RuntimeKey || key == unityScene.GetName();
         } else {
             return key == GetSceneName();
         }

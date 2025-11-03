@@ -117,8 +117,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         } else {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
             PopupHandler.instance.ClearAllPopups();
-            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server. Server might be booting still?");
-            Debug.LogError("Incompatible mod list format on server. Server might be booting still?");
+            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
+            Debug.LogError("Incompatible mod list format on server.");
         }
     }
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
@@ -200,6 +200,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public IEnumerator SinglePlayerRoutine() {
         yield return GameManager.instance.StartCoroutine(EnsureOfflineAndReadyToLoad());
+        yield return LevelLoader.instance.LoadLevel(selectedMap.GetKey());
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.JoinRandomRoom();
         yield return null;
@@ -302,35 +303,16 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     public void OnCreatedRoom() {
         cheatsEnabled = false;
-        if (!selectedMap.GetRepresentedByKey(SceneManager.GetActiveScene().name)) {
-            LevelLoader.instance.LoadLevel(selectedMap.GetKey());
-        }
-        GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
+        //GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
     }
 
-    private IEnumerator WaitForLevelToLoadThenSetModOptions() {
-        yield return new WaitForSecondsRealtime(1f);
-        yield return new WaitUntil(() => LevelLoader.InLevel() && !LevelLoader.loadingLevel);
-        JSONArray modArray = new JSONArray();
-        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
-            JSONNode modNode = JSONNode.Parse("{}");
-            modNode["title"] = mod.title;
-            modNode["folderTitle"] = mod.folderTitle;
-            modNode["id"] = mod.id.ToString();
-            modArray.Add(modNode);
-        }
-        var modOptions = new Hashtable();
-        modOptions["modList"] = modArray.ToString();
-        Debug.Log("Room property mods to " + modArray.ToString());
-        PhotonNetwork.CurrentRoom.SetCustomProperties(modOptions);
-    }
 
     public void OnLeftRoom() {
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
         Debug.Log("Master switched!" + newMasterClient);
-        GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
+        //GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
     }
 
     public void OnJoinedLobby() {

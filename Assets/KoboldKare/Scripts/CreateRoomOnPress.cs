@@ -5,8 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
+using SimpleJSON;
 using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateRoomOnPress : MonoBehaviour {
     public TMP_InputField roomNameField;
@@ -29,13 +31,20 @@ public class CreateRoomOnPress : MonoBehaviour {
         //}
     }
     public IEnumerator CreateRoomRoutine() {
-        //if (saveDropdown.value == 0) {
-            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-            PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false});
-        //} else {
-            //SaveManager.SaveList list = SaveManager.GetSaveList(false);
-            //SaveManager.Load(list.fileNames[saveDropdown.value - 1], true, (int)maxPlayersField.value, roomNameField.text, !isPrivate.isOn);
-        //}
+        yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+        JSONArray modArray = new JSONArray();
+        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = mod.title;
+            modNode["folderTitle"] = mod.folderTitle;
+            modNode["id"] = mod.id.ToString();
+            modArray.Add(modNode);
+        }
+        var modOptions = new Hashtable {
+            ["modList"] = modArray.ToString()
+        };
+        yield return LevelLoader.instance.LoadLevel(NetworkManager.instance.GetSelectedMap().GetKey());
+        PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
     }
     public void CreateRoom() {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());

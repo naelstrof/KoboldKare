@@ -74,7 +74,7 @@ public class EquipmentPostProcessor : ModPostProcessor {
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedEquipments.Count;i++) {
             if(addedEquipments[i].stub.GetRepresentedBy(data)) {
-                EquipmentDatabase.RemoveAsset(addedEquipments[i].equipment, currentStub);
+                EquipmentDatabase.RemoveAsset(addedEquipments[i].equipment, addedEquipments[i].stub);
                 addedEquipments.RemoveAt(i);
                 i--;
             }

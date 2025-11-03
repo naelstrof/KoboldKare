@@ -541,10 +541,10 @@ public class ModManager : MonoBehaviour {
             this.loadPriority = data.loadPriority;
         }
         public readonly bool GetRepresentedBy(ModInfoData data) {
-            return data.publishedFileId == id && data.title == title;
+            return data.publishedFileId == id && data.title == title || data.directoryInfo.Name == folderTitle;
         }
         public readonly bool GetRepresentedBy(ModStub stub) {
-            return stub.id == id && stub.title == title;
+            return stub.id == id && stub.title == title || stub.folderTitle == folderTitle;
         }
         public ModStub(string title, PublishedFileId_t id, ModSource source, string folderTitle, bool causedException = false, string description = "",  bool enabled = true, Texture2D preview = null, float loadPriority = 0f)  {
             this.description = description;

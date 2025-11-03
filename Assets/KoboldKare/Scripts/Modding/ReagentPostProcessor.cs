@@ -76,7 +76,7 @@ public class ReagentPostProcessor : ModPostProcessor {
     public override Task UnloadAssets(ModManager.ModInfoData data) {
         for (int i=0;i<addedReagents.Count;i++) {
             if(addedReagents[i].stub.GetRepresentedBy(data)) {
-                ReagentDatabase.RemoveAsset(addedReagents[i].obj, currentStub);
+                ReagentDatabase.RemoveAsset(addedReagents[i].obj, addedReagents[i].stub);
                 addedReagents.RemoveAt(i);
                 i--;
             }

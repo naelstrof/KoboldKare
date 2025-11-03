@@ -443,8 +443,4 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             TriggerDisconnect();
         }
     }
-    private IEnumerator LoadPlayerConfigMods() {
-        Debug.Log("Reloading player's original mod config due to leaving server.");
-        yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
-    }
 }

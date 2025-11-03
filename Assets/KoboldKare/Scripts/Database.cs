@@ -127,14 +127,17 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
         if (!instance.TryGetList(key, out var list)) {
             return;
         }
+
         for (int i = 0; i < list.Count; i++) {
             if (list[i].GetRepresentedByStub(stub)) {
                 list.RemoveAt(i);
                 i--;
             }
         }
+        
         if (list.Count == 0) {
             instance.assets.RemoveAll(pair => pair.key == key);
+            instance.assets.Sort((a,b) => String.Compare(a.key, b.key, StringComparison.InvariantCulture));
             return;
         }
         list.Sort(CompareObjectStubPair);
@@ -157,9 +160,6 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
     }
     public static List<T> GetAssets() {
         List<T> assets = new();
-        foreach (var pair in instance.assets) {
-            assets.Add(pair.value[^1].obj);
-        }
         return assets;
     }
 }

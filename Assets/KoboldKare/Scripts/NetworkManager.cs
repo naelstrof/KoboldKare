@@ -46,12 +46,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.AutomaticallySyncScene = true;
             settings.AppSettings.FixedRegion = region;
-            if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+            /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
                 settings.AppSettings.AppVersion += "Editor";
             }
             if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
                 PhotonNetwork.GameVersion += "Editor";
-            }
+            }*/
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
@@ -145,12 +145,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
     }
     private IEnumerator EnsureOfflineAndReadyToLoad() {
-        if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+        /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
             settings.AppSettings.AppVersion += "Editor";
         }
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
-        }
+        }*/
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
@@ -165,12 +165,12 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.EnableCloseConnection = true;
     }
     public IEnumerator EnsureOnlineAndReadyToLoad(bool shouldLeaveRoom = true) {
-        if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
+        /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
             settings.AppSettings.AppVersion += "Editor";
         }
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
-        }
+        }*/
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
             yield return LevelLoader.instance.LoadLevel("ErrorScene");

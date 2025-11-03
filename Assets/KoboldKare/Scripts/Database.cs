@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
@@ -34,9 +35,35 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
             return String.Compare(x, y, StringComparison.InvariantCulture);
         }
     }
+
+    public struct AssetKeyPair {
+        public string key;
+        public List<ObjectStubPair> value;
+    }
     
+    protected internal List<AssetKeyPair> assets = new();
+
+    private bool ContainsKey(string name) {
+        foreach (var pair in assets) {
+            if (pair.key == name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     
-    protected internal SortedDictionary<string, List<ObjectStubPair>> assets = new(new StringSorter());
+    private bool TryGetList(string name, out List<ObjectStubPair> list) {
+        foreach (var pair in assets) {
+            if (pair.key == name) {
+                list = pair.value;
+                return true;
+            }
+        }
+
+        list = null;
+        return false;
+    }
     public void Awake() {
         if (instance && instance != this) {
             Destroy(gameObject);
@@ -45,13 +72,15 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
         }
     }
     public static bool TryGetAsset(string name, out T match) {
-        if (instance.assets.TryGetValue(name, out var list)) {
-            match = list[^1].obj;
-            return true;
+        for (int i = 0; i < instance.assets.Count; i++) {
+            if (instance.assets[i].key == name) {
+                match = instance.assets[i].value[^1].obj;
+                return true;
+            }
         }
-
+        
         if (instance.assets.Count > 0) {
-            match = instance.assets.ElementAt(0).Value[^1].obj;
+            match = instance.assets[0].value[^1].obj;
         } else {
             match = null;
         }
@@ -61,32 +90,41 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
     public static bool TryGetAsset(short id, out T match) {
         if (id < 0 || id >= instance.assets.Count) {
             if (instance.assets.Count > 0) {
-                match = instance.assets.ElementAt(0).Value[^1].obj;
+                match = instance.assets[0].value[^1].obj;
             } else {
                 match = null;
             }
             return false;
         }
-        match = instance.assets.ElementAt(id).Value[^1].obj;
+        match = instance.assets[id].value[^1].obj;
         return true;
     }
 
     public static void AddAsset(T newAsset, ModManager.ModStub? stub) {
         var key = newAsset.name;
-        if (!instance.assets.ContainsKey(key)) {
-            instance.assets.Add(key, new List<ObjectStubPair>());
+        if (!instance.ContainsKey(key)) {
+            instance.assets.Add(new AssetKeyPair() {
+                key = key,
+                value = new List<ObjectStubPair>()
+            });
+            instance.assets.Sort((a,b) => String.Compare(a.key, b.key, StringComparison.InvariantCulture));
         }
-        var list = instance.assets[key];
-        list.Add(new ObjectStubPair() {
-            obj = newAsset,
-            stub = stub
-        });
-        list.Sort(CompareObjectStubPair);
+
+        if (instance.TryGetList(key, out var list)) {
+            list.Add(new ObjectStubPair() {
+                obj = newAsset,
+                stub = stub
+            });
+            list.Sort(CompareObjectStubPair);
+        }
     }
     
     public static void RemoveAsset(T newAsset, ModManager.ModStub? stub) {
         var key = newAsset.name;
-        if (!instance.assets.TryGetValue(key, out var list)) {
+        if (!instance.ContainsKey(key)) {
+            return;
+        }
+        if (!instance.TryGetList(key, out var list)) {
             return;
         }
         for (int i = 0; i < list.Count; i++) {
@@ -96,20 +134,21 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
             }
         }
         if (list.Count == 0) {
-            instance.assets.Remove(key);
+            instance.assets.RemoveAll(pair => pair.key == key);
+            return;
         }
         list.Sort(CompareObjectStubPair);
     }
 
     public static short GetID(T obj) {
         var key = obj.name;
-        if (!instance.assets.ContainsKey(key)) {
+        if (!instance.ContainsKey(key)) {
             return 0;
         }
 
         int i = 0;
         foreach (var pair in instance.assets) {
-            if (pair.Key == obj.name) {
+            if (pair.key == obj.name) {
                 return (short)i;
             }
             i++;
@@ -119,7 +158,7 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
     public static List<T> GetAssets() {
         List<T> assets = new();
         foreach (var pair in instance.assets) {
-            assets.Add(pair.Value[^1].obj);
+            assets.Add(pair.value[^1].obj);
         }
         return assets;
     }

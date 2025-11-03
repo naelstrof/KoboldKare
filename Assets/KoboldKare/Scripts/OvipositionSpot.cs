@@ -19,7 +19,6 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     [SerializeField]
     private PhotonGameObjectReference eggPrefab;
 
-    private ScriptableReagent egg;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     
     private float lastEggCheckTime = 0;
@@ -30,7 +29,11 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     }
     
     private bool KoboldReadyToLayEgg(Kobold k){
-        return k.bellyContainer.GetVolumeOf(egg) > 5f && k.GetEnergy() >= 1f;
+        if (ReagentDatabase.TryGetAsset("Egg", out var egg)) {
+            return k.bellyContainer.GetVolumeOf(egg) > 5f && k.GetEnergy() >= 1f;
+        }
+
+        return false;
     }
     
     public override bool CanUse(Kobold k) {
@@ -110,8 +113,11 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             }
         }
 
-        float eggVolume = k.bellyContainer.GetVolumeOf(egg);
-        k.bellyContainer.OverrideReagent(egg, 0f);
+        float eggVolume = 0f;
+        if (ReagentDatabase.TryGetAsset("Egg", out var egg)) {
+            eggVolume = k.bellyContainer.GetVolumeOf(egg);
+            k.bellyContainer.OverrideReagent(egg, 0f);
+        }
 
         if (targetPenetrable == null) {
             Debug.LogError("Kobold without a hole tried to make an egg!");

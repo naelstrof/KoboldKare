@@ -80,12 +80,6 @@ public class ReagentPostProcessor : ModPostProcessor {
                 addedReagents.RemoveAt(i);
                 i--;
             }
-            foreach (var inherentObj in inherentAssetsHandle.Result) {
-                if (addedReagents[i].obj.name != inherentObj.name) {
-                    continue;
-                }
-                LoadReagentInherent(inherentObj);
-            }
         }
         for (int i=0;i<opHandles.Count;i++) {
             if(opHandles[i].stub.GetRepresentedBy(data)) {

@@ -78,12 +78,6 @@ public class EquipmentPostProcessor : ModPostProcessor {
                 addedEquipments.RemoveAt(i);
                 i--;
             }
-            foreach (var inherentObj in inherentAssetsHandle.Result) {
-                if (addedEquipments[i].equipment.name != inherentObj.name) {
-                    continue;
-                }
-                LoadInherentEquipment(inherentObj);
-            }
         }
         for (int i=0;i<opHandles.Count;i++) {
             if(opHandles[i].stub.GetRepresentedBy(data)) {

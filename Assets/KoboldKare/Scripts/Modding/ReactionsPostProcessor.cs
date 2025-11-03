@@ -78,12 +78,6 @@ public class ReactionsPostProcessor : ModPostProcessor {
             ReactionsDatabase.RemoveAsset(addedReactions[i].obj, addedReactions[i].stub);
             addedReactions.RemoveAt(i);
             i--;
-            foreach (var inherentObj in inherentAssetsHandle.Result) {
-                if (addedReactions[i].obj.name != inherentObj.name) {
-                    continue;
-                }
-                LoadReactionInherent(inherentObj);
-            }
         }
         for (int i=0;i<opHandles.Count;i++) {
             if(opHandles[i].stub.GetRepresentedBy(data)) {

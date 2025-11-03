@@ -124,14 +124,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     } 
     public void JoinMatch(RoomInfo roomInfo) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
-        if (TryParseMods(roomInfo.CustomProperties, out var stubs)) {
-            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomInfo.Name, stubs));
-        } else {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-            PopupHandler.instance.ClearAllPopups();
-            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Incompatible mod list format on server.");
-            Debug.LogError("Incompatible mod list format on server.");
-        }
+        PhotonNetwork.JoinRoom(roomInfo.Name);
     }
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);

@@ -160,6 +160,9 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
     }
     public static List<T> GetAssets() {
         List<T> assets = new();
+        foreach (var pair in instance.assets) {
+            assets.Add(pair.value[^1].obj);
+        }
         return assets;
     }
 }

@@ -6,7 +6,6 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.SceneManagement;
-using System;
 using NetStack.Serialization;
 using SimpleJSON;
 using Steamworks;
@@ -92,7 +91,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             List<ModManager.ModStub> modsToLoad = new List<ModManager.ModStub>();
             foreach (var pair in modArray) {
                 var node = pair.Value;
-                if (!node.HasKey("id") || !node.HasKey("folderTitle")) {
+                if (!node.HasKey("id") || !node.HasKey("folderTitle") || !node.HasKey("title")) {
                     stubs = new();
                     return false;
                 }
@@ -101,7 +100,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                     continue;
                 }
 
-                modsToLoad.Add(new ModManager.ModStub((string)node["folderTitle"], (PublishedFileId_t)parsedID,
+                modsToLoad.Add(new ModManager.ModStub((string)node["title"], (PublishedFileId_t)parsedID,
                     ModManager.ModSource.Any, node["folderTitle"]));
             }
             stubs = modsToLoad;
@@ -126,14 +125,18 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
-        if (ModManager.GetFailedToLoadMods()) {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-            PopupHandler.instance.ClearAllPopups();
-            PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Failed to download mods set by the server.");
-            yield break;
+        try {
+            yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
+        } finally {
+            if (ModManager.GetFailedToLoadMods()) {
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                PopupHandler.instance.ClearAllPopups();
+                PopupHandler.instance.SpawnPopup("Disconnect", true, default,
+                    "Failed to download mods set by the server.");
+            } else {
+                PhotonNetwork.JoinRoom(roomName);
+            }
         }
-        PhotonNetwork.JoinRoom(roomName);
     }
     private IEnumerator EnsureOfflineAndReadyToLoad() {
         if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
@@ -310,12 +313,14 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         JSONArray modArray = new JSONArray();
         foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = mod.title;
             modNode["folderTitle"] = mod.folderTitle;
             modNode["id"] = mod.id.ToString();
             modArray.Add(modNode);
         }
         var modOptions = new Hashtable();
-        modOptions["mods"] = modArray.ToString();
+        modOptions["modList"] = modArray.ToString();
+        Debug.Log("Room property mods to " + modArray.ToString());
         PhotonNetwork.CurrentRoom.SetCustomProperties(modOptions);
     }
 
@@ -324,6 +329,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
         Debug.Log("Master switched!" + newMasterClient);
+        GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
     }
 
     public void OnJoinedLobby() {
@@ -373,13 +379,13 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (TryParseMods(propertiesThatChanged, out var stubs)) {
             if (ModManager.HasExactModConfigurationLoaded(stubs)) {
                 Debug.Log("Got new mods from server, but we have the exact same configuration loaded already! Woo!");
-                yield break;
+            } else {
+                Debug.Log("Got new mods from server, attempting to reload...");
+                var roomName = PhotonNetwork.CurrentRoom.Name;
+                PhotonNetwork.LeaveRoom();
+                yield return LevelLoader.instance.LoadLevel("MainMenu");
+                GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
             }
-            Debug.Log("Got new mods from server, attempting to reload...");
-            var roomName = PhotonNetwork.CurrentRoom.Name;
-            PhotonNetwork.LeaveRoom();
-            yield return LevelLoader.instance.LoadLevel("MainMenu");
-            GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
         }
     }
 

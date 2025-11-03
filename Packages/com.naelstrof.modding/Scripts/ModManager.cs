@@ -145,7 +145,7 @@ public class ModManager : MonoBehaviour {
         }
 
         public bool GetRepresentedByStub(ModStub stub) {
-            return info.publishedFileId == stub.id && info.title == stub.title;
+            return info.publishedFileId == stub.id && info.title == stub.title || info.directoryInfo.Name == stub.folderTitle;
         }
 
         public virtual bool IsValid() {
@@ -975,7 +975,7 @@ public class ModManager : MonoBehaviour {
     public static bool HasExactModConfigurationLoaded(IList<ModStub> stubs) {
         int count = 0;
         foreach (var mod in instance.fullModList) {
-            if (mod.enabled) {
+            if (mod.GetAssetsLoaded()) {
                 count++;
             }
         }
@@ -987,9 +987,9 @@ public class ModManager : MonoBehaviour {
         foreach (var stub in stubs) {
             bool found = false;
             foreach (var mod in instance.fullModList) {
-                if (mod.info.title != stub.title || mod.info.publishedFileId != stub.id) continue;
+                if (!mod.GetRepresentedByStub(stub)) continue;
                 found = true;
-                if (!mod.enabled) {
+                if (!mod.GetAssetsLoaded()) {
                     return false;
                 }
                 break;
@@ -1057,8 +1057,10 @@ public class ModManager : MonoBehaviour {
                 }
 
                 if (!found) {
-                    throw new UnityException(
-                        $"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! It must have failed to download from the steam workshop, try logging into Steam!");
+                    instance.failedToLoadMods = true;
+                    instance.status = ModStatus.Ready;
+                    Debug.LogError($"Couldn't find mod with name and id {modStub.title}, {modStub.id}. Can't continue! It must have failed to download from the steam workshop, try logging into Steam!");
+                    yield break;
                 }
             }
 

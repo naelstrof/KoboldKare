@@ -122,15 +122,19 @@ public class PlayableMap : ScriptableObject {
         }
     }
 
-    private async Task LoadAddressableSceneFromStub(ModManager.ModStub stub, object key) {
+    private async Task LoadAddressableSceneFromStub(ModManager.ModStub? stub, object key) {
         await PlayableMapPostProcessor.UnloadAllMaps();
-        await ModManager.SetModAssetsAvailable(stub,true);
+        if (stub != null) {
+            await ModManager.SetModAssetsAvailable(stub.Value, true);
+        }
         var handle = Addressables.LoadSceneAsync(key);
         await handle.Task;
-        loadedHandles.Add(new ModStubAddressableHandlePair() {
-            handle = handle,
-            stub = stub
-        });
+        if (stub != null) {
+            loadedHandles.Add(new ModStubAddressableHandlePair() {
+                handle = handle,
+                stub = stub.Value
+            });
+        }
     }
 
     private async Task LoadBundleSceneFromStub(ModManager.ModStub stub) {
@@ -151,11 +155,7 @@ public class PlayableMap : ScriptableObject {
 
     public BoxedSceneLoad LoadAsync() {
         if (string.IsNullOrEmpty(bundleAssetName)) {
-            if (stub != null) {
-                return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub.Value, unityScene.RuntimeKey));
-            } else {
-                return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync(unityScene.RuntimeKey));
-            }
+            return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub, unityScene.RuntimeKey));
         } else {
             if (stub != null) {
                 return BoxedSceneLoad.FromTask(LoadBundleSceneFromStub(stub.Value));

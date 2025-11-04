@@ -52,10 +52,10 @@ public class EquipmentUIDisplay : MonoBehaviour {
                 return;
             }
         }
+        StartCoroutine(WaitThenSubscribe());
         inventory = kobold.GetComponent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;
         UpdateDisplay(inventory.GetAllEquipment());
-        StartCoroutine(WaitThenSubscribe());
     }
 
     private IEnumerator WaitThenSubscribe() {

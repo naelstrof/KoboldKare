@@ -43,7 +43,8 @@ public class CreateRoomOnPress : MonoBehaviour {
         var modOptions = new Hashtable {
             ["modList"] = modArray.ToString()
         };
-        yield return LevelLoader.instance.LoadLevel(NetworkManager.instance.GetSelectedMap().GetKey());
+        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(NetworkManager.instance.GetSelectedMap());
+        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
     }
     public void CreateRoom() {

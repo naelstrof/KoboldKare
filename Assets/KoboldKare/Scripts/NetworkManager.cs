@@ -13,8 +13,7 @@ using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "NewNetworkManager", menuName = "Data/NetworkManager", order = 1)]
 public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IWebRpcCallback, IErrorInfoCallback, IPunOwnershipCallbacks, IOnEventCallback {
-    [SerializeField]
-    private PlayableMap selectedMap;
+    private string selectedMap;
     public PrefabSelectSingleSetting selectedPlayerPrefab;
     public ServerSettings settings;
     
@@ -76,7 +75,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public IEnumerator CreatePublicRoomRoutine() {
         PopupHandler.instance.SpawnPopup("Connect");
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        yield return LevelLoader.instance.LoadLevel(GetSelectedMap().GetKey());
+        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(selectedMap);
+        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         JSONArray modArray = new JSONArray();
         foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");
@@ -193,10 +193,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         PhotonNetwork.EnableCloseConnection = true;
     }
 
-    public void SetSelectedMap(PlayableMap map) {
-        selectedMap = map;
+    public void SetSelectedMap(string mapName) {
+        selectedMap = mapName;
     }
-    public PlayableMap GetSelectedMap() {
+    public string GetSelectedMap() {
         return selectedMap;
     }
 
@@ -205,11 +205,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     }
     public IEnumerator SinglePlayerRoutine() {
         yield return GameManager.instance.StartCoroutine(EnsureOfflineAndReadyToLoad());
-        yield return LevelLoader.instance.LoadLevel(selectedMap.GetKey());
+        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(selectedMap);
+        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.JoinRandomRoom();
-        yield return null;
-        yield return new WaitUntil(() => !LevelLoader.loadingLevel);
     }
 
     public void LeaveLobby() {

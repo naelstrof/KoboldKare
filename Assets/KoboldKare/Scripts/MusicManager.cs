@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
+using UnityEngine.Audio;
 
 public class MusicManager : MonoBehaviour {
     private static MusicManager instance;
@@ -21,6 +22,7 @@ public class MusicManager : MonoBehaviour {
             musicSource.volume = fadeoutTime-Time.time;
             yield return null;
         }
+        Debug.Log("PAUSED MUSIC");
         musicSource.Stop();
         musicSource.volume = 0.7f;
         waiting = false;
@@ -40,6 +42,7 @@ public class MusicManager : MonoBehaviour {
         yield return new WaitForSecondsRealtime(time);
         if (music != null) {
             music.Play(musicSource);
+            musicSource.outputAudioMixerGroup = GameManager.GetMusicMixer();
         }
         waiting = false;
     }

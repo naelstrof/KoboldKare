@@ -23516,6 +23516,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCanvas: {fileID: 1150552919860540980}
+  musicMixer: {fileID: 243120066433540876, guid: bc155dfdccec1be4780029a8bd542de5,
+    type: 2}
   soundEffectGroup: {fileID: 7310452493544910103, guid: bc155dfdccec1be4780029a8bd542de5,
     type: 2}
   soundEffectLoudGroup: {fileID: -2539836597092582311, guid: bc155dfdccec1be4780029a8bd542de5,

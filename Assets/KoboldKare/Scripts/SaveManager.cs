@@ -344,7 +344,7 @@ public static class SaveManager {
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
             if (map.GetRepresentedByKey(mapKey) || map.GetRepresentedByKey(mapName)) {
                 Debug.Log("Set selected map");
-                NetworkManager.instance.SetSelectedMap(map);
+                NetworkManager.instance.SetSelectedMap(map.GetKey());
             }
         }
 

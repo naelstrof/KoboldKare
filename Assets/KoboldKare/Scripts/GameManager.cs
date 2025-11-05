@@ -2,9 +2,8 @@ using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Photon.Pun;
-using UnityEngine.AddressableAssets;
+using UnityEngine.Audio;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,9 +12,11 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
     [SerializeField]
     private GameObject mainCanvas;
+    [SerializeField] private AudioMixerGroup musicMixer;
+    public static AudioMixerGroup GetMusicMixer() => instance.musicMixer;
     public static void SetUIVisible(bool visible) => instance.UIVisible(visible);
-    public UnityEngine.Audio.AudioMixerGroup soundEffectGroup;
-    public UnityEngine.Audio.AudioMixerGroup soundEffectLoudGroup;
+    public AudioMixerGroup soundEffectGroup;
+    public AudioMixerGroup soundEffectLoudGroup;
     public LayerMask precisionGrabMask;
     public LayerMask walkableGroundMask;
     public LayerMask waterSprayHitMask;
@@ -88,30 +89,12 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ReloadMapIfInEditor() {
-        if (Application.isEditor && SceneManager.GetActiveScene().name != "MainMenu"  && SceneManager.GetActiveScene().name != "ErrorScene" && !reloadedSceneAlready) {
-            StartCoroutine(ReloadMapRoutine());
+        var mapName = SceneManager.GetActiveScene().name;
+        if (Application.isEditor && mapName != "MainMenu"  && mapName != "ErrorScene" && !reloadedSceneAlready) {
+            NetworkManager.instance.SetSelectedMap(mapName);
+            NetworkManager.instance.StartSinglePlayer();
         }
         reloadedSceneAlready = true;
-    }
-
-    private IEnumerator ReloadMapRoutine() {
-        Debug.LogWarning("Reloading scene due to mods not being ready yet...");
-        bool found = false;
-        PlayableMap selectedMap = null;
-        foreach(var playableMap in PlayableMapDatabase.GetPlayableMaps()) {
-            if (SceneManager.GetActiveScene().name != playableMap.GetSceneName()) continue;
-            NetworkManager.instance.SetSelectedMap(playableMap);
-            selectedMap = playableMap;
-            found = true;
-            break;
-        }
-
-        if (!found) {
-            throw new UnityException($"Failed to find a PlayableMap instance for the map {SceneManager.GetActiveScene().name}! Please make one!");
-        }
-
-        yield return LevelLoader.instance.LoadLevel(selectedMap.GetKey());
-        NetworkManager.instance.StartSinglePlayer();
     }
 
     private void UIVisible(bool visible) {

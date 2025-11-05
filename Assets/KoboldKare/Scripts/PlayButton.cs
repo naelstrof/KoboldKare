@@ -29,7 +29,7 @@ public class PlayButton : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             yield break;
         }
-        NetworkManager.instance.SetSelectedMap(handle.Result.playableMap);
+        NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
         NetworkManager.instance.StartSinglePlayer();
         GetComponent<Button>().interactable = true;
     }

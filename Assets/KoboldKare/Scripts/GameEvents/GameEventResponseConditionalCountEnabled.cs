@@ -28,7 +28,7 @@ public class GameEventResponseConditionalCountEnabled : GameEventResponse
 
         if (!trackDisabledInstead)
         {
-            if (enabledCount == Requirement)
+            if (enabledCount >= Requirement)
             {
                 foreach (var response in requirementMet)
                 {

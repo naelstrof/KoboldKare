@@ -7,7 +7,7 @@ using Photon.Pun;
 using Cursor = UnityEngine.Cursor;
 
 public class PlayerPossession : MonoBehaviourPun {
-    public PlayerInput controls;
+    private PlayerInput controls;
     public float coyoteTime = 0.2f; 
     public int defaultMultiGrabSwitchFrames = 15;
     public User user;

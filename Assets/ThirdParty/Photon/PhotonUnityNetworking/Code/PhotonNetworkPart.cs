@@ -1798,9 +1798,10 @@ namespace Photon.Pun
             //LogObjectArray(data);
 
             PhotonView view = GetPhotonView(viewID);
-            if (view == null)
+            var networkState = NetworkingClient.State;
+            if (view == null && networkState != ClientState.Leaving && networkState != ClientState.Joining)
             {
-                Debug.LogWarning("Received OnSerialization for view ID " + viewID + ". We have no such PhotonView! Ignore this if you're joining or leaving a room. State: " + NetworkingClient.State);
+                Debug.LogWarning("Received OnSerialization for view ID " + viewID + ". We have no such PhotonView!" );
                 return;
             }
 

@@ -129,7 +129,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         PopupHandler.instance.SpawnPopup("Connect");
-        yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         try {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
             yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
@@ -139,10 +138,26 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 PopupHandler.instance.ClearAllPopups();
                 PopupHandler.instance.SpawnPopup("Disconnect", true, default,
                     "Failed to download mods set by the server.");
-            } else {
-                PhotonNetwork.JoinRoom(roomName);
             }
         }
+
+        if (!ModManager.GetFailedToLoadMods()) {
+            yield return EnsureOnlineAndReadyToLoad();
+            PhotonNetwork.JoinRoom(roomName);
+        }
+    }
+
+    private IEnumerator PhotonDisconnectCompletely() {
+        if (PhotonNetwork.InRoom) {
+            PhotonNetwork.LeaveRoom();
+        }
+        if (PhotonNetwork.InLobby) {
+            PhotonNetwork.LeaveLobby();
+        }
+        if (PhotonNetwork.IsConnected) {
+            PhotonNetwork.Disconnect();
+        }
+        yield return new WaitUntil(() => PhotonNetwork.NetworkClientState != ClientState.Leaving && !PhotonNetwork.IsConnected);
     }
     private IEnumerator EnsureOfflineAndReadyToLoad() {
         /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
@@ -151,6 +166,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
         }*/
+        PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
@@ -176,6 +192,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             yield return LevelLoader.instance.LoadLevel("ErrorScene");
         }
 
+        PhotonNetwork.IsMessageQueueRunning = true;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
@@ -367,11 +384,10 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
             if (ModManager.HasExactModConfigurationLoaded(stubs)) {
                 Debug.Log("Got new mods from server, but we have the exact same configuration loaded already! Woo!");
             } else {
-                Debug.Log("Got new mods from server, attempting to reload...");
-                var roomName = PhotonNetwork.CurrentRoom.Name;
-                PhotonNetwork.LeaveRoom();
-                yield return LevelLoader.instance.LoadLevel("MainMenu");
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+                var roomName = PhotonNetwork.CurrentRoom.Name;
+                yield return PhotonDisconnectCompletely();
+                yield return LevelLoader.instance.LoadLevel("MainMenu");
                 GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
             }
         }

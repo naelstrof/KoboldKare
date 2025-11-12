@@ -141,7 +141,7 @@ public class KoboldGenes {
         var dicks = penisDatabase.GetValidPrefabReferenceInfos();
         foreach (var info in dicks) {
             if (name.Contains(info.GetKey())) {
-                return (short)dicks.IndexOf(info);
+                return (short)(dicks.IndexOf(info)+1);
             }
         }
         return GetRandomDick();// Get random dick if can't find the correct one
@@ -149,6 +149,10 @@ public class KoboldGenes {
     private string GetDickName(short id){
         var penisDatabase = GameManager.GetPenisDatabase();
         var dicks = penisDatabase.GetValidPrefabReferenceInfos();
+        if (id < 0 || id >= dicks.Count) {
+            Debug.LogError($"Dick with ID {id} not found in database {penisDatabase} (only has {dicks.Count} elements).");
+            return "None";
+        }
         return dicks[id].GetKey();
     }
     private byte GetPlayerIndex(string name) {
@@ -298,7 +302,7 @@ public class KoboldGenes {
         rootNode["hue"] = (int)hue;
         rootNode["brightness"] = (int)brightness;
         rootNode["saturation"] = (int)saturation;
-        rootNode["dickEquip"] = dickEquip==short.MaxValue?"None":GetDickName(dickEquip);
+        rootNode["dickEquip"] = dickEquip==CommandDick.unEquipID ? "None" : GetDickName((short)(dickEquip-1));
         rootNode["grabCount"] = (int)grabCount;
         rootNode["dickThickness"] = dickThickness;
         rootNode["species"] = GetPlayerName(species);
@@ -318,7 +322,7 @@ public class KoboldGenes {
         hue = (byte)rootNode["hue"].AsInt;
         brightness = (byte)rootNode["brightness"].AsInt;
         saturation = (byte)rootNode["saturation"].AsInt;
-        dickEquip = rootNode["dickEquip"]=="None"? short.MaxValue: (short)GetDickIndex(rootNode["dickEquip"]);
+        dickEquip = rootNode["dickEquip"]=="None" ? CommandDick.unEquipID : (short)GetDickIndex(rootNode["dickEquip"]);
         grabCount = (byte)rootNode["grabCount"].AsInt;
         species = (byte)GetPlayerIndex(rootNode["species"]);
         dickThickness = rootNode["dickThickness"];

@@ -34,31 +34,27 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
 
     private delegate void GenericAction();
 
-    public IEnumerator JoinLobbyRoutine(string region) {
+    private IEnumerator JoinLobbyRoutine(string region) {
         if (PhotonNetwork.OfflineMode) {
             PhotonNetwork.OfflineMode = false;
         }
-        if (PhotonNetwork.IsConnected && settings.AppSettings.FixedRegion != region) {
-            PhotonNetwork.Disconnect();
-            yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
-        }
-        if (!PhotonNetwork.IsConnected) {
-            PhotonNetwork.AutomaticallySyncScene = true;
-            settings.AppSettings.FixedRegion = region;
-            /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
-                settings.AppSettings.AppVersion += "Editor";
-            }
-            if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
-                PhotonNetwork.GameVersion += "Editor";
-            }*/
-            PhotonNetwork.ConnectUsingSettings();
-        }
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady || (PhotonNetwork.IsConnected && PhotonNetwork.InRoom));
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
+        PhotonNetwork.AutomaticallySyncScene = true;
+        settings.AppSettings.FixedRegion = region;
+        PhotonNetwork.ConnectUsingSettings();
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         if (!PhotonNetwork.InLobby) {
             PhotonNetwork.JoinLobby();
         }
     }
     public void JoinLobby(string region) {
+        if (PhotonNetwork.IsConnected && PhotonNetwork.CloudRegion == region && PhotonNetwork.OfflineMode == false) {
+            if (!PhotonNetwork.InLobby) {
+                PhotonNetwork.JoinLobby();
+            }
+            return;
+        }
         GameManager.instance.StartCoroutine(JoinLobbyRoutine(region));
     }
     public void QuickMatch() {

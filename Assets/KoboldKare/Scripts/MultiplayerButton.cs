@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MultiplayerButton : MonoBehaviour {
+    [SerializeField] private NetworkManager networkManager;
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClick);
         SceneManager.activeSceneChanged += OnSceneChange;
@@ -18,6 +19,7 @@ public class MultiplayerButton : MonoBehaviour {
 
 
     void OnClick() {
+        networkManager.JoinLobby("");
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Multiplayer);
     }
 }

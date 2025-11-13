@@ -11,7 +11,8 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
     private RegionHandler cachedHandler;
     private Region selectedRegion;
 
-    public void ChooseRegion(int id){
+    private void ChooseRegion(int id){
+        Debug.Log("CHOOSING REGION: "+dropdown.options[id].text);
         NetworkManager.instance.JoinLobby(dropdown.options[id].text);
     }
 
@@ -21,7 +22,7 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
         cachedHandler = handler;
         var returnedRegions = new List<TMP_Dropdown.OptionData>();
         foreach (var item in cachedHandler.EnabledRegions){
-            returnedRegions.Add(new TMPro.TMP_Dropdown.OptionData(item.Code));
+            returnedRegions.Add(new TMP_Dropdown.OptionData(item.Code));
         }
         dropdown.AddOptions(returnedRegions);
         dropdown.onValueChanged.RemoveListener(ChooseRegion);

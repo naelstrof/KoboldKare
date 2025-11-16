@@ -54,9 +54,10 @@ public class CreateCustomGameButton : MonoBehaviour {
                 };
             }
         }
-        NetworkManager.instance.SetSelectedMap(handle.Result.playableMap);
+        NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
         yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
-        yield return LevelLoader.instance.LoadLevel(NetworkManager.instance.GetSelectedMap().GetKey());
+        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(NetworkManager.instance.GetSelectedMap());
+        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         JSONArray modArray = new JSONArray();
         foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");

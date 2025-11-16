@@ -40,7 +40,6 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
 
     public override void OnEnable() {
         base.OnEnable();
-        networkManager.JoinLobby("");
         StartCoroutine(RefreshRoomRoutine());
     }
 

@@ -38,7 +38,7 @@ public class LevelLoader : MonoBehaviour {
             Pauser.SetPaused(false);
             sceneLoadStart?.Invoke();
             loadingLevel = true;
-            yield return new WaitForSecondsRealtime(1f);
+            yield return null;
             try {
                 PhotonNetwork.LoadLevel(mapName);
             } catch {

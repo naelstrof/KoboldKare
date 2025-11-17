@@ -84,7 +84,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         var modOptions = new Hashtable {
             ["modList"] = modArray.ToString()
         };
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
+        var lobbyOptions = new string[] { "modList" };
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions, CustomRoomPropertiesForLobby = lobbyOptions});
     }
 
     private bool TryParseMods(Hashtable hashtable, out List<ModManager.ModStub> stubs) {
@@ -120,13 +121,18 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     } 
     public void JoinMatch(RoomInfo roomInfo) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
-        PhotonNetwork.JoinRoom(roomInfo.Name);
+        if (TryParseMods(roomInfo.CustomProperties, out var stubs)) {
+            GameManager.StartCoroutineStatic(JoinMatchRoutine(roomInfo.Name, stubs));
+        } else {
+            PhotonNetwork.JoinRoom(roomInfo.Name);
+        }
     }
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         PopupHandler.instance.SpawnPopup("Connect");
         try {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+            Debug.Log("Loading mods first...");
             yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
         } finally {
             if (ModManager.GetFailedToLoadMods()) {

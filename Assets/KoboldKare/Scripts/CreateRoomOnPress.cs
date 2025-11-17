@@ -45,12 +45,14 @@ public class CreateRoomOnPress : MonoBehaviour {
         };
         var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(NetworkManager.instance.GetSelectedMap());
         yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
-        PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
+        var lobbyOptions = new string[1];
+        lobbyOptions[0] = "modList";
+        PhotonNetwork.CreateRoom(roomNameField.text, new RoomOptions { MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions, CustomRoomPropertiesForLobby = lobbyOptions});
     }
     public void CreateRoom() {
         GameManager.instance.StartCoroutine(CreateRoomRoutine());
     }
-    public IEnumerator JoinRoomRoutine(string roomName) {
+    private IEnumerator JoinRoomRoutine(string roomName) {
         if (string.IsNullOrEmpty(roomName)) {
             PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Please enter a room name.");
             yield break;

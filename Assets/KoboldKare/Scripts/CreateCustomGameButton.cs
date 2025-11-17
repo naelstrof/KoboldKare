@@ -69,7 +69,8 @@ public class CreateCustomGameButton : MonoBehaviour {
         var modOptions = new Hashtable {
             ["modList"] = modArray.ToString()
         };
-        PhotonNetwork.CreateRoom(handle.Result.roomName, new RoomOptions { MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
+        var lobbyOptions = new string[] { "modList" };
+        PhotonNetwork.CreateRoom(handle.Result.roomName, new RoomOptions { MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions, CustomRoomPropertiesForLobby = lobbyOptions});
         GetComponent<Button>().interactable = true;
     }
 }

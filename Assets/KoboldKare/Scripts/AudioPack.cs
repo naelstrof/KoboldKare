@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "NewAudioPack", menuName = "Data/AudioPack")]
 public class AudioPack : ScriptableObject {
@@ -11,6 +13,12 @@ public class AudioPack : ScriptableObject {
     private float volume = 1f;
     [SerializeField]
     private AudioMixerGroup group;
+
+    [NonSerialized]
+    private bool gotRealGroup;
+    [NonSerialized]
+    private AudioMixerGroup realGroup;
+    
     [SerializeField]
     private float pitchRange = 0.2f;
     
@@ -24,12 +32,20 @@ public class AudioPack : ScriptableObject {
         return clips[Random.Range(0, clips.Length)];
     }
 
+    private AudioMixerGroup GetGroup() {
+        if (!gotRealGroup) {
+            realGroup = AudioGroupDatabase.GetMixerGroup(group.name);
+            gotRealGroup = true;
+        }
+        return realGroup;
+    }
+
     public float GetVolume() {
         return volume;
     }
 
     public AudioClip Play(AudioSource source, float vol = 1f) {
-        source.outputAudioMixerGroup = group;
+        source.outputAudioMixerGroup = GetGroup();
         var clip = clips[Random.Range(0, clips.Length)];
         source.clip = clip;
         source.volume = volume*vol;
@@ -38,7 +54,7 @@ public class AudioPack : ScriptableObject {
         return clip;
     }
     public void PlayOneShot(AudioSource source) {
-        source.outputAudioMixerGroup = group;
+        source.outputAudioMixerGroup = GetGroup();
         source.pitch = Random.Range(1f-pitchRange,1f+pitchRange);
         source.PlayOneShot(clips[Random.Range(0, clips.Length)], volume);
     }

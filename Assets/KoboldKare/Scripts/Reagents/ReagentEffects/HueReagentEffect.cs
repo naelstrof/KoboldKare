@@ -11,6 +11,11 @@ public class HueReagentEffect : ModifyingReagentEffect
         {
             output += 255;
         }
-        genes = genes.With(hue: (byte)Mathf.CeilToInt(output));
+        float clothingHue = (genes.clothingHue + usedAmount * Multiplier) % 255f;
+        if (clothingHue < 0f)
+        {
+            output += 255;
+        }
+        genes = genes.With(hue: (byte)Mathf.CeilToInt(output), clothingHue: (byte)Mathf.CeilToInt(clothingHue));
     }
 }

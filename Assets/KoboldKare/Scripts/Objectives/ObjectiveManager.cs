@@ -81,8 +81,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public static void SkipObjective() {
-        instance.OnObjectiveComplete(GetCurrentObjective());
-        instance.SwitchToObjective(instance.currentObjectiveIndex >= instance.objectives.Count ? null : instance.objectives[instance.currentObjectiveIndex]);
+        if (instance.photonView.IsMine) {
+            instance.OnObjectiveComplete(GetCurrentObjective());
+            instance.SwitchToObjective(instance.currentObjectiveIndex >= instance.objectives.Count ? null : instance.objectives[instance.currentObjectiveIndex]);
+        }
     }
 
     private void Awake() {

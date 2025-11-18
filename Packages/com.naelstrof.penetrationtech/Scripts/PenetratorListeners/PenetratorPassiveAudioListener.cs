@@ -47,7 +47,7 @@ namespace PenetrationTech {
 
         public override void Update() {
             base.Update();
-            if (!Application.isPlaying) {
+            if (!Application.isPlaying || source == null) {
                 return;
             }
             source.volume = Mathf.MoveTowards(source.volume, 0f, Time.deltaTime*4f*volume);

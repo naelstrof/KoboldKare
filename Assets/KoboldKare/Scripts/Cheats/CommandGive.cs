@@ -10,6 +10,15 @@ using UnityEngine;
 public class CommandGive : Command {
     [SerializeField]
     private PhotonGameObjectReference bucket;
+
+    public static readonly string[] parameters = new string[] {
+        "stars",
+        "money",
+        "dosh",
+        "dollars",
+        "machines",
+    };
+
     public override string GetArg0() => "/give";
     public override void Execute(StringBuilder output, Kobold kobold, string[] args) {
         base.Execute(output, kobold, args);
@@ -79,6 +88,32 @@ public class CommandGive : Command {
         }
 
         throw new CheatsProcessor.CommandException($"There is no prefab, reagent, or resource with name {args[1]}.");
+    }
+
+    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if(argumentIndex != 1) {
+            yield break;
+        }
+
+        if (PhotonNetwork.PrefabPool is DefaultPool pool) {
+            foreach (var pair in pool.ResourceCache) {
+                if(pair.Key.Contains(text, System.StringComparison.OrdinalIgnoreCase)) {
+                    yield return new(pair.Key);
+                }
+            }
+        }
+
+        foreach (var key in ReagentDatabase.GetAssetKeys()) {
+            if (key.Contains(text, System.StringComparison.OrdinalIgnoreCase)) {
+                yield return new(key);
+            }
+        }
+
+        foreach(var parameter in parameters) {
+            if(parameter.Contains(text, System.StringComparison.OrdinalIgnoreCase)) {
+                yield return new(parameter);
+            }
+        }
     }
 
     public override void OnValidate() {

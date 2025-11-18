@@ -65,29 +65,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRandomRoom();
     }
-    public void CreatePublicRoom() {
-        GameManager.instance.StartCoroutine(CreatePublicRoomRoutine());
-    }
-    public IEnumerator CreatePublicRoomRoutine() {
-        PopupHandler.instance.SpawnPopup("Connect");
-        yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(selectedMap);
-        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
-        JSONArray modArray = new JSONArray();
-        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
-            JSONNode modNode = JSONNode.Parse("{}");
-            modNode["title"] = mod.title;
-            modNode["folderTitle"] = mod.folderTitle;
-            modNode["id"] = mod.id.ToString();
-            modArray.Add(modNode);
-        }
-        var modOptions = new Hashtable {
-            ["modList"] = modArray.ToString()
-        };
-        var lobbyOptions = new string[] { "modList" };
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions, CustomRoomPropertiesForLobby = lobbyOptions});
-    }
-
     private bool TryParseMods(Hashtable hashtable, out List<ModManager.ModStub> stubs) {
         if (hashtable.ContainsKey("modList")) {
             if (hashtable["modList"] is not string) {
@@ -272,11 +249,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //PhotonNetwork.CreateRoom(null, new RoomOptions{MaxPlayers = maxPlayers});
     }
     public void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.");
-        GameManager.instance.StartCoroutine(CreatePublicRoomRoutine());
-        //if (popup != null) {
-        //popup.Hide();
-        //}
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
         yield return new WaitUntil(() => !LevelLoader.loadingLevel && ModManager.GetFinishedLoading());

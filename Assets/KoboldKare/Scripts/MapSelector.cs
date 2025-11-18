@@ -82,7 +82,6 @@ public class MapSelector : MonoBehaviour {
 
     public void Confirm() {
         if (instance.currentHandle != null) {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
             instance.currentHandle.Invoke(false, new MapSelectResults() {
                 playableMap = mapSelectUI.GetSelectedMap(),
                 multiplayer = instance.currentMultiplayer,

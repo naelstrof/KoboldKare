@@ -25,8 +25,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public static void GiveStars(int count) {
-        instance.stars += count;
-        instance.objectiveChanged?.Invoke(null);
+        if (instance.photonView.IsMine) {
+            instance.stars += count;
+            instance.objectiveChanged?.Invoke(null);
+        }
     }
 
     public static bool HasMail() {

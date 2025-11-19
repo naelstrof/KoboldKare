@@ -29,6 +29,7 @@ public class PlayButton : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             yield break;
         }
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
         NetworkManager.instance.StartSinglePlayer();
         GetComponent<Button>().interactable = true;

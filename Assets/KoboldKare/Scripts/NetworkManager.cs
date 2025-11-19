@@ -284,6 +284,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     
     public void OnPlayerEnteredRoom(Player other) {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
+        CheatsProcessor.AppendText($"{other.NickName}<color=yellow> has joined the room.</color>\n");
     }
 
     public void OnPlayerLeftRoom(Player other) {
@@ -291,6 +292,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.IsMasterClient) {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
         }
+        CheatsProcessor.AppendText($"{other.NickName}<color=yellow> has left the room.</color>\n");
     }
     public void OnConnected() {
         Debug.Log("Connected.");
@@ -306,6 +308,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
+        CheatsProcessor.AppendText($"<color=yellow>Host migrated to {newMasterClient.NickName}</color>\n");
         Debug.Log("Master switched!" + newMasterClient);
         //GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
     }

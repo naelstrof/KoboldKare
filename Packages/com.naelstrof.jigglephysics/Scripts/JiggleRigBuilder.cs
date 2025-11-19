@@ -234,7 +234,7 @@ public class JiggleRigBuilder : MonoBehaviour, IJiggleAdvancable, IJiggleBlendab
             }
             simulatedPoints = jiggleBoneList.ToArray();
             boneCount = simulatedPoints.Length;
-            colliderCount = colliders.Length;
+            colliderCount = colliders?.Length ?? 0;
             needsCollisions = colliderCount != 0;
         }
 

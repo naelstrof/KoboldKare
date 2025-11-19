@@ -1,11 +1,37 @@
-using System.Text;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [System.Serializable]
 public class CommandSculpt : Command
 {
+    private static readonly string[] arg1 = new string[]
+    {
+        "self",
+        "target",
+    };
+
+    private static readonly string[] arg2 = new string[]
+    {
+        "balls",
+        "bellycapacity",
+        "boobs",
+        "brightness",
+        "dick",
+        "dickthickness",
+        "energy",
+        "fat",
+        "foodcapacity",
+        "height",
+        "hue",
+        "impregnate",
+        "saturation",
+    };
+
     public override string GetArg0() => "/sculpt";
 
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
@@ -207,6 +233,30 @@ public class CommandSculpt : Command
             default:
 
                 throw new CheatsProcessor.CommandException($"Invalid body part specified: {args[2]}");
+        }
+    }
+
+    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        switch(argumentIndex) {
+            case 1:
+
+                foreach(var arg in arg1) {
+                    if (arg.Contains(text, StringComparison.OrdinalIgnoreCase)) {
+                        yield return new(arg);
+                    }
+                }
+
+                break;
+
+            case 2:
+
+                foreach (var arg in arg2) {
+                    if (arg.Contains(text, StringComparison.OrdinalIgnoreCase)) {
+                        yield return new(arg);
+                    }
+                }
+
+                break;
         }
     }
 }

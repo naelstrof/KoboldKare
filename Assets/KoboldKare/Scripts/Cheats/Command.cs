@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,23 @@ using UnityEngine.Localization;
 
 [System.Serializable]
 public class Command {
+    public class AutocompleteResult {
+
+        public string label;
+        public string value;
+
+        public AutocompleteResult(string value)
+        {
+            label = this.value = value;
+        }
+
+        public AutocompleteResult(string label, string value)
+        {
+            this.label = label;
+            this.value = value;
+        }
+    }
+
     /// <summary>
     /// This is used to cache and register commands and what they do. Arg0 should be the first argument. Example: "/give"
     /// </summary>
@@ -25,4 +43,9 @@ public class Command {
     public virtual void Execute(StringBuilder output, Kobold k, string[] args) {}
 
     public virtual void OnValidate() { }
+
+    public virtual IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text)
+    {
+        return Array.Empty<AutocompleteResult>();
+    }
 }

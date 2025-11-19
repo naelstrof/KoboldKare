@@ -26,6 +26,20 @@ public class CommandDick : Command {
         }
     }
 
+    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if(argumentIndex != 1) {
+            yield break;
+        }
+
+        var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
+
+        foreach(var info in infos) {
+            if(info.GetKey().Contains(text, StringComparison.OrdinalIgnoreCase)) {
+                yield return new(info.GetKey());
+            }
+        }
+    }
+
     private void SetDick(Kobold k, short dickID, StringBuilder output, string chatMessage) {
         k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
         output.AppendLine(chatMessage);

@@ -7,15 +7,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class NavigateSelectSomething : MonoBehaviour {
-    [SerializeField]
-    private InputActionReference navigate;
-
     private void OnEnable() {
-        navigate.action.performed += OnPerformed;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Navigate.performed += OnPerformed;
     }
 
     private void OnDisable() {
-        navigate.action.performed -= OnPerformed;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Navigate.performed -= OnPerformed;
     }
 
     void OnPerformed(InputAction.CallbackContext ctx) {

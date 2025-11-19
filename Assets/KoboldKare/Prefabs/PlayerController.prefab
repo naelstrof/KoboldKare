@@ -1860,7 +1860,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 887705302900164184}
-  - component: {fileID: 2603470697970172589}
   - component: {fileID: 8544051599655029854}
   - component: {fileID: 8381799715719624598}
   - component: {fileID: 7738571424832966628}
@@ -1887,105 +1886,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2603470697970172589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716878098619315962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: b80237a58ac8c22458251d7c9dcacf88,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c47a730b-b20e-4586-a6db-3b34af9275fa
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b550e176-87c2-4c76-9811-7066eeeb09d2
-    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 466a5d54-bc44-4eea-b7a2-229c8fc5acee
-    m_ActionName: Player/Walk[/Keyboard/leftShift,/XInputControllerWindows/dpad/down]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 499021cf-bcc5-4511-a370-0732194f6355
-    m_ActionName: Player/Gib[/Keyboard/k,/XInputControllerWindows/select]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2998db3d-b369-40c0-b490-e5a46f321d90
-    m_ActionName: Player/Use[/Keyboard/e,/XInputControllerWindows/buttonWest]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c9bd1f8a-f506-4c88-979a-3a57f51905d5
-    m_ActionName: Player/ActivateGrab[/Mouse/rightButton,/XInputControllerWindows/rightShoulder]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d6c8d9e7-d9ff-4602-b4de-f39ebd163c20
-    m_ActionName: Player/Grab[/Mouse/leftButton,/XInputControllerWindows/leftShoulder]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5f8cabfe-1e20-48c9-b3d0-47c623386416
-    m_ActionName: Player/Grab Push and Pull[/Mouse/scroll/y,/XInputControllerWindows/leftStick/y]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5b135bde-6ae9-4419-bb3e-c82fcd26909a
-    m_ActionName: Player/Crouch[/Keyboard/leftCtrl,/XInputControllerWindows/leftStickPress]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ca49f33d-5d9f-4409-b5ce-882d7bf7e519
-    m_ActionName: Player/View Stats[/Keyboard/tab,/XInputControllerWindows/start]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d1c63e44-0f6f-49b6-b8bc-a206fae3265f
-    m_ActionName: Player/Rotate[/Keyboard/r,/XInputControllerWindows/dpad/up]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 97373a1c-04e4-4551-a3a3-5def8bbde73e
-    m_ActionName: Player/Unfreeze[/Keyboard/q,/XInputControllerWindows/dpad/down]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3e7b34c3-4bd8-41bc-8c70-c70de46c2881
-    m_ActionName: Player/Ragdoll[/Keyboard/f,/XInputControllerWindows/buttonNorth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 22a581ce-7104-4e66-ac55-3cb2b934e5b1
-    m_ActionName: Player/SwitchGrabMode[/Keyboard/leftShift,/XInputControllerWindows/rightStickPress]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: bbcd3efa-011d-46f8-96c1-cf5b735277d3
-    m_ActionName: Player/Look[/XInputControllerWindows/rightStick]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ecec02b0-8b8d-4552-826a-2548e449e804
-    m_ActionName: Player/SwitchCamera[/Keyboard/c,/XInputControllerWindows/dpad/down]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 401c1935-5d4d-47fd-a653-541691fedb40
-    m_ActionName: Player/ResetCamera[/Keyboard/c,/XInputControllerWindows/dpad/down]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &8544051599655029854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,7 +1898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a5a18def985a9742845a522bc2557cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controls: {fileID: 2603470697970172589}
   coyoteTime: 0.2
   defaultMultiGrabSwitchFrames: 15
   user: {fileID: 5335658201095571829}
@@ -4635,7 +4534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.999664, y: -10}
+  m_AnchoredPosition: {x: -9.999695, y: -10}
   m_SizeDelta: {x: -20, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &1101751689644777539
@@ -7337,7 +7236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.999664, y: -48}
+  m_AnchoredPosition: {x: -9.999695, y: -48}
   m_SizeDelta: {x: -20, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2365030735395279601

@@ -87,15 +87,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "View Stats",
-                    "type": "Value",
-                    "id": "ca49f33d-5d9f-4409-b5ce-882d7bf7e519",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Rotate",
                     "type": "Button",
                     "id": "d1c63e44-0f6f-49b6-b8bc-a206fae3265f",
@@ -195,15 +186,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "7d5c81fd-1dac-483f-86a7-029428d0cd45",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ErectionUp",
                     "type": "Value",
                     "id": "b954f352-cb6f-448d-8d72-62718c2d2bb4",
@@ -220,15 +202,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Chat",
-                    "type": "Button",
-                    "id": "a1a84824-b8f9-4a96-8efe-17dde284b118",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "HipControl",
@@ -510,28 +483,6 @@
                 },
                 {
                     "name": "",
-                    "id": "3a17ca90-5133-40fb-9413-2cdf14df371a",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "View Stats",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a1b639b7-5822-4944-83fa-9b3a1e625a48",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "View Stats",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e96ff8b7-b212-4d83-b1fd-55b2e18b3339",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -730,28 +681,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d11ad586-dbca-4aad-a3be-f51edaf1348e",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2c38f9d2-ed5d-492b-830f-8655f719b29d",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "745a0c92-97e8-4719-9747-e434df652197",
                     "path": "<Keyboard>/z",
                     "interactions": "",
@@ -791,28 +720,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "ErectionUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a9c015eb-5327-4992-8826-f833d3ed6837",
-                    "path": "<Keyboard>/enter",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Chat",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3e8830ff-bd5b-4e06-9c7e-1cd269ce1f0e",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Chat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1081,6 +988,24 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "6388e28a-aee1-46fa-824a-fa71b4ff051b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "View Stats",
+                    "type": "Value",
+                    "id": "83d6aae7-5b9e-479f-882d-913bf2916120",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Chat",
+                    "type": "Button",
+                    "id": "f5dd978f-8911-4bac-a4b5-5e7a7a0586ca",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1426,6 +1351,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "24ddfd87-7f56-46e9-b11f-1975d5410208",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "View Stats",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82e2a924-c99f-481d-9010-a174700168da",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "View Stats",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e7593d2-3cda-4c10-9e7f-83c15cff3f60",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Chat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7686fb6c-dfbc-4f73-842e-a724f21fe494",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Chat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

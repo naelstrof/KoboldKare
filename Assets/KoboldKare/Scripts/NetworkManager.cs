@@ -377,7 +377,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
             targetView.TransferOwnership(requestingPlayer);
         } else {
-            if (!k.GetComponentInChildren<PlayerInput>().actions["Jump"].IsPressed() || ReferenceEquals(requestingPlayer, PhotonNetwork.LocalPlayer)) {
+            bool permission = PlayerPossession.TryGetPlayerInstance(out var instance) && instance.kobold == k && GameManager.GetPlayerControls().Player.Jump.IsPressed();
+            if (!permission || requestingPlayer == PhotonNetwork.LocalPlayer) {
                 targetView.TransferOwnership(requestingPlayer);
             }
         }

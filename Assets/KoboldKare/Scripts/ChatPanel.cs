@@ -12,15 +12,10 @@ public class ChatPanel : MonoBehaviour {
     [SerializeField] private ScrollRect chatScrollView;
     [SerializeField] private TMPro.TMP_Text chatDisplay;
     [SerializeField] private TMPro.TMP_InputField chatInput;
-    [SerializeField] private InputActionReference closeChatAction;
     [SerializeField] private Button closeButton;
-
-    private PlayerPossession playerControls;
     
     void OnEnable() {
-        if (PlayerPossession.TryGetPlayerInstance(out playerControls)) {
-            playerControls.SetControlsActive(false);
-        }
+        GameManager.SetControlsActive(false);
 
         if (SteamManager.Initialized) {
             RectTransform rectTransform = chatInput.GetComponent<RectTransform>();
@@ -43,8 +38,8 @@ public class ChatPanel : MonoBehaviour {
     IEnumerator WaitThenSubscribe() {
         yield return new WaitForSecondsRealtime(0.1f);
         closeButton.interactable = true;
-        closeChatAction.action.Enable();
-        closeChatAction.action.performed += OnCloseChat;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Cancel.performed += OnCloseChat;
         subscribed = true;
         chatInput.Select();
         chatInput.onSubmit.AddListener(OnTextSubmit);
@@ -63,9 +58,7 @@ public class ChatPanel : MonoBehaviour {
 
     private void OnDisable() {
         closeButton.interactable = false;
-        if (playerControls != null) {
-            playerControls.SetControlsActive(true);
-        }
+        GameManager.SetControlsActive(true);
         CheatsProcessor.RemoveOutputChangedListener(OnChatChanged);
         if (SteamManager.Initialized) {
             SteamUtils.DismissFloatingGamepadTextInput();
@@ -73,7 +66,8 @@ public class ChatPanel : MonoBehaviour {
 
         if (subscribed) {
             chatInput.onSubmit.RemoveListener(OnTextSubmit);
-            closeChatAction.action.performed -= OnCloseChat;
+            var controls = GameManager.GetPlayerControls();
+            controls.UI.Cancel.performed -= OnCloseChat;
         } else {
             StopAllCoroutines();
         }

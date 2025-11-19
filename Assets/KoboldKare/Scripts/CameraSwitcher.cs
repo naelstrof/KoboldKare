@@ -121,7 +121,6 @@ public class CameraSwitcher : MonoBehaviour {
             freeCamObj.transform.SetParent(GetComponentInParent<CharacterDescriptor>().transform);
             freeCamObj.transform.position = transform.position;
             freeCamController = freeCamObj.AddComponent<SimpleCameraController>();
-            freeCamController.SetControls(GetComponent<PlayerInput>());
             freeCamController.enabled = false;
             
             freecamConfiguration = new OrbitCameraBasicConfiguration();

@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class MainMenu : MonoBehaviour {
     private static MainMenu instance;
 
-    [SerializeField] private InputActionReference backButton;
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void Init() {
         instance = null;
@@ -19,12 +17,16 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         instance = this;
-        backButton.action.Enable();
-        backButton.action.performed += OnBackButton;
+    }
+
+    void Start() {
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Pause.performed += OnBackButton;
     }
 
     private void OnDestroy() {
-        backButton.action.performed -= OnBackButton;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Pause.performed -= OnBackButton;
     }
 
     private void OnBackButton(InputAction.CallbackContext obj) {

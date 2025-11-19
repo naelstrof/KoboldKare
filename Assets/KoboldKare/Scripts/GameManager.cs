@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -27,6 +28,45 @@ public class GameManager : MonoBehaviour {
     private NetworkManager networkManager;
     public AnimationCurve volumeCurve;
     public AudioPack buttonHovered, buttonClicked;
+
+    private PlayerControls controls;
+
+    public static PlayerControls GetPlayerControls() {
+        if (instance.controls == null) {
+            instance.controls = new PlayerControls();
+            instance.controls.Enable();
+            instance.controls.Player.Gib.performed += OnGibInput;
+            instance.controls.UI.Chat.performed += OnChatInput;
+            instance.controls.UI.ViewStats.performed += OnViewEquipment;
+        }
+        return instance.controls;
+    }
+
+    private static void OnGibInput(InputAction.CallbackContext ctx) {
+        if (PhotonNetwork.LocalPlayer.TagObject is Kobold kobold) {
+            PhotonNetwork.Destroy(kobold.gameObject);
+        }
+    }
+    
+    private static void OnChatInput(InputAction.CallbackContext ctx) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat && LevelLoader.InLevel()) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Chat);
+        }
+    }
+    
+    private static void OnViewEquipment(InputAction.CallbackContext ctx) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Equipment && LevelLoader.InLevel()) {
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
+        }
+    }
+    
+    public static void SetControlsActive(bool active) {
+        if (!active) {
+            GetPlayerControls().Player.Disable();
+        } else {
+            GetPlayerControls().Player.Enable();
+        }
+    }
 
     [SerializeField] private PrefabDatabase penisDatabase;
     [SerializeField] private PrefabDatabase playerDatabase;
@@ -57,7 +97,7 @@ public class GameManager : MonoBehaviour {
             GameObject freshGameManager = Instantiate( AssetDatabase.LoadAssetAtPath<GameObject>(path));
             instance = freshGameManager.GetComponent<GameManager>();
             DontDestroyOnLoad(freshGameManager);
-            Debug.LogError("Spawned a GameManager on the fly due to misconfigured scene. This is not intentional, and breaks hard references to required libraries. You should place a GameManager prefab into the scene.");
+            Debug.Log("Spawned a GameManager on the fly.");
         }
     #endif
 
@@ -72,14 +112,18 @@ public class GameManager : MonoBehaviour {
 #endif
     }
 
-    void Start() {
+    private void Awake() {
         if (instance == null) {
             instance = this;
         } else if (instance != this) {
             Destroy(gameObject);
+        }
+    }
+
+    void Start() {
+        if (instance != this) {
             return;
         }
-
         ModManager.AddFinishedLoadingListener(ReloadMapIfInEditor);
         // FIXME: Photon isn't initialized early enough for scriptable objects to add themselves as a callback...
         // So I do it here-- I guess!

@@ -39,7 +39,12 @@ public class ModManager : MonoBehaviour {
 
     public struct ModInfoData {
         public string GetSceneBundleLocation() {
-            return $"{directoryInfo.FullName}/{runningPlatform}/{assets["SceneBundleName"].ToString().Trim('"')}";
+            var platform = version switch {
+                "v0.0.1" => runningPlatform,
+                "v0.0.2" => "Universal",
+                _ => runningPlatform
+            };
+            return $"{directoryInfo.FullName}/{platform}/{assets["SceneBundleName"].ToString().Trim('"')}";
         }
         public static bool TryGetModInfoData(string jsonPath, ModSource source, out ModInfoData data) {
             FileInfo fileInfo = new FileInfo(jsonPath);
@@ -100,7 +105,7 @@ public class ModManager : MonoBehaviour {
 
             if (rootNode.HasKey("version")) {
                 modInfoData.version = rootNode["version"];
-                if (modInfoData.version == "v0.0.1") {
+                if (modInfoData.version == "v0.0.1" || modInfoData.version == "v0.0.2") {
                     
                 } else {
                     Debug.LogError($"Failed to load mod {jsonPath}, unknown version {modInfoData.version}.");
@@ -163,19 +168,78 @@ public class ModManager : MonoBehaviour {
     }
 
     public class ModAssetBundle : Mod {
+        public AssetBundle shaderBundle;
         public AssetBundle bundle;
         private bool loaded = false;
         private bool assetsLoaded = false;
-        public ModAssetBundle(ModInfoData info) : base(info) {
+        public ModAssetBundle(ModInfoData info, string version) : base(info) {
+            this.version = version;
         }
-        private string bundleLocation => $"{info.directoryInfo.FullName}/{runningPlatform}/{info.assets["BundleName"].ToString().Trim('"')}";
 
-        public override bool IsValid() {
-            FileInfo bundleFileInfo = new FileInfo(bundleLocation);
-            if (!bundleFileInfo.Exists) {
-                Debug.LogError($"AssetBundle {bundleFileInfo.FullName} does not exist.");
+        private string version;
+
+        private bool TryGetBundlePath(out string bundlePath) {
+            if (!info.directoryInfo.Exists) {
+                bundlePath = "";
                 return false;
             }
+            
+            var platform = version switch {
+                "v0.0.1" => runningPlatform,
+                "v0.0.2" => "Universal",
+                _ => runningPlatform
+            };
+            
+            if (!info.assets.HasKey("BundleName")) {
+                bundlePath = $"{info.directoryInfo.FullName}/{platform}/";
+                return false;
+            }
+            
+            bundlePath = $"{info.directoryInfo.FullName}/{platform}/{info.assets["BundleName"].ToString().Trim('"')}";
+            return true;
+        }
+        
+        private bool TryGetShaderBundlePath(out string bundlePath) {
+            if (!info.directoryInfo.Exists) {
+                bundlePath = "";
+                return false;
+            }
+            if (version != "v0.0.2") {
+                bundlePath = "";
+                return false;
+            }
+            
+            if (!info.assets.HasKey("ShaderBundleName")) {
+                bundlePath = $"{info.directoryInfo.FullName}/{runningPlatform}/";
+                return false;
+            }
+            bundlePath = $"{info.directoryInfo.FullName}/{runningPlatform}/{info.assets["ShaderBundleName"].ToString().Trim('"')}";
+            return true;
+        }
+
+        public override bool IsValid() {
+            if (TryGetBundlePath(out var bundleLocation)) {
+                FileInfo bundleFileInfo = new FileInfo(bundleLocation);
+                if (!bundleFileInfo.Exists) {
+                    Debug.LogError($"AssetBundle {bundleFileInfo.FullName} does not exist.");
+                    return false;
+                }
+            } else {
+                Debug.LogError($"Failed to locate bundle path for mod {info.title}, {bundleLocation}.");
+            }
+
+            if (version == "v0.0.2") {
+                if (TryGetShaderBundlePath(out var shaderBundleLocation)) {
+                    FileInfo bundleFileInfo = new FileInfo(shaderBundleLocation);
+                    if (!bundleFileInfo.Exists) {
+                        Debug.LogError($"AssetBundle {bundleFileInfo.FullName} does not exist.");
+                        return false;
+                    }
+                } else {
+                    Debug.LogError($"Failed to locate bundle path for mod {info.title}, {shaderBundleLocation}.");
+                }
+            }
+
             return base.IsValid();
         }
 
@@ -185,9 +249,18 @@ public class ModManager : MonoBehaviour {
 
         protected override async Task TryLoad() {
             try {
-                bundle = await AssetBundle.LoadFromFileAsync(bundleLocation).AsTask();
+                if (!TryGetBundlePath(out var bundlePath)) {
+                    throw new Exception($"Failed to load bundle. {info.title} [{info.publishedFileId}], couldn't find bundle path. {bundlePath}");
+                }
+                if (TryGetShaderBundlePath(out var shaderBundlePath)) {
+                    shaderBundle = await AssetBundle.LoadFromFileAsync(shaderBundlePath).AsTask();
+                    if (!shaderBundle) {
+                        throw new Exception($"Failed to load shader bundle. {info.title} [{info.publishedFileId}], {shaderBundlePath}");
+                    }
+                }
+                bundle = await AssetBundle.LoadFromFileAsync(bundlePath).AsTask();
                 if (!bundle) {
-                    throw new Exception($"Failed to load bundle. {info.title} [{info.publishedFileId}]");
+                    throw new Exception($"Failed to load bundle. {info.title} [{info.publishedFileId}], {bundlePath}");
                 } else {
                     loaded = true;
                 }
@@ -205,8 +278,14 @@ public class ModManager : MonoBehaviour {
                 return;
             }
             await bundle.UnloadAsync(true).AsTask();
+            
+            if (shaderBundle) {
+                await shaderBundle.UnloadAsync(true).AsTask();
+            }
+
             loaded = false;
             bundle = null;
+            shaderBundle = null;
         }
 
         public override async Task SetLoaded(bool active) {
@@ -675,7 +754,10 @@ public class ModManager : MonoBehaviour {
                     _ = instance.AddMod(new ModAddressable(modInfoData));
                     break;
                 case "v0.0.1":
-                    _ = instance.AddMod(new ModAssetBundle(modInfoData));
+                    _ = instance.AddMod(new ModAssetBundle(modInfoData, modInfoData.version));
+                    break;
+                case "v0.0.2":
+                    _ = instance.AddMod(new ModAssetBundle(modInfoData, modInfoData.version));
                     break;
                 default:
                     Debug.LogError($"Failed to load mod {modPath}, unknown version {modInfoData.version}.");
@@ -824,7 +906,11 @@ public class ModManager : MonoBehaviour {
                             break;
                         }
                         case "v0.0.1": {
-                            await AddMod(new ModAssetBundle(data));
+                            await AddMod(new ModAssetBundle(data, data.version));
+                            break;
+                        }
+                        case "v0.0.2": {
+                            await AddMod(new ModAssetBundle(data, data.version));
                             break;
                         }
                     }

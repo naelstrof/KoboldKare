@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Steamworks;
 using UnityEditor;
 using UnityEngine.Rendering;
+using UnityEngine.VFX;
 
 [Serializable]
 public class SteamWorkshopItem {
@@ -89,7 +90,7 @@ public class SteamWorkshopItem {
 	public abstract class ModContent {
 		public abstract AssetBundleBuild[] GetBuilds(string uniqueString);
 
-		public void BuildForTarget(BuildTarget target, string modBuildPath, string uniqueString) {
+		public AssetBundleManifest BuildForTarget(BuildTarget target, string modBuildPath, string uniqueString) {
 			if (!Directory.Exists(modBuildPath)) {
 				Directory.CreateDirectory(modBuildPath);
 			}
@@ -101,6 +102,8 @@ public class SteamWorkshopItem {
 			} else {
 				throw new UnityException("Build failed, see console for details.");
 			}
+
+			return manifest;
 		}
 		public abstract void Serialize(JSONNode node, string uniqueString);
 	}
@@ -197,6 +200,7 @@ public class SteamWorkshopItem {
 		
 		public override void Serialize(JSONNode rootNode, string uniqueString) {
 			rootNode["BundleName"] = $"bundle_{uniqueString}";
+			rootNode["ShaderBundleName"] = $"shaderbundle_{uniqueString}";
 			rootNode["PlayableCharacter"] = GetAssetNames(playableCharacters, uniqueString);
 			rootNode["Fruit"] = GetAssetNames(fruits, uniqueString);
 			rootNode["Penis"] = GetAssetNames(dicks, uniqueString);
@@ -210,12 +214,28 @@ public class SteamWorkshopItem {
 		}
 
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
+			var assetNames = GetAssets();
+			var shaderDeps = new HashSet<string>();
+			foreach (var asset in assetNames) {
+				var deps = AssetDatabase.GetDependencies(asset, true);
+				foreach (var dep in deps) {
+					var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
+					if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
+						shaderDeps.Add(dep);
+					}
+				}
+			}
+
+			AssetBundleBuild shaderBuild = new AssetBundleBuild {
+				assetBundleName = $"shaderBundle_{uniqueString}",
+				assetNames = shaderDeps.ToArray(),
+			};
 			AssetBundleBuild build = new AssetBundleBuild {
 				assetBundleName = $"bundle_{uniqueString}",
 				assetNames = GetAssets(),
 				addressableNames = GetAssetAddressableNames(uniqueString),
 			};
-			return new[] { build };
+			return new[] { build, shaderBuild };
 		}
 	}
 	
@@ -226,12 +246,25 @@ public class SteamWorkshopItem {
 		public string sceneTitle;
 		public string sceneDescription;
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
+			var scenePath = AssetDatabase.GetAssetPath(scene);
+			var deps = AssetDatabase.GetDependencies(scenePath, true);
+			var shaderDeps = new List<string>();
+			foreach (var dep in deps) {
+				var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
+				if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
+					shaderDeps.Add(dep);
+				}
+			}
+			AssetBundleBuild shaderBuild = new AssetBundleBuild {
+				assetBundleName = $"shaderBundle_{uniqueString}",
+				assetNames = shaderDeps.ToArray(),
+			};
 			AssetBundleBuild sceneBuild = new AssetBundleBuild {
 				assetBundleName = $"sceneBundle_{uniqueString}",
-				assetNames = new[] { AssetDatabase.GetAssetPath(scene) },
+				assetNames = new[] { scenePath },
 			};
 			var otherBuilds = base.GetBuilds(uniqueString);
-			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild };
+			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild, shaderBuild };
 			return allBuilds.ToArray();
 		}
 		
@@ -242,7 +275,8 @@ public class SteamWorkshopItem {
 
 		public override void Serialize(JSONNode node, string uniqueString) {
 			base.Serialize(node, uniqueString);
-			node["SceneBundleName"] = $"sceneBundle_{uniqueString}";
+			node["SceneBundleName"] = $"scenebundle_{uniqueString}";
+			node["ShaderBundleName"] = $"shaderbundle_{uniqueString}";
 			node["Scene"] = $"{AssetDatabase.GetAssetPath(scene)}_{uniqueString}";
 			node["SceneTitle"] = sceneTitle;
 			node["SceneDescription"] = sceneDescription;
@@ -335,8 +369,12 @@ public class SteamWorkshopItem {
 		return IsValid() && Directory.Exists(modRoot);
 	}
 
-	public string GetModBuildPath(BuildTarget target) {
-		return $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}{Path.DirectorySeparatorChar}{target}";
+	public string GetModBuildPath(BuildTarget? target) {
+		if (target != null) {
+			return $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}{Path.DirectorySeparatorChar}{target.Value}";
+		} else {
+			return $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}{Path.DirectorySeparatorChar}Universal";
+		}
 	}
 	private string modRoot => $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}mods{Path.DirectorySeparatorChar}{GetFileNameSafeTitle()}";
 
@@ -351,7 +389,7 @@ public class SteamWorkshopItem {
         rootNode["title"] = title;
         rootNode["visibility"] = visibility.ToString();
         rootNode["loadPriority"] = loadPriority;
-        rootNode["version"] = "v0.0.1";
+        rootNode["version"] = "v0.0.2";
         var arrayNode = new JSONArray();
 	
         foreach(var tag in GetTags()) {
@@ -489,10 +527,54 @@ public class SteamWorkshopItem {
 			RenderTexture.active = oldTex;
 
 			CreateModJSON(jsonSavePath, modContent, GetGUID());
+			
+			var universalBuildPath = GetModBuildPath(null);
+			Directory.CreateDirectory(universalBuildPath);
 
-			modContent.BuildForTarget(BuildTarget.StandaloneWindows64, GetModBuildPath(BuildTarget.StandaloneWindows64), GetGUID());
-			modContent.BuildForTarget(BuildTarget.StandaloneLinux64, GetModBuildPath(BuildTarget.StandaloneLinux64), GetGUID());
-			modContent.BuildForTarget(BuildTarget.StandaloneOSX, GetModBuildPath(BuildTarget.StandaloneOSX), GetGUID());
+			var windowsBuildPath = GetModBuildPath(BuildTarget.StandaloneWindows64);
+			var windowsManifest = modContent.BuildForTarget(BuildTarget.StandaloneWindows64, windowsBuildPath, GetGUID());
+			foreach(var bundleName in windowsManifest.GetAllAssetBundles()) {
+				if (!bundleName.Contains("shaderbundle")) {
+					var sourcePath = $"{windowsBuildPath}/{bundleName}";
+					var destPath = $"{universalBuildPath}/{bundleName}";
+					File.Move(sourcePath, destPath);
+					File.Move($"{sourcePath}.manifest", $"{destPath}.manifest");
+				}
+			}
+			var windowsManifestPath = $"{windowsBuildPath}/StandaloneWindows64";
+			File.Delete(windowsManifestPath);
+			File.Delete($"{windowsManifestPath}.manifest");
+			
+			var linuxBuildPath = GetModBuildPath(BuildTarget.StandaloneLinux64);
+			var linuxManifest = modContent.BuildForTarget(BuildTarget.StandaloneLinux64, linuxBuildPath, GetGUID());
+			foreach(var bundleName in linuxManifest.GetAllAssetBundles()) {
+				if (!bundleName.Contains("shaderbundle")) {
+					var sourcePath = $"{linuxBuildPath}/{bundleName}";
+					var manifestPath = $"{linuxBuildPath}/{bundleName}.manifest";
+					File.Delete(sourcePath);
+					File.Delete(manifestPath);
+				}
+			}
+			
+			var linuxManifestPath = $"{linuxBuildPath}/StandaloneLinux64";
+			File.Delete(linuxManifestPath);
+			File.Delete($"{linuxManifestPath}.manifest");
+			
+			var macBuildPath = GetModBuildPath(BuildTarget.StandaloneOSX);
+			var macManifest = modContent.BuildForTarget(BuildTarget.StandaloneOSX, macBuildPath, GetGUID());
+			foreach(var bundleName in macManifest.GetAllAssetBundles()) {
+				if (!bundleName.Contains("shaderbundle")) {
+					var sourcePath = $"{macBuildPath}/{bundleName}";
+					var manifestPath = $"{macBuildPath}/{bundleName}.manifest";
+					File.Delete(sourcePath);
+					File.Delete(manifestPath);
+				}
+			}
+			
+			var macManifestPath = $"{macBuildPath}/StandaloneOSX";
+			File.Delete(macManifestPath);
+			File.Delete($"{macManifestPath}.manifest");
+			
 			lastMessage = "Successfully built! Upload when ready.";
 			lastMessageType = MessageType.Info;
 			statusChanged?.Invoke(this, lastMessageType, lastMessage);

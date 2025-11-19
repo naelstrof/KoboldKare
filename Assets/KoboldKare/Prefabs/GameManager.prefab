@@ -11145,7 +11145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837538
   references:
@@ -17364,7 +17363,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.6
+  m_fontSize: 30.8
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22501,7 +22500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837537
   references:
@@ -25821,7 +25819,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.99999994, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -28600,7 +28598,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
-  - control: {fileID: 3749223953104337775, guid: b80237a58ac8c22458251d7c9dcacf88,
+  - control: {fileID: -1731339643134401183, guid: b80237a58ac8c22458251d7c9dcacf88,
       type: 3}
     controlName:
       m_TableReference:
@@ -28709,7 +28707,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
-  - control: {fileID: 7212306176372978217, guid: b80237a58ac8c22458251d7c9dcacf88,
+  - control: {fileID: 7127249530326107942, guid: b80237a58ac8c22458251d7c9dcacf88,
       type: 3}
     controlName:
       m_TableReference:
@@ -28742,7 +28740,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 1
       m_LocalVariables: []
-  - control: {fileID: 6299549906682794432, guid: b80237a58ac8c22458251d7c9dcacf88,
+  - control: {fileID: 4156988545588338131, guid: b80237a58ac8c22458251d7c9dcacf88,
       type: 3}
     controlName:
       m_TableReference:
@@ -31623,7 +31621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837504
   references:
@@ -33165,7 +33162,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
@@ -33401,7 +33398,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
@@ -33675,7 +33672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837536
   references:
@@ -33879,7 +33875,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837534
   references:
@@ -34050,7 +34045,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
@@ -35180,7 +35175,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
@@ -36752,7 +36747,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837505
   references:
@@ -38425,7 +38419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837535
   references:
@@ -39249,7 +39242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ef17e6e5f2694e9d3f37c53c5506e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   onButtonPress:
   - rid: 998295212114837533
   references:
@@ -39610,7 +39602,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
@@ -40267,7 +40259,7 @@ PrefabInstance:
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 414.2093
+      value: 382.51755
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742643, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}

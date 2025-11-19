@@ -11,7 +11,7 @@ public class Pauser : MonoBehaviour {
     private void Awake() {
         if (instance == null) {
             SceneManager.sceneLoaded += OnSceneLoaded;
-            GameManager.GetPlayerControls().UI.Cancel.performed += OnPauseButtonPressed;
+            GameManager.GetPlayerControls().UI.Pause.performed += OnPauseButtonPressed;
             instance = this;
         } else {
             Destroy(gameObject);
@@ -28,7 +28,7 @@ public class Pauser : MonoBehaviour {
 
     private void OnDestroy() {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        GameManager.GetPlayerControls().UI.Cancel.performed -= OnPauseButtonPressed;
+        GameManager.GetPlayerControls().UI.Pause.performed -= OnPauseButtonPressed;
     }
 
     private static void TogglePause() {

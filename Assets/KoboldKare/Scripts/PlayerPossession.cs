@@ -146,6 +146,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.Player.ResetHip.performed += OnResetHipInput;
         controls.Player.Use.performed += OnUseInput;
         controls.Player.Ragdoll.performed += OnRagdollInput;
+        controls.Player.Ragdoll.canceled += OnRagdollInput;
         
         if (grabber != null) {
             grabber.activateUIChanged -= OnActivateChange;
@@ -189,6 +190,7 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.Player.ResetHip.performed -= OnResetHipInput;
         controls.Player.Use.performed -= OnUseInput;
         controls.Player.Ragdoll.performed -= OnRagdollInput;
+        controls.Player.Ragdoll.canceled -= OnRagdollInput;
         
         if (grabber != null) {
             grabber.activateUIChanged -= OnActivateChange;
@@ -434,7 +436,7 @@ public class PlayerPossession : MonoBehaviourPun {
         pGrabber.UnfreezeAll();
     }
     private void OnRagdollInput(InputAction.CallbackContext ctx) {
-        if (ctx.ReadValueAsButton()) {
+        if (!ctx.ReadValueAsButton()) {
             photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         } else {

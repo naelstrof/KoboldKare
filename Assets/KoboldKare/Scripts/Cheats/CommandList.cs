@@ -85,10 +85,12 @@ public class CommandList : Command {
         }
     }
 
-    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text)
-    {
-        if(argumentIndex != 1)
-        {
+    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if (!CheatsProcessor.GetCheatsEnabled()) {
+            yield break;
+        }
+        
+        if(argumentIndex != 1) {
             yield break;
         }
 

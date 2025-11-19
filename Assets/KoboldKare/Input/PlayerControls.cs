@@ -103,7 +103,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Crouch"",
                     ""type"": ""Value"",
                     ""id"": ""5b135bde-6ae9-4419-bb3e-c82fcd26909a"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -1032,6 +1032,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AcceptAutoComplete"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa0eb821-914f-4703-9b54-c6ab407226e1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1419,6 +1428,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Chat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea6ef6b2-cd38-4305-a6bb-c60dabd2c157"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AcceptAutoComplete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1469,6 +1489,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_ViewStats = m_UI.FindAction("View Stats", throwIfNotFound: true);
         m_UI_Chat = m_UI.FindAction("Chat", throwIfNotFound: true);
+        m_UI_AcceptAutoComplete = m_UI.FindAction("AcceptAutoComplete", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1797,6 +1818,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Pause;
     private readonly InputAction m_UI_ViewStats;
     private readonly InputAction m_UI_Chat;
+    private readonly InputAction m_UI_AcceptAutoComplete;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -1814,6 +1836,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputAction @ViewStats => m_Wrapper.m_UI_ViewStats;
         public InputAction @Chat => m_Wrapper.m_UI_Chat;
+        public InputAction @AcceptAutoComplete => m_Wrapper.m_UI_AcceptAutoComplete;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1862,6 +1885,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Chat.started += instance.OnChat;
             @Chat.performed += instance.OnChat;
             @Chat.canceled += instance.OnChat;
+            @AcceptAutoComplete.started += instance.OnAcceptAutoComplete;
+            @AcceptAutoComplete.performed += instance.OnAcceptAutoComplete;
+            @AcceptAutoComplete.canceled += instance.OnAcceptAutoComplete;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1905,6 +1931,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Chat.started -= instance.OnChat;
             @Chat.performed -= instance.OnChat;
             @Chat.canceled -= instance.OnChat;
+            @AcceptAutoComplete.started -= instance.OnAcceptAutoComplete;
+            @AcceptAutoComplete.performed -= instance.OnAcceptAutoComplete;
+            @AcceptAutoComplete.canceled -= instance.OnAcceptAutoComplete;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1967,5 +1996,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnViewStats(InputAction.CallbackContext context);
         void OnChat(InputAction.CallbackContext context);
+        void OnAcceptAutoComplete(InputAction.CallbackContext context);
     }
 }

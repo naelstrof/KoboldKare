@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Photon.Pun;
-using UnityEngine;
 
 [System.Serializable]
 public class CommandCheats : Command {

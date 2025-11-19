@@ -49,13 +49,13 @@ public class GameManager : MonoBehaviour {
     }
     
     private static void OnChatInput(InputAction.CallbackContext ctx) {
-        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat && LevelLoader.InLevel()) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat && LevelLoader.InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Chat);
         }
     }
     
     private static void OnViewEquipment(InputAction.CallbackContext ctx) {
-        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Equipment && LevelLoader.InLevel()) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Equipment && LevelLoader.InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
         }
     }

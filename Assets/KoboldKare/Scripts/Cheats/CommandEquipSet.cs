@@ -225,9 +225,11 @@ public class CommandEquipSet : Command {
     }
 
     public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if (!CheatsProcessor.GetCheatsEnabled()) {
+            yield break;
+        }
         switch(argumentIndex) {
             case 1:
-
                 foreach(var parameter in parameters) {
                     if(parameter.Contains(text, StringComparison.OrdinalIgnoreCase)) {
                         yield return new(parameter);
@@ -237,41 +239,28 @@ public class CommandEquipSet : Command {
                 break;
 
             case 2:
-
                 var argument = arguments[1].ToLowerInvariant();
-
                 switch(argument) {
                     case "list":
-
                         //No extra args
-
                         yield break;
-
                     case "create":
-
                         //Can't autocomplete
-
                         yield break;
-
                     case "delete":
                     case "use":
                     case "add": {
                         var sets = LoadSets();
-
                         foreach (var pair in sets) {
                             if(pair.Key.Contains(text, StringComparison.OrdinalIgnoreCase)) {
                                 yield return new(pair.Key);
                             }
                         }
-
                         break;
                     }
                 }
-
                 break;
-
             default:
-
                 yield break;
         }
     }

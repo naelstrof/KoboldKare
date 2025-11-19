@@ -81,7 +81,7 @@
                     "name": "Crouch",
                     "type": "Value",
                     "id": "5b135bde-6ae9-4419-bb3e-c82fcd26909a",
-                    "expectedControlType": "",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1010,6 +1010,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AcceptAutoComplete",
+                    "type": "Button",
+                    "id": "fa0eb821-914f-4703-9b54-c6ab407226e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1395,6 +1404,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Chat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea6ef6b2-cd38-4305-a6bb-c60dabd2c157",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AcceptAutoComplete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -144,7 +144,6 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.Player.HipControl.performed += OnActivateHipInput;
         controls.Player.HipControl.canceled += OnCanceledHipInput;
         controls.Player.ResetHip.performed += OnResetHipInput;
-        controls.Player.Crouch.performed += OnCrouchInput;
         controls.Player.Use.performed += OnUseInput;
         controls.Player.Ragdoll.performed += OnRagdollInput;
         
@@ -188,7 +187,6 @@ public class PlayerPossession : MonoBehaviourPun {
         controls.Player.HipControl.performed -= OnActivateHipInput;
         controls.Player.HipControl.canceled -= OnCanceledHipInput;
         controls.Player.ResetHip.performed -= OnResetHipInput;
-        controls.Player.Crouch.performed -= OnCrouchInput;
         controls.Player.Use.performed -= OnUseInput;
         controls.Player.Ragdoll.performed -= OnRagdollInput;
         
@@ -271,9 +269,19 @@ public class PlayerPossession : MonoBehaviourPun {
         }
     }
 
+    private float lastCrouchValue = 0f;
+
     // Update is called once per frame
     void Update() {
         var controls = GameManager.GetPlayerControls();
+        if (isActiveAndEnabled && movementEnabled) {
+            var newCrouchValue = controls.Player.Crouch.ReadValue<float>();
+            if (!Mathf.Approximately(lastCrouchValue, newCrouchValue)) {
+                controller.SetInputCrouched(newCrouchValue);
+                lastCrouchValue = newCrouchValue;
+            }
+        }
+
         if (Cursor.lockState != CursorLockMode.Locked) {
             // Clear the deltas so they don't add up.
             Vector2 mouseDelta = controls.Player.Look.ReadValue<Vector2>() + controls.Player.LookJoystick.ReadValue<Vector2>();
@@ -344,11 +352,6 @@ public class PlayerPossession : MonoBehaviourPun {
 
     private void OnWalkInput(InputAction.CallbackContext ctx) {
         controller.inputWalking = ctx.ReadValueAsButton();
-    }
-    private void OnCrouchInput(InputAction.CallbackContext ctx) {
-        if (!isActiveAndEnabled || !movementEnabled) return;
-        //controller.inputCrouched = value.Get<float>();
-        controller.SetInputCrouched(ctx.ReadValue<float>());
     }
     private void OnUseInput(InputAction.CallbackContext ctx) {
         user.Use();

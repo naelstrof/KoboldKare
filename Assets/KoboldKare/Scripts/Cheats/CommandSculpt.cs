@@ -237,25 +237,23 @@ public class CommandSculpt : Command
     }
 
     public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if (!CheatsProcessor.GetCheatsEnabled()) {
+            yield break;
+        }
         switch(argumentIndex) {
             case 1:
-
                 foreach(var arg in arg1) {
                     if (arg.Contains(text, StringComparison.OrdinalIgnoreCase)) {
                         yield return new(arg);
                     }
                 }
-
                 break;
-
             case 2:
-
                 foreach (var arg in arg2) {
                     if (arg.Contains(text, StringComparison.OrdinalIgnoreCase)) {
                         yield return new(arg);
                     }
                 }
-
                 break;
         }
     }

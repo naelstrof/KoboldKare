@@ -165,6 +165,8 @@ public class SteamWorkshopItem {
 		public GameObject[] equipmentStoreItems;
 		public GameObject[] dicks;
 		public GameObject[] seeds;
+		[Tooltip("For direct prefabs in purchasables or spawners that aren't associated with any group.")]
+		public GameObject[] networkedPrefabs;
 		public ScriptablePlant[] plants;
 		public ScriptableReagent[] reagents;
 		public ScriptableReagentReaction[] reagentReactions;
@@ -199,6 +201,9 @@ public class SteamWorkshopItem {
 			foreach(var asset in equipment) {
 				assetNames.Add(AssetDatabase.GetAssetPath(asset));
 			}
+			foreach(var asset in networkedPrefabs) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
 			return assetNames.ToArray();
 		}
 		
@@ -231,6 +236,9 @@ public class SteamWorkshopItem {
 			foreach(var asset in equipment) {
 				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
+			foreach(var asset in networkedPrefabs) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+			}
 			return addressableNames.ToArray();
 		}
 
@@ -260,6 +268,7 @@ public class SteamWorkshopItem {
 			rootNode["Cosmetic"] = GetAssetNames(cosmeticItems, uniqueString);
 			rootNode["Equipment"] = GetAssetNames(equipment, uniqueString);
 			rootNode["EquipmentStoreItem"] = GetAssetNames(equipmentStoreItems, uniqueString);
+			rootNode["NetworkedPrefab"] = GetAssetNames(networkedPrefabs, uniqueString);
 		}
 
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {

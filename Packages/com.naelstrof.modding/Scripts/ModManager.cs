@@ -256,6 +256,11 @@ public class ModManager : MonoBehaviour {
                     shaderBundle = await AssetBundle.LoadFromFileAsync(shaderBundlePath).AsTask();
                     if (!shaderBundle) {
                         throw new Exception($"Failed to load shader bundle. {info.title} [{info.publishedFileId}], {shaderBundlePath}");
+                    } else {
+                        var collection = shaderBundle.LoadAllAssets<ShaderVariantCollection>();
+                        foreach(var shaderVariantCollection in collection) {
+                            shaderVariantCollection.WarmUp();
+                        }
                     }
                 }
                 bundle = await AssetBundle.LoadFromFileAsync(bundlePath).AsTask();

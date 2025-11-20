@@ -106,6 +106,55 @@ public class SteamWorkshopItem {
 			return manifest;
 		}
 		public abstract void Serialize(JSONNode node, string uniqueString);
+
+		public static void GetShaderAssets(string[] assetNames, string uniqueString, out string[] shaderDepArray) {
+			var shaderVariantCollection = new ShaderVariantCollection();
+			var shaderDeps = new HashSet<string>();
+			foreach (var asset in assetNames) {
+				var deps = AssetDatabase.GetDependencies(asset, true);
+				foreach (var dep in deps) {
+					var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
+					if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
+						shaderDeps.Add(dep);
+					}
+					if (t == typeof(Material)) {
+						var mat = AssetDatabase.LoadAssetAtPath<Material>(dep);
+						if (!mat.shader) {
+							continue;
+						}
+
+						var keywords = mat.shaderKeywords ?? Array.Empty<string>();
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, keywords));
+						} catch (ArgumentException e) {
+						}
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipelineDefaultUnlit, keywords));
+						} catch (ArgumentException e) {
+						}
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.Meta, keywords));
+						} catch (ArgumentException e) {
+						}
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.Normal, keywords));
+						} catch (ArgumentException e) {
+						}
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.MotionVectors, keywords));
+						} catch (ArgumentException e) {
+						}
+						try {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ShadowCaster, keywords));
+						} catch (ArgumentException e) {
+						}
+					}
+				}
+			}
+			AssetDatabase.CreateAsset(shaderVariantCollection, $"Assets/ModShaderVariantCollection_{uniqueString}.asset");
+			shaderDeps.Add($"Assets/ModShaderVariantCollection_{uniqueString}.asset");
+			shaderDepArray = shaderDeps.ToArray();
+		}
 	}
 
 	[Serializable]
@@ -214,25 +263,15 @@ public class SteamWorkshopItem {
 		}
 
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
-			var assetNames = GetAssets();
-			var shaderDeps = new HashSet<string>();
-			foreach (var asset in assetNames) {
-				var deps = AssetDatabase.GetDependencies(asset, true);
-				foreach (var dep in deps) {
-					var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
-					if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
-						shaderDeps.Add(dep);
-					}
-				}
-			}
-
+			var assets = GetAssets();
+			GetShaderAssets(assets, uniqueString, out var shaderDeps);
 			AssetBundleBuild shaderBuild = new AssetBundleBuild {
 				assetBundleName = $"shaderBundle_{uniqueString}",
 				assetNames = shaderDeps.ToArray(),
 			};
 			AssetBundleBuild build = new AssetBundleBuild {
 				assetBundleName = $"bundle_{uniqueString}",
-				assetNames = GetAssets(),
+				assetNames = assets,
 				addressableNames = GetAssetAddressableNames(uniqueString),
 			};
 			return new[] { build, shaderBuild };
@@ -246,25 +285,23 @@ public class SteamWorkshopItem {
 		public string sceneTitle;
 		public string sceneDescription;
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
+			var otherBuilds = base.GetBuilds(uniqueString);
 			var scenePath = AssetDatabase.GetAssetPath(scene);
-			var deps = AssetDatabase.GetDependencies(scenePath, true);
-			var shaderDeps = new List<string>();
-			foreach (var dep in deps) {
-				var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
-				if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
-					shaderDeps.Add(dep);
+			GetShaderAssets(new [] {scenePath}, uniqueString, out var shaderDeps);
+			for (int i = 0; i < otherBuilds.Length; i++) {
+				if (otherBuilds[i].assetBundleName == $"shaderBundle_{uniqueString}") {
+					var currentAssets = new HashSet<string>(otherBuilds[i].assetNames);
+					foreach(var shaderDep in shaderDeps) {
+						currentAssets.Add(shaderDep);
+					}
+					otherBuilds[i].assetNames = currentAssets.ToArray();
 				}
 			}
-			AssetBundleBuild shaderBuild = new AssetBundleBuild {
-				assetBundleName = $"shaderBundle_{uniqueString}",
-				assetNames = shaderDeps.ToArray(),
-			};
 			AssetBundleBuild sceneBuild = new AssetBundleBuild {
 				assetBundleName = $"sceneBundle_{uniqueString}",
 				assetNames = new[] { scenePath },
 			};
-			var otherBuilds = base.GetBuilds(uniqueString);
-			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild, shaderBuild };
+			List<AssetBundleBuild> allBuilds = new List<AssetBundleBuild>(otherBuilds) { sceneBuild };
 			return allBuilds.ToArray();
 		}
 		

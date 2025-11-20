@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityScriptableSettings;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -48,14 +49,18 @@ public class GameManager : MonoBehaviour {
         }
     }
     
+    public static bool InLevel() {
+        return SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "ErrorScene";
+    }
+    
     private static void OnChatInput(InputAction.CallbackContext ctx) {
-        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat && LevelLoader.InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Chat && InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Chat);
         }
     }
     
     private static void OnViewEquipment(InputAction.CallbackContext ctx) {
-        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Equipment && LevelLoader.InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
+        if (MainMenu.GetCurrentMode() != MainMenu.MainMenuMode.Equipment && InLevel() && MainMenu.GetCurrentMode() == MainMenu.MainMenuMode.None) {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Equipment);
         }
     }
@@ -67,6 +72,27 @@ public class GameManager : MonoBehaviour {
             GetPlayerControls().Player.Enable();
         }
     }
+    [SerializeField] private AudioMixer mixer;
+
+    public static void FadeInAudio() {
+        instance.StartCoroutine(instance.FadeInAudioRoutine());
+    }
+
+    IEnumerator FadeInAudioRoutine() {
+        instance.mixer.SetFloat("MasterVolume", -80f);
+        var originalVolume = ((SettingFloat)SettingsManager.GetSetting("MasterVolume")).GetValue();
+        var originalVolumeLog = Mathf.Log(Mathf.Max(originalVolume, 0.01f)) * 20f;
+        
+        float startTime = Time.unscaledTime;
+        float duration = 5f;
+        while (Time.unscaledTime - startTime < duration) {
+            float t = (Time.unscaledTime - startTime) / duration;
+            instance.mixer.SetFloat("MasterVolume", Mathf.Lerp(-80f, originalVolumeLog, t));
+            yield return null;
+        }
+        instance.mixer.SetFloat("MasterVolume", originalVolumeLog);
+    }
+
 
     [SerializeField] private PrefabDatabase penisDatabase;
     [SerializeField] private PrefabDatabase playerDatabase;
@@ -174,7 +200,8 @@ public class GameManager : MonoBehaviour {
     private IEnumerator QuitToMenuRoutine() {
         PhotonNetwork.Disconnect();
         ObjectiveManager.GetCurrentObjective()?.Unregister();
-        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
+        yield return new WaitUntil(()=>handle.IsDone);
         PhotonNetwork.OfflineMode = false;
         yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
     }

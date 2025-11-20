@@ -32,7 +32,7 @@ public class Pauser : MonoBehaviour {
     }
 
     private static void TogglePause() {
-        if (!LevelLoader.InLevel()) {
+        if (!GameManager.InLevel()) {
             return;
         }
         paused = !paused;

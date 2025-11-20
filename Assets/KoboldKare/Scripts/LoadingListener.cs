@@ -3,32 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class LoadingListener : MonoBehaviour {
     void Start() {
-        LevelLoader.instance.sceneLoadStart += SceneLoadStart;
-        LevelLoader.instance.sceneLoadEnd += SceneLoadEnd;
-        SceneManager.sceneLoaded += OnSceneLoadOther;
+        MapLoadingInterop.OnMapStartLoad += OnMapLoad;
     }
-    void SceneLoadStart() {
+
+    private void OnMapLoad(BoxedSceneLoad obj) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+        obj.OnCompleted += () => {
+            if (GameManager.InLevel()) {
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
+            } else {
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+            }
+        };
     }
     void OnDestroy() {
-        LevelLoader.instance.sceneLoadStart -= SceneLoadStart;
-        LevelLoader.instance.sceneLoadEnd -= SceneLoadEnd;
-        SceneManager.sceneLoaded -= OnSceneLoadOther;
-    }
-
-    private void OnSceneLoadOther(Scene arg0, LoadSceneMode arg1) {
-        if (LevelLoader.InLevel()) {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-        } else {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-        }
-    }
-
-    void SceneLoadEnd() {
-        if (LevelLoader.InLevel()) {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
-        } else {
-            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-        }
+        MapLoadingInterop.OnMapStartLoad -= OnMapLoad;
     }
 }

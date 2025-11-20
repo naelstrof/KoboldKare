@@ -6,7 +6,7 @@ public class QuitButton : MonoBehaviour {
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
     void OnClick() {
-        if (LevelLoader.InLevel()) {
+        if (GameManager.InLevel()) {
             GameManager.instance.QuitToMenu();
         } else {
             GameManager.instance.Quit();

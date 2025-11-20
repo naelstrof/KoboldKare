@@ -5,6 +5,8 @@ using UnityEngine;
 public static class MapLoadingInterop {
     public delegate BoxedSceneLoad MapLoaderDelegate(string mapName);
     public static event MapLoaderDelegate OnMapRequest;
+    
+    public static event System.Action<BoxedSceneLoad> OnMapStartLoad;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void Init() {
@@ -12,7 +14,9 @@ public static class MapLoadingInterop {
     }
     public static BoxedSceneLoad RequestMapLoad(string mapName) {
         if (OnMapRequest != null) {
-            return OnMapRequest.Invoke(mapName);
+            var load = OnMapRequest.Invoke(mapName);
+            OnMapStartLoad?.Invoke(load);
+            return load;
         }
         return null;
     }

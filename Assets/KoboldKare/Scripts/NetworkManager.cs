@@ -168,7 +168,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }*/
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
-            yield return LevelLoader.instance.LoadLevel("ErrorScene");
+            var boxedSceneLoad = MapLoadingInterop.RequestMapLoad("ErrorScene");
+            yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         }
 
         PhotonNetwork.IsMessageQueueRunning = true;
@@ -226,14 +227,16 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
         if (cause == DisconnectCause.DisconnectByClientLogic || cause == DisconnectCause.None) yield break;
         PopupHandler.instance.ClearAllPopups();
-        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
+        yield return new WaitUntil(() => handle.IsDone);
         PopupHandler.instance.SpawnPopup("Disconnect", true, default, cause.ToString());
     }
 
     private IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PopupHandler.instance.ClearAllPopups();
-        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
+        yield return new WaitUntil(() => handle.IsDone);
         PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Error " + returnCode + ": " + message);
     }
 
@@ -251,7 +254,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     public void OnJoinRandomFailed(short returnCode, string message) {
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
-        yield return new WaitUntil(() => !LevelLoader.loadingLevel && ModManager.GetFinishedLoading());
+        yield return new WaitUntil(() => Mathf.Approximately(PhotonNetwork.LevelLoadingProgress, 1f) && ModManager.GetFinishedLoading());
         if (PhotonNetwork.NetworkClientState != ClientState.Joined) {
             yield break;
         }
@@ -364,7 +367,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
                 var roomName = PhotonNetwork.CurrentRoom.Name;
                 yield return PhotonDisconnectCompletely();
-                yield return LevelLoader.instance.LoadLevel("MainMenu");
+                var boxedSceneLoad = MapLoadingInterop.RequestMapLoad("MainMenu");
+                yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
                 GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
             }
         }

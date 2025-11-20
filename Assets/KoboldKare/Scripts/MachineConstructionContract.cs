@@ -11,7 +11,7 @@ public class MachineConstructionContract : ConstructionContract {
     protected override void SetState(bool purchased) {
         base.SetState(purchased);
         foreach (UsableMachine machine in machines) {
-            if (machine.photonView.IsMine) {
+            if (!machine.photonView || machine.photonView.IsMine) {
                 machine.SetConstructed(purchased);
             }
         }

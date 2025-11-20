@@ -30,8 +30,10 @@ public class MainMenu : MonoBehaviour {
     }
 
     private void OnBackButton(InputAction.CallbackContext obj) {
-        if (LevelLoader.loadingLevel) return;
-        if (!LevelLoader.InLevel()) return;
+        if (instance.currentMode == MainMenuMode.Loading) {
+            return;
+        }
+        
         if (instance.currentMode == MainMenuMode.None) {
             if (PhotonNetwork.OfflineMode) {
                 Pauser.SetPaused(true);

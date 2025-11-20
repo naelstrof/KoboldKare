@@ -17726,7 +17726,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.8
+  m_fontSize: 29.8
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -23935,7 +23935,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7561188790633409799}
   - component: {fileID: 7561188790633409796}
-  - component: {fileID: 5965944242630184372}
   - component: {fileID: 5619718347981027232}
   - component: {fileID: 5138500224039285429}
   - component: {fileID: 8555256264924312813}
@@ -24053,20 +24052,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   buttonHovered: {fileID: 11400000, guid: 8a084519f78924af4905b8637de2ed5e, type: 2}
   buttonClicked: {fileID: 11400000, guid: ad0b6668f6350dcd2b27f9fe4e2c5758, type: 2}
+  mixer: {fileID: 24100000, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}
   penisDatabase: {fileID: 11400000, guid: ef3ef0fc5568133479b54ca67dcc9528, type: 2}
   playerDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847, type: 2}
---- !u!114 &5965944242630184372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f480ed7ab38f2304ca9c2eac6a0ef2a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5619718347981027232
 MonoBehaviour:
   m_ObjectHideFlags: 0

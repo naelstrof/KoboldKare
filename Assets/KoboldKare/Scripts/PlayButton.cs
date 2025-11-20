@@ -13,7 +13,7 @@ public class PlayButton : MonoBehaviour {
     }
 
     private void OnSceneChange(Scene arg0, Scene arg1) {
-        gameObject.SetActive(!LevelLoader.InLevel());
+        gameObject.SetActive(!GameManager.InLevel());
     }
 
 

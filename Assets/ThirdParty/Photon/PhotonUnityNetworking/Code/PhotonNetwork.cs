@@ -3099,11 +3099,11 @@ namespace Photon.Pun
         /// <param name='levelName'>
         /// Name of the level to load. Make sure it's available to all clients in the same room.
         /// </param>
-        public static void LoadLevel(string levelName)
+        public static BoxedSceneLoad LoadLevel(string levelName)
         {
             if (PhotonHandler.AppQuits)
             {
-                return;
+                return new BoxedSceneLoad();
             }
 
             if (PhotonNetwork.AutomaticallySyncScene)
@@ -3114,6 +3114,7 @@ namespace Photon.Pun
             PhotonNetwork.IsMessageQueueRunning = false;
             loadingLevelAndPausedNetwork = true;
             _AsyncLevelLoadingOperation = MapLoadingInterop.RequestMapLoad(levelName);
+            return _AsyncLevelLoadingOperation;
         }
 
         /// <summary>

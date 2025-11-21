@@ -123,6 +123,13 @@ public class MainMenu : MonoBehaviour {
         currentMode = mode;
     }
 
+    public void Update() {
+        if (currentMode == MainMenuMode.None) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
     public void OnApplicationFocus(bool hasFocus) {
         if (hasFocus && currentMode == MainMenuMode.None) {
             Cursor.lockState = CursorLockMode.Locked;

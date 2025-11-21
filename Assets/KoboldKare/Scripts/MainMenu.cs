@@ -35,13 +35,13 @@ public class MainMenu : MonoBehaviour {
         }
         
         if (instance.currentMode == MainMenuMode.None) {
+            ShowMenuStatic(MainMenuMode.MainMenu);
             if (PhotonNetwork.OfflineMode) {
                 Pauser.SetPaused(true);
             }
-            ShowMenuStatic(MainMenuMode.MainMenu);
-        } else if (instance.currentMode == MainMenuMode.MainMenu) {
-            Pauser.SetPaused(false);
+        } else if (instance.currentMode == MainMenuMode.MainMenu && GameManager.InLevel()) {
             ShowMenuStatic(MainMenuMode.None);
+            Pauser.SetPaused(false);
         }
     }
     

@@ -117,8 +117,7 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     private void Start() {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
 
     private void OnEnable() {

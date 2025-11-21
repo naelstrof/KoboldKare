@@ -34,7 +34,6 @@ public class RebindSpawner : MonoBehaviour
             int id = 0;
             
             foreach(RebindActionUI rebinder in i.GetComponentsInChildren<RebindActionUI>()) {
-                Debug.Log(r.control.name);
                 rebinder.actionReference = controls.FindAction(r.control.name);
                 rebinder.bindingId = r.control.action.bindings[id++].id.ToString();
                 //rebinder.bindingId = r.action.bindings[id++].id.ToString();

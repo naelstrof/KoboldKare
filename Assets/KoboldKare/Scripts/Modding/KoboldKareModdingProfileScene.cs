@@ -18,6 +18,11 @@ public class KoboldKareModdingProfileScene : KoboldKareModdingProfile {
     public override void UploadContentOnly() {
         workshopItem.Upload(modScene, false);
     }
+
+    protected override void OnValidate() {
+        base.OnValidate();
+        modScene.OnValidate();
+    }
 }
 
 #endif

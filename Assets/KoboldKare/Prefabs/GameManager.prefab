@@ -17726,7 +17726,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.8
+  m_fontSize: 30.8
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24081,6 +24081,7 @@ MonoBehaviour:
   - rid: 7257832916695908353
   - rid: 998295526335578114
   - rid: 998295526335578115
+  - rid: 9191930875180482560
   references:
     version: 2
     RefIds:
@@ -24165,6 +24166,11 @@ MonoBehaviour:
         targetDatabase: {fileID: 11400000, guid: 5953f84f337c12345b9e451e6f832759,
           type: 2}
         networkedPrefabs: 1
+    - rid: 9191930875180482560
+      type: {class: StringTablePostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        searchLabel:
+          m_LabelString: default
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0

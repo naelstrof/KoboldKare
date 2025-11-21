@@ -4,12 +4,17 @@ using System.IO;
 using System.Linq;
 using SimpleJSON;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 #if UNITY_EDITOR
+using UnityEditor.AddressableAssets;
 using System.Threading;
 using System.Threading.Tasks;
 using Steamworks;
 using UnityEditor;
+using UnityEditor.Localization;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
@@ -155,6 +160,9 @@ public class SteamWorkshopItem {
 			shaderDeps.Add($"Assets/ModShaderVariantCollection_{uniqueString}.asset");
 			shaderDepArray = shaderDeps.ToArray();
 		}
+
+		public virtual void OnValidate() {
+		}
 	}
 
 	[Serializable]
@@ -171,6 +179,7 @@ public class SteamWorkshopItem {
 		public ScriptableReagent[] reagents;
 		public ScriptableReagentReaction[] reagentReactions;
 		public Equipment[] equipment;
+		public StringTableCollection[] customLocalization;
 
 		protected virtual string[] GetAssets() {
 			HashSet<string> assetNames = new HashSet<string>();
@@ -203,6 +212,12 @@ public class SteamWorkshopItem {
 			}
 			foreach(var asset in networkedPrefabs) {
 				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+			}
+			foreach(var asset in customLocalization) {
+				assetNames.Add(AssetDatabase.GetAssetPath(asset.SharedData));
+				foreach (var localization in asset.StringTables) {
+					assetNames.Add(AssetDatabase.GetAssetPath(localization));
+				}
 			}
 			return assetNames.ToArray();
 		}
@@ -239,10 +254,16 @@ public class SteamWorkshopItem {
 			foreach(var asset in networkedPrefabs) {
 				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
+			foreach(var asset in customLocalization) {
+				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}");
+				foreach (var localization in asset.StringTables) {
+					addressableNames.Add($"{AssetDatabase.GetAssetPath(localization)}_{uniqueString}");
+				}
+			}
 			return addressableNames.ToArray();
 		}
 
-		private JSONArray GetAssetNames(ICollection<UnityEngine.Object> assets, string uniqueString) {
+		private JSONArray GetAssetNames(ICollection<Object> assets, string uniqueString) {
 			var arrayNode = new JSONArray();
 			HashSet<string> assetNames = new HashSet<string>();
 			foreach(var asset in assets) {
@@ -253,6 +274,21 @@ public class SteamWorkshopItem {
 			}
 
 			return arrayNode;
+		}
+		
+		public static string GetAddressablePrimaryKey(Object asset) {
+#if UNITY_EDITOR
+			if (asset == null) return null;
+			var path = AssetDatabase.GetAssetPath(asset);
+			if (string.IsNullOrEmpty(path)) return null;
+			var guid = AssetDatabase.AssetPathToGUID(path);
+			var settings = AddressableAssetSettingsDefaultObject.Settings;
+			if (settings == null) return null;
+			var entry = settings.FindAssetEntry(guid);
+			return entry?.guid; // null if not addressable
+#else
+			return null;
+#endif
 		}
 		
 		public override void Serialize(JSONNode rootNode, string uniqueString) {
@@ -269,6 +305,19 @@ public class SteamWorkshopItem {
 			rootNode["Equipment"] = GetAssetNames(equipment, uniqueString);
 			rootNode["EquipmentStoreItem"] = GetAssetNames(equipmentStoreItems, uniqueString);
 			rootNode["NetworkedPrefab"] = GetAssetNames(networkedPrefabs, uniqueString);
+			var stringTables = JSONNode.Parse("{}");
+			foreach(var asset in customLocalization) {
+				foreach (var localization in asset.StringTables) {
+					stringTables[AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(localization))] = $"{AssetDatabase.GetAssetPath(localization)}_{uniqueString}";
+				}
+			}
+			rootNode["StringTables"] = stringTables;
+			
+			var sharedStringData = JSONNode.Parse("{}");
+			foreach(var asset in customLocalization) {
+				sharedStringData[AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(asset.SharedData))] = $"{AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}";
+			}
+			rootNode["SharedStringData"] = sharedStringData;
 		}
 
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
@@ -284,6 +333,16 @@ public class SteamWorkshopItem {
 				addressableNames = GetAssetAddressableNames(uniqueString),
 			};
 			return new[] { build, shaderBuild };
+		}
+
+		public override void OnValidate() {
+			base.OnValidate();
+			for (int i=0;i<customLocalization.Length;i++) {
+				if (AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(customLocalization[i])) == "3a14f1902d0a4e9488964030b966c54a") {
+					Debug.LogError("Custom localization entry at index " + i + " is invalid, it will be removed. Please create a new StringTableCollection asset and assign it instead.");
+					customLocalization[i] = null;
+				}
+			}
 		}
 	}
 	
@@ -523,7 +582,6 @@ public class SteamWorkshopItem {
 		if (string.IsNullOrEmpty(title)) {
 			return false;
 		}
-		
 		return true;
 	}
 	private static bool SupportsBuildPlatform(BuildTarget target) {

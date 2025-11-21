@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Samples.RebindUI;
 using UnityEngine.UI;
 using UnityScriptableSettings;
 
 public class SaveChangesButton : MonoBehaviour {
-    private bool changed = false;
+    private static bool changed = false;
 
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClicked);
@@ -14,6 +15,7 @@ public class SaveChangesButton : MonoBehaviour {
 
     private void OnClicked() {
         UnityScriptableSettings.SettingsManager.Save();
+        InputOptions.SaveControls();
         SetChanged(false);
     }
 

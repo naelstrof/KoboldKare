@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -121,7 +122,14 @@ public class MainMenu : MonoBehaviour {
 
         currentMode = mode;
     }
-    
+
+    public void OnApplicationFocus(bool hasFocus) {
+        if (hasFocus && currentMode == MainMenuMode.None) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
     public static void ShowMenuStatic(MainMenuMode mode) {
         instance.ShowMenu(mode);
     }

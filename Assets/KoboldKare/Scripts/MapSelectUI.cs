@@ -29,7 +29,7 @@ public class MapSelectUI : MonoBehaviour {
         panels.Clear();
         
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
-            if (selectedMap == null) {
+            if (selectedMap == null && ModManager.GetReady() && ModManager.GetFinishedLoading()) {
                 OnSelectMap(map);
             }
             var obj = Instantiate(previewSelectPanelPrefab.gameObject, transform);

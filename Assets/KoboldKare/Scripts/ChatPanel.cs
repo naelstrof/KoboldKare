@@ -106,7 +106,7 @@ public class ChatPanel : MonoBehaviour {
     }
 
     private void SubmitAutoCompleteList() {
-        currentAutoCompleteResults.Reverse();
+        currentAutoCompleteResults.Sort((a, b) => a.label.CompareTo(b.label));
         for (int i = 0; i < currentAutoCompleteResults.Count; i++) {
             var autoComplete = currentAutoCompleteResults[i];
             var instance = Instantiate(autocompleteTemplate, autocompleteContent, false);
@@ -128,7 +128,6 @@ public class ChatPanel : MonoBehaviour {
 
             trigger.triggers.Add(entry);
         }
-        currentAutoCompleteResults.Reverse();
     }
     
     private void OnTextChanged(string t) {

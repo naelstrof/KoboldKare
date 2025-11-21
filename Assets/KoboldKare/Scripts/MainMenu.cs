@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         instance = this;
+        currentMode = MainMenuMode.MainMenu;
     }
 
     void Start() {

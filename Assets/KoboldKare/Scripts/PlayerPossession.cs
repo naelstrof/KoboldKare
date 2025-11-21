@@ -292,7 +292,6 @@ public class PlayerPossession : MonoBehaviourPun {
             OrbitCamera.SetTracking(false);
             return;
         }
-        Cursor.visible = false;
         if (isActiveAndEnabled && !Pauser.GetPaused()) {
             PlayerProcessing();
             bool shouldCancelAnimation = false;

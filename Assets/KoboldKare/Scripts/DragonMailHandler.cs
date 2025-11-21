@@ -100,7 +100,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
         dmMainCanvas.GetComponent<Animator>().SetBool("Open", dmActive);
         dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = dmActive;
         dmMainCanvas.GetComponent<CanvasGroup>().interactable = dmActive;
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         dmMainCanvas.enabled = dmActive;
     }
 
@@ -109,7 +109,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
         dmMainCanvas.GetComponent<Animator>().SetBool("Open", dmActive);
         dmMainCanvas.GetComponent<CanvasGroup>().blocksRaycasts = dmActive;
         dmMainCanvas.GetComponent<CanvasGroup>().interactable = dmActive;
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         dmMainCanvas.enabled = dmActive;
     }
 

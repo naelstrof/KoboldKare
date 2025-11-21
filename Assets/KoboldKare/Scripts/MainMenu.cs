@@ -118,7 +118,6 @@ public class MainMenu : MonoBehaviour {
             Cursor.visible = true;
         } else {
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         currentMode = mode;

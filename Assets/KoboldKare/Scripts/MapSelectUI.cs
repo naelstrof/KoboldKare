@@ -27,7 +27,9 @@ public class MapSelectUI : MonoBehaviour {
             Destroy(obj);
         }
         panels.Clear();
-        
+        if (!ModManager.GetFinishedLoading()) {
+            return;
+        }
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
             if (selectedMap == null && ModManager.GetReady() && ModManager.GetFinishedLoading()) {
                 OnSelectMap(map);

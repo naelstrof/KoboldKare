@@ -94,11 +94,17 @@ public class ButtonMouseOver : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnSubmit(BaseEventData eventData){
+        if (!attachedButton.interactable) {
+            return;
+        }
         lastEvent = EventType.Click;
         PlaySFX();
     }
 
     public void OnPointerClick(PointerEventData eventData){
+        if (!attachedButton.interactable) {
+            return;
+        }
         lastEvent = EventType.Click;
         PlaySFX();
     }

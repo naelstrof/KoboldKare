@@ -1,0 +1,13 @@
+{
+  "name": "com.naelstrof.orbitcam",
+  "displayName": "Orbit Cam",
+  "version": "1.0.2",
+  "unity": "2020.3",
+  "dependencies": {
+    "com.mackysoft.serializereference-extensions": "1.3.0",
+    "com.naelstrof.extensions": "0.0.1",
+    "com.naelstrof.unityscriptablesettings": "2.4.5",
+    "com.unity.inputsystem": "1.7.0"
+  },
+  "description": "Simple classes to help with camera controls."
+}

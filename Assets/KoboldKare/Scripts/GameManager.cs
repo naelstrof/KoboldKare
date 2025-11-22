@@ -156,6 +156,8 @@ public class GameManager : MonoBehaviour {
         PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
         DontDestroyOnLoad(gameObject);
         SaveManager.Init();
+        var control = GetPlayerControls();
+        OrbitCamera.SetLookActions(control.Player.Look, control.Player.LookJoystick);
     }
 
     private void ReloadMapIfInEditor() {

@@ -1,0 +1,19 @@
+{
+    "name": "com.naelstrof.orbitcam",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:9b8b7bfc1b94f9942970aa300a7b7f2a",
+        "GUID:e9c0e9c3dd6216444aea9c5833324ed6",
+        "GUID:49b49c76ee64f6b41bf28ef951cb0e50"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

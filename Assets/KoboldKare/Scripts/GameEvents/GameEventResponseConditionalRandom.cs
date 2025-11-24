@@ -15,7 +15,6 @@ public class GameEventResponseConditionalRandom : GameEventResponse
     public override void Invoke(MonoBehaviour owner)
     {
         Roll = UnityEngine.Random.Range(Min, Max);
-        Debug.Log(Roll);
         if (Roll >= MininumRequirement)
         {
             foreach (var response in requirementMet)

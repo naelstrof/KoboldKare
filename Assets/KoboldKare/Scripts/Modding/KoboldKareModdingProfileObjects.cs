@@ -130,7 +130,7 @@ public abstract class KoboldKareModdingProfile : ScriptableObject {
         return workshopItem.GetStatus(out messageType);
     }
 
-    private void OnValidate() {
+    protected virtual void OnValidate() {
         workshopItem.OnValidate();
     }
 }
@@ -147,6 +147,11 @@ public class KoboldKareModdingProfileObjects : KoboldKareModdingProfile {
     }
     public override void UploadContentOnly() {
         workshopItem.Upload(modObjects, false);
+    }
+
+    protected override void OnValidate() {
+        base.OnValidate();
+        modObjects.OnValidate();
     }
 }
 

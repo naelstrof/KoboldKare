@@ -129,6 +129,7 @@ public class PlayableMap : ScriptableObject {
         }
         var handle = Addressables.LoadSceneAsync(key);
         await handle.Task;
+        GameManager.FadeInAudio();
         if (stub != null) {
             loadedHandles.Add(new ModStubAddressableHandlePair() {
                 handle = handle,
@@ -147,6 +148,7 @@ public class PlayableMap : ScriptableObject {
             return;
         }
         await handle.AsTask();
+        GameManager.FadeInAudio();
         loadedBundles.Add(new ModStubBundleHandlePair() {
             bundle = bundle,
             stub = stub

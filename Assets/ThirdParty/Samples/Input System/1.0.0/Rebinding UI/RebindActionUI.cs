@@ -18,12 +18,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
     /// <summary>
     /// A reusable component with a self-contained UI for rebinding a single action.
     /// </summary>
-    public class RebindActionUI : MonoBehaviour
-    {
+    public class RebindActionUI : MonoBehaviour {
         /// <summary>
         /// Reference to the action that is to be rebound.
         /// </summary>
-        public InputActionReference actionReference
+        public InputAction actionReference
         {
             get => m_Action;
             set
@@ -180,7 +179,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         {
             bindingIndex = -1;
 
-            action = m_Action?.action;
+            action = m_Action;
             if (action == null)
                 return false;
 
@@ -213,7 +212,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             var controlPath = default(string);
 
             // Get display string from action.
-            var action = m_Action?.action;
+            var action = m_Action;
             if (action != null)
             {
                 var bindingIndex = action.bindings.IndexOf(x => x.id.ToString() == m_BindingId);
@@ -406,7 +405,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             for (var i = 0; i < s_RebindActionUIs.Count; ++i)
             {
                 var component = s_RebindActionUIs[i];
-                var referencedAction = component.actionReference?.action;
+                var referencedAction = component.actionReference;
                 if (referencedAction == null)
                     continue;
 
@@ -417,9 +416,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             }
         }
 
-        [Tooltip("Reference to action that is to be rebound from the UI.")]
-        [SerializeField]
-        private InputActionReference m_Action;
+        private InputAction m_Action;
 
         [SerializeField]
         private string m_BindingId;
@@ -482,7 +479,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         {
             if (m_ActionLabel != null)
             {
-                var action = m_Action?.action;
+                var action = m_Action;
                 m_ActionLabel.text = action != null ? action.name : string.Empty;
             }
         }

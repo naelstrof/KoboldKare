@@ -14,7 +14,7 @@ public class MultiplayerButton : MonoBehaviour {
     }
 
     private void OnSceneChange(Scene arg0, Scene arg1) {
-        gameObject.SetActive(!LevelLoader.InLevel());
+        gameObject.SetActive(!GameManager.InLevel());
     }
 
 

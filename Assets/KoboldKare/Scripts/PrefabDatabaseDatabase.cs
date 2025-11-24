@@ -16,4 +16,13 @@ public class PrefabDatabaseDatabase : MonoBehaviour {
         }
         instance = this;
     }
+
+    public static PrefabDatabase GetDatabase(string name) {
+        foreach(var database in instance.databases) {
+            if (database.name == name) {
+                return database;
+            }
+        }
+        return null;
+    }
 }

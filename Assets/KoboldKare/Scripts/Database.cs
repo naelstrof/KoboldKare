@@ -165,4 +165,14 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
         }
         return assets;
     }
+
+    public static List<string> GetAssetKeys()
+    {
+        List<string> keys = new();
+        foreach (var pair in instance.assets)
+        {
+            keys.Add(pair.key);
+        }
+        return keys;
+    }
 }

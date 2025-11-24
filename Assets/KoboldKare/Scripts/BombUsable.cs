@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(Photon.Pun.PhotonView)), RequireComponent(typeof(GenericReagentContainer))]

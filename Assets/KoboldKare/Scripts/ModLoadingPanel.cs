@@ -7,6 +7,6 @@ public class ModLoadingPanel : MonoBehaviour {
     [SerializeField]
     private CanvasGroup group;
     void Update() {
-        group.alpha = ModManager.GetReady() ? 0f : 1f;
+        group.alpha = ModManager.GetReady() && ModManager.GetFinishedLoading() ? 0f : 1f;
     }
 }

@@ -21,8 +21,6 @@ public class EquipmentUIDisplay : MonoBehaviour {
     private KoboldInventory inventory;
     [SerializeField] private GameObject inventoryUIPrefab;
     [SerializeField] private List<EquipmentSlotDisplay> slots = new List<EquipmentSlotDisplay>();
-    [SerializeField] private InputActionReference cancel;
-    [SerializeField] private InputActionReference otherCancel;
     [Serializable]
     public class EquipmentSlotDisplay {
         public Image targetImage;
@@ -60,10 +58,9 @@ public class EquipmentUIDisplay : MonoBehaviour {
 
     private IEnumerator WaitThenSubscribe() {
         yield return null;
-        cancel.action.Enable();
-        cancel.action.performed += OnCancel;
-        otherCancel.action.Enable();
-        otherCancel.action.performed += OnCancel;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.ViewStats.performed += OnCancel;
+        controls.UI.Cancel.performed += OnCancel;
     }
 
     private IEnumerator WaitThenDisable() {
@@ -81,8 +78,9 @@ public class EquipmentUIDisplay : MonoBehaviour {
         if (inventory != null) {
             inventory.equipmentChanged -= UpdateDisplay;
         }
-        cancel.action.performed -= OnCancel;
-        otherCancel.action.performed -= OnCancel;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.ViewStats.performed -= OnCancel;
+        controls.UI.Cancel.performed -= OnCancel;
     }
     public void DisplayDetail(Equipment e) {
         if (e == null) {

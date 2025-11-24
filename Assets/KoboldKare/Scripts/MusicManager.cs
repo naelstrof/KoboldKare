@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using KoboldKare;
 using UnityEngine.Audio;
+using UnityScriptableSettings;
 
 public class MusicManager : MonoBehaviour {
     private static MusicManager instance;

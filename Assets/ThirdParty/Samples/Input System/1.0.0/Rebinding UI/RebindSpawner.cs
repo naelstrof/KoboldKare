@@ -24,6 +24,7 @@ public class RebindSpawner : MonoBehaviour
         // Wait for settings to spawn
         yield return new WaitForSecondsRealtime(0.25f);
         controlUI.Clear();
+        var controls = GameManager.GetPlayerControls();
         foreach( var r in rebindActionNamePairs) {
             GameObject i = GameObject.Instantiate(rebindPrefab);
             i.transform.SetParent(transform, false);
@@ -31,8 +32,9 @@ public class RebindSpawner : MonoBehaviour
             i.GetComponentInChildren<TextMeshProUGUI>().text = r.controlName.GetLocalizedString();
             controlUI[r] = i;
             int id = 0;
+            
             foreach(RebindActionUI rebinder in i.GetComponentsInChildren<RebindActionUI>()) {
-                rebinder.actionReference = r.control;
+                rebinder.actionReference = controls.FindAction(r.control.name);
                 rebinder.bindingId = r.control.action.bindings[id++].id.ToString();
                 //rebinder.bindingId = r.action.bindings[id++].id.ToString();
                 rebinder.rebindOverlay = rebindUI;

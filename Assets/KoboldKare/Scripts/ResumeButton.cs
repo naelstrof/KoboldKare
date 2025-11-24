@@ -7,14 +7,14 @@ public class ResumeButton : MonoBehaviour {
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClick);
         SceneManager.activeSceneChanged += OnSceneChange;
-        gameObject.SetActive(LevelLoader.InLevel());
+        gameObject.SetActive(GameManager.InLevel());
     }
     private void OnDestroy() {
         SceneManager.activeSceneChanged -= OnSceneChange;
     }
 
     private void OnSceneChange(Scene arg0, Scene arg1) {
-        gameObject.SetActive(LevelLoader.InLevel());
+        gameObject.SetActive(GameManager.InLevel());
     }
     
     void OnClick() {

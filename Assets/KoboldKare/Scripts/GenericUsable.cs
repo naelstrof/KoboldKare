@@ -19,6 +19,12 @@ public class GenericUsable : MonoBehaviourPun, ISavable, IPunObservable {
     // Called globally by all clients, synced.
     public virtual void Use() { }
 
+    private void Start() {
+        if (photonView == null) {
+            gameObject.AddComponent<PhotonView>();
+        }
+    }
+
     // A passthrough to call from RPC
     [PunRPC]
     public void RPCUse() {

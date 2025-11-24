@@ -2,18 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Samples.RebindUI;
 using UnityEngine.UI;
 using UnityScriptableSettings;
 
 public class SaveChangesButton : MonoBehaviour {
-    private bool changed = false;
+    private static bool changed = false;
 
     private void Awake() {
         GetComponent<Button>().onClick.AddListener(OnClicked);
+        InputSystem.onActionChange += OnActionChanged;
+    }
+
+    private void OnActionChanged(object arg1, InputActionChange arg2) {
+        if (arg2 == InputActionChange.BoundControlsChanged) {
+            SetChanged(true);
+        }
     }
 
     private void OnClicked() {
-        UnityScriptableSettings.SettingsManager.Save();
+        SettingsManager.Save();
+        InputOptions.SaveControls();
         SetChanged(false);
     }
 

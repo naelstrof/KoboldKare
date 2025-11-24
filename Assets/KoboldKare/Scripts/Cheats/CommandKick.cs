@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -35,5 +36,19 @@ public class CommandKick : Command {
             return;
         }
         throw new CheatsProcessor.CommandException($"No player found with id {actorNum}, use `/list players`.");
+    }
+
+    public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
+        if (argumentIndex != 1) {
+            yield break;
+        }
+
+        foreach (var player in PhotonNetwork.PlayerList) {
+            if (Equals(player, PhotonNetwork.LocalPlayer)) {
+                continue;
+            }
+
+            yield return new(player.NickName, player.ActorNumber.ToString());
+        }
     }
 }

@@ -5,17 +5,13 @@ using UnityEngine.SceneManagement;
 public class Pauser : MonoBehaviour {
     private static Pauser instance;
     private static bool paused = false;
-    [SerializeField]
-    private InputActionReference pauseButton;
-
     public delegate void PauseAction(bool paused);
 
     public static event PauseAction pauseChanged;
     private void Awake() {
         if (instance == null) {
             SceneManager.sceneLoaded += OnSceneLoaded;
-            pauseButton.action.Enable();
-            pauseButton.action.performed += OnPauseButtonPressed;
+            GameManager.GetPlayerControls().UI.Pause.performed += OnPauseButtonPressed;
             instance = this;
         } else {
             Destroy(gameObject);
@@ -32,11 +28,11 @@ public class Pauser : MonoBehaviour {
 
     private void OnDestroy() {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        pauseButton.action.performed -= OnPauseButtonPressed;
+        GameManager.GetPlayerControls().UI.Pause.performed -= OnPauseButtonPressed;
     }
 
     private static void TogglePause() {
-        if (!LevelLoader.InLevel()) {
+        if (!GameManager.InLevel()) {
             return;
         }
         paused = !paused;
@@ -48,7 +44,6 @@ public class Pauser : MonoBehaviour {
         if (ActionButtonListener.HasAction()) {
             return;
         }
-
         TogglePause();
     }
 

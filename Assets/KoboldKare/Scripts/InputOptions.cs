@@ -7,8 +7,6 @@ using Steamworks;
 using UnityEngine.InputSystem;
 
 public class InputOptions : MonoBehaviour {
-    [SerializeField]
-    private InputActionAsset controls;
     private static InputOptions instance;
     private static string runningPlatform {
         get {
@@ -48,7 +46,8 @@ public class InputOptions : MonoBehaviour {
         FileStream file = File.Create(savePath);
         //string json = JsonUtility.ToJson(overrides, true);
         JSONNode n = JSON.Parse("{}");
-        foreach (var map in controls.actionMaps) {
+        var playerControls = GameManager.GetPlayerControls();
+        foreach (var map in playerControls.asset.actionMaps) {
             foreach (var binding in map.bindings) {
                 if (!string.IsNullOrEmpty(binding.overridePath)) {
                     n[binding.id.ToString()] = binding.overridePath;
@@ -69,17 +68,22 @@ public class InputOptions : MonoBehaviour {
             file.Read(b,0,(int)file.Length);
             file.Close();
 
+            var playerControls = GameManager.GetPlayerControls();
             string data = Encoding.UTF8.GetString(b);
             JSONNode n = JSON.Parse(data);
-            
-            foreach (var map in controls.actionMaps) {
+            foreach (var map in playerControls.asset.actionMaps) {
                 var bindings = map.bindings;
-                for (var i = 0; i < bindings.Count; ++i) {
-                    if (n.HasKey(bindings[i].id.ToString())) {
-                        map.ApplyBindingOverride(i, new InputBinding { overridePath = n[bindings[i].id.ToString()] });
+                foreach(var binding in bindings) {
+                    if (n.HasKey(binding.id.ToString())) {
+                        var action = playerControls.FindAction(binding.action);
+                        if (action == null) {
+                            continue;
+                        }
+                        map.ApplyBindingOverride( new InputBinding {id = binding.id, overridePath = n[binding.id.ToString()] });
                     }
                 }
             }
+            Debug.Log("Loaded input bindings from " + savePath);
         } catch (Exception e) {
             if (e is FileNotFoundException) {
                 return;

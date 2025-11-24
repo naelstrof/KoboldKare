@@ -13,7 +13,7 @@ public class PlayButton : MonoBehaviour {
     }
 
     private void OnSceneChange(Scene arg0, Scene arg1) {
-        gameObject.SetActive(!LevelLoader.InLevel());
+        gameObject.SetActive(!GameManager.InLevel());
     }
 
 
@@ -29,6 +29,7 @@ public class PlayButton : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             yield break;
         }
+        MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
         NetworkManager.instance.StartSinglePlayer();
         GetComponent<Button>().interactable = true;

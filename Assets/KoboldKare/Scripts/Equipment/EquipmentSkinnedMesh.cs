@@ -11,7 +11,11 @@ public class EquipmentSkinnedMesh : Equipment {
     [SerializeField] private GameObject prefabContainingSkinnedMeshRenderers;
     [SerializeField] private SkinnedMeshTweak[] blendShapesToTweak;
     private List<SkinnedMeshRenderer> targets;
-    
+
+    public class EquipmentComponent : MonoBehaviour
+    {
+
+    }    
 
     private class BlendShapeCopier : MonoBehaviour {
         public SkinnedMeshRenderer source;
@@ -61,6 +65,7 @@ public class EquipmentSkinnedMesh : Equipment {
             }
         }
         BlendShapeCopier copier = instance.AddComponent<BlendShapeCopier>();
+        EquipmentComponent equipmentComp = instance.AddComponent<EquipmentComponent>();
         copier.source = targetSkinnedMesh;
         foreach (var skinnedMesh in instance.GetComponentsInChildren<SkinnedMeshRenderer>()) {
             Transform[] newBoneList = new Transform[targetSkinnedMesh.bones.Length];

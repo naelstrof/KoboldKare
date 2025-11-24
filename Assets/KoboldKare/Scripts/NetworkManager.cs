@@ -65,28 +65,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PhotonNetwork.JoinRandomRoom();
     }
-    public void CreatePublicRoom() {
-        GameManager.instance.StartCoroutine(CreatePublicRoomRoutine());
-    }
-    public IEnumerator CreatePublicRoomRoutine() {
-        PopupHandler.instance.SpawnPopup("Connect");
-        yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
-        var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(selectedMap);
-        yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
-        JSONArray modArray = new JSONArray();
-        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
-            JSONNode modNode = JSONNode.Parse("{}");
-            modNode["title"] = mod.title;
-            modNode["folderTitle"] = mod.folderTitle;
-            modNode["id"] = mod.id.ToString();
-            modArray.Add(modNode);
-        }
-        var modOptions = new Hashtable {
-            ["modList"] = modArray.ToString()
-        };
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 8, CleanupCacheOnLeave = false, CustomRoomProperties = modOptions});
-    }
-
     private bool TryParseMods(Hashtable hashtable, out List<ModManager.ModStub> stubs) {
         if (hashtable.ContainsKey("modList")) {
             if (hashtable["modList"] is not string) {
@@ -120,13 +98,18 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     } 
     public void JoinMatch(RoomInfo roomInfo) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
-        PhotonNetwork.JoinRoom(roomInfo.Name);
+        if (TryParseMods(roomInfo.CustomProperties, out var stubs)) {
+            GameManager.StartCoroutineStatic(JoinMatchRoutine(roomInfo.Name, stubs));
+        } else {
+            PhotonNetwork.JoinRoom(roomInfo.Name);
+        }
     }
     private IEnumerator JoinMatchRoutine(string roomName, List<ModManager.ModStub> modsToLoad) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         PopupHandler.instance.SpawnPopup("Connect");
         try {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+            Debug.Log("Loading mods first...");
             yield return GameManager.instance.StartCoroutine(ModManager.SetLoadedMods(modsToLoad));
         } finally {
             if (ModManager.GetFailedToLoadMods()) {
@@ -185,14 +168,15 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }*/
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
-            yield return LevelLoader.instance.LoadLevel("ErrorScene");
+            var boxedSceneLoad = MapLoadingInterop.RequestMapLoad("ErrorScene");
+            yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         }
 
         PhotonNetwork.IsMessageQueueRunning = true;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
-        if (!PhotonNetwork.IsConnectedAndReady) {
+        if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.ConnectUsingSettings();
         }
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
@@ -243,14 +227,16 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private IEnumerator OnDisconnectRoutine(DisconnectCause cause) {
         if (cause == DisconnectCause.DisconnectByClientLogic || cause == DisconnectCause.None) yield break;
         PopupHandler.instance.ClearAllPopups();
-        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
+        yield return new WaitUntil(() => handle.IsDone);
         PopupHandler.instance.SpawnPopup("Disconnect", true, default, cause.ToString());
     }
 
     private IEnumerator OnJoinRoomFailedRoutine(short returnCode, string message) {
         yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
         PopupHandler.instance.ClearAllPopups();
-        yield return LevelLoader.instance.LoadLevel("MainMenu");
+        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
+        yield return new WaitUntil(() => handle.IsDone);
         PopupHandler.instance.SpawnPopup("Disconnect", true, default, "Error " + returnCode + ": " + message);
     }
 
@@ -266,14 +252,9 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         //PhotonNetwork.CreateRoom(null, new RoomOptions{MaxPlayers = maxPlayers});
     }
     public void OnJoinRandomFailed(short returnCode, string message) {
-        Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.");
-        GameManager.instance.StartCoroutine(CreatePublicRoomRoutine());
-        //if (popup != null) {
-        //popup.Hide();
-        //}
     }
     public IEnumerator SpawnControllablePlayerRoutine() {
-        yield return new WaitUntil(() => !LevelLoader.loadingLevel && ModManager.GetFinishedLoading());
+        yield return new WaitUntil(() => Mathf.Approximately(PhotonNetwork.LevelLoadingProgress, 1f) && ModManager.GetFinishedLoading());
         if (PhotonNetwork.NetworkClientState != ClientState.Joined) {
             yield break;
         }
@@ -306,6 +287,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     
     public void OnPlayerEnteredRoom(Player other) {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
+        CheatsProcessor.AppendText($"{other.NickName}<color=yellow> has joined the room.</color>\n");
     }
 
     public void OnPlayerLeftRoom(Player other) {
@@ -313,6 +295,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (PhotonNetwork.IsMasterClient) {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
         }
+        CheatsProcessor.AppendText($"{other.NickName}<color=yellow> has left the room.</color>\n");
     }
     public void OnConnected() {
         Debug.Log("Connected.");
@@ -328,6 +311,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         Debug.Log("Left room");
     }
     public void OnMasterClientSwitched(Player newMasterClient) {
+        CheatsProcessor.AppendText($"<color=yellow>Host migrated to {newMasterClient.NickName}</color>\n");
         Debug.Log("Master switched!" + newMasterClient);
         //GameManager.instance.StartCoroutine(WaitForLevelToLoadThenSetModOptions());
     }
@@ -383,7 +367,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
                 var roomName = PhotonNetwork.CurrentRoom.Name;
                 yield return PhotonDisconnectCompletely();
-                yield return LevelLoader.instance.LoadLevel("MainMenu");
+                var boxedSceneLoad = MapLoadingInterop.RequestMapLoad("MainMenu");
+                yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
                 GameManager.instance.StartCoroutine(JoinMatchRoutine(roomName, stubs));
             }
         }
@@ -399,7 +384,8 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
             targetView.TransferOwnership(requestingPlayer);
         } else {
-            if (!k.GetComponentInChildren<PlayerInput>().actions["Jump"].IsPressed() || ReferenceEquals(requestingPlayer, PhotonNetwork.LocalPlayer)) {
+            bool permission = PlayerPossession.TryGetPlayerInstance(out var instance) && instance.kobold == k && GameManager.GetPlayerControls().Player.Jump.IsPressed();
+            if (!permission || requestingPlayer == PhotonNetwork.LocalPlayer) {
                 targetView.TransferOwnership(requestingPlayer);
             }
         }

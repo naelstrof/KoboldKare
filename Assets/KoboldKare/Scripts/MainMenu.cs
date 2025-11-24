@@ -1,12 +1,11 @@
 using System;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour {
     private static MainMenu instance;
-
-    [SerializeField] private InputActionReference backButton;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void Init() {
@@ -19,25 +18,32 @@ public class MainMenu : MonoBehaviour {
             return;
         }
         instance = this;
-        backButton.action.Enable();
-        backButton.action.performed += OnBackButton;
+        currentMode = MainMenuMode.MainMenu;
+    }
+
+    void Start() {
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Pause.performed += OnBackButton;
     }
 
     private void OnDestroy() {
-        backButton.action.performed -= OnBackButton;
+        var controls = GameManager.GetPlayerControls();
+        controls.UI.Pause.performed -= OnBackButton;
     }
 
     private void OnBackButton(InputAction.CallbackContext obj) {
-        if (LevelLoader.loadingLevel) return;
-        if (!LevelLoader.InLevel()) return;
+        if (instance.currentMode == MainMenuMode.Loading) {
+            return;
+        }
+        
         if (instance.currentMode == MainMenuMode.None) {
+            ShowMenuStatic(MainMenuMode.MainMenu);
             if (PhotonNetwork.OfflineMode) {
                 Pauser.SetPaused(true);
             }
-            ShowMenuStatic(MainMenuMode.MainMenu);
-        } else if (instance.currentMode == MainMenuMode.MainMenu) {
-            Pauser.SetPaused(false);
+        } else if (instance.currentMode == MainMenuMode.MainMenu && GameManager.InLevel()) {
             ShowMenuStatic(MainMenuMode.None);
+            Pauser.SetPaused(false);
         }
     }
     
@@ -112,12 +118,11 @@ public class MainMenu : MonoBehaviour {
             Cursor.visible = true;
         } else {
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
 
         currentMode = mode;
     }
-    
+
     public static void ShowMenuStatic(MainMenuMode mode) {
         instance.ShowMenu(mode);
     }

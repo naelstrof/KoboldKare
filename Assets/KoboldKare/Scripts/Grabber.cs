@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -343,12 +344,26 @@ public class Grabber : MonoBehaviourPun {
     }
 
     private Vector3 GetViewPos() {
-        if (photonView.IsMine) {
+        if (PlayerPossession.TryGetPlayerInstance(out var poss) && poss.kobold == player) {
+            var desiredViewDistance = 1f;
+            if (poss.TryGetComponent<CameraSwitcher>(out var cameraSwitcher)) {
+                desiredViewDistance = cameraSwitcher.GetCameraMode() switch {
+                    CameraSwitcher.CameraMode.FirstPerson => 1f,
+                    CameraSwitcher.CameraMode.ThirdPerson => 2.5f,
+                    CameraSwitcher.CameraMode.FreeCam => 1f,
+                    null => 1f,
+                    _ => 1f
+                };
+            }
+
+            const float fudgeDistance = 3f;
+            var cameraPos = OrbitCamera.GetCamera().transform.position + OrbitCamera.GetPlayerIntendedRotation()*defaultOffset*desiredViewDistance;
+            float distance = Vector3.Distance(view.position, cameraPos);
+            Vector3 viewPos = Vector3.MoveTowards(cameraPos, view.position, Mathf.Max(distance - fudgeDistance, 0f));
+            return viewPos;
+        } else {
             return view.position;
         }
-        float distance = Vector3.Distance(view.position, OrbitCamera.GetPlayerIntendedPosition());
-        Vector3 viewPos = Vector3.MoveTowards(OrbitCamera.GetPlayerIntendedPosition(), view.position, Mathf.Max(distance - 1f, 0f));
-        return viewPos;
     }
 
     public void TryGrab(bool multiGrabMode) {

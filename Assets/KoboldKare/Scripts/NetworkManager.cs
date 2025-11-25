@@ -35,26 +35,19 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
     private delegate void GenericAction();
 
     private IEnumerator JoinLobbyRoutine(string region) {
-        if (PhotonNetwork.OfflineMode) {
-            PhotonNetwork.OfflineMode = false;
+        if (PhotonNetwork.InRoom) {
+            PhotonNetwork.LeaveRoom();
         }
+        if (PhotonNetwork.InLobby) {
+            PhotonNetwork.LeaveLobby();
+        }
+
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(()=>!PhotonNetwork.IsConnected);
-        PhotonNetwork.AutomaticallySyncScene = true;
         settings.AppSettings.FixedRegion = region;
-        PhotonNetwork.ConnectUsingSettings();
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
-        if (!PhotonNetwork.InLobby) {
-            PhotonNetwork.JoinLobby();
-        }
+        yield return GameManager.instance.StartCoroutine(EnsureOnlineAndReadyToLoad());
     }
     public void JoinLobby(string region) {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.CloudRegion == region && PhotonNetwork.OfflineMode == false) {
-            if (!PhotonNetwork.InLobby) {
-                PhotonNetwork.JoinLobby();
-            }
-            return;
-        }
         GameManager.instance.StartCoroutine(JoinLobbyRoutine(region));
     }
     public void QuickMatch() {
@@ -138,6 +131,7 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         }
         yield return new WaitUntil(() => PhotonNetwork.NetworkClientState != ClientState.Leaving && !PhotonNetwork.IsConnected);
     }
+
     private IEnumerator EnsureOfflineAndReadyToLoad() {
         /*if (Application.isEditor && !settings.AppSettings.AppVersion.Contains("Editor")) {
             settings.AppSettings.AppVersion += "Editor";
@@ -145,7 +139,6 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
         }*/
-        PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
         if (PhotonNetwork.InRoom) {
@@ -166,19 +159,22 @@ public class NetworkManager : SingletonScriptableObject<NetworkManager>, IConnec
         if (Application.isEditor && PhotonNetwork.GameVersion != null && !PhotonNetwork.GameVersion.Contains("Editor")) {
             PhotonNetwork.GameVersion += "Editor";
         }*/
+        Debug.Log("Leaving room...");
         if (PhotonNetwork.InRoom && shouldLeaveRoom) {
             PhotonNetwork.LeaveRoom();
             var boxedSceneLoad = MapLoadingInterop.RequestMapLoad("ErrorScene");
             yield return new WaitUntil(()=>boxedSceneLoad.IsDone);
         }
+        Debug.Log("left room!");
 
-        PhotonNetwork.IsMessageQueueRunning = true;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.OfflineMode = false;
         PhotonPeer.RegisterType(typeof(BitBuffer), (byte)'B', BufferPool.SerializeBitBuffer, BufferPool.DeserializeBitBuffer);
+        Debug.Log("Connecting...");
         if (!PhotonNetwork.IsConnected) {
             PhotonNetwork.ConnectUsingSettings();
         }
+        
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         
         if (!PhotonNetwork.InLobby) {

@@ -228,8 +228,8 @@ namespace Vilar.IK {
 			correctShoulder(animator.GetBoneTransform(HumanBodyBones.RightShoulder), animator.GetBoneTransform(HumanBodyBones.RightUpperArm), animator.GetBoneTransform(HumanBodyBones.RightLowerArm));
 			SolveLimb(leftUpperArmCorrection, leftLowerArmCorrection, leftHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDLEFT), targets.GetLocalRotation(IKTargetSet.parts.HANDLEFT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWLEFT), true, false);
 			SolveLimb(rightUpperArmCorrection, rightLowerArmCorrection, rightHandCorrection, targets.GetLocalPosition(IKTargetSet.parts.HANDRIGHT), targets.GetLocalRotation(IKTargetSet.parts.HANDRIGHT), targets.GetLocalPosition(IKTargetSet.parts.ELBOWRIGHT), true, false);
-			SolveLimb(leftUpperLegCorrection, leftLowerLegCorrection, leftFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTLEFT), targets.GetLocalRotation(IKTargetSet.parts.FOOTLEFT), targets.GetLocalPosition(IKTargetSet.parts.KNEELEFT), true, true);
-			SolveLimb(rightUpperLegCorrection, rightLowerLegCorrection, rightFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalRotation(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalPosition(IKTargetSet.parts.KNEERIGHT), true, true);
+			SolveLimb(leftUpperLegCorrection, leftLowerLegCorrection, leftFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTLEFT), targets.GetLocalRotation(IKTargetSet.parts.FOOTLEFT), targets.GetLocalPosition(IKTargetSet.parts.KNEELEFT), false, true);
+			SolveLimb(rightUpperLegCorrection, rightLowerLegCorrection, rightFootCorrection, targets.GetLocalPosition(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalRotation(IKTargetSet.parts.FOOTRIGHT), targets.GetLocalPosition(IKTargetSet.parts.KNEERIGHT), false, true);
 		}
 		
 		private void TPoseForAFrame() {
@@ -383,8 +383,11 @@ namespace Vilar.IK {
 			float upperLength = Vector3.Distance(upper.position, lower.position);
 			float lowerLength = Vector3.Distance(lower.position, end.position);
 			if (noPop) {
-				Vector3 targetOffset = (targetPosition - upper.localPosition);
-				targetPosition = upper.localPosition + targetOffset.normalized * (antiPop.Evaluate(targetOffset.magnitude / (upperLength + lowerLength)) * targetOffset.magnitude);
+				Vector3 dir = (targetPosition - upper.position);
+				float totalLen = upperLength + lowerLength;
+				float dist = dir.magnitude;
+				float t = antiPop.Evaluate(dist / totalLen);
+				targetPosition = upper.position + dir.normalized * (t * dist);
 			}
 			//upper.rotation = Quaternion.Slerp(
 			//	upper.localRotation,
@@ -417,12 +420,14 @@ namespace Vilar.IK {
 				blend
 			);
 
-			end.rotation = Quaternion.Slerp(
-				end.rotation,
-				//Quaternion.LookRotation(transform.rotation * rotation * Vector3.forward, transform.rotation * rotation * Vector3.up),
-				transform.rotation * rotation,
-				blend
-			);
+			// Orientation fix: use end.rotationCorrection and for hands apply Euler offset
+			Quaternion desired = transform.rotation * rotation * end.rotationCorrection;
+			end.rotation = Quaternion.Slerp(end.rotation, desired, blend);
+			if (end == leftHandCorrection) {
+				end.rotation *= Quaternion.Euler(0f, 90f, 0f);
+			} else if (end == rightHandCorrection) {
+				end.rotation *= Quaternion.Euler(0f, -90f, 0f);
+			}
 		}
 
 		private Vector3 estimateChestForward() {

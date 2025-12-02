@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -5,6 +6,7 @@ using System.Text;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [System.Serializable]
 public class CommandGive : Command {
@@ -30,7 +32,10 @@ public class CommandGive : Command {
             throw new CheatsProcessor.CommandException("/give requires at least one argument. Use /list to find what you can spawn.");
         }
 
-        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+        throw new NotImplementedException();
+
+        // FIXME FISHNET
+        /*DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
         var koboldTransform = kobold.hip.transform;
         if (pool != null && pool.ResourceCache.ContainsKey(args[1])) {
             PhotonNetwork.Instantiate(args[1], koboldTransform.position + koboldTransform.forward, Quaternion.identity);
@@ -85,7 +90,7 @@ public class CommandGive : Command {
             }
             output.Append($"Constructed all {allContracts.Length} machines.\n");
             return;
-        }
+        }*/
 
         throw new CheatsProcessor.CommandException($"There is no prefab, reagent, or resource with name {args[1]}.");
     }
@@ -95,13 +100,14 @@ public class CommandGive : Command {
             yield break;
         }
 
-        if (PhotonNetwork.PrefabPool is DefaultPool pool) {
+        // FIXME FISHNET
+        /*if (PhotonNetwork.PrefabPool is DefaultPool pool) {
             foreach (var pair in pool.ResourceCache) {
                 if(pair.Key.Contains(text, System.StringComparison.OrdinalIgnoreCase)) {
                     yield return new(pair.Key);
                 }
             }
-        }
+        }*/
 
         foreach (var key in ReagentDatabase.GetAssetKeys()) {
             if (key.Contains(text, System.StringComparison.OrdinalIgnoreCase)) {

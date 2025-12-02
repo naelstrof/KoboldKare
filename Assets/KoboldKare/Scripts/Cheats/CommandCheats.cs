@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Photon.Pun;
 
@@ -6,9 +7,11 @@ public class CommandCheats : Command {
     public override string GetArg0() => "/cheats";
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
         base.Execute(output, k, args);
-        if ((Kobold)PhotonNetwork.MasterClient.TagObject != k) {
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        /*if ((Kobold)PhotonNetwork.MasterClient.TagObject != k) {
             throw new CheatsProcessor.CommandException("Not the owner of the server, cannot enable cheats.");
-        }
+        }*/
 
         bool wasCheatsEnabled = CheatsProcessor.GetCheatsEnabled();
 

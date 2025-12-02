@@ -267,7 +267,7 @@ namespace Vilar.AnimationStation {
 
 	[SelectionBase]
 	[ExecuteAlways]
-	public class AnimationStation : MonoBehaviourPun {
+	public class AnimationStation : MonoBehaviour {
 
 		public static string GetTypeName(int index) {
 			return System.Enum.GetNames(typeof(AnimationLooper.TargetType)) [index];

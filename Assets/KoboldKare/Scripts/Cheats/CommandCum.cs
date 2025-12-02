@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using System.Text;
 
@@ -7,12 +8,14 @@ public class CommandCum : Command
 {
     public override string GetArg0() => "/cum";
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
+        throw new NotImplementedException();
         base.Execute(output, k, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
 
-        switch (args.Length) {
+        // FIXME FISHNET
+        /*switch (args.Length) {
             case 1:
                 k.photonView.RPC(nameof(Kobold.Cum), RpcTarget.All);
                 break;
@@ -29,7 +32,7 @@ public class CommandCum : Command
                 break;
             }
             default: throw new CheatsProcessor.CommandException("Usage: /cum <ballSize> ; /cum");
-        }
+        }*/
     }
 }
 

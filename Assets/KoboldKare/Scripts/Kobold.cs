@@ -12,7 +12,7 @@ using SimpleJSON;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Kobold : GeneHolder, IGrabbable, IPunObservable, IPunInstantiateMagicCallback, ISavable, IValuedGood {
+public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     [System.Serializable]
     public class PenetrableSet {
         public Penetrable penetratable;

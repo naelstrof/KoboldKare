@@ -1,9 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 public class CheatsProcessor : MonoBehaviour {
@@ -40,15 +39,12 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static void SetCheatsEnabled(bool cheatsEnabled) {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() {
-            CachingOption = EventCaching.AddToRoomCache,
-            Receivers = ReceiverGroup.All,
-        };
-        PhotonNetwork.RaiseEvent(NetworkManager.CustomCheatEvent, cheatsEnabled, raiseEventOptions, new SendOptions() { Reliability = true });
+        throw new NotImplementedException();
     }
 
     public static bool GetCheatsEnabled() {
-        return (Application.isEditor && PhotonNetwork.IsMasterClient) || NetworkManager.instance.GetCheatsEnabled();
+        throw new NotImplementedException();
+        //return (Application.isEditor && PhotonNetwork.IsMasterClient) || NetworkManager.instance.GetCheatsEnabled();
     }
 
     public static ReadOnlyCollection<Command> GetCommands() {
@@ -98,9 +94,11 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static void ProcessCommand(Kobold kobold, string command) {
-        if (kobold == null || kobold != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
-            return;
-        }
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        //if (kobold == null || kobold != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+            //return;
+        //}
         string[] args = command.Split(' ');
         try {
             instance.ProcessCommand(kobold, args);

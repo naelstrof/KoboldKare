@@ -363,7 +363,7 @@ public class KoboldGenes {
     }
 }
 
-public class GeneHolder : MonoBehaviourPun {
+public class GeneHolder : MonoBehaviour {
     private KoboldGenes genes;
 
     public delegate void GenesChangedAction(KoboldGenes newGenes);

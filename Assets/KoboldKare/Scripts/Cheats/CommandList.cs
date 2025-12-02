@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine;
 
@@ -24,10 +23,11 @@ public class CommandList : Command {
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
         base.Execute(output, k, args);
         bool didSomething = false;
-        if (args.Length == 1 || args[1] == "prefabs" || args[1] == "objects") {
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        /*if (args.Length == 1 || args[1] == "prefabs" || args[1] == "objects") {
 
-            if (PhotonNetwork.PrefabPool is not DefaultPool pool)
-            {
+            if (PhotonNetwork.PrefabPool is not DefaultPool pool) {
                 throw new CheatsProcessor.CommandException("Failed to find PhotonNetwork pool, are you online??");
             }
 
@@ -89,7 +89,7 @@ public class CommandList : Command {
             }
             output.Append("}\n");
             didSomething = true;
-        }
+        }*/
 
         if (!didSomething) {
             throw new CheatsProcessor.CommandException("Usage: /list {prefabs,objects,reagents,dicks}");

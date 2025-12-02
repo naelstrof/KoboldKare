@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 
@@ -32,7 +31,7 @@ public class UsableMachine : GenericUsable {
         }
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
             stream.SendNext(constructed);
@@ -40,5 +39,5 @@ public class UsableMachine : GenericUsable {
             SetConstructed((bool)stream.ReceiveNext());
             PhotonProfiler.LogReceive(sizeof(bool));
         }
-    }
+    }*/
 }

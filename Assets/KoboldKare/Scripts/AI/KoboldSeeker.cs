@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(SphereCollider))]
-public class KoboldSeeker : MonoBehaviour{
+public class KoboldSeeker : MonoBehaviour {
     public List<Kobold> nearbyKobolds = new List<Kobold>();
     public Kobold curTarget;
     public NavMeshAgent agent;

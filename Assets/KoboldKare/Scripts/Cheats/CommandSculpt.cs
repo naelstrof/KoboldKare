@@ -1,5 +1,4 @@
 using Photon.Pun;
-using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -95,11 +94,13 @@ public class CommandSculpt : Command
                 throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to target with.");
             }
 
-            foreach (Player player in PhotonNetwork.PlayerList) {
+            // FIXME FISHNET
+            
+            /*foreach (Player player in PhotonNetwork.PlayerList) {
                 if ((Kobold)player.TagObject == target && ((Kobold)PhotonNetwork.MasterClient.TagObject != k)) {
                     throw new CheatsProcessor.CommandException("Not the owner, not allowed to modify players.");
                 }
-            }
+            }*/
         } else {
             Usage();
         }
@@ -108,7 +109,8 @@ public class CommandSculpt : Command
             throw new CheatsProcessor.CommandException("No valid target.");
         }
 
-        target.photonView.RequestOwnership();
+        // FIXME FISHNET
+        // target.photonView.RequestOwnership();
 
         var genes = target.GetGenes();
 

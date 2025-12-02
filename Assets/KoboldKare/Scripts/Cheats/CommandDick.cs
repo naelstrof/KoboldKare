@@ -44,7 +44,9 @@ public class CommandDick : Command {
     }
 
     private void SetDick(Kobold k, short dickID, StringBuilder output, string chatMessage) {
-        k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
+        throw new NotImplementedException();
+        // FIXME: fishnet
+        //k.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, dickID);
         output.AppendLine(chatMessage);
     }
 

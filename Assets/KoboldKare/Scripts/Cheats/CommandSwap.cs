@@ -1,6 +1,5 @@
 using System.Text;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,6 +18,8 @@ public class CommandSwap : Command {
             throw new CheatsProcessor.CommandException("Couldn't find the brain swapper machine, its required to exist in the world in order to trigger a swap...");
         }
 
+        // FIXME FISHNET
+        /*
         Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
         Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
         foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
@@ -41,7 +42,7 @@ public class CommandSwap : Command {
                 b.GetComponent<MoneyHolder>().GetMoney(), k.GetComponent<MoneyHolder>().GetMoney());
             output.Append($"Swapped kobolds.\n");
             return;
-        }
+        }*/
         throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to swap with.");
     }
 }

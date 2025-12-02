@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using UnityEngine;
 
@@ -18,7 +17,10 @@ public class CommandKick : Command {
         if (!int.TryParse(args[1], out int actorNum)) {
             throw new CheatsProcessor.CommandException("Must use actor number to identify player, use `/list players` to find that.");
         }
-        if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject || !PhotonNetwork.IsMasterClient) {
+        throw new NotImplementedException();
+        
+        // FIXME FISHNET
+        /*if (k != (Kobold)PhotonNetwork.LocalPlayer.TagObject || !PhotonNetwork.IsMasterClient) {
             throw new CheatsProcessor.CommandException("Not allowed to kick players.");
         }
 
@@ -34,7 +36,7 @@ public class CommandKick : Command {
             if (player.ActorNumber != actorNum) continue;
             PhotonNetwork.CloseConnection(player);
             return;
-        }
+        }*/
         throw new CheatsProcessor.CommandException($"No player found with id {actorNum}, use `/list players`.");
     }
 
@@ -43,12 +45,13 @@ public class CommandKick : Command {
             yield break;
         }
 
-        foreach (var player in PhotonNetwork.PlayerList) {
+        // FIXME FISHNET
+        /*foreach (var player in PhotonNetwork.PlayerList) {
             if (Equals(player, PhotonNetwork.LocalPlayer)) {
                 continue;
             }
 
             yield return new(player.NickName, player.ActorNumber.ToString());
-        }
+        }*/
     }
 }

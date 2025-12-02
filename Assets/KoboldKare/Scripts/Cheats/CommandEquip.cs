@@ -25,13 +25,14 @@ public class CommandEquip : Command {
 
         if (tryEquipment != null) {
             output.Append($"Equipped {tryEquipment.name}.");
-            kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All,
-                EquipmentDatabase.GetID(tryEquipment), -1);
+            // FIXME FISHNET
+            // kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment), -1);
             return;
         }
 
         if (args[1] == "None") {
-            kobold.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, byte.MaxValue);
+            // FIXME FISHNET
+            //kobold.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, byte.MaxValue);
             output.Append($"Removed dick by modifying Kobold genes.");
         }
 

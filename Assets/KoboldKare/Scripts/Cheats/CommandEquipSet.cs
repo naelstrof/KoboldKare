@@ -197,8 +197,8 @@ public class CommandEquipSet : Command {
                         }
 
                         if (EquipmentDatabase.TryGetAsset(piece, out var tryEquipment)) {
-                            kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All,
-                                EquipmentDatabase.GetID(tryEquipment), -1);
+                            // FIXME FISHNET
+                            //kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment), -1);
 
                             output.AppendLine($"Equipped {piece}");
                         } else {

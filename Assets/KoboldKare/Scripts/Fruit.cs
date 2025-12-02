@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using ExitGames.Client.Photon.StructWrapping;
 using Naelstrof.Inflatable;
 using Photon.Pun;
 using SimpleJSON;
@@ -11,8 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunObservable, ISavable, IGrabbable,
-    ISpoilable, IPunInstantiateMagicCallback {
+public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable, IGrabbable, ISpoilable {
     [SerializeField] private VisualEffect itemParticles;
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
@@ -49,7 +47,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         container.OnChange += OnReagentContentsChanged;
         container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
         OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
-        photonView.ObservedComponents.Add(container);
+        // FIXME FISHNET
+        //photonView.ObservedComponents.Add(container);
         if (centerTransform == null) {
             centerTransform = transform;
         }
@@ -62,12 +61,14 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
     void Start() {
         SpoilableHandler.AddSpoilable(this);
         SetFrozen(startFrozen);
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnDestroy() {
         SpoilableHandler.RemoveSpoilable(this);
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -76,6 +77,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         }
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(GetFrozen());
@@ -85,7 +88,7 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
             health = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(bool) + sizeof(float));
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         node["frozen"] = GetFrozen();
@@ -122,12 +125,15 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         effect.SetVector4("Color", container.GetColor());
         GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
         Destroy(obj, 5f);
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
-        }
+        }*/
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void Damage(float amount) {
         health -= amount;
         if (health <= 0f) {
@@ -142,7 +148,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         health += amount;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         SetFrozen(false);
         PhotonProfiler.LogReceive(sizeof(int));
@@ -152,7 +159,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnReleaseRPC(int koboldId, Vector3 velocity) {
         PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
@@ -165,7 +173,8 @@ public class Fruit : MonoBehaviourPun, IDamagable, IAdvancedInteractable, IPunOb
         Die();
     }
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonInstantiate(PhotonMessageInfo info) {
         FarmSpawnEventHandler.TriggerProduceSpawn(gameObject);
-    }
+    }*/
 }

@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisableUntilNetworkReady : MonoBehaviourPunCallbacks {
+public class DisableUntilNetworkReady : MonoBehaviour {
     private Selectable selectable;
 
     private void Awake() {
         selectable = GetComponent<Selectable>();
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnEnable() {
         base.OnEnable();
         selectable.interactable = PhotonNetwork.IsConnected;
@@ -26,5 +27,5 @@ public class DisableUntilNetworkReady : MonoBehaviourPunCallbacks {
     public override void OnLeftLobby() {
         base.OnLeftLobby();
         selectable.interactable = false;
-    }
+    }*/
 }

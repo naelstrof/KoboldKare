@@ -297,11 +297,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: ccba35f9efc9e5740af2e3b0f78fa2e9
-    m_Address: PhotonServerSettings
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: d033189925fd3204b97770c866bfa8a1
     m_Address: Assets/KoboldKare/Scripts/Physics/Silicone.physicMaterial
     m_ReadOnly: 0

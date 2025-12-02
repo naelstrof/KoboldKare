@@ -63,6 +63,9 @@ public class RotateSelectorUsable : UsableMachine {
         StartCoroutine(DisableAfterTime());
     }
 
+    
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -71,7 +74,7 @@ public class RotateSelectorUsable : UsableMachine {
             SetSelected((int)stream.ReceiveNext());
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 
     public override void Save(JSONNode node) {
         base.Save(node);

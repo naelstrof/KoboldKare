@@ -66,10 +66,11 @@ public class PlayAreaEnforcer : MonoBehaviour {
         while(true) {
             yield return wait;
             for (int i = 0; i < trackedObjects.Count; i++) {
-                if (!bounds.Contains(trackedObjects[i].transform.position) && trackedObjects[i].IsMine) {
+                // FIXME FISHNET
+                /*if (!bounds.Contains(trackedObjects[i].transform.position) && trackedObjects[i].IsMine) {
                     PhotonNetwork.Destroy(trackedObjects[i]);
                     trackedObjects.RemoveAt(i--);
-                }
+                }*/
                 yield return null;
             }
         }

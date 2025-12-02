@@ -4,11 +4,10 @@ using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
 
-public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonViewOwnerChange {
+public class Ragdoller : MonoBehaviour, ISavable {
     public delegate void RagdollEventHandler(bool ragdolled);
     public event RagdollEventHandler RagdollEvent;
     private Animator animator;
@@ -113,7 +112,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             body.isKinematic = true;
             body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
-                float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+                // FIXME FISHNET
+                //float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+                float time = Time.time;
                 float diff = nextPacket.time - lastPacket.time;
                 if (diff == 0f) {
                     return;
@@ -177,7 +178,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         t.localRotation=localTransform.rotation;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void PushRagdoll() {
         PhotonProfiler.LogReceive(1);
         ragdollCount++;
@@ -192,7 +194,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             StandUp();
         }
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     public void PopRagdoll() {
         PhotonProfiler.LogReceive(1);
         ragdollCount--;
@@ -209,7 +213,8 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
     }
 
     void LateUpdate() {
-        foreach(var networkInfo in rigidbodyNetworkInfos) {
+        // FIXME FISHNET
+        /*foreach(var networkInfo in rigidbodyNetworkInfos) {
             networkInfo.UpdateState(photonView.IsMine, ragdolled);
         }
 
@@ -233,7 +238,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
             float t = (time - lastPacket.time) / diff;
             hipBody.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition, nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
-        }
+        }*/
     }
     private void Ragdoll() {
         if (ragdolled) {
@@ -372,7 +377,9 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         shouldFinishTeleport = true;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         int bitsPerElement = 12;
         if (stream.IsWriting) {
             BitBuffer sendBuffer = new BitBuffer(12);
@@ -419,7 +426,7 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
             }
             PhotonProfiler.LogReceive(data.Length);
         }
-    }
+    }*/
     public void Save(JSONNode node) {
         node["ragdolled"] = ragdolled;
     }
@@ -427,9 +434,10 @@ public class Ragdoller : MonoBehaviourPun, IPunObservable, ISavable, IOnPhotonVi
         SetRagdolled(node["ragdolled"]);
     }
 
-    public void OnOwnerChange(Player newOwner, Player previousOwner) {
+    // FIXME FISHNET
+    /*public void OnOwnerChange(Player newOwner, Player previousOwner) {
         if (ReferenceEquals(newOwner, PhotonNetwork.LocalPlayer)) {
             ragdollCount = 0;
         }
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -32,9 +32,13 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     protected virtual void OnOviposit(int koboldID, int eggID) {
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*
         PhotonView view = PhotonNetwork.GetPhotonView(eggID);
-        
+
         ObjectiveManager.NetworkAdvance(view == null ? Vector3.zero : view.transform.position, $"{koboldID.ToString()}{eggID.ToString()}");
+        */
     }
     public override string GetTextBody() {
         return $"{description.GetLocalizedString()} {eggs.ToString()}/{maxEggs.ToString()}";
@@ -49,6 +53,8 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         TriggerUpdate();
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -61,5 +67,5 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

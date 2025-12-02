@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(AudioSource)), RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class GenericDoor : GenericUsable, IPunObservable, ISavable {
+public class GenericDoor : GenericUsable, ISavable {
     public AudioClip openSFX, closeSFX;
     public Sprite openSprite, closeSprite;
     public VisualEffect activeWhenOpen;
@@ -24,7 +24,9 @@ public class GenericDoor : GenericUsable, IPunObservable, ISavable {
     public override Sprite GetSprite(Kobold k) {
         return opened ? closeSprite : openSprite;
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    // [PunRPC]
     public override void Use() {
         base.Use();
         usedCount++;

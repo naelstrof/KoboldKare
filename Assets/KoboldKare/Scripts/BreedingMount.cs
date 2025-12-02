@@ -15,7 +15,8 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
     private void Awake() {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
-        photonView.ObservedComponents.Add(container);
+        // FIXME FISHNET
+        //photonView.ObservedComponents.Add(container);
         container.OnChange += OnReagentContentsChanged;
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
@@ -27,10 +28,12 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
     }
 
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        photonView.RPC(nameof(FireStream), RpcTarget.All);
+        // FIXME FISHNET
+        //photonView.RPC(nameof(FireStream), RpcTarget.All);
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void FireStream() {
         stream.OnFire(container);
     }
@@ -42,7 +45,8 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
         return useSprite;
     }
     public override void LocalUse(Kobold k) {
-        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        // FIXME FISHNET
+        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

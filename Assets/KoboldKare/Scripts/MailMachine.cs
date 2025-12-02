@@ -58,11 +58,13 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             return false;
         }
 
+        // FIXME FISHNET
+        /*
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject == k) {
                 return false;
             }
-        }
+        }*/
 
         foreach (var station in stations) {
             if (station.info.user == null) {
@@ -83,7 +85,9 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             return;
         }
         int randomStation = UnityEngine.Random.Range(0, availableStations.Count);
-        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, stations.IndexOf(availableStations[randomStation]));
+        
+        // FIXME FISHNET
+        /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, stations.IndexOf(availableStations[randomStation]));*/
         base.LocalUse(k);
     }
     public override void Use() {
@@ -94,22 +98,25 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         yield return wait;
         mailAnimator.SetTrigger("Mail");
         yield return wait;
+        // FIXME FISHNET
+        /*
         foreach (var station in stations) {
             if (station.info.user == null || !station.info.user.photonView.IsMine) {
                 continue;
             }
             photonView.RPC(nameof(OnSwallowed), RpcTarget.All, station.info.user.photonView.ViewID);
-        }
+        }*/
     }
     
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
         PhotonProfiler.LogReceive(sizeof(int));
          if(suckingIDs.Contains(viewID)){
             yield break;
         }
         suckingIDs.Add(viewID);
-        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
+        /*PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         float totalWorth = 0f;
         foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
             if (v != null) {
@@ -139,7 +146,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
 
         totalWorth = Mathf.Min(totalWorth, 1953125f);
         PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{totalWorth});
-        suckingIDs.Remove(viewID);
+        suckingIDs.Remove(viewID);*/
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

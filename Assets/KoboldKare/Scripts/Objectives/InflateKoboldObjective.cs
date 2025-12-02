@@ -29,9 +29,10 @@ public class InflateKoboldObjective : DragonMailObjective {
     }
 
     private void OnInflatedEvent(GenericReagentContainer container) {
-        if (container.maxVolume > 20f && container.TryGetComponent(out Kobold kobold)) {
+        // FIXME FISHNET
+        /*if (container.maxVolume > 20f && container.TryGetComponent(out Kobold kobold)) {
             ObjectiveManager.NetworkAdvance(kobold.transform.position, $"{kobold.photonView.ViewID.ToString()}");
-        }
+        }*/
     }
 
     public override string GetTitle() {

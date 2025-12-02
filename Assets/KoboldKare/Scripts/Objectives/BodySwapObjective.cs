@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +24,9 @@ public class BodySwapObjective : ObjectiveWithSpaceBeam {
     }
 
     void OnBodySwap(Kobold a, Kobold b) {
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject != a && (Kobold)player.TagObject != b) continue;
             if (a != null) {
@@ -30,7 +34,7 @@ public class BodySwapObjective : ObjectiveWithSpaceBeam {
             } else if (b != null) {
                 ObjectiveManager.NetworkAdvance(b.transform.position, $"{b.photonView.ViewID.ToString()}");
             }
-        }
+        }*/
     }
 
     public override string GetTextBody() {

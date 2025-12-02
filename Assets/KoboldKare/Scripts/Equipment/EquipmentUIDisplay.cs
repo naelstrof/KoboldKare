@@ -43,7 +43,9 @@ public class EquipmentUIDisplay : MonoBehaviour {
 
     private void OnEnable() {
         // Try really hard to find the player
-        if (PhotonNetwork.LocalPlayer.TagObject is not Kobold kobold) {
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        /*if (PhotonNetwork.LocalPlayer.TagObject is not Kobold kobold) {
             if (PlayerPossession.TryGetPlayerInstance(out var koboldPossession)) {
                 kobold = koboldPossession.kobold;
             } else {
@@ -53,7 +55,7 @@ public class EquipmentUIDisplay : MonoBehaviour {
         StartCoroutine(WaitThenSubscribe());
         inventory = kobold.GetComponent<KoboldInventory>();
         inventory.equipmentChanged += UpdateDisplay;
-        UpdateDisplay(inventory.GetAllEquipment());
+        UpdateDisplay(inventory.GetAllEquipment());*/
     }
 
     private IEnumerator WaitThenSubscribe() {
@@ -118,10 +120,12 @@ public class EquipmentUIDisplay : MonoBehaviour {
             var DropButton = ui.transform.Find("DropButton").GetComponent<Button>();
             DropButton.interactable = e.canManuallyUnequip;
             DropButton.onClick.AddListener(() => {
-                if (inventory.photonView.IsMine) {
+                // FIXME FISHNET
+                throw new NotImplementedException();
+                /*if (inventory.photonView.IsMine) {
                     inventory.RemoveEquipment(e, true);
                 }
-                DisplayDetail(null);
+                DisplayDetail(null);*/
             });
             ui.transform.Find("InspectButton").GetComponent<Button>().onClick.AddListener(() => { DisplayDetail(e); });
             ui.transform.Find("Icon").GetComponent<Image>().sprite = e.sprite;

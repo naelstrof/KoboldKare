@@ -38,29 +38,30 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     public override void LocalUse(Kobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                    photonView.ViewID, i);
+                // FIXME FISHNET
+                // k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);
                 break;
             }
         }
 
-        photonView.RPC(nameof(Sleep), RpcTarget.All, k.photonView.ViewID);
-        //base.LocalUse(k);
+        // FIXME FISHNET
+        //photonView.RPC(nameof(Sleep), RpcTarget.All, k.photonView.ViewID);
     }
-    //public override void Use() {
-        //StopAllCoroutines();
-        //StartCoroutine(WaitThenMilk());
-    //}
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     private void Sleep(int targetID) {
-        PhotonView view = PhotonNetwork.GetPhotonView(targetID);
+        // FIXME FISHNET
+        /*PhotonView view = PhotonNetwork.GetPhotonView(targetID);
         if (view != null && view.TryGetComponent(out Kobold kobold)) {
             StartCoroutine(SleepRoutine(kobold));
         }
-        PhotonProfiler.LogReceive(sizeof(int));
+        PhotonProfiler.LogReceive(sizeof(int));*/
     }
 
     private IEnumerator SleepRoutine(Kobold k) {
+        // FIXME FISHNET
+        /*
         bool stillSleeping = true;
         float startStimulation = k.stimulation;
         while (k != null && stillSleeping && k.GetEnergy() < maxEnergy) {
@@ -78,7 +79,8 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         }
         if (stillSleeping && k.photonView.IsMine) {
             k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-        }
+        }*/
+        yield break;
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

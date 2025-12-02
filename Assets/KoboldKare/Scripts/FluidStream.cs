@@ -9,7 +9,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
-public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
+public class FluidStream : CatmullDeformer, ISavable {
     private class FluidParticle {
         public Vector3 position;
         public Vector3 lastPosition;
@@ -229,6 +229,8 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             Quaternion.identity,
             GameManager.instance.decalHitMask);
 
+    // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             float perVolume = (midairContents.volume * percentageLoss) + 1f;
             GenericReagentContainer cont = hit.collider.GetComponentInParent<GenericReagentContainer>();
@@ -238,6 +240,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
                 cont.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
             }
         }
+        */
     }
 
     private IEnumerator Output() {
@@ -255,9 +258,11 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
                     new Vector4(reagentColor.r, reagentColor.g, reagentColor.b, 1f));
                 ReagentContents spill = container.Spill(Time.deltaTime * 4f);
                 // Add it back if we don't own the object we're spilling from.
-                if (!photonView.IsMine) {
+                
+                // FIXME FISHNET
+                /*if (!photonView.IsMine) {
                     container.AddMix(spill, GenericReagentContainer.InjectType.Metabolize);
-                }
+                }*/
                 midairContents.AddMix(spill);
                 startClip = 0f;
             } else {
@@ -292,6 +297,8 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
         waterHitSource.enabled = false;
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             if (firing && container != null) {
@@ -313,7 +320,7 @@ public class FluidStream : CatmullDeformer, IPunObservable, ISavable {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 
     public override CatmullSpline GetPath() {
         path ??= new CatmullSpline();

@@ -23,7 +23,8 @@ public class FinalObjective : ObjectiveWithSpaceBeam {
     }
 
     void OnSpawnedKobold(Kobold a) {
-        ObjectiveManager.NetworkAdvance(a.transform.position, $"{a.photonView.ViewID}");
+        // FIXME FISHNET
+        //ObjectiveManager.NetworkAdvance(a.transform.position, $"{a.photonView.ViewID}");
     }
 
     public override string GetTextBody() {

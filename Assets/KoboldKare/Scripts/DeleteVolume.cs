@@ -5,12 +5,14 @@ using UnityEngine;
 using KoboldKare;
 using UnityEngine.Analytics;
 using Photon.Pun;
-using WebSocketSharp;
 
 public class DeleteVolume : MonoBehaviour {
     [SerializeField]
     private Transform bucketRespawnPoint;
     private void OnTriggerEnter(Collider other) {
+        
+        // FIXME FISHNET
+        /*
         PhotonView view = other.GetComponentInParent<PhotonView>();
         if (view == null) {
             return;
@@ -28,5 +30,6 @@ public class DeleteVolume : MonoBehaviour {
             }
             PhotonNetwork.Destroy(view);
         }
+        */
     }
 }

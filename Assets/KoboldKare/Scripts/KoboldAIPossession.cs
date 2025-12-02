@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class KoboldAIPossession : MonoBehaviourPun {
+public class KoboldAIPossession : MonoBehaviour {
     private WaitForSeconds waitForSeconds;
     private Transform focus;
     private bool focusing = false;
@@ -33,9 +33,10 @@ public class KoboldAIPossession : MonoBehaviourPun {
     }
 
     private void LateUpdate() {
-        if (!photonView.IsMine) {
-            return;
-        }
+        // FIXME FISHNET
+        //if (!photonView.IsMine) {
+            //return;
+        //}
         
         if (ragdoller != null && ragdoller.ragdolled) {
             Quaternion rot = Quaternion.LookRotation(headTransform.forward, Vector3.up);
@@ -61,9 +62,10 @@ public class KoboldAIPossession : MonoBehaviourPun {
         headTransform = GetComponentInParent<CharacterDescriptor>().GetDisplayAnimator().GetBoneTransform(HumanBodyBones.Head);
         while (true) {
             yield return waitForSeconds;
-            if (!photonView.IsMine) {
-                continue;
-            }
+            // FIXME FISHNET
+            //if (!photonView.IsMine) {
+                //continue;
+            //}
             if (UnityEngine.Random.Range(0f, 1f) > 0.5f) {
                 continue;
             }

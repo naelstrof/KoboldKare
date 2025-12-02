@@ -38,9 +38,10 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
         if (k == null) {
             return;
         }
-        if (k.GetGenes().breastSize > 14f) {
+        // FIXME FISHNET
+        /*if (k.GetGenes().breastSize > 14f) {
             ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, $"{view.ViewID.ToString()}");
-        }
+        }*/
     }
 
     public override string GetTitle() {
@@ -51,7 +52,8 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
         return description.GetLocalizedString();
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
             stream.SendNext(koboldCount);
@@ -63,5 +65,5 @@ public class DeliverLargeBreastedKoboldsObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

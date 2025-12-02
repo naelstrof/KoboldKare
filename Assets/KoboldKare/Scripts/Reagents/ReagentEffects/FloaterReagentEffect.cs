@@ -11,16 +11,16 @@ public class FloaterReagentEffect : ReagentEffect
     [SerializeField]
     private float Duration = 5;
 
-    public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy)
-    {
-        GameObject obj = PhotonNetwork.Instantiate(floaterInfoPrefab.photonName, k.transform.position + Vector3.up * 0.5f, Quaternion.identity);
-        obj.GetPhotonView().StartCoroutine(DestroyInSeconds(obj));
+    public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy) {
+        // FIXME FISHNET
+        /*GameObject obj = PhotonNetwork.Instantiate(floaterInfoPrefab.photonName, k.transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        obj.GetPhotonView().StartCoroutine(DestroyInSeconds(obj));*/
     }
 
-    private IEnumerator DestroyInSeconds(GameObject obj)
-    {
+    private IEnumerator DestroyInSeconds(GameObject obj) {
         yield return new WaitForSeconds(Duration);
-        PhotonNetwork.Destroy(obj);
+        // FIXME FISHNET
+        //PhotonNetwork.Destroy(obj);
     }
 
     public override void OnValidate()

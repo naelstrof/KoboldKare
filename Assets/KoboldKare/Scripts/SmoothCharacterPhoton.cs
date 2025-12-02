@@ -5,11 +5,10 @@ using System.IO;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
 
-public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable {
+public class SmoothCharacterPhoton : MonoBehaviour, ISavable {
     private Ragdoller ragdoller;
     private CharacterControllerAnimator controllerAnimator;
     private Vector3 currentVelocity;
@@ -39,6 +38,8 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     }
     
     private void LateUpdate() {
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine || !PhotonNetwork.InRoom) {
             body.isKinematic = controllerAnimator.IsAnimating() || ragdoller.ragdolled;
             currentVelocity = body.velocity;
@@ -57,9 +58,13 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
         Vector3 desiredPosition = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
         body.transform.position = Vector3.SmoothDamp(body.transform.position, desiredPosition, ref currentVelocity, 0.1f);
         body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        */
     }
     
     private Rigidbody body;
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         var worldBounds = PlayAreaEnforcer.GetWorldBounds();
         
@@ -91,6 +96,7 @@ public class SmoothCharacterPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             PhotonProfiler.LogReceive(data.Length);
         }
     }
+    */
 
     public void Save(JSONNode node) {
         node["position.x"] = body.transform.position.x;

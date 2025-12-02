@@ -29,7 +29,8 @@ public class PurchaseMachineObjective : ObjectiveWithSpaceBeam {
     private void OnContractSold(ConstructionContract contract) {
         if (contract is MachineConstructionContract machineContract) {
             if (machineContract.GetMachines().Contains(targetMachine)) {
-                ObjectiveManager.NetworkAdvance(targetMachine.transform.position, $"{contract.photonView.ViewID.ToString()}");
+                // FIXME FISHNET
+                //ObjectiveManager.NetworkAdvance(targetMachine.transform.position, $"{contract.photonView.ViewID.ToString()}");
             }
         }
     }

@@ -1,11 +1,10 @@
 ﻿using System;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grabber : MonoBehaviourPun {
+public class Grabber : MonoBehaviour {
     private Kobold player;
     private int maxGrabCount = 1;
     private Rigidbody body;
@@ -70,7 +69,8 @@ public class Grabber : MonoBehaviourPun {
             driverConstraint.dampingStrength = this.dampingStrength;
             driverConstraint.SetWorldAnchor(viewPos+viewRot*offset);
             driverConstraint.SetWorldAnchor(viewPos+viewRot*offset);
-            grabbable.photonView.RequestOwnership();
+            // FIXME FISHNET
+            //grabbable.photonView.RequestOwnership();
             weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
@@ -89,7 +89,8 @@ public class Grabber : MonoBehaviourPun {
         public bool Valid() {
             bool v = ((Component)grabbable)!=null && driverConstraint != null && valid;
             if (v && Time.time - grabTime > 2f) {
-                v &= grabbable.photonView.IsMine;
+                // FIXME FISHNET
+                //v &= grabbable.photonView.IsMine;
             }
 
             return v;
@@ -123,7 +124,8 @@ public class Grabber : MonoBehaviourPun {
             }
 
             if (((Component)grabbable) != null && body != null) {
-                grabbable.photonView.RPC(nameof(IGrabbable.OnReleaseRPC), RpcTarget.All, owner.photonView.ViewID, body.velocity);
+                // FIXME FISHNET
+                //grabbable.photonView.RPC(nameof(IGrabbable.OnReleaseRPC), RpcTarget.All, owner.photonView.ViewID, body.velocity);
                 RecursiveSetLayer(body.transform, LayerMask.NameToLayer("PlayerNocollide"),
                     LayerMask.NameToLayer("UsablePickups"));
                 if (kobold != null && owner != null) {
@@ -242,7 +244,8 @@ public class Grabber : MonoBehaviourPun {
     }
 
     private IEnumerator GiveBackKoboldAfterDelay(GiveBackKobold giveBackKobold) {
-        while (giveBackKobold.kobold.photonView.IsMine) {
+        // FIXME FISHNET
+        /*while (giveBackKobold.kobold.photonView.IsMine) {
             yield return new WaitUntil(() => !giveBackKobold.kobold.GetComponent<Ragdoller>().ragdolled || !giveBackKobold.kobold.photonView.IsMine);
             yield return new WaitForSeconds(0.25f);
             
@@ -255,18 +258,20 @@ public class Grabber : MonoBehaviourPun {
                 }
             }
         }
-        giveBackKobolds.Remove(giveBackKobold);
+        giveBackKobolds.Remove(giveBackKobold);*/
+        yield break;
     }
 
     private void AddGivebackKobold(Kobold other) {
-        foreach (Player p in PhotonNetwork.PlayerList) {
+        // FIXME FISHNET
+        /*foreach (Player p in PhotonNetwork.PlayerList) {
             if ((Kobold)p.TagObject == other) {
                 GiveBackKobold giveBackKobold = new GiveBackKobold(){kobold = other};
                 giveBackKobold.routine = StartCoroutine(GiveBackKoboldAfterDelay(giveBackKobold));
                 giveBackKobolds.Add(giveBackKobold);
                 break;
             }
-        }
+        }*/
     }
 
     private void RemoveGivebackKobold(Kobold other) {
@@ -344,6 +349,8 @@ public class Grabber : MonoBehaviourPun {
     }
 
     private Vector3 GetViewPos() {
+        // FIXME FISHNET
+        /*
         if (PlayerPossession.TryGetPlayerInstance(out var poss) && poss.kobold == player) {
             var desiredViewDistance = 1f;
             if (poss.TryGetComponent<CameraSwitcher>(out var cameraSwitcher)) {
@@ -363,7 +370,8 @@ public class Grabber : MonoBehaviourPun {
             return viewPos;
         } else {
             return view.position;
-        }
+        }*/
+        throw new NotImplementedException();
     }
 
     public void TryGrab(bool multiGrabMode) {
@@ -397,7 +405,8 @@ public class Grabber : MonoBehaviourPun {
             }
 
             if (grabbable.CanGrab(player)) {
-                grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
+                // FIXME FISHNET
+                //grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
                 GrabInfo info = new GrabInfo(player, grabbable, springStrength, dampingStrength, GetViewPos(),OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
                 // Destroyed on grab, creatures gib on grab.
                 if (!info.Valid()) {

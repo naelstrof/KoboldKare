@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable, IPunInstantiateMagicCallback {
+public class Creature : MonoBehaviour, IGrabbable, IDamagable {
     [SerializeField]
     private PhotonGameObjectReference spawnOnDeath;
     [SerializeField]
@@ -29,12 +29,14 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     public bool CanGrab(Kobold kobold) {
         return true;
     }
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         Die();
         PhotonProfiler.LogReceive(sizeof(int));
     }
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
         PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
@@ -48,6 +50,8 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
             return;
         }
 
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             if (Mathf.Abs(distanceTravelled - networkedDistanceTravelled) > 5f) {
                 distanceTravelled = networkedDistanceTravelled;
@@ -61,7 +65,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
         }
 
         transform.position = targetPath.GetPath().GetPositionFromDistance(distanceTravelled);
-        transform.forward = targetPath.GetPath().GetVelocityFromDistance(distanceTravelled).normalized;
+        transform.forward = targetPath.GetPath().GetVelocityFromDistance(distanceTravelled).normalized;*/
     }
 
 
@@ -70,34 +74,39 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
     }
 
     public void Damage(float amount) {
-        if (health < 0f || !photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (health < 0f || !photonView.IsMine) {
             return;
         }
         health -= amount;
         if (health < 0f) {
             photonView.RPC(nameof(Die), RpcTarget.All);
-        }
+        }*/
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void Die() {
         var effect = GameObject.Instantiate(splashPrefab.gameObject, transform.position, Quaternion.identity);
         effect.GetComponent<VisualEffect>().SetVector4("Color", Color.red);
         GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
         Destroy(effect, 5f);
         
+        /*
         if (!photonView.IsMine) {
             return;
         }
         PhotonNetwork.Instantiate(spawnOnDeath.photonName, transform.position, transform.rotation);
-        PhotonNetwork.Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);*/
     }
 
     public void Heal(float amount) {
         health += amount;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(health);
             stream.SendNext(distanceTravelled);
@@ -107,7 +116,7 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
             networkedDistanceTravelled = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(float) * 2);
         }
-    }
+    }*/
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.rigidbody != null && collision.impulse.magnitude > 1f) {
@@ -115,7 +124,8 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
         }
     }
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData == null) {
             return;
         }
@@ -124,5 +134,5 @@ public class Creature : MonoBehaviourPun, IGrabbable, IDamagable, IPunObservable
             targetPath = PhotonNetwork.GetPhotonView((int)info.photonView.InstantiationData[0]).GetComponentInChildren<CreaturePath>();
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

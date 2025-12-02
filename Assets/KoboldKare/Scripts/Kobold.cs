@@ -203,7 +203,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
     }
     
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void MilkRoutine() {
         milkLactator.StartMilking(this);
     }
@@ -211,14 +212,16 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     private Ragdoller ragdoller => GetComponent<Ragdoller>();
     public void AddStimulation(float s) {
         stimulation += s;
-        if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
+        // FIXME FISHNET
+        /*if (photonView.IsMine && stimulation >= stimulationMax && TryConsumeEnergy(1)) {
             photonView.RPC(nameof(Cum), RpcTarget.All);
-        }
+        }*/
     }
     
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void Cum() {
-        if (photonView.IsMine && activeDicks.Count == 0) {
+        /*if (photonView.IsMine && activeDicks.Count == 0) {
             bool foundHeart = false;
             int hits = Physics.OverlapSphereNonAlloc(hip.position, 5f, colliders, heartHitMask);
             for (int i = 0; i < hits; i++) {
@@ -250,7 +253,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             dickSet.descriptor.StartCoroutine(dickSet.descriptor.CumRoutine(dickSet));
         }
         PumpUpDick(1f);
-        stimulation = stimulationMin;
+        stimulation = stimulationMin;?*/
     }
 
     public bool TryConsumeEnergy(byte amount) {
@@ -258,14 +261,17 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             return false;
         }
         SetEnergyRPC(energy - amount);
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.Others, energy);
-        }
+        }*/
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void SetEnergyRPC(float newEnergy) {
+        /*
         float diff = newEnergy - energy;
         if (diff < 0f && GetGenes().fatSize > 0f && photonView.IsMine) {
             SetGenes(GetGenes().With(fatSize: Mathf.Max(GetGenes().fatSize + diff, 0f)));
@@ -273,7 +279,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
 
         energy = newEnergy;
         energy = Mathf.Max(0, energy);
-        energyChanged?.Invoke(energy, GetGenes().maxEnergy);
+        energyChanged?.Invoke(energy, GetGenes().maxEnergy);*/
     }
 
     private void RecursiveSetLayer(Transform t, int fromLayer, int toLayer) {
@@ -314,7 +320,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         return properties;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void SetDickRPC(short dickID) {
         SetGenes(GetGenes().With(dickEquip: dickID));
     }
@@ -413,7 +420,9 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
         metabolizedContents = new ReagentContents(20f);
         bellyContainer.maxVolume = 20f;
-        photonView.ObservedComponents.Add(bellyContainer);
+        
+        // FIXME FISHNET
+        //photonView.ObservedComponents.Add(bellyContainer);
         bellyInflater.OnEnable();
         sizeInflater.OnEnable();
         boobsInflater.OnEnable();
@@ -448,7 +457,9 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         lastPumpTime = Time.timeSinceLevelLoad;
         DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange += OnBellyContentsChanged;
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
         if (GetGenes() == null) {
             SetGenes(new KoboldGenes().Randomize(gameObject.name));
         }
@@ -456,18 +467,21 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     private void OnDestroy() {
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange -= OnBellyContentsChanged;
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         grabbed = true;
         carriedChanged?.Invoke(true);
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         
-        if (photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (photonView.IsMine) {
             photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-        }
+        }*/
     }
     public void PumpUpDick(float amount) {
         if (amount > 0 ) {
@@ -477,9 +491,10 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         arousal = Mathf.Clamp01(arousal);
     }
     public IEnumerator ThrowRoutine() {
-        photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
+        // FIXME FISHNET
+        //photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
-        photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
+        //photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 
     private void OnValidate() {
@@ -490,16 +505,19 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         return !controller.inputJump;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
         carriedChanged?.Invoke(false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
         controller.enabled = true;
         
-        if (!photonView.IsMine) {
+        
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return;
-        }
+        }*/
         
         foreach (Rigidbody b in ragdoller.GetRagdollBodies()) {
             b.velocity = velocity;
@@ -594,9 +612,10 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     }
     
     private void OnMetabolizationEvent(float f) {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return;
-        }
+        }*/
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.08f);
         ReagentContents vol = bellyContainer.Metabolize(f);
         ProcessReagents(vol);
@@ -623,7 +642,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             BitBuffer sendBuffer = new BitBuffer(32);
             sendBuffer.AddByte((byte)Mathf.RoundToInt(arousal * 255f));
@@ -646,9 +666,10 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             SetGenes(data.ReadKoboldGenes());
             PhotonProfiler.LogReceive(data.Length);
         }
-    }
+    }*/
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonInstantiate(PhotonMessageInfo info) {
         Awake();
         if (info.photonView.InstantiationData == null) {
             SetGenes(new KoboldGenes().Randomize(gameObject.name));
@@ -667,15 +688,17 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
         
         spawned?.Invoke(this);
-    }
+    }*/
 
     public void Save(JSONNode node) {
         GetGenes().Save(node, "genes");
         node["arousal"] = arousal;
         metabolizedContents.Save(node, "metabolizedContents");
         consumedReagents.Save(node, "consumedReagents");
-        bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == this;
-        node["isPlayerControlled"] = isPlayerControlled;
+        
+        // FIXME FISHNET
+        // bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == this;
+        // node["isPlayerControlled"] = isPlayerControlled;
     }
 
     public void Load(JSONNode node) {
@@ -686,7 +709,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         consumedReagents.Load(node, "consumedReagents");
         bool isPlayerControlled = node["isPlayerControlled"];
         if (isPlayerControlled) {
-            PhotonNetwork.LocalPlayer.TagObject = this;
+            // FIXME FISHNET
+            //PhotonNetwork.LocalPlayer.TagObject = this;
             GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
         }
         SetGenes(loadedGenes);

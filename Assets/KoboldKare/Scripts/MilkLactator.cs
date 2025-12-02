@@ -47,6 +47,8 @@ public class MilkLactator {
                     Color color = alloc.GetColor();
                     mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
+                        // FIXME FISHNET
+                        /*
                         if (kobold.photonView.IsMine) {
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
@@ -57,6 +59,7 @@ public class MilkLactator {
                                     buffer, kobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
                             }
                         }
+                        */
                         milkSplatMaterial.color = color;
                         PaintDecal.RenderDecalForCollider(hit.collider, milkSplatMaterial,
                             hit.point - hit.normal * 0.1f, Quaternion.LookRotation(hit.normal, Vector3.up)*Quaternion.AngleAxis(UnityEngine.Random.Range(-180f,180f), Vector3.forward),

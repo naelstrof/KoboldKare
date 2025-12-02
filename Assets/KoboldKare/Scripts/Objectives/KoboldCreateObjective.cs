@@ -28,7 +28,9 @@ public class KoboldCreateObjective : DragonMailObjective {
     private void OnEntitySpawn(GameObject obj) {
         Kobold k = obj.GetComponentInChildren<Kobold>();
         if (k != null) {
-            ObjectiveManager.NetworkAdvance(obj.transform.position, k.photonView.ViewID.ToString());
+            // FIXME FISHNET
+            /*
+            ObjectiveManager.NetworkAdvance(obj.transform.position, k.photonView.ViewID.ToString());*/
         }
     }
 
@@ -57,6 +59,8 @@ public class KoboldCreateObjective : DragonMailObjective {
         kobolds = node["kobolds"];
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(kobolds);
@@ -68,5 +72,5 @@ public class KoboldCreateObjective : DragonMailObjective {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

@@ -23,7 +23,8 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
         container.OnChange += OnReagentContainerChangedEvent;
-        photonView.ObservedComponents.Add(container);
+        // FIXME FISHNET
+        /*photonView.ObservedComponents.Add(container);*/
     }
     private void OnReagentContainerChangedEvent(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         stream.OnFire(container);
@@ -46,7 +47,8 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
     public override void LocalUse(Kobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);
+                // FIXME FISHNET
+                /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);*/
                 break;
             }
         }
@@ -58,9 +60,10 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
     }
     private IEnumerator WaitThenMilk() {
         yield return new WaitForSeconds(6f);
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             yield break;
-        }
+        }*/
         // Validate that we have two characters with energy that have been animating for 5 seconds
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null || stations[i].info.user.GetEnergy() <= 0) {
@@ -73,7 +76,9 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
                 yield break;
             }
         }
-        stations[0].info.user.photonView.RPC(nameof(Kobold.MilkRoutine), RpcTarget.All);
+        
+        // FIXME FISHNET
+        /* stations[0].info.user.photonView.RPC(nameof(Kobold.MilkRoutine), RpcTarget.All);*/
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

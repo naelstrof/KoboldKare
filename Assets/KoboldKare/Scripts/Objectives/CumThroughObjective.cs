@@ -28,12 +28,14 @@ public class CumThroughObjective : DragonMailObjective {
         base.Advance(position);
         TriggerComplete();
     }
+    
 
     private void OnCumThrough(Penetrable genes) {
-        Kobold kobold = genes.GetComponentInParent<Kobold>();
+        // FIXME FISHNET
+        /*Kobold kobold = genes.GetComponentInParent<Kobold>();
         if (kobold != null) {
             ObjectiveManager.NetworkAdvance(kobold.transform.position, kobold.photonView.ViewID.ToString());
-        }
+        }*/
     }
 
     public override string GetTitle() {

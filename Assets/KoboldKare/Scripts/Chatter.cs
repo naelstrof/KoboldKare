@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
-public class Chatter : MonoBehaviourPun {
+public class Chatter : MonoBehaviour {
     [SerializeField]
     public TMPro.TMP_Text chatText;
     [SerializeField]
@@ -48,11 +47,14 @@ public class Chatter : MonoBehaviourPun {
         displayMessageRoutine = null;
     }
     
+    
+    // FIXME FISHNET
+    /*
     private Player GetPlayer() {
         foreach (var player in PhotonNetwork.PlayerList) {
             if ((Kobold)player.TagObject != GetComponent<Kobold>()) continue;
             return player;
         }
         return null;
-    }
+    }*/
 }

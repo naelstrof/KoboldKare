@@ -5,11 +5,10 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
-using Photon.Realtime;
 using SimpleJSON;
 using Random = UnityEngine.Random;
 
-public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
+public class GenericSpawner : MonoBehaviour, ISavable {
     [SerializeField]
     private List<PhotonGameObjectReference> possibleSpawns = new List<PhotonGameObjectReference>();
     [SerializeField]
@@ -30,12 +29,15 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         StartCoroutine(SpawnRoutine());
     }
     public virtual bool CanSpawn() {
-        return PhotonNetwork.IsMasterClient;
+        // FIXME FISHNET
+        //return PhotonNetwork.IsMasterClient;
+        return false;
     }
     public virtual IEnumerator SpawnRoutine() {
         yield return waitUntilCanSpawn;
         string randomPrefab = GetRandomPrefab();
-        lastSpawned = PhotonNetwork.InstantiateRoomObject(randomPrefab, transform.position, transform.rotation);
+        // FIXME FISHNET
+        //lastSpawned = PhotonNetwork.InstantiateRoomObject(randomPrefab, transform.position, transform.rotation);
     }
 
     private void OnEnable() {
@@ -60,9 +62,11 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         if (Time.timeAsDouble > lastAttempt) {
             lastAttempt = Time.timeAsDouble+10f;
             // Attempt to give it back to the master!! Not sure how this happens, apparently a disconnect randomly assigns owners..
-            if (photonView != null && !Equals(photonView.Owner, PhotonNetwork.MasterClient) && Equals(photonView.Owner, PhotonNetwork.LocalPlayer)) {
+            
+            // FIXME FISHNET
+            /*if (photonView != null && !Equals(photonView.Owner, PhotonNetwork.MasterClient) && Equals(photonView.Owner, PhotonNetwork.LocalPlayer)) {
                 photonView.TransferOwnership(PhotonNetwork.MasterClient);
-            }
+            }*/
         }
     }
 
@@ -83,7 +87,8 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             if (lastSpawned != null) {
                 stream.SendNext(lastSpawned.GetPhotonView().ViewID);
@@ -99,11 +104,12 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
                 lastSpawned = null;
             }
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         if (lastSpawned != null) {
-            node["lastSpawned"] = lastSpawned.GetPhotonView().ViewID;
+            // FIXME FISHNET
+            //node["lastSpawned"] = lastSpawned.GetPhotonView().ViewID;
         } else {
             node["lastSpawned"] = -1;
         }
@@ -113,8 +119,9 @@ public class GenericSpawner : MonoBehaviourPun, IPunObservable, ISavable {
         if (node.HasKey("lastSpawned")) {
             int id = node["lastSpawned"];
             if (id != -1) {
-                PhotonView view = PhotonNetwork.GetPhotonView(id);
-                lastSpawned = view == null ? null : view.gameObject;
+                // FIXME FISHNET
+                //PhotonView view = PhotonNetwork.GetPhotonView(id);
+                //lastSpawned = view == null ? null : view.gameObject;
             } else {
                 lastSpawned = null;
             }

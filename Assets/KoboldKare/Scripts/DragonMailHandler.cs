@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using Photon.Pun;
 
-public class DragonMailHandler : MonoBehaviour, IPunObservable{
+public class DragonMailHandler : MonoBehaviour {
     public GameObject selectOnStart;
     public ScriptableFloat dragonMoneyGoal;
     public GameObject viewMain, viewMoneyDonate, viewMoneyConfirm, viewKoboldSend, viewKoboldRetrieve, viewKoboldReceipt;
@@ -122,13 +122,19 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
         
     }
 
+    
     public void SendDonationBox(){
+        
+        // FIXME FISHNET
+        /*
         if(koboldBoxInstance != null){
             PhotonNetwork.Destroy(koboldBoxInstance.GetComponent<PhotonView>());
         }
-        koboldBoxInstance = PhotonNetwork.Instantiate("DonationBox",boxSpawnPoint.position,Quaternion.identity);
+        koboldBoxInstance = PhotonNetwork.Instantiate("DonationBox",boxSpawnPoint.position,Quaternion.identity);*/
     }
     public void RetrieveDonationBox(){
+        // FIXME FISHNET
+        /*
         //Handle retrieval of box data-wise, awarding appropriately
         if(koboldBoxInstance != null){
             PhotonNetwork.Destroy(koboldBoxInstance);
@@ -136,8 +142,7 @@ public class DragonMailHandler : MonoBehaviour, IPunObservable{
         else{
             Debug.LogWarning("[DragonMailHandler] :: Attempted to destroy SendBox which did not exist");
         }
+        */
     }
-
-    void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
-    }
+    
 }

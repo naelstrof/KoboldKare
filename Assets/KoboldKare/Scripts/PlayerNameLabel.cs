@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class PlayerNameLabel : MonoBehaviour {
     private void OnEnable() {
+        // FIXME FISHNET
+        /*
         GetComponent<TMP_Text>().text = $"{PhotonNetwork.NickName}:";
+        */
     }
 }

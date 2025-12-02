@@ -54,7 +54,9 @@ public class ConstructionContract : GenericUsable {
             base.LocalUse(k);
         }
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     public override void Use() {
         base.Use();
         SetState(true);
@@ -71,6 +73,9 @@ public class ConstructionContract : GenericUsable {
         SetState(bought);
     }
 
+    
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         if (stream.IsWriting) {
             stream.SendNext(bought);
@@ -78,5 +83,5 @@ public class ConstructionContract : GenericUsable {
             SetState((bool)stream.ReceiveNext());
             PhotonProfiler.LogReceive(sizeof(bool));
         }
-    }
+    }*/
 }

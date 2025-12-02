@@ -22,9 +22,10 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         base.Register();
         GrinderManager.grindedObject += OnGrindedObject;
         ElectricBlender.grindedObject += OnGrindedObject;
-        if (PhotonNetwork.IsMasterClient) {
+        // FIXME FISHNET
+        /*if (PhotonNetwork.IsMasterClient) {
             PhotonNetwork.InstantiateRoomObject(fruit.photonName, fruitSpawnLocation.position, fruitSpawnLocation.rotation);
-        }
+        }*/
     }
     
     public override void Unregister() {
@@ -69,6 +70,8 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         }
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -82,4 +85,5 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
             PhotonProfiler.LogReceive(sizeof(int));
         }
     }
+    */
 }

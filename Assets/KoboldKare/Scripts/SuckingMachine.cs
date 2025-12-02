@@ -22,9 +22,11 @@ public class SuckingMachine : UsableMachine {
         return suckZone.transform.lossyScale.x*suckZone.radius;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     protected virtual IEnumerator OnSwallowed(int viewID) {
         PhotonProfiler.LogReceive(sizeof(int));
+        /*
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         yield return new WaitForSeconds(0.1f);
         // Possible that it has already been removed.
@@ -33,6 +35,8 @@ public class SuckingMachine : UsableMachine {
         }
         PhotonNetwork.Destroy(view.gameObject);
         suckingIDs.Remove(viewID);
+        */
+        yield break;
     }
 
     protected virtual bool ShouldStopTracking(Rigidbody body) {
@@ -45,10 +49,12 @@ public class SuckingMachine : UsableMachine {
             return true;
         }
         if (distance < 0.1f) {
+            // FIXME FISHNET
+            /*
             PhotonView view = body.gameObject.GetComponentInParent<PhotonView>();
             if (view != null && view.IsMine) {
                 photonView.RPC(nameof(OnSwallowed), RpcTarget.All, view.ViewID);
-            }
+            }*/
             return true;
         }
         return false;
@@ -70,11 +76,13 @@ public class SuckingMachine : UsableMachine {
     protected virtual void OnTriggerEnter(Collider other) {
         Kobold targetKobold = other.GetComponentInParent<Kobold>();
         if (targetKobold != null) {
+            // FIXME FISHNET
+            /*
             foreach (var player in PhotonNetwork.PlayerList) {
                 if ((Kobold)player.TagObject == targetKobold) {
                     return;
                 }
-            }
+            }*/
 
             if (targetKobold.grabbed || !targetKobold.GetComponent<Ragdoller>().ragdolled) {
                 return;

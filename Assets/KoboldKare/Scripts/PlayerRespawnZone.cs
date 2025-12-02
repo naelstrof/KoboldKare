@@ -16,15 +16,17 @@ public class PlayerRespawnZone : MonoBehaviour {
         Kobold k = other.GetComponentInParent<Kobold>();
         if (k == null) {
             PhotonView view = other.GetComponentInParent<PhotonView>();
-            if (view != null && view.IsMine) {
+            // FIXME FISHNET
+            /*if (view != null && view.IsMine) {
                 PhotonNetwork.Destroy(view.gameObject);
-            }
+            }*/
             return;
         }
 
-        if (!k.photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!k.photonView.IsMine) {
             return;
-        }
+        }*/
 
         k.GetComponent<Ragdoller>().PopRagdoll();
         GetSpawnLocationAndRotation(out Vector3 pos, out Quaternion rot);

@@ -42,7 +42,8 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
     public override void LocalUse(Kobold k) {
         base.LocalUse(k);
-        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        // FIXME FISHNET
+        /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);*/
     }
 
     private void BeginEggLayingRoutine(){
@@ -68,9 +69,10 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         lastEggCheckTime = Time.timeSinceLevelLoad;
         
         Kobold k = station.info.user;
-        if (k == null || !k.photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (k == null || !k.photonView.IsMine) {
             return;
-        }
+        }*/
         
         if (!KoboldReadyToLayEgg(k)) {
             return;
@@ -82,9 +84,11 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     IEnumerator EggLayingRoutine() {
         yield return new WaitForSeconds(eggDelaySeconds);
         Kobold k = station.info.user;
-        if (k == null || !k.photonView.IsMine) {
+        
+        // FIXME FISHNET
+        /*if (k == null || !k.photonView.IsMine) {
             yield break;
-        }
+        }*/
         
         if (!k.TryConsumeEnergy(1)) {
             yield break;
@@ -128,7 +132,9 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponent<Kobold>().GetGenes(),k.bellyContainer.GetGenes());
         BitBuffer spawnData = new BitBuffer(16);
         spawnData.AddKoboldGenes(mixedGenes);
-        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
+        
+        // FIXME FISHNET
+        /*Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
         if (d == null) {
             yield break;
         }
@@ -158,7 +164,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             body.transform.position = position - tangent * pushAmount;
             yield return null;
         }
-        body.isKinematic = false;
+        body.isKinematic = false;*/
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

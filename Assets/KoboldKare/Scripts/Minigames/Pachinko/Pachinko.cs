@@ -1,13 +1,8 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.VFX;
-using Photon;
 using Photon.Pun;
-using Photon.Realtime;
-using System.IO;
 using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource))]
@@ -42,13 +37,16 @@ public class Pachinko : GenericUsable {
             }
         }
         public void Claim() {
+            // FIXME FISHNET
+            throw new UnityException();
+            /*
             GameObject award = PhotonNetwork.Instantiate(prefabReference.GetKey(), location.position, location.rotation);
             //TODO: Play particle system to mask/explain instantaneous spawning
             if(award.GetComponent<Rigidbody>() != null) {
                 award.GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * 10f, ForceMode.VelocityChange); //Shoot the prize out from its spawn spot
             }
             spawnVFXInstance.Play();
-            Spawn();
+            Spawn();*/
         }
     }
     [Header("Pachinko!")]
@@ -88,7 +86,8 @@ public class Pachinko : GenericUsable {
 
     public override void LocalUse(Kobold k) {
         k.GetComponent<MoneyHolder>().ChargeMoney(playCost);
-        photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
+        // FIXME FISHNET
+        // photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
     }
 
     public override bool CanUse(Kobold k) {
@@ -100,30 +99,40 @@ public class Pachinko : GenericUsable {
     }
 
     public void StartGame(){
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*if (!photonView.IsMine) {
             return;
-        }
+        }*/
         SpawnBall();
         audioSrc.clip = gameStart;
         audioSrc.Play();
     }
 
     public void ResetGame(){
-        if(photonView.IsMine && activeBall != null){
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*if(photonView.IsMine && activeBall != null){
             PhotonNetwork.Destroy(activeBall); //One ball per customer!
-        }
+        }*/
     }
     #endregion
 
 #region Worker Methods
     void DestroyBall(){
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*
         if (!photonView.IsMine) {
             return;
         }
         PhotonNetwork.Destroy(activeBall);
+        */
     }
 
     void SpawnBall(){
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             return;
         }
@@ -133,12 +142,15 @@ public class Pachinko : GenericUsable {
         //activeBall.GetComponent<BallCheat>().SetMachine(this);
         //activeBall.GetComponent<Rigidbody>().velocity = ballSpawnPoint.transform.parent.GetComponent<Rigidbody>().velocity;
         activeBall.GetComponent<Rigidbody>().velocity = constantForce.force;
+        */
     }
 
     void DistributePrize(int listIdx){
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             return;
-        }
+        }*/
         audioSrc.clip = wonPrize;
         audioSrc.Play();
         prizes[listIdx].Claim();

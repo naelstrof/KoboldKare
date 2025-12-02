@@ -1,10 +1,9 @@
+using System;
 using System.Collections;
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
-public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwnerChange {
+public class GenericEquipment : GenericUsable {
     public Equipment representedEquipment;
     [SerializeField]
     private Sprite displaySprite;
@@ -26,6 +25,10 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
         if (k == null) {
             return;
         }
+
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        /*
         // Try to take control of the equipment, if we don't have permission.
         if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
             tryingToEquip = k;
@@ -36,7 +39,7 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
             KoboldInventory inventory = k.GetComponent<KoboldInventory>();
             inventory.PickupEquipment(representedEquipment, gameObject);
             PhotonNetwork.Destroy(photonView.gameObject);
-        }
+        }*/
     }
     private IEnumerator AttachOnTouch(float duration) {
         equipOnTouch = true;
@@ -56,11 +59,13 @@ public class GenericEquipment : GenericUsable, IPunObservable, IOnPhotonViewOwne
             equipOnTouch = false;
         }
     }
+    // FIXME FISHNET
+    /*
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
         if (newOwner == PhotonNetwork.LocalPlayer && tryingToEquip != null) {
             Equip(tryingToEquip);
         }
         // Someone else must've won the handshake, so we clear our attempt to equip.
         tryingToEquip = null;
-    }
+    }*/
 }

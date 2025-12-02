@@ -63,9 +63,10 @@ public class StarDoor : GenericUsable {
         }
 
         starDoorBreakSource.enabled = false;
-        if (photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
-        }
+        }*/
     }
 
     public override void Save(JSONNode node) {

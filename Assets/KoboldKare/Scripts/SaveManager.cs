@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using ExitGames.Client.Photon;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SimpleJSON;
@@ -98,9 +96,11 @@ public static class SaveManager {
             return false;
         }
 
+        // FIXME FISHNET
+        /*
         if (node["version"] != PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion) {
             Debug.LogWarning("Loading old version of KoboldKare... Might not work correctly!");
-        }
+        }*/
 
         lastError = "";
         return true;
@@ -113,6 +113,8 @@ public static class SaveManager {
         string savePath = $"{saveDataPath}{filename}{saveExtension}";
         JSONNode rootNode = JSONNode.Parse("{}");
         rootNode["header"] = saveHeader;
+    // FIXME FISHNET
+        /*
         rootNode["version"] = PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion;
         rootNode["mapName"] = SceneManager.GetActiveScene().name;
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
@@ -178,6 +180,7 @@ public static class SaveManager {
             saveDatas.Sort((a, b) => b.time.CompareTo(a.time));
             action?.Invoke();
         });
+        */
     }
 
     public static bool RemoveSave(string fileName){
@@ -195,14 +198,19 @@ public static class SaveManager {
         }
     }
     private static void CleanUpImmediate() {
+        // FIXME FISHNET
+        /*
         foreach(PhotonView view in Object.FindObjectsOfType<PhotonView>(true)) {
             if(((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache.ContainsKey(PrefabifyGameObjectName(view.gameObject))){
                 PhotonNetwork.Destroy(view.gameObject);
             }
         }
+        */
     }
 
     private static IEnumerator LoadRoutine(string filename) {
+    // FIXME FISHNET
+        /*
         loading = true;
         try {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
@@ -296,6 +304,8 @@ public static class SaveManager {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
             loading = false;
         }
+        */
+        yield break;
     }
     private static IEnumerator MakeSureMapIsLoadedThenLoadSave(string filename) {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
@@ -341,6 +351,8 @@ public static class SaveManager {
         yield return ModManager.SetLoadedMods(modStubs);
         Debug.Log("Successfully set loaded mods");
         
+        // FIXME FISHNET
+        /*
         foreach (var map in PlayableMapDatabase.GetPlayableMaps()) {
             if (map.GetRepresentedByKey(mapKey) || map.GetRepresentedByKey(mapName)) {
                 Debug.Log("Set selected map");
@@ -358,6 +370,7 @@ public static class SaveManager {
         
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         Pauser.SetPaused(false);
+        */
     }
 
     private static bool NeedsUpgrade() {

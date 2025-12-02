@@ -5,7 +5,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 
-public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGood {
+public class MoneyHolder : MonoBehaviour, ISavable, IValuedGood {
     public delegate void MoneyChangedAction(float newMoney);
     public MoneyChangedAction moneyChanged;
 #if UNITY_EDITOR
@@ -19,7 +19,8 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
         money = amount;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void AddMoney(float add) {
         if (add <= 0) {
             return;
@@ -43,14 +44,15 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
         money = node["money"];
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(money);
         } else {
             money = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(float));
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         node["money"] = money;

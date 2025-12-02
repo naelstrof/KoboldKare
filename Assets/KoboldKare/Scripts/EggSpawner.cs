@@ -43,7 +43,9 @@ public class EggSpawner : MonoBehaviour {
     public Penetrator SpawnEgg(float eggVolume) {
         //Penetrator d = GameObject.Instantiate(penetratorPrefab).GetComponentInChildren<Penetrator>();
         CatmullSpline path = targetPenetrable.GetPath();
-        Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up)).GetComponentInChildren<Penetrator>();
+        throw new NotImplementedException();
+        // FIXME FISHNET
+        /*Penetrator d = Photon.Pun.PhotonNetwork.Instantiate(penetratorPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up)).GetComponentInChildren<Penetrator>();
         if (d == null) {
             return null;
         }
@@ -58,7 +60,7 @@ public class EggSpawner : MonoBehaviour {
         // Manually control penetration parameters
         d.Penetrate(targetPenetrable);
         penetrators.Add(new PenetratorCoupler(){penetrable = targetPenetrable, penetrator = d, body = body, pushAmount = 0f});
-        return d;
+        return d;*/
     }
     public void OnValidate() {
 #if UNITY_EDITOR

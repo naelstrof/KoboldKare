@@ -35,6 +35,8 @@ public class BreedingStation : UsableMachine, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
+        // FIXME FISHNET
+        /*
         photonView.RequestOwnership();
         for (int i = 0; i < animationStations.Count; i++) {
             if (animationStations[i].info.user == null) {
@@ -42,7 +44,7 @@ public class BreedingStation : UsableMachine, IAnimationStationSet {
                     photonView.ViewID, i);
                 break;
             }
-        }
+        }*/
 
     }
     

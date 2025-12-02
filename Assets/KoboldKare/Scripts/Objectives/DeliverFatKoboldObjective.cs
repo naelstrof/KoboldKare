@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using KoboldKare;
@@ -36,14 +37,16 @@ public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnSoldObject(PhotonView view) {
-        Kobold k = view.GetComponent<Kobold>();
+        // FIXME FISHNET
+        throw new NotImplementedException();
+        /*Kobold k = view.GetComponent<Kobold>();
         if (k == null) {
             return;
         }
 
         if (k.GetGenes().fatSize >= 5f) {
             ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, $"{view.ViewID.ToString()}");
-        }
+        }*/
     }
     
     public override void Save(JSONNode node) {
@@ -65,7 +68,8 @@ public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
         return description.GetLocalizedString();
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
             stream.SendNext(koboldCount);
@@ -77,5 +81,5 @@ public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

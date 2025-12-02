@@ -1,14 +1,12 @@
 using System;
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using NetStack.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericFluidVolume : MonoBehaviourPun {
+public class GenericFluidVolume : MonoBehaviour {
     private static List<Renderer> staticTempRenderers = new List<Renderer>();
     private static List<Renderer> staticRenderers = new List<Renderer>();
     public float fillRate = 1f;
@@ -70,7 +68,9 @@ public class GenericFluidVolume : MonoBehaviourPun {
     }
     public void Update() {
         dippedObjects.RemoveWhere(o=>o == null);
-        foreach(PhotonView view in dippedObjects) {
+        
+        // FIXME FISHNET
+        /*foreach(PhotonView view in dippedObjects) {
             if (view == photonView) {
                 continue;
             }
@@ -89,7 +89,7 @@ public class GenericFluidVolume : MonoBehaviourPun {
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, volumeContainer.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Flood);
                 volumeContainer.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillVolume);
             }
-        }
+        }*/
         dippedObjects.Clear();
     }
 

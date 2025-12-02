@@ -6,7 +6,7 @@ using UnityEngine;
 using KoboldKare;
 using SimpleJSON;
 
-public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
+public class FreezerDoor : GenericDoor, ISavable {
     public bool shouldSpawnIceCube {get; set;}
     public PhotonGameObjectReference iceCube;
     public GameEventGeneric midnight;
@@ -15,16 +15,20 @@ public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
         base.Start();
     }
     private void MidnightEvent() {
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             iceCubeSpawned = false;
-        }
+        }*/
     }
     public override void Use() {
         base.Use();
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine && shouldSpawnIceCube && !iceCubeSpawned) {
             iceCubeSpawned = true;
             PhotonNetwork.Instantiate(iceCube.photonName, transform.position, Quaternion.identity);
-        }
+        }*/
     }
     public override void Load(JSONNode node) {
         base.Load(node);
@@ -36,6 +40,8 @@ public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
         node["shouldSpawnIceCube"] = shouldSpawnIceCube;
         node["iceCubeSpawned"] = iceCubeSpawned;
     }
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -46,7 +52,7 @@ public class FreezerDoor : GenericDoor, IPunObservable, ISavable {
             iceCubeSpawned = (bool)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(bool) * 2);
         }
-    }
+    }*/
     void OnValidate() {
         iceCube.OnValidate();
     }

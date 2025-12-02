@@ -26,7 +26,9 @@ public class Sleeper : GenericUsable {
         return true;
     }
     public override void LocalUse(Kobold k) {
-        photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
+        
+        // FIXME FISHNET
+        //photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
     }
     public override void Use() {
         StopAllCoroutines();

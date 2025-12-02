@@ -37,11 +37,12 @@ public class KoboldAnimationUsable : GenericUsable {
                 continue;
             }
 
-            float distance = Vector3.Distance(position, targetSet.photonView.transform.position);
+            // FIXME FISHNET
+            /*float distance = Vector3.Distance(position, targetSet.photonView.transform.position);
             if (distance < bestStationDistance) {
                 bestStationSet = targetSet;
                 bestStationDistance = distance;
-            }
+            }*/
         }
         return bestStationSet;
     }
@@ -65,7 +66,8 @@ public class KoboldAnimationUsable : GenericUsable {
     }
 
     public override void LocalUse(Kobold k) {
-        selfKobold.photonView.RequestOwnership();
+        // FIXME FISHNET
+        //selfKobold.photonView.RequestOwnership();
         koboldCache.Clear();
         koboldCache.Add(selfKobold);
         koboldCache.Add(k);
@@ -78,11 +80,13 @@ public class KoboldAnimationUsable : GenericUsable {
         }
         
         IAnimationStationSet targetSet = GetAnimationStationSet(transform.position, koboldCache.Count);
+        // FIXME FISHNET
+        /*
         if (targetSet != null) {
             for (int i = 0; i < koboldCache.Count; i++) {
                 koboldCache[i].photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
                     new object[] { targetSet.photonView.ViewID, i });
             }
-        }
+        }*/
     }
 }

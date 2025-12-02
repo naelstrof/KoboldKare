@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using Steamworks;
 using TMPro;
 using UnityEngine;
@@ -186,11 +184,13 @@ public class ChatPanel : MonoBehaviour {
         chatInput.text="";
         chatScrollView.normalizedPosition = new Vector2(0, 0);
         if (!string.IsNullOrEmpty(t)) {
+            // FIXME FISHNET
+            /*
             RaiseEventOptions options = new RaiseEventOptions() {
                 CachingOption = EventCaching.DoNotCache,
                 Receivers = ReceiverGroup.All,
             };
-            PhotonNetwork.RaiseEvent(NetworkManager.CustomChatEvent, t.TrimEnd(), options, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent(NetworkManager.CustomChatEvent, t.TrimEnd(), options, SendOptions.SendReliable);*/
         }
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }

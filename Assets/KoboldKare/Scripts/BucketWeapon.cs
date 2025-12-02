@@ -94,16 +94,20 @@ public class BucketWeapon : GenericWeapon {
         }
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     protected override void OnFireRPC(int viewID) {
+        /*
         base.OnFireRPC(viewID);
         bucketAnimator.SetTrigger(Fire);
         playerFired = PhotonNetwork.GetPhotonView(viewID).GetComponentInParent<Kobold>();
-        PhotonProfiler.LogReceive(sizeof(int));
+        PhotonProfiler.LogReceive(sizeof(int));*/
     }
 
     // Called from the animator
     public void OnFireComplete() {
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             return;
         }
@@ -131,7 +135,7 @@ public class BucketWeapon : GenericWeapon {
         }
 
         audioSource.enabled = true;
-        bucketSlosh.Play(audioSource);
+        bucketSlosh.Play(audioSource);*/
     }
 
     IEnumerator WaitSomeTimeThenDisableAudio() {

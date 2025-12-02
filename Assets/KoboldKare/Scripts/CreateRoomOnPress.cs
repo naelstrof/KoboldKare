@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Realtime;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine.Localization;
 using UnityEngine.SceneManagement;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateRoomOnPress : MonoBehaviour {
     public TMP_InputField roomNameField;
@@ -33,7 +31,10 @@ public class CreateRoomOnPress : MonoBehaviour {
 
     private IEnumerator CreateRoomRoutine() {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
-        yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+        
+        // FIXME FISHNET
+        /*
+        yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());*/
         JSONArray modArray = new JSONArray();
         foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");
@@ -43,6 +44,8 @@ public class CreateRoomOnPress : MonoBehaviour {
             modArray.Add(modNode);
         }
 
+        // FIXME FISHNET
+        /*
         var modOptions = new Hashtable {
             ["modList"] = modArray.ToString()
         };
@@ -55,7 +58,8 @@ public class CreateRoomOnPress : MonoBehaviour {
                 MaxPlayers = (byte)maxPlayersField.value, IsVisible = !isPrivate.isOn, CleanupCacheOnLeave = false,
                 CustomRoomProperties = modOptions, CustomRoomPropertiesForLobby = lobbyOptions
             }
-        );
+        );*/
+        yield break;
     }
 
     public void CreateRoom() {
@@ -69,9 +73,11 @@ public class CreateRoomOnPress : MonoBehaviour {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         Popup p = PopupHandler.instance.SpawnPopup("Connect");
         try {
-            yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
+            
+            // FIXME FISHNET
+            /*yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
             PhotonNetwork.JoinRoom(roomName);
-            yield return new WaitUntil(() => PhotonNetwork.InRoom);
+            yield return new WaitUntil(() => PhotonNetwork.InRoom);*/
         } finally {
             PopupHandler.instance.ClearPopup(p);
         }

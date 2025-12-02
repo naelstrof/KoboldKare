@@ -8,9 +8,11 @@ using UnityEngine.Localization;
 [System.Serializable]
 public class LayLargeEggObjective : BreedKoboldObjective {
     protected override void OnOviposit(int koboldID, int eggID) {
+        // FIXME FISHNET
+        /*
         PhotonView view = PhotonNetwork.GetPhotonView(eggID);
         if (view!=null && view.GetComponent<GenericReagentContainer>().volume > 60f) {
             ObjectiveManager.NetworkAdvance(view.transform.position, $"{koboldID.ToString()}{eggID.ToString()}");
-        }
+        }*/
     }
 }

@@ -18,13 +18,16 @@ public class ObjectiveWithSpaceBeam : DragonMailObjective {
             Debug.LogWarning("Couldn't find target to spawn space beam.");
             return;
         }
-        spaceBeamInstance = PhotonNetwork.Instantiate(spaceBeam.photonName, spaceBeamTarget.transform.position, Quaternion.AngleAxis(-90f,Vector3.right));
+        // FIXME FISHNET
+        //spaceBeamInstance = PhotonNetwork.Instantiate(spaceBeam.photonName, spaceBeamTarget.transform.position, Quaternion.AngleAxis(-90f,Vector3.right));
     }
     public override void Unregister() {
         base.Unregister();
+        // FIXME FISHNET
+        /*
         if (spaceBeamInstance != null && spaceBeamInstance.GetPhotonView().IsMine) {
             PhotonNetwork.Destroy(spaceBeamInstance);
-        }
+        }*/
     }
 
     public override void OnValidate() {

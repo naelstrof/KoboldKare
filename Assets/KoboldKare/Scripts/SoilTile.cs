@@ -2,13 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using ExitGames.Client.Photon.StructWrapping;
 using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 
-public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
+public class SoilTile : MonoBehaviour, ISavable {
     private Plant planted;
     [SerializeField]
     private bool hasDebris = false;
@@ -20,7 +19,8 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
     public delegate void FarmTileClearedAction(SoilTile tile);
     public static event FarmTileClearedAction tileCleared;
     
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void SetDebris(bool newHasDebris) {
         hasDebris = newHasDebris;
         foreach (GameObject obj in debris) {
@@ -36,12 +36,15 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         return (planted == null || planted.plant.possibleNextGenerations.Length == 0) && !hasDebris;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void SetPlantedRPC(int viewID) {
         if (viewID == -1) {
             planted = null;
         }
-
+        
+        // FIXME FISHNET
+        /*
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         if (view == null) {
             return;
@@ -54,7 +57,7 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
                 }
             }
             planted = plant;
-        }
+        }*/
     }
 
     public Vector3 GetPlantPosition() {
@@ -69,6 +72,9 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
         return hasDebris;
     }
 
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(hasDebris);
@@ -77,9 +83,13 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             PhotonProfiler.LogReceive(sizeof(bool));
         }
     }
+    */
     
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     public void PlantRPC(int seed, BitBuffer spawnData) {
+        /*
         PhotonView seedView = PhotonNetwork.GetPhotonView(seed);
         if (seedView != null && seedView.IsMine) {
             PhotonNetwork.Destroy(seedView);
@@ -96,15 +106,17 @@ public class SoilTile : MonoBehaviourPun, IPunObservable, ISavable {
             new object[] { spawnData });
         photonView.RPC(nameof(SoilTile.SetPlantedRPC), RpcTarget.All,
             obj.GetComponent<Plant>().photonView.ViewID);
+            */
     }
 
 
+    // FIXME FISHNET
     public void Save(JSONNode node) {
         node["hasDebris"] = hasDebris;
         if (planted == null) {
             node["planted"] = -1;
         } else {
-            node["planted"] = planted.photonView.ViewID;
+            //node["planted"] = planted.photonView.ViewID;
         }
     }
 

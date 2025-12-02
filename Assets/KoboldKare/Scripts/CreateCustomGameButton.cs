@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
 using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CreateCustomGameButton : MonoBehaviour {
     private void Start() {
@@ -28,7 +26,8 @@ public class CreateCustomGameButton : MonoBehaviour {
         }
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         try {
-            if (PhotonRoomListSpawner.GetBlackListed(handle.Result.roomName, out var filtered)) {
+            // FIXME FISHNET
+            /*if (PhotonRoomListSpawner.GetBlackListed(handle.Result.roomName, out var filtered)) {
                 GetComponent<Button>().interactable = true;
                 if (!Analytics.playerOptedOut) {
                     UriBuilder builder = new UriBuilder("http://koboldkare.com/analytics.php");
@@ -51,12 +50,13 @@ public class CreateCustomGameButton : MonoBehaviour {
                     var asyncreq = req.SendWebRequest();
                     asyncreq.completed += (a) => { Debug.Log(req.result); };
                 }
-            }
+            }*/
 
-            NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
+            // FIXME FISHNET
+            /*NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
             yield return GameManager.instance.StartCoroutine(NetworkManager.instance.EnsureOnlineAndReadyToLoad());
             var boxedSceneLoad = MapLoadingInterop.RequestMapLoad(NetworkManager.instance.GetSelectedMap());
-            yield return new WaitUntil(() => boxedSceneLoad.IsDone);
+            yield return new WaitUntil(() => boxedSceneLoad.IsDone);*/
             JSONArray modArray = new JSONArray();
             foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
                 JSONNode modNode = JSONNode.Parse("{}");
@@ -66,7 +66,9 @@ public class CreateCustomGameButton : MonoBehaviour {
                 modArray.Add(modNode);
             }
 
-            var modOptions = new Hashtable {
+            
+            // FIXME FISHNET
+            /*var modOptions = new Hashtable {
                 ["modList"] = modArray.ToString()
             };
             var lobbyOptions = new string[] { "modList" };
@@ -75,7 +77,7 @@ public class CreateCustomGameButton : MonoBehaviour {
                     MaxPlayers = (byte)handle.Result.playerCount, IsVisible = !handle.Result.privateRoom,
                     CleanupCacheOnLeave = false, CustomRoomProperties = modOptions,
                     CustomRoomPropertiesForLobby = lobbyOptions
-                });
+                });*/
             GetComponent<Button>().interactable = true;
         } finally {
             MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);

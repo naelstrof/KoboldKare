@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class BallCheat : MonoBehaviourPun, IPunInstantiateMagicCallback {
+public class BallCheat : MonoBehaviour {
     Rigidbody rb;
     Pachinko pachinko;
     public float sensitivity;
@@ -36,8 +36,11 @@ public class BallCheat : MonoBehaviourPun, IPunInstantiateMagicCallback {
         pachinko.BallStuck();
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         pachinko = PhotonNetwork.GetPhotonView((int)(info.photonView.InstantiationData[0])).GetComponent<Pachinko>();
         PhotonProfiler.LogReceive(sizeof(int));
     }
+    */
 }

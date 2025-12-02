@@ -4,7 +4,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 
-public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable {
+public class SmoothRigidbodyPhoton : MonoBehaviour, ISavable {
     //private JiggleRigBuilder[] jiggleRigs;
     private struct Frame {
         public Vector3 position;
@@ -29,16 +29,12 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
     }
     
     private void LateUpdate() {
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             body.isKinematic = false;
-            //foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
-                //jiggleRig.interpolate = true;
-            //}
             return;
         }
-        //foreach (JiggleRigBuilder jiggleRig in jiggleRigs) {
-            //jiggleRig.interpolate = false;
-        //}
         body.isKinematic = true;
         float time = Time.time - (1f/PhotonNetwork.SerializationRate);
         float diff = newFrame.time - lastFrame.time;
@@ -48,12 +44,14 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             return;
         }
         float t = (time - lastFrame.time) / diff;
-        //body.velocity = (newFrame.position - lastFrame.position) / (float)diff;
         body.transform.position = Vector3.LerpUnclamped(lastFrame.position, newFrame.position, Mathf.Clamp((float)t, -0.25f, 1.25f));
-        body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));
+        body.transform.rotation = Quaternion.LerpUnclamped(lastFrame.rotation, newFrame.rotation, Mathf.Clamp((float)t, -0.25f, 1.25f));*/
     }
     
     private Rigidbody body;
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         BoundedRange[] worldBounds = PlayAreaEnforcer.GetWorldBounds();
         int bitsPerElement = 12;
@@ -91,6 +89,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviourPun, IPunObservable, ISavable 
             PhotonProfiler.LogReceive(data.Length);
         }
     }
+    */
 
     public void Save(JSONNode node) {
         var position = body.transform.position;

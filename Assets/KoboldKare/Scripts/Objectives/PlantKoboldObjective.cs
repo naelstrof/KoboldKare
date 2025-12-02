@@ -19,12 +19,14 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     public override void Register() {
         base.Register();
         Plant.planted += OnPlant;
+        // FIXME FISHNET
+        /*
         if (PhotonNetwork.IsMasterClient) {
             BitBuffer buffer = new BitBuffer(4);
             buffer.AddKoboldGenes(new KoboldGenes().Randomize());
             PhotonNetwork.InstantiateRoomObject(eggPrefab.photonName, mailBox.transform.position, Quaternion.identity,
                 0, new object[] { buffer });
-        }
+        }*/
     }
     public override void Unregister() {
         base.Unregister();
@@ -41,9 +43,11 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnPlant(GameObject obj, ScriptablePlant plant) {
+        // FIXME FISHNET
+        /*
         if (plant == targetPlant) {
             ObjectiveManager.NetworkAdvance(obj.transform.position, $"PlantKoboldObjective{obj.GetPhotonView().ViewID.ToString()}");
-        }
+        }*/
     }
 
     public override string GetTitle() {
@@ -62,6 +66,8 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         plants = node["plants"];
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(plants);
@@ -73,7 +79,7 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 
     public override void OnValidate() {
         base.OnValidate();

@@ -34,12 +34,13 @@ public class PrefabPostProcessor : ModPostProcessor {
     }
     
     private void LoadInherentPrefab(GameObject obj) {
-        if (PreparePool.HasPrefab(obj.name)) {
+        // FIXME FISHNET
+        /*if (PreparePool.HasPrefab(obj.name)) {
             return;
         }
         if (networkedPrefabs) {
             PreparePool.AddPrefab(obj.name, obj, null);
-        }
+        }*/
         targetDatabase.AddPrefab(obj.name, obj, null);
     }
     
@@ -47,9 +48,12 @@ public class PrefabPostProcessor : ModPostProcessor {
         if (obj == null) {
             return;
         }
+        // FIXME FISHNET
+        /*
         if (networkedPrefabs) {
             PreparePool.AddPrefab(obj.name, obj, currentStub);
         }
+        */
         targetDatabase.AddPrefab(obj.name, obj, currentStub);
         addedGameObjects.Add(new ModStubGameObjectPair() {
             stub = currentStub,
@@ -94,9 +98,11 @@ public class PrefabPostProcessor : ModPostProcessor {
         for (int i=0;i<addedGameObjects.Count;i++) {
             if (!addedGameObjects[i].stub.GetRepresentedBy(data)) continue;
             var obj = addedGameObjects[i];
+            /*
             if (networkedPrefabs) {
                 PreparePool.RemovePrefab(obj.objName, obj.stub);
             }
+            */
             targetDatabase.RemovePrefab(obj.objName, obj.stub);
             addedGameObjects.RemoveAt(i);
             i--;

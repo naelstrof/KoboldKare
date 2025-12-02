@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
 using System.IO;
 using SimpleJSON;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
+public class KoboldCharacterController : MonoBehaviour, ISavable {
     [System.Serializable]
     public class PID {
         public float P = 1f;
@@ -177,7 +175,8 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
     //public Transform hipsTransform;
     private void Start() {
         body = GetComponent<Rigidbody>();
-        body.useGravity = photonView.IsMine || !PhotonNetwork.InRoom;
+        // FIXME FISHNET
+        //body.useGravity = photonView.IsMine || !PhotonNetwork.InRoom;
         colliderFullHeight = collider.height;
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
@@ -343,9 +342,11 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         }
         CheckSounds();
         velocity += groundVelocity;
-        if (photonView.IsMine || !PhotonNetwork.InRoom) {
+        
+        // FIXME FISHNET
+        /*if (photonView.IsMine || !PhotonNetwork.InRoom) {
             body.velocity = velocity;
-        }
+        }*/
     }
 
     private void JumpCheck() {
@@ -381,6 +382,9 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         velocity += accelspeed * wishdir;
     }
 
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(this.inputJump);
@@ -390,7 +394,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
             targetCrouched = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(bool)+sizeof(float));
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         node["targetCrouched"] = inputCrouched;

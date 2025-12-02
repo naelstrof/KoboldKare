@@ -8,7 +8,7 @@ using UnityEngine.Analytics;
 using UnityEngine.Localization;
 
 [System.Serializable]
-public class DragonMailObjective : ISavable, IPunObservable {
+public class DragonMailObjective : ISavable {
     public bool autoAdvance;
     [SerializeField]
     protected LocalizedString title;
@@ -42,9 +42,6 @@ public class DragonMailObjective : ISavable, IPunObservable {
     }
 
     public virtual void Load(JSONNode node) {
-    }
-
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
     }
 
     public virtual void OnValidate() {

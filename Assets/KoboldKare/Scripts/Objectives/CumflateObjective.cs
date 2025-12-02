@@ -52,6 +52,8 @@ public class CumflateObjective : DragonMailObjective {
         TriggerUpdate();
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream,info);
         if (stream.IsWriting) {
@@ -64,5 +66,5 @@ public class CumflateObjective : DragonMailObjective {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    } */
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
 using NetStack.Serialization;
 using UnityEngine;
 
@@ -14,6 +13,9 @@ public class BufferPool : MonoBehaviour {
 
         instance = this;
     }
+    
+    // FIXME FISHNET
+    /*
     public static short SerializeBitBuffer(StreamBuffer outStream, object customObject) {
         BitBuffer buffer = (BitBuffer)customObject;
         short size = (short)buffer.Length;
@@ -29,5 +31,5 @@ public class BufferPool : MonoBehaviour {
         BitBuffer buffer = new BitBuffer(length/4+1);
         buffer.FromArray(bytes, length);
         return buffer;
-    }
+    }*/
 }

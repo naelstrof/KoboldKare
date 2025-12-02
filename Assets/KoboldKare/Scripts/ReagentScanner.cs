@@ -88,7 +88,9 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
             yield return new WaitForSeconds(scanDelay);
         }
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     protected override void OnFireRPC(int playerViewID) {
         base.OnFireRPC(playerViewID);
         if (firing) {
@@ -144,7 +146,9 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
         StopAllCoroutines();
         StartCoroutine(RenderScreen(allReagents));
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     protected override void OnEndFireRPC(int viewID) {
         firing = false;
     }
@@ -163,12 +167,14 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         animator.SetBool("Open", true);
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    // [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
         animator.SetBool("Open", false);
     }

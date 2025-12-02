@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.VFX;
 using Vilar.AnimationStation;
@@ -52,18 +51,21 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     public override void LocalUse(Kobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                    photonView.ViewID, i);
+                // FIXME FISHNET
+                // k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);
                 break;
             }
         }
-
-        photonView.RPC(nameof(SwapAfterTime), RpcTarget.All);
+        
+        // FIXME FISHNET
+        // photonView.RPC(nameof(SwapAfterTime), RpcTarget.All);
     }
-    [PunRPC]
+    // FIXME FISHNET
+    // [PunRPC]
     private IEnumerator SwapAfterTime() {
         yield return new WaitForSeconds(4f);
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             yield break;
         }
 
@@ -86,11 +88,14 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         photonView.RPC(nameof(AssignKobolds), RpcTarget.AllBufferedViaServer, stations[0].info.user.photonView.ViewID,
             stations[1].info.user.photonView.ViewID, bPlayer?.ActorNumber ?? -1, aPlayer?.ActorNumber ?? -1, stations[1].info.user.GetComponent<MoneyHolder>().GetMoney(), stations[0].info.user.GetComponent<MoneyHolder>().GetMoney());
         stations[0].info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-        stations[1].info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+        stations[1].info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All); */
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB, float moneyA, float moneyB) {
+        // FIXME FISHNET
+        /*
         PhotonProfiler.LogReceive(sizeof(int)*4+sizeof(float)*2);
         thunderSound.PlayOneShot(brainSwapSoundSource);
         lightning.Play();
@@ -153,6 +158,7 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         if (aView != null && bView != null) {
             bodySwapped?.Invoke(aView.GetComponent<Kobold>(), bView.GetComponent<Kobold>());
         }
+        */
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

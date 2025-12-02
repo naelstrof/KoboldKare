@@ -6,7 +6,7 @@ using UnityEngine;
 using Photon.Pun;
 using SimpleJSON;
 
-public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
+public class Seed : GenericUsable, IValuedGood {
     //public List<GameObject> _plantPrefabs;
     [SerializeField]
     private float worth = 5f;
@@ -52,23 +52,28 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
             BitBuffer spawnData = new BitBuffer(16);
             spawnData.AddKoboldGenes(genes);
             spawnData.AddShort(PlantDatabase.GetID(plant));
-            bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
+            // FIXME FISHNET
+            //bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
         }
 
     }
 
     void Start() {
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnDestroy() {
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
     public float GetWorth() {
         return worth;
     }
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    
+    // FIXME FISHNET
+    /*public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
             genes = buffer.ReadKoboldGenes();
@@ -76,7 +81,7 @@ public class Seed : GenericUsable, IValuedGood, IPunInstantiateMagicCallback {
         } else {
             genes = new KoboldGenes().Randomize();
         }
-    }
+    }*/
 
     public override void Save(JSONNode node) {
         base.Save(node);

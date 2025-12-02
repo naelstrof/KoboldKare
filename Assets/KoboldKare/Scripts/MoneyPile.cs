@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
 
-public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonViewControllerChange {
+public class MoneyPile : GenericUsable {
     private float internalWorth;
     private Kobold tryingToEquip;
     [SerializeField]
@@ -33,13 +32,19 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
     public override Sprite GetSprite(Kobold k) {
         return useSprite;
     }
+    // FIXME FISHNET
+    /*
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
             worth = (float)info.photonView.InstantiationData[0];
             PhotonProfiler.LogReceive(sizeof(float));
         }
     }
+    */
+    
     public override void LocalUse(Kobold k) {
+        // FIXME FISHNET
+        /*
         // Try to take control of the equipment, if we don't have permission.
         if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
             tryingToEquip = k;
@@ -49,8 +54,11 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
         if (k.photonView.IsMine && photonView.IsMine) {
             k.GetComponent<MoneyHolder>().AddMoney(worth);
             PhotonNetwork.Destroy(photonView.gameObject);
-        }
+        }*/
     }
+    
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(worth);
@@ -58,7 +66,8 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
             worth = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(float));
         }
-    }
+    }*/
+    
     public override void Save(JSONNode node) {
         base.Save(node);
         node["worth"] = worth;
@@ -68,10 +77,12 @@ public class MoneyPile : GenericUsable, IPunInstantiateMagicCallback, IOnPhotonV
         worth = node["worth"];
     }
 
+    // FIXME FISHNET
+    /*
     public void OnControllerChange(Player newController, Player previousController) {
         if (tryingToEquip.photonView.IsMine && newController == PhotonNetwork.LocalPlayer) {
             tryingToEquip.GetComponent<MoneyHolder>().AddMoney(worth);
             PhotonNetwork.Destroy(photonView.gameObject);
         }
-    }
+    }*/
 }

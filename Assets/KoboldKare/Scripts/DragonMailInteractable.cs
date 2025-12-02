@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class DragonMailInteractable : GenericUsable, IPunObservable{
+public class DragonMailInteractable : GenericUsable {
     public AudioSource src;
     public Canvas tgt;
     public DragonMailHandler dmHandler;
@@ -14,15 +14,18 @@ public class DragonMailInteractable : GenericUsable, IPunObservable{
         return displaySprite;
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+    // FIXME FISHNET
+    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         //Serialize event
-    }
+    }*/
 
     public override void Use(){ 
         //Pulling the screen up/down is entirely local so don't broadcast this part of the set of behaviors
-        if(photonView.IsMine){
+        
+        // FIXME FISHNET
+        /*if(photonView.IsMine){
             base.Use();
             DragonMailHandler.inst.Toggle();
-        }
+        }*/
     }
 }

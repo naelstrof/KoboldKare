@@ -39,9 +39,11 @@ public class DeliverMicroKoboldsObjective : ObjectiveWithSpaceBeam {
         if (k == null) {
             return;
         }
+        // FIXME FISHNET
+        /*
         if (k.GetGenes().baseSize < 14f) {
             ObjectiveManager.NetworkAdvance(spaceBeamTarget.position, view.ViewID.ToString());
-        }
+        }*/
     }
     
     public override void Save(JSONNode node) {
@@ -63,6 +65,8 @@ public class DeliverMicroKoboldsObjective : ObjectiveWithSpaceBeam {
         return description.GetLocalizedString();
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -75,5 +79,5 @@ public class DeliverMicroKoboldsObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

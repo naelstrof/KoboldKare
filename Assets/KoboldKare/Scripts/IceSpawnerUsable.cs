@@ -34,13 +34,16 @@ public class IceSpawnerUsable : GenericUsable {
     }
     public override void LocalUse(Kobold k) {
         k.GetComponent<MoneyHolder>().ChargeMoney(cost);
-        photonView.RPC("RPCUse", RpcTarget.All);
+        // FIXME FISHNET
+        //photonView.RPC("RPCUse", RpcTarget.All);
     }
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public override void Use() {
-        if (PhotonNetwork.IsMasterClient) {
-            PhotonNetwork.InstantiateRoomObject(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
-        }
+        // FIXME FISHNET
+        //if (PhotonNetwork.IsMasterClient) {
+            //PhotonNetwork.InstantiateRoomObject(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
+        //}
         PhotonProfiler.LogReceive(1);
     }
     void OnValidate() {

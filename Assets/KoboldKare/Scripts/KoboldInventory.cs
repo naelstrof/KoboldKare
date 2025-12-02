@@ -8,7 +8,7 @@ using SimpleJSON;
 using UnityEngine;
 
 [RequireComponent(typeof(Kobold))]
-public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
+public class KoboldInventory : MonoBehaviour, ISavable {
     private Dictionary<Equipment, List<GameObject[]>> equipmentDisplays = new Dictionary<Equipment, List<GameObject[]>>();
     private static List<Equipment> staticIncomingEquipment = new List<Equipment>();
     public int Count => equipment.Count;
@@ -40,15 +40,16 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
         return null;
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void PickupEquipmentRPC(short equipmentID, int groundPrefabID) {
-        PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
+        // FIXME FISHNET
+        /*PhotonView view = PhotonNetwork.GetPhotonView(groundPrefabID);
         if (EquipmentDatabase.TryGetAsset(equipmentID, out var equip)) {
             PickupEquipment(equip, view == null ? null : view.gameObject);
             PhotonProfiler.LogReceive(sizeof(short) + sizeof(int));
         } else {
             Debug.LogError("Tried to pick up equipment with invalid ID: " + equipmentID);
-        }
+        }*/
     }
 
     public void PickupEquipment(Equipment thing, GameObject groundPrefab) {
@@ -101,6 +102,8 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
             PickupEquipment(e, null);
         }
     }
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             BitBuffer bitBuffer = new BitBuffer(4);
@@ -121,7 +124,7 @@ public class KoboldInventory : MonoBehaviourPun, IPunObservable, ISavable {
             ReplaceEquipmentWith(staticIncomingEquipment);
             PhotonProfiler.LogReceive(data.Length);
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         JSONArray equipments = new JSONArray();

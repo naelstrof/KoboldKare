@@ -36,19 +36,23 @@ public class CreaturePath : CatmullDisplay {
         StartCoroutine(Think());
     }
 
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     private void SetCreature(int viewID) {
-        trackedCreature = PhotonNetwork.GetPhotonView(viewID);
+        // FIXME FISHNET
+        //trackedCreature = PhotonNetwork.GetPhotonView(viewID);
         PhotonProfiler.LogReceive(sizeof(int));
     }
 
+    // FIXME FISHNET
     private IEnumerator Think() {
         while (isActiveAndEnabled) {
             yield return waitForSeconds;
-            if (trackedCreature == null && photonView.IsMine) {
+            /*if (trackedCreature == null && photonView.IsMine) {
                 GameObject obj = PhotonNetwork.Instantiate(creatureToSpawn.photonName, GetPath().GetPositionFromT(0f), Quaternion.identity, 0, new object[]{photonView.ViewID});
                 photonView.RPC(nameof(SetCreature), RpcTarget.All, obj.GetPhotonView().ViewID);
-            }
+            }*/
         }
     }
 

@@ -36,7 +36,8 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
 
     private void OnEntitySold(PhotonView obj) {
         if (obj.GetComponentInChildren<Kobold>() != null) {
-            ObjectiveManager.NetworkAdvance(obj.transform.position, $"{obj.ViewID.ToString()}{kobolds.ToString()}");
+            // FIXME FISHNET
+            //ObjectiveManager.NetworkAdvance(obj.transform.position, $"{obj.ViewID.ToString()}{kobolds.ToString()}");
         }
     }
 
@@ -52,6 +53,8 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
         kobolds = node["kobolds"];
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(kobolds);
@@ -63,5 +66,5 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

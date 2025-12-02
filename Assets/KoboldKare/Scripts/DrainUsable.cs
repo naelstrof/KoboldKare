@@ -51,7 +51,8 @@ public class DrainUsable : UsableMachine {
         draining = false;
     }
 
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
             stream.SendNext(draining);
@@ -63,7 +64,7 @@ public class DrainUsable : UsableMachine {
             draining = newDraining;
             PhotonProfiler.LogReceive(sizeof(bool));
         }
-    }
+    }*/
 
     public override void Load(JSONNode node) {
         base.Load(node);

@@ -30,8 +30,12 @@ public class PlayButton : MonoBehaviour {
             yield break;
         }
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
+        
+        // FIXME FISHNET
+        /*
         NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
         NetworkManager.instance.StartSinglePlayer();
+        */
         GetComponent<Button>().interactable = true;
     }
 }

@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour {
     public LayerMask plantHitMask;
     public LayerMask decalHitMask;
     public LayerMask usableHitMask;
-    [SerializeField]
-    private NetworkManager networkManager;
     public AnimationCurve volumeCurve;
     public AudioPack buttonHovered, buttonClicked;
 
@@ -44,9 +42,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private static void OnGibInput(InputAction.CallbackContext ctx) {
+        // FIXME FISHNET
+        /*
         if (PhotonNetwork.LocalPlayer.TagObject is Kobold kobold) {
             PhotonNetwork.Destroy(kobold.gameObject);
-        }
+        }*/
     }
     
     public static bool InLevel() {
@@ -151,9 +151,9 @@ public class GameManager : MonoBehaviour {
             return;
         }
         ModManager.AddFinishedLoadingListener(ReloadMapIfInEditor);
-        // FIXME: Photon isn't initialized early enough for scriptable objects to add themselves as a callback...
-        // So I do it here-- I guess!
-        PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
+        // FIXME FISHNET
+        //PhotonNetwork.AddCallbackTarget(NetworkManager.instance);
+        
         DontDestroyOnLoad(gameObject);
         SaveManager.Init();
         var control = GetPlayerControls();
@@ -162,10 +162,13 @@ public class GameManager : MonoBehaviour {
 
     private void ReloadMapIfInEditor() {
         var mapName = SceneManager.GetActiveScene().name;
+        
+        // FIXME FISHNET
+        /*
         if (Application.isEditor && mapName != "MainMenu"  && mapName != "ErrorScene" && !reloadedSceneAlready) {
             NetworkManager.instance.SetSelectedMap(mapName);
             NetworkManager.instance.StartSinglePlayer();
-        }
+        }*/
         reloadedSceneAlready = true;
     }
 
@@ -200,11 +203,12 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator QuitToMenuRoutine() {
-        PhotonNetwork.Disconnect();
+        // FIXME FISHNET
+        //PhotonNetwork.Disconnect();
         ObjectiveManager.GetCurrentObjective()?.Unregister();
         var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
         yield return new WaitUntil(()=>handle.IsDone);
-        PhotonNetwork.OfflineMode = false;
+        //PhotonNetwork.OfflineMode = false;
         yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
     }
 
@@ -236,16 +240,6 @@ public class GameManager : MonoBehaviour {
             return;
         }
         ModManager.RemoveFinishedLoadingListener(ReloadMapIfInEditor);
-        string targetString = NetworkManager.instance.settings.AppSettings.AppVersion;
-        if (Application.isEditor && targetString.EndsWith("Editor")) {
-            NetworkManager.instance.settings.AppSettings.AppVersion = targetString.Substring(0, targetString.Length - 6);
-        }
-        if (Application.isEditor && PhotonNetwork.GameVersion != null) {
-            targetString = PhotonNetwork.GameVersion;
-            if (targetString.EndsWith("Editor")) {
-                PhotonNetwork.GameVersion = targetString.Substring(0,targetString.Length-6);
-            }
-        }
     }
 
     public void PlayUISFX(ButtonMouseOver btn, ButtonMouseOver.EventType evtType) {

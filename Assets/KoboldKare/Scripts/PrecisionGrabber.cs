@@ -12,7 +12,7 @@ using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine.VFX;
 
-public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
+public class PrecisionGrabber : MonoBehaviour, ISavable {
     [SerializeField] private GameObject handDisplayPrefab;
     [SerializeField] private Transform view;
     [SerializeField] private VisualEffectAsset freezeVFX;
@@ -113,11 +113,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             configurableJoint.secondaryAxis = Vector3.right;
             configurableJoint.connectedBody = null;
             configurableJoint.autoConfigureConnectedAnchor = false;
-            if (owner.photonView.IsMine) {
+            // FIXME FISHNET
+            /*if (owner.photonView.IsMine) {
                 configurableJoint.breakForce = breakForce;
             } else {
                 configurableJoint.breakForce = float.MaxValue;
-            }
+            }*/
             JointDrive drive = configurableJoint.xDrive;
             drive.positionSpring = springForce;
             drive.positionDamper = 1f;
@@ -191,9 +192,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
             joint = AddJoint(hitPosWorld, Quaternion.identity, false);
-            if (owner.photonView.IsMine) {
-                photonView.RequestOwnership();
-            }
+            // FIXME FISHNET
+            //if (owner.photonView.IsMine) {
+                //photonView.RequestOwnership();
+            //}
         }
         
         public Grab(Kobold owner, GameObject handDisplayPrefab, Collider collider, Vector3 localColliderPosition,
@@ -225,9 +227,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
 
-            if (owner.photonView.IsMine) {
+            // FIXME FISHNET
+            /*if (owner.photonView.IsMine) {
                 photonView.RequestOwnership();
-            }
+            }*/
         }
 
         public void SetVisibility(bool newVisibility) {
@@ -266,7 +269,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         public bool Valid() {
             bool valid = body != null && owner != null && photonView != null && joint != null && collider != null;
             if (Time.time - creationTime > 2f && valid) {
-                valid &= Equals(photonView.Controller, owner.photonView.Controller);
+                // FIXME FISHNET
+                //valid &= Equals(photonView.Controller, owner.photonView.Controller);
             }
             return valid;
         }
@@ -350,7 +354,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             
             if (targetKobold != null) {
                 targetKobold.GetRagdoller().PopRagdoll();
-                if (targetKobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
+                // FIXME FISHNET
+                /*if (targetKobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
                     foreach (Grab grab in owner.GetComponent<PrecisionGrabber>().frozenGrabs) {
                         if (grab.targetKobold == targetKobold) {
                             return;
@@ -358,14 +363,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                     }
                     // If we're no longer grabbed. Request ownership back.
                     targetKobold.photonView.RequestOwnership();
-                }
+                }*/
             }
         }
         private Vector3 GetViewPos() {
-            bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == owner;
+            // FIXME FISHNET
+            /*bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == owner;
             if (!owner.photonView.IsMine || !isPlayerControlled) {
                 return view.position;
-            }
+            }*/
             return OrbitCamera.GetCamera().transform.position;
         }
     }
@@ -443,10 +449,11 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     private Vector3 GetViewPos() {
-        bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == kobold;
+        // FIXME FISHNET
+        /*bool isPlayerControlled = (Kobold)PhotonNetwork.LocalPlayer.TagObject == kobold;
         if (!photonView.IsMine || !isPlayerControlled) {
             return view.position;
-        }
+        }*/
         return OrbitCamera.GetCamera().transform.position;
     }
 
@@ -515,9 +522,11 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void GrabRPC(int viewID, int colliderNum, Vector3 localHit, Vector3 localHitNormal) {
-        PhotonView otherPhotonView = PhotonNetwork.GetPhotonView(viewID);
+        // FIXME FISHNET
+        /*PhotonView otherPhotonView = PhotonNetwork.GetPhotonView(viewID);
         if (otherPhotonView == null) {
             return;
         }
@@ -529,11 +538,12 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
         grabChanged?.Invoke(colliders[colliderNum].gameObject);
         currentGrab.SetVisibility(handVisibility);
-        PhotonProfiler.LogReceive(sizeof(int)*2+sizeof(float)*6);
+        PhotonProfiler.LogReceive(sizeof(int)*2+sizeof(float)*6);*/
     }
 
     public void TryGrab() {
-        if (currentGrab != null || !photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (currentGrab != null || !photonView.IsMine) {
             return;
         }
         if (!TryRaycastGrab(maxGrabDistance*kobold.GetGenes().baseSize*0.1f, out RaycastHit? hitTest)) {
@@ -555,10 +565,13 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 break;
             }
         }
+        */
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void FreezeRPC(int grabViewID, int colliderNum, Vector3 localColliderPosition, Vector3 localHitNormal, Vector3 worldAnchor, Quaternion rotation, bool affRotation) {
+        /*
         PhotonView grabView = PhotonNetwork.GetPhotonView(grabViewID);
         Collider[] colliders = grabView.GetComponentsInChildren<Collider>();
         frozenGrabs.Add(new Grab(kobold, previewHandAnimator.gameObject, colliders[colliderNum], localColliderPosition, localHitNormal,
@@ -571,9 +584,13 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         freezeVFXComponent.visualEffectAsset = freezeVFX;
         freezeVFXComponent.Play();
         Destroy(freezeVFXGameObject, 3f);
+        */
     }
 
+    
+    // FIXME FISHNET
     public bool TryFreeze() {
+        /*
         if (currentGrab == null || !photonView.IsMine) {
             return false;
         }
@@ -588,13 +605,15 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 return true;
             }
         }
+        */
 
         return false; // Should never happen
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void UnfreezeRPC(int viewID, int rigidbodyID) {
-        PhotonView checkView = PhotonNetwork.GetPhotonView(viewID);
+        /*PhotonView checkView = PhotonNetwork.GetPhotonView(viewID);
         Rigidbody[] bodies = checkView.GetComponentsInChildren<Rigidbody>();
         for(int i=0;i<frozenGrabs.Count;i++) {
             Grab frozenGrab = frozenGrabs[i];
@@ -602,10 +621,11 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 frozenGrab.Release();
                 frozenGrabs.RemoveAt(i--);
             }
-        }
+        }*/
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void UnfreezeAllRPC() {
         foreach (var frozenGrab in frozenGrabs) {
             frozenGrab.Release();
@@ -614,7 +634,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public bool TryUnfreeze() {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return false;
         }
 
@@ -644,17 +665,20 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
 
-        return foundGrabs;
+        return foundGrabs; */
+        return false;
     }
 
     public void UnfreezeAll() {
-        if (frozenGrabs.Count > 0 && photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (frozenGrabs.Count > 0 && photonView.IsMine) {
             UnfreezeAllRPC();
             photonView.RPC(nameof(UnfreezeAllRPC), RpcTarget.Others);
-        }
+        }*/
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void DropRPC() {
         grabChanged?.Invoke(null);
         currentGrab?.Release();
@@ -662,10 +686,11 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
     }
     
     public void TryDrop() {
-        if (currentGrab != null && photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (currentGrab != null && photonView.IsMine) {
             photonView.RPC(nameof(DropRPC), RpcTarget.All);
             return;
-        }
+        }*/
         
         grabChanged?.Invoke(null);
         currentGrab?.Release();
@@ -680,7 +705,10 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             f.LateUpdate();
         }
     }
+    
+    // FIXME FISHNET
     private IEnumerator GiveBackKoboldsWhenPossible(Kobold targetKobold, float delay) {
+        /*
         yield return new WaitForSeconds(delay);
         bool isPlayerKobold = false;
         foreach (var playerCheck in PhotonNetwork.PlayerList) {
@@ -696,7 +724,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
                 }
             }
             yield return new WaitForSeconds(1f);
-        }
+        }*/
+        yield break;
     }
 
     private void Validate() {
@@ -711,6 +740,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             }
         }
 
+        // FIXME FISHNET
+        /*
         foreach (Grab fgrab in removeIds) {
             if (photonView.IsMine && fgrab.photonView != null) {
                 Rigidbody[] bodies = fgrab.photonView.GetComponentsInChildren<Rigidbody>();
@@ -729,6 +760,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         removeIds.Clear();
         freezeUIChanged?.Invoke(frozenGrabs.Count != 0);
         activeUIChanged?.Invoke(currentGrab!=null);
+        */
     }
 
 
@@ -740,6 +772,8 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         int bitsPerElement = 12;
         if (stream.IsWriting) {
@@ -772,6 +806,7 @@ public class PrecisionGrabber : MonoBehaviourPun, IPunObservable, ISavable {
             PhotonProfiler.LogReceive(data.Length);
         }
     }
+    */
 
     public void Save(JSONNode node) {
     }

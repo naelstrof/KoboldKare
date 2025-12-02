@@ -71,6 +71,9 @@ public class KoboldDelivery : UsableMachine {
     private IEnumerator DispenseKobold() {
         targetAnimator.SetTrigger(Dispense);
         yield return new WaitForSeconds(2f);
+        
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             yield break;
         }
@@ -89,7 +92,7 @@ public class KoboldDelivery : UsableMachine {
         source.enabled = true;
         popPack.Play(source);
         yield return new WaitForSeconds(source.clip.length+0.1f);
-        source.enabled = false;
+        source.enabled = false;*/
     }
 
     private void OnValidate() {

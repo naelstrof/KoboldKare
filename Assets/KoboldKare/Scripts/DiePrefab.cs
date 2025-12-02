@@ -25,7 +25,10 @@ public class DiePrefab : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-        NetworkManager.instance.SpawnControllablePlayer();
+        
+        // FIXME FISHNET
+        /*
+        NetworkManager.instance.SpawnControllablePlayer();*/
         Destroy(gameObject);
     }
 }

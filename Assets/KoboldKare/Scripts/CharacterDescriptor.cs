@@ -36,7 +36,7 @@ public class CharacterDescriptorEditor : Editor {
 #endif
 
 [RequireComponent(typeof(Ragdoller), typeof(PhotonView), typeof(Kobold))]
-public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
+public class CharacterDescriptor : MonoBehaviour {
     private KoboldCharacterController characterController;
     private CapsuleCollider characterCollider;
     private Rigidbody body;
@@ -254,9 +254,11 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         chatter.SetTextOutput(floatingTextPrefabInstance.GetComponent<TMPro.TMP_Text>());
         chatter.SetYowlPack(chatYowlPack);
 
-        photonView = GetComponent<PhotonView>();
-        photonView.ObservedComponents.Clear();
-        photonView.FindObservables(true);
+        // FIXME FISHNET
+        //photonView = GetComponent<PhotonView>();
+        //photonView.ObservedComponents.Clear();
+        //photonView.FindObservables(true);
+        
         possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
         Physics.SyncTransforms();
     }
@@ -521,7 +523,8 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
 
     public ControlType GetPlayerControlled() => controlType;
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonInstantiate(PhotonMessageInfo info) {
         bool isPlayer = false;
         if (info.photonView.InstantiationData is { Length: > 0 } && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
@@ -544,5 +547,5 @@ public class CharacterDescriptor : MonoBehaviour, IPunInstantiateMagicCallback {
         } else if (info.Sender != null) {
             info.Sender.TagObject = GetComponent<Kobold>();
         }
-    }
+    }*/
 }

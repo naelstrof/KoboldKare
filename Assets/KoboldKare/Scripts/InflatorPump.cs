@@ -66,14 +66,15 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
-        photonView.RequestOwnership();
+        // FIXME FISHNET
+        /*photonView.RequestOwnership();
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
                 k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
                     photonView.ViewID, i);
                 break;
             }
-        }
+        }*/
 
     }
 
@@ -116,9 +117,10 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         float newInflateAmount = Mathf.Min(Mathf.Min((1f - clamp)+0.1f,1f), inflateAmount);
         float diff = Mathf.Max(inflateAmount - newInflateAmount, 0f);
         float spillAmount = diff * 10f;
-        if (photonView.IsMine) {
-            Accumulate(spillAmount);
-        }
+        // FIXME FISHNET
+        //if (photonView.IsMine) {
+            //Accumulate(spillAmount);
+        //}
         inflateAmount = newInflateAmount;
         inflateAmount = Mathf.MoveTowards(inflateAmount, 1f, Time.deltaTime*1f);
         joint.connectedAnchor = startPos + axis * ((1f - inflateAmount) * maxDistance);
@@ -152,6 +154,9 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
             }
             yield return null;
         }
+        
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             ReagentContents contents = container.Spill(accumulation);
             container.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, accumulation);
@@ -193,7 +198,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
                     mozzarella.SetFollowPenetrator(pumper);
                 }
             }
-        }
+        }*/
 
         accumulation = 0f;
         pumpAnimator.SetBool(Pumping, false);

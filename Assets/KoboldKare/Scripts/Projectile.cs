@@ -9,7 +9,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateMagicCallback {
+public class Projectile : GeneHolder, ISavable {
     private Vector3 velocity;
     [SerializeField]
     private GameObject splash;
@@ -37,7 +37,8 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
     }
 
     private void OnDestroy() {
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
     void Update() {
@@ -85,7 +86,8 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         splashSoundSource.playOnAwake = false;
         splashSoundSource.loop = false;
         splashSoundSource.rolloffMode = AudioRolloffMode.Linear;
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnSplash() {
@@ -99,7 +101,9 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         splash.SetActive(true);
         projectile.SetActive(false);
         splashed = true;
-        if (photonView.IsMine) {
+        
+        // FIXME FISHNET
+        /*if (photonView.IsMine) {
             hitContainers.Clear();
             int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders,
                 GameManager.instance.waterSprayHitMask);
@@ -125,15 +129,17 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
 
         if (splashSoundSource != null) {
             splashSound.Play(splashSoundSource);
-        }
+        }*/
     }
 
     private IEnumerator DestroyAfterTime() {
         yield return new WaitForSeconds(5f);
-        PhotonNetwork.Destroy(photonView);
+        // FIXME FISHNET
+        //PhotonNetwork.Destroy(photonView);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+    // FIXME FISHNET
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(velocity);
             stream.SendNext(splashed);
@@ -146,7 +152,7 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
             splashed = newSplash;
             PhotonProfiler.LogReceive(sizeof(float) * 3 + sizeof(bool));
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         node["velocity.x"] = velocity.x;
@@ -180,6 +186,9 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         }
     }
 
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView == null || info.photonView.InstantiationData == null || info.photonView.InstantiationData[0] is not BitBuffer) {
             Debug.LogWarning("Projectile created without proper instantiation data! If loading from a save then this is OK.");
@@ -201,5 +210,5 @@ public class Projectile : GeneHolder, IPunObservable, ISavable, IPunInstantiateM
         splashed = false;
         SetGenes(buffer.ReadKoboldGenes());
         PhotonProfiler.LogReceive(buffer.Length);
-    }
+    }*/
 }

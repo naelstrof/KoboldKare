@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using Photon.Pun;
 using Cursor = UnityEngine.Cursor;
 
-public class PlayerPossession : MonoBehaviourPun {
+public class PlayerPossession : MonoBehaviour {
     public float coyoteTime = 0.2f; 
     public int defaultMultiGrabSwitchFrames = 15;
     public User user;
@@ -204,12 +204,13 @@ public class PlayerPossession : MonoBehaviourPun {
     }
 
     private void OnDestroy() {
-        if (gameObject.scene.isLoaded) {
+        // FIXME FISHNET
+        /*if (gameObject.scene.isLoaded) {
             if (kobold == (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
                 Instantiate(diePrefab, transform.position, Quaternion.identity);
             }
             playerDieEvent.Raise(transform.position);
-        }
+        }*/
     }
     IEnumerator PauseInputForSeconds(float delay) {
         pauseInput = true;
@@ -301,7 +302,8 @@ public class PlayerPossession : MonoBehaviourPun {
             shouldCancelAnimation = (shouldCancelAnimation | controls.Player.Ragdoll.ReadValue<float>() > 0.5f);
             shouldCancelAnimation = (shouldCancelAnimation | controls.UI.Cancel.ReadValue<float>() > 0.5f);
             if (shouldCancelAnimation) {
-                photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+                // FIXME FISHNET
+                // photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
             }
         } else {
             Vector2 mouseDelta = controls.Player.Look.ReadValue<Vector2>() + controls.Player.LookJoystick.ReadValue<Vector2>();
@@ -327,9 +329,11 @@ public class PlayerPossession : MonoBehaviourPun {
     private void OnJumpInput(InputAction.CallbackContext ctx) {
         if (!isActiveAndEnabled || !movementEnabled) return;
         controller.inputJump = ctx.ReadValueAsButton();
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             photonView.RequestOwnership();
-        }
+        }*/
     }
 
     private void OnShiftMode(InputAction.CallbackContext ctx) {
@@ -434,19 +438,24 @@ public class PlayerPossession : MonoBehaviourPun {
         pGrabber.UnfreezeAll();
     }
     private void OnRagdollInput(InputAction.CallbackContext ctx) {
+        // FIXME FISHNET
+        /*
         if (!ctx.ReadValueAsButton()) {
             photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         } else {
             photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
             inputRagdolled = true;
-        }
+        }*/
     }
     // This fixes a bug where OnRagdoll isn't called when the application isn't in focus.
     void OnApplicationFocus(bool hasFocus) {
+        // FIXME FISHNET
+        /*
         if (hasFocus && inputRagdolled) {
             photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
             inputRagdolled = false;
         }
+        */
     }
 }

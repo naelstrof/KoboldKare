@@ -27,7 +27,8 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
-        photonView.ObservedComponents.Add(container);
+        // FIXME FISHNET
+        //photonView.ObservedComponents.Add(container);
         container.OnChange += OnReagentContentsChanged;
     }
     
@@ -52,11 +53,13 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     public override void LocalUse(Kobold k) {
         base.LocalUse(k);       
         if (stations[0].info.user == null) {
-            k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, 0);
+            // FIXME FISHNET
+            //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, 0);
         }
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public override void Use() {
         base.Use();
         StopAllCoroutines();
@@ -71,7 +74,8 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
 
         yield return new WaitForSeconds(6f);
         
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             yield break;
         }
 
@@ -87,7 +91,7 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         BitBuffer buffer = new BitBuffer(4);
         buffer.AddReagentContents(spilled);
         container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer,
-            pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+            pressedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);*/
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

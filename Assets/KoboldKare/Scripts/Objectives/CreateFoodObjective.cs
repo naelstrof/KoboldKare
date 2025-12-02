@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -36,9 +37,12 @@ public class CreateFoodObjective : DragonMailObjective {
     }
 
     private void OnFoodCreatedEvent(BucketWeapon bucket, ScriptableReagent reagent) {
+        // FIXME PHOTON
+        throw new NotImplementedException();
+        /*
         if (reagentFilter.Contains(reagent)) {
             ObjectiveManager.NetworkAdvance(bucket.transform.position, $"{bucket.photonView.ViewID.ToString()}{foodMade.ToString()}");
-        }
+        }*/
     }
 
     public override string GetTitle() {
@@ -59,6 +63,8 @@ public class CreateFoodObjective : DragonMailObjective {
         }
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);
         if (stream.IsWriting) {
@@ -71,5 +77,5 @@ public class CreateFoodObjective : DragonMailObjective {
             }
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }
+    }*/
 }

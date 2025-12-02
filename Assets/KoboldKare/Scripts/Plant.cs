@@ -8,7 +8,7 @@ using NetStack.Serialization;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, ISavable {
+public class Plant : GeneHolder, ISavable {
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
@@ -44,6 +44,8 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
     IEnumerator GrowRoutine() {
         growing = true;
         yield return new WaitForSeconds(30f);
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             yield break;
         }
@@ -55,6 +57,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         photonView.RPC(nameof(SwitchToRPC), RpcTarget.AllBufferedViaServer,
             PlantDatabase.GetID(plant.possibleNextGenerations[Random.Range(0, plant.possibleNextGenerations.Length)]));
         growing = false;
+        */
     }
 
     void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
@@ -73,7 +76,9 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         StartCoroutine(nameof(GrowRoutine));
     }
 
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     void SwitchToRPC(short newPlantID) {
         if (PlantDatabase.TryGetAsset(newPlantID, out var checkPlant)) {
             if (checkPlant == plant) {
@@ -117,6 +122,9 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
             }
         }
 
+        
+        // FIXME FISHNET
+        /*
         if (PhotonNetwork.IsMasterClient) {
             foreach (var produce in newPlant.produces) {
                 int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
@@ -134,13 +142,16 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
                     }
                 }
             }
-        }
+        }*/
         switched?.Invoke();
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             StartCoroutine(GrowRoutine());
         }
     }
 
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonInstantiate(PhotonMessageInfo info) {
         if (info.photonView.InstantiationData != null && info.photonView.InstantiationData[0] is BitBuffer) {
             BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
@@ -159,7 +170,7 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         }
         
         planted?.Invoke(photonView.gameObject, plant);
-    }
+    }*/
 
     void UndarkenMaterials(){
         if (display == null) {
@@ -227,6 +238,4 @@ public class Plant : GeneHolder, IPunInstantiateMagicCallback, IPunObservable, I
         StartCoroutine(nameof(GrowRoutine));
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-    }
 }

@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Photon.Pun;
-using Photon.Realtime;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 
-public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnPhotonViewOwnerChange {
+public class ObjectiveManager : MonoBehaviour, ISavable {
     private static ObjectiveManager instance;
     [SerializeReference, SerializeReferenceButton]
     [SerializeField] private List<DragonMailObjective> objectives;
@@ -25,10 +23,12 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public static void GiveStars(int count) {
+        // FIXME FISHNET
+        /*
         if (instance.photonView.IsMine) {
             instance.stars += count;
             instance.objectiveChanged?.Invoke(null);
-        }
+        }*/
     }
 
     public static bool HasMail() {
@@ -41,26 +41,31 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     private event ObjectiveChangedAction objectiveChanged;
     private event ObjectiveChangedAction objectiveUpdated;
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void AdvanceObjective(Vector3 position) {
-        if (!PhotonNetwork.IsMasterClient) return;
+        throw new NotImplementedException();
+        /*if (!PhotonNetwork.IsMasterClient) return;
         GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
         obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
         currentObjective?.Advance(position);
-        PhotonProfiler.LogReceive(sizeof(float) * 3);
+        PhotonProfiler.LogReceive(sizeof(float) * 3);*/
     }
 
     public static void NetworkAdvance(Vector3 position, string advanceInstance) {
+        // FIXME FISHNET
+        /*
         if (!PhotonNetwork.IsMasterClient || instance.advanceInstances.Contains(advanceInstance)) {
             return;
         }
         instance.advanceInstances.Add(advanceInstance);
-        instance.photonView.RPC(nameof(AdvanceObjective), RpcTarget.All, position);
+        instance.photonView.RPC(nameof(AdvanceObjective), RpcTarget.All, position);*/
     }
 
     IEnumerator DestroyAfterTime(GameObject obj) {
         yield return new WaitForSeconds(5f);
-        PhotonNetwork.Destroy(obj);
+        // FIXME FISHNET
+        // PhotonNetwork.Destroy(obj);
     }
 
     public static void AddObjectiveSwappedListener(ObjectiveChangedAction action) {
@@ -81,10 +86,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
     }
 
     public static void SkipObjective() {
-        if (instance.photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (instance.photonView.IsMine) {
             instance.OnObjectiveComplete(GetCurrentObjective());
             instance.SwitchToObjective(instance.currentObjectiveIndex >= instance.objectives.Count ? null : instance.objectives[instance.currentObjectiveIndex]);
-        }
+        }*/
     }
 
     private void Awake() {
@@ -130,9 +136,10 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         }
         currentObjective = newObjective;
         if (currentObjective != null) {
-            if (photonView.IsMine) {
+            // FIXME FISHNET
+            /*if (photonView.IsMine) {
                 currentObjective.Register();
-            }
+            }*/
             currentObjective.completed += OnObjectiveComplete;
             currentObjective.updated += OnObjectiveUpdated;
         }
@@ -159,6 +166,8 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         }
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             bool hasObjective = currentObjective != null;
@@ -176,7 +185,7 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         if (objectives.Count > 0 && currentObjectiveIndex > 0) {
             objectives[currentObjectiveIndex].OnPhotonSerializeView(stream, info);
         }
-    }
+    }*/
 
     private void OnValidate() {
         foreach (var obj in objectives) {
@@ -185,9 +194,11 @@ public class ObjectiveManager : MonoBehaviourPun, ISavable, IPunObservable, IOnP
         starExplosion.OnValidate();
     }
 
+    // FIXME FISHNET
+    /*
     public void OnOwnerChange(Player newOwner, Player previousOwner) {
         if (currentObjective != null) {
             SwitchToObjective(currentObjective);
         }
-    }
+    }*/
 }

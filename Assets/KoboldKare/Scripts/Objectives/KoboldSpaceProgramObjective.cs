@@ -51,10 +51,12 @@ public class KoboldSpaceProgram : DragonMailObjective {
                     maxHeight = kobold.hip.transform.position.y;
                 }
             }
+            // FIXME FISHNET
+            /*
             if (maxHeightKobold != null && maxHeight > height) {
                 ObjectiveManager.NetworkAdvance(maxHeightKobold.transform.position, maxHeightKobold.photonView.ViewID.ToString());
                 yield break;
-            }
+            }*/
             currentMaxHeight = maxHeight;
             TriggerUpdate();
             yield return null;

@@ -7,7 +7,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
+public class WeatherManager : MonoBehaviour, ISavable {
     [Range(0f,1f)]
     public float rainAmount = 0f;
     public float fogRangeWhenRaining;
@@ -103,17 +103,19 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
     }
 
     public void StopRain() {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return;
-        }
+        }*/
         StopCoroutine("Rain");
         StartCoroutine("StopRainRoutine");
     }
 
     public void RandomlyRain(float chance) {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return;
-        }
+        }*/
         if (UnityEngine.Random.Range(0f,1f) < chance) {
             StopCoroutine(nameof(StopRainRoutine));
             StopCoroutine(nameof(Rain));
@@ -206,6 +208,8 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
         }
     }
 
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(rainAmount);
@@ -213,7 +217,7 @@ public class WeatherManager : MonoBehaviourPun, IPunObservable, ISavable {
             rainAmount = (float)stream.ReceiveNext();
             PhotonProfiler.LogReceive(sizeof(float));
         }
-    }
+    }*/
 
     public void Save(JSONNode node) {
         node["rainAmount"] = rainAmount;

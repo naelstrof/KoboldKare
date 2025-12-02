@@ -7,7 +7,7 @@ using System.IO;
 using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource), typeof(Rigidbody))]
-public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbable {
+public class BreakOnGrab : MonoBehaviour, ISavable, IGrabbable {
     private bool grabbed = false;
     private AudioSource source;
     [SerializeField]
@@ -16,11 +16,13 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
     void Start() {
         source = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnDestroy() {
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        // PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
     void SetState(bool newGrabbed) {
@@ -39,21 +41,27 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    // [PunRPC]
     public void OnGrabRPC(int koboldID) {
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             SetState(true);
         }
-        PhotonProfiler.LogReceive(sizeof(int));
+        PhotonProfiler.LogReceive(sizeof(int)); */
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    // [PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
     }
 
     public Transform GrabTransform() {
         return transform;
     }
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(grabbed);
@@ -61,7 +69,7 @@ public class BreakOnGrab : MonoBehaviourPun, IPunObservable, ISavable, IGrabbabl
             SetState((bool)stream.ReceiveNext());
             PhotonProfiler.LogReceive(sizeof(bool));
         }
-    }
+    } */
 
     public void Save(JSONNode node) {
         node["grabbed"] = grabbed;

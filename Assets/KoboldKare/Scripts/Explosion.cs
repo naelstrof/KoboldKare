@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class Explosion : MonoBehaviourPun {
+public class Explosion : MonoBehaviour {
     [SerializeField]
     private LayerMask playerMask;
     [SerializeField]
     private Material scorchDecal;
     void Start() {
         SkinnedMeshDecals.PaintDecal.RenderDecalInBox(Vector3.one*4f, transform.position, scorchDecal, Quaternion.FromToRotation(Vector3.forward, Vector3.down), GameManager.instance.decalHitMask);
+        // FIXME FISHNET
+        /*
         if (!photonView.IsMine) {
             return;
         }
@@ -53,6 +55,6 @@ public class Explosion : MonoBehaviourPun {
 
         if (bestTile != null) {
             bestTile.photonView.RPC(nameof(SoilTile.SetDebris),RpcTarget.All,false);
-        }
+        }*/
     }
 }

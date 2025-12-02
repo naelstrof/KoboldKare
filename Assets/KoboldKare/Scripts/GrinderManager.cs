@@ -46,11 +46,14 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     }
 
     public override void LocalUse(Kobold k) {
-        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        // FIXME FISHNET
+        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
         base.LocalUse(k);
     }
 
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     private void BeginGrind() {
         grinding = true;
         animator.SetBool("Grinding", true);
@@ -62,7 +65,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         PhotonProfiler.LogReceive(1);
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     private void StopGrind() {
         grinding = false;
         animator.SetBool("Grinding", false);
@@ -85,7 +89,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         yield return new WaitForSeconds(4f);
         
 
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             yield break;
         }
         if (station.info.user == null) {
@@ -98,6 +103,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
             yield return new WaitForSeconds(18f);
             photonView.RPC(nameof(StopGrind), RpcTarget.All);
         }
+        */
     }
 
     protected override void Start() {
@@ -115,7 +121,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         }
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public override void Use() {
 
         StopCoroutine(nameof(WaitThenConsumeEnergy));
@@ -125,7 +132,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         yield return new WaitForSeconds(2f);
         grindedThingsCache.Clear();
     }
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     void Grind(int viewID, BitBuffer incomingContentsData) {
         ReagentContents incomingContents = incomingContentsData.ReadReagentContents();
         KoboldGenes genes = incomingContentsData.ReadKoboldGenes();
@@ -133,7 +141,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         grindedObject?.Invoke(viewID, incomingContents);
         // reset before we send back.
         incomingContentsData.SetReadPosition(0);
-        container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+        // FIXME FISHNET
+        //container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
         container.SetGenes(genes);
         fluidStream.OnFire(container);
     }
@@ -177,6 +186,9 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
             return;
         }
         
+        
+        // FIXME FISHNET
+        /*
         if (!view.IsMine) {
             return;
         }
@@ -194,14 +206,15 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
             d.Damage(d.GetHealth() + 1f);
         } else {
             PhotonNetwork.Destroy(view.gameObject);
-        }
+        }*/
 
     }
 
     private IEnumerator RagdollForTime(Kobold kobold) {
-        kobold.photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
+        // FIXME FISHNET
+        //kobold.photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
-        kobold.photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
+        //kobold.photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 
     private void OnTriggerEnter(Collider other) {

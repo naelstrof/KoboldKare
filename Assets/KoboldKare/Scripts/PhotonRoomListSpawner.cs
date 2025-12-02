@@ -1,17 +1,15 @@
 ﻿using System;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 
-public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks, IInRoomCallbacks {
+public class PhotonRoomListSpawner : MonoBehaviour {
     public GameObject roomPrefab;
     public GameObject hideOnRoomsFound;
     private List<GameObject> roomPrefabs = new List<GameObject>();
-    [SerializeField] private NetworkManager networkManager;
     
     private static string[] blacklist;
 
@@ -20,29 +18,23 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
         blacklist = null;
     }
     
-    public override void OnConnectedToMaster(){
-        base.OnConnectedToMaster();
-        Debug.Log("PhotonRoomListSpawner :: Connected to master");
-    }
-    public override void OnLeftLobby(){
-        ClearRoomList();
-        Debug.Log("[PhotonRoomListSpawner] :: Player left lobby");
-    }
-
     private IEnumerator RefreshRoomRoutine() {
         while (isActiveAndEnabled) {
-            if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady && PhotonNetwork.NetworkClientState != ClientState.JoiningLobby) {
+            // FIXME FISHNET
+            /*if (!PhotonNetwork.InLobby && PhotonNetwork.IsConnectedAndReady && PhotonNetwork.NetworkClientState != ClientState.JoiningLobby) {
                 PhotonNetwork.JoinLobby();
-            }
+            }*/
             yield return new WaitForSeconds(1f);
         }
     }
 
-    public override void OnEnable() {
-        base.OnEnable();
+    public void OnEnable() {
         StartCoroutine(RefreshRoomRoutine());
     }
 
+    
+    // FIXME FISHNET
+    /*
     private void SetupRoom(GameObject room, RoomInfo info) {
         room.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = info.Name;
         room.transform.Find("Info").GetComponent<TextMeshProUGUI>().text = info.PlayerCount + "/" + info.MaxPlayers;
@@ -102,5 +94,5 @@ public class PhotonRoomListSpawner : MonoBehaviourPunCallbacks, ILobbyCallbacks,
     public override void OnDisconnected(DisconnectCause cause) {
         base.OnDisconnected(cause);
         ClearRoomList();
-    }
+    }*/
 }

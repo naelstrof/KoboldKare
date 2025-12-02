@@ -10,7 +10,7 @@ using System.IO;
 using PenetrationTech;
 using SimpleJSON;
 
-public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISavable {
+public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     private static readonly int Carried = Animator.StringToHash("Carried");
     private static readonly int Quaff = Animator.StringToHash("Quaff");
     private Kobold kobold;
@@ -200,12 +200,14 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         playerModel.SetBool(Carried, newCarry);
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void BeginAnimationRPC(int photonViewID, int animatorID) {
+        /*
         PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
         IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
         BeginAnimation(set, set.GetAnimationStations()[animatorID]);
-        PhotonProfiler.LogReceive(sizeof(int) * 2);
+        PhotonProfiler.LogReceive(sizeof(int) * 2);*/
     }
     
     private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
@@ -280,7 +282,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     void Update() {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /* if (!photonView.IsMine) {
             eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
             facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
         } else {
@@ -290,7 +293,7 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             if ((inputShouldFaceEye || inputActivate || inputGrabbing) && !controller.inputWalking) {
                 facingRot = eyeRot.x;
             }
-        }
+        }*/
         hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);
         if (kobold != null) {
             playerModel.SetFloat(ThrustX, hipVector.x);
@@ -400,7 +403,8 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void StopAnimationRPC() {
         StopAnimation();
     }
@@ -450,6 +454,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
     }
 
     // Animations are something that cannot have packets dropped, so we sync via RPC
+    
+    // FIXME FISHNET
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
             stream.SendNext(eyeRot);
@@ -469,10 +476,13 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             networkedFacingRotDiff = Mathf.Abs(networkedFacingRot-facingRot);
             PhotonProfiler.LogReceive(sizeof(float)*5);
         }
-    }
+    }*/
+    
+    
+    // FIXME FISHNET
     public void Save(JSONNode node) {
         if (animating) {
-            node["currentStationSetID"] = currentStationSet.photonView.ViewID;
+            //node["currentStationSetID"] = currentStationSet.photonView.ViewID;
             node["stationIndex"] = currentStationSet.GetAnimationStations().IndexOf(currentStation);
         } else {
             node["currentStationSetID"] = -1;
@@ -480,8 +490,9 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
         }
     }
 
+    // FIXME FISHNET
     public void Load(JSONNode node) {
-        int photonViewID = node.GetValueOrDefault("currentStationSetID", -1);
+        /*int photonViewID = node.GetValueOrDefault("currentStationSetID", -1);
         int animationID = node.GetValueOrDefault("stationIndex", -1);
         if (photonViewID != -1 &&
             (currentStationSet == null || currentStationSet.photonView.ViewID != photonViewID ||
@@ -489,6 +500,6 @@ public class CharacterControllerAnimator : MonoBehaviourPun, IPunObservable, ISa
             PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
             IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
             BeginAnimation(set, set.GetAnimationStations()[animationID]);
-        }
+        }*/
     }
 }

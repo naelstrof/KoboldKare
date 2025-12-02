@@ -1,4 +1,3 @@
-using ExitGames.Client.Photon;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -70,9 +69,11 @@ public class Equipment : ScriptableObject {
         return null;
     }
     public virtual GameObject OnUnequip(Kobold k, bool dropOnGround = true) {
-        if (k.photonView.IsMine && groundPrefab.photonName != null && dropOnGround) {
+        // FIXME FISHNET
+        /*if (k.photonView.IsMine && groundPrefab.photonName != null && dropOnGround) {
             return PhotonNetwork.Instantiate(groundPrefab.photonName, k.transform.position, Quaternion.identity);
-        }
+        }*/
+        throw new NotImplementedException();
         return null;
     }
 

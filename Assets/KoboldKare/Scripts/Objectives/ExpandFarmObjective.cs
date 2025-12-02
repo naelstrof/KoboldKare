@@ -43,7 +43,8 @@ public class ExpandFarmObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnTileClear(SoilTile tile) {
-        ObjectiveManager.NetworkAdvance(tile.transform.position, tile.photonView.ViewID.ToString());
+        // FIXME FISHNET
+        /*ObjectiveManager.NetworkAdvance(tile.transform.position, tile.photonView.ViewID.ToString());*/
     }
 
     public override string GetTitle() {

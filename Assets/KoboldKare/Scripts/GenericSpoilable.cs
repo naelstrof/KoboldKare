@@ -1,7 +1,8 @@
 ﻿using System;
 using Photon.Pun;
+using UnityEngine;
 
-public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
+public class GenericSpoilable : MonoBehaviour, ISpoilable {
     void Start() {
         SpoilableHandler.AddSpoilable(this);
     }
@@ -11,8 +12,9 @@ public class GenericSpoilable : MonoBehaviourPun, ISpoilable {
     }
 
     public void OnSpoil() {
-        if (photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView.gameObject);
-        }
+        }*/
     }
 }

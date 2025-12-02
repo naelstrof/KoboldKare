@@ -5,7 +5,7 @@ using PenetrationTech;
 using Photon.Pun;
 using UnityEngine;
 
-public class PenetratorPhotonHelper : MonoBehaviourPun {
+public class PenetratorPhotonHelper : MonoBehaviour {
     private Penetrator penetrator;
     private void Start() {
         penetrator = GetComponent<Penetrator>();
@@ -19,7 +19,8 @@ public class PenetratorPhotonHelper : MonoBehaviourPun {
     }
 
     void OnPenetrationStart(Penetrable p) {
-        if (!photonView.IsMine) {
+        // FIXME FISHNET
+        /*if (!photonView.IsMine) {
             return;
         }
         PhotonView other = p.GetComponentInParent<PhotonView>();
@@ -28,16 +29,18 @@ public class PenetratorPhotonHelper : MonoBehaviourPun {
             if (penetrables[i] == p) {
                 photonView.RPC(nameof(PenetrateRPC), RpcTarget.Others, other.ViewID, i);
             }
-        }
+        }*/
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    // [PunRPC]
     private void PenetrateRPC(int viewID, int penetrableID) {
-        PhotonView other = PhotonNetwork.GetPhotonView(viewID);
+        /*PhotonView other = PhotonNetwork.GetPhotonView(viewID);
         Penetrable[] penetrables = other.GetComponentsInChildren<Penetrable>();
         // Only penetrate if we already aren't
         if (!penetrator.TryGetPenetrable(out Penetrable checkPen) || checkPen != penetrables[penetrableID]) {
             penetrator.Penetrate(penetrables[penetrableID]);
         }
-        PhotonProfiler.LogReceive(sizeof(int) * 2);
+        PhotonProfiler.LogReceive(sizeof(int) * 2);*/
     }
 }

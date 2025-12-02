@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public delegate void SpriteEvent(Sprite sprite);
 
-public class User : MonoBehaviourPun {
+public class User : MonoBehaviour {
     private Kobold internalKobold;
     [SerializeField] private GameObject panel;
     [SerializeField] private Image useImage;
@@ -32,7 +32,8 @@ public class User : MonoBehaviourPun {
 
     public void LateUpdate() {
         var ownedKobold = kobold;
-        if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
+        // FIXME FISHNET
+        //if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
         
         var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.forward * (capsuleCollider.height*0.5f);

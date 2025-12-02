@@ -20,9 +20,10 @@ public class DildoStuffingObjective : ObjectiveWithSpaceBeam {
         penetrationMemory[k].Add(d);
         penetrationMemory[k].RemoveWhere((o) => o == null);
         TriggerUpdate();
-        if (penetrationMemory[k].Count >= minDildosInserted) {
+        // FIXME FISHNET
+        /* if (penetrationMemory[k].Count >= minDildosInserted) {
             ObjectiveManager.NetworkAdvance(k.transform.position, k.photonView.ToString());
-        }
+        }*/
     }
 
     private void RemoveInsertion(Kobold k, Dildo d) {

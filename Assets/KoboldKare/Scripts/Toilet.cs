@@ -28,7 +28,8 @@ public class Toilet : GenericUsable, IAnimationStationSet {
 
     public override void LocalUse(Kobold k) {
         base.LocalUse(k);
-        k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+        // FIXME FISHNET
+        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
     }
 
     public override void Use() {
@@ -48,7 +49,8 @@ public class Toilet : GenericUsable, IAnimationStationSet {
         Kobold k = station.info.user;
         if (k != null) {
             k.bellyContainer.Spill(k.bellyContainer.volume);
-            k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+            // FIXME FISHNET
+            //k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
         }
         effect.gameObject.SetActive(false);
         yield return new WaitForSeconds(4f);

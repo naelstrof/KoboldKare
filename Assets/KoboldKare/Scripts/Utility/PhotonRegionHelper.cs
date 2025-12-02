@@ -1,21 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-using Photon.Realtime;
 using TMPro;
 
-public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
+public class PhotonRegionHelper : MonoBehaviour {
     public TMPro.TMP_Dropdown dropdown;
-    private RegionHandler cachedHandler;
-    private Region selectedRegion;
 
     private void ChooseRegion(int id){
         Debug.Log("CHOOSING REGION: "+dropdown.options[id].text);
-        NetworkManager.instance.JoinLobby(dropdown.options[id].text);
+        // FIXME FISHNET
+        //NetworkManager.instance.JoinLobby(dropdown.options[id].text);
     }
 
+    // FIXME FISHNET
+    /*
     public override void OnRegionListReceived(RegionHandler handler){
         Debug.Log("[Photon Region Handler] :: Currently connected region: "+PhotonNetwork.CloudRegion);
         dropdown.ClearOptions();
@@ -41,5 +40,5 @@ public class PhotonRegionHelper : MonoBehaviourPunCallbacks{
                 dropdown.SetValueWithoutNotify(dropdown.options.IndexOf(item));
             }
         }
-    }
+    }*/
 }

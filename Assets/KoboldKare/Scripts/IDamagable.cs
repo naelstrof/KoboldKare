@@ -5,8 +5,9 @@ using UnityEngine;
 
 public interface IDamagable {
     public float GetHealth();
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     public void Damage(float amount);
     public void Heal(float amount);
-    public PhotonView photonView { get; }
 }

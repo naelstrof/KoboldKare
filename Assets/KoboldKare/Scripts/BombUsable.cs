@@ -19,7 +19,9 @@ public class BombUsable : GenericUsable, IDamagable {
     public override Sprite GetSprite(Kobold k) {
         return bombSprite;
     }
-    [PunRPC]
+    
+    // FIXME FISHNET
+    //[PunRPC]
     public override void Use() {
         base.Use();
         Fire();
@@ -32,6 +34,8 @@ public class BombUsable : GenericUsable, IDamagable {
 
         effect.gameObject.SetActive(true);
         animator.SetTrigger("Burn");
+        // FIXME FISHNET
+        /*
         if (photonView.IsMine) {
             // Mix the water with the potassium...
             // It should sizzle and blow up.
@@ -52,7 +56,7 @@ public class BombUsable : GenericUsable, IDamagable {
             
             container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, bufferOne, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
             container.photonView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, bufferTwo, container.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-        }
+        }*/
         fired = true;
     }
 
@@ -60,12 +64,14 @@ public class BombUsable : GenericUsable, IDamagable {
         return 1f;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void Damage(float amount) {
         if (!fired) {
             Fire();
         } else {
-            PhotonNetwork.Destroy(gameObject);
+            // FIXME FISHNET
+            //PhotonNetwork.Destroy(gameObject);
         }
         PhotonProfiler.LogReceive(sizeof(float));
     }

@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
+public class GenericGrabbable : MonoBehaviour, IGrabbable {
     [System.Serializable]
     public class RendererMaterialPair {
         public Renderer renderer;
@@ -17,7 +17,8 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
         return true;
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {
@@ -34,14 +35,17 @@ public class GenericGrabbable : MonoBehaviourPun, IGrabbable {
             }
             pair.defaultMaterial = pair.renderer.material;
         }
-        PlayAreaEnforcer.AddTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
     private void OnDestroy() {
-        PlayAreaEnforcer.RemoveTrackedObject(photonView);
+        // FIXME FISHNET
+        //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {

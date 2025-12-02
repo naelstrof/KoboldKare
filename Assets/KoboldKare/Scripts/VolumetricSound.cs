@@ -12,6 +12,8 @@ public class VolumetricSound : MonoBehaviour {
     void Update() {
         if (listener == null || !listener.isActiveAndEnabled ) {
             //listener = GameObject.FindObjectOfType<AudioListener>();
+            // FIXME FISHNET
+            /*
             if (PhotonNetwork.LocalPlayer.TagObject != null) {
                 foreach(AudioListener l in (PhotonNetwork.LocalPlayer.TagObject as Kobold).GetComponentsInChildren<AudioListener>()) {
                     if (l.isActiveAndEnabled) {
@@ -19,7 +21,7 @@ public class VolumetricSound : MonoBehaviour {
                         break;
                     }
                 }
-            }
+            }*/
             if (listener == null || !listener.isActiveAndEnabled) {
                 return;
             }

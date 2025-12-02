@@ -207,7 +207,8 @@ public class DickDescriptor : MonoBehaviour {
                         if (attachedKobold == null) {
                             return;
                         }
-                        if (attachedKobold.photonView.IsMine) {
+                        // FIXME FISHNET
+                        /*if (attachedKobold.photonView.IsMine) {
                             GenericReagentContainer container =
                                 hit.collider.GetComponentInParent<GenericReagentContainer>();
                             if (container != null && attachedKobold != null) {
@@ -216,9 +217,8 @@ public class DickDescriptor : MonoBehaviour {
                                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
                                     buffer, attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
                             }
-                        }
+                        }*/
 
-                        //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.red, 5f);
                         if (alloc.volume > 0f) {
                             set.cumSplatProjectorMaterial.color = color;
                         }
@@ -236,7 +236,8 @@ public class DickDescriptor : MonoBehaviour {
                 set.cumSplatProjectorMaterial, Quaternion.LookRotation(holeTangent, Vector3.up),
                 GameManager.instance.decalHitMask);
             GenericReagentContainer container = pennedHole.GetComponentInParent<GenericReagentContainer>();
-            if (attachedKobold.photonView.IsMine) {
+            // FIXME FISHNET
+            /*if (attachedKobold.photonView.IsMine) {
                 ReagentContents alloc = new ReagentContents();
                 if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
                     alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
@@ -246,7 +247,7 @@ public class DickDescriptor : MonoBehaviour {
                 reagentBuffer.AddReagentContents(alloc);
                 container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, reagentBuffer,
                     attachedKobold.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-            }
+            }*/
         }
         cumming = false;
     }

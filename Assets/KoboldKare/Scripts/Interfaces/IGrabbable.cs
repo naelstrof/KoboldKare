@@ -5,13 +5,14 @@ using UnityEngine;
 public interface IGrabbable {
     bool CanGrab(Kobold kobold);
     
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     void OnGrabRPC(int koboldID);
-    [PunRPC]
+    // FIXME FISHNET
+    //[PunRPC]
     void OnReleaseRPC(int koboldID, Vector3 velocity);
     
     Transform GrabTransform();
     Transform transform { get; }
     GameObject gameObject { get; }
-    PhotonView photonView { get; }
 }

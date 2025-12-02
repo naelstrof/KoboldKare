@@ -6,7 +6,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class ExplosionReaction : ReagentReaction {
-    private class ExplosionBehaviour : MonoBehaviourPun {
+    private class ExplosionBehaviour : MonoBehaviour {
         public AudioPack sizzle;
         public GameObject explosion;
         public GenericReagentContainer container;
@@ -16,10 +16,12 @@ public class ExplosionReaction : ReagentReaction {
         }
         private IEnumerator ExplosionRoutine() {
             yield return new WaitForSeconds(3f);
+            // FIXME FISHNET
+            /*
             if (photonView.IsMine) {
                 PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
                 container.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.All, container.volume);
-            }
+            }*/
         }
     }
 

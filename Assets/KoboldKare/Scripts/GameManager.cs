@@ -49,6 +49,13 @@ public class GameManager : MonoBehaviour {
         }*/
     }
     
+    private static string[] blacklist = null;
+    public static bool GetBlackListed(string name, out string filtered) {
+        blacklist ??= WordFilter.NaughtyList.GetNaughtyList("Y3ViCmtpZAprdWIKeW91bmcKYmFieQpjdWJieQpib3ljdWIKYm9pY3ViCmdpcmxjdWIKZ3VybGN1YgpsaWxib2kKbGlsZ2lybApsaWxndXJsCmxpbG9uZQphZ2VwbGF5CnBlZG8KbmlnZ2VyCnRyYW5ueQpkaWtlCnJldGFyZApqYWlsYmFpdApuaWdnYQpuZWdybwpwYWVkbwpzaGVtYWxlCnNwaWMKc3BpY2sKem9vcGhpbGlhCmxvbGkKbGl0dGxlY3ViCmxpdHRsZWJveQpsaXR0bGVib2kKbGl0dGxlZ2lybApsaXR0bGVndXJsCmxpdHRsZW9uZQpjdWJib2kKY3ViYm95CmN1YmdpcmwKY3ViZ3VybA==");
+        var blacklisted = WordFilter.WordFilter.GetBlackListed(name, blacklist, out filtered, true);
+        return blacklisted;
+    }
+    
     public static bool InLevel() {
         return SceneManager.GetActiveScene().name != "MainMenu" && SceneManager.GetActiveScene().name != "ErrorScene";
     }

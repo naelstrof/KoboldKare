@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Steamworks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +14,9 @@ public class MapSelector : MonoBehaviour {
     
     [SerializeField] private TMP_InputField nameField;
     [SerializeField] private Slider playerCountSlider;
-    [SerializeField] private Toggle privateRoom;
     [SerializeField] private MapSelectUI mapSelectUI;
     [SerializeField] private GameObject[] multiplayerUI;
+    [SerializeField] private TMP_Dropdown lobbyTypeDropdown;
     private List<bool> otherViewMemory;
     private bool busy;
     private MapSelectHandle currentHandle;
@@ -23,7 +25,7 @@ public class MapSelector : MonoBehaviour {
     public struct MapSelectResults {
         public bool multiplayer;
         public int playerCount;
-        public bool privateRoom;
+        public ELobbyType lobbyType;
         public string roomName;
         public PlayableMap playableMap;
     }
@@ -42,6 +44,19 @@ public class MapSelector : MonoBehaviour {
         public bool IsDone;
         public bool Cancelled;
         public MapSelectResults Result;
+
+        public Task<MapSelectResults> AsTask() {
+            var tcs = new TaskCompletionSource<MapSelectResults>(TaskCreationOptions.RunContinuationsAsynchronously);
+            finished += (cancelled, results) => {
+                if (cancelled) {
+                    tcs.SetCanceled();
+                } else {
+                    tcs.SetResult(results);
+                }
+            };
+            return tcs.Task;
+        }
+        
         public void Invoke(bool cancelled, MapSelectResults mapSelectResults) {
             Cancelled = cancelled;
             Result = mapSelectResults;
@@ -86,7 +101,12 @@ public class MapSelector : MonoBehaviour {
                 playableMap = mapSelectUI.GetSelectedMap(),
                 multiplayer = instance.currentMultiplayer,
                 playerCount = Mathf.RoundToInt(playerCountSlider.value),
-                privateRoom = privateRoom.isOn,
+                lobbyType = lobbyTypeDropdown.value switch {
+                    0 => ELobbyType.k_ELobbyTypePrivate,
+                    1 => ELobbyType.k_ELobbyTypeFriendsOnly,
+                    2 => ELobbyType.k_ELobbyTypePublic,
+                    _ => ELobbyType.k_ELobbyTypePrivate 
+                },
                 roomName = nameField.text
             });
             instance.currentHandle = null;

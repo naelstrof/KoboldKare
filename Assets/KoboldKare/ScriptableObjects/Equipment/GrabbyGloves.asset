@@ -19,7 +19,7 @@ MonoBehaviour:
   groundPrefab:
     gameObject: {fileID: 5605572581541272102, guid: e19ec61e30e580d4480bdd0fc79fb3d3,
       type: 3}
-    photonName: Gloves
+    optionalDatabase: {fileID: 0}
   localizedName:
     m_TableReference:
       m_TableCollectionName: GUID:7b0547fe1d039e3448e29797d2fc4463

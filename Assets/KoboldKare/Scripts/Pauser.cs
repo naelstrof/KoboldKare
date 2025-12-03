@@ -32,9 +32,6 @@ public class Pauser : MonoBehaviour {
     }
 
     private static void TogglePause() {
-        if (!GameManager.InLevel()) {
-            return;
-        }
         paused = !paused;
         OnPauseStateChanged(paused);
         pauseChanged?.Invoke(paused);

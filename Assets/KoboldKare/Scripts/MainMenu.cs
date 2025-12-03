@@ -38,7 +38,7 @@ public class MainMenu : MonoBehaviour {
         
         if (instance.currentMode == MainMenuMode.None) {
             ShowMenuStatic(MainMenuMode.MainMenu);
-            if (PhotonNetwork.OfflineMode) {
+            if (PhotonNetwork.OfflineMode && GameManager.InLevel()) {
                 Pauser.SetPaused(true);
             }
         } else if (instance.currentMode == MainMenuMode.MainMenu && GameManager.InLevel()) {

@@ -9,6 +9,17 @@ using UnityEngine;
 
 [System.Serializable]
 public class CommandList : Command {
+
+    private static readonly string[] parameters = new string[] {
+        "dicks",
+        "equipment",
+        "kobolds",
+        "objects",
+        "players",
+        "prefabs",
+        "reagents",
+    };
+
     public override string GetArg0() => "/list";
     public override void Execute(StringBuilder output, Kobold k, string[] args) {
         base.Execute(output, k, args);
@@ -94,12 +105,10 @@ public class CommandList : Command {
             yield break;
         }
 
-        yield return new("prefabs");
-        yield return new("objects");
-        yield return new("kobolds");
-        yield return new("dicks");
-        yield return new("reagents");
-        yield return new("equipment");
-        yield return new("players");
+        foreach(var parameter in parameters) {
+            if(parameter.Contains(text, StringComparison.OrdinalIgnoreCase)) {
+                yield return new(parameter);
+            }
+        }
     }
 }

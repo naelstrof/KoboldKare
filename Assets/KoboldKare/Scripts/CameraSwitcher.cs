@@ -51,6 +51,10 @@ public class CameraSwitcher : MonoBehaviour {
     private CameraMode? mode = null;
     private const float thirdPersonCameraDistance = 1.5f;
 
+    public CameraMode? GetCameraMode() {
+        return mode;
+    }
+
     void OnKoboldSizeChange(float newSize) {
         crouchPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);
         headPivot.SetDesiredDistanceFromPivot(thirdPersonCameraDistance * newSize);

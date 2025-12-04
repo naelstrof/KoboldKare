@@ -1324,7 +1324,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: Kurcz-penis
+    m_Localized: Kurcz-kutas
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1488,6 +1488,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: Gotowy!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "Od\u015Bwie\u017C lobby"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "Zmie\u0144 filtry"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "Wyczy\u015B\u0107 filtry"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "Przegl\u0105danie lobby jest dost\u0119pne tylko na platformie
+      Steam, po\u0142\u0105cz si\u0119 przez adres IP!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: 'Adres IP lub SteamID:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Przyk\u0142ady adres\xF3w bezpo\u015Bredniego \u0142\u0105czenia:\nIP:
+      69.69.69.69:27069\nSteamID: 76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "Bezpo\u015Brednie do\u0142\u0105czenie"
     m_Metadata:
       m_Items: []
   references:

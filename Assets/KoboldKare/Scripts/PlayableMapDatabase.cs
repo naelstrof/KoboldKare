@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public class PlayableMapDatabase : MonoBehaviour {
     private static PlayableMapDatabase instance;
@@ -24,13 +22,13 @@ public class PlayableMapDatabase : MonoBehaviour {
 
     private BoxedSceneLoad OnMapRequest(string mapName) {
         if (mapName == "MainMenu" || mapName == "ErrorScene") {
-            return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync(mapName));
+            return BoxedSceneLoad.FromAddressables(mapName);
         }
         if (TryGetPlayableMap(mapName, out var playableMap)) {
             return playableMap.LoadAsync();
         }
         Debug.LogError("Could not find map: " + mapName);
-        return BoxedSceneLoad.FromAddressables(Addressables.LoadSceneAsync("ErrorScene"));
+        return BoxedSceneLoad.FromAddressables("ErrorScene");
     }
 
     public static void AddPlayableMap(PlayableMap playableMap) {

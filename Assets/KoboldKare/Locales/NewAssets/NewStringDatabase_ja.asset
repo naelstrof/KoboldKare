@@ -1147,7 +1147,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620096
-    m_Localized: "\u30B8\u30E5\u30FC\u30B9\u3092\u98F2\u3082\u3046\uFF01"
+    m_Localized: "\u30B8\u30E5\u30FC\u30B9\u3092\u6CE8\u3044\u3067\u304F\u3060\u3055\u3044\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
@@ -1410,6 +1410,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: "\u6E96\u5099\u304C\u3067\u304D\u3066\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "\u30ED\u30D3\u30FC\u3092\u66F4\u65B0\u3059\u308B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "\u30D5\u30A3\u30EB\u30BF\u30FC\u3092\u5909\u66F4\u3059\u308B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "\u30D5\u30A3\u30EB\u30BF\u30FC\u3092\u30AF\u30EA\u30A2"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "\u30ED\u30D3\u30FC\u95B2\u89A7\u306F Steam \u3067\u306E\u307F\u5229\u7528\u53EF\u80FD\u3067\u3059\u3002\u4EE3\u308F\u308A\u306B
+      IP \u7D4C\u7531\u3067\u63A5\u7D9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "IP \u30A2\u30C9\u30EC\u30B9\u307E\u305F\u306F SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "\u76F4\u63A5\u53C2\u52A0\u30A2\u30C9\u30EC\u30B9\u306E\u4F8B\uFF1A\nIP:
+      69.69.69.69:27069\nSteamID: 76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "\u76F4\u63A5\u7D50\u5408"
     m_Metadata:
       m_Items: []
   references:

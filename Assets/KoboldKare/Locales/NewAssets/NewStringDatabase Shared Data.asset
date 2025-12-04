@@ -1391,6 +1391,34 @@ MonoBehaviour:
     m_Key: MENU_MOD_READY
     m_Metadata:
       m_Items: []
+  - m_Id: 640674222914478080
+    m_Key: MENU_MULTIPLAYER_REFRESH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Key: MENU_MULTIPLAYER_CHANGE_FILTERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Key: MENU_MULTIPLAYER_CLEAR_FILTERS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Key: MENU_MULTIPLAYER_STEAM_ONLY_LOBBIES_WARNING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Key: MENU_MULTIPLAYER_DIRECT_JOIN_ADDRESS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Key: MENU_MULTIPLAYER_DIRECT_JOIN_EXAMPLES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Key: MENU_MULTIPLAYER_DIRECT_JOIN
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

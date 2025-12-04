@@ -1467,6 +1467,36 @@ MonoBehaviour:
     m_Localized: Parat!
     m_Metadata:
       m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: Opdater lobbyer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Skift filtre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Ryd filtre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "Lobbybrowsing er kun tilg\xE6ngelig p\xE5 Steam, opret forbindelse
+      via IP i stedet!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: 'IP-adresse eller SteamID:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Eksempler p\xE5 direkte join-adresser:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: Direkte tilmelding
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1293,7 +1293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: Vermindert reisziekte
+    m_Localized: Reisziekteverminderaar
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1490,6 +1490,40 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: Klaar!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: Vernieuw lobby's
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Filters wijzigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Filters wissen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: Bladeren in de lobby is alleen mogelijk op Steam. Maak in plaats
+      daarvan verbinding via IP!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: 'IP-adres of SteamID:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: 'Voorbeelden van directe join-adressen:
+
+      IP: 69.69.69.69:27069
+
+      SteamID:
+      76561196976978969'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: Directe deelname
     m_Metadata:
       m_Items: []
   references:

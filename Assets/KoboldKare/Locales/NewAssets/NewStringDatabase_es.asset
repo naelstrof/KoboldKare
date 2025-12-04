@@ -1469,6 +1469,36 @@ MonoBehaviour:
     m_Localized: "\xA1Listo!"
     m_Metadata:
       m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "Actualizar vest\xEDbulos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Cambiar filtros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Borrar filtros
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "\xA1La navegaci\xF3n en el lobby solo est\xE1 disponible en Steam,
+      con\xE9ctate mediante IP!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "Direcci\xF3n IP o SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Ejemplos de direcciones de conexi\xF3n directa:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "Uni\xF3n directa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

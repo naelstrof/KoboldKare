@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -122,12 +123,28 @@ public class PlayableMap : ScriptableObject {
         }
     }
 
+    private static Dictionary<object,AsyncOperationHandle<SceneInstance>> loadingScenes = new();
+    private static Dictionary<object,AsyncOperation> loadingBundles = new();
+
+    private static void ActivateScene(object key) {
+        if (loadingScenes.ContainsKey(key)) {
+            loadingScenes[key].Result.ActivateAsync();
+            loadingScenes.Remove(key);
+        } else if (loadingBundles.TryGetValue(key, out var bundle)) {
+            bundle.allowSceneActivation = true;
+            loadingBundles.Remove(key);
+        } else {
+            Debug.LogWarning("Tried to activate scene that wasn't loading: " + key);
+        }
+    }
+    
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub? stub, object key) {
         await PlayableMapPostProcessor.UnloadAllMaps();
         if (stub != null) {
             await ModManager.SetModAssetsAvailable(stub.Value, true);
         }
-        var handle = Addressables.LoadSceneAsync(key);
+        var handle = Addressables.LoadSceneAsync(key, LoadSceneMode.Additive, false);
+        loadingScenes.Add(key, handle);
         await handle.Task;
         GameManager.FadeInAudio();
         if (stub != null) {
@@ -147,6 +164,8 @@ public class PlayableMap : ScriptableObject {
             Debug.LogError("Failed to load bundled scene: " + GetSceneName());
             return;
         }
+        loadingBundles.Add(GetSceneName(), handle);
+        handle.allowSceneActivation = false;
         await handle.AsTask();
         GameManager.FadeInAudio();
         loadedBundles.Add(new ModStubBundleHandlePair() {
@@ -157,10 +176,10 @@ public class PlayableMap : ScriptableObject {
 
     public BoxedSceneLoad LoadAsync() {
         if (string.IsNullOrEmpty(bundleAssetName)) {
-            return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub, unityScene.RuntimeKey));
+            return BoxedSceneLoad.FromTask(LoadAddressableSceneFromStub(stub, unityScene.RuntimeKey), unityScene.RuntimeKey.ToString(), ()=>ActivateScene(unityScene.RuntimeKey));
         } else {
             if (stub != null) {
-                return BoxedSceneLoad.FromTask(LoadBundleSceneFromStub(stub.Value));
+                return BoxedSceneLoad.FromTask(LoadBundleSceneFromStub(stub.Value), GetSceneName(), ()=>ActivateScene(GetSceneName()));
             } else {
                 Debug.LogError("Failed to load bundled scene, there was no mod associated??: " + GetSceneName());
                 return new BoxedSceneLoad();

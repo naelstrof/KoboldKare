@@ -1486,6 +1486,36 @@ MonoBehaviour:
     m_Localized: "K\xE9sz!"
     m_Metadata:
       m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "Friss\xEDtse a v\xE1r\xF3kat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "Sz\u0171r\u0151k m\xF3dos\xEDt\xE1sa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "Sz\u0171r\u0151k t\xF6rl\xE9se"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "A lobby b\xF6ng\xE9sz\xE9s csak Steamen \xE9rhet\u0151 el, ink\xE1bb
+      IP-n kereszt\xFCl csatlakozz!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "IP-c\xEDm vagy SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "K\xF6zvetlen csatlakoz\xE1si c\xEDm p\xE9ld\xE1k:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "K\xF6zvetlen csatlakoz\xE1s"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

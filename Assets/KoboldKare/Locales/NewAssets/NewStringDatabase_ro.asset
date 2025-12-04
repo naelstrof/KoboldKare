@@ -1216,7 +1216,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216462783215620097
-    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, ceea ce \xEEnseamn\u0103
+    m_Localized: "Vreau o mul\u021Bime de tipuri diferite de kobold, iar asta \xEEnseamn\u0103
       c\u0103 ai nevoie de mai multe sucuri de fructe. M\u0103cin\u0103 mai multe
       fructe!"
     m_Metadata:
@@ -1486,6 +1486,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: Gata!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "Re\xEEmprosp\u0103ta\u021Bi lobbie-urile"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "Schimba\u021Bi filtrele"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "\u0218terge\u021Bi filtrele"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "Navigarea \xEEn lobby este disponibil\u0103 doar pe Steam, conecta\u021Bi-v\u0103
+      prin IP \xEEn schimb!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "Adres\u0103 IP sau SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Exemple de adrese de al\u0103turare direct\u0103:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "Al\u0103turare direct\u0103"
     m_Metadata:
       m_Items: []
   references:

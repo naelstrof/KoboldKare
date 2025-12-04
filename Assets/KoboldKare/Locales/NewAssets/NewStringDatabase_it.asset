@@ -798,7 +798,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695178
-    m_Localized: Big McLargeEnorme
+    m_Localized: Big McLargeHuge
     m_Metadata:
       m_Items: []
   - m_Id: 198589332866695179
@@ -1267,7 +1267,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 216470162770546689
-    m_Localized: Sono curioso di sapere come se la cavano i coboldi con l'attrito
+    m_Localized: Sono curioso di sapere come se la cavano i Kobold con l'attrito
       dell'aria, facendone schizzare uno in cielo.
     m_Metadata:
       m_Items: []
@@ -1472,6 +1472,40 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: Pronto!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: Aggiornare le lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Cambia filtri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Cancella filtri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "La navigazione nella lobby \xE8 disponibile solo su Steam, connettiti
+      invece tramite IP!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: 'Indirizzo IP o SteamID:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: 'Esempi di indirizzi di collegamento diretto:
+
+      IP: 69.69.69.69:27069
+
+      SteamID:
+      76561196976978969'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: Partecipazione diretta
     m_Metadata:
       m_Items: []
   references:

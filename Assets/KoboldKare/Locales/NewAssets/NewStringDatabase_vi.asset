@@ -1318,7 +1318,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216462783215620107
     m_Localized: "G\u1EEDi cho t\xF4i th\u1EADt nhi\u1EC1u Kobold ng\u1EF1c b\u1EF1.
-      Con n\xE0y kh\xF4ng ph\u1EA3i \u0111\u1EC3 l\xE0m c\u1EA3nh \u0111\xE2u, ch\u1EC9
+      Con n\xE0y kh\xF4ng ph\u1EA3i \u0111\u1EC3 th\u1EF1c h\xE0nh \u0111\xE2u, ch\u1EC9
       l\xE0 \u0111\u1EC3 l\u1EAFc cho vui th\xF4i."
     m_Metadata:
       m_Items: []
@@ -1339,8 +1339,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 216470162770546689
     m_Localized: "T\xF4i t\xF2 m\xF2 kh\xF4ng bi\u1EBFt Kobold c\xF3 th\u1EC3 ch\u1ECBu
-      \u0111\u01B0\u1EE3c l\u1EF1c ma s\xE1t c\u1EE7a kh\xF4ng kh\xED t\u1ED1t \u0111\u1EBFn
-      m\u1EE9c n\xE0o, c\xF3 th\u1EC3 ph\xF3ng m\u1ED9t con l\xEAn tr\u1EDDi kh\xF4ng."
+      \u0111\u01B0\u1EE3c l\u1EF1c ma s\xE1t c\u1EE7a kh\xF4ng kh\xED nh\u01B0 th\u1EBF
+      n\xE0o, c\xF3 th\u1EC3 ph\xF3ng m\u1ED9t con l\xEAn tr\u1EDDi kh\xF4ng."
     m_Metadata:
       m_Items: []
   - m_Id: 216833884877803520
@@ -1348,7 +1348,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 228010423070457856
-    m_Localized: "Thu\u1ED1c gi\u1EA3m say t\xE0u xe"
+    m_Localized: "Gi\u1EA3m say t\xE0u xe"
     m_Metadata:
       m_Items: []
   - m_Id: 231982103588818944
@@ -1553,6 +1553,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: "S\u1EB5n s\xE0ng!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "L\xE0m m\u1EDBi s\u1EA3nh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "Thay \u0111\u1ED5i b\u1ED9 l\u1ECDc"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "X\xF3a b\u1ED9 l\u1ECDc"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "Duy\u1EC7t s\u1EA3nh ch\u1EC9 kh\u1EA3 d\u1EE5ng tr\xEAn Steam,
+      h\xE3y k\u1EBFt n\u1ED1i qua IP!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "\u0110\u1ECBa ch\u1EC9 IP ho\u1EB7c SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "V\xED d\u1EE5 v\u1EC1 \u0111\u1ECBa ch\u1EC9 tham gia tr\u1EF1c
+      ti\u1EBFp:\nIP: 69.69.69.69:27069\nSteamID: 76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "Tham gia tr\u1EF1c ti\u1EBFp"
     m_Metadata:
       m_Items: []
   references:

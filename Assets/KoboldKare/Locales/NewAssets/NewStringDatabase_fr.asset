@@ -1300,15 +1300,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: "R\xE9tr\xE9cissement des seins"
+    m_Localized: "R\xE9duction mammaire"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
-    m_Localized: "Boules r\xE9tractables"
+    m_Localized: "R\xE9tr\xE9cissement des testicules"
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284033
-    m_Localized: "R\xE9tr\xE9cissement de la bite"
+    m_Localized: "R\xE9ducteur de p\xE9nis"
     m_Metadata:
       m_Items: []
   - m_Id: 258142671894794240
@@ -1316,7 +1316,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 258400516968075264
-    m_Localized: Configuration du module
+    m_Localized: Configuration du mod
     m_Metadata:
       m_Items: []
   - m_Id: 268693956486176768
@@ -1328,15 +1328,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 277668489729613824
-    m_Localized: Installation...
+    m_Localized: Installation en cours...
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296896
-    m_Localized: Charger sauvegarder
+    m_Localized: Charger la sauvegarde
     m_Metadata:
       m_Items: []
   - m_Id: 277970981017296897
-    m_Localized: Supprimer la sauvegarde
+    m_Localized: Supprimer l'enregistrement
     m_Metadata:
       m_Items: []
   - m_Id: 278016973389373440
@@ -1369,12 +1369,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930368
-    m_Localized: "La suppression d'une sauvegarde est d\xE9finitive !"
+    m_Localized: "Supprimer une sauvegarde est d\xE9finitif !"
     m_Metadata:
       m_Items: []
   - m_Id: 278029437631930369
-    m_Localized: "Le chargement de la sauvegarde maintenant entra\xEEnera la perte
-      de votre session actuelle."
+    m_Localized: "Charger la sauvegarde maintenant entra\xEEnera la perte de votre
+      session actuelle."
     m_Metadata:
       m_Items: []
   - m_Id: 279799208752914432
@@ -1473,6 +1473,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: "Pr\xEAt!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: Actualiser les halls d'accueil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Modifier les filtres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Filtres d'effacement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "La navigation dans les salons est uniquement disponible sur Steam,
+      connectez-vous plut\xF4t via IP\_!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "Adresse IP ou SteamID\_:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Exemples d'adresses pour rejoindre directement le serveur\_:\n\nIP\_:
+      69.69.69.69:27069\nSteamID\_: 76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "Adh\xE9sion directe"
     m_Metadata:
       m_Items: []
   references:

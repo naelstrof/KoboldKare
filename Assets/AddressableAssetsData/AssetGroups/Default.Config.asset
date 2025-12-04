@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
-  - m_GUID: 0db1b2949f8595e4685ff4a5aa255d32
-    m_Address: Assets/KoboldKare/Prefabs/UI/CreateCustomGame.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
   - m_GUID: 0e2cb600d38202641a1d3db74913f7c1
     m_Address: Assets/KoboldKare/JiggleSettings/SoftbodyFlat.asset
     m_ReadOnly: 0

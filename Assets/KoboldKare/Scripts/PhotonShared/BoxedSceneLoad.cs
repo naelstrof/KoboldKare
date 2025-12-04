@@ -14,6 +14,9 @@ public class BoxedSceneLoad {
     AsyncOperation unityOp;
     AsyncOperationHandle<SceneInstance> addrHandle;
     Task task;
+    private string sceneName;
+    private Action activateAction;
+
     event Action completedInternal;
 
     public bool IsDone {
@@ -38,6 +41,20 @@ public class BoxedSceneLoad {
         }
     }
 
+    public void ActivateScene() {
+        switch (source) {
+            case Source.Addressables:
+                addrHandle.Result.ActivateAsync();
+                break;
+            case Source.Unity:
+                unityOp.allowSceneActivation = true;
+                break;
+            case Source.Task:
+                activateAction?.Invoke();
+                break;
+        }
+    }
+
     public event Action OnCompleted {
         add {
             completedInternal += value;
@@ -46,9 +63,11 @@ public class BoxedSceneLoad {
         remove => completedInternal -= value;
     }
 
-    public static BoxedSceneLoad FromUnity(AsyncOperation op) {
-        var boxed = new BoxedSceneLoad { source = Source.Unity, unityOp = op };
+    public static BoxedSceneLoad FromUnity(string sceneName) {
+        var op = SceneManager.LoadSceneAsync(sceneName);
+        var boxed = new BoxedSceneLoad { source = Source.Unity, unityOp = op, sceneName = sceneName};
         if (op != null) {
+            op.allowSceneActivation = false;
             op.completed += _ => boxed.completedInternal?.Invoke();
         } else {
             boxed.completedInternal?.Invoke();
@@ -56,14 +75,16 @@ public class BoxedSceneLoad {
         return boxed;
     }
 
-    public static BoxedSceneLoad FromAddressables(AsyncOperationHandle<SceneInstance> handle) {
-        var boxed = new BoxedSceneLoad { source = Source.Addressables, addrHandle = handle };
+    public static BoxedSceneLoad FromAddressables(string sceneName) {
+        var handle = Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Single, false);
+        var boxed = new BoxedSceneLoad { source = Source.Addressables, addrHandle = handle, sceneName =  sceneName };
         handle.Completed += _ => boxed.completedInternal?.Invoke();
         return boxed;
     }
     
-    public static BoxedSceneLoad FromTask(Task handle) {
-        var boxed = new BoxedSceneLoad { source = Source.Task, task = handle };
+    public static BoxedSceneLoad FromTask(Task handle, string sceneName, Action activateScene) {
+        var boxed = new BoxedSceneLoad { source = Source.Task, task = handle, sceneName = sceneName };
+        boxed.activateAction = activateScene;
         handle.ContinueWith(_ => boxed.completedInternal?.Invoke());
         return boxed;
     }

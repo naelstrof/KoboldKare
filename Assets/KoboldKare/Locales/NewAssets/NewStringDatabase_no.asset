@@ -1293,7 +1293,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 254924482117312512
-    m_Localized: Krymping av bryster
+    m_Localized: Brystkrymping
     m_Metadata:
       m_Items: []
   - m_Id: 254924482138284032
@@ -1464,6 +1464,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: Ferdig!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: Oppdater lobbyer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: Endre filtre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: Fjern filtre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "Lobbysurfing er bare tilgjengelig p\xE5 Steam, koble til via IP
+      i stedet!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: 'IP-adresse eller SteamID:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "Eksempler p\xE5 direkte tilkoblingsadresser:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: Direkte tilkobling
     m_Metadata:
       m_Items: []
   references:

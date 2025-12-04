@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Steamworks;
 using TMPro;
@@ -9,15 +10,23 @@ public class SteamListLobbies : MonoBehaviour {
     [SerializeField] private GameObject noLobbiesFound;
     [SerializeField] private CanvasGroup lobbyControls;
     [SerializeField] private GameObject steamUnavailable;
+    
+    [SerializeField] private Button refreshButton;
+    
     private bool refreshing = false;
     
     private void OnEnable() {
         steamUnavailable.SetActive(false);
         noLobbiesFound.SetActive(false);
         _ = RefreshLobbies();
+        refreshButton.onClick.AddListener(RefreshLobby);
     }
 
-    public void RefreshLobby() {
+    private void OnDisable() {
+        refreshButton.onClick.RemoveListener(RefreshLobby);
+    }
+
+    private void RefreshLobby() {
         _ = RefreshLobbies();
     }
 

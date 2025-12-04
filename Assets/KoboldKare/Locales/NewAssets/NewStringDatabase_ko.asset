@@ -832,8 +832,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 198589332866695179
     m_Localized: "\uCF54\uBCFC\uB4DC\uB97C \uD0A4\uAC00 \uCEE4\uC11C \uC9D1\uB3C4
-      \uB0B4\uB824\uB2E4\uBCFC \uC218 \uC788\uAC8C \uB9CC\uB4DC\uB294 \uBE44\uBC00
-      \uB808\uC2DC\uD53C..."
+      \uB0B4\uB824\uB2E4\uBCFC \uC218 \uC788\uAC8C \uB9CC\uB4DC\uB294 \uBE44\uBC95..."
     m_Metadata:
       m_Items: []
   - m_Id: 202939310757433344
@@ -1330,7 +1329,7 @@ MonoBehaviour:
   - m_Id: 216462783215620107
     m_Localized: "\uAC00\uC2B4 \uD070 \uCF54\uBCFC\uB4DC \uB9CE\uC774 \uBCF4\uB0B4
       \uC918. \uC774\uAC74 \uC2E4\uC6A9\uC131 \uB54C\uBB38\uC774 \uC544\uB2C8\uB77C
-      \uADF8\uB0E5 \uD754\uB4E4\uAE30\uB9CC \uD558\uBA74 \uC7AC\uBC0C\uC73C\uB2C8\uAE4C."
+      \uADF8\uB0E5 \uD754\uB4E4\uAE30 \uC7AC\uBC0C\uC744 \uBFD0\uC774\uC57C."
     m_Metadata:
       m_Items: []
   - m_Id: 216462783219814400
@@ -1568,6 +1567,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 626166151215390727
     m_Localized: "\uC900\uBE44\uAC00 \uB41C!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478080
+    m_Localized: "\uB85C\uBE44 \uC0C8\uB85C \uACE0\uCE68"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478081
+    m_Localized: "\uD544\uD130 \uBCC0\uACBD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640674222914478082
+    m_Localized: "\uD544\uD130 \uC9C0\uC6B0\uAE30"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640680267661516800
+    m_Localized: "\uB85C\uBE44 \uD0D0\uC0C9\uC740 Steam\uC5D0\uC11C\uB9CC \uAC00\uB2A5\uD569\uB2C8\uB2E4.
+      \uB300\uC2E0 IP\uB97C \uD1B5\uD574 \uC5F0\uACB0\uD558\uC138\uC694!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951805009920
+    m_Localized: "IP \uC8FC\uC18C \uB610\uB294 SteamID:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204224
+    m_Localized: "\uC9C1\uC811 \uCC38\uC5EC \uC8FC\uC18C \uC608\uC2DC:\nIP: 69.69.69.69:27069\nSteamID:
+      76561196976978969"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 640724951809204225
+    m_Localized: "\uC9C1\uC811 \uC870\uC778"
     m_Metadata:
       m_Items: []
   references:

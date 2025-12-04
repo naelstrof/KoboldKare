@@ -46,6 +46,15 @@ public class PlayableMapDatabase : MonoBehaviour {
         match = null;
         return false;
     }
+    
+    public static ModManager.ModStub? GetStubForMap(string key) {
+        foreach(var map in instance.playableMaps) {
+            if (map.GetRepresentedByKey(key)) {
+                return map.stub;
+            }
+        }
+        return null;
+    }
 
     public static void RemovePlayableMap(PlayableMap playableMap) {
         instance.playableMaps.Remove(playableMap);

@@ -159,6 +159,11 @@ public class PlayableMap : ScriptableObject {
         await PlayableMapPostProcessor.UnloadAllMaps();
         await ModManager.SetModAssetsAvailable(stub, true);
         var bundle = AssetBundle.LoadFromFile(bundlePath);
+        loadedBundles.Add(new ModStubBundleHandlePair() {
+            bundle = bundle,
+            stub = stub
+        });
+        
         var handle = SceneManager.LoadSceneAsync(GetSceneName(), LoadSceneMode.Single);
         if (handle == null) {
             Debug.LogError("Failed to load bundled scene: " + GetSceneName());
@@ -168,10 +173,6 @@ public class PlayableMap : ScriptableObject {
         handle.allowSceneActivation = false;
         await handle.AsTask();
         GameManager.FadeInAudio();
-        loadedBundles.Add(new ModStubBundleHandlePair() {
-            bundle = bundle,
-            stub = stub
-        });
     }
 
     public BoxedSceneLoad LoadAsync() {

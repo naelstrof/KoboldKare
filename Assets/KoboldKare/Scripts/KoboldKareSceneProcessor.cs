@@ -5,6 +5,8 @@ using UnityScene = UnityEngine.SceneManagement.Scene;
 using System.Collections;
 using System;
 using System.Threading.Tasks;
+using SimpleJSON;
+using Steamworks;
 
 namespace FishNet.Managing.Scened {
     public class KoboldKareSceneProcessor : SceneProcessorBase {
@@ -12,7 +14,8 @@ namespace FishNet.Managing.Scened {
         /// <summary>
         /// Currently active loading AsyncOperations.
         /// </summary>
-        protected List<BoxedSceneLoad> LoadingAsyncOperations = new();
+        protected List<Task> LoadingAsyncOperations = new();
+        protected List<BoxedSceneLoad> AwaitingActivation = new();
         /// <summary>
         /// A collection of scenes used both for loading and unloading.
         /// </summary>
@@ -20,9 +23,8 @@ namespace FishNet.Managing.Scened {
         /// <summary>
         /// Current AsyncOperation being processed.
         /// </summary>
-        protected BoxedSceneLoad CurrentSceneLoad;
+        protected Task CurrentTask;
 
-        protected Task CurrentSceneUnload;
         /// <summary>
         /// Last scene to load or begin loading.
         /// </summary>
@@ -34,6 +36,19 @@ namespace FishNet.Managing.Scened {
         /// </summary>
         public override void LoadStart(LoadQueueData queueData) {
             base.LoadStart(queueData);
+            var bytes = queueData.SceneLoadData.Params;
+            var mapLoadInfo = JSONNode.Parse(bytes.ToString());
+            if (!mapLoadInfo.HasKey("mods")) {
+                throw new Exception($"No mods key found in map load info: {mapLoadInfo.ToString()}");
+            }
+
+            List<ModManager.ModStub> modList = new List<ModManager.ModStub>();
+            foreach (var node in mapLoadInfo["mods"]) {
+                if (ulong.TryParse(node.Value["id"], out var id)) {
+                    modList.Add(new ModManager.ModStub(node.Value["title"], (PublishedFileId_t)id, ModManager.ModSource.Any, node.Value["id"]));
+                }
+            }
+            _ = ModManager.SetLoadedMods(modList);
             ResetValues();
         }
 
@@ -46,8 +61,9 @@ namespace FishNet.Managing.Scened {
         /// Resets values for a fresh load or unload.
         /// </summary>
         private void ResetValues() {
-            CurrentSceneLoad = null;
+            CurrentTask = null;
             LoadingAsyncOperations.Clear();
+            AwaitingActivation.Clear();
         }
 
         /// <summary>
@@ -59,23 +75,41 @@ namespace FishNet.Managing.Scened {
             Scenes.Clear();
         }
 
+        private async Task LoadAsyncTask(string sceneName, UnityEngine.SceneManagement.LoadSceneParameters parameters) {
+            while (!ModManager.GetFinishedLoading()) {
+                await Task.Delay(1000);
+            }
+
+            if (ModManager.GetFailedToLoadMods()) {
+                InstanceFinder.ClientManager.StopConnection();
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                PopupHandler.instance.SpawnPopup("ModLoadFailed");
+                return;
+            }
+            if (!PlayableMapDatabase.TryGetPlayableMap(sceneName, out var map)) {
+                InstanceFinder.ClientManager.StopConnection();
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                PopupHandler.instance.SpawnPopup("FailedLoad");
+                return;
+            }
+            var handle = map.LoadAsync();
+            var task = new TaskCompletionSource<bool>();
+            handle.OnCompleted += () => {
+                task.SetResult(true);
+                AwaitingActivation.Add(handle);
+            };
+            await task.Task;
+        }
+
         /// <summary>
         /// Begin loading a scene using an async method.
         /// </summary>
         /// <param name = "sceneName">Scene name to load.</param>
         public override void BeginLoadAsync(string sceneName, UnityEngine.SceneManagement.LoadSceneParameters parameters) {
-            if (!PlayableMapDatabase.TryGetPlayableMap(sceneName, out var map)) {
-                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-                PopupHandler.instance.SpawnPopup("FailedLoad");
-            }
-
-            var handle = map.LoadAsync();
-            LoadingAsyncOperations.Add(handle);
-
+            var task = LoadAsyncTask(sceneName, parameters);
+            LoadingAsyncOperations.Add(task);
             _lastLoadedScene = UnitySceneManager.GetSceneAt(UnitySceneManager.sceneCount - 1);
-
-            CurrentSceneLoad = handle;
-            CurrentSceneUnload = null;
+            CurrentTask = task;
         }
 
         /// <summary>
@@ -83,8 +117,7 @@ namespace FishNet.Managing.Scened {
         /// </summary>
         /// <param name = "sceneName">Scene name to unload.</param>
         public override void BeginUnloadAsync(UnityScene scene) {
-            CurrentSceneUnload = UnitySceneManager.UnloadSceneAsync(scene).AsTask();
-            CurrentSceneLoad = null;
+            CurrentTask = UnitySceneManager.UnloadSceneAsync(scene).AsTask();
         }
 
         /// <summary>
@@ -100,11 +133,8 @@ namespace FishNet.Managing.Scened {
         /// </summary>
         /// <returns></returns>
         public override float GetPercentComplete() {
-            if (CurrentSceneLoad != null) return CurrentSceneLoad.Progress;
-            if (CurrentSceneUnload == null) {
-                return 1f;
-            }
-            return CurrentSceneUnload.IsCompleted ? 1f : 0f;
+            if (CurrentTask != null) return CurrentTask.IsCompleted ? 1f : 0f;
+            return 1f;
         }
 
         /// <summary>
@@ -136,13 +166,14 @@ namespace FishNet.Managing.Scened {
         /// </summary>
         public override void ActivateLoadedScenes()
         {
-            for (int i = 0; i < LoadingAsyncOperations.Count; i++) {
+            for (int i = 0; i < AwaitingActivation.Count; i++) {
                 try {
-                    LoadingAsyncOperations[i].ActivateScene();
+                    AwaitingActivation[i].ActivateScene();
                 } catch (Exception e) {
                     SceneManager.NetworkManager.LogError($"An error occured while activating scenes. {e.Message}");
                 }
             }
+            AwaitingActivation.Clear();
         }
 
         /// <summary>
@@ -154,7 +185,7 @@ namespace FishNet.Managing.Scened {
             do {
                 notDone = false;
                 foreach (var ao in LoadingAsyncOperations) {
-                    if (!ao.IsDone) {
+                    if (!ao.IsCompleted) {
                         notDone = true;
                         break;
                     }

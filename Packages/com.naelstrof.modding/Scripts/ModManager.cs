@@ -711,7 +711,20 @@ public class ModManager : MonoBehaviour {
             instance.finishedLoading?.Invoke();
         }
     }
-    
+
+    public static async Task<bool> GetModAssetsAvailable(ModStub stub) {
+        await Mutex.WaitAsync();
+        try {
+            foreach (var mod in instance.fullModList) {
+                if (!mod.GetRepresentedByStub(stub)) continue;
+                return mod.GetAssetsLoaded();
+            }
+        } finally {
+            Mutex.Release();
+        }
+        return false;
+    }
+
     public static async Task SetModAssetsAvailable(ModStub stub, bool loaded) {
         await Mutex.WaitAsync();
         try {

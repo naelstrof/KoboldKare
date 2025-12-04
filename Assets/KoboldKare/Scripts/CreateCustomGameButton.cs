@@ -29,7 +29,6 @@ public class CreateCustomGameButton : MonoBehaviour {
             GetComponent<Button>().interactable = true;
             return;
         }
-        // FIXME FISHNET
         if (GameManager.GetBlackListed(handle.Result.roomName, out var filtered)) {
             GetComponent<Button>().interactable = true;
             if (!Analytics.playerOptedOut) {
@@ -69,19 +68,6 @@ public class CreateCustomGameButton : MonoBehaviour {
         var lobbyId = new CSteamID(lobbyCreateResult.m_ulSteamIDLobby);
         SteamMatchmaking.SetLobbyData(lobbyId, "name", handle.Result.roomName);
         SteamMatchmaking.SetLobbyMemberLimit(lobbyId, handle.Result.playerCount);
-
-        var networkManager = InstanceFinder.NetworkManager;
-        networkManager.ServerManager.StartConnection();
-        
-        networkManager.GetComponent<Multipass>().SetClientTransport(networkManager.GetComponent<Tugboat>());
-        networkManager.ClientManager.StartConnection(); 
-        
-        
-        SceneLoadData sld = new SceneLoadData(handle.Result.playableMap.GetKey()) {
-            ReplaceScenes = ReplaceOption.All
-        };
-        networkManager.SceneManager.LoadGlobalScenes(sld); 
-        
         JSONArray modArray = new JSONArray();
         foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
             JSONNode modNode = JSONNode.Parse("{}");
@@ -89,7 +75,31 @@ public class CreateCustomGameButton : MonoBehaviour {
             modNode["id"] = mod.id.ToString();
             modArray.Add(modNode);
         }
+
+        var extraMapStub = handle.Result.playableMap.stub;
+        if (extraMapStub.HasValue) {
+            JSONNode modNode = JSONNode.Parse("{}");
+            modNode["title"] = extraMapStub.Value.title;
+            modNode["id"] = extraMapStub.Value.id.ToString();
+            modArray.Add(modNode);
+        }
         SteamMatchmaking.SetLobbyData(lobbyId, "mods", modArray.ToString());
+        JSONNode node = JSONNode.Parse("{}");
+        node["mods"] = modArray;
+
+        var networkManager = InstanceFinder.NetworkManager;
+        networkManager.ServerManager.StartConnection();
+        
+        networkManager.GetComponent<Multipass>().SetClientTransport(networkManager.GetComponent<Tugboat>());
+        networkManager.ClientManager.StartConnection(); 
+        
+        SceneLoadData sld = new SceneLoadData(handle.Result.playableMap.GetKey()) {
+            ReplaceScenes = ReplaceOption.All,
+            Params = new LoadParams() {
+                ClientParams = System.Text.Encoding.UTF8.GetBytes(node.ToString()),
+            }
+        };
+        networkManager.SceneManager.LoadGlobalScenes(sld); 
         
         GetComponent<Button>().interactable = true;
     }

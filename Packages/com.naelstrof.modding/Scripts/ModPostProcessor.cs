@@ -14,8 +14,6 @@ public class ModPostProcessor {
         public ModManager.ModStub stub;
         public AsyncOperationHandle handle;
     }
-    [SerializeField]
-    protected AssetLabelReference searchLabel;
     public virtual Task Awake() {
         return Task.CompletedTask;
     }

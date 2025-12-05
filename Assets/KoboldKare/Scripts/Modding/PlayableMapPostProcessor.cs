@@ -13,15 +13,11 @@ public class PlayableMapPostProcessor : ModPostProcessor {
         public ModManager.ModStub stub;
         public PlayableMap playableMap;
     }
+    [SerializeField]
+    protected AssetLabelReference searchLabel;
 
     private static List<ModStubPlayableMapPair> addedPlayableMaps = new();
 
-    public static async Task UnloadAllMaps() {
-        foreach (var pair in addedPlayableMaps) {
-            await ModManager.SetModAssetsAvailable(pair.stub, false);
-        }
-    }
-    
     AsyncOperationHandle inherentAssetsHandle;
 
     public override async Task Awake() {

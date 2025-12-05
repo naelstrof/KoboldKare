@@ -163,7 +163,6 @@ public class ModManager : MonoBehaviour {
         protected abstract Task TryUnload();
 
         public abstract Task SetLoaded(bool active);
-        public abstract Task SetAssetsAvailable(bool active);
         public abstract bool Provides(IResourceLocation location);
     }
 
@@ -314,44 +313,6 @@ public class ModManager : MonoBehaviour {
             }
         }
 
-        public override async Task SetAssetsAvailable(bool active) {
-            await modMutex.WaitAsync();
-            try {
-                if (!assetsLoaded && active) {
-                    await SetLoaded(true);
-                    instance.status = ModStatus.LoadingAssets;
-                    foreach (var modPostProcessor in instance.earlyModPostProcessors) {
-                        await modPostProcessor.HandleAssetBundleMod(info, bundle);
-                    }
-
-                    foreach (var modPostProcessor in instance.modPostProcessors) {
-                        await modPostProcessor.HandleAssetBundleMod(info, bundle);
-                    }
-                } else if (assetsLoaded && !active) {
-                    foreach (var modPostProcessor in instance.earlyModPostProcessors) {
-                        await modPostProcessor.UnloadAssets(info);
-                    }
-
-                    foreach (var modPostProcessor in instance.modPostProcessors) {
-                        await modPostProcessor.UnloadAssets(info);
-                    }
-                    await SetLoaded(false);
-                }
-                assetsLoaded = active;
-            } catch (Exception e) {
-                Debug.LogException(e);
-                Debug.LogError($"Failed to make assets available for mod {info.title} [{info.publishedFileId}].");
-                instance.lastException = e;
-                causedException = true;
-                instance.changed = true;
-                throw;
-            } finally {
-                instance.status = ModStatus.Ready;
-                instance.ready = true;
-                modMutex.Release();
-            }
-        }
-
         public override bool Provides(IResourceLocation location) {
             return false;
         }
@@ -429,54 +390,6 @@ public class ModManager : MonoBehaviour {
             }
         }
 
-        public override async Task SetAssetsAvailable(bool active) {
-            await modMutex.WaitAsync();
-            try {
-                if (!loadedAssets && active) {
-                    var cancelTokenSource = new CancellationTokenSource();
-                    cancelTokenSources.Add(cancelTokenSource);
-                    try {
-                        await SetLoaded(true);
-                        instance.status = ModStatus.LoadingAssets;
-                        foreach (var modPostProcessor in instance.earlyModPostProcessors) {
-                            cancelTokenSource.Token.ThrowIfCancellationRequested();
-                            await modPostProcessor.HandleAddressableMod(info, locator);
-                        }
-
-                        foreach (var modPostProcessor in instance.modPostProcessors) {
-                            cancelTokenSource.Token.ThrowIfCancellationRequested();
-                            await modPostProcessor.HandleAddressableMod(info, locator);
-                        }
-                    } finally {
-                        cancelTokenSources.Remove(cancelTokenSource);
-                    }
-                } else if (loadedAssets && !active) {
-                    instance.status = ModStatus.LoadingAssets;
-                    foreach (var modPostProcessor in instance.earlyModPostProcessors) {
-                        await modPostProcessor.UnloadAssets(info);
-                    }
-
-                    foreach (var modPostProcessor in instance.modPostProcessors) {
-                        await modPostProcessor.UnloadAssets(info);
-                    }
-                    await SetLoaded(false);
-                }
-                loadedAssets = active;
-            } catch (Exception e) {
-                Debug.LogException(e);
-                Debug.LogError($"Failed to set active state for mod {info.title} [{info.publishedFileId}].");
-                instance.lastException = e;
-                causedException = true;
-                instance.changed = true;
-                _ = TryUnload();
-                throw;
-            } finally {
-                modMutex.Release();
-                instance.status = ModStatus.Ready;
-                instance.ready = true;
-            }
-        }
-
         protected override Task TryUnload() {
             if (locator == null) {
                 return Task.CompletedTask;
@@ -525,9 +438,6 @@ public class ModManager : MonoBehaviour {
     private const string modLocation = "mods/";
     private const string JsonFilename = "modList.json";
     private bool changed = false;
-    
-    [SerializeReference,SerializeReferenceButton]
-    private List<ModPostProcessor> earlyModPostProcessors;
     
     [SerializeReference,SerializeReferenceButton]
     private List<ModPostProcessor> modPostProcessors;
@@ -694,7 +604,7 @@ public class ModManager : MonoBehaviour {
                 instance.ready = false;
                 instance.status = ModStatus.LoadingAssets;
                 found = true;
-                await mod.SetAssetsAvailable(active);
+                await mod.SetLoaded(active);
                 mod.enabled = active;
                 break;
             }
@@ -723,25 +633,6 @@ public class ModManager : MonoBehaviour {
             Mutex.Release();
         }
         return false;
-    }
-
-    public static async Task SetModAssetsAvailable(ModStub stub, bool loaded) {
-        await Mutex.WaitAsync();
-        try {
-            bool found = false;
-            foreach (var mod in instance.fullModList) {
-                if (!mod.GetRepresentedByStub(stub)) continue;
-                found = true;
-                await mod.SetAssetsAvailable(loaded);
-                break;
-            }
-
-            if (!found) {
-                Debug.LogError($"Failed to set assets for mod {stub.title} [{stub.id}], this is really weird.");
-            }
-        } finally{
-            Mutex.Release();
-        }
     }
 
     public static void AddFinishedLoadingListener(ModReadyAction action) {
@@ -967,12 +858,12 @@ public class ModManager : MonoBehaviour {
         try {
             foreach(var mod in fullModList) {
                 if (!mod.enabled) {
-                    await mod.SetAssetsAvailable(false);
+                    await mod.SetLoaded(false);
                 }
             }
             foreach(var mod in fullModList) {
                 if (mod.enabled) {
-                    await mod.SetAssetsAvailable(true);
+                    await mod.SetLoaded(true);
                 }
             }
         } catch (Exception e) {
@@ -1030,9 +921,6 @@ public class ModManager : MonoBehaviour {
         ready = false;
         instance = this;
         fullModList = new List<Mod>();
-        foreach(var modPostProcessor in earlyModPostProcessors) {
-            modPostProcessor.Awake();
-        }
         foreach(var modPostProcessor in modPostProcessors) {
             modPostProcessor.Awake();
         }

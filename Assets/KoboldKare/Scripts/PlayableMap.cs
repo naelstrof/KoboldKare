@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -89,12 +88,10 @@ public class PlayableMap : ScriptableObject {
     private void OnSceneUnloaded(Scene arg0) {
         foreach(var handle in loadedHandles) {
             Addressables.Release(handle.handle);
-            _ = ModManager.SetModAssetsAvailable(handle.stub, false);
         }
         loadedHandles.Clear();
         foreach(var bundle in loadedBundles) {
             bundle.bundle.Unload(true);
-            _ = ModManager.SetModAssetsAvailable(bundle.stub, false);
         }
         loadedBundles.Clear();
     }
@@ -139,10 +136,6 @@ public class PlayableMap : ScriptableObject {
     }
     
     private async Task LoadAddressableSceneFromStub(ModManager.ModStub? stub, object key) {
-        await PlayableMapPostProcessor.UnloadAllMaps();
-        if (stub != null) {
-            await ModManager.SetModAssetsAvailable(stub.Value, true);
-        }
         var handle = Addressables.LoadSceneAsync(key, LoadSceneMode.Additive, false);
         loadingScenes.Add(key, handle);
         await handle.Task;
@@ -156,8 +149,6 @@ public class PlayableMap : ScriptableObject {
     }
 
     private async Task LoadBundleSceneFromStub(ModManager.ModStub stub) {
-        await PlayableMapPostProcessor.UnloadAllMaps();
-        await ModManager.SetModAssetsAvailable(stub, true);
         var bundle = AssetBundle.LoadFromFile(bundlePath);
         loadedBundles.Add(new ModStubBundleHandlePair() {
             bundle = bundle,

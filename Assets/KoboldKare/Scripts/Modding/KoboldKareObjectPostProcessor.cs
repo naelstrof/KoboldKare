@@ -1,36 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class PrefabPostProcessor : ModPostProcessor {
-    [SerializeField] private PrefabDatabase targetDatabase;
-    [SerializeField] private bool networkedPrefabs;
-    private struct ModStubGameObjectPair {
+public class KoboldKareObjectPostProcessor : ModPostProcessor {
+    [SerializeField] protected AssetLabelReference equipmentLabel;
+    [SerializeField] protected AssetLabelReference reactionsLabel;
+    [SerializeField] protected AssetLabelReference reagentsLabel;
+    [SerializeField] protected AssetLabelReference koboldLabel;
+    [SerializeField] protected AssetLabelReference plantLabel;
+    [SerializeField] protected AssetLabelReference dicksLabel;
+    [SerializeField] protected AssetLabelReference cosmeticItemsLebel;
+    [SerializeField] protected AssetLabelReference seedsLabel;
+    [SerializeField] protected AssetLabelReference networkedPrefabsLabel;
+    
+    private struct ModStubPair<T> {
         public ModManager.ModStub stub;
-        public string objName;
-        public GameObject obj;
+        public string objKey;
+        public T obj;
     }
-    
-    private List<ModStubGameObjectPair> addedGameObjects;
-    
-    private List<ModStubAddressableHandlePair> opHandles;
-
-    private ModManager.ModStub currentStub;
-    
-    private AsyncOperationHandle<IList<GameObject>> inherentAssetsHandle;
 
     public override async Task Awake() {
         await base.Awake();
-        addedGameObjects = new ();
-        opHandles = new();
-        inherentAssetsHandle = Addressables.LoadAssetsAsync<GameObject>(searchLabel.RuntimeKey, LoadInherentPrefab);
-        await inherentAssetsHandle.Task;
+        var locationHandle = Addressables.LoadResourceLocationsAsync(equipmentLabel.RuntimeKey);
     }
     
     private void LoadInherentPrefab(GameObject obj) {

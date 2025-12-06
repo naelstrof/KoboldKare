@@ -38,7 +38,7 @@ public class MilkLactator {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     mozzarella.SetFollowTransform(t);
                     ReagentContents alloc = new ReagentContents();
-                    if (ReagentDatabase.TryGetAsset("Milk", out var milk)) {
+                    if (ReagentDatabase.TryGetAssetStub("Milk", out var milk)) {
                         alloc.AddMix(milk.GetReagent(kobold.GetGenes().breastSize / (pulses * nipples.Count)));
                     }
 

@@ -223,7 +223,7 @@ public class CommandSculpt : Command
             case "impregnate":
                 {
                     ReagentContents alloc = new ReagentContents();
-                    if (ReagentDatabase.TryGetAsset("Cum", out var cumReagent)) {
+                    if (ReagentDatabase.TryGetAssetStub("Cum", out var cumReagent)) {
                         alloc.AddMix(cumReagent.GetReagent(Mathf.Abs(modifier)));
                     }
 

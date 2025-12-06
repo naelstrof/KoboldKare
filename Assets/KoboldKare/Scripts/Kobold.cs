@@ -590,7 +590,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             newEnergy = Mathf.MoveTowards(newEnergy, 1.1f, passiveEnergyGeneration);
         }
         foreach (var pair in contents) {
-            if (ReagentDatabase.TryGetAsset(pair.id, out var reagent)) {
+            if (ReagentDatabase.TryGetAssetStub(pair.id, out var reagent)) {
                 float processedAmount = pair.volume;
                 reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents,
                     ref addbackReagents, ref genes, ref newEnergy);

@@ -80,7 +80,7 @@ public class Plant : GeneHolder, ISavable {
     // FIXME FISHNET
     //[PunRPC]
     void SwitchToRPC(short newPlantID) {
-        if (PlantDatabase.TryGetAsset(newPlantID, out var checkPlant)) {
+        if (PlantDatabase.TryGetAssetStub(newPlantID, out var checkPlant)) {
             if (checkPlant == plant) {
                 return;
             }
@@ -212,7 +212,7 @@ public class Plant : GeneHolder, ISavable {
     }
 
     public void Load(JSONNode node) {
-        if (PlantDatabase.TryGetAsset((short)node["plantID"].AsInt, out var match)) {
+        if (PlantDatabase.TryGetAssetStub((short)node["plantID"].AsInt, out var match)) {
             SwitchTo(match);
         } else {
             Debug.LogError("Failed to find plant with ID " + (short)node["plantID"].AsInt + " while loading plant.");

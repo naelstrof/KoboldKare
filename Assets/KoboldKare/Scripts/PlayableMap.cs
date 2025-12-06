@@ -30,7 +30,7 @@ public class PlayableMap : ScriptableObject {
         }
         public override bool ValidateAsset(string path) {
 #if UNITY_EDITOR
-            var type = AssetDatabase.GetMainAssetTypeAtPath(path);
+            var type = UnityEditor.AssetDatabase.GetMainAssetTypeAtPath(path);
             return typeof(SceneAsset).IsAssignableFrom(type);
 #else
             return false;

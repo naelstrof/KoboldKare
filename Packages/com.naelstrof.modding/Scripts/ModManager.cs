@@ -993,6 +993,17 @@ public class ModManager : MonoBehaviour {
 
         return true;
     }
+    
+    public static bool TryGetModByStub(ModStub stub, out Mod match) {
+        foreach (var mod in instance.fullModList) {
+            if (mod.GetRepresentedByStub(stub)) {
+                match = mod;
+                return true;
+            }
+        }
+        match = null;
+        return false;
+    }
 
     public static IEnumerator SetLoadedMods(IList<ModStub> stubs) {
         try {

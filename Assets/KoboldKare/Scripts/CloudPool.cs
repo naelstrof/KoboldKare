@@ -47,8 +47,8 @@ public class CloudPool : GenericPool<Cloud> {
 #if UNITY_EDITOR
     private void OnValidate() {
         if (prefab == null) {
-            prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
-                AssetDatabase.GUIDToAssetPath("eecff7b2cef7a554fa2e0ce739b133a3"));
+            prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(
+                UnityEditor.AssetDatabase.GUIDToAssetPath("eecff7b2cef7a554fa2e0ce739b133a3"));
         }
     }
 

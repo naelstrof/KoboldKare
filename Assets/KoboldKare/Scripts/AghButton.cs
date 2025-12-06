@@ -19,8 +19,8 @@ public static class AghButton {
     [MenuItem("Tools/KoboldKare/Prefabify Button")]
     public static void PrefabifyButton() {
         var prefabGUID = "f7a9775ff8c444f3c964c30b914805d0";
-        var path = AssetDatabase.GUIDToAssetPath(prefabGUID);
-        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        var path = UnityEditor.AssetDatabase.GUIDToAssetPath(prefabGUID);
+        var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
         
         foreach (GameObject g in Selection.gameObjects) {
             foreach (Button b in g.GetComponentsInChildren<Button>(true)) {
@@ -120,10 +120,10 @@ public static class AghButton {
                 fixes += RTLFix(t);
             }
         }
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:GameObject");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
-            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path1);
             foreach(TMP_Text t in go.GetComponentsInChildren<TMP_Text>(true)) {
                 if (t.GetComponent<TextRTLFixer>() == null) {
                     Selection.activeGameObject = go;
@@ -169,10 +169,10 @@ public static class AghButton {
         Undo.IncrementCurrentGroup();
         Undo.SetCurrentGroupName("Changed project gpu instancing");
         var undoIndex = Undo.GetCurrentGroup();
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
-            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(path1);
             if (go.enableInstancing) {
                 Undo.RecordObject(go, "Changed project gpu instancing");
                 go.enableInstancing = false;
@@ -183,10 +183,10 @@ public static class AghButton {
     }
     //[MenuItem("Tools/KoboldKare/Find Specular Workflow Materials")]
     public static void FindSpecularWorkflowMaterials() {
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
-            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(path1);
             if (go.IsKeywordEnabled("_SPECULAR_SETUP")) {
                 Selection.activeObject = go;
                 return;
@@ -195,16 +195,16 @@ public static class AghButton {
     }
     //[MenuItem("Tools/KoboldKare/Enable all environment reflections, specular highlights (to reduce shader variants.)")]
     public static void FindSpecularOffMaterials() {
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:Material");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:Material");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
             var check = UnityEditor.PackageManager.PackageInfo.FindForAssetPath(path1);
             if (check != null && check.source != PackageSource.Local && check.source != PackageSource.Embedded) {
                 continue;
             }
 
             string reason = "";
-            var go = AssetDatabase.LoadAssetAtPath<Material>(path1);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(path1);
             if (go.IsKeywordEnabled("_SPECULARHIGHTLIGHTS_OFF")) {
                 go.DisableKeyword("_SPECULARHIGHTLIGHTS_OFF");
                 reason = "_SPECULARHIGHTLIGHTS_OFF";
@@ -265,10 +265,10 @@ public static class AghButton {
                 }
             }
         }
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:GameObject");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
-            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path1);
             foreach(var c in go.GetComponentsInChildren<AudioSource>(true)) {
                 if (c.spatialize) {
                     c.spatialize = false;
@@ -307,10 +307,10 @@ public static class AghButton {
                 }
             }
         }
-        string[] pathsToAssets = AssetDatabase.FindAssets("t:GameObject");
+        string[] pathsToAssets = UnityEditor.AssetDatabase.FindAssets("t:GameObject");
         foreach (var path in pathsToAssets) {
-            var path1 = AssetDatabase.GUIDToAssetPath(path);
-            var go = AssetDatabase.LoadAssetAtPath<GameObject>(path1);
+            var path1 = UnityEditor.AssetDatabase.GUIDToAssetPath(path);
+            var go = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path1);
             foreach(var c in go.GetComponentsInChildren<Component>(true)) {
                 if (c == null) {
                     Selection.activeGameObject = go;

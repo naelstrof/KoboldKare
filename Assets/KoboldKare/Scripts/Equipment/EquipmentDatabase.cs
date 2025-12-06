@@ -1,2 +1,2 @@
 
-public class EquipmentDatabase : Database<Equipment> { }
+public class EquipmentDatabase : AssetGroup { }

@@ -121,7 +121,7 @@ public class CommandEquipSet : Command {
                 if (list.Contains(equipName)) {
                     output.AppendLine($"Equip set {equipset} already has {equipName}!");
                 } else {
-                    if (!EquipmentDatabase.TryGetAsset(equipName, out var tryEquipment)) {
+                    if (!EquipmentDatabase.TryGetAssetStub(equipName, out var tryEquipment)) {
                         output.AppendLine($"Equipment {equipName} not found!");
                         return false;
                     }
@@ -196,7 +196,7 @@ public class CommandEquipSet : Command {
                             continue;
                         }
 
-                        if (EquipmentDatabase.TryGetAsset(piece, out var tryEquipment)) {
+                        if (EquipmentDatabase.TryGetAssetStub(piece, out var tryEquipment)) {
                             // FIXME FISHNET
                             //kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment), -1);
 

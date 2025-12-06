@@ -64,7 +64,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             Image targetImage = new GameObject("colorBlock", typeof(Image)).GetComponent<Image>();
             targetImage.sprite = imageSprite;
             targetImage.transform.SetParent(transform, false);
-            if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+            if (ReagentDatabase.TryGetAssetStub(reagents[i].id, out var reagentAsset)) {
                 targetImage.color = reagentAsset.GetColor();
             } else {
                 targetImage.color = Color.white;
@@ -87,7 +87,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         if (isActiveAndEnabled) {
             StopAllCoroutines();
             for (int i = 0; i < reagents.Count; i++) {
-                if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+                if (ReagentDatabase.TryGetAssetStub(reagents[i].id, out var reagentAsset)) {
                     images[i].GetComponent<Image>().color = reagentAsset.GetColor();
                 } else {
                     images[i].GetComponent<Image>().color = Color.white;
@@ -99,7 +99,7 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
             StartCoroutine(TweenWidth(background, Mathf.Min(contents.GetMaxVolume() * volumeToPixels, 3000f)));
         } else {
             for (int i = 0; i < reagents.Count; i++) {
-                if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
+                if (ReagentDatabase.TryGetAssetStub(reagents[i].id, out var reagentAsset)) {
                     images[i].GetComponent<Image>().color = reagentAsset.GetColor();
                 } else {
                     images[i].GetComponent<Image>().color = Color.white;

@@ -116,14 +116,14 @@ public class SteamWorkshopItem {
 			var shaderVariantCollection = new ShaderVariantCollection();
 			var shaderDeps = new HashSet<string>();
 			foreach (var asset in assetNames) {
-				var deps = AssetDatabase.GetDependencies(asset, true);
+				var deps = UnityEditor.AssetDatabase.GetDependencies(asset, true);
 				foreach (var dep in deps) {
-					var t = AssetDatabase.GetMainAssetTypeAtPath(dep);
+					var t = UnityEditor.AssetDatabase.GetMainAssetTypeAtPath(dep);
 					if (t == typeof(Shader) || t == typeof(VisualEffectAsset)) {
 						shaderDeps.Add(dep);
 					}
 					if (t == typeof(Material)) {
-						var mat = AssetDatabase.LoadAssetAtPath<Material>(dep);
+						var mat = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(dep);
 						if (!mat.shader) {
 							continue;
 						}
@@ -156,7 +156,7 @@ public class SteamWorkshopItem {
 					}
 				}
 			}
-			AssetDatabase.CreateAsset(shaderVariantCollection, $"Assets/ModShaderVariantCollection_{uniqueString}.asset");
+			UnityEditor.AssetDatabase.CreateAsset(shaderVariantCollection, $"Assets/ModShaderVariantCollection_{uniqueString}.asset");
 			shaderDeps.Add($"Assets/ModShaderVariantCollection_{uniqueString}.asset");
 			shaderDepArray = shaderDeps.ToArray();
 		}
@@ -184,39 +184,39 @@ public class SteamWorkshopItem {
 		protected virtual string[] GetAssets() {
 			HashSet<string> assetNames = new HashSet<string>();
 			foreach(var asset in playableCharacters) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in cosmeticItems) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in fruits) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in equipmentStoreItems) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in dicks) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in plants) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in reagents) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in reagentReactions) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in equipment) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in networkedPrefabs) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset));
 			}
 			foreach(var asset in customLocalization) {
-				assetNames.Add(AssetDatabase.GetAssetPath(asset.SharedData));
+				assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(asset.SharedData));
 				foreach (var localization in asset.StringTables) {
-					assetNames.Add(AssetDatabase.GetAssetPath(localization));
+					assetNames.Add(UnityEditor.AssetDatabase.GetAssetPath(localization));
 				}
 			}
 			return assetNames.ToArray();
@@ -225,39 +225,39 @@ public class SteamWorkshopItem {
 		protected virtual string[] GetAssetAddressableNames(string uniqueString) {
 			HashSet<string> addressableNames = new HashSet<string>();
 			foreach(var asset in playableCharacters) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in cosmeticItems) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in fruits) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in equipmentStoreItems) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in dicks) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in plants) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in reagents) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in reagentReactions) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in equipment) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in networkedPrefabs) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var asset in customLocalization) {
-				addressableNames.Add($"{AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}");
+				addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}");
 				foreach (var localization in asset.StringTables) {
-					addressableNames.Add($"{AssetDatabase.GetAssetPath(localization)}_{uniqueString}");
+					addressableNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(localization)}_{uniqueString}");
 				}
 			}
 			return addressableNames.ToArray();
@@ -267,7 +267,7 @@ public class SteamWorkshopItem {
 			var arrayNode = new JSONArray();
 			HashSet<string> assetNames = new HashSet<string>();
 			foreach(var asset in assets) {
-				assetNames.Add($"{AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
+				assetNames.Add($"{UnityEditor.AssetDatabase.GetAssetPath(asset)}_{uniqueString}");
 			}
 			foreach(var assetName in assetNames) {
 				arrayNode.Add(assetName);
@@ -279,9 +279,9 @@ public class SteamWorkshopItem {
 		public static string GetAddressablePrimaryKey(Object asset) {
 #if UNITY_EDITOR
 			if (asset == null) return null;
-			var path = AssetDatabase.GetAssetPath(asset);
+			var path = UnityEditor.AssetDatabase.GetAssetPath(asset);
 			if (string.IsNullOrEmpty(path)) return null;
-			var guid = AssetDatabase.AssetPathToGUID(path);
+			var guid = UnityEditor.AssetDatabase.AssetPathToGUID(path);
 			var settings = AddressableAssetSettingsDefaultObject.Settings;
 			if (settings == null) return null;
 			var entry = settings.FindAssetEntry(guid);
@@ -308,14 +308,14 @@ public class SteamWorkshopItem {
 			var stringTables = JSONNode.Parse("{}");
 			foreach(var asset in customLocalization) {
 				foreach (var localization in asset.StringTables) {
-					stringTables[AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(localization))] = $"{AssetDatabase.GetAssetPath(localization)}_{uniqueString}";
+					stringTables[UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(localization))] = $"{UnityEditor.AssetDatabase.GetAssetPath(localization)}_{uniqueString}";
 				}
 			}
 			rootNode["StringTables"] = stringTables;
 			
 			var sharedStringData = JSONNode.Parse("{}");
 			foreach(var asset in customLocalization) {
-				sharedStringData[AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(asset.SharedData))] = $"{AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}";
+				sharedStringData[UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(asset.SharedData))] = $"{UnityEditor.AssetDatabase.GetAssetPath(asset.SharedData)}_{uniqueString}";
 			}
 			rootNode["SharedStringData"] = sharedStringData;
 		}
@@ -338,7 +338,7 @@ public class SteamWorkshopItem {
 		public override void OnValidate() {
 			base.OnValidate();
 			for (int i=0;i<customLocalization.Length;i++) {
-				if (AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(customLocalization[i])) == "3a14f1902d0a4e9488964030b966c54a") {
+				if (UnityEditor.AssetDatabase.AssetPathToGUID(UnityEditor.AssetDatabase.GetAssetPath(customLocalization[i])) == "3a14f1902d0a4e9488964030b966c54a") {
 					Debug.LogError("Custom localization entry at index " + i + " is invalid, it will be removed. Please create a new StringTableCollection asset and assign it instead.");
 					customLocalization[i] = null;
 				}
@@ -354,7 +354,7 @@ public class SteamWorkshopItem {
 		public string sceneDescription;
 		public override AssetBundleBuild[] GetBuilds( string uniqueString ) {
 			var otherBuilds = base.GetBuilds(uniqueString);
-			var scenePath = AssetDatabase.GetAssetPath(scene);
+			var scenePath = UnityEditor.AssetDatabase.GetAssetPath(scene);
 			GetShaderAssets(new [] {scenePath}, uniqueString, out var shaderDeps);
 			for (int i = 0; i < otherBuilds.Length; i++) {
 				if (otherBuilds[i].assetBundleName == $"shaderBundle_{uniqueString}") {
@@ -374,7 +374,7 @@ public class SteamWorkshopItem {
 		}
 		
 		protected override string[] GetAssets() {
-			HashSet<string> assets = new HashSet<string>(base.GetAssets()) { AssetDatabase.GetAssetPath(sceneIcon) };
+			HashSet<string> assets = new HashSet<string>(base.GetAssets()) { UnityEditor.AssetDatabase.GetAssetPath(sceneIcon) };
 			return assets.ToArray();
 		}
 
@@ -382,10 +382,10 @@ public class SteamWorkshopItem {
 			base.Serialize(node, uniqueString);
 			node["SceneBundleName"] = $"scenebundle_{uniqueString}";
 			node["ShaderBundleName"] = $"shaderbundle_{uniqueString}";
-			node["Scene"] = $"{AssetDatabase.GetAssetPath(scene)}_{uniqueString}";
+			node["Scene"] = $"{UnityEditor.AssetDatabase.GetAssetPath(scene)}_{uniqueString}";
 			node["SceneTitle"] = sceneTitle;
 			node["SceneDescription"] = sceneDescription;
-			node["SceneIcon"] = AssetDatabase.GetAssetPath(sceneIcon);
+			node["SceneIcon"] = UnityEditor.AssetDatabase.GetAssetPath(sceneIcon);
 		}
 	}
 

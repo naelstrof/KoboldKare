@@ -1,140 +1,69 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
     protected static Database<T> instance;
-
-    public struct ObjectStubPair {
-        public object key;
-        public ModManager.ModStub? stub;
-        public bool GetRepresentedByStub(ModManager.ModStub? b) {
-            if (b == null && stub == null) {
-                return true;
-            }
-            if (b == null || stub == null) {
-                return false;
-            }
-            return stub.Value.GetRepresentedBy(b.Value);
-        }
-    }
-    private static int CompareObjectStubPair(ObjectStubPair x, ObjectStubPair y) {
-        if (x.stub == null && y.stub == null) return 0;
-        if (x.stub == null) return -1;
-        if (y.stub == null) return 1;
-        if (x.stub.Value.loadPriority == y.stub.Value.loadPriority) {
-            return String.Compare(x.stub.Value.title, y.stub.Value.title, StringComparison.InvariantCulture);
-        }
-        return x.stub.Value.loadPriority.CompareTo(y.stub.Value.loadPriority);
-    }
+    [SerializeField] private T missingObject;
     
-    public struct AssetKeyPair {
-        public object key;
-        public List<ObjectStubPair> value;
-    }
-    
-    protected internal List<AssetKeyPair> assets = new();
+    private List<AssetGroup.AssetLocation.AssetHandle<T>> handles;
 
-    private bool ContainsKey(object key) {
-        foreach (var pair in assets) {
-            if (pair.key == key) {
-                return true;
-            }
+    private class StringSorter : IComparer<string> {
+        public int Compare(string x, string y) {
+            return String.Compare(x, y, StringComparison.InvariantCulture);
         }
-
-        return false;
     }
-    
-    private bool TryGetList(object key, out List<ObjectStubPair> list) {
-        foreach (var pair in assets) {
-            if (pair.key == key) {
-                list = pair.value;
-                return true;
-            }
-        }
+    protected internal SortedDictionary<string, T> assets = new(new StringSorter());
 
-        list = null;
-        return false;
+    private bool ContainsKey(string name) {
+        return assets.ContainsKey(name);
     }
     public void Awake() {
         if (instance && instance != this) {
             Destroy(gameObject);
         } else {
+            handles = new();
             instance = this;
         }
     }
-    public static bool TryGetAsset(object key, out object matchKey, out ModManager.ModStub? matchStub) {
-        for (int i = 0; i < instance.assets.Count; i++) {
-            if (instance.assets[i].key == key) {
-                matchKey = instance.assets[i].value[^1].key;
-                matchStub = instance.assets[i].value[^1].stub;
+    public static bool TryGetAsset(string name, out T match) {
+        return instance.assets.TryGetValue(name, out match);
+    }
+    
+    public static bool TryGetAsset(short id, out T match) {
+        int i = 0;
+        foreach (var pair in instance.assets) {
+            if (i == id) {
+                match = pair.Value;
                 return true;
             }
+            i++;
         }
         
-        if (instance.assets.Count > 0) {
-            matchKey = instance.assets[0].value[^1].key;
-            matchStub = instance.assets[0].value[^1].stub;
-        } else {
-            matchKey = null;
-            matchStub = null;
-        }
+        match = null;
         return false;
     }
-    
-    public static bool TryGetAsset(short id, out object matchKey, out ModManager.ModStub? matchStub) {
-        if (id < 0 || id >= instance.assets.Count) {
-            if (instance.assets.Count > 0) {
-                matchKey = instance.assets[0].value[^1].key;
-                matchStub = instance.assets[0].value[^1].stub;
-            } else {
-                matchKey = null;
-                matchStub = null;
-            }
-            return false;
-        }
-        matchKey = instance.assets[id].value[^1].key;
-        matchStub = instance.assets[id].value[^1].stub;
-        return true;
-    }
 
-    public static void AddAsset(object key, ModManager.ModStub? stub) {
+    public static void AddAsset(string key, T newAsset) {
         if (!instance.ContainsKey(key)) {
-            instance.assets.Add(new AssetKeyPair() {
-                key = key,
-                value = new List<ObjectStubPair>()
-            });
-        }
-
-        if (instance.TryGetList(key, out var list)) {
-            list.Add(new ObjectStubPair() {
-                key = key,
-                stub = stub
-            });
-            list.Sort(CompareObjectStubPair);
+            instance.assets.Add(key, newAsset);
+        } else {
+            instance.assets[key] = newAsset;
         }
     }
+
+    public static void ClearAllAssets() {
+        instance.assets.Clear();
+    }
     
-    public static void RemoveAsset(object key, ModManager.ModStub? stub) {
+    public static void RemoveAsset(string key) {
         if (!instance.ContainsKey(key)) {
             return;
         }
-        if (!instance.TryGetList(key, out var list)) {
-            return;
-        }
-
-        for (int i = 0; i < list.Count; i++) {
-            if (list[i].GetRepresentedByStub(stub)) {
-                list.RemoveAt(i);
-                i--;
-            }
-        }
-        
-        if (list.Count == 0) {
-            instance.assets.RemoveAll(pair => pair.key == key);
-            return;
-        }
-        list.Sort(CompareObjectStubPair);
+        instance.assets.Remove(key);
     }
 
     public static short GetID(T obj) {
@@ -145,18 +74,47 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
 
         int i = 0;
         foreach (var pair in instance.assets) {
-            if (pair.key == obj.name) {
+            if (pair.Key == obj.name) {
                 return (short)i;
             }
             i++;
         }
         return 0;
     }
-    public static List<object> GetAssets() {
-        List<object> assets = new();
+    public static List<T> GetAssets() {
+        List<T> assets = new();
         foreach (var pair in instance.assets) {
-            assets.Add(pair.value[^1].key);
+            assets.Add(pair.Value);
         }
         return assets;
+    }
+
+    public static List<string> GetAssetKeys() {
+        return instance.assets.Keys.ToList();
+    }
+    
+    private void FreeAllHandles() {
+        if(handles != null) {
+            foreach(var handle in handles) {
+                handle.Release();
+            }
+            handles.Clear();
+        }
+    }
+    
+    protected internal async Task LoadAllAssets(string group, List<string> names) {
+        instance.FreeAllHandles();
+        ClearAllAssets();
+        
+        List<Task> tasksToComplete = new List<Task>();
+        foreach (var objName in names) {
+            var reagentTask = KoboldKareObjectPostProcessor.GetAssetAsync<T>(group, objName, missingObject);
+            tasksToComplete.Add(reagentTask.ContinueWith(task => {
+                AddAsset(objName, task.Result.asset);
+                handles.Add(task.Result);
+            }));
+        }
+
+        await Task.WhenAll(tasksToComplete);
     }
 }

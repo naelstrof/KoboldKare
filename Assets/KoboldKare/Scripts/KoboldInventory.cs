@@ -139,7 +139,7 @@ public class KoboldInventory : MonoBehaviour, ISavable {
         JSONArray equipments = node["equipments"].AsArray;
         staticIncomingEquipment.Clear();
         for(int i=0;i<equipments.Count;i++) {
-            if (EquipmentDatabase.TryGetAsset((short)equipments[i].AsInt, out var match)) {
+            if (EquipmentDatabase.TryGetAssetStub((short)equipments[i].AsInt, out var match)) {
                 staticIncomingEquipment.Add(match);
             } else {
                 Debug.LogError("Failed to find equipment with ID " + (short)equipments[i].AsInt + " while loading kobold inventory.");

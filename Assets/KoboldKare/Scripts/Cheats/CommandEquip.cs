@@ -19,7 +19,7 @@ public class CommandEquip : Command {
             throw new CheatsProcessor.CommandException("/equip requires at least one argument. Use `/list equipment` to find what you can equip.");
         }
 
-        if (!EquipmentDatabase.TryGetAsset(args[1], out var tryEquipment)) {
+        if (!EquipmentDatabase.TryGetAssetStub(args[1], out var tryEquipment)) {
             throw new CheatsProcessor.CommandException($"Equipment with name {args[1]} not found.");
         }
 

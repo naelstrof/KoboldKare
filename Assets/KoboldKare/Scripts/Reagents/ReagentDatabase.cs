@@ -1,11 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ReagentDatabase : Database<ScriptableReagent> {
-    public static void DoReactions(GenericReagentContainer container, ScriptableReagent introducedReactant) {
-        ReactionsDatabase.DoReactions(container, (byte)GetID(introducedReactant));
+    public static async Task LoadReagents(List<string> names) {
+        await instance.LoadAllAssets("Reagent", names);
+    }
+    public static void DoReactions(GenericReagentContainer container) {
+        ReactionsDatabase.DoReactions(container);
     }
 }

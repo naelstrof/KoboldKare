@@ -29,7 +29,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     }
     
     private bool KoboldReadyToLayEgg(Kobold k){
-        if (ReagentDatabase.TryGetAsset("Egg", out var egg)) {
+        if (ReagentDatabase.TryGetAssetStub("Egg", out var egg)) {
             return k.bellyContainer.GetVolumeOf(egg) > 5f && k.GetEnergy() >= 1f;
         }
 
@@ -59,7 +59,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         List<AnimationStation> stations = new List<AnimationStation>();
         stations.Add(station);
         readOnlyStations = stations.AsReadOnly();
-        ReagentDatabase.TryGetAsset("Egg", out var egg);
+        ReagentDatabase.TryGetAssetStub("Egg", out var egg);
     }
 
     void Update(){
@@ -118,7 +118,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
 
         float eggVolume = 0f;
-        if (ReagentDatabase.TryGetAsset("Egg", out var egg)) {
+        if (ReagentDatabase.TryGetAssetStub("Egg", out var egg)) {
             eggVolume = k.bellyContainer.GetVolumeOf(egg);
             k.bellyContainer.OverrideReagent(egg, 0f);
         }

@@ -1,115 +1,133 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class KoboldKareObjectPostProcessor : ModPostProcessor {
-    [SerializeField] protected AssetLabelReference equipmentLabel;
-    [SerializeField] protected AssetLabelReference reactionsLabel;
-    [SerializeField] protected AssetLabelReference reagentsLabel;
-    [SerializeField] protected AssetLabelReference koboldLabel;
-    [SerializeField] protected AssetLabelReference plantLabel;
-    [SerializeField] protected AssetLabelReference dicksLabel;
-    [SerializeField] protected AssetLabelReference cosmeticItemsLebel;
-    [SerializeField] protected AssetLabelReference seedsLabel;
-    [SerializeField] protected AssetLabelReference networkedPrefabsLabel;
+    [SerializeField] protected AssetLabelReference[] assetLabels;
+    private static Dictionary<string, AssetGroup> assetDatabases;
     
-    private struct ModStubPair<T> {
-        public ModManager.ModStub stub;
-        public string objKey;
-        public T obj;
+    public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, string assetName, T missingResult) where T : Object {
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            var database = assetDatabases[group];
+            if (database.TryGetAssetLocation(assetName, out var assetLocation)) {
+                return await assetLocation.GetAssetAsync<T>();
+            }
+            Debug.LogWarning($"Asset {assetName} in group {group} is not found.");
+            return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+        }
+        Debug.LogWarning($"Asset group {group} is not found.");
+        return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+    }
+    
+    public static void GetAllAssetNamesInGroup(string group, List<string> output) {
+        output.Clear();
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            var database = assetDatabases[group];
+            database.GetAssetKeys(output);
+        }
+    }
+    
+    private static string GetCachedKeyFileLocation(string uniqueModID) {
+        if (!Directory.Exists($"{Application.persistentDataPath}/modcache/")) {
+            Directory.CreateDirectory($"{Application.persistentDataPath}/modcache/");
+        }
+        return $"{Application.persistentDataPath}/modcache/{uniqueModID}";
+    }
+
+    private bool TryGetCachedKeys(string uniqueModID, out JSONNode keys) {
+        try {
+            FileInfo fileInfo = new FileInfo(GetCachedKeyFileLocation(uniqueModID));
+            if (fileInfo.Exists) {
+                string fileContents = File.ReadAllText(fileInfo.FullName);
+                keys = JSON.Parse(fileContents);
+                return true;
+            }
+        } catch {
+            Debug.LogWarning($"Failed to read cached mod keys with {uniqueModID}.");
+            keys = null;
+            return false;
+        }
+        keys = null;
+        return false;
+    }
+
+    private void WriteCachedKeys(string uniqueModID, JSONNode keys) {
+        FileInfo fileInfo = new FileInfo(GetCachedKeyFileLocation(uniqueModID));
+        File.WriteAllText(fileInfo.FullName, keys.ToString());
     }
 
     public override async Task Awake() {
+        assetDatabases = new Dictionary<string, AssetGroup>();
         await base.Awake();
-        var locationHandle = Addressables.LoadResourceLocationsAsync(equipmentLabel.RuntimeKey);
-    }
-    
-    private void LoadInherentPrefab(GameObject obj) {
-        // FIXME FISHNET
-        /*if (PreparePool.HasPrefab(obj.name)) {
-            return;
-        }
-        if (networkedPrefabs) {
-            PreparePool.AddPrefab(obj.name, obj, null);
-        }*/
-        targetDatabase.AddPrefab(obj.name, obj, null);
-    }
-    
-    private void LoadPrefab(GameObject obj) {
-        if (obj == null) {
-            return;
-        }
-        // FIXME FISHNET
-        /*
-        if (networkedPrefabs) {
-            PreparePool.AddPrefab(obj.name, obj, currentStub);
-        }
-        */
-        targetDatabase.AddPrefab(obj.name, obj, currentStub);
-        addedGameObjects.Add(new ModStubGameObjectPair() {
-            stub = currentStub,
-            obj = obj,
-            objName = obj.name
-        });
-    }
-
-    public override async Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
-        var key = searchLabel.labelString;
-        List<Task> tasks = new List<Task>();
-        var rootNode = data.assets;
-        if (rootNode.HasKey(key)) {
-            currentStub = new ModManager.ModStub(data);
-            var array = rootNode[key].AsArray;
-            foreach (var node in array) {
-                if (!node.Value.IsString) continue;
-                var assetName = node.Value;
-                var handle = assetBundle.LoadAssetAsync<GameObject>(assetName);
-                handle.completed += (a) => {
-                    LoadPrefab(((AssetBundleRequest)a).asset as GameObject);
-                };
-                tasks.Add(handle.AsSingleAssetTask<GameObject>());
+        foreach (var label in assetLabels) {
+            var handle = Addressables.LoadResourceLocationsAsync(label.RuntimeKey);
+            await handle.Task;
+            if (!assetDatabases.ContainsKey(label.labelString)) {
+                assetDatabases[label.labelString] = new AssetGroup();
+            }
+            var database = assetDatabases[label.labelString];
+            foreach (var location in handle.Result) {
+                var nameWithoutPath = Path.GetFileNameWithoutExtension(location.PrimaryKey);
+                database.AddAsset(nameWithoutPath, null);
             }
         }
-        await Task.WhenAll(tasks);
     }
 
+    public override Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
+        var rootNode = data.assets;
+        foreach (var label in assetLabels) {
+            if (rootNode.HasKey(label.labelString)) {
+                if (!assetDatabases.ContainsKey(label.labelString)) {
+                    assetDatabases[label.labelString] = new AssetGroup();
+                }
+                var array = rootNode[label.labelString].AsArray;
+                foreach (var node in array) {
+                    if (!node.Value.IsString) continue;
+                    var assetName = node.Value;
+                    var nameWithoutPath = Path.GetFileNameWithoutExtension(assetName);
+                    assetDatabases[label.labelString].AddAsset(nameWithoutPath, new ModManager.ModStub(data));
+                }
+            }
+        }
+        return Task.CompletedTask;
+    }
+    
+
     public override async Task HandleAddressableMod(ModManager.ModInfoData data, IResourceLocator locator) {
-        if (locator.Locate(searchLabel.RuntimeKey, typeof(GameObject), out var locations)) {
-            currentStub = new ModManager.ModStub(data);
-            var opHandle = Addressables.LoadAssetsAsync<GameObject>(locations, LoadPrefab);
-            await opHandle.Task;
-            opHandles.Add(new ModStubAddressableHandlePair() {
-                stub = currentStub,
-                handle = opHandle
-            });
+        if (!TryGetCachedKeys(data.publishedFileId.ToString(), out var keys)) {
+            keys = JSONNode.Parse("{}");
+            foreach (var label in assetLabels) {
+                if (locator.Locate(label.RuntimeKey, typeof(Object), out var locations)) {
+                    JSONNode labelKeys = new JSONArray();
+                    var opHandle = Addressables.LoadAssetsAsync<Object>(locations, (obj) => {
+                        labelKeys.Add(obj.name);
+                    }, Addressables.MergeMode.UseFirst, false);
+                    await opHandle.Task;
+                    Addressables.Release(opHandle);
+                    Addressables.Release(locations);
+                    keys[label.labelString] = labelKeys;
+                }
+            }
+            WriteCachedKeys(data.publishedFileId.ToString(), keys);
+        }
+        foreach (var keyset in keys) {
+            if (!assetDatabases.ContainsKey(keyset.Key)) {
+                assetDatabases[keyset.Key] = new AssetGroup();
+            }
+            var database = assetDatabases[keyset.Key];
+            foreach(var assetName in keyset.Value.AsArray) {
+                database.AddAsset(assetName.Value, new ModManager.ModStub(data));
+            }
         }
     }
 
     public override Task UnloadAssets(ModManager.ModInfoData data) {
-        for (int i=0;i<addedGameObjects.Count;i++) {
-            if (!addedGameObjects[i].stub.GetRepresentedBy(data)) continue;
-            var obj = addedGameObjects[i];
-            /*
-            if (networkedPrefabs) {
-                PreparePool.RemovePrefab(obj.objName, obj.stub);
-            }
-            */
-            targetDatabase.RemovePrefab(obj.objName, obj.stub);
-            addedGameObjects.RemoveAt(i);
-            i--;
-        }
-        
-        for (int i=0;i<opHandles.Count;i++) {
-            if(opHandles[i].stub.GetRepresentedBy(data)) {
-                if (opHandles[i].handle.IsValid()) {
-                    Addressables.Release(opHandles[i].handle);
-                }
-                opHandles.RemoveAt(i);
-                i--;
-            }
+        foreach (var assetDatabase in assetDatabases) {
+            assetDatabase.Value.RemoveAllRepresentedByStub(new ModManager.ModStub(data));
         }
         return base.UnloadAssets(data);
     }

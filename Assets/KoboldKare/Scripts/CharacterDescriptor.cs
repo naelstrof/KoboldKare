@@ -272,7 +272,7 @@ public class CharacterDescriptor : MonoBehaviour {
                 Debug.LogError("A null equipment piece was assigned to this kobold. Please double check its character descriptor");
                 continue;
             }
-            if (!EquipmentDatabase.TryGetAsset(equip.name, out var newEquip)) {
+            if (!EquipmentDatabase.TryGetAssetStub(equip.name, out var newEquip)) {
                 Debug.LogError("One or more on-spawn equipments assigned to this kobold are invalid. Please double check its character descriptor");
                 continue;
             }
@@ -332,15 +332,15 @@ public class CharacterDescriptor : MonoBehaviour {
         popCurve.AddKey(new Keyframe { time = 0f, value = 0f, outTangent = 1.3f });
         popCurve.AddKey(new Keyframe { time = 1.1f, value = 1f, inTangent = 0.1f });
         serializedObject.FindProperty("antiPopCurveIK").animationCurveValue = popCurve;
-        var TPoseAvatar = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GUIDToAssetPath("46bd2d6ffa5c8c14f850b597913018ee"));
+        var TPoseAvatar = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(UnityEditor.AssetDatabase.GUIDToAssetPath("46bd2d6ffa5c8c14f850b597913018ee"));
         foreach(var asset in TPoseAvatar) {
             if (asset is not AnimationClip clip || !clip.name.Contains("T-Pose")) continue;
             serializedObject.FindProperty("tposeIK").objectReferenceValue = clip;
             break;
         }
 
-        var genericBounceCurve = AssetDatabase.LoadAssetAtPath<InflatableCurve>(AssetDatabase.GUIDToAssetPath("e18312d1b399ef44cbae03acd0a32afb"));
-        var bellyBounceCurve = AssetDatabase.LoadAssetAtPath<InflatableCurve>(AssetDatabase.GUIDToAssetPath("8bb8ec1eabdcb7043a4605858f604a8a"));
+        var genericBounceCurve = UnityEditor.AssetDatabase.LoadAssetAtPath<InflatableCurve>(UnityEditor.AssetDatabase.GUIDToAssetPath("e18312d1b399ef44cbae03acd0a32afb"));
+        var bellyBounceCurve = UnityEditor.AssetDatabase.LoadAssetAtPath<InflatableCurve>(UnityEditor.AssetDatabase.GUIDToAssetPath("8bb8ec1eabdcb7043a4605858f604a8a"));
         var kobold = GetComponent<Kobold>();
         var koboldSerializedObject = new SerializedObject(kobold);
         koboldSerializedObject.FindProperty("bellyInflater").FindPropertyRelative("bounce").objectReferenceValue = bellyBounceCurve;
@@ -400,14 +400,14 @@ public class CharacterDescriptor : MonoBehaviour {
             koboldSerializedObject.FindProperty("hip").objectReferenceValue = displayAnimator.GetBoneTransform(HumanBodyBones.Hips);
         }
 
-        koboldSerializedObject.FindProperty("heartPrefab").FindPropertyRelative("gameObject").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath("b47e824ef9dd0654bae5ca33a2d5dd4b"));
+        koboldSerializedObject.FindProperty("heartPrefab").FindPropertyRelative("gameObject").objectReferenceValue = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(UnityEditor.AssetDatabase.GUIDToAssetPath("b47e824ef9dd0654bae5ca33a2d5dd4b"));
         koboldSerializedObject.FindProperty("heartHitMask").intValue = 1 << LayerMask.NameToLayer("UsablePickups");
-        koboldSerializedObject.FindProperty("tummyGrumbles").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("67a1644657f256b47ab2a61a75c069d6")); 
-        koboldSerializedObject.FindProperty("garglePack").objectReferenceValue = AssetDatabase.LoadAssetAtPath<AudioPack>(AssetDatabase.GUIDToAssetPath("2098de8eac6d5e0419986616fa2a8f15")); 
-        koboldSerializedObject.FindProperty("milkLactator").FindPropertyRelative("milkSplatMaterial").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Material>(AssetDatabase.GUIDToAssetPath("3821f9133468bfa449f3dbee8d5a1aff"));
+        koboldSerializedObject.FindProperty("tummyGrumbles").objectReferenceValue = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioPack>(UnityEditor.AssetDatabase.GUIDToAssetPath("67a1644657f256b47ab2a61a75c069d6")); 
+        koboldSerializedObject.FindProperty("garglePack").objectReferenceValue = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioPack>(UnityEditor.AssetDatabase.GUIDToAssetPath("2098de8eac6d5e0419986616fa2a8f15")); 
+        koboldSerializedObject.FindProperty("milkLactator").FindPropertyRelative("milkSplatMaterial").objectReferenceValue = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(UnityEditor.AssetDatabase.GUIDToAssetPath("3821f9133468bfa449f3dbee8d5a1aff"));
         
         if (displayAnimator != null && displayAnimator.runtimeAnimatorController == null) {
-            var defaultAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(AssetDatabase.GUIDToAssetPath("01936098084665e4bb7c834e8c46c5cc"));
+            var defaultAnimatorController = UnityEditor.AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(UnityEditor.AssetDatabase.GUIDToAssetPath("01936098084665e4bb7c834e8c46c5cc"));
             displayAnimator.runtimeAnimatorController = defaultAnimatorController;
             displayAnimator.applyRootMotion = false;
         }
@@ -474,7 +474,7 @@ public class CharacterDescriptor : MonoBehaviour {
         ragdollBodiesProp.ClearArray();
         foreach (var coll in colliders) {
             var realCollider = coll.Get(animator);
-            realCollider.material = AssetDatabase.LoadAssetAtPath<PhysicMaterial>(AssetDatabase.GUIDToAssetPath("aed15ac3b782c8c4a8403ba6c6039f0e"));
+            realCollider.material = UnityEditor.AssetDatabase.LoadAssetAtPath<PhysicMaterial>(UnityEditor.AssetDatabase.GUIDToAssetPath("aed15ac3b782c8c4a8403ba6c6039f0e"));
             var ragdollRigidbody = realCollider.GetComponentInParent<Rigidbody>();
             bool find = false;
             for (int i = 0; i < ragdollBodiesProp.arraySize; i++) {

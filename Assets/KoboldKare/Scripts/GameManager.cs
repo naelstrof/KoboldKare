@@ -126,8 +126,8 @@ public class GameManager : MonoBehaviour {
         private static void OnInitialize() {
             // No gamemanager found! Spawn one.
             if (FindObjectOfType<GameManager>() != null) return;
-            var path = AssetDatabase.GUIDToAssetPath("364d21a5e4c0c464784d42f01767a083");
-            GameObject freshGameManager = Instantiate( AssetDatabase.LoadAssetAtPath<GameObject>(path));
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath("364d21a5e4c0c464784d42f01767a083");
+            GameObject freshGameManager = Instantiate( UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path));
             instance = freshGameManager.GetComponent<GameManager>();
             DontDestroyOnLoad(freshGameManager);
             Debug.Log("Spawned a GameManager on the fly.");

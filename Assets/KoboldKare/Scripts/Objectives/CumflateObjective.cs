@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -47,9 +48,10 @@ public class CumflateObjective : DragonMailObjective {
         node["cumflated"] = cumflated;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         cumflated = node["cumflated"];
         TriggerUpdate();
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -400,8 +401,9 @@ public class KoboldCharacterController : MonoBehaviour, ISavable {
         node["targetCrouched"] = inputCrouched;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         targetCrouched = node.GetValueOrDefault("targetCrouched", 0f);
+        return Task.CompletedTask;
     }
 
 }

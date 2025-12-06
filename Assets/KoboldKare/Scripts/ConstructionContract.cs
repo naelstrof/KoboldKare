@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 
 public class ConstructionContract : GenericUsable {
@@ -68,9 +69,10 @@ public class ConstructionContract : GenericUsable {
         node["bought"] = bought;
     }
 
-    public override void Load(JSONNode node){
+    public override Task Load(JSONNode node){
         bought = node["bought"];
         SetState(bought);
+        return Task.CompletedTask;
     }
 
     

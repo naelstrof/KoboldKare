@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
+using FishNet;
+using FishNet.Managing.Scened;
 using Photon.Pun;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityScriptableSettings;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -27,6 +29,14 @@ public class GameManager : MonoBehaviour {
     public LayerMask usableHitMask;
     public AnimationCurve volumeCurve;
     public AudioPack buttonHovered, buttonClicked;
+    [SerializeField]
+    private Equipment errorEquipment;
+    [SerializeField]
+    private ScriptablePlant errorPlant;
+
+    public static Equipment GetErrorEquipment() => instance.errorEquipment;
+    public static ScriptablePlant GetErrorPlant() => instance.errorPlant;
+    
 
     private PlayerControls controls;
 
@@ -206,17 +216,10 @@ public class GameManager : MonoBehaviour {
     }
     
     public void QuitToMenu(){
-        StartCoroutine(QuitToMenuRoutine());
-    }
-
-    private IEnumerator QuitToMenuRoutine() {
-        // FIXME FISHNET
-        //PhotonNetwork.Disconnect();
+        InstanceFinder.ClientManager.StopConnection();
+        InstanceFinder.ServerManager.StopConnection(true);
         ObjectiveManager.GetCurrentObjective()?.Unregister();
-        var handle = MapLoadingInterop.RequestMapLoad("MainMenu");
-        yield return new WaitUntil(()=>handle.IsDone);
-        //PhotonNetwork.OfflineMode = false;
-        yield return ModManager.SetLoadedMods(ModManager.GetPlayerConfig());
+        KoboldKareSceneProcessor.LoadSceneGlobal("MainMenu");
     }
 
     public void SpawnAudioClipInWorld(AudioClip clip, Vector3 position, float volume = 1f, UnityEngine.Audio.AudioMixerGroup group = null) {

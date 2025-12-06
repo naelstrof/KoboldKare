@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JigglePhysics;
 using UnityEngine;
 using Photon.Pun;
@@ -590,7 +591,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             newEnergy = Mathf.MoveTowards(newEnergy, 1.1f, passiveEnergyGeneration);
         }
         foreach (var pair in contents) {
-            if (ReagentDatabase.TryGetAssetStub(pair.id, out var reagent)) {
+            if (ReagentDatabase.TryGetAsset(pair.id, out var reagent)) {
                 float processedAmount = pair.volume;
                 reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents,
                     ref addbackReagents, ref genes, ref newEnergy);
@@ -701,7 +702,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         // node["isPlayerControlled"] = isPlayerControlled;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         KoboldGenes loadedGenes = new KoboldGenes();
         loadedGenes.Load(node, "genes");
         arousal = node["arousal"];
@@ -714,6 +715,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
         }
         SetGenes(loadedGenes);
+        return Task.CompletedTask;
     }
 
     public float GetWorth() {

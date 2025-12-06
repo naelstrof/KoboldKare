@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Threading.Tasks;
 using Naelstrof.Inflatable;
 using Photon.Pun;
 using SimpleJSON;
@@ -95,9 +96,10 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
         node["health"] = health;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         SetFrozen(node["frozen"]);
         health = node["health"];
+        return Task.CompletedTask;
     }
 
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
@@ -140,8 +142,6 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
             Die();
             health = 0f;
         }
-
-        PhotonProfiler.LogReceive(sizeof(float));
     }
 
     public void Heal(float amount) {
@@ -152,7 +152,6 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
     //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         SetFrozen(false);
-        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     public bool CanGrab(Kobold kobold) {
@@ -162,7 +161,6 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
     // FIXME FISHNET
     //[PunRPC]
     public void OnReleaseRPC(int koboldId, Vector3 velocity) {
-        PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
 
     public Transform GrabTransform() {

@@ -17,18 +17,6 @@ public class PlayableMapDatabase : MonoBehaviour {
         instance = this;
         playableMaps = new List<PlayableMap>();
         readOnlyPlayableMaps = playableMaps.AsReadOnly();
-        MapLoadingInterop.OnMapRequest += OnMapRequest;
-    }
-
-    private BoxedSceneLoad OnMapRequest(string mapName) {
-        if (mapName == "MainMenu" || mapName == "ErrorScene") {
-            return BoxedSceneLoad.FromAddressables(mapName);
-        }
-        if (TryGetPlayableMap(mapName, out var playableMap)) {
-            return playableMap.LoadAsync();
-        }
-        Debug.LogError("Could not find map: " + mapName);
-        return BoxedSceneLoad.FromAddressables("ErrorScene");
     }
 
     public static void AddPlayableMap(PlayableMap playableMap) {

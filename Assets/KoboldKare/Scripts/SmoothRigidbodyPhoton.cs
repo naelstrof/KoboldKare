@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -103,7 +104,7 @@ public class SmoothRigidbodyPhoton : MonoBehaviour, ISavable {
         node["rotation.w"] = rotation.w;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         float x = node["position.x"];
         float y = node["position.y"];
         float z = node["position.z"];
@@ -115,5 +116,6 @@ public class SmoothRigidbodyPhoton : MonoBehaviour, ISavable {
             float rw = node["rotation.w"];
             body.transform.rotation = new Quaternion(rx, ry, rz, rw);
         }
+        return Task.CompletedTask;
     }
 }

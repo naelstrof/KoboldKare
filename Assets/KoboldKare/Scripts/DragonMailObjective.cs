@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -41,7 +42,8 @@ public class DragonMailObjective : ISavable {
     public virtual void Save(JSONNode node) {
     }
 
-    public virtual void Load(JSONNode node) {
+    public virtual Task Load(JSONNode node) {
+        return Task.CompletedTask;
     }
 
     public virtual void OnValidate() {

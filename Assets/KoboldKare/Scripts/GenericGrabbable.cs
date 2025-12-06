@@ -25,7 +25,6 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
                 pair.renderer.material = pair.pickedUpMaterial;
             }
         }
-        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     public void Start() {

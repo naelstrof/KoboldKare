@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq;
+using System.Threading.Tasks;
 using KoboldKare;
 using NetStack.Quantization;
 using NetStack.Serialization;
@@ -811,6 +812,7 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     public void Save(JSONNode node) {
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
+        return Task.CompletedTask;
     }
 }

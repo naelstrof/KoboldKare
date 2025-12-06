@@ -88,7 +88,9 @@ public class CharacterDescriptor : MonoBehaviour {
     public event FinishedLoadingAssetAction finishedLoading;
     
     [Header("Special Settings")]
-    public List<Equipment> equipOnSpawn = new List<Equipment>();
+    [SerializeField]
+    private List<Equipment> equipOnSpawn = new List<Equipment>();
+    
     [SerializeField] private AnimationCurve antiPopCurveIK;
     [SerializeField] private AnimationClip tposeIK;
     private Coroutine coroutine;
@@ -263,20 +265,14 @@ public class CharacterDescriptor : MonoBehaviour {
         Physics.SyncTransforms();
     }
     
-    void EquipOnSpawn()
-    {
-        foreach (Equipment equip in equipOnSpawn)
-        {
-            if (equip == null)
-            {
+    private async Task EquipOnSpawn() {
+        foreach (Equipment equip in equipOnSpawn) {
+            if (equip == null) {
                 Debug.LogError("A null equipment piece was assigned to this kobold. Please double check its character descriptor");
                 continue;
             }
-            if (!EquipmentDatabase.TryGetAssetStub(equip.name, out var newEquip)) {
-                Debug.LogError("One or more on-spawn equipments assigned to this kobold are invalid. Please double check its character descriptor");
-                continue;
-            }
-            koboldInventory.PickupEquipment(newEquip, null);
+
+            koboldInventory.PickupEquipment(equip.name, null);
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 
 public class Sleeper : GenericUsable {
@@ -41,5 +42,8 @@ public class Sleeper : GenericUsable {
         //DayNightCycle.StaticSleep();
     }
     public override void Save(JSONNode writer) { }
-    public override void Load(JSONNode reader) { }
+
+    public override Task Load(JSONNode reader) {
+        return Task.CompletedTask;
+    }
 }

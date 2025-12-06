@@ -19,21 +19,19 @@ public class CommandEquip : Command {
             throw new CheatsProcessor.CommandException("/equip requires at least one argument. Use `/list equipment` to find what you can equip.");
         }
 
-        if (!EquipmentDatabase.TryGetAssetStub(args[1], out var tryEquipment)) {
-            throw new CheatsProcessor.CommandException($"Equipment with name {args[1]} not found.");
-        }
-
-        if (tryEquipment != null) {
-            output.Append($"Equipped {tryEquipment.name}.");
-            // FIXME FISHNET
-            // kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment), -1);
-            return;
-        }
-
         if (args[1] == "None") {
             // FIXME FISHNET
             //kobold.photonView.RPC(nameof(Kobold.SetDickRPC), RpcTarget.All, byte.MaxValue);
             output.Append($"Removed dick by modifying Kobold genes.");
+            return;
+        }
+
+        if (!KoboldKareObjectPostProcessor.HasAssetInGroup("Equipment",args[1])) {
+            throw new CheatsProcessor.CommandException($"Equipment with name {args[1]} not found.");
+        } else {
+            output.Append($"Equipped {args[1]}.");
+            // FIXME FISHNET
+            // kobold.photonView.RPC(nameof(KoboldInventory.PickupEquipmentRPC), RpcTarget.All, EquipmentDatabase.GetID(tryEquipment), -1);
         }
 
         throw new CheatsProcessor.CommandException($"There is no equipment with name {args[1]}.");
@@ -47,7 +45,8 @@ public class CommandEquip : Command {
             yield break;
         }
 
-        var assets = EquipmentDatabase.GetAssetKeys();
+        List<string> assets = new();
+        KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Equipment", assets);
 
         foreach (var key in assets) {
             if (key.Contains(text, StringComparison.OrdinalIgnoreCase)) {

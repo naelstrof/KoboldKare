@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -27,7 +28,6 @@ public class MoneyHolder : MonoBehaviour, ISavable, IValuedGood {
         }
         money += add;
         moneyChanged.Invoke(money);
-        PhotonProfiler.LogReceive(sizeof(float));
     }
     public bool ChargeMoney(float amount) {
         if (money < amount) {
@@ -40,8 +40,9 @@ public class MoneyHolder : MonoBehaviour, ISavable, IValuedGood {
     public bool HasMoney(float amount) {
         return money >= amount;
     }
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         money = node["money"];
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

@@ -4,6 +4,7 @@ using UnityEngine.VFX;
 using Photon.Pun;
 using KoboldKare;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using SimpleJSON;
 
@@ -20,11 +21,14 @@ public class Plant : GeneHolder, ISavable {
     private VisualEffect effect, wateredEffect;
     [SerializeField]
     private GameObject display;
+    
 
     [SerializeField]
     public AudioSource audioSource;
     public delegate void SwitchAction();
     public event SwitchAction switched;
+
+    private AssetGroup.AssetLocation.AssetHandle<ScriptablePlant> plantHandle;
     
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private bool growing;
@@ -79,16 +83,12 @@ public class Plant : GeneHolder, ISavable {
     
     // FIXME FISHNET
     //[PunRPC]
-    void SwitchToRPC(short newPlantID) {
-        if (PlantDatabase.TryGetAssetStub(newPlantID, out var checkPlant)) {
-            if (checkPlant == plant) {
-                return;
-            }
-            SwitchTo(checkPlant);
-            PhotonProfiler.LogReceive(sizeof(short));
-        } else {
-            Debug.LogError("Failed to find plant to switch to.");
+    private async Task SwitchToRPC(short newPlantID) {
+        if (plantHandle != null) {
+            plantHandle.Release();
         }
+        plantHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Plant", newPlantID, GameManager.GetErrorPlant());
+        SwitchTo(plantHandle.asset);
     }
 
     public override void SetGenes(KoboldGenes newGenes) {
@@ -203,7 +203,7 @@ public class Plant : GeneHolder, ISavable {
     }
     
     public void Save(JSONNode node) {
-        node["plantID"] = PlantDatabase.GetID(plant);
+        node["plant"] = plant.name;
         node["position.x"] = transform.position.x;
         node["position.y"] = transform.position.y;
         node["position.z"] = transform.position.z;
@@ -211,12 +211,9 @@ public class Plant : GeneHolder, ISavable {
         node["growing"] = growing;
     }
 
-    public void Load(JSONNode node) {
-        if (PlantDatabase.TryGetAssetStub((short)node["plantID"].AsInt, out var match)) {
-            SwitchTo(match);
-        } else {
-            Debug.LogError("Failed to find plant with ID " + (short)node["plantID"].AsInt + " while loading plant.");
-        }
+    public async Task Load(JSONNode node) {
+        plantHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Plant", node["plant"].ToString(), GameManager.GetErrorPlant());
+        SwitchTo(plantHandle.asset);
         float x = node.GetValueOrDefault("position.x", 0f);
         float y = node.GetValueOrDefault("position.y", 0f);
         float z = node.GetValueOrDefault("position.z", 0f);

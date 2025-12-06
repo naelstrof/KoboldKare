@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -48,9 +49,10 @@ public class BreedKoboldObjective : ObjectiveWithSpaceBeam {
         node["eggs"] = eggs;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         eggs = node["eggs"];
         TriggerUpdate();
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -167,7 +168,7 @@ public class Projectile : GeneHolder, ISavable {
         node["splashed"] = splashed;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         float vx = node["velocity.x"];
         float vy = node["velocity.y"];
         float vz = node["velocity.z"];
@@ -184,6 +185,8 @@ public class Projectile : GeneHolder, ISavable {
         if (newSplashed && !splashed) {
             OnSplash();
         }
+
+        return Task.CompletedTask;
     }
 
     

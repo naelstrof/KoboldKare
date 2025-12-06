@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -63,11 +64,12 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         node["fruitCount"] = fruitCount;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         if (node.HasKey("fruitCount")) {
             fruitCount = node["fruitCount"];
             TriggerUpdate();
         }
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

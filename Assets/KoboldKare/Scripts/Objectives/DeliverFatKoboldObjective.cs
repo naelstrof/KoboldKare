@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using KoboldKare;
 using Photon.Pun;
 using SimpleJSON;
@@ -53,11 +54,12 @@ public class DeliverFatKoboldObjective : ObjectiveWithSpaceBeam {
         node["koboldCount"] = koboldCount;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         if (node.HasKey("koboldCount")) {
             koboldCount = node["koboldCount"];
             TriggerUpdate();
         }
+        return Task.CompletedTask;
     }
 
     public override string GetTitle() {

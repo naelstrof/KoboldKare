@@ -65,6 +65,29 @@ namespace FishNet.Managing.Scened {
             LoadingAsyncOperations.Clear();
             AwaitingActivation.Clear();
         }
+        
+        public static void LoadSceneGlobal(string sceneName, ICollection<ModManager.ModStub> mods = null) {
+            JSONArray modArray = new JSONArray();
+            if (mods != null) {
+                foreach (var mod in mods) {
+                    JSONNode modNode = JSONNode.Parse("{}");
+                    modNode["title"] = mod.title;
+                    modNode["id"] = mod.id.ToString();
+                    modArray.Add(modNode);
+                }
+            }
+
+            JSONNode node = JSONNode.Parse("{}");
+            node["mods"] = modArray;
+        
+            SceneLoadData sld = new SceneLoadData(sceneName) {
+                ReplaceScenes = ReplaceOption.All,
+                Params = new LoadParams() {
+                    ClientParams = System.Text.Encoding.UTF8.GetBytes(node.ToString()),
+                }
+            };
+            InstanceFinder.SceneManager.LoadGlobalScenes(sld);
+        }
 
         /// <summary>
         /// Called when scene unloading has begun within an unload operation.
@@ -80,18 +103,43 @@ namespace FishNet.Managing.Scened {
                 await Task.Delay(1000);
             }
 
+            // No need to update mods for the main menu or error scene.
+            if (sceneName == "MainMenu" || sceneName == "ErrorScene") {
+                var builtInHandle = BoxedSceneLoad.FromAddressables(sceneName);
+                var builtInTask = new TaskCompletionSource<bool>();
+                builtInHandle.OnCompleted += () => {
+                    builtInTask.SetResult(true);
+                    AwaitingActivation.Add(builtInHandle);
+                };
+                await builtInTask.Task;
+                MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
+                GameManager.StartCoroutineStatic(ModManager.SetLoadedMods(ModManager.GetPlayerConfig()));
+                return;
+            }
+
             if (ModManager.GetFailedToLoadMods()) {
                 InstanceFinder.ClientManager.StopConnection();
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
                 PopupHandler.instance.SpawnPopup("ModLoadFailed");
                 return;
             }
+            
             if (!PlayableMapDatabase.TryGetPlayableMap(sceneName, out var map)) {
                 InstanceFinder.ClientManager.StopConnection();
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
                 PopupHandler.instance.SpawnPopup("FailedLoad");
                 return;
             }
+            
+            var preloadTasks = new List<Task>();
+            List<string> reagentNames = new List<string>();
+            KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Reagent", reagentNames);
+            preloadTasks.Add(ReagentDatabase.LoadAllAssets("Reagent", reagentNames));
+            List<string> reactionNames = new List<string>();
+            KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("ReagentReaction", reactionNames);
+            preloadTasks.Add(ReactionsDatabase.LoadAllAssets("ReagentReaction", reagentNames));
+            await Task.WhenAll(preloadTasks);
+            
             var handle = map.LoadAsync();
             var task = new TaskCompletionSource<bool>();
             handle.OnCompleted += () => {
@@ -99,6 +147,7 @@ namespace FishNet.Managing.Scened {
                 AwaitingActivation.Add(handle);
             };
             await task.Task;
+            MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
         }
 
         /// <summary>

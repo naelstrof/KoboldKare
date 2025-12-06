@@ -33,12 +33,10 @@ public class Creature : MonoBehaviour, IGrabbable, IDamagable {
     //[PunRPC]
     public void OnGrabRPC(int koboldID) {
         Die();
-        PhotonProfiler.LogReceive(sizeof(int));
     }
     // FIXME FISHNET
     //[PunRPC]
     public void OnReleaseRPC(int koboldID, Vector3 velocity) {
-        PhotonProfiler.LogReceive(sizeof(int)+sizeof(float)*3);
     }
 
     public Transform GrabTransform() {

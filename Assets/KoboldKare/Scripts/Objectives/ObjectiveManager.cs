@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -156,7 +157,7 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
         }
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         stars = node["stars"];
         bool hasObjective = node["hasObjective"];
         currentObjectiveIndex = node["currentObjectiveIndex"];
@@ -164,6 +165,7 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
         if (hasObjective) {
             objectives[currentObjectiveIndex].Load(node);
         }
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

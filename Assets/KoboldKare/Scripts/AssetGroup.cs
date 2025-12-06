@@ -111,6 +111,10 @@ public class AssetGroup {
         return x.stub.Value.loadPriority.CompareTo(y.stub.Value.loadPriority);
     }
     
+    private static int CompareAssetKeyPair(AssetKeyPair x, AssetKeyPair y) {
+        return String.Compare(x.key, y.key, StringComparison.InvariantCulture);
+    }
+    
     public struct AssetKeyPair {
         public string key;
         public List<AssetLocation> value;
@@ -140,6 +144,15 @@ public class AssetGroup {
         return false;
     }
     
+    public bool TryGetAssetLocation(int id, out AssetLocation matchLocation) {
+        if (id >= 0 && id < assets.Count) {
+            matchLocation = assets[id].value[^1];
+            return true;
+        }
+        matchLocation = null;
+        return false;
+    }
+    
     public bool TryGetAssetLocation(string key, out AssetLocation matchLocation) {
         for (int i = 0; i < assets.Count; i++) {
             if (assets[i].key == key) {
@@ -166,6 +179,7 @@ public class AssetGroup {
             });
             list.Sort(CompareObjectStubPair);
         }
+        assets.Sort(CompareAssetKeyPair);
     }
     
     public void RemoveAsset(string key, ModManager.ModStub? stub) {
@@ -188,6 +202,7 @@ public class AssetGroup {
             return;
         }
         list.Sort(CompareObjectStubPair);
+        assets.Sort(CompareAssetKeyPair);
     }
 
     public void GetAssetKeys(List<string> output) {
@@ -204,4 +219,14 @@ public class AssetGroup {
         }
         return assetKeys;
     }
+    
+    public int GetAssetID(string key) {
+        for (int i = 0; i < assets.Count; i++) {
+            if (assets[i].key == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
 }

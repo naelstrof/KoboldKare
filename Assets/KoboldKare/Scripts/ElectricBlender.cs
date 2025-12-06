@@ -53,7 +53,6 @@ public class ElectricBlender : SuckingMachine {
     // FIXME FISHNET
     //[PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
-        PhotonProfiler.LogReceive(sizeof(int));
         if (!constructed) {
             yield break;
         }

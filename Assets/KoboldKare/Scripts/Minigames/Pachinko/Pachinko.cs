@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.VFX;
 using Photon.Pun;
@@ -177,5 +178,8 @@ public class Pachinko : GenericUsable {
         pachinkoBallPrefab.OnValidate();
     }
     public override void Save(JSONNode node) { }
-    public override void Load(JSONNode node) { }
+
+    public override Task Load(JSONNode node) {
+        return Task.CompletedTask;
+    }
 }

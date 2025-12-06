@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using KoboldKare;
 using SimpleJSON;
 using UnityEngine;
@@ -223,7 +224,8 @@ public class WeatherManager : MonoBehaviour, ISavable {
         node["rainAmount"] = rainAmount;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         rainAmount = node["rainAmount"];
+        return Task.CompletedTask;
     }
 }

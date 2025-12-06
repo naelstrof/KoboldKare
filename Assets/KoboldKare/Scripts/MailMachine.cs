@@ -111,7 +111,6 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     // FIXME FISHNET
     //[PunRPC]
     protected override IEnumerator OnSwallowed(int viewID) {
-        PhotonProfiler.LogReceive(sizeof(int));
          if(suckingIDs.Contains(viewID)){
             yield break;
         }

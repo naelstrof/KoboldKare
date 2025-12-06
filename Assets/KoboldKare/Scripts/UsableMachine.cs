@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 
@@ -24,11 +25,12 @@ public class UsableMachine : GenericUsable {
         node["constructed"] = constructed;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         if (node.HasKey("constructed")) {
             SetConstructed(node["constructed"]);
         }
+        return Task.CompletedTask;
     }
 
     /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

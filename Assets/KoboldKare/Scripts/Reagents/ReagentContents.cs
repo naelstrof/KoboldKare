@@ -96,7 +96,7 @@ public class ReagentContents : IEnumerable<Reagent> {
             }
         }
         if (worldContainer) {
-            ReactionsDatabase.DoReactions(worldContainer, id);
+            ReactionsDatabase.DoReactions(worldContainer);
         }
         if (volume > maxVolume) {
             Spill(volume-maxVolume);
@@ -139,7 +139,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         foreach(var pair in contents) {
             float metabolizationHalfLife = 0f;
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var reagent)) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
                 metabolizationHalfLife = reagent.GetMetabolizationHalfLife();
             }
 
@@ -172,7 +172,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     public bool IsCleaningAgent() {
         float totalCleanerVolume = 0f;
         foreach(var pair in contents) {
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var reagent) && reagent.IsCleaningAgent()) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent) && reagent.IsCleaningAgent()) {
                 totalCleanerVolume += pair.Value.volume;
             }
         }
@@ -183,7 +183,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     public float GetCalories() {
         float totalCalories = 0f;
         foreach(var pair in contents) {
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var calorieCheck)) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var calorieCheck)) {
                 totalCalories += pair.Value.volume * calorieCheck.GetCalories();
             }
         }
@@ -201,7 +201,7 @@ public class ReagentContents : IEnumerable<Reagent> {
                 continue;
             }
 
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var colorReagent)) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var colorReagent)) {
                 totalColor += colorReagent.GetColor() * ((pair.Value.volume) / v);
             }
         }
@@ -210,7 +210,7 @@ public class ReagentContents : IEnumerable<Reagent> {
     public float GetValue() {
         float totalValue = 0f;
         foreach(var pair in contents) {
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var reagent)) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
                 totalValue += reagent.GetValue() * pair.Value.volume;
             }
         }
@@ -226,7 +226,7 @@ public class ReagentContents : IEnumerable<Reagent> {
                 continue;
             }
 
-            if (ReagentDatabase.TryGetAssetStub(pair.Key, out var reagent)) {
+            if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
                 reagentPair["name"] = reagent.name;
             } else {
                 reagentPair["name"] = "Water";
@@ -246,7 +246,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         for(int i=0;i<reagents.Count;i++) {
             string name = reagents[i]["name"];
             float vol = reagents[i]["volume"];
-            if (ReagentDatabase.TryGetAssetStub(name, out var reagent)) {
+            if (ReagentDatabase.TryGetAsset(name, out var reagent)) {
                 OverrideReagent((byte)ReagentDatabase.GetID(reagent), vol);
             }
         }

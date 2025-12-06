@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
@@ -120,10 +121,11 @@ public class SoilTile : MonoBehaviour, ISavable {
         }
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         SetDebris(node["hasDebris"]);
         int viewID = node["planted"];
         SetPlantedRPC(viewID);
+        return Task.CompletedTask;
     }
 
     private void OnValidate() {

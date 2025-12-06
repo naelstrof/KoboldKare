@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
@@ -95,7 +96,6 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = GetContents().Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
-        PhotonProfiler.LogReceive(sizeof(float));
         return spillContents;
     }
 
@@ -273,8 +273,9 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         GetContents().Save(node, "contents");
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         GetContents().Load(node, "contents");
         OnReagentContentsChanged(InjectType.Metabolize);
+        return Task.CompletedTask;
     }
 }

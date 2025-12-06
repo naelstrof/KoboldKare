@@ -6,6 +6,7 @@ using Photon.Pun;
 using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using SimpleJSON;
 
@@ -62,7 +63,6 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = false;
         }
-        PhotonProfiler.LogReceive(1);
     }
 
     // FIXME FISHNET
@@ -75,7 +75,6 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         foreach (Collider cylinderCollider in cylinderColliders) {
             cylinderCollider.enabled = true;
         }
-        PhotonProfiler.LogReceive(1);
     }
 
     IEnumerator WaitThenConsumeEnergy() {
@@ -228,7 +227,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         return stations;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         bool newGrinding = node["grinding"];
         if (!grinding && newGrinding) {
@@ -236,6 +235,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         } else if (grinding && !newGrinding) {
             StopGrind();
         }
+
+        return Task.CompletedTask;
     }
 
     public override void Save(JSONNode node) {

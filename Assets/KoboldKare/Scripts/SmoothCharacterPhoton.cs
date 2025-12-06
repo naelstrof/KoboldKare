@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -106,7 +107,7 @@ public class SmoothCharacterPhoton : MonoBehaviour, ISavable {
         node["angle"] = angle;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         float x = node["position.x"];
         float y = node["position.y"];
         float z = node["position.z"];
@@ -115,5 +116,6 @@ public class SmoothCharacterPhoton : MonoBehaviour, ISavable {
             Quaternion realRotation = Quaternion.AngleAxis(node["angle"], Vector3.up);
             body.transform.rotation = realRotation;
         }
+        return Task.CompletedTask;
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -66,13 +67,14 @@ public class DrainUsable : UsableMachine {
         }
     }*/
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         bool newDraining = node["draining"];
         if (!draining && newDraining) {
             StartCoroutine(Drain());
         }
         draining = newDraining;
+        return Task.CompletedTask;
     }
 
     public override void Save(JSONNode node) {

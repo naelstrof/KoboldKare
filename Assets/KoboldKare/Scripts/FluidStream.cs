@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using PenetrationTech;
 using Photon.Pun;
@@ -338,6 +339,7 @@ public class FluidStream : CatmullDeformer, ISavable {
     public void Save(JSONNode node) {
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
+        return Task.CompletedTask;
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource), typeof(Rigidbody))]
@@ -75,7 +76,8 @@ public class BreakOnGrab : MonoBehaviour, ISavable, IGrabbable {
         node["grabbed"] = grabbed;
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         SetState(node["grabbed"]);
+        return Task.CompletedTask;
     }
 }

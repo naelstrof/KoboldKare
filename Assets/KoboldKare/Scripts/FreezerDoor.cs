@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 using KoboldKare;
@@ -30,10 +31,11 @@ public class FreezerDoor : GenericDoor, ISavable {
             PhotonNetwork.Instantiate(iceCube.photonName, transform.position, Quaternion.identity);
         }*/
     }
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         shouldSpawnIceCube = node["shouldSpawnIceCube"];
         iceCubeSpawned = node["iceCubeSpawned"];
+        return Task.CompletedTask;
     }
     public override void Save(JSONNode node) {
         base.Save(node);

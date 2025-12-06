@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using UnityEngine;
 using Photon.Pun;
@@ -51,7 +52,7 @@ public class Seed : GenericUsable, IValuedGood {
             genes ??= new KoboldGenes().Randomize();
             BitBuffer spawnData = new BitBuffer(16);
             spawnData.AddKoboldGenes(genes);
-            spawnData.AddShort(PlantDatabase.GetID(plant));
+            spawnData.AddShort((short)KoboldKareObjectPostProcessor.GetAssetID("Plant", plant.name));
             // FIXME FISHNET
             //bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
         }
@@ -89,10 +90,11 @@ public class Seed : GenericUsable, IValuedGood {
         genes.Save(node, "genes");
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         KoboldGenes loadedGenes = new KoboldGenes();
         loadedGenes.Load(node, "genes");
         genes = loadedGenes;
+        return Task.CompletedTask;
     }
 }

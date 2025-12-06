@@ -25,7 +25,6 @@ public class SuckingMachine : UsableMachine {
     // FIXME FISHNET
     //[PunRPC]
     protected virtual IEnumerator OnSwallowed(int viewID) {
-        PhotonProfiler.LogReceive(sizeof(int));
         /*
         PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         yield return new WaitForSeconds(0.1f);

@@ -2,6 +2,7 @@ using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using KoboldKare;
 using Photon.Pun;
 using SimpleJSON;
@@ -179,7 +180,6 @@ public class GenericPurchasable : GenericUsable, ISavable {
             PhotonNetwork.InstantiateRoomObject(purchasablePhotonName, transform.position, Quaternion.identity);
             StartCoroutine(Restock());
         }*/
-        PhotonProfiler.LogReceive(1);
     }
     
     // FIXME FISHNET
@@ -200,7 +200,7 @@ public class GenericPurchasable : GenericUsable, ISavable {
         node["purchasable"] = purchasablePhotonName;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         display.SetActive(node["inStock"]);
         if (node.HasKey("purchasable")) {
@@ -208,6 +208,8 @@ public class GenericPurchasable : GenericUsable, ISavable {
         } else {
             SwapTo(spawn.photonName);
         }
+
+        return Task.CompletedTask;
     }
 
     private IEnumerator Restock() {

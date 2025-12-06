@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -84,7 +85,7 @@ public class StarDoor : GenericUsable {
         node["starRequirement"] = starRequirement;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         float x = node["position.x"];
         float y = node["position.y"];
@@ -103,5 +104,6 @@ public class StarDoor : GenericUsable {
             starRequirement = node["starRequirement"];
             text.text = starRequirement.ToString();
         }
+        return Task.CompletedTask;
     }
 }

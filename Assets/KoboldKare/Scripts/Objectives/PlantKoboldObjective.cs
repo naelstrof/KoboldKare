@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
@@ -62,8 +63,9 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
         node["plants"] = plants;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         plants = node["plants"];
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

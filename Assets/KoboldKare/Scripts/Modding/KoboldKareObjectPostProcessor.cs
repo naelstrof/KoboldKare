@@ -23,6 +23,36 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
         return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
     }
     
+    public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, int id, T missingResult) where T : Object {
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            var database = assetDatabases[group];
+            if (database.TryGetAssetLocation(id, out var assetLocation)) {
+                return await assetLocation.GetAssetAsync<T>();
+            }
+            Debug.LogWarning($"Asset ID {id} in group {group} is not found.");
+            return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+        }
+        Debug.LogWarning($"Asset group {group} is not found.");
+        return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+    }
+
+    public static int GetAssetID(string group, string assetName) {
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            var database = assetDatabases[group];
+            return database.GetAssetID(assetName);
+        }
+        return -1;
+    }
+    
+    
+    
+    public static bool HasAssetInGroup(string group, string assetName) {
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            return true;
+        }
+        return false;
+    }
+    
     public static void GetAllAssetNamesInGroup(string group, List<string> output) {
         output.Clear();
         if (assetDatabases != null && assetDatabases.ContainsKey(group)) {

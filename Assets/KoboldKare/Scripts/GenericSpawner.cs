@@ -5,6 +5,7 @@ using UnityEngine;
 using KoboldKare;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using SimpleJSON;
 using Random = UnityEngine.Random;
 
@@ -115,7 +116,7 @@ public class GenericSpawner : MonoBehaviour, ISavable {
         }
     }
 
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         if (node.HasKey("lastSpawned")) {
             int id = node["lastSpawned"];
             if (id != -1) {
@@ -126,6 +127,8 @@ public class GenericSpawner : MonoBehaviour, ISavable {
                 lastSpawned = null;
             }
         }
+
+        return Task.CompletedTask;
     }
 
 }

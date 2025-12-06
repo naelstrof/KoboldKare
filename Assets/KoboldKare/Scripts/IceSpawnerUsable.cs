@@ -44,7 +44,6 @@ public class IceSpawnerUsable : GenericUsable {
         //if (PhotonNetwork.IsMasterClient) {
             //PhotonNetwork.InstantiateRoomObject(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
         //}
-        PhotonProfiler.LogReceive(1);
     }
     void OnValidate() {
         prefabSpawn.OnValidate();

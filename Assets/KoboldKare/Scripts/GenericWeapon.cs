@@ -26,11 +26,9 @@ public class GenericWeapon : MonoBehaviour {
     // FIXME FISHNET
     //[PunRPC]
     protected virtual void OnFireRPC(int playerID) {
-        PhotonProfiler.LogReceive(sizeof(int));
     }
     // FIXME FISHNET
     //[PunRPC]
     protected virtual void OnEndFireRPC(int playerID) {
-        PhotonProfiler.LogReceive(sizeof(int));
     }
 }

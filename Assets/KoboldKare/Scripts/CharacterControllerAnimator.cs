@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using Vilar.AnimationStation;
 using Photon.Pun;
 using System.IO;
+using System.Threading.Tasks;
 using PenetrationTech;
 using SimpleJSON;
 
@@ -491,7 +492,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     // FIXME FISHNET
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         /*int photonViewID = node.GetValueOrDefault("currentStationSetID", -1);
         int animationID = node.GetValueOrDefault("stationIndex", -1);
         if (photonViewID != -1 &&
@@ -501,5 +502,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
             IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
             BeginAnimation(set, set.GetAnimationStations()[animationID]);
         }*/
+        return Task.CompletedTask;
     }
 }

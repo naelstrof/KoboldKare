@@ -73,7 +73,6 @@ public class BombUsable : GenericUsable, IDamagable {
             // FIXME FISHNET
             //PhotonNetwork.Destroy(gameObject);
         }
-        PhotonProfiler.LogReceive(sizeof(float));
     }
 
     public void Heal(float amount) {

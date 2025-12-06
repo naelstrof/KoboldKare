@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -49,8 +50,9 @@ public class SellKoboldObjective : ObjectiveWithSpaceBeam {
         node["kobolds"] = kobolds;
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         kobolds = node["kobolds"];
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
@@ -81,9 +82,10 @@ public class RotateSelectorUsable : UsableMachine {
         node["selected"] = GetSelected();
     }
 
-    public override void Load(JSONNode node) {
+    public override Task Load(JSONNode node) {
         base.Load(node);
         SetSelected(node["selected"]);
+        return Task.CompletedTask;
     }
 
     IEnumerator DisableAfterTime() {

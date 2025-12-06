@@ -197,7 +197,7 @@ public class DickDescriptor : MonoBehaviour {
 
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
-                    if (ReagentDatabase.TryGetAssetStub("Cum", out var cum)) {
+                    if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
                         alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
                     }
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);

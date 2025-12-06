@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
@@ -181,7 +182,6 @@ public class Ragdoller : MonoBehaviour, ISavable {
     // FIXME FISHNET
     //[PunRPC]
     public void PushRagdoll() {
-        PhotonProfiler.LogReceive(1);
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -198,7 +198,6 @@ public class Ragdoller : MonoBehaviour, ISavable {
     // FIXME FISHNET
     //[PunRPC]
     public void PopRagdoll() {
-        PhotonProfiler.LogReceive(1);
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
         if (locked) {
@@ -430,8 +429,9 @@ public class Ragdoller : MonoBehaviour, ISavable {
     public void Save(JSONNode node) {
         node["ragdolled"] = ragdolled;
     }
-    public void Load(JSONNode node) {
+    public Task Load(JSONNode node) {
         SetRagdolled(node["ragdolled"]);
+        return Task.CompletedTask;
     }
 
     // FIXME FISHNET

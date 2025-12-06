@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FishNet;
 using FishNet.Managing.Scened;
@@ -68,38 +69,20 @@ public class CreateCustomGameButton : MonoBehaviour {
         var lobbyId = new CSteamID(lobbyCreateResult.m_ulSteamIDLobby);
         SteamMatchmaking.SetLobbyData(lobbyId, "name", handle.Result.roomName);
         SteamMatchmaking.SetLobbyMemberLimit(lobbyId, handle.Result.playerCount);
-        JSONArray modArray = new JSONArray();
-        foreach (var mod in ModManager.GetModsWithLoadedAssets()) {
-            JSONNode modNode = JSONNode.Parse("{}");
-            modNode["title"] = mod.title;
-            modNode["id"] = mod.id.ToString();
-            modArray.Add(modNode);
+        List<ModManager.ModStub> stubs = new(ModManager.GetModsWithLoadedAssets());
+        if (handle.Result.playableMap.stub.HasValue) {
+            stubs.Add(handle.Result.playableMap.stub.Value);
         }
-
-        var extraMapStub = handle.Result.playableMap.stub;
-        if (extraMapStub.HasValue) {
-            JSONNode modNode = JSONNode.Parse("{}");
-            modNode["title"] = extraMapStub.Value.title;
-            modNode["id"] = extraMapStub.Value.id.ToString();
-            modArray.Add(modNode);
-        }
-        SteamMatchmaking.SetLobbyData(lobbyId, "mods", modArray.ToString());
-        JSONNode node = JSONNode.Parse("{}");
-        node["mods"] = modArray;
-
+        
+        // FIXME FISHNET
+        //SteamMatchmaking.SetLobbyData(lobbyId, "mods", modArray.ToString());
         var networkManager = InstanceFinder.NetworkManager;
         networkManager.ServerManager.StartConnection();
         
         networkManager.GetComponent<Multipass>().SetClientTransport(networkManager.GetComponent<Tugboat>());
         networkManager.ClientManager.StartConnection(); 
         
-        SceneLoadData sld = new SceneLoadData(handle.Result.playableMap.GetKey()) {
-            ReplaceScenes = ReplaceOption.All,
-            Params = new LoadParams() {
-                ClientParams = System.Text.Encoding.UTF8.GetBytes(node.ToString()),
-            }
-        };
-        networkManager.SceneManager.LoadGlobalScenes(sld); 
+        KoboldKareSceneProcessor.LoadSceneGlobal(handle.Result.playableMap.GetKey(), stubs);
         
         GetComponent<Button>().interactable = true;
     }

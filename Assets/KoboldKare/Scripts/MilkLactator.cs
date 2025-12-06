@@ -26,7 +26,6 @@ public class MilkLactator {
     }
 
     private IEnumerator MilkRoutine(Kobold kobold) {
-        PhotonProfiler.LogReceive(1);
         while (milking) {
             yield return null;
         }
@@ -38,7 +37,7 @@ public class MilkLactator {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     mozzarella.SetFollowTransform(t);
                     ReagentContents alloc = new ReagentContents();
-                    if (ReagentDatabase.TryGetAssetStub("Milk", out var milk)) {
+                    if (ReagentDatabase.TryGetAsset("Milk", out var milk)) {
                         alloc.AddMix(milk.GetReagent(kobold.GetGenes().breastSize / (pulses * nipples.Count)));
                     }
 

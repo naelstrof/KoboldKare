@@ -42,7 +42,6 @@ public class CreaturePath : CatmullDisplay {
     private void SetCreature(int viewID) {
         // FIXME FISHNET
         //trackedCreature = PhotonNetwork.GetPhotonView(viewID);
-        PhotonProfiler.LogReceive(sizeof(int));
     }
 
     // FIXME FISHNET

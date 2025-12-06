@@ -102,16 +102,16 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
         }
     }
     
-    protected internal async Task LoadAllAssets(string group, List<string> names) {
+    public static async Task LoadAllAssets(string group, List<string> names) {
         instance.FreeAllHandles();
         ClearAllAssets();
         
         List<Task> tasksToComplete = new List<Task>();
         foreach (var objName in names) {
-            var reagentTask = KoboldKareObjectPostProcessor.GetAssetAsync<T>(group, objName, missingObject);
+            var reagentTask = KoboldKareObjectPostProcessor.GetAssetAsync<T>(group, objName, instance.missingObject);
             tasksToComplete.Add(reagentTask.ContinueWith(task => {
                 AddAsset(objName, task.Result.asset);
-                handles.Add(task.Result);
+                instance.handles.Add(task.Result);
             }));
         }
 

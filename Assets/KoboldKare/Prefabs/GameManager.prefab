@@ -23654,8 +23654,6 @@ GameObject:
   - component: {fileID: 6469891538952618807}
   - component: {fileID: 8350809288681488242}
   - component: {fileID: 6656111697390988985}
-  - component: {fileID: 1347546203939439728}
-  - component: {fileID: 1690795527870271038}
   - component: {fileID: 1878465994047708710}
   - component: {fileID: 9077834555265927992}
   - component: {fileID: 2834318638625028991}
@@ -23663,7 +23661,6 @@ GameObject:
   - component: {fileID: 6489079882250573063}
   - component: {fileID: 7631385928551424154}
   - component: {fileID: 1571778077590375759}
-  - component: {fileID: 1738957109270132025}
   - component: {fileID: 5777462673292206884}
   - component: {fileID: 1459112186616522742}
   - component: {fileID: 2543063585876273753}
@@ -23673,7 +23670,6 @@ GameObject:
   - component: {fileID: 2003149808394843466}
   - component: {fileID: 9185425679682655073}
   - component: {fileID: 10635944395992719}
-  - component: {fileID: 8914700998504743750}
   - component: {fileID: 3548380771726421691}
   - component: {fileID: 7107561844589350787}
   - component: {fileID: 5953396789803824962}
@@ -23771,6 +23767,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   buttonHovered: {fileID: 11400000, guid: 8a084519f78924af4905b8637de2ed5e, type: 2}
   buttonClicked: {fileID: 11400000, guid: ad0b6668f6350dcd2b27f9fe4e2c5758, type: 2}
+  errorEquipment: {fileID: 0}
+  errorPlant: {fileID: 0}
+  errorKobold: {fileID: 0}
   mixer: {fileID: 24100000, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}
   penisDatabase: {fileID: 11400000, guid: ef3ef0fc5568133479b54ca67dcc9528, type: 2}
   playerDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847, type: 2}
@@ -23787,24 +23786,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modPostProcessors:
-  - rid: 998295526335578115
+  - rid: 3168665195395678209
   - rid: 9191930875180482560
+  - rid: 3168665195395678208
   references:
     version: 2
     RefIds:
-    - rid: 998295526335578115
-      type: {class: PrefabPostProcessor, ns: , asm: Assembly-CSharp}
+    - rid: 3168665195395678208
+      type: {class: KoboldKareObjectPostProcessor, ns: , asm: Assembly-CSharp}
+      data:
+        assetLabels:
+        - m_LabelString: Cosmetic
+        - m_LabelString: Equipment
+        - m_LabelString: Penis
+        - m_LabelString: Plant
+        - m_LabelString: PlayableCharacter
+        - m_LabelString: Fruit
+        - m_LabelString: NetworkedPrefab
+        - m_LabelString: Reaction
+        - m_LabelString: Reagent
+        - m_LabelString: Seed
+        - m_LabelString: EquipmentStoreItem
+    - rid: 3168665195395678209
+      type: {class: PlayableMapPostProcessor, ns: , asm: Assembly-CSharp}
       data:
         searchLabel:
-          m_LabelString: EquipmentStoreItem
-        targetDatabase: {fileID: 11400000, guid: ab49c41711410144b99911cfd0a26001,
-          type: 2}
-        networkedPrefabs: 1
+          m_LabelString: PlayableMap
     - rid: 9191930875180482560
       type: {class: StringTablePostProcessor, ns: , asm: Assembly-CSharp}
-      data:
-        searchLabel:
-          m_LabelString: default
+      data: 
 --- !u!114 &5138500224039285429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23952,30 +23962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537ed01512d9bac4c920127736303673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1347546203939439728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18ade0a4a11185146ab42e90641dad56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1690795527870271038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9064ce04b8f171941a73af1dc6175f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  missingObject: {fileID: 0}
 --- !u!114 &1878465994047708710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24247,18 +24234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d670627f1609084bb70f3782f6a5714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1738957109270132025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4385ae956a4c91441aea0bc6727d4b16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5777462673292206884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24499,18 +24474,6 @@ MonoBehaviour:
   EquipmentTab: {fileID: 5241308895173127538}
   ChatTab: {fileID: 8437742442202552392}
   loadingMenu: {fileID: 7209367944815567411}
---- !u!114 &8914700998504743750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7561188790633409797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abeea6bce037410489950a490bd05ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3548380771726421691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24523,6 +24486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5752d554a64f28574b4ea145fbcc5411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  missingObject: {fileID: 0}
 --- !u!114 &7107561844589350787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39175,7 +39139,7 @@ PrefabInstance:
     - target: {fileID: 8075032082337567067, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 17.999878
+      value: 17.999939
       objectReference: {fileID: 0}
     - target: {fileID: 8075032082737742642, guid: f7a9775ff8c444f3c964c30b914805d0,
         type: 3}

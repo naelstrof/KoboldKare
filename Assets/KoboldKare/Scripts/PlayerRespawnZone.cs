@@ -31,7 +31,7 @@ public class PlayerRespawnZone : MonoBehaviour {
         k.GetComponent<Ragdoller>().PopRagdoll();
         GetSpawnLocationAndRotation(out Vector3 pos, out Quaternion rot);
         k.transform.SetPositionAndRotation(pos, Quaternion.identity);
-        k.GetComponent<CharacterDescriptor>().SetEyeDir(rot*Vector3.forward);
+        k.GetComponent<NetworkedKobold>().SetEyeDir(rot*Vector3.forward);
         if (resetVelocity) {
             k.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }

@@ -64,8 +64,9 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
 
 
     void HandlePlayerSpawn(GameObject player) {
-        var characterDescriptor = player.GetComponent<CharacterDescriptor>();
-        characterDescriptor.finishedLoading += (view) => {
+        var networkedKobold = player.GetComponent<NetworkedKobold>();
+        networkedKobold.koboldFinishedLoading += (kobold) => {
+            var characterDescriptor = kobold.GetComponent<CharacterDescriptor>();
             player.AddComponent<PlayerKoboldLoader>();
             shoulderPivot.SetInfo(new Vector2(0.666f, 0.666f), 2f);
             shoulderPivot.Initialize(characterDescriptor.GetDisplayAnimator(), HumanBodyBones.Head, 1f);
@@ -87,14 +88,14 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     void OnChangePlayerRoutine(int newValue = -1) {
         foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
             if (!info.IsValid() || info.GetKey() != playerSetting.GetPrefab()) continue;
-            player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
+            player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
             HandlePlayerSpawn(player);
             return;
         }
 
         foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
             if (!info.IsValid()) continue;
-            player = Instantiate(info.GetPrefab(), transform.position, transform.rotation);
+            player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
             HandlePlayerSpawn(player);
         }
     }

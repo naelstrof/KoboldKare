@@ -79,8 +79,8 @@ public class OnPlayerEnter : MonoBehaviour {
         if ( (1<<other.gameObject.layer & playerLayers) == 0) {
             return;
         }
-        CharacterDescriptor p = other.transform.GetComponentInParent<CharacterDescriptor>();
-        if (p != null && p.GetPlayerControlled() == CharacterDescriptor.ControlType.LocalPlayer) {
+        NetworkedKobold p = other.transform.GetComponentInParent<NetworkedKobold>();
+        if (p != null && p.GetPlayerControlled() == NetworkedKobold.ControlType.LocalPlayer) {
             StopAllCoroutines();
             StartCoroutine(OnEnterDelay());
         }
@@ -90,8 +90,8 @@ public class OnPlayerEnter : MonoBehaviour {
             return;
         }
 
-        CharacterDescriptor p = other.transform.GetComponentInParent<CharacterDescriptor>();
-        if (p != null && p.GetPlayerControlled() == CharacterDescriptor.ControlType.LocalPlayer) {
+        NetworkedKobold p = other.transform.GetComponentInParent<NetworkedKobold>();
+        if (p != null && p.GetPlayerControlled() == NetworkedKobold.ControlType.LocalPlayer) {
             StopAllCoroutines();
             StartCoroutine(OnExitDelay());
         }

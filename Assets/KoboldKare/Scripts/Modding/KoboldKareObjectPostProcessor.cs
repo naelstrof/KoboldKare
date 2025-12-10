@@ -11,6 +11,9 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
     private static Dictionary<string, AssetGroup> assetDatabases;
     
     public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, string assetName, T missingResult) where T : Object {
+        while (!ModManager.GetReady()) {
+            await Task.Delay(1000);
+        }
         if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
             var database = assetDatabases[group];
             if (database.TryGetAssetLocation(assetName, out var assetLocation)) {
@@ -36,6 +39,27 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
         return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
     }
 
+    public static bool TryGetRandomAssetKey(string group, out string assetKey) {
+        float range = 0f;
+        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+            var database = assetDatabases[group];
+            foreach (var asset in database.assets) {
+                range += 1f;
+            }
+            float roll = Random.Range(0f, range);
+            float cumulative = 0f;
+            foreach (var asset in database.assets) {
+                cumulative += 1f;
+                if (roll <= cumulative) {
+                    assetKey = asset.key;
+                    return true;
+                }
+            }
+        }
+        assetKey = "";
+        return false;
+    }
+
     public static int GetAssetID(string group, string assetName) {
         if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
             var database = assetDatabases[group];
@@ -43,8 +67,6 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
         }
         return -1;
     }
-    
-    
     
     public static bool HasAssetInGroup(string group, string assetName) {
         if (assetDatabases != null && assetDatabases.ContainsKey(group)) {

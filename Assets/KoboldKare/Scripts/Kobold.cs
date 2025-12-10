@@ -712,7 +712,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         if (isPlayerControlled) {
             // FIXME FISHNET
             //PhotonNetwork.LocalPlayer.TagObject = this;
-            GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);
+            GetComponent<NetworkedKobold>().SetPlayerControlled(NetworkedKobold.ControlType.LocalPlayer);
         }
         SetGenes(loadedGenes);
         return Task.CompletedTask;

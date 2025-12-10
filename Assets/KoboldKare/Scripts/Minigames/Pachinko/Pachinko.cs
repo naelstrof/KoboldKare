@@ -17,19 +17,29 @@ public class Pachinko : GenericUsable {
         public Shader displayShader;
         
         private GameObject display;
-        private PrefabDatabase.PrefabReferenceInfo prefabReference;
+        private PrefabReferenceInfo prefabReference;
+        private AssetGroup.AssetLocation.AssetHandle<GameObject> prefabHandle;
+        
         private VisualEffect spawnVFXInstance;
-        public void Spawn() {
-            if (!prizeSpawn.TryGetRandom(out var info)) {
+        public async Task Spawn() {
+
+            if (!prizeSpawn.TryGetGroupName(out var groupName)) {
                 return;
             }
-            prefabReference = info;
+            
+            if (!KoboldKareObjectPostProcessor.TryGetRandomAssetKey(groupName, out var assetKey)) {
+                return;
+            }
+            
+            prefabReference = new PrefabReferenceInfo(groupName, assetKey);
+            prefabHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(prefabReference.GetGroupName(), prefabReference.GetKey(), GameManager.GetErrorGeneric());
+            
             if (display != null) {
                 Destroy(display);
             }
             
-            if (prefabReference != null && prefabReference.GetPrefab() != null) {
-                display = GenericPurchasable.GenerateDisplay(prefabReference.GetPrefab(), displayShader, location);
+            if (prefabReference != null && prefabHandle.asset != null) {
+                display = GenericPurchasable.GenerateDisplay(prefabHandle.asset, displayShader, location);
             }
 
             //ScriptablePurchasable.DisableAllButGraphics(gobj);

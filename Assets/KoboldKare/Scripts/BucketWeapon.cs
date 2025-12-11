@@ -142,8 +142,4 @@ public class BucketWeapon : GenericWeapon {
         yield return waitForSeconds;
         audioSource.enabled = false;
     }
-
-    private void OnValidate() {
-        bucketSplashProjectile.OnValidate();
-    }
 }

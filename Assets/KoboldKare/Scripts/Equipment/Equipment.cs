@@ -77,8 +77,4 @@ public class Equipment : ScriptableObject {
         throw new NotImplementedException();
         return null;
     }
-
-    private void OnValidate() {
-        groundPrefab.OnValidate();
-    }
 }

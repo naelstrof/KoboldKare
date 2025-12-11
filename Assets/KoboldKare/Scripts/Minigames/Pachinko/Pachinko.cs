@@ -184,9 +184,6 @@ public class Pachinko : GenericUsable {
         audioSrc.PlayOneShot(hitPin);
     }
     #endregion
-    void OnValidate() {
-        pachinkoBallPrefab.OnValidate();
-    }
     public override void Save(JSONNode node) { }
 
     public override Task Load(JSONNode node) {

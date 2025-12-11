@@ -82,9 +82,4 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
             PhotonProfiler.LogReceive(sizeof(int));
         }
     }*/
-
-    public override void OnValidate() {
-        base.OnValidate();
-        eggPrefab.OnValidate();
-    }
 }

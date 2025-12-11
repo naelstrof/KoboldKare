@@ -91,7 +91,7 @@ public class Plant : GeneHolder, ISavable {
         SwitchTo(plantHandle.asset);
     }
 
-    public override void SetGenes(KoboldGenes newGenes) {
+    public override Task SetGenes(KoboldGenes newGenes) {
         if (display != null) {
             Vector4 hbcs = new Vector4(newGenes.hue / 255f, newGenes.brightness / 255f, 0.5f, newGenes.saturation / 255f);
             foreach (var r in display.GetComponentsInChildren<Renderer>()) {
@@ -100,7 +100,7 @@ public class Plant : GeneHolder, ISavable {
                 }
             }
         }
-        base.SetGenes(newGenes);
+        return base.SetGenes(newGenes);
     }
 
     void SwitchTo(ScriptablePlant newPlant) {

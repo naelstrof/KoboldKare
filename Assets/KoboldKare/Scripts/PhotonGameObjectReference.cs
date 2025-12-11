@@ -5,33 +5,24 @@ using System.IO;
 
 [System.Serializable]
 public class PhotonGameObjectReference {
-    [SerializeField]
+    [SerializeField, HideInInspector]
     private GameObject gameObject;
-    [SerializeField]
-    private PrefabDatabase optionalDatabase;
 
-    public string photonName {
-        get {
-            if (gameObject != null) {
-                return gameObject.name;
-            }
+    [SerializeField] private string assetGroup;
+    [SerializeField] private string assetName;
+    
+    [SerializeField] private PrefabDatabase optionalDatabase;
 
-            if (optionalDatabase != null) {
-                var database = PrefabDatabaseDatabase.GetDatabase(optionalDatabase.name);
-                if (database && database.TryGetRandom(out var info)) {
-                    return info.GetKey();
+    public bool TryGetAssetGroupAndKey(out string group, out string key) {
+        if (optionalDatabase != null) {
+            if (optionalDatabase.TryGetGroupName(out group)) {
+                if (KoboldKareObjectPostProcessor.TryGetRandomAssetKey(group, out key)) {
+                    return true;
                 }
             }
-            
-            return null;
         }
-    }
-
-    public PrefabDatabase GetOptionalDatabase() => optionalDatabase;
-
-    public void OnValidate() {
-        //if (gameObject != null) {
-            //photonName = gameObject.name;
-        //}
+        group = assetGroup;
+        key = assetName;
+        return !string.IsNullOrEmpty(group) && !string.IsNullOrEmpty(key);
     }
 }

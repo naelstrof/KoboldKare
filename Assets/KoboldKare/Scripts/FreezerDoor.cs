@@ -55,7 +55,4 @@ public class FreezerDoor : GenericDoor, ISavable {
             PhotonProfiler.LogReceive(sizeof(bool) * 2);
         }
     }*/
-    void OnValidate() {
-        iceCube.OnValidate();
-    }
 }

@@ -39,6 +39,20 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
         return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
     }
 
+    public static bool GetAssetGroupFromKey(string key, out string group) {
+        if (assetDatabases != null) {
+            foreach (var databaseKVP in assetDatabases) {
+                var database = databaseKVP.Value;
+                if (database.ContainsKey(key)) {
+                    group = databaseKVP.Key;
+                    return true;
+                }
+            }
+        }
+        group = "";
+        return false;
+    }
+
     public static bool TryGetRandomAssetKey(string group, out string assetKey) {
         float range = 0f;
         if (assetDatabases != null && assetDatabases.ContainsKey(group)) {

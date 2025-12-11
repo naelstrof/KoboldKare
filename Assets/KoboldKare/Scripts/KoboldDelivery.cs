@@ -95,7 +95,4 @@ public class KoboldDelivery : UsableMachine {
         source.enabled = false;*/
     }
 
-    private void OnValidate() {
-        koboldPrefab.OnValidate();
-    }
 }

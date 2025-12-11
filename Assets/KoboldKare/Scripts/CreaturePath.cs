@@ -26,8 +26,6 @@ public class CreaturePath : CatmullDisplay {
 
             path.SetWeightsFromPoints(points);
         }
-
-        creatureToSpawn.OnValidate();
     }
 
     private void Start() {

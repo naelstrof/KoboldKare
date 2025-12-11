@@ -22,8 +22,4 @@ public class MaxEnergyGivingConsumption : ConsumptionDiscreteTrigger {
         // FIXME FISHNET
         //PhotonNetwork.Destroy(obj);
     }
-    public override void OnValidate() {
-        base.OnValidate();
-        floaterInfoPrefab.OnValidate();
-    }
 }

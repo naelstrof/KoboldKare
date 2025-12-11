@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class KoboldCustomizerSpawner : MonoBehaviour {
@@ -28,21 +30,13 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     void FinishedLoading() {
         OnChangedPlayer();
         playerSetting.changed += OnChangedPlayer;
-        GameManager.GetPenisDatabase().AddPrefabReferencesChangedListener(OnChangedPrefabDatabase);
-        playerPrefabDatabase.AddPrefabReferencesChangedListener(OnChangedPrefabDatabase);
         ModManager.RemoveFinishedLoadingListener(FinishedLoading);
     }
 
     private void OnDestroy() {
         playerSetting.changed -= OnChangedPlayer;
-        GameManager.GetPenisDatabase().RemovePrefabReferencesChangedListener(OnChangedPrefabDatabase);
-        playerPrefabDatabase.RemovePrefabReferencesChangedListener(OnChangedPrefabDatabase);
     }
-
-    void OnChangedPrefabDatabase(ReadOnlyCollection<PrefabDatabase.PrefabReferenceInfo> infos) {
-        StopAllCoroutines();
-        StartCoroutine(EnsureModsAreLoadedThenChangePlayer());
-    }
+    
     void OnChangedPlayer(int newValue = -1) {
         StopAllCoroutines();
         StartCoroutine(EnsureModsAreLoadedThenChangePlayer());
@@ -85,11 +79,16 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         OrbitCamera.RemoveConfiguration(cameraConfiguration);
     }
 
-    void OnChangePlayerRoutine(int newValue = -1) {
-        foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
-            if (!info.IsValid() || info.GetKey() != playerSetting.GetPrefab()) continue;
+    private async Task OnChangePlayerRoutine(int newValue = -1) {
+        /*List<string> playerPrefabs = new();
+        if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
+            KoboldKareObjectPostProcessor.GetAssetAsync("PlayerCharacter", playerPrefabName, GameManager.GetErrorKobold());
             player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
             HandlePlayerSpawn(player);
+        }
+        KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("PlayableCharacter", playerPrefabs);
+        foreach (var info in playerPrefabs) {
+            if (!info || info != playerSetting.TryGetPrefab()) continue;
             return;
         }
 
@@ -97,6 +96,6 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
             if (!info.IsValid()) continue;
             player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
             HandlePlayerSpawn(player);
-        }
+        }*/
     }
 }

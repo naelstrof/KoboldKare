@@ -582,8 +582,8 @@ public class ModManager : MonoBehaviour {
     }
 
     public delegate void ModReadyAction();
-    private event ModReadyAction finishedLoading;
-    private event ModReadyAction modListChanged;
+    private static event ModReadyAction finishedLoading;
+    private static event ModReadyAction modListChanged;
 
     public static bool GetFinishedLoading() {
         bool isLocked = Mutex.CurrentCount == 0;
@@ -617,8 +617,8 @@ public class ModManager : MonoBehaviour {
             instance.ready = true;
             instance.status = ModStatus.Ready;
             instance.playerConfig = ConvertToStubs(instance.fullModList, (info)=>info.enabled);
-            instance.modListChanged?.Invoke();
-            instance.finishedLoading?.Invoke();
+            modListChanged?.Invoke();
+            finishedLoading?.Invoke();
         }
     }
 
@@ -636,19 +636,19 @@ public class ModManager : MonoBehaviour {
     }
 
     public static void AddFinishedLoadingListener(ModReadyAction action) {
-        instance.finishedLoading += action;
+        finishedLoading += action;
     }
 
     public static void RemoveFinishedLoadingListener(ModReadyAction action) {
-        instance.finishedLoading -= action;
+        finishedLoading -= action;
     }
     
     public static void AddModListChangeListener(ModReadyAction action) {
-        instance.modListChanged += action;
+        modListChanged += action;
     }
 
     public static void RemoveModListChangeListener(ModReadyAction action) {
-        instance.modListChanged -= action;
+        modListChanged -= action;
     }
 
     public static void AddMod(string modPath) {
@@ -690,7 +690,7 @@ public class ModManager : MonoBehaviour {
             }
         } finally {
             Mutex.Release();
-            instance.modListChanged?.Invoke();
+            modListChanged?.Invoke();
         }
     }
     private async Task AddMod(Mod mod) {

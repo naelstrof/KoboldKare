@@ -62,9 +62,4 @@ public class EggSpawner : MonoBehaviour {
         penetrators.Add(new PenetratorCoupler(){penetrable = targetPenetrable, penetrator = d, body = body, pushAmount = 0f});
         return d;*/
     }
-    public void OnValidate() {
-#if UNITY_EDITOR
-        penetratorPrefab.OnValidate();
-#endif
-    }
 }

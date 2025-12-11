@@ -56,10 +56,6 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
         return description.GetLocalizedString();
     }
 
-    public override void OnValidate() {
-        base.OnValidate();
-        fruit.OnValidate();
-    }
     public override void Save(JSONNode node) {
         node["fruitCount"] = fruitCount;
     }

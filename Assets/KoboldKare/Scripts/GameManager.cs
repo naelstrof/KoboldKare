@@ -37,11 +37,14 @@ public class GameManager : MonoBehaviour {
     private GameObject errorKobold;
     [SerializeField]
     private GameObject errorGeneric;
+    [SerializeField]
+    private GameObject errorPenis;
 
     public static Equipment GetErrorEquipment() => instance.errorEquipment;
     public static ScriptablePlant GetErrorPlant() => instance.errorPlant;
     public static GameObject GetErrorKobold() => instance.errorKobold;
     public static GameObject GetErrorGeneric() => instance.errorGeneric;
+    public static GameObject GetErrorPenis() => instance.errorPenis;
     
 
     private PlayerControls controls;

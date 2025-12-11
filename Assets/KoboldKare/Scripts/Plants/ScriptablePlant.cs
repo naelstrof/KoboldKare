@@ -14,9 +14,4 @@ public class ScriptablePlant : ScriptableObject {
     public GameObject display;
     public ScriptablePlant[] possibleNextGenerations;
     public Produce[] produces;
-    void OnValidate() {
-        foreach(var produce in produces) {
-            produce.prefab.OnValidate();
-        }
-    }
 }

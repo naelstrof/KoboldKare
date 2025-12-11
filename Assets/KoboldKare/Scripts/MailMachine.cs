@@ -151,8 +151,4 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return readOnlyStations;
     }
-
-    private void OnValidate() {
-        moneyPile.OnValidate();
-    }
 }

@@ -20,8 +20,11 @@ public class GenericSpawner : MonoBehaviour, ISavable {
     private float minRespawnTime = 60f;
     [SerializeField]
     private float maxRespawnTime = 360f;
-    private string GetRandomPrefab() {
-        return possibleSpawns[Random.Range(0, possibleSpawns.Count)].photonName;
+    private bool TryGetRandomPrefab(out string group, out string key) {
+        if (possibleSpawns[Random.Range(0, possibleSpawns.Count)].TryGetAssetGroupAndKey(out group, out key)) {
+            return true;
+        }
+        return false;
     }
     public virtual void Spawn() {
         if (lastSpawned != null && lastSpawned.transform.DistanceTo(transform) < 1f) {
@@ -36,8 +39,8 @@ public class GenericSpawner : MonoBehaviour, ISavable {
     }
     public virtual IEnumerator SpawnRoutine() {
         yield return waitUntilCanSpawn;
-        string randomPrefab = GetRandomPrefab();
         // FIXME FISHNET
+        // string randomPrefab = TryGetRandomPrefab();
         //lastSpawned = PhotonNetwork.InstantiateRoomObject(randomPrefab, transform.position, transform.rotation);
     }
 
@@ -80,12 +83,6 @@ public class GenericSpawner : MonoBehaviour, ISavable {
 
     private void OnDrawGizmos() {
         Gizmos.DrawIcon(transform.position, "ico_spawn.png", true);
-    }
-
-    public void OnValidate() {
-        foreach (var photonGameObject in possibleSpawns) {
-            photonGameObject.OnValidate();
-        }
     }
 
     // FIXME FISHNET

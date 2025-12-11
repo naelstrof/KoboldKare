@@ -121,9 +121,4 @@ public class CommandGive : Command {
             }
         }
     }
-
-    public override void OnValidate() {
-        base.OnValidate();
-        bucket.OnValidate();
-    }
 }

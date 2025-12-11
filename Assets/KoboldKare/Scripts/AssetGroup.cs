@@ -122,7 +122,7 @@ public class AssetGroup {
     
     protected internal List<AssetKeyPair> assets = new();
 
-    private bool ContainsKey(string key) {
+    public bool ContainsKey(string key) {
         foreach (var pair in assets) {
             if (pair.key == key) {
                 return true;

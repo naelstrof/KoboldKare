@@ -127,8 +127,4 @@ public class SoilTile : MonoBehaviour, ISavable {
         SetPlantedRPC(viewID);
         return Task.CompletedTask;
     }
-
-    private void OnValidate() {
-        plantPrefab.OnValidate();
-    }
 }

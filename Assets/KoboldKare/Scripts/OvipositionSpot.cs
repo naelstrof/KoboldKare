@@ -170,8 +170,4 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return readOnlyStations;
     }
-
-    private void OnValidate() {
-        eggPrefab.OnValidate();
-    }
 }

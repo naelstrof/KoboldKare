@@ -44,15 +44,8 @@ public class PlayerKoboldLoader : MonoBehaviour {
     private static KoboldGenes ProcessOption(KoboldGenes genes, SettingInt setting) {
         switch (setting.name) {
             case "Dick":
-                var database = GameManager.GetPenisDatabase();
-                var validInfos = database.GetValidPrefabReferenceInfos();
-                var info = database.GetInfoByName("HumanoidDick");
-                if (info == null) {
-                    genes.dickEquip = (setting.GetValue() == 0f) ? CommandDick.unEquipID : (short)1;
-                } else {
-                    genes.dickEquip = (setting.GetValue() == 0f) ? CommandDick.unEquipID : (short)(validInfos.IndexOf(info) + 1);
-                }
-
+                var info = KoboldKareObjectPostProcessor.GetAssetID("Penis", "HumanoidDick");
+                genes.dickEquip = (setting.GetValue() == 0f) ? CommandDick.unEquipID : (short)(info + 1);
                 break;
         }
         return genes;
@@ -80,12 +73,10 @@ public class PlayerKoboldLoader : MonoBehaviour {
         genes = ProcessOption(genes, SettingsManager.GetSetting("Dick") as SettingInt);
         //genes = genes.With(species: 
         var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
-        var database = GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos();
-        for(int i=0;i<database.Count;i++) {
-            if (prefabSelect.GetPrefab() == database[i].GetKey()) {
-                genes = genes.With(species: (byte)i);
-                break;
-            }
+        if (prefabSelect != null && prefabSelect.TryGetPrefab(out string prefabName)) {
+            genes = genes.With(species: (byte)KoboldKareObjectPostProcessor.GetAssetID("PlayableCharacter", prefabName));
+        } else {
+            genes = genes.With(species: (byte)0);
         }
 
         return genes;

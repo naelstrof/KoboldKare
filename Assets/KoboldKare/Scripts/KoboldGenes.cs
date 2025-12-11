@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -133,47 +135,28 @@ public class KoboldGenes {
     }
 
     private short GetRandomDick() {
-        var penisDatabase = GameManager.GetPenisDatabase();
-        var penises = penisDatabase.GetValidPrefabReferenceInfos();
-        if (!penisDatabase.TryGetRandom(out var selectedPenis)) {
-            throw new UnityException("Failed to get a penis, penis database is probably empty.");
+        if (KoboldKareObjectPostProcessor.TryGetRandomAssetKey("Penis", out var infoKey)) {
+            return (short)KoboldKareObjectPostProcessor.GetAssetID("Penis", infoKey);
         }
-        return (short)penises.IndexOf(selectedPenis);
+        throw new UnityException("Failed to get a penis, penis database is probably empty.");
     }
-    private short GetDickIndex(string name){
-        var penisDatabase = GameManager.GetPenisDatabase();
-        var dicks = penisDatabase.GetValidPrefabReferenceInfos();
-        foreach (var info in dicks) {
-            if (name.Contains(info.GetKey())) {
-                return (short)(dicks.IndexOf(info)+1);
-            }
-        }
-        return GetRandomDick();// Get random dick if can't find the correct one
+    private short GetDickIndex(string name) {
+        return (short)KoboldKareObjectPostProcessor.GetAssetID("Penis", name);
     }
     private string GetDickName(short id){
-        var penisDatabase = GameManager.GetPenisDatabase();
-        var dicks = penisDatabase.GetValidPrefabReferenceInfos();
-        if (id < 0 || id >= dicks.Count) {
-            Debug.LogError($"Dick with ID {id} not found in database {penisDatabase} (only has {dicks.Count} elements).");
-            return "None";
-        }
-        return dicks[id].GetKey();
+        List<string> penises = new();
+        KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Penis", penises);
+        return penises[id];
     }
+    
     private byte GetPlayerIndex(string name) {
-        var playerDatabase = GameManager.GetPlayerDatabase();
-        var players = playerDatabase.GetValidPrefabReferenceInfos();
-        foreach (var info in players) {
-            if (name.Contains(info.GetKey())) {
-                return (byte)players.IndexOf(info);
-            }
-        }
-        return 0;
+        return (byte)KoboldKareObjectPostProcessor.GetAssetID("PlayableCharacter", name);
     }
 
     private string GetPlayerName(byte id){
-        var playerDatabase = GameManager.GetPlayerDatabase();
-        var players = playerDatabase.GetValidPrefabReferenceInfos();
-        return players[id].GetKey();
+        List<string> players = new();
+        KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("PlayableCharacter", players);
+        return players[id];
     }
 
     public KoboldGenes Randomize(string koboldName=null, float meanMultiplier=1f, float standardDeviationMultiplier=1f) {
@@ -196,8 +179,8 @@ public class KoboldGenes {
         clothingHue = hue;  // Let's not randomize this as the results might be weird more often than not
         brightness = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
         saturation = (byte)Mathf.RoundToInt((float)NextGaussian(128f,35f*standardDeviationMultiplier, 0f,255f));
-        if (string.IsNullOrEmpty(koboldName) && GameManager.GetPlayerDatabase().TryGetRandom(out var info)) {
-            koboldName = info.GetKey();
+        if (string.IsNullOrEmpty(koboldName) && KoboldKareObjectPostProcessor.TryGetRandomAssetKey("PlayableCharacter", out var info)) {
+            koboldName = info;
         }
         species = GetPlayerIndex(koboldName);
         return this;
@@ -244,7 +227,9 @@ public class KoboldGenes {
         // If species don't match, we have a 30% chance to mutate to a new species!
         if (a.species != b.species && Random.Range(0f, 1f) > 0.7f) {
             int maxSpecies = Mathf.Max(a.species, b.species);
-            c.species = (byte)((maxSpecies+1)%GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos().Count);
+            List<string> possibleMutations = new();
+            KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("PlayableCharacter", possibleMutations);
+            c.species = (byte)((maxSpecies+1)%possibleMutations.Count);
         }
         return c;
     }
@@ -373,9 +358,10 @@ public class GeneHolder : MonoBehaviour {
     public KoboldGenes GetGenes() {
         return genes;
     }
-    public virtual void SetGenes(KoboldGenes newGenes) {
+    public virtual Task SetGenes(KoboldGenes newGenes) {
         genes = newGenes;
         genesChanged?.Invoke(newGenes);
+        return Task.CompletedTask;
     }
 }
 

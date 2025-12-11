@@ -327,7 +327,10 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
-    public override void SetGenes(KoboldGenes newGenes) {
+
+    private AssetGroup.AssetLocation.AssetHandle<GameObject> penisHandle;
+    
+    public override async Task SetGenes(KoboldGenes newGenes) {
         if (newGenes == null) {
             return;
         }
@@ -336,23 +339,17 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         // Dick IDs start at 1, but internally will remain starting at 0.
         // i.e. Getting the first dick from the dick database will be dickDatabase[dickID - 1].
         if (newGenes.dickEquip == CommandDick.unEquipID || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
-            if (dickObject != null) {
+            penisHandle?.Release();
+            if (dickObject) {
                 dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
                 Destroy(dickObject);
             }
         }
 
         if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != CommandDick.unEquipID) {
-            var dickDatabase = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
-            PrefabDatabase.PrefabReferenceInfo selectedDick;
-            if (newGenes.dickEquip <= dickDatabase.Count) {
-                selectedDick = dickDatabase[newGenes.dickEquip - 1];
-            } else {
-                Debug.LogWarning($"Couldn't find dick with id {newGenes.dickEquip}, replacing with default dick.");
-                selectedDick = dickDatabase[0];
-            }
-
-            dickObject = Instantiate(selectedDick.GetPrefab(), GetAttachPointTransform(Equipment.AttachPoint.Crotch));
+            penisHandle?.Release();
+            penisHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Penis", newGenes.dickEquip - 1, GameManager.GetErrorPenis());
+            dickObject = Instantiate(penisHandle.asset, GetAttachPointTransform(Equipment.AttachPoint.Crotch));
             dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
         }
 
@@ -496,10 +493,6 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         //photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
         yield return new WaitForSeconds(3f);
         //photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
-    }
-
-    private void OnValidate() {
-        heartPrefab?.OnValidate();
     }
 
     public bool CanGrab(Kobold kobold) {

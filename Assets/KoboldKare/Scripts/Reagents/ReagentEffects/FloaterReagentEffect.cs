@@ -23,13 +23,10 @@ public class FloaterReagentEffect : ReagentEffect
         //PhotonNetwork.Destroy(obj);
     }
 
-    public override void OnValidate()
-    {
+    public override void OnValidate() {
         base.OnValidate();
-        if (Duration <= 1)
-        {
+        if (Duration <= 1) {
             Duration = 5;
         }
-        floaterInfoPrefab.OnValidate();
     }
 }

@@ -193,7 +193,6 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
         foreach (var obj in objectives) {
             obj?.OnValidate();
         }
-        starExplosion.OnValidate();
     }
 
     // FIXME FISHNET

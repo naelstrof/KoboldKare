@@ -23,9 +23,6 @@ public class Creature : MonoBehaviour, IGrabbable, IDamagable {
     private float networkedDistanceTravelled = 0f;
 
     [SerializeField] private AudioPack gibSound;
-    private void OnValidate() {
-        spawnOnDeath.OnValidate();
-    }
     public bool CanGrab(Kobold kobold) {
         return true;
     }

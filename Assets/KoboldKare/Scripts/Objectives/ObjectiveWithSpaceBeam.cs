@@ -30,8 +30,4 @@ public class ObjectiveWithSpaceBeam : DragonMailObjective {
         }*/
     }
 
-    public override void OnValidate() {
-        base.OnValidate();
-        spaceBeam.OnValidate();
-    }
 }

@@ -48,8 +48,8 @@ public class GenericPurchasable : GenericUsable, ISavable {
         source.maxDistance = 25f;
         source.SetCustomCurve(AudioSourceCurveType.CustomRolloff, GameManager.instance.volumeCurve);
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
-        if (spawn != null && !string.IsNullOrEmpty(spawn.photonName)) {
-            SwapTo(spawn.photonName);
+        if (spawn != null && spawn.TryGetAssetGroupAndKey(out var group, out var key)) {
+            SwapTo(group, key);
         }
     }
     public override Sprite GetSprite(Kobold k) {
@@ -132,14 +132,14 @@ public class GenericPurchasable : GenericUsable, ISavable {
         return newDisplay;
     }
 
-    protected void SwapTo(string targetPurchasable) {
-        if (purchasablePhotonName == targetPurchasable || !ModManager.GetReady()) {
+    protected void SwapTo(string group, string targetPurchasableKey) {
+        if (purchasablePhotonName == targetPurchasableKey) {
             return;
         }
         if (display != null) {
             Destroy(display);
         }
-        purchasablePhotonName = targetPurchasable;
+        purchasablePhotonName = targetPurchasableKey;
         // FIXME FISHNET
         /*var targetPrefab = ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache[targetPurchasable];
         display = GenerateDisplay(targetPrefab, displayShader, transform);
@@ -155,7 +155,10 @@ public class GenericPurchasable : GenericUsable, ISavable {
     public virtual void OnDestroy() {
     }
     public virtual void OnRestock(object nothing) {
-        SwapTo(spawn.photonName);
+        if (spawn.TryGetAssetGroupAndKey(out var group, out var key)) {
+            SwapTo(group, key);
+        }
+
         if (!display.activeInHierarchy) {
             display.SetActive(true);
             floater.gameObject.SetActive(true);
@@ -204,9 +207,13 @@ public class GenericPurchasable : GenericUsable, ISavable {
         base.Load(node);
         display.SetActive(node["inStock"]);
         if (node.HasKey("purchasable")) {
-            SwapTo(node["purchasable"]);
+            if (KoboldKareObjectPostProcessor.GetAssetGroupFromKey(node["purchasable"], out var group)) {
+                SwapTo(group, node["purchasable"]);
+            }
         } else {
-            SwapTo(spawn.photonName);
+            if (spawn.TryGetAssetGroupAndKey(out var group, out var key)) {
+                SwapTo(group, key);
+            }
         }
 
         return Task.CompletedTask;

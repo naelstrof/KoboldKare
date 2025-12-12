@@ -98,8 +98,7 @@ public class PlayerPossession : MonoBehaviour {
     private void OnTextDeselect(string t) {
     }
 
-
-    private void Awake() {
+    private void Start() {
         controller = GetComponentInParent<KoboldCharacterController>();
         characterControllerAnimator = GetComponentInParent<CharacterControllerAnimator>();
         pGrabber = controller.GetComponentInChildren<PrecisionGrabber>();
@@ -114,9 +113,6 @@ public class PlayerPossession : MonoBehaviour {
         grabber.throwUIChanged += OnThrowChange;
         body = controller.GetComponent<Rigidbody>();
         animator = controller.GetComponentInChildren<Animator>();
-    }
-
-    private void Start() {
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }
 

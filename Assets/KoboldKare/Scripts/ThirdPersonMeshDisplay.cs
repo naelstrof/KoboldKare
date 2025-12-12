@@ -22,7 +22,7 @@ public class ThirdPersonMeshDisplay : MonoBehaviour {
         dissolveTargets ??= new List<SkinnedMeshRenderer>();
         
         kobold = GetComponentInParent<Kobold>();
-        physics = kobold.GetComponent<JiggleSkin>();
+        physics = kobold.GetComponentInChildren<JiggleSkin>();
         group = kobold.GetComponentInChildren<LODGroup>();
         proceduralDeformation = kobold.GetComponentInChildren<ProceduralDeformation>();
         if (isActiveAndEnabled) {

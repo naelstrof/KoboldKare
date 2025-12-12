@@ -344,10 +344,7 @@ public class KoboldCharacterController : MonoBehaviour, ISavable {
         CheckSounds();
         velocity += groundVelocity;
         
-        // FIXME FISHNET
-        /*if (photonView.IsMine || !PhotonNetwork.InRoom) {
-            body.velocity = velocity;
-        }*/
+        body.velocity = velocity;
     }
 
     private void JumpCheck() {

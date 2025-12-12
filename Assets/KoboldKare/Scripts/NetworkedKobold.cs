@@ -17,6 +17,12 @@ public class NetworkedKobold : NetworkBehaviour {
     
     private void Awake() {
         koboldAssetName.OnChange += OnKoboldAssetNameChanged;
+        OnKoboldAssetNameChanged("", koboldAssetName.Value, true);
+    }
+
+    [ServerRpc]
+    public void SetKoboldAssetName(string newName) {
+        koboldAssetName.Value = newName;
     }
 
     private AssetGroup.AssetLocation.AssetHandle<GameObject> koboldAssetHandle;
@@ -43,9 +49,12 @@ public class NetworkedKobold : NetworkBehaviour {
             koboldAssetHandle.Release();
         }
         
-        koboldAssetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Kobold", next, GameManager.GetErrorKobold());
+        Debug.Log("waiting for asset");
+        koboldAssetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("PlayableCharacter", next, GameManager.GetErrorKobold());
+        Debug.Log("instantiating!!");
         koboldInstance = Instantiate(koboldAssetHandle.asset, transform);
         try {
+            Debug.Log("trying to initialize kobold...");
             await TryInitializeKobold(koboldInstance);
         } catch (Exception e) {
             Debug.LogException(e);
@@ -61,6 +70,7 @@ public class NetworkedKobold : NetworkBehaviour {
                 equipmentTasks.Add(koboldInventory.PickupEquipment(equipName, null));
             }
         }
+        Debug.Log("waiting for equipments");
         await Task.WhenAll(equipmentTasks);
     }
 

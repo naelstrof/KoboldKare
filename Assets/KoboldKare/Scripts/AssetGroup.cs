@@ -164,7 +164,7 @@ public class AssetGroup {
         return false;
     }
 
-    public void AddAsset(string key, ModManager.ModStub? stub) {
+    public void AddAsset(string key, ModManager.ModStub? stub, IResourceLocation location) {
         if (!ContainsKey(key)) {
             assets.Add(new AssetKeyPair() {
                 key = key,
@@ -173,10 +173,12 @@ public class AssetGroup {
         }
 
         if (TryGetList(key, out var list)) {
-            list.Add(new AssetLocation() {
+            var assetLocation = new AssetLocation() {
                 key = key,
-                stub = stub
-            });
+                stub = stub,
+                location = location
+            };
+            list.Add(assetLocation);
             list.Sort(CompareObjectStubPair);
         }
         assets.Sort(CompareAssetKeyPair);

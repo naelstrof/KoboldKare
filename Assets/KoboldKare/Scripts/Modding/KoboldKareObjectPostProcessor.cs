@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -5,38 +6,55 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class KoboldKareObjectPostProcessor : ModPostProcessor {
     [SerializeField] protected AssetLabelReference[] assetLabels;
     private static Dictionary<string, AssetGroup> assetDatabases;
     
     public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, string assetName, T missingResult) where T : Object {
-        while (!ModManager.GetReady()) {
-            await Task.Delay(1000);
-        }
-        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
-            var database = assetDatabases[group];
-            if (database.TryGetAssetLocation(assetName, out var assetLocation)) {
-                return await assetLocation.GetAssetAsync<T>();
+        try {
+            while (!ModManager.GetReady()) {
+                await Task.Delay(1000);
             }
-            Debug.LogWarning($"Asset {assetName} in group {group} is not found.");
+
+            if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+                var database = assetDatabases[group];
+                if (database.TryGetAssetLocation(assetName, out var assetLocation)) {
+                    return await assetLocation.GetAssetAsync<T>();
+                }
+
+                Debug.LogWarning($"Asset {assetName} in group {group} is not found.");
+                return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+            }
+
+            Debug.LogWarning($"Asset group {group} is not found.");
             return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+        } catch (Exception e) {
+            Debug.LogException(e);
+            throw;
         }
-        Debug.LogWarning($"Asset group {group} is not found.");
-        return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
     }
     
     public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, int id, T missingResult) where T : Object {
-        if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
-            var database = assetDatabases[group];
-            if (database.TryGetAssetLocation(id, out var assetLocation)) {
-                return await assetLocation.GetAssetAsync<T>();
+        try {
+            if (assetDatabases != null && assetDatabases.ContainsKey(group)) {
+                var database = assetDatabases[group];
+                if (database.TryGetAssetLocation(id, out var assetLocation)) {
+                    return await assetLocation.GetAssetAsync<T>();
+                }
+
+                Debug.LogWarning($"Asset ID {id} in group {group} is not found.");
+                return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
             }
-            Debug.LogWarning($"Asset ID {id} in group {group} is not found.");
+
+            Debug.LogWarning($"Asset group {group} is not found.");
             return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
+        } catch (Exception e) {
+            Debug.LogException(e);
+            throw;
         }
-        Debug.LogWarning($"Asset group {group} is not found.");
-        return new AssetGroup.AssetLocation.AssetHandle<T>(missingResult, null);
     }
 
     public static bool GetAssetGroupFromKey(string key, out string group) {
@@ -138,7 +156,7 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
             var database = assetDatabases[label.labelString];
             foreach (var location in handle.Result) {
                 var nameWithoutPath = Path.GetFileNameWithoutExtension(location.PrimaryKey);
-                database.AddAsset(nameWithoutPath, null);
+                database.AddAsset(nameWithoutPath, null, location);
             }
         }
     }
@@ -155,7 +173,7 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
                     if (!node.Value.IsString) continue;
                     var assetName = node.Value;
                     var nameWithoutPath = Path.GetFileNameWithoutExtension(assetName);
-                    assetDatabases[label.labelString].AddAsset(nameWithoutPath, new ModManager.ModStub(data));
+                    assetDatabases[label.labelString].AddAsset(nameWithoutPath, new ModManager.ModStub(data), null);
                 }
             }
         }
@@ -186,7 +204,7 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
             }
             var database = assetDatabases[keyset.Key];
             foreach(var assetName in keyset.Value.AsArray) {
-                database.AddAsset(assetName.Value, new ModManager.ModStub(data));
+                database.AddAsset(assetName.Value, new ModManager.ModStub(data), null);
             }
         }
     }

@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using FishNet;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using FishNet.Connection;
+using FishNet.Managing;
+using FishNet.Object;
 
 public class KoboldCustomizerSpawner : MonoBehaviour {
     [SerializeField] private PrefabSelectSingleSetting playerSetting; 
@@ -13,12 +16,71 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
     private GameObject player;
     private OrbitCameraLockedLerpTrackPivot shoulderPivot;
     private OrbitCameraLockedLerpTrackPivot buttPivot;
+    
+    #region Public.
+    /// <summary>
+    /// Called on the server when a player is spawned.
+    /// </summary>
+    public event Action<NetworkObject> OnSpawned;
+    #endregion
 
-    void Start() {
-        ModManager.AddFinishedLoadingListener(FinishedLoading);
-        if (ModManager.GetReady()) {
-            FinishedLoading();
+    #region Serialized.
+    /// <summary>
+    /// Prefab to spawn for the player.
+    /// </summary>
+    [Tooltip("Prefab to spawn for the player.")]
+    [SerializeField]
+    private NetworkObject _playerPrefab;
+
+    /// <summary>
+    /// Sets the PlayerPrefab to use.
+    /// </summary>
+    /// <param name = "nob"></param>
+    public void SetPlayerPrefab(NetworkObject nob) => _playerPrefab = nob;
+
+    /// <summary>
+    /// True to add player to the active scene when no global scenes are specified through the SceneManager.
+    /// </summary>
+    [Tooltip("True to add player to the active scene when no global scenes are specified through the SceneManager.")]
+    [SerializeField]
+    private bool _addToDefaultScene = true;
+    /// <summary>
+    /// Areas in which players may spawn.
+    /// </summary>
+    [Tooltip("Areas in which players may spawn.")]
+    public Transform[] Spawns = new Transform[0];
+    #endregion
+
+    #region Private.
+    /// <summary>
+    /// First instance of the NetworkManager found. This will be either the NetworkManager on or above this object, or InstanceFinder.NetworkManager.
+    /// </summary>
+    private NetworkManager _networkManager;
+    /// <summary>
+    /// Next spawns to use.
+    /// </summary>
+    private int _nextSpawn;
+    #endregion
+
+    private void OnDestroy() {
+        OnSpawned -= OnPlayerSpawn;
+        if (playerSetting) {
+            playerSetting.changed -= OnChangedPlayer;
         }
+
+        if (_networkManager) {
+            _networkManager.SceneManager.OnClientLoadedStartScenes -= SceneManager_OnClientLoadedStartScenes;
+        }
+    }
+
+    private void OnDisable() {
+        OrbitCamera.RemoveConfiguration(cameraConfiguration);
+    }
+
+    private void Awake() {
+        InitializeOnce();
+        OnSpawned += OnPlayerSpawn;
+        playerSetting.changed += OnChangedPlayer;
         shoulderPivot = new GameObject("ShoulderCamPivot", typeof(OrbitCameraLockedLerpTrackPivot)).GetComponent<OrbitCameraLockedLerpTrackPivot>();
         buttPivot = new GameObject("ButtPivot", typeof(OrbitCameraLockedLerpTrackPivot)).GetComponent<OrbitCameraLockedLerpTrackPivot>();
         shoulderPivot.gameObject.SetActive(false);
@@ -27,23 +89,22 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         cameraConfiguration.SetPivots(shoulderPivot, buttPivot, 0.5f);
     }
 
-    void FinishedLoading() {
-        OnChangedPlayer();
-        playerSetting.changed += OnChangedPlayer;
-        ModManager.RemoveFinishedLoadingListener(FinishedLoading);
+    private void OnChangedPlayer(int newValue) {
+        if (!player) {
+            return;
+        }
+        if (player.TryGetComponent<NetworkedKobold>(out var networkedKobold)) {
+            if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
+                networkedKobold.SetKoboldAssetName(playerPrefabName);
+            } else {
+                networkedKobold.SetKoboldAssetName("Kobold");
+            }
+        }
     }
 
-    private void OnDestroy() {
-        playerSetting.changed -= OnChangedPlayer;
-    }
-    
-    void OnChangedPlayer(int newValue = -1) {
-        StopAllCoroutines();
-        StartCoroutine(EnsureModsAreLoadedThenChangePlayer());
-    }
 
-    IEnumerator EnsureModsAreLoadedThenChangePlayer() {
-        if (player != null) {
+    private void OnPlayerSpawn(NetworkObject obj) {
+        if (player) {
             shoulderPivot.transform.SetParent(null);
             buttPivot.transform.SetParent(null);
             shoulderPivot.gameObject.SetActive(false);
@@ -51,14 +112,13 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
             Destroy(player);
             OrbitCamera.RemoveConfiguration(cameraConfiguration);
         }
-        
-        yield return new WaitUntil(ModManager.GetReady);
-        OnChangePlayerRoutine();
-    }
-
-
-    void HandlePlayerSpawn(GameObject player) {
+        player = obj.gameObject;
         var networkedKobold = player.GetComponent<NetworkedKobold>();
+        if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
+            networkedKobold.SetKoboldAssetName(playerPrefabName);
+        } else {
+            networkedKobold.SetKoboldAssetName("Kobold");
+        }
         networkedKobold.koboldFinishedLoading += (kobold) => {
             var characterDescriptor = kobold.GetComponent<CharacterDescriptor>();
             player.AddComponent<PlayerKoboldLoader>();
@@ -75,27 +135,85 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         };
     }
 
-    private void OnDisable() {
-        OrbitCamera.RemoveConfiguration(cameraConfiguration);
+    /// <summary>
+    /// Initializes this script for use.
+    /// </summary>
+    private void InitializeOnce() {
+        _networkManager = GetComponentInParent<NetworkManager>();
+        if (_networkManager == null) {
+            _networkManager = InstanceFinder.NetworkManager;
+        }
+
+        if (_networkManager == null) {
+            _networkManager.LogWarning($"PlayerSpawner on {gameObject.name} cannot work as NetworkManager wasn't found on this object or within parent objects.");
+            return;
+        }
+        _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
     }
 
-    private async Task OnChangePlayerRoutine(int newValue = -1) {
-        /*List<string> playerPrefabs = new();
-        if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
-            KoboldKareObjectPostProcessor.GetAssetAsync("PlayerCharacter", playerPrefabName, GameManager.GetErrorKobold());
-            player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
-            HandlePlayerSpawn(player);
-        }
-        KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("PlayableCharacter", playerPrefabs);
-        foreach (var info in playerPrefabs) {
-            if (!info || info != playerSetting.TryGetPrefab()) continue;
+    /// <summary>
+    /// Called when a client loads initial scenes after connecting.
+    /// </summary>
+    private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer) {
+        if (!asServer) {
             return;
         }
 
-        foreach (var info in playerPrefabDatabase.GetPrefabReferenceInfos()) {
-            if (!info.IsValid()) continue;
-            player = Instantiate(info.GetPrefabKey(), transform.position, transform.rotation);
-            HandlePlayerSpawn(player);
-        }*/
+        if (!_playerPrefab) {
+            _networkManager.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");
+            return;
+        }
+
+        Vector3 position;
+        Quaternion rotation;
+        SetSpawn(_playerPrefab.transform, out position, out rotation);
+
+        NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
+        _networkManager.ServerManager.Spawn(nob, conn);
+
+        // If there are no global scenes 
+        if (_addToDefaultScene) {
+            _networkManager.SceneManager.AddOwnerToDefaultScene(nob);
+        }
+
+        OnSpawned?.Invoke(nob);
+    }
+
+    /// <summary>
+    /// Sets a spawn position and rotation.
+    /// </summary>
+    /// <param name = "pos"></param>
+    /// <param name = "rot"></param>
+    private void SetSpawn(Transform prefab, out Vector3 pos, out Quaternion rot) {
+        // No spawns specified.
+        if (Spawns.Length == 0) {
+            SetSpawnUsingPrefab(prefab, out pos, out rot);
+            return;
+        }
+
+        Transform result = Spawns[_nextSpawn];
+        if (!result) {
+            SetSpawnUsingPrefab(prefab, out pos, out rot);
+        } else {
+            pos = result.position;
+            rot = result.rotation;
+        }
+
+        // Increase next spawn and reset if needed.
+        _nextSpawn++;
+        if (_nextSpawn >= Spawns.Length) {
+            _nextSpawn = 0;
+        }
+    }
+
+    /// <summary>
+    /// Sets spawn using values from prefab.
+    /// </summary>
+    /// <param name = "prefab"></param>
+    /// <param name = "pos"></param>
+    /// <param name = "rot"></param>
+    private void SetSpawnUsingPrefab(Transform prefab, out Vector3 pos, out Quaternion rot) {
+        pos = prefab.position;
+        rot = prefab.rotation;
     }
 }

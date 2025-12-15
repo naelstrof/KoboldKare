@@ -12,8 +12,19 @@ using Vilar.IK;
 
 public class NetworkedKobold : NetworkBehaviour {
     private List<AsyncOperationHandle> handles = new();
+    
     private readonly SyncVar<string> koboldAssetName = new SyncVar<string>("Kobold");
+    public readonly SyncVar<float> facingRotationY = new SyncVar<float>();
+    public readonly SyncVar<Vector2> eyeRot = new SyncVar<Vector2>();
+    public readonly SyncVar<Vector2> hipOffset = new SyncVar<Vector2>();
+    
     private ControlType controlType = ControlType.AIPlayer;
+
+    public Quaternion GetFacingRotation() => Quaternion.AngleAxis(facingRotationY.Value, Vector3.up);
+    public Vector3 GetFacingDirection() => GetFacingRotation()*Vector3.forward;
+    public Vector3 GetEyeDir() => Quaternion.Euler(-eyeRot.Value.y, eyeRot.Value.x, 0) * Vector3.forward;
+    public Vector2 GetHipOffset() => hipOffset.Value;
+    
     
     private void Awake() {
         koboldAssetName.OnChange += OnKoboldAssetNameChanged;
@@ -23,6 +34,21 @@ public class NetworkedKobold : NetworkBehaviour {
     [ServerRpc]
     public void SetKoboldAssetName(string newName) {
         koboldAssetName.Value = newName;
+    }
+    
+    [ServerRpc(RunLocally = true)]
+    public void SetEyeRot(Vector2 newEyeRot) {
+        eyeRot.Value = newEyeRot;
+    }
+    
+    [ServerRpc(RunLocally = true)]
+    public void SetHipOffset(Vector2 newHipOffset) {
+        hipOffset.Value = newHipOffset;
+    }
+
+    [ServerRpc(RunLocally = true)]
+    public void SetFacingDirection(Vector3 direction) {
+        facingRotationY.Value = Vector3.SignedAngle(direction, Vector3.forward, -Vector3.up);
     }
 
     private AssetGroup.AssetLocation.AssetHandle<GameObject> koboldAssetHandle;
@@ -78,11 +104,11 @@ public class NetworkedKobold : NetworkBehaviour {
         }
         changingKobold = true;
         try {
+            
             ReleaseHandles();
             if (!koboldGameObject.TryGetComponent(out CharacterDescriptor characterDescriptor)) {
                 throw new UnityException("Kobold asset is missing CharacterDescriptor!");
             }
-            
 
             koboldGameObject.AddComponent<PhysicsAudio>();
             koboldGameObject.AddComponent<MoneyHolder>();
@@ -125,7 +151,7 @@ public class NetworkedKobold : NetworkBehaviour {
                 }
             }
 
-            var body = koboldGameObject.AddComponent<Rigidbody>();
+            var body = gameObject.AddComponent<Rigidbody>();
             body.mass = 25f;
             body.drag = 0f;
             body.angularDrag = 10f;
@@ -133,11 +159,15 @@ public class NetworkedKobold : NetworkBehaviour {
             body.collisionDetectionMode = CollisionDetectionMode.Continuous;
             body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
+            if (koboldGameObject.TryGetComponent<Rigidbody>(out var existingBody)) {
+                Destroy(existingBody);
+            }
+
             var classicIK = characterDescriptor.GetDisplayAnimator().gameObject.AddComponent<ClassicIK>();
             classicIK.SetAntiPopAndTPose(characterDescriptor.GetTPoseIK(), characterDescriptor.GetAntiPopCurveIK());
             classicIK.enabled = false;
 
-            var characterCollider = koboldGameObject.AddComponent<CapsuleCollider>();
+            var characterCollider = gameObject.AddComponent<CapsuleCollider>();
             characterCollider.center = characterDescriptor.GetColliderOffset();
             characterCollider.height = characterDescriptor.GetColliderHeight();
             characterCollider.radius = characterDescriptor.GetColliderRadius();
@@ -157,6 +187,7 @@ public class NetworkedKobold : NetworkBehaviour {
             handles.Add(footlandsTask);
             characterController.footland = await footlandsTask.Task;
 
+            characterController.body = body;
             characterController.worldModel = characterDescriptor.GetDisplayAnimator().transform;
             characterController.collider = characterCollider;
             characterController.crouchHeight = characterDescriptor.GetColliderHeight() * 0.5f;
@@ -261,6 +292,7 @@ public class NetworkedKobold : NetworkBehaviour {
             classicIK.Initialize();
 
             if (koboldGameObject.TryGetComponent<Kobold>(out var koboldComponent)) {
+                koboldComponent.body = body;
                 koboldComponent.SetGenes(koboldComponent.GetGenes());
             }
             

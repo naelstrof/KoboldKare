@@ -77,7 +77,7 @@ public class CommandSculpt : Command
             target = k;
         } else if (targetType == "target") {
             Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
-            Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
+            Vector3 aimDir = k.GetComponentInChildren<NetworkedKobold>(true).GetEyeDir();
 
             foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
                 Kobold b = hit.collider.GetComponentInParent<Kobold>();

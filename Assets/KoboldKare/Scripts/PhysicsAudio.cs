@@ -16,7 +16,7 @@ public class PhysicsAudio : MonoBehaviour {
         scrapeSoundOutput.enabled = false;
     }
     private void Start() {
-        body = GetComponent<Rigidbody>();
+        body = GetComponentInParent<Rigidbody>();
         scrapeSoundOutput = gameObject.AddComponent<AudioSource>();
         scrapeSoundOutput.spatialBlend = 1f;
         scrapeSoundOutput.rolloffMode = AudioRolloffMode.Custom;

@@ -451,7 +451,6 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
 
     void Start() {
         controller = GetComponent<KoboldCharacterController>();
-        body = GetComponent<Rigidbody>();
         lastPumpTime = Time.timeSinceLevelLoad;
         DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange += OnBellyContentsChanged;

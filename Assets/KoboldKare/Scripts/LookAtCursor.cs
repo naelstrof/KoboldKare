@@ -7,10 +7,11 @@ using UnityEngine.InputSystem;
 public class LookAtCursor : MonoBehaviour {
     [Range(0f,20f)]
     public float distanceFromCamera = 1f;
-    private CharacterControllerAnimator characterAnimator;
+    //private CharacterControllerAnimator characterAnimator;
+    private NetworkedKobold networkedKobold;
     private Animator animator;
     void Start() {
-        characterAnimator = GetComponentInParent<CharacterControllerAnimator>();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
         animator = GetComponentInChildren<Animator>();
     }
     private void Update() {
@@ -20,7 +21,7 @@ public class LookAtCursor : MonoBehaviour {
             Camera.MonoOrStereoscopicEye.Mono);
         Quaternion rot = Quaternion.LookRotation((lookPoint - headPos).normalized, Vector3.up);
         var rotEuler = rot.eulerAngles;
-        characterAnimator.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
-        characterAnimator.SetFacingDirection((lookPoint - transform.position).normalized);
+        networkedKobold.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
+        networkedKobold.SetFacingDirection((lookPoint - transform.position).normalized);
     }
 }

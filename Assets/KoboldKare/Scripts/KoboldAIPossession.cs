@@ -1,16 +1,13 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
 public class KoboldAIPossession : MonoBehaviour {
     private WaitForSeconds waitForSeconds;
     private Transform focus;
     private bool focusing = false;
-    private CharacterControllerAnimator characterControllerAnimator;
     private static readonly Collider[] colliders = new Collider[32];
     private Transform headTransform;
+    private NetworkedKobold networkedKobold;
 
     private Ragdoller ragdoller;
 
@@ -23,7 +20,7 @@ public class KoboldAIPossession : MonoBehaviour {
         ragdoller = GetComponentInParent<Ragdoller>();
         lerpDir = Vector3.forward;
         waitForSeconds = new WaitForSeconds(2f);
-        characterControllerAnimator = GetComponentInParent<CharacterControllerAnimator>();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
         body = GetComponentInParent<Rigidbody>();
     }
 
@@ -41,7 +38,7 @@ public class KoboldAIPossession : MonoBehaviour {
         if (ragdoller != null && ragdoller.ragdolled) {
             Quaternion rot = Quaternion.LookRotation(headTransform.forward, Vector3.up);
             var rotEuler = rot.eulerAngles;
-            characterControllerAnimator.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
+            networkedKobold.SetEyeRot(new Vector2(rotEuler.y, -rotEuler.x));
             return;
         }
         
@@ -54,7 +51,7 @@ public class KoboldAIPossession : MonoBehaviour {
         lerpDir = Vector3.RotateTowards(lerpDir, wantedDir, Time.deltaTime * 30f, 0f);
         Quaternion rotB = Quaternion.LookRotation(lerpDir, Vector3.up);
         var rotEulerB = rotB.eulerAngles;
-        characterControllerAnimator.SetEyeRot(new Vector2(rotEulerB.y, -rotEulerB.x));
+        networkedKobold.SetEyeRot(new Vector2(rotEulerB.y, -rotEulerB.x));
     }
 
     IEnumerator Think() {

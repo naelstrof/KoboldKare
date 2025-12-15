@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun;
-using System.IO;
+﻿using UnityEngine;
 using System.Threading.Tasks;
 using SimpleJSON;
 
-[RequireComponent(typeof(Rigidbody))]
 public class KoboldCharacterController : MonoBehaviour, ISavable {
     [System.Serializable]
     public class PID {
@@ -175,7 +170,6 @@ public class KoboldCharacterController : MonoBehaviour, ISavable {
 
     //public Transform hipsTransform;
     private void Start() {
-        body = GetComponent<Rigidbody>();
         // FIXME FISHNET
         //body.useGravity = photonView.IsMine || !PhotonNetwork.InRoom;
         colliderFullHeight = collider.height;

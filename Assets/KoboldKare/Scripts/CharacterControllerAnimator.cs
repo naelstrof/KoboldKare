@@ -38,21 +38,14 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     private float lookModifierMemory = 0.5f;
     private float chestLookMemory = 0.5f;
     private float headLookMemory = 0.5f;
+    private NetworkedKobold networkedKobold;
 
     public delegate void AnimationStateChangeAction(bool animating);
 
     public AnimationStateChangeAction animationStateChanged;
 
-    private float facingRot;
-    private float networkedFacingRot;
-    private float networkedFacingRotDiff;
-    
-    private Vector2 eyeRot;
     private float speedLerp;
-    private Vector2 networkedEyeRot;
-    private float networkedAngle;
     private Vector2 hipVectorVelocity;
-    private Vector2 hipVector;
     private Vector2 desiredHipVector;
     private bool lookEnabled = true;
 
@@ -70,7 +63,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         }
     }
 
-    public Vector3 eyeDir => Quaternion.Euler(-eyeRot.y, eyeRot.x, 0) * Vector3.forward;
 
     [SerializeField] private Rigidbody body;
 
@@ -106,15 +98,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         //eyeRot = new Vector2(euler.y, -euler.x);
     //}
 
-    public void SetEyeRot(Vector2 newEyeRot) {
-        eyeRot = newEyeRot;
-    }
-
-    public void SetFacingDirection(Vector3 direction) {
-        facingRot = Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
-    }
-
-    public Vector3 GetFacingDirection() => Quaternion.AngleAxis(facingRot, Vector3.up)*Vector3.forward;
 
     public bool TryGetAnimationStationSet(out IAnimationStationSet set) {
         if (!animating) {
@@ -233,6 +216,58 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         tempDir = Vector3.forward;
         handler.SetWeight(0.7f);
         lookEnabled = true;
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        if (networkedKobold != null) {
+            networkedKobold.facingRotationY.OnChange += OnFacingRotationChanged;
+            networkedKobold.eyeRot.OnChange += OnEyeRotChanged;
+            networkedKobold.hipOffset.OnChange += OnHipOffsetChanged;
+        }
+    }
+
+    private void OnHipOffsetChanged(Vector2 prev, Vector2 next, bool asServer) {
+        if (kobold != null) {
+            playerModel.SetFloat(ThrustX, next.x);
+            playerModel.SetFloat(ThrustY, next.y);
+        }
+    }
+
+    private void OnEyeRotChanged(Vector2 prev, Vector2 nextEyeRot, bool asServer) {
+        var eyeDir = networkedKobold.GetEyeDir();
+        Vector3 lookPos = headTransform.position + eyeDir;
+
+        if (!inputShouldIgnoreLookDirChange) {
+            lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+            chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(nextEyeRot.y / 45f));
+            headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(nextEyeRot.y / 90f));
+        }
+
+        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
+        if (animating) {
+            if (!inputShouldIgnoreLookDirChange) {
+                var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+                var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
+                var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
+                var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
+                Vector3 hipToHead = head.position - hips.position;
+                Vector3 leftHandToRightHand = right.position - left.position;
+                Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
+                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
+                currentStation.SetLookAtPosition(lookPos);
+            }
+            
+            currentStation.SetLookAtWeight(lookModifierMemory * 0.5f);
+            currentStation.SetHipOffset(networkedKobold.GetHipOffset());
+            handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
+        } else {
+            handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
+        }
+
+        if (!inputShouldIgnoreLookDirChange) {
+            handler.SetLookAtPosition(lookPos);
+        }
+    }
+
+    private void OnFacingRotationChanged(float prev, float next, bool asServer) {
     }
 
     private IEnumerator AnimationRoutine() {
@@ -283,22 +318,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     void Update() {
-        // FIXME FISHNET
-        /* if (!photonView.IsMine) {
-            eyeRot = Vector2.MoveTowards(eyeRot, networkedEyeRot, networkedAngle * Time.deltaTime * PhotonNetwork.SerializationRate);
-            facingRot = Mathf.MoveTowards(facingRot, networkedFacingRot, networkedFacingRotDiff * Time.deltaTime * PhotonNetwork.SerializationRate);
-        } else {
-            if (controller.inputDir != Vector3.zero && !controller.inputWalking && !inputActivate && !inputGrabbing) {
-                facingRot = Vector3.SignedAngle(controller.inputDir, Vector3.forward, Vector3.down);
-            }
-            if ((inputShouldFaceEye || inputActivate || inputGrabbing) && !controller.inputWalking) {
-                facingRot = eyeRot.x;
-            }
-        }*/
-        hipVector = Vector2.SmoothDamp(hipVector, desiredHipVector, ref hipVectorVelocity, 0.05f);
         if (kobold != null) {
-            playerModel.SetFloat(ThrustX, hipVector.x);
-            playerModel.SetFloat(ThrustY, hipVector.y);
             float maxPen = 0f;
             playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));
             if (maxPen > 0f) {
@@ -338,7 +358,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         Vector3 velocity = (transform.position - lastPosition) / Mathf.Max(Time.deltaTime,0.000001f);
         lastPosition = transform.position;
         Vector3 dir = Vector3.Normalize(velocity);
-        //dir = Quaternion.Inverse(Quaternion.Euler(0,eyeRot.x,0)) * dir;
         dir = playerModel.transform.InverseTransformDirection(dir).With(y:0).normalized;
         float speedTarget = velocity.With(y: 0).magnitude;
         speedTarget *= Mathf.Lerp(standingAnimationSpeedMultiplier, crouchedAnimationSpeedMultiplier,
@@ -366,42 +385,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         playerModel.SetBool(Grounded, controller.grounded);
         crouchLerper = Mathf.MoveTowards(crouchLerper, controller.crouchAmount, 3f*Time.deltaTime);
         playerModel.SetFloat(CrouchAmount, crouchLerper);
-        //lookPosition = Vector3.Lerp(lookPosition, lookDir.position + lookDir.forward, Time.deltaTime*20f);
-        //handler.SetLookAtWeight(1f, 1f, 1f, 1f, 1f);
-        
-        //Vector3 lookPos = controller.transform.position + controller.transform.forward;
-        Vector3 lookPos = headTransform.position + eyeDir;
-
-        if (!inputShouldIgnoreLookDirChange) {
-            lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
-            chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeRot.y / 45f));
-            headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeRot.y / 90f));
-        }
-
-        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
-        if (animating) {
-            if (!inputShouldIgnoreLookDirChange) {
-                var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
-                var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
-                var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
-                var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
-                Vector3 hipToHead = head.position - hips.position;
-                Vector3 leftHandToRightHand = right.position - left.position;
-                Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
-                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
-                currentStation.SetLookAtPosition(lookPos);
-            }
-            
-            currentStation.SetLookAtWeight(lookModifierMemory * 0.5f);
-            currentStation.SetHipOffset(hipVector);
-            handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
-        } else {
-            handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
-        }
-
-        if (!inputShouldIgnoreLookDirChange) {
-            handler.SetLookAtPosition(lookPos);
-        }
     }
 
     // FIXME FISHNET
@@ -429,7 +412,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         float duration = 1f;
         float startTime = Time.time;
         Quaternion startRotation = kobold.body.rotation;
-        Quaternion endRotation = Quaternion.Euler(0, eyeRot.x, 0);
+        Quaternion endRotation = networkedKobold.GetFacingRotation();
         while (Time.time < startTime + duration) {
             float t = (Time.time - startTime) / duration;
             solver.ForceBlend(1f - t);
@@ -445,7 +428,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     void FixedUpdate() {
-        Quaternion characterRot = Quaternion.Euler(0, facingRot, 0);
+        Quaternion characterRot = networkedKobold.GetFacingRotation();
         Vector3 fdir = characterRot * Vector3.forward;
         float deflectionForgivenessDegrees = 12f;
         var forward = body.transform.forward;

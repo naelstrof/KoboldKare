@@ -17,7 +17,7 @@ public class OrbitCameraCharacterHitmanConfiguration : OrbitCameraConfiguration 
     
     private Kobold character;
     private KoboldCharacterController controller;
-    private CharacterControllerAnimator koboldAnimator; 
+    private NetworkedKobold networkedKobold;
 
     private OrbitCameraData? lastData;
 
@@ -32,7 +32,7 @@ public class OrbitCameraCharacterHitmanConfiguration : OrbitCameraConfiguration 
         this.buttOogle = buttOogle;
         this.headOogle = headOogle;
         controller = character.GetComponent<KoboldCharacterController>();
-        koboldAnimator = character.GetComponentInChildren<CharacterControllerAnimator>();
+        networkedKobold = character.GetComponentInParent<NetworkedKobold>();
     }
 
     public override OrbitCameraData GetData(Camera cam) {
@@ -47,7 +47,7 @@ public class OrbitCameraCharacterHitmanConfiguration : OrbitCameraConfiguration 
         float downUpSoftReversed = 1f - Easing.Sinusoidal.In(Mathf.Clamp01(forward.y));
         float downUpReversed = 1f - Easing.Sinusoidal.InOut(Mathf.Clamp01((forward.y+1f)*0.5f));
 
-        float forwardBackSoft = Easing.Sinusoidal.In(Mathf.Clamp01(Vector3.Dot(-koboldAnimator.GetFacingDirection(), forward)));
+        float forwardBackSoft = Easing.Sinusoidal.In(Mathf.Clamp01(Vector3.Dot(-networkedKobold.GetFacingDirection(), forward)));
         forwardBackSoftMemory = forwardBackSoftMemory.ExpDecay(forwardBackSoft, 0.16f, Time.deltaTime);
 
         OrbitCameraData crouchCamera = crouchPivot.GetData(cam);

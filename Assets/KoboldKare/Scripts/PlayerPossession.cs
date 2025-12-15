@@ -38,7 +38,9 @@ public class PlayerPossession : MonoBehaviour {
         }
     }
     private KoboldCharacterController controller;
+    private NetworkedKobold networkedKobold;
     private CharacterControllerAnimator characterControllerAnimator;
+    
     private Rigidbody body;
     private Animator animator;
     public GameEventVector3 playerDieEvent;
@@ -100,6 +102,7 @@ public class PlayerPossession : MonoBehaviour {
 
     private void Start() {
         controller = GetComponentInParent<KoboldCharacterController>();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
         characterControllerAnimator = GetComponentInParent<CharacterControllerAnimator>();
         pGrabber = controller.GetComponentInChildren<PrecisionGrabber>();
         pGrabber.activeUIChanged -= OnShiftGrabChange;
@@ -238,7 +241,7 @@ public class PlayerPossession : MonoBehaviour {
         bool rotatingProp = rotating && pGrabber.TryRotate(mouseDelta * mouseSensitivity.GetValue());
         
         if (trackingHip && !rotatingProp) {
-            characterControllerAnimator.SetHipVector(characterControllerAnimator.GetHipVector() + mouseDelta*0.002f);
+            networkedKobold.SetHipOffset(networkedKobold.GetHipOffset() + mouseDelta*0.002f);
         }
 
         if (rotating || rotatingProp || trackingHip) {
@@ -320,7 +323,7 @@ public class PlayerPossession : MonoBehaviour {
         {
             multiGrabSwitchUi[0].SetActive(false);
         }
-        characterControllerAnimator.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
+        networkedKobold.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());
     }
     private void OnJumpInput(InputAction.CallbackContext ctx) {
         if (!isActiveAndEnabled || !movementEnabled) return;

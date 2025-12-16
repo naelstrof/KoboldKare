@@ -32,13 +32,14 @@ public class User : MonoBehaviour {
 
     public void LateUpdate() {
         var ownedKobold = kobold;
+        var networkedKobold = kobold.GetComponentInParent<NetworkedKobold>();
         // FIXME FISHNET
         //if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
         
         var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.forward * (capsuleCollider.height*0.5f);
         float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
-        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - ownedKobold.GetGenes().baseSize*0.2f, 0f));
+        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - networkedKobold.GetGenes().baseSize*0.2f, 0f));
     }
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
@@ -59,7 +60,8 @@ public class User : MonoBehaviour {
         }
     }
     void FixedUpdate() {
-        capsuleCollider.height = kobold.GetGenes().baseSize * 0.20f;
+        var networkedKobold = kobold.GetComponentInParent<NetworkedKobold>();
+        capsuleCollider.height = networkedKobold.GetGenes().baseSize * 0.20f;
         SortGrabbables();
         possibleUsables.Clear();
     }

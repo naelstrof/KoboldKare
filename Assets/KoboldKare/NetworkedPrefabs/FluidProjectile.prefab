@@ -191,7 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -200,9 +199,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6036217758743299740}
   - {fileID: 5449135698538099406}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &6036217758743299740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9267be205011b41b7759eaa5a4b860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   splash: {fileID: 8990559583516497300}
   projectile: {fileID: 2486025102224192870}
   splashSound: {fileID: 11400000, guid: 28060c26902176c4885806a8a485b3da, type: 2}

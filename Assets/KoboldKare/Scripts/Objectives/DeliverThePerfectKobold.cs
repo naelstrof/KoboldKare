@@ -26,7 +26,7 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
     }
 
     private void OnSoldObject(PhotonView view) {
-        Kobold k = view.GetComponent<Kobold>();
+        NetworkedKobold k = view.GetComponentInParent<NetworkedKobold>();
         if (k == null) {
             return;
         }

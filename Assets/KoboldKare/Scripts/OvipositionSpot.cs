@@ -129,7 +129,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
 
         CatmullSpline path = targetPenetrable.GetPath();
-        KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponent<Kobold>().GetGenes(),k.bellyContainer.GetGenes());
+        KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponentInParent<NetworkedKobold>().GetGenes(),k.bellyContainer.GetGenes());
         BitBuffer spawnData = new BitBuffer(16);
         spawnData.AddKoboldGenes(mixedGenes);
         

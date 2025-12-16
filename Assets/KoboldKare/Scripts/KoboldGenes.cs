@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -113,7 +115,7 @@ public class KoboldGenes {
     public KoboldGenes With(float? maxEnergy = null, float? baseSize = null, float? fatSize = null,
             float? ballSize = null, float? dickSize = null, float? breastSize = null, float? bellySize = null,
             float? metabolizeCapacitySize = null, byte? hue = null, byte? clothingHue = null, byte? brightness = null,
-            byte? saturation = null, short? dickEquip = null, float? dickThickness = null, byte? grabCount = null, byte? species = null) {
+            byte? saturation = null, short? dickEquip = null, float? dickThickness = null, byte? grabCount = null, string species = null) {
         return new KoboldGenes() {
             maxEnergy = maxEnergy ?? this.maxEnergy,
             baseSize = baseSize ?? this.baseSize,
@@ -130,7 +132,7 @@ public class KoboldGenes {
             dickEquip = dickEquip ?? this.dickEquip,
             dickThickness = dickThickness ?? this.dickThickness,
             grabCount = grabCount ?? this.grabCount,
-            species = species ?? this.species
+            species = string.IsNullOrEmpty(species) ? this.species : GetPlayerIndex(species)
         };
     }
 
@@ -234,51 +236,6 @@ public class KoboldGenes {
         return c;
     }
 
-    /*public const short byteCount = sizeof(float) * 9 + sizeof(byte) * 5;
-    public static short Serialize(StreamBuffer outStream, object customObject) {
-        KoboldGenes genes = (KoboldGenes)customObject;
-        byte[] bytes = new byte[byteCount];
-        int index = 0;
-        Protocol.Serialize(genes.maxEnergy, bytes, ref index);
-        Protocol.Serialize(genes.baseSize, bytes, ref index);
-        Protocol.Serialize(genes.fatSize, bytes, ref index);
-        Protocol.Serialize(genes.ballSize, bytes, ref index);
-        Protocol.Serialize(genes.dickSize, bytes, ref index);
-        Protocol.Serialize(genes.breastSize, bytes, ref index);
-        Protocol.Serialize(genes.bellySize, bytes, ref index);
-        Protocol.Serialize(genes.metabolizeCapacitySize, bytes, ref index);
-        bytes[index++] = genes.hue;
-        bytes[index++] = genes.brightness;
-        bytes[index++] = genes.saturation;
-        bytes[index++] = genes.dickEquip;
-        bytes[index++] = genes.grabCount;
-        Protocol.Serialize(genes.dickThickness, bytes, ref index);
-        outStream.Write(bytes, 0, byteCount);
-        return byteCount;
-    }
-    public static object Deserialize(StreamBuffer inStream, short length) {
-        KoboldGenes genes = new KoboldGenes();
-        byte[] bytes = new byte[length];
-        inStream.Read(bytes, 0, length);
-        int index = 0;
-        while (index < length) {
-            Protocol.Deserialize(out genes.maxEnergy, bytes, ref index);
-            Protocol.Deserialize(out genes.baseSize, bytes, ref index);
-            Protocol.Deserialize(out genes.fatSize, bytes, ref index);
-            Protocol.Deserialize(out genes.ballSize, bytes, ref index);
-            Protocol.Deserialize(out genes.dickSize, bytes, ref index);
-            Protocol.Deserialize(out genes.breastSize, bytes, ref index);
-            Protocol.Deserialize(out genes.bellySize, bytes, ref index);
-            Protocol.Deserialize(out genes.metabolizeCapacitySize, bytes, ref index);
-            genes.hue = bytes[index++];
-            genes.brightness = bytes[index++];
-            genes.saturation = bytes[index++];
-            genes.dickEquip = bytes[index++];
-            genes.grabCount = bytes[index++];
-            Protocol.Deserialize(out genes.dickThickness, bytes, ref index);
-        }
-        return genes;
-    }*/
 
     public void Save(JSONNode node, string key) {
         JSONNode rootNode = JSONNode.Parse("{}");
@@ -348,20 +305,12 @@ public class KoboldGenes {
     }
 }
 
-public class GeneHolder : MonoBehaviour {
-    private KoboldGenes genes;
-
-    public delegate void GenesChangedAction(KoboldGenes newGenes);
-
-    public event GenesChangedAction genesChanged;
-
-    public KoboldGenes GetGenes() {
-        return genes;
-    }
-    public virtual Task SetGenes(KoboldGenes newGenes) {
-        genes = newGenes;
-        genesChanged?.Invoke(newGenes);
-        return Task.CompletedTask;
+public class GeneHolder : NetworkBehaviour {
+    public readonly SyncVar<KoboldGenes> genes = new SyncVar<KoboldGenes>();
+    public KoboldGenes GetGenes() => genes.Value;
+    [ServerRpc]
+    public void SetGenes(KoboldGenes newGenes) {
+        genes.Value = newGenes;
     }
 }
 

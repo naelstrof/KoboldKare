@@ -29,6 +29,8 @@ public class MilkLactator {
         while (milking) {
             yield return null;
         }
+
+        var networkedKobold = kobold.GetComponentInParent<NetworkedKobold>();
         milking = true;
         int pulses = 12;
         // Now do some milk stuff.
@@ -38,7 +40,7 @@ public class MilkLactator {
                     mozzarella.SetFollowTransform(t);
                     ReagentContents alloc = new ReagentContents();
                     if (ReagentDatabase.TryGetAsset("Milk", out var milk)) {
-                        alloc.AddMix(milk.GetReagent(kobold.GetGenes().breastSize / (pulses * nipples.Count)));
+                        alloc.AddMix(milk.GetReagent(networkedKobold.GetGenes().breastSize / (pulses * nipples.Count)));
                     }
 
                     mozzarella.SetVolumeMultiplier(alloc.volume);

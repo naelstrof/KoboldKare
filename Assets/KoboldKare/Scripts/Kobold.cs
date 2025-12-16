@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using JigglePhysics;
 using UnityEngine;
-using Photon.Pun;
 using PenetrationTech;
 using Naelstrof.Inflatable;
-using NetStack.Quantization;
-using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
+public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
+    private static Collider[] colliders = new Collider[32];
     [System.Serializable]
     public class PenetrableSet {
         public Penetrable penetratable;
@@ -45,6 +43,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
 
     [HideInInspector]
     public Rigidbody body;
+
+    private NetworkedKobold networkedKobold;
     
 
     public GenericReagentContainer bellyContainer { get; private set; }
@@ -59,6 +59,9 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     [SerializeField]
     private LayerMask heartHitMask;
     [SerializeField] private PhotonGameObjectReference heartPrefab;
+    public PhotonGameObjectReference GetHeartPrefab() => heartPrefab;
+
+    public LayerMask GetHeartHitMask() => heartHitMask;
     
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
@@ -167,7 +170,6 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     
     private ReagentContents consumedReagents;
     private ReagentContents addbackReagents;
-    private static Collider[] colliders = new Collider[32];
     public delegate void CarriedAction(bool carried);
     public delegate void QuaffAction();
 
@@ -204,9 +206,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
     }
     
-    // FIXME FISHNET
-    //[PunRPC]
-    public void MilkRoutine() {
+    public void Lactate() {
         milkLactator.StartMilking(this);
     }
 
@@ -222,39 +222,12 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     // FIXME FISHNET
     //[PunRPC]
     public void Cum() {
-        /*if (photonView.IsMine && activeDicks.Count == 0) {
-            bool foundHeart = false;
-            int hits = Physics.OverlapSphereNonAlloc(hip.position, 5f, colliders, heartHitMask);
-            for (int i = 0; i < hits; i++) {
-                // Found a nearby heart!
-                PhotonView fruitView = colliders[i].GetComponentInParent<PhotonView>();
-                if (fruitView != null && fruitView.name.Contains(heartPrefab.photonName)) {
-                    BitBuffer reagentBuffer = new BitBuffer(16);
-                    ReagentContents loveContents = new ReagentContents();
-                    if (ReagentDatabase.TryGetAsset("Love", out var loveReagent)) {
-                        loveContents.AddMix(loveReagent.GetReagent(10f));
-                    }
-                    reagentBuffer.AddReagentContents(loveContents);
-                    fruitView.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, reagentBuffer,
-                        photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-                    foundHeart = true;
-                    break;
-                }
-            }
-
-            // No nearby hearts, spawn a new one.
-            if (!foundHeart) {
-                BitBuffer buffer = new BitBuffer(16);
-                buffer.AddKoboldGenes(GetGenes());
-                PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0, new object[] { buffer });
-            }
-        }
         foreach(var dickSet in activeDicks) {
             // TODO: This is a really, really terrible way to make a dick cum lol. Clean this up.
             dickSet.descriptor.StartCoroutine(dickSet.descriptor.CumRoutine(dickSet));
         }
         PumpUpDick(1f);
-        stimulation = stimulationMin;?*/
+        stimulation = stimulationMin;
     }
 
     public bool TryConsumeEnergy(byte amount) {
@@ -300,11 +273,11 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
 
     public Ragdoller GetRagdoller() => ragdoller;
     public float GetMaxEnergy() {
-        if (GetGenes() == null) {
+        var genes = networkedKobold.GetGenes();
+        if (genes == null) {
             return 1f;
         }
-
-        return GetGenes().maxEnergy;
+        return genes.maxEnergy;
     }
 
     private float[] GetRandomProperties(float totalBudget, int count) {
@@ -324,13 +297,13 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     // FIXME FISHNET
     //[PunRPC]
     public void SetDickRPC(short dickID) {
-        SetGenes(GetGenes().With(dickEquip: dickID));
+        //SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
 
     private AssetGroup.AssetLocation.AssetHandle<GameObject> penisHandle;
     
-    public override async Task SetGenes(KoboldGenes newGenes) {
+    private async Task OnGenesChangedRoutine(KoboldGenes oldGenes, KoboldGenes newGenes, bool isServer) {
         if (newGenes == null) {
             return;
         }
@@ -338,7 +311,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         // Removing the dick is now 0 instead of 255.
         // Dick IDs start at 1, but internally will remain starting at 0.
         // i.e. Getting the first dick from the dick database will be dickDatabase[dickID - 1].
-        if (newGenes.dickEquip == CommandDick.unEquipID || GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) {
+        if (newGenes.dickEquip == CommandDick.unEquipID || oldGenes == null || newGenes.dickEquip != oldGenes.dickEquip) {
             penisHandle?.Release();
             if (dickObject) {
                 dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
@@ -346,7 +319,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             }
         }
 
-        if ((GetGenes() == null || newGenes.dickEquip != GetGenes().dickEquip) && newGenes.dickEquip != CommandDick.unEquipID) {
+        if ((oldGenes == null || newGenes.dickEquip != oldGenes.dickEquip) && newGenes.dickEquip != CommandDick.unEquipID) {
             penisHandle?.Release();
             penisHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Penis", newGenes.dickEquip - 1, GameManager.GetErrorPenis());
             dickObject = Instantiate(penisHandle.asset, GetAttachPointTransform(Equipment.AttachPoint.Crotch));
@@ -403,7 +376,6 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
 
         energyChanged?.Invoke(energy, newGenes.maxEnergy);
-        base.SetGenes(newGenes);
     }
     private void Awake() {
         if (initialized) {
@@ -411,6 +383,8 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         }
 
         initialized = true;
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        networkedKobold.genes.OnChange += OnGenesChanged;
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
@@ -449,6 +423,10 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         bellyInflater.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
     }
 
+    private void OnGenesChanged(KoboldGenes prev, KoboldGenes next, bool asServer) {
+        _ = OnGenesChangedRoutine(prev, next, asServer);
+    }
+
     void Start() {
         controller = GetComponent<KoboldCharacterController>();
         lastPumpTime = Time.timeSinceLevelLoad;
@@ -457,9 +435,6 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
-        if (GetGenes() == null) {
-            SetGenes(new KoboldGenes().Randomize(gameObject.name));
-        }
     }
     private void OnDestroy() {
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
@@ -519,8 +494,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         if (velocity.magnitude > 3f) {
             StartCoroutine(ThrowRoutine());
         } else {
-            int hits = Physics.OverlapSphereNonAlloc(transform.position, Mathf.Max(1f, Mathf.Log(1f+transform.localScale.x,2f)),
-                colliders, GameManager.instance.usableHitMask, QueryTriggerInteraction.Collide);
+            int hits = Physics.OverlapSphereNonAlloc(transform.position, Mathf.Max(1f, Mathf.Log(1f+transform.localScale.x,2f)), colliders, GameManager.instance.usableHitMask, QueryTriggerInteraction.Collide);
             usableColliderComparer.SetCheckPoint(transform.position);
             Array.Sort(colliders, 0, hits, usableColliderComparer);
             for (int i=0;i<hits;i++) {
@@ -573,7 +547,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
 
     public void ProcessReagents(ReagentContents contents) {
         addbackReagents.Clear();
-        KoboldGenes genes = GetGenes();
+        KoboldGenes genes = networkedKobold.GetGenes();
         float newEnergy = energy;
         float passiveEnergyGeneration = 0.025f;
         if (newEnergy < 1f) {
@@ -596,7 +570,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
         if (overflowEnergy != 0f) {
             genes = genes.With(fatSize: genes.fatSize + overflowEnergy);
         }
-        SetGenes(genes);
+        networkedKobold.SetGenes(genes);
         
         if (Math.Abs(energy - newEnergy) > 0.001f) {
             energy = Mathf.Clamp(newEnergy, 0f, GetMaxEnergy());
@@ -684,7 +658,7 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
     }*/
 
     public void Save(JSONNode node) {
-        GetGenes().Save(node, "genes");
+        networkedKobold.GetGenes().Save(node, "genes");
         node["arousal"] = arousal;
         metabolizedContents.Save(node, "metabolizedContents");
         consumedReagents.Save(node, "consumedReagents");
@@ -706,12 +680,12 @@ public class Kobold : GeneHolder, IGrabbable, ISavable, IValuedGood {
             //PhotonNetwork.LocalPlayer.TagObject = this;
             GetComponent<NetworkedKobold>().SetPlayerControlled(NetworkedKobold.ControlType.LocalPlayer);
         }
-        SetGenes(loadedGenes);
+        networkedKobold.SetGenes(loadedGenes);
         return Task.CompletedTask;
     }
 
     public float GetWorth() {
-        KoboldGenes genes = GetGenes();
+        KoboldGenes genes = networkedKobold.GetGenes();
         return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
     }
 }

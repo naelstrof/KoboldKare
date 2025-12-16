@@ -10,13 +10,16 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.VFX;
 using Vilar.IK;
 
-public class NetworkedKobold : NetworkBehaviour {
+public class NetworkedKobold : GeneHolder {
     private List<AsyncOperationHandle> handles = new();
+    private static Collider[] colliders = new Collider[32];
     
     private readonly SyncVar<string> koboldAssetName = new SyncVar<string>("Kobold");
     public readonly SyncVar<float> facingRotationY = new SyncVar<float>();
     public readonly SyncVar<Vector2> eyeRot = new SyncVar<Vector2>();
     public readonly SyncVar<Vector2> hipOffset = new SyncVar<Vector2>();
+    public readonly SyncVar<byte[]> ragdollBitBuffer = new SyncVar<byte[]>();
+    public readonly SyncVar<bool> ragdolled = new SyncVar<bool>();
     
     private ControlType controlType = ControlType.AIPlayer;
 
@@ -36,26 +39,83 @@ public class NetworkedKobold : NetworkBehaviour {
         koboldAssetName.Value = newName;
     }
     
-    [ServerRpc(RunLocally = true)]
+    [ServerRpc]
+    public void SetRagdolled(bool newRagdoll) {
+        ragdolled.Value = newRagdoll;
+    }
+    
+    [ServerRpc]
     public void SetEyeRot(Vector2 newEyeRot) {
         eyeRot.Value = newEyeRot;
     }
     
-    [ServerRpc(RunLocally = true)]
+    [ServerRpc]
     public void SetHipOffset(Vector2 newHipOffset) {
         hipOffset.Value = newHipOffset;
     }
 
-    [ServerRpc(RunLocally = true)]
+    [ServerRpc]
     public void SetFacingDirection(Vector3 direction) {
         facingRotationY.Value = Vector3.SignedAngle(direction, Vector3.forward, -Vector3.up);
+    }
+    
+    [ServerRpc]
+    public void Lactate() {
+        koboldInstance.GetComponent<Kobold>().Lactate();
+    }
+
+    [ServerRpc]
+    public void Cum() {
+        if (!koboldInstance) {
+            return;
+        }
+
+        if (!koboldInstance.TryGetComponent<Kobold>(out var kobold)) {
+            return;
+        }
+        
+        // FIXME FISHNET
+        /*if (kobold.activeDicks.Count == 0) {
+            var heartPrefab = kobold.GetHeartPrefab();
+            if (!heartPrefab.TryGetAssetGroupAndKey(out var heartGroup, out var heartKey)) {
+                return;
+            }
+            
+            bool foundHeart = false;
+            int hits = Physics.OverlapSphereNonAlloc(kobold.hip.position, 5f, colliders, kobold.GetHeartHitMask());
+            for (int i = 0; i < hits; i++) {
+                // Found a nearby heart!
+                GenericReagentContainer fruitReagentContainer = colliders[i].GetComponentInParent<GenericReagentContainer>();
+                if (fruitReagentContainer != null && fruitReagentContainer.name.Contains(heartKey)) {
+                    BitBuffer reagentBuffer = new BitBuffer(16);
+                    ReagentContents loveContents = new ReagentContents();
+                    if (ReagentDatabase.TryGetAsset("Love", out var loveReagent)) {
+                        loveContents.AddMix(loveReagent.GetReagent(10f));
+                    }
+                    reagentBuffer.AddReagentContents(loveContents);
+                    
+                    fruitReagentContainer.RPC(nameof(GenericReagentContainer.ForceMixRPC), RpcTarget.All, reagentBuffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
+                    
+                    foundHeart = true;
+                    break;
+                }
+            }
+
+            // No nearby hearts, spawn a new one.
+            if (!foundHeart) {
+                BitBuffer buffer = new BitBuffer(16);
+                buffer.AddKoboldGenes(GetGenes());
+                PhotonNetwork.Instantiate(heartPrefab.photonName, hip.transform.position, Quaternion.identity, 0, new object[] { buffer });
+            }
+        }*/
+        kobold.Cum();
     }
 
     private AssetGroup.AssetLocation.AssetHandle<GameObject> koboldAssetHandle;
     private GameObject koboldInstance;
 
     private bool changingKobold = false;
-    public event System.Action<GameObject> koboldFinishedLoading;
+    public event Action<GameObject> koboldFinishedLoading;
     
     public enum ControlType {
         NetworkedPlayer,
@@ -78,6 +138,13 @@ public class NetworkedKobold : NetworkBehaviour {
         
         koboldAssetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("PlayableCharacter", next, GameManager.GetErrorKobold());
         koboldInstance = Instantiate(koboldAssetHandle.asset, transform);
+        
+        if (GetGenes() == null) {
+            SetGenes(new KoboldGenes().Randomize(next));
+        } else {
+            SetGenes(GetGenes().With(species:next));
+        }
+
         try {
             await TryInitializeKobold(koboldInstance);
         } catch (Exception e) {
@@ -293,7 +360,6 @@ public class NetworkedKobold : NetworkBehaviour {
 
             if (koboldGameObject.TryGetComponent<Kobold>(out var koboldComponent)) {
                 koboldComponent.body = body;
-                koboldComponent.SetGenes(koboldComponent.GetGenes());
             }
             
             koboldGameObject.AddComponent<KoboldInventory>();

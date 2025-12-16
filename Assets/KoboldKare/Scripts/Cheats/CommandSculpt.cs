@@ -71,16 +71,16 @@ public class CommandSculpt : Command
             }
         }
 
-        Kobold target = null;
+        NetworkedKobold target = null;
 
         if (targetType == "self") {
-            target = k;
+            target = k.GetComponentInParent<NetworkedKobold>();
         } else if (targetType == "target") {
             Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
             Vector3 aimDir = k.GetComponentInChildren<NetworkedKobold>(true).GetEyeDir();
 
             foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
-                Kobold b = hit.collider.GetComponentInParent<Kobold>();
+                NetworkedKobold b = hit.collider.GetComponentInParent<NetworkedKobold>();
 
                 if (b == null) continue;
                 if (b == k) continue;
@@ -227,7 +227,8 @@ public class CommandSculpt : Command
                         alloc.AddMix(cumReagent.GetReagent(Mathf.Abs(modifier)));
                     }
 
-                    target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
+                    // FIXME FISHNET
+                    //target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
 
                 break;

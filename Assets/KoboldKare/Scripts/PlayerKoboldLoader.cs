@@ -9,9 +9,10 @@ using UnityScriptableSettings;
 public class PlayerKoboldLoader : MonoBehaviour {
     private static readonly string[] settingNames = {"ClothingHue", "Hue", "Brightness", "Saturation", "BoobSize", "KoboldSize", "DickSize", "DickThickness", "BallSize"};
     // FIXME: FISHNET
-    private Kobold targetKobold;
+    private NetworkedKobold targetKobold;
     void OnEnable() {
         //targetKobold = GetComponent<Kobold>();
+        targetKobold = GetComponentInParent<NetworkedKobold>();
         foreach(string settingName in settingNames) {
             var option = SettingsManager.GetSetting(settingName);
             if (option is SettingFloat optionFloat) {
@@ -28,7 +29,7 @@ public class PlayerKoboldLoader : MonoBehaviour {
         } else {
             throw new UnityException($"Setting Dick is not a SettingInt");
         }
-        //targetKobold.SetGenes(GetPlayerGenes());
+        targetKobold.SetGenes(GetPlayerGenes());
     }
     void OnDisable() {
         foreach(string settingName in settingNames) {
@@ -75,9 +76,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
         //genes = genes.With(species: 
         var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
         if (prefabSelect != null && prefabSelect.TryGetPrefab(out string prefabName)) {
-            genes = genes.With(species: (byte)KoboldKareObjectPostProcessor.GetAssetID("PlayableCharacter", prefabName));
+            genes = genes.With(species: prefabName);
         } else {
-            genes = genes.With(species: (byte)0);
+            genes = genes.With(species: "Kobold");
         }
 
         return genes;

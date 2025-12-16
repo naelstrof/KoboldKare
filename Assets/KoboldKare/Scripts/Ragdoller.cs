@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FishNet;
 using JigglePhysics;
 using NetStack.Quantization;
 using NetStack.Serialization;
@@ -25,6 +26,8 @@ public class Ragdoller : MonoBehaviour, ISavable {
     private Rigidbody hipBody;
     [SerializeField]
     private List<JiggleRigBuilder> disableRigs;
+
+    private NetworkedKobold networkedKobold;
 
     public List<JiggleRigBuilder> GetDisableRigs() => disableRigs;
 
@@ -114,8 +117,7 @@ public class Ragdoller : MonoBehaviour, ISavable {
             body.interpolation = RigidbodyInterpolation.None;
             if (ragdolled) {
                 // FIXME FISHNET
-                //float time = Time.time - (1f / PhotonNetwork.SerializationRate);
-                float time = Time.time;
+                float time = Time.time - (1f / InstanceFinder.TimeManager.TickRate);
                 float diff = nextPacket.time - lastPacket.time;
                 if (diff == 0f) {
                     return;
@@ -144,6 +146,7 @@ public class Ragdoller : MonoBehaviour, ISavable {
                 joint.autoConfigureConnectedAnchor = false;
             }
             ragdollBody.maxDepenetrationVelocity = Physics.defaultMaxDepenetrationVelocity * 0.5f;
+            ragdollBody.isKinematic = true;
         }
 
         rigidbodyNetworkInfos.Clear();
@@ -157,13 +160,49 @@ public class Ragdoller : MonoBehaviour, ISavable {
                 SaveRecursive(jiggle.GetRootTransform());
             }
         }
+
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        networkedKobold.ragdollBitBuffer.OnChange += OnRagdollBitBufferChange;
+        networkedKobold.ragdolled.OnChange += OnRagdollChanged;
+    }
+
+    private void OnRagdollChanged(bool prev, bool next, bool asServer) {
+        if (next) {
+            Ragdoll();
+        } else {
+            StandUp();
+        }
+    }
+
+    private const int bitsPerElement = 12;
+    private void OnRagdollBitBufferChange(byte[] prev, byte[] next, bool asServer) {
+        BitBuffer data = new BitBuffer();
+        data.FromArray(next, next.Length);
+        if (data.ReadBool()) {
+            lastPacket = nextPacket;
+            float xPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+            float yPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+            float zPosition = BitConverter.ToSingle(BitConverter.GetBytes(data.ReadUInt()));
+            nextPacket = new PositionPacket(Time.time, new Vector3(xPosition, yPosition, zPosition));
+
+            foreach (var t in rigidbodyNetworkInfos) {
+                QuantizedQuaternion rot = new QuantizedQuaternion(data.Read(2), data.Read(bitsPerElement),
+                    data.Read(bitsPerElement), data.Read(bitsPerElement));
+                t.SetNetworkPosition(SmallestThree.Dequantize(rot), Time.time);
+            }
+        } else {
+            lastPacket = nextPacket;
+            nextPacket = new PositionPacket(Time.time, hipBody.position);
+            foreach (var t in rigidbodyNetworkInfos) {
+                t.SetNetworkPosition(t.body.transform.rotation, Time.time);
+            }
+        }
     }
 
     private void SaveRecursive(Transform t) {
         for (int i = 0; i < t.childCount; i++) {
             SaveRecursive(t.GetChild(i));
-        }
-        if (defaultRigTransforms.ContainsKey(t)) {
+        } if (defaultRigTransforms.ContainsKey(t)) {
             defaultRigTransforms[t] = Matrix4x4.TRS(t.localPosition, t.localRotation, Vector3.one);
         } else {
             defaultRigTransforms.Add(t,Matrix4x4.TRS(t.localPosition, t.localRotation, Vector3.one));
@@ -179,8 +218,6 @@ public class Ragdoller : MonoBehaviour, ISavable {
         t.localRotation=localTransform.rotation;
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
     public void PushRagdoll() {
         ragdollCount++;
         ragdollCount = Mathf.Max(0,ragdollCount);
@@ -190,13 +227,13 @@ public class Ragdoller : MonoBehaviour, ISavable {
 
         if (ragdollCount > 0 && !ragdolled) {
             Ragdoll();
+            networkedKobold.SetRagdolled(true);
         } else if (ragdollCount == 0 && ragdolled) {
             StandUp();
+            networkedKobold.SetRagdolled(false);
         }
     }
     
-    // FIXME FISHNET
-    //[PunRPC]
     public void PopRagdoll() {
         ragdollCount--;
         ragdollCount = Mathf.Max(0,ragdollCount);
@@ -212,9 +249,8 @@ public class Ragdoller : MonoBehaviour, ISavable {
     }
 
     void LateUpdate() {
-        // FIXME FISHNET
-        /*foreach(var networkInfo in rigidbodyNetworkInfos) {
-            networkInfo.UpdateState(photonView.IsMine, ragdolled);
+        foreach(var networkInfo in rigidbodyNetworkInfos) {
+            networkInfo.UpdateState(networkedKobold.IsOwner, ragdolled);
         }
 
         if (shouldFinishTeleport) {
@@ -226,18 +262,18 @@ public class Ragdoller : MonoBehaviour, ISavable {
             }
             shouldFinishTeleport = false;
         }
-        if (photonView.IsMine) {
+        if (networkedKobold.IsOwner) {
             return;
         }
         if (ragdolled) {
-            float time = Time.time - (1f / PhotonNetwork.SerializationRate);
+            float time = Time.time - (1f / InstanceFinder.TimeManager.TickRate);
             float diff = nextPacket.time - lastPacket.time;
             if (diff == 0f) {
                 return;
             }
             float t = (time - lastPacket.time) / diff;
             hipBody.transform.position = Vector3.LerpUnclamped(lastPacket.networkedPosition, nextPacket.networkedPosition, Mathf.Clamp((float)t, -0.25f, 1.25f));
-        }*/
+        }
     }
     private void Ragdoll() {
         if (ragdolled) {

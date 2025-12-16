@@ -91,7 +91,8 @@ public class Plant : GeneHolder, ISavable {
         SwitchTo(plantHandle.asset);
     }
 
-    public override Task SetGenes(KoboldGenes newGenes) {
+    //FIXME FISHNET
+    public Task SetGenes(KoboldGenes newGenes) {
         if (display != null) {
             Vector4 hbcs = new Vector4(newGenes.hue / 255f, newGenes.brightness / 255f, 0.5f, newGenes.saturation / 255f);
             foreach (var r in display.GetComponentsInChildren<Renderer>()) {
@@ -100,7 +101,8 @@ public class Plant : GeneHolder, ISavable {
                 }
             }
         }
-        return base.SetGenes(newGenes);
+
+        return Task.CompletedTask;
     }
 
     void SwitchTo(ScriptablePlant newPlant) {

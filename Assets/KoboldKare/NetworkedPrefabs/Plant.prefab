@@ -578,7 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -587,9 +586,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2729919834162755298}
   - {fileID: 97410656406585341}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &2729919834162755298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +598,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 1
   type: 0
   startingReagents: []
@@ -617,6 +616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0f56381a8094f4792fcc1191f89752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   plant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
   container: {fileID: 2729919834162755298}
   darkenedColor: {r: 0.54257214, g: 0.5276344, b: 0.6698113, a: 1}

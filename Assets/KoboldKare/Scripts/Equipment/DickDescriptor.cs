@@ -151,7 +151,8 @@ public class DickDescriptor : MonoBehaviour {
         }
 
         cumming = true;
-        float ballSize = attachedKobold.GetGenes().ballSize;
+        var networkedKobold = attachedKobold.GetComponentInParent<NetworkedKobold>();
+        float ballSize = networkedKobold.GetGenes().ballSize;
         // (1-1/(x/maxInput+1)) * maxPossibleResult
         float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 60f + 5f;
         int pulses = Mathf.CeilToInt(pulsesSample);
@@ -198,7 +199,7 @@ public class DickDescriptor : MonoBehaviour {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
                     if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
-                        alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
+                        alloc.AddMix(cum.GetReagent(networkedKobold.GetGenes().ballSize / pulses));
                     }
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     Color color = alloc.GetColor();

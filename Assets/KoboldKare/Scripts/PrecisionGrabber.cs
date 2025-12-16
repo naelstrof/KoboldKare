@@ -19,6 +19,7 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     [SerializeField] private VisualEffectAsset freezeVFX;
     [SerializeField] private AudioPack unfreezeSound;
     private Kobold kobold;
+    private NetworkedKobold networkedKobold;
     private static List<PrecisionGrabber> allGrabbers;
     public static void SetPinVisibility(bool visibility) {
         foreach (var grabber in allGrabbers) {
@@ -395,11 +396,11 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
         raycastHitDistanceComparer = new RaycastHitDistanceComparer();
         kobold = GetComponent<Kobold>();
         frozenGrabs = new List<Grab>();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
     }
 
     private void Start() {
-        kobold.genesChanged += OnGenesChanged;
-        OnGenesChanged(kobold.GetGenes());
+        networkedKobold.genes.OnChange += OnGenesChanged;
         removeIds = new List<Grab>();
         previewHandAnimator = Instantiate(handDisplayPrefab, transform)
             .GetComponentInChildren<Animator>();
@@ -425,14 +426,14 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     }
 
     private void OnDestroy() {
-        if (kobold != null) {
-            kobold.genesChanged -= OnGenesChanged;
+        if (networkedKobold != null) {
+            networkedKobold.genes.OnChange -= OnGenesChanged;
         }
         TryDrop();
         UnfreezeAll();
     }
 
-    private void OnGenesChanged(KoboldGenes newGenes) {
+    private void OnGenesChanged(KoboldGenes oldGenes, KoboldGenes newGenes, bool isServer) {
         if (newGenes == null) {
             return;
         }
@@ -489,7 +490,7 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     }
 
     private void DoPreview() {
-        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance*kobold.GetGenes().baseSize*0.1f, out RaycastHit? previewHit)) {
+        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance*networkedKobold.GetGenes().baseSize*0.1f, out RaycastHit? previewHit)) {
             RaycastHit hit = previewHit.Value;
             previewHandTransform.rotation = Quaternion.LookRotation(-hit.normal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f));
             previewHandTransform.position = hit.point + previewHandTransform.rotation*Vector3.down*0.1f;

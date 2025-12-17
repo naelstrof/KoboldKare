@@ -23,7 +23,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     }
 
     private Vector3 GetPivotPosition(Quaternion camRotation) {
-        if (!isActiveAndEnabled) {
+        if (!isActiveAndEnabled && transform) {
             return lastPosition;
         }
         lastPosition = transform.position;
@@ -46,7 +46,7 @@ public class OrbitCameraLerpTrackPivot : OrbitCameraPivotBase {
     public override OrbitCameraData GetData(Camera cam) {
         var rot = cam.transform.rotation;
         return new OrbitCameraData() {
-            fov = fov.GetValue(),
+            fov = fov ? fov.GetValue() : 65f,
             clampPitch = true,
             clampYaw = false,
             distance = 0f,

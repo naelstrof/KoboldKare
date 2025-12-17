@@ -22,7 +22,12 @@ public class OrbitCameraLerpTrackBasicPivot : OrbitCameraLerpTrackPivot {
             data.distance = desiredDistanceFromPivot;
         }
         Vector3 forward = data.rotation * Vector3.back;
-        data.fov = Mathf.Lerp(Mathf.Min(fov.GetValue() * 1.5f,100f), fov.GetValue(), Easing.OutCubic(Mathf.Clamp01(forward.y + 1f)));
+        if (fov) {
+            data.fov = Mathf.Lerp(Mathf.Min(fov.GetValue() * 1.5f, 100f), fov.GetValue(), Easing.OutCubic(Mathf.Clamp01(forward.y + 1f)));
+        } else {
+            data.fov = Mathf.Lerp(Mathf.Min(65f * 1.5f, 100f), 65f, Easing.OutCubic(Mathf.Clamp01(forward.y + 1f)));
+        }
+
         return data;
     }
 }

@@ -87,12 +87,18 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         buttPivot.gameObject.SetActive(false);
         cameraConfiguration = new OrbitCameraConfigurationBlend();
         cameraConfiguration.SetPivots(shoulderPivot, buttPivot, 0.5f);
+        OrbitCamera.AddConfiguration(cameraConfiguration);
     }
 
     private void OnChangedPlayer(int newValue) {
         if (!player) {
             return;
         }
+        shoulderPivot.transform.SetParent(null);
+        buttPivot.transform.SetParent(null);
+        shoulderPivot.gameObject.SetActive(false);
+        buttPivot.gameObject.SetActive(false);
+        
         if (player.TryGetComponent<NetworkedKobold>(out var networkedKobold)) {
             if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
                 networkedKobold.SetKoboldAssetName(playerPrefabName);
@@ -104,14 +110,6 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
 
 
     private void OnPlayerSpawn(NetworkObject obj) {
-        if (player) {
-            shoulderPivot.transform.SetParent(null);
-            buttPivot.transform.SetParent(null);
-            shoulderPivot.gameObject.SetActive(false);
-            buttPivot.gameObject.SetActive(false);
-            Destroy(player);
-            OrbitCamera.RemoveConfiguration(cameraConfiguration);
-        }
         player = obj.gameObject;
         var networkedKobold = player.GetComponent<NetworkedKobold>();
         if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
@@ -131,7 +129,6 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
             buttPivot.gameObject.SetActive(true);
 
             characterDescriptor.GetDisplayAnimator().gameObject.AddComponent<LookAtCursor>();
-            OrbitCamera.AddConfiguration(cameraConfiguration);
         };
     }
 

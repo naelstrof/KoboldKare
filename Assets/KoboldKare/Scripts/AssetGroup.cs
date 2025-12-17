@@ -9,7 +9,7 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 public class AssetGroup {
     public class AssetLocation {
         public string key;
-        public IResourceLocation location;
+        public string primaryKey;
         public ModManager.ModStub? stub;
         private AsyncOperationHandle<UnityEngine.Object> handle;
         private int useCount = 0;
@@ -40,12 +40,12 @@ public class AssetGroup {
         }
 
         public async Task<AssetHandle<T>> GetAssetAsync<T>() where T : UnityEngine.Object {
-            if (stub == null && location != null) {
+            if (stub == null && !string.IsNullOrEmpty(primaryKey)) {
                 if (handle.IsValid() && handle.Status == AsyncOperationStatus.Succeeded) {
                     useCount++;
                     return new AssetHandle<T>((T)handle.Result, OnReleasedAsset);
                 }
-                handle = Addressables.LoadAssetAsync<UnityEngine.Object>(location);
+                handle = Addressables.LoadAssetAsync<UnityEngine.Object>(primaryKey);
                 UnityEngine.Object obj = await handle.Task;
                 useCount++;
                 return new AssetHandle<T>((T)obj, OnReleasedAsset);
@@ -61,7 +61,7 @@ public class AssetGroup {
                         useCount++;
                         return new AssetHandle<T>((T)handle.Result, OnReleasedAsset);
                     }
-                    handle = Addressables.LoadAssetAsync<UnityEngine.Object>(key);
+                    handle = Addressables.LoadAssetAsync<UnityEngine.Object>(primaryKey);
                     UnityEngine.Object obj = await handle.Task;
                     useCount++;
                     return new AssetHandle<T>((T)obj, OnReleasedAsset);
@@ -164,7 +164,7 @@ public class AssetGroup {
         return false;
     }
 
-    public void AddAsset(string key, ModManager.ModStub? stub, IResourceLocation location) {
+    public void AddAsset(string key, ModManager.ModStub? stub, string primaryKey) {
         if (!ContainsKey(key)) {
             assets.Add(new AssetKeyPair() {
                 key = key,
@@ -176,7 +176,7 @@ public class AssetGroup {
             var assetLocation = new AssetLocation() {
                 key = key,
                 stub = stub,
-                location = location
+                primaryKey = primaryKey
             };
             list.Add(assetLocation);
             list.Sort(CompareObjectStubPair);

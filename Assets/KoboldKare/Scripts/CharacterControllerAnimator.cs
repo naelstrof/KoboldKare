@@ -224,6 +224,14 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         }
     }
 
+    private void OnDestroy() {
+        if (networkedKobold != null) {
+            networkedKobold.facingRotationY.OnChange -= OnFacingRotationChanged;
+            networkedKobold.eyeRot.OnChange -= OnEyeRotChanged;
+            networkedKobold.hipOffset.OnChange -= OnHipOffsetChanged;
+        }
+    }
+
     private void OnHipOffsetChanged(Vector2 prev, Vector2 next, bool asServer) {
         if (kobold != null) {
             playerModel.SetFloat(ThrustX, next.x);

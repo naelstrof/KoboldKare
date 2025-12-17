@@ -156,13 +156,14 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
             var database = assetDatabases[label.labelString];
             foreach (var location in handle.Result) {
                 var nameWithoutPath = Path.GetFileNameWithoutExtension(location.PrimaryKey);
-                database.AddAsset(nameWithoutPath, null, location);
+                database.AddAsset(nameWithoutPath, null, location.PrimaryKey);
             }
         }
     }
 
     public override Task HandleAssetBundleMod(ModManager.ModInfoData data, AssetBundle assetBundle) {
         var rootNode = data.assets;
+        Debug.Log(data.title);
         foreach (var label in assetLabels) {
             if (rootNode.HasKey(label.labelString)) {
                 if (!assetDatabases.ContainsKey(label.labelString)) {
@@ -186,13 +187,13 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
             keys = JSONNode.Parse("{}");
             foreach (var label in assetLabels) {
                 if (locator.Locate(label.RuntimeKey, typeof(Object), out var locations)) {
-                    JSONNode labelKeys = new JSONArray();
-                    var opHandle = Addressables.LoadAssetsAsync<Object>(locations, (obj) => {
-                        labelKeys.Add(obj.name);
-                    }, Addressables.MergeMode.UseFirst, false);
-                    await opHandle.Task;
-                    Addressables.Release(opHandle);
-                    Addressables.Release(locations);
+                    JSONNode labelKeys = JSONNode.Parse("{}");
+                    foreach (var location in locations) {
+                        var opHandle = Addressables.LoadAssetAsync<Object>(location);
+                        await opHandle.Task;
+                        labelKeys[opHandle.Result.name] = location.PrimaryKey;
+                        Addressables.Release(opHandle);
+                    }
                     keys[label.labelString] = labelKeys;
                 }
             }
@@ -203,8 +204,8 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
                 assetDatabases[keyset.Key] = new AssetGroup();
             }
             var database = assetDatabases[keyset.Key];
-            foreach(var assetName in keyset.Value.AsArray) {
-                database.AddAsset(assetName.Value, new ModManager.ModStub(data), null);
+            foreach(var assetNameKeyPair in keyset.Value) {
+                database.AddAsset(assetNameKeyPair.Key, new ModManager.ModStub(data), assetNameKeyPair.Value);
             }
         }
     }

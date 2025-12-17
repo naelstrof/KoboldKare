@@ -604,8 +604,10 @@ public class ModManager : MonoBehaviour {
                 instance.ready = false;
                 instance.status = ModStatus.LoadingAssets;
                 found = true;
+                await UnloadAllProcessors();
                 await mod.SetLoaded(active);
                 mod.enabled = active;
+                await LoadAllProcessors();
                 break;
             }
 
@@ -853,9 +855,41 @@ public class ModManager : MonoBehaviour {
         instance.changed = false;
     }
 
+    private static async Task UnloadAllProcessors() {
+        foreach(var modPostProcessor in instance.modPostProcessors) {
+            foreach (var mod in instance.fullModList) {
+                await modPostProcessor.UnloadAssets(mod.info);
+            }
+        }
+    }
+
+    private static async Task LoadAllProcessors() {
+        foreach(var modPostProcessor in instance.modPostProcessors) {
+            foreach (var mod in instance.fullModList) {
+                try {
+                    if (!mod.enabled) {
+                        continue;
+                    }
+                    if (mod is ModAddressable modAddressable) {
+                        await modPostProcessor.HandleAddressableMod(modAddressable.info, modAddressable.GetLocator());
+                    } else if (mod is ModAssetBundle modAssetBundle) {
+                        await modPostProcessor.HandleAssetBundleMod(modAssetBundle.info, modAssetBundle.bundle);
+                    }
+                } catch (Exception e) {
+                    Debug.LogException(e);
+                    instance.failedToLoadMods = true;
+                    instance.lastException = e;
+                    mod.causedException = true;
+                    throw;
+                }
+            }
+        }
+    }
+
     private async Task SyncEnabledStatusWithLoaded() {
         status = ModStatus.LoadingAssets;
         try {
+            await UnloadAllProcessors();
             foreach(var mod in fullModList) {
                 if (!mod.enabled) {
                     await mod.SetLoaded(false);
@@ -866,6 +900,7 @@ public class ModManager : MonoBehaviour {
                     await mod.SetLoaded(true);
                 }
             }
+            await LoadAllProcessors();
         } catch (Exception e) {
             Debug.LogException(e);
             failedToLoadMods = true;

@@ -171,7 +171,6 @@ public class NetworkedKobold : GeneHolder {
         }
         changingKobold = true;
         try {
-            
             ReleaseHandles();
             if (!koboldGameObject.TryGetComponent(out CharacterDescriptor characterDescriptor)) {
                 throw new UnityException("Kobold asset is missing CharacterDescriptor!");
@@ -218,7 +217,10 @@ public class NetworkedKobold : GeneHolder {
                 }
             }
 
-            var body = gameObject.AddComponent<Rigidbody>();
+            if (!gameObject.TryGetComponent<Rigidbody>(out var body)) {
+                body = gameObject.AddComponent<Rigidbody>();
+            }
+
             body.mass = 25f;
             body.drag = 0f;
             body.angularDrag = 10f;
@@ -234,7 +236,9 @@ public class NetworkedKobold : GeneHolder {
             classicIK.SetAntiPopAndTPose(characterDescriptor.GetTPoseIK(), characterDescriptor.GetAntiPopCurveIK());
             classicIK.enabled = false;
 
-            var characterCollider = gameObject.AddComponent<CapsuleCollider>();
+            if (!gameObject.TryGetComponent<CapsuleCollider>(out var characterCollider)) {
+                characterCollider = gameObject.AddComponent<CapsuleCollider>();
+            }
             characterCollider.center = characterDescriptor.GetColliderOffset();
             characterCollider.height = characterDescriptor.GetColliderHeight();
             characterCollider.radius = characterDescriptor.GetColliderRadius();

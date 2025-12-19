@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HueReagentEffect : ModifyingReagentEffect
-{
-    public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy)
-    {
-        float output = (genes.hue + usedAmount * Multiplier) % 255f;
-        if (output < 0f)
-        {
+public class HueReagentEffect : ModifyingReagentEffect {
+    public override void Apply(NetworkedKobold k, float usedAmount, ref ReagentContents addBack, ref float energy) {
+        float output = (k.hue.Value + usedAmount * Multiplier) % 255f;
+        if (output < 0f) {
             output += 255;
         }
-        float clothingHue = (genes.clothingHue + usedAmount * Multiplier) % 255f;
-        if (clothingHue < 0f)
-        {
+        float clothingHue = (k.clothingHue.Value + usedAmount * Multiplier) % 255f;
+        if (clothingHue < 0f) {
             output += 255;
         }
-        genes = genes.With(hue: (byte)Mathf.CeilToInt(output), clothingHue: (byte)Mathf.CeilToInt(clothingHue));
+        k.SetHue((byte)Mathf.CeilToInt(output));
+        k.SetClothingHue((byte)Mathf.CeilToInt(clothingHue));
     }
 }

@@ -52,10 +52,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6d34433bd96c8419395cac5324132f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   constructed: 0
   trackedConstructedObjects:
   - {fileID: 8834900377372941533}
   suckZone: {fileID: 4620444764763333346}
+  suckingIDs: 
   stream: {fileID: 3608884092755669024}
   container: {fileID: 4620444764763333347}
   poof: {fileID: 4620444765372269012}
@@ -72,17 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 3.4028235e+38
   type: 0
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
   startingReagents: []
 --- !u!135 &4620444764763333346
 SphereCollider:
@@ -109,7 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -119,9 +116,6 @@ MonoBehaviour:
   - {fileID: 4620444764763333344}
   - {fileID: 4620444764763333347}
   - {fileID: 3608884092755669024}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &4620444765372269015
 GameObject:
   m_ObjectHideFlags: 0

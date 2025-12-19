@@ -5,12 +5,10 @@ using UnityEngine;
 
 [System.Serializable]
 public class CumInstantlyConsumption : ConsumptionDiscreteTrigger {
-    protected override void OnTrigger(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        genes = genes.With(ballSize: genes.ballSize + requiredCumulativeReagent);
-        // FIXME FISHNET
-        //k.photonView.RPC(nameof(Kobold.Cum), RpcTarget.All);
-        base.OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
+    protected override void OnTrigger(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        k.SetBallSize(k.ballSize.Value + requiredCumulativeReagent);
+        k.Cum();
+        base.OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
     }
 
 }

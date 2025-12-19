@@ -7,6 +7,7 @@ using Vilar.AnimationStation;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using FishNet;
 using NetStack.Serialization;
 using SimpleJSON;
 
@@ -133,16 +134,23 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     }
     // FIXME FISHNET
     //[PunRPC]
-    void Grind(int viewID, BitBuffer incomingContentsData) {
-        ReagentContents incomingContents = incomingContentsData.ReadReagentContents();
-        KoboldGenes genes = incomingContentsData.ReadKoboldGenes();
+    void Grind(int objectID) {
+        // Get gameobject from objectID from FishNet
+        var networkManager = InstanceFinder.NetworkManager;
+        var spawnedObjects = networkManager.ServerManager.Objects.Spawned;
+        if (!spawnedObjects.TryGetValue(objectID, out var netObject)) {
+            return;
+        }
+
+        ReagentContents incomingContents = new ReagentContents();
+        foreach (var reagentContainer in netObject.GetComponentsInChildren<GenericReagentContainer>()) {
+            incomingContents.AddMix(reagentContainer.GetContents());
+            container.CopyGenesFrom(reagentContainer);
+        }
         
-        grindedObject?.Invoke(viewID, incomingContents);
-        // reset before we send back.
-        incomingContentsData.SetReadPosition(0);
-        // FIXME FISHNET
+        grindedObject?.Invoke(objectID, incomingContents);
+        //FIXME FISHNET
         //container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-        container.SetGenes(genes);
         fluidStream.OnFire(container);
     }
     private void HandleCollision(Collider other) {

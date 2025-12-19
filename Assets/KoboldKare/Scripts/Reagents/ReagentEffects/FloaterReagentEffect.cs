@@ -4,14 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 
 [System.Serializable]
-public class FloaterReagentEffect : ReagentEffect
-{
+public class FloaterReagentEffect : ReagentEffect {
     [SerializeField]
     private PhotonGameObjectReference floaterInfoPrefab;
     [SerializeField]
     private float Duration = 5;
 
-    public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy) {
+    public override void Apply(NetworkedKobold k, float usedAmount, ref ReagentContents addBack, ref float energy) {
         // FIXME FISHNET
         /*GameObject obj = PhotonNetwork.Instantiate(floaterInfoPrefab.photonName, k.transform.position + Vector3.up * 0.5f, Quaternion.identity);
         obj.GetPhotonView().StartCoroutine(DestroyInSeconds(obj));*/

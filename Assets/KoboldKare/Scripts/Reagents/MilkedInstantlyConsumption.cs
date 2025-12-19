@@ -5,11 +5,10 @@ using UnityEngine;
 
 [System.Serializable]
 public class MilkedInstantlyConsumption : ConsumptionDiscreteTrigger {
-    protected override void OnTrigger(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        genes = genes.With(breastSize: genes.breastSize + requiredCumulativeReagent);
-        // FIXME FISHNET
-        //k.photonView.RPC(nameof(Kobold.MilkRoutine), RpcTarget.All);
-        base.OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
+    protected override void OnTrigger(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
+        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        k.SetBreastSize(k.breastSize.Value + requiredCumulativeReagent);
+        k.Lactate();
+        base.OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
     }
 }

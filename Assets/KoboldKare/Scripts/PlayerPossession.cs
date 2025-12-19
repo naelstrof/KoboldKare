@@ -315,12 +315,10 @@ public class PlayerPossession : MonoBehaviour {
         if (kobold.activeDicks.Count == 0 && dickErectionHidable.activeInHierarchy) {
             dickErectionHidable.SetActive(false);
         }
-        if (networkedKobold.GetGenes().grabCount > 1 && !multiGrabSwitchUi[0].activeInHierarchy)
-        {
+        if (networkedKobold.grabCount.Value > 1 && !multiGrabSwitchUi[0].activeInHierarchy) {
             multiGrabSwitchUi[0].SetActive(true);
         }
-        if (networkedKobold.GetGenes().grabCount == 1 && multiGrabSwitchUi[0].activeInHierarchy)
-        {
+        if (networkedKobold.grabCount.Value == 1 && multiGrabSwitchUi[0].activeInHierarchy) {
             multiGrabSwitchUi[0].SetActive(false);
         }
         networkedKobold.SetEyeRot(OrbitCamera.GetPlayerIntendedScreenAim());

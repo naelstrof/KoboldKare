@@ -31,8 +31,8 @@ public class TiddyMatcher : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if(!Mathf.Approximately(networkedKobold.GetGenes().breastSize, lastSize)) {
-            float newSize=networkedKobold.GetGenes().breastSize;
+        if(!Mathf.Approximately(networkedKobold.breastSize.Value, lastSize)) {
+            float newSize=networkedKobold.breastSize.Value;
             if(newSize<20) {
                 ownTransform.localPosition=Vector3.Lerp(smallTransform.localPosition,initialPosition,newSize/20f);
                 ownTransform.localRotation=Quaternion.Lerp(smallTransform.localRotation,initialRotation,Mathf.Clamp(newSize/20f,0,1));

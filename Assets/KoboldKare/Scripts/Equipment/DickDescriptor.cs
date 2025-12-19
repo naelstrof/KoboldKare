@@ -46,6 +46,7 @@ public class DickDescriptor : MonoBehaviour {
     public static event CumThroughAction cumThrough;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
     private Kobold attachedKobold;
+    private NetworkedKobold networkedKobold;
     private bool cumming = false;
     [HideInInspector]
     public int equipmentInstanceID;
@@ -152,7 +153,7 @@ public class DickDescriptor : MonoBehaviour {
 
         cumming = true;
         var networkedKobold = attachedKobold.GetComponentInParent<NetworkedKobold>();
-        float ballSize = networkedKobold.GetGenes().ballSize;
+        float ballSize = networkedKobold.ballSize.Value;
         // (1-1/(x/maxInput+1)) * maxPossibleResult
         float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 60f + 5f;
         int pulses = Mathf.CeilToInt(pulsesSample);
@@ -199,7 +200,7 @@ public class DickDescriptor : MonoBehaviour {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
                     if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
-                        alloc.AddMix(cum.GetReagent(networkedKobold.GetGenes().ballSize / pulses));
+                        alloc.AddMix(cum.GetReagent(networkedKobold.ballSize.Value / pulses));
                     }
                     mozzarella.SetVolumeMultiplier(alloc.volume*2f);
                     Color color = alloc.GetColor();
@@ -287,9 +288,44 @@ public class DickDescriptor : MonoBehaviour {
             }
         }
         attachedAnimator.enabled = animatorWasEnabled;
+        networkedKobold = k.GetComponentInParent<NetworkedKobold>();
+        networkedKobold.dickThickness.OnChange += OnDickThicknessChanged;
+        networkedKobold.ballSize.OnChange += OnBallSizeChanged;
+        networkedKobold.dickSize.OnChange += OnDickSizeChanged;
+        OnDickThicknessChanged(networkedKobold.dickThickness.Value, networkedKobold.dickThickness.Value, false);
+        OnBallSizeChanged(networkedKobold.ballSize.Value, networkedKobold.ballSize.Value, false);
+        OnDickSizeChanged(networkedKobold.dickSize.Value, networkedKobold.dickSize.Value, false);
     }
 
-    //private void OnDestroy() {
+    private void OnDickSizeChanged(float prev, float next, bool asServer) {
+        foreach (DickSet set in dicks) {
+            set.dickSizeInflater.SetSize(0.5f + Mathf.Log(1f + next / 20f, 2f), set.descriptor);
+        }
+    }
+
+    private void OnBallSizeChanged(float prev, float next, bool asServer) {
+        foreach (DickSet set in dicks) {
+            set.ballSizeInflater.SetSize(0.5f + Mathf.Log(1f + next / 20f, 2f), set.descriptor);
+        }
+    }
+
+    private void OnDickThicknessChanged(float prev, float next, bool asServer) {
+        foreach (DickSet set in dicks) {
+            foreach (var inflater in set.dickSizeInflater.GetInflatableListeners()) {
+                if (inflater is InflatableDick inflatableDick) {
+                    inflatableDick.SetDickThickness(next);
+                }
+            }
+            set.dickSizeInflater.SetSize(0.5f + Mathf.Log(1f + networkedKobold.dickSize.Value / 20f, 2f), set.descriptor);
+        }
+    }
+    
+    private void OnDestroy() {
+        if (networkedKobold) {
+            networkedKobold.dickThickness.OnChange -= OnDickThicknessChanged;
+            networkedKobold.ballSize.OnChange -= OnBallSizeChanged;
+            networkedKobold.dickSize.OnChange -= OnDickSizeChanged;
+        }
         //RemoveFrom(attachedKobold);
-    //}
+    }
 }

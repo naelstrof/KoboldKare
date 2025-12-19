@@ -561,7 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -569,9 +568,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1749557916}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1749557916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,9 +580,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b8e76bfb95de4408eb1298d332f7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   useSprite: {fileID: 21300000, guid: ba9bc1d411d9834479f8f8a390d3ab25, type: 3}
   station: {fileID: 937417985}
   eggPrefab:
     gameObject: {fileID: 4875906831416810242, guid: cf5c01008cb4b0545966476ef384ba09,
       type: 3}
-    photonName: Egg
+    assetGroup: 
+    assetName: 
+    optionalDatabase: {fileID: 0}

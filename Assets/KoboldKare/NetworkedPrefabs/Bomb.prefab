@@ -54,7 +54,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -64,9 +63,6 @@ MonoBehaviour:
   - {fileID: 2166678963712758235}
   - {fileID: 7018421226979366839}
   - {fileID: 1984768638256701165}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &2166678963712758235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,17 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 40
   type: 1
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
   startingReagents:
   - reagent: {fileID: 11400000, guid: 8aea7d57d8982ea448cb144fbf99bcb3, type: 2}
     volume: 20
@@ -142,6 +132,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5627280049321385021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d14ac24e1f07d9418288c339e842519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   bombSprite: {fileID: 21300000, guid: 636f3e42565e3494a8264d315e14f40d, type: 3}
   effect: {fileID: 6977407387482380955}
 --- !u!114 &1984768638256701165

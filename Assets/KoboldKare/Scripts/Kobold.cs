@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FishNet;
 using JigglePhysics;
 using UnityEngine;
 using PenetrationTech;
@@ -273,11 +274,7 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
 
     public Ragdoller GetRagdoller() => ragdoller;
     public float GetMaxEnergy() {
-        var genes = networkedKobold.GetGenes();
-        if (genes == null) {
-            return 1f;
-        }
-        return genes.maxEnergy;
+        return networkedKobold.maxEnergy.Value;
     }
 
     private float[] GetRandomProperties(float totalBudget, int count) {
@@ -300,91 +297,15 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         //SetGenes(GetGenes().With(dickEquip: dickID));
     }
 
-
     private AssetGroup.AssetLocation.AssetHandle<GameObject> penisHandle;
     
-    private async Task OnGenesChangedRoutine(KoboldGenes oldGenes, KoboldGenes newGenes, bool isServer) {
-        if (newGenes == null) {
-            return;
-        }
-
-        // Removing the dick is now 0 instead of 255.
-        // Dick IDs start at 1, but internally will remain starting at 0.
-        // i.e. Getting the first dick from the dick database will be dickDatabase[dickID - 1].
-        if (newGenes.dickEquip == CommandDick.unEquipID || oldGenes == null || newGenes.dickEquip != oldGenes.dickEquip) {
-            penisHandle?.Release();
-            if (dickObject) {
-                dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
-                Destroy(dickObject);
-            }
-        }
-
-        if ((oldGenes == null || newGenes.dickEquip != oldGenes.dickEquip) && newGenes.dickEquip != CommandDick.unEquipID) {
-            penisHandle?.Release();
-            penisHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Penis", newGenes.dickEquip - 1, GameManager.GetErrorPenis());
-            dickObject = Instantiate(penisHandle.asset, GetAttachPointTransform(Equipment.AttachPoint.Crotch));
-            dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
-        }
-
-        foreach (var dickSet in activeDicks) {
-            foreach (var inflater in dickSet.dickSizeInflater.GetInflatableListeners()) {
-                if (inflater is InflatableDick inflatableDick) {
-                    inflatableDick.SetDickThickness(newGenes.dickThickness);
-                }
-            }
-            dickSet.dickSizeInflater.SetSize(0.5f+Mathf.Log(1f + newGenes.dickSize / 20f, 2f), dickSet.descriptor);
-            dickSet.ballSizeInflater.SetSize(0.5f+Mathf.Log(1f + newGenes.ballSize / 20f, 2f), dickSet.descriptor);
-        }
-        grabber.SetMaxGrabCount(newGenes.grabCount);
-        if (ragdoller.ragdolled) {
-            sizeInflater.SetSizeInstant(Mathf.Max(Mathf.Log(1f + newGenes.baseSize / 20f, 2f), 0.2f));
-        } else {
-            sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f + newGenes.baseSize / 20f, 2f), 0.2f), this);
-        }
-
-        fatnessInflater.SetSize(Mathf.Log(1f + newGenes.fatSize / 20f, 2f), this);
-        boobsInflater.SetSize(Mathf.Log(1f + newGenes.breastSize / 20f, 2f), this);
-        bellyContainer.maxVolume = newGenes.bellySize;
-        metabolizedContents.SetMaxVolume(newGenes.metabolizeCapacitySize);
-        Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
-        Vector4 chbcs = new Vector4(newGenes.clothingHue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
-        // Set color
-        foreach (Renderer r in koboldBodyRenderers) {
-            if (r == null) {
-                continue;
-            }
-            foreach (Material m in r.materials) {
-                // If it's an equipment, it will have the EquipmentComponent
-                if (r.gameObject.GetComponent<EquipmentSkinnedMesh.EquipmentComponent>() != null)
-                {
-                    m.SetVector(BrightnessContrastSaturation, chbcs);
-                } else
-                {
-                    m.SetVector(BrightnessContrastSaturation, hbcs);
-                }
-            }
-            foreach (var dickSet in activeDicks) {
-                foreach (var rendererMask in dickSet.dick.GetTargetRenderers()) {
-                    if (rendererMask.renderer == null) {
-                        continue;
-                    }
-                    foreach (Material m in rendererMask.renderer.materials) {
-                        m.SetVector(BrightnessContrastSaturation, hbcs);
-                    }
-                }
-            }
-        }
-
-        energyChanged?.Invoke(energy, newGenes.maxEnergy);
-    }
     private void Awake() {
         if (initialized) {
             return;
         }
 
         initialized = true;
-        networkedKobold = GetComponentInParent<NetworkedKobold>();
-        networkedKobold.genes.OnChange += OnGenesChanged;
+        
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
@@ -423,8 +344,100 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         bellyInflater.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
     }
 
-    private void OnGenesChanged(KoboldGenes prev, KoboldGenes next, bool asServer) {
-        _ = OnGenesChangedRoutine(prev, next, asServer);
+    private void OnMaxEnergyChanged(float prev, float next, bool asServer) {
+        energyChanged?.Invoke(energy, next);
+    }
+
+    private void OnColorChanged(byte prev, byte next, bool asServer) {
+        Vector4 hbcs = new Vector4(networkedKobold.hue.Value/255f, networkedKobold.brightness.Value/255f, 0.5f, networkedKobold.saturation.Value/255f);
+        Vector4 chbcs = new Vector4(networkedKobold.clothingHue.Value/255f, networkedKobold.brightness.Value/255f, 0.5f, networkedKobold.saturation.Value/255f);
+        // Set color
+        foreach (Renderer r in koboldBodyRenderers) {
+            if (r == null) {
+                continue;
+            }
+            foreach (Material m in r.materials) {
+                // If it's an equipment, it will have the EquipmentComponent
+                if (r.gameObject.GetComponent<EquipmentSkinnedMesh.EquipmentComponent>() != null) {
+                    m.SetVector(BrightnessContrastSaturation, chbcs);
+                } else {
+                    m.SetVector(BrightnessContrastSaturation, hbcs);
+                }
+            }
+            foreach (var dickSet in activeDicks) {
+                foreach (var rendererMask in dickSet.dick.GetTargetRenderers()) {
+                    if (rendererMask.renderer == null) {
+                        continue;
+                    }
+                    foreach (Material m in rendererMask.renderer.materials) {
+                        m.SetVector(BrightnessContrastSaturation, hbcs);
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnMetabolizeCapacitySizeChanged(float prev, float next, bool asServer) {
+        metabolizedContents.SetMaxVolume(next);
+    }
+
+    private void OnBellySizeChanged(float prev, float next, bool asServer) {
+        bellyContainer.maxVolume = next;
+    }
+
+    private void OnBreastSizeChanged(float prev, float next, bool asServer) {
+        boobsInflater.SetSize(Mathf.Log(1f + next / 20f, 2f), this);
+    }
+
+    private void OnFatSizeChanged(float prev, float next, bool asServer) {
+        fatnessInflater.SetSize(Mathf.Log(1f + next / 20f, 2f), this);
+    }
+
+    private void OnBaseSizeChanged(float prev, float next, bool asServer) {
+        if (ragdoller.ragdolled) {
+            sizeInflater.SetSizeInstant(Mathf.Max(Mathf.Log(1f + next / 20f, 2f), 0.2f));
+        } else {
+            sizeInflater.SetSize(Mathf.Max(Mathf.Log(1f + next / 20f, 2f), 0.2f), this);
+        }
+    }
+
+    private void OnGrabCountChanged(byte prev, byte next, bool asServer) {
+        grabber.SetMaxGrabCount(next);
+    }
+
+    private void OnDickChanged(string prev, string next, bool asServer) {
+        _ = OnDickChangedRoutine(prev, next, asServer);
+    }
+
+    private bool changingDick = false;
+
+    private async Task OnDickChangedRoutine(string prev, string next, bool asServer) {
+        if (!asServer && InstanceFinder.ServerManager.Started) {
+            return;
+        }
+
+        while (changingDick) {
+            await Task.Delay(1000);
+        }
+
+        changingDick = true;
+        try {
+            penisHandle?.Release();
+            if (dickObject) {
+                dickObject.GetComponentInChildren<DickDescriptor>().RemoveFrom(this);
+                Destroy(dickObject);
+            }
+
+            if (next == "None") {
+                return;
+            }
+
+            penisHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Penis", next, GameManager.GetErrorPenis());
+            dickObject = Instantiate(penisHandle.asset, GetAttachPointTransform(Equipment.AttachPoint.Crotch));
+            dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
+        } finally {
+            changingDick = false;
+        }
     }
 
     void Start() {
@@ -433,12 +446,50 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange += OnBellyContentsChanged;
         
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        networkedKobold.dickEquip.OnChange += OnDickChanged;
+        OnDickChanged(networkedKobold.dickEquip.Value, networkedKobold.dickEquip.Value, true);
+        networkedKobold.grabCount.OnChange += OnGrabCountChanged;
+        OnGrabCountChanged(networkedKobold.grabCount.Value, networkedKobold.grabCount.Value, true);
+        networkedKobold.baseSize.OnChange += OnBaseSizeChanged;
+        OnBaseSizeChanged(networkedKobold.baseSize.Value, networkedKobold.baseSize.Value, true);
+        networkedKobold.fatSize.OnChange += OnFatSizeChanged;
+        OnFatSizeChanged(networkedKobold.fatSize.Value, networkedKobold.fatSize.Value, true);
+        networkedKobold.breastSize.OnChange += OnBreastSizeChanged;
+        OnBreastSizeChanged(networkedKobold.breastSize.Value, networkedKobold.breastSize.Value, true);
+        networkedKobold.bellySize.OnChange += OnBellySizeChanged;
+        OnBellySizeChanged(networkedKobold.bellySize.Value, networkedKobold.bellySize.Value, true);
+        networkedKobold.metabolizeCapacitySize.OnChange += OnMetabolizeCapacitySizeChanged;
+        OnMetabolizeCapacitySizeChanged(networkedKobold.metabolizeCapacitySize.Value, networkedKobold.metabolizeCapacitySize.Value, true);
+        networkedKobold.brightness.OnChange += OnColorChanged;
+        networkedKobold.hue.OnChange += OnColorChanged;
+        networkedKobold.saturation.OnChange += OnColorChanged;
+        networkedKobold.clothingHue.OnChange += OnColorChanged;
+        OnColorChanged(0, 0, true);
+        networkedKobold.maxEnergy.OnChange += OnMaxEnergyChanged;
+        OnMaxEnergyChanged(networkedKobold.maxEnergy.Value, networkedKobold.maxEnergy.Value, true);
+        
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
     private void OnDestroy() {
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
         bellyContainer.OnChange -= OnBellyContentsChanged;
+        if (networkedKobold) {
+            networkedKobold.dickEquip.OnChange -= OnDickChanged;
+            networkedKobold.grabCount.OnChange -= OnGrabCountChanged;
+            networkedKobold.baseSize.OnChange -= OnBaseSizeChanged;
+            networkedKobold.fatSize.OnChange -= OnFatSizeChanged;
+            networkedKobold.breastSize.OnChange -= OnBreastSizeChanged;
+            networkedKobold.bellySize.OnChange -= OnBellySizeChanged;
+            networkedKobold.metabolizeCapacitySize.OnChange -= OnMetabolizeCapacitySizeChanged;
+            networkedKobold.brightness.OnChange -= OnColorChanged;
+            networkedKobold.hue.OnChange -= OnColorChanged;
+            networkedKobold.saturation.OnChange -= OnColorChanged;
+            networkedKobold.clothingHue.OnChange -= OnColorChanged;
+            networkedKobold.maxEnergy.OnChange -= OnMaxEnergyChanged;
+        
+        }
         // FIXME FISHNET
         //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
@@ -547,7 +598,6 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
 
     public void ProcessReagents(ReagentContents contents) {
         addbackReagents.Clear();
-        KoboldGenes genes = networkedKobold.GetGenes();
         float newEnergy = energy;
         float passiveEnergyGeneration = 0.025f;
         if (newEnergy < 1f) {
@@ -559,8 +609,7 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         foreach (var pair in contents) {
             if (ReagentDatabase.TryGetAsset(pair.id, out var reagent)) {
                 float processedAmount = pair.volume;
-                reagent.GetConsumptionEvent().OnConsume(this, reagent, ref processedAmount, ref consumedReagents,
-                    ref addbackReagents, ref genes, ref newEnergy);
+                reagent.GetConsumptionEvent().OnConsume(networkedKobold, reagent, ref processedAmount, ref consumedReagents, ref addbackReagents, ref newEnergy);
                 pair.volume -= processedAmount;
             }
         }
@@ -568,9 +617,8 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         bellyContainer.AddMix(addbackReagents, GenericReagentContainer.InjectType.Inject);
         float overflowEnergy = Mathf.Max(newEnergy - GetMaxEnergy(), 0f);
         if (overflowEnergy != 0f) {
-            genes = genes.With(fatSize: genes.fatSize + overflowEnergy);
+            networkedKobold.SetFatSize(networkedKobold.fatSize.Value + overflowEnergy);
         }
-        networkedKobold.SetGenes(genes);
         
         if (Math.Abs(energy - newEnergy) > 0.001f) {
             energy = Mathf.Clamp(newEnergy, 0f, GetMaxEnergy());
@@ -653,12 +701,12 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         } else {
             SetGenes(new KoboldGenes().Randomize(gameObject.name));
         }
-        
+
         spawned?.Invoke(this);
     }*/
 
     public void Save(JSONNode node) {
-        networkedKobold.GetGenes().Save(node, "genes");
+        networkedKobold.SaveGenes(node, "genes");
         node["arousal"] = arousal;
         metabolizedContents.Save(node, "metabolizedContents");
         consumedReagents.Save(node, "consumedReagents");
@@ -669,8 +717,7 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
     }
 
     public Task Load(JSONNode node) {
-        KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(node, "genes");
+        networkedKobold.LoadGenes(node, "genes");
         arousal = node["arousal"];
         metabolizedContents.Load(node, "metabolizedContents");
         consumedReagents.Load(node, "consumedReagents");
@@ -680,12 +727,10 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
             //PhotonNetwork.LocalPlayer.TagObject = this;
             GetComponent<NetworkedKobold>().SetPlayerControlled(NetworkedKobold.ControlType.LocalPlayer);
         }
-        networkedKobold.SetGenes(loadedGenes);
         return Task.CompletedTask;
     }
 
     public float GetWorth() {
-        KoboldGenes genes = networkedKobold.GetGenes();
-        return 5f+(Mathf.Log(1f+(genes.baseSize + genes.dickSize + genes.breastSize + genes.fatSize),2)*6f);
+        return 5f+(Mathf.Log(1f+(networkedKobold.baseSize.Value + networkedKobold.dickSize.Value + networkedKobold.breastSize.Value + networkedKobold.fatSize.Value),2)*6f);
     }
 }

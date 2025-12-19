@@ -31,19 +31,18 @@ public class DeliverThePerfectKobold : ObjectiveWithSpaceBeam {
             return;
         }
 
-        KoboldGenes genes = k.GetGenes();
-        if (genes == null) {
+        if (!k) {
             return;
         }
         float sum = 0f;
-        sum += genes.baseSize;
-        sum += genes.fatSize;
-        sum += genes.ballSize;
-        sum += genes.bellySize;
-        sum += genes.dickSize;
-        sum += genes.dickThickness;
-        sum += genes.maxEnergy;
-        sum += genes.fatSize;
+        sum += k.baseSize.Value;
+        sum += k.fatSize.Value;
+        sum += k.ballSize.Value;
+        sum += k.bellySize.Value;
+        sum += k.dickSize.Value;
+        sum += k.dickThickness.Value;
+        sum += k.maxEnergy.Value;
+        sum += k.fatSize.Value;
         // 150 would be the maximum value of a kobold generated randomly. This means that a value of 200 would be at least 50 units of metabolized something.
         // 210 would be at least 3 generations of fluid intake.
         if (sum > 210f) {

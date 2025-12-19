@@ -9,7 +9,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GenericUsable : MonoBehaviour, ISavable {
+public class GenericUsable : GeneHolder, ISavable {
     public virtual Sprite GetSprite(Kobold k) { return null; }
     public virtual bool CanUse(Kobold k) { return true; }
 

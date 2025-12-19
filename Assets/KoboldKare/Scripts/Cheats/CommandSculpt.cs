@@ -112,8 +112,6 @@ public class CommandSculpt : Command
         // FIXME FISHNET
         // target.photonView.RequestOwnership();
 
-        var genes = target.GetGenes();
-
         byte SafeModify(byte value, float modifier) {
             var outValue = (int)(value + modifier);
 
@@ -143,98 +141,55 @@ public class CommandSculpt : Command
 
         switch(part.ToLowerInvariant()) {
             case "dick":
-
-                target.SetGenes(genes.With(dickSize: ApplyFloat(genes.dickSize)));
-
+                target.SetDickSize(ApplyFloat(target.dickSize.Value));
                 break;
 
             case "balls":
-
-                target.SetGenes(genes.With(ballSize: ApplyFloat(genes.ballSize)));
-
+                target.SetBallSize(ApplyFloat(target.dickSize.Value));
                 break;
-
             case "boobs":
-
-                target.SetGenes(genes.With(breastSize: ApplyFloat(genes.breastSize)));
-
+                target.SetBreastSize(ApplyFloat(target.breastSize.Value));
                 break;
-
             case "height":
-
-                target.SetGenes(genes.With(baseSize: ApplyFloat(genes.baseSize)));
-
+                target.SetBaseSize(ApplyFloat(target.baseSize.Value));
                 break;
-
             case "fat":
-
-                target.SetGenes(genes.With(fatSize: ApplyFloat(genes.fatSize)));
-
+                target.SetFatSize(ApplyFloat(target.fatSize.Value));
                 break;
-
             case "bellycapacity":
-
-                target.SetGenes(genes.With(bellySize: ApplyFloat(genes.bellySize)));
-
+                target.SetBellySize(ApplyFloat(target.bellySize.Value));
                 break;
-
             case "foodcapacity":
-
-                target.SetGenes(genes.With(metabolizeCapacitySize: ApplyFloat(genes.metabolizeCapacitySize)));
-
+                target.SetMetabolizeCapacitySize(ApplyFloat(target.metabolizeCapacitySize.Value));
                 break;
-
             case "energy":
-
-                target.SetGenes(genes.With(maxEnergy: ApplyFloat(genes.maxEnergy)));
-
+                target.SetMaxEnergy(ApplyFloat(target.maxEnergy.Value));
                 break;
-
             case "dickthickness":
-
-                target.SetGenes(genes.With(dickThickness: ApplyFloat(genes.dickThickness)));
-
+                target.SetDickThickness(ApplyFloat(target.dickThickness.Value));
                 break;
-
             case "hue":
-
-                target.SetGenes(genes.With(hue: SafeModify(genes.hue, modifier)));
-
+                target.SetHue(SafeModify(target.hue.Value, modifier));
                 break;
-
             case "clothinghue":
-
-                target.SetGenes(genes.With(clothingHue: SafeModify(genes.clothingHue, modifier)));
-
+                target.SetClothingHue(SafeModify(target.clothingHue.Value, modifier));
                 break;
-
             case "brightness":
-
-                target.SetGenes(genes.With(brightness: SafeModify(genes.brightness, modifier)));
-
+                target.SetBrightness(SafeModify(target.brightness.Value, modifier));
                 break;
-
             case "saturation":
-
-                target.SetGenes(genes.With(saturation: SafeModify(genes.saturation, modifier)));
-
+                target.SetSaturation(SafeModify(target.saturation.Value, modifier));
                 break;
-
-            case "impregnate":
-                {
+            case "impregnate": {
                     ReagentContents alloc = new ReagentContents();
                     if (ReagentDatabase.TryGetAsset("Cum", out var cumReagent)) {
                         alloc.AddMix(cumReagent.GetReagent(Mathf.Abs(modifier)));
                     }
-
                     // FIXME FISHNET
                     //target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
-
                 break;
-
             default:
-
                 throw new CheatsProcessor.CommandException($"Invalid body part specified: {args[2]}");
         }
     }

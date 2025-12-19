@@ -129,15 +129,13 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
 
         CatmullSpline path = targetPenetrable.GetPath();
-        KoboldGenes mixedGenes = KoboldGenes.Mix(k.GetComponentInParent<NetworkedKobold>().GetGenes(),k.bellyContainer.GetGenes());
-        BitBuffer spawnData = new BitBuffer(16);
-        spawnData.AddKoboldGenes(mixedGenes);
         
         // FIXME FISHNET
         /*Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
         if (d == null) {
             yield break;
         }
+        d.MixFrom(k.GetComponentInParent<NetworkedKobold>(), k.bellyContainer);
 
         ReagentContents eggContents = new ReagentContents();
         if (ReagentDatabase.TryGetAsset("ScrambledEgg", out var scrambled)) {

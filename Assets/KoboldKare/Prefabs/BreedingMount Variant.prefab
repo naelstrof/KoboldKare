@@ -809,10 +809,10 @@ MonoBehaviour:
   points:
   - {fileID: 608484954}
   - {fileID: 1212790585}
-  splineTension: 0.5
   listeners:
   - rid: 0
   - rid: 1
+  actualHoleStartT: 0
   references:
     version: 2
     RefIds:
@@ -846,6 +846,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9102e5b71956ac44986688727c85bbde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   constructed: 0
   trackedConstructedObjects:
   - {fileID: 2614752462802733371}
@@ -864,7 +867,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -873,9 +875,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4524874221848432123}
   - {fileID: 7673482707527759551}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &2614752462802733371 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: fce804033b1f2e04982a0849fb7f22bf,

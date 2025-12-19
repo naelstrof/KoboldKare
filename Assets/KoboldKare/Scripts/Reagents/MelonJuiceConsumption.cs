@@ -5,9 +5,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class MelonJuiceConsumption : ReagentConsumptionMetabolize {
-    public override void OnConsume(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
-        genes.breastSize+=amountProcessed;
+    public override void OnConsume(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
+        k.SetBreastSize(k.breastSize.Value + amountProcessed);
     }
 }

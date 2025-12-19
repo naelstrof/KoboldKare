@@ -5,9 +5,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class MushBallShrinkConsumption : ReagentConsumptionMetabolize {
-    public override void OnConsume(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
-        genes.ballSize = Mathf.Max(genes.ballSize-amountProcessed,0f);
+    public override void OnConsume(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
+        k.SetBallSize(k.ballSize.Value - amountProcessed);
     }
 }

@@ -10,22 +10,17 @@ public class CustomReagentConsumptionMetabolize : ReagentConsumptionMetabolize
     [SerializeField, SerializeReference, SerializeReferenceButton]
     private List<ModifyingReagentEffect> Effects;
 
-    public override void OnConsume(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy)
-    {
-        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
-        foreach (var Effect in Effects)
-        {
-            Effect.Apply(k, amountProcessed, ref genes, ref addBack, ref energy);
+    public override void OnConsume(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
+        foreach (var effect in Effects) {
+            effect.Apply(k, amountProcessed, ref addBack, ref energy);
         }
     }
 
-    public override void OnValidate()
-    {
+    public override void OnValidate() {
         base.OnValidate();
-        foreach (var Effect in Effects)
-        {
-            Effect.OnValidate();
+        foreach (var effect in Effects) {
+            effect.OnValidate();
         }
     }
 }

@@ -4,10 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 
 [System.Serializable]
-public class CumReagentEffect : ReagentEffect
-{
-    public override void Apply(Kobold k, float usedAmount, ref KoboldGenes genes, ref ReagentContents addBack, ref float energy) {
-        // FIXME FISHNET
-        //k.photonView.RPC(nameof(Kobold.Cum), RpcTarget.All);
+public class CumReagentEffect : ReagentEffect {
+    public override void Apply(NetworkedKobold k, float usedAmount, ref ReagentContents addBack, ref float energy) {
+        k.Cum();
     }
 }

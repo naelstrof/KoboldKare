@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Photon.Pun;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class NoTouchGenericReagentContainer : GeneHolder {
     [SerializeField]
@@ -75,6 +70,8 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     public float GetVolumeOf(byte id) => GetContents().GetVolumeOf(id);
     public InspectorReagent[] startingReagents;
 
+    private bool hasGenes = false;
+
     private bool filled = false;
     private bool emptied = false;
     protected override void Awake() {
@@ -100,35 +97,28 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     }
 
     private void TransferMix(GenericReagentContainer injector, float amount, InjectType injectType) {
-        // FIXME FISHNET
-        /*if (!IsMixable(this.type, injectType) || !photonView.IsMine) {
+        if (!IsMixable(this.type, injectType)) {
             return;
         }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
-        SetGenes(injector.GetGenes());*/
+        CopyGenesFrom(injector);
     }
     private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
-        // FIXME FISHNET
-        /*
-        if (!IsMixable(type, injectType) || !photonView.IsMine) {
+        if (!IsMixable(type, injectType)) {
             return false;
         }
-
         GetContents().AddMix((byte)ReagentDatabase.GetID(incomingReagent), volume, this);
-
-        OnReagentContentsChanged(injectType);*/
+        OnReagentContentsChanged(injectType);
         return true;
     }
     
-    // FIXME FISHNET
     public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
-        /*
-        if (!IsMixable(type, injectType) || !photonView.IsMine) {
+        if (!IsMixable(type, injectType)) {
             return false;
         }
         GetContents().AddMix(incomingReagents, this);
-        OnReagentContentsChanged(injectType);*/
+        OnReagentContentsChanged(injectType);
         return true;
     }
 
@@ -182,21 +172,16 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
     public void OverrideReagent(Reagent r) => GetContents().OverrideReagent(r.id, r.volume);
     public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent((byte)ReagentDatabase.GetID(r), volume);
     public void OnReagentContentsChanged(InjectType injectType) {
-        //Debug.Log("[Generic Reagent Container] :: <Reagent Contents were changed on object "+gameObject.name+"!>");
         if (!filled && isFull) {
-            //Debug.Log("[Generic Reagent Container] :: STATE_FILLING_TO_FULL_EVENT");
             OnFilled?.Invoke(GetContents(), injectType);
             containerFilled?.Invoke(this);
         }
-        //Debug.Log("[Generic Reagent Container] :: STATE FILLED AND ISFULL: "+filled+","+isFull);
         filled = isFull;
         OnChange?.Invoke(GetContents(), injectType);
         if (!emptied && isEmpty) {
-            SetGenes(null);
-            //Debug.Log("[Generic Reagent Container] :: STATE_EMPTY_BUT_NOT_EMPTY");
+            hasGenes = false;
             OnEmpty?.Invoke(GetContents(), injectType);
         }
-        //Debug.Log("[Generic Reagent Container] :: STATE EMPTIED AND ISEMPTY: "+emptied+","+isEmpty);
         emptied = isEmpty;
     }
 
@@ -212,7 +197,8 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         return GetContents().GetValue();
     }
 
-    public void OnValidate() {
+    protected override void OnValidate() {
+        base.OnValidate();
         if (startingReagents == null) {
             return;
         }

@@ -160,11 +160,8 @@ public class Projectile : GeneHolder, ISavable {
         node["velocity.y"] = velocity.y;
         node["velocity.z"] = velocity.z;
         contents.Save(node, "fluidContents");
-        bool hasGenes = GetGenes() != null;
-        node["hasGenes"] = hasGenes;
-        if (hasGenes) {
-            GetGenes().Save(node,"genes");
-        }
+        node["hasGenes"] = true;
+        SaveGenes(node,"genes");
         node["splashed"] = splashed;
     }
 
@@ -177,9 +174,7 @@ public class Projectile : GeneHolder, ISavable {
         contents.Load(node, "fluidContents");
         bool hasGenes = node["hasGenes"];
         if (hasGenes) {
-            KoboldGenes loadedGenes = new KoboldGenes();
-            loadedGenes.Load(node,"genes");
-            SetGenes(loadedGenes);
+            LoadGenes(node,"genes");
         }
         bool newSplashed = node["splashed"];
         if (newSplashed && !splashed) {

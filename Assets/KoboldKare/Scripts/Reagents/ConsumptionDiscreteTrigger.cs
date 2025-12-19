@@ -11,9 +11,8 @@ public class ConsumptionDiscreteTrigger : ReagentConsumptionEvent {
     protected float requiredCumulativeReagent = 5;
     [SerializeField]
     protected int maximumTriggerCount = 1;
-    public override void OnConsume(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
+    public override void OnConsume(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
         float volume = reagentMemory.GetVolumeOf(scriptableReagent);
         reagentMemory.AddMix(scriptableReagent.GetReagent(amountProcessed));
         float newVolume = reagentMemory.GetVolumeOf(scriptableReagent);
@@ -24,10 +23,9 @@ public class ConsumptionDiscreteTrigger : ReagentConsumptionEvent {
             return;
         }
         for (int i = 0; i < triggerCount; i++) {
-            OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
+            OnTrigger(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
         }
     }
-    protected virtual void OnTrigger(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
+    protected virtual void OnTrigger(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
     }
 }

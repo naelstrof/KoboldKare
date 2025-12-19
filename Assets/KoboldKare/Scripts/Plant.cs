@@ -37,11 +37,31 @@ public class Plant : GeneHolder, ISavable {
 
     void Start() {
         container.OnFilled += OnFilled;
+        hue.OnChange += OnColorChange;
+        brightness.OnChange += OnColorChange;
+        saturation.OnChange += OnColorChange;
     }
+
 
     void OnDestroy() {
         if (container) {
             container.OnFilled -= OnFilled;
+        }
+        hue.OnChange -= OnColorChange;
+        brightness.OnChange -= OnColorChange;
+        saturation.OnChange -= OnColorChange;
+    }
+    
+    private void OnColorChange(byte prev, byte next, bool asServer) {
+        if (!display) {
+            return;
+        }
+
+        Vector4 hbcs = new Vector4(hue.Value / 255f, brightness.Value / 255f, 0.5f, saturation.Value / 255f);
+        foreach (var r in display.GetComponentsInChildren<Renderer>()) {
+            foreach (var material in r.materials) {
+                material.SetColor(BrightnessContrastSaturation, hbcs);
+            }
         }
     }
 
@@ -91,20 +111,6 @@ public class Plant : GeneHolder, ISavable {
         SwitchTo(plantHandle.asset);
     }
 
-    //FIXME FISHNET
-    public Task SetGenes(KoboldGenes newGenes) {
-        if (display != null) {
-            Vector4 hbcs = new Vector4(newGenes.hue / 255f, newGenes.brightness / 255f, 0.5f, newGenes.saturation / 255f);
-            foreach (var r in display.GetComponentsInChildren<Renderer>()) {
-                foreach (var material in r.materials) {
-                    material.SetColor(BrightnessContrastSaturation, hbcs);
-                }
-            }
-        }
-
-        return Task.CompletedTask;
-    }
-
     void SwitchTo(ScriptablePlant newPlant) {
         if (plant == newPlant) {
             return;
@@ -117,11 +123,8 @@ public class Plant : GeneHolder, ISavable {
             Destroy(display);
         }
         if(newPlant.display != null){
-            display = GameObject.Instantiate(newPlant.display,transform);
-            // TODO: This is a hack to make sure future iterations have received the genes.
-            if (GetGenes() != null) {
-                SetGenes(GetGenes());
-            }
+            display = Instantiate(newPlant.display,transform);
+            OnColorChange(0,0, false);
         }
 
         
@@ -209,7 +212,7 @@ public class Plant : GeneHolder, ISavable {
         node["position.x"] = transform.position.x;
         node["position.y"] = transform.position.y;
         node["position.z"] = transform.position.z;
-        GetGenes().Save(node, "genes");
+        SaveGenes(node, "genes");
         node["growing"] = growing;
     }
 
@@ -220,9 +223,7 @@ public class Plant : GeneHolder, ISavable {
         float y = node.GetValueOrDefault("position.y", 0f);
         float z = node.GetValueOrDefault("position.z", 0f);
         transform.position = new Vector3(x,y,z);
-        KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(node, "genes");
-        SetGenes(loadedGenes);
+        LoadGenes(node, "genes");
         
         if (!node.GetValueOrDefault("growing", false)) return;
         foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {

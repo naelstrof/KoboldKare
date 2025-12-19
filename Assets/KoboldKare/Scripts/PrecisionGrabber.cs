@@ -400,7 +400,10 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     }
 
     private void Start() {
-        networkedKobold.genes.OnChange += OnGenesChanged;
+        networkedKobold.brightness.OnChange += OnGenesChanged;
+        networkedKobold.saturation.OnChange += OnGenesChanged;
+        networkedKobold.hue.OnChange += OnGenesChanged;
+        
         removeIds = new List<Grab>();
         previewHandAnimator = Instantiate(handDisplayPrefab, transform)
             .GetComponentInChildren<Animator>();
@@ -427,18 +430,16 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
 
     private void OnDestroy() {
         if (networkedKobold != null) {
-            networkedKobold.genes.OnChange -= OnGenesChanged;
+            networkedKobold.brightness.OnChange -= OnGenesChanged;
+            networkedKobold.saturation.OnChange -= OnGenesChanged;
+            networkedKobold.hue.OnChange -= OnGenesChanged;
         }
         TryDrop();
         UnfreezeAll();
     }
 
-    private void OnGenesChanged(KoboldGenes oldGenes, KoboldGenes newGenes, bool isServer) {
-        if (newGenes == null) {
-            return;
-        }
-
-        Vector4 hbcs = new Vector4(newGenes.hue/255f, newGenes.brightness/255f, 0.5f, newGenes.saturation/255f);
+    private void OnGenesChanged(byte a, byte b, bool isServer) {
+        Vector4 hbcs = new Vector4(networkedKobold.hue.Value/255f, networkedKobold.brightness.Value/255f, 0.5f, networkedKobold.saturation.Value/255f);
         // Set color
         foreach (Renderer r in previewHandAnimator.GetComponentsInChildren<Renderer>()) {
             if (r == null) {
@@ -490,7 +491,7 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
     }
 
     private void DoPreview() {
-        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance*networkedKobold.GetGenes().baseSize*0.1f, out RaycastHit? previewHit)) {
+        if (previewGrab && currentGrab == null && TryRaycastGrab(maxGrabDistance*networkedKobold.baseSize.Value*0.1f, out RaycastHit? previewHit)) {
             RaycastHit hit = previewHit.Value;
             previewHandTransform.rotation = Quaternion.LookRotation(-hit.normal, Vector3.up) * Quaternion.AngleAxis(90f, new Vector3(0.0f, 1.0f, 0.0f));
             previewHandTransform.position = hit.point + previewHandTransform.rotation*Vector3.down*0.1f;

@@ -29,8 +29,9 @@ public class PlayerKoboldLoader : MonoBehaviour {
         } else {
             throw new UnityException($"Setting Dick is not a SettingInt");
         }
-        targetKobold.SetGenes(GetPlayerGenes());
+        ApplyPlayerGenes(targetKobold);
     }
+    
     void OnDisable() {
         foreach(string settingName in settingNames) {
             var option = SettingsManager.GetSetting(settingName);
@@ -43,52 +44,46 @@ public class PlayerKoboldLoader : MonoBehaviour {
             optionInt.changed -= OnValueChange;
         }
     }
-    private static KoboldGenes ProcessOption(KoboldGenes genes, SettingInt setting) {
+    private static void ProcessOption(GeneHolder holder, SettingInt setting) {
         switch (setting.name) {
             case "Dick":
-                var info = KoboldKareObjectPostProcessor.GetAssetID("Penis", "HumanoidDick");
-                genes.dickEquip = (setting.GetValue() == 0f) ? CommandDick.unEquipID : (short)(info + 1);
+                holder.SetDickEquip((setting.GetValue() == 0f) ? "None" : "HumanoidDick");
                 break;
         }
-        return genes;
     }
-    private static KoboldGenes ProcessOption(KoboldGenes genes, SettingFloat setting) {
+    private static void ProcessOption(GeneHolder holder, SettingFloat setting) {
         switch(setting.name) {
-            case "Hue": genes.hue = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
-            case "ClothingHue": genes.clothingHue = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
-            case "Brightness": genes.brightness = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
-            case "Saturation": genes.saturation = (byte)Mathf.RoundToInt(setting.GetValue()*255f); break;
-            case "DickSize": genes.dickSize = Mathf.Lerp(0f, 10f, setting.GetValue()); break;
-            case "BallSize": genes.ballSize = Mathf.Lerp(5f, 10f, setting.GetValue()); break;
-            case "DickThickness": genes.dickThickness = Mathf.Lerp(0.3f, 0.7f, setting.GetValue()); break;
-            case "BoobSize": genes.breastSize = setting.GetValue() * 30f; break;
-            case "KoboldSize": genes.baseSize = setting.GetValue() * 20f; break;
+            case "Hue": holder.SetHue((byte)Mathf.RoundToInt(setting.GetValue()*255f)); break;
+            case "ClothingHue": holder.SetClothingHue((byte)Mathf.RoundToInt(setting.GetValue()*255f)); break;
+            case "Brightness": holder.SetBrightness((byte)Mathf.RoundToInt(setting.GetValue()*255f)); break;
+            case "Saturation": holder.SetSaturation((byte)Mathf.RoundToInt(setting.GetValue()*255f)); break;
+            case "DickSize": holder.SetDickSize(Mathf.Lerp(0f, 10f, setting.GetValue())); break;
+            case "BallSize": holder.SetBallSize(Mathf.Lerp(5f, 10f, setting.GetValue())); break;
+            case "DickThickness": holder.SetDickThickness(Mathf.Lerp(0.3f, 0.7f, setting.GetValue())); break;
+            case "BoobSize": holder.SetBreastSize(setting.GetValue() * 30f); break;
+            case "KoboldSize": holder.SetBaseSize(setting.GetValue() * 20f); break;
         }
-        return genes;
     }
 
-    public static KoboldGenes GetPlayerGenes() {
-        KoboldGenes genes = new KoboldGenes();
+    public static void ApplyPlayerGenes(GeneHolder target) {
+        target.SetFatSize(0f);
         foreach (string setting in settingNames) {
-            genes = ProcessOption(genes, SettingsManager.GetSetting(setting) as SettingFloat);
+            ProcessOption(target, SettingsManager.GetSetting(setting) as SettingFloat);
         }
-        genes = ProcessOption(genes, SettingsManager.GetSetting("Dick") as SettingInt);
-        //genes = genes.With(species: 
+        ProcessOption(target, SettingsManager.GetSetting("Dick") as SettingInt);
         var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
         if (prefabSelect != null && prefabSelect.TryGetPrefab(out string prefabName)) {
-            genes = genes.With(species: prefabName);
+            target.SetSpecies(prefabName);
         } else {
-            genes = genes.With(species: "Kobold");
+            target.SetSpecies("Kobold");
         }
-
-        return genes;
     }
 
     void OnValueChange(int newValue) {
-        targetKobold.SetGenes(GetPlayerGenes());
+        ApplyPlayerGenes(targetKobold);
     }
 
     void OnValueChange(float newValue) {
-        targetKobold.SetGenes(GetPlayerGenes());
+        ApplyPlayerGenes(targetKobold);
     }
 }

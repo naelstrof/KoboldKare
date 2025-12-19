@@ -16,7 +16,6 @@ public class Seed : GenericUsable, IValuedGood {
     public float _spacing = 1f;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
-    private KoboldGenes genes;
     private bool waitingOnPlant = false;
 
     public override Sprite GetSprite(Kobold k) {
@@ -49,11 +48,11 @@ public class Seed : GenericUsable, IValuedGood {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            genes ??= new KoboldGenes().Randomize();
-            BitBuffer spawnData = new BitBuffer(16);
-            spawnData.AddKoboldGenes(genes);
-            spawnData.AddShort((short)KoboldKareObjectPostProcessor.GetAssetID("Plant", plant.name));
+            RandomizeGenes();
             // FIXME FISHNET
+            //BitBuffer spawnData = new BitBuffer(16);
+            //spawnData.AddKoboldGenes(genes);
+            //spawnData.AddShort((short)KoboldKareObjectPostProcessor.GetAssetID("Plant", plant.name));
             //bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
         }
 
@@ -86,15 +85,12 @@ public class Seed : GenericUsable, IValuedGood {
 
     public override void Save(JSONNode node) {
         base.Save(node);
-        genes ??= new KoboldGenes().Randomize();
-        genes.Save(node, "genes");
+        SaveGenes(node, "genes");
     }
 
     public override Task Load(JSONNode node) {
         base.Load(node);
-        KoboldGenes loadedGenes = new KoboldGenes();
-        loadedGenes.Load(node, "genes");
-        genes = loadedGenes;
+        LoadGenes(node, "genes");
         return Task.CompletedTask;
     }
 }

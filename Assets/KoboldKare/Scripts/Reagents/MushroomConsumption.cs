@@ -5,14 +5,13 @@ using UnityEngine;
 
 [System.Serializable]
 public class MushroomConsumption : ReagentConsumptionMetabolize {
-    public override void OnConsume(Kobold k, ScriptableReagent scriptableReagent, ref float amountProcessed,
-        ref ReagentContents reagentMemory, ref ReagentContents addBack, ref KoboldGenes genes, ref float energy) {
-        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref genes, ref energy);
-        genes.baseSize = Mathf.Max(genes.baseSize-amountProcessed * 0.2f, 0f);
-        genes.ballSize = Mathf.Max(genes.ballSize-amountProcessed * 0.2f,0f);
-        genes.dickSize = Mathf.Max(genes.dickSize-amountProcessed * 0.2f, 0.2f);
-        genes.fatSize = Mathf.Max(genes.fatSize-amountProcessed * 0.2f,-2f);
-        genes.breastSize = Mathf.Max(genes.breastSize-amountProcessed * 0.2f,0f);
-        genes.saturation = (byte)Mathf.Clamp(genes.saturation-(byte)(Mathf.CeilToInt(amountProcessed*6f)), 0, 255);
+    public override void OnConsume(NetworkedKobold k, ScriptableReagent scriptableReagent, ref float amountProcessed, ref ReagentContents reagentMemory, ref ReagentContents addBack, ref float energy) {
+        base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
+        k.SetBaseSize(Mathf.Max(k.baseSize.Value-amountProcessed * 0.2f, 0f));
+        k.SetBallSize(Mathf.Max(k.ballSize.Value-amountProcessed * 0.2f,0f));
+        k.SetDickSize(Mathf.Max(k.dickSize.Value-amountProcessed * 0.2f, 0.2f));
+        k.SetFatSize(Mathf.Max(k.fatSize.Value-amountProcessed * 0.2f,-2f));
+        k.SetBreastSize(Mathf.Max(k.breastSize.Value-amountProcessed * 0.2f,0f));
+        k.SetSaturation((byte)Mathf.Clamp(k.saturation.Value-(byte)(Mathf.CeilToInt(amountProcessed*6f)), 0, 255));
     }
 }

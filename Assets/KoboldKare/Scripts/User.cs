@@ -39,7 +39,7 @@ public class User : MonoBehaviour {
         
         var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.forward * (capsuleCollider.height*0.5f);
         float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
-        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - networkedKobold.GetGenes().baseSize*0.2f, 0f));
+        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - networkedKobold.baseSize.Value*0.2f, 0f));
     }
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
@@ -61,7 +61,7 @@ public class User : MonoBehaviour {
     }
     void FixedUpdate() {
         var networkedKobold = kobold.GetComponentInParent<NetworkedKobold>();
-        capsuleCollider.height = networkedKobold.GetGenes().baseSize * 0.20f;
+        capsuleCollider.height = networkedKobold.baseSize.Value * 0.20f;
         SortGrabbables();
         possibleUsables.Clear();
     }

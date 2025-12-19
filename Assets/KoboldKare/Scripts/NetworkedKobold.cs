@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FishNet;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using JigglePhysics;
@@ -32,6 +33,7 @@ public class NetworkedKobold : GeneHolder {
     private void Awake() {
         koboldAssetName.OnChange += OnKoboldAssetNameChanged;
         OnKoboldAssetNameChanged("", koboldAssetName.Value, true);
+        RandomizeGenes();
     }
 
     [ServerRpc]
@@ -124,6 +126,9 @@ public class NetworkedKobold : GeneHolder {
     }
 
     private void OnKoboldAssetNameChanged(string prev, string next, bool asServer) {
+        if (!asServer && InstanceFinder.ServerManager.Started) {
+            return;
+        }
         _ = KoboldAssetNameChangedAsync(prev, next, asServer);
     }
 
@@ -139,12 +144,6 @@ public class NetworkedKobold : GeneHolder {
         koboldAssetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("PlayableCharacter", next, GameManager.GetErrorKobold());
         koboldInstance = Instantiate(koboldAssetHandle.asset, transform);
         
-        if (GetGenes() == null) {
-            SetGenes(new KoboldGenes().Randomize(next));
-        } else {
-            SetGenes(GetGenes().With(species:next));
-        }
-
         try {
             await TryInitializeKobold(koboldInstance);
         } catch (Exception e) {
@@ -154,6 +153,8 @@ public class NetworkedKobold : GeneHolder {
             koboldInstance = Instantiate(GameManager.GetErrorKobold(), transform);
             await TryInitializeKobold(koboldInstance);
         }
+        
+        species.Value = next;
 
         var equipmentTasks = new List<Task>();
         if (koboldInstance.TryGetComponent<KoboldInventory>(out var koboldInventory) && koboldInstance.TryGetComponent<CharacterDescriptor>(out var characterDescriptor)) {
@@ -404,6 +405,14 @@ public class NetworkedKobold : GeneHolder {
     
     private void OnDestroy() {
         ReleaseHandles();
+    }
+    
+    public bool TryGetKobold(out Kobold kobold) {
+        if (koboldInstance && koboldInstance.TryGetComponent<Kobold>(out kobold)) {
+            return true;
+        }
+        kobold = null;
+        return false;
     }
 
 

@@ -428,9 +428,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b875c23c4d4224daee7b498e9ac529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   constructed: 1
   trackedConstructedObjects: []
   suckZone: {fileID: 5460425087074685386}
+  suckingIDs: 
   mailSprite: {fileID: 21300000, guid: 27712d2f9bbe5b64baceb5004c158549, type: 3}
   stations:
   - {fileID: 813309497274286429}
@@ -439,6 +443,8 @@ MonoBehaviour:
   moneyPile:
     gameObject: {fileID: 5605572581541272102, guid: 32035abfbf56df34d9f5c85a5dd460c6,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   sellPack: {fileID: 11400000, guid: 2fe5b5c5bfdebf6409d8a592d85d9547, type: 2}
   poof: {fileID: 634465358718552423}
@@ -464,6 +470,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &813309496448811804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,7 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -484,9 +490,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 813309496448811794}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!135 &5460425087074685386
 SphereCollider:
   m_ObjectHideFlags: 0

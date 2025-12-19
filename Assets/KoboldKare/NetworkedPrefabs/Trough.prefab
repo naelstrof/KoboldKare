@@ -58,17 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 60
   type: 0
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
   startingReagents: []
 --- !u!114 &6209813979592397900
 MonoBehaviour:
@@ -121,7 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -131,9 +124,6 @@ MonoBehaviour:
   - {fileID: 5305001150950473274}
   - {fileID: 2778530082504687417}
   - {fileID: 3165363792815808124}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &875323940387169680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +157,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7231916857138784437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +200,8 @@ MonoBehaviour:
   bucketSplashProjectile:
     gameObject: {fileID: 6847052273168792518, guid: f42cf9decb64d9f4f9a00d76db944c15,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
@@ -217,6 +210,7 @@ MonoBehaviour:
   bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
   projectileCount: 3
   projectileVolume: 5
+  projectileSpeed: 10
 --- !u!114 &2778530082504687417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6813240c1000e204f98fbc3fe36bafce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   eatSymbol: {fileID: 21300000, guid: 8088d40388c4d4a4d8f8b1c3ebf4c768, type: 3}
   container: {fileID: 5305001150950473274}
   destroyOnEat: 0

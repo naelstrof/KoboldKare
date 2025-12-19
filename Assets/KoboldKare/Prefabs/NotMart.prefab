@@ -136,6 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 810515157076547232}
+  - component: {fileID: 379524283003492039}
   m_Layer: 10
   m_Name: NotMart
   m_TagString: Untagged
@@ -167,6 +168,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &379524283003492039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32747378321542170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6a39c46bf52104ba8efe3100bce3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
 --- !u!1 &157235796882645157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3686,7 +3702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -3694,9 +3709,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5594835734319197252}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &5594835734319197252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3709,6 +3721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55801eb56c08724f8ecf426dc57be16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   cost: 20
   floater: {fileID: 5914675360279917033}
   buySprite: {fileID: 21300000, guid: e9dff82264b70634f89d563e2897391b, type: 3}
@@ -3716,6 +3731,8 @@ MonoBehaviour:
   prefabSpawn:
     gameObject: {fileID: 2189650494590434039, guid: c20c66225b257bc4687f182bbc47645f,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
 --- !u!1 &6731710176248377152
 GameObject:
@@ -4095,6 +4112,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -3.162
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.5639992
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 4.692
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.997748
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: -0.06707448
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -4217,6 +4284,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -4.111
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.5639992
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 4.692
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.9930468
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: -0.11772002
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -4774,6 +4891,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: 1.4058228
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.5639992
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 3.7600098
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -5143,7 +5310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -5153,9 +5319,6 @@ MonoBehaviour:
   - {fileID: 915706547747134165}
   - {fileID: 915706547747134167}
   - {fileID: 6171776625417682787}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &6171776625417682787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5168,6 +5331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7759ece444ba9b6449bcb9e37fced6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   useSprite: {fileID: 21300000, guid: 8088d40388c4d4a4d8f8b1c3ebf4c768, type: 3}
   speechBackgroundBubble: {fileID: 2429771264445967868}
   animator: {fileID: 2829818915584920513}
@@ -5316,6 +5482,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: 0.13082886
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.5639992
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 3.7600098
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -6476,6 +6692,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -1.875
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49800014
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 0.88500977
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -6691,6 +6957,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: 1.3650017
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: -0.07098389
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -6826,6 +7142,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -1.7520218
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49000168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: -0.071014404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: -0.00000008940696
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -6966,6 +7332,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -3.2270012
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49000168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: -0.071014404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: -0.00000044703478
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -7106,6 +7522,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: -3.3919983
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49800014
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 0.88500977
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -7341,6 +7807,56 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: 0.15600204
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.49000168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: -0.071014404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId
@@ -7576,6 +8092,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4971596559109733231}
     m_Modifications:
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: <ComponentIndex>k__BackingField
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: InitializedParentNetworkBehaviour
+      value: 
+      objectReference: {fileID: 379524283003492039}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.x
+      value: 0.0018310547
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.y
+      value: 0.67699814
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Position.z
+      value: 0.84298706
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.w
+      value: -0.6953329
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0.18631352
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.y
+      value: 0.67046636
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0.1796507
+      objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: sceneViewId

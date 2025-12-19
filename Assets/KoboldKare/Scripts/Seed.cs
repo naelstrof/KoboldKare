@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Threading.Tasks;
-using NetStack.Serialization;
-using UnityEngine;
-using Photon.Pun;
-using SimpleJSON;
+﻿using UnityEngine;
 
 public class Seed : GenericUsable, IValuedGood {
     //public List<GameObject> _plantPrefabs;
@@ -48,7 +41,6 @@ public class Seed : GenericUsable, IValuedGood {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            RandomizeGenes();
             // FIXME FISHNET
             //BitBuffer spawnData = new BitBuffer(16);
             //spawnData.AddKoboldGenes(genes);
@@ -82,15 +74,4 @@ public class Seed : GenericUsable, IValuedGood {
             genes = new KoboldGenes().Randomize();
         }
     }*/
-
-    public override void Save(JSONNode node) {
-        base.Save(node);
-        SaveGenes(node, "genes");
-    }
-
-    public override Task Load(JSONNode node) {
-        base.Load(node);
-        LoadGenes(node, "genes");
-        return Task.CompletedTask;
-    }
 }

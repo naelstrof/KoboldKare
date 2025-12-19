@@ -35,6 +35,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private GenericReagentContainer container;
 
+    private NetworkedEntity networkedEntity;
+
     // added by Godeken
     [SerializeField] private Animator anim;
     [SerializeField] private float animMinSpeed = 0.9f;
@@ -113,6 +115,7 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         tempList.Add(station);
         stations = tempList.AsReadOnly();
         container.OnChange += OnReagentsChanged;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
     }
 
     private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {
@@ -145,7 +148,9 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         ReagentContents incomingContents = new ReagentContents();
         foreach (var reagentContainer in netObject.GetComponentsInChildren<GenericReagentContainer>()) {
             incomingContents.AddMix(reagentContainer.GetContents());
-            container.CopyGenesFrom(reagentContainer);
+            if (reagentContainer.TryGetNetworkedEntity(out var net)) {
+                networkedEntity.CopyGenesFrom(net);
+            }
         }
         
         grindedObject?.Invoke(objectID, incomingContents);

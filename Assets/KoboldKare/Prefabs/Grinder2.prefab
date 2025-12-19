@@ -207,9 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acfb1c7863c6d8d4ab81308971419aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   constructed: 1
   trackedConstructedObjects:
   - {fileID: 6931346590783120197}

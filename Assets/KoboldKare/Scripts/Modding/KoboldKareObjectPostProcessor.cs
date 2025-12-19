@@ -15,7 +15,7 @@ public class KoboldKareObjectPostProcessor : ModPostProcessor {
     
     public static async Task<AssetGroup.AssetLocation.AssetHandle<T>> GetAssetAsync<T>(string group, string assetName, T missingResult) where T : Object {
         try {
-            while (!ModManager.GetReady()) {
+            while (!ModManager.GetFinishedLoading()) {
                 await Task.Delay(1000);
             }
 

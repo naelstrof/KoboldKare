@@ -1,7 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
+using FishNet;
+using FishNet.Managing.Scened;
+using FishNet.Transporting.Multipass;
+using FishNet.Transporting.Tugboat;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class PlayButton : MonoBehaviour {
     private void Awake() {
@@ -31,11 +37,23 @@ public class PlayButton : MonoBehaviour {
         }
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.Loading);
         
-        // FIXME FISHNET
-        /*
-        NetworkManager.instance.SetSelectedMap(handle.Result.playableMap.GetKey());
-        NetworkManager.instance.StartSinglePlayer();
-        */
+        List<ModManager.ModStub> stubs = new(ModManager.GetModsWithLoadedAssets());
+        if (handle.Result.playableMap.stub.HasValue) {
+            stubs.Add(handle.Result.playableMap.stub.Value);
+        }
+        
+        var networkManager = InstanceFinder.NetworkManager;
+        if (!networkManager.ServerManager.Started) {
+            networkManager.ServerManager.StartConnection();
+        }
+
+        if (!networkManager.ClientManager.Started) {
+            networkManager.GetComponent<Multipass>().SetClientTransport(networkManager.GetComponent<Tugboat>());
+            networkManager.ClientManager.StartConnection();
+        }
+
+        KoboldKareSceneProcessor.LoadSceneGlobal(handle.Result.playableMap.GetKey(), stubs);
+        
         GetComponent<Button>().interactable = true;
     }
 }

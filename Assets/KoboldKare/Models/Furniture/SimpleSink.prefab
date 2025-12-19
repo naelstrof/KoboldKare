@@ -191,7 +191,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1579706102615051458}
-  - component: {fileID: -5069738728585036713}
   m_Layer: 11
   m_Name: SimpleSink
   m_TagString: Untagged
@@ -216,21 +215,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5069738728585036713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2208996892196689528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a6a39c46bf52104ba8efe3100bce3f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
 --- !u!1 &2984745927312601145
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,9 +526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 20
   type: 0
   startingReagents: []
@@ -657,9 +638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fca879989abffd429366e7d858d27a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
 --- !u!114 &7850814599479109800
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -177,9 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d14ac24e1f07d9418288c339e842519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   bombSprite: {fileID: 21300000, guid: 636f3e42565e3494a8264d315e14f40d, type: 3}
   effect: {fileID: 6977407387482380955}
 --- !u!114 &1984768638256701165

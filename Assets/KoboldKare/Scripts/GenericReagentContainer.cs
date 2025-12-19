@@ -3,7 +3,7 @@ using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
 
-public class NoTouchGenericReagentContainer : GeneHolder {
+public class NoTouchGenericReagentContainer : MonoBehaviour {
     [SerializeField]
     protected float startingMaxVolume = float.MaxValue;
     private ReagentContents contents;
@@ -49,6 +49,16 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
     public float volume => GetContents().volume;
+    private NetworkedEntity networkedEntity;
+
+    public bool TryGetNetworkedEntity(out NetworkedEntity ent) {
+        if (networkedEntity) {
+            ent = networkedEntity;
+            return true;
+        }
+        ent = null;
+        return false;
+    }
 
     public float maxVolume {
         get => GetContents().GetMaxVolume();
@@ -83,7 +93,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         }
     }
     public void Start() {
-        
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
         filled = isFull;
         emptied = isEmpty;
     }
@@ -102,7 +112,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         }
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
-        CopyGenesFrom(injector);
+        networkedEntity.CopyGenesFrom(injector.networkedEntity);
     }
     private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
         if (!IsMixable(type, injectType)) {
@@ -197,8 +207,7 @@ public class GenericReagentContainer : NoTouchGenericReagentContainer, IValuedGo
         return GetContents().GetValue();
     }
 
-    protected override void OnValidate() {
-        base.OnValidate();
+    protected void OnValidate() {
         if (startingReagents == null) {
             return;
         }

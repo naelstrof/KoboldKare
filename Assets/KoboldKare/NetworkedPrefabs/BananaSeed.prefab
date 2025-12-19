@@ -69,9 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6548b1f7376046a4baf2a8fffac24402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   worth: 5
   displaySprite: {fileID: 21300000, guid: c4d52768fead19a4ab13f15b42b9d589, type: 3}
   _spacing: 2.5

@@ -64,6 +64,10 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
 
     private void OnDestroy() {
         OnSpawned -= OnPlayerSpawn;
+        if (player) {
+            _networkManager.ServerManager.Despawn(player);
+            Destroy(player);
+        }
         if (playerSetting) {
             playerSetting.changed -= OnChangedPlayer;
         }

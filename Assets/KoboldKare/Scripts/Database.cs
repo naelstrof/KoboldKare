@@ -109,10 +109,12 @@ public class Database<T> : MonoBehaviour where T : UnityEngine.Object {
         List<Task> tasksToComplete = new List<Task>();
         foreach (var objName in names) {
             var reagentTask = KoboldKareObjectPostProcessor.GetAssetAsync<T>(group, objName, instance.missingObject);
-            tasksToComplete.Add(reagentTask.ContinueWith(task => {
-                AddAsset(objName, task.Result.asset);
-                instance.handles.Add(task.Result);
-            }));
+            async Task Consume() {
+                var result = await reagentTask;
+                AddAsset(objName, result.asset);
+                instance.handles.Add(result);
+            }
+            tasksToComplete.Add(Consume());
         }
 
         await Task.WhenAll(tasksToComplete);

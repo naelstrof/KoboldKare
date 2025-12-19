@@ -175,6 +175,12 @@ public class KoboldCharacterController : MonoBehaviour, ISavable {
         colliderFullHeight = collider.height;
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
+        if (!body) {
+            body = GetComponent<Rigidbody>();
+        }
+        if (!body) {
+            body = gameObject.AddComponent<Rigidbody>();
+        }
     }
 
     // Check if we've clipped our capsule into something.

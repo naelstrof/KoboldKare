@@ -136,7 +136,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 810515157076547232}
-  - component: {fileID: 379524283003492039}
   m_Layer: 10
   m_Name: NotMart
   m_TagString: Untagged
@@ -168,21 +167,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &379524283003492039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32747378321542170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a6a39c46bf52104ba8efe3100bce3f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
 --- !u!1 &157235796882645157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3721,9 +3705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55801eb56c08724f8ecf426dc57be16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   cost: 20
   floater: {fileID: 5914675360279917033}
   buySprite: {fileID: 21300000, guid: e9dff82264b70634f89d563e2897391b, type: 3}
@@ -4114,6 +4095,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -4121,6 +4107,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4134,9 +4125,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 3816034285550775330}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -4159,8 +4175,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: -0.06707448
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4238,6 +4264,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d6f727311c5055a4dba33c636026d635,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -4277,6 +4308,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1835086504}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3816034285550775330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 1835086504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5896130120064777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4286,6 +4329,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -4293,6 +4341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4306,9 +4359,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 3810525261322846595}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -4331,8 +4409,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: -0.11772002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4410,6 +4498,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e62c1d3f96f9d5841835f4a5c486e633,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -4449,6 +4542,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5896130120064777}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3810525261322846595 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 5896130120064777}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &326451419312791281
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4893,6 +4998,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -4900,6 +5010,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -4913,9 +5028,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 4053372388260102002}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -4938,8 +5078,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -5017,6 +5167,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5f30375a350596d4bbc95495c7530f2b,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -5051,6 +5206,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 915706546607399416}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4053372388260102002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 915706546607399416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7760735144549070219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7423785130557445235, guid: e027eb106162ec24caaf11d881182856,
@@ -5331,9 +5498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7759ece444ba9b6449bcb9e37fced6bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   useSprite: {fileID: 21300000, guid: 8088d40388c4d4a4d8f8b1c3ebf4c768, type: 3}
   speechBackgroundBubble: {fileID: 2429771264445967868}
   animator: {fileID: 2829818915584920513}
@@ -5484,6 +5648,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -5491,6 +5660,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -5504,9 +5678,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 4053372388445750360}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -5529,8 +5728,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -5608,6 +5817,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5f30375a350596d4bbc95495c7530f2b,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -5642,6 +5856,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 915706546761603794}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4053372388445750360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 915706546761603794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7760735144394985121 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7423785130557445235, guid: e027eb106162ec24caaf11d881182856,
@@ -6694,6 +6920,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -6701,6 +6932,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6714,9 +6950,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 3043889993980832795}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -6739,8 +7000,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6818,6 +7089,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 74407138233f66748b88f57006b0bdb3,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -6852,6 +7128,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2218963053658108561}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3043889993980832795 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 2218963053658108561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8776884667026892514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7423785130557445235, guid: e027eb106162ec24caaf11d881182856,
@@ -6959,6 +7247,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -6966,6 +7259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -6979,9 +7277,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 434528982272971344}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -7004,8 +7327,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7083,6 +7416,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1bc487e4f445fcc45bcd49294a95f6d9,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -7111,6 +7449,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e027eb106162ec24caaf11d881182856, type: 3}
+--- !u!114 &434528982272971344 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 3671145321475869914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2467401728320846839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1211327513617741613, guid: e027eb106162ec24caaf11d881182856,
@@ -7144,6 +7494,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -7151,6 +7506,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7164,9 +7524,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 510384459560349324}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -7189,8 +7574,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: -0.00000008940696
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7268,6 +7663,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 060b6b902ea097843b1a8cad38a65633,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4370193069827373674, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -7301,6 +7701,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e027eb106162ec24caaf11d881182856, type: 3}
+--- !u!114 &510384459560349324 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 3738120734836224006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2535252760622319403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1211327513617741613, guid: e027eb106162ec24caaf11d881182856,
@@ -7334,6 +7746,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -7341,6 +7758,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7354,9 +7776,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 130577534993622727}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -7379,8 +7826,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: -0.00000044703478
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7458,6 +7915,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 060b6b902ea097843b1a8cad38a65633,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4370193069827373674, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -7491,6 +7953,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e027eb106162ec24caaf11d881182856, type: 3}
+--- !u!114 &130577534993622727 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 3835555487846692941}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2735337065912815456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1211327513617741613, guid: e027eb106162ec24caaf11d881182856,
@@ -7524,6 +7998,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -7531,6 +8010,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7544,9 +8028,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 7483366471331367598}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -7569,8 +8078,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7648,6 +8167,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 74407138233f66748b88f57006b0bdb3,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -7700,6 +8224,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5994014983574279204}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7483366471331367598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 5994014983574279204}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6965807619672675639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7809,6 +8345,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -7816,6 +8357,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7829,9 +8375,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 6009872550128409280}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -7854,8 +8425,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: SerializedTransformProperties.Rotation.y
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Rotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1200474957606537873, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -7933,6 +8514,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1bc487e4f445fcc45bcd49294a95f6d9,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -7977,6 +8563,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6009872550128409280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 7463060279925949514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8601138874016068455 stripped
@@ -8094,6 +8692,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: _initializedTimestamp
+      value: -8584354964843272798
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: <IsNested>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -8101,6 +8704,11 @@ PrefabInstance:
         type: 3}
       propertyPath: <PrefabId>k__BackingField
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: NetworkBehaviours.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
@@ -8114,9 +8722,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
+      propertyPath: NetworkBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 6505622947064727851}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
       propertyPath: InitializedParentNetworkBehaviour
       value: 
-      objectReference: {fileID: 379524283003492039}
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.IsValid
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: SerializedTransformProperties.Scale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8916378468045259212, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: SerializedTransformProperties.Position.x
@@ -8228,6 +8861,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 2172a736d19be8d47a2c7f1e375a6d15,
         type: 2}
+    - target: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+        type: 3}
+      propertyPath: _networkObjectCache
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4905809034766477750, guid: e027eb106162ec24caaf11d881182856,
         type: 3}
       propertyPath: conditions.Array.data[0]._args.Array.data[0].floatValue
@@ -8272,6 +8910,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f89a464f22a6aa347a4eb8dc4d70e91f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6505622947064727851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3816034283883470474, guid: e027eb106162ec24caaf11d881182856,
+    type: 3}
+  m_PrefabInstance: {fileID: 7979775374491539361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc17b414ea236e40a2a464cf52a6fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &9111525969070252172 stripped

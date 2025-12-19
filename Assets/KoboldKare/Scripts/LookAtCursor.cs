@@ -15,6 +15,11 @@ public class LookAtCursor : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
     }
     private void Update() {
+        var cam = Camera.main;
+        if (!cam) {
+            return;
+        }
+        
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Vector3 headPos = animator.GetBoneTransform(HumanBodyBones.Head).position;
         Vector3 lookPoint = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distanceFromCamera),

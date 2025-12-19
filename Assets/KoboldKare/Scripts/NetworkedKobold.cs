@@ -36,37 +36,37 @@ public class NetworkedKobold : GeneHolder {
         RandomizeGenes();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void SetKoboldAssetName(string newName) {
         koboldAssetName.Value = newName;
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void SetRagdolled(bool newRagdoll) {
         ragdolled.Value = newRagdoll;
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void SetEyeRot(Vector2 newEyeRot) {
         eyeRot.Value = newEyeRot;
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void SetHipOffset(Vector2 newHipOffset) {
         hipOffset.Value = newHipOffset;
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void SetFacingDirection(Vector3 direction) {
         facingRotationY.Value = Vector3.SignedAngle(direction, Vector3.forward, -Vector3.up);
     }
     
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void Lactate() {
         koboldInstance.GetComponent<Kobold>().Lactate();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = true)]
     public void Cum() {
         if (!koboldInstance) {
             return;

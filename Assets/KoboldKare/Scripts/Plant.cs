@@ -9,7 +9,7 @@ using NetStack.Serialization;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
-public class Plant : GeneHolder, ISavable {
+public class Plant : MonoBehaviour, ISavable {
     public ScriptablePlant plant;
     [SerializeField]
     private GenericReagentContainer container;
@@ -35,11 +35,14 @@ public class Plant : GeneHolder, ISavable {
     public delegate void PlantSpawnEventAction(GameObject obj, ScriptablePlant plant);
     public static event PlantSpawnEventAction planted;
 
+    private NetworkedEntity networkedEntity;
+
     void Start() {
         container.OnFilled += OnFilled;
-        hue.OnChange += OnColorChange;
-        brightness.OnChange += OnColorChange;
-        saturation.OnChange += OnColorChange;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        networkedEntity.hue.OnChange += OnColorChange;
+        networkedEntity.brightness.OnChange += OnColorChange;
+        networkedEntity.saturation.OnChange += OnColorChange;
     }
 
 
@@ -47,9 +50,9 @@ public class Plant : GeneHolder, ISavable {
         if (container) {
             container.OnFilled -= OnFilled;
         }
-        hue.OnChange -= OnColorChange;
-        brightness.OnChange -= OnColorChange;
-        saturation.OnChange -= OnColorChange;
+        networkedEntity.hue.OnChange -= OnColorChange;
+        networkedEntity.brightness.OnChange -= OnColorChange;
+        networkedEntity.saturation.OnChange -= OnColorChange;
     }
     
     private void OnColorChange(byte prev, byte next, bool asServer) {
@@ -57,7 +60,7 @@ public class Plant : GeneHolder, ISavable {
             return;
         }
 
-        Vector4 hbcs = new Vector4(hue.Value / 255f, brightness.Value / 255f, 0.5f, saturation.Value / 255f);
+        Vector4 hbcs = new Vector4(networkedEntity.hue.Value / 255f, networkedEntity.brightness.Value / 255f, 0.5f, networkedEntity.saturation.Value / 255f);
         foreach (var r in display.GetComponentsInChildren<Renderer>()) {
             foreach (var material in r.materials) {
                 material.SetColor(BrightnessContrastSaturation, hbcs);
@@ -212,7 +215,6 @@ public class Plant : GeneHolder, ISavable {
         node["position.x"] = transform.position.x;
         node["position.y"] = transform.position.y;
         node["position.z"] = transform.position.z;
-        SaveGenes(node, "genes");
         node["growing"] = growing;
     }
 
@@ -223,7 +225,6 @@ public class Plant : GeneHolder, ISavable {
         float y = node.GetValueOrDefault("position.y", 0f);
         float z = node.GetValueOrDefault("position.z", 0f);
         transform.position = new Vector3(x,y,z);
-        LoadGenes(node, "genes");
         
         if (!node.GetValueOrDefault("growing", false)) return;
         foreach(Renderer renderer in display.GetComponentsInChildren<Renderer>()) {

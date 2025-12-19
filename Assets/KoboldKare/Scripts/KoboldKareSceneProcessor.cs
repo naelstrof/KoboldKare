@@ -37,7 +37,7 @@ namespace FishNet.Managing.Scened {
         public override void LoadStart(LoadQueueData queueData) {
             base.LoadStart(queueData);
             var bytes = queueData.SceneLoadData.Params;
-            var mapLoadInfo = JSONNode.Parse(bytes.ToString());
+            var mapLoadInfo = JSONNode.Parse(System.Text.Encoding.UTF8.GetString(bytes.ClientParams));
             if (!mapLoadInfo.HasKey("mods")) {
                 throw new Exception($"No mods key found in map load info: {mapLoadInfo.ToString()}");
             }
@@ -127,7 +127,7 @@ namespace FishNet.Managing.Scened {
             if (!PlayableMapDatabase.TryGetPlayableMap(sceneName, out var map)) {
                 InstanceFinder.ClientManager.StopConnection();
                 MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.MainMenu);
-                PopupHandler.instance.SpawnPopup("FailedLoad");
+                PopupHandler.instance.SpawnPopup("FailedToLoad");
                 return;
             }
             
@@ -136,8 +136,8 @@ namespace FishNet.Managing.Scened {
             KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Reagent", reagentNames);
             preloadTasks.Add(ReagentDatabase.LoadAllAssets("Reagent", reagentNames));
             List<string> reactionNames = new List<string>();
-            KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("ReagentReaction", reactionNames);
-            preloadTasks.Add(ReactionsDatabase.LoadAllAssets("ReagentReaction", reagentNames));
+            KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Reaction", reactionNames);
+            preloadTasks.Add(ReactionsDatabase.LoadAllAssets("Reaction", reactionNames));
             await Task.WhenAll(preloadTasks);
             
             var handle = map.LoadAsync();

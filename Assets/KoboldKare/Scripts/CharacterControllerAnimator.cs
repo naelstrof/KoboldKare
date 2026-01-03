@@ -24,6 +24,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     private bool isInAir;
     private bool jumped;
     private Vector3 tempDir;
+    private float facingAngleY;
     [SerializeField]
     private VisualEffect jumpDust;
     [SerializeField]
@@ -276,6 +277,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     private void OnFacingRotationChanged(float prev, float next, bool asServer) {
+        facingAngleY = next;
     }
 
     private IEnumerator AnimationRoutine() {
@@ -436,7 +438,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     void FixedUpdate() {
-        Quaternion characterRot = networkedKobold.GetFacingRotation();
+        Quaternion characterRot = Quaternion.AngleAxis(facingAngleY, Vector3.up);
         Vector3 fdir = characterRot * Vector3.forward;
         float deflectionForgivenessDegrees = 12f;
         var forward = body.transform.forward;

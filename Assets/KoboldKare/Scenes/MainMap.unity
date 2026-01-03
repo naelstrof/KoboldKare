@@ -7463,7 +7463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -7473,9 +7472,6 @@ MonoBehaviour:
   - {fileID: 45514630}
   - {fileID: 45514629}
   - {fileID: 1652595130}
-  sceneViewId: 162
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &45514629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11914,7 +11910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -11922,9 +11917,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 79866549}
-  sceneViewId: 106
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &79870805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46731,7 +46723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -46739,9 +46730,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 321111108}
-  sceneViewId: 161
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &321111110
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -68462,6 +68450,8 @@ MonoBehaviour:
   creatureToSpawn:
     gameObject: {fileID: 8221306948554587165, guid: b36b0bebccf6b1940a66ab268ec4ab24,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   spawnDelay: 240
 --- !u!4 &469938162
@@ -68500,16 +68490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 74
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &470254013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70404,7 +70390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -70412,9 +70397,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 479731704}
-  sceneViewId: 158
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &479731706
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -92202,6 +92184,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 671511145}
   m_PrefabAsset: {fileID: 0}
+--- !u!28 &623511560
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Lightning_PositionMap
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 8
+  m_Height: 1
+  m_CompleteImageSize: 128
+  m_MipsStripped: 0
+  m_TextureFormat: 20
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMasterTextureLimit: 0
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 0
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 128
+  _typelessdata: 9af967c3f0522742d6c32c430000803f736868c3fb292c42e07a2e430000803ff8136ac380152a42d6632d430000803f21f06ac3420b304270fd2a430000803f4a8c67c361903742f5282b430000803f879664c394c33142d6632e430000803fd90e63c3d2cd314214ee2c430000803f540365c3d24d2742a9d12c430000803f
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
 --- !u!4 &623755560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7239969446039512633, guid: c33c6a145d6e19c46a6b91e2c691edae,
@@ -97292,7 +97321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -97300,9 +97328,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 661281845}
-  sceneViewId: 164
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &661281845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128293,7 +128318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -128301,9 +128325,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 831557778}
-  sceneViewId: 166
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &832106076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -129186,6 +129207,8 @@ MonoBehaviour:
   starExplosion:
     gameObject: {fileID: 4909127261036313709, guid: 42fc2eef1f321a844a59836e8ccd423d,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   references:
     version: 2
@@ -129229,6 +129252,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         maxKobolds: 1
@@ -129258,6 +129283,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1098257762}
         targetPlant: {fileID: 11400000, guid: 5cd56e481dbd3214fb4d56d2a988bce5, type: 2}
@@ -129274,6 +129301,8 @@ MonoBehaviour:
         eggPrefab:
           gameObject: {fileID: 4875906831416810242, guid: cf5c01008cb4b0545966476ef384ba09,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         mailBox: {fileID: 1729350821}
     - rid: 5882124470068445184
@@ -129292,6 +129321,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1863775356}
         description:
@@ -129320,6 +129351,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1656121163}
         description:
@@ -129334,6 +129367,8 @@ MonoBehaviour:
         fruit:
           gameObject: {fileID: 1108172281563609256, guid: a751d681912b4084f8f53000b749377f,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         fruitSpawnLocation: {fileID: 1729350821}
         successSpawnLocation: {fileID: 2083936586}
@@ -129354,6 +129389,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 113915689}
         maxEggs: 2
@@ -129407,6 +129444,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129437,6 +129476,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 113915689}
         maxEggs: 8
@@ -129517,6 +129558,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1904187990}
         description:
@@ -129545,6 +129588,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1556242186}
         description:
@@ -129616,6 +129661,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1354849217}
         description:
@@ -129644,6 +129691,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129674,6 +129723,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129704,6 +129755,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129734,6 +129787,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 2136620468}
         description:
@@ -129762,6 +129817,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 113915689}
         maxEggs: 3
@@ -129790,6 +129847,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129819,6 +129878,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 96969141}
         description:
@@ -129847,6 +129908,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 98769}
         description:
@@ -129874,6 +129937,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 1656121163}
         description:
@@ -129888,6 +129953,8 @@ MonoBehaviour:
         fruit:
           gameObject: {fileID: 1108172281563609256, guid: 3e37074b175176045ac3af82e92f423e,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         fruitSpawnLocation: {fileID: 1729350821}
         successSpawnLocation: {fileID: 2083936586}
@@ -129908,6 +129975,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 113915689}
         maxEggs: 8
@@ -129936,6 +130005,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129966,6 +130037,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -129996,6 +130069,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -130026,6 +130101,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -130056,6 +130133,8 @@ MonoBehaviour:
         spaceBeam:
           gameObject: {fileID: 4110194595212281148, guid: 175378b3ef3acc344b9287bed0f5296b,
             type: 3}
+          assetGroup: 
+          assetName: 
           optionalDatabase: {fileID: 0}
         spaceBeamTarget: {fileID: 942865863}
         description:
@@ -130121,7 +130200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -130129,9 +130207,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 834699461}
-  sceneViewId: 3
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &834699464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145431,7 +145506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -145441,9 +145515,6 @@ MonoBehaviour:
   - {fileID: 928972007}
   - {fileID: 928972010}
   - {fileID: 928972015}
-  sceneViewId: 121
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!95 &928972014 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: 54565293a431f0647bdf1a71fa935a16,
@@ -161649,7 +161720,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -161657,9 +161727,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 975352357}
-  sceneViewId: 101
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!82 &975352355
 AudioSource:
   m_ObjectHideFlags: 0
@@ -201023,7 +201090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -201031,9 +201097,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1242816083}
-  sceneViewId: 155
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!65 &1242816082
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -203808,7 +203871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -203818,9 +203880,6 @@ MonoBehaviour:
   - {fileID: 1252549623}
   - {fileID: 1252549624}
   - {fileID: 1252549629}
-  sceneViewId: 47
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!114 &1252549623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205124,7 +205183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -205132,9 +205190,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1257620108}
-  sceneViewId: 159
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &1257620110
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -205595,53 +205650,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1260507134}
   m_PrefabAsset: {fileID: 0}
---- !u!28 &1260967908
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Lightning_PositionMap
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 2
-  m_Width: 8
-  m_Height: 1
-  m_CompleteImageSize: 128
-  m_MipsStripped: 0
-  m_TextureFormat: 20
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 0
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 1
-  m_PlatformBlob: 
-  image data: 128
-  _typelessdata: 9af967c3f0522742d6c32c430000803f736868c3fb292c42e07a2e430000803ff8136ac380152a42d6632d430000803f21f06ac3420b304270fd2a430000803f4a8c67c361903742f5282b430000803f879664c394c33142d6632e430000803fd90e63c3d2cd314214ee2c430000803f540365c3d24d2742a9d12c430000803f
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
 --- !u!4 &1261012452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2eb9ace0a680f6f4eb2c7c50c6834267,
@@ -206115,16 +206123,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 108
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!136 &1264398052
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -240558,6 +240562,8 @@ MonoBehaviour:
   pachinkoBallPrefab:
     gameObject: {fileID: 1388518888101982767, guid: a5aad232361f1f340b126e83a4b7f50d,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   ballSpawnPoint: {fileID: 614715580}
   constantForce: {fileID: 79866547}
@@ -240671,7 +240677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -240679,9 +240684,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1492927504}
-  sceneViewId: 115
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!82 &1492927509
 AudioSource:
   m_ObjectHideFlags: 0
@@ -242074,7 +242076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -242083,9 +242084,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 1504612193}
   - {fileID: 359322814}
-  sceneViewId: 116
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1505798061
 GameObject:
   m_ObjectHideFlags: 0
@@ -277189,16 +277187,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 138
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!4 &1696567031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1211327513617741613, guid: e027eb106162ec24caaf11d881182856,
@@ -282800,7 +282794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -282808,9 +282801,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1726987608}
-  sceneViewId: 75
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &1726987605
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -289757,7 +289747,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -289765,9 +289754,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1770935313}
-  sceneViewId: 156
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &1770935315
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -293129,7 +293115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -293137,9 +293122,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1794229062}
-  sceneViewId: 167
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &1794229064
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -293357,7 +293339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -293365,9 +293346,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1794868536}
-  sceneViewId: 8
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &1794868538
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -308337,16 +308315,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 15
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!4 &1883351007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9073595008780642209, guid: 5a12cb200707c90408cd70450b2e768b,
@@ -328729,7 +328703,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -328737,9 +328710,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2022985156}
-  sceneViewId: 26
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!136 &2022985158
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -333713,7 +333683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -333721,9 +333690,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2057533903}
-  sceneViewId: 109
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!4 &2057666776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9073595008780642209, guid: 5a12cb200707c90408cd70450b2e768b,
@@ -344266,7 +344232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -344274,9 +344239,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 2123432838}
-  sceneViewId: 16
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &2123432840
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -348341,7 +348303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -348349,9 +348310,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5594835734855968292}
-  sceneViewId: 61
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &278907653831000890
 GameObject:
   m_ObjectHideFlags: 0
@@ -349162,7 +349120,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[0].m_Value
       value: 
-      objectReference: {fileID: 1260967908}
+      objectReference: {fileID: 623511560}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24cf10a9d79cd20439523f1400bc1fce, type: 3}
 --- !u!4 &854138841937624099 stripped
@@ -349559,7 +349517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -349569,9 +349526,6 @@ MonoBehaviour:
   - {fileID: 915706546136420533}
   - {fileID: 915706546136420535}
   - {fileID: 6171776625954649347}
-  sceneViewId: 94
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &915706546171871116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -354430,7 +354384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -354438,9 +354391,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1015751651941283935}
-  sceneViewId: 98
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &1051617302185356007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -357483,6 +357433,8 @@ MonoBehaviour:
   iceCube:
     gameObject: {fileID: 2189650494590434039, guid: c20c66225b257bc4687f182bbc47645f,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   midnight: {fileID: 11400000, guid: 305e944eb7950264d8b36c509133b906, type: 2}
 --- !u!64 &4434916636693441465
@@ -357608,7 +357560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -357616,9 +357567,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4434916636693441463}
-  sceneViewId: 99
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!95 &4434916636693441468
 Animator:
   serializedVersion: 5
@@ -358706,6 +358654,8 @@ MonoBehaviour:
   prefabSpawn:
     gameObject: {fileID: 2189650494590434039, guid: c20c66225b257bc4687f182bbc47645f,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
 --- !u!33 &5685938599462842630
 MeshFilter:
@@ -359847,6 +359797,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1548270288207718913, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990568893762718052, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990568893762718052, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990568893762718052, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990568893762718052, guid: 364d21a5e4c0c464784d42f01767a083,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990568893762718052, guid: 364d21a5e4c0c464784d42f01767a083,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -383475,7 +383450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -383483,9 +383457,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8712960149138153350}
-  sceneViewId: 168
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &8712960149143129857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390380,7 +390351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -390388,9 +390358,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8712960149350150858}
-  sceneViewId: 33
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &8712960149350150898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -405943,7 +405910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -405951,9 +405917,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8712960149800896155}
-  sceneViewId: 76
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!64 &8712960149800896149
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -407055,7 +407018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 1
@@ -407063,9 +407025,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8712960149845758670}
-  sceneViewId: 50
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1001 &8712960149848879589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417312,6 +417271,8 @@ MonoBehaviour:
   koboldPrefab:
     gameObject: {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae,
       type: 3}
+    assetGroup: 
+    assetName: 
     optionalDatabase: {fileID: 0}
   targetAnimator: {fileID: 8712960150401167722}
   floater: {fileID: 8712960148978460738}
@@ -417328,7 +417289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -417336,9 +417296,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8712960150168954608}
-  sceneViewId: 169
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &8712960150168954613
 GameObject:
   m_ObjectHideFlags: 0

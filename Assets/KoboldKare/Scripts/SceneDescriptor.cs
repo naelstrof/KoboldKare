@@ -1,3 +1,4 @@
+using FishNet;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -48,12 +49,19 @@ public class SceneDescriptor : OrbitCameraPivotBase {
 
     }
 
+    void Start() {
+        var networkManager = InstanceFinder.NetworkManager;
+        if (networkManager.ServerManager.Started && GameManager.InLevel()) {
+            networkManager.GetComponent<KoboldPlayerSpawner>().SpawnPlayers();
+        }
+    }
+
     public static void GetSpawnLocationAndRotation(out Vector3 position, out Quaternion rotation) {
         if (instance == null || instance.spawnLocations == null || instance.spawnLocations.Length == 0) {
             var spawn = GameObject.Find("PlayerSpawn");
             if (spawn != null) {
                 position = spawn.transform.position;
-                rotation = spawn.transform.rotation;
+                rotation = Quaternion.identity;
             } else {
                 position = Vector3.zero;
                 rotation = Quaternion.identity;
@@ -61,11 +69,7 @@ public class SceneDescriptor : OrbitCameraPivotBase {
             return;
         }
         var t = instance.spawnLocations[Random.Range(0, instance.spawnLocations.Length)];
-        Vector3 flattenedForward = t.forward.With(y:0);
-        if (flattenedForward.magnitude == 0) {
-            flattenedForward = Vector3.forward;
-        }
-        rotation = Quaternion.FromToRotation(Vector3.forward,flattenedForward.normalized); 
+        rotation = Quaternion.identity; 
         position = t.position;
     }
     public static bool CanGrabFly() {

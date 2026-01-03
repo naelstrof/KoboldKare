@@ -80,7 +80,7 @@ public class OnPlayerEnter : MonoBehaviour {
             return;
         }
         NetworkedKobold p = other.transform.GetComponentInParent<NetworkedKobold>();
-        if (p != null && p.GetPlayerControlled() == NetworkedKobold.ControlType.LocalPlayer) {
+        if (p != null && p.GetControlType() == NetworkedKobold.ControlType.NetworkedPlayer && p.IsOwner) {
             StopAllCoroutines();
             StartCoroutine(OnEnterDelay());
         }
@@ -91,7 +91,7 @@ public class OnPlayerEnter : MonoBehaviour {
         }
 
         NetworkedKobold p = other.transform.GetComponentInParent<NetworkedKobold>();
-        if (p != null && p.GetPlayerControlled() == NetworkedKobold.ControlType.LocalPlayer) {
+        if (p != null && p.GetControlType() == NetworkedKobold.ControlType.NetworkedPlayer && p.IsOwner) {
             StopAllCoroutines();
             StartCoroutine(OnExitDelay());
         }

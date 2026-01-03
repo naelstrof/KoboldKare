@@ -725,7 +725,7 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         if (isPlayerControlled) {
             // FIXME FISHNET
             //PhotonNetwork.LocalPlayer.TagObject = this;
-            GetComponent<NetworkedKobold>().SetPlayerControlled(NetworkedKobold.ControlType.LocalPlayer);
+            GetComponent<NetworkedKobold>().SetControlType(NetworkedKobold.ControlType.NetworkedPlayer);
         }
         return Task.CompletedTask;
     }

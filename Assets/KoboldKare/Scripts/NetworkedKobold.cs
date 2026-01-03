@@ -21,8 +21,7 @@ public class NetworkedKobold : GeneHolder {
     public readonly SyncVar<Vector2> hipOffset = new SyncVar<Vector2>();
     public readonly SyncVar<byte[]> ragdollBitBuffer = new SyncVar<byte[]>();
     public readonly SyncVar<bool> ragdolled = new SyncVar<bool>();
-    
-    private ControlType controlType = ControlType.AIPlayer;
+    private readonly SyncVar<ControlType> controlType = new(ControlType.AIPlayer);
 
     public Quaternion GetFacingRotation() => Quaternion.AngleAxis(facingRotationY.Value, Vector3.up);
     public Vector3 GetFacingDirection() => GetFacingRotation()*Vector3.forward;
@@ -32,8 +31,32 @@ public class NetworkedKobold : GeneHolder {
     
     private void Awake() {
         koboldAssetName.OnChange += OnKoboldAssetNameChanged;
+        controlType.OnChange += OnControlTypeChanged;
         OnKoboldAssetNameChanged("", koboldAssetName.Value, true);
         RandomizeGenes();
+    }
+
+    private void OnControlTypeChanged(ControlType prev, ControlType next, bool asServer) {
+        if (next == ControlType.NetworkedPlayer && PlayerPossession.TryGetPlayerInstance(out var player)) {
+            next = ControlType.AIPlayer;
+        }
+        
+        if (!koboldInstance || changingKobold) return;
+        
+        koboldInstance.GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(next == ControlType.NetworkedPlayer && IsOwner);
+        koboldInstance.GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(next == ControlType.AIPlayer);
+        if (!koboldInstance.TryGetComponent<KoboldCharacterController>(out var controller)) return;
+        controller.inputDir = Vector3.zero;
+        controller.inputJump = false;
+    }
+    
+    [ServerRpc(RequireOwnership = true)]
+    public void SetControlType(ControlType newControlType) {
+        controlType.Value = newControlType;
+    }
+    
+    public void SetSpawnType(ControlType newControlType) {
+        controlType.Value = newControlType;
     }
 
     [ServerRpc(RequireOwnership = true)]
@@ -121,7 +144,6 @@ public class NetworkedKobold : GeneHolder {
     
     public enum ControlType {
         NetworkedPlayer,
-        LocalPlayer,
         AIPlayer,
     }
 
@@ -296,7 +318,6 @@ public class NetworkedKobold : GeneHolder {
             var footlands = await defaultFootstepTask.Task;
             characterAnimator.SetDefaultFootstepPack(footlands);
             characterAnimator.SetBody(body);
-            Debug.Log(footlands);
             characterController.footland = footlands;
 
             var precisionGrabber = koboldGameObject.AddComponent<PrecisionGrabber>();
@@ -333,7 +354,7 @@ public class NetworkedKobold : GeneHolder {
             handles.Add(chatYowlPackTask);
             chatter.SetYowlPack(await chatYowlPackTask.Task);
 
-            possession.gameObject.SetActive(controlType == ControlType.LocalPlayer);
+            possession.gameObject.SetActive(controlType.Value == ControlType.NetworkedPlayer && IsOwner);
             Physics.SyncTransforms();
             
             koboldGameObject.SetActive(true);
@@ -352,7 +373,7 @@ public class NetworkedKobold : GeneHolder {
             if (koboldAIPossession == null) {
                 koboldAIPossession = koboldGameObject.AddComponent<KoboldAIPossession>();
             }
-            koboldAIPossession.enabled = controlType == ControlType.AIPlayer;
+            koboldAIPossession.enabled = controlType.Value == ControlType.AIPlayer;
 
             var neck = characterDescriptor.GetDisplayAnimator().GetBoneTransform(HumanBodyBones.Neck);
             if (neck) {
@@ -374,24 +395,10 @@ public class NetworkedKobold : GeneHolder {
         }
     }
     
-    public void SetPlayerControlled(ControlType newControlType) {
-        // Don't allow multiple players to be set to LocalPlayer
-        if (newControlType == ControlType.LocalPlayer && PlayerPossession.TryGetPlayerInstance(out var player)) {
-            newControlType = ControlType.AIPlayer;
-        }
-        
-        controlType = newControlType;
-        if (!koboldInstance) return;
-        GetComponentInChildren<PlayerPossession>(true).gameObject.SetActive(newControlType == ControlType.LocalPlayer);
-        GetComponentInChildren<KoboldAIPossession>(true).gameObject.SetActive(newControlType == ControlType.AIPlayer);
-        if (!koboldInstance.TryGetComponent<KoboldCharacterController>(out var controller)) return;
-        controller.inputDir = Vector3.zero;
-        controller.inputJump = false;
-    }
-    public ControlType GetPlayerControlled() => controlType;
+    public ControlType GetControlType() => controlType.Value;
     
     public void SetEyeDir(Vector3 dir) {
-        if (controlType == ControlType.LocalPlayer) {
+        if (controlType.Value == ControlType.NetworkedPlayer && IsOwner) {
             OrbitCamera.SetPlayerIntendedFacingDirection(dir);
         }
     }

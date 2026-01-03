@@ -16,31 +16,60 @@ namespace Photon.Pun {
     public class PhotonView : MonoBehaviour {
         public byte Group = 0;
         public int prefixField = -1;
-
         [FormerlySerializedAs("synchronization")]
         public ViewSynchronization Synchronization = ViewSynchronization.UnreliableOnChange;
-
         protected internal bool mixedModeIsReliable = false;
-
-        /// <summary>Defines if ownership of this PhotonView is fixed, can be requested or simply taken.</summary>
-        /// <remarks>
-        /// Note that you can't edit this value at runtime.
-        /// The options are described in enum OwnershipOption.
-        /// The current owner has to implement IPunCallbacks.OnOwnershipRequest to react to the ownership request.
-        /// </remarks>
         [FormerlySerializedAs("ownershipTransfer")]
         public OwnershipOption OwnershipTransfer = OwnershipOption.Fixed;
-
+        [SerializeField] [FormerlySerializedAs("viewIdField")]
+        public int sceneViewId = 0;
+        
+        private static List<PhotonView> photonViews = new ();
 
         public enum ObservableSearch {
             Manual,
             AutoFindActive,
             AutoFindAll
         }
-
-        /// Default to manual so existing PVs in projects default to same as before. Reset() changes this to AutoAll for new implementations.
         public ObservableSearch observableSearch = ObservableSearch.Manual;
-
         public List<Component> ObservedComponents;
+
+        public static event System.Action<PhotonView> OnPhotonViewAdd;
+        public static event System.Action<PhotonView> OnPhotonViewRemove;
+
+        public static bool TryFind(out PhotonView view, int sceneViewID) {
+            foreach (var v in photonViews) {
+                if (v.sceneViewId == sceneViewID) {
+                    view = v;
+                    return true;
+                }
+            }
+
+            foreach (var v in FindObjectsByType<PhotonView>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+                if (v.sceneViewId == sceneViewID) {
+                    view = v;
+                    return true;
+                }
+            }
+
+            view = null;
+            return false;
+        }
+
+
+        private bool tracked = false;
+        void Start() {
+            tracked = true;
+            OnPhotonViewAdd?.Invoke(this);
+            photonViews.Add(this);
+        }
+
+        void OnDestroy() {
+            if (!tracked) {
+                return;
+            }
+            OnPhotonViewRemove?.Invoke(this);
+            photonViews.Remove(this);
+        }
     }
 }

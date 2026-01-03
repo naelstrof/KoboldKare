@@ -70,9 +70,9 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         
         Kobold k = station.info.user;
         // FIXME FISHNET
-        /*if (k == null || !k.photonView.IsMine) {
+        if (k == null || !k.GetComponentInParent<NetworkedKobold>().IsOwner) {
             return;
-        }*/
+        }
         
         if (!KoboldReadyToLayEgg(k)) {
             return;

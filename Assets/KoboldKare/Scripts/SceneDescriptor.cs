@@ -51,8 +51,8 @@ public class SceneDescriptor : OrbitCameraPivotBase {
 
     void Start() {
         var networkManager = InstanceFinder.NetworkManager;
-        if (networkManager.ServerManager.Started && GameManager.InLevel()) {
-            networkManager.GetComponent<KoboldPlayerSpawner>().SpawnPlayers();
+        if (networkManager.ClientManager.Started) {
+            networkManager.ClientManager.Broadcast(PlayerKoboldLoader.GetPlayerInstantiationData());
         }
     }
 

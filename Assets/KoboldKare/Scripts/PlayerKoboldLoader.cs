@@ -65,6 +65,29 @@ public class PlayerKoboldLoader : MonoBehaviour {
         }
     }
 
+    public static NetworkedKobold.NetworkedKoboldInstantiationData GetPlayerInstantiationData() {
+        var koboldSpecies = "Kobold";
+        var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
+        if (prefabSelect != null && prefabSelect.TryGetPrefab(out string prefabName)) {
+            koboldSpecies = prefabName;
+        }
+
+        var data = NetworkedKobold.NetworkedKoboldInstantiationData.Default();
+        data.controlType = NetworkedKobold.ControlType.NetworkedPlayer;
+        data.koboldAssetName = koboldSpecies;
+        data.dickEquip = ((SettingInt)SettingsManager.GetSetting("Dick")).GetValue() == 0 ? "None" : "HumanoidDick";
+        data.hue = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("Hue")).GetValue() * 255f);
+        data.clothingHue = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("ClothingHue")).GetValue() * 255f);
+        data.brightness = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("Brightness")).GetValue() * 255f);
+        data.saturation = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("Saturation")).GetValue() * 255f);
+        data.dickSize = Mathf.Lerp(0f, 10f, ((SettingFloat)SettingsManager.GetSetting("DickSize")).GetValue());
+        data.ballSize = Mathf.Lerp(5f, 10f, ((SettingFloat)SettingsManager.GetSetting("BallSize")).GetValue());
+        data.dickThickness = Mathf.Lerp(0.3f, 0.7f, ((SettingFloat)SettingsManager.GetSetting("DickThickness")).GetValue());
+        data.breastSize = ((SettingFloat)SettingsManager.GetSetting("DickThickness")).GetValue() * 30f;
+        data.baseSize = ((SettingFloat)SettingsManager.GetSetting("KoboldSize")).GetValue() * 20f;
+        return data;
+    }
+
     public static void ApplyPlayerGenes(GeneHolder target) {
         target.SetFatSize(0f);
         foreach (string setting in settingNames) {

@@ -8,6 +8,7 @@ using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Managing.Scened;
 using FishNet.Object;
+using FishNet.Transporting;
 using UnityEngine.SceneManagement;
 
 public class KoboldPlayerSpawner : MonoBehaviour {
@@ -91,34 +92,29 @@ public class KoboldPlayerSpawner : MonoBehaviour {
             return;
         }
         _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
+        _networkManager.ServerManager.RegisterBroadcast<NetworkedKobold.NetworkedKoboldInstantiationData>(OnSpawnBroadcast);
     }
 
-    public void SpawnPlayers() {
-        if (!_networkManager.ServerManager.Started) {
+    
+    private void OnSpawnBroadcast(NetworkConnection conn, NetworkedKobold.NetworkedKoboldInstantiationData data, Channel channel) {
+        if (!GameManager.InLevel()) {
+            return;
+        }
+
+        if (!_playerPrefab) {
+            _networkManager.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");
             return;
         }
         
-        if (_playerPrefab == null) {
-            Debug.LogWarning("Player prefab is not assigned and thus cannot be spawned.");
-            return;
-        }
-
-        foreach (NetworkConnection client in _networkManager.ServerManager.Clients.Values) {
-            // Since the ServerManager.Clients collection contains all clients (even non-authenticated ones),
-            // we need to check if they are authenticated first before spawning a player object for them.
-            if (!client.IsAuthenticated)
-                continue;
-            Spawn(client);
-        }
-    }
-
-    private void Spawn(NetworkConnection conn) {
+        // FIXME fishnet: needs validation to prevent spam
         Vector3 position;
         Quaternion rotation;
         SceneDescriptor.GetSpawnLocationAndRotation(out position, out rotation);
 
+        data.controlType = NetworkedKobold.ControlType.NetworkedPlayer;
+
         NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
-        nob.GetComponent<NetworkedKobold>().SetSpawnType(NetworkedKobold.ControlType.NetworkedPlayer);
+        nob.GetComponent<NetworkedKobold>().SetInstantiationData(data);
         _networkManager.ServerManager.Spawn(nob, conn);
 
         // If there are no global scenes 
@@ -133,13 +129,11 @@ public class KoboldPlayerSpawner : MonoBehaviour {
     /// Called when a client loads initial scenes after connecting.
     /// </summary>
     private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer) {
-        if (!asServer) {
-            Debug.Log("skipped loading player due to being the client");
+        if (asServer) {
             return;
         }
 
         if (!GameManager.InLevel()) {
-            Debug.Log("skipped loading player due to being in a menu");
             return;
         }
 
@@ -147,6 +141,7 @@ public class KoboldPlayerSpawner : MonoBehaviour {
             _networkManager.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");
             return;
         }
-        Spawn(conn);
+        
+        _networkManager.ClientManager.Broadcast(PlayerKoboldLoader.GetPlayerInstantiationData());
     }
 }

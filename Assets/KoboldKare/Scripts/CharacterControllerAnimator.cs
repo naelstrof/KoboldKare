@@ -301,8 +301,8 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
 
             if (!inputShouldIgnoreLookDirChange) {
                 lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
-                chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeDir.y / 45f));
-                headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeDir.y / 90f));
+                chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(Vector3.Dot(eyeDir, Vector3.down)*2f));
+                headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(Vector3.Dot(eyeDir, Vector3.down)));
             }
 
             handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));

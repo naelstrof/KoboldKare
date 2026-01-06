@@ -138,7 +138,7 @@ public class NetworkedKobold : GeneHolder {
         ragdolled.Value = newRagdoll;
     }
     
-    [ServerRpc(RequireOwnership = true)]
+    [ServerRpc(RequireOwnership = true, RunLocally = true)]
     public void SetEyeRot(Vector2 newEyeRot) {
         eyeRot.Value = newEyeRot;
     }
@@ -309,7 +309,7 @@ public class NetworkedKobold : GeneHolder {
             }
         }
 
-        foreach (JiggleSkin skin in GetComponentsInChildren<JiggleSkin>()) {
+        foreach (JiggleSkin skin in koboldGameObject.GetComponentsInChildren<JiggleSkin>()) {
             foreach (var jiggleZone in skin.jiggleZones) {
                 // reverse-compatiblity for old mods, force animated to true, costs a little performance, oh well!
                 jiggleZone.animated = true;

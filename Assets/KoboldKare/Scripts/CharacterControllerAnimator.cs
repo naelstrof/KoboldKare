@@ -77,6 +77,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
 
     private Vector3 lastPosition;
     private bool animating;
+    private Vector3 lookPos;
     private static readonly int PenetrationSize = Animator.StringToHash("PenetrationSize");
     private static readonly int SexFace = Animator.StringToHash("SexFace");
     private static readonly int Orgasm = Animator.StringToHash("Orgasm");
@@ -148,8 +149,14 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
             footstepSoundManager = existingFootstepSoundManager;
         }
         
+        kobold = playerModel.GetComponentInParent<Kobold>();
+        if (kobold != null) {
+            kobold.carriedChanged += OnCarriedChanged;
+            kobold.quaff += OnQuaff;
+        }
         footstepSoundManager.SetFootstepPack(footstepPack);
-
+        controller = playerModel.GetComponentInParent<KoboldCharacterController>();
+        solver = playerModel.GetComponentInChildren<Vilar.IK.ClassicIK>();
     }
 
     public Animator GetPlayerModel() => playerModel;
@@ -162,19 +169,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     private void Awake() {
-        kobold = GetComponentInParent<Kobold>();
-        solver = GetComponentInChildren<Vilar.IK.ClassicIK>();
-        playerModel = GetComponentInChildren<Animator>();
-        if (kobold != null) {
-            kobold.carriedChanged += OnCarriedChanged;
-            kobold.quaff += OnQuaff;
-        }
-        handler = playerModel.gameObject.AddComponent<LookAtHandler>();
-        controller = GetComponentInParent<KoboldCharacterController>();
-        playerModel.gameObject.AddComponent<AnimatorExtender>();
-        footIK = playerModel.gameObject.AddComponent<FootIK>();
-        playerModel.gameObject.AddComponent<HandIK>();
-        playerModel.gameObject.AddComponent<FootstepSoundManager>().SetFootstepPack(footstepPack);
+        SetPlayerModel(GetComponentInChildren<Animator>());
     }
 
     private void OnQuaff() {
@@ -220,7 +215,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         networkedKobold = GetComponentInParent<NetworkedKobold>();
         if (networkedKobold != null) {
             networkedKobold.facingRotationY.OnChange += OnFacingRotationChanged;
-            networkedKobold.eyeRot.OnChange += OnEyeRotChanged;
             networkedKobold.hipOffset.OnChange += OnHipOffsetChanged;
         }
     }
@@ -228,7 +222,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     private void OnDestroy() {
         if (networkedKobold != null) {
             networkedKobold.facingRotationY.OnChange -= OnFacingRotationChanged;
-            networkedKobold.eyeRot.OnChange -= OnEyeRotChanged;
             networkedKobold.hipOffset.OnChange -= OnHipOffsetChanged;
         }
     }
@@ -237,42 +230,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         if (kobold != null) {
             playerModel.SetFloat(ThrustX, next.x);
             playerModel.SetFloat(ThrustY, next.y);
-        }
-    }
-
-    private void OnEyeRotChanged(Vector2 prev, Vector2 nextEyeRot, bool asServer) {
-        var eyeDir = networkedKobold.GetEyeDir();
-        Vector3 lookPos = headTransform.position + eyeDir;
-
-        if (!inputShouldIgnoreLookDirChange) {
-            lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
-            chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(nextEyeRot.y / 45f));
-            headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(nextEyeRot.y / 90f));
-        }
-
-        handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
-        if (animating) {
-            if (!inputShouldIgnoreLookDirChange) {
-                var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
-                var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
-                var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
-                var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
-                Vector3 hipToHead = head.position - hips.position;
-                Vector3 leftHandToRightHand = right.position - left.position;
-                Vector3 probableForward = Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
-                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
-                currentStation.SetLookAtPosition(lookPos);
-            }
-            
-            currentStation.SetLookAtWeight(lookModifierMemory * 0.5f);
-            currentStation.SetHipOffset(networkedKobold.GetHipOffset());
-            handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
-        } else {
-            handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory*lookModifierMemory, headLookMemory*lookModifierMemory, 1f*lookModifierMemory, 0.4f);
-        }
-
-        if (!inputShouldIgnoreLookDirChange) {
-            handler.SetLookAtPosition(lookPos);
         }
     }
 
@@ -328,6 +285,55 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     }
 
     void Update() {
+        if (networkedKobold) {
+            var eyeDir = networkedKobold.GetEyeDir();
+            
+            if (networkedKobold.IsOwner ) {
+                if ((inputShouldFaceEye || inputActivate || inputGrabbing)) {
+                    networkedKobold.SetFacingDirection(eyeDir);
+                }
+
+                if (controller.inputDir != Vector3.zero && !controller.inputWalking && !inputActivate && !inputGrabbing) {
+                    networkedKobold.SetFacingDirection(controller.inputDir);
+                }
+            }
+            Vector3 lookPos = headTransform.position + eyeDir;
+
+            if (!inputShouldIgnoreLookDirChange) {
+                lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, playerModel.transform.forward));
+                chestLookMemory = Mathf.Lerp(0.5f, 0f, Mathf.Abs(eyeDir.y / 45f));
+                headLookMemory = Mathf.Lerp(1f, 0.5f, Mathf.Abs(eyeDir.y / 90f));
+            }
+
+            handler.SetWeight(Mathf.MoveTowards(handler.GetWeight(), lookEnabled ? 1f : 0.4f, Time.deltaTime));
+            if (animating) {
+                if (!inputShouldIgnoreLookDirChange) {
+                    var left = playerModel.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+                    var right = playerModel.GetBoneTransform(HumanBodyBones.RightUpperArm);
+                    var hips = playerModel.GetBoneTransform(HumanBodyBones.Hips);
+                    var head = playerModel.GetBoneTransform(HumanBodyBones.Head);
+                    Vector3 hipToHead = head.position - hips.position;
+                    Vector3 leftHandToRightHand = right.position - left.position;
+                    Vector3 probableForward =
+                        Vector3.Cross(leftHandToRightHand.normalized, hipToHead.normalized).normalized;
+                    lookModifierMemory = 1f - Mathf.Clamp01(-Vector3.Dot(eyeDir, probableForward));
+                    currentStation.SetLookAtPosition(lookPos);
+                }
+
+                currentStation.SetLookAtWeight(lookModifierMemory * 0.5f);
+                currentStation.SetHipOffset(networkedKobold.GetHipOffset());
+                handler.SetLookAtWeight(handler.GetWeight(), 0f, headLookMemory * lookModifierMemory,
+                    1f * lookModifierMemory, 0.4f);
+            } else {
+                handler.SetLookAtWeight(handler.GetWeight(), chestLookMemory * lookModifierMemory,
+                    headLookMemory * lookModifierMemory, 1f * lookModifierMemory, 0.4f);
+            }
+
+            if (!inputShouldIgnoreLookDirChange) {
+                handler.SetLookAtPosition(lookPos);
+            }
+        }
+
         if (kobold != null) {
             float maxPen = 0f;
             playerModel.SetFloat(PenetrationSize, Mathf.Clamp01(maxPen * 4f));

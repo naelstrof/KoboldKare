@@ -405,11 +405,7 @@ public class PrecisionGrabber : MonoBehaviour, ISavable {
         networkedKobold.hue.OnChange += OnGenesChanged;
         
         removeIds = new List<Grab>();
-        previewHandAnimator = Instantiate(handDisplayPrefab, transform)
-            .GetComponentInChildren<Animator>();
-        previewHandAnimator.SetBool(GrabbingHash, true);
-        previewHandTransform = previewHandAnimator.GetBoneTransform(HumanBodyBones.RightHand);
-        previewHandAnimator.gameObject.SetActive(false);
+        //previewHandAnimator = Instantiate(handDisplayPrefab, transform) .GetComponentInChildren<Animator>();
         //handVisibilityEvent.AddListener(OnHandVisibilityChanged);
     }
 

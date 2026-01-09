@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleJSON;
 
-[RequireComponent(typeof(AudioSource), typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class BreakOnGrab : MonoBehaviour, ISavable {
     private bool grabbed = false;
     private AudioSource source;
@@ -17,7 +17,7 @@ public class BreakOnGrab : MonoBehaviour, ISavable {
     private NetworkedEntity networkedEntity;
     void Start() {
         source = GetComponent<AudioSource>();
-        body = GetComponent<Rigidbody>();
+        body = GetComponentInParent<Rigidbody>();
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity == null) {
             return;
@@ -59,7 +59,6 @@ public class BreakOnGrab : MonoBehaviour, ISavable {
     }
 
     private void OnGrab(NetworkedKobold by) {
-        Debug.Log(networkedEntity.IsOwner);
         if (networkedEntity.IsOwner) {
             networkedEntity.SetFrozen(true);
         }

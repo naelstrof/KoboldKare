@@ -54,7 +54,7 @@ public class Grabber : MonoBehaviour {
             this.grabbable = grabbable;
             this.springStrength = springStrength;
             this.dampingStrength = dampingStrength;
-            body = grabbable.transform.GetComponentInParent<Rigidbody>();
+            body = grabbable.transform.GetComponentInChildren<Rigidbody>();
             if (body == null) {
                 valid = false;
                 return;

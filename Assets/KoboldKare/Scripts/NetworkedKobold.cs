@@ -236,7 +236,7 @@ public class NetworkedKobold : NetworkedEntity {
                 await TryInitializeKobold(koboldInstance);
             } catch (Exception e) {
                 Debug.LogException(e);
-                Debug.LogError($"Failed to initialize kobold with name {next}, loading error kobold instead.");
+                Debug.LogError($"Failed to initialize kobold with name {next.groupName}:{next.assetName}, loading error kobold instead.");
                 Destroy(koboldInstance);
                 koboldInstance = Instantiate(GameManager.GetErrorKobold(), transform);
                 await TryInitializeKobold(koboldInstance);

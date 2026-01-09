@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1819641265608231892}
   - component: {fileID: 5445727179456667262}
   - component: {fileID: 907355526734446831}
+  - component: {fileID: 2234168128789241650}
   m_Layer: 0
   m_Name: NetworkedEntity
   m_TagString: Untagged
@@ -118,3 +119,49 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 5445727179456667262}
   _networkObjectCache: {fileID: 0}
   _allowTakeOwnership: 1
+--- !u!114 &2234168128789241650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730817269567564991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069b0b0a3a8d880e58cc73957a849fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5445727179456667262}
+  _networkObjectCache: {fileID: 0}
+  _componentConfiguration: 2
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _useScaledTime: 1
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSensitivity: 0.001
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 1
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 1
+  _scaleSensitivity: 0.001
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0

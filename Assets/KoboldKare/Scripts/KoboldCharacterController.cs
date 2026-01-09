@@ -176,10 +176,7 @@ public class KoboldCharacterController : MonoBehaviour, ISavable {
         colliderNormalCenter = collider.center;
         defaultWorldModelPosition = worldModel.localPosition;
         if (!body) {
-            body = GetComponent<Rigidbody>();
-        }
-        if (!body) {
-            body = gameObject.AddComponent<Rigidbody>();
+            body = GetComponentInParent<Rigidbody>();
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class GenericGrabbable : MonoBehaviour, IGrabbable {
+public class GenericGrabbable : MonoBehaviour {
     [System.Serializable]
     public class RendererMaterialPair {
         public Renderer renderer;
@@ -12,14 +12,14 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
     public RendererMaterialPair[] rendererMaterialPairs;
     public Renderer[] renderers;
     public Transform center;
-    //public GrabbableType grabbableType;
-    public bool CanGrab(Kobold kobold) {
+
+    private NetworkedEntity networkedEntity;
+    
+    public bool OnGrabRequested(NetworkedKobold by) {
         return true;
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnGrabRPC(int koboldID) {
+    private void OnGrab(NetworkedKobold by) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {
                 pair.renderer.material = pair.pickedUpMaterial;
@@ -34,6 +34,11 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
             }
             pair.defaultMaterial = pair.renderer.material;
         }
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        networkedEntity.grabbed += OnGrab;
+        networkedEntity.released += OnRelease;
+        networkedEntity.grabRequested += OnGrabRequested;
+        networkedEntity.SetGrabTransform(center != null ? center : transform);
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
@@ -43,17 +48,12 @@ public class GenericGrabbable : MonoBehaviour, IGrabbable {
         //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+    private void OnRelease(NetworkedKobold by, Vector3 velocity) {
         foreach(var pair in rendererMaterialPairs) {
             if (pair.pickedUpMaterial != null) {
                 pair.renderer.material = pair.defaultMaterial;
             }
         }
-    }
-    public Transform GrabTransform() {
-        return center;
     }
 
     void OnValidate() {

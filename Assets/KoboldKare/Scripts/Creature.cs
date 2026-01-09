@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Creature : MonoBehaviour, IGrabbable, IDamagable {
+public class Creature : MonoBehaviour, IDamagable {
     [SerializeField]
     private PhotonGameObjectReference spawnOnDeath;
     [SerializeField]
@@ -21,23 +21,28 @@ public class Creature : MonoBehaviour, IGrabbable, IDamagable {
     private float distanceTravelled = 0f;
     private float distanceTravelledVel;
     private float networkedDistanceTravelled = 0f;
+    private NetworkedEntity networkedEntity;
+
+    private void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (!networkedEntity) {
+            return;
+        }
+
+        networkedEntity.grabRequested += OnGrabRequested;
+        networkedEntity.grabbed += OnGrab;
+        networkedEntity.released += OnRelease;
+        networkedEntity.SetGrabTransform(transform);
+    }
 
     [SerializeField] private AudioPack gibSound;
-    public bool CanGrab(Kobold kobold) {
+    private bool OnGrabRequested(NetworkedKobold by) {
         return true;
     }
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnGrabRPC(int koboldID) {
+    private void OnGrab(NetworkedKobold by) {
         Die();
     }
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
-    }
-
-    public Transform GrabTransform() {
-        return transform;
+    private void OnRelease(NetworkedKobold by, Vector3 velocity) {
     }
 
     public void Update() {

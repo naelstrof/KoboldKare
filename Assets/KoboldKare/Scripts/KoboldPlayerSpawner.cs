@@ -71,9 +71,9 @@ public class KoboldPlayerSpawner : MonoBehaviour {
         if (obj.IsOwner) {
             var networkedKobold = obj.GetComponent<NetworkedKobold>();
             if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
-                networkedKobold.SetKoboldAssetName(playerPrefabName);
+                networkedKobold.SetAsset("PlayableCharacter", playerPrefabName);
             } else {
-                networkedKobold.SetKoboldAssetName("Kobold");
+                networkedKobold.SetAsset("PlayableCharacter", "Kobold");
             }
         }
     }

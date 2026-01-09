@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8261231560356814068}
   - component: {fileID: 1819641265608231892}
   - component: {fileID: 5445727179456667262}
+  - component: {fileID: 907355526734446831}
   m_Layer: 0
   m_Name: NetworkedEntity
   m_TagString: Untagged
@@ -101,3 +102,19 @@ MonoBehaviour:
   _preventDespawnOnDisconnect: 0
   _defaultDespawnType: 0
   _initializedTimestamp: 0
+--- !u!114 &907355526734446831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730817269567564991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03002f7d324007e41b10a9dc87ed3c38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5445727179456667262}
+  _networkObjectCache: {fileID: 0}
+  _allowTakeOwnership: 1

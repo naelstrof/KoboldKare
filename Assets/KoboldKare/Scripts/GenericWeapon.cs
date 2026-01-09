@@ -14,11 +14,11 @@ public class GenericWeapon : MonoBehaviour {
     public virtual Vector3 GetWeaponHoldPosition() {
         return weaponHoldOffset;
     }
-    public void OnEndFire(Kobold player) {
+    public void OnEndFire(NetworkedKobold player) {
         // FIXME FISHNET
         //photonView.RPC(nameof(OnEndFireRPC), RpcTarget.All, player.photonView.ViewID);
     }
-    public void OnFire(Kobold player) {
+    public void OnFire(NetworkedKobold player) {
         // FIXME FISHNET
         //photonView.RPC(nameof(OnFireRPC), RpcTarget.All, player.photonView.ViewID);
     }

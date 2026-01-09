@@ -11,7 +11,7 @@ using SimpleJSON;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
+public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     private static Collider[] colliders = new Collider[32];
     [System.Serializable]
     public class PenetrableSet {
@@ -469,6 +469,11 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         networkedKobold.maxEnergy.OnChange += OnMaxEnergyChanged;
         OnMaxEnergyChanged(networkedKobold.maxEnergy.Value, networkedKobold.maxEnergy.Value, true);
         
+        networkedKobold.grabbed += OnGrab;
+        networkedKobold.released += OnRelease;
+        networkedKobold.grabRequested += OnGrabRequest;
+        networkedKobold.SetGrabTransform(hip);
+        
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
@@ -488,14 +493,14 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
             networkedKobold.saturation.OnChange -= OnColorChanged;
             networkedKobold.clothingHue.OnChange -= OnColorChanged;
             networkedKobold.maxEnergy.OnChange -= OnMaxEnergyChanged;
-        
+            networkedKobold.grabbed -= OnGrab;
+            networkedKobold.released -= OnRelease;
+            networkedKobold.grabRequested -= OnGrabRequest;
         }
         // FIXME FISHNET
         //PlayAreaEnforcer.RemoveTrackedObject(photonView);
     }
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnGrabRPC(int koboldID) {
+    public void OnGrab(NetworkedKobold by) {
         grabbed = true;
         carriedChanged?.Invoke(true);
         controller.frictionMultiplier = 0.1f;
@@ -520,23 +525,19 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
         //photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
     }
 
-    public bool CanGrab(Kobold kobold) {
+    private bool OnGrabRequest(NetworkedKobold kobold) {
         return !controller.inputJump;
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+    public void OnRelease(NetworkedKobold by, Vector3 velocity) {
         carriedChanged?.Invoke(false);
         controller.frictionMultiplier = 1f;
         grabbed = false;
         controller.enabled = true;
-        
-        
-        // FIXME FISHNET
-        /*if (!photonView.IsMine) {
+
+        if (!networkedKobold.IsOwner) {
             return;
-        }*/
+        }
         
         foreach (Rigidbody b in ragdoller.GetRagdollBodies()) {
             b.velocity = velocity;
@@ -587,9 +588,6 @@ public class Kobold : MonoBehaviour, IGrabbable, ISavable, IValuedGood {
     }
 
     public bool PhysicsGrabbable() { return true; }
-    public Transform GrabTransform() {
-        return hip;
-    }
     private float FloorNearestPower(float baseNum, float target) {
         float f = baseNum;
         for(;f<=target;f*=baseNum) {}

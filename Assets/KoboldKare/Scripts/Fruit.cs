@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable, IGrabbable, ISpoilable {
+public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable {
     [SerializeField] private VisualEffect itemParticles;
     private Rigidbody body;
     [SerializeField] private VisualEffect gibSplash;
@@ -23,15 +23,7 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
     [SerializeField] private bool startFrozen = true;
     [SerializeField] private AudioPack gibSound;
     [SerializeField] private Transform centerTransform;
-
-    private void SetFrozen(bool frozen) {
-        itemParticles.enabled = frozen;
-        body.constraints = frozen ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
-    }
-
-    private bool GetFrozen() {
-        return itemParticles.enabled;
-    }
+    private NetworkedEntity networkedEntity;
 
     private void Awake() {
         body = GetComponent<Rigidbody>();
@@ -61,9 +53,27 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
 
     void Start() {
         SpoilableHandler.AddSpoilable(this);
-        SetFrozen(startFrozen);
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        networkedEntity.SetFrozen(startFrozen);
+        networkedEntity.grabbed += OnGrab;
+        networkedEntity.released += OnRelease;
+        networkedEntity.grabRequested += OnGrabRequested;
+        networkedEntity.SetGrabTransform(centerTransform);
+        networkedEntity.frozen.OnChange += OnFrozenChanged;
+        networkedEntity.health.OnChange += OnHealthChanged;
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
+    }
+
+    private void OnHealthChanged(float prev, float next, bool asServer) {
+        if (prev > 0f && next <= 0f) {
+            Die();
+        }
+    }
+
+    private void OnFrozenChanged(bool prev, bool next, bool asServer) {
+        itemParticles.enabled = next;
+        body.constraints = next ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
     }
 
     private void OnDestroy() {
@@ -74,7 +84,7 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.rigidbody != null && !collision.rigidbody.isKinematic && collision.impulse.magnitude > 0.1f) {
-            SetFrozen(false);
+            networkedEntity.SetFrozen(false);
         }
     }
 
@@ -92,12 +102,12 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
     }*/
 
     public void Save(JSONNode node) {
-        node["frozen"] = GetFrozen();
+        node["frozen"] = networkedEntity.frozen.Value;
         node["health"] = health;
     }
 
     public Task Load(JSONNode node) {
-        SetFrozen(node["frozen"]);
+        networkedEntity.SetFrozen(node["frozen"]);
         health = node["health"];
         return Task.CompletedTask;
     }
@@ -105,8 +115,9 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
     public void InteractTo(Vector3 worldPosition, Quaternion worldRotation) {
     }
 
+    // FIXME FISHNET
     public void OnInteract(Kobold k) {
-        SetFrozen(false);
+        networkedEntity.SetFrozen(false);
     }
 
     public void OnEndInteract() {
@@ -134,37 +145,14 @@ public class Fruit : MonoBehaviour, IDamagable, IAdvancedInteractable, ISavable,
         }*/
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void Damage(float amount) {
-        health -= amount;
-        if (health <= 0f) {
-            Die();
-            health = 0f;
-        }
+    private void OnGrab(NetworkedKobold by) {
+        networkedEntity.SetFrozen(false);
     }
 
-    public void Heal(float amount) {
-        health += amount;
-    }
-
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnGrabRPC(int koboldID) {
-        SetFrozen(false);
-    }
-
-    public bool CanGrab(Kobold kobold) {
+    private bool OnGrabRequested(NetworkedKobold by) {
         return true;
     }
-
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnReleaseRPC(int koboldId, Vector3 velocity) {
-    }
-
-    public Transform GrabTransform() {
-        return centerTransform;
+    private void OnRelease(NetworkedKobold by, Vector3 velocity) {
     }
 
     public void OnSpoil() {

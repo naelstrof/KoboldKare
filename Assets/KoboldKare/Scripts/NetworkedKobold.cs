@@ -12,11 +12,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.VFX;
 using Vilar.IK;
 
-public class NetworkedKobold : GeneHolder {
+public class NetworkedKobold : NetworkedEntity {
     private List<AsyncOperationHandle> handles = new();
     private static Collider[] colliders = new Collider[32];
     
-    private readonly SyncVar<string> koboldAssetName = new SyncVar<string>("Kobold");
     public readonly SyncVar<float> facingRotationY = new SyncVar<float>();
     public readonly SyncVar<Vector2> eyeRot = new SyncVar<Vector2>();
     public readonly SyncVar<Vector2> hipOffset = new SyncVar<Vector2>();
@@ -77,11 +76,9 @@ public class NetworkedKobold : GeneHolder {
     public Vector2 GetHipOffset() => hipOffset.Value;
     
     
-    private void Awake() {
-        koboldAssetName.OnChange += OnKoboldAssetNameChanged;
+    protected override void Awake() {
+        base.Awake();
         controlType.OnChange += OnControlTypeChanged;
-        OnKoboldAssetNameChanged("", koboldAssetName.Value, true);
-        RandomizeGenes();
     }
 
     private void OnControlTypeChanged(ControlType prev, ControlType next, bool asServer) {
@@ -104,7 +101,10 @@ public class NetworkedKobold : GeneHolder {
     }
     
     public void SetInstantiationData(NetworkedKoboldInstantiationData instantiationData) {
-        koboldAssetName.Value = instantiationData.koboldAssetName;
+        assetPair.Value = new AssetNamePair() {
+            groupName = "PlayableCharacter",
+            assetName = instantiationData.koboldAssetName,
+        };
         facingRotationY.Value = instantiationData.facingRotationY;
         eyeRot.Value = instantiationData.eyeRot;
         hipOffset.Value = instantiationData.hipOffset;
@@ -126,11 +126,6 @@ public class NetworkedKobold : GeneHolder {
         grabCount.Value = instantiationData.grabCount;
         species.Value = instantiationData.koboldAssetName;
         dickEquip.Value = instantiationData.dickEquip;
-    }
-
-    [ServerRpc(RequireOwnership = true)]
-    public void SetKoboldAssetName(string newName) {
-        koboldAssetName.Value = newName;
     }
     
     [ServerRpc(RequireOwnership = true)]
@@ -216,25 +211,16 @@ public class NetworkedKobold : GeneHolder {
         AIPlayer,
     }
 
-    private void OnKoboldAssetNameChanged(string prev, string next, bool asServer) {
-        if (!asServer && InstanceFinder.ServerManager.Started) {
+    protected override async Task AssetChangedAsync(AssetNamePair prev, AssetNamePair next, bool asServer) {
+        if (next.groupName != "PlayableCharacter") {
+            await base.AssetChangedAsync(prev, next, asServer);
             return;
         }
-        _ = KoboldAssetNameChangedAsync(prev, next, asServer);
-    }
-
-    private async Task KoboldAssetNameChangedAsync(string prev, string next, bool asServer) {
-        if (prev == next) {
-            return;
-        }
-
         while (changingKobold) {
             await Task.Delay(1000);
         }
         changingKobold = true;
-
         try {
-            Debug.Log($"Switching to {next}");
             if (koboldInstance) {
                 Destroy(koboldInstance);
             }
@@ -243,9 +229,7 @@ public class NetworkedKobold : GeneHolder {
                 koboldAssetHandle.Release();
             }
 
-            koboldAssetHandle =
-                await KoboldKareObjectPostProcessor.GetAssetAsync("PlayableCharacter", next,
-                    GameManager.GetErrorKobold());
+            koboldAssetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(next.groupName, next.assetName, GameManager.GetErrorKobold());
             koboldInstance = Instantiate(koboldAssetHandle.asset, transform);
 
             try {
@@ -258,7 +242,7 @@ public class NetworkedKobold : GeneHolder {
                 await TryInitializeKobold(koboldInstance);
             }
 
-            species.Value = next;
+            species.Value = next.assetName;
 
             var equipmentTasks = new List<Task>();
             if (koboldInstance.TryGetComponent<KoboldInventory>(out var koboldInventory) &&

@@ -105,9 +105,9 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         
         if (player.TryGetComponent<NetworkedKobold>(out var networkedKobold)) {
             if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
-                networkedKobold.SetKoboldAssetName(playerPrefabName);
+                networkedKobold.SetAsset("PlayableCharacter", playerPrefabName);
             } else {
-                networkedKobold.SetKoboldAssetName("Kobold");
+                networkedKobold.SetAsset("PlayableCharacter", "Kobold");
             }
         }
     }
@@ -117,9 +117,9 @@ public class KoboldCustomizerSpawner : MonoBehaviour {
         player = obj.gameObject;
         var networkedKobold = player.GetComponent<NetworkedKobold>();
         if (playerSetting.TryGetPrefab(out string playerPrefabName)) {
-            networkedKobold.SetKoboldAssetName(playerPrefabName);
+            networkedKobold.SetAsset("PlayableCharacter", playerPrefabName);
         } else {
-            networkedKobold.SetKoboldAssetName("Kobold");
+            networkedKobold.SetAsset("PlayableCharacter", "Kobold");
         }
         networkedKobold.koboldFinishedLoading += (kobold) => {
             var characterDescriptor = kobold.GetComponent<CharacterDescriptor>();

@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using FishNet;
+using FishNet.Connection;
+using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Photon.Pun;
@@ -12,7 +14,9 @@ public class NetworkedEntity : GeneHolder {
         public string groupName;
         public string assetName;
     }
-    private readonly SyncVar<AssetNamePair> assetPair = new SyncVar<AssetNamePair>();
+    protected readonly SyncVar<AssetNamePair> assetPair = new SyncVar<AssetNamePair>();
+    public readonly SyncVar<bool> frozen = new SyncVar<bool>();
+    public readonly SyncVar<float> health = new SyncVar<float>(100f);
     
     public const string PHOTONVIEW_ID_GROUP = "PHOTONVIEW_ID_GROUP";
 
@@ -20,9 +24,16 @@ public class NetworkedEntity : GeneHolder {
     private GameObject mapInstance;
     
     private AssetGroup.AssetLocation.AssetHandle<GameObject> entityHandle;
+    
+    private NetworkManager networkManager;
 
     public void SetSceneAsset(PhotonView photonView) {
         assetPair.Value = new AssetNamePair { groupName = PHOTONVIEW_ID_GROUP, assetName = $"{photonView.sceneViewId}"};
+    }
+
+    [ServerRpc]
+    public void SetFrozen(bool setFrozen) {
+        frozen.Value = setFrozen;
     }
     
     public void InitializeAsset(string groupName, string assetName) {
@@ -34,9 +45,13 @@ public class NetworkedEntity : GeneHolder {
         assetPair.Value = new AssetNamePair { groupName = groupName, assetName = assetName };
     }
     
-    private void Awake() {
+    protected virtual void Awake() {
         assetPair.OnChange += OnAssetChanged;
         RandomizeGenes();
+    }
+
+    private void Start() {
+        networkManager = InstanceFinder.NetworkManager;
     }
 
     private void OnAssetChanged(AssetNamePair prev, AssetNamePair next, bool asServer) {
@@ -45,8 +60,8 @@ public class NetworkedEntity : GeneHolder {
         }
         _ = AssetChangedAsync(prev, next, asServer);
     }
-    
-    private async Task AssetChangedAsync(AssetNamePair prev, AssetNamePair next, bool asServer) {
+
+    protected virtual async Task AssetChangedAsync(AssetNamePair prev, AssetNamePair next, bool asServer) {
         if (entityInstance) {
             Destroy(entityInstance);
         }
@@ -106,4 +121,42 @@ public class NetworkedEntity : GeneHolder {
         LoadGenes(node, "genes");
         return Task.CompletedTask;
     }
+    
+    public delegate void GrabbedAction(NetworkedKobold by);
+    public delegate void ReleaseAction(NetworkedKobold by, Vector3 velocity);
+    public delegate bool GrabRequestAction(NetworkedKobold by);
+    
+    public event GrabbedAction grabbed;
+    public event ReleaseAction released;
+    public event GrabRequestAction grabRequested;
+
+    private Transform grabTransform;
+    public void SetGrabTransform(Transform grabTransform) {
+        this.grabTransform = grabTransform;
+    }
+
+    public bool CanGrab(NetworkedKobold kobold) {
+        if (grabRequested != null) {
+            return grabRequested.Invoke(kobold);
+        }
+        return false;
+    }
+    
+    [ServerRpc]
+    public void OnGrab(NetworkedKobold kobold) {
+        grabbed?.Invoke(kobold);
+    }
+    
+    [ServerRpc]
+    public void OnRelease(NetworkedKobold kobold, Vector3 velocity) {
+        released?.Invoke(kobold, velocity);
+    }
+    public Transform GrabTransform() {
+        if (grabTransform) {
+            return grabTransform;
+        } else {
+            return transform;
+        }
+    }
+    
 }

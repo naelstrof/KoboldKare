@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 
-public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
+public class ReagentScanner : GenericWeapon, IValuedGood {
     public bool firing = false;
     [SerializeField]
     private Animator animator;
@@ -35,10 +35,21 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
     private static RaycastHit[] hits = new RaycastHit[32];
     private static RaycastHitComparer comparer = new RaycastHitComparer();
 
+    private NetworkedEntity networkedEntity;
+
     private void Awake() {
         GameEventSanitizer.SanitizeRuntime(OnSuccess, onSuccessResponses, this);
         GameEventSanitizer.SanitizeRuntime(OnFailure, onFailureResponses, this);
     }
+
+    private void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        networkedEntity.grabbed += OnGrab;
+        networkedEntity.released += OnRelease;
+        networkedEntity.grabRequested += OnGrabRequested;
+        networkedEntity.SetGrabTransform(center);
+    }
+    
     private void OnValidate() {
         GameEventSanitizer.SanitizeEditor(nameof(OnSuccess), nameof(onSuccessResponses), this);
         GameEventSanitizer.SanitizeEditor(nameof(OnFailure), nameof(onFailureResponses), this);
@@ -163,19 +174,15 @@ public class ReagentScanner : GenericWeapon, IValuedGood, IGrabbable {
         return 15f;
     }
 
-    public bool CanGrab(Kobold kobold) {
+    public bool OnGrabRequested(NetworkedKobold by) {
         return true;
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void OnGrabRPC(int koboldID) {
+    private void OnGrab(NetworkedKobold by) {
         animator.SetBool("Open", true);
     }
 
-    // FIXME FISHNET
-    // [PunRPC]
-    public void OnReleaseRPC(int koboldID, Vector3 velocity) {
+    private void OnRelease(NetworkedKobold by, Vector3 velocity) {
         animator.SetBool("Open", false);
     }
 

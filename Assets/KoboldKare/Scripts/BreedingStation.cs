@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FishNet.Object;
+using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
@@ -9,16 +11,24 @@ public class BreedingStation : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private List<AnimationStation> animationStations;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
+    
+    private NetworkedEntity networkedEntity;
 
     void Awake() {
         readOnlyStations = animationStations.AsReadOnly();
     }
 
-    public override Sprite GetSprite(Kobold k) {
-        return breedingSprite;
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(breedingSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         if (!constructed) {
             return false;
         }
@@ -31,18 +41,13 @@ public class BreedingStation : UsableMachine, IAnimationStationSet {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
-        // FIXME FISHNET
-        /*
-        photonView.RequestOwnership();
+    private void OnUse(NetworkedKobold k) {
         for (int i = 0; i < animationStations.Count; i++) {
             if (animationStations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                    photonView.ViewID, i);
+                k.BeginAnimation(GetComponentInParent<NetworkObject>(), i);
                 break;
             }
-        }*/
-
+        }
     }
     
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

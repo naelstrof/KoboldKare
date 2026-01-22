@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FishNet.Object;
 using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
@@ -12,6 +13,8 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
     [SerializeField] private FluidStream stream;
     private ReadOnlyCollection<AnimationStation> stations;
     private GenericReagentContainer container;
+    
+    private NetworkedEntity networkedEntity;
     private void Awake() {
         container = gameObject.AddComponent<GenericReagentContainer>();
         container.type = GenericReagentContainer.ContainerType.Mouth;
@@ -21,6 +24,16 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
+    }
+
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private void OnDestroy() {
@@ -38,15 +51,11 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
         stream.OnFire(container);
     }
 
-    public override bool CanUse(Kobold k) {
-        return constructed && k.GetEnergy() > 0 && station.info.user == null;
+    private bool OnUseRequested(NetworkedKobold k) {
+        return constructed && k.energy.Value > 0 && station.info.user == null;
     }
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
-    public override void LocalUse(Kobold k) {
-        // FIXME FISHNET
-        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
+    private void OnUse(NetworkedKobold k) {
+        k.BeginAnimation(GetComponentInParent<NetworkObject>(), 0);
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

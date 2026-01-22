@@ -8,7 +8,7 @@ using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
-public class OvipositionSpot : GenericUsable, IAnimationStationSet {
+public class OvipositionSpot : MonoBehaviour, IAnimationStationSet {
     public delegate void OvipositionAction(int koboldID, int eggID);
     public static event OvipositionAction oviposition;
         
@@ -23,36 +23,35 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     
     private float lastEggCheckTime = 0;
     private const float eggDelaySeconds = 6f;
-
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
+    private NetworkedEntity networkedEntity;
     
     private bool KoboldReadyToLayEgg(Kobold k){
+        // FIXME FISHNET
+        /*
         if (ReagentDatabase.TryGetAsset("Egg", out var egg)) {
-            return k.bellyContainer.GetVolumeOf(egg) > 5f && k.GetEnergy() >= 1f;
-        }
+            return k.bellyContainer.GetVolumeOf(egg) > 5f && k.energy >= 1f;
+        }*/
 
         return false;
     }
     
-    public override bool CanUse(Kobold k) {
-        return KoboldReadyToLayEgg(k) && station.info.user == null;
+    private bool OnUseRequested(NetworkedKobold k) {
+        if (k.TryGetKobold(out var kobold)) {
+            return KoboldReadyToLayEgg(kobold) && station.info.user == null;
+        }
+
+        return false;
     }
 
-    public override void LocalUse(Kobold k) {
-        base.LocalUse(k);
+    private void OnUse(NetworkedKobold k) {
         // FIXME FISHNET
         /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);*/
+        BeginEggLayingRoutine();
     }
 
     private void BeginEggLayingRoutine(){
         lastEggCheckTime = Time.timeSinceLevelLoad + eggDelaySeconds;//don't bother checking again until the current one will be out
         StartCoroutine(EggLayingRoutine());
-    }
-    
-    public override void Use() {
-        BeginEggLayingRoutine();
     }
 
     void Start() {
@@ -60,6 +59,12 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         stations.Add(station);
         readOnlyStations = stations.AsReadOnly();
         ReagentDatabase.TryGetAsset("Egg", out var egg);
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.used += OnUse;
+            networkedEntity.useRequested += OnUseRequested;
+        }
     }
 
     void Update(){
@@ -68,13 +73,13 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
         }
         lastEggCheckTime = Time.timeSinceLevelLoad;
         
-        Kobold k = station.info.user;
+        NetworkedKobold k = station.info.user;
         // FIXME FISHNET
-        if (k == null || !k.GetComponentInParent<NetworkedKobold>().IsOwner) {
+        if (k == null || !k.IsOwner || !k.TryGetKobold(out var kobold)) {
             return;
         }
         
-        if (!KoboldReadyToLayEgg(k)) {
+        if (!KoboldReadyToLayEgg(kobold)) {
             return;
         }
         
@@ -82,13 +87,14 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
     }
 
     IEnumerator EggLayingRoutine() {
-        yield return new WaitForSeconds(eggDelaySeconds);
-        Kobold k = station.info.user;
-        
         // FIXME FISHNET
-        /*if (k == null || !k.photonView.IsMine) {
+        /*
+        yield return new WaitForSeconds(eggDelaySeconds);
+        NetworkedKobold k = station.info.user;
+        
+        if (k == null || !k.photonView.IsMine) {
             yield break;
-        }*/
+        }
         
         if (!k.TryConsumeEnergy(1)) {
             yield break;
@@ -130,8 +136,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
 
         CatmullSpline path = targetPenetrable.GetPath();
         
-        // FIXME FISHNET
-        /*Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
+        Penetrator d = PhotonNetwork.Instantiate(eggPrefab.photonName,path.GetPositionFromT(0f), Quaternion.LookRotation(path.GetVelocityFromT(0f).normalized,Vector3.up), 0, new object[]{spawnData}).GetComponentInChildren<Penetrator>();
         if (d == null) {
             yield break;
         }
@@ -163,6 +168,7 @@ public class OvipositionSpot : GenericUsable, IAnimationStationSet {
             yield return null;
         }
         body.isKinematic = false;*/
+        yield break;
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

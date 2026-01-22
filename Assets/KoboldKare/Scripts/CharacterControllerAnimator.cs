@@ -179,18 +179,8 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
     private void OnCarriedChanged(bool newCarry) {
         playerModel.SetBool(Carried, newCarry);
     }
-
-    // FIXME FISHNET
-    //[PunRPC]
-    public void BeginAnimationRPC(int photonViewID, int animatorID) {
-        /*
-        PhotonView view = PhotonNetwork.GetPhotonView(photonViewID);
-        IAnimationStationSet set = view.GetComponentInChildren<IAnimationStationSet>();
-        BeginAnimation(set, set.GetAnimationStations()[animatorID]);
-        PhotonProfiler.LogReceive(sizeof(int) * 2);*/
-    }
     
-    private void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
+    public void BeginAnimation(IAnimationStationSet set, AnimationStation station) {
         StopAnimation();
         StopAllCoroutines();
         kobold.GetComponent<Ragdoller>().SetLocked(true);
@@ -246,7 +236,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         kobold.body.isKinematic = true;
         solver.Initialize();
         currentStation.SetProgress(0f);
-        currentStation.OnStartAnimation(kobold);
+        currentStation.OnStartAnimation(networkedKobold);
         float startTime = Time.time;
         float blendDuration = 1f;
         Quaternion startRotation = kobold.body.rotation;
@@ -403,13 +393,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         playerModel.SetFloat(CrouchAmount, crouchLerper);
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public void StopAnimationRPC() {
-        StopAnimation();
-    }
-
-    private void StopAnimation() {
+    public void StopAnimation() {
         if (!animating) {
             return;
         }

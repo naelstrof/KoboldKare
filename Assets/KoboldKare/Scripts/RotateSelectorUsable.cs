@@ -15,6 +15,8 @@ public class RotateSelectorUsable : UsableMachine {
     private const int maxSelections = 4;
     private Quaternion startRotation;
     
+    private NetworkedEntity networkedEntity;
+    
 
     public delegate void RotatedAction(int newValue);
 
@@ -34,12 +36,18 @@ public class RotateSelectorUsable : UsableMachine {
         }
     }
 
-    public override bool CanUse(Kobold k) {
-        return constructed;
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+            networkedEntity.SetSprite(useSprite);
+        }
     }
 
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
+    private bool OnUseRequested(NetworkedKobold k) {
+        return constructed;
     }
 
     private void SetSelected(int select) {
@@ -56,7 +64,7 @@ public class RotateSelectorUsable : UsableMachine {
         return selectedMode;
     }
 
-    public override void Use() {
+    private void OnUse(NetworkedKobold k) {
         SetSelected(selectedMode + 1);
         StopAllCoroutines();
         source.enabled = true;
@@ -75,7 +83,7 @@ public class RotateSelectorUsable : UsableMachine {
             SetSelected((int)stream.ReceiveNext());
             PhotonProfiler.LogReceive(sizeof(int));
         }
-    }*/
+    }
 
     public override void Save(JSONNode node) {
         base.Save(node);
@@ -86,7 +94,7 @@ public class RotateSelectorUsable : UsableMachine {
         base.Load(node);
         SetSelected(node["selected"]);
         return Task.CompletedTask;
-    }
+    }*/
 
     IEnumerator DisableAfterTime() {
         yield return new WaitForSeconds(source.clip.length+0.1f);

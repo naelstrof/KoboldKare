@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FishNet.Object;
 using Naelstrof.Mozzarella;
 using NetStack.Serialization;
 using PenetrationTech;
@@ -38,6 +39,8 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
 
     private AudioSource sloshSource;
 
+    private NetworkedEntity networkedEntity;
+
     [SerializeField] private Animator pumpAnimator;
 
     private bool spraying = false;
@@ -47,12 +50,8 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
     private float inflateAmount;
     private float lastAccumulateTime = 0f;
     private static readonly int Pumping = Animator.StringToHash("Pumping");
-    
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
 
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         if (!constructed) {
             return false;
         }
@@ -65,17 +64,13 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
-        // FIXME FISHNET
-        /*photonView.RequestOwnership();
+    private void OnUse(NetworkedKobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                    photonView.ViewID, i);
+                k.BeginAnimation(GetComponentInParent<NetworkObject>(), i);
                 break;
             }
-        }*/
-
+        }
     }
 
     protected override void Start() {
@@ -98,6 +93,12 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         pumper.enabled = constructed;
         sloshSource.enabled = false;
         base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     public override void SetConstructed(bool isConstructed) {

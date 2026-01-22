@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 [System.Serializable]
 public class GameEventResponseButtonUse : GameEventResponse {
@@ -23,8 +24,10 @@ public class GameEventResponseButtonUse : GameEventResponse {
             return;
         }
         base.Invoke(owner);
+        // FIXME FISHNET, untested, probably should only trigger on host?
+        var anyKobold = Object.FindAnyObjectByType<NetworkedKobold>();
         foreach (var target in targets) {
-            target.Use();
+            target.GetComponentInParent<NetworkedEntity>().OnUse(anyKobold);
         }
         if (isRootInvoker) {
             stackOverflowCheck = false;

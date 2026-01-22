@@ -9,7 +9,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.VFX;
 
-public class StarDoor : GenericUsable {
+public class StarDoor : MonoBehaviour {
     [SerializeField] private Sprite useSprite;
     [SerializeField]
     private AudioPack starDoorBreak;
@@ -23,16 +23,13 @@ public class StarDoor : GenericUsable {
     private Material starMaterial;
     private AudioSource starDoorBreakSource;
     private static readonly int Progress1 = Shader.PropertyToID("_DissolveProgress");
+    private NetworkedEntity networkedEntity;
 
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
-
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         return ObjectiveManager.GetStars() >= starRequirement;
     }
 
-    public override void Use() {
+    private void OnUse(NetworkedKobold k) {
         StartCoroutine(DissolveRoutine());
     }
 
@@ -47,6 +44,12 @@ public class StarDoor : GenericUsable {
             starDoorBreakSource.rolloffMode = AudioRolloffMode.Linear;
             starDoorBreakSource.spatialBlend = 1f;
             starDoorBreakSource.loop = true;
+        }
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
         }
     }
 
@@ -70,6 +73,8 @@ public class StarDoor : GenericUsable {
         }*/
     }
 
+    // FIXME FISHNET
+    /*
     public override void Save(JSONNode node) {
         base.Save(node);
         node["position.x"] = transform.position.x;
@@ -105,5 +110,5 @@ public class StarDoor : GenericUsable {
             text.text = starRequirement.ToString();
         }
         return Task.CompletedTask;
-    }
+    }*/
 }

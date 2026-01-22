@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FishNet.Object;
 using Naelstrof.Mozzarella;
 using Photon.Pun;
 using SkinnedMeshDecals;
@@ -17,6 +18,8 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private FluidStream stream;
 
+    private NetworkedKobold networkedKobold;
+
     private GenericReagentContainer container;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
@@ -26,14 +29,23 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         // FIXME FISHNET
         /*photonView.ObservedComponents.Add(container);*/
     }
+
+    protected override void Start() {
+        base.Start();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        if (networkedKobold) {
+            networkedKobold.SetSprite(milkingSprite);
+            networkedKobold.useRequested += OnUseRequested;
+            networkedKobold.used += OnUse;
+        }
+    }
+
     private void OnReagentContainerChangedEvent(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         stream.OnFire(container);
     }
-    public override Sprite GetSprite(Kobold k) {
-        return milkingSprite;
-    }
-    public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() < 1f || !constructed) {
+    
+    private bool OnUseRequested(NetworkedKobold k) {
+        if (k.energy.Value < 1f || !constructed) {
             return false;
         }
         foreach (var station in stations) {
@@ -44,17 +56,13 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                // FIXME FISHNET
-                /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);*/
+                k.BeginAnimation(GetComponentInParent<NetworkObject>(), i);
                 break;
             }
         }
-        base.LocalUse(k);
-    }
-    public override void Use() {
         StopAllCoroutines();
         StartCoroutine(WaitThenMilk());
     }
@@ -66,13 +74,13 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
         }*/
         // Validate that we have two characters with energy that have been animating for 5 seconds
         for (int i = 0; i < stations.Count; i++) {
-            if (stations[i].info.user == null || stations[i].info.user.GetEnergy() <= 0) {
+            if (stations[i].info.user == null || stations[i].info.user.energy.Value <= 0) {
                 yield break;
             }
         }
         // Consume their energy!
         for (int i = 0; i < stations.Count; i++) {
-            if (!stations[i].info.user.TryConsumeEnergy(1)) {
+            if (stations[i].info.user.energy.Value < 1) { // TryConsume
                 yield break;
             }
         }

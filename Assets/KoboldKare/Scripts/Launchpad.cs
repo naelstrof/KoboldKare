@@ -28,10 +28,6 @@ public class Launchpad : UsableMachine {
     public float flightTime = 5f;
     private WaitForFixedUpdate waitForFixedUpdate;
 
-    public override bool CanUse(Kobold k) {
-        return false;
-    }
-
     [SerializeField]
     private UnityEvent OnFire;
     
@@ -46,6 +42,10 @@ public class Launchpad : UsableMachine {
     private void Awake() {
         waitForFixedUpdate = new WaitForFixedUpdate();
         GameEventSanitizer.SanitizeRuntime(OnFire, onFireResponses, this);
+    }
+
+    protected override void Start() {
+        base.Start();
     }
 
     private void OnValidate() {

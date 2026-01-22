@@ -22,6 +22,8 @@ public class NetworkedKobold : NetworkedEntity {
     public readonly SyncVar<byte[]> ragdollBitBuffer = new SyncVar<byte[]>();
     public readonly SyncVar<bool> ragdolled = new SyncVar<bool>();
     private readonly SyncVar<ControlType> controlType = new(ControlType.AIPlayer);
+    public readonly SyncVar<float> energy = new SyncVar<float>();
+    public readonly SyncVar<float> money = new SyncVar<float>();
     
     public struct NetworkedKoboldInstantiationData : IBroadcast {
         public string koboldAssetName;
@@ -79,6 +81,11 @@ public class NetworkedKobold : NetworkedEntity {
     protected override void Awake() {
         base.Awake();
         controlType.OnChange += OnControlTypeChanged;
+    }
+
+    [ServerRpc(RequireOwnership = true)]
+    public void SetEnergy(float newEnergy) {
+        energy.Value = newEnergy;
     }
 
     private void OnControlTypeChanged(ControlType prev, ControlType next, bool asServer) {
@@ -483,6 +490,21 @@ public class NetworkedKobold : NetworkedEntity {
         }
         kobold = null;
         return false;
+    }
+    
+    [ServerRpc(RequireOwnership = true)]
+    public void StopAnimation() {
+        if (koboldInstance && koboldInstance.TryGetComponent<CharacterControllerAnimator>(out var koboldAnimator)) {
+            koboldAnimator.StopAnimation();
+        }
+    }
+    
+    [ServerRpc(RequireOwnership = true)]
+    public void BeginAnimation(NetworkObject obj, int animatorID) {
+        if (koboldInstance && koboldInstance.TryGetComponent<CharacterControllerAnimator>(out var koboldAnimator)) {
+            IAnimationStationSet set = obj.GetComponentInChildren<IAnimationStationSet>();
+            koboldAnimator.BeginAnimation(set, set.GetAnimationStations()[animatorID]);
+        }
     }
 
 

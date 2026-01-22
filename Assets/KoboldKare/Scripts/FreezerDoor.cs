@@ -7,14 +7,25 @@ using UnityEngine;
 using KoboldKare;
 using SimpleJSON;
 
-public class FreezerDoor : GenericDoor, ISavable {
+public class FreezerDoor : GenericDoor {
     public bool shouldSpawnIceCube {get; set;}
     public PhotonGameObjectReference iceCube;
     public GameEventGeneric midnight;
+    private NetworkedEntity networkedEntity;
     private bool iceCubeSpawned = false;
     public override void Start() {
         base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
+
+    private bool OnUseRequested(NetworkedKobold by) {
+        return true;
+    }
+
     private void MidnightEvent() {
         // FIXME FISHNET
         /*
@@ -22,8 +33,7 @@ public class FreezerDoor : GenericDoor, ISavable {
             iceCubeSpawned = false;
         }*/
     }
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold by) {
         // FIXME FISHNET
         /*
         if (photonView.IsMine && shouldSpawnIceCube && !iceCubeSpawned) {
@@ -31,6 +41,8 @@ public class FreezerDoor : GenericDoor, ISavable {
             PhotonNetwork.Instantiate(iceCube.photonName, transform.position, Quaternion.identity);
         }*/
     }
+    // FIXME FISHNET
+    /*
     public override Task Load(JSONNode node) {
         base.Load(node);
         shouldSpawnIceCube = node["shouldSpawnIceCube"];
@@ -41,7 +53,7 @@ public class FreezerDoor : GenericDoor, ISavable {
         base.Save(node);
         node["shouldSpawnIceCube"] = shouldSpawnIceCube;
         node["iceCubeSpawned"] = iceCubeSpawned;
-    }
+    }*/
     // FIXME FISHNET
     /*
     public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

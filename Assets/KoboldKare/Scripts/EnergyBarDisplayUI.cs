@@ -8,26 +8,36 @@ public class EnergyBarDisplayUI : MonoBehaviour {
     [SerializeField] private RectTransform filledBar;
     [SerializeField] private RectTransform barBackground;
     [SerializeField] private AnimationCurve bounceCurve;
-    private Kobold targetKobold;
+    private NetworkedKobold targetKobold;
     
     private float targetWidth;
     private float targetBackgroundWidth;
     private bool running = false;
     private void OnEnable() {
-        targetKobold = GetComponentInParent<Kobold>();
-        targetKobold.energyChanged += OnEnergyChanged;
+        targetKobold = GetComponentInParent<NetworkedKobold>();
+        targetKobold.energy.OnChange += OnEnergyChanged;
         running = false;
-        OnEnergyChanged(targetKobold.GetEnergy(), targetKobold.GetMaxEnergy());
+        OnEnergyChanged(targetKobold.energy.Value, targetKobold.energy.Value, false);
+        OnMaxEnergyChanged(targetKobold.maxEnergy.Value, targetKobold.maxEnergy.Value, false);
     }
 
     private void OnDisable() {
-        targetKobold.energyChanged -= OnEnergyChanged;
+        if (targetKobold) {
+            targetKobold.energy.OnChange -= OnEnergyChanged;
+            targetKobold.maxEnergy.OnChange -= OnEnergyChanged;
+        }
+
         running = false;
     }
 
-    void OnEnergyChanged(float energy, float maxEnergy) {
-        targetWidth = Mathf.Min(energy * energyToPixel,3000f);
-        targetBackgroundWidth = Mathf.Min(maxEnergy * energyToPixel,3000f);
+    void OnEnergyChanged(float prev, float next, bool asServer) {
+        targetWidth = Mathf.Min(next * energyToPixel,3000f);
+        if (!running) {
+            StartCoroutine(EnergyLerpRoutine(filledBar.sizeDelta.x, barBackground.sizeDelta.x));
+        }
+    }
+    void OnMaxEnergyChanged(float prev, float next, bool asServer) {
+        targetBackgroundWidth = Mathf.Min(next * energyToPixel,3000f);
         if (!running) {
             StartCoroutine(EnergyLerpRoutine(filledBar.sizeDelta.x, barBackground.sizeDelta.x));
         }

@@ -7,15 +7,24 @@ public class ShowerFaucetButton : UsableMachine {
     [SerializeField] private FluidStream stream;
     [SerializeField] private Sprite useSprite;
     [SerializeField] private GenericReagentContainer container;
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
-    private bool firing = false;
-    public override bool CanUse(Kobold k) {
-        return base.CanUse(k) && constructed;
+    private NetworkedEntity networkedEntity;
+
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.used += OnUse;
+            networkedEntity.useRequested += OnUseRequested;
+        }
     }
 
-    public override void Use() {
+    private bool firing = false;
+    private bool OnUseRequested(NetworkedKobold k) {
+        return constructed;
+    }
+
+    private void OnUse(NetworkedKobold by) {
         firing = !firing;
         if (firing) {
             stream.OnFire(container);

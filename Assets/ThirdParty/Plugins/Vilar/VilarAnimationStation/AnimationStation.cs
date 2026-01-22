@@ -259,7 +259,7 @@ namespace Vilar.AnimationStation {
 	[System.Serializable]
 	public class AnimationStationInfo {
 		public bool needsPenetrator;
-		public Kobold user;
+		public NetworkedKobold user;
     }
 
 	[System.Serializable]
@@ -347,7 +347,7 @@ namespace Vilar.AnimationStation {
 			info = new AnimationStationInfo();
 		}
 
-		public void OnStartAnimation(Kobold user) {
+		public void OnStartAnimation(NetworkedKobold user) {
 			info.user = user;
 			foreach (var linkedStation in linkedStations.hashSet) {
 				linkedStation.animProgress = 0f;

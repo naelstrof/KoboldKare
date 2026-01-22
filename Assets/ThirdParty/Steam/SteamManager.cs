@@ -9,6 +9,7 @@
 #define DISABLESTEAMWORKS
 #endif
 
+using System.IO;
 using UnityEngine;
 #if !DISABLESTEAMWORKS
 using System.Collections;
@@ -35,6 +36,15 @@ public class SteamManager : MonoBehaviour {
 	[AOT.MonoPInvokeCallback(typeof(SteamAPIWarningMessageHook_t))]
 	protected static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
 		Debug.LogWarning(pchDebugText);
+	}
+	private void EnsureSteamAppIdFile(uint appId) {
+		try {
+			var path = Path.Combine(Application.dataPath, "..", "steam_appid.txt");
+			File.WriteAllText(path, appId.ToString());
+			Debug.Log("Wrote steam_appid.txt at: " + Path.GetFullPath(path));
+		} catch (System.Exception e) {
+			Debug.LogWarning("Failed to write steam_appid.txt: " + e.Message);
+		}
 	}
 
 #if UNITY_2019_3_OR_NEWER
@@ -95,6 +105,7 @@ public class SteamManager : MonoBehaviour {
 		// [*] Your App ID is not completely set up, i.e. in Release State: Unavailable, or it's missing default packages.
 		// Valve's documentation for this is located here:
 		// https://partner.steamgames.com/doc/sdk/api#initialization_and_shutdown
+		EnsureSteamAppIdFile(1102930);
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
 			Debug.LogWarning("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);

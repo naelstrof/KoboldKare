@@ -27,6 +27,8 @@ public class NetworkedEntity : GeneHolder {
     
     private NetworkManager networkManager;
 
+    private Sprite sprite;
+
     public void SetSceneAsset(PhotonView photonView) {
         assetPair.Value = new AssetNamePair { groupName = PHOTONVIEW_ID_GROUP, assetName = $"{photonView.sceneViewId}"};
     }
@@ -122,13 +124,16 @@ public class NetworkedEntity : GeneHolder {
         return Task.CompletedTask;
     }
     
-    public delegate void GrabbedAction(NetworkedKobold by);
-    public delegate void ReleaseAction(NetworkedKobold by, Vector3 velocity);
-    public delegate bool GrabRequestAction(NetworkedKobold by);
+    public delegate void KoboldAction(NetworkedKobold by);
+    public delegate void KoboldReleaseAction(NetworkedKobold by, Vector3 velocity);
+    public delegate bool KoboldRequestAction(NetworkedKobold by);
     
-    public event GrabbedAction grabbed;
-    public event ReleaseAction released;
-    public event GrabRequestAction grabRequested;
+    public event KoboldAction grabbed;
+    public event KoboldReleaseAction released;
+    public event KoboldRequestAction grabRequested;
+    
+    public event KoboldAction used;
+    public event KoboldRequestAction useRequested;
 
     private Transform grabTransform;
     public void SetGrabTransform(Transform grabTransform) {
@@ -140,6 +145,29 @@ public class NetworkedEntity : GeneHolder {
             return grabRequested.Invoke(kobold);
         }
         return false;
+    }
+    
+    public bool CanUse(NetworkedKobold kobold) {
+        if (useRequested != null) {
+            return useRequested.Invoke(kobold);
+        }
+        return false;
+    }
+
+    [ServerRpc]
+    public void OnUse(NetworkedKobold kobold) {
+        used?.Invoke(kobold);
+    }
+
+    public void SetSprite(Sprite newSprite) {
+        sprite = newSprite;
+    }
+
+    public Sprite GetSprite() {
+        if (sprite) {
+            return sprite;
+        }
+        return GameManager.GetErrorSprite();
     }
     
     [ServerRpc]
@@ -157,6 +185,17 @@ public class NetworkedEntity : GeneHolder {
         } else {
             return transform;
         }
+    }
+    
+    [ServerRpc(RequireOwnership = true)]
+    public void Equip(NetworkedKobold k, string representedEquipment) {
+        if (!k || !k.TryGetKobold(out var kobold)) {
+            return;
+        }
+        // Only successfully equip if we own both the equipment, and the kobold. Otherwise, wait for ownership to successfully transfer
+        KoboldInventory inventory = kobold.GetComponent<KoboldInventory>();
+        _ = inventory.PickupEquipment(representedEquipment, gameObject);
+        InstanceFinder.ServerManager.Despawn(GetComponent<NetworkObject>());
     }
     
 }

@@ -9,21 +9,21 @@ using UnityEngine.UI;
 public delegate void SpriteEvent(Sprite sprite);
 
 public class User : MonoBehaviour {
-    private Kobold internalKobold;
+    private NetworkedKobold internalKobold;
     [SerializeField] private GameObject panel;
     [SerializeField] private Image useImage;
-    public Kobold kobold {
+    public NetworkedKobold kobold {
         get {
             if (internalKobold == null) {
-                internalKobold = GetComponentInParent<Kobold>();
+                internalKobold = GetComponentInParent<NetworkedKobold>();
             }
             return internalKobold;
         }
     }
 
     public Sprite unknownUsableSprite;
-    private HashSet<Tuple<GenericUsable,GameObject>> possibleUsables = new HashSet<Tuple<GenericUsable,GameObject>>();
-    private GenericUsable closestUsable = null;
+    private HashSet<Tuple<NetworkedEntity,GameObject>> possibleUsables = new HashSet<Tuple<NetworkedEntity,GameObject>>();
+    private NetworkedEntity closestUsable = null;
     private CapsuleCollider capsuleCollider;
 
     private void Awake() {
@@ -48,15 +48,15 @@ public class User : MonoBehaviour {
         e.Invoke();
     }
     private void OnTriggerEnter(Collider other) {
-        GenericUsable g = other.GetComponentInParent<GenericUsable>();
+        NetworkedEntity g = other.GetComponentInParent<NetworkedEntity>();
         if (g!=null) {
-            possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
+            possibleUsables.Add(new Tuple<NetworkedEntity, GameObject>(g, other.gameObject));
         }
     }
     private void OnTriggerStay(Collider other) {
-        GenericUsable g = other.GetComponentInParent<GenericUsable>();
+        NetworkedEntity g = other.GetComponentInParent<NetworkedEntity>();
         if (g!=null) {
-            possibleUsables.Add(new Tuple<GenericUsable, GameObject>(g, other.gameObject));
+            possibleUsables.Add(new Tuple<NetworkedEntity, GameObject>(g, other.gameObject));
         }
     }
     void FixedUpdate() {
@@ -69,8 +69,8 @@ public class User : MonoBehaviour {
     void SortGrabbables() {
         possibleUsables.RemoveWhere(o=>o == null || ((Component)o.Item1) == null || o.Item2 == null || !o.Item2.activeInHierarchy);
         float distance = float.MaxValue;
-        GenericUsable closest = null;
-        foreach( Tuple<GenericUsable,GameObject> u in possibleUsables ) {
+        NetworkedEntity closest = null;
+        foreach( Tuple<NetworkedEntity,GameObject> u in possibleUsables ) {
             if (!u.Item1.CanUse(kobold) || u.Item1.transform.root == transform.root) {
                 continue;
             }
@@ -86,10 +86,10 @@ public class User : MonoBehaviour {
                 panel.SetActive(true);
             }
 
-            if (closestUsable.GetSprite(kobold) == null) {
+            if (closestUsable.GetSprite() == null) {
                 useImage.sprite = unknownUsableSprite;
             } else {
-                useImage.sprite = closestUsable.GetSprite(kobold);
+                useImage.sprite = closestUsable.GetSprite();
             }
         } else {
             closestUsable = null;
@@ -102,7 +102,7 @@ public class User : MonoBehaviour {
     public void Use() {
         if (closestUsable != null) {
             //closestUsable.photonView.RPC("RPCUse", RpcTarget.All, new object[]{photonView.ViewID});
-            closestUsable.LocalUse(kobold);
+            closestUsable.OnUse(kobold);
         }
     }
 }

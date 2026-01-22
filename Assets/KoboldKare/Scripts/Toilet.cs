@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FishNet.Object;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
 using Vilar.AnimationStation;
 
-public class Toilet : GenericUsable, IAnimationStationSet {
+public class Toilet : MonoBehaviour, IAnimationStationSet {
     [SerializeField] private Sprite useSprite;
     [SerializeField] private AnimationStation station;
     
@@ -17,23 +18,15 @@ public class Toilet : GenericUsable, IAnimationStationSet {
     
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private AudioSource source;
+    private NetworkedEntity networkedEntity;
     
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
-
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         return station.info.user == null;
     }
 
-    public override void LocalUse(Kobold k) {
-        base.LocalUse(k);
+    private void OnUse(NetworkedKobold k) {
         // FIXME FISHNET
-        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
-    }
-
-    public override void Use() {
-        base.Use();
+        k.BeginAnimation(GetComponentInParent<NetworkObject>(), 0);
         StopAllCoroutines();
         StartCoroutine(ToiletRoutine());
     }
@@ -46,11 +39,10 @@ public class Toilet : GenericUsable, IAnimationStationSet {
         yield return new WaitForSeconds(6f);
         source.Pause();
         flush.PlayOneShot(source);
-        Kobold k = station.info.user;
-        if (k != null) {
-            k.bellyContainer.Spill(k.bellyContainer.volume);
-            // FIXME FISHNET
-            //k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+        NetworkedKobold k = station.info.user;
+        if (k != null && k.TryGetKobold(out var kobold)) {
+            kobold.bellyContainer.Spill(kobold.bellyContainer.volume);
+            k.StopAnimation();
         }
         effect.gameObject.SetActive(false);
         yield return new WaitForSeconds(4f);
@@ -73,6 +65,12 @@ public class Toilet : GenericUsable, IAnimationStationSet {
         }
 
         source.enabled = false;
+        networkedEntity = GetComponentInParent<NetworkedKobold>();
+        if (networkedEntity) {
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+            networkedEntity.SetSprite(useSprite);
+        }
     }
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {
         return readOnlyStations;

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(AudioSource)), RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class GenericDoor : GenericUsable, ISavable {
+public class GenericDoor : MonoBehaviour {
     public AudioClip openSFX, closeSFX;
     public Sprite openSprite, closeSprite;
     public VisualEffect activeWhenOpen;
@@ -14,21 +14,29 @@ public class GenericDoor : GenericUsable, ISavable {
     public Animator animator;
     AudioSource audioSource;
     private int usedCount;
+    
+    private NetworkedEntity networkedEntity;
     protected bool opened {
         get { return (usedCount % 2) != 0; }
     }
     public virtual void Start(){
         audioSource = GetComponent<AudioSource>();
         UpdateState();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(opened ? closeSprite : openSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
-    public override Sprite GetSprite(Kobold k) {
-        return opened ? closeSprite : openSprite;
+
+    private bool OnUseRequested(NetworkedKobold by) {
+        return true;
     }
-    
+
     // FIXME FISHNET
     // [PunRPC]
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold by) {
         usedCount++;
         UpdateState();
     }
@@ -38,6 +46,7 @@ public class GenericDoor : GenericUsable, ISavable {
         } else{
             Close();
         }
+        networkedEntity.SetSprite(opened ? closeSprite : openSprite);
     }
     // These should never be called externally, use Use() to open and close.
     protected virtual void Open(){

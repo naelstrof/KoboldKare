@@ -24,7 +24,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
 
     public delegate void EnergyChangedAction(float value, float maxValue);
     public delegate void KoboldSpawnAction(Kobold kobold);
-    public event EnergyChangedAction energyChanged;
     public static event KoboldSpawnAction spawned;
 
     public List<PenetrableSet> penetratables = new List<PenetrableSet>();
@@ -67,8 +66,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     private UsableColliderComparer usableColliderComparer;
     public ReagentContents metabolizedContents;
     
-    private float energy = 1f;
-
     [SerializeField]
     private AudioPack tummyGrumbles;
     [FormerlySerializedAs("gurglePack")] [SerializeField]
@@ -231,18 +228,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         stimulation = stimulationMin;
     }
 
-    public bool TryConsumeEnergy(byte amount) {
-        if (energy < amount) {
-            return false;
-        }
-        SetEnergyRPC(energy - amount);
-        // FIXME FISHNET
-        /*if (!photonView.IsMine) {
-            photonView.RPC(nameof(Kobold.SetEnergyRPC), RpcTarget.Others, energy);
-        }*/
-        return true;
-    }
-
     // FIXME FISHNET
     //[PunRPC]
     public void SetEnergyRPC(float newEnergy) {
@@ -267,10 +252,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     }
     private Color internalHBCS;
     private static readonly int BrightnessContrastSaturation = Shader.PropertyToID("_HueBrightnessContrastSaturation");
-
-    public float GetEnergy() {
-        return energy;
-    }
 
     public Ragdoller GetRagdoller() => ragdoller;
     public float GetMaxEnergy() {
@@ -342,10 +323,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             gargleSource.loop = true;
         }
         bellyInflater.AddListener(new InflatableSoundPack(tummyGrumbles, tummyGrumbleSource, this));
-    }
-
-    private void OnMaxEnergyChanged(float prev, float next, bool asServer) {
-        energyChanged?.Invoke(energy, next);
     }
 
     private void OnColorChanged(byte prev, byte next, bool asServer) {
@@ -466,8 +443,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         networkedKobold.saturation.OnChange += OnColorChanged;
         networkedKobold.clothingHue.OnChange += OnColorChanged;
         OnColorChanged(0, 0, true);
-        networkedKobold.maxEnergy.OnChange += OnMaxEnergyChanged;
-        OnMaxEnergyChanged(networkedKobold.maxEnergy.Value, networkedKobold.maxEnergy.Value, true);
         
         networkedKobold.grabbed += OnGrab;
         networkedKobold.released += OnRelease;
@@ -492,7 +467,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             networkedKobold.hue.OnChange -= OnColorChanged;
             networkedKobold.saturation.OnChange -= OnColorChanged;
             networkedKobold.clothingHue.OnChange -= OnColorChanged;
-            networkedKobold.maxEnergy.OnChange -= OnMaxEnergyChanged;
             networkedKobold.grabbed -= OnGrab;
             networkedKobold.released -= OnRelease;
             networkedKobold.grabRequested -= OnGrabRequest;
@@ -551,9 +525,9 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             Array.Sort(colliders, 0, hits, usableColliderComparer);
             for (int i=0;i<hits;i++) {
                 Collider c = colliders[i];
-                GenericUsable usable = c.GetComponentInParent<GenericUsable>();
-                if (usable != null && usable.CanUse(this)) {
-                    usable.LocalUse(this);
+                NetworkedEntity usable = c.GetComponentInParent<NetworkedEntity>();
+                if (usable != null && usable.CanUse(networkedKobold)) {
+                    usable.OnUse(networkedKobold);
                     break;
                 }
             }
@@ -596,7 +570,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
 
     public void ProcessReagents(ReagentContents contents) {
         addbackReagents.Clear();
-        float newEnergy = energy;
+        float newEnergy = networkedKobold.energy.Value;
         float passiveEnergyGeneration = 0.025f;
         if (newEnergy < 1f) {
             if (ragdoller.ragdolled) {
@@ -618,9 +592,8 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             networkedKobold.SetFatSize(networkedKobold.fatSize.Value + overflowEnergy);
         }
         
-        if (Math.Abs(energy - newEnergy) > 0.001f) {
-            energy = Mathf.Clamp(newEnergy, 0f, GetMaxEnergy());
-            energyChanged?.Invoke(energy, GetMaxEnergy());
+        if (Math.Abs(networkedKobold.energy.Value - newEnergy) > 0.001f) {
+            networkedKobold.SetEnergy(Mathf.Clamp(newEnergy, 0f, GetMaxEnergy()));
         }
     }
     

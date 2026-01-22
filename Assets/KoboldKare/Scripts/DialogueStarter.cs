@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public class DialogueStarter : GenericUsable {
+public class DialogueStarter : MonoBehaviour {
     [Serializable]
     private class DialogueInfo {
         public int minimumStarCount;
@@ -26,11 +26,17 @@ public class DialogueStarter : GenericUsable {
     private AudioSource source;
     private WaitForSeconds textDelay;
     private WaitForSeconds lineDelay;
+    private NetworkedEntity networkedEntity;
     
     private bool talking = false;
 
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
+    private void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private void Awake() {
@@ -49,12 +55,11 @@ public class DialogueStarter : GenericUsable {
         source.enabled = false;
     }
 
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         return !talking;
     }
 
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold k) {
         StartCoroutine(Talk());
     }
 

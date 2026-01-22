@@ -6,7 +6,7 @@ using Photon.Pun;
 using SimpleJSON;
 using UnityEngine;
 
-public class MoneyPile : GenericUsable {
+public class MoneyPile : MonoBehaviour {
     private float internalWorth;
     private Kobold tryingToEquip;
     [SerializeField]
@@ -15,6 +15,8 @@ public class MoneyPile : GenericUsable {
     private AnimationCurve moneyMap;
     [SerializeField]
     private Sprite useSprite;
+
+    private NetworkedEntity networkedEntity;
     private float worth {
         get {
             return internalWorth;
@@ -30,8 +32,12 @@ public class MoneyPile : GenericUsable {
             }
         }
     }
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
+
+    void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+        }
     }
     // FIXME FISHNET
     /*
@@ -43,7 +49,7 @@ public class MoneyPile : GenericUsable {
     }
     */
     
-    public override void LocalUse(Kobold k) {
+    //public override void LocalUse(Kobold k) {
         // FIXME FISHNET
         /*
         // Try to take control of the equipment, if we don't have permission.
@@ -56,7 +62,7 @@ public class MoneyPile : GenericUsable {
             k.GetComponent<MoneyHolder>().AddMoney(worth);
             PhotonNetwork.Destroy(photonView.gameObject);
         }*/
-    }
+    //}
     
     // FIXME FISHNET
     /*
@@ -69,7 +75,7 @@ public class MoneyPile : GenericUsable {
         }
     }*/
     
-    public override void Save(JSONNode node) {
+    /*public override void Save(JSONNode node) {
         base.Save(node);
         node["worth"] = worth;
     }
@@ -77,7 +83,7 @@ public class MoneyPile : GenericUsable {
         base.Load(node);
         worth = node["worth"];
         return Task.CompletedTask;
-    }
+    }*/
 
     // FIXME FISHNET
     /*

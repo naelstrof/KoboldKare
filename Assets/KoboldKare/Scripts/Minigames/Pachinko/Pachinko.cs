@@ -7,7 +7,7 @@ using Photon.Pun;
 using SimpleJSON;
 
 [RequireComponent(typeof(AudioSource))]
-public class Pachinko : GenericUsable {
+public class Pachinko : MonoBehaviour {
 #region Definitions
     [System.Serializable]
     public class Prize {
@@ -21,6 +21,7 @@ public class Pachinko : GenericUsable {
         private AssetGroup.AssetLocation.AssetHandle<GameObject> prefabHandle;
         
         private VisualEffect spawnVFXInstance;
+        
         public async Task Spawn() {
 
             if (!prizeSpawn.TryGetGroupName(out var groupName)) {
@@ -60,6 +61,7 @@ public class Pachinko : GenericUsable {
             Spawn();*/
         }
     }
+
     [Header("Pachinko!")]
     [SerializeField]
     private MoneyFloater floater;
@@ -69,6 +71,7 @@ public class Pachinko : GenericUsable {
     public PhotonGameObjectReference pachinkoBallPrefab;
     public Transform ballSpawnPoint;
     GameObject activeBall;
+    private NetworkedEntity networkedEntity;
     
     [SerializeField]
     public new ConstantForce constantForce;
@@ -83,9 +86,6 @@ public class Pachinko : GenericUsable {
 #endregion
 
 #region Top Level Code
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
-    }
     void Start(){
         floater.SetBounds(GetComponent<Renderer>().bounds);
         floater.SetText(playCost.ToString());
@@ -93,20 +93,26 @@ public class Pachinko : GenericUsable {
         foreach(var prize in prizes) {
             prize.Spawn();
         }
+
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(displaySprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
-    public override void LocalUse(Kobold k) {
-        k.GetComponent<MoneyHolder>().ChargeMoney(playCost);
+    private void OnUse(NetworkedKobold k) {
+        if (k.TryGetKobold(out var kobold)) {
+            kobold.GetComponent<MoneyHolder>().ChargeMoney(playCost);
+        }
+        StartGame();
         // FIXME FISHNET
         // photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
     }
 
-    public override bool CanUse(Kobold k) {
-        return (k==null || k.GetComponent<MoneyHolder>().HasMoney(playCost)) && activeBall == null;
-    }
-
-    public override void Use() {
-        StartGame();
+    private bool OnUseRequested(NetworkedKobold k) {
+        return (k && k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().HasMoney(playCost)) && activeBall == null;
     }
 
     public void StartGame(){
@@ -184,9 +190,4 @@ public class Pachinko : GenericUsable {
         audioSrc.PlayOneShot(hitPin);
     }
     #endregion
-    public override void Save(JSONNode node) { }
-
-    public override Task Load(JSONNode node) {
-        return Task.CompletedTask;
-    }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Seed : GenericUsable, IValuedGood {
+public class Seed : MonoBehaviour, IValuedGood {
     //public List<GameObject> _plantPrefabs;
     [SerializeField]
     private float worth = 5f;
@@ -10,11 +10,9 @@ public class Seed : GenericUsable, IValuedGood {
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
     private bool waitingOnPlant = false;
+    private NetworkedEntity networkedEntity;
 
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
-    }
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         for(int i=0;i<hitCount;i++) {
             SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
@@ -25,7 +23,7 @@ public class Seed : GenericUsable, IValuedGood {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         int hitCount = Physics.OverlapSphereNonAlloc(transform.position, _spacing, hitColliders, GameManager.instance.plantHitMask, QueryTriggerInteraction.Ignore);
         SoilTile bestTile = null;
         float bestTileDistance = float.MaxValue;
@@ -53,6 +51,12 @@ public class Seed : GenericUsable, IValuedGood {
     void Start() {
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(displaySprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private void OnDestroy() {

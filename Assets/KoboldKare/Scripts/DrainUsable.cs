@@ -12,6 +12,8 @@ public class DrainUsable : UsableMachine {
     [SerializeField] private GenericReagentContainer drainContainer;
     [SerializeField] private Sprite displaySprite;
     private AudioSource audioSource;
+    private NetworkedEntity networkedEntity;
+    
     protected override void Start() {
         base.Start();
         if (audioSource == null) {
@@ -24,19 +26,21 @@ public class DrainUsable : UsableMachine {
             audioSource.loop = true;
             audioSource.enabled = false;
         }
+
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(displaySprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private bool draining;
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
+    private bool OnUseRequested(NetworkedKobold k) {
+        return constructed && drainContainer.volume > 0.01f;
     }
 
-    public override bool CanUse(Kobold k) {
-        return base.CanUse(k) && constructed && drainContainer.volume > 0.01f;
-    }
-
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold by) {
         StartCoroutine(Drain());
     }
 
@@ -65,7 +69,7 @@ public class DrainUsable : UsableMachine {
             draining = newDraining;
             PhotonProfiler.LogReceive(sizeof(bool));
         }
-    }*/
+    }
 
     public override Task Load(JSONNode node) {
         base.Load(node);
@@ -80,5 +84,5 @@ public class DrainUsable : UsableMachine {
     public override void Save(JSONNode node) {
         base.Save(node);
         node["draining"] = draining;
-    }
+    }*/
 }

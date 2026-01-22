@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using FishNet;
+using FishNet.Object;
 using NetStack.Serialization;
 using SimpleJSON;
 
@@ -42,18 +43,10 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     [SerializeField] private float animMinSpeed = 0.9f;
     [SerializeField] private float animMaxSpeed = 1.2f;
 
-    public override Sprite GetSprite(Kobold k) {
-        return onSprite;
-    }
-    public override bool CanUse(Kobold k) {
-        return k.GetEnergy() >= 1f && !grinding && station.info.user == null && constructed;
+    private bool OnUseRequested(NetworkedKobold k) {
+        return k.energy.Value >= 1f && !grinding && station.info.user == null && constructed;
     }
 
-    public override void LocalUse(Kobold k) {
-        // FIXME FISHNET
-        //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, 0);
-        base.LocalUse(k);
-    }
 
     
     // FIXME FISHNET
@@ -116,6 +109,11 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         stations = tempList.AsReadOnly();
         container.OnChange += OnReagentsChanged;
         networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(onSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {
@@ -124,10 +122,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         }
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    public override void Use() {
-
+    private void OnUse(NetworkedKobold k) {
+        k.BeginAnimation(GetComponentInParent<NetworkObject>(), 0);
         StopCoroutine(nameof(WaitThenConsumeEnergy));
         StartCoroutine(nameof(WaitThenConsumeEnergy));
     }
@@ -240,7 +236,8 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         return stations;
     }
 
-    public override Task Load(JSONNode node) {
+    // FIXME FISHNET
+    /*public override Task Load(JSONNode node) {
         base.Load(node);
         bool newGrinding = node["grinding"];
         if (!grinding && newGrinding) {
@@ -255,5 +252,5 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     public override void Save(JSONNode node) {
         base.Save(node);
         node["grinding"] = grinding;
-    }
+    }*/
 }

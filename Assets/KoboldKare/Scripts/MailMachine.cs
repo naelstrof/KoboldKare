@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FishNet.Object;
 using KoboldKare;
 using Naelstrof.Mozzarella;
 using Photon.Pun;
@@ -35,6 +36,8 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private WaitForSeconds wait;
     private List<AnimationStation> availableStations;
+    private NetworkedEntity networkedEntity;
+    
     protected override void Awake() {
         base.Awake();
         readOnlyStations = stations.AsReadOnly();
@@ -50,10 +53,18 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             sellSource.loop = false;
         }
     }
-    public override Sprite GetSprite(Kobold k) {
-        return mailSprite;
+
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(mailSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
-    public override bool CanUse(Kobold k) {
+
+    private bool OnUseRequested(NetworkedKobold k) {
         if (!constructed) {
             return false;
         }
@@ -74,7 +85,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         return true;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         availableStations.Clear();
         foreach (var station in stations) {
             if (station.info.user == null) {
@@ -86,11 +97,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         }
         int randomStation = UnityEngine.Random.Range(0, availableStations.Count);
         
-        // FIXME FISHNET
-        /*k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, stations.IndexOf(availableStations[randomStation]));*/
-        base.LocalUse(k);
-    }
-    public override void Use() {
+        k.BeginAnimation(GetComponentInParent<NetworkObject>(), stations.IndexOf(availableStations[randomStation]));
         StopAllCoroutines();
         StartCoroutine(WaitThenVoreKobold());
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using SimpleJSON;
 using UnityEngine;
 
-public class UsableMachine : GenericUsable {
+public class UsableMachine : MonoBehaviour {
     [SerializeField] protected bool constructed;
     [SerializeField]
     private GameObject[] trackedConstructedObjects;
@@ -20,18 +20,19 @@ public class UsableMachine : GenericUsable {
         SetConstructed(constructed);
     }
 
-    public override void Save(JSONNode node) {
-        base.Save(node);
-        node["constructed"] = constructed;
-    }
+    // FIXME: fishnet
+    //public override void Save(JSONNode node) {
+        //base.Save(node);
+        //node["constructed"] = constructed;
+    //}
 
-    public override Task Load(JSONNode node) {
-        base.Load(node);
-        if (node.HasKey("constructed")) {
-            SetConstructed(node["constructed"]);
-        }
-        return Task.CompletedTask;
-    }
+    //public override Task Load(JSONNode node) {
+        //base.Load(node);
+        //if (node.HasKey("constructed")) {
+            //SetConstructed(node["constructed"]);
+        //}
+        //return Task.CompletedTask;
+    //}
 
     /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         base.OnPhotonSerializeView(stream, info);

@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Naelstrof.Mozzarella;
-using Photon.Pun;
-using SkinnedMeshDecals;
+using FishNet.Object;
 using UnityEngine;
 using Vilar.AnimationStation;
 
@@ -16,15 +14,22 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
     private float maxEnergy = 3f;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private WaitForSeconds energyGrantPeriod;
+    private NetworkedEntity networkedEntity;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
         energyGrantPeriod = new WaitForSeconds(1f);
     }
-    public override Sprite GetSprite(Kobold k) {
-        return sleepingSprite;
+
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        networkedEntity.SetSprite(sleepingSprite);
+        networkedEntity.useRequested += OnUseRequested;
+        networkedEntity.used += OnUse;
     }
-    public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() >= maxEnergy) {
+
+    private bool OnUseRequested(NetworkedKobold k) {
+        if (k.energy.Value >= maxEnergy) {
             return false;
         }
         foreach (var station in stations) {
@@ -35,41 +40,27 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
+        if (!k.TryGetKobold(out var kobold)) {
+            return;
+        }
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                // FIXME FISHNET
-                // k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);
+                k.BeginAnimation(GetComponent<NetworkObject>(), i);
                 break;
             }
         }
-
-        // FIXME FISHNET
-        //photonView.RPC(nameof(Sleep), RpcTarget.All, k.photonView.ViewID);
-    }
-    
-    // FIXME FISHNET
-    //[PunRPC]
-    private void Sleep(int targetID) {
-        // FIXME FISHNET
-        /*PhotonView view = PhotonNetwork.GetPhotonView(targetID);
-        if (view != null && view.TryGetComponent(out Kobold kobold)) {
-            StartCoroutine(SleepRoutine(kobold));
-        }
-        PhotonProfiler.LogReceive(sizeof(int));*/
+        StartCoroutine(SleepRoutine(k));
     }
 
-    private IEnumerator SleepRoutine(Kobold k) {
-        // FIXME FISHNET
-        /*
+    private IEnumerator SleepRoutine(NetworkedKobold k) {
         bool stillSleeping = true;
-        float startStimulation = k.stimulation;
-        while (k != null && stillSleeping && k.GetEnergy() < maxEnergy) {
+        while (k != null && stillSleeping && k.energy.Value < maxEnergy) {
             yield return energyGrantPeriod;
-            if (k.photonView.IsMine) {
-                k.SetEnergyRPC(Mathf.Min(k.GetEnergy() + 0.2f, maxEnergy));
-                k.stimulation = Mathf.MoveTowards(startStimulation, 0f, 1f);
+            if (!k.IsOwner) {
+                continue;
             }
+            k.SetEnergy(Mathf.Min(k.energy.Value + 0.2f, maxEnergy));
             stillSleeping = false;
             foreach (var station in GetAnimationStations()) {
                 if (station.info.user == k) {
@@ -77,9 +68,9 @@ public class BedMachine : UsableMachine, IAnimationStationSet {
                 }
             }
         }
-        if (stillSleeping && k.photonView.IsMine) {
-            k.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-        }*/
+        if (stillSleeping && k.IsOwner) {
+            k.StopAnimation();
+        }
         yield break;
     }
 

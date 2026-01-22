@@ -18,6 +18,7 @@ public class KoboldDelivery : UsableMachine {
     [SerializeField] private AudioPack popPack;
     private AudioSource source;
     private static readonly int Dispense = Animator.StringToHash("Dispense");
+    private NetworkedKobold networkedKobold;
 
     public delegate void SpawnedKoboldAction(Kobold kob);
 
@@ -41,31 +42,39 @@ public class KoboldDelivery : UsableMachine {
         }
     }
 
+    protected override void Start() {
+        base.Start();
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        if (networkedKobold) {
+            networkedKobold.SetSprite(useSprite);
+            networkedKobold.used += OnUse;
+            networkedKobold.useRequested += OnUseRequested;
+        }
+    }
+
     void OnRotated(int newRotation) {
         floater.SetText(GetPrice().ToString(CultureInfo.CurrentCulture));
     }
 
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
+    private bool OnUseRequested(NetworkedKobold k) {
+        if (k.TryGetKobold(out Kobold kobold)) {
+            MoneyHolder holder = kobold.GetComponent<MoneyHolder>();
+            return constructed && holder.HasMoney(GetPrice());
+        }
+
+        return false;
     }
 
-    public override bool CanUse(Kobold k) {
-        MoneyHolder holder = k.GetComponent<MoneyHolder>();
-        return constructed && holder.HasMoney(GetPrice());
-    }
-
-    public override void LocalUse(Kobold k) {
-        if (!CanUse(k)) {
+    private void OnUse(NetworkedKobold k) {
+        if (!OnUseRequested(k)) {
             return;
         }
-        MoneyHolder holder = k.GetComponent<MoneyHolder>();
-        holder.ChargeMoney(GetPrice());
-        base.LocalUse(k);
-    }
 
-    public override void Use() {
-        base.Use();
-        StartCoroutine(DispenseKobold());
+        if (k.TryGetKobold(out Kobold kobold)) {
+            MoneyHolder holder = kobold.GetComponent<MoneyHolder>();
+            holder.ChargeMoney(GetPrice());
+            StartCoroutine(DispenseKobold());
+        }
     }
 
     private IEnumerator DispenseKobold() {

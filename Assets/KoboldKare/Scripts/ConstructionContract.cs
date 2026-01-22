@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleJSON;
 
-public class ConstructionContract : GenericUsable {
+public class ConstructionContract : MonoBehaviour {
     public delegate void ConstructionContractPurchaseAction(ConstructionContract contract);
     public static event ConstructionContractPurchaseAction purchasedEvent;
     [SerializeField]
@@ -22,6 +22,8 @@ public class ConstructionContract : GenericUsable {
     [SerializeField] private int starRequirement = 1;
     private bool bought;
 
+    private NetworkedKobold networkedKobold;
+
     void Start() {
         Bounds bound = new Bounds(transform.position, Vector3.one);
         foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
@@ -29,13 +31,18 @@ public class ConstructionContract : GenericUsable {
         }
         floater.SetBounds(bound);
         floater.SetText(cost.ToString());
+        networkedKobold = GetComponentInParent<NetworkedKobold>();
+        if (networkedKobold) {
+            networkedKobold.SetSprite(displaySprite);
+            networkedKobold.useRequested += OnUseRequested;
+            networkedKobold.used += OnUse;
+        }
     }
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
+    
+    private bool OnUseRequested(NetworkedKobold k) {
+        return !bought && (k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().HasMoney(cost) && ObjectiveManager.GetStars() > starRequirement || (ObjectiveManager.GetStars() == starRequirement && ObjectiveManager.GetCurrentObjective() != null));
     }
-    public override bool CanUse(Kobold k) {
-        return !bought && (k.GetComponent<MoneyHolder>().HasMoney(cost) && ObjectiveManager.GetStars() > starRequirement || (ObjectiveManager.GetStars() == starRequirement && ObjectiveManager.GetCurrentObjective() != null));
-    }
+    
     protected virtual void SetState(bool purchased) {
         bought = purchased;
         foreach (Transform t in transform) {
@@ -50,22 +57,17 @@ public class ConstructionContract : GenericUsable {
             r.enabled = !purchased;
         }
     }
-    public override void LocalUse(Kobold k) {
-        if (k.GetComponent<MoneyHolder>().ChargeMoney(cost)) {
-            base.LocalUse(k);
+    
+    private void OnUse(NetworkedKobold k) {
+        if (k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().ChargeMoney(cost)) {
+            SetState(true);
+            GameManager.instance.SpawnAudioClipInWorld(purchaseSound, transform.position);
+            purchasedEvent?.Invoke(this);
         }
     }
-    
-    // FIXME FISHNET
-    //[PunRPC]
-    public override void Use() {
-        base.Use();
-        SetState(true);
-        GameManager.instance.SpawnAudioClipInWorld(purchaseSound, transform.position);
-        purchasedEvent?.Invoke(this);
-    }
 
-    public override void Save(JSONNode node) {
+    // FIXME FISHNET
+    /*public override void Save(JSONNode node) {
         node["bought"] = bought;
     }
 
@@ -73,7 +75,7 @@ public class ConstructionContract : GenericUsable {
         bought = node["bought"];
         SetState(bought);
         return Task.CompletedTask;
-    }
+    }*/
 
     
     // FIXME FISHNET

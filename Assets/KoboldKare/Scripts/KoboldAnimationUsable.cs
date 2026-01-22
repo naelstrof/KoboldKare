@@ -1,26 +1,33 @@
 using System.Collections.Generic;
 using System.Linq;
+using FishNet.Object;
 using Photon.Pun;
 using UnityEngine;
 using Vilar.AnimationStation;
 
 [RequireComponent(typeof(CharacterControllerAnimator))]
-public class KoboldAnimationUsable : GenericUsable {
-    private Kobold selfKobold;
+public class KoboldAnimationUsable : MonoBehaviour {
+    private NetworkedKobold selfKobold;
     private CharacterControllerAnimator animator;
     private static Collider[] colliders = new Collider[32];
     private LayerMask mask;
-    private List<Kobold> koboldCache;
+    private List<NetworkedKobold> koboldCache;
+    
+    private NetworkedEntity networkedEntity;
+    
     [SerializeField] private Sprite sprite;
-    public override Sprite GetSprite(Kobold k) {
-        return sprite;
-    }
 
     void Start() {
-        koboldCache = new List<Kobold>();
+        koboldCache = new List<NetworkedKobold>();
         mask = LayerMask.GetMask("AnimationSet");
-        selfKobold = GetComponent<Kobold>();
+        selfKobold = GetComponentInParent<NetworkedKobold>();
         animator = GetComponent<CharacterControllerAnimator>();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(sprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
     
     private IAnimationStationSet GetAnimationStationSet(Vector3 position, int neededSlots) {
@@ -47,8 +54,8 @@ public class KoboldAnimationUsable : GenericUsable {
         return bestStationSet;
     }
 
-    public override bool CanUse(Kobold k) {
-        if (k.GetEnergy() == 0 || selfKobold.GetEnergy() == 0) {
+    private bool OnUseRequested(NetworkedKobold k) {
+        if (k.energy.Value == 0 || selfKobold.energy.Value == 0) {
             return false;
         }
         koboldCache.Clear();
@@ -56,7 +63,7 @@ public class KoboldAnimationUsable : GenericUsable {
         koboldCache.Add(k);
         if (animator.TryGetAnimationStationSet(out IAnimationStationSet testSet)) {
             foreach (AnimationStation station in testSet.GetAnimationStations()) {
-                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k && station.info.user.GetEnergy() > 0) {
+                if (station.info.user != null && station.info.user != selfKobold && station.info.user != k && station.info.user.energy.Value > 0) {
                     koboldCache.Add(station.info.user);
                 }
             }
@@ -65,7 +72,7 @@ public class KoboldAnimationUsable : GenericUsable {
         return targetSet != null;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         // FIXME FISHNET
         //selfKobold.photonView.RequestOwnership();
         koboldCache.Clear();
@@ -80,13 +87,10 @@ public class KoboldAnimationUsable : GenericUsable {
         }
         
         IAnimationStationSet targetSet = GetAnimationStationSet(transform.position, koboldCache.Count);
-        // FIXME FISHNET
-        /*
         if (targetSet != null) {
             for (int i = 0; i < koboldCache.Count; i++) {
-                koboldCache[i].photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,
-                    new object[] { targetSet.photonView.ViewID, i });
+                koboldCache[i].BeginAnimation(GetComponentInParent<NetworkObject>(), i);
             }
-        }*/
+        }
     }
 }

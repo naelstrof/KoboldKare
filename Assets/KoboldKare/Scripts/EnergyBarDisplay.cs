@@ -18,18 +18,23 @@ public class EnergyBarDisplay : MonoBehaviour {
     private static readonly int ColorID = Shader.PropertyToID("_Color");
     private static readonly int BaseColorID = Shader.PropertyToID("_BaseColor");
 
-    private Kobold kobold;
+    private NetworkedKobold kobold;
 
     void Start() {
-        kobold = GetComponentInParent<Kobold>();
-        kobold.energyChanged += OnEnergyChanged;
+        kobold = GetComponentInParent<NetworkedKobold>();
+        kobold.energy.OnChange += OnEnergyChanged;
+        kobold.maxEnergy.OnChange += OnMaxEnergyChanged;
         energyBar.material.SetColor(ColorID, energyBar.material.GetColor(ColorID).With(a:0f));
         energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
-        OnEnergyChanged(kobold.GetEnergy(), kobold.GetMaxEnergy());
+        OnEnergyChanged(kobold.energy.Value, kobold.energy.Value, false);
+        OnMaxEnergyChanged(kobold.maxEnergy.Value, kobold.maxEnergy.Value, false);
     }
 
     private void OnDestroy() {
-        kobold.energyChanged -= OnEnergyChanged;
+        if (kobold) {
+            kobold.energy.OnChange -= OnEnergyChanged;
+            kobold.maxEnergy.OnChange -= OnMaxEnergyChanged;
+        }
     }
 
     void OnDisable() {
@@ -37,13 +42,24 @@ public class EnergyBarDisplay : MonoBehaviour {
         energyBarContainer.material.SetColor(BaseColorID, energyBarContainer.material.GetColor(BaseColorID).With(a:0f));
     }
 
-    void OnEnergyChanged(float value, float maxValue) {
-        if (Math.Abs(desiredValue - value) < 0.01f && Math.Abs(desiredMaxValue - maxValue) < 0.01f) {
+    void OnEnergyChanged(float oldValue, float newValue, bool asServer) {
+        if (Math.Abs(desiredValue - newValue) < 0.01f)  {
             return;
         }
 
-        desiredValue = value;
-        desiredMaxValue = maxValue;
+        desiredValue = newValue;
+        if (!animating) {
+            StopAllCoroutines();
+            StartCoroutine(EnergyAnimation(energyBar.material.GetFloat(Value), energyBar.material.GetFloat(MaxValue)));
+        }
+    }
+    
+    void OnMaxEnergyChanged(float oldValue, float newValue, bool asServer) {
+        if (Math.Abs(desiredMaxValue - newValue) < 0.01f)  {
+            return;
+        }
+
+        desiredMaxValue = newValue;
         if (!animating) {
             StopAllCoroutines();
             StartCoroutine(EnergyAnimation(energyBar.material.GetFloat(Value), energyBar.material.GetFloat(MaxValue)));

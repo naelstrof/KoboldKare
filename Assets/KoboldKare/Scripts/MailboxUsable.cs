@@ -6,17 +6,15 @@ using KoboldKare;
 using Photon.Pun;
 using UnityEngine;
 
-public class MailboxUsable : GenericUsable {
+public class MailboxUsable : MonoBehaviour {
     [SerializeField] private Sprite useSprite;
     [SerializeField] private AudioPack mailWaiting;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject spaceBeam;
     private AudioSource mailWaitingSource;
+    private NetworkedEntity networkedEntity;
 
     private bool hasMail = true;
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
 
     void Start() {
         if (mailWaitingSource == null) {
@@ -36,6 +34,12 @@ public class MailboxUsable : GenericUsable {
         mailWaiting.Play(mailWaitingSource);
         ObjectiveManager.AddObjectiveSwappedListener(OnObjectiveSwapped);
         OnObjectiveSwapped(ObjectiveManager.GetCurrentObjective());
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     private void OnDestroy() {
@@ -74,12 +78,11 @@ public class MailboxUsable : GenericUsable {
         }
     }*/
 
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         return hasMail && ObjectiveManager.GetCurrentObjective() == null;
     }
 
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold by) {
         hasMail = false;
         ObjectiveManager.GetMail();
         mailWaitingSource.Stop();

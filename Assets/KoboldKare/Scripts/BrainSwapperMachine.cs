@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FishNet.Object;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -20,6 +21,7 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
     [SerializeField] private AudioPack brainSwapSound;
     private AudioSource brainSwapSoundSource;
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
+    private NetworkedEntity networkedEntity;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
         if (brainSwapSoundSource == null) {
@@ -32,10 +34,18 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
             brainSwapSoundSource.loop = false;
         }
     }
-    public override Sprite GetSprite(Kobold k) {
-        return sleepingSprite;
+
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            networkedEntity.SetSprite(sleepingSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
-    public override bool CanUse(Kobold k) {
+    
+    public bool OnUseRequested(NetworkedEntity k) {
         if (!constructed) {
             return false;
         }
@@ -48,11 +58,10 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         for (int i = 0; i < stations.Count; i++) {
             if (stations[i].info.user == null) {
-                // FIXME FISHNET
-                // k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All, photonView.ViewID, i);
+                k.BeginAnimation(networkedEntity.GetComponent<NetworkObject>(), i);
                 break;
             }
         }

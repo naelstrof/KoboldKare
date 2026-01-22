@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FishNet.Object;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private GenericReagentContainer container;
 
+    private NetworkedEntity networkedEntity;
+    
     protected override void Start() {
         base.Start();
         readOnlyStations = stations.AsReadOnly();
@@ -30,38 +33,36 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(container);
         container.OnChange += OnReagentContentsChanged;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(useSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
     
     private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
         stream.OnFire(container);
     }
 
-    public override Sprite GetSprite(Kobold k) {
-        return useSprite;
-    }
-
-    public override bool CanUse(Kobold k) {
+    private bool OnUseRequested(NetworkedKobold k) {
         if (!constructed) {
             return false;
         }
+
+        if (!k.TryGetKobold(out Kobold kobold)) {
+            return false;
+        }
         if (stations[0].info.user == null) {
-            return k.bellyContainer.volume > 0f;
+            return kobold.bellyContainer.volume > 0f;
         }
         return false;
     }
 
-    public override void LocalUse(Kobold k) {
-        base.LocalUse(k);       
+    private void OnUse(NetworkedKobold k) {
         if (stations[0].info.user == null) {
-            // FIXME FISHNET
-            //k.photonView.RPC(nameof(CharacterControllerAnimator.BeginAnimationRPC), RpcTarget.All,photonView.ViewID, 0);
+            k.BeginAnimation(GetComponentInParent<NetworkObject>(), 0);
         }
-    }
-
-    // FIXME FISHNET
-    //[PunRPC]
-    public override void Use() {
-        base.Use();
         StopAllCoroutines();
         StartCoroutine(CrusherRoutine());
     }

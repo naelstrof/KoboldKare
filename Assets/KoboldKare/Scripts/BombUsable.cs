@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Animator)), RequireComponent(typeof(Photon.Pun.PhotonView)), RequireComponent(typeof(GenericReagentContainer))]
-public class BombUsable : GenericUsable, IDamagable {
+public class BombUsable : MonoBehaviour, IDamagable {
     [SerializeField]
     private Sprite bombSprite;
     private bool fired = false;
@@ -12,18 +12,28 @@ public class BombUsable : GenericUsable, IDamagable {
     [SerializeField]
     private VisualEffect effect;
     private GenericReagentContainer container;
+    private NetworkedEntity networkEntity;
     void Awake() {
         container = GetComponent<GenericReagentContainer>();
         animator = GetComponent<Animator>();
     }
-    public override Sprite GetSprite(Kobold k) {
-        return bombSprite;
+
+    void Start() {
+        networkEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkEntity != null) {
+            networkEntity.SetSprite(bombSprite);
+            networkEntity.useRequested += OnUseRequested;
+            networkEntity.used += OnUse;
+        }
     }
-    
+
+    private bool OnUseRequested(NetworkedKobold by) {
+        return !fired;
+    }
+
     // FIXME FISHNET
     //[PunRPC]
-    public override void Use() {
-        base.Use();
+    private void OnUse(NetworkedKobold by) {
         Fire();
     }
 

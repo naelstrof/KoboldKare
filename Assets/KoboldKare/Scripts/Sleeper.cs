@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,23 @@ using System.IO;
 using System.Threading.Tasks;
 using SimpleJSON;
 
-public class Sleeper : GenericUsable {
+public class Sleeper : MonoBehaviour {
     public GameEventGeneric startSleep;
     public GameEventGeneric sleep;
     public Sprite sleepSprite;
-    public override Sprite GetSprite(Kobold k) {
-        return sleepSprite;
+    private NetworkedEntity networkedEntity;
+
+    private void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(sleepSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
-    public override bool CanUse(Kobold k) {
+
+    private bool OnUseRequested(NetworkedKobold k) {
+        // FIXME FISHNET
         /*bool canSleep = true;
         foreach(var player in PhotonNetwork.PlayerList) {
             if (player.TagObject != null) {
@@ -26,12 +36,7 @@ public class Sleeper : GenericUsable {
         }*/
         return true;
     }
-    public override void LocalUse(Kobold k) {
-        
-        // FIXME FISHNET
-        //photonView.RPC("RPCUse", RpcTarget.All, new object[]{});
-    }
-    public override void Use() {
+    private void OnUse(NetworkedKobold k) {
         StopAllCoroutines();
         StartCoroutine(SleepRoutine());
     }
@@ -40,10 +45,5 @@ public class Sleeper : GenericUsable {
         yield return new WaitForSeconds(0.5f);
         sleep.Raise(null);
         //DayNightCycle.StaticSleep();
-    }
-    public override void Save(JSONNode writer) { }
-
-    public override Task Load(JSONNode reader) {
-        return Task.CompletedTask;
     }
 }

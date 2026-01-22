@@ -87,7 +87,8 @@ public class SuckingMachine : UsableMachine {
                 return;
             }
 
-            LocalUse(targetKobold);
+            // FIXME FISHNET
+            //LocalUse(targetKobold);
             return;
         }
         Rigidbody body = other.GetComponentInParent<Rigidbody>();

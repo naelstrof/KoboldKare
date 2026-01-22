@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 using KoboldKare;
 
 [RequireComponent(typeof(Photon.Pun.PhotonView))]
-public class IceSpawnerUsable : GenericUsable {
+public class IceSpawnerUsable : MonoBehaviour {
     [SerializeField]
     private float cost = 20f;
     [SerializeField]
@@ -18,6 +18,7 @@ public class IceSpawnerUsable : GenericUsable {
     [SerializeField]
     private Transform spawnLocation;
     public PhotonGameObjectReference prefabSpawn;
+    private NetworkedEntity networkedEntity;
     void Start() {
         Bounds newBounds = new Bounds(transform.position, Vector3.zero);
         foreach(Renderer r in GetComponentsInChildren<Renderer>()) {
@@ -25,24 +26,20 @@ public class IceSpawnerUsable : GenericUsable {
         }
         floater.SetBounds(newBounds);
         floater.SetText(cost.ToString());
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(buySprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
-    public override bool CanUse(Kobold k) {
-        return k.GetComponent<MoneyHolder>().HasMoney(cost);
+    private bool OnUseRequested(NetworkedKobold k) {
+        return k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().HasMoney(cost);
     }
-    public override Sprite GetSprite(Kobold k) {
-        return buySprite;
-    }
-    public override void LocalUse(Kobold k) {
-        k.GetComponent<MoneyHolder>().ChargeMoney(cost);
-        // FIXME FISHNET
-        //photonView.RPC("RPCUse", RpcTarget.All);
-    }
-    // FIXME FISHNET
-    //[PunRPC]
-    public override void Use() {
-        // FIXME FISHNET
-        //if (PhotonNetwork.IsMasterClient) {
+    private void OnUse(NetworkedKobold k) {
+        if (k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().ChargeMoney(cost)) {
+            // FIXME FISHNET
             //PhotonNetwork.InstantiateRoomObject(prefabSpawn.photonName, spawnLocation.position, spawnLocation.rotation);
-        //}
+        }
     }
 }

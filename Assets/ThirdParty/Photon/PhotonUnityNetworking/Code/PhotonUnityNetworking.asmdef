@@ -9,7 +9,8 @@
         "Unity.Addressables",
         "Unity.ResourceManager",
         "naelstrof.Modding",
-        "Naelstrof.PhotonShared"
+        "Naelstrof.PhotonShared",
+        "SteamManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

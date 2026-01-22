@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class GenericPurchasable : GenericUsable, ISavable {
+public class GenericPurchasable : MonoBehaviour {
 
     [SerializeField]
     public PhotonGameObjectReference spawn;
@@ -40,6 +40,8 @@ public class GenericPurchasable : GenericUsable, ISavable {
     [SerializeField]
     private MoneyFloater floater;
 
+    private NetworkedEntity networkedEntity;
+
     public virtual void Start() {
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
@@ -51,9 +53,13 @@ public class GenericPurchasable : GenericUsable, ISavable {
         if (spawn != null && spawn.TryGetAssetGroupAndKey(out var group, out var key)) {
             SwapTo(group, key);
         }
-    }
-    public override Sprite GetSprite(Kobold k) {
-        return displaySprite;
+
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(displaySprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+        }
     }
 
     public static GameObject GenerateDisplay(GameObject targetPrefab, Shader displayShader, Transform parent) {
@@ -164,25 +170,23 @@ public class GenericPurchasable : GenericUsable, ISavable {
             floater.gameObject.SetActive(true);
         }
     }
-    public override void LocalUse(Kobold k) {
+    private void OnUse(NetworkedKobold k) {
         // FIXME FISHNET
         //photonView.RPC("RPCUse", RpcTarget.All);
-        k.GetComponent<MoneyHolder>().ChargeMoney(price);
+        if (k.TryGetKobold(out var kobold)) {
+            kobold.GetComponent<MoneyHolder>().ChargeMoney(price);
+            purchaseSoundPack.Play(source);
+            floater.gameObject.SetActive(false);
+            display.SetActive(false);
+            // FIXME FISHNET
+            /*if (PhotonNetwork.IsMasterClient && !string.IsNullOrEmpty(purchasablePhotonName)) {
+                PhotonNetwork.InstantiateRoomObject(purchasablePhotonName, transform.position, Quaternion.identity);
+                StartCoroutine(Restock());
+            }*/
+        }
     }
-    public override bool CanUse(Kobold k) {
-        return (display != null && display.activeInHierarchy) && (k == null || k.GetComponent<MoneyHolder>().HasMoney(price));
-    }
-    // FIXME FISHNET
-    //[PunRPC]
-    public override void Use() {
-        purchaseSoundPack.Play(source);
-        floater.gameObject.SetActive(false);
-        display.SetActive(false);
-        // FIXME FISHNET
-        /*if (PhotonNetwork.IsMasterClient && !string.IsNullOrEmpty(purchasablePhotonName)) {
-            PhotonNetwork.InstantiateRoomObject(purchasablePhotonName, transform.position, Quaternion.identity);
-            StartCoroutine(Restock());
-        }*/
+    private bool OnUseRequested(NetworkedKobold k) {
+        return (display != null && display.activeInHierarchy) && (k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().HasMoney(price));
     }
     
     // FIXME FISHNET
@@ -196,7 +200,7 @@ public class GenericPurchasable : GenericUsable, ISavable {
             SwapTo(currentPurchasable);
             PhotonProfiler.LogReceive(sizeof(bool)+currentPurchasable.Length);
         }
-    }*/
+    }
     public override void Save(JSONNode node) {
         base.Save(node);
         node["inStock"] = inStock;
@@ -217,7 +221,7 @@ public class GenericPurchasable : GenericUsable, ISavable {
         }
 
         return Task.CompletedTask;
-    }
+    }*/
 
     private IEnumerator Restock() {
         yield return new WaitForSeconds(30f);

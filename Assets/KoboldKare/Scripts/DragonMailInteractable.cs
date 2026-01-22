@@ -4,28 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class DragonMailInteractable : GenericUsable {
+public class DragonMailInteractable : MonoBehaviour {
     public AudioSource src;
     public Canvas tgt;
     public DragonMailHandler dmHandler;
     public Sprite displaySprite;
+    private NetworkedEntity networkedEntity;
 
-    public override Sprite GetSprite(Kobold k){
-        return displaySprite;
+    void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.SetSprite(displaySprite);
+            networkedEntity.used += OnUse;
+        }
     }
+
+    private bool OnUseRequested(NetworkedKobold by) {
+        return true;
+    }
+
 
     // FIXME FISHNET
     /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         //Serialize event
     }*/
 
-    public override void Use(){ 
-        //Pulling the screen up/down is entirely local so don't broadcast this part of the set of behaviors
-        
+    private void OnUse(NetworkedKobold by) { 
         // FIXME FISHNET
-        /*if(photonView.IsMine){
-            base.Use();
-            DragonMailHandler.inst.Toggle();
-        }*/
+        // Should only trigger on client who used it.
+        DragonMailHandler.inst.Toggle();
     }
 }

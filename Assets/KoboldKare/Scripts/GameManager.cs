@@ -30,22 +30,19 @@ public class GameManager : MonoBehaviour {
     public LayerMask usableHitMask;
     public AnimationCurve volumeCurve;
     public AudioPack buttonHovered, buttonClicked;
-    [SerializeField]
-    private Equipment errorEquipment;
-    [SerializeField]
-    private ScriptablePlant errorPlant;
-    [SerializeField]
-    private GameObject errorKobold;
-    [SerializeField]
-    private GameObject errorGeneric;
-    [SerializeField]
-    private GameObject errorPenis;
+    [SerializeField] private Equipment errorEquipment;
+    [SerializeField] private ScriptablePlant errorPlant;
+    [SerializeField] private GameObject errorKobold;
+    [SerializeField] private GameObject errorGeneric;
+    [SerializeField] private GameObject errorPenis;
+    [SerializeField] private Sprite errorSprite;
 
     public static Equipment GetErrorEquipment() => instance.errorEquipment;
     public static ScriptablePlant GetErrorPlant() => instance.errorPlant;
     public static GameObject GetErrorKobold() => instance.errorKobold;
     public static GameObject GetErrorGeneric() => instance.errorGeneric;
     public static GameObject GetErrorPenis() => instance.errorPenis;
+    public static Sprite GetErrorSprite() => instance.errorSprite;
 
     private PlayerControls controls;
 

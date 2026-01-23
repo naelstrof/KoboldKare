@@ -128,7 +128,14 @@ public class SteamWorkshopItem {
 							continue;
 						}
 
-						var keywords = mat.shaderKeywords ?? Array.Empty<string>();
+						List<string> keywordArray = new List<string>();
+						if (mat.shaderKeywords != null) {
+							keywordArray.AddRange(mat.shaderKeywords);
+						}
+						keywordArray.Add("_PENETRATION_DEFORMATION");
+						keywordArray.Add("_PENETRATION_DEFORMATION_DETAIL");
+						var keywords = keywordArray.ToArray();
+						
 						try {
 							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, keywords));
 						} catch (ArgumentException e) {

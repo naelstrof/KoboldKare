@@ -154,9 +154,19 @@ public class NetworkedEntity : GeneHolder {
         return false;
     }
 
-    [ServerRpc]
-    public void OnUse(NetworkedKobold kobold) {
-        used?.Invoke(kobold);
+    [ServerRpc(RequireOwnership = false)]
+    public void TryUse(NetworkConnection conn = null) {
+        if (KoboldPlayerSpawner.TryGetPlayerKobold(conn, out var kobold)) {
+            OnUse(kobold);
+        }
+    }
+
+    [ObserversRpc]
+    private void OnUse(NetworkObject kobold) {
+        var kob = kobold.GetComponentInChildren<NetworkedKobold>();
+        if (kob) {
+            used?.Invoke(kob);
+        }
     }
 
     public void SetSprite(Sprite newSprite) {

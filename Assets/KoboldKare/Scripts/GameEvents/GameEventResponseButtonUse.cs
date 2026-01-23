@@ -27,7 +27,7 @@ public class GameEventResponseButtonUse : GameEventResponse {
         // FIXME FISHNET, untested, probably should only trigger on host?
         var anyKobold = Object.FindAnyObjectByType<NetworkedKobold>();
         foreach (var target in targets) {
-            target.GetComponentInParent<NetworkedEntity>().OnUse(anyKobold);
+            target.GetComponentInParent<NetworkedEntity>().TryUse();
         }
         if (isRootInvoker) {
             stackOverflowCheck = false;

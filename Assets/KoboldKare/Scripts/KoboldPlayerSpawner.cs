@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FishNet;
 using UnityEngine;
@@ -14,6 +15,8 @@ using UnityEngine.SceneManagement;
 public class KoboldPlayerSpawner : MonoBehaviour {
     [SerializeField] private PrefabSelectSingleSetting playerSetting; 
     [SerializeField] private PrefabDatabase playerPrefabDatabase;
+    
+    private static Dictionary<int, NetworkObject> playerKobolds;
     
     #region Public.
     /// <summary>
@@ -62,6 +65,15 @@ public class KoboldPlayerSpawner : MonoBehaviour {
         }
     }
 
+    public static bool TryGetPlayerKobold(NetworkConnection connection, out NetworkObject kobold) {
+        if (playerKobolds.TryGetValue(connection.ClientId, out kobold)) {
+            if (kobold) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void Awake() {
         InitializeOnce();
         OnSpawned += OnPlayerSpawn;
@@ -82,6 +94,7 @@ public class KoboldPlayerSpawner : MonoBehaviour {
     /// Initializes this script for use.
     /// </summary>
     private void InitializeOnce() {
+        playerKobolds = new();
         _networkManager = GetComponentInParent<NetworkManager>();
         if (_networkManager == null) {
             _networkManager = InstanceFinder.NetworkManager;
@@ -122,6 +135,7 @@ public class KoboldPlayerSpawner : MonoBehaviour {
             _networkManager.SceneManager.AddOwnerToDefaultScene(nob);
         }
 
+        playerKobolds.Add(conn.ClientId, nob);
         OnSpawned?.Invoke(nob);
     }
 

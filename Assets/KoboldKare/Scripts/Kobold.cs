@@ -527,7 +527,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
                 Collider c = colliders[i];
                 NetworkedEntity usable = c.GetComponentInParent<NetworkedEntity>();
                 if (usable != null && usable.CanUse(networkedKobold)) {
-                    usable.OnUse(networkedKobold);
+                    usable.TryUse();
                     break;
                 }
             }

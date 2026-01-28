@@ -112,6 +112,17 @@ public class SteamWorkshopItem {
 		}
 		public abstract void Serialize(JSONNode node, string uniqueString);
 
+		private static string[] Intersection(string[] setA, HashSet<string> setB) {
+			List<string> result = new List<string>();
+			foreach (var element in setA) {
+				if (setB.Contains(element)) {
+					result.Add(element);
+				}
+			}
+
+			return result.ToArray();
+		}
+
 		public static void GetShaderAssets(string[] assetNames, string uniqueString, out string[] shaderDepArray) {
 			var shaderVariantCollection = new ShaderVariantCollection();
 			var shaderDeps = new HashSet<string>();
@@ -128,37 +139,61 @@ public class SteamWorkshopItem {
 							continue;
 						}
 
-						List<string> keywordArray = new List<string>();
+						if (mat.shader.name.Contains("InternalErrorShader")) {
+							continue;
+						}
+
+						HashSet<string> keywordSet = new HashSet<string>();
 						if (mat.shaderKeywords != null) {
-							keywordArray.AddRange(mat.shaderKeywords);
+							foreach (var keyword in mat.shaderKeywords) {
+								keywordSet.Add(keyword);
+							}
 						}
-						keywordArray.Add("_PENETRATION_DEFORMATION");
-						keywordArray.Add("_PENETRATION_DEFORMATION_DETAIL");
-						var keywords = keywordArray.ToArray();
-						
+
+						string[] variantSetOne = new[] { "FOG_EXP2", "_ADDITIONAL_LIGHTS", "_ADDITIONAL_LIGHT_SHADOWS", "_MAIN_LIGHT_SHADOWS_CASCADE", "_SHADOWS_SOFT", "_PENETRATION_DEFORMATION_ON" };
+						string[] variantSetTwo = new[] { "_ADDITIONAL_LIGHTS", "_ADDITIONAL_LIGHT_SHADOWS", "_MAIN_LIGHT_SHADOWS", "_PENETRATION_DEFORMATION_ON" };
+						string[] variantSetThree = new[] { "_PENETRATION_DEFORMATION_ON" };
+
 						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, keywords));
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipelineDefaultUnlit));
 						} catch (ArgumentException e) {
 						}
 						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipelineDefaultUnlit, keywords));
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.Normal));
+							var intersect = Intersection(variantSetThree, keywordSet);
+							if (intersect.Length > 0) {
+								shaderVariantCollection.Add( new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ShadowCaster, intersect));
+							}
 						} catch (ArgumentException e) {
+							Debug.LogException(e);
 						}
 						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.Meta, keywords));
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ShadowCaster));
+							var intersect = Intersection(variantSetThree, keywordSet);
+							if (intersect.Length > 0) {
+								shaderVariantCollection.Add( new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ShadowCaster, intersect));
+							}
 						} catch (ArgumentException e) {
+							Debug.LogException(e);
 						}
+
 						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.Normal, keywords));
-						} catch (ArgumentException e) {
+							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline));
+							var intersect = Intersection(variantSetOne, keywordSet);
+							if (intersect.Length > 0) {
+								shaderVariantCollection.Add( new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, intersect));
+							}
+							intersect = Intersection(variantSetTwo, keywordSet);
+							if (intersect.Length > 0) {
+								shaderVariantCollection.Add( new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, intersect));
+							}
+							intersect = Intersection(variantSetThree, keywordSet);
+							if (intersect.Length > 0) {
+								shaderVariantCollection.Add( new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ScriptableRenderPipeline, intersect));
+							}
 						}
-						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.MotionVectors, keywords));
-						} catch (ArgumentException e) {
-						}
-						try {
-							shaderVariantCollection.Add(new ShaderVariantCollection.ShaderVariant(mat.shader, PassType.ShadowCaster, keywords));
-						} catch (ArgumentException e) {
+						catch (ArgumentException e) {
+							Debug.LogException(e);
 						}
 					}
 				}
@@ -610,6 +645,7 @@ public class SteamWorkshopItem {
 		return (bool)isPlatformSupportLoaded.Invoke(null,new object[] {(string)getTargetStringFromBuildTarget.Invoke(null, new object[] {target})});
 	}
 	public void Build(ModContent modContent) {
+		Debug.Log($"Building {modContent}");
 		try {
 			if (!IsValid()) {
 				throw new Exception("Mod is not valid.");

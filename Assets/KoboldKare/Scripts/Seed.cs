@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using FishNet;
+using FishNet.Object;
+using UnityEngine;
 
 public class Seed : MonoBehaviour, IValuedGood {
     //public List<GameObject> _plantPrefabs;
@@ -9,7 +11,6 @@ public class Seed : MonoBehaviour, IValuedGood {
     public float _spacing = 1f;
     public ScriptablePlant plant;
     private Collider[] hitColliders = new Collider[16];
-    private bool waitingOnPlant = false;
     private NetworkedEntity networkedEntity;
 
     private bool OnUseRequested(NetworkedKobold k) {
@@ -17,7 +18,7 @@ public class Seed : MonoBehaviour, IValuedGood {
         for(int i=0;i<hitCount;i++) {
             SoilTile tile = hitColliders[i].GetComponentInParent<SoilTile>();
             if (tile != null && tile.GetPlantable()) {
-                return true && !waitingOnPlant;
+                return true;
             }
         }
         return false;
@@ -39,11 +40,7 @@ public class Seed : MonoBehaviour, IValuedGood {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            // FIXME FISHNET
-            //BitBuffer spawnData = new BitBuffer(16);
-            //spawnData.AddKoboldGenes(genes);
-            //spawnData.AddShort((short)KoboldKareObjectPostProcessor.GetAssetID("Plant", plant.name));
-            //bestTile.photonView.RPC(nameof(SoilTile.PlantRPC), RpcTarget.All, photonView.ViewID, spawnData);
+            bestTile.GetComponentInParent<NetworkedEntity>().PlantRPC(GetComponentInParent<NetworkObject>(), plant.name);
         }
 
     }

@@ -7,6 +7,7 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Photon.Pun;
 using SimpleJSON;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class NetworkedEntity : GeneHolder {
@@ -17,6 +18,7 @@ public class NetworkedEntity : GeneHolder {
     protected readonly SyncVar<AssetNamePair> assetPair = new SyncVar<AssetNamePair>();
     public readonly SyncVar<bool> frozen = new SyncVar<bool>();
     public readonly SyncVar<float> health = new SyncVar<float>(100f);
+    public readonly SyncVar<bool> planted = new SyncVar<bool>();
     
     public const string PHOTONVIEW_ID_GROUP = "PHOTONVIEW_ID_GROUP";
 
@@ -24,6 +26,7 @@ public class NetworkedEntity : GeneHolder {
     private GameObject mapInstance;
     
     private AssetGroup.AssetLocation.AssetHandle<GameObject> entityHandle;
+    private AssetGroup.AssetLocation.AssetHandle<ScriptablePlant> plantHandle;
     
     private NetworkManager networkManager;
 
@@ -33,7 +36,7 @@ public class NetworkedEntity : GeneHolder {
         assetPair.Value = new AssetNamePair { groupName = PHOTONVIEW_ID_GROUP, assetName = $"{photonView.sceneViewId}"};
     }
 
-    [ServerRpc]
+    [ObserversRpc]
     public void SetFrozen(bool setFrozen) {
         frozen.Value = setFrozen;
     }
@@ -44,6 +47,10 @@ public class NetworkedEntity : GeneHolder {
     
     [ServerRpc]
     public void SetAsset(string groupName, string assetName) {
+        assetPair.Value = new AssetNamePair { groupName = groupName, assetName = assetName };
+    }
+    
+    public void SetInstantiationAsset(string groupName, string assetName) {
         assetPair.Value = new AssetNamePair { groupName = groupName, assetName = assetName };
     }
     
@@ -74,45 +81,88 @@ public class NetworkedEntity : GeneHolder {
         
         if (entityHandle != null) {
             entityHandle.Release();
+            entityHandle = null;
         }
 
-        if (next.groupName != PHOTONVIEW_ID_GROUP) {
-            entityHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(next.groupName, next.assetName, GameManager.GetErrorGeneric());
-            entityInstance = Instantiate(entityHandle.asset, transform);
+        if (plantHandle != null) {
+            plantHandle.Release();
+            plantHandle = null;
+        }
 
-            try {
-                await TryInitializeEntity(entityInstance);
-            } catch (Exception e) {
-                Debug.LogException(e);
-                Debug.LogError($"Failed to initialize entity with asset id {next.groupName}:{next.assetName}, loading error instead.");
+        try {
+            await TryInitializeEntity(next.groupName, next.assetName);
+        } catch (Exception e) {
+            Debug.LogException(e);
+            Debug.LogError($"Failed to initialize entity with asset id {next.groupName}:{next.assetName}.");
+            if (entityInstance) {
                 Destroy(entityInstance);
-                entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
-                await TryInitializeEntity(entityInstance);
+                entityInstance = null;
             }
-        } else {
-            if (!int.TryParse(next.assetName, out int photonViewID)) {
-                Debug.LogError($"Failed to parse photonViewID from asset name {next.groupName}:{next.assetName}");
-                entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
-                return;
-            }
-
-            if (!PhotonView.TryFind(out var view, photonViewID)) {
-                Debug.LogError($"Failed to find PhotonView with ID {photonViewID}");
-                entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
-                return;
-            }
-
-            mapInstance = view.gameObject;
-            transform.SetParent(mapInstance.transform.parent);
-            view.gameObject.transform.GetLocalPositionAndRotation(out var pos, out var rot);
-            transform.SetLocalPositionAndRotation(pos, rot);
-            mapInstance.transform.SetParent(transform, true);
-            
-            mapInstance.gameObject.SetActive(true);
+            entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
         }
     }
 
-    private async Task TryInitializeEntity(GameObject instance) {
+    private async Task TryInitializeEntity(string groupName, string assetName) {
+        switch (groupName) {
+            default:
+                try {
+                    entityHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(groupName, assetName, GameManager.GetErrorGeneric());
+                    entityInstance = Instantiate(entityHandle.asset, transform);
+                } catch (Exception e) {
+                    if (entityInstance) {
+                        Destroy(entityInstance);
+                        entityInstance = null;
+                    }
+                    Debug.LogException(e);
+                    Debug.LogError($"Failed to initialize entity with asset id {groupName}:{assetName}, loading error instead.");
+                    entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
+                }
+                entityInstance.transform.localPosition = Vector3.zero;
+                entityInstance.transform.localRotation = Quaternion.identity;
+                break;
+            case "Plant":
+                try {
+                    plantHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(groupName, assetName, GameManager.GetErrorPlant());
+                    if (plantHandle.asset.display) {
+                        entityInstance = Instantiate(plantHandle.asset.display, transform);
+                    } else {
+                        entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
+                        Debug.LogError("Failed to initialize plant display, not found.");
+                    }
+                } catch (Exception e) {
+                    if (entityInstance) {
+                        Destroy(entityInstance);
+                        entityInstance = null;
+                    }
+                    Debug.LogException(e);
+                    Debug.LogError($"Failed to initialize entity with asset id {groupName}:{assetName}, loading error instead.");
+                    entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
+                }
+                entityInstance.transform.localPosition = Vector3.zero;
+                entityInstance.transform.localRotation = Quaternion.identity;
+                break;
+            case PHOTONVIEW_ID_GROUP:
+                if (!int.TryParse(assetName, out int photonViewID)) {
+                    Debug.LogError($"Failed to parse photonViewID from asset name {groupName}:{assetName}");
+                    entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
+                    return;
+                }
+
+                if (!PhotonView.TryFind(out var view, photonViewID)) {
+                    Debug.LogError($"Failed to find PhotonView with ID {photonViewID}");
+                    entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
+                    return;
+                }
+
+                mapInstance = view.gameObject;
+                transform.SetParent(mapInstance.transform.parent);
+                view.gameObject.transform.GetLocalPositionAndRotation(out var pos, out var rot);
+                transform.SetLocalPositionAndRotation(pos, rot);
+                mapInstance.transform.SetParent(transform, true);
+            
+                mapInstance.gameObject.SetActive(true);
+                break;
+        }
     }
     
     public void Save(JSONNode node) {
@@ -207,5 +257,40 @@ public class NetworkedEntity : GeneHolder {
         _ = inventory.PickupEquipment(representedEquipment, gameObject);
         InstanceFinder.ServerManager.Despawn(GetComponent<NetworkObject>());
     }
+    
+    [ObserversRpc]
+    public void PlantRPC(NetworkObject seed, string plantName) {
+        if (!networkManager.ServerManager.Started) {
+            return;
+        }
+
+        SoilTile tile = GetComponentInChildren<SoilTile>();
+        if (tile == null) {
+            return;
+        }
+
+        if (seed == null) {
+            return;
+        }
+        
+        
+        var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+        data.groupName = "Plant";
+        data.assetName = plantName;
+        data.position = tile.GetPlantPosition();
+        data.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        var geneHolder = seed.GetComponentInChildren<GeneHolder>();
+        if (geneHolder == null) {
+            Debug.LogError("Failed to find gene holder for seed", seed.gameObject);
+            return;
+        }
+        data.CopyGenesFrom(geneHolder);
+        var nob = networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false);
+        networkManager.ServerManager.Despawn(seed);
+
+        planted.Value = true;
+        planted.Value = nob;
+    }
+
     
 }

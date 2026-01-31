@@ -137,10 +137,7 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
         }
         currentObjective = newObjective;
         if (currentObjective != null) {
-            // FIXME FISHNET
-            /*if (photonView.IsMine) {
-                currentObjective.Register();
-            }*/
+            currentObjective.Register();
             currentObjective.completed += OnObjectiveComplete;
             currentObjective.updated += OnObjectiveUpdated;
         }

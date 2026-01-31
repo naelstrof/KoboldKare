@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using FishNet;
 using FishNet.Managing.Scened;
+using FishNet.Object;
 using FishNet.Transporting.Multipass;
 using FishNet.Transporting.Tugboat;
 using UnityEngine.Audio;
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject errorGeneric;
     [SerializeField] private GameObject errorPenis;
     [SerializeField] private Sprite errorSprite;
+    [SerializeField] private GameObject networkedEntityGeneric;
 
     public static Equipment GetErrorEquipment() => instance.errorEquipment;
     public static ScriptablePlant GetErrorPlant() => instance.errorPlant;
@@ -156,6 +158,10 @@ public class GameManager : MonoBehaviour {
         // Application.Quit() does not work in the editor so
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
         EditorApplication.isPlaying = false;
+        var networkManager = InstanceFinder.NetworkManager;
+        if (networkManager.ServerManager.Started) {
+            networkManager.ServerManager.StopConnection(true);
+        }
 #else
          Application.Quit();
 #endif
@@ -188,9 +194,9 @@ public class GameManager : MonoBehaviour {
             var tugboat = networkManager.GetComponent<Tugboat>();
             tugboat.SetMaximumClients(1);
 
-            networkManager.ServerManager.StartConnection();
-        
             networkManager.GetComponent<Multipass>().SetClientTransport(tugboat);
+
+            networkManager.ServerManager.StartConnection();
             networkManager.ClientManager.StartConnection();
 
             KoboldKareSceneProcessor.LoadSceneGlobal("MainMenu");
@@ -263,6 +269,13 @@ public class GameManager : MonoBehaviour {
         source.Play();
         Destroy(g, clip.length);
         //AudioSource.PlayClipAtPoint(clip, position, volume);
+    }
+
+    private void OnApplicationQuit() {
+        var networkManager = InstanceFinder.NetworkManager;
+        if (networkManager.ServerManager.Started) {
+            networkManager.ServerManager.StopConnection(true);
+        }
     }
 
     public void OnDestroy() {

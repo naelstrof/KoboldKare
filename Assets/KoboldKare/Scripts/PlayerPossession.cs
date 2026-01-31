@@ -301,8 +301,7 @@ public class PlayerPossession : MonoBehaviour {
             shouldCancelAnimation = (shouldCancelAnimation | controls.Player.Ragdoll.ReadValue<float>() > 0.5f);
             shouldCancelAnimation = (shouldCancelAnimation | controls.UI.Cancel.ReadValue<float>() > 0.5f);
             if (shouldCancelAnimation) {
-                // FIXME FISHNET
-                // photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
+                networkedKobold.StopAnimation();
             }
         } else {
             Vector2 mouseDelta = controls.Player.Look.ReadValue<Vector2>() + controls.Player.LookJoystick.ReadValue<Vector2>();

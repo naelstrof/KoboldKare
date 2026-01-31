@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FishNet;
+using FishNet.Managing;
 using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
@@ -16,18 +18,21 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     [SerializeField] private PhotonGameObjectReference eggPrefab;
     [SerializeField] private Transform mailBox;
     
+    private NetworkManager networkManager;
+    
     private int plants = 0;
     public override void Register() {
         base.Register();
         Plant.planted += OnPlant;
-        // FIXME FISHNET
-        /*
-        if (PhotonNetwork.IsMasterClient) {
-            BitBuffer buffer = new BitBuffer(4);
-            buffer.AddKoboldGenes(new KoboldGenes().Randomize());
-            PhotonNetwork.InstantiateRoomObject(eggPrefab.photonName, mailBox.transform.position, Quaternion.identity,
-                0, new object[] { buffer });
-        }*/
+        networkManager = InstanceFinder.NetworkManager;
+        if (networkManager.ServerManager.Started) {
+            var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+            data.assetName = "Egg";
+            data.groupName = "NetworkedPrefab";
+            data.position = mailBox.position;
+            data.rotation = Quaternion.identity;
+            networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, true);
+        }
     }
     public override void Unregister() {
         base.Unregister();

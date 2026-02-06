@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
 using KoboldKare;
 using NetStack.Quantization;
 using NetStack.Serialization;
@@ -15,8 +16,6 @@ public class BucketWeapon : GenericWeapon {
     [SerializeField]
     private PhotonGameObjectReference bucketSplashProjectile;
     [SerializeField]
-    private GenericReagentContainer container;
-    [SerializeField]
     private Animator bucketAnimator;
     [SerializeField]
     private GameObject defaultBucketDisplay;
@@ -25,7 +24,7 @@ public class BucketWeapon : GenericWeapon {
     private Rigidbody body;
 
     private static readonly int Fire = Animator.StringToHash("Fire");
-    private Kobold playerFired;
+    private NetworkedKobold playerFired;
 
     [SerializeField] private AudioPack bucketSlosh;
     private AudioSource audioSource;
@@ -37,7 +36,8 @@ public class BucketWeapon : GenericWeapon {
 
     private GameObject currentDisplay;
 
-    void Start() {
+    protected override void Start() {
+        base.Start();
         if (audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
@@ -48,20 +48,23 @@ public class BucketWeapon : GenericWeapon {
             audioSource.loop = false;
         }
 
-        container.OnChange += OnReagentsChanged;
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange += OnReagentsChanged;
+            OnReagentsChanged(networkedEntity.reagentContents.Value, networkedEntity.reagentContents.Value, true);
+        }
+        
         audioSource.enabled = false;
         waitForSeconds = new WaitForSeconds(5f);
         defaultBucketDisplay.SetActive(true);
-        OnReagentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
     }
 
-    private void OnDestroy() {
-        if (container != null) {
-            container.OnChange -= OnReagentsChanged;
+    protected override void OnDestroy() {
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange -= OnReagentsChanged;
         }
     }
 
-    void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    void OnReagentsChanged(ReagentContents contents, ReagentContents next, bool asServer) {
         GameObject bestDisplay = null;
         float bestVolume = 0f;
         byte bestID = 0;
@@ -94,48 +97,39 @@ public class BucketWeapon : GenericWeapon {
         }
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    protected override void OnFireRPC(int viewID) {
-        /*
-        base.OnFireRPC(viewID);
+    protected override void OnFire(NetworkedKobold kobold) {
+        playerFired = kobold;
         bucketAnimator.SetTrigger(Fire);
-        playerFired = PhotonNetwork.GetPhotonView(viewID).GetComponentInParent<Kobold>();
-        PhotonProfiler.LogReceive(sizeof(int));*/
     }
 
     // Called from the animator
-    public void OnFireComplete() {
-        // FIXME FISHNET
-        /*
-        if (!photonView.IsMine) {
+    protected override void OnEndFire(NetworkedKobold player) {
+        if (networkedEntity.volume < 0.1f) {
             return;
         }
-
-        if (container.volume < 0.1f) {
+        if (!player.TryGetKobold(out var kobold)) {
             return;
         }
+        
         for (int i = 0; i < projectileCount; i++) {
             Vector3 velocity = GetWeaponBarrelTransform().forward * projectileSpeed;
-            if (playerFired != null) {
-                velocity += playerFired.body.velocity * 0.5f;
-            }
-
+            velocity += kobold.body.velocity * 0.5f;
             velocity += Random.insideUnitSphere * i * 2f;
-            BitBuffer instantiationData = new BitBuffer(16);
-            instantiationData.AddReagentContents(container.Spill(projectileVolume));
-            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.x));
-            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.y));
-            instantiationData.AddUShort(HalfPrecision.Quantize(velocity.z));
-            instantiationData.AddKoboldGenes(container.GetGenes());
-            GameObject obj = PhotonNetwork.Instantiate(bucketSplashProjectile.photonName,
-                GetWeaponBarrelTransform().position,
-                GetWeaponBarrelTransform().rotation, 0, new object[] { instantiationData });
-            obj.GetComponent<Projectile>().LaunchFrom(body);
+
+            KoboldEntitySpawner.NetworkedEntityInstantiationData data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+            data.assetName = "FluidProjectile";
+            data.groupName = "NetworkedPrefab";
+            data.velocity = velocity;
+            data.position = GetWeaponBarrelTransform().position;
+            data.rotation = GetWeaponBarrelTransform().rotation;
+            data.CopyGenesFrom(networkedEntity);
+
+            var networkObject = InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false);
+            //networkObject.GetComponentInChildren<Projectile>().LaunchFrom(body);
         }
 
         audioSource.enabled = true;
-        bucketSlosh.Play(audioSource);*/
+        bucketSlosh.Play(audioSource);
     }
 
     IEnumerator WaitSomeTimeThenDisableAudio() {

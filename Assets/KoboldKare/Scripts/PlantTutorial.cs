@@ -7,23 +7,26 @@ public class PlantTutorial : MonoBehaviour {
     private Canvas waterCanvas;
     [SerializeField]
     private Canvas timeCanvas;
-    private GenericReagentContainer container;
     private Plant plant;
+    private NetworkedEntity networkedEntity;
     void Start() {
         plant = GetComponent<Plant>();
-        container = GetComponent<GenericReagentContainer>();
-        container.OnFilled += OnFilled;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            networkedEntity.OnFilled += OnFilled;
+        }
+
         plant.switched += OnSwitched;
     }
     void OnDestroy() {
         if (plant) {
             plant.switched -= OnSwitched;
         }
-        if (container) {
-            container.OnFilled -= OnFilled;
+        if (networkedEntity) {
+            networkedEntity.OnFilled -= OnFilled;
         }
     }
-    void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    void OnFilled(ReagentContents contents, GeneHolder.InjectType type) {
         if (plant.plant.possibleNextGenerations.Length == 0) {
             waterCanvas.gameObject.SetActive(false);
             timeCanvas.gameObject.SetActive(false);

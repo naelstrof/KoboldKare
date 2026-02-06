@@ -16,11 +16,8 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
     
     private NetworkedEntity networkedEntity;
     private void Awake() {
-        container = gameObject.AddComponent<GenericReagentContainer>();
-        container.type = GenericReagentContainer.ContainerType.Mouth;
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(container);
-        container.OnChange += OnReagentContentsChanged;
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
@@ -33,14 +30,18 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
             networkedEntity.SetSprite(useSprite);
             networkedEntity.useRequested += OnUseRequested;
             networkedEntity.used += OnUse;
+            networkedEntity.type = GeneHolder.ContainerType.Mouth;
+            networkedEntity.reagentContents.OnChange += OnReagentContentsChanged;
         }
     }
 
     private void OnDestroy() {
-        container.OnChange -= OnReagentContentsChanged;
+        if (networkedEntity) {
+            networkedEntity.reagentContents.OnChange += OnReagentContentsChanged;
+        }
     }
 
-    private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    private void OnReagentContentsChanged(ReagentContents contents, ReagentContents next, bool asServer) {
         // FIXME FISHNET
         //photonView.RPC(nameof(FireStream), RpcTarget.All);
     }
@@ -48,7 +49,7 @@ public class BreedingMount : UsableMachine, IAnimationStationSet {
     // FIXME FISHNET
     //[PunRPC]
     private void FireStream() {
-        stream.OnFire(container);
+        stream.OnFire(networkedEntity);
     }
 
     private bool OnUseRequested(NetworkedKobold k) {

@@ -36,9 +36,18 @@ public static class ReagentContentsBitBufferExtension {
     }
 }
 
+[System.Serializable]
 public class ReagentContents : IEnumerable<Reagent> {
+    private const float metabolizationVolumeEpsilon = 0.1f;
+    public int Count => contents.Count;
+    [SerializeField] private Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
     public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
+    public ReagentContents() {
+        maxVolume = float.MaxValue;
+    }
+
+    [NonSerialized]
     public ReagentContentsChangedAction changed;
     public ReagentContents(ReagentContents other) { Copy(other); }
     public ReagentContents(float maxVolume = float.MaxValue) {
@@ -65,7 +74,6 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         changed?.Invoke(this);
     }
-    private const float metabolizationVolumeEpsilon = 0.1f;
     public float volume {
         get {
             float v = 0f;
@@ -75,9 +83,6 @@ public class ReagentContents : IEnumerable<Reagent> {
             return v;
         }
     }
-    public int Count => contents.Count;
-    [SerializeField]
-    private Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
     public void OverrideReagent(byte id, float volume) {
         if (contents.ContainsKey(id)) {
             contents[id].volume = volume;
@@ -86,7 +91,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         contents.Add(id, new Reagent(){ id=id, volume=volume });
         changed?.Invoke(this);
     }
-    public void AddMix(byte id, float addVolume, GenericReagentContainer worldContainer = null) {
+    public void AddMix(byte id, float addVolume, GeneHolder worldContainer = null) {
         if (contents.ContainsKey(id)) {
             contents[id].volume = Mathf.Max(0f,contents[id].volume+addVolume);
         } else {
@@ -103,10 +108,10 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         changed?.Invoke(this);
     }
-    public void AddMix(Reagent reagent, GenericReagentContainer worldContainer = null) {
+    public void AddMix(Reagent reagent, GeneHolder worldContainer = null) {
         AddMix(reagent.id, reagent.volume, worldContainer);
     }
-    public void AddMix(ReagentContents container, GenericReagentContainer worldContainer = null) {
+    public void AddMix(ReagentContents container, GeneHolder worldContainer = null) {
         foreach(var pair in container.contents) {
             AddMix(pair.Value, worldContainer);
         }

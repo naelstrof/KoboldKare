@@ -15,8 +15,9 @@ public class GenericFluidVolume : MonoBehaviour {
     public Material decalDipMaterial;
     public Material decalClearMaterial;
     public List<BoxCollider> fluidHitboxes = new List<BoxCollider>();
-    public GenericReagentContainer volumeContainer;
+    
     public HashSet<PhotonView> dippedObjects;
+    private NetworkedEntity networkedEntity;
     
     
     [SerializeField, HideInInspector]
@@ -30,8 +31,8 @@ public class GenericFluidVolume : MonoBehaviour {
     private List<GameEventResponse> drainEndResponses = new List<GameEventResponse>();
 
     public IEnumerator DrainProcess() {
-        while (volumeContainer.volume > 0f) {
-            volumeContainer.Spill(fillRate * Time.fixedDeltaTime);
+        while (networkedEntity.reagentContents.Value.volume > 0f) {
+            networkedEntity.reagentContents.Value.Spill(fillRate * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
         }
         foreach(var response in drainEndResponses) {
@@ -58,14 +59,18 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     public void Start() {
-        volumeContainer.OnChange += OnReagentContainerChanged;
-        OnReagentContainerChanged(volumeContainer.GetContents(), GenericReagentContainer.InjectType.Metabolize);
-    }
-    public void OnDestroy() {
-        if (volumeContainer != null) {
-            volumeContainer.OnChange -= OnReagentContainerChanged;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange += OnReagentContainerChanged;
+            OnReagentContainerChanged(networkedEntity.GetContents(), networkedEntity.GetContents(), false);
         }
     }
+    public void OnDestroy() {
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange -= OnReagentContainerChanged;
+        }
+    }
+    
     public void Update() {
         dippedObjects.RemoveWhere(o=>o == null);
         
@@ -97,7 +102,7 @@ public class GenericFluidVolume : MonoBehaviour {
         if (view.gameObject.layer == LayerMask.NameToLayer("World")) {
             return;
         }
-        if (volumeContainer.volume <= 0f) {
+        if (networkedEntity.reagentContents.Value.volume <= 0f) {
             return;
         }
         foreach(BoxCollider b in fluidHitboxes) {
@@ -113,9 +118,9 @@ public class GenericFluidVolume : MonoBehaviour {
             Vector3 pos = boxFrontWorld;
             Vector3 norm = (boxCenterWorld-boxFrontWorld).normalized;
 
-            Color c = volumeContainer.GetColor();
+            Color c = networkedEntity.GetColor();
             c.a = 1f;
-            if (volumeContainer.IsCleaningAgent()) {
+            if (networkedEntity.IsCleaningAgent()) {
                 staticRenderers.Clear();
                 view.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
@@ -148,7 +153,7 @@ public class GenericFluidVolume : MonoBehaviour {
         Gizmos.DrawIcon(transform.position, "ico_fluidvolume.png", true);
     }
 
-    public void OnReagentContainerChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    public void OnReagentContainerChanged(ReagentContents contents, ReagentContents next, bool asServer) {
         foreach(Renderer r in fluidRenderers) {
             foreach(Material material in r.materials) {
                 material.color = contents.GetColor();
@@ -161,6 +166,6 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     public bool HasAnyFillAmount(){
-        return !volumeContainer.isEmpty; //If not empty, return true; if empty, return false
+        return !networkedEntity.isEmpty; //If not empty, return true; if empty, return false
     }
 }

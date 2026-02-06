@@ -26,7 +26,7 @@ public class GenericEdible : MonoBehaviour {
 
     private bool OnUseRequested(NetworkedKobold k) {
         if (k && k.TryGetKobold(out var kobold)) {
-            return container.volume > 0.01f && kobold.bellyContainer.volume < kobold.bellyContainer.maxVolume;
+            return networkedEntity.reagentContents.Value.volume > 0.01f && k.reagentContents.Value.volume < k.reagentContents.Value.GetMaxVolume();
         }
 
         return false;
@@ -35,8 +35,8 @@ public class GenericEdible : MonoBehaviour {
     private void OnUse(NetworkedKobold k) {
         if (k && k.TryGetKobold(out var kobold)) {
             // Only successfully eat if we own both the edible, and the kobold. Otherwise, wait for ownership to successfully transfer
-            float spillAmount = Mathf.Min(10f, kobold.bellyContainer.maxVolume - kobold.bellyContainer.volume);
-            ReagentContents spill = container.Spill(spillAmount);
+            float spillAmount = Mathf.Min(10f, k.reagentContents.Value.GetMaxVolume() - k.reagentContents.Value.volume);
+            ReagentContents spill = networkedEntity.Spill(spillAmount);
             // FIXME FISHNET
             /*photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillAmount);
             BitBuffer buffer = new BitBuffer(4);

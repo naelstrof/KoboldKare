@@ -137,7 +137,7 @@ public class InflatorPump : UsableMachine, IAnimationStationSet {
         }
 
         if (amount > 0.1 || accumulation > 5f) {
-            if (!spraying && container.volume > 0f) {
+            if (!spraying && networkedEntity.reagentContents.Value.volume > 0f) {
                 pumpAnimator.SetBool(Pumping, true);
                 spraying = true;
                 StartCoroutine(SprayRoutine());

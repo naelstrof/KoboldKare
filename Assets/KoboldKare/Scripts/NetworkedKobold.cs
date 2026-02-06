@@ -24,53 +24,6 @@ public class NetworkedKobold : NetworkedEntity {
     private readonly SyncVar<ControlType> controlType = new(ControlType.AIPlayer);
     public readonly SyncVar<float> energy = new SyncVar<float>();
     public readonly SyncVar<float> money = new SyncVar<float>();
-    
-    public struct NetworkedKoboldInstantiationData : IBroadcast {
-        public string koboldAssetName;
-        public float facingRotationY;
-        public Vector2 eyeRot;
-        public Vector2 hipOffset;
-        public ControlType controlType;
-        public float maxEnergy;
-        public float baseSize;
-        public float fatSize;
-        public float ballSize;
-        public float dickSize;
-        public float breastSize;
-        public float bellySize;
-        public float metabolizeCapacitySize;
-        public float dickThickness;
-        public byte hue;
-        public byte clothingHue;
-        public byte brightness;
-        public byte saturation;
-        public string dickEquip;
-        public byte grabCount;
-        public static NetworkedKoboldInstantiationData Default() {
-            return new NetworkedKoboldInstantiationData() {
-                koboldAssetName = "Kobold",
-                facingRotationY = 0f,
-                eyeRot = Vector2.zero,
-                hipOffset = Vector2.zero,
-                controlType = ControlType.AIPlayer,
-                maxEnergy = 5f,
-                baseSize = 20f,
-                fatSize = 0f,
-                ballSize = 0f,
-                dickSize = 0f,
-                breastSize = 0f,
-                bellySize = 20f,
-                metabolizeCapacitySize = 20f,
-                dickThickness = 0f,
-                hue = 0,
-                clothingHue = 0,
-                brightness = 128,
-                saturation = 128,
-                dickEquip = "None",
-                grabCount = 1
-            };
-        }
-    }
 
     public Quaternion GetFacingRotation() => Quaternion.AngleAxis(facingRotationY.Value, Vector3.up);
     public Vector3 GetFacingDirection() => GetFacingRotation()*Vector3.forward;
@@ -106,33 +59,15 @@ public class NetworkedKobold : NetworkedEntity {
     public void SetControlType(ControlType newControlType) {
         controlType.Value = newControlType;
     }
-    
-    public void SetInstantiationData(NetworkedKoboldInstantiationData instantiationData) {
+
+    public override void SetInstantiationData(KoboldEntitySpawner.NetworkedEntityInstantiationData data) {
+        base.SetInstantiationData(data);
         assetPair.Value = new AssetNamePair() {
-            groupName = "PlayableCharacter",
-            assetName = instantiationData.koboldAssetName,
+            groupName = data.groupName,
+            assetName = data.assetName,
         };
-        facingRotationY.Value = instantiationData.facingRotationY;
-        eyeRot.Value = instantiationData.eyeRot;
-        hipOffset.Value = instantiationData.hipOffset;
-        controlType.Value = instantiationData.controlType;
-        maxEnergy.Value = instantiationData.maxEnergy;
-        baseSize.Value = instantiationData.baseSize;
-        fatSize.Value = instantiationData.fatSize;
-        ballSize.Value = instantiationData.ballSize;
-        baseSize.Value = instantiationData.baseSize;
-        breastSize.Value = instantiationData.breastSize;
-        dickSize.Value = instantiationData.dickSize;
-        bellySize.Value = instantiationData.bellySize;
-        metabolizeCapacitySize.Value = instantiationData.metabolizeCapacitySize;
-        dickThickness.Value = instantiationData.dickThickness;
-        hue.Value = instantiationData.hue;
-        clothingHue.Value = instantiationData.clothingHue;
-        brightness.Value = instantiationData.brightness;
-        saturation.Value = instantiationData.saturation;
-        grabCount.Value = instantiationData.grabCount;
-        species.Value = instantiationData.koboldAssetName;
-        dickEquip.Value = instantiationData.dickEquip;
+        // FIXME fishnet
+        controlType.Value = ControlType.NetworkedPlayer;
     }
     
     [ServerRpc(RequireOwnership = true)]
@@ -396,17 +331,14 @@ public class NetworkedKobold : NetworkedEntity {
         var precisionGrabber = koboldGameObject.AddComponent<PrecisionGrabber>();
 
         var freezeVFXTask = Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/Freeze.vfx");
-        var handDisplayPrefabTask =
-            Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/koboldhand.prefab");
-        var unfreezeAudioPackTask =
-            Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Unfreeze.asset");
+        var handDisplayPrefabTask = Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/koboldhand.prefab");
+        var unfreezeAudioPackTask = Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Unfreeze.asset");
 
         handles.Add(freezeVFXTask);
         handles.Add(handDisplayPrefabTask);
         handles.Add(unfreezeAudioPackTask);
 
-        precisionGrabber.InitializeWithAssets(await handDisplayPrefabTask.Task, await freezeVFXTask.Task,
-            await unfreezeAudioPackTask.Task);
+        precisionGrabber.InitializeWithAssets(await handDisplayPrefabTask.Task, await freezeVFXTask.Task, await unfreezeAudioPackTask.Task);
 
         var playerPossessionPrefabTask =
             Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/PlayerController.prefab");

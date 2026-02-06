@@ -65,16 +65,17 @@ public class PlayerKoboldLoader : MonoBehaviour {
         }
     }
 
-    public static NetworkedKobold.NetworkedKoboldInstantiationData GetPlayerInstantiationData() {
+    public static KoboldEntitySpawner.NetworkedEntityInstantiationData GetPlayerInstantiationData() {
         var koboldSpecies = "Kobold";
         var prefabSelect = SettingsManager.GetSetting("PlayablePrefabSelect") as PrefabSelectSingleSetting;
         if (prefabSelect != null && prefabSelect.TryGetPrefab(out string prefabName)) {
             koboldSpecies = prefabName;
         }
 
-        var data = NetworkedKobold.NetworkedKoboldInstantiationData.Default();
-        data.controlType = NetworkedKobold.ControlType.NetworkedPlayer;
-        data.koboldAssetName = koboldSpecies;
+        var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+        //data.controlType = NetworkedKobold.ControlType.NetworkedPlayer;
+        data.assetName = koboldSpecies;
+        data.groupName = "PlayableCharacter";
         data.dickEquip = ((SettingInt)SettingsManager.GetSetting("Dick")).GetValue() == 0 ? "None" : "HumanoidDick";
         data.hue = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("Hue")).GetValue() * 255f);
         data.clothingHue = (byte)Mathf.RoundToInt(((SettingFloat)SettingsManager.GetSetting("ClothingHue")).GetValue() * 255f);

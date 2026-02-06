@@ -41,7 +41,7 @@ public class Toilet : MonoBehaviour, IAnimationStationSet {
         flush.PlayOneShot(source);
         NetworkedKobold k = station.info.user;
         if (k != null && k.TryGetKobold(out var kobold)) {
-            kobold.bellyContainer.Spill(kobold.bellyContainer.volume);
+            k.Spill(k.GetContents().volume);
             k.StopAnimation();
         }
         effect.gameObject.SetActive(false);

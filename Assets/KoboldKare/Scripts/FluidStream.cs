@@ -28,7 +28,7 @@ public class FluidStream : CatmullDeformer, ISavable {
     [NonSerialized]
     public PhotonView photonView;
 
-    private GenericReagentContainer container;
+    private GeneHolder container;
     private ReagentContents midairContents;
     private float startClip, endClip = 0f;
     private List<Vector3> points;
@@ -103,7 +103,7 @@ public class FluidStream : CatmullDeformer, ISavable {
     }
 
     
-    public void OnFire(GenericReagentContainer source) {
+    public void OnFire(GeneHolder source) {
         container = source;
         firing = true;
         if (!particleCoroutineRunning) {

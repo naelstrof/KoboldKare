@@ -16,7 +16,7 @@ public class ScriptableReagentReaction : ScriptableObject {
     }
     public Reactant[] reactants;
     public Reactant[] products;
-    public void DoReaction(GenericReagentContainer container) {
+    public void DoReaction(GeneHolder container) {
         Reactant minReactant = reactants[0];
         float minReactantVolumeRatio = container.GetVolumeOf(minReactant.reactant)/Mathf.Max(minReactant.coefficient,0.001f);
         foreach(var reactant in reactants) {

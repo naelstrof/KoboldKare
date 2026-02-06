@@ -38,7 +38,7 @@ public class Plant : MonoBehaviour, ISavable {
     private NetworkedEntity networkedEntity;
 
     void Start() {
-        container.OnFilled += OnFilled;
+        networkedEntity.OnFilled += OnFilled;
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         networkedEntity.hue.OnChange += OnColorChange;
         networkedEntity.brightness.OnChange += OnColorChange;
@@ -47,12 +47,12 @@ public class Plant : MonoBehaviour, ISavable {
 
 
     void OnDestroy() {
-        if (container) {
-            container.OnFilled -= OnFilled;
+        if (networkedEntity) {
+            networkedEntity.OnFilled -= OnFilled;
+            networkedEntity.hue.OnChange -= OnColorChange;
+            networkedEntity.brightness.OnChange -= OnColorChange;
+            networkedEntity.saturation.OnChange -= OnColorChange;
         }
-        networkedEntity.hue.OnChange -= OnColorChange;
-        networkedEntity.brightness.OnChange -= OnColorChange;
-        networkedEntity.saturation.OnChange -= OnColorChange;
     }
     
     private void OnColorChange(byte prev, byte next, bool asServer) {
@@ -71,23 +71,20 @@ public class Plant : MonoBehaviour, ISavable {
     IEnumerator GrowRoutine() {
         growing = true;
         yield return new WaitForSeconds(30f);
-        // FIXME FISHNET
-        /*
-        if (!photonView.IsMine) {
+        if (!networkedEntity.IsOwner) {
             yield break;
         }
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0f) {
-            PhotonNetwork.Destroy(gameObject);
+            networkedEntity.Destroy();
             yield break;
         }
-        photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.All, container.volume);
-        photonView.RPC(nameof(SwitchToRPC), RpcTarget.AllBufferedViaServer,
-            PlantDatabase.GetID(plant.possibleNextGenerations[Random.Range(0, plant.possibleNextGenerations.Length)]));
+
+        networkedEntity.Spill(networkedEntity.volume);
+        networkedEntity.SetAsset("Plant", plant.possibleNextGenerations[Random.Range(0, plant.possibleNextGenerations.Length)].name);
         growing = false;
-        */
     }
 
-    void OnFilled(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    void OnFilled(ReagentContents contents, GeneHolder.InjectType type) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }

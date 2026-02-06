@@ -9,7 +9,7 @@ public class ExplosionReaction : ReagentReaction {
     private class ExplosionBehaviour : MonoBehaviour {
         public AudioPack sizzle;
         public GameObject explosion;
-        public GenericReagentContainer container;
+        public GeneHolder container;
         private void Start() {
             GameManager.instance.SpawnAudioClipInWorld(sizzle, transform.position);
             StartCoroutine(ExplosionRoutine());
@@ -29,7 +29,7 @@ public class ExplosionReaction : ReagentReaction {
     private AudioPack sizzle;
     [SerializeField]
     private GameObject explosion;
-    public override void React(GenericReagentContainer container) {
+    public override void React(GeneHolder container) {
         base.React(container);
         if (!container.TryGetComponent(out ExplosionBehaviour behaviour)) {
             behaviour = container.gameObject.AddComponent<ExplosionBehaviour>();

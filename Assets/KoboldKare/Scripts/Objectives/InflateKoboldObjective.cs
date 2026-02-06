@@ -15,12 +15,12 @@ public class InflateKoboldObjective : DragonMailObjective {
     
     public override void Register() {
         base.Register();
-        GenericReagentContainer.containerInflated += OnInflatedEvent;
+        GeneHolder.containerInflated += OnInflatedEvent;
     }
     
     public override void Unregister() {
         base.Unregister();
-        GenericReagentContainer.containerInflated -= OnInflatedEvent;
+        GeneHolder.containerInflated -= OnInflatedEvent;
     }
 
     public override void Advance(Vector3 position) {
@@ -28,7 +28,7 @@ public class InflateKoboldObjective : DragonMailObjective {
         TriggerComplete();
     }
 
-    private void OnInflatedEvent(GenericReagentContainer container) {
+    private void OnInflatedEvent(GeneHolder container) {
         // FIXME FISHNET
         /*if (container.maxVolume > 20f && container.TryGetComponent(out Kobold kobold)) {
             ObjectiveManager.NetworkAdvance(kobold.transform.position, $"{kobold.photonView.ViewID.ToString()}");

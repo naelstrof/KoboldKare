@@ -35,21 +35,31 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
     private static RaycastHit[] hits = new RaycastHit[32];
     private static RaycastHitComparer comparer = new RaycastHitComparer();
 
-    private NetworkedEntity networkedEntity;
-
     private void Awake() {
         GameEventSanitizer.SanitizeRuntime(OnSuccess, onSuccessResponses, this);
         GameEventSanitizer.SanitizeRuntime(OnFailure, onFailureResponses, this);
     }
 
-    private void Start() {
-        networkedEntity = GetComponentInParent<NetworkedEntity>();
-        networkedEntity.grabbed += OnGrab;
-        networkedEntity.released += OnRelease;
-        networkedEntity.grabRequested += OnGrabRequested;
-        networkedEntity.SetGrabTransform(center);
+    protected override void Start() {
+        base.Start();
+        if (networkedEntity != null) {
+            networkedEntity.grabbed += OnGrab;
+            networkedEntity.released += OnRelease;
+            networkedEntity.grabRequested += OnGrabRequested;
+            networkedEntity.SetGrabTransform(center);
+        }
     }
-    
+
+    protected override void OnDestroy() {
+        base.OnDestroy();
+        if (networkedEntity != null) {
+            networkedEntity.grabbed -= OnGrab;
+            networkedEntity.released -= OnRelease;
+            networkedEntity.grabRequested -= OnGrabRequested;
+            networkedEntity.SetGrabTransform(center);
+        }
+    }
+
     private void OnValidate() {
         GameEventSanitizer.SanitizeEditor(nameof(OnSuccess), nameof(onSuccessResponses), this);
         GameEventSanitizer.SanitizeEditor(nameof(OnFailure), nameof(onFailureResponses), this);
@@ -102,8 +112,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
     
     // FIXME FISHNET
     //[PunRPC]
-    protected override void OnFireRPC(int playerViewID) {
-        base.OnFireRPC(playerViewID);
+    protected override void OnFire(NetworkedKobold player) {
         if (firing) {
             return;
         }
@@ -120,7 +129,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
         }
         Array.Sort(hits, 0, hitCount, comparer);
 
-        GenericReagentContainer[] containers = null;
+        NetworkedEntity[] containers = null;
         for (int i = 0; i < hitCount; i++) {
             RaycastHit hit = hits[i];
             if (Vector3.Dot(hit.normal, laserEmitterLocation.forward) > 0f) {
@@ -129,7 +138,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
 
             PhotonView rootView = hit.collider.GetComponentInParent<PhotonView>();
             if (rootView != null) {
-                GenericReagentContainer[] containersCheck = rootView.GetComponentsInChildren<GenericReagentContainer>();
+                NetworkedEntity[] containersCheck = rootView.GetComponentsInChildren<NetworkedEntity>();
                 if (containersCheck.Length > 0) {
                     float vol = 0f;
                     foreach (var cont in containersCheck) {
@@ -151,7 +160,7 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
         }
 
         ReagentContents allReagents = new ReagentContents();
-        foreach(GenericReagentContainer container in containers) {
+        foreach(NetworkedEntity container in containers) {
             allReagents.AddMix(container.Peek());
         }
         StopAllCoroutines();
@@ -160,7 +169,8 @@ public class ReagentScanner : GenericWeapon, IValuedGood {
     
     // FIXME FISHNET
     //[PunRPC]
-    protected override void OnEndFireRPC(int viewID) {
+
+    protected override void OnEndFire(NetworkedKobold player) {
         firing = false;
     }
     public Vector3 GetWeaponPositionOffset(Transform grabber) {

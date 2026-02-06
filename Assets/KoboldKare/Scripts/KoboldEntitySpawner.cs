@@ -9,6 +9,7 @@ using FishNet.Object;
 using FishNet.Transporting;
 
 public class KoboldEntitySpawner : MonoBehaviour {
+    private static Dictionary<int, NetworkObject> playerKobolds;
     #region Public.
     /// <summary>
     /// Called on the server when a player is spawned.
@@ -21,8 +22,12 @@ public class KoboldEntitySpawner : MonoBehaviour {
     /// Prefab to spawn for the player.
     /// </summary>
     [Tooltip("Prefab to spawn for the player.")]
-    [SerializeField]
-    private NetworkObject entityPrefab;
+    [SerializeField] private NetworkObject entityPrefab;
+    
+    [SerializeField] private NetworkObject playerPrefab;
+    
+    [SerializeField] private PrefabSelectSingleSetting playerSetting; 
+    [SerializeField] private PrefabDatabase playerPrefabDatabase;
 
     /// <summary>
     /// True to add player to the active scene when no global scenes are specified through the SceneManager.
@@ -56,13 +61,33 @@ public class KoboldEntitySpawner : MonoBehaviour {
             _networkManager.LogWarning($"PlayerSpawner on {gameObject.name} cannot work as NetworkManager wasn't found on this object or within parent objects.");
             return;
         }
+        _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
         _networkManager.ServerManager.RegisterBroadcast<NetworkedEntityInstantiationData>(OnSpawnBroadcast);
+        playerKobolds = new ();
+    }
+
+    private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer) {
+        if (asServer) {
+            return;
+        }
+
+        if (!GameManager.InLevel()) {
+            return;
+        }
+
+        if (!playerPrefab) {
+            _networkManager.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");
+            return;
+        }
+        
+        _networkManager.ClientManager.Broadcast(PlayerKoboldLoader.GetPlayerInstantiationData()); 
     }
 
     public struct NetworkedEntityInstantiationData : IBroadcast {
         public string groupName;
         public string assetName;
         public Vector3 position;
+        public Vector3 velocity;
         public Quaternion rotation;
 
         public string species;
@@ -105,6 +130,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
             return new NetworkedEntityInstantiationData() {
                 groupName = "Error",
                 assetName = "Error",
+                velocity = Vector3.zero,
                 species = "Kobold",
                 position = Vector3.zero,
                 rotation = Quaternion.identity,
@@ -137,10 +163,10 @@ public class KoboldEntitySpawner : MonoBehaviour {
             return null;
         }
 
-        NetworkObject nob = _networkManager.GetPooledInstantiated(entityPrefab, data.position, data.rotation, true);
-        nob.GetComponent<NetworkedEntity>().SetInstantiationAsset(data.groupName, data.assetName);
+        NetworkObject nob = _networkManager.GetPooledInstantiated(data.groupName == "PlayableCharacter" ? playerPrefab : entityPrefab, data.position, data.rotation, true);
+        var geneHolder = nob.GetComponentInChildren<GeneHolder>();
+        geneHolder.SetInstantiationData(data);
         if (randomizedGenes) {
-            var geneHolder = nob.GetComponentInChildren<GeneHolder>();
             geneHolder.RandomizeGenes();
         }
         _networkManager.ServerManager.Spawn(nob);
@@ -158,10 +184,18 @@ public class KoboldEntitySpawner : MonoBehaviour {
             _networkManager.LogWarning($"Entity prefab is empty and cannot be spawned for connection {conn.ClientId}.");
             return;
         }
+        
+        var isPlayer = data.groupName == "PlayableCharacter";
+        SceneDescriptor.GetSpawnLocationAndRotation(out var pos, out Quaternion quat);
 
-        NetworkObject nob = _networkManager.GetPooledInstantiated(entityPrefab, data.position, data.rotation, true);
-        nob.GetComponent<NetworkedEntity>().SetInstantiationAsset(data.groupName, data.assetName);
+        NetworkObject nob = _networkManager.GetPooledInstantiated(isPlayer ? playerPrefab : entityPrefab, isPlayer ? pos : data.position, isPlayer ? quat : data.rotation, true);
+        var geneHolder = nob.GetComponentInChildren<GeneHolder>();
+        geneHolder.SetInstantiationData(data);
         _networkManager.ServerManager.Spawn(nob, conn);
+        
+        if (data.groupName == "PlayableCharacter") {
+            playerKobolds.TryAdd(conn.ClientId, nob);
+        }
 
         // If there are no global scenes 
         if (_addToDefaultScene) {
@@ -169,5 +203,13 @@ public class KoboldEntitySpawner : MonoBehaviour {
         }
 
         OnSpawned?.Invoke(nob);
+    }
+
+    public static bool TryGetPlayerKobold(NetworkConnection conn, out NetworkedKobold o) {
+        if (playerKobolds.TryGetValue(conn.ClientId, out var nob)) {
+            return nob.TryGetComponent(out o);
+        }
+        o = null;
+        return false;
     }
 }

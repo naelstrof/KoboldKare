@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class DrainUsable : UsableMachine {
     [SerializeField] private AudioPack drainSound;
-    [SerializeField] private GenericReagentContainer drainContainer;
     [SerializeField] private Sprite displaySprite;
     private AudioSource audioSource;
     private NetworkedEntity networkedEntity;
@@ -37,7 +36,7 @@ public class DrainUsable : UsableMachine {
 
     private bool draining;
     private bool OnUseRequested(NetworkedKobold k) {
-        return constructed && drainContainer.volume > 0.01f;
+        return constructed && networkedEntity.reagentContents.Value.volume > 0.01f;
     }
 
     private void OnUse(NetworkedKobold by) {
@@ -48,8 +47,9 @@ public class DrainUsable : UsableMachine {
         draining = true;
         audioSource.enabled = true;
         drainSound.Play(audioSource);
-        while (drainContainer.volume > 0.01f) {
-            drainContainer.Spill(Time.deltaTime * 10f);
+        
+        while (networkedEntity.reagentContents.Value.volume > 0.01f) {
+            networkedEntity.Spill(Time.deltaTime * 10f);
             yield return null;
         }
         audioSource.enabled = false;

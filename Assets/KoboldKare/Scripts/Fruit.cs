@@ -17,7 +17,6 @@ public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable 
     [SerializeField] private VisualEffect gibSplash;
     private float health = 100f;
     public GenericReagentContainer.InspectorReagent startingReagent;
-    private GenericReagentContainer container;
     private Renderer[] renderers;
     [SerializeField] private Inflatable fruitInflater;
     [SerializeField] private bool startFrozen = true;
@@ -28,18 +27,12 @@ public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable 
     private void Awake() {
         body = GetComponent<Rigidbody>();
         renderers = GetComponentsInChildren<Renderer>();
-        container = gameObject.AddComponent<GenericReagentContainer>();
-        container.type = GenericReagentContainer.ContainerType.Mouth;
 
         InflatableTransform inflatableTransform = new InflatableTransform();
         inflatableTransform.SetTransform(transform);
         fruitInflater.AddListener(inflatableTransform);
 
         fruitInflater.OnEnable();
-
-        container.OnChange += OnReagentContentsChanged;
-        container.GetContents().AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), container);
-        OnReagentContentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(container);
         if (centerTransform == null) {
@@ -47,8 +40,8 @@ public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable 
         }
     }
 
-    void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType type) {
-        fruitInflater.SetSize(Mathf.Max(Mathf.Log(1f + contents.volume / 20f, 2f),0.15f), this);
+    void OnReagentContentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
+        fruitInflater.SetSize(Mathf.Max(Mathf.Log(1f + next.volume / 20f, 2f),0.15f), this);
     }
 
     void Start() {
@@ -61,6 +54,11 @@ public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable 
         networkedEntity.SetGrabTransform(centerTransform);
         networkedEntity.frozen.OnChange += OnFrozenChanged;
         networkedEntity.health.OnChange += OnHealthChanged;
+        networkedEntity.type = GeneHolder.ContainerType.Mouth;
+
+        networkedEntity.reagentContents.OnChange += OnReagentContentsChanged;
+        networkedEntity.AddMix(startingReagent.reagent.GetReagent(startingReagent.volume), GeneHolder.InjectType.Inject);
+        OnReagentContentsChanged(networkedEntity.reagentContents.Value, networkedEntity.reagentContents.Value, true);
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
@@ -135,7 +133,7 @@ public class Fruit : MonoBehaviour, IAdvancedInteractable, ISavable, ISpoilable 
         GameObject obj = GameObject.Instantiate(gibSplash.gameObject);
         obj.transform.position = transform.position;
         VisualEffect effect = obj.GetComponentInChildren<VisualEffect>();
-        effect.SetVector4("Color", container.GetColor());
+        effect.SetVector4("Color", networkedEntity.GetColor());
         GameManager.instance.SpawnAudioClipInWorld(gibSound, transform.position);
         Destroy(obj, 5f);
         // FIXME FISHNET

@@ -27,7 +27,7 @@ public class ShowerFaucetButton : UsableMachine {
     private void OnUse(NetworkedKobold by) {
         firing = !firing;
         if (firing) {
-            stream.OnFire(container);
+            stream.OnFire(by);
         } else {
             stream.OnEndFire();
         }

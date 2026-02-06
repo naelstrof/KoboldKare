@@ -18,8 +18,9 @@ GameObject:
   - component: {fileID: 1548502343243868654}
   - component: {fileID: 1548502343243868653}
   - component: {fileID: 5636119736436676269}
-  - component: {fileID: 693857655922450226}
   - component: {fileID: 7951812121353576243}
+  - component: {fileID: 1635427000128221167}
+  - component: {fileID: 6351156055900371114}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -191,24 +192,6 @@ MonoBehaviour:
   _updateHostVisibility: 1
   _maximumTimedObserversDuration: 10
   _defaultConditions: []
---- !u!114 &693857655922450226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548502343243868652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e73c20b1097565c669638f61c3084eff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSetting: {fileID: 11400000, guid: 95eaa8b7f817151478392ea09909329f, type: 2}
-  playerPrefabDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847,
-    type: 2}
-  _playerPrefab: {fileID: 2270841014911726173, guid: cbb21eb3fe2a075719b5081331ac6a51,
-    type: 3}
-  _addToDefaultScene: 1
 --- !u!114 &7951812121353576243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,3 +206,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkedEntityPrefab: {fileID: 2730817269567564991, guid: 62b7c8d1ba13e3694a1c661acaf1b2cc,
     type: 3}
+--- !u!114 &1635427000128221167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548502343243868652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68828c85278210948b9d50a8db3aab74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _authenticator: {fileID: 0}
+  _remoteClientTimeout: 2
+  _remoteClientTimeoutDuration: 60
+  _allowPredictedSpawning: 0
+  _reservedObjectIds: 15
+  _syncTypeRate: 0.1
+  SpawnPacking:
+    Position: 0
+    Rotation: 2
+    Scale: 2
+  _changeFrameRate: 1
+  _frameRate: 500
+  _shareIds: 1
+  _startOnHeadless: 1
+--- !u!114 &6351156055900371114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548502343243868652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a953aca470344129f02f932c52a407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityPrefab: {fileID: 5445727179456667262, guid: 62b7c8d1ba13e3694a1c661acaf1b2cc,
+    type: 3}
+  playerPrefab: {fileID: 2270841014911726173, guid: cbb21eb3fe2a075719b5081331ac6a51,
+    type: 3}
+  playerSetting: {fileID: 11400000, guid: 95eaa8b7f817151478392ea09909329f, type: 2}
+  playerPrefabDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847,
+    type: 2}
+  _addToDefaultScene: 1

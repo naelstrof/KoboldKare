@@ -1,34 +1,42 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
-public class GenericWeapon : MonoBehaviour {
+public abstract class GenericWeapon : MonoBehaviour {
     [SerializeField]
     private Transform weaponBarrelTransform;
     [SerializeField]
     private Vector3 weaponHoldOffset;
+
+    protected NetworkedEntity networkedEntity;
+
+    protected virtual void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity != null) {
+            Debug.Log("Subscribed!!");
+            networkedEntity.weaponFireStart += OnFire;
+            networkedEntity.weaponFireEnd += OnEndFire;
+        } else {
+            Debug.Log("Not subscribed!!");
+        }
+    }
+
+    protected virtual void OnDestroy() {
+        if (networkedEntity != null) {
+            networkedEntity.weaponFireStart -= OnFire;
+            networkedEntity.weaponFireEnd -= OnEndFire;
+        }
+    }
+
     public virtual Transform GetWeaponBarrelTransform() {
         return weaponBarrelTransform;
     }
     public virtual Vector3 GetWeaponHoldPosition() {
         return weaponHoldOffset;
     }
-    public void OnEndFire(NetworkedKobold player) {
-        // FIXME FISHNET
-        //photonView.RPC(nameof(OnEndFireRPC), RpcTarget.All, player.photonView.ViewID);
-    }
-    public void OnFire(NetworkedKobold player) {
-        // FIXME FISHNET
-        //photonView.RPC(nameof(OnFireRPC), RpcTarget.All, player.photonView.ViewID);
-    }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    protected virtual void OnFireRPC(int playerID) {
-    }
-    // FIXME FISHNET
-    //[PunRPC]
-    protected virtual void OnEndFireRPC(int playerID) {
-    }
+    protected abstract void OnEndFire(NetworkedKobold player);
+    protected abstract void OnFire(NetworkedKobold player);
 }

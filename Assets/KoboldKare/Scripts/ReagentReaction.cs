@@ -4,6 +4,6 @@ using UnityEngine;
 
 [System.Serializable]
 public class ReagentReaction {
-    public virtual void React(GenericReagentContainer container) {
+    public virtual void React(GeneHolder container) {
     }
 }

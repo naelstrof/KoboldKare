@@ -47,7 +47,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     private NetworkedKobold networkedKobold;
     
 
-    public GenericReagentContainer bellyContainer { get; private set; }
     [FormerlySerializedAs("belly")] [SerializeField]
     private Inflatable bellyInflater;
     private Grabber grabber => GetComponent<Grabber>();
@@ -290,10 +289,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
-        bellyContainer = gameObject.AddComponent<GenericReagentContainer>();
-        bellyContainer.type = GenericReagentContainer.ContainerType.Mouth;
         metabolizedContents = new ReagentContents(20f);
-        bellyContainer.maxVolume = 20f;
         
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(bellyContainer);
@@ -358,10 +354,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         metabolizedContents.SetMaxVolume(next);
     }
 
-    private void OnBellySizeChanged(float prev, float next, bool asServer) {
-        bellyContainer.maxVolume = next;
-    }
-
     private void OnBreastSizeChanged(float prev, float next, bool asServer) {
         boobsInflater.SetSize(Mathf.Log(1f + next / 20f, 2f), this);
     }
@@ -421,7 +413,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         controller = GetComponent<KoboldCharacterController>();
         lastPumpTime = Time.timeSinceLevelLoad;
         DayNightCycle.AddMetabolizationListener(OnMetabolizationEvent);
-        bellyContainer.OnChange += OnBellyContentsChanged;
         
         networkedKobold = GetComponentInParent<NetworkedKobold>();
         networkedKobold.dickEquip.OnChange += OnDickChanged;
@@ -434,8 +425,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         OnFatSizeChanged(networkedKobold.fatSize.Value, networkedKobold.fatSize.Value, true);
         networkedKobold.breastSize.OnChange += OnBreastSizeChanged;
         OnBreastSizeChanged(networkedKobold.breastSize.Value, networkedKobold.breastSize.Value, true);
-        networkedKobold.bellySize.OnChange += OnBellySizeChanged;
-        OnBellySizeChanged(networkedKobold.bellySize.Value, networkedKobold.bellySize.Value, true);
         networkedKobold.metabolizeCapacitySize.OnChange += OnMetabolizeCapacitySizeChanged;
         OnMetabolizeCapacitySizeChanged(networkedKobold.metabolizeCapacitySize.Value, networkedKobold.metabolizeCapacitySize.Value, true);
         networkedKobold.brightness.OnChange += OnColorChanged;
@@ -443,6 +432,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         networkedKobold.saturation.OnChange += OnColorChanged;
         networkedKobold.clothingHue.OnChange += OnColorChanged;
         OnColorChanged(0, 0, true);
+        networkedKobold.reagentContents.OnChange += OnBellyContentsChanged;
         
         networkedKobold.grabbed += OnGrab;
         networkedKobold.released += OnRelease;
@@ -454,14 +444,12 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     }
     private void OnDestroy() {
         DayNightCycle.RemoveMetabolizationListener(OnMetabolizationEvent);
-        bellyContainer.OnChange -= OnBellyContentsChanged;
         if (networkedKobold) {
             networkedKobold.dickEquip.OnChange -= OnDickChanged;
             networkedKobold.grabCount.OnChange -= OnGrabCountChanged;
             networkedKobold.baseSize.OnChange -= OnBaseSizeChanged;
             networkedKobold.fatSize.OnChange -= OnFatSizeChanged;
             networkedKobold.breastSize.OnChange -= OnBreastSizeChanged;
-            networkedKobold.bellySize.OnChange -= OnBellySizeChanged;
             networkedKobold.metabolizeCapacitySize.OnChange -= OnMetabolizeCapacitySizeChanged;
             networkedKobold.brightness.OnChange -= OnColorChanged;
             networkedKobold.hue.OnChange -= OnColorChanged;
@@ -470,6 +458,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             networkedKobold.grabbed -= OnGrab;
             networkedKobold.released -= OnRelease;
             networkedKobold.grabRequested -= OnGrabRequest;
+            networkedKobold.reagentContents.OnChange -= OnBellyContentsChanged;
         }
         // FIXME FISHNET
         //PlayAreaEnforcer.RemoveTrackedObject(photonView);
@@ -585,8 +574,9 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
                 pair.volume -= processedAmount;
             }
         }
-        bellyContainer.AddMix(contents, GenericReagentContainer.InjectType.Inject); 
-        bellyContainer.AddMix(addbackReagents, GenericReagentContainer.InjectType.Inject);
+
+        networkedKobold.AddMix(contents, GeneHolder.InjectType.Inject);
+        networkedKobold.AddMix(addbackReagents, GeneHolder.InjectType.Inject);
         float overflowEnergy = Mathf.Max(newEnergy - GetMaxEnergy(), 0f);
         if (overflowEnergy != 0f) {
             networkedKobold.SetFatSize(networkedKobold.fatSize.Value + overflowEnergy);
@@ -603,7 +593,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             return;
         }*/
         stimulation = Mathf.MoveTowards(stimulation, 0f, f*0.08f);
-        ReagentContents vol = bellyContainer.Metabolize(f);
+        ReagentContents vol = networkedKobold.Metabolize(f);
         ProcessReagents(vol);
     }
 
@@ -612,19 +602,19 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         gargleSource.Pause();
         gargleSource.enabled = false;
     }
-    private void OnBellyContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        bellyInflater.SetSize(Mathf.Log(1f + contents.volume / 80f, 2f), this);
-        if (injectType != GenericReagentContainer.InjectType.Spray || bellyContainer.volume >= bellyContainer.maxVolume*0.99f) {
-            return;
-        }
+    
+    private void OnBellyContentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
+        bellyInflater.SetSize(Mathf.Log(1f + next.volume / 80f, 2f), this);
 
-        quaff?.Invoke();
-        if (gargleSource.enabled == false || !gargleSource.isPlaying) {
-            gargleSource.enabled = true;
-            garglePack.Play(gargleSource);
-            //gurgleSource.Play();
-            gargleSource.pitch = 1f;
-            StartCoroutine(WaitAndThenStopGargling(0.25f));
+        if (prev.volume < next.volume) {
+            quaff?.Invoke();
+            if (gargleSource.enabled == false || !gargleSource.isPlaying) {
+                gargleSource.enabled = true;
+                garglePack.Play(gargleSource);
+                //gurgleSource.Play();
+                gargleSource.pitch = 1f;
+                StartCoroutine(WaitAndThenStopGargling(0.25f));
+            }
         }
     }
 

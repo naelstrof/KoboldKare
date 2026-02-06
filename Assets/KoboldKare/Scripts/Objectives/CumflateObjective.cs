@@ -20,13 +20,13 @@ public class CumflateObjective : DragonMailObjective {
     private int cumflated;
     public override void Register() {
         base.Register();
-        GenericReagentContainer.containerFilled += OnContainerFilled;
+        GeneHolder.containerFilled += OnContainerFilled;
     }
     public override void Unregister() {
         base.Unregister();
-        GenericReagentContainer.containerFilled -= OnContainerFilled;
+        GeneHolder.containerFilled -= OnContainerFilled;
     }
-    private void OnContainerFilled(GenericReagentContainer container) {
+    private void OnContainerFilled(GeneHolder container) {
         if (container.GetVolumeOf(reagentTypeA) + container.GetVolumeOf(reagentTypeB) > container.maxVolume * 0.8f) {
             cumflated++;
             TriggerUpdate();

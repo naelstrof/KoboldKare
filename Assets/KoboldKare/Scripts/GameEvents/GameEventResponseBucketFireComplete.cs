@@ -7,7 +7,8 @@ public class GameEventResponseBucketOnFireComplete : GameEventResponse {
     public override void Invoke(MonoBehaviour owner){
         base.Invoke(owner);
         foreach (var target in targets) {
-            target.OnFireComplete();
+            // FIXME fishnet
+            //target.OnFireComplete();
         }
     }
 }

@@ -18,30 +18,30 @@ public class MilkingTable : UsableMachine, IAnimationStationSet {
     [SerializeField]
     private FluidStream stream;
 
-    private NetworkedKobold networkedKobold;
+    private NetworkedEntity networkedEntity;
 
-    private GenericReagentContainer container;
     void Awake() {
         readOnlyStations = stations.AsReadOnly();
-        container = gameObject.AddComponent<GenericReagentContainer>();
-        container.type = GenericReagentContainer.ContainerType.Mouth;
-        container.OnChange += OnReagentContainerChangedEvent;
+        
+        
         // FIXME FISHNET
         /*photonView.ObservedComponents.Add(container);*/
     }
 
     protected override void Start() {
         base.Start();
-        networkedKobold = GetComponentInParent<NetworkedKobold>();
-        if (networkedKobold) {
-            networkedKobold.SetSprite(milkingSprite);
-            networkedKobold.useRequested += OnUseRequested;
-            networkedKobold.used += OnUse;
+        networkedEntity = GetComponentInParent<NetworkedKobold>();
+        if (networkedEntity) {
+            networkedEntity.SetSprite(milkingSprite);
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
+            networkedEntity.type = GeneHolder.ContainerType.Mouth;
+            networkedEntity.reagentContents.OnChange += OnReagentContainerChangedEvent;
         }
     }
 
-    private void OnReagentContainerChangedEvent(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        stream.OnFire(container);
+    private void OnReagentContainerChangedEvent(ReagentContents contents, ReagentContents next, bool asServer) {
+        stream.OnFire(networkedEntity);
     }
     
     private bool OnUseRequested(NetworkedKobold k) {

@@ -12,15 +12,19 @@ public class SphereFluidDisplay : MonoBehaviour {
     public Renderer fluidRenderer;
     private Vector3 vel;
     private Vector3 pos;
+    private NetworkedEntity networkedEntity;
     void Start() {
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
         vel = Vector3.zero;
         pos = Vector3.up;
-        container.OnChange += OnChanged;
-        OnChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
+        if (networkedEntity) {
+            networkedEntity.reagentContents.OnChange += OnChanged;
+            OnChanged(networkedEntity.GetContents(), networkedEntity.GetContents(), true);
+        }
     }
     void OnDestroy() {
-        if (container) {
-            container.OnChange -= OnChanged;
+        if (networkedEntity) {
+            networkedEntity.reagentContents.OnChange -= OnChanged;
         }
     }
     void FixedUpdate() {
@@ -30,7 +34,7 @@ public class SphereFluidDisplay : MonoBehaviour {
         pos = Vector3.Normalize(pos + vel * Time.fixedDeltaTime);
         fluidRenderer.material.SetVector("_PlaneNormal", pos);
     }
-    void OnChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    void OnChanged(ReagentContents contents, ReagentContents next, bool asServer) {
         fluidRenderer.material.SetColor("_Color", contents.GetColor());
         fluidRenderer.material.SetFloat("_Position", contents.volume / contents.GetMaxVolume());
     }

@@ -9,17 +9,15 @@ using UnityEngine.VFX;
 public class ElectricBlender : SuckingMachine {
     [SerializeField]
     private FluidStream stream;
-    [SerializeField]
-    private GenericReagentContainer container;
     
     [SerializeField] private VisualEffect poof;
     [SerializeField] private AudioPack grindSound;
     private AudioSource source;
     public static event GrinderManager.GrindedObjectAction grindedObject;
+    private NetworkedEntity networkedEntity;
 
     protected override void Awake() {
         base.Awake();
-        container.OnChange += OnFluidChanged;
         if (source == null) {
             source = gameObject.AddComponent<AudioSource>();
             source.playOnAwake = false;
@@ -32,14 +30,22 @@ public class ElectricBlender : SuckingMachine {
         }
     }
 
-    private void OnDestroy() {
-        if (container != null) {
-            container.OnChange += OnFluidChanged;
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+        if (networkedEntity) {
+            networkedEntity.reagentContents.OnChange += OnFluidChanged;
         }
     }
 
-    void OnFluidChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        stream.OnFire(container);
+    private void OnDestroy() {
+        if (networkedEntity) {
+            networkedEntity.reagentContents.OnChange -= OnFluidChanged;
+        }
+    }
+
+    void OnFluidChanged(ReagentContents contents, ReagentContents next, bool asServer) {
+        stream.OnFire(networkedEntity);
     }
 
     protected override void OnTriggerEnter(Collider other) {

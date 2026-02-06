@@ -23761,8 +23761,11 @@ MonoBehaviour:
   errorEquipment: {fileID: 0}
   errorPlant: {fileID: 0}
   errorKobold: {fileID: 0}
-  errorGeneric: {fileID: 0}
+  errorGeneric: {fileID: 2139235349309577026, guid: fe3ec6c85b301c9e595d2a75f6441e6d,
+    type: 3}
   errorPenis: {fileID: 0}
+  errorSprite: {fileID: 0}
+  networkedEntityGeneric: {fileID: 0}
   mixer: {fileID: 24100000, guid: bc155dfdccec1be4780029a8bd542de5, type: 2}
   penisDatabase: {fileID: 11400000, guid: ef3ef0fc5568133479b54ca67dcc9528, type: 2}
   playerDatabase: {fileID: 11400000, guid: 35066fb21452d9c4fb642d6e941f2847, type: 2}

@@ -33,8 +33,6 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     private bool grinding;
     [SerializeField]
     private Collider grindingCollider;
-    [SerializeField]
-    private GenericReagentContainer container;
 
     private NetworkedEntity networkedEntity;
 
@@ -46,8 +44,6 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
     private bool OnUseRequested(NetworkedKobold k) {
         return k.energy.Value >= 1f && !grinding && station.info.user == null && constructed;
     }
-
-
     
     // FIXME FISHNET
     //[PunRPC]
@@ -107,18 +103,18 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         List<AnimationStation> tempList = new List<AnimationStation>();
         tempList.Add(station);
         stations = tempList.AsReadOnly();
-        container.OnChange += OnReagentsChanged;
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             networkedEntity.SetSprite(onSprite);
             networkedEntity.useRequested += OnUseRequested;
             networkedEntity.used += OnUse;
+            networkedEntity.reagentContents.OnChange += OnReagentsChanged;
         }
     }
 
-    private void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType inject) {
+    private void OnReagentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
         if (fluidStream.isActiveAndEnabled) {
-            fluidStream.OnFire(container);
+            fluidStream.OnFire(networkedEntity);
         }
     }
 
@@ -142,17 +138,16 @@ public class GrinderManager : UsableMachine, IAnimationStationSet {
         }
 
         ReagentContents incomingContents = new ReagentContents();
-        foreach (var reagentContainer in netObject.GetComponentsInChildren<GenericReagentContainer>()) {
-            incomingContents.AddMix(reagentContainer.GetContents());
-            if (reagentContainer.TryGetNetworkedEntity(out var net)) {
-                networkedEntity.CopyGenesFrom(net);
-            }
+        var nettarget = netObject.GetComponentInChildren<NetworkedEntity>();
+        if (nettarget) {
+            incomingContents.AddMix(nettarget.GetContents());
+            networkedEntity.CopyGenesFrom(nettarget);
         }
         
         grindedObject?.Invoke(objectID, incomingContents);
         //FIXME FISHNET
         //container.AddMixRPC(incomingContentsData, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Inject);
-        fluidStream.OnFire(container);
+        fluidStream.OnFire(networkedEntity);
     }
     private void HandleCollision(Collider other) {
         if (!grinding) {

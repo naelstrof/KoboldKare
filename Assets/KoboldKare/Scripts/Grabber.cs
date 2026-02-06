@@ -72,7 +72,7 @@ public class Grabber : MonoBehaviour {
             driverConstraint.SetWorldAnchor(viewPos+viewRot*offset);
             // FIXME FISHNET
             //grabbable.photonView.RequestOwnership();
-            weapon = grabbable.transform.GetComponentInParent<GenericWeapon>();
+            weapon = grabbable.transform.GetComponentInChildren<GenericWeapon>();
             if (weapon != null) {
                 driverConstraint.angleSpringStrength = 32f;
                 driverConstraint.SetWorldAnchor(viewPos+viewRot*(weapon.GetWeaponHoldPosition()+offset));
@@ -99,7 +99,7 @@ public class Grabber : MonoBehaviour {
 
         public void Activate() {
             if (weapon != null) {
-                weapon.OnFire(owner);
+                grabbable.OnFire(owner);
             } else {
                 body.velocity += OrbitCamera.GetPlayerIntendedRotation()* Vector3.forward * 10f;
                 Release();
@@ -107,7 +107,7 @@ public class Grabber : MonoBehaviour {
         }
         public void StopActivate() {
             if (weapon != null) {
-                weapon.OnEndFire(owner);
+                grabbable.OnEndFire(owner);
             }
         }
 

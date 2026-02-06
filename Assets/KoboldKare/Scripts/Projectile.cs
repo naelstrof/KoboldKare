@@ -10,7 +10,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class Projectile : GeneHolder, ISavable {
+public class Projectile : MonoBehaviour {
     private Vector3 velocity;
     [SerializeField]
     private GameObject splash;
@@ -153,7 +153,7 @@ public class Projectile : GeneHolder, ISavable {
             splashed = newSplash;
             PhotonProfiler.LogReceive(sizeof(float) * 3 + sizeof(bool));
         }
-    }*/
+    }
 
     public void Save(JSONNode node) {
         node["velocity.x"] = velocity.x;
@@ -182,7 +182,7 @@ public class Projectile : GeneHolder, ISavable {
         }
 
         return Task.CompletedTask;
-    }
+    }*/
 
     
     // FIXME FISHNET

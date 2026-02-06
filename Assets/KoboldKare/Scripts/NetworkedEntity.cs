@@ -7,7 +7,6 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using Photon.Pun;
 using SimpleJSON;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 
 public class NetworkedEntity : GeneHolder {
@@ -31,6 +30,9 @@ public class NetworkedEntity : GeneHolder {
     private NetworkManager networkManager;
 
     private Sprite sprite;
+    
+    public event System.Action<NetworkedKobold> weaponFireStart;
+    public event System.Action<NetworkedKobold> weaponFireEnd;
 
     public void SetSceneAsset(PhotonView photonView) {
         assetPair.Value = new AssetNamePair { groupName = PHOTONVIEW_ID_GROUP, assetName = $"{photonView.sceneViewId}"};
@@ -49,17 +51,20 @@ public class NetworkedEntity : GeneHolder {
     public void SetAsset(string groupName, string assetName) {
         assetPair.Value = new AssetNamePair { groupName = groupName, assetName = assetName };
     }
-    
-    public void SetInstantiationAsset(string groupName, string assetName) {
-        assetPair.Value = new AssetNamePair { groupName = groupName, assetName = assetName };
+
+    public override void SetInstantiationData(KoboldEntitySpawner.NetworkedEntityInstantiationData data) {
+        base.SetInstantiationData(data);
+        assetPair.Value = new AssetNamePair { groupName = data.groupName, assetName = data.assetName };
     }
     
-    protected virtual void Awake() {
+    protected override void Awake() {
+        base.Awake();
         assetPair.OnChange += OnAssetChanged;
         RandomizeGenes();
     }
 
-    private void Start() {
+    protected override void Start() {
+        base.Awake();
         networkManager = InstanceFinder.NetworkManager;
     }
 
@@ -161,6 +166,12 @@ public class NetworkedEntity : GeneHolder {
                 mapInstance.transform.SetParent(transform, true);
             
                 mapInstance.gameObject.SetActive(true);
+                
+                foreach (var reagentContainer in mapInstance.GetComponentsInChildren<GenericReagentContainer>()) {
+                    foreach (var reagent in reagentContainer.startingReagents) {
+                        AddMix(reagent.reagent.GetReagent(reagent.volume), InjectType.Inject);
+                    }
+                }
                 break;
         }
     }
@@ -206,7 +217,7 @@ public class NetworkedEntity : GeneHolder {
 
     [ServerRpc(RequireOwnership = false)]
     public void TryUse(NetworkConnection conn = null) {
-        if (KoboldPlayerSpawner.TryGetPlayerKobold(conn, out var kobold)) {
+        if (KoboldEntitySpawner.TryGetPlayerKobold(conn, out var kobold)) {
             OnUse(kobold);
         }
     }
@@ -289,8 +300,21 @@ public class NetworkedEntity : GeneHolder {
         networkManager.ServerManager.Despawn(seed);
 
         planted.Value = true;
-        planted.Value = nob;
     }
 
+    [ServerRpc]
+    public void Destroy() {
+        networkManager.ServerManager.Despawn(GetComponent<NetworkObject>());
+    }
+
+    [ObserversRpc]
+    public void OnFire(NetworkedKobold kobold) {
+        weaponFireStart?.Invoke(kobold);
+    }
+    
+    [ObserversRpc]
+    public void OnEndFire(NetworkedKobold kobold) {
+        weaponFireEnd?.Invoke(kobold);
+    }
     
 }

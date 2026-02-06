@@ -7,7 +7,7 @@ public class BellySizeReagentEffect : ModifyingReagentEffect {
         if (!k.TryGetKobold(out var kobold)) {
             return;
         }
-        float currentUsedAmount = Mathf.Max(kobold.bellyContainer.volume, 20f);
+        float currentUsedAmount = Mathf.Max(k.reagentContents.Value.volume, 20f);
         k.SetBellySize(Mathf.Max(k.bellySize.Value + usedAmount * Multiplier, currentUsedAmount));
     }
 }

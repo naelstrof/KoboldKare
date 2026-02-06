@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ReagentContentsDisplayUI : MonoBehaviour {
-    private Kobold targetKobold;
+    private NetworkedKobold targetKobold;
     [SerializeField] private TargetReagentContents targetContents;
     [SerializeField]
     private RectTransform background;
@@ -31,16 +31,19 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         images = new List<RectTransform>();
     }
     private void OnEnable() {
-        targetKobold = GetComponentInParent<Kobold>();
+        targetKobold = GetComponentInParent<NetworkedKobold>();
+        if (!targetKobold.TryGetKobold(out var kobold)) {
+            return;
+        }
         switch (targetContents) {
             case TargetReagentContents.Belly:
-                targetKobold.bellyContainer.OnChange += OnReagentContentsChangedOther;
-                OnReagentContentsChanged(targetKobold.bellyContainer.GetContents());
+                targetKobold.reagentContents.OnChange += OnReagentContentsChangedOther;
+                OnReagentContentsChanged(targetKobold.GetContents());
                 break;
             case TargetReagentContents.Metabolized:
                 //targetKobold.bellyContainer.OnChange.AddListener(OnReagentContentsChanged);
-                targetKobold.metabolizedContents.changed += OnReagentContentsChanged;
-                OnReagentContentsChanged(targetKobold.metabolizedContents);
+                kobold.metabolizedContents.changed += OnReagentContentsChanged;
+                OnReagentContentsChanged(kobold.metabolizedContents);
                 break;
         }
     }
@@ -50,10 +53,10 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
     }
 
     private void OnReagentContentsChanged(ReagentContents contents) {
-        OnReagentContentsChangedOther(contents, GenericReagentContainer.InjectType.Inject);
+        OnReagentContentsChangedOther(contents, contents, true);
     }
 
-    private void OnReagentContentsChangedOther(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
+    private void OnReagentContentsChangedOther(ReagentContents contents, ReagentContents next, bool asServer) {
         reagents.Clear();
         foreach (var reagent in contents) {
             reagents.Add(reagent);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using NetStack.Serialization;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -25,6 +26,26 @@ public class GeneHolder : NetworkBehaviour {
     public readonly SyncVar<string> dickEquip = new SyncVar<string>("None");
     public readonly SyncVar<byte> grabCount = new SyncVar<byte>(1);
     public readonly SyncVar<string> species = new SyncVar<string>("Kobold");
+    public readonly SyncVar<ReagentContents> reagentContents = new SyncVar<ReagentContents>(new ReagentContents(20f));
+
+    public virtual void SetInstantiationData(KoboldEntitySpawner.NetworkedEntityInstantiationData data) {
+        maxEnergy.Value = data.maxEnergy;
+        baseSize.Value = data.baseSize;
+        fatSize.Value = data.fatSize;
+        ballSize.Value = data.ballSize;
+        dickSize.Value = data.dickSize;
+        breastSize.Value = data.breastSize;
+        bellySize.Value = data.bellySize;
+        metabolizeCapacitySize.Value = data.metabolizeCapacitySize;
+        dickThickness.Value = data.dickThickness;
+        hue.Value = data.hue;
+        clothingHue.Value = data.clothingHue;
+        brightness.Value = data.brightness;
+        saturation.Value = data.saturation;
+        dickEquip.Value = data.dickEquip;
+        grabCount.Value = data.grabCount;
+        species.Value = data.species;
+    }
     
     [ServerRpc]
     public void SetMaxEnergy(float value) {
@@ -59,6 +80,7 @@ public class GeneHolder : NetworkBehaviour {
     [ServerRpc]
     public void SetBellySize(float value) {
         bellySize.Value = value;
+        reagentContents.Value.SetMaxVolume(value);
     }
 
     [ServerRpc]
@@ -279,22 +301,215 @@ public class GeneHolder : NetworkBehaviour {
     }
 
     public override string ToString() {
+        string blah = "[";
+        foreach(var reagent in ReagentDatabase.GetAssets()) {
+            if (GetContents().GetVolumeOf(reagent) != 0f) {
+                blah += reagent.name + ": " + GetContents().GetVolumeOf(reagent) + ", ";
+            }
+        }
+        blah += "]";
         return $@"{base.ToString()}: With Genes: 
-           maxEnergy: {maxEnergy}
-           baseSize: {baseSize}
-           fatSize: {fatSize}
-           ballSize: {ballSize}
-           dickSize: {dickSize}
-           breastSize: {breastSize}
-           bellySize: {bellySize}
-           metabolizeCapacitySize: {metabolizeCapacitySize}
-           hue: {hue}
-           clothingHue: {clothingHue}
-           brightness: {brightness}
-           saturation: {saturation}
-           dickEquip: {dickEquip}
-           grabCount: {grabCount}
-           dickThickness: {dickThickness}
-           species: {species}";
+            maxEnergy: {maxEnergy}
+            baseSize: {baseSize}
+            fatSize: {fatSize}
+            ballSize: {ballSize}
+            dickSize: {dickSize}
+            breastSize: {breastSize}
+            bellySize: {bellySize}
+            metabolizeCapacitySize: {metabolizeCapacitySize}
+            hue: {hue}
+            clothingHue: {clothingHue}
+            brightness: {brightness}
+            saturation: {saturation}
+            dickEquip: {dickEquip}
+            grabCount: {grabCount}
+            dickThickness: {dickThickness}
+            species: {species}
+            With reagents: {blah}";
     }
+    
+    public delegate void ContainerFilledAction(GeneHolder container);
+    public static event ContainerFilledAction containerFilled;
+    public static event ContainerFilledAction containerInflated;
+    public ReagentContents GetContents() {
+        return reagentContents.Value;
+    }
+    [System.Serializable]
+    public class InspectorReagent {
+        public ScriptableReagent reagent;
+        public float volume;
+    }
+    public enum ContainerType : byte {
+        OpenTop,
+        Sealed,
+        Mouth,
+    }
+    public enum InjectType : byte {
+        Inject,
+        Spray,
+        Flood,
+        Metabolize,
+        Vacuum,
+    }
+    private static bool[,] ReagentMixMatrix = new bool[,]{
+        // OpenTop, Sealed, Mouth
+        {  true,   true,    true }, // Inject
+        {  true,   false,   true }, // Spray
+        {  true,   false,   false }, // Flood
+        {  true,   true,   true }, // Metabolize
+        {  true,   true,   true }, // Vacuum
+    };
+    public delegate void ReagentContainerChangedEvent(ReagentContents c, InjectType t);
+    public static bool IsMixable(ContainerType container, InjectType injectionType) {
+        return ReagentMixMatrix[(int)injectionType,(int)container];
+    }
+    public float volume => GetContents().volume;
+
+    public float maxVolume {
+        get => GetContents().GetMaxVolume();
+        set {
+            GetContents().SetMaxVolume(value);
+            OnReagentContentsChanged(InjectType.Vacuum);
+        }
+    }
+
+    public Color GetColor() => GetContents().GetColor();
+    public ContainerType type;
+    
+    public event ReagentContainerChangedEvent OnFilled, OnEmpty;
+    
+    public bool isFull => Mathf.Approximately(GetContents().volume, GetContents().GetMaxVolume());
+    public bool isEmpty => Mathf.Approximately(GetContents().volume,0f);
+    public bool IsCleaningAgent() => GetContents().IsCleaningAgent();
+    public float GetVolumeOf(ScriptableReagent reagent) => GetContents().GetVolumeOf(reagent);
+    public float GetVolumeOf(byte id) => GetContents().GetVolumeOf(id);
+    public InspectorReagent[] startingReagents;
+
+    private bool hasGenes = false;
+
+    private bool filled = false;
+    private bool emptied = false;
+    protected virtual void Awake() {
+        if (startingReagents != null) {
+            foreach (var reagent in startingReagents) {
+                AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+            }
+            foreach (var reagentContainer in GetComponentsInChildren<GenericReagentContainer>()) {
+                foreach (var reagent in reagentContainer.startingReagents) {
+                    AddMix(reagent.reagent, reagent.volume, InjectType.Inject);
+                }
+            }
+        }
+    }
+    
+    protected virtual void Start() {
+        filled = isFull;
+        emptied = isEmpty;
+    }
+    
+    // FIXME FISHNET
+    //[PunRPC]
+    public ReagentContents Spill(float spillVolume) {
+        ReagentContents spillContents = GetContents().Spill(spillVolume);
+        OnReagentContentsChanged(InjectType.Vacuum);
+        return spillContents;
+    }
+
+    private void TransferMix(GeneHolder injector, float amount, InjectType injectType) {
+        if (!IsMixable(this.type, injectType)) {
+            return;
+        }
+        ReagentContents spill = injector.Spill(amount);
+        AddMix(spill, injectType);
+        CopyGenesFrom(injector);
+    }
+    private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
+        if (!IsMixable(type, injectType)) {
+            return false;
+        }
+        GetContents().AddMix((byte)ReagentDatabase.GetID(incomingReagent), volume, this);
+        OnReagentContentsChanged(injectType);
+        return true;
+    }
+    
+    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+        if (!IsMixable(type, injectType)) {
+            return false;
+        }
+        GetContents().AddMix(incomingReagents, this);
+        OnReagentContentsChanged(injectType);
+        return true;
+    }
+    public bool AddMix(Reagent reagent, InjectType injectType, GeneHolder worldContainer = null) {
+        if (!IsMixable(type, injectType)) {
+            return false;
+        }
+        GetContents().AddMix(reagent.id, reagent.volume, worldContainer);
+        OnReagentContentsChanged(injectType);
+        return true;
+    }
+
+    public ReagentContents Peek() => new(GetContents());
+    public ReagentContents Metabolize(float deltaTime) => GetContents().Metabolize(deltaTime);
+    public void OverrideReagent(Reagent r) => GetContents().OverrideReagent(r.id, r.volume);
+    public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent((byte)ReagentDatabase.GetID(r), volume);
+    public void OnReagentContentsChanged(InjectType injectType) {
+        if (!filled && isFull) {
+            OnFilled?.Invoke(GetContents(), injectType);
+            containerFilled?.Invoke(this);
+        }
+        filled = isFull;
+        if (!emptied && isEmpty) {
+            hasGenes = false;
+            OnEmpty?.Invoke(GetContents(), injectType);
+        }
+        emptied = isEmpty;
+    }
+
+    public void RefillToFullWithDefaultContents(){
+        if(startingReagents.Length != 0){
+            foreach (var item in startingReagents){
+                AddMix(item.reagent,item.volume,InjectType.Spray);
+            }
+        }
+    }
+
+    public float GetWorth() {
+        return GetContents().GetValue();
+    }
+
+    
+    // FIXME FISHNET
+    /*
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.IsWriting) {
+            BitBuffer bitBuffer = new BitBuffer(8);
+            bitBuffer.AddReagentContents(GetContents());
+            stream.SendNext(bitBuffer);
+        } else {
+            BitBuffer data = (BitBuffer)stream.ReceiveNext();
+            ReagentContents newContents = data.ReadReagentContents();
+            GetContents().Copy(newContents);
+            OnReagentContentsChanged(InjectType.Metabolize);
+            PhotonProfiler.LogReceive(data.Length);
+        }
+    }*/
+
+    // FIXME FISHNET
+    /*
+    public void OnPhotonInstantiate(PhotonMessageInfo info) {
+        if (info.photonView.InstantiationData == null) {
+            return;
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is BitBuffer) {
+            BitBuffer buffer = (BitBuffer)info.photonView.InstantiationData[0];
+            // This buffer might be shared.
+            buffer.SetReadPosition(0);
+            SetGenes(buffer.ReadKoboldGenes());
+            PhotonProfiler.LogReceive(buffer.Length);
+        }
+        if (info.photonView.InstantiationData.Length > 0 && info.photonView.InstantiationData[0] is not BitBuffer) {
+            throw new UnityException("Unexpected spawn data for container");
+        }
+    }*/
 }

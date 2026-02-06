@@ -8,20 +8,26 @@ public class FoodDisplay : MonoBehaviour {
     [SerializeField]
     private Inflatable sizeInflater;
 
-    private GenericReagentContainer container;
+    private NetworkedEntity networkedEntity;
 
     private void OnEnable() {
-        container = GetComponentInParent<GenericReagentContainer>();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
         sizeInflater.OnEnable();
-        container.OnChange += OnReagentsChanged;
-        OnReagentsChanged(container.GetContents(), GenericReagentContainer.InjectType.Inject);
+        
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange += OnReagentsChanged;
+            OnReagentsChanged(networkedEntity.reagentContents.Value, networkedEntity.reagentContents.Value, true);
+        }
+
     }
 
     private void OnDisable() {
-        container.OnChange += OnReagentsChanged;
+        if (networkedEntity != null) {
+            networkedEntity.reagentContents.OnChange -= OnReagentsChanged;
+        }
     }
 
-    void OnReagentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        sizeInflater.SetSize(0.5f+Mathf.Log(1f + container.volume / 20f, 2f), this);
+    void OnReagentsChanged(ReagentContents contents, ReagentContents next, bool asServer) {
+        sizeInflater.SetSize(0.5f+Mathf.Log(1f + next.volume / 20f, 2f), this);
     }
 }

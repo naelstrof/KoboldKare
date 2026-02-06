@@ -20,29 +20,26 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
     [SerializeField] private Animator anim;
 
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
-    private GenericReagentContainer container;
-
     private NetworkedEntity networkedEntity;
     
     protected override void Start() {
         base.Start();
         readOnlyStations = stations.AsReadOnly();
         
-        container = gameObject.AddComponent<GenericReagentContainer>();
-        container.type = GenericReagentContainer.ContainerType.Mouth;
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(container);
-        container.OnChange += OnReagentContentsChanged;
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             networkedEntity.SetSprite(useSprite);
             networkedEntity.useRequested += OnUseRequested;
             networkedEntity.used += OnUse;
+            networkedEntity.type = GeneHolder.ContainerType.Mouth;
+            networkedEntity.reagentContents.OnChange += OnReagentContentsChanged;
         }
     }
     
-    private void OnReagentContentsChanged(ReagentContents contents, GenericReagentContainer.InjectType injectType) {
-        stream.OnFire(container);
+    private void OnReagentContentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
+        stream.OnFire(networkedEntity);
     }
 
     private bool OnUseRequested(NetworkedKobold k) {
@@ -54,7 +51,7 @@ public class KoboldPress : UsableMachine, IAnimationStationSet {
             return false;
         }
         if (stations[0].info.user == null) {
-            return kobold.bellyContainer.volume > 0f;
+            return k.reagentContents.Value.volume > 0f;
         }
         return false;
     }

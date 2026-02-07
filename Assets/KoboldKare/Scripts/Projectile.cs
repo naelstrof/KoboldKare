@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FishNet.Object;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using Photon.Pun;
@@ -23,15 +24,16 @@ public class Projectile : MonoBehaviour {
     [SerializeField] private Renderer projectileBlob;
     [SerializeField] private Material decalProjector;
     [SerializeField] private Material decalProjectorSubtractive;
-    private ReagentContents contents;
     private HashSet<Collider> ignoreColliders;
     private static Collider[] colliders = new Collider[32];
     private static RaycastHit[] raycastHits = new RaycastHit[32];
-    private static HashSet<GenericReagentContainer> hitContainers = new HashSet<GenericReagentContainer>();
+    private static HashSet<NetworkedEntity> hitContainers = new HashSet<NetworkedEntity>();
     private bool splashed = false;
     private static readonly int FluidColor = Shader.PropertyToID("_FluidColor");
     private AudioSource splashSoundSource;
     private static readonly int ColorID = Shader.PropertyToID("_Color");
+
+    private NetworkedEntity networkedEntity;
 
     private void Awake() {
         ignoreColliders ??= new HashSet<Collider>();
@@ -87,15 +89,20 @@ public class Projectile : MonoBehaviour {
         splashSoundSource.playOnAwake = false;
         splashSoundSource.loop = false;
         splashSoundSource.rolloffMode = AudioRolloffMode.Linear;
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
         // FIXME FISHNET
         //PlayAreaEnforcer.AddTrackedObject(photonView);
     }
 
+    public void SetVelocity(Vector3 velocity) {
+        this.velocity = velocity;
+    }
+
     private void OnSplash() {
-        Color color = contents.GetColor();
+        Color color = networkedEntity.GetColor();
         decalProjector.SetColor(ColorID, color);
         decalProjectorSubtractive.SetColor(ColorID, color);
-        SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(transform.position, 1f, contents.IsCleaningAgent() ? decalProjectorSubtractive : decalProjector,
+        SkinnedMeshDecals.PaintDecal.RenderDecalInSphere(transform.position, 1f, networkedEntity.IsCleaningAgent() ? decalProjectorSubtractive : decalProjector,
             Quaternion.identity,
             GameManager.instance.decalHitMask);
 
@@ -103,38 +110,33 @@ public class Projectile : MonoBehaviour {
         projectile.SetActive(false);
         splashed = true;
         
-        // FIXME FISHNET
-        /*if (photonView.IsMine) {
+        if (networkedEntity.IsOwner) {
             hitContainers.Clear();
             int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders,
                 GameManager.instance.waterSprayHitMask);
             for (int i = 0; i < hits; i++) {
-                GenericReagentContainer container = colliders[i].GetComponentInParent<GenericReagentContainer>();
+                NetworkedEntity container = colliders[i].GetComponentInParent<NetworkedEntity>();
                 if (container != null) {
                     hitContainers.Add(container);
                 }
             }
-            float perVolume = contents.volume / hitContainers.Count;
-            foreach (GenericReagentContainer container in hitContainers) {
-                BitBuffer buffer = new BitBuffer(4);
-                buffer.AddReagentContents(contents.Spill(perVolume));
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All,
-                    buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);
+            float perVolume = networkedEntity.volume / hitContainers.Count;
+            foreach (NetworkedEntity container in hitContainers) {
+                container.AddMix(networkedEntity.Spill(perVolume), GeneHolder.InjectType.Spray);
             }
-        }
-
-        if (photonView.IsMine) {
             StartCoroutine(DestroyAfterTime());
         }
+
         transform.rotation = Quaternion.identity;
 
         if (splashSoundSource != null) {
             splashSound.Play(splashSoundSource);
-        }*/
+        }
     }
 
     private IEnumerator DestroyAfterTime() {
         yield return new WaitForSeconds(5f);
+        GetComponentInParent<NetworkObject>().Despawn();
         // FIXME FISHNET
         //PhotonNetwork.Destroy(photonView);
     }

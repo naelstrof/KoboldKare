@@ -102,7 +102,6 @@ public class BucketWeapon : GenericWeapon {
         bucketAnimator.SetTrigger(Fire);
     }
 
-    // Called from the animator
     protected override void OnEndFire(NetworkedKobold player) {
         if (networkedEntity.volume < 0.1f) {
             return;
@@ -123,6 +122,9 @@ public class BucketWeapon : GenericWeapon {
             data.position = GetWeaponBarrelTransform().position;
             data.rotation = GetWeaponBarrelTransform().rotation;
             data.CopyGenesFrom(networkedEntity);
+
+            var spilled = networkedEntity.Spill(projectileVolume);
+            data.reagentContents = spilled;
 
             var networkObject = InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false);
             //networkObject.GetComponentInChildren<Projectile>().LaunchFrom(body);

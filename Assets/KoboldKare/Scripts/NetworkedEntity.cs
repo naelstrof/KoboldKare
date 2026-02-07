@@ -174,6 +174,15 @@ public class NetworkedEntity : GeneHolder {
                 }
                 break;
         }
+
+        if (entityInstance) {
+            foreach (var body in entityInstance.GetComponentsInChildren<Rigidbody>()) {
+                body.velocity = instantiationData.velocity;
+            }
+            foreach (var projectile in entityInstance.GetComponentsInChildren<Projectile>()) {
+                projectile.SetVelocity(instantiationData.velocity);
+            }
+        }
     }
     
     public void Save(JSONNode node) {

@@ -15,11 +15,8 @@ public abstract class GenericWeapon : MonoBehaviour {
     protected virtual void Start() {
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity != null) {
-            Debug.Log("Subscribed!!");
             networkedEntity.weaponFireStart += OnFire;
             networkedEntity.weaponFireEnd += OnEndFire;
-        } else {
-            Debug.Log("Not subscribed!!");
         }
     }
 

@@ -22,7 +22,7 @@ public class GenericFluidDisplay : MonoBehaviour {
             networkedEntity.reagentContents.OnChange -= OnChanged;
         }
     }
-    public void OnChanged(ReagentContents prev, ReagentContents next, bool asServer) {
+    private void OnChanged(ReagentContents prev, ReagentContents next, bool asServer) {
         foreach(var m in targetRenderer.materials) {
             m.color = next.GetColor();
         }

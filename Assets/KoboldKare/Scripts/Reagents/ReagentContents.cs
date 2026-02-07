@@ -40,7 +40,7 @@ public static class ReagentContentsBitBufferExtension {
 public class ReagentContents : IEnumerable<Reagent> {
     private const float metabolizationVolumeEpsilon = 0.1f;
     public int Count => contents.Count;
-    [SerializeField] private Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
+    public Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
     public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
     public ReagentContents() {
@@ -59,7 +59,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         maxVolume = other.maxVolume;
     }
 
-    private float maxVolume = float.MaxValue;
+    public float maxVolume = float.MaxValue;
     public float GetMaxVolume() {
         return maxVolume;
     }
@@ -265,5 +265,16 @@ public class ReagentContents : IEnumerable<Reagent> {
 
     IEnumerator IEnumerable.GetEnumerator() {
         return GetEnumerator();
+    }
+
+    public override string ToString() {
+        string blah = "[";
+        foreach(var reagent in ReagentDatabase.GetAssets()) {
+            if (GetVolumeOf(reagent) != 0f) {
+                blah += reagent.name + ": " + GetVolumeOf(reagent) + ", ";
+            }
+        }
+        blah += "]";
+        return $"{base.ToString()}:{blah}";
     }
 }

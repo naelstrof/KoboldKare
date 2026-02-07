@@ -107,6 +107,8 @@ public class KoboldEntitySpawner : MonoBehaviour {
         public string dickEquip;
         public byte grabCount;
 
+        public ReagentContents reagentContents;
+
         public void CopyGenesFrom(GeneHolder holder) {
             maxEnergy = holder.maxEnergy.Value;
             baseSize = holder.baseSize.Value;
@@ -148,7 +150,8 @@ public class KoboldEntitySpawner : MonoBehaviour {
                 brightness = 128,
                 saturation = 128,
                 dickEquip = "None",
-                grabCount = 1
+                grabCount = 1,
+                reagentContents = new ReagentContents(20f)
             };
         }
     }

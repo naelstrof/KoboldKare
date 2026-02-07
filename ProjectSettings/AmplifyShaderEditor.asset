@@ -1,0 +1,9 @@
+{
+    "Version": 1,
+    "AutoSRP": true,
+    "DefineSymbol": true,
+    "TemplateExtensions": [
+        ".shader",
+        ".template.shader"
+    ]
+}

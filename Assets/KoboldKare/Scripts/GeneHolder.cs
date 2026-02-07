@@ -28,7 +28,11 @@ public class GeneHolder : NetworkBehaviour {
     public readonly SyncVar<string> species = new SyncVar<string>("Kobold");
     public readonly SyncVar<ReagentContents> reagentContents = new SyncVar<ReagentContents>(new ReagentContents(20f));
 
+    
+    protected KoboldEntitySpawner.NetworkedEntityInstantiationData instantiationData;
+    
     public virtual void SetInstantiationData(KoboldEntitySpawner.NetworkedEntityInstantiationData data) {
+        instantiationData = data;
         maxEnergy.Value = data.maxEnergy;
         baseSize.Value = data.baseSize;
         fatSize.Value = data.fatSize;
@@ -45,6 +49,7 @@ public class GeneHolder : NetworkBehaviour {
         dickEquip.Value = data.dickEquip;
         grabCount.Value = data.grabCount;
         species.Value = data.species;
+        reagentContents.Value = data.reagentContents;
     }
     
     [ServerRpc]
@@ -412,9 +417,15 @@ public class GeneHolder : NetworkBehaviour {
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = GetContents().Spill(spillVolume);
         OnReagentContentsChanged(InjectType.Vacuum);
+        SetReagentContents(GetContents());
         return spillContents;
     }
 
+    [ObserversRpc]
+    public void SetReagentContents(ReagentContents contents) {
+        reagentContents.Value = contents;
+    }
+    
     private void TransferMix(GeneHolder injector, float amount, InjectType injectType) {
         if (!IsMixable(this.type, injectType)) {
             return;
@@ -432,21 +443,20 @@ public class GeneHolder : NetworkBehaviour {
         return true;
     }
     
-    public bool AddMix(ReagentContents incomingReagents, InjectType injectType) {
+    [ObserversRpc]
+    public void AddMix(ReagentContents incomingReagents, InjectType injectType) {
         if (!IsMixable(type, injectType)) {
-            return false;
+            return;
         }
         GetContents().AddMix(incomingReagents, this);
         OnReagentContentsChanged(injectType);
-        return true;
     }
-    public bool AddMix(Reagent reagent, InjectType injectType, GeneHolder worldContainer = null) {
+    public void AddMix(Reagent reagent, InjectType injectType, GeneHolder worldContainer = null) {
         if (!IsMixable(type, injectType)) {
-            return false;
+            return;
         }
         GetContents().AddMix(reagent.id, reagent.volume, worldContainer);
         OnReagentContentsChanged(injectType);
-        return true;
     }
 
     public ReagentContents Peek() => new(GetContents());

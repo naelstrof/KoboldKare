@@ -21,12 +21,12 @@ public class GenericDoor : MonoBehaviour {
     }
     public virtual void Start(){
         audioSource = GetComponent<AudioSource>();
-        UpdateState();
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             networkedEntity.SetSprite(opened ? closeSprite : openSprite);
             networkedEntity.useRequested += OnUseRequested;
             networkedEntity.used += OnUse;
+            UpdateState();
         }
     }
 
@@ -46,7 +46,10 @@ public class GenericDoor : MonoBehaviour {
         } else{
             Close();
         }
-        networkedEntity.SetSprite(opened ? closeSprite : openSprite);
+
+        if (networkedEntity) {
+            networkedEntity.SetSprite(opened ? closeSprite : openSprite);
+        }
     }
     // These should never be called externally, use Use() to open and close.
     protected virtual void Open(){

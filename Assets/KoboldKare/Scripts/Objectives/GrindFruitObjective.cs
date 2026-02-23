@@ -45,7 +45,7 @@ public class GrindFruitObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnGrindedObject(int viewID, ReagentContents contents) {
-        ObjectiveManager.NetworkAdvance(successSpawnLocation == null ? Vector3.zero : successSpawnLocation.position, viewID.ToString());
+        ObjectiveManager.NetworkAdvance(successSpawnLocation == null ? Vector3.zero : successSpawnLocation.position);
     }
 
     public override string GetTitle() {

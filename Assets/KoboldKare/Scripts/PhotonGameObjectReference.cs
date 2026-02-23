@@ -13,6 +13,8 @@ public class PhotonGameObjectReference {
     
     [SerializeField] private PrefabDatabase optionalDatabase;
 
+    public GameObject GetGameObject() => gameObject;
+
     public bool TryGetAssetGroupAndKey(out string group, out string key) {
         if (optionalDatabase != null) {
             if (optionalDatabase.TryGetGroupName(out group)) {

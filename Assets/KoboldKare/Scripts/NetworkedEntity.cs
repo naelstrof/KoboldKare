@@ -128,12 +128,9 @@ public class NetworkedEntity : GeneHolder {
             case "Plant":
                 try {
                     plantHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(groupName, assetName, GameManager.GetErrorPlant());
-                    if (plantHandle.asset.display) {
-                        entityInstance = Instantiate(plantHandle.asset.display, transform);
-                    } else {
-                        entityInstance = Instantiate(GameManager.GetErrorGeneric(), transform);
-                        Debug.LogError("Failed to initialize plant display, not found.");
-                    }
+                    entityHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("NetworkedPrefab", "Plant", GameManager.GetErrorGeneric());
+                    entityInstance = Instantiate(entityHandle.asset, transform);
+                    entityInstance.GetComponentInChildren<Plant>().SwitchTo(plantHandle.asset);
                 } catch (Exception e) {
                     if (entityInstance) {
                         Destroy(entityInstance);

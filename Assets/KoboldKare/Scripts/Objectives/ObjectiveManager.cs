@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FishNet;
+using FishNet.Broadcast;
+using FishNet.Managing;
+using FishNet.Transporting;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -18,9 +22,31 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
     private int currentObjectiveIndex;
     private int stars = 0;
     private List<string> advanceInstances;
+    private NetworkManager _networkManager;
 
     public static int GetStars() {
         return instance.stars;
+    }
+
+    private void InitializeOnce() {
+        _networkManager = InstanceFinder.NetworkManager;
+
+        if (_networkManager == null) {
+            _networkManager.LogWarning($"Couldn't find networkmanager??");
+            return;
+        }
+        
+        _networkManager.ClientManager.RegisterBroadcast<NetworkedObjectiveAdvance>(OnObjectiveAdvancedClient);
+    }
+
+    private void OnObjectiveAdvancedClient(NetworkedObjectiveAdvance data, Channel arg2) {
+        GameObject obj = Instantiate(starExplosion.GetGameObject(), data.position, Quaternion.identity);
+        obj.GetComponentInChildren<MonoBehaviour>().StartCoroutine(DestroyAfterTime(obj));
+        currentObjective?.Advance(data.position);
+    }
+
+    public struct NetworkedObjectiveAdvance : IBroadcast {
+        public Vector3 position;
     }
 
     public static void GiveStars(int count) {
@@ -42,31 +68,15 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
     private event ObjectiveChangedAction objectiveChanged;
     private event ObjectiveChangedAction objectiveUpdated;
 
-    // FIXME FISHNET
-    //[PunRPC]
-    private void AdvanceObjective(Vector3 position) {
-        throw new NotImplementedException();
-        /*if (!PhotonNetwork.IsMasterClient) return;
-        GameObject obj = PhotonNetwork.Instantiate(starExplosion.photonName, position, Quaternion.identity);
-        obj.GetPhotonView().StartCoroutine(DestroyAfterTime(obj));
-        currentObjective?.Advance(position);
-        PhotonProfiler.LogReceive(sizeof(float) * 3);*/
-    }
-
-    public static void NetworkAdvance(Vector3 position, string advanceInstance) {
-        // FIXME FISHNET
-        /*
-        if (!PhotonNetwork.IsMasterClient || instance.advanceInstances.Contains(advanceInstance)) {
-            return;
+    public static void NetworkAdvance(Vector3 position) {
+        if (instance._networkManager.ServerManager.Started) {
+            instance._networkManager.ServerManager.Broadcast(new NetworkedObjectiveAdvance { position = position });
         }
-        instance.advanceInstances.Add(advanceInstance);
-        instance.photonView.RPC(nameof(AdvanceObjective), RpcTarget.All, position);*/
     }
 
     IEnumerator DestroyAfterTime(GameObject obj) {
         yield return new WaitForSeconds(5f);
-        // FIXME FISHNET
-        // PhotonNetwork.Destroy(obj);
+        Destroy(obj);
     }
 
     public static void AddObjectiveSwappedListener(ObjectiveChangedAction action) {
@@ -98,6 +108,7 @@ public class ObjectiveManager : MonoBehaviour, ISavable {
         if (instance == null || instance == this) {
             instance = this;
             advanceInstances = new List<string>();
+            InitializeOnce();
         } else {
             Destroy(gameObject);
         }

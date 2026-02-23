@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using FishNet;
 using FishNet.Managing;
+using FishNet.Object;
 using NetStack.Serialization;
 using Photon.Pun;
 using SimpleJSON;
@@ -49,11 +50,7 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
     }
 
     private void OnPlant(GameObject obj, ScriptablePlant plant) {
-        // FIXME FISHNET
-        /*
-        if (plant == targetPlant) {
-            ObjectiveManager.NetworkAdvance(obj.transform.position, $"PlantKoboldObjective{obj.GetPhotonView().ViewID.ToString()}");
-        }*/
+        ObjectiveManager.NetworkAdvance(obj.transform.position);
     }
 
     public override string GetTitle() {

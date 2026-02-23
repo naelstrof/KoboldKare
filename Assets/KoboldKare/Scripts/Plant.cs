@@ -38,11 +38,15 @@ public class Plant : MonoBehaviour, ISavable {
     private NetworkedEntity networkedEntity;
 
     void Start() {
-        networkedEntity.OnFilled += OnFilled;
         networkedEntity = GetComponentInParent<NetworkedEntity>();
-        networkedEntity.hue.OnChange += OnColorChange;
-        networkedEntity.brightness.OnChange += OnColorChange;
-        networkedEntity.saturation.OnChange += OnColorChange;
+        if (networkedEntity) {
+            networkedEntity.OnFilled += OnFilled;
+            networkedEntity = GetComponentInParent<NetworkedEntity>();
+            networkedEntity.hue.OnChange += OnColorChange;
+            networkedEntity.brightness.OnChange += OnColorChange;
+            networkedEntity.saturation.OnChange += OnColorChange;
+            planted?.Invoke(networkedEntity.gameObject, plant);
+        }
     }
 
 
@@ -111,7 +115,7 @@ public class Plant : MonoBehaviour, ISavable {
         SwitchTo(plantHandle.asset);
     }
 
-    void SwitchTo(ScriptablePlant newPlant) {
+    public void SwitchTo(ScriptablePlant newPlant) {
         if (plant == newPlant) {
             return;
         }

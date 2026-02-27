@@ -65,6 +65,7 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         changed?.Invoke(this);
     }
+    private const float metabolizationVolumeEpsilon = 0.4f;
     public float volume {
         get {
             float v = 0f;
@@ -148,6 +149,11 @@ public class ReagentContents : IEnumerable<Reagent> {
             float halfLifeKeep = metabolizationHalfLife == 0f ? curVolume : curVolume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
             float flatRateLoss = deltaTime * metabolizationFlatRate; // Tiny constant loss since half life is terrible on small values.
             float newVolume = Mathf.Max(0f, halfLifeKeep - flatRateLoss);
+
+            // Snap to zero when extremely small, since at this point it's hard to see on the HUD if the fluid is truly gone or not.
+            if (newVolume < metabolizationVolumeEpsilon) {
+                newVolume = 0f;
+            }
 
             contents[pair.Key].volume = newVolume;
             metabolizeContents.AddMix(pair.Key, curVolume - newVolume);

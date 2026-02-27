@@ -15,6 +15,9 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     public PhotonGameObjectReference spawn;
     [SerializeField]
     private float price;
+    [SerializeField]
+    private float AutoRefreshTimer = 600f;
+    private float timeCheck;
 
     [SerializeField]
     private Sprite displaySprite;
@@ -40,6 +43,7 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     private MoneyFloater floater;
 
     public virtual void Start() {
+        timeCheck = Time.fixedTime;
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1f;
         source.rolloffMode = AudioRolloffMode.Custom;
@@ -49,6 +53,14 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
         source.outputAudioMixerGroup = GameManager.instance.soundEffectGroup;
         if (spawn != null && !string.IsNullOrEmpty(spawn.photonName)) {
             SwapTo(spawn.photonName);
+        }
+    }
+    private void Update()
+    {
+        if (Time.fixedTime - timeCheck >= AutoRefreshTimer)
+        {
+            timeCheck = Time.fixedTime;
+            OnRestock(null);
         }
     }
     public override Sprite GetSprite(Kobold k) {
@@ -206,7 +218,9 @@ public class GenericPurchasable : GenericUsable, IPunObservable, ISavable {
     }
 
     private IEnumerator Restock() {
+        timeCheck = float.PositiveInfinity;
         yield return new WaitForSeconds(30f);
+        timeCheck = Time.fixedTime;
         OnRestock(null);
     }
 }

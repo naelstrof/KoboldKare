@@ -56,7 +56,6 @@ public static class ReagentContentsSerializer {
             var volume = reader.ReadSingle();
             contents.OverrideReagent(id, volume);
         }
-        Debug.Log(contents.maxVolume);
         return contents;
     }
 }

@@ -6,6 +6,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System.IO;
 using SimpleJSON;
+using Unity.Mathematics;
 
 [RequireComponent(typeof(Rigidbody))]
 public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISavable {
@@ -251,7 +252,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         float radius = groundCheckRadius * transform.lossyScale.x;
         for(float x = -radius; x <= radius; x+=radius) {
             for (float y = -radius; y <= radius; y += radius) {
-                if (Physics.Raycast(collider.transform.TransformPoint(collider.center) + new Vector3(x,0,y), Vector3.down, out hit, 5f*transform.lossyScale.x, GameManager.instance.walkableGroundMask)) {
+                if (Physics.Raycast(collider.transform.TransformPoint(collider.center) + new Vector3(x,0,y), Physics.gravity, out hit, 5f*transform.lossyScale.x, GameManager.instance.walkableGroundMask)) {
                     floorNormal = hit.normal;
                     distanceToGround = hit.distance;
                     if (hit.normal.y >= 0.7f && hit.distance <= effectiveStepCheckDistance + 0.05f) {
@@ -346,6 +347,7 @@ public class KoboldCharacterController : MonoBehaviourPun, IPunObservable, ISava
         if (photonView.IsMine || !PhotonNetwork.InRoom) {
             body.velocity = velocity;
         }
+        body.transform.rotation = Quaternion.FromToRotation(body.transform.up, -Physics.gravity) * body.transform.rotation;
     }
 
     private void JumpCheck() {

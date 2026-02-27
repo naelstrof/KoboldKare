@@ -141,6 +141,7 @@ public class NetworkedKobold : NetworkedEntity {
     }
 
     private AssetGroup.AssetLocation.AssetHandle<GameObject> koboldAssetHandle;
+    
     private GameObject koboldInstance;
 
     private bool changingKobold = false;
@@ -150,6 +151,7 @@ public class NetworkedKobold : NetworkedEntity {
         NetworkedPlayer,
         AIPlayer,
     }
+
 
     protected override async Task AssetChangedAsync(AssetNamePair prev, AssetNamePair next, bool asServer) {
         if (next.groupName != "PlayableCharacter") {
@@ -273,8 +275,8 @@ public class NetworkedKobold : NetworkedEntity {
         characterCollider.radius = characterDescriptor.GetColliderRadius();
 
         var physicsMaterialTask = Addressables.LoadAssetAsync<PhysicMaterial>( "Assets/KoboldKare/Scripts/Physics/SpaceLube.physicMaterial");
-        handles.Add(physicsMaterialTask);
         characterCollider.material = await physicsMaterialTask.Task;
+        handles.Add(physicsMaterialTask);
 
         var characterController = koboldGameObject.AddComponent<KoboldCharacterController>();
         characterController.collider = characterCollider;
@@ -284,8 +286,8 @@ public class NetworkedKobold : NetworkedEntity {
         var footlandsTask =
             Addressables.LoadAssetAsync<AudioPack>(
                 "Assets/KoboldKare/ScriptableObjects/SoundPacks/FootLands.asset");
-        handles.Add(footlandsTask);
         characterController.footland = await footlandsTask.Task;
+        handles.Add(footlandsTask);
 
         characterController.body = body;
         characterController.worldModel = characterDescriptor.GetDisplayAnimator().transform;
@@ -300,8 +302,8 @@ public class NetworkedKobold : NetworkedEntity {
 
         var circlePoofVFXTask =
             Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/CirclePoof.vfx");
-        handles.Add(circlePoofVFXTask);
         circlePoofEffect.visualEffectAsset = await circlePoofVFXTask.Task;
+        handles.Add(circlePoofVFXTask);
 
         GameObject walkDustEffectGameObject = new GameObject("WalkDust", typeof(VisualEffect));
         walkDustEffectGameObject.transform.SetParent(characterDescriptor.GetDisplayAnimator().transform);
@@ -312,16 +314,16 @@ public class NetworkedKobold : NetworkedEntity {
         VisualEffect walkDustEffect = circlePoofEffectGameObject.GetComponent<VisualEffect>();
 
         var walkDustVFXTask = Addressables.LoadAssetAsync<VisualEffectAsset>("Assets/KoboldKare/VFX/WalkDust.vfx");
-        handles.Add(walkDustVFXTask);
         walkDustEffect.visualEffectAsset = await walkDustVFXTask.Task;
+        handles.Add(walkDustVFXTask);
 
         var characterAnimator = koboldGameObject.AddComponent<CharacterControllerAnimator>();
         characterAnimator.SetPlayerModel(characterDescriptor.GetDisplayAnimator());
         characterAnimator.SetVisualEffectSources(circlePoofEffect, walkDustEffect);
 
         var defaultFootstepTask = Addressables.LoadAssetAsync<AudioPack>( "Assets/KoboldKare/ScriptableObjects/SoundPacks/DefaultFootsteps.asset");
-        handles.Add(defaultFootstepTask);
         var footlands = await defaultFootstepTask.Task;
+        handles.Add(defaultFootstepTask);
         characterAnimator.SetDefaultFootstepPack(footlands);
         characterAnimator.SetBody(body);
         characterController.footland = footlands;
@@ -332,30 +334,30 @@ public class NetworkedKobold : NetworkedEntity {
         var handDisplayPrefabTask = Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/koboldhand.prefab");
         var unfreezeAudioPackTask = Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Unfreeze.asset");
 
+        precisionGrabber.InitializeWithAssets(await handDisplayPrefabTask.Task, await freezeVFXTask.Task, await unfreezeAudioPackTask.Task);
+        
         handles.Add(freezeVFXTask);
         handles.Add(handDisplayPrefabTask);
         handles.Add(unfreezeAudioPackTask);
 
-        precisionGrabber.InitializeWithAssets(await handDisplayPrefabTask.Task, await freezeVFXTask.Task, await unfreezeAudioPackTask.Task);
-
         var playerPossessionPrefabTask =
             Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/PlayerController.prefab");
-        handles.Add(playerPossessionPrefabTask);
         var playerPossessionInstance = Instantiate(await playerPossessionPrefabTask.Task, koboldGameObject.transform);
+        handles.Add(playerPossessionPrefabTask);
         var possession = playerPossessionInstance.GetComponent<PlayerPossession>();
 
         var chatter = gameObject.AddComponent<Chatter>();
 
         var floatingTextPrefabTask =
             Addressables.LoadAssetAsync<GameObject>("Assets/KoboldKare/Prefabs/FloatingText.prefab");
-        handles.Add(floatingTextPrefabTask);
         var floatingTextPrefabInstance = Instantiate(await floatingTextPrefabTask.Task, koboldGameObject.transform);
+        handles.Add(floatingTextPrefabTask);
         chatter.SetTextOutput(floatingTextPrefabInstance.GetComponent<TMPro.TMP_Text>());
 
         var chatYowlPackTask =
             Addressables.LoadAssetAsync<AudioPack>("Assets/KoboldKare/ScriptableObjects/SoundPacks/Yowl.asset");
-        handles.Add(chatYowlPackTask);
         chatter.SetYowlPack(await chatYowlPackTask.Task);
+        handles.Add(chatYowlPackTask);
 
         possession.gameObject.SetActive(controlType.Value == ControlType.NetworkedPlayer && IsOwner);
         Physics.SyncTransforms();

@@ -64,7 +64,7 @@ public class NetworkedEntity : GeneHolder {
     }
 
     protected override void Start() {
-        base.Awake();
+        base.Start();
         networkManager = InstanceFinder.NetworkManager;
     }
 

@@ -110,7 +110,7 @@ public class Projectile : MonoBehaviour {
         projectile.SetActive(false);
         splashed = true;
         
-        if (networkedEntity.IsOwner) {
+        if (networkedEntity.NetworkManager.ServerManager.Started) {
             hitContainers.Clear();
             int hits = Physics.OverlapSphereNonAlloc(transform.position, 1f, colliders,
                 GameManager.instance.waterSprayHitMask);
@@ -122,7 +122,8 @@ public class Projectile : MonoBehaviour {
             }
             float perVolume = networkedEntity.volume / hitContainers.Count;
             foreach (NetworkedEntity container in hitContainers) {
-                container.AddMix(networkedEntity.Spill(perVolume), GeneHolder.InjectType.Spray);
+                var spill = networkedEntity.Spill(perVolume);
+                container.AddMix(spill, GeneHolder.InjectType.Spray);
             }
             StartCoroutine(DestroyAfterTime());
         }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.CodeGenerating;
+using FishNet.Serializing;
 using NetStack.Quantization;
 using NetStack.Serialization;
 using SimpleJSON;
@@ -36,19 +38,40 @@ public static class ReagentContentsBitBufferExtension {
     }
 }
 
+public static class ReagentContentsSerializer {
+    public static void WriteReagentContents(this Writer writer, ReagentContents value) {
+        writer.Write(value.maxVolume);
+        writer.Write((short)value.Count);
+        foreach (var pair in value.contents) {
+            writer.Write(pair.Value.id);
+            writer.Write(pair.Value.volume);
+        }
+    }
+
+    public static ReagentContents ReadReagentContents(this Reader reader) {
+        ReagentContents contents = new ReagentContents(reader.ReadSingle());
+        var count = reader.ReadInt16();
+        for (int i = 0; i < count; i++) {
+            var id = reader.ReadUInt8Unpacked();
+            var volume = reader.ReadSingle();
+            contents.OverrideReagent(id, volume);
+        }
+        Debug.Log(contents.maxVolume);
+        return contents;
+    }
+}
+
 [System.Serializable]
+[UseGlobalCustomSerializer]
 public class ReagentContents : IEnumerable<Reagent> {
     private const float metabolizationVolumeEpsilon = 0.1f;
     public int Count => contents.Count;
     public Dictionary<byte,Reagent> contents = new Dictionary<byte,Reagent>();
-    public delegate void ReagentContentsChangedAction(ReagentContents contents);
 
     public ReagentContents() {
         maxVolume = float.MaxValue;
     }
 
-    [NonSerialized]
-    public ReagentContentsChangedAction changed;
     public ReagentContents(ReagentContents other) { Copy(other); }
     public ReagentContents(float maxVolume = float.MaxValue) {
         this.maxVolume = maxVolume;
@@ -72,7 +95,6 @@ public class ReagentContents : IEnumerable<Reagent> {
         if (contents != null && maxVolume < volume) {
             Spill(volume-maxVolume);
         }
-        changed?.Invoke(this);
     }
     public float volume {
         get {
@@ -89,7 +111,6 @@ public class ReagentContents : IEnumerable<Reagent> {
             return;
         }
         contents.Add(id, new Reagent(){ id=id, volume=volume });
-        changed?.Invoke(this);
     }
     public void AddMix(byte id, float addVolume, GeneHolder worldContainer = null) {
         if (contents.ContainsKey(id)) {
@@ -106,7 +127,6 @@ public class ReagentContents : IEnumerable<Reagent> {
         if (volume > maxVolume) {
             Spill(volume-maxVolume);
         }
-        changed?.Invoke(this);
     }
     public void AddMix(Reagent reagent, GeneHolder worldContainer = null) {
         AddMix(reagent.id, reagent.volume, worldContainer);
@@ -128,12 +148,10 @@ public class ReagentContents : IEnumerable<Reagent> {
             spillContents.AddMix(pair.Key, pair.Value.volume*spillRatio);
             contents[pair.Key].volume = pair.Value.volume*(1f-spillRatio);
         }
-        changed?.Invoke(this);
         return spillContents;
     }
     public void Clear() {
         contents.Clear();
-        changed?.Invoke(this);
     }
 
     public ReagentContents Metabolize(float deltaTime) {
@@ -159,7 +177,6 @@ public class ReagentContents : IEnumerable<Reagent> {
             contents[pair.Key].volume = Mathf.Max(metaHalfLife, 0f);
             metabolizeContents.AddMix(pair.Key, loss);
         }
-        changed?.Invoke(this);
         return metabolizeContents;
     }
 

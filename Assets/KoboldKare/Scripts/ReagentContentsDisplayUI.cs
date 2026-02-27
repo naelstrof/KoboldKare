@@ -42,7 +42,8 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
                 break;
             case TargetReagentContents.Metabolized:
                 //targetKobold.bellyContainer.OnChange.AddListener(OnReagentContentsChanged);
-                kobold.metabolizedContents.changed += OnReagentContentsChanged;
+                //FIXME FISHNET
+                //kobold.metabolizedContents.changed += OnReagentContentsChanged;
                 OnReagentContentsChanged(kobold.metabolizedContents);
                 break;
         }

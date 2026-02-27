@@ -1,18 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
-using Photon.Pun;
-using KoboldKare;
-using System.IO;
 using System.Threading.Tasks;
-using NetStack.Serialization;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
 public class Plant : MonoBehaviour, ISavable {
     public ScriptablePlant plant;
-    [SerializeField]
-    private GenericReagentContainer container;
 
     [SerializeField]
     public Color darkenedColor;
@@ -40,6 +34,8 @@ public class Plant : MonoBehaviour, ISavable {
     void Start() {
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
+            // FIXME FISHNET: hacky set maxvolume, can't tell who owns it.
+            networkedEntity.reagentContents.Value.SetMaxVolume(1f);
             networkedEntity.OnFilled += OnFilled;
             networkedEntity = GetComponentInParent<NetworkedEntity>();
             networkedEntity.hue.OnChange += OnColorChange;
@@ -88,7 +84,7 @@ public class Plant : MonoBehaviour, ISavable {
         growing = false;
     }
 
-    void OnFilled(ReagentContents contents, GeneHolder.InjectType type) {
+    void OnFilled(ReagentContents contents) {
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             return;
         }

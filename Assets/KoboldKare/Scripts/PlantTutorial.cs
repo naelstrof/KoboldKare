@@ -26,7 +26,7 @@ public class PlantTutorial : MonoBehaviour {
             networkedEntity.OnFilled -= OnFilled;
         }
     }
-    void OnFilled(ReagentContents contents, GeneHolder.InjectType type) {
+    void OnFilled(ReagentContents contents) {
         if (plant.plant.possibleNextGenerations.Length == 0) {
             waterCanvas.gameObject.SetActive(false);
             timeCanvas.gameObject.SetActive(false);

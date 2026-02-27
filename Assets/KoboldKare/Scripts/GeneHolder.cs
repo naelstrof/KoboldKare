@@ -364,7 +364,7 @@ public class GeneHolder : NetworkBehaviour {
         {  true,   true,   true }, // Metabolize
         {  true,   true,   true }, // Vacuum
     };
-    public delegate void ReagentContainerChangedEvent(ReagentContents c, InjectType t);
+    public delegate void ReagentContainerChangedEvent(ReagentContents c);
     public static bool IsMixable(ContainerType container, InjectType injectionType) {
         return ReagentMixMatrix[(int)injectionType,(int)container];
     }
@@ -374,7 +374,6 @@ public class GeneHolder : NetworkBehaviour {
         get => GetContents().GetMaxVolume();
         set {
             GetContents().SetMaxVolume(value);
-            OnReagentContentsChanged(InjectType.Vacuum);
         }
     }
 
@@ -408,22 +407,36 @@ public class GeneHolder : NetworkBehaviour {
     }
     
     protected virtual void Start() {
-        filled = isFull;
-        emptied = isEmpty;
+        reagentContents.OnChange += OnReagentsChanged;
     }
-    
+
+    private void OnReagentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
+        bool newFilled = Mathf.Approximately(next.volume, next.maxVolume);
+        if (!filled && newFilled) {
+            OnFilled?.Invoke(next);
+        }
+        filled = newFilled;
+
+        bool newEmptied = next.volume <= 0f;
+        if (!emptied && newEmptied) {
+            OnEmpty?.Invoke(next);
+        }
+        emptied = newEmptied;
+    }
+
     // FIXME FISHNET
     //[PunRPC]
     public ReagentContents Spill(float spillVolume) {
         ReagentContents spillContents = GetContents().Spill(spillVolume);
-        OnReagentContentsChanged(InjectType.Vacuum);
         SetReagentContents(GetContents());
+        reagentContents.DirtyAll();
         return spillContents;
     }
 
     [ObserversRpc]
     public void SetReagentContents(ReagentContents contents) {
         reagentContents.Value = contents;
+        reagentContents.DirtyAll();
     }
     
     private void TransferMix(GeneHolder injector, float amount, InjectType injectType) {
@@ -433,13 +446,14 @@ public class GeneHolder : NetworkBehaviour {
         ReagentContents spill = injector.Spill(amount);
         AddMix(spill, injectType);
         CopyGenesFrom(injector);
+        reagentContents.DirtyAll();
     }
     private bool AddMix(ScriptableReagent incomingReagent, float volume, InjectType injectType) {
         if (!IsMixable(type, injectType)) {
             return false;
         }
         GetContents().AddMix((byte)ReagentDatabase.GetID(incomingReagent), volume, this);
-        OnReagentContentsChanged(injectType);
+        reagentContents.DirtyAll();
         return true;
     }
     
@@ -449,32 +463,20 @@ public class GeneHolder : NetworkBehaviour {
             return;
         }
         GetContents().AddMix(incomingReagents, this);
-        OnReagentContentsChanged(injectType);
+        reagentContents.DirtyAll();
     }
     public void AddMix(Reagent reagent, InjectType injectType, GeneHolder worldContainer = null) {
         if (!IsMixable(type, injectType)) {
             return;
         }
         GetContents().AddMix(reagent.id, reagent.volume, worldContainer);
-        OnReagentContentsChanged(injectType);
+        reagentContents.DirtyAll();
     }
 
     public ReagentContents Peek() => new(GetContents());
     public ReagentContents Metabolize(float deltaTime) => GetContents().Metabolize(deltaTime);
     public void OverrideReagent(Reagent r) => GetContents().OverrideReagent(r.id, r.volume);
     public void OverrideReagent(ScriptableReagent r, float volume) => GetContents().OverrideReagent((byte)ReagentDatabase.GetID(r), volume);
-    public void OnReagentContentsChanged(InjectType injectType) {
-        if (!filled && isFull) {
-            OnFilled?.Invoke(GetContents(), injectType);
-            containerFilled?.Invoke(this);
-        }
-        filled = isFull;
-        if (!emptied && isEmpty) {
-            hasGenes = false;
-            OnEmpty?.Invoke(GetContents(), injectType);
-        }
-        emptied = isEmpty;
-    }
 
     public void RefillToFullWithDefaultContents(){
         if(startingReagents.Length != 0){

@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FishNet;
 using FishNet.Broadcast;
 using UnityEngine;
 using FishNet.Connection;
 using FishNet.Managing;
+using FishNet.Managing.Scened;
 using FishNet.Object;
 using FishNet.Transporting;
 
@@ -187,7 +189,6 @@ public class KoboldEntitySpawner : MonoBehaviour {
             _networkManager.LogWarning($"Entity prefab is empty and cannot be spawned for connection {conn.ClientId}.");
             return;
         }
-        
         var isPlayer = data.groupName == "PlayableCharacter";
         SceneDescriptor.GetSpawnLocationAndRotation(out var pos, out Quaternion quat);
 
@@ -207,6 +208,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
 
         OnSpawned?.Invoke(nob);
     }
+    
 
     public static bool TryGetPlayerKobold(NetworkConnection conn, out NetworkedKobold o) {
         if (playerKobolds.TryGetValue(conn.ClientId, out var nob)) {

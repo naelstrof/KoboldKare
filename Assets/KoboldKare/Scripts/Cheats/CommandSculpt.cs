@@ -30,6 +30,7 @@ public class CommandSculpt : Command
         "hue",
         "impregnate",
         "saturation",
+        "grabcount",
     };
 
     public override string GetArg0() => "/sculpt";
@@ -38,7 +39,7 @@ public class CommandSculpt : Command
         base.Execute(output, k, args);
 
         static void Usage() {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate,grabcount} [set] {modifier} (set is optional)");
         }
 
         if (!CheatsProcessor.GetCheatsEnabled()) {
@@ -227,6 +228,12 @@ public class CommandSculpt : Command
 
                     target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
+
+                break;
+            
+            case "grabcount":
+
+                target.SetGenes(genes.With(grabCount: SafeModify(genes.grabCount, Mathf.Max(modifier, 1f))));
 
                 break;
 

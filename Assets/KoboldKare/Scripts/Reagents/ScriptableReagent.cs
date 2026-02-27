@@ -18,6 +18,8 @@ public class ScriptableReagent : ScriptableObject {
     [SerializeField]
     private float metabolizationHalfLife;
     [SerializeField]
+    private float metabolizationFlatRate = 0.05f;
+    [SerializeField]
     private bool cleaningAgent;
     [SerializeField]
     private float calories = 0f;
@@ -31,6 +33,7 @@ public class ScriptableReagent : ScriptableObject {
     public Color GetColorEmission() => emission;
     public float GetValue() => value;
     public float GetMetabolizationHalfLife() => metabolizationHalfLife;
+    public float GetMetabolizationFlatRate() => metabolizationFlatRate;
     public bool IsCleaningAgent() => cleaningAgent;
     public float GetCalories() => calories;
     public GameObject GetDisplayPrefab() => display;

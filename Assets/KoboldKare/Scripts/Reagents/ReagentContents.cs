@@ -65,7 +65,6 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         changed?.Invoke(this);
     }
-    private const float metabolizationVolumeEpsilon = 0.1f;
     public float volume {
         get {
             float v = 0f;
@@ -139,20 +138,19 @@ public class ReagentContents : IEnumerable<Reagent> {
         }
         foreach(var pair in contents) {
             float metabolizationHalfLife = 0f;
+            float metabolizationFlatRate = 0f;
             if (ReagentDatabase.TryGetAsset(pair.Key, out var reagent)) {
                 metabolizationHalfLife = reagent.GetMetabolizationHalfLife();
+                metabolizationFlatRate = reagent.GetMetabolizationFlatRate();
             }
 
-            float metaHalfLife = metabolizationHalfLife == 0 ? pair.Value.volume : pair.Value.volume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
-            // halflife on a tiny value suuucks, just kill it if the value gets small enough so we don't spam incredibly tiny updates.
-            if (pair.Value.volume <= metabolizationVolumeEpsilon) {
-                metabolizeContents.AddMix(pair.Value);
-                contents[pair.Key].volume = 0f;
-                continue;
-            }
-            float loss = Mathf.Max(pair.Value.volume - metaHalfLife, 0f);
-            contents[pair.Key].volume = Mathf.Max(metaHalfLife, 0f);
-            metabolizeContents.AddMix(pair.Key, loss);
+            float curVolume = pair.Value.volume;
+            float halfLifeKeep = metabolizationHalfLife == 0f ? curVolume : curVolume * Mathf.Pow(0.5f, deltaTime / metabolizationHalfLife);
+            float flatRateLoss = deltaTime * metabolizationFlatRate; // Tiny constant loss since half life is terrible on small values.
+            float newVolume = Mathf.Max(0f, halfLifeKeep - flatRateLoss);
+
+            contents[pair.Key].volume = newVolume;
+            metabolizeContents.AddMix(pair.Key, curVolume - newVolume);
         }
         changed?.Invoke(this);
         return metabolizeContents;

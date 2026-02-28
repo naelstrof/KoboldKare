@@ -29,7 +29,9 @@ public class FloatTextDisplay : MonoBehaviour {
         if (routine != null) {
             StopCoroutine(routine);
         }
-        routine = StartCoroutine(MoneyUpdateRoutine(oldMoney, newMoney));
+        if (text.IsActive()) {
+            routine = StartCoroutine(MoneyUpdateRoutine(oldMoney, newMoney));
+        }
     }
     IEnumerator MoneyUpdateRoutine(float from, float to) {
         float startTime = Time.time;

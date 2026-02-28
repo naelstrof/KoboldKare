@@ -17,6 +17,7 @@ public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGo
 
     public void SetMoney(float amount) {
         money = amount;
+        moneyChanged?.Invoke(money);
     }
 
     [PunRPC]

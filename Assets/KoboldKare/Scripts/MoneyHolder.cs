@@ -6,13 +6,16 @@ using SimpleJSON;
 using UnityEngine;
 
 public class MoneyHolder : MonoBehaviourPun, ISavable, IPunObservable, IValuedGood {
+#if UNITY_EDITOR
+    public const float STARTING_MONEY = 150f;
+#else
+    public const float STARTING_MONEY = 150f;
+#endif
+
     public delegate void MoneyChangedAction(float newMoney);
     public MoneyChangedAction moneyChanged;
-#if UNITY_EDITOR
-    private float money = 150f;
-#else
-    private float money = 5f;
-#endif
+    private float money = STARTING_MONEY;
+
     public float GetMoney() => money;
 
     public void SetMoney(float amount) {

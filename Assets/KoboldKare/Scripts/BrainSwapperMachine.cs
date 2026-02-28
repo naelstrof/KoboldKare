@@ -89,6 +89,13 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         stations[1].info.user.photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
     }
 
+    private (float, float) SwapMoneyToPlayer(float playerMoney, float nonPlayerMoney) {
+        // Reserve the starting money on the non-player kobold to avoid money duplication.
+        float nonPlayerKeep = Mathf.Min(nonPlayerMoney, MoneyHolder.STARTING_MONEY);
+    
+        return (playerMoney + nonPlayerMoney - nonPlayerKeep, nonPlayerKeep);    
+    }
+
     [PunRPC]
     public void AssignKobolds(int aViewID, int bViewID, int playerIDA, int playerIDB, float moneyA, float moneyB) {
         PhotonProfiler.LogReceive(sizeof(int)*4+sizeof(float)*2);
@@ -120,11 +127,9 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
         // This lets a player leave the lobby, rejoin, and get their money back when swapping back into their old self.
         if (aView != null && bView != null && ((aPlayer == null) != (bPlayer == null))) {
             if (aPlayer != null) {
-                moneyA += moneyB;
-                moneyB = 0;
+                (moneyA, moneyB) = SwapMoneyToPlayer(moneyA, moneyB);
             } else {
-                moneyB += moneyA;
-                moneyA = 0;
+                (moneyB, moneyA) = SwapMoneyToPlayer(moneyB, moneyA);
             }
         }
 

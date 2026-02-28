@@ -78,19 +78,7 @@ public class CommandSculpt : Command
         if (targetType == "self") {
             target = k;
         } else if (targetType == "target") {
-            Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
-            Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
-
-            foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
-                Kobold b = hit.collider.GetComponentInParent<Kobold>();
-
-                if (b == null) continue;
-                if (b == k) continue;
-
-                target = b;
-
-                break;
-            }
+            target = GetAimedAtKobold(k);
 
             if(target == null) {
                 throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to target with.");

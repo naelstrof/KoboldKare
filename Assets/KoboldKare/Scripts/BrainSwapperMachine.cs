@@ -116,6 +116,18 @@ public class BrainSwapperMachine : UsableMachine, IAnimationStationSet {
             }
         }
 
+        // If one kobold is a player and the other isn't, give ALL the money to the player.
+        // This lets a player leave the lobby, rejoin, and get their money back when swapping back into their old self.
+        if (aView != null && bView != null && ((aPlayer == null) != (bPlayer == null))) {
+            if (aPlayer != null) {
+                moneyA += moneyB;
+                moneyB = 0;
+            } else {
+                moneyB += moneyA;
+                moneyA = 0;
+            }
+        }
+
         if (aView != null) {
             if (Equals(aPlayer, PhotonNetwork.LocalPlayer)) {
                 aView.GetComponent<CharacterDescriptor>().SetPlayerControlled(CharacterDescriptor.ControlType.LocalPlayer);

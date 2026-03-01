@@ -24451,6 +24451,7 @@ MonoBehaviour:
   - rid: 991488056044552193
   - rid: 991488175422570496
   - rid: 3900068453231886386
+  - rid: 3900068453231886396
   references:
     version: 2
     RefIds:
@@ -24518,6 +24519,18 @@ MonoBehaviour:
           gameObject: {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae,
             type: 3}
           optionalDatabase: {fileID: 0}
+    - rid: 3900068453231886396
+      type: {class: CommandFlush, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
     - rid: 8920608363450728448
       type: {class: CommandHelp, ns: , asm: Assembly-CSharp}
       data:

@@ -24452,6 +24452,7 @@ MonoBehaviour:
   - rid: 991488175422570496
   - rid: 3900068453231886386
   - rid: 3900068453231886396
+  - rid: 7739000595272171520
   references:
     version: 2
     RefIds:
@@ -24521,6 +24522,18 @@ MonoBehaviour:
           optionalDatabase: {fileID: 0}
     - rid: 3900068453231886396
       type: {class: CommandFlush, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+    - rid: 7739000595272171520
+      type: {class: CommandView, ns: , asm: Assembly-CSharp}
       data:
         description:
           m_TableReference:

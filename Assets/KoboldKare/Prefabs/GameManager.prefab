@@ -24396,8 +24396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbcb31de5617996449b00a4330cc41ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controls: {fileID: -944628639613478452, guid: b80237a58ac8c22458251d7c9dcacf88,
-    type: 3}
 --- !u!114 &8298682615481124282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24452,6 +24450,7 @@ MonoBehaviour:
   - rid: 1602997817464061955
   - rid: 991488056044552193
   - rid: 991488175422570496
+  - rid: 3900068453231886386
   references:
     version: 2
     RefIds:
@@ -24503,6 +24502,22 @@ MonoBehaviour:
           m_FallbackState: 0
           m_WaitForCompletion: 0
           m_LocalVariables: []
+    - rid: 3900068453231886386
+      type: {class: CommandClone, ns: , asm: Assembly-CSharp}
+      data:
+        description:
+          m_TableReference:
+            m_TableCollectionName: 
+          m_TableEntryReference:
+            m_KeyId: 0
+            m_Key: 
+          m_FallbackState: 0
+          m_WaitForCompletion: 0
+          m_LocalVariables: []
+        koboldPrefab:
+          gameObject: {fileID: 8587189159933912498, guid: c03e2c2295efd074c8f62bae057e84ae,
+            type: 3}
+          optionalDatabase: {fileID: 0}
     - rid: 8920608363450728448
       type: {class: CommandHelp, ns: , asm: Assembly-CSharp}
       data:

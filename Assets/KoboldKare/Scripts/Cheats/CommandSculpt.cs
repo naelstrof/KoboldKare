@@ -27,11 +27,11 @@ public class CommandSculpt : Command
         "energy",
         "fat",
         "foodcapacity",
+        "grabcount",
         "height",
         "hue",
         "impregnate",
         "saturation",
-        "grabcount",
     };
 
     public override string GetArg0() => "/sculpt";

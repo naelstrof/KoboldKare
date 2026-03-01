@@ -35,6 +35,7 @@ public class User : MonoBehaviourPun {
         if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
 
+        // Move the user towards the camera, but limit it by the kobold's effective size so they can't abuse freecam.
         var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.TransformVector(new(0f, 0f, capsuleCollider.height * 0.5f));
         float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
         float desiredReach = kobold.sizeInflater.GetSize() * 3.8f + 0.2f;

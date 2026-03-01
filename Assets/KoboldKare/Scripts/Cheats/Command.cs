@@ -70,8 +70,9 @@ public class Command {
     protected Kobold GetAimedAtKobold(Kobold caller) {
         Vector3 aimPosition = caller.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
         Vector3 aimDir = caller.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
+        float range = caller.sizeInflater.GetSize() * 5f + 1f; // Scale range by the effective height of the caller.
 
-        foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
+        foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, range)) {
             Kobold k = hit.collider.GetComponentInParent<Kobold>();
             if (k != null && k != caller) return k;
         }

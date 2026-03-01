@@ -21,6 +21,7 @@ public class CommandSculpt : Command
         "bellycapacity",
         "boobs",
         "brightness",
+        "clothinghue",
         "dick",
         "dickthickness",
         "energy",

@@ -20,7 +20,7 @@ public class CommandSwap : Command {
         }
 
         Kobold b = GetAimedAtKobold(k);
-        if (k == null) throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to swap with.");
+        if (b == null) throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to swap with.");
 
         Player aPlayer = null;
         Player bPlayer = null;

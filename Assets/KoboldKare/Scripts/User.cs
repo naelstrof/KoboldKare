@@ -36,10 +36,11 @@ public class User : MonoBehaviourPun {
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
 
         // Move the user towards the camera, but limit it by the kobold's effective size so they can't abuse freecam.
-        var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.TransformVector(new(0f, 0f, capsuleCollider.height * 0.5f));
-        float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
+        Vector3 desiredPosition = OrbitCamera.GetCamera().transform.position + transform.TransformVector(new(0f, 0f, capsuleCollider.height * 0.5f));
+        Vector3 anchorPosition = ownedKobold.transform.position;
+        float distance = Vector3.Distance(anchorPosition, desiredPosition);
         float desiredReach = kobold.sizeInflater.GetSize() * 3.8f + 0.2f;
-        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - desiredReach, 0f));
+        transform.position = Vector3.MoveTowards(desiredPosition, anchorPosition, Mathf.Max(distance - desiredReach, 0f));
     }
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {

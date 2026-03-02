@@ -343,7 +343,7 @@ public class Grabber : MonoBehaviourPun {
         }
     }
 
-    private Vector3 GetViewPos() {
+    private Vector3 GetViewPos(float offsetScale = 1f) {
         if (PlayerPossession.TryGetPlayerInstance(out var poss) && poss.kobold == player) {
             var desiredViewDistance = 1f;
             if (poss.TryGetComponent<CameraSwitcher>(out var cameraSwitcher)) {
@@ -357,7 +357,7 @@ public class Grabber : MonoBehaviourPun {
             }
 
             const float fudgeDistance = 3f;
-            var cameraPos = OrbitCamera.GetCamera().transform.position + OrbitCamera.GetPlayerIntendedRotation()*defaultOffset*desiredViewDistance;
+            var cameraPos = OrbitCamera.GetCamera().transform.position + OrbitCamera.GetPlayerIntendedRotation()*defaultOffset*desiredViewDistance*offsetScale;
             float distance = Vector3.Distance(view.position, cameraPos);
             Vector3 viewPos = Vector3.MoveTowards(cameraPos, view.position, Mathf.Max(distance - fudgeDistance, 0f));
             return viewPos;
@@ -375,9 +375,24 @@ public class Grabber : MonoBehaviourPun {
             return;
         }
 
-        var position = GetViewPos()+OrbitCamera.GetPlayerIntendedRotation()*defaultOffset;
-        int hits = Physics.OverlapSphereNonAlloc(position, 1f, colliders);
-        sorter.SetRay(new Ray(position, OrbitCamera.GetPlayerIntendedRotation()*Vector3.forward));
+        Quaternion aimQuat = OrbitCamera.GetPlayerIntendedRotation();
+        Vector3 viewPos = GetViewPos();
+        Vector3 aimDir = aimQuat * Vector3.forward;
+        Vector3 searchCenter;
+
+        float plyScale = player.sizeInflater.GetSize();
+        float range = plyScale * 1.35f;
+        float sphereRadius = Mathf.Clamp(plyScale, 1f, 3f);
+
+        // Decide how far out to do the sphere search with a raycast that scales with effective kobold height.
+        if (Physics.Raycast(viewPos, aimDir, out RaycastHit rayHit, range, GameManager.instance.multiGrabMask, QueryTriggerInteraction.Ignore)) {
+            searchCenter = rayHit.point;
+        } else {
+            searchCenter = viewPos + aimDir * range;
+        }
+
+        int hits = Physics.OverlapSphereNonAlloc(searchCenter, sphereRadius, colliders);
+        sorter.SetRay(new Ray(searchCenter, aimDir));
         System.Array.Sort(colliders, 0, hits, sorter);
         for (int i = 0; i < hits; i++) {
             IGrabbable grabbable = colliders[i].GetComponentInParent<IGrabbable>();
@@ -398,7 +413,7 @@ public class Grabber : MonoBehaviourPun {
 
             if (grabbable.CanGrab(player)) {
                 grabbable.photonView.RPC(nameof(IGrabbable.OnGrabRPC), RpcTarget.All, photonView.ViewID);
-                GrabInfo info = new GrabInfo(player, grabbable, springStrength, dampingStrength, GetViewPos(),OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
+                GrabInfo info = new GrabInfo(player, grabbable, springStrength, dampingStrength, GetViewPos(1f),OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
                 // Destroyed on grab, creatures gib on grab.
                 if (!info.Valid()) {
                     return;
@@ -415,8 +430,17 @@ public class Grabber : MonoBehaviourPun {
 
     public void LateUpdate() {
         Validate();
-        foreach (var grab in grabbedObjects) {
-            grab.Set(GetViewPos(), OrbitCamera.GetPlayerIntendedRotation(), defaultOffset);
+
+        if (grabbedObjects.Count != 0) {
+            // Scale hold distance so it doesn't leave the interaction range of small kobolds, and isn't too close to big kobolds.
+            float holdDist = Math.Min(player.sizeInflater.GetSize(), 1.25f) * 1.6f + 0.4f;
+            Vector3 origin = GetViewPos(0f); // clamped camera position without any forwards offset
+            Vector3 offset = defaultOffset * holdDist;
+
+            // Update positions.
+            foreach (var grab in grabbedObjects) {
+                grab.Set(origin, OrbitCamera.GetPlayerIntendedRotation(), offset);
+            }
         }
     }
     public void TryStopActivate() {

@@ -24010,6 +24010,9 @@ MonoBehaviour:
   precisionGrabMask:
     serializedVersion: 2
     m_Bits: 33564672
+  multiGrabMask:
+    serializedVersion: 2
+    m_Bits: 33565696
   walkableGroundMask:
     serializedVersion: 2
     m_Bits: 3072

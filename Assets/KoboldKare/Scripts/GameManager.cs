@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public AudioMixerGroup soundEffectGroup;
     public AudioMixerGroup soundEffectLoudGroup;
     public LayerMask precisionGrabMask;
+    public LayerMask multiGrabMask;
     public LayerMask walkableGroundMask;
     public LayerMask waterSprayHitMask;
     public LayerMask plantHitMask;

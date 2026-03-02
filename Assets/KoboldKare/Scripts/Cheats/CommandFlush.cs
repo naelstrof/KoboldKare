@@ -28,7 +28,7 @@ public class CommandFlush : Command {
         Kobold target = targetType == "self" ? caller : GetAimedAtKobold(caller);
         if (target == null) throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to target.");
 
-        if (caller != (Kobold)PhotonNetwork.MasterClient.TagObject) {
+        if (caller != target && caller != (Kobold)PhotonNetwork.MasterClient.TagObject) {
             foreach (Player player in PhotonNetwork.PlayerList) {
                 if ((Kobold)player.TagObject == target) {
                     throw new CheatsProcessor.CommandException("Not the owner, not allowed to modify players.");

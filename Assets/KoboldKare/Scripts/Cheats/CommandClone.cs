@@ -7,9 +7,6 @@ using UnityEngine;
 
 [System.Serializable]
 public class CommandClone : Command {
-    [SerializeField]
-    private PhotonGameObjectReference koboldPrefab;
-
     private static readonly string[] arg1 = new string[]
     {
         "self",
@@ -33,11 +30,11 @@ public class CommandClone : Command {
         if (refKobold == null) throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to target.");
 
         var callerTransform = caller.hip.transform;
-        string koboldName = koboldPrefab.photonName;
+        var speciesName = GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos()[refKobold.GetGenes().species].GetKey();
         BitBuffer playerSpawnData = new(16);
         playerSpawnData.AddKoboldGenes(refKobold.GetGenes());
         playerSpawnData.AddBool(false);
-        PhotonNetwork.InstantiateRoomObject(koboldName, callerTransform.position + callerTransform.forward, Quaternion.identity, 0, new object[] { playerSpawnData });
+        PhotonNetwork.InstantiateRoomObject(speciesName, callerTransform.position + callerTransform.forward, Quaternion.identity, 0, new object[] { playerSpawnData });
     }
 
     public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
@@ -50,10 +47,5 @@ public class CommandClone : Command {
                 yield return new(arg);
             }
         }
-    }
-
-    public override void OnValidate() {
-        base.OnValidate();
-        koboldPrefab.OnValidate();
     }
 }

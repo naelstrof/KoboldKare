@@ -1903,7 +1903,6 @@ MonoBehaviour:
   user: {fileID: 5335658201095571829}
   diePrefab: {fileID: 2324341566642796016, guid: 777f0892239272d4497bb6d3bec7061c,
     type: 3}
-  back: {fileID: -1021622891412111194, guid: b80237a58ac8c22458251d7c9dcacf88, type: 3}
   dickErectionHidable: {fileID: 6066078501566182707}
   inputRagdolled: 0
   playerDieEvent: {fileID: 11400000, guid: 01668319808ee8c48b1c39fc22f6ff84, type: 2}
@@ -4534,7 +4533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.999695, y: -10}
+  m_AnchoredPosition: {x: -9.999664, y: -10}
   m_SizeDelta: {x: -20, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &1101751689644777539
@@ -7236,7 +7235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.999695, y: -48}
+  m_AnchoredPosition: {x: -9.999664, y: -48}
   m_SizeDelta: {x: -20, y: 35}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2365030735395279601
@@ -7784,7 +7783,7 @@ CapsuleCollider:
   m_Radius: 0.4
   m_Height: 2.75
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5335658201095571829
 MonoBehaviour:
   m_ObjectHideFlags: 0

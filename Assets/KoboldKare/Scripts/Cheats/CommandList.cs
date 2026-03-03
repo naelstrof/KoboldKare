@@ -60,6 +60,7 @@ public class CommandList : Command {
         }
         if (args.Length == 1 || args[1] == "dicks") {
             output.Append("Dicks = {\n");
+            output.Append($"{CommandDick.unEquipName},\n"); // Specifically list the unequip option, as it isn't in the database.
             foreach (var info in GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos()) {
                 output.Append($"{info.GetKey()},\n");
             }

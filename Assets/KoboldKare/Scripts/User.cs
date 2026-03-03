@@ -34,10 +34,13 @@ public class User : MonoBehaviourPun {
         var ownedKobold = kobold;
         if (!photonView.IsMine || (Kobold)PhotonNetwork.LocalPlayer.TagObject != ownedKobold) return;
         transform.rotation = OrbitCamera.GetPlayerIntendedRotation();
-        
-        var desiredPosition = OrbitCamera.GetCamera().transform.position + transform.forward * (capsuleCollider.height*0.5f);
-        float distance = Vector3.Distance(ownedKobold.transform.position, desiredPosition);
-        transform.position = Vector3.MoveTowards(desiredPosition, ownedKobold.transform.position, Mathf.Max(distance - ownedKobold.GetGenes().baseSize*0.2f, 0f));
+
+        // Move the user towards the camera, but limit it by the kobold's effective size so they can't abuse freecam.
+        Vector3 desiredPosition = OrbitCamera.GetCamera().transform.position + transform.TransformVector(new(0f, 0f, capsuleCollider.height * 0.5f));
+        Vector3 anchorPosition = ownedKobold.transform.position;
+        float distance = Vector3.Distance(anchorPosition, desiredPosition);
+        float desiredReach = kobold.sizeInflater.GetSize() * 3.8f + 0.2f;
+        transform.position = Vector3.MoveTowards(desiredPosition, anchorPosition, Mathf.Max(distance - desiredReach, 0f));
     }
 
     public IEnumerator WaitAndThenTrigger(UnityEvent e) {
@@ -58,7 +61,6 @@ public class User : MonoBehaviourPun {
         }
     }
     void FixedUpdate() {
-        capsuleCollider.height = kobold.GetGenes().baseSize * 0.20f;
         SortGrabbables();
         possibleUsables.Clear();
     }

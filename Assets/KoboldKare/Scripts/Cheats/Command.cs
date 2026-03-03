@@ -62,4 +62,21 @@ public class Command {
     public virtual IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {
         return Array.Empty<AutocompleteResult>();
     }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="caller">The kobold that tried to run the command.</param>
+    /// <returns>The kobold being looked at by the caller, or null if none can be found.</returns>
+    protected Kobold GetAimedAtKobold(Kobold caller) {
+        Vector3 aimPosition = caller.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
+        Vector3 aimDir = caller.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
+        float range = caller.sizeInflater.GetSize() * 5f + 1f; // Scale range by the effective height of the caller.
+
+        foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, range)) {
+            Kobold k = hit.collider.GetComponentInParent<Kobold>();
+            if (k != null && k != caller) return k;
+        }
+
+        return null;
+    }
 }

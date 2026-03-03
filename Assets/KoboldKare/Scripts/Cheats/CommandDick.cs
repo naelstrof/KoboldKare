@@ -6,6 +6,7 @@ using Photon.Pun;
 [Serializable]
 public class CommandDick : Command {
     public const short unEquipID = 0;
+    public const string unEquipName = "None";
 
     public override string GetArg0() => "/dick";
 
@@ -17,6 +18,13 @@ public class CommandDick : Command {
         if (args.Length != 2) {
             throw new CheatsProcessor.CommandException("Usage: /dick <index or name>.");
         }
+
+        // Shortcut for dick unequip, so that it has an actual name instead of only being selectable via ID 0.
+        if (args[1] == unEquipName) {
+            SetDickByID(output, k, new(), unEquipID);
+            return;
+        }
+
         var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
         // Dick setting
         if (short.TryParse(args[1], out short dickID)) {
@@ -34,6 +42,12 @@ public class CommandDick : Command {
             yield break;
         }
 
+        // Handle unequip autocomplete manually.
+        if (unEquipName.Contains(text, StringComparison.OrdinalIgnoreCase)) {
+            yield return new(unEquipName);
+        }
+
+        // Everything else.
         var infos = GameManager.GetPenisDatabase().GetValidPrefabReferenceInfos();
 
         foreach(var info in infos) {

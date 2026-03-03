@@ -21,11 +21,13 @@ public class CommandSculpt : Command
         "bellycapacity",
         "boobs",
         "brightness",
+        "clothinghue",
         "dick",
         "dickthickness",
         "energy",
         "fat",
         "foodcapacity",
+        "grabcount",
         "height",
         "hue",
         "impregnate",
@@ -38,7 +40,7 @@ public class CommandSculpt : Command
         base.Execute(output, k, args);
 
         static void Usage() {
-            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
+            throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate,grabcount} [set] {modifier} (set is optional)");
         }
 
         if (!CheatsProcessor.GetCheatsEnabled()) {
@@ -77,19 +79,7 @@ public class CommandSculpt : Command
         if (targetType == "self") {
             target = k;
         } else if (targetType == "target") {
-            Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
-            Vector3 aimDir = k.GetComponentInChildren<CharacterControllerAnimator>(true).eyeDir;
-
-            foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
-                Kobold b = hit.collider.GetComponentInParent<Kobold>();
-
-                if (b == null) continue;
-                if (b == k) continue;
-
-                target = b;
-
-                break;
-            }
+            target = GetAimedAtKobold(k);
 
             if(target == null) {
                 throw new CheatsProcessor.CommandException("Need to be facing the kobold you want to target with.");
@@ -227,6 +217,12 @@ public class CommandSculpt : Command
 
                     target.bellyContainer.AddMix(alloc, GenericReagentContainer.InjectType.Inject);
                 }
+
+                break;
+            
+            case "grabcount":
+
+                target.SetGenes(genes.With(grabCount: SafeModify(genes.grabCount, Mathf.Max(modifier, 1f))));
 
                 break;
 

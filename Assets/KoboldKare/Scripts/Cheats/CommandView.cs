@@ -98,6 +98,7 @@ public class CommandView : Command
             case "all":
                 output.Append($"The stats are currently\n");
 
+                // TODO: This works fine in-editor, but nothing from this for loop shows up when tested in a built game. Needs further debugging.
                 foreach (string sn in statNames) {
                     int spaceCount = statNameMaxLength - sn.Length;
                     spaceCount = (int)(spaceCount * 1.8f); // The chat font isn't monospaced, have to approximate it :(

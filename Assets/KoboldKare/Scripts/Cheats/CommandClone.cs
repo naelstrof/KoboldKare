@@ -34,7 +34,7 @@ public class CommandClone : Command {
         BitBuffer playerSpawnData = new(16);
         playerSpawnData.AddKoboldGenes(refKobold.GetGenes());
         playerSpawnData.AddBool(false);
-        PhotonNetwork.InstantiateRoomObject(speciesName, callerTransform.position + callerTransform.forward, Quaternion.identity, 0, new object[] { playerSpawnData });
+        PhotonNetwork.Instantiate(speciesName, callerTransform.position + callerTransform.forward, Quaternion.identity, 0, new object[] { playerSpawnData });
     }
 
     public override IEnumerable<AutocompleteResult> Autocomplete(int argumentIndex, string[] arguments, string text) {

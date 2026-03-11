@@ -370,9 +370,14 @@ static Dictionary<char, string> homoglyphs = new() {
             return true;
         }
         if (homoglyphs.TryGetValue(character, out var homoglyphList)) {
-            return homoglyphList.Contains(textElement);
+            var enumerator = StringInfo.GetTextElementEnumerator(homoglyphList);
+            while (enumerator.MoveNext()) {
+                if (enumerator.GetTextElement() == textElement) {
+                    return true;
+                }
+            }
         }
-        return character == textElement[0];
+        return false;
     }
 
     public static bool GetBlackListed(string name, string[] blacklist, out string filtered, bool stripRichText = false) {

@@ -287,6 +287,32 @@ static Dictionary<char, string> homoglyphs = new() {
 };
     
 #endregion
+    private static string StripInvisibleCharacters(string input) {
+        var sb = new System.Text.StringBuilder(input.Length);
+        foreach (char c in input) {
+            switch (c) {
+                case '\u200B': // zero-width space
+                case '\u200C': // zero-width non-joiner
+                case '\u200D': // zero-width joiner
+                case '\uFEFF': // zero-width no-break space (BOM)
+                case '\u00AD': // soft hyphen
+                case '\u200E': // left-to-right mark
+                case '\u200F': // right-to-left mark
+                case '\u2060': // word joiner
+                case '\u2061': // function application
+                case '\u2062': // invisible times
+                case '\u2063': // invisible separator
+                case '\u2064': // invisible plus
+                case '\u034F': // combining grapheme joiner
+                    continue;
+                default:
+                    sb.Append(c);
+                    break;
+            }
+        }
+        return sb.ToString();
+    }
+
     private static bool CheckTrigram(StringInfo info, int index, string bannedWord) {
         var character = info.SubstringByTextElements(index, 1);
         if (info.LengthInTextElements > index + 2) {
@@ -344,15 +370,21 @@ static Dictionary<char, string> homoglyphs = new() {
             return true;
         }
         if (homoglyphs.TryGetValue(character, out var homoglyphList)) {
-            return homoglyphList.Contains(textElement);
+            var enumerator = StringInfo.GetTextElementEnumerator(homoglyphList);
+            while (enumerator.MoveNext()) {
+                if (enumerator.GetTextElement() == textElement) {
+                    return true;
+                }
+            }
         }
-        return character == textElement[0];
+        return false;
     }
 
     public static bool GetBlackListed(string name, string[] blacklist, out string filtered, bool stripRichText = false) {
         if (stripRichText) {
             name = name.StripRichText();
         }
+        name = StripInvisibleCharacters(name);
         StringInfo info = new StringInfo(name);
         foreach (var word in blacklist) {
             if (string.IsNullOrEmpty(word)) {

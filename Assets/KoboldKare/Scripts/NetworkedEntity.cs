@@ -276,7 +276,7 @@ public class NetworkedEntity : GeneHolder {
     }
     
     [ObserversRpc]
-    public void PlantRPC(NetworkObject seed, string plantName) {
+    public void PlantRPC(NetworkObject seed, string plantName, NetworkConnection conn = null) {
         if (!networkManager.ServerManager.Started) {
             return;
         }
@@ -302,7 +302,7 @@ public class NetworkedEntity : GeneHolder {
             return;
         }
         data.CopyGenesFrom(geneHolder);
-        var nob = networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false);
+        var nob = networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false, conn);
         networkManager.ServerManager.Despawn(seed);
 
         planted.Value = true;

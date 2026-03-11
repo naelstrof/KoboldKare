@@ -158,7 +158,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
         }
     }
 
-    public NetworkObject SpawnAsServer(NetworkedEntityInstantiationData data, bool randomizedGenes) {
+    public NetworkObject SpawnAsServer(NetworkedEntityInstantiationData data, bool randomizedGenes, NetworkConnection conn = null) {
         if (!GameManager.InLevel()) {
             return null;
         }
@@ -174,7 +174,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
         if (randomizedGenes) {
             geneHolder.RandomizeGenes();
         }
-        _networkManager.ServerManager.Spawn(nob);
+        _networkManager.ServerManager.Spawn(nob, conn);
 
         OnSpawned?.Invoke(nob);
         return nob;

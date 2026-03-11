@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7114612191764486330}
   - component: {fileID: 6891365461746580679}
   - component: {fileID: 2270841014911726173}
+  - component: {fileID: 5419722846830847865}
   m_Layer: 9
   m_Name: NetworkedKobold
   m_TagString: Untagged
@@ -48,6 +49,8 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 2270841014911726173}
   _networkObjectCache: {fileID: 0}
+  type: 0
+  startingReagents: []
 --- !u!114 &2270841014911726173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,3 +104,19 @@ MonoBehaviour:
   _preventDespawnOnDisconnect: 1
   _defaultDespawnType: 0
   _initializedTimestamp: 0
+--- !u!114 &5419722846830847865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140750814847756052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03002f7d324007e41b10a9dc87ed3c38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 2270841014911726173}
+  _networkObjectCache: {fileID: 0}
+  _allowTakeOwnership: 1

@@ -40,7 +40,7 @@ public class Seed : MonoBehaviour, IValuedGood {
         }
 
         if (bestTile != null && bestTile.GetPlantable()) {
-            bestTile.GetComponentInParent<NetworkedEntity>().PlantRPC(GetComponentInParent<NetworkObject>(), plant.name);
+            bestTile.GetComponentInParent<NetworkedEntity>().PlantRPC(GetComponentInParent<NetworkObject>(), plant.name, networkedEntity.Owner);
         }
 
     }

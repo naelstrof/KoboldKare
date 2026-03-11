@@ -32,7 +32,10 @@ public class PlantKoboldObjective : ObjectiveWithSpaceBeam {
             data.groupName = "NetworkedPrefab";
             data.position = mailBox.position;
             data.rotation = Quaternion.identity;
-            networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, true);
+
+            foreach (var pair in networkManager.ServerManager.Clients) {
+                networkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, true, pair.Value);
+            }
         }
     }
     public override void Unregister() {

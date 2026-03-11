@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.VFX;
 using System.Threading.Tasks;
+using FishNet;
 using SimpleJSON;
 
 [RequireComponent(typeof(GenericReagentContainer))]
@@ -30,14 +31,13 @@ public class Plant : MonoBehaviour, ISavable {
     public static event PlantSpawnEventAction planted;
 
     private NetworkedEntity networkedEntity;
-
+    
     void Start() {
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             // FIXME FISHNET: hacky set maxvolume, can't tell who owns it.
             networkedEntity.reagentContents.Value.SetMaxVolume(1f);
             networkedEntity.OnFilled += OnFilled;
-            networkedEntity = GetComponentInParent<NetworkedEntity>();
             networkedEntity.hue.OnChange += OnColorChange;
             networkedEntity.brightness.OnChange += OnColorChange;
             networkedEntity.saturation.OnChange += OnColorChange;
@@ -70,7 +70,7 @@ public class Plant : MonoBehaviour, ISavable {
 
     IEnumerator GrowRoutine() {
         growing = true;
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(3f);
         if (!networkedEntity.IsOwner) {
             yield break;
         }
@@ -115,6 +115,9 @@ public class Plant : MonoBehaviour, ISavable {
         if (plant == newPlant) {
             return;
         }
+        if (networkedEntity == null) {
+            Start();
+        }
         plant = newPlant;
         UndarkenMaterials();
         wateredEffect.Stop();
@@ -127,27 +130,23 @@ public class Plant : MonoBehaviour, ISavable {
             OnColorChange(0,0, false);
         }
 
-        
-        // FIXME FISHNET
-        /*
-        if (PhotonNetwork.IsMasterClient) {
+
+        if (networkedEntity.IsOwner) {
             foreach (var produce in newPlant.produces) {
                 int spawnCount = Random.Range(produce.minProduce, produce.maxProduce);
                 for(int i=0;i<spawnCount;i++) {
-                    BitBuffer buffer = new BitBuffer(4);
-                    buffer.AddKoboldGenes(GetGenes());
-                    buffer.AddBool(false);
-                    if (produce.prefab.GetOptionalDatabase() == GameManager.GetPlayerDatabase()) {
-                        var speciesName = GameManager.GetPlayerDatabase().GetValidPrefabReferenceInfos()[GetGenes().species].GetKey();
-                        PhotonNetwork.InstantiateRoomObject(speciesName, transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0, new object[] { buffer });
-                    } else {
-                        PhotonNetwork.InstantiateRoomObject(produce.prefab.photonName,
-                             transform.position + Vector3.up + Random.insideUnitSphere * 0.5f, Quaternion.identity, 0,
-                             new object[] { buffer });
+                    var ent = produce.prefab;
+                    if (ent.TryGetAssetGroupAndKey(out var group, out var key)) {
+                        KoboldEntitySpawner.NetworkedEntityInstantiationData data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+                        data.CopyGenesFrom(networkedEntity);
+                        data.groupName = group;
+                        data.assetName = key;
+                        data.position = transform.position + Vector3.up + Random.insideUnitSphere * 0.5f;
+                        InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false, networkedEntity.Owner);
                     }
                 }
             }
-        }*/
+        }
         switched?.Invoke();
         if (plant.possibleNextGenerations == null || plant.possibleNextGenerations.Length == 0) {
             StartCoroutine(GrowRoutine());

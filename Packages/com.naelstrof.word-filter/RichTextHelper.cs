@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -25,7 +25,7 @@ namespace WordFilter {
             "blue",
             "white",
         };
-        
+
         private static readonly List<string> knownOpeningTags = new() {
             "i",
             "b",
@@ -35,8 +35,11 @@ namespace WordFilter {
             "sub",
             "sup",
             "u",
+            "nobr",
+            "noparse",
+            "page",
         };
-        
+
         private static readonly List<string> knownClosingTags = new () {
             "color",
             "i",
@@ -46,6 +49,23 @@ namespace WordFilter {
             "sub",
             "sup",
             "u",
+            "size",
+            "font",
+            "sprite",
+            "mark",
+            "align",
+            "indent",
+            "link",
+            "lowercase",
+            "uppercase",
+            "smallcaps",
+            "margin",
+            "nobr",
+            "noparse",
+            "pos",
+            "space",
+            "voffset",
+            "width",
         };
 
         private static bool TryParseStartColorTag(string tag) {
@@ -72,6 +92,24 @@ namespace WordFilter {
             return true;
         }
 
+        private static readonly List<string> knownParameterizedTags = new() {
+            "size",
+            "font",
+            "sprite",
+            "mark",
+            "align",
+            "indent",
+            "link",
+            "lowercase",
+            "uppercase",
+            "smallcaps",
+            "margin",
+            "pos",
+            "space",
+            "voffset",
+            "width",
+        };
+
         private static bool ParseStartTag(ReadOnlySpan<char> tag) {
             if (TryParseHex(tag)) {
                 return true;
@@ -81,12 +119,17 @@ namespace WordFilter {
             if (tag.StartsWith("color")) {
                 return TryParseStartColorTag(tagString);
             }
+            foreach (var paramTag in knownParameterizedTags) {
+                if (tagString.StartsWith(paramTag)) {
+                    return true;
+                }
+            }
             return knownOpeningTags.Contains(tagString);
         }
         private static bool ParseEndTag(ReadOnlySpan<char> tag) {
             return knownClosingTags.Contains(tag.ToString());
         }
-        
+
         public static string StripRichText(this string text) {
             var builder = new StringBuilder();
             var i = 0;

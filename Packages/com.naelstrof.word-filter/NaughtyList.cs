@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace WordFilter {
 public static class NaughtyList {
-    // Use the wizard to create the encrypted blobs
-    public static string[] GetNaughtyList(TextAsset encryptedAsset) {
-        var bytes = Convert.FromBase64String(encryptedAsset.text);
+    // Use the wizard to create the base64-encoded blobs
+    public static string[] GetNaughtyList(TextAsset encodedAsset) {
+        var bytes = Convert.FromBase64String(encodedAsset.text);
         var text = Encoding.UTF8.GetString(bytes);
         return text.Split('\n');
     }
-    public static string[] GetNaughtyList(string encryptedBlob) {
-        var bytes = Convert.FromBase64String(encryptedBlob);
+    public static string[] GetNaughtyList(string encodedBlob) {
+        var bytes = Convert.FromBase64String(encodedBlob);
         var text = Encoding.UTF8.GetString(bytes);
         return text.Split('\n');
     }

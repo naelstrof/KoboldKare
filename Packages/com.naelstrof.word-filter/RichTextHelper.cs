@@ -65,8 +65,8 @@ namespace WordFilter {
             if (color[0] != '#') return false;
             for (int i = 1; i < color.Length; i++) {
                 if ((byte)color[i] >= '0' && (byte)color[i] <= '9') { continue; } // Is it a number?
-                if ((byte)color[i] >= 'A' && (byte)color[i] <= 'Z') { continue; } // Is it A-F?
-                if ((byte)color[i] >= 'a' && (byte)color[i] <= 'z') { continue; } // Is it a-f?
+                if ((byte)color[i] >= 'A' && (byte)color[i] <= 'F') { continue; } // Is it A-F?
+                if ((byte)color[i] >= 'a' && (byte)color[i] <= 'f') { continue; } // Is it a-f?
                 return false;
             }
             return true;

@@ -359,14 +359,14 @@ static Dictionary<char, string> homoglyphs = new() {
                 continue;
             }
             int state = 0;
+            int textElementIndex = 0;
             var enumerator = StringInfo.GetTextElementEnumerator(name);
             while (enumerator.MoveNext()) {
-                var index = enumerator.ElementIndex;
                 var element = enumerator.GetTextElement();
                 var character = word[state];
-                if (CheckHomoglyph(character, element) && !CheckTrigram(info, index, word)) {
+                if (CheckHomoglyph(character, element) && !CheckTrigram(info, textElementIndex, word)) {
                     state++;
-                } else if (CheckTrigram(info, index, word)) {
+                } else if (CheckTrigram(info, textElementIndex, word)) {
                     if (state > 0) {
                         state--;
                     }
@@ -375,6 +375,7 @@ static Dictionary<char, string> homoglyphs = new() {
                     filtered = word;
                     return true;
                 }
+                textElementIndex++;
             }
         }
         filtered = "";

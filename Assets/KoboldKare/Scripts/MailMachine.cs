@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+using FishNet;
 using FishNet.Object;
 using KoboldKare;
-using Naelstrof.Mozzarella;
 using Photon.Pun;
-using SkinnedMeshDecals;
 using UnityEngine;
 using UnityEngine.VFX;
 using Vilar.AnimationStation;
@@ -36,7 +33,6 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
     private ReadOnlyCollection<AnimationStation> readOnlyStations;
     private WaitForSeconds wait;
     private List<AnimationStation> availableStations;
-    private NetworkedEntity networkedEntity;
     
     protected override void Awake() {
         base.Awake();
@@ -54,9 +50,46 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
         }
     }
 
+    protected override void OnSwallowed(NetworkedEntity ent) {
+        base.OnSwallowed(ent);
+        
+        float totalWorth = 0f;
+        foreach(IValuedGood v in ent.GetComponentsInChildren<IValuedGood>()) {
+            if (v != null) {
+                float add = Mathf.Min(v.GetWorth(), 1953125f);
+                totalWorth = Mathf.Min(totalWorth+add,1953125f);
+            }
+        }
+        soldGameEvent.Raise(ent.GetComponentInChildren<PhotonView>());
+        poof.SendEvent("TriggerPoof");
+        
+        sellPack.PlayOneShot(sellSource);
+
+        if (!ent.IsOwner) {
+            return;
+        }
+
+        totalWorth = Mathf.Min(totalWorth, 1953125f);
+        if (moneyPile.TryGetAssetGroupAndKey(out var group, out var key)) {
+            var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+            data.groupName = group;
+            data.assetName = key;
+            data.position = payoutLocation.position;
+            data.rotation = payoutLocation.rotation;
+            InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false, ent.Owner);
+        } else {
+            Debug.LogError("Money pile prefab not found in database.");
+            return;
+        }
+            
+        // It is technically possible for it to be destroyed at this point already.
+        if (ent != null) {
+            InstanceFinder.ServerManager.Despawn(ent.NetworkObject);
+        }
+    }
+
     protected override void Start() {
         base.Start();
-        networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             networkedEntity.SetSprite(mailSprite);
             networkedEntity.useRequested += OnUseRequested;
@@ -69,13 +102,15 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             return false;
         }
 
-        // FIXME FISHNET
-        /*
-        foreach (var player in PhotonNetwork.PlayerList) {
-            if ((Kobold)player.TagObject == k) {
+        if (KoboldEntitySpawner.GetIsPlayerKobold(k)) {
+            return false;
+        }
+        
+        foreach (var station in stations) {
+            if (station.info.user == k) {
                 return false;
             }
-        }*/
+        }
 
         foreach (var station in stations) {
             if (station.info.user == null) {
@@ -91,68 +126,37 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             if (station.info.user == null) {
                 availableStations.Add(station);
             }
+
+            if (station.info.user == k) {
+                return;
+            }
         }
         if (availableStations.Count <= 0) {
+            Debug.Log("All stations are full!");
             return;
         }
-        int randomStation = UnityEngine.Random.Range(0, availableStations.Count);
+
+        if (k.IsAnimating()) {
+            return;
+        }
+        
+        int randomStation = Random.Range(0, availableStations.Count);
         
         k.BeginAnimation(GetComponentInParent<NetworkObject>(), stations.IndexOf(availableStations[randomStation]));
         StopAllCoroutines();
         StartCoroutine(WaitThenVoreKobold());
     }
+    
     private IEnumerator WaitThenVoreKobold() {
         yield return wait;
         mailAnimator.SetTrigger("Mail");
         yield return wait;
-        // FIXME FISHNET
-        /*
         foreach (var station in stations) {
-            if (station.info.user == null || !station.info.user.photonView.IsMine) {
+            if (station.info.user == null || !station.info.user.IsOwner) {
                 continue;
             }
-            photonView.RPC(nameof(OnSwallowed), RpcTarget.All, station.info.user.photonView.ViewID);
-        }*/
-    }
-    
-    // FIXME FISHNET
-    //[PunRPC]
-    protected override IEnumerator OnSwallowed(int viewID) {
-         if(suckingIDs.Contains(viewID)){
-            yield break;
+            OnSwallowed(station.info.user);
         }
-        suckingIDs.Add(viewID);
-        /*PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-        float totalWorth = 0f;
-        foreach(IValuedGood v in view.GetComponentsInChildren<IValuedGood>()) {
-            if (v != null) {
-                float add = Mathf.Min(v.GetWorth(), 1953125f);
-                totalWorth = Mathf.Min(totalWorth+add,1953125f);
-            }
-        }
-        soldGameEvent.Raise(view);
-        poof.SendEvent("TriggerPoof");
-        // Kobolds can only be sold if they've already played the mail animation.
-        if (view.GetComponent<Kobold>() != null) {
-            mailAnimator.SetTrigger("Mail");
-        }
-        sellPack.PlayOneShot(sellSource);
-
-        if (!view.IsMine) {
-            yield break;
-        }
-
-        // Just wait a very short while so that we don't shuffle the order of our commands (sell -> delete)
-        yield return new WaitForSeconds(0.1f);
-        
-        // It is technically possible for it to be destroyed at this point already.
-        if (view != null) {
-            PhotonNetwork.Destroy(view.gameObject);
-        }
-
-        totalWorth = Mathf.Min(totalWorth, 1953125f);
-        PhotonNetwork.Instantiate(moneyPile.photonName, payoutLocation.position, payoutLocation.rotation, 0, new object[]{totalWorth});
-        suckingIDs.Remove(viewID);*/
     }
 
     public ReadOnlyCollection<AnimationStation> GetAnimationStations() {

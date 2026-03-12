@@ -23,6 +23,12 @@ public class PhotonGameObjectReference {
                 }
             }
         }
+
+        if (gameObject != null && (string.IsNullOrEmpty(assetGroup) || string.IsNullOrEmpty(assetName))) {
+            group = "NetworkedPrefab";
+            key = gameObject.name;
+            return true;
+        }
         group = assetGroup;
         key = assetName;
         return !string.IsNullOrEmpty(group) && !string.IsNullOrEmpty(key);

@@ -187,7 +187,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         currentStationSet = set;
         currentStation = station;
         if (station.info.user != null) {
-            station.info.user.GetComponent<CharacterControllerAnimator>().StopAnimation();
+            station.info.user.StopAnimation();
         }
 
         if (isActiveAndEnabled) {
@@ -231,8 +231,6 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         animating = true;
         solver.enabled = true;
         controller.enabled = false;
-        // For kobolds loading in a save, we might be trying to couple with a station when we aren't loaded yet....
-        yield return new WaitUntil(() => kobold != null);
         kobold.body.isKinematic = true;
         solver.Initialize();
         currentStation.SetProgress(0f);
@@ -400,7 +398,7 @@ public class CharacterControllerAnimator : MonoBehaviour, ISavable {
         StopAllCoroutines();
         StartCoroutine(StopAnimationRoutine());
         animating = false;
-        if (currentStation != null && currentStation.info.user == kobold) {
+        if (currentStation != null && currentStation.info.user == networkedKobold) {
             currentStation.info.user = null;
         }
         currentStation = null;

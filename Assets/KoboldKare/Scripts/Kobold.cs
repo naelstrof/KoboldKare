@@ -404,6 +404,8 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             penisHandle = await KoboldKareObjectPostProcessor.GetAssetAsync("Penis", next, GameManager.GetErrorPenis());
             dickObject = Instantiate(penisHandle.asset, GetAttachPointTransform(Equipment.AttachPoint.Crotch));
             dickObject.GetComponentInChildren<DickDescriptor>().AttachTo(this);
+            var hue = networkedKobold.hue.Value;
+            OnColorChanged(hue, hue, true);
         } finally {
             changingDick = false;
         }
@@ -469,10 +471,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         controller.frictionMultiplier = 0.1f;
         controller.enabled = false;
         
-        // FIXME FISHNET
-        /*if (photonView.IsMine) {
-            photonView.RPC(nameof(CharacterControllerAnimator.StopAnimationRPC), RpcTarget.All);
-        }*/
+        by.StopAnimation();
     }
     public void PumpUpDick(float amount) {
         if (amount > 0 ) {
@@ -482,10 +481,9 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         arousal = Mathf.Clamp01(arousal);
     }
     public IEnumerator ThrowRoutine() {
-        // FIXME FISHNET
-        //photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
+        ragdoller.PushRagdoll();
         yield return new WaitForSeconds(3f);
-        //photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
+        ragdoller.PopRagdoll();
     }
 
     private bool OnGrabRequest(NetworkedKobold kobold) {

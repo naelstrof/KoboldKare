@@ -58,14 +58,14 @@ public class ElectricBlender : SuckingMachine {
 
     // FIXME FISHNET
     //[PunRPC]
-    protected override IEnumerator OnSwallowed(int viewID) {
+    protected override void OnSwallowed(NetworkedEntity ent) {
         if (!constructed) {
-            yield break;
+            return;
         }
-        if(suckingIDs.Contains(viewID)){
-            yield break;
+        if(suckingIDs.Contains(ent.ObjectId)) {
+            return;
         }
-        suckingIDs.Add(viewID);
+        suckingIDs.Add(ent.ObjectId);
         // FIXME FISHNET
         /*PhotonView view = PhotonNetwork.GetPhotonView(viewID);
         poof.SendEvent("TriggerPoof");
@@ -79,7 +79,7 @@ public class ElectricBlender : SuckingMachine {
             container.AddMixRPC(tempBuffer, viewID, (byte)GenericReagentContainer.InjectType.Inject);
             grindedObject?.Invoke(viewID, otherContainer.GetContents());
         }*/
-        yield return base.OnSwallowed(viewID);
+        base.OnSwallowed(ent);
     }
 
     IEnumerator WaitThenDisableSound() {

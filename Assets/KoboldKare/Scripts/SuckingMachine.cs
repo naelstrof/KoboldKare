@@ -10,9 +10,13 @@ public class SuckingMachine : UsableMachine {
     private HashSet<Rigidbody> trackedRigidbodies;
     private bool sucking;
     private WaitForFixedUpdate waitForFixedUpdate;
+    protected NetworkedEntity networkedEntity;
+    private HashSet<NetworkedEntity> processingEntities;
+    private float tickTime = 0f;
     protected virtual void Awake() {
         trackedRigidbodies = new HashSet<Rigidbody>();
         waitForFixedUpdate = new WaitForFixedUpdate();
+        processingEntities = new HashSet<NetworkedEntity>();
     }
 
     private Vector3 GetSuckLocation() {
@@ -22,20 +26,49 @@ public class SuckingMachine : UsableMachine {
         return suckZone.transform.lossyScale.x*suckZone.radius;
     }
 
-    // FIXME FISHNET
-    //[PunRPC]
-    protected virtual IEnumerator OnSwallowed(int viewID) {
-        /*
-        PhotonView view = PhotonNetwork.GetPhotonView(viewID);
-        yield return new WaitForSeconds(0.1f);
-        // Possible that it has already been removed.
-        if (view == null) {
-            yield break;
+    protected override void Start() {
+        base.Start();
+        networkedEntity = GetComponentInParent<NetworkedEntity>();
+    }
+
+    void Update() {
+        tickTime += Time.deltaTime;
+        if (tickTime > 0.5f) {
+            foreach (var ent in processingEntities) {
+                if (ent is NetworkedKobold targetKobold && targetKobold.TryGetKobold(out var kobold)) {
+                    if (KoboldEntitySpawner.GetIsPlayerKobold(targetKobold)) {
+                        continue;
+                    }
+
+                    if (kobold.grabbed || !kobold.GetComponent<Ragdoller>().ragdolled) {
+                        continue;
+                    }
+
+                    if (networkedEntity.CanUse(targetKobold)) {
+                        networkedEntity.TryUse(targetKobold);
+                    }
+
+                    continue;
+                }
+
+                Rigidbody body = ent.GetComponentInParent<Rigidbody>();
+                if (body != null && body.gameObject.GetComponent<MoneyPile>() == null) {
+                    trackedRigidbodies.Add(body);
+                    if (!sucking) {
+                        StartCoroutine(SuckAndSwallow());
+                    }
+                }
+            }
+
+            tickTime = 0f;
+            processingEntities.Clear();
         }
-        PhotonNetwork.Destroy(view.gameObject);
-        suckingIDs.Remove(viewID);
-        */
-        yield break;
+    }
+
+    protected virtual void OnSwallowed(NetworkedEntity ent) {
+        if (suckingIDs.Contains(ent.ObjectId)) {
+            suckingIDs.Remove(ent.ObjectId);
+        }
     }
 
     protected virtual bool ShouldStopTracking(Rigidbody body) {
@@ -48,12 +81,10 @@ public class SuckingMachine : UsableMachine {
             return true;
         }
         if (distance < 0.1f) {
-            // FIXME FISHNET
-            /*
-            PhotonView view = body.gameObject.GetComponentInParent<PhotonView>();
-            if (view != null && view.IsMine) {
-                photonView.RPC(nameof(OnSwallowed), RpcTarget.All, view.ViewID);
-            }*/
+            var networkEntity = body.gameObject.GetComponentInParent<NetworkedEntity>();
+            if (networkEntity != null && networkEntity.IsOwner) {
+                OnSwallowed(networkEntity);
+            }
             return true;
         }
         return false;
@@ -71,32 +102,10 @@ public class SuckingMachine : UsableMachine {
         }
         sucking = false;
     }
+    
 
     protected virtual void OnTriggerEnter(Collider other) {
-        Kobold targetKobold = other.GetComponentInParent<Kobold>();
-        if (targetKobold != null) {
-            // FIXME FISHNET
-            /*
-            foreach (var player in PhotonNetwork.PlayerList) {
-                if ((Kobold)player.TagObject == targetKobold) {
-                    return;
-                }
-            }*/
-
-            if (targetKobold.grabbed || !targetKobold.GetComponent<Ragdoller>().ragdolled) {
-                return;
-            }
-
-            // FIXME FISHNET
-            //LocalUse(targetKobold);
-            return;
-        }
-        Rigidbody body = other.GetComponentInParent<Rigidbody>();
-        if (body != null && body.gameObject.GetComponent<MoneyPile>() == null) {
-            trackedRigidbodies.Add(body);
-            if (!sucking) {
-                StartCoroutine(SuckAndSwallow());
-            }
-        }
+        var ent = other.GetComponentInParent<NetworkedEntity>();
+        processingEntities.Add(ent);
     }
 }

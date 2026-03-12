@@ -208,7 +208,13 @@ public class KoboldEntitySpawner : MonoBehaviour {
 
         OnSpawned?.Invoke(nob);
     }
-    
+
+    public static bool GetIsPlayerKobold(NetworkedKobold o) {
+        if (playerKobolds.TryGetValue(o.OwnerId, out var nob)) {
+            return (nob.TryGetComponent(out NetworkedKobold test) && test == o);
+        }
+        return false;
+    }
 
     public static bool TryGetPlayerKobold(NetworkConnection conn, out NetworkedKobold o) {
         if (playerKobolds.TryGetValue(conn.ClientId, out var nob)) {

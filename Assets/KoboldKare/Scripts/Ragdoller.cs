@@ -134,11 +134,11 @@ public class Ragdoller : MonoBehaviour, ISavable {
 
     private List<RigidbodyNetworkInfo> rigidbodyNetworkInfos = new();
     
-    private void Awake() {
+    private void Start() {
         animator = GetComponent<CharacterDescriptor>().GetDisplayAnimator();
         group = GetComponentInChildren<LODGroup>();
         kobold = GetComponent<Kobold>();
-        body = GetComponent<Rigidbody>();
+        body = GetComponentInParent<Rigidbody>();
         jointAnchors = new List<SavedJointAnchor>();
         foreach (Rigidbody ragdollBody in ragdollBodies) {
             if (ragdollBody.TryGetComponent(out ConfigurableJoint joint)) {
@@ -243,8 +243,10 @@ public class Ragdoller : MonoBehaviour, ISavable {
         
         if (ragdollCount > 0 && !ragdolled) {
             Ragdoll();
+            networkedKobold.SetRagdolled(true);
         } else if (ragdollCount == 0 && ragdolled) {
             StandUp();
+            networkedKobold.SetRagdolled(false);
         }
     }
 
@@ -343,8 +345,8 @@ public class Ragdoller : MonoBehaviour, ISavable {
     }
 
     private void FixPlayerPosition() {
-        Vector3 diff = transform.position - hipBody.position;
-        transform.position -= diff;
+        Vector3 diff = networkedKobold.transform.position - hipBody.position;
+        networkedKobold.transform.position -= diff;
         hipBody.position += diff;
     }
 
@@ -359,7 +361,7 @@ public class Ragdoller : MonoBehaviour, ISavable {
             jiggleSkin.PrepareTeleport();
         }
         FixPlayerPosition();
-        transform.position += Vector3.up*0.5f;
+        networkedKobold.transform.position += Vector3.up*0.5f;
         foreach (var dickSet in kobold.activeDicks) {
             dickSet.dick.Penetrate(null);
             dickSet.dick.SetTargetHole(null);

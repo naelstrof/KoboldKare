@@ -227,6 +227,14 @@ public class NetworkedEntity : GeneHolder {
             OnUse(kobold);
         }
     }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void TryUse(NetworkObject obj, NetworkConnection conn = null) {
+        if (obj.Owner != conn) {
+            return;
+        }
+        OnUse(obj);
+    }
 
     [ObserversRpc]
     private void OnUse(NetworkObject kobold) {

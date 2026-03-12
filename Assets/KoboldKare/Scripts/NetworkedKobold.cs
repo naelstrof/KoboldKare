@@ -439,6 +439,13 @@ public class NetworkedKobold : NetworkedEntity {
         }
     }
 
+    public bool IsAnimating() {
+        if (koboldInstance && koboldInstance.TryGetComponent<CharacterControllerAnimator>(out var koboldAnimator)) {
+            return koboldAnimator.IsAnimating();
+        }
+        return false;
+    }
+
 
     // FIXME FISHNET
     /*public void OnPhotonInstantiate(PhotonMessageInfo info) {

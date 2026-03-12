@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FishNet;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using JigglePhysics;
@@ -414,6 +415,12 @@ public class NetworkedKobold : NetworkedEntity {
     
     private void OnDestroy() {
         ReleaseHandles();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GiveMoney(NetworkedEntity moneyPile) {
+        money.Value += moneyPile.moneyPileWorth.Value;
+        InstanceFinder.ServerManager.Despawn(moneyPile);
     }
     
     public bool TryGetKobold(out Kobold kobold) {

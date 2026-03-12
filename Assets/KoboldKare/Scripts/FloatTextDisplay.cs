@@ -11,33 +11,28 @@ public class FloatTextDisplay : MonoBehaviour {
     private TMPro.TextMeshProUGUI text;
     [SerializeField]
     private string startingText;
-    private MoneyHolder holder;
-    private float oldMoney;
     private Coroutine routine;
-
-    private void OnEnable() {
-        holder = GetComponentInParent<MoneyHolder>();
-    }
+    private NetworkedKobold holder;
 
     void Start() {
         text = GetComponent<TMPro.TextMeshProUGUI>();
-        text.text = startingText + Mathf.Round(holder.GetMoney());
-        oldMoney = holder.GetMoney();
-        holder.moneyChanged += OnMoneyChanged;
+        holder = GetComponentInParent<NetworkedKobold>();
+        text.text = startingText + Mathf.Round(holder.money.Value);
+        holder.money.OnChange += OnMoneyChanged;
     }
-    void OnMoneyChanged(float newMoney) {
+    void OnMoneyChanged(float prev, float next, bool asServer) {
         if (routine != null) {
             StopCoroutine(routine);
         }
-        routine = StartCoroutine(MoneyUpdateRoutine(oldMoney, newMoney));
+        routine = StartCoroutine(MoneyUpdateRoutine(prev, next));
     }
     IEnumerator MoneyUpdateRoutine(float from, float to) {
         float startTime = Time.time;
         float duration = 1f;
         while (Time.time<startTime+duration) {
             float t = (Time.time - startTime)/duration;
-            oldMoney = Mathf.Lerp(from,to,t);
-            text.text = startingText + Mathf.Round(oldMoney).ToString();
+            var actual = Mathf.Lerp(from,to,t);
+            text.text = startingText + Mathf.Round(actual);
             yield return null;
         }
     }

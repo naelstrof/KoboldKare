@@ -17,80 +17,30 @@ public class MoneyPile : MonoBehaviour {
     private Sprite useSprite;
 
     private NetworkedEntity networkedEntity;
-    private float worth {
-        get {
-            return internalWorth;
-        }
-        set {
-            internalWorth = value;
-            //int targetIndex = Mathf.RoundToInt(moneyMap.Evaluate(value/maxMoney)*(displays.Length-1));
-            int targetIndex = (int)Mathf.Log(value, 5f);
-            //Debug.Log("Got " + Mathf.Log(value, 5f) + ", rounded to " + targetIndex);
-            targetIndex = Mathf.Clamp(targetIndex, 0, displays.Length-1);
-            for (int i=0;i<displays.Length;i++) {
-                displays[i].SetActive(i==targetIndex);
-            }
-        }
-    }
 
     void Start() {
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
             networkedEntity.SetSprite(useSprite);
+            networkedEntity.moneyPileWorth.OnChange += OnMoneyPileWorthChanged;
+            networkedEntity.useRequested += OnUseRequested;
+            networkedEntity.used += OnUse;
         }
     }
-    // FIXME FISHNET
-    /*
-    public void OnPhotonInstantiate(PhotonMessageInfo info) {
-        if (info.photonView.InstantiationData != null && info.photonView.InstantiationData.Length != 0) {
-            worth = (float)info.photonView.InstantiationData[0];
-            PhotonProfiler.LogReceive(sizeof(float));
-        }
-    }
-    */
-    
-    //public override void LocalUse(Kobold k) {
-        // FIXME FISHNET
-        /*
-        // Try to take control of the equipment, if we don't have permission.
-        if (k.photonView.IsMine && !photonView.IsMine && tryingToEquip == null) {
-            tryingToEquip = k;
-            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
-        }
-        // Only successfully equip if we own both the equipment, and the kobold. Otherwise, wait for ownership to successfully transfer
-        if (k.photonView.IsMine && photonView.IsMine) {
-            k.GetComponent<MoneyHolder>().AddMoney(worth);
-            PhotonNetwork.Destroy(photonView.gameObject);
-        }*/
-    //}
-    
-    // FIXME FISHNET
-    /*
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(worth);
-        } else {
-            worth = (float)stream.ReceiveNext();
-            PhotonProfiler.LogReceive(sizeof(float));
-        }
-    }*/
-    
-    /*public override void Save(JSONNode node) {
-        base.Save(node);
-        node["worth"] = worth;
-    }
-    public override Task Load(JSONNode node) {
-        base.Load(node);
-        worth = node["worth"];
-        return Task.CompletedTask;
-    }*/
 
-    // FIXME FISHNET
-    /*
-    public void OnControllerChange(Player newController, Player previousController) {
-        if (tryingToEquip.photonView.IsMine && newController == PhotonNetwork.LocalPlayer) {
-            tryingToEquip.GetComponent<MoneyHolder>().AddMoney(worth);
-            PhotonNetwork.Destroy(photonView.gameObject);
+    private void OnUse(NetworkedKobold by) {
+        by.GiveMoney(networkedEntity);
+    }
+
+    private bool OnUseRequested(NetworkedKobold by) {
+        return true;
+    }
+    
+    private void OnMoneyPileWorthChanged(float prev, float next, bool asServer) {
+        int targetIndex = (int)Mathf.Log(next, 5f);
+        targetIndex = Mathf.Clamp(targetIndex, 0, displays.Length-1);
+        for (int i=0;i<displays.Length;i++) {
+            displays[i].SetActive(i==targetIndex);
         }
-    }*/
+    }
 }

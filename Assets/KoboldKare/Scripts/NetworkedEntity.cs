@@ -18,6 +18,7 @@ public class NetworkedEntity : GeneHolder {
     public readonly SyncVar<bool> frozen = new SyncVar<bool>();
     public readonly SyncVar<float> health = new SyncVar<float>(100f);
     public readonly SyncVar<bool> planted = new SyncVar<bool>();
+    public readonly SyncVar<float> moneyPileWorth = new SyncVar<float>();
     
     public const string PHOTONVIEW_ID_GROUP = "PHOTONVIEW_ID_GROUP";
 
@@ -55,6 +56,7 @@ public class NetworkedEntity : GeneHolder {
     public override void SetInstantiationData(KoboldEntitySpawner.NetworkedEntityInstantiationData data) {
         base.SetInstantiationData(data);
         assetPair.Value = new AssetNamePair { groupName = data.groupName, assetName = data.assetName };
+        moneyPileWorth.Value = data.moneyPileWorth;
     }
     
     protected override void Awake() {
@@ -258,6 +260,12 @@ public class NetworkedEntity : GeneHolder {
     [ServerRpc]
     public void OnGrab(NetworkedKobold kobold) {
         grabbed?.Invoke(kobold);
+    }
+    
+    [ServerRpc]
+    public void SetMoneyPileWorth(float worth) {
+        Debug.Log($"Set worth to {worth}");
+        moneyPileWorth.Value = worth;
     }
     
     [ServerRpc]

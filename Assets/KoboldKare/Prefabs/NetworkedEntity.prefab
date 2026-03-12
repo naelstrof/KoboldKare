@@ -50,6 +50,8 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 5445727179456667262}
   _networkObjectCache: {fileID: 0}
+  type: 0
+  startingReagents: []
 --- !u!114 &5445727179456667262
 MonoBehaviour:
   m_ObjectHideFlags: 0

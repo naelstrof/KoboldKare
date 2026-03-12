@@ -76,6 +76,7 @@ public class MailMachine : SuckingMachine, IAnimationStationSet {
             data.assetName = key;
             data.position = payoutLocation.position;
             data.rotation = payoutLocation.rotation;
+            data.moneyPileWorth = totalWorth;
             InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, false, ent.Owner);
         } else {
             Debug.LogError("Money pile prefab not found in database.");

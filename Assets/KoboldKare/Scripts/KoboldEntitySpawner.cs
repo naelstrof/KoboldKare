@@ -108,6 +108,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
         public byte saturation;
         public string dickEquip;
         public byte grabCount;
+        public float moneyPileWorth;
 
         public ReagentContents reagentContents;
 
@@ -153,6 +154,7 @@ public class KoboldEntitySpawner : MonoBehaviour {
                 saturation = 128,
                 dickEquip = "None",
                 grabCount = 1,
+                moneyPileWorth = 0f,
                 reagentContents = new ReagentContents(20f)
             };
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using FishNet;
 using KoboldKare;
 using Photon.Pun;
 using SimpleJSON;
@@ -23,11 +24,15 @@ public class GenericPurchasable : MonoBehaviour {
     [SerializeField]
     private Shader displayShader;
 
-    private string purchasablePhotonName;
+    private struct AssetGroupKeyPair {
+        public string group;
+        public string key;
+    }
+    private AssetGroupKeyPair purchaseable;
     
     [SerializeField]
     private AudioPack purchaseSoundPack;
-    private bool inStock {
+    public bool inStock {
         get {
             if (display) {
                 return display.activeInHierarchy;
@@ -41,6 +46,8 @@ public class GenericPurchasable : MonoBehaviour {
     private MoneyFloater floater;
 
     private NetworkedEntity networkedEntity;
+
+    public float GetPrice() => price;
 
     public virtual void Start() {
         source = gameObject.AddComponent<AudioSource>();
@@ -138,16 +145,23 @@ public class GenericPurchasable : MonoBehaviour {
         return newDisplay;
     }
 
-    protected void SwapTo(string group, string targetPurchasableKey) {
-        if (purchasablePhotonName == targetPurchasableKey) {
+    private async void SwapTo(string group, string targetPurchasableKey) {
+        if (purchaseable.key == targetPurchasableKey && purchaseable.group == group) {
             return;
         }
+        
         if (display != null) {
             Destroy(display);
         }
-        purchasablePhotonName = targetPurchasableKey;
-        // FIXME FISHNET
-        /*var targetPrefab = ((DefaultPool)PhotonNetwork.PrefabPool).ResourceCache[targetPurchasable];
+
+        purchaseable = new AssetGroupKeyPair() {
+            group = group,
+            key = targetPurchasableKey
+        };
+        
+        var assetHandle = await KoboldKareObjectPostProcessor.GetAssetAsync(group, targetPurchasableKey, GameManager.GetErrorGeneric());
+
+        var targetPrefab = assetHandle.asset;
         display = GenerateDisplay(targetPrefab, displayShader, transform);
         
         Bounds encapsulate = new Bounds(transform.position, Vector3.zero);
@@ -156,7 +170,9 @@ public class GenericPurchasable : MonoBehaviour {
         }
         floater.SetBounds(encapsulate);
         display.SetActive(inStock);
-        floater.SetText(price.ToString());*/
+        floater.SetText(price.ToString());
+        
+        assetHandle.Release();
     }
     public virtual void OnDestroy() {
     }
@@ -171,58 +187,26 @@ public class GenericPurchasable : MonoBehaviour {
         }
     }
     private void OnUse(NetworkedKobold k) {
-        // FIXME FISHNET
-        //photonView.RPC("RPCUse", RpcTarget.All);
         if (k.TryGetKobold(out var kobold)) {
-            kobold.GetComponent<MoneyHolder>().ChargeMoney(price);
+            k.ChargeMoney(networkedEntity);
             purchaseSoundPack.Play(source);
             floater.gameObject.SetActive(false);
             display.SetActive(false);
-            // FIXME FISHNET
-            /*if (PhotonNetwork.IsMasterClient && !string.IsNullOrEmpty(purchasablePhotonName)) {
-                PhotonNetwork.InstantiateRoomObject(purchasablePhotonName, transform.position, Quaternion.identity);
-                StartCoroutine(Restock());
-            }*/
+            
+            var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+            data.assetName = purchaseable.key;
+            data.groupName = purchaseable.group;
+            data.position = transform.position;
+            
+            InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, true, k.Owner);
+            
+            StartCoroutine(Restock());
         }
     }
     private bool OnUseRequested(NetworkedKobold k) {
         return (display != null && display.activeInHierarchy) && (k.TryGetKobold(out var kobold) && kobold.GetComponent<MoneyHolder>().HasMoney(price));
     }
     
-    // FIXME FISHNET
-    /*public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        if (stream.IsWriting) {
-            stream.SendNext(inStock);
-            stream.SendNext(purchasablePhotonName);
-        } else {
-            display.SetActive((bool)stream.ReceiveNext());
-            string currentPurchasable = (string)stream.ReceiveNext();
-            SwapTo(currentPurchasable);
-            PhotonProfiler.LogReceive(sizeof(bool)+currentPurchasable.Length);
-        }
-    }
-    public override void Save(JSONNode node) {
-        base.Save(node);
-        node["inStock"] = inStock;
-        node["purchasable"] = purchasablePhotonName;
-    }
-
-    public override Task Load(JSONNode node) {
-        base.Load(node);
-        display.SetActive(node["inStock"]);
-        if (node.HasKey("purchasable")) {
-            if (KoboldKareObjectPostProcessor.GetAssetGroupFromKey(node["purchasable"], out var group)) {
-                SwapTo(group, node["purchasable"]);
-            }
-        } else {
-            if (spawn.TryGetAssetGroupAndKey(out var group, out var key)) {
-                SwapTo(group, key);
-            }
-        }
-
-        return Task.CompletedTask;
-    }*/
-
     private IEnumerator Restock() {
         yield return new WaitForSeconds(30f);
         OnRestock(null);

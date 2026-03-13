@@ -422,6 +422,14 @@ public class NetworkedKobold : NetworkedEntity {
         money.Value += moneyPile.moneyPileWorth.Value;
         InstanceFinder.ServerManager.Despawn(moneyPile);
     }
+
+    [ServerRpc]
+    public void ChargeMoney(NetworkedEntity purchasable) {
+        var buyable = purchasable.GetComponentInChildren<GenericPurchasable>();
+        if (buyable != null && buyable.inStock) {
+            money.Value = Mathf.Max(money.Value - buyable.GetPrice(),0);
+        }
+    }
     
     public bool TryGetKobold(out Kobold kobold) {
         if (koboldInstance && koboldInstance.TryGetComponent<Kobold>(out kobold)) {

@@ -109,6 +109,11 @@ public class NetworkedEntity : GeneHolder {
         }
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void TryTakeOwnership(NetworkConnection conn = null) {
+        GiveOwnership(conn);
+    }
+
     private async Task TryInitializeEntity(string groupName, string assetName) {
         switch (groupName) {
             default:
@@ -126,6 +131,12 @@ public class NetworkedEntity : GeneHolder {
                 }
                 entityInstance.transform.localPosition = Vector3.zero;
                 entityInstance.transform.localRotation = Quaternion.identity;
+                foreach (var reagentContainer in entityInstance.GetComponentsInChildren<GenericReagentContainer>()) {
+                    maxVolume = reagentContainer.GetStartingMaxVolume();
+                    foreach (var reagent in reagentContainer.startingReagents) {
+                        AddMix(reagent.reagent.GetReagent(reagent.volume), InjectType.Inject);
+                    }
+                }
                 break;
             case "Plant":
                 try {
@@ -144,6 +155,13 @@ public class NetworkedEntity : GeneHolder {
                 }
                 entityInstance.transform.localPosition = Vector3.zero;
                 entityInstance.transform.localRotation = Quaternion.identity;
+                foreach (var reagentContainer in entityInstance.GetComponentsInChildren<GenericReagentContainer>()) {
+                    maxVolume = reagentContainer.GetStartingMaxVolume();
+                    foreach (var reagent in reagentContainer.startingReagents) {
+                        AddMix(reagent.reagent.GetReagent(reagent.volume), InjectType.Inject);
+                    }
+                }
+
                 break;
             case PHOTONVIEW_ID_GROUP:
                 if (!int.TryParse(assetName, out int photonViewID)) {
@@ -167,6 +185,7 @@ public class NetworkedEntity : GeneHolder {
                 mapInstance.gameObject.SetActive(true);
                 
                 foreach (var reagentContainer in mapInstance.GetComponentsInChildren<GenericReagentContainer>()) {
+                    maxVolume = reagentContainer.GetStartingMaxVolume();
                     foreach (var reagent in reagentContainer.startingReagents) {
                         AddMix(reagent.reagent.GetReagent(reagent.volume), InjectType.Inject);
                     }

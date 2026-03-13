@@ -4,8 +4,10 @@ using SimpleJSON;
 using UnityEngine;
 
 public class GenericReagentContainer : MonoBehaviour {
-    [SerializeField,Header("This component has been deprecated, use a NetworkedEntity instead")]
+    [SerializeField]
     protected float startingMaxVolume = float.MaxValue;
+    
+    public float GetStartingMaxVolume() => startingMaxVolume;
     
     [SerializeField]
     public InspectorReagent[] startingReagents;

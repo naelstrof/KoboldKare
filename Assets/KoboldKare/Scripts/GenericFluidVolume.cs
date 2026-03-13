@@ -16,7 +16,7 @@ public class GenericFluidVolume : MonoBehaviour {
     public Material decalClearMaterial;
     public List<BoxCollider> fluidHitboxes = new List<BoxCollider>();
     
-    public HashSet<PhotonView> dippedObjects;
+    private HashSet<NetworkedEntity> dippedObjects;
     private NetworkedEntity networkedEntity;
     
     
@@ -48,7 +48,7 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     private void Awake() {
-        dippedObjects = new HashSet<PhotonView>();
+        dippedObjects = new ();
         GameEventSanitizer.SanitizeRuntime(drainStart, drainStartResponses, this);
         GameEventSanitizer.SanitizeRuntime(drainEnd, drainEndResponses, this);
     }
@@ -73,32 +73,29 @@ public class GenericFluidVolume : MonoBehaviour {
     
     public void Update() {
         dippedObjects.RemoveWhere(o=>o == null);
-        
-        // FIXME FISHNET
-        /*foreach(PhotonView view in dippedObjects) {
-            if (view == photonView) {
+        if (dippedObjects.Count <= 0) {
+            return;
+        }
+        foreach(var ent in dippedObjects) {
+            if (ent == networkedEntity) {
                 continue;
             }
-            DipDecal(view);
-            if (!photonView.IsMine) {
+            DipDecal(ent);
+            if (!ent.IsOwner) {
+                ent.TryTakeOwnership();
                 continue;
             }
 
-            GenericReagentContainer container = view.GetComponentInChildren<GenericReagentContainer>();
-            if (container != null && GenericReagentContainer.IsMixable(container.type, GenericReagentContainer.InjectType.Flood)) {
-                float spillVolume = Mathf.Min(container.maxVolume - container.volume,
-                    fillRate * Time.deltaTime);
-                ReagentContents spill = volumeContainer.Spill(spillVolume);
-                BitBuffer buffer = new BitBuffer(4);
-                buffer.AddReagentContents(spill);
-                container.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, volumeContainer.photonView.ViewID, (byte)GenericReagentContainer.InjectType.Flood);
-                volumeContainer.photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillVolume);
+            if (GeneHolder.IsMixable(ent.type, GeneHolder.InjectType.Flood)) {
+                float spillVolume = Mathf.Min(ent.maxVolume - ent.volume, fillRate * Time.deltaTime);
+                ReagentContents spill = networkedEntity.Spill(spillVolume);
+                ent.AddMix(spill, GeneHolder.InjectType.Flood);
             }
-        }*/
+        }
         dippedObjects.Clear();
     }
 
-    public void DipDecal(PhotonView view) {
+    public void DipDecal(NetworkedEntity view) {
         if (view.gameObject.layer == LayerMask.NameToLayer("World")) {
             return;
         }
@@ -122,14 +119,14 @@ public class GenericFluidVolume : MonoBehaviour {
             c.a = 1f;
             if (networkedEntity.IsCleaningAgent()) {
                 staticRenderers.Clear();
-                view.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                view.transform.GetComponentsInChildrenNoAlloc(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
                     SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalClearMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
                 }
             } else {
                 decalDipMaterial.color = c;
                 staticRenderers.Clear();
-                view.transform.GetComponentsInChildrenNoAlloc<Renderer>(staticTempRenderers, staticRenderers);
+                view.transform.GetComponentsInChildrenNoAlloc(staticTempRenderers, staticRenderers);
                 foreach(Renderer r in staticRenderers) {
                     SkinnedMeshDecals.PaintDecal.RenderDecal(r, decalDipMaterial, pos, Quaternion.FromToRotation(Vector3.forward, norm), rectangle, depth);
                 }
@@ -138,13 +135,13 @@ public class GenericFluidVolume : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider other) {
-        PhotonView view = other.GetComponentInParent<PhotonView>();
+        var view = other.GetComponentInParent<NetworkedEntity>();
         if (view != null) {
             dippedObjects.Add(view);
         }
     }
     public void OnTriggerStay(Collider other) {
-        PhotonView view = other.GetComponentInParent<PhotonView>();
+        var view = other.GetComponentInParent<NetworkedEntity>();
         if (view != null) {
             dippedObjects.Add(view);
         }

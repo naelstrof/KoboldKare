@@ -470,7 +470,7 @@ public class GeneHolder : NetworkBehaviour {
             return;
         }
         GetContents().AddMix(reagent.id, reagent.volume, worldContainer);
-        reagentContents.DirtyAll();
+        SetReagentContents(GetContents());
     }
 
     public ReagentContents Peek() => new(GetContents());

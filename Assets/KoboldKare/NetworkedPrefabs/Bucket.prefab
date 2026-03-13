@@ -130,11 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ffbe90fd241248a4d4f8beb243775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
-  _networkObjectCache: {fileID: 0}
   startingMaxVolume: 20
-  type: 0
   startingReagents: []
 --- !u!114 &6209813979592397900
 MonoBehaviour:
@@ -191,6 +187,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 1
+  sceneViewId: 0
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5305001150950473274}
@@ -263,7 +260,6 @@ MonoBehaviour:
     assetGroup: 
     assetName: 
     optionalDatabase: {fileID: 0}
-  container: {fileID: 5305001150950473274}
   bucketAnimator: {fileID: 8229970607678505117}
   defaultBucketDisplay: {fileID: 5734314245941284669}
   body: {fileID: 7403922466466801549}

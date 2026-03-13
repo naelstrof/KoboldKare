@@ -35,8 +35,6 @@ public class Plant : MonoBehaviour, ISavable {
     void Start() {
         networkedEntity = GetComponentInParent<NetworkedEntity>();
         if (networkedEntity) {
-            // FIXME FISHNET: hacky set maxvolume, can't tell who owns it.
-            networkedEntity.reagentContents.Value.SetMaxVolume(1f);
             networkedEntity.OnFilled += OnFilled;
             networkedEntity.hue.OnChange += OnColorChange;
             networkedEntity.brightness.OnChange += OnColorChange;

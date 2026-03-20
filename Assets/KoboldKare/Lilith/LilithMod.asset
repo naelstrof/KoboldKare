@@ -22,6 +22,7 @@ MonoBehaviour:
     title: Lilith
     description: 
     changeNotes: 
+    guid: 0445251a-028b-4af0-9596-b4730ffb70f2
   modObjects:
     playableCharacters:
     - {fileID: 2274364766123311957, guid: 9e5b26f3a223aeb4d84a97ad337e693e, type: 3}
@@ -30,7 +31,9 @@ MonoBehaviour:
     equipmentStoreItems: []
     dicks: []
     seeds: []
+    networkedPrefabs: []
     plants: []
     reagents: []
     reagentReactions: []
     equipment: []
+    customLocalization: []

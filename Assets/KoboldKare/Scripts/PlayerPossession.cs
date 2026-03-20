@@ -434,15 +434,11 @@ public class PlayerPossession : MonoBehaviour {
         pGrabber.UnfreezeAll();
     }
     private void OnRagdollInput(InputAction.CallbackContext ctx) {
-        // FIXME FISHNET
-        /*
         if (!ctx.ReadValueAsButton()) {
-            photonView.RPC(nameof(Ragdoller.PopRagdoll), RpcTarget.All);
-            inputRagdolled = false;
+            networkedKobold.SetRagdolled(false);
         } else {
-            photonView.RPC(nameof(Ragdoller.PushRagdoll), RpcTarget.All);
-            inputRagdolled = true;
-        }*/
+            networkedKobold.SetRagdolled(true);
+        }
     }
     // This fixes a bug where OnRagdoll isn't called when the application isn't in focus.
     void OnApplicationFocus(bool hasFocus) {

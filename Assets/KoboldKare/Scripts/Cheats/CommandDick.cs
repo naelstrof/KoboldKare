@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FishNet.Connection;
 using Photon.Pun;
 
 [Serializable]
@@ -9,8 +10,8 @@ public class CommandDick : Command {
 
     public override string GetArg0() => "/dick";
 
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
@@ -20,10 +21,16 @@ public class CommandDick : Command {
 
         List<string> dickNames = new List<string>();
         KoboldKareObjectPostProcessor.GetAllAssetNamesInGroup("Penis", dickNames);
+        if (!KoboldEntitySpawner.TryGetPlayerKobold(conn, out var networkedKobold)) {
+            throw new CheatsProcessor.CommandException("Failed to find player kobold.");
+        }
+        if (!networkedKobold.TryGetKobold(out var kobold)) {
+            throw new CheatsProcessor.CommandException("Kobold not ready yet, please wait.");
+        }
         if (short.TryParse(args[1], out short dickID)) {
-            SetDickByID(output, k, dickNames, dickID);
+            SetDickByID(output, kobold, dickNames, dickID);
         } else {
-            SetDickByName(output, k, dickNames, args);
+            SetDickByName(output, kobold, dickNames, args);
         }
     }
 

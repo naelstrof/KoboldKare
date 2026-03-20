@@ -1,12 +1,13 @@
 using System;
 using System.Text;
+using FishNet.Connection;
 using Photon.Pun;
 
 [System.Serializable]
 public class CommandCheats : Command {
     public override string GetArg0() => "/cheats";
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         throw new NotImplementedException();
         // FIXME FISHNET
         /*if ((Kobold)PhotonNetwork.MasterClient.TagObject != k) {

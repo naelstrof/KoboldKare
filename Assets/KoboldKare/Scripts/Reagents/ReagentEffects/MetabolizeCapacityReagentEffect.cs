@@ -7,7 +7,7 @@ public class MetabolizeCapacityReagentEffect : ModifyingReagentEffect {
         if (!k.TryGetKobold(out var kobold)) {
             return;
         }
-        float currentUsedAmount = Mathf.Max(kobold.metabolizedContents.volume, 20f);
+        float currentUsedAmount = Mathf.Max(k.metabolizedContents.Value.volume, 20f);
         k.SetMetabolizeCapacitySize(Mathf.Max(k.metabolizeCapacitySize.Value + usedAmount * Multiplier, currentUsedAmount));
     }
 }

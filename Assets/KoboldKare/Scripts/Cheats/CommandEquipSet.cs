@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FishNet.Connection;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -96,7 +97,7 @@ public class CommandEquipSet : Command {
         }
     }
 
-    public override void Execute(StringBuilder output, Kobold kobold, string[] args) {
+    public override void Execute(StringBuilder output, NetworkConnection kobold, string[] args) {
         base.Execute(output, kobold, args);
 
         if (!CheatsProcessor.GetCheatsEnabled()) {

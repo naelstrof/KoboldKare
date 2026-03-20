@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using FishNet;
+using FishNet.Connection;
 using Photon.Pun;
 using UnityEngine;
 
@@ -43,8 +45,8 @@ public class CheatsProcessor : MonoBehaviour {
     }
 
     public static bool GetCheatsEnabled() {
-        throw new NotImplementedException();
-        //return (Application.isEditor && PhotonNetwork.IsMasterClient) || NetworkManager.instance.GetCheatsEnabled();
+        // FIXME fishnet
+        return (Application.isEditor && InstanceFinder.ServerManager.Started);
     }
 
     public static ReadOnlyCollection<Command> GetCommands() {
@@ -69,7 +71,7 @@ public class CheatsProcessor : MonoBehaviour {
         public CommandException(string message) : base(message) { }
     }
 
-    private void ProcessCommand(Kobold kobold, string[] args) {
+    private void ProcessCommand(NetworkConnection connection, string[] args) {
         // empty command
         if (args.Length <= 0) {
             return;
@@ -85,7 +87,7 @@ public class CheatsProcessor : MonoBehaviour {
 
         foreach (var command in commands) {
             if (command.GetArg0() == args[0]) {
-                command.Execute(commandOutput, kobold, args);
+                command.Execute(commandOutput, connection, args);
                 outputChanged?.Invoke(commandOutput.ToString());
                 return;
             }
@@ -93,15 +95,10 @@ public class CheatsProcessor : MonoBehaviour {
         throw new CommandException($"`{args[0]}` Not a command. Use /help to see the available commands.");
     }
 
-    public static void ProcessCommand(Kobold kobold, string command) {
-        throw new NotImplementedException();
-        // FIXME FISHNET
-        //if (kobold == null || kobold != (Kobold)PhotonNetwork.LocalPlayer.TagObject) {
-            //return;
-        //}
+    public static void ProcessCommand(NetworkConnection connection, string command) {
         string[] args = command.Split(' ');
         try {
-            instance.ProcessCommand(kobold, args);
+            instance.ProcessCommand(connection, args);
         } catch (CommandException exception) {
             instance.commandOutput.Append($"<#ff4f00>{exception.Message}</color>\n");
             if (instance.commandOutput.Length > maxLength) {

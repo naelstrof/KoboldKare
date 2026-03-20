@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet.Connection;
 using Photon.Pun;
 using UnityEngine;
 
@@ -9,8 +10,8 @@ using UnityEngine;
 public class CommandSkip : Command {
     public override string GetArg0() => "/skip";
 
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }

@@ -1,15 +1,16 @@
 using System;
 using Photon.Pun;
 using System.Text;
+using FishNet.Connection;
 
 [System.Serializable]
 
 public class CommandCum : Command
 {
     public override string GetArg0() => "/cum";
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
         throw new NotImplementedException();
-        base.Execute(output, k, args);
+        base.Execute(output, conn, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }

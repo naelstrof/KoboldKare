@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet;
+using FishNet.Connection;
 using NetStack.Serialization;
 using Photon.Pun;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -22,8 +25,8 @@ public class CommandGive : Command {
     };
 
     public override string GetArg0() => "/give";
-    public override void Execute(StringBuilder output, Kobold kobold, string[] args) {
-        base.Execute(output, kobold, args);
+    public override void Execute(StringBuilder output, NetworkConnection connection, string[] args) {
+        base.Execute(output, connection, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
         }
@@ -31,8 +34,42 @@ public class CommandGive : Command {
         if (args.Length < 2) {
             throw new CheatsProcessor.CommandException("/give requires at least one argument. Use /list to find what you can spawn.");
         }
+        if (!KoboldEntitySpawner.TryGetPlayerKobold(connection, out var networkedKobold)) {
+            throw new CheatsProcessor.CommandException("Failed to find player kobold.");
+        }
+        if (!networkedKobold.TryGetKobold(out var kobold)) {
+            throw new CheatsProcessor.CommandException("Kobold not ready yet, please wait.");
+        }
+        
+        var koboldTransform = kobold.hip.transform;
+        if (KoboldKareObjectPostProcessor.GetAssetGroupFromKey(args[1], out var group)) {
+            if (group == "Reagent") {
+                if (bucket == null || !bucket.TryGetAssetGroupAndKey(out var bucketGroup, out var bucketKey)) {
+                    throw new CheatsProcessor.CommandException("Failed to spawn bucket, bucket reference is not valid.");
+                }
 
-        throw new NotImplementedException();
+                if (!ReagentDatabase.TryGetAsset(args[1], out var check)) {
+                    throw new CheatsProcessor.CommandException($"Failed to get reagent with name {args[1]}");
+                }
+                var data = KoboldEntitySpawner.NetworkedEntityInstantiationData.Default();
+                data.groupName = bucketGroup;
+                data.assetName = bucketKey;
+                data.position = kobold.transform.position + kobold.transform.forward * 1f;
+                data.rotation = kobold.transform.rotation;
+                data.reagentContents.maxVolume = 20f;
+                if (args.Length > 2 && float.TryParse(args[2], out float value)) {
+                    data.reagentContents.maxVolume = value;
+                    data.reagentContents.AddMix(check.GetReagent(value));
+                } else {
+                    data.reagentContents.AddMix(check.GetReagent(20f));
+                }
+
+                InstanceFinder.NetworkManager.GetComponent<KoboldEntitySpawner>().SpawnAsServer(data, true, kobold.GetComponentInParent<NetworkedKobold>().Owner);
+                output.Append($"Spawned bucket filled with {20f} {args[1]}.\n");
+                return;
+                
+            }
+        }
 
         // FIXME FISHNET
         /*DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;

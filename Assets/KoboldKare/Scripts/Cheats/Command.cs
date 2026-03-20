@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet.Connection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -53,9 +54,9 @@ public class Command {
     /// <summary>
     /// </summary>
     /// <param name="output"></param>
-    /// <param name="k">The kobold that tried to run the command. Commands are only processed by the master client, use this kobold to figure out if they have permission to run the command.</param>
+    /// <param name="conn"></param>
     /// <param name="args">The full argument list, space separated. For example: {"/give", "MelonJuice", "30"}.</param>
-    public virtual void Execute(StringBuilder output, Kobold k, string[] args) {}
+    public virtual void Execute(StringBuilder output, NetworkConnection conn, string[] args) {}
 
     public virtual void OnValidate() { }
 

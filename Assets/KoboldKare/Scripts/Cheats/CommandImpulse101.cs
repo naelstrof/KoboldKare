@@ -1,11 +1,12 @@
 using System.Text;
+using FishNet.Connection;
 using UnityEngine;
 
 [System.Serializable]
 public class CommandImpulse101 : Command {
     public override string GetArg0() => "/impulse101";
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         if (args.Length != 1) {
             throw new CheatsProcessor.CommandException("Usage: /impulse101");
         }

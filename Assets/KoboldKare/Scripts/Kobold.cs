@@ -63,7 +63,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     public LayerMask GetHeartHitMask() => heartHitMask;
     
     private UsableColliderComparer usableColliderComparer;
-    public ReagentContents metabolizedContents;
     
     [SerializeField]
     private AudioPack tummyGrumbles;
@@ -289,7 +288,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         usableColliderComparer = new UsableColliderComparer();
         consumedReagents = new ReagentContents();
         addbackReagents = new ReagentContents();
-        metabolizedContents = new ReagentContents(20f);
         
         // FIXME FISHNET
         //photonView.ObservedComponents.Add(bellyContainer);
@@ -348,10 +346,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
                 }
             }
         }
-    }
-
-    private void OnMetabolizeCapacitySizeChanged(float prev, float next, bool asServer) {
-        metabolizedContents.SetMaxVolume(next);
     }
 
     private void OnBreastSizeChanged(float prev, float next, bool asServer) {
@@ -427,8 +421,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
         OnFatSizeChanged(networkedKobold.fatSize.Value, networkedKobold.fatSize.Value, true);
         networkedKobold.breastSize.OnChange += OnBreastSizeChanged;
         OnBreastSizeChanged(networkedKobold.breastSize.Value, networkedKobold.breastSize.Value, true);
-        networkedKobold.metabolizeCapacitySize.OnChange += OnMetabolizeCapacitySizeChanged;
-        OnMetabolizeCapacitySizeChanged(networkedKobold.metabolizeCapacitySize.Value, networkedKobold.metabolizeCapacitySize.Value, true);
         networkedKobold.brightness.OnChange += OnColorChanged;
         networkedKobold.hue.OnChange += OnColorChanged;
         networkedKobold.saturation.OnChange += OnColorChanged;
@@ -452,7 +444,6 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
             networkedKobold.baseSize.OnChange -= OnBaseSizeChanged;
             networkedKobold.fatSize.OnChange -= OnFatSizeChanged;
             networkedKobold.breastSize.OnChange -= OnBreastSizeChanged;
-            networkedKobold.metabolizeCapacitySize.OnChange -= OnMetabolizeCapacitySizeChanged;
             networkedKobold.brightness.OnChange -= OnColorChanged;
             networkedKobold.hue.OnChange -= OnColorChanged;
             networkedKobold.saturation.OnChange -= OnColorChanged;
@@ -667,7 +658,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     public void Save(JSONNode node) {
         networkedKobold.SaveGenes(node, "genes");
         node["arousal"] = arousal;
-        metabolizedContents.Save(node, "metabolizedContents");
+        //metabolizedContents.Save(node, "metabolizedContents");
         consumedReagents.Save(node, "consumedReagents");
         
         // FIXME FISHNET
@@ -678,7 +669,7 @@ public class Kobold : MonoBehaviour, ISavable, IValuedGood {
     public Task Load(JSONNode node) {
         networkedKobold.LoadGenes(node, "genes");
         arousal = node["arousal"];
-        metabolizedContents.Load(node, "metabolizedContents");
+        //metabolizedContents.Load(node, "metabolizedContents");
         consumedReagents.Load(node, "consumedReagents");
         bool isPlayerControlled = node["isPlayerControlled"];
         if (isPlayerControlled) {

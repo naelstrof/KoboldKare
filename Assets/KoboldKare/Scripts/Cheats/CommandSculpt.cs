@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FishNet.Connection;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -33,8 +34,8 @@ public class CommandSculpt : Command
 
     public override string GetArg0() => "/sculpt";
 
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
 
         static void Usage() {
             throw new CheatsProcessor.CommandException("Usage: /sculpt {self,target} {dick,balls,boobs,height,fat,foodcapacity,bellycapacity,dickthickness,energy,clothinghue,hue,brightness,saturation,impregnate} [set] {modifier} (set is optional)");
@@ -42,6 +43,13 @@ public class CommandSculpt : Command
 
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");
+        }
+        
+        if (!KoboldEntitySpawner.TryGetPlayerKobold(conn, out var networkedKobold)) {
+            throw new CheatsProcessor.CommandException("Failed to find player kobold.");
+        }
+        if (!networkedKobold.TryGetKobold(out var kobold)) {
+            throw new CheatsProcessor.CommandException("Kobold not ready yet, please wait.");
         }
 
         if (args.Length != 4 && args.Length != 5) {
@@ -74,16 +82,16 @@ public class CommandSculpt : Command
         NetworkedKobold target = null;
 
         if (targetType == "self") {
-            target = k.GetComponentInParent<NetworkedKobold>();
+            target = networkedKobold;
         } else if (targetType == "target") {
-            Vector3 aimPosition = k.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
-            Vector3 aimDir = k.GetComponentInChildren<NetworkedKobold>(true).GetEyeDir();
+            Vector3 aimPosition = kobold.GetComponentInChildren<Animator>().GetBoneTransform(HumanBodyBones.Head).position;
+            Vector3 aimDir = networkedKobold.GetEyeDir();
 
             foreach (RaycastHit hit in Physics.RaycastAll(aimPosition, aimDir, 5f)) {
                 NetworkedKobold b = hit.collider.GetComponentInParent<NetworkedKobold>();
 
                 if (b == null) continue;
-                if (b == k) continue;
+                if (b == networkedKobold) continue;
 
                 target = b;
 

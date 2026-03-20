@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet.Connection;
 using Photon.Pun;
 using UnityEngine;
 
@@ -20,8 +21,8 @@ public class CommandList : Command {
     };
 
     public override string GetArg0() => "/list";
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         bool didSomething = false;
         throw new NotImplementedException();
         // FIXME FISHNET

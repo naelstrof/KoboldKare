@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FishNet;
 using Photon.Pun;
 using Steamworks;
 using TMPro;
@@ -184,13 +185,9 @@ public class ChatPanel : MonoBehaviour {
         chatInput.text="";
         chatScrollView.normalizedPosition = new Vector2(0, 0);
         if (!string.IsNullOrEmpty(t)) {
-            // FIXME FISHNET
-            /*
-            RaiseEventOptions options = new RaiseEventOptions() {
-                CachingOption = EventCaching.DoNotCache,
-                Receivers = ReceiverGroup.All,
-            };
-            PhotonNetwork.RaiseEvent(NetworkManager.CustomChatEvent, t.TrimEnd(), options, SendOptions.SendReliable);*/
+            InstanceFinder.ClientManager.Broadcast(new KoboldKareChatHandler.ChatBroadcast() {
+                chatMessage = t.TrimEnd()
+            });
         }
         MainMenu.ShowMenuStatic(MainMenu.MainMenuMode.None);
     }

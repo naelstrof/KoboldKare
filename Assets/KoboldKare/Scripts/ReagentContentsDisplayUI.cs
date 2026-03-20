@@ -37,14 +37,12 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         }
         switch (targetContents) {
             case TargetReagentContents.Belly:
-                targetKobold.reagentContents.OnChange += OnReagentContentsChangedOther;
-                OnReagentContentsChanged(targetKobold.GetContents());
+                targetKobold.reagentContents.OnChange += OnReagentContentsChanged;
+                OnReagentContentsChanged(targetKobold.GetContents(), targetKobold.GetContents(), false);
                 break;
             case TargetReagentContents.Metabolized:
-                //targetKobold.bellyContainer.OnChange.AddListener(OnReagentContentsChanged);
-                //FIXME FISHNET
-                //kobold.metabolizedContents.changed += OnReagentContentsChanged;
-                OnReagentContentsChanged(kobold.metabolizedContents);
+                targetKobold.metabolizedContents.OnChange += OnReagentContentsChanged;
+                OnReagentContentsChanged(targetKobold.metabolizedContents.Value, targetKobold.metabolizedContents.Value, false);
                 break;
         }
     }
@@ -53,13 +51,9 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
         return a.id.CompareTo(b.id);
     }
 
-    private void OnReagentContentsChanged(ReagentContents contents) {
-        OnReagentContentsChangedOther(contents, contents, true);
-    }
-
-    private void OnReagentContentsChangedOther(ReagentContents contents, ReagentContents next, bool asServer) {
+    private void OnReagentContentsChanged(ReagentContents prev, ReagentContents next, bool asServer) {
         reagents.Clear();
-        foreach (var reagent in contents) {
+        foreach (var reagent in next) {
             reagents.Add(reagent);
         }
         reagents.Sort(SortReagent);
@@ -99,8 +93,8 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
                 StartCoroutine(TweenWidth(images[i], Mathf.Min(reagents[i].volume * volumeToPixels,3000f)));
             }
 
-            StartCoroutine(TweenWidth(rectTransform, Mathf.Min(contents.volume * volumeToPixels, 3000f)));
-            StartCoroutine(TweenWidth(background, Mathf.Min(contents.GetMaxVolume() * volumeToPixels, 3000f)));
+            StartCoroutine(TweenWidth(rectTransform, Mathf.Min(next.volume * volumeToPixels, 3000f)));
+            StartCoroutine(TweenWidth(background, Mathf.Min(next.GetMaxVolume() * volumeToPixels, 3000f)));
         } else {
             for (int i = 0; i < reagents.Count; i++) {
                 if (ReagentDatabase.TryGetAsset(reagents[i].id, out var reagentAsset)) {
@@ -112,8 +106,8 @@ public class ReagentContentsDisplayUI : MonoBehaviour {
                 images[i].sizeDelta = new Vector2(reagents[i].volume * volumeToPixels, images[i].sizeDelta.y);
             }
 
-            rectTransform.sizeDelta = new Vector2(contents.volume * volumeToPixels, rectTransform.sizeDelta.y);
-            background.sizeDelta = new Vector2(contents.GetMaxVolume() * volumeToPixels, background.sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(next.volume * volumeToPixels, rectTransform.sizeDelta.y);
+            background.sizeDelta = new Vector2(next.GetMaxVolume() * volumeToPixels, background.sizeDelta.y);
         }
     }
 

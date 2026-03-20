@@ -23,6 +23,7 @@ public class NetworkedKobold : NetworkedEntity {
     private readonly SyncVar<ControlType> controlType = new(ControlType.AIPlayer);
     public readonly SyncVar<float> energy = new SyncVar<float>();
     public readonly SyncVar<float> money = new SyncVar<float>();
+    public readonly SyncVar<ReagentContents> metabolizedContents = new SyncVar<ReagentContents>();
 
     public Quaternion GetFacingRotation() => Quaternion.AngleAxis(facingRotationY.Value, Vector3.up);
     public Vector3 GetFacingDirection() => GetFacingRotation()*Vector3.forward;

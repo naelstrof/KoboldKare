@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Connection;
 using Photon.Pun;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class Chatter : MonoBehaviour {
     private AudioPack yowls;
 
     private Coroutine displayMessageRoutine;
+    private NetworkedKobold kobold;
 
     public void SetTextOutput(TMPro.TMP_Text newChatText) {
         chatText = newChatText;
@@ -21,6 +23,25 @@ public class Chatter : MonoBehaviour {
 
     public void SetYowlPack(AudioPack newPack) {
         yowls = newPack;
+    }
+
+    private void OnEnable() {
+        KoboldKareChatHandler.chatMessageReceived += OnChatMessage;
+    }
+    private void OnDisable() {
+        KoboldKareChatHandler.chatMessageReceived -= OnChatMessage;
+    }
+
+    void Start() {
+        kobold = GetComponentInParent<NetworkedKobold>();
+    }
+
+    private void OnChatMessage(NetworkConnection conn, string chat) {
+        if (KoboldEntitySpawner.TryGetPlayerKobold(conn, out var chatKobold)) {
+            if (chatKobold == kobold) {
+                DisplayMessage(chat, 1f);
+            }
+        }
     }
 
     public void DisplayMessage(string message, float duration) {

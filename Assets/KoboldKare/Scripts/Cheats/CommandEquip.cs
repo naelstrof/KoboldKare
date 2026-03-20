@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet.Connection;
 using UnityEngine;
 
 [System.Serializable]
 public class CommandEquip : Command {
     public override string GetArg0() => "/equip";
-    public override void Execute(StringBuilder output, Kobold kobold, string[] args) {
+    public override void Execute(StringBuilder output, NetworkConnection kobold, string[] args) {
         base.Execute(output, kobold, args);
         if (!CheatsProcessor.GetCheatsEnabled()) {
             throw new CheatsProcessor.CommandException("Cheats are not enabled, use `/cheats 1` to enable cheats.");

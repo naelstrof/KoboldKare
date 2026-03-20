@@ -8,10 +8,9 @@ public class ReagentConsumptionMetabolize : ReagentConsumptionEvent {
         if (!k.TryGetKobold(out var kobold)) {
             return;
         }
-        float spaceAvailable = kobold.metabolizedContents.GetMaxVolume()-kobold.metabolizedContents.volume;
+        float spaceAvailable = k.metabolizedContents.Value.GetMaxVolume()-k.metabolizedContents.Value.volume;
         float mixAmount = Mathf.Min(spaceAvailable, amountProcessed);
-        kobold.metabolizedContents.AddMix(scriptableReagent.GetReagent(mixAmount));
-        //addBack.AddMix(scriptableReagent.GetReagent(amountProcessed - mixAmount));
+        k.metabolizedContents.Value.AddMix(scriptableReagent.GetReagent(mixAmount));
         amountProcessed = mixAmount;
         base.OnConsume(k, scriptableReagent, ref amountProcessed, ref reagentMemory, ref addBack, ref energy);
     }

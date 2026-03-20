@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FishNet.Connection;
 using Photon.Pun;
 using UnityEngine;
 
 [System.Serializable]
 public class CommandKick : Command {
     public override string GetArg0() => "/kick";
-    public override void Execute(StringBuilder output, Kobold k, string[] args) {
-        base.Execute(output, k, args);
+    public override void Execute(StringBuilder output, NetworkConnection conn, string[] args) {
+        base.Execute(output, conn, args);
         if (args.Length != 2) {
             throw new CheatsProcessor.CommandException("Usage: /kick {actor number}");
         }

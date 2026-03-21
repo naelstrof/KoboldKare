@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
 using NetStack.Serialization;
 using Photon.Pun;
 using UnityEngine;
@@ -37,14 +38,10 @@ public class GenericEdible : MonoBehaviour {
             // Only successfully eat if we own both the edible, and the kobold. Otherwise, wait for ownership to successfully transfer
             float spillAmount = Mathf.Min(10f, k.reagentContents.Value.GetMaxVolume() - k.reagentContents.Value.volume);
             ReagentContents spill = networkedEntity.Spill(spillAmount);
-            // FIXME FISHNET
-            /*photonView.RPC(nameof(GenericReagentContainer.Spill), RpcTarget.Others, spillAmount);
-            BitBuffer buffer = new BitBuffer(4);
-            buffer.AddReagentContents(spill);
-            k.bellyContainer.photonView.RPC(nameof(GenericReagentContainer.AddMixRPC), RpcTarget.All, buffer, photonView.ViewID, (byte)GenericReagentContainer.InjectType.Spray);*/
-            /*if (destroyOnEat) {
-                PhotonNetwork.Destroy(photonView.gameObject);
-            }*/
+            k.AddMix(spill, GeneHolder.InjectType.Spray);
+            if (destroyOnEat) {
+                networkedEntity.Despawn();
+            }
             GameManager.instance.SpawnAudioClipInWorld(eatSoundPack, transform.position);
         }
     }

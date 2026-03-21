@@ -28,6 +28,11 @@ public class KoboldKareChatHandler : MonoBehaviour {
             return;
         }
         _networkManager.ServerManager.RegisterBroadcast<ChatBroadcast>(OnChatBroadcast);
+        _networkManager.ClientManager.RegisterBroadcast<ChatBroadcast>(OnChatBroadcastClient);
+    }
+
+    private void OnChatBroadcastClient(ChatBroadcast broadcast, Channel channel) {
+        CheatsProcessor.AppendText(broadcast.chatMessage);
     }
 
     public struct ChatBroadcast : IBroadcast {
@@ -35,9 +40,10 @@ public class KoboldKareChatHandler : MonoBehaviour {
     }
 
     private void OnChatBroadcast(NetworkConnection conn, ChatBroadcast data, Channel channel) {
-        CheatsProcessor.AppendText($"{conn.ClientId}: {data.chatMessage}\n");
         chatMessageReceived?.Invoke(conn, data.chatMessage);
         CheatsProcessor.ProcessCommand(conn, data.chatMessage);
+        var koboldName = KoboldEntitySpawner.TryGetPlayerName(conn);
+        _networkManager.ServerManager.Broadcast(new ChatBroadcast { chatMessage = $"{koboldName}: {data.chatMessage}\n" });
     }
 
 }

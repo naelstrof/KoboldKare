@@ -2,6 +2,7 @@ using FishNet;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityScriptableSettings;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(ObjectiveManager))]
@@ -53,6 +54,7 @@ public class SceneDescriptor : OrbitCameraPivotBase {
         var networkManager = InstanceFinder.NetworkManager;
         if (networkManager.ClientManager.Started) {
             networkManager.ClientManager.Broadcast(PlayerKoboldLoader.GetPlayerInstantiationData());
+            networkManager.ClientManager.Broadcast(new KoboldEntitySpawner.SetKoboldNameBroadcast() { name = ((SettingString)SettingsManager.GetSetting("NickName" )).GetValue() }); 
         }
     }
 

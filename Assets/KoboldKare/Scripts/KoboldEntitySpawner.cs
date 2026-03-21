@@ -9,9 +9,15 @@ using FishNet.Managing;
 using FishNet.Managing.Scened;
 using FishNet.Object;
 using FishNet.Transporting;
+using UnityScriptableSettings;
 
 public class KoboldEntitySpawner : MonoBehaviour {
-    private static Dictionary<int, NetworkObject> playerKobolds;
+    private struct PlayerData {
+        public NetworkObject kobold;
+        public string name;
+    }
+    private static Dictionary<int, PlayerData> playerKobolds;
+    
     #region Public.
     /// <summary>
     /// Called on the server when a player is spawned.
@@ -63,9 +69,22 @@ public class KoboldEntitySpawner : MonoBehaviour {
             _networkManager.LogWarning($"PlayerSpawner on {gameObject.name} cannot work as NetworkManager wasn't found on this object or within parent objects.");
             return;
         }
+        playerKobolds = new ();
         _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
         _networkManager.ServerManager.RegisterBroadcast<NetworkedEntityInstantiationData>(OnSpawnBroadcast);
-        playerKobolds = new ();
+        _networkManager.ServerManager.RegisterBroadcast<SetKoboldNameBroadcast>(OnKoboldName);
+        Debug.Log("registered Name");
+    }
+
+    private void OnKoboldName(NetworkConnection conn, SetKoboldNameBroadcast data, Channel channel) {
+        Debug.Log($"Got broadcast {data.name}");
+        if (playerKobolds.TryGetValue(conn.ClientId, out var playerKobold)) {
+            playerKobold.name = data.name;
+            Debug.Log($"set name to {playerKobold.name} ?? ");
+            playerKobolds[conn.ClientId] = playerKobold;
+        } else {
+            playerKobolds.TryAdd(conn.ClientId, new PlayerData() { kobold = null, name = data.name });
+        }
     }
 
     private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer) {
@@ -83,6 +102,11 @@ public class KoboldEntitySpawner : MonoBehaviour {
         }
         
         _networkManager.ClientManager.Broadcast(PlayerKoboldLoader.GetPlayerInstantiationData()); 
+        _networkManager.ClientManager.Broadcast(new SetKoboldNameBroadcast() { name = ((SettingString)SettingsManager.GetSetting("NickName" )).GetValue() }); 
+    }
+
+    public struct SetKoboldNameBroadcast : IBroadcast {
+        public string name;
     }
 
     public struct NetworkedEntityInstantiationData : IBroadcast {
@@ -200,7 +224,12 @@ public class KoboldEntitySpawner : MonoBehaviour {
         _networkManager.ServerManager.Spawn(nob, conn);
         
         if (data.groupName == "PlayableCharacter") {
-            playerKobolds.TryAdd(conn.ClientId, nob);
+            if (playerKobolds.TryGetValue(conn.ClientId, out var playerKobold)) {
+                playerKobold.kobold = nob;
+                playerKobolds[conn.ClientId] = playerKobold;
+            } else {
+                playerKobolds.TryAdd(conn.ClientId, new PlayerData() { kobold = nob, name = "(connecting player...)" });
+            }
         }
 
         // If there are no global scenes 
@@ -211,16 +240,23 @@ public class KoboldEntitySpawner : MonoBehaviour {
         OnSpawned?.Invoke(nob);
     }
 
+    public static string TryGetPlayerName(NetworkConnection conn) {
+        if (playerKobolds.TryGetValue(conn.ClientId, out var data)) {
+            return data.name;
+        }
+        return "(connecting player...)";
+    }
+
     public static bool GetIsPlayerKobold(NetworkedKobold o) {
-        if (playerKobolds.TryGetValue(o.OwnerId, out var nob)) {
-            return (nob.TryGetComponent(out NetworkedKobold test) && test == o);
+        if (playerKobolds.TryGetValue(o.OwnerId, out var data)) {
+            return (data.kobold.TryGetComponent(out NetworkedKobold test) && test == o);
         }
         return false;
     }
 
     public static bool TryGetPlayerKobold(NetworkConnection conn, out NetworkedKobold o) {
-        if (playerKobolds.TryGetValue(conn.ClientId, out var nob)) {
-            return nob.TryGetComponent(out o);
+        if (playerKobolds.TryGetValue(conn.ClientId, out var data)) {
+            return data.kobold.TryGetComponent(out o);
         }
         o = null;
         return false;

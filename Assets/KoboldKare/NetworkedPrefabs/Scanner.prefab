@@ -106,23 +106,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onSuccessResponses:
-  - rid: 998295076665819139
+  - rid: -2
   onFailureResponses:
-  - rid: 998295076665819137
+  - rid: -2
   scanDelay: 0.08
   references:
     version: 2
     RefIds:
-    - rid: 998295076665819137
-      type: {class: GameEventResponsePlayOneShot, ns: , asm: Assembly-CSharp}
-      data:
-        target: {fileID: 9126312317091049311}
-        clip: {fileID: 8300000, guid: f3f684858781dbe41b9659969de683d2, type: 3}
-    - rid: 998295076665819139
-      type: {class: GameEventResponsePlayOneShot, ns: , asm: Assembly-CSharp}
-      data:
-        target: {fileID: 9126312317091049311}
-        clip: {fileID: 8300000, guid: c48d03e8805874e449e108f02b452a37, type: 3}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!54 &7877201617650488777
 Rigidbody:
   m_ObjectHideFlags: 0

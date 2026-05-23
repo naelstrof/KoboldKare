@@ -105,7 +105,9 @@ public class DickDescriptor : MonoBehaviour {
         public bool inside { get; set; }
         public bool overpenetrated { get; set; }
     }
+
     public List<DickSet> dicks = new List<DickSet>();
+
     public void Initialize() {
         foreach (DickSet set in dicks) {
             //set.ball
@@ -153,14 +155,17 @@ public class DickDescriptor : MonoBehaviour {
         cumming = true;
         float ballSize = attachedKobold.GetGenes().ballSize;
         // (1-1/(x/maxInput+1)) * maxPossibleResult
-        float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 60f + 5f;
+        float pulsesSample = (1f - 1f / (ballSize / 100f + 1f)) * 30f + 6f;
         int pulses = Mathf.CeilToInt(pulsesSample);
-        float pulseDuration = 0.8f;
+        float pulseDuration = 0.25f;
         for (int i = 0; i < pulses; i++) {
             GameManager.instance.SpawnAudioClipInWorld(set.cumSoundPack, set.dick.transform.position);
             float pulseStartTime = Time.time;
+            pulseDuration += (1f / ((i + 1) * 4));
+            //Debug.Log(pulseStartTime +" + "+ pulseDuration);
             while (Time.time < pulseStartTime+pulseDuration) {
                 float t = ((Time.time - pulseStartTime) / pulseDuration);
+                
                 foreach (var renderTarget in set.dick.GetTargetRenderers()) {
                     Mesh mesh = ((SkinnedMeshRenderer)renderTarget.renderer).sharedMesh;
                     List<string> cumBlendShapeIndices = new List<string>();
@@ -198,9 +203,9 @@ public class DickDescriptor : MonoBehaviour {
                 if (MozzarellaPool.instance.TryInstantiate(out Mozzarella mozzarella)) {
                     ReagentContents alloc = new ReagentContents();
                     if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
-                        alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
+                        alloc.AddMix(cum.GetReagent( (ballSize * 3f/2f) / (pulses + ballSize / 2) ));
                     }
-                    mozzarella.SetVolumeMultiplier(alloc.volume*2f);
+                    mozzarella.SetVolumeMultiplier(alloc.volume*1.1f);
                     Color color = alloc.GetColor();
                     mozzarella.SetLineColor(color);
                     mozzarella.hitCallback += (hit, startPos, dir, length, volume) => {
@@ -227,6 +232,7 @@ public class DickDescriptor : MonoBehaviour {
                             Vector2.one * (volume * 4f), length);
                     };
                     mozzarella.SetFollowPenetrator(set.dick);
+                    //Debug.Log( ballSize +" "+( ballSize*3f/2f) / (pulses + ballSize/2) );
                 }
                 continue;
             }
@@ -239,7 +245,7 @@ public class DickDescriptor : MonoBehaviour {
             if (attachedKobold.photonView.IsMine) {
                 ReagentContents alloc = new ReagentContents();
                 if (ReagentDatabase.TryGetAsset("Cum", out var cum)) {
-                    alloc.AddMix(cum.GetReagent(attachedKobold.GetGenes().ballSize / pulses));
+                    alloc.AddMix(cum.GetReagent( (ballSize * 3f / 2f) / (pulses + ballSize / 2)));
                 }
 
                 BitBuffer reagentBuffer = new BitBuffer(4);
@@ -259,10 +265,13 @@ public class DickDescriptor : MonoBehaviour {
         attachedAnimator.enabled = true;
         foreach(DickSet set in dicks) {
             Vector3 scale = set.dickContainer.localScale;
+            scale.x = scale.x / 2f;
+            scale.y = scale.y / 2f;
+            scale.z = scale.z / 2f;
             set.descriptor = this;
             set.dickContainer.parent = k.GetAttachPointTransform(set.attachPoint);
             set.dickContainer.localScale = scale;
-            set.dickContainer.transform.localPosition = -set.attachPosition;
+            set.dickContainer.transform.localPosition = -set.attachPosition/2f;
             set.dickContainer.transform.localRotation = Quaternion.identity;
             foreach (var penset in k.penetratables) {
                 set.dick.AddIgnorePenetrable(penset.penetratable);

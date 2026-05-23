@@ -1,0 +1,25 @@
+﻿<Solution>
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="PhotonRealtime.csproj" />
+  <Project Path="PhotonUnityNetworking.csproj" />
+  <Project Path="PhotonUnityNetworking.Utilities.csproj" />
+  <Project Path="Naelstrof.PenetrationTech.csproj" />
+  <Project Path="KoboldKare.ISavable.csproj" />
+  <Project Path="com.naelstrof.orbitcam.csproj" />
+  <Project Path="naelstrof.Modding.csproj" />
+  <Project Path="NetStack.csproj" />
+  <Project Path="naelstrof.MozzarellaTech.csproj" />
+  <Project Path="Naelstrof.JigglePhysics.csproj" />
+  <Project Path="com.naelstrof.ragdoll.creator.csproj" />
+  <Project Path="com.naelstrof.inflatable.csproj" />
+  <Project Path="com.naelstrof.word-filter.csproj" />
+  <Project Path="Naelstrof.PhotonShared.csproj" />
+  <Project Path="com.naelstrof.photon.profiler.csproj" />
+  <Project Path="SteamManager.csproj" />
+  <Project Path="SimpleJSON.csproj" />
+  <Project Path="com.naelstrof.easing.csproj" />
+  <Project Path="PhotonUnityNetworking.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj" />
+  <Project Path="PhotonUnityNetworking.Utilities.Culling.Editor.csproj" />
+</Solution>

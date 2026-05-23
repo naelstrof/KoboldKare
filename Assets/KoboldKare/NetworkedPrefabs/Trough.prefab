@@ -60,15 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingMaxVolume: 60
   type: 0
-  OnChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFilled:
-    m_PersistentCalls:
-      m_Calls: []
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
   startingReagents: []
 --- !u!114 &6209813979592397900
 MonoBehaviour:
@@ -167,6 +158,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7231916857138784437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +209,7 @@ MonoBehaviour:
   bucketSlosh: {fileID: 11400000, guid: 2156a65addaf5974e97d14a5b76080aa, type: 2}
   projectileCount: 3
   projectileVolume: 5
+  projectileSpeed: 10
 --- !u!114 &2778530082504687417
 MonoBehaviour:
   m_ObjectHideFlags: 0
